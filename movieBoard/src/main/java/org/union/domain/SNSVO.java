@@ -15,9 +15,119 @@ public class SNSVO {
 	private Integer share_cnt;
 	private Date writeDate;
 	private String keyword;
+	private String keyword_type;
 	private String url;
 	private String textType;
 	private String thumbnail;
 	private Date createDate;
 	private Date updateDate;
+	
+	
+	public Integer getSns_idx() {
+		return sns_idx;
+	}
+	public void setSns_idx(Integer sns_idx) {
+		this.sns_idx = sns_idx;
+	}
+	public String getSns_name() {
+		return sns_name;
+	}
+	public void setSns_name(String sns_name) {
+		this.sns_name = sns_name;
+	}
+	public String getSns_title() {
+		return sns_title;
+	}
+	public void setSns_title(String sns_title) {
+		this.sns_title = sns_title;
+	}
+	public String getSns_content() {
+		return sns_content;
+	}
+	public void setSns_content(String sns_content) {
+		this.sns_content = sns_content;
+	}
+	public String getSns_writer() {
+		return sns_writer;
+	}
+	public void setSns_writer(String sns_writer) {
+		this.sns_writer = sns_writer;
+	}
+	public Integer getLike_cnt() {
+		return like_cnt;
+	}
+	public void setLike_cnt(Integer like_cnt) {
+		this.like_cnt = like_cnt;
+	}
+	public Integer getReply_cnt() {
+		return reply_cnt;
+	}
+	public void setReply_cnt(Integer reply_cnt) {
+		this.reply_cnt = reply_cnt;
+	}
+	public Integer getShare_cnt() {
+		return share_cnt;
+	}
+	public void setShare_cnt(Integer share_cnt) {
+		this.share_cnt = share_cnt;
+	}
+	public Date getWriteDate() {
+		return writeDate;
+	}
+	public void setWriteDate(Date writeDate) {
+		this.writeDate = writeDate;
+	}
+	public String getKeyword() {
+		return keyword;
+	}
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
+	}
+	public String getKeyword_type() {
+		return keyword_type;
+	}
+	public void setKeyword_type(String keyword_type) {
+		this.keyword_type = keyword_type;
+	}
+	public String getUrl() {
+		return url;
+	}
+	public void setUrl(String url) {
+		this.url = url;
+	}
+	public String getTextType() {
+		return textType;
+	}
+	public void setTextType(String textType) {
+		this.textType = textType;
+	}
+	public String getThumbnail() {
+		return thumbnail;
+	}
+	public void setThumbnail(String thumbnail) {
+		this.thumbnail = thumbnail;
+	}
+	public Date getCreateDate() {
+		return createDate;
+	}
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
+	public Date getUpdateDate() {
+		return updateDate;
+	}
+	public void setUpdateDate(Date updateDate) {
+		this.updateDate = updateDate;
+	}
+	
+	
+	@Override
+	public String toString() {
+		return "SNSVO [sns_idx=" + sns_idx + ", sns_name=" + sns_name + ", sns_title=" + sns_title + ", sns_content="
+				+ sns_content + ", sns_writer=" + sns_writer + ", like_cnt=" + like_cnt + ", reply_cnt=" + reply_cnt
+				+ ", share_cnt=" + share_cnt + ", writeDate=" + writeDate + ", keyword=" + keyword + ", keyword_type="
+				+ keyword_type + ", url=" + url + ", textType=" + textType + ", thumbnail=" + thumbnail
+				+ ", createDate=" + createDate + ", updateDate=" + updateDate + "]";
+	}
+	
 }
