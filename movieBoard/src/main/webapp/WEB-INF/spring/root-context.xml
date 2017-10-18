@@ -34,4 +34,6 @@
 		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"></constructor-arg>
 	</bean>
 		
+	<context:component-scan base-package="org.union.persistence"></context:component-scan>
+	
 </beans>
