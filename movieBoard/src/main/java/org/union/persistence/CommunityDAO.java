@@ -1,14 +1,16 @@
 package org.union.persistence;
 
+import org.union.domain.CommunityVO;
+
 public interface CommunityDAO {
 
 	
-	public void create();
+	public void create(CommunityVO vo);
 
-	public void read();
+	public void read(Integer community_idx);
 
-	public void update();
+	public void update(CommunityVO vo);
 
-	public void delete();
+	public void delete(Integer community_idx);
 	
 }

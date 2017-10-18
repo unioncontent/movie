@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.union.mapper.KeywordMapper">
+
+	<insert id="create">
+		insert into
+			keyword_data(user_idx, keyword_type, keyword_property, keyword)
+		values
+			(#{user_idx}, #{keyword_type}, #{keyword_property}, #{keyword})
+	
+	</insert>
+
+	<select id="read" resultType="KeywordVO">
+		select
+			*
+		from
+			keyword_data
+		where
+			keyword_idx = #{keyword_idx}
+	
+	</select>
+
+	<update id="update">
+		update
+			keyword_data
+		set
+			user_idx = #{user_idx},
+			keyword_type = #{keyword_type},
+			keyword_property = #{keyword_property},
+			keyword = #{keyword},
+			updateDate = now()
+		where
+			keyword_idx = #{keyword_idx}
+	
+	</update>
+
+	<delete id="delete">
+		delete from
+			keyword_data
+		where
+			keyword_idx = #{keyword_idx}
+		
+	</delete>
+
+</mapper>

@@ -6,7 +6,7 @@ public class RelationVO {
 
 	
 	private Integer relation_idx;
-	private String rerlation_keyword;
+	private String relation_keyword;
 	private String relation_word;
 	private Date createDate;
 	private Date updateDate;
@@ -18,11 +18,11 @@ public class RelationVO {
 	public void setRelation_idx(Integer relation_idx) {
 		this.relation_idx = relation_idx;
 	}
-	public String getRerlation_keyword() {
-		return rerlation_keyword;
+	public String getRelation_keyword() {
+		return relation_keyword;
 	}
-	public void setRerlation_keyword(String rerlation_keyword) {
-		this.rerlation_keyword = rerlation_keyword;
+	public void setRelation_keyword(String relation_keyword) {
+		this.relation_keyword = relation_keyword;
 	}
 	public String getRelation_word() {
 		return relation_word;
@@ -46,9 +46,10 @@ public class RelationVO {
 	
 	@Override
 	public String toString() {
-		return "RelationVO [relation_idx=" + relation_idx + ", rerlation_keyword=" + rerlation_keyword
+		return "RelationVO [relation_idx=" + relation_idx + ", relation_keyword=" + relation_keyword
 				+ ", relation_word=" + relation_word + ", createDate=" + createDate + ", updateDate=" + updateDate
 				+ "]";
 	}
+	
 	
 }

@@ -7,12 +7,12 @@ public class PortalVO {
 	
 	private Integer portal_idx;
 	private String portal_name;
-	private String protal_type;
+	private String portal_type;
 	private String portal_title;
 	private Integer deviceType; // 1 = PC, 2 = Mobile
 	private Date writeDate;
 	private String keyword;
-	private String keyword_type;
+	private Integer keyword_type;
 	private String url;
 	private String textType;
 	private String thumbnail;
@@ -32,11 +32,11 @@ public class PortalVO {
 	public void setPortal_name(String portal_name) {
 		this.portal_name = portal_name;
 	}
-	public String getProtal_type() {
-		return protal_type;
+	public String getPortal_type() {
+		return portal_type;
 	}
-	public void setProtal_type(String protal_type) {
-		this.protal_type = protal_type;
+	public void setPortal_type(String portal_type) {
+		this.portal_type = portal_type;
 	}
 	public String getPortal_title() {
 		return portal_title;
@@ -62,10 +62,10 @@ public class PortalVO {
 	public void setKeyword(String keyword) {
 		this.keyword = keyword;
 	}
-	public String getKeyword_type() {
+	public Integer getKeyword_type() {
 		return keyword_type;
 	}
-	public void setKeyword_type(String keyword_type) {
+	public void setKeyword_type(Integer keyword_type) {
 		this.keyword_type = keyword_type;
 	}
 	public String getUrl() {
@@ -102,10 +102,11 @@ public class PortalVO {
 	
 	@Override
 	public String toString() {
-		return "PortalVO [portal_idx=" + portal_idx + ", portal_name=" + portal_name + ", protal_type=" + protal_type
+		return "PortalVO [portal_idx=" + portal_idx + ", portal_name=" + portal_name + ", portal_type=" + portal_type
 				+ ", portal_title=" + portal_title + ", deviceType=" + deviceType + ", writeDate=" + writeDate
 				+ ", keyword=" + keyword + ", keyword_type=" + keyword_type + ", url=" + url + ", textType=" + textType
 				+ ", thumbnail=" + thumbnail + ", createDate=" + createDate + ", updateDate=" + updateDate + "]";
 	}
+	
 	
 }

@@ -1,8 +1,7 @@
 package org.union.persistence;
 
-import javax.inject.Inject;
-
 import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.union.domain.BiralVO;
 
@@ -10,31 +9,57 @@ import org.union.domain.BiralVO;
 public class BiralDAOImpl implements BiralDAO {
 
 	
-	@Inject
+	@Autowired
 	private SqlSession session;
 	
 	private static final String namespace = "org.union.mapper.BiralMapper.";
-											
+								
+	
 	@Override
-	public void create(BiralVO vo) throws Exception{
-		session.insert(namespace + "create", vo);
+	public void create(BiralVO vo){
+		
+		try {
+			session.insert(namespace + "create", vo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 
 	}
 
+	
 	@Override
-	public void read(Integer biral_idx) throws Exception {
-		session.selectOne(namespace + "read", biral_idx);
+	public void read(Integer biral_idx){
+		
+		try {
+			session.selectOne(namespace + "read", biral_idx);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 
+	
 	@Override
-	public void update(BiralVO vo) throws Exception {
-		session.update(namespace + "update", vo);
+	public void update(BiralVO vo){
+		
+		try {
+			session.update(namespace + "update", vo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}	
 
 	}
+	
 
 	@Override
-	public void delete(Integer biral_idx) throws Exception {
-		session.delete(namespace + "delete", biral_idx);
+	public void delete(Integer biral_idx){
+		
+		try {
+			session.delete(namespace + "delete", biral_idx);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}	
 		
 	}
 

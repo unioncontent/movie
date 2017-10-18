@@ -8,7 +8,7 @@ public class KeywordVO {
 	private Integer keyword_idx;
 	private Integer user_idx;
 	private String keyword;
-	private String keyword_type; 
+	private Integer keyword_type; 
 	private String keyword_property; // 제외 or 포함
 	private Date createDate;
 	private Date updateDate;
@@ -32,10 +32,10 @@ public class KeywordVO {
 	public void setKeyword(String keyword) {
 		this.keyword = keyword;
 	}
-	public String getKeyword_type() {
+	public Integer getKeyword_type() {
 		return keyword_type;
 	}
-	public void setKeyword_type(String keyword_type) {
+	public void setKeyword_type(Integer keyword_type) {
 		this.keyword_type = keyword_type;
 	}
 	public String getKeyword_property() {

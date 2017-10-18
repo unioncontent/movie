@@ -53,7 +53,7 @@ public class BiralDAOTester {
 	@Test
 	public void testUpdate() throws Exception{
 
-		vo.setBiral_idx(2);
+		vo.setBiral_idx(3);
 		vo.setUser_idx(5);
 		vo.setBiral_title("u강철비 흥행");
 		vo.setBiral_rank(20);

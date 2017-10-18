@@ -32,7 +32,8 @@
             user_idx = #{user_idx},
             keyword = #{keyword},
             url = #{url},
-            writeDate = #{writeDate}
+            writeDate = #{writeDate},
+            updateDate = now()
 		where 
 			biral_idx = #{biral_idx}
 			

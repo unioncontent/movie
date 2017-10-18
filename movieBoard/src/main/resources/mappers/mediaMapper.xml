@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="org.union.mappers.MediaMapper">
+ 
+ 	<insert id="create">
+ 		insert into
+ 			media_data(media_name, media_title, media_content, reporter_name, reporter_ID,writeDate, keyword, keyword_type, url)
+ 		values
+ 			(#{media_name}, #{media_title}, #{media_content}, #{reporter_name}, #{reporter_ID}, #{writeDate}, #{keyword}, #{keyword_type}, #{url})
+ 	
+ 	</insert>
+ 
+ 	<select id="read" resultType="MediaVO">
+ 		select
+ 			*
+ 		from
+ 			media_data
+ 		where
+ 			media_idx = #{media_idx}
+ 	
+ 	</select>
+ 
+ 	<update id="update">
+ 		update 
+ 			media_data
+ 		set
+ 			media_name = #{media_name},
+ 			media_title = #{media_title},
+ 			media_content = #{media_content},
+ 			reporter_name = #{reporter_name},
+ 			writeDate = #{writeDate},
+ 			keyword = #{keyword},
+ 			keyword_type = #{keyword_type},
+ 			url = #{url},
+ 			updateDate = now()
+ 		where
+ 			media_idx = #{media_idx}
+ 		
+ 	</update>
+ 
+ 	<delete id="delete">
+ 		delete from
+ 			media_data
+ 		where
+ 			media_idx = #{media_idx}
+ 	
+ 	</delete>
+ 
+ </mapper>

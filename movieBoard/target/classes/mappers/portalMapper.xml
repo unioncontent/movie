@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="org.union.mappers.PortalMapper">
+ 
+ 	<insert id="create">
+ 		insert into
+ 			portal_data(portal_type, portal_name, portal_title, deviceType, writeDate, keyword, keyword_type, url)
+ 		values
+ 			(#{portal_type}, #{portal_name}, #{portal_title}, #{deviceType}, #{writeDate}, #{keyword}, #{keyword_type}, #{url})
+ 	
+ 	</insert>
+ 
+ 	<select id="read" resultType="PortalVO">
+ 		select
+ 			*
+ 		from
+ 			portal_data
+ 		where
+ 			portal_idx = #{portal_idx}
+ 	
+ 	</select>
+ 
+ 	<update id="update">
+ 		update
+ 			portal_data
+ 		set
+ 			portal_type = #{portal_type},
+ 			portal_name = #{portal_name},
+ 			portal_title = #{portal_title},
+ 			deviceType = #{deviceType},
+ 			writeDate = #{writeDate},
+ 			keyword = #{keyword},
+ 			keyword_type = #{keyword_type},
+ 			url = #{url},
+ 			updateDate = now()
+ 		where
+ 			portal_idx = #{portal_idx}
+ 			
+ 	</update>
+ 
+ 	<delete id="delete">
+ 		delete from
+ 			portal_data
+ 		where
+ 			portal_idx = #{portal_idx}
+ 	
+ 	</delete>
+ 
+ 
+ </mapper>

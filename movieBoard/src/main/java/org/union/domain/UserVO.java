@@ -10,7 +10,7 @@ public class UserVO {
 	private String user_ID;
 	private String user_PW;
 	private String user_name;
-	private Integer user_phoneNum;
+	private String user_phoneNum;
 	private String user_email;
 	private String company_name;
 	private String company_type;
@@ -51,10 +51,10 @@ public class UserVO {
 	public void setUser_name(String user_name) {
 		this.user_name = user_name;
 	}
-	public Integer getUser_phoneNum() {
+	public String getUser_phoneNum() {
 		return user_phoneNum;
 	}
-	public void setUser_phoneNum(Integer user_phoneNum) {
+	public void setUser_phoneNum(String user_phoneNum) {
 		this.user_phoneNum = user_phoneNum;
 	}
 	public String getUser_email() {

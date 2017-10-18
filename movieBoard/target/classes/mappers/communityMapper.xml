@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.union.mapper.CommunityMapper">
+
+	<insert id="create">
+		insert into
+			community_data(community_name, community_title, community_content, community_writer, community_writer_IP, writeDate, keyword, keyword_type, url)
+		values
+			(#{community_name}, #{community_title}, #{community_content}, #{community_writer}, #{community_writer_IP}, #{writeDate}, #{keyword}, #{keyword_type}, #{url})
+	
+	</insert>
+
+	<select id="read" resultType="CommunityVO">
+		select
+			*
+		from
+			community_data
+		where
+			community_idx = #{community_idx}
+	
+	</select>
+	
+	<update id="update">
+		update
+			community_data
+		set
+			community_name = #{community_name},
+			community_title = #{community_title},
+			community_content = #{community_content},
+			community_writer = #{community_writer},
+			community_writer_IP = #{community_writer_IP},
+			writeDate = #{writeDate},
+			keyword = #{keyword},
+			keyword_type = #{keyword_type},
+			url = #{url},
+			updateDate = now()
+		where
+			community_idx = #{community_idx}
+	
+	</update>
+
+	<delete id="delete">
+		delete from
+			community_data
+		where
+			community_idx = #{community_idx}
+	
+	</delete>
+
+</mapper>

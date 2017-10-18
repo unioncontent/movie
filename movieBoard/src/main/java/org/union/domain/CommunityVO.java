@@ -13,7 +13,7 @@ public class CommunityVO {
 	private String community_writer_IP;
 	private Date writeDate;
 	private String keyword;
-	private String keyword_type;
+	private Integer keyword_type;
 	private String url;
 	private String textType;
 	private String thumbnail;
@@ -69,10 +69,10 @@ public class CommunityVO {
 	public void setKeyword(String keyword) {
 		this.keyword = keyword;
 	}
-	public String getKeyword_type() {
+	public Integer getKeyword_type() {
 		return keyword_type;
 	}
-	public void setKeyword_type(String keyword_type) {
+	public void setKeyword_type(Integer keyword_type) {
 		this.keyword_type = keyword_type;
 	}
 	public String getUrl() {

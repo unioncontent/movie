@@ -14,7 +14,7 @@ public class MediaVO {
 	private String reporter_email;
 	private Date writeDate;
 	private String keyword;
-	private String keyword_type;
+	private Integer keyword_type;
 	private String url;
 	private String textType;
 	private String thumbnail;
@@ -76,10 +76,10 @@ public class MediaVO {
 	public void setKeyword(String keyword) {
 		this.keyword = keyword;
 	}
-	public String getKeyword_type() {
+	public Integer getKeyword_type() {
 		return keyword_type;
 	}
-	public void setKeyword_type(String keyword_type) {
+	public void setKeyword_type(Integer keyword_type) {
 		this.keyword_type = keyword_type;
 	}
 	public String getUrl() {
@@ -122,5 +122,6 @@ public class MediaVO {
 				+ keyword + ", keyword_type=" + keyword_type + ", url=" + url + ", textType=" + textType
 				+ ", thumbnail=" + thumbnail + ", createDate=" + createDate + ", updateDate=" + updateDate + "]";
 	}
+	
 	
 }

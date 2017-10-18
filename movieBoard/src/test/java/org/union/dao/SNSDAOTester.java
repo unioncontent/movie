@@ -1,0 +1,81 @@
+package org.union.dao;
+
+import java.util.Date;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.union.domain.SNSVO;
+import org.union.persistence.SNSDAO;
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = { "file:src/main/webapp/WEB-INF/spring/root-context.xml" })
+public class SNSDAOTester {
+
+	
+	@Autowired
+	SNSDAO dao;
+	
+	SNSVO vo;
+	
+	@Before
+	public void setUp() throws Exception {
+		vo = new SNSVO();
+	}
+
+	
+	@Test
+	public void testCreate() {
+		
+		vo.setSns_name("name");
+		vo.setSns_title("title");
+		vo.setSns_content("content");
+		vo.setSns_writer("writer");
+		vo.setLike_cnt(5);
+		vo.setReply_cnt(3);
+		vo.setShare_cnt(8);
+		vo.setWriteDate(new Date());
+		vo.setKeyword("강철비");
+		vo.setKeyword_type(1);
+		vo.setUrl("url");
+		
+		dao.create(vo);
+	}
+
+	
+	@Test
+	public void testRead() {
+		
+		dao.read(1);
+	}
+	
+	@Test
+	public void testUpdate() {
+		
+		vo.setSns_name("UUUUUUUUUname");
+		vo.setSns_title("title");
+		vo.setSns_content("content");
+		vo.setSns_writer("writer");
+		vo.setLike_cnt(5);
+		vo.setReply_cnt(3);
+		vo.setShare_cnt(8);
+		vo.setWriteDate(new Date());
+		vo.setKeyword("강철비");
+		vo.setKeyword_type(1);
+		vo.setUrl("url");
+		vo.setSns_idx(1);
+		
+		dao.update(vo);
+	}
+	
+	
+	@Test
+	public void testDelete() {
+		
+		dao.delete(1);
+		
+	}
+}

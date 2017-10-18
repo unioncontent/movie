@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ 
+ <mapper namespace="org.union.mappers.NaverMovieMapper">
+ 
+ 	<insert id="create">
+ 		insert into
+ 			NaverMovie_data(NM_title, NM_media_name, NM_reporter_name, writeDate, keyword, keyword_type, url)
+ 		values
+ 			(#{NM_title}, #{NM_media_name}, #{NM_reporter_name}, #{writeDate}, #{keyword}, #{keyword_type}, #{url})
+ 	
+ 	</insert>
+ 
+ 	<select id="read" resultType="NaverMovieVO">
+ 		select
+ 			*
+ 		from
+ 			NaverMovie_data
+ 		where
+ 			NM_idx = #{NM_idx}
+ 	
+ 	</select>
+ 	
+ 	<update id="update">
+ 		update
+ 			NaverMovie_data
+ 		set
+ 			NM_title = #{NM_title},
+ 			NM_media_name = #{NM_media_name},
+ 			NM_reporter_name = #{NM_reporter_name},
+ 			writeDate = #{writeDate},
+ 			keyword = #{keyword},
+ 			keyword_type = #{keyword_type},
+ 			url = #{url},
+ 			updateDate = now()
+ 		where
+ 			NM_idx = #{NM_idx}
+ 	
+ 	</update>
+ 	
+ 	<delete id="delete">
+ 		delete from
+ 			navermovie_data
+ 		where
+ 			NM_idx = #{NM_idx}
+ 	
+ 	</delete>
+ 	
+ </mapper>
