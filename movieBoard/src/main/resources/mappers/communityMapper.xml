@@ -7,9 +7,9 @@
 
 	<insert id="create">
 		insert into
-			community_data(community_name, community_title, community_content, community_writer, community_writer_IP, writeDate, keyword, keyword_type, url)
+			community_data(community_name, community_title, community_content, community_writer, community_writer_IP, writeDate, keyword, keyword_type, url, board_number)
 		values
-			(#{community_name}, #{community_title}, #{community_content}, #{community_writer}, #{community_writer_IP}, #{writeDate}, #{keyword}, #{keyword_type}, #{url})
+			(#{community_name}, #{community_title}, #{community_content}, #{community_writer}, #{community_writer_IP}, #{writeDate}, #{keyword}, #{keyword_type}, #{url}, #{board_number)
 	
 	</insert>
 
@@ -36,6 +36,7 @@
 			keyword = #{keyword},
 			keyword_type = #{keyword_type},
 			url = #{url},
+			board_number = #{board_number},
 			updateDate = now()
 		where
 			community_idx = #{community_idx}

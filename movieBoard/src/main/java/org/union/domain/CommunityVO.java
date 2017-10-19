@@ -15,6 +15,7 @@ public class CommunityVO {
 	private String keyword;
 	private Integer keyword_type;
 	private String url;
+	private Integer board_number;
 	private String textType;
 	private String thumbnail;
 	private Date createDate;
@@ -81,6 +82,12 @@ public class CommunityVO {
 	public void setUrl(String url) {
 		this.url = url;
 	}
+	public Integer getBoard_number() {
+		return board_number;
+	}
+	public void setBoard_number(Integer board_number) {
+		this.board_number = board_number;
+	}
 	public String getTextType() {
 		return textType;
 	}
@@ -113,8 +120,9 @@ public class CommunityVO {
 				+ ", community_title=" + community_title + ", community_content=" + community_content
 				+ ", community_writer=" + community_writer + ", community_writer_IP=" + community_writer_IP
 				+ ", writeDate=" + writeDate + ", keyword=" + keyword + ", keyword_type=" + keyword_type + ", url="
-				+ url + ", textType=" + textType + ", thumbnail=" + thumbnail + ", createDate=" + createDate
-				+ ", updateDate=" + updateDate + "]";
+				+ url + ", board_number=" + board_number + ", textType=" + textType + ", thumbnail=" + thumbnail
+				+ ", createDate=" + createDate + ", updateDate=" + updateDate + "]";
 	}
+	
 	
 }

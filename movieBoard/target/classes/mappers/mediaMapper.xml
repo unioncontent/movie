@@ -7,9 +7,10 @@
  
  	<insert id="create">
  		insert into
- 			media_data(media_name, media_title, media_content, reporter_name, reporter_ID,writeDate, keyword, keyword_type, url)
+ 			media_data(media_name, media_title, media_content, reporter_name, reporter_ID,writeDate, last_writeDate, last_media_title, last_media_content, keyword, keyword_type, url)
  		values
- 			(#{media_name}, #{media_title}, #{media_content}, #{reporter_name}, #{reporter_ID}, #{writeDate}, #{keyword}, #{keyword_type}, #{url})
+ 			(#{media_name}, #{media_title}, #{media_content}, #{reporter_name}, #{reporter_ID}, #{writeDate}, #{keyword}, #{last_writeDate}, #{last_media_title},
+ 			 #{last_media_content}, #{keyword_type}, #{url})
  	
  	</insert>
  
@@ -32,6 +33,9 @@
  			media_content = #{media_content},
  			reporter_name = #{reporter_name},
  			writeDate = #{writeDate},
+ 			last_writeDate = #{last_writeDate},
+ 			last_media_title = #{last_media_title},
+ 			last_media_content = #{last_media_content},
  			keyword = #{keyword},
  			keyword_type = #{keyword_type},
  			url = #{url},

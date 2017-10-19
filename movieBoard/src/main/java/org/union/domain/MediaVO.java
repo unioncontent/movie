@@ -13,6 +13,9 @@ public class MediaVO {
 	private String reporter_ID;
 	private String reporter_email;
 	private Date writeDate;
+	private Date last_writeDate;
+	private Date last_media_title;
+	private Date last_media_content;
 	private String keyword;
 	private Integer keyword_type;
 	private String url;
@@ -70,6 +73,24 @@ public class MediaVO {
 	public void setWriteDate(Date writeDate) {
 		this.writeDate = writeDate;
 	}
+	public Date getLast_writeDate() {
+		return last_writeDate;
+	}
+	public void setLast_writeDate(Date last_writeDate) {
+		this.last_writeDate = last_writeDate;
+	}
+	public Date getLast_media_title() {
+		return last_media_title;
+	}
+	public void setLast_media_title(Date last_media_title) {
+		this.last_media_title = last_media_title;
+	}
+	public Date getLast_media_content() {
+		return last_media_content;
+	}
+	public void setLast_media_content(Date last_media_content) {
+		this.last_media_content = last_media_content;
+	}
 	public String getKeyword() {
 		return keyword;
 	}
@@ -118,10 +139,11 @@ public class MediaVO {
 	public String toString() {
 		return "MediaVO [media_idx=" + media_idx + ", media_name=" + media_name + ", media_title=" + media_title
 				+ ", media_content=" + media_content + ", reporter_name=" + reporter_name + ", reporter_ID="
-				+ reporter_ID + ", reporter_email=" + reporter_email + ", writeDate=" + writeDate + ", keyword="
-				+ keyword + ", keyword_type=" + keyword_type + ", url=" + url + ", textType=" + textType
-				+ ", thumbnail=" + thumbnail + ", createDate=" + createDate + ", updateDate=" + updateDate + "]";
+				+ reporter_ID + ", reporter_email=" + reporter_email + ", writeDate=" + writeDate + ", last_writeDate="
+				+ last_writeDate + ", last_media_title=" + last_media_title + ", last_media_content="
+				+ last_media_content + ", keyword=" + keyword + ", keyword_type=" + keyword_type + ", url=" + url
+				+ ", textType=" + textType + ", thumbnail=" + thumbnail + ", createDate=" + createDate + ", updateDate="
+				+ updateDate + "]";
 	}
-	
 	
 }
