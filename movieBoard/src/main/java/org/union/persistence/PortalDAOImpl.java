@@ -4,6 +4,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.union.domain.PortalVO;
+import org.union.domain.SearchVO;
 
 @Repository
 public class PortalDAOImpl implements PortalDAO {
@@ -52,6 +53,39 @@ public class PortalDAOImpl implements PortalDAO {
 	public void delete(Integer portal_idx) {
 		try {
 			session.delete(namespace + "delete", portal_idx);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+
+	@Override
+	public void listSearch(SearchVO vo) {
+		try {
+			session.selectList(namespace + "listSearch", vo);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+
+	@Override
+	public void updateTextType(PortalVO vo) {
+		try {
+			session.update(namespace + "updateTextType", vo);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+
+	@Override
+	public void updateThumbnail(PortalVO vo) {
+		try {
+			session.update(namespace + "updateThumbnail", vo);
 			
 		} catch (Exception e) {
 			e.printStackTrace();

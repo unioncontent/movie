@@ -52,4 +52,42 @@
  			
  	</delete>
  	
+ 	<select id="listSearch" resultType="SNSVO">
+ 		select 
+			*
+		from 
+			sns_data
+		where 
+			textType is not null
+		and 
+			community_title like concat('%', #{keyword}, '%')
+		or 
+			community_content like concat('%', #{keyword}, '%')
+		order 
+			by createdate
+		limit  
+			#{startPage}, #{pageUnit}
+ 	
+ 	</select>
+ 	
+ 	<update id="updateTextType">
+		update
+			sns_data
+		set
+			textType = #{textType}
+		where
+			sns_idx = #{sns_idx}
+	
+	</update>
+
+	<update id="updateThumbnail">
+		update
+			sns_data
+		set
+			thumbnail = #{thumbnail}
+		where
+			sns_idx = #{sns_idx}
+	
+	</update>
+ 	
  </mapper>

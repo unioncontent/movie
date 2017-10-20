@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.union.domain.CommunityVO;
+import org.union.domain.SearchVO;
 import org.union.persistence.CommunityDAO;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -20,17 +21,21 @@ public class CommunityDAOTester {
 	CommunityDAO dao;
 	
 	CommunityVO vo;
+	SearchVO svo;
 	
 	@Before
 	public void setUp() throws Exception {
 		vo = new CommunityVO();
+		svo = new SearchVO();
 	}
 
 
 	@Test
 	public void testCreate() {
 		
-		vo.setCommunity_name("디씨");
+		for(int i = 0; i < 100; i++) {
+		
+		vo.setCommunity_name(i+1 + "디씨");
 		vo.setCommunity_title("강철비 본사람");
 		vo.setCommunity_content("강철비 ~~~~~~~~~~~~~~~~");
 		vo.setCommunity_writer("익명134");
@@ -39,15 +44,17 @@ public class CommunityDAOTester {
 		vo.setKeyword("강철비");
 		vo.setKeyword_type(2);
 		vo.setUrl("url");
+		vo.setTextType("호감");
 		
 		dao.create(vo);
+		}
 	}
 	
 	
 	@Test
 	public void testRead() {
 		
-		dao.read(1);
+		dao.read(3);
 	}
 	
 	@Test
@@ -72,5 +79,34 @@ public class CommunityDAOTester {
 	public void testDelete() {
 		
 		dao.delete(1);
+	}
+	
+	
+	@Test
+	public void testListSearch() {
+		
+		svo.setKeyword("12");
+		
+		dao.listSearch(svo);
+	}
+	
+	
+	@Test
+	public void testUpdateTextType() {
+		
+		vo.setCommunity_idx(3);
+		vo.setTextType("호감");
+		
+		dao.updateTextType(vo);
+	}
+	
+	
+	@Test
+	public void testUpdateThumbnail() {
+		
+		vo.setCommunity_idx(3);
+		vo.setThumbnail("1234132131231TESTTEST");
+		
+		dao.updateThumbnail(vo);
 	}
 }

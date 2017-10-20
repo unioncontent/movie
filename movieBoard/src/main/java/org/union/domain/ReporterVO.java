@@ -12,6 +12,7 @@ public class ReporterVO {
 	private String reporter_email;
 	private String reporter_phoneNum;
 	private String reporter_part_name;
+	private String reporter_memo;
 	private Date createDate;
 	private Date updateDate;
 	
@@ -58,6 +59,12 @@ public class ReporterVO {
 	public void setReporter_part_name(String reporter_part_name) {
 		this.reporter_part_name = reporter_part_name;
 	}
+	public String getReporter_memo() {
+		return reporter_memo;
+	}
+	public void setReporter_memo(String reporter_memo) {
+		this.reporter_memo = reporter_memo;
+	}
 	public Date getCreateDate() {
 		return createDate;
 	}
@@ -77,7 +84,8 @@ public class ReporterVO {
 		return "ReporterVO [reporter_idx=" + reporter_idx + ", reporter_media_name=" + reporter_media_name
 				+ ", reporter_name=" + reporter_name + ", reporter_ID=" + reporter_ID + ", reporter_email="
 				+ reporter_email + ", reporter_phoneNum=" + reporter_phoneNum + ", reporter_part_name="
-				+ reporter_part_name + ", createDate=" + createDate + ", updateDate=" + updateDate + "]";
+				+ reporter_part_name + ", reporter_memo=" + reporter_memo + ", createDate=" + createDate
+				+ ", updateDate=" + updateDate + "]";
 	}
 	
 }

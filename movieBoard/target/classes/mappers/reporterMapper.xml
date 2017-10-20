@@ -7,9 +7,9 @@
  
  	<insert id="create">
  		insert into
- 			reporter_data(reporter_media_name, reporter_name, reporter_ID, reporter_email, reporter_phoneNum, reporter_part_name)
+ 			reporter_data(reporter_media_name, reporter_name, reporter_ID, reporter_email, reporter_phoneNum, reporter_part_name, reporter_memo)
  		values
- 			(#{reporter_media_name}, #{reporter_name}, #{reporter_ID}, #{reporter_email}, #{reporter_phoneNum}, #{reporter_part_name})
+ 			(#{reporter_media_name}, #{reporter_name}, #{reporter_ID}, #{reporter_email}, #{reporter_phoneNum}, #{reporter_part_name}, #{reporter_memo})
  	
  	</insert>
  
@@ -33,6 +33,7 @@
  			reporter_email = #{reporter_email},
  			reporter_phoneNum = #{reporter_phoneNum},
  			reporter_part_name = #{reporter_part_name},
+ 			reporter_memo = #{reporter_memo},
  			updateDate = now()
  		where
  			reporter_idx = #{reporter_idx}

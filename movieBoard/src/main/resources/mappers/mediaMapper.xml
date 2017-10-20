@@ -53,4 +53,43 @@
  	
  	</delete>
  
+ 	<select id="listSearch" resultType="MediaVO">
+ 		select 
+			*
+		from 
+			media_data
+		where 
+			textType is not null
+		and 
+			community_title like concat('%', #{keyword}, '%')
+		or 
+			community_content like concat('%', #{keyword}, '%')
+		order 
+			by createdate
+		limit  
+			#{startPage}, #{pageUnit}
+ 	
+ 	</select>
+ 	
+ 	<update id="updateTextType">
+		update
+			media_data
+		set
+			textType = #{textType}
+		where
+			media_idx = #{media_idx}
+	
+	</update>
+
+	<update id="updateThumbnail">
+		update
+			media_data
+		set
+			thumbnail = #{thumbnail}
+		where
+			media_idx = #{media_idx}
+	
+	</update>
+ 	
+ 
  </mapper>

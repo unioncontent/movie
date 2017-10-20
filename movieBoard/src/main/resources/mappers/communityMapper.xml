@@ -9,7 +9,7 @@
 		insert into
 			community_data(community_name, community_title, community_content, community_writer, community_writer_IP, writeDate, keyword, keyword_type, url, board_number)
 		values
-			(#{community_name}, #{community_title}, #{community_content}, #{community_writer}, #{community_writer_IP}, #{writeDate}, #{keyword}, #{keyword_type}, #{url}, #{board_number)
+			(#{community_name}, #{community_title}, #{community_content}, #{community_writer}, #{community_writer_IP}, #{writeDate}, #{keyword}, #{keyword_type}, #{url}, #{board_number})
 	
 	</insert>
 
@@ -50,5 +50,44 @@
 			community_idx = #{community_idx}
 	
 	</delete>
+
+	<select id="listSearch" resultType="CommunityVO">
+		select 
+			*
+		from 
+			community_data
+		where 
+			textType is not null
+		and 
+			community_title like concat('%', #{keyword}, '%')
+		or 
+			community_content like concat('%', #{keyword}, '%')
+		order 
+			by createdate
+		limit  
+			#{startPage}, #{pageUnit}
+	
+	</select>
+
+	<update id="updateTextType">
+		update
+			community_data
+		set
+			textType = #{textType}
+		where
+			community_idx = #{community_idx}
+	
+	</update>
+
+	<update id="updateThumbnail">
+		update
+			community_data
+		set
+			thumbnail = #{thumbnail}
+		where
+			community_idx = #{community_idx}
+	
+	</update>
+
 
 </mapper>

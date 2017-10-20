@@ -49,5 +49,42 @@
  	
  	</delete>
  
+ 	<select id="listSearch" resultType="PortalVO">
+ 		select 
+			*
+		from 
+			portal_data
+		where 
+			textType is not null
+		and 
+			community_title like concat('%', #{keyword}, '%')
+		or 
+			community_content like concat('%', #{keyword}, '%')
+		order 
+			by createdate
+		limit  
+			#{startPage}, #{pageUnit}
+ 	
+ 	</select>
+ 	
+ 	<update id="updateTextType">
+		update
+			portal_data
+		set
+			textType = #{textType}
+		where
+			portal_idx = #{portal_idx}
+	
+	</update>
+
+	<update id="updateThumbnail">
+		update
+			portal_data
+		set
+			thumbnail = #{thumbnail}
+		where
+			portal_idx = #{portal_idx}
+	
+	</update>
  
  </mapper>
