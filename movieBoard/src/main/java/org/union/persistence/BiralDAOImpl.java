@@ -29,13 +29,9 @@ public class BiralDAOImpl implements BiralDAO {
 
 	
 	@Override
-	public void read(Integer biral_idx){
+	public BiralVO read(Integer biral_idx){
 		
-		try {
-			session.selectOne(namespace + "read", biral_idx);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		return  session.selectOne(namespace + "read", biral_idx);
 		
 	}
 

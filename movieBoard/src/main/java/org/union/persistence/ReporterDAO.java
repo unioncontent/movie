@@ -7,7 +7,7 @@ public interface ReporterDAO {
 	
 	public void create(ReporterVO vo);
 	
-	public void read(Integer reporter_idx);
+	public ReporterVO read(Integer reporter_idx);
 	
 	public void update(ReporterVO vo);
 	

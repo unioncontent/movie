@@ -27,14 +27,9 @@ public class KeywordDAOImpl implements KeywordDAO {
 	}
 
 	@Override
-	public void read(Integer keyword_idx) {
-		try {
-			session.selectOne(namespace + "read", keyword_idx);
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
+	public KeywordVO read(Integer keyword_idx) {
+
+		return session.selectOne(namespace + "read", keyword_idx);
 	}
 
 	@Override

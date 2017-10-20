@@ -7,7 +7,7 @@ public interface KeywordDAO {
 	
 	public void create(KeywordVO vo);
 	
-	public void read(Integer keyword_idx);
+	public KeywordVO read(Integer keyword_idx);
 	
 	public void update(KeywordVO vo);
 	

@@ -7,7 +7,7 @@ public interface BiralDAO {
 	
 	public void create(BiralVO vo);
 	
-	public void read(Integer biral_idx);
+	public BiralVO read(Integer biral_idx);
 	
 	public void update(BiralVO vo);
 	

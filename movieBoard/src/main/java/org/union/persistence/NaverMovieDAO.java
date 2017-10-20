@@ -7,7 +7,7 @@ public interface NaverMovieDAO {
 	
 	public void create(NaverMovieVO vo);
 	
-	public void read(Integer NM_idx);
+	public NaverMovieVO read(Integer NM_idx);
 	
 	public void update(NaverMovieVO vo);
 	

@@ -7,7 +7,7 @@ public interface RelationDAO {
 	
 	public void create(RelationVO vo);
 	
-	public void read(Integer relation_idx);
+	public RelationVO read(Integer relation_idx);
 	
 	public void update(RelationVO vo);
 	

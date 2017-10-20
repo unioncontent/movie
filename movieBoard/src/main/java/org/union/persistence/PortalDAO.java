@@ -1,5 +1,7 @@
 package org.union.persistence;
 
+import java.util.List;
+
 import org.union.domain.PortalVO;
 import org.union.domain.SearchVO;
 
@@ -8,13 +10,13 @@ public interface PortalDAO {
 	
 	public void create(PortalVO vo);
 	
-	public void read(Integer portal_idx);
+	public PortalVO read(Integer portal_idx);
 	
 	public void update(PortalVO vo);
 	
 	public void delete(Integer portal_idx);
 	
-	public void listSearch(SearchVO vo);
+	public List<PortalVO> listSearch(SearchVO vo);
 	
 	public void updateTextType(PortalVO vo);
 	

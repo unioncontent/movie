@@ -27,13 +27,9 @@ public class RelationDAOImpl implements RelationDAO {
 
 	
 	@Override
-	public void read(Integer relation_idx) {
-		try {
-			session.selectOne(namespace + "read", relation_idx);
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	public RelationVO read(Integer relation_idx) {
+
+		return session.selectOne(namespace + "read", relation_idx);
 	}
 
 	

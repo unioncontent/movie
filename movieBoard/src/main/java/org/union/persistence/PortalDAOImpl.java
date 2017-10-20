@@ -1,5 +1,7 @@
 package org.union.persistence;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -28,13 +30,10 @@ public class PortalDAOImpl implements PortalDAO {
 
 	
 	@Override
-	public void read(Integer portal_idx) {
-		try {
-			session.selectOne(namespace + "read", portal_idx);
+	public PortalVO read(Integer portal_idx) {
+		
+		return session.selectOne(namespace + "read", portal_idx);
 			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 
 	
@@ -61,13 +60,9 @@ public class PortalDAOImpl implements PortalDAO {
 
 
 	@Override
-	public void listSearch(SearchVO vo) {
-		try {
-			session.selectList(namespace + "listSearch", vo);
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	public List<PortalVO> listSearch(SearchVO vo) {
+		
+		return session.selectList(namespace + "listSearch", vo);
 	}
 
 

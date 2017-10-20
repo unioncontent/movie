@@ -1,5 +1,7 @@
 package org.union.persistence;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -30,15 +32,9 @@ public class CommunityDAOImpl implements CommunityDAO {
 	
 
 	@Override
-	public void read(Integer community_idx) {
+	public CommunityVO read(Integer community_idx) {
 		
-		try {
-			session.selectOne(namespace + "read", community_idx);
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
+		return session.selectOne(namespace + "read", community_idx);
 	}
 	
 
@@ -69,12 +65,9 @@ public class CommunityDAOImpl implements CommunityDAO {
 
 
 	@Override
-	public void listSearch(SearchVO vo) {
-		try {
-			session.selectList(namespace + "listSearch", vo); 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	public List<CommunityVO> listSearch(SearchVO vo) {
+
+		return session.selectList(namespace + "listSearch", vo); 
 	}
 
 

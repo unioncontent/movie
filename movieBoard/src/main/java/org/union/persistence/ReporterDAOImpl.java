@@ -27,13 +27,9 @@ public class ReporterDAOImpl implements ReporterDAO {
 
 	
 	@Override
-	public void read(Integer reporter_idx) {
-		try {
-			session.selectOne(namespace + "read", reporter_idx);
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	public ReporterVO read(Integer reporter_idx) {
+		
+		return session.selectOne(namespace + "read", reporter_idx);
 	}
 
 	

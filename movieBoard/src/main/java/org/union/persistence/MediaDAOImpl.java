@@ -1,5 +1,7 @@
 package org.union.persistence;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -30,14 +32,9 @@ public class MediaDAOImpl implements MediaDAO {
 
 	
 	@Override
-	public void read(Integer media_idx) {
-		try {
-			session.selectOne(namespace + "read", media_idx);
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
+	public MediaVO read(Integer media_idx) {
+
+		return session.selectOne(namespace + "read", media_idx);
 	}
 
 	
@@ -66,13 +63,9 @@ public class MediaDAOImpl implements MediaDAO {
 
 
 	@Override
-	public void listSearch(SearchVO vo) {
-		try {
-			session.selectList(namespace + "listSearch", vo);
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	public List<MediaVO> listSearch(SearchVO vo) {
+
+		return session.selectList(namespace + "listSearch", vo);
 	}
 
 

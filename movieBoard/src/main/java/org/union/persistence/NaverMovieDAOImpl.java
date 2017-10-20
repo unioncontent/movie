@@ -27,13 +27,9 @@ public class NaverMovieDAOImpl implements NaverMovieDAO {
 
 	
 	@Override
-	public void read(Integer NM_idx) {
-		try {
-			session.selectOne(namespace + "read", NM_idx);
+	public NaverMovieVO read(Integer NM_idx) {
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		return session.selectOne(namespace + "read", NM_idx);
 	}
 
 	

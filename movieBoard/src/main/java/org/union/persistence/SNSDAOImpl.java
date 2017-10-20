@@ -1,5 +1,7 @@
 package org.union.persistence;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -28,13 +30,9 @@ public class SNSDAOImpl implements SNSDAO {
 
 	
 	@Override
-	public void read(Integer SNS_idx) {
-		try {
-			session.selectOne(namespace + "read", SNS_idx);
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	public SNSVO read(Integer SNS_idx) {
+		
+		return session.selectOne(namespace + "read", SNS_idx);
 	}
 
 	
@@ -61,13 +59,9 @@ public class SNSDAOImpl implements SNSDAO {
 
 
 	@Override
-	public void listSearch(SearchVO vo) {
-		try {
-			session.selectList(namespace + "listSearch", vo);
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	public List<SNSVO> listSearch(SearchVO vo) {
+		
+		return session.selectList(namespace + "listSearch", vo);
 	}
 
 

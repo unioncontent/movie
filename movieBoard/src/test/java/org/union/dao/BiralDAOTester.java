@@ -46,7 +46,7 @@ public class BiralDAOTester {
 	@Test
 	public void testRead()throws Exception{
 		
-		dao.read(2);
+		dao.read(3);
 	}
 
 

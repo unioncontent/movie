@@ -27,13 +27,9 @@ public class UserDAOImpl implements UserDAO {
 
 	
 	@Override
-	public void read(Integer user_idx) {
-		try {
-			session.selectOne(namespace + "read", user_idx);
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	public UserVO read(Integer user_idx) {
+
+		return session.selectOne(namespace + "read", user_idx);
 	}
 
 	

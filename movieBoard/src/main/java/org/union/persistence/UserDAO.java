@@ -7,7 +7,7 @@ public interface UserDAO {
 	
 	public void create(UserVO vo);
 	
-	public void read(Integer user_idx);
+	public UserVO read(Integer user_idx);
 	
 	public void update(UserVO vo);
 	
