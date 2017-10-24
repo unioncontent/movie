@@ -33,9 +33,9 @@ public class CommunityDAOTester {
 	@Test
 	public void testCreate() {
 		
-		for(int i = 0; i < 100; i++) {
 		
-		vo.setCommunity_name(i+1 + "디씨");
+		
+		vo.setCommunity_name("새로운" + "디씨");
 		vo.setCommunity_title("강철비 본사람");
 		vo.setCommunity_content("강철비 ~~~~~~~~~~~~~~~~");
 		vo.setCommunity_writer("익명134");
@@ -47,7 +47,7 @@ public class CommunityDAOTester {
 		vo.setTextType("호감");
 		
 		dao.create(vo);
-		}
+		
 	}
 	
 	
@@ -60,16 +60,16 @@ public class CommunityDAOTester {
 	@Test
 	public void testUpdate() {
 		
-		vo.setCommunity_name("u디씨");
-		vo.setCommunity_title("u강철비 본사람");
+		vo.setCommunity_name("100100100디씨");
+		/*vo.setCommunity_title("u강철비 본사람");
 		vo.setCommunity_content("u강철비 ~~~~~~~~~~~~~~~~");
 		vo.setCommunity_writer("u익명134");
 		vo.setCommunity_writer_IP("u102.168.0.1");
 		vo.setWriteDate(new Date());
 		vo.setKeyword("uu강철비");
 		vo.setKeyword_type(2);
-		vo.setUrl("uuurl");
-		vo.setCommunity_idx(1);
+		vo.setUrl("uuurl");*/
+		vo.setCommunity_idx(100);
 		
 		dao.update(vo);
 	}
@@ -85,7 +85,7 @@ public class CommunityDAOTester {
 	@Test
 	public void testListSearch() {
 		
-		svo.setKeyword("12");
+		svo.setKeyword("title");
 		
 		dao.listSearch(svo);
 	}
