@@ -38,12 +38,15 @@ ul {
   margin-bottom: 0; }
 
 * a {
-  font-size: 14px; }
+  font-size: 14px;
+  color: black; }
   * a:hover, * a:focus {
+    font-weight: normal;
     text-decoration: none; }
 
 p {
-  font-size: 13px; }
+  font-size: 13px;
+  font-weight: normal; }
 
 .media-left {
   padding-right: 20px; }
@@ -79,7 +82,8 @@ p {
 ==========================  **/
 .card {
   border-radius: 2px;
-  border-top: 4px solid #8CDDCD;
+  border-top: 4px solid #607D8B;
+  /*4px solid #8CDDCD;*/
   box-shadow: 0 2px 1px rgba(0, 0, 0, 0.05);
   border-left: none;
   border-right: none;
@@ -1059,13 +1063,16 @@ a.bg-danger:hover {
     background-color: #fff;
     width: calc(100% / 4);
     text-align: center; }
+  .md-tabs .nav-item li.nav-link, .md-tabs .main-menu .main-menu-content .nav-item .tree-1 a li.nav-link, .main-menu .main-menu-content .nav-item .tree-1 .md-tabs a li.nav-link, .md-tabs .main-menu .main-menu-content .nav-item .tree-2 a li.nav-link, .main-menu .main-menu-content .nav-item .tree-2 .md-tabs a li.nav-link, .md-tabs .main-menu .main-menu-content .nav-item .tree-3 a li.nav-link, .main-menu .main-menu-content .nav-item .tree-3 .md-tabs a li.nav-link, .md-tabs .main-menu .main-menu-content .nav-item .tree-4 a li.nav-link, .main-menu .main-menu-content .nav-item .tree-4 .md-tabs a li.nav-link {
+    text-align: center;
+    background-color: #fff; }
   .md-tabs .nav-link:focus,
   .md-tabs .nav-link:hover {
     border: none; }
-  .md-tabs .nav-item .nav-link.active ~ .slide, .md-tabs .main-menu .main-menu-content .nav-item .tree-1 a .nav-link.active ~ .slide, .main-menu .main-menu-content .nav-item .tree-1 .md-tabs a .nav-link.active ~ .slide, .md-tabs .main-menu .main-menu-content .nav-item .tree-2 a .nav-link.active ~ .slide, .main-menu .main-menu-content .nav-item .tree-2 .md-tabs a .nav-link.active ~ .slide, .md-tabs .main-menu .main-menu-content .nav-item .tree-3 a .nav-link.active ~ .slide, .main-menu .main-menu-content .nav-item .tree-3 .md-tabs a .nav-link.active ~ .slide, .md-tabs .main-menu .main-menu-content .nav-item .tree-4 a .nav-link.active ~ .slide, .main-menu .main-menu-content .nav-item .tree-4 .md-tabs a .nav-link.active ~ .slide {
+  .md-tabs .nav-item .active p ~ .slide, .main-menu .main-menu-content .nav-item .tree-1 .md-tabs a .active p ~ .slide, .main-menu .main-menu-content .nav-item .tree-2 .md-tabs a .active p ~ .slide, .main-menu .main-menu-content .nav-item .tree-3 .md-tabs a .active p ~ .slide, .main-menu .main-menu-content .nav-item .tree-4 .md-tabs a .active p ~ .slide {
     opacity: 1;
     transition: all 0.3s ease-out; }
-  .md-tabs .nav-item .nav-link ~ .slide, .md-tabs .main-menu .main-menu-content .nav-item .tree-1 a .nav-link ~ .slide, .main-menu .main-menu-content .nav-item .tree-1 .md-tabs a .nav-link ~ .slide, .md-tabs .main-menu .main-menu-content .nav-item .tree-2 a .nav-link ~ .slide, .main-menu .main-menu-content .nav-item .tree-2 .md-tabs a .nav-link ~ .slide, .md-tabs .main-menu .main-menu-content .nav-item .tree-3 a .nav-link ~ .slide, .main-menu .main-menu-content .nav-item .tree-3 .md-tabs a .nav-link ~ .slide, .md-tabs .main-menu .main-menu-content .nav-item .tree-4 a .nav-link ~ .slide, .main-menu .main-menu-content .nav-item .tree-4 .md-tabs a .nav-link ~ .slide {
+  .md-tabs .nav-item p ~ .slide, .md-tabs .main-menu .main-menu-content .nav-item .tree-1 a p ~ .slide, .main-menu .main-menu-content .nav-item .tree-1 .md-tabs a p ~ .slide, .md-tabs .main-menu .main-menu-content .nav-item .tree-2 a p ~ .slide, .main-menu .main-menu-content .nav-item .tree-2 .md-tabs a p ~ .slide, .md-tabs .main-menu .main-menu-content .nav-item .tree-3 a p ~ .slide, .main-menu .main-menu-content .nav-item .tree-3 .md-tabs a p ~ .slide, .md-tabs .main-menu .main-menu-content .nav-item .tree-4 a p ~ .slide, .main-menu .main-menu-content .nav-item .tree-4 .md-tabs a p ~ .slide {
     opacity: 0;
     transition: all 0.3s ease-out; }
   .md-tabs .nav-item.open .nav-link, .md-tabs .main-menu .main-menu-content .nav-item .tree-1 a.open .nav-link, .main-menu .main-menu-content .nav-item .tree-1 .md-tabs a.open .nav-link, .md-tabs .main-menu .main-menu-content .nav-item .tree-2 a.open .nav-link, .main-menu .main-menu-content .nav-item .tree-2 .md-tabs a.open .nav-link, .md-tabs .main-menu .main-menu-content .nav-item .tree-3 a.open .nav-link, .main-menu .main-menu-content .nav-item .tree-3 .md-tabs a.open .nav-link, .md-tabs .main-menu .main-menu-content .nav-item .tree-4 a.open .nav-link, .main-menu .main-menu-content .nav-item .tree-4 .md-tabs a.open .nav-link,
@@ -1089,11 +1096,14 @@ a.bg-danger:hover {
   .main-menu .main-menu-content .nav-item .tree-4 .md-tabs a.open .nav-link:hover,
   .md-tabs .nav-link.active,
   .md-tabs .nav-link.active:focus,
-  .md-tabs .nav-link.active:hover {
+  .md-tabs .nav-link.active:hover,
+  .md-tabs li.active p {
     color: #1abc9c;
     border: none;
     background-color: transparent;
     border-radius: 0; }
+  .md-tabs li.active p {
+    color: #34495e; }
   .md-tabs .nav-item:first-child, .md-tabs .main-menu .main-menu-content .nav-item .tree-1 a:first-child, .main-menu .main-menu-content .nav-item .tree-1 .md-tabs a:first-child, .md-tabs .main-menu .main-menu-content .nav-item .tree-2 a:first-child, .main-menu .main-menu-content .nav-item .tree-2 .md-tabs a:first-child, .md-tabs .main-menu .main-menu-content .nav-item .tree-3 a:first-child, .main-menu .main-menu-content .nav-item .tree-3 .md-tabs a:first-child, .md-tabs .main-menu .main-menu-content .nav-item .tree-4 a:first-child, .main-menu .main-menu-content .nav-item .tree-4 .md-tabs a:first-child {
     border-bottom: 1px solid #ddd; }
   .md-tabs .nav-item a, .md-tabs .main-menu .main-menu-content .nav-item .tree-1 a a, .main-menu .main-menu-content .nav-item .tree-1 .md-tabs a a, .md-tabs .main-menu .main-menu-content .nav-item .tree-2 a a, .main-menu .main-menu-content .nav-item .tree-2 .md-tabs a a, .md-tabs .main-menu .main-menu-content .nav-item .tree-3 a a, .main-menu .main-menu-content .nav-item .tree-3 .md-tabs a a, .md-tabs .main-menu .main-menu-content .nav-item .tree-4 a a, .main-menu .main-menu-content .nav-item .tree-4 .md-tabs a a {
@@ -1101,7 +1111,7 @@ a.bg-danger:hover {
     color: #1abc9c; }
 
 .nav-tabs .slide {
-  background: #1abc9c;
+  background: #34495e;
   width: calc(100% / 5);
   height: 4px;
   position: absolute;
@@ -1110,7 +1120,7 @@ a.bg-danger:hover {
   bottom: 0; }
   .nav-tabs .slide .nav-item.show .nav-link, .nav-tabs .slide .main-menu .main-menu-content .nav-item .tree-1 a.show .nav-link, .main-menu .main-menu-content .nav-item .tree-1 .nav-tabs .slide a.show .nav-link, .nav-tabs .slide .main-menu .main-menu-content .nav-item .tree-2 a.show .nav-link, .main-menu .main-menu-content .nav-item .tree-2 .nav-tabs .slide a.show .nav-link, .nav-tabs .slide .main-menu .main-menu-content .nav-item .tree-3 a.show .nav-link, .main-menu .main-menu-content .nav-item .tree-3 .nav-tabs .slide a.show .nav-link, .nav-tabs .slide .main-menu .main-menu-content .nav-item .tree-4 a.show .nav-link, .main-menu .main-menu-content .nav-item .tree-4 .nav-tabs .slide a.show .nav-link,
   .nav-tabs .slide .nav-link {
-    color: #1abc9c; }
+    color: #34495e; }
 
 .img-tabs img {
   width: 100px;
@@ -1188,6 +1198,9 @@ a.bg-danger:hover {
   padding: 0; }
   .table-border-style .table {
     margin-bottom: 0; }
+
+.table > tbody > td a:hover {
+  font-weight: bold; }
 
 .table > thead > tr > th {
   border-bottom-color: #ccc; }
@@ -6157,7 +6170,7 @@ body.menu-sidebar .navbar-wrapper {
   border-radius: 2px;
   border-width: 2px; }
   .form-control:focus {
-    border-color: #1abc9c !important; }
+    border-color: #3498DB !important; }
   .form-control.form-control-normal {
     font-weight: 400; }
   .form-control.form-control-bold {
@@ -8009,7 +8022,10 @@ table.footable-paging-center > tfoot > tr.footable-paging > td {
   display: inline-block;
   font-size: 40px; }
   .client-blocks ul li:last-child {
-    float: right; }
+    float: right;
+    color: #666; }
+  .client-blocks ul li i {
+    color: #607D8B; }
 
 .warning-border {
   border-top-color: #f1c40f; }
@@ -8022,6 +8038,12 @@ table.footable-paging-center > tfoot > tr.footable-paging > td {
   .dark-primary-border li,
   .dark-primary-border i {
     color: #17a689; }
+
+.dark-inverse-border {
+  border-top-color: #afb6bb; }
+  .dark-inverse-border li,
+  .dark-inverse-border i {
+    color: #afb6bb; }
 
 .large-widget-card {
   border-top: none; }
@@ -11322,10 +11344,12 @@ table.footable-paging-center > tfoot > tr.footable-paging > td {
   bottom: 0;
   right: 30px; }
 
-.nav-tabs.md-tabs.tab-timeline li a {
+.nav-tabs.md-tabs.tab-timeline a li {
   padding: 20px 0 10px;
   color: #666666;
   font-size: 18px; }
+  .nav-tabs.md-tabs.tab-timeline a li p {
+    font-size: 18px; }
 
 .social-timeline-left {
   position: absolute;
@@ -13912,7 +13936,7 @@ span.value {
   .animation-type {
     text-align: center; }
 
-  .nav-tabs.md-tabs.tab-timeline li a {
+  .nav-tabs.md-tabs.tab-timeline a li {
     font-size: 16px; } }
 @media only screen and (min-width: 992px) {
   .btn-blog {
@@ -14000,7 +14024,7 @@ span.value {
     margin-bottom: 10px;
     margin-top: 10px; }
 
-  .nav-tabs.md-tabs.tab-timeline li a {
+  .nav-tabs.md-tabs.tab-timeline a li {
     font-size: 14px; }
 
   .user-content h4 {
@@ -14113,10 +14137,10 @@ span.value {
     display: inherit; }
 
   .nav-tabs .nav-item.show .nav-link, .nav-tabs .main-menu .main-menu-content .nav-item .tree-1 a.show .nav-link, .main-menu .main-menu-content .nav-item .tree-1 .nav-tabs a.show .nav-link, .nav-tabs .main-menu .main-menu-content .nav-item .tree-2 a.show .nav-link, .main-menu .main-menu-content .nav-item .tree-2 .nav-tabs a.show .nav-link, .nav-tabs .main-menu .main-menu-content .nav-item .tree-3 a.show .nav-link, .main-menu .main-menu-content .nav-item .tree-3 .nav-tabs a.show .nav-link, .nav-tabs .main-menu .main-menu-content .nav-item .tree-4 a.show .nav-link, .main-menu .main-menu-content .nav-item .tree-4 .nav-tabs a.show .nav-link,
-  .nav-tabs .nav-link.active {
+  .nav-tabs li.active {
     border: none; }
 
-  .nav-tabs .nav-link {
+  .nav-tabs .nav-link, .nav-tabs li {
     text-align: center; }
 
   .search-content {
@@ -14290,11 +14314,11 @@ span.value {
     left: auto;
     right: 0; }
 
-  .nav-tabs .nav-link.active {
+  .nav-tabs .nav-item li.active, .nav-tabs .main-menu .main-menu-content .nav-item .tree-1 a li.active, .main-menu .main-menu-content .nav-item .tree-1 .nav-tabs a li.active, .nav-tabs .main-menu .main-menu-content .nav-item .tree-2 a li.active, .main-menu .main-menu-content .nav-item .tree-2 .nav-tabs a li.active, .nav-tabs .main-menu .main-menu-content .nav-item .tree-3 a li.active, .main-menu .main-menu-content .nav-item .tree-3 .nav-tabs a li.active, .nav-tabs .main-menu .main-menu-content .nav-item .tree-4 a li.active, .main-menu .main-menu-content .nav-item .tree-4 .nav-tabs a li.active {
     box-shadow: 0 0 1px #1abc9c;
     margin-bottom: 5px; }
 
-  .md-tabs .nav-item a, .md-tabs .main-menu .main-menu-content .nav-item .tree-1 a a, .main-menu .main-menu-content .nav-item .tree-1 .md-tabs a a, .md-tabs .main-menu .main-menu-content .nav-item .tree-2 a a, .main-menu .main-menu-content .nav-item .tree-2 .md-tabs a a, .md-tabs .main-menu .main-menu-content .nav-item .tree-3 a a, .main-menu .main-menu-content .nav-item .tree-3 .md-tabs a a, .md-tabs .main-menu .main-menu-content .nav-item .tree-4 a a, .main-menu .main-menu-content .nav-item .tree-4 .md-tabs a a {
+  .md-tabs .nav-item a, .md-tabs .main-menu .main-menu-content .nav-item .tree-1 a a, .main-menu .main-menu-content .nav-item .tree-1 .md-tabs a a, .md-tabs .main-menu .main-menu-content .nav-item .tree-2 a a, .main-menu .main-menu-content .nav-item .tree-2 .md-tabs a a, .md-tabs .main-menu .main-menu-content .nav-item .tree-3 a a, .main-menu .main-menu-content .nav-item .tree-3 .md-tabs a a, .md-tabs .main-menu .main-menu-content .nav-item .tree-4 a a, .main-menu .main-menu-content .nav-item .tree-4 .md-tabs a a, .md-tabs .nav-item li, .md-tabs .main-menu .main-menu-content .nav-item .tree-1 a li, .main-menu .main-menu-content .nav-item .tree-1 .md-tabs a li, .md-tabs .main-menu .main-menu-content .nav-item .tree-2 a li, .main-menu .main-menu-content .nav-item .tree-2 .md-tabs a li, .md-tabs .main-menu .main-menu-content .nav-item .tree-3 a li, .main-menu .main-menu-content .nav-item .tree-3 .md-tabs a li, .md-tabs .main-menu .main-menu-content .nav-item .tree-4 a li, .main-menu .main-menu-content .nav-item .tree-4 .md-tabs a li {
     box-shadow: 0 0 0 1px #d2cece;
     margin-bottom: 5px; } }
 @media only screen and (min-width: 801px) and (max-width: 915px) {
@@ -16316,7 +16340,8 @@ body[themebg-pattern="pattern9"] {
 .pcoded .pcoded-navbar[active-item-theme="theme1"] .pcoded-item li.pcoded-hasmenu.active > a {
   background: #ff5e3a !important; }
 .pcoded .pcoded-navbar[active-item-theme="theme1"] .pcoded-item li.pcoded-hasmenu:hover > a {
-  color: #FFF !important; }
+  color: #FFF !important;
+  font-weight: normal; }
 .pcoded .pcoded-navbar[active-item-theme="theme1"] .pcoded-item li:hover > a {
   color: #ff5e3a !important;
   background: #ff5e3a; }
@@ -16331,7 +16356,8 @@ body[themebg-pattern="pattern9"] {
 .pcoded .pcoded-navbar[active-item-theme="theme2"] .pcoded-item li.pcoded-hasmenu.active > a {
   background: #0096b1 !important; }
 .pcoded .pcoded-navbar[active-item-theme="theme2"] .pcoded-item li.pcoded-hasmenu:hover > a {
-  color: #FFF !important; }
+  color: #FFF !important;
+  font-weight: normal; }
 .pcoded .pcoded-navbar[active-item-theme="theme2"] .pcoded-item li:hover > a {
   color: #0096b1 !important;
   background: #0096b1; }
@@ -16346,7 +16372,8 @@ body[themebg-pattern="pattern9"] {
 .pcoded .pcoded-navbar[active-item-theme="theme3"] .pcoded-item li.pcoded-hasmenu.active > a {
   background: #e64056 !important; }
 .pcoded .pcoded-navbar[active-item-theme="theme3"] .pcoded-item li.pcoded-hasmenu:hover > a {
-  color: #FFF !important; }
+  color: #FFF !important;
+  font-weight: normal; }
 .pcoded .pcoded-navbar[active-item-theme="theme3"] .pcoded-item li:hover > a {
   color: #e64056 !important;
   background: #e64056; }
@@ -16361,7 +16388,8 @@ body[themebg-pattern="pattern9"] {
 .pcoded .pcoded-navbar[active-item-theme="theme4"] .pcoded-item li.pcoded-hasmenu.active > a {
   background: #0073aa !important; }
 .pcoded .pcoded-navbar[active-item-theme="theme4"] .pcoded-item li.pcoded-hasmenu:hover > a {
-  color: #FFF !important; }
+  color: #FFF !important;
+  font-weight: normal; }
 .pcoded .pcoded-navbar[active-item-theme="theme4"] .pcoded-item li:hover > a {
   color: #0073aa !important;
   background: #0073aa; }
@@ -16376,7 +16404,8 @@ body[themebg-pattern="pattern9"] {
 .pcoded .pcoded-navbar[active-item-theme="theme5"] .pcoded-item li.pcoded-hasmenu.active > a {
   background: #1ABC9C !important; }
 .pcoded .pcoded-navbar[active-item-theme="theme5"] .pcoded-item li.pcoded-hasmenu:hover > a {
-  color: #FFF !important; }
+  color: #FFF !important;
+  font-weight: normal; }
 .pcoded .pcoded-navbar[active-item-theme="theme5"] .pcoded-item li:hover > a {
   color: #1ABC9C !important;
   background: #1ABC9C; }
@@ -16391,7 +16420,8 @@ body[themebg-pattern="pattern9"] {
 .pcoded .pcoded-navbar[active-item-theme="theme6"] .pcoded-item li.pcoded-hasmenu.active > a {
   background: #967adc !important; }
 .pcoded .pcoded-navbar[active-item-theme="theme6"] .pcoded-item li.pcoded-hasmenu:hover > a {
-  color: #FFF !important; }
+  color: #FFF !important;
+  font-weight: normal; }
 .pcoded .pcoded-navbar[active-item-theme="theme6"] .pcoded-item li:hover > a {
   color: #967adc !important;
   background: #967adc; }
@@ -16406,7 +16436,8 @@ body[themebg-pattern="pattern9"] {
 .pcoded .pcoded-navbar[active-item-theme="theme7"] .pcoded-item li.pcoded-hasmenu.active > a {
   background: #fe9375 !important; }
 .pcoded .pcoded-navbar[active-item-theme="theme7"] .pcoded-item li.pcoded-hasmenu:hover > a {
-  color: #FFF !important; }
+  color: #FFF !important;
+  font-weight: normal; }
 .pcoded .pcoded-navbar[active-item-theme="theme7"] .pcoded-item li:hover > a {
   color: #fe9375 !important;
   background: #fe9375; }
@@ -16421,7 +16452,8 @@ body[themebg-pattern="pattern9"] {
 .pcoded .pcoded-navbar[active-item-theme="theme8"] .pcoded-item li.pcoded-hasmenu.active > a {
   background: #565a90 !important; }
 .pcoded .pcoded-navbar[active-item-theme="theme8"] .pcoded-item li.pcoded-hasmenu:hover > a {
-  color: #FFF !important; }
+  color: #FFF !important;
+  font-weight: normal; }
 .pcoded .pcoded-navbar[active-item-theme="theme8"] .pcoded-item li:hover > a {
   color: #565a90 !important;
   background: #565a90; }
