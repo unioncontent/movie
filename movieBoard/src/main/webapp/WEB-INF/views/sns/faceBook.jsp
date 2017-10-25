@@ -19,35 +19,35 @@
   <meta name="keywords" content="flat ui, admin , Flat ui, Admin , Responsive, Landing, Bootstrap, App, Template, Mobile, iOS, Android, apple, creative app">
   <meta name="author" content="Phoenixcoded">
   <!-- Favicon icon -->
-  <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="../resources/assets/images/favicon.ico" type="image/x-icon">
   <!-- Google font-->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
   <!-- Required Fremwork -->
-  <link rel="stylesheet" type="text/css" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="../resources/bower_components/bootstrap/dist/css/bootstrap.min.css">
   <!-- themify-icons line icon -->
-  <link rel="stylesheet" type="text/css" href="assets/icon/themify-icons/themify-icons.css">
+  <link rel="stylesheet" type="text/css" href="../resources/assets/icon/themify-icons/themify-icons.css">
   <!-- ico font -->
-  <link rel="stylesheet" type="text/css" href="assets/icon/icofont/css/icofont.css">
+  <link rel="stylesheet" type="text/css" href="../resources/assets/icon/icofont/css/icofont.css">
   <!-- flag icon framework css -->
-  <link rel="stylesheet" type="text/css" href="assets/pages/flag-icon/flag-icon.min.css">
+  <link rel="stylesheet" type="text/css" href="../resources/assets/pages/flag-icon/flag-icon.min.css">
   <!-- Menu-Search css -->
-  <link rel="stylesheet" type="text/css" href="assets/pages/menu-search/css/component.css">
+  <link rel="stylesheet" type="text/css" href="../resources/assets/pages/menu-search/css/component.css">
   <!-- Horizontal-Timeline css -->
-  <link rel="stylesheet" type="text/css" href="assets/pages/dashboard/horizontal-timeline/css/style.css">
+  <link rel="stylesheet" type="text/css" href="../resources/assets/pages/dashboard/horizontal-timeline/css/style.css">
   <!-- font awesome -->
-  <link rel="stylesheet" type="text/css" href="assets/icon/font-awesome/css/font-awesome.css">
+  <link rel="stylesheet" type="text/css" href="../resources/assets/icon/font-awesome/css/font-awesome.css">
   <!-- Date-range picker css  -->
-  <link rel="stylesheet" type="text/css" href="../bower_components/bootstrap-daterangepicker/daterangepicker.css">
+  <link rel="stylesheet" type="text/css" href="../resources/bower_components/bootstrap-daterangepicker/daterangepicker.css">
   <!-- Style.css -->
-  <link rel="stylesheet" type="text/css" href="assets/css/style.css">
-  <link rel="stylesheet" type="text/css" href="assets/pages/sns/css/style.css">
-  <link rel="stylesheet" type="text/css" href="assets/css/picker.css">
+  <link rel="stylesheet" type="text/css" href="../resources/assets/css/style.css">
+  <link rel="stylesheet" type="text/css" href="../resources/assets/pages/sns/css/style.css">
+  <link rel="stylesheet" type="text/css" href="../resources/assets/css/picker.css">
   <!--color css-->
-  <link rel="stylesheet" type="text/css" href="assets/css/color/color-1.css" id="color" />
-  <link rel="stylesheet" type="text/css" href="assets/css/linearicons.css">
-  <link rel="stylesheet" type="text/css" href="assets/css/simple-line-icons.css">
-  <link rel="stylesheet" type="text/css" href="assets/css/ionicons.css">
-  <link rel="stylesheet" type="text/css" href="assets/css/jquery.mCustomScrollbar.css">
+  <link rel="stylesheet" type="text/css" href="../resources/assets/css/color/color-1.css" id="color" />
+  <link rel="stylesheet" type="text/css" href="../resources/assets/css/linearicons.css">
+  <link rel="stylesheet" type="text/css" href="../resources/assets/css/simple-line-icons.css">
+  <link rel="stylesheet" type="text/css" href="../resources/assets/css/ionicons.css">
+  <link rel="stylesheet" type="text/css" href="../resources/assets/css/jquery.mCustomScrollbar.css">
 </head>
 <body>
 	<!-- Pre-loader start -->
@@ -72,7 +72,7 @@
               <i class="ti-search"></i>
             </a>
             <a href="dashboard.html">
-              <img class="img-fluid" src="assets/images/logo.png" alt="Theme-Logo" />
+              <img class="img-fluid" src="../resources/assets/images/logo.png" alt="Theme-Logo" />
             </a>
             <a class="mobile-options">
               <i class="ti-more"></i>
@@ -88,7 +88,7 @@
               <ul class="nav-right">
                 <li class="user-profile header-notification">
                   <a href="#!">
-                      <img src="assets/images/user.png" alt="User-Profile-Image">
+                      <img src="../resources/assets/images/user.png" alt="User-Profile-Image">
                       <span>Union</span>
                       <i class="ti-angle-down"></i>
                   </a>
@@ -133,7 +133,7 @@
             <div class="pcoded-inner-navbar main-menu">
               <div class="">
                 <div class="main-menu-header">
-                  <img class="img-fluid" src="assets/images/company/unioncontents.png" alt="User-Profile-Image">
+                  <img class="img-fluid" src="../resources/assets/images/company/unioncontents.png" alt="User-Profile-Image">
                 </div>
 
                 <div class="main-menu-content">
@@ -499,31 +499,31 @@
         <ul class="iew-download">
           <li>
             <a href="http://www.google.com/chrome/">
-              <img src="assets/images/browser/chrome.png" alt="Chrome">
+              <img src="../resources/assets/images/browser/chrome.png" alt="Chrome">
               <div>Chrome</div>
             </a>
           </li>
           <li>
             <a href="https://www.mozilla.org/en-US/firefox/new/">
-              <img src="assets/images/browser/firefox.png" alt="Firefox">
+              <img src="../resources/assets/images/browser/firefox.png" alt="Firefox">
               <div>Firefox</div>
             </a>
           </li>
           <li>
             <a href="http://www.opera.com">
-              <img src="assets/images/browser/opera.png" alt="Opera">
+              <img src="../resources/assets/images/browser/opera.png" alt="Opera">
               <div>Opera</div>
             </a>
           </li>
           <li>
             <a href="https://www.apple.com/safari/">
-              <img src="assets/images/browser/safari.png" alt="Safari">
+              <img src="../resources/assets/images/browser/safari.png" alt="Safari">
               <div>Safari</div>
             </a>
           </li>
           <li>
             <a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie">
-              <img src="assets/images/browser/ie.png" alt="">
+              <img src="../resources/assets/images/browser/ie.png" alt="">
               <div>IE (9 & above)</div>
             </a>
           </li>
@@ -536,36 +536,36 @@
 
 
   <!-- Required Jquery -->
-  <script type="text/javascript" src="../bower_components/jquery/dist/jquery.min.js"></script>
-  <script type="text/javascript" src="../bower_components/jquery-ui/jquery-ui.min.js"></script>
-  <script type="text/javascript" src="../bower_components/tether/dist/js/tether.min.js"></script>
-  <script type="text/javascript" src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="../resources/bower_components/jquery/dist/jquery.min.js"></script>
+  <script type="text/javascript" src="../resources/bower_components/jquery-ui/jquery-ui.min.js"></script>
+  <script type="text/javascript" src="../resources/bower_components/tether/dist/js/tether.min.js"></script>
+  <script type="text/javascript" src="../resources/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
   <!-- jquery slimscroll js -->
-  <script type="text/javascript" src="../bower_components/jquery-slimscroll/jquery.slimscroll.js"></script>
+  <script type="text/javascript" src="../resources/bower_components/jquery-slimscroll/jquery.slimscroll.js"></script>
   <!-- modernizr js -->
-  <script type="text/javascript" src="../bower_components/modernizr/modernizr.js"></script>
-  <script type="text/javascript" src="../bower_components/modernizr/feature-detects/css-scrollbars.js"></script>
+  <script type="text/javascript" src="../resources/bower_components/modernizr/modernizr.js"></script>
+  <script type="text/javascript" src="../resources/bower_components/modernizr/feature-detects/css-scrollbars.js"></script>
   <!-- Bootstrap date-time-picker js -->
-  <script type="text/javascript" src="assets/pages/advance-elements/moment-with-locales.min.js"></script>
+  <script type="text/javascript" src="../resources/assets/pages/advance-elements/moment-with-locales.min.js"></script>
   <!-- Date-range picker js -->
-  <script type="text/javascript" src="../bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+  <script type="text/javascript" src="../resources/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
   <!-- classie js -->
-  <script type="text/javascript" src="../bower_components/classie/classie.js"></script>
+  <script type="text/javascript" src="../resources/bower_components/classie/classie.js"></script>
   <!-- Morris Chart js -->
-  <script src="../bower_components/raphael/raphael.min.js"></script>
-  <script src="../bower_components/morris.js/morris.js"></script>
+  <script src="../resources/bower_components/raphael/raphael.min.js"></script>
+  <script src="../resources/bower_components/morris.js/morris.js"></script>
   <!-- i18next.min.js -->
-  <script type="text/javascript" src="../bower_components/i18next/i18next.min.js"></script>
-  <script type="text/javascript" src="../bower_components/i18next-xhr-backend/i18nextXHRBackend.min.js"></script>
-  <script type="text/javascript" src="../bower_components/i18next-browser-languagedetector/i18nextBrowserLanguageDetector.min.js"></script>
-  <script type="text/javascript" src="../bower_components/jquery-i18next/jquery-i18next.min.js"></script>
-  <!-- Custom js -->
-  <script type="text/javascript" src="assets/js/script.js"></script>
-  <script src="assets/js/pcoded.min.js"></script>
-  <script src="assets/js/demo-12.js"></script>
-  <script src="assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
-  <script src="assets/js/jquery.mousewheel.min.js"></script>
-  <script src="assets/pages/sns/script.js"></script>
-  <script src="assets/pages/picker.js"></script>
+  <script type="text/javascript" src="../resources/bower_components/i18next/i18next.min.js"></script>
+  <script type="text/javascript" src="../resources/bower_components/i18next-xhr-backend/i18nextXHRBackend.min.js"></script>
+  <script type="text/javascript" src="../resources/bower_components/i18next-browser-languagedetector/i18nextBrowserLanguageDetector.min.js"></script>
+  <script type="text/javascript" src="../resources/bower_components/jquery-i18next/jquery-i18next.min.js"></script>
+  <!-- Custom js --> 
+  <script type="text/javascript" src="../resources/assets/js/script.js"></script>
+  <script src="../resources/assets/js/pcoded.min.js"></script>
+  <script src="../resources/assets/js/demo-12.js"></script>
+  <script src="../resources/assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
+  <script src="../resources/assets/js/jquery.mousewheel.min.js"></script>
+  <script src="../resources/assets/pages/sns/script.js"></script>
+  <script src="../resources/assets/pages/picker.js"></script>
 </body>
 </html>
