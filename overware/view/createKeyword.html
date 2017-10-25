@@ -26,14 +26,17 @@
   <link rel="stylesheet" type="text/css" href="assets/icon/themify-icons/themify-icons.css">
   <!-- ico font -->
   <link rel="stylesheet" type="text/css" href="assets/icon/icofont/css/icofont.css">
-  <!-- flag icon framework css -->
-  <link rel="stylesheet" type="text/css" href="assets/pages/flag-icon/flag-icon.min.css">
+  <!-- sweet alert framework -->
+  <link rel="stylesheet" type="text/css" href="../bower_components/sweetalert/dist/sweetalert.css">
+  <!-- animation nifty modal window effects css -->
+  <link rel="stylesheet" type="text/css" href="assets/css/component.css">
   <!-- Menu-Search css -->
   <link rel="stylesheet" type="text/css" href="assets/pages/menu-search/css/component.css">
   <!-- Horizontal-Timeline css -->
   <link rel="stylesheet" type="text/css" href="assets/pages/dashboard/horizontal-timeline/css/style.css">
   <!-- Style.css -->
   <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+  <link rel="stylesheet" type="text/css" href="assets/pages/keyword/css/style.css">
   <!--color css-->
   <link rel="stylesheet" type="text/css" href="assets/css/color/color-1.css" id="color" />
   <link rel="stylesheet" type="text/css" href="assets/css/linearicons.css">
@@ -358,22 +361,32 @@
                               <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">회사명</label>
                                 <div class="col-sm-10">
-                                  <select name="select" class="form-control">
-                                    <option value="opt1">Select One Value Only</option>
-                                    <option value="opt2">Type 2</option>
-                                    <option value="opt3">Type 3</option>
+                                  <select name="select" class="form-control" id="company">
+                                    <option value="opt1">선택</option>
+                                    <option value="opt2">쇼박스</option>
                                   </select>
+                                  <span class="messages"><p class="text-danger error"></p></span>
                                 </div>
                               </div>
                               <div class="form-group row">
                                   <label class="col-sm-2 col-form-label">대표키워드명</label>
-                                  <div class="col-sm-10">
-                                      <select name="select" class="form-control">
-                                          <option value="opt1">Select One Value Only</option>
-                                          <option value="opt2">Type 2</option>
-                                          <option value="opt3">Type 3</option>
-                                      </select>
+                                  <div class="col-sm-3">
+                                    <input type="text" class="form-control" id="keyword">
+                                    <input type="hidden" id="keywordCheck"/>
+                                    <span class="messages"><p class="text-danger error"></p></span>
                                   </div>
+                                  <div class="col-sm-1">
+                                    <button type="button" class="btn btn-sm btn-inverse alert-prompt" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'alert-prompt']);">
+                                      <i class="icofont icofont-user-alt-3"></i>
+                                      중복체크
+                                    </button>
+                                  </div>
+                              </div>
+                              <div class="row">
+                                <label class="col-sm-2"></label>
+                                <div class="col-sm-10">
+                                    <button type="submit" class="btn btn-primary m-b-0">등록</button>
+                                </div>
                               </div>
                             </form>
                           </div>
@@ -522,6 +535,15 @@
   <!-- modernizr js -->
   <script type="text/javascript" src="../bower_components/modernizr/modernizr.js"></script>
   <script type="text/javascript" src="../bower_components/modernizr/feature-detects/css-scrollbars.js"></script>
+  <!-- sweet alert js -->
+  <script type="text/javascript" src="../bower_components/sweetalert/dist/sweetalert.min.js"></script>
+  <script type="text/javascript" src="assets/pages/keyword/script.js"></script>
+  <!-- sweet alert modal.js intialize js -->
+  <!-- modalEffects js nifty modal window effects -->
+  <script type="text/javascript" src="assets/js/modalEffects.js"></script>
+  <script type="text/javascript" src="assets/js/classie.js"></script>
+  <!-- classie js -->
+  <script type="text/javascript" src="../bower_components/classie/classie.js"></script>
   <!-- classie js -->
   <script type="text/javascript" src="../bower_components/classie/classie.js"></script>
   <!-- i18next.min.js -->

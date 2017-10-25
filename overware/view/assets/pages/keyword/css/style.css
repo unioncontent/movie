@@ -2,3 +2,7 @@
   vertical-align: inherit;
   margin: 0px;
 }
+.alert-prompt{
+  line-height: 14px;
+  font-size: 14px;
+}
