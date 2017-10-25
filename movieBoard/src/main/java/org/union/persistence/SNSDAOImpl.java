@@ -6,7 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.union.domain.SNSVO;
-import org.union.domain.SearchVO;
+import org.union.domain.SearchCriteria;
 
 @Repository
 public class SNSDAOImpl implements SNSDAO {
@@ -59,11 +59,18 @@ public class SNSDAOImpl implements SNSDAO {
 
 
 	@Override
-	public List<SNSVO> listSearch(SearchVO vo) {
+	public List<SNSVO> listSearch(SearchCriteria cri) {
 		
-		return session.selectList(namespace + "listSearch", vo);
+		return session.selectList(namespace + "listSearch", cri);
 	}
 
+	
+	@Override
+	public Integer getTotalCount(SearchCriteria  cri) {
+
+		return session.selectOne(namespace + "getTotalCount");
+	}
+	
 
 	@Override
 	public void updateTextType(SNSVO vo) {
@@ -85,5 +92,7 @@ public class SNSDAOImpl implements SNSDAO {
 			e.printStackTrace();
 		}
 	}
+
+
 
 }

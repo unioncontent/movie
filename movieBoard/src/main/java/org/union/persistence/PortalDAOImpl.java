@@ -6,7 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.union.domain.PortalVO;
-import org.union.domain.SearchVO;
+import org.union.domain.SearchCriteria;
 
 @Repository
 public class PortalDAOImpl implements PortalDAO {
@@ -60,7 +60,7 @@ public class PortalDAOImpl implements PortalDAO {
 
 
 	@Override
-	public List<PortalVO> listSearch(SearchVO vo) {
+	public List<PortalVO> listSearch(SearchCriteria vo) {
 		
 		return session.selectList(namespace + "listSearch", vo);
 	}

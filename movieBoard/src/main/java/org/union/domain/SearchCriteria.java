@@ -1,15 +1,22 @@
 package org.union.domain;
 
-public class SearchVO extends PageVO {
+public class SearchCriteria extends Criteria {
 
 	
-	private String searchType, keyword, orderType;
+	private String searchType, keyword;
 	private Integer total;
 
-	public SearchVO(){
+	
+	public SearchCriteria(){
 	}
 
+	
 	public String getSearchType() {
+		
+		if(this.searchType == null){
+			this.searchType = "t";
+		}
+		
 		return searchType;
 	}
 
@@ -25,14 +32,6 @@ public class SearchVO extends PageVO {
 		this.keyword = keyword;
 	}
 
-	public String getOrderType() {
-		return orderType;
-	}
-
-	public void setOrderType(String orderType) {
-		this.orderType = orderType;
-	}
-
 	public Integer getTotal() {
 		return total;
 	}
@@ -40,10 +39,11 @@ public class SearchVO extends PageVO {
 	public void setTotal(Integer total) {
 		this.total = total;
 	}
+	
 
 	@Override
 	public String toString() {
-		return "SearchVO [searchType=" + searchType + ", keyword=" + keyword + ", orderType=" + orderType + ", total="
-				+ total + "]";
+		return "SearchVO [searchType=" + searchType + ", keyword=" + keyword + ", total=" + total + "]";
 	}
+	
 }

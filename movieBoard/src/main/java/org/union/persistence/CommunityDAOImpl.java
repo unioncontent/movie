@@ -6,7 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.union.domain.CommunityVO;
-import org.union.domain.SearchVO;
+import org.union.domain.SearchCriteria;
 
 @Repository
 public class CommunityDAOImpl implements CommunityDAO {
@@ -65,7 +65,7 @@ public class CommunityDAOImpl implements CommunityDAO {
 
 
 	@Override
-	public List<CommunityVO> listSearch(SearchVO vo) {
+	public List<CommunityVO> listSearch(SearchCriteria vo) {
 
 		return session.selectList(namespace + "listSearch", vo); 
 	}

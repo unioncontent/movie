@@ -3,7 +3,7 @@ package org.union.service;
 import java.util.List;
 
 import org.union.domain.PortalVO;
-import org.union.domain.SearchVO;
+import org.union.domain.SearchCriteria;
 
 public interface PortalService {
 
@@ -16,7 +16,7 @@ public interface PortalService {
 	
 	public void remove(Integer portal_idx);
 	
-	public List<PortalVO> listSearch(SearchVO vo);
+	public List<PortalVO> listSearch(SearchCriteria vo);
 	
 	public void modifyType(PortalVO vo);
 	

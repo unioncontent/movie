@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -387,7 +390,7 @@
                           <div class="card-header">
                             <h5 class="card-header-text">
                               <i class="icofont icofont-chart-line m-r-5"></i>
-                              페이스북 그래프
+                             	 페이스북 그래프
                             </h5>
                             <div class="card-header-right">
                               <i class="icofont icofont-rounded-down"></i>
@@ -409,19 +412,23 @@
                             <div class="col-md-6">
                               <div class="row">
                                 <select name="select" class="col-sm-1 form-control form-control-inverse m-r-10 m-b-10 p-r-5">
-                                  <option value="">10</option>
+                                  <option id= "10" >10</option>
+                                  <option id = "50">50</option>
+                                  <option id = "100">100</option>
                                 </select>
-                                <select name="select" class="col-sm-2 form-control form-control-inverse m-r-10 m-b-10">
-                                  <option value="">제목</option>
+                                <select id = "selectSearchType" name="select" class="col-sm-2 form-control form-control-inverse m-r-10 m-b-10">
+                                  <option id="t" value="t">제목</option>
+                                  <option id="c">게시글</option>
                                 </select>
                                 <div class="col-sm-5 input-group input-group-button input-group-inverse p-l-0 p-r-10 m-b-10">
-                                  <input type="text" class="form-control" placeholder="">
+                                  <input id="keywordInput" type="text" class="form-control" placeholder="">
                                   <span class="input-group-addon" id="basic-addon1">
-                                    <button class="btn btn-inverse">검색</button>
+                                    <button id="keySearchBtn" class=" btn btn-inverse">검색</button>
                                   </span>
                                 </div>
                               </div>
                             </div>
+                            
                           </div>
                           <div class="card-block">
                             <div class="table-responsive">
@@ -439,16 +446,18 @@
                                   </tr>
                                 </thead>
                                 <tbody>
-                                  <tr>
-                                    <th scope="row">1</th>
-                                    <td>2017-10-28</td>
-                                    <td>강철비</td>
-                                    <td><a href="https://www.naver.com/" target="_blank">강철비 언제 개봉?</a></td>
-                                    <td>...</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                  </tr>
+                                  <c:forEach items="${facebookList}" var="snsVO">
+                                    <tr>
+                                      <th scope="row">${snsVO.sns_idx}</th>
+                                      <td>${snsVO.writeDate}</td>
+                                      <td>${snsVO.keyword}</td>
+                                      <td><a href="${snsVO.url}" target="_blank">${snsVO.sns_title}</a></td>
+                                      <td>${snsVO.sns_writer}</td>
+                                      <td>${snsVO.like_cnt}</td>
+                                      <td>${snsVO.share_cnt}</td>
+                                      <td>${snsVO.reply_cnt}</td>
+                                    </tr>
+                                  </c:forEach>
                                 </tbody>
                               </table>
                               <ul class="pagination float-right">
@@ -560,4 +569,48 @@
   <script src="../assets/pages/sns/script.js"></script>
   <script src="../assets/pages/picker.js"></script>
 </body>
+
+
+  
+  
+  <script type="text/javascript" language="javascript">
+
+  	
+  $(document).ready(function(){
+	  
+	//최신순 함수 빼놓음
+		var newest = function(event) {
+			self.location = "facebook"
+						+ '${pageMaker.makeQuery(1)}'
+						+ "&searchType=" 
+						+ $("#selectSearchType option:selected").val()
+						+ "&keyword="
+						+ $('#keywordInput').val();
+		}
+		
+
+    $('#keySearchBtn').on("click", function(event){
+    	console.log("searchBtn click....");
+    	
+  		console.log($('#selectSearchType option:selected').val());
+  		
+  		newest();
+  		
+  		  /* $(function(){ $("#listButton").click(function(){
+  			$.ajax({
+  				type: 'post' ,
+  				url: '/list.html' ,
+  				dataType : 'html' ,
+  				success: function(data) {
+  					$("#listDiv").html(data); 
+  					}
+  				});	
+  			})	  
+  		})*/
+
+     });
+  });
+  	
+
+  </script>
 </html>

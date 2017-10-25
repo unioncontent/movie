@@ -3,7 +3,7 @@ package org.union.persistence;
 import java.util.List;
 
 import org.union.domain.CommunityVO;
-import org.union.domain.SearchVO;
+import org.union.domain.SearchCriteria;
 
 public interface CommunityDAO {
 
@@ -16,7 +16,7 @@ public interface CommunityDAO {
 
 	public void delete(Integer community_idx);
 	
-	public List<CommunityVO> listSearch(SearchVO vo);
+	public List<CommunityVO> listSearch(SearchCriteria vo);
 	
 	public void updateTextType (CommunityVO vo);
 	
