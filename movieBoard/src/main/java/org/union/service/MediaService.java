@@ -10,7 +10,7 @@ public interface MediaService {
 	
 	public void regist(MediaVO vo);
 	
-	public MediaVO read(Integer media_idx);
+	public MediaVO view(Integer media_idx);
 	
 	public void modify(MediaVO vo);
 	
