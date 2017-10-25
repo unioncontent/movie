@@ -20,7 +20,7 @@
   <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
   <!-- Google font-->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
-  <!--  Fremwork -->
+  <!-- Required Fremwork -->
   <link rel="stylesheet" type="text/css" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
   <!-- themify-icons line icon -->
   <link rel="stylesheet" type="text/css" href="assets/icon/themify-icons/themify-icons.css">
@@ -34,7 +34,6 @@
   <link rel="stylesheet" type="text/css" href="assets/pages/dashboard/horizontal-timeline/css/style.css">
   <!-- Style.css -->
   <link rel="stylesheet" type="text/css" href="assets/css/style.css">
-  <link rel="stylesheet" type="text/css" href="assets/pages/news/css/style.css">
   <!--color css-->
   <link rel="stylesheet" type="text/css" href="assets/css/color/color-1.css" id="color" />
   <link rel="stylesheet" type="text/css" href="assets/css/linearicons.css">
@@ -121,16 +120,15 @@
       </nav>
       <div class="pcoded-main-container">
         <div class="pcoded-wrapper">
+          <!-- right menu start -->
           <nav class="pcoded-navbar" pcoded-header-position="relative">
             <div class="sidebar_toggle"><a href="#"><i class="icon-close icons"></i></a></div>
             <div class="pcoded-inner-navbar main-menu">
               <div class="">
                 <div class="main-menu-header">
-                  <img class="img-40" src="assets/images/user.png" alt="User-Profile-Image">
-                  <div class="user-details">
-                    <span id="more-details">Union<i class="ti-angle-down"></i></span>
-                  </div>
+                  <img class="img-fluid" src="assets/images/company/unioncontents.png" alt="User-Profile-Image">
                 </div>
+
                 <div class="main-menu-content">
                   <ul>
                     <li class="more-details">
@@ -149,14 +147,16 @@
                     <span class="pcoded-mcaret"></span>
                   </a>
                 </li>
-                <li class="">
+                <!-- 단일페이지 활성화 시 -->
+                <li class="active">
                   <a href="period.html">
                     <span class="pcoded-micon"><i class="ti-bar-chart-alt"></i></span>
                     <span class="pcoded-mtext">통계보고서</span>
                     <span class="pcoded-mcaret"></span>
                   </a>
                 </li>
-                <li class="pcoded-hasmenu">
+                <!-- 서브페이지 활성화 시 -->
+                <li class="pcoded-hasmenu active pcoded-trigger">
                   <a href="javascript:void(0)" data-i18n="nav.advance-components.main">
                     <span class="pcoded-micon"><i class="ti-world"></i></span>
                     <span class="pcoded-mtext">포털관리</span>
@@ -209,7 +209,7 @@
                     </li>
                   </ul>
                 </li>
-                <li class="pcoded-hasmenu active pcoded-trigger">
+                <li class="pcoded-hasmenu">
                   <a href="javascript:void(0)" data-i18n="nav.advance-components.main">
                     <span class="pcoded-micon"><i class="ti-notepad"></i></span>
                     <span class="pcoded-mtext">언론사관리</span>
@@ -240,14 +240,14 @@
                   </a>
                   <ul class="pcoded-submenu">
                     <li class=" ">
-                      <a href="createCompany.html" data-i18n="nav.advance-components.draggable">
+                      <a href="mngCompany.html" data-i18n="nav.advance-components.draggable">
                         <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                         <span class="pcoded-mtext">거래처관리</span>
                         <span class="pcoded-mcaret"></span>
                       </a>
                     </li>
                     <li class=" ">
-                      <a href="mngMonitoring.html" data-i18n="nav.advance-components.grid-stack">
+                      <a href="monitoring.html" data-i18n="nav.advance-components.grid-stack">
                         <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                         <span class="pcoded-mtext">모니터링현황</span>
                         <span class="pcoded-mcaret"></span>
@@ -255,28 +255,12 @@
                     </li>
                   </ul>
                 </li>
-                <li class="pcoded-hasmenu">
-                  <a href="javascript:void(0)" data-i18n="nav.advance-components.main">
+                <li class="">
+                  <a href="mngKeyword.html" data-i18n="nav.advance-components.main">
                     <span class="pcoded-micon"><i class="ti-ink-pen"></i></span>
                     <span class="pcoded-mtext">키워드관리</span>
                     <span class="pcoded-mcaret"></span>
                   </a>
-                  <ul class="pcoded-submenu">
-                    <li class=" ">
-                      <a href="mngKeyword.html" data-i18n="nav.advance-components.draggable">
-                        <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                        <span class="pcoded-mtext">키워드등록</span>
-                        <span class="pcoded-mcaret"></span>
-                      </a>
-                    </li>
-                    <li class=" ">
-                      <a href="createContents.html" data-i18n="nav.advance-components.grid-stack">
-                        <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                        <span class="pcoded-mtext">콘텐츠등록</span>
-                        <span class="pcoded-mcaret"></span>
-                      </a>
-                    </li>
-                  </ul>
                 </li>
                 <li class="">
                   <a href="mngExtract.html" data-i18n="nav.advance-components.main">
@@ -314,14 +298,14 @@
                       </a>
                     </li>
                     <li class=" ">
-                      <a href="mngClassifiCation3.html" data-i18n="nav.advance-components.grid-stack">
+                      <a href="mngClassifiCation4.html" data-i18n="nav.advance-components.grid-stack">
                         <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                         <span class="pcoded-mtext">기타</span>
                         <span class="pcoded-mcaret"></span>
                       </a>
                     </li>
                     <li class=" ">
-                      <a href="mngClassifiCation4.html" data-i18n="nav.advance-components.grid-stack">
+                      <a href="mngClassifiCation5.html" data-i18n="nav.advance-components.grid-stack">
                         <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                         <span class="pcoded-mtext">삭제</span>
                         <span class="pcoded-mcaret"></span>
@@ -339,6 +323,7 @@
               </ul>
             </div>
           </nav>
+          <!-- right menu end -->
           <div class="pcoded-content">
             <div class="pcoded-inner-content">
               <div class="main-body">
@@ -376,52 +361,44 @@
                             <div class="card-block">
                                 <form>
                                   <div class="form-group row">
-                                      <label class="col-sm-2 col-form-label">* 언론사명</label>
+                                      <label class="col-sm-2 col-form-label">언론사</label>
                                       <div class="col-sm-10">
-                                          <select name="select" class="form-control" id="newsName">
-                                              <option value="">언론사</option>
-                                              <option value="">YTN</option>
+                                          <select name="select" class="form-control">
+                                              <option value="opt1">Select One Value Only</option>
+                                              <option value="opt2">Type 2</option>
+                                              <option value="opt3">Type 3</option>
                                           </select>
-                                          <span class="messages"><p class="text-danger error"></p></span>
                                       </div>
                                   </div>
                                   <div class="form-group row">
-                                      <label class="col-sm-2 col-form-label">
-                                        <div class="f-left">* 언론사 신규등록시</div>
-                                        <div class="border-checkbox-section m-l-5 f-left">
-                                          <div class="border-checkbox-group border-checkbox-group-primary">
-                                              <input class="border-checkbox" type="checkbox" id="checkbox1">
-                                              <label class="border-checkbox-label" for="checkbox1"></label>
-                                          </div>
-                                        </div>
-                                      </label>
+                                      <label class="col-sm-2 col-form-label">언론사 신규등록시</label>
                                       <div class="col-sm-5">
-                                          <input type="text" class="form-control" id="newsNewName1" placeholder="언론사명">
+                                          <input type="text" class="form-control" placeholder="언론사명">
                                           <span class="messages"><p class="text-danger error"></p></span>
                                       </div>
                                       <div class="col-sm-5">
-                                          <input type="text" class="form-control" id="newsNewName2" value="1" >
+                                          <input type="text" class="form-control" value="1">
                                           <span class="messages"><p class="text-danger error"></p></span>
                                       </div>
                                   </div>
                                   <div class="form-group row">
-                                      <label class="col-sm-2 col-form-label">* 검색언론사명</label>
+                                      <label class="col-sm-2 col-form-label">검색언론사명</label>
                                       <div class="col-sm-10">
-                                          <input type="text" class="form-control" id="serachNewsName" >
+                                          <input type="text" class="form-control">
                                           <span class="messages"><p class="text-danger error"></p></span>
                                       </div>
                                   </div>
                                   <div class="form-group row">
-                                      <label class="col-sm-2 col-form-label">* 기자명</label>
+                                      <label class="col-sm-2 col-form-label">기자명</label>
                                       <div class="col-sm-10">
-                                          <input type="text" class="form-control" id="pressName" >
+                                          <input type="text" class="form-control">
                                           <span class="messages"><p class="text-danger error"></p></span>
                                       </div>
                                   </div>
                                   <div class="form-group row">
-                                      <label class="col-sm-2 col-form-label">* 기자아이디</label>
+                                      <label class="col-sm-2 col-form-label">기자아이디</label>
                                       <div class="col-sm-10">
-                                          <input type="text" class="form-control" id="pressID" >
+                                          <input type="text" class="form-control">
                                           <span class="messages"><p class="text-danger error"></p></span>
                                       </div>
                                   </div>
@@ -446,13 +423,6 @@
                                           <span class="messages"><p class="text-danger error"></p></span>
                                       </div>
                                   </div>
-                                  <div class="form-group row">
-                                      <label class="col-sm-2 col-form-label">메모</label>
-                                      <div class="col-sm-10">
-                                          <input type="text" class="form-control">
-                                          <span class="messages"><p class="text-danger error"></p></span>
-                                      </div>
-                                  </div>
                                   <div class="row">
                                       <label class="col-sm-2"></label>
                                       <div class="col-sm-10">
@@ -466,23 +436,29 @@
                         <!-- table card start -->
                         <div class="card">
                             <div class="card-header">
-                              <h3 class="card-header-text f-left m-t-15 m-b-15">기자리스트</h3>
-                              <div class="">
-                                <div class="col-md-6 p-r-0 f-right">
-                                  <div class="col-sm-5 input-group input-group-button input-group-inverse p-l-0 p-r-0 m-b-10 m-l-10 f-right">
+                              <div class="col-md-6">
+                                <div class="row">
+                                  <select name="select" class="col-sm-2 form-control form-control-default">
+                                    <option value="">제목</option>
+                                  </select>
+                                  <div class="col-sm-5 input-group input-group-button input-group-primary">
                                     <input type="text" class="form-control" placeholder="">
                                     <span class="input-group-addon" id="basic-addon1">
-                                      <button class="btn btn-inverse">검색</button>
+                                      <button class="btn btn-primary">Search</button>
                                     </span>
                                   </div>
-                                  <select name="select" class="col-sm-2 form-control form-control-inverse m-l-10 m-b-10 f-right">
-                                    <option value="">기자명</option>
-                                    <option value="">언론사명</option>
-                                  </select>
-                                  <select name="select" class="col-sm-1 form-control form-control-inverse m-l-10 m-b-10 p-r-5 f-right">
+                                  <select name="select" class="col-sm-1 form-control form-control-default">
                                     <option value="">10</option>
                                   </select>
+                                  <select name="select" class="col-sm-2 form-control form-control-default m-l-10">
+                                    <option value="">전체</option>
+                                  </select>
                                 </div>
+                              </div>
+                              <div class="card-header-right">
+                                  <i class="icofont icofont-rounded-down"></i>
+                                  <i class="icofont icofont-refresh"></i>
+                                  <i class="icofont icofont-close-circled"></i>
                               </div>
                             </div>
                             <div class="card-block">
@@ -490,46 +466,52 @@
                                 <table class="table table-bordered">
                                   <thead>
                                     <tr>
-                                      <th width="5%">NO</th>
-                                      <th width="5%">언론사명</th>
-                                      <th width="5%">검색언론사명</th>
-                                      <th width="5%">언론사ID</th>
-                                      <th width="5%">부서</th>
-                                      <th width="5%">기자명</th>
-                                      <th width="5%">기자ID</th>
-                                      <th width="10%">이메일</th>
-                                      <th width="10%">연락처</th>
+                                      <th>NO</th>
+                                      <th>언론사명</th>
+                                      <th>검색언론사명</th>
+                                      <th>언론사</th>
+                                      <th>ID</th>
+                                      <th>부서</th>
+                                      <th>기자명</th>
+                                      <th>기자</th>
+                                      <th>ID</th>
+                                      <th>이메일</th>
+                                      <th>연락처</th>
                                     </tr>
                                   </thead>
                                   <tbody>
                                     <tr>
                                       <th scope="row">1</th>
-                                      <td>일간스포츠</td>
-                                      <td>일간스포츠</td>
-                                      <td>PA10163</td>
                                       <td></td>
-                                      <td>정여진</td>
-                                      <td>P10163</td>
-                                      <td>jeong.yeojin@jtbc.co.kr</td>
+                                      <td></td>
+                                      <td></td>
+                                      <td></td>
+                                      <td></td>
+                                      <td></td>
+                                      <td></td>
+                                      <td></td>
+                                      <td></td>
                                       <td></td>
                                     </tr>
                                   </tbody>
                                 </table>
                                 <ul class="pagination float-right">
-                                  <li class="page-item">
-                                    <a class="page-link" href="#" aria-label="Previous">
-                                      <span aria-hidden="true">«</span>
-                                      <span class="sr-only">Previous</span>
-                                    </a>
-                                  </li>
-                                  <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                  <li class="page-item">
-                                      <a class="page-link" href="#" aria-label="Next">
-                                          <span aria-hidden="true">»</span>
-                                          <span class="sr-only">Next</span>
+                                    <li class="page-item">
+                                      <a class="page-link" href="#" aria-label="Previous">
+                                        <span aria-hidden="true">«</span>
+                                        <span class="sr-only">Previous</span>
                                       </a>
-                                  </li>
-                                </ul>
+                                    </li>
+                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                    <li class="page-item active"><a class="page-link" href="#">2</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#" aria-label="Next">
+                                            <span aria-hidden="true">»</span>
+                                            <span class="sr-only">Next</span>
+                                        </a>
+                                    </li>
+                                  </ul>
                               </div>
                             </div>
                         </div>
@@ -591,7 +573,7 @@
   <!-- Warning Section Ends -->
 
 
-  <!--  Jquery -->
+  <!-- Required Jquery -->
   <script type="text/javascript" src="../bower_components/jquery/dist/jquery.min.js"></script>
   <script type="text/javascript" src="../bower_components/jquery-ui/jquery-ui.min.js"></script>
   <script type="text/javascript" src="../bower_components/tether/dist/js/tether.min.js"></script>
@@ -610,7 +592,6 @@
   <script type="text/javascript" src="../bower_components/jquery-i18next/jquery-i18next.min.js"></script>
   <!-- Custom js -->
   <script type="text/javascript" src="assets/js/script.js"></script>
-  <script type="text/javascript" src="assets/pages/news/script2.js"></script>
   <script src="assets/js/pcoded.min.js"></script>
   <script src="assets/js/demo-12.js"></script>
   <script src="assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
