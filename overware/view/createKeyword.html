@@ -120,15 +120,13 @@
       </nav>
       <div class="pcoded-main-container">
         <div class="pcoded-wrapper">
+          <!-- right menu start -->
           <nav class="pcoded-navbar" pcoded-header-position="relative">
             <div class="sidebar_toggle"><a href="#"><i class="icon-close icons"></i></a></div>
             <div class="pcoded-inner-navbar main-menu">
               <div class="">
                 <div class="main-menu-header">
-                  <img class="img-40" src="assets/images/user.png" alt="User-Profile-Image">
-                  <div class="user-details">
-                    <span id="more-details">Union<i class="ti-angle-down"></i></span>
-                  </div>
+                  <img class="img-fluid" src="assets/images/company/unioncontents.png" alt="User-Profile-Image">
                 </div>
                 <div class="main-menu-content">
                   <ul>
@@ -239,7 +237,7 @@
                   </a>
                   <ul class="pcoded-submenu">
                     <li class=" ">
-                      <a href="createCompany.html" data-i18n="nav.advance-components.draggable">
+                      <a href="mngCompany.html" data-i18n="nav.advance-components.draggable">
                         <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                         <span class="pcoded-mtext">거래처관리</span>
                         <span class="pcoded-mcaret"></span>
@@ -254,28 +252,12 @@
                     </li>
                   </ul>
                 </li>
-                <li class="pcoded-hasmenu active pcoded-trigger">
-                  <a href="javascript:void(0)" data-i18n="nav.advance-components.main">
+                <li class="active">
+                  <a href="mngKeyword.html" data-i18n="nav.advance-components.main">
                     <span class="pcoded-micon"><i class="ti-ink-pen"></i></span>
                     <span class="pcoded-mtext">키워드관리</span>
                     <span class="pcoded-mcaret"></span>
                   </a>
-                  <ul class="pcoded-submenu">
-                    <li class=" ">
-                      <a href="mngKeyword.html" data-i18n="nav.advance-components.draggable">
-                        <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                        <span class="pcoded-mtext">키워드등록</span>
-                        <span class="pcoded-mcaret"></span>
-                      </a>
-                    </li>
-                    <li class=" ">
-                      <a href="createContents.html" data-i18n="nav.advance-components.grid-stack">
-                        <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                        <span class="pcoded-mtext">콘텐츠등록</span>
-                        <span class="pcoded-mcaret"></span>
-                      </a>
-                    </li>
-                  </ul>
                 </li>
                 <li class="">
                   <a href="mngExtract.html" data-i18n="nav.advance-components.main">
@@ -313,14 +295,14 @@
                       </a>
                     </li>
                     <li class=" ">
-                      <a href="mngClassifiCation3.html" data-i18n="nav.advance-components.grid-stack">
+                      <a href="mngClassifiCation4.html" data-i18n="nav.advance-components.grid-stack">
                         <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                         <span class="pcoded-mtext">기타</span>
                         <span class="pcoded-mcaret"></span>
                       </a>
                     </li>
                     <li class=" ">
-                      <a href="mngClassifiCation4.html" data-i18n="nav.advance-components.grid-stack">
+                      <a href="mngClassifiCation5.html" data-i18n="nav.advance-components.grid-stack">
                         <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                         <span class="pcoded-mtext">삭제</span>
                         <span class="pcoded-mcaret"></span>
@@ -338,6 +320,7 @@
               </ul>
             </div>
           </nav>
+          <!-- right menu end -->
           <div class="pcoded-content">
             <div class="pcoded-inner-content">
               <div class="main-body">
@@ -353,132 +336,126 @@
                             <i class="icofont icofont-home"></i>
                           </a>
                         </li>
-                        <li class="breadcrumb-item"><a href="#!">키워드관리</a></li>
+                        <li class="breadcrumb-item"><a href="mngKeyword.html">키워드관리</a></li>
                         <li class="breadcrumb-item"><a href="#!">키워드등록</a></li>
                       </ul>
                     </div>
                   </div>
                   <div class="page-body">
                     <div class="row">
-                      <div class="col-lg-12">
-                        <!-- Form Inputs card start -->
+                      <div class="col-md-12">
                         <div class="card">
-                            <div class="card-block">
-                                <form>
-                                  <div class="form-group row">
-                                      <label class="col-sm-2 col-form-label">소속사회사</label>
-                                      <div class="col-sm-10">
-                                          <select name="select" class="form-control">
-                                              <option value="opt1">Select One Value Only</option>
-                                              <option value="opt2">Type 2</option>
-                                              <option value="opt3">Type 3</option>
-                                          </select>
-                                      </div>
-                                  </div>
-                                  <div class="form-group row">
-                                      <label class="col-sm-2 col-form-label">검색언론사명</label>
-                                      <div class="col-sm-10">
-                                          <select name="select" class="form-control">
-                                              <option value="opt1">Select One Value Only</option>
-                                              <option value="opt2">Type 2</option>
-                                              <option value="opt3">Type 3</option>
-                                          </select>
-                                      </div>
-                                  </div>
-                                  <div class="form-group row">
-                                      <label class="col-sm-2 col-form-label">회사분류</label>
-                                      <div class="col-sm-10">
-                                          <select name="select" class="form-control">
-                                              <option value="opt1">Select One Value Only</option>
-                                              <option value="opt2">Type 2</option>
-                                              <option value="opt3">Type 3</option>
-                                          </select>
-                                      </div>
-                                  </div>
-                                </form>
-                            </div>
-                        </div>
-                        <!-- Form Inputs card end -->
-                        <div class="row">
-                          <div class="col-md-6">
-                            <div class="card">
-                              <div class="card-header">
-                                <h5></h5>
-                                <div class="card-header-right">
-                                    <i class="icofont icofont-rounded-down"></i>
-                                    <i class="icofont icofont-refresh"></i>
-                                    <i class="icofont icofont-close-circled"></i>
-                                </div>
-                              </div>
-                              <div class="card-block table-border-style">
-                                  <div class="table-responsive">
-                                      <table class="table table-bordered table-de">
-                                          <tbody>
-                                              <tr>
-                                                <th class="bg-primary">컨텐츠명</th>
-                                                <td>산양산삼</td>
-                                                <th class="bg-primary">CP사/설명</th>
-                                                <td>12</td>
-                                              </tr>
-                                              <tr>
-                                                <th class="bg-primary">컨텐츠ID</th>
-                                                <td>청유심/</td>
-                                                <th class="bg-primary">관리</th>
-                                                <td>YES</td>
-                                              </tr>
-                                          </tbody>
-                                      </table>
-                                  </div>
-                              </div>
+                          <div class="card-header">
+                            <h5></h5>
+                            <div class="card-header-right">
+                              <i class="icofont icofont-rounded-down"></i>
+                              <i class="icofont icofont-refresh"></i>
+                              <i class="icofont icofont-close-circled"></i>
                             </div>
                           </div>
-                          <div class="col-md-6">
-                            <div class="card">
-                              <div class="card-header">
-                                <h5></h5>
-                                <div class="card-header-right">
-                                    <i class="icofont icofont-rounded-down"></i>
-                                    <i class="icofont icofont-refresh"></i>
-                                    <i class="icofont icofont-close-circled"></i>
+                          <div class="card-block">
+                            <form>
+                              <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">회사명</label>
+                                <div class="col-sm-10">
+                                  <select name="select" class="form-control">
+                                    <option value="opt1">Select One Value Only</option>
+                                    <option value="opt2">Type 2</option>
+                                    <option value="opt3">Type 3</option>
+                                  </select>
                                 </div>
                               </div>
-                              <div class="card-block table-border-style">
-                                  <div class="table-responsive">
-                                    <table class="table">
-                                      <thead>
-                                        <tr>
-                                          <th>NO</th>
-                                          <th>검색어</th>
-                                          <th>제외검색어</th>
-                                          <th>영화구분</th>
-                                          <th>작업</th>
-                                        </tr>
-                                      </thead>
-                                      <tbody>
-                                        <tr>
-                                          <th scope="row">입력</th>
-                                          <td><input type="text"/></td>
-                                          <td><input type="text"/></td>
-                                          <td></td>
-                                          <td><button class="btn btn-success btn-icon"><i class="icofont icofont-plus"style="margin-right:0"></i></button></td>
-                                          <!-- <td><button class="btn btn-primary"> <i class="icofont icofont-plus" style="margin-right:0"></i></button></td> -->
-                                        </tr>
-                                        <tr>
-                                          <th scope="row">1</th>
-                                          <td>산양산삼</td>
-                                          <td></td>
-                                          <td></td>
-                                          <td><button class="btn btn-danger btn-icon"><i class="icofont icofont-garbage" style="margin-right:0"></i></button></td>
-                                          <!-- <td><button class="btn btn-danger"><i class="icofont icofont-garbage" style="margin-right:0"></i></button></td> -->
-                                        </tr>
-                                      </tbody>
-                                    </table>
+                              <div class="form-group row">
+                                  <label class="col-sm-2 col-form-label">대표키워드명</label>
+                                  <div class="col-sm-10">
+                                      <select name="select" class="form-control">
+                                          <option value="opt1">Select One Value Only</option>
+                                          <option value="opt2">Type 2</option>
+                                          <option value="opt3">Type 3</option>
+                                      </select>
                                   </div>
-                                </div>
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-12">
+                        <div class="card">
+                          <div class="card-header">
+                            <h5></h5>
+                            <div class="card-header-right">
+                              <i class="icofont icofont-rounded-down"></i>
+                              <i class="icofont icofont-refresh"></i>
+                              <i class="icofont icofont-close-circled"></i>
+                            </div>
+                          </div>
+                          <div class="card-block">
+                            <div class="table-responsive">
+                              <table class="table table-bordered table-">
+                                <thead>
+                                  <th>컨텐츠명</th>
+                                  <th>CP사/설명</th>
+                                  <th>컨텐츠ID</th>
+                                  <th>관리</th>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                    <td>산양산삼</td>
+                                    <td>청유심/</td>
+                                    <td>12</td>
+                                    <td>YES</td>
+                                  </tr>
+                                </tbody>
+                              </table>
                             </div>
                           </div>
                         </div>
                       </div>
+                      <div class="col-md-12">
+                          <div class="card">
+                            <div class="card-header">
+                              <h5></h5>
+                              <div class="card-header-right">
+                                <i class="icofont icofont-rounded-down"></i>
+                                <i class="icofont icofont-refresh"></i>
+                                <i class="icofont icofont-close-circled"></i>
+                              </div>
+                            </div>
+                            <div class="card-block">
+                              <div class="table-responsive">
+                                <table class="table table-bordered">
+                                  <thead>
+                                    <tr>
+                                      <th>NO</th>
+                                      <th>검색어</th>
+                                      <th>제외검색어</th>
+                                      <th>영화구분</th>
+                                      <th>작업</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr>
+                                      <th scope="row">입력</th>
+                                      <td><input type="text"/></td>
+                                      <td><input type="text"/></td>
+                                      <td></td>
+                                      <td><button class="btn btn-success btn-icon"><i class="icofont icofont-plus"style="margin-right:0"></i></button></td>
+                                      <!-- <td><button class="btn btn-primary"> <i class="icofont icofont-plus" style="margin-right:0"></i></button></td> -->
+                                    </tr>
+                                    <tr>
+                                      <th scope="row">1</th>
+                                      <td>산양산삼</td>
+                                      <td></td>
+                                      <td></td>
+                                      <td><button class="btn btn-danger btn-icon"><i class="icofont icofont-garbage" style="margin-right:0"></i></button></td>
+                                      <!-- <td><button class="btn btn-danger"><i class="icofont icofont-garbage" style="margin-right:0"></i></button></td> -->
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                     </div>
                   </div>
                 </div>

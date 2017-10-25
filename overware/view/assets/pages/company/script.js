@@ -14,6 +14,10 @@ $(document).ready(function () {
         swal.showInputError("아이디를 다시 입력해 주세요.");
         return false;
       }
+      if (inputValue == ""){
+        swal.showInputError("아이디를 다시 입력해 주세요.");
+        return false;
+      }
 			if (inputValue === "union") {
 				swal.showInputError("아이디가 중복됩니다. 다시 입력해 주세요.");
 				return false
