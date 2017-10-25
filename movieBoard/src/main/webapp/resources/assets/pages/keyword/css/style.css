@@ -2,3 +2,13 @@
   vertical-align: inherit;
   margin: 0px;
 }
+.alert-prompt{
+  line-height: 19px;
+  font-size: 14px;
+}
+.keywordResult{
+  display: none;
+}
+.result th,.result td{
+  text-align: center;
+}
