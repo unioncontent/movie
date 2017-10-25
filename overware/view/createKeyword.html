@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -377,7 +377,7 @@
                                   </div>
                                   <div class="col-sm-1">
                                     <button type="button" class="btn btn-sm btn-inverse alert-prompt" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'alert-prompt']);">
-                                      <i class="icofont icofont-user-alt-3"></i>
+                                      <i class="icofont icofont icofont-ui-check"></i>
                                       중복체크
                                     </button>
                                   </div>
@@ -385,14 +385,14 @@
                               <div class="row">
                                 <label class="col-sm-2"></label>
                                 <div class="col-sm-10">
-                                    <button type="submit" class="btn btn-primary m-b-0">등록</button>
+                                    <button type="button" class="submit btn btn-primary m-b-0">등록</button>
                                 </div>
                               </div>
                             </form>
                           </div>
                         </div>
                       </div>
-                      <div class="col-md-12">
+                      <div class="col-md-6 keywordResult">
                         <div class="card">
                           <div class="card-header">
                             <h5></h5>
@@ -404,19 +404,29 @@
                           </div>
                           <div class="card-block">
                             <div class="table-responsive">
-                              <table class="table table-bordered table-">
+                              <table class="table table-bordered result">
                                 <thead>
-                                  <th>컨텐츠명</th>
-                                  <th>CP사/설명</th>
-                                  <th>컨텐츠ID</th>
-                                  <th>관리</th>
+                                  <tr class="bg-inverse">
+                                    <th width="5%">컨텐츠명</th>
+                                    <th width="5%">CP사</th>
+                                    <th width="5%">설명</th>
+                                    <th width="5%">컨텐츠ID</th>
+                                  </tr>
                                 </thead>
                                 <tbody>
                                   <tr>
-                                    <td>산양산삼</td>
-                                    <td>청유심/</td>
+                                    <td>
+                                      산양산삼
+                                      <div class="label-main">
+                                        <label class="label label-success">관리</label>
+                                      </div>
+                                      <!-- <div class="label-main">
+                                        <label class="label label-danger">비관리</label>
+                                      </div> -->
+                                    </td>
+                                    <td>청유심</td>
+                                    <td></td>
                                     <td>12</td>
-                                    <td>YES</td>
                                   </tr>
                                 </tbody>
                               </table>
@@ -424,7 +434,7 @@
                           </div>
                         </div>
                       </div>
-                      <div class="col-md-12">
+                      <div class="col-md-6 keywordResult">
                           <div class="card">
                             <div class="card-header">
                               <h5></h5>
@@ -439,20 +449,41 @@
                                 <table class="table table-bordered">
                                   <thead>
                                     <tr>
-                                      <th>NO</th>
-                                      <th>검색어</th>
-                                      <th>제외검색어</th>
-                                      <th>영화구분</th>
-                                      <th>작업</th>
+                                      <th class="tabledit-view-mode"></th>
+                                      <th class="tabledit-view-mode">검색어</th>
+                                      <th class="tabledit-view-mode">제외검색어</th>
+                                      <th class="tabledit-view-mode">영화구분</th>
+                                      <th class="tabledit-view-mode">작업</th>
                                     </tr>
                                   </thead>
                                   <tbody>
                                     <tr>
                                       <th scope="row">입력</th>
-                                      <td><input type="text"/></td>
-                                      <td><input type="text"/></td>
-                                      <td></td>
-                                      <td><button class="btn btn-success btn-icon"><i class="icofont icofont-plus"style="margin-right:0"></i></button></td>
+                                      <td><input type="text" class="form-control"/></td>
+                                      <td><input type="text" class="form-control"/></td>
+                                      <td>
+                                        <div class="form-radio">
+                                          <div class="radio radiofill radio-primary radio-inline">
+                                            <label>
+                                              <input type="radio" name="member" value="free" data-bv-field="member">
+                                              <i class="helper"></i>영화
+                                            </label>
+                                          </div>
+                                          <div class="radio radiofill radio-primary radio-inline">
+                                            <label>
+                                              <input type="radio" name="member" value="personal" data-bv-field="member">
+                                              <i class="helper"></i>배우
+                                            </label>
+                                          </div>
+                                          <div class="radio radiofill radio-primary radio-inline">
+                                            <label>
+                                              <input type="radio" name="member" value="personal" data-bv-field="member">
+                                              <i class="helper"></i>기타
+                                            </label>
+                                          </div>
+                                        </div>
+                                      </td>
+                                      <td><button class="btn btn-success btn-sm"><i class="icofont icofont-plus"style="margin-right:0"></i></button></td>
                                       <!-- <td><button class="btn btn-primary"> <i class="icofont icofont-plus" style="margin-right:0"></i></button></td> -->
                                     </tr>
                                     <tr>
@@ -460,8 +491,7 @@
                                       <td>산양산삼</td>
                                       <td></td>
                                       <td></td>
-                                      <td><button class="btn btn-danger btn-icon"><i class="icofont icofont-garbage" style="margin-right:0"></i></button></td>
-                                      <!-- <td><button class="btn btn-danger"><i class="icofont icofont-garbage" style="margin-right:0"></i></button></td> -->
+                                      <td><button class="btn btn-danger btn-sm"><i class="icofont icofont-garbage" style="margin-right:0"></i></button></td>
                                     </tr>
                                   </tbody>
                                 </table>

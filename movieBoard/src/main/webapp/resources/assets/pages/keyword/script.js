@@ -1,4 +1,4 @@
-﻿'use strict';
+'use strict';
 $(document).ready(function () {
   // 대표키워드 중복체크
   document.querySelector('.alert-prompt').onclick = function(){

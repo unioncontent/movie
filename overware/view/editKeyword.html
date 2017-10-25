@@ -26,14 +26,17 @@
   <link rel="stylesheet" type="text/css" href="assets/icon/themify-icons/themify-icons.css">
   <!-- ico font -->
   <link rel="stylesheet" type="text/css" href="assets/icon/icofont/css/icofont.css">
-  <!-- flag icon framework css -->
-  <link rel="stylesheet" type="text/css" href="assets/pages/flag-icon/flag-icon.min.css">
+  <!-- sweet alert framework -->
+  <link rel="stylesheet" type="text/css" href="../bower_components/sweetalert/dist/sweetalert.css">
+  <!-- animation nifty modal window effects css -->
+  <link rel="stylesheet" type="text/css" href="assets/css/component.css">
   <!-- Menu-Search css -->
   <link rel="stylesheet" type="text/css" href="assets/pages/menu-search/css/component.css">
   <!-- Horizontal-Timeline css -->
   <link rel="stylesheet" type="text/css" href="assets/pages/dashboard/horizontal-timeline/css/style.css">
   <!-- Style.css -->
   <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+  <link rel="stylesheet" type="text/css" href="assets/pages/keyword/css/style.css">
   <!--color css-->
   <link rel="stylesheet" type="text/css" href="assets/css/color/color-1.css" id="color" />
   <link rel="stylesheet" type="text/css" href="assets/css/linearicons.css">
@@ -353,57 +356,31 @@
                               <i class="icofont icofont-close-circled"></i>
                             </div>
                           </div>
-                          <div class="card-block">
-                            <form>
-                              <div class="form-group row">
-                                <label class="col-sm-2 col-form-label">검색언론사명</label>
-                                <div class="col-sm-10">
-                                  <select name="select" class="form-control">
-                                    <option value="opt1">Select One Value Only</option>
-                                    <option value="opt2">Type 2</option>
-                                    <option value="opt3">Type 3</option>
-                                  </select>
-                                </div>
-                              </div>
-                              <div class="form-group row">
-                                  <label class="col-sm-2 col-form-label">회사분류</label>
-                                  <div class="col-sm-10">
-                                      <select name="select" class="form-control">
-                                          <option value="opt1">Select One Value Only</option>
-                                          <option value="opt2">Type 2</option>
-                                          <option value="opt3">Type 3</option>
-                                      </select>
-                                  </div>
-                              </div>
-                            </form>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-12">
-                        <div class="card">
-                          <div class="card-header">
-                            <h5></h5>
-                            <div class="card-header-right">
-                              <i class="icofont icofont-rounded-down"></i>
-                              <i class="icofont icofont-refresh"></i>
-                              <i class="icofont icofont-close-circled"></i>
-                            </div>
-                          </div>
-                          <div class="card-block">
+                          <div class="card-block  table-border-style">
                             <div class="table-responsive">
-                              <table class="table table-bordered table-">
+                              <table class="table table-bordered result">
                                 <thead>
-                                  <th>컨텐츠명</th>
-                                  <th>CP사/설명</th>
-                                  <th>컨텐츠ID</th>
-                                  <th>관리</th>
+                                  <tr class="bg-inverse">
+                                    <th width="5%">컨텐츠명</th>
+                                    <th width="5%">CP사</th>
+                                    <th width="5%">설명</th>
+                                    <th width="5%">컨텐츠ID</th>
+                                  </tr>
                                 </thead>
                                 <tbody>
                                   <tr>
-                                    <td>산양산삼</td>
-                                    <td>청유심/</td>
+                                    <td>
+                                      산양산삼
+                                      <div class="label-main">
+                                        <label class="label label-success">관리</label>
+                                      </div>
+                                      <!-- <div class="label-main">
+                                        <label class="label label-danger">비관리</label>
+                                      </div> -->
+                                    </td>
+                                    <td>청유심</td>
+                                    <td></td>
                                     <td>12</td>
-                                    <td>YES</td>
                                   </tr>
                                 </tbody>
                               </table>
@@ -421,34 +398,59 @@
                                 <i class="icofont icofont-close-circled"></i>
                               </div>
                             </div>
-                            <div class="card-block">
+                            <div class="card-block  table-border-style">
                               <div class="table-responsive">
                                 <table class="table table-bordered">
                                   <thead>
                                     <tr>
-                                      <th>NO</th>
-                                      <th>검색어</th>
-                                      <th>제외검색어</th>
-                                      <th>영화구분</th>
-                                      <th>작업</th>
+                                      <th class="tabledit-view-mode"></th>
+                                      <th class="tabledit-view-mode">검색어</th>
+                                      <th class="tabledit-view-mode">제외검색어</th>
+                                      <th class="tabledit-view-mode">영화구분</th>
+                                      <th class="tabledit-view-mode">작업</th>
                                     </tr>
                                   </thead>
                                   <tbody>
                                     <tr>
                                       <th scope="row">입력</th>
-                                      <td><input type="text"/></td>
-                                      <td><input type="text"/></td>
-                                      <td></td>
-                                      <td><button class="btn btn-success btn-icon"><i class="icofont icofont-plus"style="margin-right:0"></i></button></td>
-                                      <!-- <td><button class="btn btn-primary"> <i class="icofont icofont-plus" style="margin-right:0"></i></button></td> -->
+                                      <td>
+                                        <input type="text" class="form-control" id="pSearch"/>
+                                        <span class="messages"><p class="text-danger error m-b-0"></p></span>
+                                      </td>
+                                      <td>
+                                        <input type="text" class="form-control" id="dSearch"/>
+                                        <span class="messages"><p class="text-danger error m-b-0"></p></span>
+                                      </td>
+                                      <td>
+                                        <div class="form-radio">
+                                          <div class="radio radiofill radio-primary radio-inline">
+                                            <label>
+                                              <input type="radio" name="member" value="free" data-bv-field="member">
+                                              <i class="helper"></i>영화
+                                            </label>
+                                          </div>
+                                          <div class="radio radiofill radio-primary radio-inline">
+                                            <label>
+                                              <input type="radio" name="member" value="personal" data-bv-field="member">
+                                              <i class="helper"></i>배우
+                                            </label>
+                                          </div>
+                                          <div class="radio radiofill radio-primary radio-inline">
+                                            <label>
+                                              <input type="radio" name="member" value="personal" data-bv-field="member">
+                                              <i class="helper"></i>기타
+                                            </label>
+                                          </div>
+                                        </div>
+                                      </td>
+                                      <td><button class="btn btn-success btn-sm" id="puls"><i class="icofont icofont-plus" style="margin-right:0"></i></button></td>
                                     </tr>
                                     <tr>
                                       <th scope="row">1</th>
                                       <td>산양산삼</td>
                                       <td></td>
                                       <td></td>
-                                      <td><button class="btn btn-danger btn-icon"><i class="icofont icofont-garbage" style="margin-right:0"></i></button></td>
-                                      <!-- <td><button class="btn btn-danger"><i class="icofont icofont-garbage" style="margin-right:0"></i></button></td> -->
+                                      <td><button class="btn btn-danger btn-sm"><i class="icofont icofont-garbage" style="margin-right:0"></i></button></td>
                                     </tr>
                                   </tbody>
                                 </table>
@@ -522,6 +524,15 @@
   <!-- modernizr js -->
   <script type="text/javascript" src="../bower_components/modernizr/modernizr.js"></script>
   <script type="text/javascript" src="../bower_components/modernizr/feature-detects/css-scrollbars.js"></script>
+  <!-- sweet alert js -->
+  <script type="text/javascript" src="../bower_components/sweetalert/dist/sweetalert.min.js"></script>
+  <script type="text/javascript" src="assets/pages/keyword/script2.js"></script>
+  <!-- sweet alert modal.js intialize js -->
+  <!-- modalEffects js nifty modal window effects -->
+  <script type="text/javascript" src="assets/js/modalEffects.js"></script>
+  <script type="text/javascript" src="assets/js/classie.js"></script>
+  <!-- classie js -->
+  <script type="text/javascript" src="../bower_components/classie/classie.js"></script>
   <!-- classie js -->
   <script type="text/javascript" src="../bower_components/classie/classie.js"></script>
   <!-- i18next.min.js -->

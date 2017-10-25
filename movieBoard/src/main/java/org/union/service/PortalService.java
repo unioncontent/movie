@@ -10,7 +10,7 @@ public interface PortalService {
 	
 	public void regist(PortalVO vo);
 	
-	public PortalVO read(Integer portal_idx);
+	public PortalVO view(Integer portal_idx);
 	
 	public void modify(PortalVO vo);
 	
