@@ -3,7 +3,7 @@ package org.union.service;
 import java.util.List;
 
 import org.union.domain.MediaVO;
-import org.union.domain.SearchVO;
+import org.union.domain.SearchCriteria;
 
 public interface MediaService {
 
@@ -16,7 +16,7 @@ public interface MediaService {
 	
 	public void remove(Integer media_idx);
 	
-	public List<MediaVO> listSearch(SearchVO vo);
+	public List<MediaVO> listSearch(SearchCriteria vo);
 	
 	public void modifyType(MediaVO vo);
 	

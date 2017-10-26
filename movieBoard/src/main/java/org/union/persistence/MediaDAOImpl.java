@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.union.domain.CommunityVO;
 import org.union.domain.MediaVO;
-import org.union.domain.SearchVO;
+import org.union.domain.SearchCriteria;
 
 @Repository
 public class MediaDAOImpl implements MediaDAO {
@@ -63,7 +63,7 @@ public class MediaDAOImpl implements MediaDAO {
 
 
 	@Override
-	public List<MediaVO> listSearch(SearchVO vo) {
+	public List<MediaVO> listSearch(SearchCriteria vo) {
 
 		return session.selectList(namespace + "listSearch", vo);
 	}

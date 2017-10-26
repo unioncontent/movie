@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.union.domain.CommunityVO;
-import org.union.domain.SearchVO;
+import org.union.domain.SearchCriteria;
 import org.union.persistence.CommunityDAO;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -21,12 +21,12 @@ public class CommunityDAOTester {
 	CommunityDAO dao;
 	
 	CommunityVO vo;
-	SearchVO svo;
+	SearchCriteria svo;
 	
 	@Before
 	public void setUp() throws Exception {
 		vo = new CommunityVO();
-		svo = new SearchVO();
+		svo = new SearchCriteria();
 	}
 
 

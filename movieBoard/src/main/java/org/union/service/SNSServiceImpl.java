@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.union.domain.SNSVO;
-import org.union.domain.SearchVO;
+import org.union.domain.SearchCriteria;
 import org.union.persistence.SNSDAO;
 
 @Service
@@ -45,9 +45,9 @@ public class SNSServiceImpl implements SNSService {
 
 	
 	@Override
-	public List<SNSVO> listSearch(SearchVO vo) {
+	public List<SNSVO> listSearch(SearchCriteria cri) {
 
-		return dao.listSearch(vo);
+		return dao.listSearch(cri);
 	}
 	
 
@@ -62,6 +62,13 @@ public class SNSServiceImpl implements SNSService {
 	public void modifyThumbnail(SNSVO vo) {
 
 		dao.updateThumbnail(vo);
+	}
+
+
+	@Override
+	public Integer getTotalCount(SearchCriteria  cri) {
+
+		return dao.getTotalCount(cri);
 	}
 
 }

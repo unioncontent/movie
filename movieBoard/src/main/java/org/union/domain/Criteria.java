@@ -1,45 +1,39 @@
 package org.union.domain;
 
-public class PageVO {
 
-	
-private Integer pageUnit, page;
-	
-	
-	public void getSearchVO(){
-		
+public class Criteria {
+
+	private Integer pageUnit, page;
+
+
+	public void getSearchVO() {
+
 	}
-	
-	public void setSearchVO(){
-		
+
+	public void setSearchVO() {
+
 	}
-	
-	public Integer getStartPage(){
-		return (this.page -1) * pageUnit;
+
+	public Integer getStartPage() {
+		return (this.page - 1) * pageUnit;
 	}
-	
-	public Integer getEndPage(){
-		return (this.page)* pageUnit ;
-	}
-	
-	public PageVO(){
+
+	public Criteria() {
 		this.pageUnit = 10;
 		this.page = 1;
 	}
 
-	
 	public Integer getPageUnit() {
 		return pageUnit;
 	}
 
 	public void setPageUnit(Integer pageUnit) {
 
-
-		if(pageUnit <= 0 || pageUnit > 90){
+		if (pageUnit <= 0 || pageUnit > 90) {
 			this.pageUnit = 9;
 			return;
 		}
-		
+
 		this.pageUnit = pageUnit;
 	}
 
@@ -49,11 +43,11 @@ private Integer pageUnit, page;
 
 	public void setPage(Integer page) {
 
-		if(page <= 0){
+		if (page <= 0) {
 			this.page = 1;
 			return;
 		}
-		
+
 		this.page = page;
 	}
 

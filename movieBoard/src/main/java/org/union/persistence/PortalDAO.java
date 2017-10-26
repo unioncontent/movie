@@ -3,7 +3,7 @@ package org.union.persistence;
 import java.util.List;
 
 import org.union.domain.PortalVO;
-import org.union.domain.SearchVO;
+import org.union.domain.SearchCriteria;
 
 public interface PortalDAO {
 
@@ -16,7 +16,7 @@ public interface PortalDAO {
 	
 	public void delete(Integer portal_idx);
 	
-	public List<PortalVO> listSearch(SearchVO vo);
+	public List<PortalVO> listSearch(SearchCriteria vo);
 	
 	public void updateTextType(PortalVO vo);
 	

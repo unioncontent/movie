@@ -3,7 +3,7 @@ package org.union.service;
 import java.util.List;
 
 import org.union.domain.CommunityVO;
-import org.union.domain.SearchVO;
+import org.union.domain.SearchCriteria;
 
 public interface CommunityService {
 
@@ -16,7 +16,7 @@ public interface CommunityService {
 
 	public void remove(Integer community_idx);
 	
-	public List<CommunityVO> listSearch(SearchVO vo);
+	public List<CommunityVO> listSearch(SearchCriteria vo);
 	
 	public void modifyType (CommunityVO vo);
 	

@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.union.domain.CommunityVO;
 import org.union.domain.MediaVO;
-import org.union.domain.SearchVO;
+import org.union.domain.SearchCriteria;
 
 public interface MediaDAO {
 
@@ -17,7 +17,7 @@ public interface MediaDAO {
 	
 	public void delete(Integer media_idx);
 	
-	public List<MediaVO> listSearch(SearchVO vo);
+	public List<MediaVO> listSearch(SearchCriteria vo);
 	
 	public void updateTextType (CommunityVO vo);
 	
