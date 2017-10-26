@@ -35,6 +35,16 @@ p {
     padding-right: 20px;
 }
 
+#keyword{
+  margin-left: 15px;
+}
+
+@media (min-width: 1200px){
+  #keyword{
+    margin-left: 0px;
+  }
+}
+
 .nobr{
   display:block;
   text-overflow:ellipsis;

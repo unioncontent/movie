@@ -9,15 +9,3 @@ table td,table th{
 .table.table-xs td{
   padding: .4rem 1rem;
 }
-
-@media (min-width: 576px){
-  #keyword{
-    margin-left: 15px;
-  }
-}
-
-@media (min-width: 1200px){
-  #keyword{
-    margin-left: 0px;
-  }
-}
