@@ -26,8 +26,6 @@
   <link rel="stylesheet" type="text/css" href="assets/icon/themify-icons/themify-icons.css">
   <!-- ico font -->
   <link rel="stylesheet" type="text/css" href="assets/icon/icofont/css/icofont.css">
-  <!-- flag icon framework css -->
-  <link rel="stylesheet" type="text/css" href="assets/pages/flag-icon/flag-icon.min.css">
   <!-- Menu-Search css -->
   <link rel="stylesheet" type="text/css" href="assets/pages/menu-search/css/component.css">
   <!-- Horizontal-Timeline css -->
@@ -36,9 +34,11 @@
   <link rel="stylesheet" type="text/css" href="assets/icon/font-awesome/css/font-awesome.css">
   <!-- Date-range picker css  -->
   <link rel="stylesheet" type="text/css" href="../bower_components/bootstrap-daterangepicker/daterangepicker.css">
+  <!-- sweet alert framework -->
+  <link rel="stylesheet" type="text/css" href="../bower_components/sweetalert/dist/sweetalert.css">
   <!-- Style.css -->
   <link rel="stylesheet" type="text/css" href="assets/css/style.css">
-  <link rel="stylesheet" type="text/css" href="assets/pages/sns/css/style.css">
+  <link rel="stylesheet" type="text/css" href="assets/pages/division/css/style.css">
   <link rel="stylesheet" type="text/css" href="assets/css/picker.css">
   <!--color css-->
   <link rel="stylesheet" type="text/css" href="assets/css/color/color-1.css" id="color" />
@@ -67,9 +67,6 @@
             <a class="mobile-menu" id="mobile-collapse" href="#!">
               <i class="ti-menu"></i>
             </a>
-            <a class="mobile-search morphsearch-search" href="#">
-              <i class="ti-search"></i>
-            </a>
             <a href="dashboard.html">
               <img class="img-fluid" src="assets/images/logo.png" alt="Theme-Logo" />
             </a>
@@ -92,31 +89,11 @@
                       <i class="ti-angle-down"></i>
                   </a>
                   <ul class="show-notification profile-notification">
-                      <li>
-                          <a href="#!">
-                              <i class="ti-settings"></i> Settings
-                          </a>
-                      </li>
-                      <li>
-                          <a href="user-profile.html">
-                              <i class="ti-user"></i> Profile
-                          </a>
-                      </li>
-                      <li>
-                          <a href="email-inbox.html">
-                              <i class="ti-email"></i> My Messages
-                          </a>
-                      </li>
-                      <li>
-                          <a href="auth-lock-screen.html">
-                              <i class="ti-lock"></i> Lock Screen
-                          </a>
-                      </li>
-                      <li>
-                          <a href="#!">
-                              <i class="ti-layout-sidebar-left"></i> Logout
-                          </a>
-                      </li>
+                    <li>
+                        <a href="#!">
+                            <i class="ti-layout-sidebar-left"></i> Logout
+                        </a>
+                    </li>
                   </ul>
                 </li>
               </ul>
@@ -132,7 +109,18 @@
             <div class="pcoded-inner-navbar main-menu">
               <div class="">
                 <div class="main-menu-header">
-                  <img class="img-fluid" src="assets/images/company/unioncontents.png" alt="User-Profile-Image">
+                  <img class="img-40" src="assets/images/user.png" alt="User-Profile-Image">
+                  <div class="user-details">
+                    <span id="more-details">Union<i class="ti-angle-down"></i></span>
+                  </div>
+                </div>
+
+                <div class="main-menu-content">
+                  <ul>
+                    <li class="more-details">
+                      <a href="#!"><i class="ti-layout-sidebar-left"></i>Logout</a>
+                    </li>
+                  </ul>
                 </div>
               </div>
               <ul class="pcoded-item pcoded-left-item">
@@ -173,7 +161,7 @@
                     </li>
                   </ul>
                 </li>
-                <li class="pcoded-hasmenu  active pcoded-trigger">
+                <li class="pcoded-hasmenu">
                   <a href="javascript:void(0)" data-i18n="nav.advance-components.main">
                     <span class="pcoded-micon"><i class="ti-facebook"></i></span>
                     <span class="pcoded-mtext">SNS관리</span>
@@ -263,14 +251,14 @@
                     <span class="pcoded-mcaret"></span>
                   </a>
                 </li>
-                <li class="pcoded-hasmenu">
+                <li class="pcoded-hasmenu active pcoded-trigger">
                   <a href="javascript:void(0)" data-i18n="nav.advance-components.main">
                     <span class="pcoded-micon"><i class="ti-filter"></i></span>
                     <span class="pcoded-mtext">분류글관리</span>
                     <span class="pcoded-mcaret"></span>
                   </a>
                   <ul class="pcoded-submenu">
-                    <li class=" ">
+                    <li class="">
                       <a href="mngClassifiCation1.html" data-i18n="nav.advance-components.draggable">
                         <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                         <span class="pcoded-mtext">좋은글</span>
@@ -292,14 +280,14 @@
                       </a>
                     </li>
                     <li class=" ">
-                      <a href="mngClassifiCation3.html" data-i18n="nav.advance-components.grid-stack">
+                      <a href="mngClassifiCation4.html" data-i18n="nav.advance-components.grid-stack">
                         <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                         <span class="pcoded-mtext">기타</span>
                         <span class="pcoded-mcaret"></span>
                       </a>
                     </li>
                     <li class=" ">
-                      <a href="mngClassifiCation4.html" data-i18n="nav.advance-components.grid-stack">
+                      <a href="mngClassifiCation5.html" data-i18n="nav.advance-components.grid-stack">
                         <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                         <span class="pcoded-mtext">삭제</span>
                         <span class="pcoded-mcaret"></span>
@@ -324,7 +312,7 @@
                 <div class="page-wrapper">
                   <div class="page-header">
                     <div class="page-header-title">
-                      <h4>페이스북관리</h4>
+                      <h4>좋은글</h4>
                     </div>
                     <div class="page-header-breadcrumb">
                       <ul class="breadcrumb-title">
@@ -333,8 +321,8 @@
                             <i class="icofont icofont-home"></i>
                           </a>
                         </li>
-                        <li class="breadcrumb-item"><a href="#!">SNS관리</a></li>
-                        <li class="breadcrumb-item"><a href="#!">페이스북관리</a></li>
+                        <li class="breadcrumb-item"><a href="#!">분류글관리</a></li>
+                        <li class="breadcrumb-item"><a href="#!">좋은글</a></li>
                       </ul>
                     </div>
                   </div>
@@ -342,24 +330,17 @@
                   <div class="page-body">
                     <div class="row">
                       <!-- data setting start -->
-                      <div class="col-md-6">
-                        <div class="row">
-                          <div class="col-sm-12 col-xl-3 m-b-10">
-                            <select name="select" class="form-control form-control-inverse">
-                                <option value="opt1">회사</option>
-                            </select>
-                          </div>
-                          <div class="col-sm-12 col-xl-3 m-b-10">
-                            <select name="select" class="form-control form-control-inverse">
-                                <option value="opt1">키워드</option>
-                            </select>
-                          </div>
-                        </div>
-                      </div>
+                      <select name="select" class="col-md-1 form-control form-control-inverse m-l-15 m-r-10 m-b-10 p-r-5 f-left">
+                          <option value="opt1">회사</option>
+                      </select>
+                      <select name="select" class="col-md-1 form-control form-control-inverse  m-r-10 m-b-10 p-r-5 f-left" id="keyword">
+                          <option value="opt1">키워드</option>
+                      </select>
+                      <div class="col"></div>
                       <div class="col-md-6">
                         <!-- date picker start -->
                         <div class="row">
-                          <div class="btn-group float-right m-b-10 p-l-15 p-r-10" role="group" data-toggle="tooltip" data-placement="top" title="" data-original-title=".btn-xlg">
+                          <div class="btn-group float-right m-b-10 p-l-15 p-r-10" role="group">
                             <button type="button" class="btn btn-inverse btn-sd waves-effect waves-light">당일</button>
                             <button type="button" class="btn btn-inverse btn-sd waves-effect waves-light">전일</button>
                             <button type="button" class="btn btn-inverse btn-sd waves-effect waves-light">최근7일</button>
@@ -376,73 +357,108 @@
                         <!-- date picker end -->
                       </div>
                       <!-- data setting end -->
-                      <!-- 그래프 start -->
-                      <div class="col-lg-12">
-                        <div class="card">
-                          <div class="card-header">
-                            <h5 class="card-header-text">
-                              <i class="icofont icofont-chart-line m-r-5"></i>
-                              페이스북 그래프
-                            </h5>
-                            <div class="card-header-right">
-                              <i class="icofont icofont-rounded-down"></i>
-                              <i class="icofont icofont-refresh"></i>
-                            </div>
-                          </div>
-                          <div class="card-block">
-                            <!-- chart start -->
-                            <div id="line-chart1"></div>
-                            <!-- chart end -->
-                          </div>
-                        </div>
-                      </div>
-                      <!-- 그래프 end -->
                       <!-- table start -->
                       <div class="col-lg-12">
                         <div class="card">
                           <div class="card-header">
-                            <div class="col-md-6">
-                              <div class="row">
-                                <select name="select" class="col-sm-1 form-control form-control-inverse m-r-10 m-b-10 p-r-5">
-                                  <option value="">10</option>
-                                </select>
-                                <select name="select" class="col-sm-2 form-control form-control-inverse m-r-10 m-b-10">
-                                  <option value="">제목</option>
-                                </select>
-                                <div class="col-sm-5 input-group input-group-button input-group-inverse p-l-0 p-r-10 m-b-10">
-                                  <input type="text" class="form-control" placeholder="">
-                                  <span class="input-group-addon" id="basic-addon1">
-                                    <button class="btn btn-inverse">검색</button>
-                                  </span>
-                                </div>
-                              </div>
+                            <select name="select" class="col-sm-1 form-control form-control-inverse m-r-10 m-b-10 p-r-5 f-left">
+                              <option value="">10</option>
+                              <option value="">30</option>
+                              <option value="">50</option>
+                              <option value="">100</option>
+                            </select>
+                            <select name="select" class="col-sm-1 form-control form-control-inverse m-r-10 m-b-10 f-left">
+                              <option value="">제목</option>
+                              <option value="">분류</option>
+                              <option value="">사이트명</option>
+                              <option value="">게시판명</option>
+                            </select>
+                            <div class="col-sm-3 input-group input-group-button input-group-inverse p-l-0 p-r-0 m-b-10 f-left">
+                              <input type="text" class="form-control" placeholder="">
+                              <span class="input-group-addon" id="basic-addon1">
+                                <button class="btn btn-inverse">검색</button>
+                              </span>
                             </div>
+                            <button type="button" class="alert-confirm btn btn-primary waves-effect f-right p-r-0 p-l-5 m-l-15 m-b-10  f-right" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'alert-confirm']);"><i class="icofont icofont-check-circled"></i>일괄처리</button>
                           </div>
                           <div class="card-block">
                             <div class="table-responsive">
-                              <table class="table table-bordered">
+                              <table class="table table-hover">
                                 <thead>
                                   <tr>
                                     <th width="5%">NO</th>
-                                    <th width="10%">등록날짜</th>
-                                    <th width="5%">키워드</th>
-                                    <th width="30%">제목</th>
-                                    <th width="5%">글쓴이</th>
-                                    <th width="5%">좋아요</th>
-                                    <th width="5%">공유</th>
-                                    <th width="5%">댓글</th>
+                                    <th width="10%">사이트<br /><span class="text-muted">구분</span></th>
+                                    <th width="10%">회사명</th>
+                                    <th width="10%">컨텐츠타입<br /><span class="text-muted">(랭킹)</span></th>
+                                    <th width="10%">게시판명<br /><span class="text-muted">키워드</span></th>
+                                    <th width="20%">제목<br /><span class="text-muted">타이틀</span><br /><span class="text-success">컨텐츠</span></th>
+                                    <th width="10%">추출일 / 작성일</th>
+                                    <th width="10%">분류변경</th>
+                                    <th width="5%">분류처리</th>
                                   </tr>
                                 </thead>
                                 <tbody>
                                   <tr>
                                     <th scope="row">1</th>
-                                    <td>2017-10-28</td>
-                                    <td>강철비</td>
-                                    <td><a href="https://www.naver.com/" target="_blank">강철비 언제 개봉?</a></td>
-                                    <td>...</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
+                                    <td>naver_web<br /><span class="text-muted">구분</span></td>
+                                    <td>우드파크온수매트</td>
+                                    <td>news<br /><span class="text-muted">()</span></td>
+                                    <td>온수매트기사<br /><span class="text-muted">우드파크</span></td>
+                                    <td>
+                                      <a href="https://www.naver.com" target="_blank">
+                                        <div class="nobr">찬바람 불어오니 온수매트 인기… 올해 6000억원대 시장 성장 전망</div>
+                                      </a><br />
+                                      <span class="text-muted"></span><br />
+                                      <span class="text-success">14</span>
+                                    </td>
+                                    <td>2017-10-23 07:46:00 /<br/>2017-10-23 07:46:00 </td>
+                                    <td>
+                                      <div class="radios">
+                                        <input type="radio" id="radio6" name="radios1" checked>
+                                        <label for="radio6">미분류</label>
+                                        <input type="radio" id="radio2" name="radios1">
+                                        <label for="radio2">나쁜글</label>
+                                        <input type="radio" id="radio3" name="radios1">
+                                        <label for="radio3">관심글</label>
+                                        <input type="radio" id="radio4" name="radios1">
+                                        <label for="radio4">기타</label>
+                                      </div>
+                                    </td>
+                                    <td>
+                                      <button class="btn btn-danger btn-sm alert-confirm1" data-toggle="tooltip" data-placement="top" data-original-title="삭제" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'alert-confirm']);"><i class="icofont icofont-ui-delete" style="margin-right:0"></i></button>
+                                      <button class="btn btn-success btn-sm alert-confirm2" data-toggle="tooltip" data-placement="top" data-original-title="즉시처리" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'alert-confirm']);"><i class="icofont icofont-ui-check" style="margin-right:0"></i></button>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row">2</th>
+                                    <td>naver_web<br /><span class="text-muted">구분</span></td>
+                                    <td>우드파크온수매트</td>
+                                    <td>news<br /><span class="text-muted">()</span></td>
+                                    <td>온수매트기사<br /><span class="text-muted">우드파크</span></td>
+                                    <td>
+                                      <a href="https://www.naver.com" target="_blank">
+                                        <div class="nobr">찬바람 불어오니 온수매트 인기… 올해 6000억원대 시장 성장 전망</div>
+                                      </a><br />
+                                      <span class="text-muted"></span><br />
+                                      <span class="text-success">14</span>
+                                    </td>
+                                    <td>2017-10-23 07:46:00 /<br/>2017-10-23 07:46:00 </td>
+                                    <td>
+                                      <div class="radios">
+                                        <input type="radio" id="radio6" name="radios2" checked>
+                                        <label for="radio6">미분류</label>
+                                        <input type="radio" id="radio2" name="radios2">
+                                        <label for="radio2">나쁜글</label>
+                                        <input type="radio" id="radio3" name="radios2">
+                                        <label for="radio3">관심글</label>
+                                        <input type="radio" id="radio4" name="radios2">
+                                        <label for="radio4">기타</label>
+                                      </div>
+                                    </td>
+                                    <td>
+                                      <button class="btn btn-danger btn-sm alert-confirm1" data-toggle="tooltip" data-placement="top" data-original-title="삭제" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'alert-confirm']);"><i class="icofont icofont-ui-delete" style="margin-right:0"></i></button>
+                                      <button class="btn btn-success btn-sm alert-confirm2" data-toggle="tooltip" data-placement="top" data-original-title="즉시처리" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'alert-confirm']);"><i class="icofont icofont-ui-check" style="margin-right:0"></i></button>
+                                    </td>
                                   </tr>
                                 </tbody>
                               </table>
@@ -466,7 +482,7 @@
                         </div>
                       </div>
                       <!-- table end -->
-                  </div>
+                    </div>
                   <!-- Page-body end -->
                 </div>
               </div>
@@ -532,15 +548,19 @@
   <!-- modernizr js -->
   <script type="text/javascript" src="../bower_components/modernizr/modernizr.js"></script>
   <script type="text/javascript" src="../bower_components/modernizr/feature-detects/css-scrollbars.js"></script>
+  <!-- classie js -->
+  <script type="text/javascript" src="../bower_components/classie/classie.js"></script>
   <!-- Bootstrap date-time-picker js -->
   <script type="text/javascript" src="assets/pages/advance-elements/moment-with-locales.min.js"></script>
   <!-- Date-range picker js -->
   <script type="text/javascript" src="../bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
-  <!-- classie js -->
-  <script type="text/javascript" src="../bower_components/classie/classie.js"></script>
   <!-- Morris Chart js -->
   <script src="../bower_components/raphael/raphael.min.js"></script>
   <script src="../bower_components/morris.js/morris.js"></script>
+  <!-- sweet alert js -->
+  <script type="text/javascript" src="../bower_components/sweetalert/dist/sweetalert.min.js"></script>
+  <script type="text/javascript" src="assets/pages/division/script.js"></script>
+  <!-- sweet alert modal.js intialize js -->
   <!-- i18next.min.js -->
   <script type="text/javascript" src="../bower_components/i18next/i18next.min.js"></script>
   <script type="text/javascript" src="../bower_components/i18next-xhr-backend/i18nextXHRBackend.min.js"></script>
@@ -548,12 +568,11 @@
   <script type="text/javascript" src="../bower_components/jquery-i18next/jquery-i18next.min.js"></script>
   <!-- Custom js -->
   <script type="text/javascript" src="assets/js/script.js"></script>
+  <script type="text/javascript" src="assets/pages/picker.js"></script>
   <script src="assets/js/pcoded.min.js"></script>
   <script src="assets/js/demo-12.js"></script>
   <script src="assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
   <script src="assets/js/jquery.mousewheel.min.js"></script>
-  <script src="assets/pages/sns/script.js"></script>
-  <script src="assets/pages/picker.js"></script>
 </body>
 
 </html>
