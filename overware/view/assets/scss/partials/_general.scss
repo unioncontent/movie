@@ -35,6 +35,13 @@ p {
     padding-right: 20px;
 }
 
+.nobr{
+  display:block;
+  text-overflow:ellipsis;
+  width:300px;
+  overflow:hidden;
+}
+
 table td > a:hover{
   font-weight: bold;
 }

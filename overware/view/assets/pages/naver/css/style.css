@@ -1,0 +1,23 @@
+table td,table th{
+  text-align: center;
+}
+
+.nobr{
+  width:380px;
+}
+
+.table.table-xs td{
+  padding: .4rem 1rem;
+}
+
+@media (min-width: 576px){
+  #keyword{
+    margin-left: 15px;
+  }
+}
+
+@media (min-width: 1200px){
+  #keyword{
+    margin-left: 0px;
+  }
+}
