@@ -22,6 +22,7 @@ ul {
     &:focus {
       font-weight: normal;
       text-decoration: none;
+      color: black;
     }
 }
 
@@ -32,6 +33,10 @@ p {
 
 .media-left {
     padding-right: 20px;
+}
+
+table td > a:hover{
+  font-weight: bold;
 }
 
 /**====== Custom css end ======**/
