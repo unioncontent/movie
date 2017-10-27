@@ -1,6 +1,8 @@
 package org.union.dao;
 
 import java.util.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -8,7 +10,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.union.domain.Criteria;
+import org.union.domain.GraphVO;
 import org.union.domain.SNSVO;
 import org.union.domain.SearchCriteria;
 import org.union.persistence.SNSDAO;
@@ -36,16 +38,15 @@ public class SNSDAOTester {
 	public void testCreate() {
 		
 		for(int i = 0; i < 50; i++) {
-		vo.setSns_name(i + "name");
-		vo.setSns_title(i + "범죄도시");
+		vo.setSns_name("facebook");
+		vo.setSns_title(i + "택시운전사");
 		vo.setSns_content(i + "content");
 		vo.setSns_writer(i + "writer");
 		vo.setLike_cnt(5);
 		vo.setReply_cnt(3);
 		vo.setShare_cnt(8);
-		vo.setWriteDate(new Date());
 		vo.setKeyword(i + "범죄도시");
-		vo.setKeyword_type(1);
+		vo.setKeyword_type("영화");
 		vo.setUrl("url");
 		vo.setTextType("호감");
 		dao.create(vo);
@@ -56,7 +57,31 @@ public class SNSDAOTester {
 	@Test
 	public void testRead() {
 		
-		dao.read(1);
+		vo = dao.read(1);
+		
+		SimpleDateFormat date = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+		
+		System.out.println((date.format(vo.getWriteDate())));
+		
+		
+	}
+	
+	@Test
+	public void testGetDateCount() throws ParseException {
+		
+		String startDate = "2017-10-22 00:00:00";
+		String endDate = "2017-10-25 23:59:59";
+		
+		GraphVO graph = new GraphVO();
+		
+		graph.setStartDate(startDate);
+		graph.setEndDate(endDate);
+		graph.setSns_name("facebook");
+		
+		System.out.println(dao.getDateCount(graph));
+		
+		
+		
 	}
 	
 	@Test
@@ -69,9 +94,8 @@ public class SNSDAOTester {
 		vo.setLike_cnt(5);
 		vo.setReply_cnt(3);
 		vo.setShare_cnt(8);
-		vo.setWriteDate(new Date());
 		vo.setKeyword("강철비");
-		vo.setKeyword_type(1);
+		vo.setKeyword_type("영화");
 		vo.setUrl("url");
 		vo.setSns_idx(1);
 		
@@ -92,12 +116,71 @@ public class SNSDAOTester {
 		
 		cri.setPage(2);
 		cri.setSearchType("t");
-		cri.setKeyword("범죄도시");
+		cri.setKeyword("택시");
+		cri.setPerPageNum(20);
 
-		System.out.println(dao.listSearch(cri));
+		System.out.println(dao.facebookList(cri));
 		System.out.println(cri);
-		System.out.println(cri.getPage());
-		System.out.println(cri.getStartPage());
-		System.out.println(cri.getPageUnit());
+		System.out.println("page: " + cri.getPage());
+		System.out.println("startPage: " + cri.getStartPage());
+		System.out.println("pageUnit: " + cri.getPerPageNum());
+	}
+	
+	@Test
+	public void facebookTotalCount() {
+		
+		cri.setKeyword("강철비");
+		cri.setSearchType("t");
+		
+		System.out.println(dao.facebookTotalCount(cri));
+	}
+	
+	@Test
+	public void instaList() {
+		
+		cri.setPage(1);
+		cri.setSearchType("t");
+		cri.setKeyword("택시");
+		cri.setPerPageNum(5);
+
+		System.out.println(dao.instaList(cri));
+		System.out.println(cri);
+		System.out.println("page: " + cri.getPage());
+		System.out.println("startPage: " + cri.getStartPage());
+		System.out.println("pageUnit: " + cri.getPerPageNum());
+	}
+	
+	@Test
+	public void instaTotalCount() {
+		
+		cri.setKeyword("강철비");
+		cri.setSearchType("t");
+		
+		System.out.println(dao.instaTotalCount(cri));
+	}
+	
+	
+	@Test
+	public void twitterList() {
+		
+		cri.setPage(2);
+		cri.setSearchType("t");
+		cri.setKeyword("택시");
+		cri.setPerPageNum(20);
+
+		System.out.println(dao.twitterList(cri));
+		System.out.println(cri);
+		System.out.println("page: " + cri.getPage());
+		System.out.println("startPage: " + cri.getStartPage());
+		System.out.println("pageUnit: " + cri.getPerPageNum());
+	}
+	
+	@Test
+	public void twitterTotalCount() {
+		
+		cri.setKeyword("강철비");
+		cri.setSearchType("t");
+		
+		System.out.println(dao.twitterTotalCount(cri));
 	}
 }

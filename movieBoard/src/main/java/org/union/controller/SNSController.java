@@ -1,5 +1,8 @@
 package org.union.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,9 +10,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.union.domain.PageMaker;
+import org.union.domain.SNSVO;
 import org.union.domain.SearchCriteria;
 import org.union.service.SNSService;
 
@@ -35,24 +38,22 @@ public class SNSController {
 	public void list(@ModelAttribute("cri") SearchCriteria cri, Model model) throws Exception{
 		logger.info("GET list call....");
 		
-		
 		logger.info("cri : " + cri);
 		
 		PageMaker pageMaker = new PageMaker();
 		
-		logger.info("SearchType: "+cri.getSearchType());
-		logger.info("keyWord: "+cri.getKeyword());
-		
-		pageMaker.setCriteria(cri);
-		pageMaker.setTotalCount(service.getTotalCount(cri));
-		
-	
-		model.addAttribute("facebookList", service.listSearch(cri));
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(service.facebookTotalCount(cri));
+		logger.info("totalCount: " + service.facebookTotalCount(cri));
 		model.addAttribute("pageMaker", pageMaker);
-	
-		logger.info("complete....");
-		logger.info(service.listSearch(cri).toString());
-		logger.info(pageMaker.toString());
+		logger.info("pageMaker: " + pageMaker);
+		
+		List<SNSVO> list = new ArrayList<SNSVO>();
+		list = service.facebookList(cri);
+		
+		model.addAttribute("facebookList", list);
+		logger.info("list: " + list);
+		
 		
 		
 	}

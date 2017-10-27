@@ -411,7 +411,7 @@
                           <div class="card-header">
                             <div class="col-md-6">
                               <div class="row">
-                                <select name="select" class="col-sm-1 form-control form-control-inverse m-r-10 m-b-10 p-r-5">
+                                <select id= "selectPerPageNum" name="select" class="col-sm-1 form-control form-control-inverse m-r-10 m-b-10 p-r-5">
                                   <option id= "10" >10</option>
                                   <option id = "50">50</option>
                                   <option id = "100">100</option>
@@ -461,19 +461,32 @@
                                 </tbody>
                               </table>
                               <ul class="pagination float-right">
+                              
+								<c:if test="${pageMaker.prev}">
                                 <li class="page-item">
-                                  <a class="page-link" href="#" aria-label="Previous">
+                                  <a class="page-link" href="facebook${pageMaker.makeSearch(pageMaker.startPage - 1) }" aria-label="Previous">&laquo;
                                     <span aria-hidden="true">«</span>
                                     <span class="sr-only">Previous</span>
                                   </a>
                                 </li>
-                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                </c:if>
+                                
+                                <c:forEach begin="${pageMaker.startPage }"
+								end="${pageMaker.endPage }" var="idx">
+								<li class="page-item active" 
+								  <c:out value="${pageMaker.cri.page == idx?'class =active':''}"/>>
+									<a class="page-link" href="facebook${pageMaker.makeSearch(idx)}">${idx}</a>
+								</li>
+								</c:forEach>
+							
+								<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
                                 <li class="page-item">
-                                  <a class="page-link" href="#" aria-label="Next">
+                                  <a class="page-link" href="facebook${pageMaker.makeSearch(pageMaker.endPage +1) }" aria-label="Next">&raquo;
                                     <span aria-hidden="true">»</span>
                                     <span class="sr-only">Next</span>
                                   </a>
                                 </li>
+                                </c:if>
                               </ul>
                             </div>
                           </div>
@@ -580,12 +593,16 @@
 	  
 	//최신순 함수 빼놓음
 		var newest = function(event) {
+			
+			var makeQeury = '${pageMaker.makeQuery(1)}'.slice(0,-2);
+			
 			self.location = "facebook"
-						+ '${pageMaker.makeQuery(1)}'
+						+ makeQeury 
+						+ $('#selectPerPageNum option:selected').val()
 						+ "&searchType=" 
 						+ $("#selectSearchType option:selected").val()
 						+ "&keyword="
-						+ $('#keywordInput').val();
+						+ $('#keywordInput').val(); 
 		}
 		
 

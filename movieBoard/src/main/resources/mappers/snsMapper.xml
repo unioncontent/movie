@@ -67,30 +67,106 @@
  			
  	</delete>
  	
- 	<select id="listSearch" resultType="SNSVO">
+ 	<select id="facebookList" resultType="SNSVO">
  		select 
 			*
 		from 
 			sns_data
 		where 
 			textType is not null
+		and
+			sns_name = 'facebook'
 		<include refid="search"></include>
 		order 
 			by createdate
 		limit  
-			#{startPage}, #{pageUnit}
+			#{startPage}, #{perPageNum}
  	
  	</select>
  	
- 	<select id="getTotalCount" resultType="Integer">
+ 	<select id="facebookTotalCount" resultType="Integer">
  		select 
  			count(*)
  		from	
  			sns_data
+ 		where
+ 			sns_name = 'facebook'
+ 		
  		<include refid="search"></include>
  		
  	</select>
  	
+ 	<select id="instaList" resultType="SNSVO">
+ 		select 
+			*
+		from 
+			sns_data
+		where 
+			textType is not null
+		and
+			sns_name = 'instagram'
+		<include refid="search"></include>
+		order 
+			by createdate
+		limit  
+			#{startPage}, #{perPageNum}
+ 	
+ 	</select>
+ 	
+ 	<select id="instaTotalCount" resultType="Integer">
+ 		select 
+ 			count(*)
+ 		from	
+ 			sns_data
+ 		where
+ 			sns_name = 'instagram'
+ 		
+ 		<include refid="search"></include>
+ 		
+ 	</select>
+ 	
+ 	<select id="twitterList" resultType="SNSVO">
+ 		select 
+			*
+		from 
+			sns_data
+		where 
+			textType is not null
+		and
+			sns_name = 'twitter'
+		<include refid="search"></include>
+		order 
+			by createdate
+		limit  
+			#{startPage}, #{perPageNum}
+ 	
+ 	</select>
+ 	
+ 	<select id="twitterTotalCount" resultType="Integer">
+ 		select 
+ 			count(*)
+ 		from	
+ 			sns_data
+ 		where
+ 			sns_name = 'twitter'
+ 		
+ 		<include refid="search"></include>
+ 		
+ 	</select>
+ 	
+ 	<select id="getDateCount" resultType="SNSVO">
+ 		select 
+ 			writeDate, like_cnt, reply_cnt, share_cnt, sns_name
+  		from 
+  			sns_data
+  		where 
+  			writeDate <![CDATA[>]]> #{startDate}
+  		and 
+  			writeDate <![CDATA[<]]> #{endDate}
+  		and 
+  			sns_name = #{sns_name}
+ 	
+ 	</select>
  	
  	<update id="updateTextType">
 		update

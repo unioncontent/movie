@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.union.domain.GraphVO;
 import org.union.domain.SNSVO;
 import org.union.domain.SearchCriteria;
 import org.union.persistence.SNSDAO;
@@ -45,9 +46,44 @@ public class SNSServiceImpl implements SNSService {
 
 	
 	@Override
-	public List<SNSVO> listSearch(SearchCriteria cri) {
+	public List<SNSVO> facebookList(SearchCriteria cri) {
 
-		return dao.listSearch(cri);
+		return dao.facebookList(cri);
+	}
+	
+	
+	@Override
+	public Integer facebookTotalCount(SearchCriteria  cri) {
+
+		return dao.facebookTotalCount(cri);
+	}
+	
+	
+	@Override
+	public List<SNSVO> instaList(SearchCriteria cri) {
+
+		return dao.instaList(cri);
+	}
+
+
+	@Override
+	public Integer instaTotalCount(SearchCriteria cri) {
+
+		return dao.instaTotalCount(cri);
+	}
+
+
+	@Override
+	public List<SNSVO> twitterList(SearchCriteria cri) {
+
+		return dao.twitterList(cri);
+	}
+
+
+	@Override
+	public Integer twitterTotalCount(SearchCriteria cri) {
+
+		return dao.twitterTotalCount(cri);
 	}
 	
 
@@ -66,9 +102,10 @@ public class SNSServiceImpl implements SNSService {
 
 
 	@Override
-	public Integer getTotalCount(SearchCriteria  cri) {
+	public List<SNSVO> getDateCount(GraphVO vo) {
 
-		return dao.getTotalCount(cri);
+		return dao.getDateCount(vo);
 	}
+
 
 }
