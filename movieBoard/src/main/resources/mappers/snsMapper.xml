@@ -156,7 +156,7 @@
  	
  	<select id="getDateCount" resultType="SNSVO">
  		select 
- 			writeDate, like_cnt, reply_cnt, share_cnt, sns_name
+ 			date_format(writeDate, '%x-%m-%d') writeDate, like_cnt, reply_cnt, share_cnt, sns_name
   		from 
   			sns_data
   		where 
@@ -165,6 +165,7 @@
   			writeDate <![CDATA[<]]> #{endDate}
   		and 
   			sns_name = #{sns_name}
+  		order by  date_format(writeDate, '%x-%m-%d')
  	
  	</select>
  	

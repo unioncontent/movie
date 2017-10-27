@@ -583,8 +583,6 @@
   <script src="../assets/pages/picker.js"></script>
 </body>
 
-
-  
   
   <script type="text/javascript" language="javascript">
 
@@ -626,7 +624,62 @@
   		})*/
 
      });
-  });
+    
+    
+    
+    	
+    $('#fromDate').on('apply.daterangepicker', function(ev, picker) { 
+    	   var startDate = picker.startDate.format('YYYY-MM-DD'); 
+    	   var endDate = picker.endDate.format('YYYY-MM-DD'); 
+    	 
+    
+    	$.ajax({
+        
+          type : "POST",
+      	  url : "graph",
+       	  dataType : "json",
+       	  data : {startDate : startDate, endDate : endDate},
+        	error : function(){
+            	alert('graphPOST ajax error....');
+        	},
+        	success : function(data){
+        		
+        		var script = "[";
+        		
+        		for(var i = 0; i < data.length; i++){
+        			console.log(data[i]);
+        			script += '{"perid":' + '"' + data[i].writeDate + '",'+ '"l1"'+ ':' + data[i].likeCount + ","+ '"l2"' + ':' + data[i].shareCount + ","+ '"l3"' + ':' + data[i].replyCount + "},";
+        			
+        			if(i == data.length-1){
+        				script =  script.substr(0, script.length-1);
+        				script += "]";
+        			}
+        		}
+        		console.log(script);
+        		
+        		var jsonScript = JSON.parse(script);
+        		console.log(jsonScript);
+        		
+        		window.lineChart = Morris.Line({
+        		      element: 'line-chart1',
+        		      data: jsonScript,
+        		      xkey: 'period',
+        		      redraw: true,
+        		      ykeys: ['l1', 'l2', 'l3'],
+        		      hideHover: 'auto',
+        		      labels: ['좋아요', '공유', '댓글'],
+        		      lineColors: ['#fb9678', '#7E81CB', '#01C0C8']
+        		  });
+        	} 
+    	}); 
+	   
+    }); // end
+
+
+    
+    
+    
+  }); // end ready....
   	
 
   </script>
