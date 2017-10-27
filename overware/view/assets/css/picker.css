@@ -1,5 +1,36 @@
-@media only screen and (min-width: 1200px) {
-  .btn-group{
+@media only screen and (min-width: 412px){
+  .input-group:not(.btn-select){
     padding-right: 0px;
+  }
+}
+
+@media only screen and (min-width: 576px){
+  .input-group:not(.btn-select){
+    max-width: 500px;
+  }
+}
+
+@media only screen and (min-width: 600px){
+  .input-group:not(.btn-select){
+    padding-left: 13px;
+    padding-right: 0px;
+  }
+}
+
+@media only screen and (min-width: 929px) {
+  .input-group:not(.btn-select){
+    padding-left: 6px;
+  }
+}
+
+@media only screen and (min-width: 992px){
+  .input-group:not(.btn-select){
+    padding-left: 0px;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .input-group:not(.btn-select){
+    max-width: 267px;
   }
 }

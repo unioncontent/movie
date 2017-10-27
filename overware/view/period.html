@@ -28,8 +28,6 @@
   <link rel="stylesheet" type="text/css" href="assets/icon/icofont/css/icofont.css">
   <!-- font awesome -->
   <link rel="stylesheet" type="text/css" href="assets/icon/font-awesome/css/font-awesome.css">
-  <!-- flag icon framework css -->
-  <link rel="stylesheet" type="text/css" href="assets/pages/flag-icon/flag-icon.min.css">
   <!-- Menu-Search css -->
   <link rel="stylesheet" type="text/css" href="assets/pages/menu-search/css/component.css">
   <!-- Horizontal-Timeline css -->
@@ -325,14 +323,15 @@
                   <div class="page-body">
                     <div class="row">
                       <!-- data setting start -->
-                      <select name="select" class="col-md-1 form-control form-control-inverse m-l-15 m-r-15 m-b-10 p-r-5 f-left">
-                        <option value="opt1">회사</option>
-                      </select>
-                      <select name="select" class="col-md-1 form-control form-control-inverse  m-r-15 m-b-15 p-r-5 f-left" id="keyword">
-                        <option value="opt1">키워드</option>
-                      </select>
-                      <div class="col"></div>
-                      <div class="col-md-6">
+                      <div class="col-md-7">
+                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left">
+                          <option value="opt1">회사</option>
+                        </select>
+                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="keyword">
+                          <option value="opt1">키워드</option>
+                        </select>
+                      </div>
+                      <div class="col-md-5">
                         <!-- date picker start -->
                         <div class="row">
                           <div class="btn-group float-right m-b-10 p-l-15 p-r-10" role="group">
@@ -347,7 +346,7 @@
                               <span class="icofont icofont-ui-calendar"></span>
                             </span>
                           </div>
-                          <button class="btn btn-inverse waves-effect float-right p-r-5 p-l-5 m-r-15 m-b-10" data-type="inverse" data-from="top" data-align="right" data-icon="fa fa-comments">검색</button>
+                          <button class="btn btn-inverse waves-effect float-right p-r-5 p-l-5 m-r-15 m-b-10 btn-search">검색</button>
                         </div>
                         <!-- date picker end -->
                       </div>
@@ -451,7 +450,7 @@
                                     </h5>
                                     <div class="card-header-right">
                                       <i class="icofont icofont-rounded-down"></i>
-
+                                      <i class="icofont icofont-refresh"></i>
                                     </div>
                                   </div>
                                   <div class="card-block">
