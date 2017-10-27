@@ -6015,9 +6015,10 @@ body.menu-sidebar .navbar-wrapper {
   line-height: 23px; }
 
 .btn-sm {
-  padding: 8px 14px;
+  padding: 10px 16px;
+  padding-right: 15px;
   line-height: 16px;
-  font-size: 11px; }
+  font-size: 13px; }
 
 .btn-mini {
   padding: 5px 10px;
