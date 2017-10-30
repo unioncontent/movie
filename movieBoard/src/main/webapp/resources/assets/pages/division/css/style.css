@@ -54,15 +54,3 @@ input[type=radio] + label{
   max-height: 700px;
   overflow: auto;
 }
-
-@media (min-width: 576px){
-  #keyword{
-    margin-left: 15px;
-  }
-}
-
-@media (min-width: 1200px){
-  #keyword{
-    margin-left: 0px;
-  }
-}
