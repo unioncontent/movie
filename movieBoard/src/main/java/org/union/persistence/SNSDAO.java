@@ -2,6 +2,7 @@ package org.union.persistence;
 
 import java.util.List;
 
+import org.union.domain.GraphVO;
 import org.union.domain.SNSVO;
 import org.union.domain.SearchCriteria;
 
@@ -16,9 +17,19 @@ public interface SNSDAO {
 	
 	public void delete(Integer SNS_idx);
 	
-	public List<SNSVO> listSearch(SearchCriteria cri);
+	public List<SNSVO> facebookList(SearchCriteria cri);
 	
-	public Integer getTotalCount(SearchCriteria  cri);
+	public Integer facebookTotalCount(SearchCriteria  cri);
+	
+	public List<SNSVO> instaList(SearchCriteria cri);
+	
+	public Integer instaTotalCount(SearchCriteria cri);
+	
+	public List<SNSVO> twitterList(SearchCriteria cri);
+	
+	public Integer twitterTotalCount(SearchCriteria cri);
+	
+	public List<SNSVO> getDateCount(GraphVO vo);
 	
 	public void updateTextType(SNSVO vo);
 	

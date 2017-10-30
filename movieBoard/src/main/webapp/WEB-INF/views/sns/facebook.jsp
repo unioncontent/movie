@@ -32,6 +32,8 @@
   <link rel="stylesheet" type="text/css" href="../assets/icon/font-awesome/css/font-awesome.css">
   <!-- Date-range picker css  -->
   <link rel="stylesheet" type="text/css" href="../bower_components/bootstrap-daterangepicker/daterangepicker.css">
+  <!-- sweet alert framework -->
+  <link rel="stylesheet" type="text/css" href="../bower_components/sweetalert/dist/sweetalert.css">
   <!-- Style.css -->
   <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
   <link rel="stylesheet" type="text/css" href="../assets/pages/sns/css/style.css">
@@ -350,28 +352,22 @@
                   <div class="page-body">
                     <div class="row">
                       <!-- data setting start -->
-                      <div class="col-md-6">
-                        <div class="row">
-                          <div class="col-sm-12 col-xl-3 m-b-10">
-                            <select name="select" class="form-control form-control-inverse">
-                                <option value="opt1">회사</option>
-                            </select>
-                          </div>
-                          <div class="col-sm-12 col-xl-3 m-b-10">
-                            <select name="select" class="form-control form-control-inverse">
-                                <option value="opt1">키워드</option>
-                            </select>
-                          </div>
-                        </div>
+                      <div class="col-md-7">
+                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left">
+                          <option value="opt1">회사</option>
+                        </select>
+                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="keyword">
+                          <option value="opt1">키워드</option>
+                        </select>
                       </div>
-                      <div class="col-md-6">
+                      <div class="col-md-5">
                         <!-- date picker start -->
                         <div class="row">
-                          <div class="btn-group float-right m-b-10 p-l-15 p-r-10" role="group" data-toggle="tooltip" data-placement="top" title="" data-original-title=".btn-xlg">
-                            <button type="button" class="btn btn-inverse btn-sd waves-effect waves-light">당일</button>
-                            <button type="button" class="btn btn-inverse btn-sd waves-effect waves-light">전일</button>
-                            <button type="button" class="btn btn-inverse btn-sd waves-effect waves-light">최근7일</button>
-                            <button type="button" class="btn btn-inverse btn-sd waves-effect waves-light">최근30일</button>
+                          <div class="btn-group float-right m-b-10 p-l-15 p-r-10" role="group">
+                            <button id="toDay" type="button" class="btn btn-inverse btn-sm waves-effect waves-light">당일</button>
+                            <button id="yesterDay" type="button" class="btn btn-inverse btn-sm waves-effect waves-light">전일</button>
+                            <button id="week" type="button" class="btn btn-inverse btn-sm waves-effect waves-light">최근7일</button>
+                            <button id="month" type="button" class="btn btn-inverse btn-sm waves-effect waves-light">최근30일</button>
                           </div>
                           <div class="input-group float-right date col p-l-15 p-r-15 m-b-10">
                             <input type="text" id="fromDate" class="form-control form-control-inverse" value="">
@@ -379,7 +375,6 @@
                               <span class="icofont icofont-ui-calendar"></span>
                             </span>
                           </div>
-                          <button class="btn btn-inverse waves-effect float-right p-r-5 p-l-5 m-l-15 m-r-15 m-b-10" data-type="inverse" data-from="top" data-align="right" data-icon="fa fa-comments">검색</button>
                         </div>
                         <!-- date picker end -->
                       </div>
@@ -409,26 +404,23 @@
                       <div class="col-lg-12">
                         <div class="card">
                           <div class="card-header">
-                            <div class="col-md-6">
-                              <div class="row">
-                                <select name="select" class="col-sm-1 form-control form-control-inverse m-r-10 m-b-10 p-r-5">
+                            
+                                <select id= "selectPerPageNum" name="select" class="col-sm-1 form-control form-control-inverse m-r-10 m-b-10 p-r-5 f-left list-select">
                                   <option id= "10" >10</option>
                                   <option id = "50">50</option>
                                   <option id = "100">100</option>
                                 </select>
-                                <select id = "selectSearchType" name="select" class="col-sm-2 form-control form-control-inverse m-r-10 m-b-10">
+                                <select id = "selectSearchType" name="select" class="col-sm-1 form-control form-control-inverse m-r-10 m-b-10 f-left search-select">
                                   <option id="t" value="t">제목</option>
                                   <option id="c">게시글</option>
                                 </select>
-                                <div class="col-sm-5 input-group input-group-button input-group-inverse p-l-0 p-r-10 m-b-10">
+                                <div class="col-sm-3 input-group input-group-button input-group-inverse p-l-0 p-r-0 m-b-10 f-left btn-select">
                                   <input id="keywordInput" type="text" class="form-control" placeholder="">
                                   <span class="input-group-addon" id="basic-addon1">
                                     <button id="keySearchBtn" class=" btn btn-inverse">검색</button>
                                   </span>
                                 </div>
-                              </div>
-                            </div>
-                            
+                              <button class="btn btn-warning f-right alert-confirm" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'alert-confirm']);"><i class="icofont icofont-file-excel"></i>EXCEL</button>
                           </div>
                           <div class="card-block">
                             <div class="table-responsive">
@@ -461,19 +453,32 @@
                                 </tbody>
                               </table>
                               <ul class="pagination float-right">
+                              
+								<c:if test="${pageMaker.prev}">
                                 <li class="page-item">
-                                  <a class="page-link" href="#" aria-label="Previous">
+                                  <a class="page-link" href="facebook${pageMaker.makeSearch(pageMaker.startPage - 1) }" aria-label="Previous">&laquo;
                                     <span aria-hidden="true">«</span>
                                     <span class="sr-only">Previous</span>
                                   </a>
                                 </li>
-                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                </c:if>
+                                
+                                <c:forEach begin="${pageMaker.startPage }"
+								end="${pageMaker.endPage }" var="idx">
+								<li class="page-item active" 
+								  <c:out value="${pageMaker.cri.page == idx?'class =active':''}"/>>
+									<a class="page-link" href="facebook${pageMaker.makeSearch(idx)}">${idx}</a>
+								</li>
+								</c:forEach>
+							
+								<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
                                 <li class="page-item">
-                                  <a class="page-link" href="#" aria-label="Next">
+                                  <a class="page-link" href="facebook${pageMaker.makeSearch(pageMaker.endPage +1) }" aria-label="Next">&raquo;
                                     <span aria-hidden="true">»</span>
                                     <span class="sr-only">Next</span>
                                   </a>
                                 </li>
+                                </c:if>
                               </ul>
                             </div>
                           </div>
@@ -552,6 +557,9 @@
   <script type="text/javascript" src="../bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
   <!-- classie js -->
   <script type="text/javascript" src="../bower_components/classie/classie.js"></script>
+  <!-- sweet alert js -->
+  <script type="text/javascript" src="../bower_components/sweetalert/dist/sweetalert.min.js"></script>
+  <script type="text/javascript" src="../assets/pages/news/script.js"></script>
   <!-- Morris Chart js -->
   <script src="../bower_components/raphael/raphael.min.js"></script>
   <script src="../bower_components/morris.js/morris.js"></script>
@@ -570,22 +578,32 @@
   <script src="../assets/pages/picker.js"></script>
 </body>
 
-
-  
   
   <script type="text/javascript" language="javascript">
 
   	
   $(document).ready(function(){
 	  
+	  
+	  var date = getDate("week");
+  	  var startDate = date.startDate;
+  	  var endDate = date.endDate;
+  	
+  	  ajaxGraph(startDate, endDate);
+	  
+	  
 	//최신순 함수 빼놓음
 		var newest = function(event) {
+			
+			var makeQeury = '${pageMaker.makeQuery(1)}'.slice(0,-2);
+			
 			self.location = "facebook"
-						+ '${pageMaker.makeQuery(1)}'
+						+ makeQeury 
+						+ $('#selectPerPageNum option:selected').val()
 						+ "&searchType=" 
 						+ $("#selectSearchType option:selected").val()
 						+ "&keyword="
-						+ $('#keywordInput').val();
+						+ $('#keywordInput').val(); 
 		}
 		
 
@@ -609,7 +627,143 @@
   		})*/
 
      });
-  });
+    
+    
+    
+    
+    // 당일 클릭시
+    $('#toDay').on("click", function(){
+    	console.log("toDay clicked....");
+    	var date = getDate("toDay");
+    	var endDate = date.endDate;
+    	
+    	ajaxGraph(endDate, endDate);
+    });
+
+    $('#yesterDay').on("click", function(){
+    	console.log("yesterDay clicked....");
+    	var date = getDate("yesterDay");
+    	var startDate = date.startDate;
+    	var endDate = date.endDate;
+    	
+    	ajaxGraph(startDate, endDate);
+    });
+   
+    $('#week').on("click", function(){
+    	console.log("week clicked....");
+    	var date = getDate("week");
+    	var startDate = date.startDate;
+    	var endDate = date.endDate;
+    	
+    	ajaxGraph(startDate, endDate);
+    })
+    
+    $('#month').on("click", function(){
+    	console.log("month clicked....");
+    	var date = getDate("month");
+    	var startDate = date.startDate;
+    	var endDate = date.endDate;
+    	
+    	ajaxGraph(startDate, endDate);
+    })
+    
+    
+    // 캘린더 클릭시
+    $('#fromDate').on('apply.daterangepicker', function(ev, picker) { 
+    	   var startDate = picker.startDate.format('YYYY-MM-DD'); 
+    	   var endDate = picker.endDate.format('YYYY-MM-DD'); 
+    	
+    	   ajaxGraph(startDate, endDate);
+		    	
+    	
+    }); // end
+
+	
+    function ajaxGraph(startDate, endDate){
+    	$.ajax({
+            
+            type : "POST",
+        	  url : "graph",
+         	  dataType : "json",
+         	  data : {startDate : startDate, endDate : endDate},
+          	error : function(){
+              	alert('graphPOST ajax error....');
+          	},
+          	success : function(data){
+          		
+          		var script = "[";
+          		
+          		for(var i = 0; i < data.length; i++){
+          			console.log(data[i]);
+          			script += '{"period":' + '"' + data[i].writeDate + '",'+ '"l1"'+ ':' + data[i].likeCount + ","+ '"l2"' + ':' + data[i].shareCount + ","+ '"l3"' + ':' + data[i].replyCount + "},";
+          			
+          			if(i == data.length-1){
+          				script =  script.substr(0, script.length-1);
+          				script += "]";
+          			}
+          		}
+          		console.log(script);
+          		
+          		// to json
+          		var jsonScript = JSON.parse(script);
+          		
+          		lineChart(jsonScript);
+          		
+          	} 
+      	});
+    }
+	
+    
+    function getDate(type){
+    	console.log("TYPE : " + type);
+    	var date = new Date();
+   	 
+   	 	var month = date.getMonth()+1;
+   	 	var day = date.getDate();
+   	 	var year = date.getFullYear();
+   	 
+   	 	var endDate = year + "-" + month + "-" + day;
+   	 	var startDate;
+   	 	
+   	 	if(type == "yesterDay"){
+   	 		var calcDate = day-1;
+   	 		startDate = year + "-" + month + "-" + calcDate;
+   	 		
+   	 	}else if(type == "month"){
+   	 		var calcDate = month-1;
+   	 		startDate = year + "-" + calcDate + "-" + day;
+   	 		
+   	 	}else if(type == "week"){
+   	 		var calcDate = day-7;
+   	 		startDate = year + "-" + month + "-" + calcDate;
+   	 	}
+
+   	 	return {
+   	 		startDate : startDate,
+   	 		endDate : endDate
+   	 	}
+   	 	
+    }
+    
+   	// 그래프 함수
+    function lineChart(data){
+		// 그래프 초기화
+		$('#line-chart1').children().remove();
+		
+		window.lineChart = Morris.Line({
+		      element: 'line-chart1',
+		      data: data,
+		      xkey: 'period',
+		      redraw: true,
+		      ykeys: ['l1', 'l2', 'l3'],
+		      hideHover: 'auto',
+		      labels: ['좋아요', '공유', '댓글'],
+		      lineColors: ['#fb9678', '#7E81CB', '#01C0C8']
+		  });
+	}
+    
+    
+  }); // end ready....
   	
 
   </script>

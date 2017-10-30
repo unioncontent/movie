@@ -134,7 +134,7 @@
             color: #666;
         }
         i{
-          color: #607D8B;
+          color: $inverse-color;
         }
     }
 }
@@ -570,9 +570,9 @@
 }
 
 .user-activity-card {
-    border-top-color: $info-color;
+    border-top-color: $inverse-color;
     .progress-bar-warning {
-        background-color: $info-color;
+        background-color: $inverse-color;
     }
     .card-block-big {
         padding-top: 35px;
@@ -581,7 +581,7 @@
     .user-number {
         padding: 30px 0;
         font-weight: 600;
-        color: $info-color;
+        color: $inverse-color;
     }
     .card-footer {
         padding-top: 25px;
@@ -593,8 +593,8 @@
         position: absolute;
         right: 30px;
         top: 40px;
-        font-size: 25px;
-        color: $info-color;
+        font-size: 30px;
+        color: $inverse-color;
     }
 }
 

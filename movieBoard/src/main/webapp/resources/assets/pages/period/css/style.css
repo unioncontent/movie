@@ -29,15 +29,3 @@ th .sort > i:first-child{
 tr.more{
   display: none;
 }
-
-@media (min-width: 576px){
-  #keyword{
-    margin-left: 15px;
-  }
-}
-
-@media (min-width: 1200px){
-  #keyword{
-    margin-left: 0px;
-  }
-}

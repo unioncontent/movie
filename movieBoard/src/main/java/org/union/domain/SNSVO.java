@@ -1,5 +1,6 @@
 package org.union.domain;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class SNSVO {
@@ -13,16 +14,14 @@ public class SNSVO {
 	private Integer like_cnt;
 	private Integer reply_cnt;
 	private Integer share_cnt;
-	private Date writeDate;
+	private String writeDate;
 	private String keyword;
-	private Integer keyword_type;
+	private String keyword_type;
 	private String url;
 	private String textType;
 	private String thumbnail;
 	private Date createDate;
 	private Date updateDate;
-	
-	
 	public Integer getSns_idx() {
 		return sns_idx;
 	}
@@ -71,10 +70,10 @@ public class SNSVO {
 	public void setShare_cnt(Integer share_cnt) {
 		this.share_cnt = share_cnt;
 	}
-	public Date getWriteDate() {
+	public String getWriteDate() {
 		return writeDate;
 	}
-	public void setWriteDate(Date writeDate) {
+	public void setWriteDate(String writeDate) {
 		this.writeDate = writeDate;
 	}
 	public String getKeyword() {
@@ -83,10 +82,10 @@ public class SNSVO {
 	public void setKeyword(String keyword) {
 		this.keyword = keyword;
 	}
-	public Integer getKeyword_type() {
+	public String getKeyword_type() {
 		return keyword_type;
 	}
-	public void setKeyword_type(Integer keyword_type) {
+	public void setKeyword_type(String keyword_type) {
 		this.keyword_type = keyword_type;
 	}
 	public String getUrl() {
@@ -119,8 +118,6 @@ public class SNSVO {
 	public void setUpdateDate(Date updateDate) {
 		this.updateDate = updateDate;
 	}
-	
-	
 	@Override
 	public String toString() {
 		return "SNSVO [sns_idx=" + sns_idx + ", sns_name=" + sns_name + ", sns_title=" + sns_title + ", sns_content="

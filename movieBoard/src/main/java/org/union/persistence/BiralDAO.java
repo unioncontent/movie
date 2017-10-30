@@ -13,4 +13,5 @@ public interface BiralDAO {
 	
 	public void delete(Integer biral_idx);
 	
+	
 }

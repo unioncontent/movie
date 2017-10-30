@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.union.domain.GraphVO;
 import org.union.domain.SNSVO;
 import org.union.domain.SearchCriteria;
 
@@ -59,18 +60,46 @@ public class SNSDAOImpl implements SNSDAO {
 
 
 	@Override
-	public List<SNSVO> listSearch(SearchCriteria cri) {
+	public List<SNSVO> facebookList(SearchCriteria cri) {
 		
-		return session.selectList(namespace + "listSearch", cri);
+		return session.selectList(namespace + "facebookList", cri);
 	}
 
 	
 	@Override
-	public Integer getTotalCount(SearchCriteria  cri) {
+	public Integer facebookTotalCount(SearchCriteria  cri) {
 
-		return session.selectOne(namespace + "getTotalCount");
+		return session.selectOne(namespace + "facebookTotalCount", cri);
 	}
 	
+	
+	@Override
+	public List<SNSVO> instaList(SearchCriteria cri) {
+
+		return session.selectList(namespace + "instaList", cri);
+	}
+
+
+	@Override
+	public Integer instaTotalCount(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "instaTotalCount", cri);
+	}
+
+
+	@Override
+	public List<SNSVO> twitterList(SearchCriteria cri) {
+
+		return session.selectList(namespace + "twitterList", cri);
+	}
+
+
+	@Override
+	public Integer twitterTotalCount(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "twitterTotalCount", cri);
+	}
+
 
 	@Override
 	public void updateTextType(SNSVO vo) {
@@ -93,6 +122,12 @@ public class SNSDAOImpl implements SNSDAO {
 		}
 	}
 
+
+	@Override
+	public List<SNSVO> getDateCount(GraphVO vo) {
+
+		return session.selectList(namespace + "getDateCount", vo);
+	}
 
 
 }

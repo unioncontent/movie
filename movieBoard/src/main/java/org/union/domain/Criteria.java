@@ -3,7 +3,7 @@ package org.union.domain;
 
 public class Criteria {
 
-	private Integer pageUnit, page;
+	private Integer perPageNum, page;
 
 
 	public void getSearchVO() {
@@ -15,26 +15,26 @@ public class Criteria {
 	}
 
 	public Integer getStartPage() {
-		return (this.page - 1) * pageUnit;
+		return (this.page - 1) * perPageNum;
 	}
 
 	public Criteria() {
-		this.pageUnit = 10;
+		this.perPageNum = 10;
 		this.page = 1;
 	}
 
-	public Integer getPageUnit() {
-		return pageUnit;
+	public Integer getPerPageNum() {
+		return perPageNum;
 	}
 
-	public void setPageUnit(Integer pageUnit) {
+	public void setPerPageNum(Integer perPageNum) {
 
-		if (pageUnit <= 0 || pageUnit > 90) {
-			this.pageUnit = 9;
+		if (perPageNum <= 0 || perPageNum > 100) {
+			this.perPageNum = 10;
 			return;
 		}
 
-		this.pageUnit = pageUnit;
+		this.perPageNum = perPageNum;
 	}
 
 	public Integer getPage() {
@@ -53,6 +53,6 @@ public class Criteria {
 
 	@Override
 	public String toString() {
-		return "PageVO [pageUnit=" + pageUnit + ", page=" + page + "]";
+		return "PageVO [perPageNum=" + perPageNum + ", page=" + page + "]";
 	}
 }

@@ -1,6 +1,8 @@
 package org.union.dao;
 
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.junit.Before;
@@ -29,13 +31,19 @@ public class PortalDAOTester {
 
 	
 	@Test
-	public void testCreate() {
+	public void testCreate() throws ParseException {
 		
 		vo.setPortal_type("카페");
 		vo.setPortal_name("네이버");
 		vo.setPortal_title("title");
 		vo.setDeviceType(1);
-		vo.setWriteDate(new Date());
+		
+		String writeDate = "2017-10-25";
+
+		Date date =  new SimpleDateFormat("yyyy-mm-dd").parse(writeDate);
+		System.out.println(date);
+		vo.setWriteDate(date);
+		
 		vo.setKeyword("keyword");
 		vo.setKeyword_type(1);
 		vo.setUrl("url");
