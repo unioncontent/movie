@@ -41,6 +41,7 @@
   <!-- Style.css -->
   <link rel="stylesheet" type="text/css" href="assets/css/style.css">
   <link rel="stylesheet" type="text/css" href="assets/pages/news/css/style.css">
+  <link rel="stylesheet" type="text/css" href="assets/pages/division/css/style.css">
   <link rel="stylesheet" type="text/css" href="assets/css/picker.css">
   <!--color css-->
   <link rel="stylesheet" type="text/css" href="assets/css/color/color-1.css" id="color" />
@@ -387,7 +388,7 @@
                                     <th width="5%">언론사</th>
                                     <th width="5%">기자</th>
                                     <th width="5%">키워드</th>
-                                    <th width="15%">분류변경</th>
+                                    <th width="5%">분류변경</th>
                                   </tr>
                                 </thead>
                                 <tbody>
@@ -399,38 +400,21 @@
                                     <td>조연경</td>
                                     <td>희생부활자</td>
                                     <td>
-                                      <div class="form-radio">
-                                          <div class="radio radio-inline">
-                                            <label>
-                                              <input type="radio" name="radio" checked="checked">
-                                              <i class="helper"></i>좋은글
-                                            </label>
-                                          </div>
-                                          <div class="radio radio-inline">
-                                            <label>
-                                              <input type="radio" name="radio">
-                                              <i class="helper"></i>나쁜글
-                                            </label>
-                                          </div>
-                                          <div class="radio radio-inline">
-                                            <label>
-                                              <input type="radio" name="radio">
-                                              <i class="helper"></i>관심글
-                                            </label>
-                                          </div>
-                                          <div class="radio radio-inline">
-                                            <label>
-                                              <input type="radio" name="radio">
-                                              <i class="helper"></i>기타글
-                                            </label>
-                                          </div>
-                                          <div class="radio radio-inline">
-                                            <label>
-                                              <input type="radio" name="radio">
-                                              <i class="helper"></i>미분류
-                                            </label>
-                                          </div>
-                                        </div>
+                                      <div class="radios">
+                                        <input type="radio" id="radio1" name="radios">
+                                        <label for="radio1">좋은글</label>
+                                        <input type="radio" id="radio2" name="radios">
+                                        <label for="radio2">나쁜글</label>
+                                        <input type="radio" id="radio3" name="radios">
+                                        <label for="radio3">관심글</label>
+                                        <br/>
+                                        <input type="radio" id="radio4" name="radios">
+                                        <label for="radio4">기타글</label>
+                                        <input type="radio" id="radio5" name="radios">
+                                        <label for="radio5">삭제글</label>
+                                        <input type="radio" id="radio6" name="radios" checked>
+                                        <label for="radio6">미분류</label>
+                                      </div>
                                     </td>
                                   </tr>
                                 </tbody>

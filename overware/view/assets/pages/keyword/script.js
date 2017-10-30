@@ -8,7 +8,7 @@ $(document).ready(function () {
       type: "input",
       showCancelButton: true,
       closeOnConfirm: false,
-      inputValue:$("#keyword").val(),
+      inputValue:$("#keywordName").val(),
       inputPlaceholder: "대표 키워드 입력"
     }, function (inputValue) {
       if (inputValue === false){
@@ -23,10 +23,10 @@ $(document).ready(function () {
         swal.showInputError("키워드가 중복됩니다. 다시 입력해 주세요.");
         return false
       }
-      $("#keyword").val(inputValue);
+      $("#keywordName").val(inputValue);
       $("#keywordCheck").val("true");
-      $("#keyword").removeClass("form-control-danger");
-      $("#keyword").siblings().children("p").text("");
+      $("#keywordName").removeClass("form-control-danger");
+      $("#keywordName").siblings().children("p").text("");
       swal("중복확인!", inputValue+"는 사용가능한 키워드입니다.", "success");
     });
   };
@@ -37,12 +37,12 @@ $(document).ready(function () {
     if($("#company option:selected").text() == "선택"){
       check = requiredMessage("company","회사명을 선택해주세요.");
     }
-    if($("#keyword").val() == ""){
-      check = requiredMessage("keyword","키워드를 입력해주세요.");
+    if($("#keywordName").val() == ""){
+      check = requiredMessage("keywordName","키워드를 입력해주세요.");
     }
     //키워드가 입력되어 있는데 중복체크 안했을 경우
-    if($("#keyword").val() != "" && $("#keywordCheck").val() == ""){
-      check = requiredMessage("keyword","키워드 중복확인 해주세요.");
+    if($("#keywordName").val() != "" && $("#keywordCheck").val() == ""){
+      check = requiredMessage("keywordName","키워드 중복확인 해주세요.");
     }
     if(check){
       swal("등록완료!", "등록이 성공적으로 되었습니다.", "success");

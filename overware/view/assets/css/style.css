@@ -2998,7 +2998,13 @@ select.form-control-inverse, .search-select {
     min-width: 180px; } }
 @media only screen and (min-width: 768px) {
   .btn-sm {
-    padding: 10px 13px; } }
+    padding: 10px 13px; }
+
+  .press-setting {
+    max-width: 635px; }
+
+  .monitoring-setting {
+    max-width: 683px; } }
 @media only screen and (min-width: 1025px) {
   .btn-group {
     padding-left: 0px; } }
