@@ -31,43 +31,70 @@ public class SNSController {
 	
 	private static Logger logger = LoggerFactory.getLogger(SNSController.class);
 	
-	/*@GetMapping("/facebook")
-	public String facebook() {
-		logger.info("GET facebook....");
-		
-		return "sns/facebook";
-	}*/
-	
 	
 	@GetMapping("/facebook")
-	public void list(@ModelAttribute("cri") SearchCriteria cri, Model model) throws Exception{
-		logger.info("GET list call....");
-		
+	public void facebookGET(@ModelAttribute("cri") SearchCriteria cri, Model model) throws Exception{
+		logger.info("facebookGET called....");
 		logger.info("cri : " + cri);
 		
 		PageMaker pageMaker = new PageMaker();
 		
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(service.facebookTotalCount(cri));
-		logger.info("totalCount: " + service.facebookTotalCount(cri));
 		model.addAttribute("pageMaker", pageMaker);
 		logger.info("pageMaker: " + pageMaker);
 		
 		List<SNSVO> list = new ArrayList<SNSVO>();
 		list = service.facebookList(cri);
-		
 		model.addAttribute("facebookList", list);
 		logger.info("list: " + list);
 		
 	}
 	
+	@GetMapping("/instagram")
+	public void instagramGET(@ModelAttribute("cri") SearchCriteria cri, Model model) throws Exception{
+		logger.info("instagramGET called....");
+		logger.info("cri : " + cri);
+		
+		PageMaker pageMaker = new PageMaker();
+		
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(service.instaTotalCount(cri));
+		model.addAttribute("pageMaker", pageMaker);
+		logger.info("pageMaker: " + pageMaker);
+		
+		List<SNSVO> list = new ArrayList<SNSVO>();
+		list = service.instaList(cri);
+		model.addAttribute("instagramList", list);
+		logger.info("list: " + list);
+		
+	}
+	
+	
+	@GetMapping("/twitter")
+	public void twitterGET(@ModelAttribute("cri") SearchCriteria cri, Model model) throws Exception{
+		logger.info("twitterGET called....");
+		logger.info("cri : " + cri);
+		
+		PageMaker pageMaker = new PageMaker();
+		
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(service.twitterTotalCount(cri));
+		model.addAttribute("pageMaker", pageMaker);
+		logger.info("pageMaker: " + pageMaker);
+		
+		List<SNSVO> list = new ArrayList<SNSVO>();
+		list = service.twitterList(cri);
+		model.addAttribute("twitterList", list);
+		logger.info("list: " + list);
+		
+	}
+	
+	
 	@PostMapping("/graph")
 	@ResponseBody
 	public List<GraphVO> graphPOST(String startDate, String endDate) throws Exception{
-		logger.info("graphPOST called....");
-		
-		logger.info("startDate: " + startDate);
-		logger.info("endDate: " + endDate);
+		logger.info("grpahPOST called....");
 		
 		/*Date transStart = new SimpleDateFormat("yyyy-mm-dd").parse(startDate);
 		Date transEnd = new SimpleDateFormat("yyyy-mm-dd").parse(endDate);
@@ -97,25 +124,20 @@ public class SNSController {
 			
 			// equlas
 			if((startDate.equals(list.get(i).getWriteDate()))) {
-				logger.info("EQUALS");
-				
 				graphData.setWriteDate(startDate);
 				like = like + list.get(i).getLike_cnt();
 				share =share + list.get(i).getShare_cnt();
 				reply =reply + list.get(i).getReply_cnt();
+				
 			}else {
-				logger.info("NOT EQUALS");
 				graphData.setLikeCount(like);
 				graphData.setShareCount(share);
 				graphData.setReplyCount(reply);
-				logger.info("GRAPH: " + graphData);
 				
 				// 데이터 부족할 때
 				if(graphData.getWriteDate() != null) {
 					graphList.add(graphData);
 				}
-				
-				logger.info("graphList: " + graphList);
 				
 				graphData = new GraphVO();
 				
@@ -128,15 +150,12 @@ public class SNSController {
 			
 			// 마지막 날짜
 			if(i == list.size()-1) {
-				logger.info("LAST");
 				
 				graphData.setLikeCount(like);
 				graphData.setShareCount(share);
 				graphData.setReplyCount(reply);
-				logger.info("GRAPH: " + graphData);
 				
 				graphList.add(graphData);
-				logger.info("graphList: " + graphList);
 			}
 			
 		}// end for

@@ -32,6 +32,8 @@
   <link rel="stylesheet" type="text/css" href="../assets/icon/font-awesome/css/font-awesome.css">
   <!-- Date-range picker css  -->
   <link rel="stylesheet" type="text/css" href="../bower_components/bootstrap-daterangepicker/daterangepicker.css">
+  <!-- sweet alert framework -->
+  <link rel="stylesheet" type="text/css" href="../bower_components/sweetalert/dist/sweetalert.css">
   <!-- Style.css -->
   <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
   <link rel="stylesheet" type="text/css" href="../assets/pages/sns/css/style.css">
@@ -350,28 +352,22 @@
                   <div class="page-body">
                     <div class="row">
                       <!-- data setting start -->
-                      <div class="col-md-6">
-                        <div class="row">
-                          <div class="col-sm-12 col-xl-3 m-b-10">
-                            <select name="select" class="form-control form-control-inverse">
-                                <option value="opt1">회사</option>
-                            </select>
-                          </div>
-                          <div class="col-sm-12 col-xl-3 m-b-10">
-                            <select name="select" class="form-control form-control-inverse">
-                                <option value="opt1">키워드</option>
-                            </select>
-                          </div>
-                        </div>
+                      <div class="col-md-7">
+                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left">
+                          <option value="opt1">회사</option>
+                        </select>
+                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="keyword">
+                          <option value="opt1">키워드</option>
+                        </select>
                       </div>
-                      <div class="col-md-6">
+                      <div class="col-md-5">
                         <!-- date picker start -->
                         <div class="row">
-                          <div class="btn-group float-right m-b-10 p-l-15 p-r-10" role="group" data-toggle="tooltip" data-placement="top" title="" data-original-title=".btn-xlg">
-                            <button id = "toDay" type="button" class="btn btn-inverse btn-sd waves-effect waves-light">당일</button>
-                            <button id = "yesterDay" type="button" class="btn btn-inverse btn-sd waves-effect waves-light">전일</button>
-                            <button id = "week" type="button" class="btn btn-inverse btn-sd waves-effect waves-light">최근7일</button>
-                            <button id = "month" type="button" class="btn btn-inverse btn-sd waves-effect waves-light">최근30일</button>
+                          <div class="btn-group float-right m-b-10 p-l-15 p-r-10" role="group">
+                            <button id="toDay" type="button" class="btn btn-inverse btn-sm waves-effect waves-light">당일</button>
+                            <button id="yesterDay" type="button" class="btn btn-inverse btn-sm waves-effect waves-light">전일</button>
+                            <button id="week" type="button" class="btn btn-inverse btn-sm waves-effect waves-light">최근7일</button>
+                            <button id="month" type="button" class="btn btn-inverse btn-sm waves-effect waves-light">최근30일</button>
                           </div>
                           <div class="input-group float-right date col p-l-15 p-r-15 m-b-10">
                             <input type="text" id="fromDate" class="form-control form-control-inverse" value="">
@@ -379,7 +375,6 @@
                               <span class="icofont icofont-ui-calendar"></span>
                             </span>
                           </div>
-                          <button class="btn btn-inverse waves-effect float-right p-r-5 p-l-5 m-l-15 m-r-15 m-b-10" data-type="inverse" data-from="top" data-align="right" data-icon="fa fa-comments">검색</button>
                         </div>
                         <!-- date picker end -->
                       </div>
@@ -409,26 +404,23 @@
                       <div class="col-lg-12">
                         <div class="card">
                           <div class="card-header">
-                            <div class="col-md-6">
-                              <div class="row">
-                                <select id= "selectPerPageNum" name="select" class="col-sm-1 form-control form-control-inverse m-r-10 m-b-10 p-r-5">
+                            
+                                <select id= "selectPerPageNum" name="select" class="col-sm-1 form-control form-control-inverse m-r-10 m-b-10 p-r-5 f-left list-select">
                                   <option id= "10" >10</option>
                                   <option id = "50">50</option>
                                   <option id = "100">100</option>
                                 </select>
-                                <select id = "selectSearchType" name="select" class="col-sm-2 form-control form-control-inverse m-r-10 m-b-10">
+                                <select id = "selectSearchType" name="select" class="col-sm-1 form-control form-control-inverse m-r-10 m-b-10 f-left search-select">
                                   <option id="t" value="t">제목</option>
                                   <option id="c">게시글</option>
                                 </select>
-                                <div class="col-sm-5 input-group input-group-button input-group-inverse p-l-0 p-r-10 m-b-10">
+                                <div class="col-sm-3 input-group input-group-button input-group-inverse p-l-0 p-r-0 m-b-10 f-left btn-select">
                                   <input id="keywordInput" type="text" class="form-control" placeholder="">
                                   <span class="input-group-addon" id="basic-addon1">
                                     <button id="keySearchBtn" class=" btn btn-inverse">검색</button>
                                   </span>
                                 </div>
-                              </div>
-                            </div>
-                            
+                              <button class="btn btn-warning f-right alert-confirm" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'alert-confirm']);"><i class="icofont icofont-file-excel"></i>EXCEL</button>
                           </div>
                           <div class="card-block">
                             <div class="table-responsive">
@@ -565,6 +557,9 @@
   <script type="text/javascript" src="../bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
   <!-- classie js -->
   <script type="text/javascript" src="../bower_components/classie/classie.js"></script>
+  <!-- sweet alert js -->
+  <script type="text/javascript" src="../bower_components/sweetalert/dist/sweetalert.min.js"></script>
+  <script type="text/javascript" src="../assets/pages/news/script.js"></script>
   <!-- Morris Chart js -->
   <script src="../bower_components/raphael/raphael.min.js"></script>
   <script src="../bower_components/morris.js/morris.js"></script>
