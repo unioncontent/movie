@@ -368,10 +368,10 @@
                         <!-- date picker start -->
                         <div class="row">
                           <div class="btn-group float-right m-b-10 p-l-15 p-r-10" role="group" data-toggle="tooltip" data-placement="top" title="" data-original-title=".btn-xlg">
-                            <button type="button" class="btn btn-inverse btn-sd waves-effect waves-light">당일</button>
-                            <button type="button" class="btn btn-inverse btn-sd waves-effect waves-light">전일</button>
-                            <button type="button" class="btn btn-inverse btn-sd waves-effect waves-light">최근7일</button>
-                            <button type="button" class="btn btn-inverse btn-sd waves-effect waves-light">최근30일</button>
+                            <button id = "toDay" type="button" class="btn btn-inverse btn-sd waves-effect waves-light">당일</button>
+                            <button id = "yesterDay" type="button" class="btn btn-inverse btn-sd waves-effect waves-light">전일</button>
+                            <button id = "week" type="button" class="btn btn-inverse btn-sd waves-effect waves-light">최근7일</button>
+                            <button id = "month" type="button" class="btn btn-inverse btn-sd waves-effect waves-light">최근30일</button>
                           </div>
                           <div class="input-group float-right date col p-l-15 p-r-15 m-b-10">
                             <input type="text" id="fromDate" class="form-control form-control-inverse" value="">
@@ -589,6 +589,14 @@
   	
   $(document).ready(function(){
 	  
+	  
+	  var date = getDate("week");
+  	  var startDate = date.startDate;
+  	  var endDate = date.endDate;
+  	
+  	  ajaxGraph(startDate, endDate);
+	  
+	  
 	//최신순 함수 빼놓음
 		var newest = function(event) {
 			
@@ -627,56 +635,137 @@
     
     
     
+    
+    // 당일 클릭시
+    $('#toDay').on("click", function(){
+    	console.log("toDay clicked....");
+    	var date = getDate("toDay");
+    	var endDate = date.endDate;
     	
+    	ajaxGraph(endDate, endDate);
+    });
+
+    $('#yesterDay').on("click", function(){
+    	console.log("yesterDay clicked....");
+    	var date = getDate("yesterDay");
+    	var startDate = date.startDate;
+    	var endDate = date.endDate;
+    	
+    	ajaxGraph(startDate, endDate);
+    });
+   
+    $('#week').on("click", function(){
+    	console.log("week clicked....");
+    	var date = getDate("week");
+    	var startDate = date.startDate;
+    	var endDate = date.endDate;
+    	
+    	ajaxGraph(startDate, endDate);
+    })
+    
+    $('#month').on("click", function(){
+    	console.log("month clicked....");
+    	var date = getDate("month");
+    	var startDate = date.startDate;
+    	var endDate = date.endDate;
+    	
+    	ajaxGraph(startDate, endDate);
+    })
+    
+    
+    // 캘린더 클릭시
     $('#fromDate').on('apply.daterangepicker', function(ev, picker) { 
     	   var startDate = picker.startDate.format('YYYY-MM-DD'); 
     	   var endDate = picker.endDate.format('YYYY-MM-DD'); 
-    	 
-    
-    	$.ajax({
-        
-          type : "POST",
-      	  url : "graph",
-       	  dataType : "json",
-       	  data : {startDate : startDate, endDate : endDate},
-        	error : function(){
-            	alert('graphPOST ajax error....');
-        	},
-        	success : function(data){
-        		
-        		var script = "[";
-        		
-        		for(var i = 0; i < data.length; i++){
-        			console.log(data[i]);
-        			script += '{"perid":' + '"' + data[i].writeDate + '",'+ '"l1"'+ ':' + data[i].likeCount + ","+ '"l2"' + ':' + data[i].shareCount + ","+ '"l3"' + ':' + data[i].replyCount + "},";
-        			
-        			if(i == data.length-1){
-        				script =  script.substr(0, script.length-1);
-        				script += "]";
-        			}
-        		}
-        		console.log(script);
-        		
-        		var jsonScript = JSON.parse(script);
-        		console.log(jsonScript);
-        		
-        		window.lineChart = Morris.Line({
-        		      element: 'line-chart1',
-        		      data: jsonScript,
-        		      xkey: 'period',
-        		      redraw: true,
-        		      ykeys: ['l1', 'l2', 'l3'],
-        		      hideHover: 'auto',
-        		      labels: ['좋아요', '공유', '댓글'],
-        		      lineColors: ['#fb9678', '#7E81CB', '#01C0C8']
-        		  });
-        	} 
-    	}); 
-	   
+    	
+    	   ajaxGraph(startDate, endDate);
+		    	
+    	
     }); // end
 
-
+	
+    function ajaxGraph(startDate, endDate){
+    	$.ajax({
+            
+            type : "POST",
+        	  url : "graph",
+         	  dataType : "json",
+         	  data : {startDate : startDate, endDate : endDate},
+          	error : function(){
+              	alert('graphPOST ajax error....');
+          	},
+          	success : function(data){
+          		
+          		var script = "[";
+          		
+          		for(var i = 0; i < data.length; i++){
+          			console.log(data[i]);
+          			script += '{"period":' + '"' + data[i].writeDate + '",'+ '"l1"'+ ':' + data[i].likeCount + ","+ '"l2"' + ':' + data[i].shareCount + ","+ '"l3"' + ':' + data[i].replyCount + "},";
+          			
+          			if(i == data.length-1){
+          				script =  script.substr(0, script.length-1);
+          				script += "]";
+          			}
+          		}
+          		console.log(script);
+          		
+          		// to json
+          		var jsonScript = JSON.parse(script);
+          		
+          		lineChart(jsonScript);
+          		
+          	} 
+      	});
+    }
+	
     
+    function getDate(type){
+    	console.log("TYPE : " + type);
+    	var date = new Date();
+   	 
+   	 	var month = date.getMonth()+1;
+   	 	var day = date.getDate();
+   	 	var year = date.getFullYear();
+   	 
+   	 	var endDate = year + "-" + month + "-" + day;
+   	 	var startDate;
+   	 	
+   	 	if(type == "yesterDay"){
+   	 		var calcDate = day-1;
+   	 		startDate = year + "-" + month + "-" + calcDate;
+   	 		
+   	 	}else if(type == "month"){
+   	 		var calcDate = month-1;
+   	 		startDate = year + "-" + calcDate + "-" + day;
+   	 		
+   	 	}else if(type == "week"){
+   	 		var calcDate = day-7;
+   	 		startDate = year + "-" + month + "-" + calcDate;
+   	 	}
+
+   	 	return {
+   	 		startDate : startDate,
+   	 		endDate : endDate
+   	 	}
+   	 	
+    }
+    
+   	// 그래프 함수
+    function lineChart(data){
+		// 그래프 초기화
+		$('#line-chart1').children().remove();
+		
+		window.lineChart = Morris.Line({
+		      element: 'line-chart1',
+		      data: data,
+		      xkey: 'period',
+		      redraw: true,
+		      ykeys: ['l1', 'l2', 'l3'],
+		      hideHover: 'auto',
+		      labels: ['좋아요', '공유', '댓글'],
+		      lineColors: ['#fb9678', '#7E81CB', '#01C0C8']
+		  });
+	}
     
     
   }); // end ready....

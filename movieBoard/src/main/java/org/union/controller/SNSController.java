@@ -69,17 +69,18 @@ public class SNSController {
 		logger.info("startDate: " + startDate);
 		logger.info("endDate: " + endDate);
 		
-		Date transStart = new SimpleDateFormat("yyyy-mm-dd").parse(startDate);
+		/*Date transStart = new SimpleDateFormat("yyyy-mm-dd").parse(startDate);
 		Date transEnd = new SimpleDateFormat("yyyy-mm-dd").parse(endDate);
 		
-		long gapDays = (transEnd.getTime() - transStart.getTime()) / (24 * 60 * 60 * 1000) +1;
-		logger.info("gap: " + gapDays);
+		
+		long gapDays = (transEnd.getTime() - transStart.getTime()) / (24 * 60 * 60 * 1000);
+		logger.info("gap: " + gapDays);*/
 		
 		GraphVO vo = new GraphVO();
 		vo.setStartDate(startDate + " 00:00:00");
 		vo.setEndDate(endDate + " 23:59:59");
 		vo.setSns_name("facebook");
-		
+		logger.info("GRAPHVO: " +vo);
 		
 		
 		List<SNSVO> list= service.getDateCount(vo);
@@ -109,7 +110,11 @@ public class SNSController {
 				graphData.setReplyCount(reply);
 				logger.info("GRAPH: " + graphData);
 				
-				graphList.add(graphData);
+				// 데이터 부족할 때
+				if(graphData.getWriteDate() != null) {
+					graphList.add(graphData);
+				}
+				
 				logger.info("graphList: " + graphList);
 				
 				graphData = new GraphVO();
@@ -134,7 +139,8 @@ public class SNSController {
 				logger.info("graphList: " + graphList);
 			}
 			
-		}
+		}// end for
+		
 		logger.info("graphList: " + graphList);
 		
 		return graphList;
