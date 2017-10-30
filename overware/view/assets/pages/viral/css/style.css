@@ -1,0 +1,6 @@
+.text-center td,.text-center th{
+  text-align: center;
+}
+.talbe-checkbox tr > td:first-child{
+  text-align: center;
+}

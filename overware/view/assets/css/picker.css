@@ -1,9 +1,32 @@
-@media only screen and (min-width: 412px){
-  .input-group:not(.btn-select){
-    padding-right: 0px;
+/* iphone 5 */
+@media only screen and (min-width: 320px){
+  .btn-sm {
+    padding: 10px 11px;
+    padding-right: 10px;
+  }
+}
+/* Galaxy S5 */
+@media only screen and (min-width: 360px){
+  .btn-sm {
+    padding: 10px 16px;
+    padding-right: 15px;
+  }
+}
+/* iphone 6 */
+@media only screen and (min-width: 372px){
+  .btn-sm {
+    padding: 10px 15px;
+    padding-right: 20px;
   }
 }
 
+/* Nexus 5X */
+@media only screen and (min-width: 412px){
+  .btn-sm {
+    padding: 10px 22px;
+  }
+}
+/* Nexus 6P */
 @media only screen and (min-width: 576px){
   .input-group:not(.btn-select){
     max-width: 500px;
@@ -14,6 +37,16 @@
   .input-group:not(.btn-select){
     padding-left: 13px;
     padding-right: 0px;
+  }
+  .btn-sm {
+    padding: 10px 51px;
+    padding-right: 52px;
+  }
+}
+/* iPad */
+@media only screen and (min-width: 768px) {
+  .btn-sm{
+    padding: 10px 13px;
   }
 }
 
