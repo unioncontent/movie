@@ -1,14 +1,18 @@
-'use strict';
+/*'use strict';*/
 /*$(window).on('resize',function(){
   setTimeout(function(){
     window.lineChart.redraw();
   }, 500);
 });
 */
+
+
+
+
 $(document).ready(function() {
-  linechart();
   //일괄처리 확인메시지
-	document.querySelector('.alert-confirm').onclick = function(){
+
+  document.querySelector('.alert-confirm').onclick = function(){
 		swal({
 					title: "엑셀출력 하시겠습니까?",
 					text: "현재 리스트가 엑셀출력 됩니다.",

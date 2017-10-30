@@ -296,7 +296,6 @@
   <script type="text/javascript" src="../bower_components/classie/classie.js"></script>
   <!-- sweet alert js -->
   <script type="text/javascript" src="../bower_components/sweetalert/dist/sweetalert.min.js"></script>
-  <script type="text/javascript" src="../assets/pages/sns/script.js"></script>
   <!-- Morris Chart js -->
   <script src="../bower_components/raphael/raphael.min.js"></script>
   <script src="../bower_components/morris.js/morris.js"></script>
@@ -315,18 +314,14 @@
   <script src="../assets/pages/picker.js"></script>
 </body>
 
-  
-  <script type="text/javascript" language="javascript">
-
-  	
-  $(document).ready(function(){
-	  
+<script type="text/javascript">
+$(document).ready(function(){
 	  
 	  var date = getDate("week");
-  	  var startDate = date.startDate;
-  	  var endDate = date.endDate;
-  	
-  	  ajaxGraph(startDate, endDate);
+	  var startDate = date.startDate;
+	  var endDate = date.endDate;
+	
+	  ajaxGraph(startDate, endDate);
 	  
 	  
 	//최신순 함수 빼놓음
@@ -344,146 +339,146 @@
 		}
 		
 
-    $('#keySearchBtn').on("click", function(event){
-    	console.log("searchBtn click....");
-    	
-  		console.log($('#selectSearchType option:selected').val());
-  		
-  		newest();
-  		
-  		  /* $(function(){ $("#listButton").click(function(){
-  			$.ajax({
-  				type: 'post' ,
-  				url: '/list.html' ,
-  				dataType : 'html' ,
-  				success: function(data) {
-  					$("#listDiv").html(data); 
-  					}
-  				});	
-  			})	  
-  		})*/
+$('#keySearchBtn').on("click", function(event){
+	console.log("searchBtn click....");
+	
+		console.log($('#selectSearchType option:selected').val());
+		
+		newest();
+		
+		  /* $(function(){ $("#listButton").click(function(){
+			$.ajax({
+				type: 'post' ,
+				url: '/list.html' ,
+				dataType : 'html' ,
+				success: function(data) {
+					$("#listDiv").html(data); 
+					}
+				});	
+			})	  
+		})*/
 
-     });
-    
-    
-    
-    
-    // 당일 클릭시
-    $('#toDay').on("click", function(){
-    	console.log("toDay clicked....");
-    	var date = getDate("toDay");
-    	var endDate = date.endDate;
-    	
-    	ajaxGraph(endDate, endDate);
-    });
+ });
 
-    $('#yesterDay').on("click", function(){
-    	console.log("yesterDay clicked....");
-    	var date = getDate("yesterDay");
-    	var startDate = date.startDate;
-    	var endDate = date.endDate;
-    	
-    	ajaxGraph(startDate, endDate);
-    });
-   
-    $('#week').on("click", function(){
-    	console.log("week clicked....");
-    	var date = getDate("week");
-    	var startDate = date.startDate;
-    	var endDate = date.endDate;
-    	
-    	ajaxGraph(startDate, endDate);
-    })
-    
-    $('#month').on("click", function(){
-    	console.log("month clicked....");
-    	var date = getDate("month");
-    	var startDate = date.startDate;
-    	var endDate = date.endDate;
-    	
-    	ajaxGraph(startDate, endDate);
-    })
-    
-    
-    // 캘린더 클릭시
-    $('#fromDate').on('apply.daterangepicker', function(ev, picker) { 
-    	   var startDate = picker.startDate.format('YYYY-MM-DD'); 
-    	   var endDate = picker.endDate.format('YYYY-MM-DD'); 
-    	
-    	   ajaxGraph(startDate, endDate);
+
+
+
+// 당일 클릭시
+$('#toDay').on("click", function(){
+	console.log("toDay clicked....");
+	var date = getDate("toDay");
+	var endDate = date.endDate;
+	
+	ajaxGraph(endDate, endDate);
+});
+
+$('#yesterDay').on("click", function(){
+	console.log("yesterDay clicked....");
+	var date = getDate("yesterDay");
+	var startDate = date.startDate;
+	var endDate = date.endDate;
+	
+	ajaxGraph(startDate, endDate);
+});
+
+$('#week').on("click", function(){
+	console.log("week clicked....");
+	var date = getDate("week");
+	var startDate = date.startDate;
+	var endDate = date.endDate;
+	
+	ajaxGraph(startDate, endDate);
+})
+
+$('#month').on("click", function(){
+	console.log("month clicked....");
+	var date = getDate("month");
+	var startDate = date.startDate;
+	var endDate = date.endDate;
+	
+	ajaxGraph(startDate, endDate);
+})
+
+
+// 캘린더 클릭시
+$('#fromDate').on('apply.daterangepicker', function(ev, picker) { 
+	   var startDate = picker.startDate.format('YYYY-MM-DD'); 
+	   var endDate = picker.endDate.format('YYYY-MM-DD'); 
+	
+	   ajaxGraph(startDate, endDate);
 		    	
-    	
-    }); // end
+	
+}); // end
 
 	
-    function ajaxGraph(startDate, endDate){
-    	$.ajax({
-            
-            type : "POST",
-        	  url : "graph",
-         	  dataType : "json",
-         	  data : {startDate : startDate, endDate : endDate},
-          	error : function(){
-              	alert('graphPOST ajax error....');
-          	},
-          	success : function(data){
-          		
-          		var script = "[";
-          		
-          		for(var i = 0; i < data.length; i++){
-          			console.log(data[i]);
-          			script += '{"period":' + '"' + data[i].writeDate + '",'+ '"l1"'+ ':' + data[i].likeCount + ","+ '"l2"' + ':' + data[i].shareCount + ","+ '"l3"' + ':' + data[i].replyCount + "},";
-          			
-          			if(i == data.length-1){
-          				script =  script.substr(0, script.length-1);
-          				script += "]";
-          			}
-          		}
-          		console.log(script);
-          		
-          		// to json
-          		var jsonScript = JSON.parse(script);
-          		
-          		lineChart(jsonScript);
-          		
-          	} 
-      	});
-    }
+function ajaxGraph(startDate, endDate){
+	$.ajax({
+        
+        type : "POST",
+    	  url : "graph",
+     	  dataType : "json",
+     	  data : {startDate : startDate, endDate : endDate},
+      	error : function(){
+          	alert('graphPOST ajax error....');
+      	},
+      	success : function(data){
+      		
+      		var script = "[";
+      		
+      		for(var i = 0; i < data.length; i++){
+      			console.log(data[i]);
+      			script += '{"period":' + '"' + data[i].writeDate + '",'+ '"l1"'+ ':' + data[i].likeCount + ","+ '"l2"' + ':' + data[i].shareCount + ","+ '"l3"' + ':' + data[i].replyCount + "},";
+      			
+      			if(i == data.length-1){
+      				script =  script.substr(0, script.length-1);
+      				script += "]";
+      			}
+      		}
+      		console.log(script);
+      		
+      		// to json
+      		var jsonScript = JSON.parse(script);
+      		
+      		lineChart(jsonScript);
+      		
+      	} 
+  	});
+}
 	
-    
-    function getDate(type){
-    	console.log("TYPE : " + type);
-    	var date = new Date();
-   	 
-   	 	var month = date.getMonth()+1;
-   	 	var day = date.getDate();
-   	 	var year = date.getFullYear();
-   	 
-   	 	var endDate = year + "-" + month + "-" + day;
-   	 	var startDate;
-   	 	
-   	 	if(type == "yesterDay"){
-   	 		var calcDate = day-1;
-   	 		startDate = year + "-" + month + "-" + calcDate;
-   	 		
-   	 	}else if(type == "month"){
-   	 		var calcDate = month-1;
-   	 		startDate = year + "-" + calcDate + "-" + day;
-   	 		
-   	 	}else if(type == "week"){
-   	 		var calcDate = day-7;
-   	 		startDate = year + "-" + month + "-" + calcDate;
-   	 	}
 
-   	 	return {
-   	 		startDate : startDate,
-   	 		endDate : endDate
-   	 	}
-   	 	
-    }
-    
-   	// 그래프 함수
-    function lineChart(data){
+function getDate(type){
+	console.log("TYPE : " + type);
+	var date = new Date();
+	 
+	 	var month = date.getMonth()+1;
+	 	var day = date.getDate();
+	 	var year = date.getFullYear();
+	 
+	 	var endDate = year + "-" + month + "-" + day;
+	 	var startDate;
+	 	
+	 	if(type == "yesterDay"){
+	 		var calcDate = day-1;
+	 		startDate = year + "-" + month + "-" + calcDate;
+	 		
+	 	}else if(type == "month"){
+	 		var calcDate = month-1;
+	 		startDate = year + "-" + calcDate + "-" + day;
+	 		
+	 	}else if(type == "week"){
+	 		var calcDate = day-7;
+	 		startDate = year + "-" + month + "-" + calcDate;
+	 	}
+
+	 	return {
+	 		startDate : startDate,
+	 		endDate : endDate
+	 	}
+	 	
+}
+
+	// 그래프 함수
+function lineChart(data){
 		// 그래프 초기화
 		$('#line-chart1').children().remove();
 		
@@ -498,10 +493,10 @@
 		      lineColors: ['#fb9678', '#7E81CB', '#01C0C8']
 		  });
 	}
-    
-    
-  }); // end ready....
-  	
 
-  </script>
+
+
+}); // end ready....
+</script>
+  
 </html>

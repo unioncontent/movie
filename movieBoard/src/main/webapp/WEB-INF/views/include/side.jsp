@@ -14,14 +14,14 @@
     </div>
     <ul class="pcoded-item pcoded-left-item">
       <li class="">
-        <a href="dashboard.html">
+        <a href="dashboard.jsp">
           <span class="pcoded-micon"><i class="ti-home"></i></span>
           <span class="pcoded-mtext" data-i18n="nav.dash.main">대시보드</span>
           <span class="pcoded-mcaret"></span>
         </a>
       </li>
       <li class="">
-        <a href="period.html">
+        <a href="period.jsp">
           <span class="pcoded-micon"><i class="ti-bar-chart-alt"></i></span>
           <span class="pcoded-mtext">통계보고서</span>
           <span class="pcoded-mcaret"></span>
@@ -35,14 +35,14 @@
         </a>
         <ul class="pcoded-submenu">
           <li class="">
-            <a href="mngNaver.html" data-i18n="nav.advance-components.draggable">
+            <a href="mngNaver.jsp" data-i18n="nav.advance-components.draggable">
               <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
               <span class="pcoded-mtext">네이버관리</span>
               <span class="pcoded-mcaret"></span>
             </a>
           </li>
           <li class=" ">
-            <a href="mngViral.html" data-i18n="nav.advance-components.grid-stack">
+            <a href="mngViral.jsp" data-i18n="nav.advance-components.grid-stack">
               <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
               <span class="pcoded-mtext">바이럴관리</span>
               <span class="pcoded-mcaret"></span>
@@ -58,21 +58,21 @@
         </a>
         <ul class="pcoded-submenu">
           <li class=" ">
-            <a href="mngFaceBook.html" data-i18n="nav.advance-components.draggable">
+            <a href="facebook.jsp" data-i18n="nav.advance-components.draggable">
               <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
               <span class="pcoded-mtext">페이스북관리</span>
               <span class="pcoded-mcaret"></span>
             </a>
           </li>
           <li class=" ">
-            <a href="mngTwitter.html" data-i18n="nav.advance-components.grid-stack">
+            <a href="twitter.jsp" data-i18n="nav.advance-components.grid-stack">
               <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
               <span class="pcoded-mtext">트위터관리</span>
               <span class="pcoded-mcaret"></span>
             </a>
           </li>
           <li class=" ">
-            <a href="mngInstagram.html" data-i18n="nav.advance-components.grid-stack">
+            <a href="instagram.jsp" data-i18n="nav.advance-components.grid-stack">
               <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
               <span class="pcoded-mtext">인스타그램관리</span>
               <span class="pcoded-mcaret"></span>
@@ -88,14 +88,14 @@
         </a>
         <ul class="pcoded-submenu">
           <li class=" ">
-            <a href="mngNews.html" data-i18n="nav.advance-components.draggable">
+            <a href="mngNews.jsp" data-i18n="nav.advance-components.draggable">
               <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
               <span class="pcoded-mtext">언론사 기사글 관리</span>
               <span class="pcoded-mcaret"></span>
             </a>
           </li>
           <li class=" ">
-            <a href="mngPress.html" data-i18n="nav.advance-components.grid-stack">
+            <a href="mngPress.jsp" data-i18n="nav.advance-components.grid-stack">
               <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
               <span class="pcoded-mtext">기자관리</span>
               <span class="pcoded-mcaret"></span>
@@ -111,14 +111,14 @@
         </a>
         <ul class="pcoded-submenu">
           <li class=" ">
-            <a href="mngCompany.html" data-i18n="nav.advance-components.draggable">
+            <a href="mngCompany.jsp" data-i18n="nav.advance-components.draggable">
               <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
               <span class="pcoded-mtext">거래처관리</span>
               <span class="pcoded-mcaret"></span>
             </a>
           </li>
           <li class=" ">
-            <a href="monitoring.html" data-i18n="nav.advance-components.grid-stack">
+            <a href="monitoring.jsp" data-i18n="nav.advance-components.grid-stack">
               <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
               <span class="pcoded-mtext">모니터링현황</span>
               <span class="pcoded-mcaret"></span>
@@ -127,14 +127,14 @@
         </ul>
       </li>
       <li class="">
-        <a href="mngKeyword.html" data-i18n="nav.advance-components.main">
+        <a href="mngKeyword.jsp" data-i18n="nav.advance-components.main">
           <span class="pcoded-micon"><i class="ti-ink-pen"></i></span>
           <span class="pcoded-mtext">키워드관리</span>
           <span class="pcoded-mcaret"></span>
         </a>
       </li>
       <li class="">
-        <a href="mngExtract.html" data-i18n="nav.advance-components.main">
+        <a href="mngExtract.jsp" data-i18n="nav.advance-components.main">
           <span class="pcoded-micon"><i class="ti-search"></i></span>
           <span class="pcoded-mtext">추출글관리</span>
           <span class="pcoded-mcaret"></span>
@@ -148,35 +148,35 @@
         </a>
         <ul class="pcoded-submenu">
           <li class=" ">
-            <a href="mngClassifiCation1.html" data-i18n="nav.advance-components.draggable">
+            <a href="mngClassifiCation1.jsp" data-i18n="nav.advance-components.draggable">
               <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
               <span class="pcoded-mtext">좋은글</span>
               <span class="pcoded-mcaret"></span>
             </a>
           </li>
           <li class=" ">
-            <a href="mngClassifiCation2.html" data-i18n="nav.advance-components.grid-stack">
+            <a href="mngClassifiCation2.jsp" data-i18n="nav.advance-components.grid-stack">
               <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
               <span class="pcoded-mtext">나쁜글</span>
               <span class="pcoded-mcaret"></span>
             </a>
           </li>
           <li class=" ">
-            <a href="mngClassifiCation3.html" data-i18n="nav.advance-components.grid-stack">
+            <a href="mngClassifiCation3.jsp" data-i18n="nav.advance-components.grid-stack">
               <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
               <span class="pcoded-mtext">관심글</span>
               <span class="pcoded-mcaret"></span>
             </a>
           </li>
           <li class=" ">
-            <a href="mngClassifiCation4.html" data-i18n="nav.advance-components.grid-stack">
+            <a href="mngClassifiCation4.jsp" data-i18n="nav.advance-components.grid-stack">
               <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
               <span class="pcoded-mtext">기타</span>
               <span class="pcoded-mcaret"></span>
             </a>
           </li>
           <li class=" ">
-            <a href="mngClassifiCation5.html" data-i18n="nav.advance-components.grid-stack">
+            <a href="mngClassifiCation5.jsp" data-i18n="nav.advance-components.grid-stack">
               <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
               <span class="pcoded-mtext">삭제</span>
               <span class="pcoded-mcaret"></span>
@@ -184,7 +184,7 @@
           </li>
         </ul>
         <li class="">
-          <a href="mngAllList.html" data-i18n="nav.advance-components.main">
+          <a href="mngAllList.jsp" data-i18n="nav.advance-components.main">
             <span class="pcoded-micon"><i class="ti-menu"></i></span>
             <span class="pcoded-mtext">전체글관리</span>
             <span class="pcoded-mcaret"></span>
