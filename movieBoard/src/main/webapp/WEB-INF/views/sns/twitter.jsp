@@ -101,8 +101,11 @@
                         <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left">
                           <option value="opt1">회사</option>
                         </select>
-                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="keyword">
-                          <option value="opt1">키워드</option>
+                        <select id = "selectKeyword" name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left">
+                          <option>키워드</option>
+                          <option value="택시">택시</option>
+                          <option value="강철비">강철비</option>
+                          <option value="살인자">살인자</option>
                         </select>
                       </div>
                       <div class="col-md-5">
@@ -159,9 +162,9 @@
                                   <option id="c">게시글</option>
                                 </select>
                             <div class="col-sm-3 input-group input-group-button input-group-inverse p-l-0 p-r-0 m-b-10 f-left btn-select">
-                              <input type="text" class="form-control" placeholder="">
+                              <input id="keywordInput" type="text" class="form-control" placeholder="">
                               <span class="input-group-addon" id="basic-addon1">
-                                <button id="keySearchBtn" class="btn btn-inverse">검색</button>
+                                <button id="searchBtn" class="btn btn-inverse">검색</button>
                               </span>
                             </div>
                             <button class="btn btn-warning f-right alert-confirm" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'alert-confirm']);"><i class="icofont icofont-file-excel"></i>EXCEL</button>
@@ -327,49 +330,47 @@
 <script type="text/javascript">
 $(document).ready(function(){
 	  
-	  var date = getDate("week");
-	  var startDate = date.startDate;
-	  var endDate = date.endDate;
+	var date = getDate("week");
+	var startDate = date.startDate;
+	var endDate = date.endDate;
 	
-	  ajaxGraph(startDate, endDate);
-	  
-	  
-	//최신순 함수 빼놓음
-		var newest = function(event) {
-			
-			var makeQeury = '${pageMaker.makeQuery(1)}'.slice(0,-2);
-			
-			self.location = "facebook"
-						+ makeQeury 
-						+ $('#selectPerPageNum option:selected').val()
-						+ "&searchType=" 
-						+ $("#selectSearchType option:selected").val()
-						+ "&keyword="
-						+ $('#keywordInput').val(); 
+	ajaxGraph(startDate, endDate);
+	
+	var selectOption = decodeURI(window.location.href.split("selectKey=")[1]);
+	console.log(selectOption);
+	
+	var $selectKeyword = $('#selectKeyword');
+	
+	if(selectOption != 'undefined'){
+		for(var i = 0; i < $selectKeyword[0].length; i++ ){
+			if($selectKeyword[0][i].value == selectOption){
+				$selectKeyword[0][i].selected = 'selected';
+			}
 		}
-		
-
-$('#keySearchBtn').on("click", function(event){
-	console.log("searchBtn click....");
+	}
+	$selectKeyword[0][0].disabled = true;
 	
-		console.log($('#selectSearchType option:selected').val());
+	// 키워드 선택시
+	$selectKeyword.change(function(){
+		console.log("selectKeyword clicked....");
+		console.log($('#selectKeyword option:selected').val());
 		
-		newest();
+		searchList();
+	}); 
+	
 		
-		  /* $(function(){ $("#listButton").click(function(){
-			$.ajax({
-				type: 'post' ,
-				url: '/list.html' ,
-				dataType : 'html' ,
-				success: function(data) {
-					$("#listDiv").html(data); 
-					}
-				});	
-			})	  
-		})*/
-
- });
-
+	// 검색 클릭시
+	$('#searchBtn').on("click", function(event){
+	  console.log("searchBtn clicked....");
+	  console.log($('#selectSearchType option:selected').val());
+	
+	   if($('#keywordInput').val() == ''){
+		  alert("검색어를 입력해주세요.");
+	  }else{
+		  searchList();
+	  } 
+	  
+    });
 
 
 
@@ -421,6 +422,9 @@ $('#fromDate').on('apply.daterangepicker', function(ev, picker) {
 }); // end
 
 	
+
+}); // end ready....
+
 function ajaxGraph(startDate, endDate){
 	$.ajax({
         
@@ -449,7 +453,7 @@ function ajaxGraph(startDate, endDate){
       		// to json
       		var jsonScript = JSON.parse(script);
       		
-      		lineChart(jsonScript);
+      		drawChart(jsonScript);
       		
       	} 
   	});
@@ -488,7 +492,7 @@ function getDate(type){
 }
 
 	// 그래프 함수
-function lineChart(data){
+function drawChart(data){
 		// 그래프 초기화
 		$('#line-chart1').children().remove();
 		
@@ -503,8 +507,19 @@ function lineChart(data){
 		      lineColors: ['#fb9678', '#7E81CB', '#01C0C8']
 		  });
 	}
+	
+function searchList(event) {
 
-
-
-}); // end ready....
+	var makeQeury = '${pageMaker.makeQuery(1)}'.slice(0,-2);
+	
+	self.location = "twitter"
+				  + makeQeury 
+				  + $('#selectPerPageNum option:selected').val()
+				  + "&searchType=" 
+				  + $("#selectSearchType option:selected").val()
+				  + "&keyword="
+				  + $('#keywordInput').val()
+				  + "&selectKey="
+				  + $('#selectKeyword option:selected').val(); 
+}
 </script>

@@ -93,8 +93,11 @@
                         <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left">
                           <option value="opt1">회사</option>
                         </select>
-                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="keyword">
-                          <option value="opt1">키워드</option>
+                        <select id = "selectKeyword"  name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left">
+                          <option>키워드</option>
+                          <option value="택시">택시</option>
+                          <option value="강철비">강철비</option>
+                          <option value="살인자">살인자</option>
                         </select>
                       </div>
                       <div class="col-md-5">
@@ -149,12 +152,12 @@
                                 </select>
                                 <select id = "selectSearchType" name="select" class="col-sm-1 form-control form-control-inverse m-r-10 m-b-10 f-left search-select">
                                   <option id="t" value="t">제목</option>
-                                  <option id="c">게시글</option>
+                                  <option id="c" value="c">게시글</option>
                                 </select>
                                 <div class="col-sm-3 input-group input-group-button input-group-inverse p-l-0 p-r-0 m-b-10 f-left btn-select">
                                   <input id="keywordInput" type="text" class="form-control" placeholder="">
                                   <span class="input-group-addon" id="basic-addon1">
-                                    <button id="keySearchBtn" class=" btn btn-inverse">검색</button>
+                                    <button id="searchBtn" class=" btn btn-inverse">검색</button>
                                   </span>
                                 </div>
                               <button class="btn btn-warning f-right alert-confirm" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'alert-confirm']);"><i class="icofont icofont-file-excel"></i>EXCEL</button>
@@ -315,188 +318,210 @@
 </body>
 
 <script type="text/javascript">
-$(document).ready(function(){
+  $(document).ready(function(){
 	  
-	  var date = getDate("week");
-	  var startDate = date.startDate;
-	  var endDate = date.endDate;
-	
-	  ajaxGraph(startDate, endDate);
-	  
-	  
-	//최신순 함수 빼놓음
-		var newest = function(event) {
-			
-			var makeQeury = '${pageMaker.makeQuery(1)}'.slice(0,-2);
-			
-			self.location = "facebook"
-						+ makeQeury 
-						+ $('#selectPerPageNum option:selected').val()
-						+ "&searchType=" 
-						+ $("#selectSearchType option:selected").val()
-						+ "&keyword="
-						+ $('#keywordInput').val(); 
-		}
-		
-
-$('#keySearchBtn').on("click", function(event){
-	console.log("searchBtn click....");
-	
-		console.log($('#selectSearchType option:selected').val());
-		
-		newest();
-		
-		  /* $(function(){ $("#listButton").click(function(){
-			$.ajax({
-				type: 'post' ,
-				url: '/list.html' ,
-				dataType : 'html' ,
-				success: function(data) {
-					$("#listDiv").html(data); 
-					}
-				});	
-			})	  
-		})*/
-
- });
-
-
-
-
-// 당일 클릭시
-$('#toDay').on("click", function(){
-	console.log("toDay clicked....");
-	var date = getDate("toDay");
-	var endDate = date.endDate;
-	
-	ajaxGraph(endDate, endDate);
-});
-
-$('#yesterDay').on("click", function(){
-	console.log("yesterDay clicked....");
-	var date = getDate("yesterDay");
-	var startDate = date.startDate;
-	var endDate = date.endDate;
-	
-	ajaxGraph(startDate, endDate);
-});
-
-$('#week').on("click", function(){
-	console.log("week clicked....");
 	var date = getDate("week");
 	var startDate = date.startDate;
 	var endDate = date.endDate;
 	
 	ajaxGraph(startDate, endDate);
-})
-
-$('#month').on("click", function(){
-	console.log("month clicked....");
-	var date = getDate("month");
-	var startDate = date.startDate;
-	var endDate = date.endDate;
 	
-	ajaxGraph(startDate, endDate);
-})
+	var selectOption = decodeURI(window.location.href.split("selectKey=")[1]);
+	console.log(selectOption);
+	
+	
+	
+	var $selectKeyword = $('#selectKeyword');
+	
+	if(selectOption != 'undefined'){
+		for(var i = 0; i < $selectKeyword[0].length; i++ ){
+			if($selectKeyword[0][i].value == selectOption){
+				$selectKeyword[0][i].selected = 'selected';
+			}
+		}
+	}
+	$selectKeyword[0][0].disabled = true;
+	
+	// 키워드 선택시
+	$selectKeyword.change(function(){
+		console.log("selectKeyword clicked....");
+		console.log($('#selectKeyword option:selected').val());
+		
+		searchList();
+	}); 
+	
+		
+	// 검색 클릭시
+	$('#searchBtn').on("click", function(event){
+	  console.log("searchBtn clicked....");
+	  console.log($('#selectSearchType option:selected').val());
+	
+	   if($('#keywordInput').val() == ''){
+		  alert("검색어를 입력해주세요.");
+	  }else{
+		  searchList();
+	  } 
+	  
+    });
 
 
-// 캘린더 클릭시
-$('#fromDate').on('apply.daterangepicker', function(ev, picker) { 
+	// 당일 클릭시
+	$('#toDay').on("click", function(){
+	  console.log("toDay clicked....");
+	  var date = getDate("toDay");
+	  var endDate = date.endDate;
+	  
+	  ajaxGraph(endDate, endDate);
+	});
+
+	// 전일 클릭시
+	$('#yesterDay').on("click", function(){
+	  console.log("yesterDay clicked....");
+	  var date = getDate("yesterDay");
+	  var startDate = date.startDate;
+	  var endDate = date.endDate;
+	
+	  ajaxGraph(startDate, endDate);
+	});
+
+	// 7일  클릭시
+	$('#week').on("click", function(){
+	  console.log("week clicked....");
+	  var date = getDate("week");
+	  var startDate = date.startDate;
+	  var endDate = date.endDate;
+	
+	  ajaxGraph(startDate, endDate);
+	})
+
+	// 30일 클릭시
+	$('#month').on("click", function(){
+	  console.log("month clicked....");
+	  var date = getDate("month");
+	  var startDate = date.startDate;
+	  var endDate = date.endDate;
+	
+	  ajaxGraph(startDate, endDate);
+	})
+
+
+	// 캘린더 클릭시
+	$('#fromDate').on('apply.daterangepicker', function(ev, picker) { 
 	   var startDate = picker.startDate.format('YYYY-MM-DD'); 
 	   var endDate = picker.endDate.format('YYYY-MM-DD'); 
 	
 	   ajaxGraph(startDate, endDate);
 		    	
 	
-}); // end
-
-	
-function ajaxGraph(startDate, endDate){
-	$.ajax({
-        
-        type : "POST",
-    	  url : "graph",
-     	  dataType : "json",
-     	  data : {startDate : startDate, endDate : endDate},
-      	error : function(){
-          	alert('graphPOST ajax error....');
-      	},
-      	success : function(data){
-      		
-      		var script = "[";
-      		
-      		for(var i = 0; i < data.length; i++){
-      			console.log(data[i]);
-      			script += '{"period":' + '"' + data[i].writeDate + '",'+ '"l1"'+ ':' + data[i].likeCount + ","+ '"l2"' + ':' + data[i].shareCount + ","+ '"l3"' + ':' + data[i].replyCount + "},";
-      			
-      			if(i == data.length-1){
-      				script =  script.substr(0, script.length-1);
-      				script += "]";
-      			}
-      		}
-      		console.log(script);
-      		
-      		// to json
-      		var jsonScript = JSON.parse(script);
-      		
-      		lineChart(jsonScript);
-      		
-      	} 
-  	});
-}
-	
-
-function getDate(type){
-	console.log("TYPE : " + type);
-	var date = new Date();
-	 
-	 	var month = date.getMonth()+1;
-	 	var day = date.getDate();
-	 	var year = date.getFullYear();
-	 
-	 	var endDate = year + "-" + month + "-" + day;
-	 	var startDate;
-	 	
-	 	if(type == "yesterDay"){
-	 		var calcDate = day-1;
-	 		startDate = year + "-" + month + "-" + calcDate;
-	 		
-	 	}else if(type == "month"){
-	 		var calcDate = month-1;
-	 		startDate = year + "-" + calcDate + "-" + day;
-	 		
-	 	}else if(type == "week"){
-	 		var calcDate = day-7;
-	 		startDate = year + "-" + month + "-" + calcDate;
-	 	}
-
-	 	return {
-	 		startDate : startDate,
-	 		endDate : endDate
-	 	}
-	 	
-}
 
 	// 그래프 함수
-function lineChart(data){
-		// 그래프 초기화
-		$('#line-chart1').children().remove();
-		
-		window.lineChart = Morris.Line({
-		      element: 'line-chart1',
-		      data: data,
-		      xkey: 'period',
-		      redraw: true,
-		      ykeys: ['l1', 'l2', 'l3'],
-		      hideHover: 'auto',
-		      labels: ['좋아요', '공유', '댓글'],
-		      lineColors: ['#fb9678', '#7E81CB', '#01C0C8']
-		  });
-	}
-
+	    
+}); // end
 
 
 }); // end ready....
+
+//list URL 함수
+function searchList(event) {
+
+	var makeQeury = '${pageMaker.makeQuery(1)}'.slice(0,-2);
+	
+	self.location = "facebook"
+				  + makeQeury 
+				  + $('#selectPerPageNum option:selected').val()
+				  + "&searchType=" 
+				  + $("#selectSearchType option:selected").val()
+				  + "&keyword="
+				  + $('#keywordInput').val()
+				  + "&selectKey="
+				  + $('#selectKeyword option:selected').val(); 
+}
+
+// 그래프 함수
+function ajaxGraph(startDate, endDate){
+	$.ajax({
+    
+      type : "POST",
+	  url : "graph",
+ 	  dataType : "json",
+ 	  data : {startDate : startDate, endDate : endDate},
+  	  error : function(){
+      	alert('graphPOST ajax error....');
+  	  },
+  	  success : function(data){
+  		
+  		var script = "[";
+  		
+  		for(var i = 0; i < data.length; i++){
+  			console.log(data[i]);
+  			script += '{"period":' + '"' + data[i].writeDate + '",'+ '"l1"'+ ':' + data[i].likeCount + ","+ '"l2"' + ':' + data[i].shareCount + ","+ '"l3"' + ':' + data[i].replyCount + "},";
+  			
+  			if(i == data.length-1){
+  				script =  script.substr(0, script.length-1);
+  				script += "]";
+  			}
+  		}
+  		console.log(script);
+  		
+  		// to json
+  		var jsonScript = JSON.parse(script);
+  		
+  		drawChart(jsonScript);
+  		
+  	 } 
+	});
+}
+
+
+function drawChart(data){
+   	// 그래프 초기화
+   	$('#line-chart1').children().remove();
+   	
+   	window.lineChart = Morris.Line({
+   	      element: 'line-chart1',
+   	      data: data,
+   	      xkey: 'period',
+   	      redraw: true,
+   	      ykeys: ['l1', 'l2', 'l3'],
+   	      hideHover: 'auto',
+   	      labels: ['좋아요', '공유', '댓글'],
+   	      lineColors: ['#fb9678', '#7E81CB', '#01C0C8']
+   	  });
+   }
+
+// 날짜 계산 함수
+function getDate(type){
+	console.log("TYPE : " + type);
+	var date = new Date();
+ 
+ 	var month = date.getMonth()+1;
+ 	var day = date.getDate();
+ 	var year = date.getFullYear();
+ 
+ 	var endDate = year + "-" + month + "-" + day;
+ 	var startDate;
+ 	
+ 	if(type == "yesterDay"){
+ 		var calcDate = day-1;
+ 		startDate = year + "-" + month + "-" + calcDate;
+ 		
+ 	}else if(type == "month"){
+ 		var calcDate = month-1;
+ 		startDate = year + "-" + calcDate + "-" + day;
+ 		
+ 	}else if(type == "week"){
+ 		var calcDate = day-7;
+ 		startDate = year + "-" + month + "-" + calcDate;
+ 	}
+
+ 	return {
+ 		startDate : startDate,
+ 		endDate : endDate
+ 	}
+ 	
+}
+
+
 </script>
   
 </html>

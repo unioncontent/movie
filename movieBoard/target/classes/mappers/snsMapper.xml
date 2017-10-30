@@ -18,6 +18,9 @@
 				</if>
 			</if>
 		</if>
+		<if test="selectKey != null">
+			and keyword = #{selectKey}
+		</if>
 	</sql>
  
  

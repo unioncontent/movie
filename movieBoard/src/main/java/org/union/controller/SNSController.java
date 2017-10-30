@@ -49,6 +49,7 @@ public class SNSController {
 		model.addAttribute("facebookList", list);
 		logger.info("list: " + list);
 		
+		
 	}
 	
 	@GetMapping("/instagram")

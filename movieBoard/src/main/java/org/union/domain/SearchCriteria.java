@@ -3,7 +3,7 @@ package org.union.domain;
 public class SearchCriteria extends Criteria {
 
 	
-	private String searchType, keyword;
+	private String searchType, keyword, selectKey;
 	private Integer total;
 
 	
@@ -41,9 +41,21 @@ public class SearchCriteria extends Criteria {
 	}
 	
 
+	public String getSelectKey() {
+		return selectKey;
+	}
+
+
+	public void setSelectKey(String selectKey) {
+		this.selectKey = selectKey;
+	}
+
+
 	@Override
 	public String toString() {
-		return "SearchVO [searchType=" + searchType + ", keyword=" + keyword + ", total=" + total + "]";
+		return "SearchCriteria [searchType=" + searchType + ", keyword=" + keyword + ", selectKey=" + selectKey
+				+ ", total=" + total + "]";
 	}
+
 	
 }
