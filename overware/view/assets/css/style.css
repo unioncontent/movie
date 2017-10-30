@@ -4504,13 +4504,11 @@ table tbody .border-bottom-info td {
       .main-menu .main-menu-header .user-details span {
         color: #fff;
         display: block;
-        font-size: 14px;
+        font-size: 19px;
         text-transform: capitalize; }
         .main-menu .main-menu-header .user-details span i {
           font-size: 10px;
           margin-left: 10px; }
-        .main-menu .main-menu-header .user-details span:first-child {
-          margin-bottom: 5px; }
   .main-menu .main-menu-content .more-details {
     display: none; }
     .main-menu .main-menu-content .more-details a {
