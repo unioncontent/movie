@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /**
 
 Template Name: Flat Able Admin Template
@@ -49,9 +50,6 @@ p {
   font-size: 13px;
   font-weight: normal; }
 
-.media-left {
-  padding-right: 20px; }
-
 table td > a:hover {
   font-weight: bold; }
 
@@ -86,7 +84,7 @@ table td > a:hover {
 ==========================  **/
 .card {
   border-radius: 2px;
-  border-top: 4px solid #607D8B;
+  border-top: 4px solid #34495e;
   /*4px solid #8CDDCD;*/
   box-shadow: 0 2px 1px rgba(0, 0, 0, 0.05);
   border-left: none;
@@ -1125,6 +1123,9 @@ a.bg-danger:hover {
   .nav-tabs .slide .nav-item.show .nav-link, .nav-tabs .slide .main-menu .main-menu-content .nav-item .tree-1 a.show .nav-link, .main-menu .main-menu-content .nav-item .tree-1 .nav-tabs .slide a.show .nav-link, .nav-tabs .slide .main-menu .main-menu-content .nav-item .tree-2 a.show .nav-link, .main-menu .main-menu-content .nav-item .tree-2 .nav-tabs .slide a.show .nav-link, .nav-tabs .slide .main-menu .main-menu-content .nav-item .tree-3 a.show .nav-link, .main-menu .main-menu-content .nav-item .tree-3 .nav-tabs .slide a.show .nav-link, .nav-tabs .slide .main-menu .main-menu-content .nav-item .tree-4 a.show .nav-link, .main-menu .main-menu-content .nav-item .tree-4 .nav-tabs .slide a.show .nav-link,
   .nav-tabs .slide .nav-link {
     color: #34495e; }
+
+.nav-vtabs .slide {
+  width: calc(100% / 6); }
 
 .img-tabs img {
   width: 100px;
@@ -2933,6 +2934,85 @@ table.matrics-table tr:first-child td {
 #sessionTimeout-dialog .close {
   display: none; }
 
+/** 추가 **/
+.media-left {
+  padding-right: 20px; }
+
+@media (min-width: 400px) {
+  #keyword {
+    margin-left: 0px; } }
+@media (min-width: 768px) {
+  #keyword {
+    margin-left: 15px; } }
+@media (min-width: 1200px) {
+  #keyword {
+    margin-left: 15px; } }
+#keyword ~ .col-md-6 .row {
+  float: right;
+  max-width: 700px; }
+
+select.form-control-inverse, .search-select {
+  min-width: 105px; }
+
+.list-select {
+  min-width: 64px; }
+
+.btn-success {
+  min-height: 38px; }
+
+.nobr {
+  display: block;
+  text-overflow: ellipsis;
+  width: 300px;
+  overflow: hidden; }
+
+@media only screen and (min-width: 320px) {
+  .col-md-5 {
+    max-width: auto;
+    position: inherit;
+    right: auto; }
+
+  .input-time {
+    max-width: auto;
+    position: inherit;
+    right: auto; } }
+@media only screen and (min-width: 360px) {
+  .time {
+    margin-left: 0px; } }
+@media only screen and (min-width: 576px) {
+  .btn-select > input {
+    min-width: 48px; } }
+@media only screen and (min-width: 600px) {
+  .btn-select > input {
+    min-width: 180px; } }
+@media only screen and (min-width: 768px) {
+  .press-setting {
+    max-width: 635px; }
+
+  .monitoring-setting {
+    max-width: 683px; } }
+@media only screen and (min-width: 1025px) {
+  .btn-group {
+    padding-left: 0px; }
+
+  .time {
+    margin-left: 10px; } }
+@media (min-width: 1260px) and (min-width: 1260px) {
+  .col-md-5 {
+    max-width: 569px;
+    position: absolute;
+    right: 24px; }
+
+  .input-time {
+    max-width: 773px;
+    position: absolute;
+    right: 24px; } }
+@media only screen and (min-width: 1354px) {
+  .btn-group {
+    padding-right: 15px; } }
+@media only screen and (min-width: 1700px) {
+  .btn-group {
+    padding-right: 8px; } }
 /*====== Session Timeout css ends ======= */
 /**  =====================
       Generic-class css start
@@ -6003,9 +6083,10 @@ body.menu-sidebar .navbar-wrapper {
   line-height: 23px; }
 
 .btn-sm {
-  padding: 8px 14px;
+  padding: 10px 16px;
+  padding-right: 15px;
   line-height: 16px;
-  font-size: 11px; }
+  font-size: 13px; }
 
 .btn-mini {
   padding: 5px 10px;
@@ -8029,7 +8110,7 @@ table.footable-paging-center > tfoot > tr.footable-paging > td {
     float: right;
     color: #666; }
   .client-blocks ul li i {
-    color: #607D8B; }
+    color: #34495e; }
 
 .warning-border {
   border-top-color: #f1c40f; }
@@ -8352,16 +8433,16 @@ table.footable-paging-center > tfoot > tr.footable-paging > td {
     background-color: #e74c3c; }
 
 .user-activity-card {
-  border-top-color: #3498DB; }
+  border-top-color: #34495e; }
   .user-activity-card .progress-bar-warning {
-    background-color: #3498DB; }
+    background-color: #34495e; }
   .user-activity-card .card-block-big {
     padding-top: 35px;
     padding-bottom: 35px; }
   .user-activity-card .user-number {
     padding: 30px 0;
     font-weight: 600;
-    color: #3498DB; }
+    color: #34495e; }
   .user-activity-card .card-footer {
     padding-top: 25px;
     padding-bottom: 25px;
@@ -8371,8 +8452,8 @@ table.footable-paging-center > tfoot > tr.footable-paging > td {
     position: absolute;
     right: 30px;
     top: 40px;
-    font-size: 25px;
-    color: #3498DB; }
+    font-size: 30px;
+    color: #34495e; }
 
 .table-1-card .table th {
   border-top: none; }

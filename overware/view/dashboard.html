@@ -24,12 +24,8 @@
   <link rel="stylesheet" type="text/css" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
   <!-- themify-icons line icon -->
   <link rel="stylesheet" type="text/css" href="assets/icon/themify-icons/themify-icons.css">
-  <!-- Calender css -->
-  <link rel="stylesheet" type="text/css" href="assets/pages/dashboard/calender/pignose.calendar.min.css">
   <!-- ico font -->
   <link rel="stylesheet" type="text/css" href="assets/icon/icofont/css/icofont.css">
-  <!-- flag icon framework css -->
-  <link rel="stylesheet" type="text/css" href="assets/pages/flag-icon/flag-icon.min.css">
   <!-- Menu-Search css -->
   <link rel="stylesheet" type="text/css" href="assets/pages/menu-search/css/component.css">
   <!-- Horizontal-Timeline css -->
@@ -321,7 +317,7 @@
                   <!-- page-body start -->
                   <div class="page-body">
                     <div class="row">
-                      <!-- Documents card start -->
+                      <!-- card start -->
                       <div class="col-md-4 col-xl-3 main-card">
                         <div class="card client-blocks ">
                           <div class="card-block">
@@ -337,8 +333,6 @@
                           </div>
                         </div>
                       </div>
-                      <!-- Documents card end -->
-                      <!-- New clients card start -->
                       <div class="col-md-4 col-xl-3 main-card">
                         <div class="card client-blocks ">
                           <div class="card-block">
@@ -354,8 +348,6 @@
                           </div>
                         </div>
                       </div>
-                      <!-- New clients card end -->
-                      <!-- New files card start -->
                       <div class="col-md-4 col-xl-3 main-card">
                         <div class="card client-blocks ">
                           <div class="card-block">
@@ -371,8 +363,6 @@
                           </div>
                         </div>
                       </div>
-                      <!-- New files card end -->
-                      <!-- Open Project card start -->
                       <div class="col-md-4 col-xl-3 main-card">
                         <div class="card client-blocks ">
                           <div class="card-block">
@@ -388,8 +378,6 @@
                           </div>
                         </div>
                       </div>
-                      <!-- Open Project card end -->
-                      <!-- Open Project card start -->
                       <div class="col-md-4 col-xl-3 main-card">
                         <div class="card client-blocks ">
                           <div class="card-block">
@@ -405,16 +393,16 @@
                           </div>
                         </div>
                       </div>
-                      <!-- Open Project card end -->
+                      <!-- card end -->
+                      <!-- Morris chart start -->
                       <div class="col-md-12">
                         <div class="card">
                           <div class="card-header">
                             <h5>검출량그래프</h5>
                             <span>최근 24시간 블로그, 카페, 지식인에서 검출된 데이터 그래프</span>
                             <div class="card-header-right">
-                                <i class="icofont icofont-rounded-down"></i>
-                                <i class="icofont icofont-refresh"></i>
-                                <i class="icofont icofont-close-circled"></i>
+                              <i class="icofont icofont-rounded-down"></i>
+                              <i class="icofont icofont-refresh"></i>
                             </div>
                           </div>
                           <div class="card-block">
@@ -428,10 +416,9 @@
                         <div class="card">
                           <div class="card-header">
                             <h5>플랫폼별 노출현황</h5>
+                            <span>2017-10-20 기준(최근 24시간)</span>
                             <div class="card-header-right">
                                 <i class="icofont icofont-rounded-down"></i>
-                                <i class="icofont icofont-refresh"></i>
-                                <i class="icofont icofont-close-circled"></i>
                             </div>
                           </div>
                           <div class="card-block table-border-style">
@@ -484,11 +471,10 @@
                       <div class="col-md-6">
                         <div class="card">
                           <div class="card-header">
-                            <h5>포털 키워드 노출현황 2017-10-20 기준(최근 24시간)</h5>
+                            <h5>포털 키워드 노출현황</h5>
+                            <span>2017-10-20 기준(최근 24시간)</span>
                             <div class="card-header-right">
                               <i class="icofont icofont-rounded-down"></i>
-                              <i class="icofont icofont-refresh"></i>
-                              <i class="icofont icofont-close-circled"></i>
                             </div>
                           </div>
                           <div class="card-block table-border-style">
@@ -538,68 +524,6 @@
                           </div>
                         </div>
                       </div>
-                      <!-- Vertical borders table end -->
-                      <!-- Calender card start -->
-                      <!-- <div class="col-sm-6">
-                        <div class="card">
-                            <div class="card-header">
-                                <h5>Selected Date</h5>
-                                <span>It Should highlight the last date you clicked on.</span>
-                                <div class="card-header-right">
-                                    <i class="icofont icofont-rounded-down"></i>
-                                    <i class="icofont icofont-refresh"></i>
-                                    <i class="icofont icofont-close-circled"></i>
-                                </div>
-                            </div>
-                            <div class="card-block">
-                                <div id="clndr-selected-date" class="overflow-hidden bg-grey bg-lighten-3"></div>
-                            </div>
-                        </div>
-                      </div> -->
-                      <!-- Calender card end -->
-                    </div>
-                    <!-- row end -->
-                    <div id="clndr" class="clearfix">
-                      <script type="text/template" id="clndr-template">
-                        <div class="clndr-controls">
-                            <div class="clndr-previous-button">&lt;</div>
-                            <div class="clndr-next-button">&gt;</div>
-                            <div class="current-month">
-                                <%= month %>
-                                    <%= year %>
-                            </div>
-                        </div>
-                        <div class="clndr-grid">
-                            <div class="days-of-the-week clearfix">
-                                <% _.each(daysOfTheWeek, function(day) { %>
-                                    <div class="header-day">
-                                        <%= day %>
-                                    </div>
-                                    <% }); %>
-                            </div>
-                            <div class="days">
-                                <% _.each(days, function(day) { %>
-                                    <div class="<%= day.classes %>" id="<%= day.id %>"><span class="day-number"><%= day.day %></span></div>
-                                    <% }); %>
-                            </div>
-                        </div>
-                        <div class="event-listing">
-                              <div class="event-listing-title">Event this month</div>
-                              <% _.each(eventsThisMonth, function(event) { %>
-                                  <div class="event-item font-small-3">
-                                      <div class="event-item-day font-small-2">
-                                          <%= event.date %>
-                                      </div>
-                                      <div class="event-item-name text-bold-600">
-                                          <%= event.title %>
-                                      </div>
-                                      <div class="event-item-location">
-                                          <%= event.location %>
-                                      </div>
-                                  </div>
-                                  <% }); %>
-                          </div>
-                      </script>
                     </div>
                   </div>
                   <!-- page-body end -->
@@ -666,18 +590,11 @@
   <script type="text/javascript" src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
   <!-- jquery slimscroll js -->
   <script type="text/javascript" src="../bower_components/jquery-slimscroll/jquery.slimscroll.js"></script>
-  <!-- Calender js -->
-  <script type="text/javascript" src="../bower_components/moment/min/moment.min.js"></script>
-  <script type="text/javascript" src="assets/pages/dashboard/calender/pignose.calendar.min.js"></script>
   <!-- modernizr js사 -->
   <script type="text/javascript" src="../bower_components/modernizr/modernizr.js"></script>
   <script type="text/javascript" src="../bower_components/modernizr/feature-detects/css-scrollbars.js"></script>
   <!-- classie js -->
   <script type="text/javascript" src="../bower_components/classie/classie.js"></script>
-  <!-- Clndr calendar js -->
-  <script type="text/javascript" src="../bower_components/moment/min/moment.min.js"></script>
-  <script type="text/javascript" src="../bower_components/underscore/underscore-min.js"></script>
-  <script type="text/javascript" src="../bower_components/clndr/src/clndr.js"></script>
   <!-- Morris Chart js -->
   <script src="../bower_components/raphael/raphael.min.js"></script>
   <script src="../bower_components/morris.js/morris.js"></script>
@@ -688,13 +605,11 @@
   <script type="text/javascript" src="../bower_components/jquery-i18next/jquery-i18next.min.js"></script>
   <!-- Custom js -->
   <script type="text/javascript" src="assets/pages/dashboard/custom-dashboard.js"></script>
-  <script type="text/javascript" src="assets/pages/clndr-calendar/js/clndr-custom.js"></script>
   <script type="text/javascript" src="assets/js/script.js"></script>
   <script src="assets/js/pcoded.min.js"></script>
   <script src="assets/js/demo-12.js"></script>
   <script src="assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
   <script src="assets/js/jquery.mousewheel.min.js"></script>
-
 </body>
 
 </html>

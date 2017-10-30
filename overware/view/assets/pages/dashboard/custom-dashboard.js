@@ -10,9 +10,6 @@ $(document).ready(function() {
   //dashboard card width size
   cardResize();
 
-  // Calender js
-  $('.dashboard-calender').pignoseCalendar();
-
   areaChart();
 });
 

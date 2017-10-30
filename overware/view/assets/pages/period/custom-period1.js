@@ -38,9 +38,11 @@ function echart(){
             show: true,
             lineStyle: {
                 color: [
-                    [0.2, '#1ABC9C'],
-                    [0.8, '#64DDBB'],
-                    [1, '#1ABC9C']
+                    [0.05, '#8BD2FD'],
+                    [0.1, '#50BAFB'],
+                    [0.2, '#41B4FB'],
+                    [0.3, '#23a8FA'],
+                    [1, '#059CF9']
                 ],
                 width: 10
             }
@@ -68,7 +70,7 @@ function echart(){
             }
         },
 
-        data:[{value: 50, name: 'Server Load (MB)'}]
+        data:[{value: 5, name: '아주좋음'}]
       }
     ]
   };
@@ -97,13 +99,15 @@ function echart(){
             show: true,
             lineStyle: {
                 color: [
-                    [0.2, '#1ABC9C'],
-                    [0.8, '#64DDBB'],
-                    [1, '#1ABC9C']
+                    [0.05, '#8BD2FD'],
+                    [0.1, '#50BAFB'],
+                    [0.2, '#41B4FB'],
+                    [0.3, '#23a8FA'],
+                    [1, '#059CF9']
                 ],
                 width: 10
             }
-        }  ,
+        } ,
         title: {
             show : false,
             offsetCenter: [0, '120%'],
@@ -127,7 +131,7 @@ function echart(){
             }
         },
 
-        data:[{value: 50, name: 'Server Load (MB)'}]
+        data:[{value: 90, name: '경고'}]
       }
     ]
   };

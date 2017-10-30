@@ -6,13 +6,6 @@
   vertical-align: middle;
 }
 
-.nobr{
-  display:block;
-  text-overflow:ellipsis;
-  width:300px;
-  overflow:hidden;
-}
-
 input[type=radio]{
 		display:none;
 	}
