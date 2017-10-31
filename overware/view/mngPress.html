@@ -26,6 +26,8 @@
   <link rel="stylesheet" type="text/css" href="assets/icon/themify-icons/themify-icons.css">
   <!-- ico font -->
   <link rel="stylesheet" type="text/css" href="assets/icon/icofont/css/icofont.css">
+  <!-- Select 2 css -->
+  <link rel="stylesheet" href="../bower_components/select2/dist/css/select2.min.css" />
   <!-- Menu-Search css -->
   <link rel="stylesheet" type="text/css" href="assets/pages/menu-search/css/component.css">
   <!-- Horizontal-Timeline css -->
@@ -334,29 +336,31 @@
                             <div class="card-block">
                                 <form>
                                   <div class="form-group row">
-                                      <label class="col-sm-2 col-form-label">* 언론사명</label>
-                                      <div class="col-sm-5">
-                                          <select name="select" class="form-control" id="newsName">
-                                              <option value="">언론사</option>
-                                              <option value="">YTN</option>
-                                          </select>
-                                          <span class="messages"><p class="text-danger error"></p></span>
-                                      </div>
+                                    <label class="col-sm-2 col-form-label">* 언론사명</label>
+                                    <div class="col-sm-5">
+                                        <select class="js-example-basic-single form-control" name="select" id="newsName">
+                                            <option value="">선택</option>
+                                            <option value="">YTN</option>
+                                        </select>
+                                        <span class="messages"><p class="text-danger error"></p></span>
+                                    </div>
                                   </div>
                                   <div class="form-group row">
                                       <label class="col-sm-2 col-form-label">
-                                        <div class="f-left">* 언론사 신규등록시</div>
+                                        <div class="f-left">* 언론사 신규등록</div>
                                       </label>
                                       <div class="col-sm-5">
                                           <input type="text" class="form-control" id="newsNewName1" placeholder="언론사명">
                                           <span class="messages"><p class="text-danger error"></p></span>
                                       </div>
-                                      <div class="border-checkbox-section m-l-5 f-left">
-                                        <div class="border-checkbox-group border-checkbox-group-primary">
-                                            <input class="border-checkbox" type="checkbox" id="checkbox1">
-                                            <label class="border-checkbox-label" for="checkbox1"></label>
-                                            <span>언론사 신규등록 시 체크</span>
-                                        </div>
+                                      <div class="checkbox-fade fade-in-primary p-t-5">
+                                        <label>
+                                          <input type="checkbox" id="checkbox">
+                                          <span class="cr">
+                                            <i class="cr-icon icofont icofont-ui-check txt-primary"></i>
+                                          </span>
+                                          <span>신규등록 시 체크</span>
+                                        </label>
                                       </div>
                                   </div>
                                   <div class="form-group row">
@@ -377,8 +381,12 @@
                                       <label class="col-sm-2 col-form-label">* 기자분류</label>
                                       <div class="col-sm-5">
                                           <select name="select" class="form-control" id="press-select">
-                                              <option value="">언론사</option>
-                                              <option value="">YTN</option>
+                                              <option value="">선택</option>
+                                              <option value="">보도기자</option>
+                                              <option value="">촬영기자</option>
+                                              <option value="">취재기자</option>
+                                              <option value="">포토기자</option>
+                                              <option value="">기타</option>
                                           </select>
                                           <span class="messages"><p class="text-danger error"></p></span>
                                       </div>
@@ -564,6 +572,8 @@
   <script type="text/javascript" src="../bower_components/modernizr/feature-detects/css-scrollbars.js"></script>
   <!-- classie js -->
   <script type="text/javascript" src="../bower_components/classie/classie.js"></script>
+  <!-- Select 2 js -->
+  <script type="text/javascript" src="../bower_components/select2/dist/js/select2.full.min.js"></script>
   <!-- i18next.min.js -->
   <script type="text/javascript" src="../bower_components/i18next/i18next.min.js"></script>
   <script type="text/javascript" src="../bower_components/i18next-xhr-backend/i18nextXHRBackend.min.js"></script>
