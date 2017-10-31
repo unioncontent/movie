@@ -1,13 +1,17 @@
 'use strict';
-$(window).on('resize',function(){
-  setTimeout(function(){
-    window.lineChart.redraw();
-  }, 500);
-});
-
 $(document).ready(function() {
-  linechart();
-  bartChart();
+  $('[data-toggle="tooltip"]').tooltip();
+
+  /* 언론사 통계 순위 for문 */
+  for (var i = 2; i < 41; i++) {
+    var check=""; // 20위이상 안보이게 하는 클래스 변수(more 클래스)
+    if(i > 20){
+      check="more";
+    }
+
+    $("#news-ranking").append("<tr class='"+check+"'><th scope='row'>"+i+"</th><td class='news'>언론사</td><td>3,294</td><td>13</td><td>11.74%</td></tr>");
+    $("#press-ranking").append("<tr class='"+check+"'><th scope='row'>"+i+"</th><td class='press'>기자</td><td>언론사</td><td>1</td><td>0</td><td>0%</td></tr>");
+  }
 
   /* 테이블 정렬 */
   $(".sort").on("click",function(){
@@ -31,128 +35,107 @@ $(document).ready(function() {
     console.log($(this).text());//클릭한 기자 이름
     $('#press-Modal').modal('show');
   });
+
+  /* 그래프1 */
+  nv.addGraph(function() {
+    var chart = nv.models.pieChart()
+        .x(function(d) {
+            return d.label })
+        .y(function(d) {
+            return d.value })
+        .showLabels(true) //Display pie labels
+        .labelThreshold(.05) //Configure the minimum slice size for labels to show up
+        .labelType("percent") //Configure what type of data to show in the label. Can be "key", "value" or "percent"
+        .donut(true) //Turn on Donut mode. Makes pie chart look tasty!
+        .donutRatio(0.35) //Configure how big you want the donut hole size to be.
+    ;
+
+    d3.select("#donutchart").append('svg')
+        .datum(pieData1())
+        .transition().duration(350)
+        .call(chart);
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+  /* 그래프2 */
+  nv.addGraph(function() {
+    var chart = nv.models.pieChart()
+        .x(function(d) {
+            return d.label })
+        .y(function(d) {
+            return d.value })
+        .showLabels(true) //Display pie labels
+        .labelThreshold(.05) //Configure the minimum slice size for labels to show up
+        .labelType("percent") //Configure what type of data to show in the label. Can be "key", "value" or "percent"
+        .donut(true) //Turn on Donut mode. Makes pie chart look tasty!
+        .donutRatio(0.35) //Configure how big you want the donut hole size to be.
+    ;
+
+    d3.select("#donutchart2").append('svg')
+        .datum(pieData2())
+        .transition().duration(350)
+        .call(chart);
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
 });
 
-/*line*/
-function linechart(){
-  window.lineChart = Morris.Line({
-      element: 'line-chart1',
-      data: [
-        {period: '2017-10-10',l1: 0,l2: 0,l3: 0},
-        {period: '2017-10-11',l1: 50,l2: 15,l3: 5},
-        {period: '2017-10-12',l1: 20,l2: 50,l3: 65},
-        {period: '2017-10-13',l1: 60,l2: 12,l3: 7},
-        {period: '2017-10-14',l1: 30,l2: 20,l3: 120},
-        {period: '2017-10-15',l1: 25,l2: 80,l3: 40},
-        {period: '2017-10-16',l1: 10,l2: 10,l3: 10}
-      ],
-      xkey: 'period',
-      redraw: true,
-      ykeys: ['l1', 'l2', 'l3'],
-      hideHover: 'auto',
-      labels: ['언론사', '기자', '매칭'],
-      lineColors: ['#ff5e00', '#2ecc71', '#3498DB']
-  });
-}
-
-/*bar*/
-function bartChart(){
-  /*Bar chart*/
-    var data1 = {
-        labels: ['좋은기사','나쁜기사','관심기사','기타기사'],
-        datasets: [{
-            backgroundColor: [
-                'rgba(95, 190, 170, 0.99)',
-                'rgba(231, 76, 60, 0.99)',
-                'rgba(52, 152, 219, 0.99)',
-                'rgba(241, 196, 15, 0.99)'
-            ],
-            hoverBackgroundColor: [
-                'rgba(26, 188, 156, 0.88)',
-                'rgba(231, 76, 60, 0.88)',
-                'rgba(52, 152, 219, 0.88)',
-                'rgba(241, 196, 15, 0.88)'
-            ],
-            data: [65, 59, 80, 81],
-        }]
-    };
-
-    var bar = document.getElementById("barChart").getContext('2d');
-    var myBarChart = new Chart(bar, {
-        type: 'bar',
-        data: data1,
-        options: {
-          barValueSpacing: 5,
-          legend: {
-            display: false
-          }
-        }
-    });
-
-    /*Doughnut chart*/
-      var ctx = document.getElementById("doughnutChart");
-      var data = {
-          labels: ['좋은기사','나쁜기사','관심기사','기타기사'],
-          datasets: [{
-              data: [40, 10, 40, 10],
-              backgroundColor: [
-                'rgba(95, 190, 170, 0.99)',
-                'rgba(231, 76, 60, 0.99)',
-                'rgba(52, 152, 219, 0.99)',
-                'rgba(241, 196, 15, 0.99)'
-              ],
-              borderWidth: ["0px","0px","0px","0px"]
-          }]
-      };
-
-      var myDoughnutChart = new Chart(ctx, {
-          type: 'doughnut',
-          data: data,
-          options: {
-            legend: {
-              display: false
-            }
-          }
-      });
-
-      //Donut chart example
-    nv.addGraph(function() {
-      var chart = nv.models.pieChart()
-          .x(function(d) {
-              return d.label })
-          .y(function(d) {
-              return d.value })
-          .showLabels(true) //Display pie labels
-          .labelThreshold(.05) //Configure the minimum slice size for labels to show up
-          .labelType("percent") //Configure what type of data to show in the label. Can be "key", "value" or "percent"
-          .donut(true) //Turn on Donut mode. Makes pie chart look tasty!
-          .donutRatio(0.35) //Configure how big you want the donut hole size to be.
-      ;
-
-      d3.select("#donutchart").append('svg')
-          .datum(pieData())
-          .transition().duration(350)
-          .call(chart);
-      nv.utils.windowResize(chart.update);
-      return chart;
-  });
-  function pieData() {
+//data
+function pieData1() {
     return [{
         "label": "좋은기사",
-        "value": 29.765957771107,
+        "value": 50,
         "color": "#2ecc71"
-    }, {
+    },{
         "label": "나쁜기사",
-        "value": 1,
+        "value": 10,
         "color": "#e74c3c"
-    }, {
+    },{
         "label": "관심기사",
-        "value": 32.807804682612,
-        "color": "#3498DB"
-    }, {
+        "value": 5,
+        "color": "#FF9F55"
+    },   {
         "label": "기타기사",
-        "value": 196.45946739256,
+        "value": 5,
         "color": "#f1c40f"
     }];
 }
+
+function pieData2() {
+  return [{
+      "label": "좋은기사",
+      "value": 10,
+      "color": "#2ecc71"
+  },{
+      "label": "나쁜기사",
+      "value": 50,
+      "color": "#e74c3c"
+  },{
+      "label": "관심기사",
+      "value": 10,
+      "color": "#FF9F55"
+  },   {
+      "label": "기타기사",
+      "value": 70,
+      "color": "#f1c40f"
+  }];
+}
+
+//more
+function moreRanking(moreName,morehtml){
+  // 1. 더보기를 할 부분 이름 가져와 타이틀 부분에 넣기(언론사,기자)
+  $("#moreName").text(moreName);
+  // 2. 더보기 할 부분의 순위 리스트 html을 변수에 대입
+  var originHtml = $("#"+morehtml).html();
+  // 3. 더보기 할 부분에 more이라는 클래스를 지워줌
+  $("#"+morehtml+" tr").removeClass("more");
+  // 4. more 클래스를 지운 html을 변수에 대입
+  var changeHtml = $("#"+morehtml).html();
+  // 5. more 클래스가 지워진 부분 다시 원래대로 복구
+  $("#"+morehtml).html(originHtml);
+  // 6. more클래스를 지운 html 모달 부분에 넣어줌
+  $("#more-Modal .modal-body").html(changeHtml);
+  $("#more-Modal").modal('show');
 }

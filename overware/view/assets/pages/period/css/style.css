@@ -25,3 +25,7 @@ th .sort > i:first-child{
   position: relative;
   right: -12px;
 }
+
+tr.more{
+  display: none;
+}

@@ -116,9 +116,9 @@ public class SNSDAOTester {
 		
 		cri.setPage(2);
 		cri.setSearchType("t");
-		cri.setKeyword("택시");
+		cri.setKeyword("강철비");
 		cri.setPerPageNum(20);
-
+		cri.setSelectKey("택시");
 		System.out.println(dao.facebookList(cri));
 		System.out.println(cri);
 		System.out.println("page: " + cri.getPage());

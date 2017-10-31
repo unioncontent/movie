@@ -26,8 +26,6 @@
   <link rel="stylesheet" type="text/css" href="assets/icon/themify-icons/themify-icons.css">
   <!-- ico font -->
   <link rel="stylesheet" type="text/css" href="assets/icon/icofont/css/icofont.css">
-  <!-- flag icon framework css -->
-  <link rel="stylesheet" type="text/css" href="assets/pages/flag-icon/flag-icon.min.css">
   <!-- Menu-Search css -->
   <link rel="stylesheet" type="text/css" href="assets/pages/menu-search/css/component.css">
   <!-- Horizontal-Timeline css -->
@@ -61,9 +59,6 @@
           <div class="navbar-logo">
             <a class="mobile-menu" id="mobile-collapse" href="#!">
               <i class="ti-menu"></i>
-            </a>
-            <a class="mobile-search morphsearch-search" href="#">
-              <i class="ti-search"></i>
             </a>
             <a href="dashboard.html">
               <img class="img-fluid" src="assets/images/logo.png" alt="Theme-Logo" />
@@ -101,12 +96,16 @@
       </nav>
       <div class="pcoded-main-container">
         <div class="pcoded-wrapper">
+          <!-- right menu start -->
           <nav class="pcoded-navbar" pcoded-header-position="relative">
             <div class="sidebar_toggle"><a href="#"><i class="icon-close icons"></i></a></div>
             <div class="pcoded-inner-navbar main-menu">
               <div class="">
                 <div class="main-menu-header">
-                  <img class="img-fluid" src="assets/images/company/unioncontents.png" alt="User-Profile-Image">
+                  <img class="img-40" src="assets/images/user.png" alt="User-Profile-Image">
+                  <div class="user-details">
+                    <span id="more-details">Union<i class="ti-angle-down"></i></span>
+                  </div>
                 </div>
 
                 <div class="main-menu-content">
@@ -223,7 +222,7 @@
                       </a>
                     </li>
                     <li class=" ">
-                      <a href="mngMonitoring.html" data-i18n="nav.advance-components.grid-stack">
+                      <a href="monitoring.html" data-i18n="nav.advance-components.grid-stack">
                         <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                         <span class="pcoded-mtext">모니터링현황</span>
                         <span class="pcoded-mcaret"></span>
@@ -232,7 +231,7 @@
                   </ul>
                 </li>
                 <li class="">
-                  <a href="javascript:void(0)" data-i18n="nav.advance-components.main">
+                  <a href="mngKeyword.html" data-i18n="nav.advance-components.main">
                     <span class="pcoded-micon"><i class="ti-ink-pen"></i></span>
                     <span class="pcoded-mtext">키워드관리</span>
                     <span class="pcoded-mcaret"></span>
@@ -274,14 +273,14 @@
                       </a>
                     </li>
                     <li class=" ">
-                      <a href="mngClassifiCation3.html" data-i18n="nav.advance-components.grid-stack">
+                      <a href="mngClassifiCation4.html" data-i18n="nav.advance-components.grid-stack">
                         <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                         <span class="pcoded-mtext">기타</span>
                         <span class="pcoded-mcaret"></span>
                       </a>
                     </li>
                     <li class=" ">
-                      <a href="mngClassifiCation4.html" data-i18n="nav.advance-components.grid-stack">
+                      <a href="mngClassifiCation5.html" data-i18n="nav.advance-components.grid-stack">
                         <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                         <span class="pcoded-mtext">삭제</span>
                         <span class="pcoded-mcaret"></span>
@@ -299,6 +298,7 @@
               </ul>
             </div>
           </nav>
+          <!-- right menu end -->
           <div class="pcoded-content">
             <div class="pcoded-inner-content">
               <div class="main-body">
@@ -329,8 +329,6 @@
                                 <span>* 항목은 필수 입력입니다.</span>
                                 <div class="card-header-right">
                                     <i class="icofont icofont-rounded-down"></i>
-                                    <i class="icofont icofont-refresh"></i>
-                                    <i class="icofont icofont-close-circled"></i>
                                 </div>
                             </div>
                             <div class="card-block">
@@ -428,19 +426,22 @@
                             <div class="card-header">
                               <h3 class="card-header-text f-left m-t-15 m-b-15">기자리스트</h3>
                               <div class="">
-                                <div class="col-md-6 p-r-0 f-right">
-                                  <div class="col-sm-5 input-group input-group-button input-group-inverse p-l-0 p-r-0 m-b-10 m-l-10 f-right">
+                                <div class="col-md-6 p-r-0 f-right press-setting">
+                                  <div class="col-sm-5 input-group input-group-button input-group-inverse p-l-0 p-r-0 m-b-10 m-l-10 f-right btn-select">
                                     <input type="text" class="form-control" placeholder="">
                                     <span class="input-group-addon" id="basic-addon1">
                                       <button class="btn btn-inverse">검색</button>
                                     </span>
                                   </div>
-                                  <select name="select" class="col-sm-2 form-control form-control-inverse m-l-10 m-b-10 f-right">
+                                  <select name="select" class="col-sm-2 form-control form-control-inverse m-l-10 m-b-10 f-right search-select">
                                     <option value="">기자명</option>
                                     <option value="">언론사명</option>
                                   </select>
-                                  <select name="select" class="col-sm-1 form-control form-control-inverse m-l-10 m-b-10 p-r-5 f-right">
+                                  <select name="select" class="col-sm-1 form-control form-control-inverse m-l-10 m-b-10 p-r-5 f-right  list-select">
                                     <option value="">10</option>
+                                    <option value="">30</option>
+                                    <option value="">50</option>
+                                    <option value="">100</option>
                                   </select>
                                 </div>
                               </div>

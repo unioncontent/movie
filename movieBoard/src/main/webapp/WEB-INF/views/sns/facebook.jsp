@@ -32,6 +32,8 @@
   <link rel="stylesheet" type="text/css" href="../assets/icon/font-awesome/css/font-awesome.css">
   <!-- Date-range picker css  -->
   <link rel="stylesheet" type="text/css" href="../bower_components/bootstrap-daterangepicker/daterangepicker.css">
+  <!-- sweet alert framework -->
+  <link rel="stylesheet" type="text/css" href="../bower_components/sweetalert/dist/sweetalert.css">
   <!-- Style.css -->
   <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
   <link rel="stylesheet" type="text/css" href="../assets/pages/sns/css/style.css">
@@ -56,275 +58,12 @@
     <div class="pcoded-overlay-box"></div>
     <div class="pcoded-container navbar-wrapper">
 
-      <nav class="navbar header-navbar pcoded-header" header-theme="theme4">
-        <div class="navbar-wrapper">
-          <div class="navbar-logo">
-            <a class="mobile-menu" id="mobile-collapse" href="#!">
-              <i class="ti-menu"></i>
-            </a>
-            <a class="mobile-search morphsearch-search" href="#">
-              <i class="ti-search"></i>
-            </a>
-            <a href="dashboard.html">
-              <img class="img-fluid" src="../assets/images/logo.png" alt="Theme-Logo" />
-            </a>
-            <a class="mobile-options">
-              <i class="ti-more"></i>
-            </a>
-          </div>
-          <div class="navbar-container container-fluid">
-            <div>
-              <ul class="nav-left">
-                <li>
-                  <div class="sidebar_toggle"><a href="javascript:void(0)"><i class="ti-menu"></i></a></div>
-                </li>
-              </ul>
-              <ul class="nav-right">
-                <li class="user-profile header-notification">
-                  <a href="#!">
-                      <img src="../assets/images/user.png" alt="User-Profile-Image">
-                      <span>Union</span>
-                      <i class="ti-angle-down"></i>
-                  </a>
-                  <ul class="show-notification profile-notification">
-                      <li>
-                          <a href="#!">
-                              <i class="ti-settings"></i> Settings
-                          </a>
-                      </li>
-                      <li>
-                          <a href="user-profile.html">
-                              <i class="ti-user"></i> Profile
-                          </a>
-                      </li>
-                      <li>
-                          <a href="email-inbox.html">
-                              <i class="ti-email"></i> My Messages
-                          </a>
-                      </li>
-                      <li>
-                          <a href="auth-lock-screen.html">
-                              <i class="ti-lock"></i> Lock Screen
-                          </a>
-                      </li>
-                      <li>
-                          <a href="#!">
-                              <i class="ti-layout-sidebar-left"></i> Logout
-                          </a>
-                      </li>
-                  </ul>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </nav>
+	<jsp:include page='../include/header.jsp' />
+
       <div class="pcoded-main-container">
         <div class="pcoded-wrapper">
           <!-- right menu start -->
-          <nav class="pcoded-navbar" pcoded-header-position="relative">
-            <div class="sidebar_toggle"><a href="#"><i class="icon-close icons"></i></a></div>
-            <div class="pcoded-inner-navbar main-menu">
-              <div class="">
-                <div class="main-menu-header">
-                  <img class="img-40" src="../assets/images/user.png" alt="User-Profile-Image">
-                  <div class="user-details">
-                    <span id="more-details">Union<i class="ti-angle-down"></i></span>
-                  </div>
-                </div>
-
-                <div class="main-menu-content">
-                  <ul>
-                    <li class="more-details">
-                      <a href="user-profile.html"><i class="ti-user"></i>View Profile</a>
-                      <a href="#!"><i class="ti-settings"></i>Settings</a>
-                      <a href="#!"><i class="ti-layout-sidebar-left"></i>Logout</a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <ul class="pcoded-item pcoded-left-item">
-                <li class="">
-                  <a href="dashboard.html">
-                    <span class="pcoded-micon"><i class="ti-home"></i></span>
-                    <span class="pcoded-mtext" data-i18n="nav.dash.main">대시보드</span>
-                    <span class="pcoded-mcaret"></span>
-                  </a>
-                </li>
-                <li class="">
-                  <a href="period.html">
-                    <span class="pcoded-micon"><i class="ti-bar-chart-alt"></i></span>
-                    <span class="pcoded-mtext">통계보고서</span>
-                    <span class="pcoded-mcaret"></span>
-                  </a>
-                </li>
-                <li class="pcoded-hasmenu">
-                  <a href="javascript:void(0)" data-i18n="nav.advance-components.main">
-                    <span class="pcoded-micon"><i class="ti-world"></i></span>
-                    <span class="pcoded-mtext">포털관리</span>
-                    <span class="pcoded-mcaret"></span>
-                  </a>
-                  <ul class="pcoded-submenu">
-                    <li class="">
-                      <a href="mngNaver.html" data-i18n="nav.advance-components.draggable">
-                        <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                        <span class="pcoded-mtext">네이버관리</span>
-                        <span class="pcoded-mcaret"></span>
-                      </a>
-                    </li>
-                    <li class=" ">
-                      <a href="mngViral.html" data-i18n="nav.advance-components.grid-stack">
-                        <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                        <span class="pcoded-mtext">바이럴관리</span>
-                        <span class="pcoded-mcaret"></span>
-                      </a>
-                    </li>
-                  </ul>
-                </li>
-                <li class="pcoded-hasmenu  active pcoded-trigger">
-                  <a href="javascript:void(0)" data-i18n="nav.advance-components.main">
-                    <span class="pcoded-micon"><i class="ti-facebook"></i></span>
-                    <span class="pcoded-mtext">SNS관리</span>
-                    <span class="pcoded-mcaret"></span>
-                  </a>
-                  <ul class="pcoded-submenu">
-                    <li class=" ">
-                      <a href="mngFaceBook.html" data-i18n="nav.advance-components.draggable">
-                        <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                        <span class="pcoded-mtext">페이스북관리</span>
-                        <span class="pcoded-mcaret"></span>
-                      </a>
-                    </li>
-                    <li class=" ">
-                      <a href="mngTwitter.html" data-i18n="nav.advance-components.grid-stack">
-                        <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                        <span class="pcoded-mtext">트위터관리</span>
-                        <span class="pcoded-mcaret"></span>
-                      </a>
-                    </li>
-                    <li class=" ">
-                      <a href="mngInstagram.html" data-i18n="nav.advance-components.grid-stack">
-                        <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                        <span class="pcoded-mtext">인스타그램관리</span>
-                        <span class="pcoded-mcaret"></span>
-                      </a>
-                    </li>
-                  </ul>
-                </li>
-                <li class="pcoded-hasmenu">
-                  <a href="javascript:void(0)" data-i18n="nav.advance-components.main">
-                    <span class="pcoded-micon"><i class="ti-notepad"></i></span>
-                    <span class="pcoded-mtext">언론사관리</span>
-                    <span class="pcoded-mcaret"></span>
-                  </a>
-                  <ul class="pcoded-submenu">
-                    <li class=" ">
-                      <a href="mngNews.html" data-i18n="nav.advance-components.draggable">
-                        <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                        <span class="pcoded-mtext">언론사 기사글 관리</span>
-                        <span class="pcoded-mcaret"></span>
-                      </a>
-                    </li>
-                    <li class=" ">
-                      <a href="mngPress.html" data-i18n="nav.advance-components.grid-stack">
-                        <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                        <span class="pcoded-mtext">기자관리</span>
-                        <span class="pcoded-mcaret"></span>
-                      </a>
-                    </li>
-                  </ul>
-                </li>
-                <li class="pcoded-hasmenu">
-                  <a href="javascript:void(0)" data-i18n="nav.advance-components.main">
-                    <span class="pcoded-micon"><i class="ti-harddrives"></i></span>
-                    <span class="pcoded-mtext">운영관리</span>
-                    <span class="pcoded-mcaret"></span>
-                  </a>
-                  <ul class="pcoded-submenu">
-                    <li class=" ">
-                      <a href="mngCompany.html" data-i18n="nav.advance-components.draggable">
-                        <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                        <span class="pcoded-mtext">거래처관리</span>
-                        <span class="pcoded-mcaret"></span>
-                      </a>
-                    </li>
-                    <li class=" ">
-                      <a href="mngMonitoring.html" data-i18n="nav.advance-components.grid-stack">
-                        <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                        <span class="pcoded-mtext">모니터링현황</span>
-                        <span class="pcoded-mcaret"></span>
-                      </a>
-                    </li>
-                  </ul>
-                </li>
-                <li class="">
-                  <a href="mngKeyword.html" data-i18n="nav.advance-components.main">
-                    <span class="pcoded-micon"><i class="ti-ink-pen"></i></span>
-                    <span class="pcoded-mtext">키워드관리</span>
-                    <span class="pcoded-mcaret"></span>
-                  </a>
-                </li>
-                <li class="">
-                  <a href="mngExtract.html" data-i18n="nav.advance-components.main">
-                    <span class="pcoded-micon"><i class="ti-search"></i></span>
-                    <span class="pcoded-mtext">추출글관리</span>
-                    <span class="pcoded-mcaret"></span>
-                  </a>
-                </li>
-                <li class="pcoded-hasmenu">
-                  <a href="javascript:void(0)" data-i18n="nav.advance-components.main">
-                    <span class="pcoded-micon"><i class="ti-filter"></i></span>
-                    <span class="pcoded-mtext">분류글관리</span>
-                    <span class="pcoded-mcaret"></span>
-                  </a>
-                  <ul class="pcoded-submenu">
-                    <li class=" ">
-                      <a href="mngClassifiCation1.html" data-i18n="nav.advance-components.draggable">
-                        <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                        <span class="pcoded-mtext">좋은글</span>
-                        <span class="pcoded-mcaret"></span>
-                      </a>
-                    </li>
-                    <li class=" ">
-                      <a href="mngClassifiCation2.html" data-i18n="nav.advance-components.grid-stack">
-                        <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                        <span class="pcoded-mtext">나쁜글</span>
-                        <span class="pcoded-mcaret"></span>
-                      </a>
-                    </li>
-                    <li class=" ">
-                      <a href="mngClassifiCation3.html" data-i18n="nav.advance-components.grid-stack">
-                        <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                        <span class="pcoded-mtext">관심글</span>
-                        <span class="pcoded-mcaret"></span>
-                      </a>
-                    </li>
-                    <li class=" ">
-                      <a href="mngClassifiCation3.html" data-i18n="nav.advance-components.grid-stack">
-                        <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                        <span class="pcoded-mtext">기타</span>
-                        <span class="pcoded-mcaret"></span>
-                      </a>
-                    </li>
-                    <li class=" ">
-                      <a href="mngClassifiCation4.html" data-i18n="nav.advance-components.grid-stack">
-                        <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                        <span class="pcoded-mtext">삭제</span>
-                        <span class="pcoded-mcaret"></span>
-                      </a>
-                    </li>
-                  </ul>
-                  <li class="">
-                    <a href="mngAllList.html" data-i18n="nav.advance-components.main">
-                      <span class="pcoded-micon"><i class="ti-menu"></i></span>
-                      <span class="pcoded-mtext">전체글관리</span>
-                      <span class="pcoded-mcaret"></span>
-                    </a>
-                  </li>
-                </li>
-              </ul>
-            </div>
-          </nav>
+          <jsp:include page='../include/side.jsp' />
           <!-- right menu end -->
           <div class="pcoded-content">
             <div class="pcoded-inner-content">
@@ -350,28 +89,25 @@
                   <div class="page-body">
                     <div class="row">
                       <!-- data setting start -->
-                      <div class="col-md-6">
-                        <div class="row">
-                          <div class="col-sm-12 col-xl-3 m-b-10">
-                            <select name="select" class="form-control form-control-inverse">
-                                <option value="opt1">회사</option>
-                            </select>
-                          </div>
-                          <div class="col-sm-12 col-xl-3 m-b-10">
-                            <select name="select" class="form-control form-control-inverse">
-                                <option value="opt1">키워드</option>
-                            </select>
-                          </div>
-                        </div>
+                      <div class="col-md-7">
+                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left">
+                          <option value="opt1">회사</option>
+                        </select>
+                        <select id = "selectKeyword"  name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left">
+                          <option>키워드</option>
+                          <option value="택시">택시</option>
+                          <option value="강철비">강철비</option>
+                          <option value="살인자">살인자</option>
+                        </select>
                       </div>
-                      <div class="col-md-6">
+                      <div class="col-md-5">
                         <!-- date picker start -->
                         <div class="row">
-                          <div class="btn-group float-right m-b-10 p-l-15 p-r-10" role="group" data-toggle="tooltip" data-placement="top" title="" data-original-title=".btn-xlg">
-                            <button type="button" class="btn btn-inverse btn-sd waves-effect waves-light">당일</button>
-                            <button type="button" class="btn btn-inverse btn-sd waves-effect waves-light">전일</button>
-                            <button type="button" class="btn btn-inverse btn-sd waves-effect waves-light">최근7일</button>
-                            <button type="button" class="btn btn-inverse btn-sd waves-effect waves-light">최근30일</button>
+                          <div class="btn-group float-right m-b-10 p-l-15 p-r-10" role="group">
+                            <button id="toDay" type="button" class="btn btn-inverse btn-sm waves-effect waves-light">당일</button>
+                            <button id="yesterDay" type="button" class="btn btn-inverse btn-sm waves-effect waves-light">전일</button>
+                            <button id="week" type="button" class="btn btn-inverse btn-sm waves-effect waves-light">최근7일</button>
+                            <button id="month" type="button" class="btn btn-inverse btn-sm waves-effect waves-light">최근30일</button>
                           </div>
                           <div class="input-group float-right date col p-l-15 p-r-15 m-b-10">
                             <input type="text" id="fromDate" class="form-control form-control-inverse" value="">
@@ -379,7 +115,6 @@
                               <span class="icofont icofont-ui-calendar"></span>
                             </span>
                           </div>
-                          <button class="btn btn-inverse waves-effect float-right p-r-5 p-l-5 m-l-15 m-r-15 m-b-10" data-type="inverse" data-from="top" data-align="right" data-icon="fa fa-comments">검색</button>
                         </div>
                         <!-- date picker end -->
                       </div>
@@ -409,26 +144,23 @@
                       <div class="col-lg-12">
                         <div class="card">
                           <div class="card-header">
-                            <div class="col-md-6">
-                              <div class="row">
-                                <select id= "selectPerPageNum" name="select" class="col-sm-1 form-control form-control-inverse m-r-10 m-b-10 p-r-5">
+                            
+                                <select id= "selectPerPageNum" name="select" class="col-sm-1 form-control form-control-inverse m-r-10 m-b-10 p-r-5 f-left list-select">
                                   <option id= "10" >10</option>
                                   <option id = "50">50</option>
                                   <option id = "100">100</option>
                                 </select>
-                                <select id = "selectSearchType" name="select" class="col-sm-2 form-control form-control-inverse m-r-10 m-b-10">
+                                <select id = "selectSearchType" name="select" class="col-sm-1 form-control form-control-inverse m-r-10 m-b-10 f-left search-select">
                                   <option id="t" value="t">제목</option>
-                                  <option id="c">게시글</option>
+                                  <option id="c" value="c">게시글</option>
                                 </select>
-                                <div class="col-sm-5 input-group input-group-button input-group-inverse p-l-0 p-r-10 m-b-10">
+                                <div class="col-sm-3 input-group input-group-button input-group-inverse p-l-0 p-r-0 m-b-10 f-left btn-select">
                                   <input id="keywordInput" type="text" class="form-control" placeholder="">
                                   <span class="input-group-addon" id="basic-addon1">
-                                    <button id="keySearchBtn" class=" btn btn-inverse">검색</button>
+                                    <button id="searchBtn" class=" btn btn-inverse">검색</button>
                                   </span>
                                 </div>
-                              </div>
-                            </div>
-                            
+                              <button class="btn btn-warning f-right alert-confirm" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'alert-confirm']);"><i class="icofont icofont-file-excel"></i>EXCEL</button>
                           </div>
                           <div class="card-block">
                             <div class="table-responsive">
@@ -565,6 +297,8 @@
   <script type="text/javascript" src="../bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
   <!-- classie js -->
   <script type="text/javascript" src="../bower_components/classie/classie.js"></script>
+  <!-- sweet alert js -->
+  <script type="text/javascript" src="../bower_components/sweetalert/dist/sweetalert.min.js"></script>
   <!-- Morris Chart js -->
   <script src="../bower_components/raphael/raphael.min.js"></script>
   <script src="../bower_components/morris.js/morris.js"></script>
@@ -583,104 +317,211 @@
   <script src="../assets/pages/picker.js"></script>
 </body>
 
-  
-  <script type="text/javascript" language="javascript">
-
-  	
+<script type="text/javascript">
   $(document).ready(function(){
 	  
-	//최신순 함수 빼놓음
-		var newest = function(event) {
-			
-			var makeQeury = '${pageMaker.makeQuery(1)}'.slice(0,-2);
-			
-			self.location = "facebook"
-						+ makeQeury 
-						+ $('#selectPerPageNum option:selected').val()
-						+ "&searchType=" 
-						+ $("#selectSearchType option:selected").val()
-						+ "&keyword="
-						+ $('#keywordInput').val(); 
+	var date = getDate("week");
+	var startDate = date.startDate;
+	var endDate = date.endDate;
+	
+	ajaxGraph(startDate, endDate);
+	
+	var selectOption = decodeURI(window.location.href.split("selectKey=")[1]);
+	console.log(selectOption);
+	
+	
+	
+	var $selectKeyword = $('#selectKeyword');
+	
+	if(selectOption != 'undefined'){
+		for(var i = 0; i < $selectKeyword[0].length; i++ ){
+			if($selectKeyword[0][i].value == selectOption){
+				$selectKeyword[0][i].selected = 'selected';
+			}
 		}
+	}
+	$selectKeyword[0][0].disabled = true;
+	
+	// 키워드 선택시
+	$selectKeyword.change(function(){
+		console.log("selectKeyword clicked....");
+		console.log($('#selectKeyword option:selected').val());
 		
+		searchList();
+	}); 
+	
+		
+	// 검색 클릭시
+	$('#searchBtn').on("click", function(event){
+	  console.log("searchBtn clicked....");
+	  console.log($('#selectSearchType option:selected').val());
+	
+	   if($('#keywordInput').val() == ''){
+		  alert("검색어를 입력해주세요.");
+	  }else{
+		  searchList();
+	  } 
+	  
+    });
 
-    $('#keySearchBtn').on("click", function(event){
-    	console.log("searchBtn click....");
-    	
-  		console.log($('#selectSearchType option:selected').val());
+
+	// 당일 클릭시
+	$('#toDay').on("click", function(){
+	  console.log("toDay clicked....");
+	  var date = getDate("toDay");
+	  var endDate = date.endDate;
+	  
+	  ajaxGraph(endDate, endDate);
+	});
+
+	// 전일 클릭시
+	$('#yesterDay').on("click", function(){
+	  console.log("yesterDay clicked....");
+	  var date = getDate("yesterDay");
+	  var startDate = date.startDate;
+	  var endDate = date.endDate;
+	
+	  ajaxGraph(startDate, endDate);
+	});
+
+	// 7일  클릭시
+	$('#week').on("click", function(){
+	  console.log("week clicked....");
+	  var date = getDate("week");
+	  var startDate = date.startDate;
+	  var endDate = date.endDate;
+	
+	  ajaxGraph(startDate, endDate);
+	})
+
+	// 30일 클릭시
+	$('#month').on("click", function(){
+	  console.log("month clicked....");
+	  var date = getDate("month");
+	  var startDate = date.startDate;
+	  var endDate = date.endDate;
+	
+	  ajaxGraph(startDate, endDate);
+	})
+
+
+	// 캘린더 클릭시
+	$('#fromDate').on('apply.daterangepicker', function(ev, picker) { 
+	   var startDate = picker.startDate.format('YYYY-MM-DD'); 
+	   var endDate = picker.endDate.format('YYYY-MM-DD'); 
+	
+	   ajaxGraph(startDate, endDate);
+		    	
+	
+
+	// 그래프 함수
+	    
+}); // end
+
+
+}); // end ready....
+
+//list URL 함수
+function searchList(event) {
+
+	var makeQeury = '${pageMaker.makeQuery(1)}'.slice(0,-2);
+	
+	self.location = "facebook"
+				  + makeQeury 
+				  + $('#selectPerPageNum option:selected').val()
+				  + "&searchType=" 
+				  + $("#selectSearchType option:selected").val()
+				  + "&keyword="
+				  + $('#keywordInput').val()
+				  + "&selectKey="
+				  + $('#selectKeyword option:selected').val(); 
+}
+
+// 그래프 함수
+function ajaxGraph(startDate, endDate){
+	$.ajax({
+    
+      type : "POST",
+	  url : "graph",
+ 	  dataType : "json",
+ 	  data : {startDate : startDate, endDate : endDate},
+  	  error : function(){
+      	alert('graphPOST ajax error....');
+  	  },
+  	  success : function(data){
   		
-  		newest();
+  		var script = "[";
   		
-  		  /* $(function(){ $("#listButton").click(function(){
-  			$.ajax({
-  				type: 'post' ,
-  				url: '/list.html' ,
-  				dataType : 'html' ,
-  				success: function(data) {
-  					$("#listDiv").html(data); 
-  					}
-  				});	
-  			})	  
-  		})*/
-
-     });
-    
-    
-    
-    	
-    $('#fromDate').on('apply.daterangepicker', function(ev, picker) { 
-    	   var startDate = picker.startDate.format('YYYY-MM-DD'); 
-    	   var endDate = picker.endDate.format('YYYY-MM-DD'); 
-    	 
-    
-    	$.ajax({
-        
-          type : "POST",
-      	  url : "graph",
-       	  dataType : "json",
-       	  data : {startDate : startDate, endDate : endDate},
-        	error : function(){
-            	alert('graphPOST ajax error....');
-        	},
-        	success : function(data){
-        		
-        		var script = "[";
-        		
-        		for(var i = 0; i < data.length; i++){
-        			console.log(data[i]);
-        			script += '{"perid":' + '"' + data[i].writeDate + '",'+ '"l1"'+ ':' + data[i].likeCount + ","+ '"l2"' + ':' + data[i].shareCount + ","+ '"l3"' + ':' + data[i].replyCount + "},";
-        			
-        			if(i == data.length-1){
-        				script =  script.substr(0, script.length-1);
-        				script += "]";
-        			}
-        		}
-        		console.log(script);
-        		
-        		var jsonScript = JSON.parse(script);
-        		console.log(jsonScript);
-        		
-        		window.lineChart = Morris.Line({
-        		      element: 'line-chart1',
-        		      data: jsonScript,
-        		      xkey: 'period',
-        		      redraw: true,
-        		      ykeys: ['l1', 'l2', 'l3'],
-        		      hideHover: 'auto',
-        		      labels: ['좋아요', '공유', '댓글'],
-        		      lineColors: ['#fb9678', '#7E81CB', '#01C0C8']
-        		  });
-        	} 
-    	}); 
-	   
-    }); // end
+  		for(var i = 0; i < data.length; i++){
+  			console.log(data[i]);
+  			script += '{"period":' + '"' + data[i].writeDate + '",'+ '"l1"'+ ':' + data[i].likeCount + ","+ '"l2"' + ':' + data[i].shareCount + ","+ '"l3"' + ':' + data[i].replyCount + "},";
+  			
+  			if(i == data.length-1){
+  				script =  script.substr(0, script.length-1);
+  				script += "]";
+  			}
+  		}
+  		console.log(script);
+  		
+  		// to json
+  		var jsonScript = JSON.parse(script);
+  		
+  		drawChart(jsonScript);
+  		
+  	 } 
+	});
+}
 
 
-    
-    
-    
-  }); // end ready....
-  	
+function drawChart(data){
+   	// 그래프 초기화
+   	$('#line-chart1').children().remove();
+   	
+   	window.lineChart = Morris.Line({
+   	      element: 'line-chart1',
+   	      data: data,
+   	      xkey: 'period',
+   	      redraw: true,
+   	      ykeys: ['l1', 'l2', 'l3'],
+   	      hideHover: 'auto',
+   	      labels: ['좋아요', '공유', '댓글'],
+   	      lineColors: ['#fb9678', '#7E81CB', '#01C0C8']
+   	  });
+   }
 
-  </script>
+// 날짜 계산 함수
+function getDate(type){
+	console.log("TYPE : " + type);
+	var date = new Date();
+ 
+ 	var month = date.getMonth()+1;
+ 	var day = date.getDate();
+ 	var year = date.getFullYear();
+ 
+ 	var endDate = year + "-" + month + "-" + day;
+ 	var startDate;
+ 	
+ 	if(type == "yesterDay"){
+ 		var calcDate = day-1;
+ 		startDate = year + "-" + month + "-" + calcDate;
+ 		
+ 	}else if(type == "month"){
+ 		var calcDate = month-1;
+ 		startDate = year + "-" + calcDate + "-" + day;
+ 		
+ 	}else if(type == "week"){
+ 		var calcDate = day-7;
+ 		startDate = year + "-" + month + "-" + calcDate;
+ 	}
+
+ 	return {
+ 		startDate : startDate,
+ 		endDate : endDate
+ 	}
+ 	
+}
+
+
+</script>
+  
 </html>
