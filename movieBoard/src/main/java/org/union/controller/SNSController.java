@@ -1,8 +1,6 @@
 package org.union.controller;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -48,6 +46,7 @@ public class SNSController {
 		list = service.facebookList(cri);
 		model.addAttribute("facebookList", list);
 		logger.info("list: " + list);
+		
 		
 	}
 	

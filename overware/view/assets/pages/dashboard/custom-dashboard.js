@@ -9,9 +9,102 @@ $(window).resize(function(){
 $(document).ready(function() {
   //dashboard card width size
   cardResize();
-
+  //cart
   areaChart();
+  //calendar
+  settingCalendar();
+  $("#mcalendar").width("500px");
+  $(".save_btn").on("click", function() {
+      $(".md-form-control").removeClass("md-valid");
+      var saveTask = $('.save_task_todo').val();
+      if (saveTask == "") {
+          alert("please enter task");
+      } else {
+          var add_todo = $("<div class='to-do-label'>\
+            <div class='checkbox-fade fade-in-info'>\
+              <label class='check-task'>\
+                <input type='checkbox' checked disabled>\
+                <span class='cr'><i class='cr-icon icofont icofont-ui-check txt-info'></i></span>\
+                <span class='task-title-sp'>"+saveTask+"</span>\
+                <div class='f-right hidden-phone'>\
+                  <i class='icofont icofont-ui-delete delete_todo'></i>\
+                </div>\
+              </label>\
+            </div>\
+          </div>");
+          $(add_todo).appendTo(".task-content").hide().fadeIn(300);
+          $('.save_task_todo').val('');
+          $("#flipFlop").modal('hide');
+      }
+  });
+  $(document).on("click",".delete_todo",function() {
+    $(this).parent().parent().parent().parent().fadeOut();
+  });
 });
+
+function settingCalendar(){
+  var now = new Date();
+  var year = now.getFullYear();
+  var month = now.getMonth() + 1;
+  var date = now.getDate();
+
+  $("#date").text(year+"년 "+month+"월 "+date+"일 ");
+
+  var data = [{
+      date: year + '-' + month + '-' + (date - 1),
+      value: '스케줄표시1\n스케줄1-2'
+  }, {
+      date: year + '-' + month + '-' + date,
+      value: '스케줄표시2'
+  }, {
+      date: new Date(year, month - 1, date + 1),
+      value: '스케줄표시3'
+  }];
+
+  // inline
+  var $ca = $('#mcalendar').calendar({
+      width: '300px',
+      height: '280px',
+      data: data,
+      date: new Date(),
+      onSelected: function (view, date, data) {//날짜 선택시 이벤트
+          console.log('date:' + date);//날짜
+          console.log('data:' + (data || '없음'));//일정
+
+          if(data != null && typeof data != "undefined") {//일정 있을때
+            var data = data.split("\n");
+            //일정 건수 넣기
+            $("#data").text(data.length);
+            //스케줄 넣기 전 비우기
+            $(".task-content").empty();
+            $.each(data, function(key,value){
+              $(".task-content").append("<div class='to-do-label'>\
+                <div class='checkbox-fade fade-in-info'>\
+                  <label class='check-task'>\
+                    <input type='checkbox' checked disabled>\
+                    <span class='cr'><i class='cr-icon icofont icofont-ui-check txt-info'></i></span>\
+                    <span class='task-title-sp'>"+value+"</span>\
+                    <div class='f-right hidden-phone'>\
+                      <i class='icofont icofont-ui-delete delete_todo'></i>\
+                    </div>\
+                  </label>\
+                </div>\
+              </div>");
+            });
+          }
+          else{//일정 없을때
+            $("#data").text(0);
+            $(".task-content").empty();
+          }
+          //선택된 날짜 대입
+          var select = new Date(date);
+          $("#date").text(select.getFullYear()+"년 "+(select.getMonth() + 1)+"월 "+select.getDate()+"일 ");
+      },
+      viewChange: function (view, y, m) {//날짜 변경될 때, ex) 10월에서 11월 / 2017년에서 2010년
+          console.log(view, y, m);
+      }
+  });
+}
 
 function cardResize(){
   setTimeout(function(){

@@ -3,9 +3,24 @@ table td,table th{
 }
 
 .nobr{
-  width:380px;
+  width: 500px;
+  margin: 0px auto;
 }
 
 .table.table-xs td{
   padding: .4rem 1rem;
+}
+
+.counter-card-1 [class*="card-"] > i, .counter-card-2 [class*="card-"] > i, .counter-card-3 [class*="card-"] > i {
+    position: absolute;
+    color: #1abc9c;
+    right: 30px;
+    top: 40px;
+    font-size: 35px;
+}
+
+@media (min-width: 1260px) and (min-width: 1260px) {
+  .col-md-5{
+    max-width: 567px;
+  }
 }

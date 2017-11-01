@@ -1,0 +1,505 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+<head>
+  <title>OverWare</title>
+  <!-- HTML5 Shim and Respond.js IE9 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+      <![endif]-->
+  <!-- Meta -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="description" content="Phoenixcoded">
+  <meta name="keywords" content="flat ui, admin , Flat ui, Admin , Responsive, Landing, Bootstrap, App, Template, Mobile, iOS, Android, apple, creative app">
+  <meta name="author" content="Phoenixcoded">
+  <!-- Favicon icon -->
+  <link rel="icon" href="../assets/images/favicon.ico" type="image/x-icon">
+  <!-- Google font-->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
+  <!-- Required Fremwork -->
+  <link rel="stylesheet" type="text/css" href="../bower_components/bootstrap/css/bootstrap.min.css">
+  <!-- themify-icons line icon -->
+  <link rel="stylesheet" type="text/css" href="../assets/icon/themify-icons/themify-icons.css">
+  <!-- ico font -->
+  <link rel="stylesheet" type="text/css" href="../assets/icon/icofont/css/icofont.css">
+  <!-- Menu-Search css -->
+  <link rel="stylesheet" type="text/css" href="../assets/pages/menu-search/css/component.css">
+  <!-- Horizontal-Timeline css -->
+  <link rel="stylesheet" type="text/css" href="../assets/pages/dashboard/horizontal-timeline/css/style.css">
+  <!-- font awesome -->
+  <link rel="stylesheet" type="text/css" href="../assets/icon/font-awesome/css/font-awesome.css">
+  <!-- Date-range picker css  -->
+  <link rel="stylesheet" type="text/css" href="../bower_components/bootstrap-daterangepicker/daterangepicker.css">
+  <!-- jquery timepicker css -->
+  <link rel="stylesheet" href="../bower_components/jquery-timepicker-1.3.5/jquery.timepicker.min.css">
+  <!-- Style.css -->
+  <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
+  <link rel="stylesheet" type="text/css" href="../assets/pages/viral/css/style.css">
+  <link rel="stylesheet" type="text/css" href="../assets/css/picker.css">
+  <!--color css-->
+  <link rel="stylesheet" type="text/css" href="../assets/css/color/color-1.css" id="color" />
+  <link rel="stylesheet" type="text/css" href="../assets/css/linearicons.css">
+  <link rel="stylesheet" type="text/css" href="../assets/css/simple-line-icons.css">
+  <link rel="stylesheet" type="text/css" href="../assets/css/ionicons.css">
+  <link rel="stylesheet" type="text/css" href="../assets/css/jquery.mCustomScrollbar.css">
+</head>
+
+<body>
+  <!-- Pre-loader start -->
+  <div class="theme-loader">
+    <div class="ball-scale">
+      <div></div>
+    </div>
+  </div>
+  <!-- Pre-loader end -->
+
+  <div id="pcoded" class="pcoded">
+    <div class="pcoded-overlay-box"></div>
+    <div class="pcoded-container navbar-wrapper">
+	  <jsp:include page='../include/header.jsp' />      
+      <div class="pcoded-main-container">
+        <div class="pcoded-wrapper">
+          <!-- right menu start -->
+          <jsp:include page='../include/side.jsp' />
+          <!-- right menu end -->
+          <div class="pcoded-content">
+            <div class="pcoded-inner-content">
+              <div class="main-body">
+                <div class="page-wrapper">
+                  <div class="page-header">
+                    <div class="page-header-title">
+                      <h4>바이럴관리</h4>
+                    </div>
+                    <div class="page-header-breadcrumb">
+                      <ul class="breadcrumb-title">
+                        <li class="breadcrumb-item">
+                          <a href="dashboard.html">
+                            <i class="icofont icofont-home"></i>
+                          </a>
+                        </li>
+                        <li class="breadcrumb-item"><a href="#!">바이럴관리</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                  <!-- page-body start -->
+                  <div class="page-body">
+                    <div class="row">
+                      <!-- data setting start -->
+                      <div class="col-md-6">
+                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left">
+                          <option value="opt1">회사</option>
+                        </select>
+                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="keyword">
+                          <option value="opt1">키워드</option>
+                        </select>
+                      </div>
+                      <div class="col-md-6 input-time">
+                        <!-- date picker start -->
+                        <div class="row">
+                          <div class="btn-group float-right m-b-10 p-l-15 p-r-10" role="group">
+                            <button type="button" class="btn btn-inverse btn-sm waves-effect waves-light">당일</button>
+                            <button type="button" class="btn btn-inverse btn-sm waves-effect waves-light">전일</button>
+                            <button type="button" class="btn btn-inverse btn-sm waves-effect waves-light">최근7일</button>
+                            <button type="button" class="btn btn-inverse btn-sm waves-effect waves-light">최근30일</button>
+                          </div>
+                          <div class="input-group float-right date col p-l-15 p-r-15 m-b-10">
+                            <input type="text" id="fromDate" class="form-control form-control-inverse" value="">
+                            <span class="input-group-addon bg-inverse" onclick="$('#fromDate').click();">
+                              <span class="icofont icofont-ui-calendar"></span>
+                            </span>
+                          </div>
+                          <div class="input-group float-right date time col-sm-3 p-l-15 p-r-15 m-b-10">
+                            <input type="text" id="time" class="timepicker form-control form-control-inverse">
+                            <span class="input-group-addon bg-inverse" onclick="$('#time').click();">
+                              <span class="icofont icofont-clock-time"></span>
+                            </span>
+                          </div>
+
+                        </div>
+                        <!-- date picker end -->
+                      </div>
+                      <!-- data setting end -->
+                      <div class="col-lg-12">
+                        <!-- tab header start -->
+                        <div class="tab-header">
+                          <ul class="nav nav-tabs nav-vtabs md-tabs tab-timeline" role="tablist" id="mytab">
+                            <a class="nav-item" href="mngViral.html">
+                              <li class="nav-link active">
+                                <p>바이럴관리</p>
+                                <div class="slide"></div>
+                              </li>
+                            </a>
+                            <a class="nav-item" href="viralBlog.html">
+                              <li class="nav-link">
+                                <p>블로그관리</p>
+                                <div class="slide"></div>
+                              </li>
+                            </a>
+                            <a class="nav-item" href="viralCafe.html">
+                              <li class="nav-link">
+                                  <p>카페관리</p>
+                                  <div class="slide"></div>
+                              </li>
+                            </a>
+                            <a class="nav-item" href="viralKinTip.html">
+                              <li class="nav-link">
+                                <p>지식인/Tip관리</p>
+                                <div class="slide"></div>
+                              </li>
+                            </a>
+                            <a class="nav-item" href="viralWeb.html">
+                              <li class="nav-link">
+                                <p>웹문서관리</p>
+                                <div class="slide"></div>
+                              </li>
+                            </a>
+                            <a class="nav-item" href="viralRword.html">
+                              <li class="nav-link">
+                                <p>연관검색어관리</p>
+                                <div class="slide"></div>
+                              </li>
+                            </a>
+                          </ul>
+                        </div>
+                        <!-- tab header end -->
+                        <!-- tab-content start -->
+                        <div class="tab-content">
+                          <!-- tab1 main start -->
+                          <div class="tab-pane fade show active" id="main" role="tabpanel">
+                            <div class="row">
+                              <!-- top cards start -->
+                              <div class="col-md-6 col-xl-3">
+                                <div class="card user-activity-card">
+                                  <div class="card-block-big viral-card p-b-20">
+                                      <h5>BOLG</h5>
+                                      <h3 class="user-number">195</h3>
+                                      <div class="row">
+                                        <div class="col-sm-6">
+                                          <p>본사계정</p>
+                                          <h6>12</h6>
+                                        </div>
+                                        <div class="col-sm-6">
+                                          <p>외부계정</p>
+                                          <h6>5</h6>
+                                        </div>
+                                      </div>
+                                      <i class="icofont icofont-ui-note link"></i>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-md-6 col-xl-3">
+                                <div class="card user-activity-card">
+                                  <div class="card-block-big viral-card p-b-20">
+                                      <h5>CAFE</h5>
+                                      <h3 class="user-number">1234</h3>
+                                      <div class="row">
+                                        <div class="col-sm-6">
+                                          <p>본사계정</p>
+                                          <h6>102</h6>
+                                        </div>
+                                        <div class="col-sm-6">
+                                          <p>외부계정</p>
+                                          <h6>150</h6>
+                                        </div>
+                                      </div>
+                                      <i class="icofont icofont-users link"></i>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-md-6 col-xl-3">
+                                <div class="card user-activity-card">
+                                  <div class="card-block-big viral-card p-b-20">
+                                      <h5>지식인 / TIP</h5>
+                                      <h3 class="user-number">1234</h3>
+                                      <div class="row">
+                                        <div class="col-sm-6">
+                                          <p>본사계정</p>
+                                          <h6>102</h6>
+                                        </div>
+                                        <div class="col-sm-6">
+                                          <p>외부계정</p>
+                                          <h6>150</h6>
+                                        </div>
+                                      </div>
+                                      <i class="icofont icofont-hat-alt link"></i>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-md-6 col-xl-3">
+                                <div class="card user-activity-card">
+                                  <div class="card-block-big viral-card p-b-20">
+                                      <h5>웹문서</h5>
+                                      <h3 class="user-number">1234</h3>
+                                      <div class="row">
+                                        <div class="col-sm-6">
+                                          <p>본사계정</p>
+                                          <h6>102</h6>
+                                        </div>
+                                        <div class="col-sm-6">
+                                          <p>외부계정</p>
+                                          <h6>150</h6>
+                                        </div>
+                                      </div>
+                                      <i class="icofont icofont-web link"></i>
+                                  </div>
+                                </div>
+                              </div>
+                              <!-- top cards end -->
+                              <!-- naver/daum 그래프 start -->
+                              <div class="col-lg-12">
+                                <div class="card">
+                                  <div class="card-header">
+                                    <h5 class="card-header-text">
+                                      <i class="icofont icofont-chart-line m-r-5"></i>
+                                      NAVER / DAUM 그래프
+                                    </h5>
+                                    <div class="card-header-right">
+                                      <i class="icofont icofont-rounded-down"></i>
+                                      <i class="icofont icofont-refresh"></i>
+                                    </div>
+                                  </div>
+                                  <div class="card-block">
+                                    <!-- chart start -->
+                                    <div class="m-b-35" id="line-chart1"></div>
+                                    <!-- chart end -->
+                                  </div>
+                                </div>
+                              </div>
+                              <!-- naver/daum 그래프 end -->
+                              <!-- 그래프2 start -->
+                              <div class="col-lg-12">
+                                <div class="card">
+                                  <div class="card-header">
+                                    <h5 class="card-header-text">
+                                      <i class="icofont icofont-chart-line m-r-5"></i>
+                                      블로그 / 카페 / 지식인 / 웹문서 그래프
+                                    </h5>
+                                    <div class="card-header-right">
+                                      <i class="icofont icofont-rounded-down"></i>
+                                      <i class="icofont icofont-refresh"></i>
+                                    </div>
+                                  </div>
+                                  <div class="card-block">
+                                    <!-- chart start -->
+                                    <div class="m-b-35" id="line-chart2"></div>
+                                    <!-- chart end -->
+                                  </div>
+                                </div>
+                              </div>
+                              <!-- 그래프2 end -->
+                              <!-- Naver테이블 start-->
+                              <div class="col-md-6">
+                                <div class="card">
+                                  <div class="card-header">
+                                    <h5 class="card-header-text">NAVER</h5>
+                                    <div class="card-header-right">
+                                      <i class="icofont icofont-rounded-down"></i>
+                                    </div>
+                                  </div>
+                                  <div class="card-block table-border-style">
+                                    <div class="table-border-style">
+                                        <div class="table-responsive">
+                                          <table class="table table-styling text-center">
+                                            <thead>
+                                              <tr>
+                                                <th>분류</th>
+                                                <th>본사계정</th>
+                                                <th>외부계정</th>
+                                              </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <th scope="row">블로그</th>
+                                                    <td>1</td>
+                                                    <td>0</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">카페</th>
+                                                    <td>2</td>
+                                                    <td>0</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">TIP</th>
+                                                    <td>3</td>
+                                                    <td>0</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">웹문서</th>
+                                                    <td>4</td>
+                                                    <td>0</td>
+                                                </tr>
+                                                <tr class="bg-inverse">
+                                                    <th scope="row">합계</th>
+                                                    <td>0</td>
+                                                    <td>0</td>
+                                                </tr>
+                                            </tbody>
+                                          </table>
+                                        </div>
+                                      </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <!-- Naver테이블 end-->
+                              <!-- daum테이블 start-->
+                              <div class="col-md-6">
+                                <div class="card">
+                                  <div class="card-header">
+                                    <h5 class="card-header-text">DAUM</h5>
+                                    <div class="card-header-right">
+                                      <i class="icofont icofont-rounded-down"></i>
+                                    </div>
+                                  </div>
+                                  <div class="card-block table-border-style">
+                                    <div class="table-border-style">
+                                        <div class="table-responsive">
+                                          <table class="table table-styling text-center">
+                                            <thead>
+                                              <tr>
+                                                <th>분류</th>
+                                                <th>본사계정</th>
+                                                <th>외부계정</th>
+                                              </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <th scope="row">블로그</th>
+                                                    <td>1</td>
+                                                    <td>0</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">카페</th>
+                                                    <td>2</td>
+                                                    <td>0</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">TIP</th>
+                                                    <td>3</td>
+                                                    <td>0</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">웹문서</th>
+                                                    <td>4</td>
+                                                    <td>0</td>
+                                                </tr>
+                                                <tr class="bg-inverse">
+                                                    <th scope="row">합계</th>
+                                                    <td>0</td>
+                                                    <td>0</td>
+                                                </tr>
+                                            </tbody>
+                                          </table>
+                                        </div>
+                                      </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <!-- daum테이블 end-->
+                            </div>
+                          </div>
+                          <!-- tab1 main end -->
+                        </div>
+                        <!-- tab-content end -->
+                      </div>
+                    </div>
+                  </div>
+                  <!-- page-body end -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Warning Section Starts -->
+  <!-- Older IE warning message -->
+  <!--[if lt IE 9]>
+    <div class="ie-warning">
+      <h1>Warning!!</h1>
+      <p>You are using an outdated version of Internet Explorer, please upgrade <br/>to any of the following web browsers to access this website.</p>
+      <div class="iew-container">
+        <ul class="iew-download">
+          <li>
+            <a href="http://www.google.com/chrome/">
+              <img src="../assets/images/browser/chrome.png" alt="Chrome">
+              <div>Chrome</div>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.mozilla.org/en-US/firefox/new/">
+              <img src="../assets/images/browser/firefox.png" alt="Firefox">
+              <div>Firefox</div>
+            </a>
+          </li>
+          <li>
+            <a href="http://www.opera.com">
+              <img src="../assets/images/browser/opera.png" alt="Opera">
+              <div>Opera</div>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.apple.com/safari/">
+              <img src="../assets/images/browser/safari.png" alt="Safari">
+              <div>Safari</div>
+            </a>
+          </li>
+          <li>
+            <a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie">
+              <img src="../assets/images/browser/ie.png" alt="">
+              <div>IE (9 & above)</div>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <p>Sorry for the inconvenience!</p>
+    </div>
+  <![endif]-->
+  <!-- Warning Section Ends -->
+
+
+  <!-- Required Jquery -->
+  <script type="text/javascript" src="../bower_components/jquery/dist/jquery.min.js"></script>
+  <script type="text/javascript" src="../bower_components/jquery-ui/jquery-ui.min.js"></script>
+  <script type="text/javascript" src="../bower_components/tether/dist/js/tether.min.js"></script>
+  <script type="text/javascript" src="../bower_components/bootstrap/js/bootstrap.min.js"></script>
+  <!-- jquery slimscroll js -->
+  <script type="text/javascript" src="../bower_components/jquery-slimscroll/jquery.slimscroll.js"></script>
+  <!-- Bootstrap date-time-picker js -->
+  <script type="text/javascript" src="../assets/pages/advance-elements/moment-with-locales.min.js"></script>
+  <!-- Date-range picker js -->
+  <script type="text/javascript" src="../bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+  <!-- jquery timepicker js -->
+  <script src="../bower_components/jquery-timepicker-1.3.5/jquery.timepicker.min.js"></script>
+  <!-- modernizr js -->
+  <script type="text/javascript" src="../bower_components/modernizr/modernizr.js"></script>
+  <script type="text/javascript" src="../bower_components/modernizr/feature-detects/css-scrollbars.js"></script>
+  <!-- classie js -->
+  <script type="text/javascript" src="../bower_components/classie/classie.js"></script>
+  <!-- Morris Chart js -->
+  <script src="../bower_components/raphael/raphael.min.js"></script>
+  <script src="../bower_components/morris.js/morris.js"></script>
+  <!-- i18next.min.js -->
+  <script type="text/javascript" src="../bower_components/i18next/i18next.min.js"></script>
+  <script type="text/javascript" src="../bower_components/i18next-xhr-backend/i18nextXHRBackend.min.js"></script>
+  <script type="text/javascript" src="../bower_components/i18next-browser-languagedetector/i18nextBrowserLanguageDetector.min.js"></script>
+  <script type="text/javascript" src="../bower_components/jquery-i18next/jquery-i18next.min.js"></script>
+  <!-- Custom js -->
+  <script type="text/javascript" src="../assets/js/script.js"></script>
+  <script type="text/javascript" src="../assets/pages/viral/script.js"></script>
+  <script src="../assets/pages/picker.js"></script>
+  <script src="../assets/js/pcoded.min.js"></script>
+  <script src="../assets/js/demo-12.js"></script>
+  <script src="../assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
+  <script src="../assets/js/jquery.mousewheel.min.js"></script>
+</body>
+
+</html>

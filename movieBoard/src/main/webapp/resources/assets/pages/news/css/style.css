@@ -25,3 +25,13 @@
   padding-left: 0px;
   margin-right: 0px;
 }
+
+.btn-warning{
+  min-height: 38px;
+}
+
+@media (min-width: 992px){
+  .row {
+    padding-right: 15px;
+  }  
+}
