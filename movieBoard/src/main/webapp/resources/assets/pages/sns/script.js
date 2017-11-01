@@ -1,18 +1,14 @@
-/*'use strict';*/
-/*$(window).on('resize',function(){
+'use strict';
+$(window).on('resize',function(){
   setTimeout(function(){
     window.lineChart.redraw();
   }, 500);
 });
-*/
-
-
-
 
 $(document).ready(function() {
+  linechart();
   //일괄처리 확인메시지
-
-  document.querySelector('.alert-confirm').onclick = function(){
+	document.querySelector('.alert-confirm').onclick = function(){
 		swal({
 					title: "엑셀출력 하시겠습니까?",
 					text: "현재 리스트가 엑셀출력 됩니다.",
@@ -29,7 +25,7 @@ $(document).ready(function() {
 });
 
 /*line*/
-/*function linechart(){
+function linechart(){
   window.lineChart = Morris.Line({
       element: 'line-chart1',
       data: [
@@ -48,4 +44,4 @@ $(document).ready(function() {
       labels: ['좋아요', '공유', '댓글'],
       lineColors: ['#fb9678', '#7E81CB', '#01C0C8']
   });
-}*/
+}

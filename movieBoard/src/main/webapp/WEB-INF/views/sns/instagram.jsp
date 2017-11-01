@@ -166,7 +166,7 @@
                                 <button id="searchBtn" class="btn btn-inverse">검색</button>
                               </span>
                             </div>
-                            <button class="btn btn-warning f-right alert-confirm" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'alert-confirm']);"><i class="icofont icofont-file-excel"></i>EXCEL</button>
+                            <button class="btn btn-warning f-right alert-confirm" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'alert-confirm']);"><i class="icofont icofont-download-alt"></i>EXCEL</button>
                           </div>
                           <div class="card-block">
                             <div class="table-responsive">

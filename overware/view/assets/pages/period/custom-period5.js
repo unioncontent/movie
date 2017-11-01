@@ -1,6 +1,20 @@
 'use strict';
 $(document).ready(function() {
   $('[data-toggle="tooltip"]').tooltip();
+  document.querySelector('.alert-confirm').onclick = function(){
+    swal({
+          title: "엑셀출력 하시겠습니까?",
+          text: "현재 리스트가 엑셀출력 됩니다.",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonClass: "btn-danger",
+          confirmButtonText: "YES",
+          closeOnConfirm: false
+        },
+        function(){//엑셀 출력하겠다고 할 시 진행 함수
+          swal("Success!", "엑셀출력 되었습니다.", "success");
+        });
+  };
 
   /* 언론사 통계 순위 for문 */
   for (var i = 2; i < 41; i++) {
@@ -9,12 +23,12 @@ $(document).ready(function() {
       check="more";
     }
 
-    $("#news-ranking").append("<tr class='"+check+"'><th scope='row'>"+i+"</th><td class='news'>언론사</td><td>3,294</td><td>13</td><td>11.74%</td></tr>");
-    $("#press-ranking").append("<tr class='"+check+"'><th scope='row'>"+i+"</th><td class='press'>기자</td><td>언론사</td><td>1</td><td>0</td><td>0%</td></tr>");
+    $("#news-ranking").append("<tr class='"+check+"'><th scope='row'>"+i+"</th><td class='news' onclick='showModal('#news-Modal')'>언론사</td><td>3,294</td><td>13</td><td>11.74%</td></tr>");
+    $("#press-ranking").append("<tr class='"+check+"'><th scope='row'>"+i+"</th><td class='press' onclick='showModal('#press-Modal')'>기자</td><td>언론사</td><td>1</td><td>0</td><td>0%</td></tr>");
   }
 
-  /* 테이블 정렬 */
-  $(".sort").on("click",function(){
+  /* sort */
+  $(".card").on("click",".sort",function(){
     if($(this).children("i").eq(0).hasClass("on")){
       $(this).children("i").eq(0).removeClass("on");
       $(this).children("i").eq(1).addClass("on");
@@ -23,17 +37,245 @@ $(document).ready(function() {
       $(this).children("i").eq(0).addClass("on");
       $(this).children("i").eq(1).removeClass("on");
     }
+    return false;
   });
 
-  /* 언론사 클릭시 모달Toggle */
-  $(".news").on("click",function(){
-    console.log($(this).text());//클릭한 언론사 이름
-    $('#news-Modal').modal('show');
+  /* 더보기 언론사 테이블 상세보기*/
+  $("#more-Modal").on("click",".news",function(){
+    if($(".detail").length > 0){
+      $(".detail").remove();
+    }
+    else{
+      $(this).parent().after("<tr class='detail'><td colspan='5'>\
+          <div class='card'>\
+            <div class='card-header'>\
+              <h5 class='card-header-text'>언론사정보</h5>\
+            </div>\
+            <div class='card-block table-border-style'>\
+              <!-- list satart -->\
+              <div class='table-border-style'>\
+                <div class='table-responsive'>\
+                  <table class='table table-de table-styling table-bordered'>\
+                    <tbody>\
+                      <tr>\
+                        <th scope='row' width='30%'>언론사명</th>\
+                        <td style='text-align:left'>톱스타뉴스</td>\
+                      </tr>\
+                      <tr>\
+                        <th scope='row'>URL</th>\
+                        <td style='text-align:left'></td>\
+                      </tr>\
+                      <tr>\
+                        <th scope='row'>연락처</th>\
+                        <td style='text-align:left'>000-000-000</td>\
+                      </tr>\
+                      <tr>\
+                        <th scope='row'>메모</th>\
+                        <td style='text-align:left'></td>\
+                      </tr>\
+                    </tbody>\
+                  </table>\
+                </div>\
+              </div>\
+            </div>\
+          </div>\
+          <div class='card'>\
+            <div class='card-header'>\
+              <h5 class='card-header-text'>기사노출도</h5>\
+            </div>\
+            <div class='card-block table-border-style'>\
+              <div class='table-border-style'>\
+                <div class='table-responsive'>\
+                  <table class='table table-styling table-bordered'>\
+                    <thead>\
+                      <tr>\
+                        <th>전체기사</th>\
+                        <th>NAVER</th>\
+                        <th>DAUM</th>\
+                      </tr>\
+                    </thead>\
+                    <tbody>\
+                      <tr>\
+                        <td>0</td>\
+                        <td>0</td>\
+                        <td>0</td>\
+                      </tr>\
+                    </tbody>\
+                  </table>\
+                </div>\
+              </div>\
+            </div>\
+          </div>\
+          <div class='card'>\
+            <div class='card-header'>\
+              <h5 class='card-header-text'>성향분석</h5>\
+            </div>\
+            <div class='card-block table-border-style'>\
+              <div class='table-border-style'>\
+                <div class='table-responsive'>\
+                  <table class='table table-styling table-bordered'>\
+                    <thead>\
+                      <tr>\
+                        <th colspan='4'>전체기사</th>\
+                        <th colspan='4'>매칭기사</th>\
+                      </tr>\
+                      <tr>\
+                        <th>전체기사수</th>\
+                        <th>호흥</th>\
+                        <th>비호흥(악성)</th>\
+                        <th>관심</th>\
+                        <th>전체기사수</th>\
+                        <th>호흥</th>\
+                        <th>비호흥(악성)</th>\
+                        <th>관심</th>\
+                      </tr>\
+                    </thead>\
+                    <tbody>\
+                      <tr>\
+                        <td>0</td>\
+                        <td>0</td>\
+                        <td>0</td>\
+                        <td>0</td>\
+                        <td>0</td>\
+                        <td>0</td>\
+                        <td>0</td>\
+                        <td>0</td>\
+                      </tr>\
+                    </tbody>\
+                  </table>\
+                </div>\
+              </div>\
+            </div>\
+          </div>\
+        </td>\
+      </tr>");
+    }
   });
-  /* 기자 클릭시 모달Toggle */
-  $(".press").on("click",function(){
-    console.log($(this).text());//클릭한 기자 이름
-    $('#press-Modal').modal('show');
+
+  /* 더보기 기자 테이블 상세보기*/
+  $("#more-Modal").on("click",".press",function(){
+    if($(".detail").length > 0){
+      $(".detail").remove();
+    }
+    else{
+      $(this).parent().after("<tr class='detail'>\
+        <td colspan='6'>\
+          <div class='card'>\
+            <div class='card-header'>\
+              <h5 class='card-header-text'>기자정보</h5>\
+            </div>\
+            <div class='card-block table-border-style'>\
+              <div class='table-border-style'>\
+                <div class='table-responsive'>\
+                  <table class='table table-de table-styling table-bordered'>\
+                    <tbody>\
+                      <tr>\
+                        <th scope='row' width='30%'>이름</th>\
+                        <td style='text-align:left'>김한준</td>\
+                      </tr>\
+                      <tr>\
+                        <th scope='row'>언론사명</th>\
+                        <td style='text-align:left'></td>\
+                      </tr>\
+                      <tr>\
+                        <th scope='row'>이메일</th>\
+                        <td style='text-align:left'></td>\
+                      </tr>\
+                      <tr>\
+                        <th scope='row'>연락처</th>\
+                        <td style='text-align:left'>000-000-000</td>\
+                      </tr>\
+                    </tbody>\
+                  </table>\
+                </div>\
+              </div>\
+            </div>\
+          </div>\
+          <div class='card'>\
+            <div class='card-header'>\
+              <h5 class='card-header-text'>기사노출도</h5>\
+            </div>\
+            <div class='card-block table-border-style'>\
+              <!-- list satart -->\
+              <div class='table-border-style'>\
+                <div class='table-responsive'>\
+                  <table class='table table-styling table-bordered'>\
+                    <thead>\
+                      <tr>\
+                        <th>전체기사</th>\
+                        <th>NAVER</th>\
+                        <th>DAUM</th>\
+                      </tr>\
+                    </thead>\
+                    <tbody>\
+                      <tr>\
+                        <td>0</td>\
+                        <td>0</td>\
+                        <td>0</td>\
+                      </tr>v\
+                    </tbody>\
+                  </table>\
+                </div>\
+              </div>\
+            </div>\
+          </div>\
+          <div class='card'>\
+            <div class='card-header'>\
+              <h5 class='card-header-text'>성향분석</h5>\
+            </div>\
+            <div class='card-block table-border-style'>\
+              <div class='table-border-style'>\
+                <div class='table-responsive'>\
+                  <table class='table table-styling table-bordered'>\
+                    <thead>\
+                      <tr>\
+                        <th colspan='4'>전체기사</th>\
+                        <th colspan='4'>매칭기사</th>\
+                      </tr>\
+                      <tr>\
+                        <th>전체기사수</th>\
+                        <th>호흥</th>\
+                        <th>비호흥(악성)</th>\
+                        <th>관심</th>\
+                        <th>전체기사수</th>\
+                        <th>호흥</th>\
+                        <th>비호흥(악성)</th>\
+                        <th>관심</th>\
+                      </tr>\
+                    </thead>\
+                    <tbody>\
+                      <tr>\
+                        <td>0</td>\
+                        <td>0</td>\
+                        <td>0</td>\
+                        <td>0</td>\
+                        <td>0</td>\
+                        <td>0</td>\
+                        <td>0</td>\
+                        <td>0</td>\
+                      </tr>\
+                    </tbody>\
+                  </table>\
+                </div>\
+              </div>\
+            </div>\
+          </div>\
+        </td>\
+      </tr>");
+    }
+  });
+
+  /*더보기 sort*/
+  $("#more-Modal").on("click",".sort",function(){
+    if($(this).children("i").eq(0).hasClass("on")){
+      $(this).children("i").eq(0).removeClass("on");
+      $(this).children("i").eq(1).addClass("on");
+    }
+    else{
+      $(this).children("i").eq(0).addClass("on");
+      $(this).children("i").eq(1).removeClass("on");
+    }
+    return false;
   });
 
   /* 그래프1 */
@@ -82,6 +324,11 @@ $(document).ready(function() {
   });
 });
 
+//modal
+function showModal(element){
+  $(element).modal('show');
+}
+
 //data
 function pieData1() {
     return [{
@@ -102,7 +349,6 @@ function pieData1() {
         "color": "#f1c40f"
     }];
 }
-
 function pieData2() {
   return [{
       "label": "좋은기사",
@@ -138,4 +384,6 @@ function moreRanking(moreName,morehtml){
   // 6. more클래스를 지운 html 모달 부분에 넣어줌
   $("#more-Modal .modal-body").html(changeHtml);
   $("#more-Modal").modal('show');
+  $("#more-Modal i").removeClass("on");
+  $("#more-Modal td").attr('onclick', '').unbind('click');
 }

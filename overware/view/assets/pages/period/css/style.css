@@ -29,3 +29,15 @@ th .sort > i:first-child{
 tr.more{
   display: none;
 }
+
+.detail .card-header{
+  padding: 10px;
+  line-height: 16px;
+  text-align: left;
+}
+
+@media (min-width: 1260px) and (min-width: 1260px) {
+  .col-md-5{
+    max-width: 567px;
+  }
+}
