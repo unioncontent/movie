@@ -2,7 +2,6 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <!-- top menu start -->
-
 <nav class="navbar header-navbar pcoded-header" header-theme="theme4">
   <div class="navbar-wrapper">
     <div class="navbar-logo">

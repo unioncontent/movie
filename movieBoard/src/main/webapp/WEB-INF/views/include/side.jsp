@@ -21,7 +21,7 @@
         </a>
       </li>
       <li class="">
-        <a href="period.jsp">
+        <a href="../period/main">
           <span class="pcoded-micon"><i class="ti-bar-chart-alt"></i></span>
           <span class="pcoded-mtext">통계보고서</span>
           <span class="pcoded-mcaret"></span>
@@ -35,14 +35,14 @@
         </a>
         <ul class="pcoded-submenu">
           <li class="">
-            <a href="mngNaver.jsp" data-i18n="nav.advance-components.draggable">
+            <a href="../portal/naver" data-i18n="nav.advance-components.draggable">
               <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
               <span class="pcoded-mtext">네이버관리</span>
               <span class="pcoded-mcaret"></span>
             </a>
           </li>
           <li class=" ">
-            <a href="mngViral.jsp" data-i18n="nav.advance-components.grid-stack">
+            <a href="../portal/viral" data-i18n="nav.advance-components.grid-stack">
               <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
               <span class="pcoded-mtext">바이럴관리</span>
               <span class="pcoded-mcaret"></span>
@@ -58,21 +58,21 @@
         </a>
         <ul class="pcoded-submenu">
           <li class=" ">
-            <a href="facebook.jsp" data-i18n="nav.advance-components.draggable">
+            <a href="../sns/facebook" data-i18n="nav.advance-components.draggable">
               <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
               <span class="pcoded-mtext">페이스북관리</span>
               <span class="pcoded-mcaret"></span>
             </a>
           </li>
           <li class=" ">
-            <a href="twitter.jsp" data-i18n="nav.advance-components.grid-stack">
+            <a href="../sns/twitter" data-i18n="nav.advance-components.grid-stack">
               <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
               <span class="pcoded-mtext">트위터관리</span>
               <span class="pcoded-mcaret"></span>
             </a>
           </li>
           <li class=" ">
-            <a href="instagram.jsp" data-i18n="nav.advance-components.grid-stack">
+            <a href="../sns/instagram" data-i18n="nav.advance-components.grid-stack">
               <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
               <span class="pcoded-mtext">인스타그램관리</span>
               <span class="pcoded-mcaret"></span>
