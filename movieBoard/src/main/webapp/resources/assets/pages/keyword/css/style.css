@@ -14,3 +14,15 @@
 .centerTh{
   text-align: center;
 }
+
+@media (max-width: 412px){
+  .btn-check{
+    padding-left: 15px;
+  }
+}
+
+@media (min-width: 1000px){
+  .btn-check{
+    padding-left: 2px;
+  }
+}
