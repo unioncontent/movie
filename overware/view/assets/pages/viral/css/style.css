@@ -13,6 +13,26 @@ label {
 .sweet-alert h2{
   font-size: 26px;
 }
+
+.viral-card > .user-number{
+  padding-top: 11px;
+  padding-bottom: 11px;
+}
+
+.viral-card > .row{
+  border-top: 1px solid #e3e3e3;
+}
+
+.viral-card > .row > .col-sm-6{
+  border-right: 1px solid #e3e3e3;
+  padding-top: 9px;
+  padding-bottom: 7px;
+}
+
+.viral-card > .row > .col-sm-6:last-child{
+  border-right: 0px;
+}
+
 @media only screen and (min-width: 320px) {
   .btn-viral{
     padding-left: 0px;
