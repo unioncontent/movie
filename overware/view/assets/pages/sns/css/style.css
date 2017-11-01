@@ -2,3 +2,8 @@
   vertical-align: inherit;
   text-align: center;
 }
+@media (min-width: 1260px) and (min-width: 1260px) {
+  .col-md-5{
+    max-width: 567px;
+  }
+}
