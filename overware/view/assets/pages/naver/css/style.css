@@ -3,7 +3,8 @@ table td,table th{
 }
 
 .nobr{
-  width:380px;
+  width: 500px;
+  margin: 0px auto;
 }
 
 .table.table-xs td{
@@ -16,4 +17,10 @@ table td,table th{
     right: 30px;
     top: 40px;
     font-size: 35px;
+}
+
+@media (min-width: 1260px) and (min-width: 1260px) {
+  .col-md-5{
+    max-width: 567px;
+  }
 }
