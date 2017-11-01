@@ -28,11 +28,12 @@
   <link rel="stylesheet" type="text/css" href="assets/icon/icofont/css/icofont.css">
   <!-- Menu-Search css -->
   <link rel="stylesheet" type="text/css" href="assets/pages/menu-search/css/component.css">
-  <!-- Horizontal-Timeline css -->
-  <link rel="stylesheet" type="text/css" href="assets/pages/dashboard/horizontal-timeline/css/style.css">
+  <!-- calendar -->
+  <link rel="stylesheet" type="text/css" href="assets/pages/dashboard/pgcalendar/calendar.css">
   <!-- Style.css -->
   <link rel="stylesheet" type="text/css" href="assets/pages/clndr-calendar/css/clndr.css">
   <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+  <link rel="stylesheet" type="text/css" href="assets/pages/dashboard/css/style.css">
   <!--color css-->
   <link rel="stylesheet" type="text/css" href="assets/css/color/color-1.css" id="color" />
   <link rel="stylesheet" type="text/css" href="assets/css/linearicons.css">
@@ -411,7 +412,6 @@
                         </div>
                       </div>
                       <!-- Morris chart end -->
-                      <!-- Vertical borders table start -->
                       <div class="col-md-6">
                         <div class="card">
                           <div class="card-header">
@@ -524,6 +524,49 @@
                           </div>
                         </div>
                       </div>
+                      <!-- calendar start -->
+                      <div class="col-md-4 ">
+                        <div class="card borderless-card z-depth-left-0">
+                          <div class="card-block o-auto p-l-0 p-r-0">
+                            <div id="mcalendar"></div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-8">
+                        <div class="card">
+                          <div class="card-header">
+                            <h5><i class="icofont icofont-ui-calendar m-r-5"></i>주요 일정</h5>
+                            <span><p id="date">2017년 11월 1일</p><p id="data">1</p>건의 일정이 있습니다.</span>
+                            <div class="card-header-right">
+                                <i class="icofont icofont-rounded-down"></i>
+                            </div>
+                          </div>
+                          <div class="card-block">
+                            <section class="task-panel tasks-widget">
+                              <div class="panel-body">
+                                <div class="task-content">
+                                  <div class="to-do-label">
+                                    <div class="checkbox-fade fade-in-info">
+                                      <label class="check-task">
+                                        <input type="checkbox" checked disabled>
+                                        <span class="cr"><i class="cr-icon icofont icofont-ui-check txt-info"></i></span>
+                                        <span class="task-title-sp">스케줄표시2</span>
+                                        <div class="f-right hidden-phone">
+                                          <i class="icofont icofont-ui-delete delete_todo"></i>
+                                        </div>
+                                      </label>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div>
+                                  <a class="btn btn-info btn-add-task waves-effect waves-light m-t-10" href="#" data-toggle="modal" data-target="#flipFlop"><i class="icofont icofont-plus"></i> 일정 추가</a>
+                                </div>
+                              </div>
+                            </section>
+                          </div>
+                        </div>
+                        <!-- calendar end -->
+                      </div>
                     </div>
                   </div>
                   <!-- page-body end -->
@@ -533,6 +576,31 @@
             </div>
           </div>
           <!-- content end -->
+        </div>
+      </div>
+      <!-- 일정 추가 modal -->
+      <div class="modal fade" id="flipFlop" tabindex="-1" role="dialog" aria-labelledby="modalLabel" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="modalLabel">일정추가</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <label class="col-sm-3 col-form-label">일정</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control save_task_todo" placeholder="일정을 적어주세요.">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="save_btn btn btn-primary">Save</button>
+                    <button type="button" class="btn btn-default close_btn" data-dismiss="modal">Close</button>
+                </div>
+            </div>
         </div>
       </div>
       <!-- main container end -->
@@ -595,6 +663,8 @@
   <script type="text/javascript" src="../bower_components/modernizr/feature-detects/css-scrollbars.js"></script>
   <!-- classie js -->
   <script type="text/javascript" src="../bower_components/classie/classie.js"></script>
+  <!-- calendar -->
+  <script type="text/javascript" src="assets/pages/dashboard/pgcalendar/calendar.js"></script>
   <!-- Morris Chart js -->
   <script src="../bower_components/raphael/raphael.min.js"></script>
   <script src="../bower_components/morris.js/morris.js"></script>
