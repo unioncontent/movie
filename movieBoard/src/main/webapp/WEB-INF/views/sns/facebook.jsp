@@ -197,7 +197,7 @@
 								<c:if test="${pageMaker.prev}">
                                 <li class="page-item">
                                   <a class="page-link" href="facebook${pageMaker.makeSearch(pageMaker.startPage - 1) }" aria-label="Previous">&laquo;
-                                    <span aria-hidden="true">«</span>
+                                    <span aria-hidden="true"></span>
                                     <span class="sr-only">Previous</span>
                                   </a>
                                 </li>
@@ -205,8 +205,7 @@
                                 
                                 <c:forEach begin="${pageMaker.startPage }"
 								end="${pageMaker.endPage }" var="idx">
-								<li class="page-item active" 
-								  <c:out value="${pageMaker.cri.page == idx?'class =active':''}"/>>
+								<li class= "${pageMaker.cri.page == idx? 'active':''} page-item">
 									<a class="page-link" href="facebook${pageMaker.makeSearch(idx)}">${idx}</a>
 								</li>
 								</c:forEach>
@@ -214,7 +213,7 @@
 								<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
                                 <li class="page-item">
                                   <a class="page-link" href="facebook${pageMaker.makeSearch(pageMaker.endPage +1) }" aria-label="Next">&raquo;
-                                    <span aria-hidden="true">»</span>
+                                    <span aria-hidden="true"></span>
                                     <span class="sr-only">Next</span>
                                   </a>
                                 </li>
@@ -320,6 +319,16 @@
 <script type="text/javascript">
   $(document).ready(function(){
 	  
+	  
+	// 페이징 css 제어
+	/* var pageNum = $(".page-item");
+	var urlPage = decodeURI((window.location.href.split("page=")[1]).split("&")[0]);
+	
+	for (var i = 0; i < pageNum.length; i++){
+		pageNum[i].children[0].text == urlPage? pageNum[i].classList.add("active") : console.log("not matching");
+	}  */
+	
+	
 	var date = getDate("week");
 	var startDate = date.startDate;
 	var endDate = date.endDate;
@@ -511,6 +520,11 @@ function getDate(type){
  		
  	}else if(type == "week"){
  		var calcDate = day-7;
+ 		if(calcDate < 0){
+ 			var lastDay = (new Date(year, month-1, 0)).getDate();
+ 			calcDate += lastDay;
+ 			month -= 1;
+ 		}
  		startDate = year + "-" + month + "-" + calcDate;
  	}
 

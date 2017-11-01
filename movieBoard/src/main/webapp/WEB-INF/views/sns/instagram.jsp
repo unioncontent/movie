@@ -202,8 +202,8 @@
                               
 								<c:if test="${pageMaker.prev}">
                                 <li class="page-item">
-                                  <a class="page-link" href="facebook${pageMaker.makeSearch(pageMaker.startPage - 1) }" aria-label="Previous">&laquo;
-                                    <span aria-hidden="true">«</span>
+                                  <a class="page-link" href="instagram${pageMaker.makeSearch(pageMaker.startPage - 1) }" aria-label="Previous">&laquo;
+                                    <span aria-hidden="true"></span>
                                     <span class="sr-only">Previous</span>
                                   </a>
                                 </li>
@@ -211,16 +211,15 @@
                                 
                                 <c:forEach begin="${pageMaker.startPage }"
 								end="${pageMaker.endPage }" var="idx">
-								<li class="page-item active" 
-								  <c:out value="${pageMaker.cri.page == idx?'class =active':''}"/>>
-									<a class="page-link" href="facebook${pageMaker.makeSearch(idx)}">${idx}</a>
+								<li class="${pageMaker.cri.page == idx? 'active':''} page-item">
+									<a class="page-link" href="instagram${pageMaker.makeSearch(idx)}">${idx}</a>
 								</li>
 								</c:forEach>
 							
 								<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
                                 <li class="page-item">
-                                  <a class="page-link" href="facebook${pageMaker.makeSearch(pageMaker.endPage +1) }" aria-label="Next">&raquo;
-                                    <span aria-hidden="true">»</span>
+                                  <a class="page-link" href="instagram${pageMaker.makeSearch(pageMaker.endPage +1) }" aria-label="Next">&raquo;
+                                    <span aria-hidden="true"></span>
                                     <span class="sr-only">Next</span>
                                   </a>
                                 </li>

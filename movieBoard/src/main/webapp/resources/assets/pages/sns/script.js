@@ -1,11 +1,11 @@
 'use strict';
-$(window).on('resize',function(){
+/*$(window).on('resize',function(){
   setTimeout(function(){
     window.lineChart.redraw();
   }, 500);
 });
-
-$(document).ready(function() {
+*/
+/*$(document).ready(function() {
   linechart();
   //일괄처리 확인메시지
 	document.querySelector('.alert-confirm').onclick = function(){
@@ -22,10 +22,10 @@ $(document).ready(function() {
 					swal("Success!", "엑셀출력 되었습니다.", "success");
 				});
 	};
-});
+});*/
 
 /*line*/
-function linechart(){
+/*function linechart(){
   window.lineChart = Morris.Line({
       element: 'line-chart1',
       data: [
@@ -44,4 +44,4 @@ function linechart(){
       labels: ['좋아요', '공유', '댓글'],
       lineColors: ['#fb9678', '#7E81CB', '#01C0C8']
   });
-}
+}*/

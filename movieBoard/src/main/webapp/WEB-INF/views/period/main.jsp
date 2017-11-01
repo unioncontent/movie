@@ -108,13 +108,13 @@
                         </select>
                       </div>
                       <div class="col-md-5">
-                        <!-- date picker start -->
+                         <!-- date picker start -->
                         <div class="row">
                           <div class="btn-group float-right m-b-10 p-l-15 p-r-10" role="group">
-                            <button type="button" class="btn btn-inverse btn-sm waves-effect waves-light">당일</button>
-                            <button type="button" class="btn btn-inverse btn-sm waves-effect waves-light">전일</button>
-                            <button type="button" class="btn btn-inverse btn-sm waves-effect waves-light">최근7일</button>
-                            <button type="button" class="btn btn-inverse btn-sm waves-effect waves-light">최근30일</button>
+                            <button id="toDay" type="button" class="btn btn-inverse btn-sm waves-effect waves-light">당일</button>
+                            <button id="yesterDay" type="button" class="btn btn-inverse btn-sm waves-effect waves-light">전일</button>
+                            <button id="week" type="button" class="btn btn-inverse btn-sm waves-effect waves-light">최근7일</button>
+                            <button id="month" type="button" class="btn btn-inverse btn-sm waves-effect waves-light">최근30일</button>
                           </div>
                           <div class="input-group float-right date col p-l-15 p-r-15 m-b-10">
                             <input type="text" id="fromDate" class="form-control form-control-inverse" value="">
