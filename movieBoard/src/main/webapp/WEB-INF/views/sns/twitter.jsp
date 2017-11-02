@@ -21,7 +21,7 @@
   <meta name="keywords" content="flat ui, admin , Flat ui, Admin , Responsive, Landing, Bootstrap, App, Template, Mobile, iOS, Android, apple, creative app">
   <meta name="author" content="Phoenixcoded">
   <!-- Favicon icon -->
-  <link rel="icon" href="../assets/images/favicon.ico" type="image/x-icon">
+  <%-- <link rel="icon" href="../assets/images/favicon.ico" type="image/x-icon"> --%>
   <!-- Google font-->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
   <!-- Required Fremwork -->
@@ -30,8 +30,6 @@
   <link rel="stylesheet" type="text/css" href="../assets/icon/themify-icons/themify-icons.css">
   <!-- ico font -->
   <link rel="stylesheet" type="text/css" href="../assets/icon/icofont/css/icofont.css">
-  <!-- flag icon framework css -->
-  <link rel="stylesheet" type="text/css" href="../assets/pages/flag-icon/flag-icon.min.css">
   <!-- Menu-Search css -->
   <link rel="stylesheet" type="text/css" href="../assets/pages/menu-search/css/component.css">
   <!-- Horizontal-Timeline css -->
@@ -200,7 +198,7 @@
                                 </tbody>
                               </table>
                               <ul class="pagination float-right">
-                              
+
 								<c:if test="${pageMaker.prev}">
                                 <li class="page-item">
                                   <a class="page-link" href="twitter${pageMaker.makeSearch(pageMaker.startPage - 1) }" aria-label="Previous">&laquo;
@@ -209,14 +207,14 @@
                                   </a>
                                 </li>
                                 </c:if>
-                                
+
                                 <c:forEach begin="${pageMaker.startPage }"
 								end="${pageMaker.endPage }" var="idx">
-								<li class= "${pageMaker.cri.page == idx? 'active':''} page-item"> 
+								<li class= "${pageMaker.cri.page == idx? 'active':''} page-item">
 									<a class="page-link" href="twitter${pageMaker.makeSearch(idx)}">${idx}</a>
 								</li>
 								</c:forEach>
-							
+
 								<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
                                 <li class="page-item">
                                   <a class="page-link" href="twitter${pageMaker.makeSearch(pageMaker.endPage +1) }" aria-label="Next">&raquo;
@@ -328,18 +326,18 @@
 
 <script type="text/javascript">
 $(document).ready(function(){
-	  
+
 	var date = getDate("week");
 	var startDate = date.startDate;
 	var endDate = date.endDate;
-	
+
 	ajaxGraph(startDate, endDate);
-	
+
 	var selectOption = decodeURI(window.location.href.split("selectKey=")[1]);
 	console.log(selectOption);
-	
+
 	var $selectKeyword = $('#selectKeyword');
-	
+
 	if(selectOption != 'undefined'){
 		for(var i = 0; i < $selectKeyword[0].length; i++ ){
 			if($selectKeyword[0][i].value == selectOption){
@@ -348,27 +346,27 @@ $(document).ready(function(){
 		}
 	}
 	$selectKeyword[0][0].disabled = true;
-	
+
 	// 키워드 선택시
 	$selectKeyword.change(function(){
 		console.log("selectKeyword clicked....");
 		console.log($('#selectKeyword option:selected').val());
-		
+
 		searchList();
-	}); 
-	
-		
+	});
+
+
 	// 검색 클릭시
 	$('#searchBtn').on("click", function(event){
 	  console.log("searchBtn clicked....");
 	  console.log($('#selectSearchType option:selected').val());
-	
+
 	   if($('#keywordInput').val() == ''){
 		  alert("검색어를 입력해주세요.");
 	  }else{
 		  searchList();
-	  } 
-	  
+	  }
+
     });
 
 
@@ -378,7 +376,7 @@ $('#toDay').on("click", function(){
 	console.log("toDay clicked....");
 	var date = getDate("toDay");
 	var endDate = date.endDate;
-	
+
 	ajaxGraph(endDate, endDate);
 });
 
@@ -387,7 +385,7 @@ $('#yesterDay').on("click", function(){
 	var date = getDate("yesterDay");
 	var startDate = date.startDate;
 	var endDate = date.endDate;
-	
+
 	ajaxGraph(startDate, endDate);
 });
 
@@ -396,7 +394,7 @@ $('#week').on("click", function(){
 	var date = getDate("week");
 	var startDate = date.startDate;
 	var endDate = date.endDate;
-	
+
 	ajaxGraph(startDate, endDate);
 })
 
@@ -405,28 +403,28 @@ $('#month').on("click", function(){
 	var date = getDate("month");
 	var startDate = date.startDate;
 	var endDate = date.endDate;
-	
+
 	ajaxGraph(startDate, endDate);
 })
 
 
 // 캘린더 클릭시
-$('#fromDate').on('apply.daterangepicker', function(ev, picker) { 
-	   var startDate = picker.startDate.format('YYYY-MM-DD'); 
-	   var endDate = picker.endDate.format('YYYY-MM-DD'); 
-	
+$('#fromDate').on('apply.daterangepicker', function(ev, picker) {
+	   var startDate = picker.startDate.format('YYYY-MM-DD');
+	   var endDate = picker.endDate.format('YYYY-MM-DD');
+
 	   ajaxGraph(startDate, endDate);
-		    	
-	
+
+
 }); // end
 
-	
+
 
 }); // end ready....
 
 function ajaxGraph(startDate, endDate){
 	$.ajax({
-        
+
         type : "POST",
     	  url : "graph",
      	  dataType : "json",
@@ -435,49 +433,49 @@ function ajaxGraph(startDate, endDate){
           	alert('graphPOST ajax error....');
       	},
       	success : function(data){
-      		
+
       		var script = "[";
-      		
+
       		for(var i = 0; i < data.length; i++){
       			console.log(data[i]);
       			script += '{"period":' + '"' + data[i].writeDate + '",'+ '"l1"'+ ':' + data[i].likeCount + ","+ '"l2"' + ':' + data[i].shareCount + ","+ '"l3"' + ':' + data[i].replyCount + "},";
-      			
+
       			if(i == data.length-1){
       				script =  script.substr(0, script.length-1);
       				script += "]";
       			}
       		}
       		console.log(script);
-      		
+
       		// to json
       		var jsonScript = JSON.parse(script);
-      		
+
       		drawChart(jsonScript);
-      		
-      	} 
+
+      	}
   	});
 }
-	
+
 
 function getDate(type){
 	console.log("TYPE : " + type);
 	var date = new Date();
-	 
+
 	 	var month = date.getMonth()+1;
 	 	var day = date.getDate();
 	 	var year = date.getFullYear();
-	 
+
 	 	var endDate = year + "-" + month + "-" + day;
 	 	var startDate;
-	 	
+
 	 	if(type == "yesterDay"){
 	 		var calcDate = day-1;
 	 		startDate = year + "-" + month + "-" + calcDate;
-	 		
+
 	 	}else if(type == "month"){
 	 		var calcDate = month-1;
 	 		startDate = year + "-" + calcDate + "-" + day;
-	 		
+
 	 	}else if(type == "week"){
 	 		var calcDate = day-7;
 	 		startDate = year + "-" + month + "-" + calcDate;
@@ -487,14 +485,14 @@ function getDate(type){
 	 		startDate : startDate,
 	 		endDate : endDate
 	 	}
-	 	
+
 }
 
 	// 그래프 함수
 function drawChart(data){
 		// 그래프 초기화
 		$('#line-chart1').children().remove();
-		
+
 		window.lineChart = Morris.Line({
 		      element: 'line-chart1',
 		      data: data,
@@ -506,19 +504,19 @@ function drawChart(data){
 		      lineColors: ['#fb9678', '#7E81CB', '#01C0C8']
 		  });
 	}
-	
+
 function searchList(event) {
 
 	var makeQeury = '${pageMaker.makeQuery(1)}'.slice(0,-2);
-	
+
 	self.location = "twitter"
-				  + makeQeury 
+				  + makeQeury
 				  + $('#selectPerPageNum option:selected').val()
-				  + "&searchType=" 
+				  + "&searchType="
 				  + $("#selectSearchType option:selected").val()
 				  + "&keyword="
 				  + $('#keywordInput').val()
 				  + "&selectKey="
-				  + $('#selectKeyword option:selected').val(); 
+				  + $('#selectKeyword option:selected').val();
 }
 </script>

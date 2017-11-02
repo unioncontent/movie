@@ -21,7 +21,7 @@
   <meta name="keywords" content="flat ui, admin , Flat ui, Admin , Responsive, Landing, Bootstrap, App, Template, Mobile, iOS, Android, apple, creative app">
   <meta name="author" content="Phoenixcoded">
   <!-- Favicon icon -->
-  <link rel="icon" href="../assets/images/favicon.ico" type="image/x-icon">
+  <%-- <link rel="icon" href="../assets/images/favicon.ico" type="image/x-icon"> --%>
   <!-- Google font-->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
   <!-- Required Fremwork -->
@@ -64,7 +64,7 @@
   <div id="pcoded" class="pcoded">
     <div class="pcoded-overlay-box"></div>
     <div class="pcoded-container navbar-wrapper">
-	  <jsp:include page='../include/header.jsp' />      
+	  <jsp:include page='../include/header.jsp' />
       <div class="pcoded-main-container">
         <div class="pcoded-wrapper">
           <!-- right menu start -->
