@@ -302,7 +302,7 @@
                 <div class="page-wrapper">
                   <div class="page-header">
                     <div class="page-header-title">
-                      <h4>좋은글</h4>
+                      <h4>분류글관리</h4>
                     </div>
                     <div class="page-header-breadcrumb">
                       <ul class="breadcrumb-title">
@@ -312,7 +312,6 @@
                           </a>
                         </li>
                         <li class="breadcrumb-item"><a href="#!">분류글관리</a></li>
-                        <li class="breadcrumb-item"><a href="#!">좋은글</a></li>
                       </ul>
                     </div>
                   </div>
@@ -321,11 +320,19 @@
                     <div class="row">
                       <!-- data setting start -->
                       <div class="col-md-7">
-                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left">
+                        <select name="select" class="col-md-1 form-control form-control-inverse m-r-10 m-b-10 p-r-5 f-left">
                           <option value="opt1">회사</option>
                         </select>
-                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="keyword">
+                        <select name="select" class="col-md-1 form-control form-control-inverse m-r-10 m-b-10 p-r-5 f-left">
                           <option value="opt1">키워드</option>
+                        </select>
+                        <select name="select" class="col-md-1 form-control form-control-inverse m-r-10 m-b-10 p-r-5 f-left">
+                          <option value="opt1">분류</option>
+                          <option value="opt1">좋은글</option>
+                          <option value="opt1">나쁜글</option>
+                          <option value="opt1">관심글</option>
+                          <option value="opt1">기타</option>
+                          <option value="opt1">삭제</option>
                         </select>
                       </div>
                       <div class="col-md-5">
@@ -370,7 +377,8 @@
                                 <button class="btn btn-inverse">검색</button>
                               </span>
                             </div>
-                            <button type="button" class="alert-confirm btn btn-primary waves-effect f-right p-r-0 p-l-5 m-l-15 m-b-10  f-right" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'alert-confirm']);"><i class="icofont icofont-check-circled"></i>일괄처리</button>
+                            <button class="btn btn-warning alert-excel f-right p-r-5 p-l-5 m-l-15 m-b-10"><i class="icofont icofont-download-alt"></i>EXCEL</button>
+                            <button type="button" class="alert-confirm btn btn-primary waves-effect f-right p-r-0 p-l-5 m-l-15 m-b-10  f-right"><i class="icofont icofont-check-circled"></i>일괄처리</button>
                           </div>
                           <div class="card-block">
                             <div class="table-responsive">
@@ -405,19 +413,24 @@
                                     <td>2017-10-23 07:46:00 /<br/>2017-10-23 07:46:00 </td>
                                     <td>
                                       <div class="radios">
-                                        <input type="radio" id="radio1" name="radios1" checked>
-                                        <label for="radio1">미분류</label>
-                                        <input type="radio" id="radio2" name="radios1">
+                                        <input type="radio" id="radio1" name="radios" checked>
+                                        <label for="radio1">좋은글</label>
+                                        <input type="radio" id="radio2" name="radios">
                                         <label for="radio2">나쁜글</label>
-                                        <input type="radio" id="radio3" name="radios1">
+                                        <input type="radio" id="radio3" name="radios">
                                         <label for="radio3">관심글</label>
-                                        <input type="radio" id="radio4" name="radios1">
-                                        <label for="radio4">기타</label>
+                                        <br/>
+                                        <input type="radio" id="radio4" name="radios">
+                                        <label for="radio4">기타글</label>
+                                        <input type="radio" id="radio5" name="radios">
+                                        <label for="radio5">삭제글</label>
+                                        <input type="radio" id="radio6" name="radios">
+                                        <label for="radio6">미분류</label>
                                       </div>
                                     </td>
                                     <td>
-                                      <button class="btn btn-danger btn-sm alert-confirm1" data-toggle="tooltip" data-placement="top" data-original-title="삭제" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'alert-confirm']);"><i class="icofont icofont-ui-delete" style="margin-right:0"></i></button>
-                                      <button class="btn btn-success btn-sm alert-confirm2" data-toggle="tooltip" data-placement="top" data-original-title="즉시처리" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'alert-confirm']);"><i class="icofont icofont-ui-check" style="margin-right:0"></i></button>
+                                      <button class="btn btn-danger btn-sm alert-confirm1" data-toggle="tooltip" data-placement="top" data-original-title="삭제"><i class="icofont icofont-ui-delete" style="margin-right:0"></i></button>
+                                      <button class="btn btn-success btn-sm alert-confirm2" data-toggle="tooltip" data-placement="top" data-original-title="즉시처리"><i class="icofont icofont-ui-check" style="margin-right:0"></i></button>
                                     </td>
                                   </tr>
                                   <tr>
@@ -436,19 +449,24 @@
                                     <td>2017-10-23 07:46:00 /<br/>2017-10-23 07:46:00 </td>
                                     <td>
                                       <div class="radios">
-                                        <input type="radio" id="radio6" name="radios2" checked>
-                                        <label for="radio6">미분류</label>
-                                        <input type="radio" id="radio7" name="radios2">
-                                        <label for="radio7">나쁜글</label>
-                                        <input type="radio" id="radio8" name="radios2">
-                                        <label for="radio8">관심글</label>
-                                        <input type="radio" id="radio9" name="radios2">
-                                        <label for="radio9">기타</label>
+                                        <input type="radio" id="radio7" name="radios1">
+                                        <label for="radio7">좋은글</label>
+                                        <input type="radio" id="radio8" name="radios1" checked>
+                                        <label for="radio8">나쁜글</label>
+                                        <input type="radio" id="radio9" name="radios1">
+                                        <label for="radio9">관심글</label>
+                                        <br/>
+                                        <input type="radio" id="radio10" name="radios1">
+                                        <label for="radio10">기타글</label>
+                                        <input type="radio" id="radio11" name="radios1">
+                                        <label for="radio11">삭제글</label>
+                                        <input type="radio" id="radio12" name="radios1">
+                                        <label for="radio12">미분류</label>
                                       </div>
                                     </td>
                                     <td>
-                                      <button class="btn btn-danger btn-sm alert-confirm1" data-toggle="tooltip" data-placement="top" data-original-title="삭제" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'alert-confirm']);"><i class="icofont icofont-ui-delete" style="margin-right:0"></i></button>
-                                      <button class="btn btn-success btn-sm alert-confirm2" data-toggle="tooltip" data-placement="top" data-original-title="즉시처리" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'alert-confirm']);"><i class="icofont icofont-ui-check" style="margin-right:0"></i></button>
+                                      <button class="btn btn-danger btn-sm alert-confirm1" data-toggle="tooltip" data-placement="top" data-original-title="삭제"><i class="icofont icofont-ui-delete" style="margin-right:0"></i></button>
+                                      <button class="btn btn-success btn-sm alert-confirm2" data-toggle="tooltip" data-placement="top" data-original-title="즉시처리"><i class="icofont icofont-ui-check" style="margin-right:0"></i></button>
                                     </td>
                                   </tr>
                                 </tbody>

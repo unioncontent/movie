@@ -1,11 +1,11 @@
-﻿'use strict';
-/*$(window).on('resize',function(){
+'use strict';
+$(window).on('resize',function(){
   setTimeout(function(){
     window.lineChart.redraw();
   }, 500);
 });
-*/
-/*$(document).ready(function() {
+
+$(document).ready(function() {
   linechart();
   $(".icofont-refresh").on("click",linechart);
 
@@ -24,10 +24,11 @@
 					swal("Success!", "엑셀출력 되었습니다.", "success");
 				});
 	};
-});*/
+});
 
 /*line*/
-/*function linechart(){
+function linechart(){
+  $("#line-chart1").empty();
   window.lineChart = Morris.Line({
       element: 'line-chart1',
       data: [
@@ -46,4 +47,4 @@
       labels: ['좋아요', '공유', '댓글'],
       lineColors: ['#fb9678', '#7E81CB', '#01C0C8']
   });
-}*/
+}

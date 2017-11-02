@@ -29,10 +29,15 @@
 /* Nexus 6P */
 @media only screen and (min-width: 576px){
   .input-group:not(.btn-select){
-    max-width: 500px;
+    max-width: auto;
   }
   .input-group:not(.btn-select){
     padding-left: 0px;
+  }
+}
+@media (min-width:580px) {
+  .input-group:not(.btn-select){
+    max-width: 267px;
   }
 }
 /* iPad */
@@ -55,11 +60,5 @@
 @media only screen and (min-width: 992px){
   .input-group:not(.btn-select){
     padding-left: 0px;
-  }
-}
-
-@media only screen and (min-width: 1200px) {
-  .input-group:not(.btn-select){
-    max-width: 267px;
   }
 }
