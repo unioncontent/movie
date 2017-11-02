@@ -38,7 +38,7 @@ $(document).ready(function() {
     $(this).parent().parent().parent().parent().fadeOut();
   });
   $(".icofont-refresh").on("click",areaChart);
-  
+
 });
 
 function settingCalendar(){

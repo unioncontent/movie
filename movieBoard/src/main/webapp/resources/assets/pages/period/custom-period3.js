@@ -9,7 +9,7 @@ $(window).on('resize',function(){
 $(document).ready(function() {
   cardResize();
   linechart();
-  $(".icofont-refresh").on("click",areaChart);
+  $(".icofont-refresh").on("click",linechart);
   document.querySelector('.alert-confirm').onclick = function(){
     swal({
           title: "엑셀출력 하시겠습니까?",

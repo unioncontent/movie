@@ -1,7 +1,8 @@
 'use strict';
 $(window).on('resize',function(){
   setTimeout(function(){
-    echart();
+    echart1();
+    echart2();
     cardResize();
     window.lineChart.redraw();
   }, 500);

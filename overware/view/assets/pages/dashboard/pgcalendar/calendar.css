@@ -269,3 +269,7 @@
 .calendar-ct li{
   font-family: 'Raleway', 'Open Sans', 'helvetica', 'sans-serif';
 }
+
+.calendar-label > p{
+  margin:0px;
+}
