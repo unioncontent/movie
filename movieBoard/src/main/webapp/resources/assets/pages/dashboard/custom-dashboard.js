@@ -111,6 +111,9 @@ function cardResize(){
       var card = Math.ceil($(".page-body > .row").width()/5)-1;
       $(".main-card").css("max-width",card);
     }
+    else{
+      $('.main-card').removeAttr('style');
+    }
   }, 400);
 
 }
