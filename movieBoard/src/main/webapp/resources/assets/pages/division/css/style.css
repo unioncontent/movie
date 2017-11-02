@@ -54,3 +54,7 @@ input[type=radio] + label{
   max-height: 700px;
   overflow: auto;
 }
+
+#image-Modal .modal-body{
+  padding: 10px;
+}

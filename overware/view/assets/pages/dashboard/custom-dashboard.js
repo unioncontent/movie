@@ -18,7 +18,7 @@ $(document).ready(function() {
       $(".md-form-control").removeClass("md-valid");
       var saveTask = $('.save_task_todo').val();
       if (saveTask == "") {
-          alert("please enter task");
+          alert("일정을 적어주세요.");
       } else {
           var add_todo = $("<div class='to-do-label'>\
             <div class='checkbox-fade fade-in-info'>\
@@ -109,7 +109,7 @@ function settingCalendar(){
 function cardResize(){
   setTimeout(function(){
     if($(".page-body > .row").width() > 1200){
-      var card = Math.ceil($(".page-body > .row").width()/5)-3;
+      var card = Math.ceil($(".page-body > .row").width()/5)-1;
       $(".main-card").css("max-width",card);
     }
   }, 400);

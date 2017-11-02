@@ -18,9 +18,3 @@ table td,table th{
     top: 40px;
     font-size: 35px;
 }
-
-@media (min-width: 1260px) and (min-width: 1260px) {
-  .col-md-5{
-    max-width: 567px;
-  }
-}
