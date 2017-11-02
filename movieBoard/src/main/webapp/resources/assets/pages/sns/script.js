@@ -1,4 +1,4 @@
-'use strict';
+﻿'use strict';
 /*$(window).on('resize',function(){
   setTimeout(function(){
     window.lineChart.redraw();
@@ -7,6 +7,8 @@
 */
 /*$(document).ready(function() {
   linechart();
+  $(".icofont-refresh").on("click",linechart);
+
   //일괄처리 확인메시지
 	document.querySelector('.alert-confirm').onclick = function(){
 		swal({

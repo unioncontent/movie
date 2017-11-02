@@ -2,7 +2,7 @@
 $(document).ready(function () {
   $('[data-toggle="tooltip"]').tooltip();
   //일괄처리 확인메시지
-	document.querySelector('.alert-confirm').onclick = function(){
+	$(document).on("click",".alert-confirm",function(){
 		swal({
 					title: "일괄처리 하시겠습니까?",
 					text: "선택한 분류들로 일괄처리 됩니다.",
@@ -15,9 +15,9 @@ $(document).ready(function () {
 				function(){
 					swal("Success!", "일괄처리가 완료되었습니다.", "success");
 				});
-	};
+	});
   //삭제처리 확인메시지
-	document.querySelector('.alert-confirm1').onclick = function(){
+	$(document).on("click",".alert-confirm1",function(){
 		swal({
 					title: "삭제처리 하시겠습니까?",
 					text: "바로 삭제처리 됩니다.",
@@ -30,9 +30,9 @@ $(document).ready(function () {
 				function(){
 					swal("Delete!", "삭제처리가 완료되었습니다.", "success");
 				});
-  };
+  });
   //즉시처리 확인메시지
-	document.querySelector('.alert-confirm2').onclick = function(){
+	$(document).on("click",".alert-confirm2",function(){
 		swal({
 					title: "즉시처리 하시겠습니까?",
 					text: "선택된 분류로 즉시처리 됩니다.",
@@ -45,9 +45,27 @@ $(document).ready(function () {
 				function(){
 					swal("Success!", "즉시처리가 완료되었습니다.", "success");
 				});
-  };
+  });
   //이미지 보기 클릭시 모달
   $(".image").on("click",function(){
     $('#image-Modal').modal('show');
+  });
+  //이미지업로드 클릭시
+  $(document).on("click",".alert-upload",function(){
+    $("#image-Modal").modal("hide");
+
+    //이미지처리메시지 - 성공시
+    swal("Success!", "이미지업로드가 되었습니다.", "success");
+    //이미지처리메시지 - 실패시
+    // swal("error!", "이미지업로드가 실패했습니다.", "error");
+  });
+  //이미지삭제 클릭시
+  $(document).on("click",".alert-delete",function(){
+    $("#image-Modal").modal("hide");
+
+    //이미지처리메시지 - 성공시
+    swal("Success!", "이미지삭제가 되었습니다.", "success");
+    //이미지처리메시지 - 실패시
+    // swal("Delete!", "이미지삭제가 실패했습니다.", "error");
   });
 });

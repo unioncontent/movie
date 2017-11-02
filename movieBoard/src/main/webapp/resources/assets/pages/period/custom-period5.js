@@ -1,6 +1,18 @@
 'use strict';
 $(document).ready(function() {
-  $('[data-toggle="tooltip"]').tooltip();
+  /* 언론사 통계 순위 for문 */
+  for (var i = 2; i < 41; i++) {
+    var check=""; // 20위이상 안보이게 하는 클래스 변수(more 클래스)
+    if(i > 20){
+      check="more";
+    }
+
+    $("#news-ranking").append("<tr class='"+check+"'><th scope='row'>"+i+"</th><td class='news' onclick='showModal('#news-Modal')'>언론사</td><td>3,294</td><td>13</td><td>11.74%</td></tr>");
+    $("#press-ranking").append("<tr class='"+check+"'><th scope='row'>"+i+"</th><td class='press' onclick='showModal('#press-Modal')'>기자</td><td>언론사</td><td>1</td><td>0</td><td>0%</td></tr>");
+  }
+
+  pieGraph1();
+  pieGraph2();
   document.querySelector('.alert-confirm').onclick = function(){
     swal({
           title: "엑셀출력 하시겠습니까?",
@@ -15,17 +27,10 @@ $(document).ready(function() {
           swal("Success!", "엑셀출력 되었습니다.", "success");
         });
   };
+  $('[data-toggle="tooltip"]').tooltip();
 
-  /* 언론사 통계 순위 for문 */
-  for (var i = 2; i < 41; i++) {
-    var check=""; // 20위이상 안보이게 하는 클래스 변수(more 클래스)
-    if(i > 20){
-      check="more";
-    }
-
-    $("#news-ranking").append("<tr class='"+check+"'><th scope='row'>"+i+"</th><td class='news' onclick='showModal('#news-Modal')'>언론사</td><td>3,294</td><td>13</td><td>11.74%</td></tr>");
-    $("#press-ranking").append("<tr class='"+check+"'><th scope='row'>"+i+"</th><td class='press' onclick='showModal('#press-Modal')'>기자</td><td>언론사</td><td>1</td><td>0</td><td>0%</td></tr>");
-  }
+  $("i[data-value='chart1']").on("click",pieGraph1);
+  $("i[data-value='chart2']").on("click",pieGraph2);
 
   /* sort */
   $(".card").on("click",".sort",function(){
@@ -278,7 +283,17 @@ $(document).ready(function() {
     return false;
   });
 
+});
+
+//modal
+function showModal(element){
+  $(element).modal('show');
+}
+
+//graph
+function pieGraph1(){
   /* 그래프1 */
+  $("#donutchart").empty();
   nv.addGraph(function() {
     var chart = nv.models.pieChart()
         .x(function(d) {
@@ -300,7 +315,10 @@ $(document).ready(function() {
 
     return chart;
   });
+}
+function pieGraph2(){
   /* 그래프2 */
+  $("#donutchart2").empty();
   nv.addGraph(function() {
     var chart = nv.models.pieChart()
         .x(function(d) {
@@ -322,11 +340,6 @@ $(document).ready(function() {
 
     return chart;
   });
-});
-
-//modal
-function showModal(element){
-  $(element).modal('show');
 }
 
 //data

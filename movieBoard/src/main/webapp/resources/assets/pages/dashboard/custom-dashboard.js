@@ -1,24 +1,21 @@
 "use strict";
 
 $(window).resize(function(){
-  //dashboard card width size
   cardResize();
   window.areaChart.redraw();
 });
 
 $(document).ready(function() {
-  //dashboard card width size
   cardResize();
-  //cart
   areaChart();
-  //calendar
   settingCalendar();
+
   $("#mcalendar").width("500px");
   $(".save_btn").on("click", function() {
       $(".md-form-control").removeClass("md-valid");
       var saveTask = $('.save_task_todo').val();
       if (saveTask == "") {
-          alert("please enter task");
+          alert("일정을 적어주세요.");
       } else {
           var add_todo = $("<div class='to-do-label'>\
             <div class='checkbox-fade fade-in-info'>\
@@ -40,6 +37,8 @@ $(document).ready(function() {
   $(document).on("click",".delete_todo",function() {
     $(this).parent().parent().parent().parent().fadeOut();
   });
+  $(".icofont-refresh").on("click",areaChart);
+
 });
 
 function settingCalendar(){
@@ -109,7 +108,7 @@ function settingCalendar(){
 function cardResize(){
   setTimeout(function(){
     if($(".page-body > .row").width() > 1200){
-      var card = Math.ceil($(".page-body > .row").width()/5)-3;
+      var card = Math.ceil($(".page-body > .row").width()/5)-1;
       $(".main-card").css("max-width",card);
     }
   }, 400);
@@ -118,7 +117,8 @@ function cardResize(){
 
 /*Area chart*/
 function areaChart() {
-    window.areaChart = Morris.Area({
+  $("#morris-extra-area").empty();
+  window.areaChart = Morris.Area({
       element: 'morris-extra-area',
       data: [
         {period: '2017-10-10 00:00:00',portal: 0,cumminty: 0,sns: 0},
@@ -159,5 +159,4 @@ function areaChart() {
       hideHover: 'auto'
 
     });
-
 }

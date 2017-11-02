@@ -640,20 +640,20 @@
         showLabel: function (event, view, date, data) {
             var $lbl = this.$label;
 
-            $lbl.find('p').html(this.options.label.repeat({
-                m: view,
-                d: date.format(this.options.format),
-                v: data
-            }).replace(/\n/g, '<br>'));
-
-            var w = $lbl.outerWidth(),
-                h = $lbl.outerHeight();
-
-            $lbl.css({
-                left: (event.pageX - w / 2) + 'px',
-                top: (event.pageY - h - 20) + 'px',
-                zIndex: this.options.zIndex + 1
-            }).show();
+            // $lbl.find('p').html(this.options.label.repeat({
+            //     m: view,
+            //     d: date.format(this.options.format),
+            //     v: data
+            // }).replace(/\n/g, '<br>'));
+            //
+            // var w = $lbl.outerWidth(),
+            //     h = $lbl.outerHeight();
+            //
+            // $lbl.css({
+            //     left: (event.pageX - w / 2) + 'px',
+            //     top: (event.pageY - h - 20) + 'px',
+            //     zIndex: this.options.zIndex + 1
+            // }).show();
         },
         hasLabel: function () {
             if (this.options.label) {

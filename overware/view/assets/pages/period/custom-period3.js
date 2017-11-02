@@ -9,6 +9,7 @@ $(window).on('resize',function(){
 $(document).ready(function() {
   cardResize();
   linechart();
+  $(".icofont-refresh").on("click",linechart);
   document.querySelector('.alert-confirm').onclick = function(){
     swal({
           title: "엑셀출력 하시겠습니까?",
@@ -27,6 +28,7 @@ $(document).ready(function() {
 
 /*line*/
 function linechart(){
+  $("#line-chart1").empty();
   window.lineChart = Morris.Line({
       element: 'line-chart1',
       data: [
@@ -50,7 +52,7 @@ function linechart(){
 function cardResize(){
   setTimeout(function(){
     if($(".tab-pane > .row").width() > 1200){
-      var card = Math.ceil($(".tab-pane > .row").width()/5)-2;
+      var card = Math.ceil($(".tab-pane > .row").width()/5)-1;
       $(".main-card").css("min-width",card);
     }
   }, 400);

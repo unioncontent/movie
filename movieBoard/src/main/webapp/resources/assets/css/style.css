@@ -2999,7 +2999,7 @@ select.form-control-inverse, .search-select {
     margin-left: 10px; } }
 @media (min-width: 1260px) and (min-width: 1260px) {
   .col-md-5 {
-    max-width: 583px;
+    max-width: 569px;
     position: absolute;
     right: 24px; }
 
@@ -6596,11 +6596,11 @@ body.menu-sidebar .navbar-wrapper {
 .input-group-button .input-group-addon {
   transition: all ease-in .3s; }
   .input-group-button .input-group-addon:hover {
-    background-color: #28e1bd;
-    border-color: #28e1bd; }
+    background-color: #5faee3;
+    border-color: #5faee3; }
     .input-group-button .input-group-addon:hover .btn {
-      background-color: #28e1bd;
-      border-color: #28e1bd; }
+      background-color: #5faee3;
+      border-color: #5faee3; }
 
 .input-group-dropdown [class*=btn-] {
   margin-bottom: 0; }

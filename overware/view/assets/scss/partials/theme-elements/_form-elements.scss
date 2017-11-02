@@ -254,9 +254,9 @@ $danger-color;
 .input-group-button .input-group-addon {
     transition: all ease-in .3s;
     &:hover {
-        @include buttons-hover(theme-color(primary, hover), theme-color(primary, hover));
+        @include buttons-hover(theme-color(info, hover), theme-color(info, hover));
         .btn {
-            @include buttons-hover(theme-color(primary, hover), theme-color(primary, hover));
+            @include buttons-hover(theme-color(info, hover), theme-color(info, hover));
         }
     }
 }
