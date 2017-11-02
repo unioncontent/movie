@@ -31,20 +31,16 @@
   .input-group:not(.btn-select){
     max-width: 500px;
   }
-}
-
-@media only screen and (min-width: 600px){
   .input-group:not(.btn-select){
-    padding-left: 13px;
-    padding-right: 0px;
-  }
-  .btn-sm {
-    padding: 10px 51px;
-    padding-right: 52px;
+    padding-left: 0px;
   }
 }
 /* iPad */
 @media only screen and (min-width: 768px) {
+  .btn-group{
+    padding-left: 0px;
+    display: block;
+  }
   .btn-sm{
     padding: 10px 13px;
   }

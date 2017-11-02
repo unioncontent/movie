@@ -2997,9 +2997,9 @@ select.form-control-inverse, .search-select {
 
   .time {
     margin-left: 10px; } }
-@media (min-width: 1260px) and (min-width: 1260px) {
+@media (min-width: 1260px) {
   .col-md-5 {
-    max-width: 569px;
+    max-width: 538px;
     position: absolute;
     right: 24px; }
 
