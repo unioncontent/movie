@@ -53,6 +53,15 @@
  	
  	</delete>
  
+ 	<select id="searchAll" resultType="MediaVO">
+ 		select
+ 			*
+ 		from
+ 			media_data
+ 			
+ 	
+ 	</select>
+ 
  	<select id="listSearch" resultType="MediaVO">
  		select 
 			*
@@ -70,6 +79,35 @@
 			#{startPage}, #{pageUnit}
  	
  	</select>
+ 	
+ 	<select id="getTotalCount" resultType="Integer">
+ 		select
+ 			count(*)
+ 		from
+ 			media_data
+ 	
+ 	</select>
+ 	
+ 	<select id="mediaGetTotalCount" resultType="Integer">
+ 		select 
+ 			count(*) 
+ 		from 
+ 			media_data
+ 		where
+ 			media_name = #{keyword}
+ 	
+ 	</select>
+ 	
+ 	<select id="reporterGetTotalCount" resultType="Integer">
+ 		select
+ 			count(*)
+ 		from
+ 			media_data
+ 		where
+ 			reporter_name = #{reporter_name}
+ 	
+ 	</select>
+ 	
  	
  	<update id="updateTextType">
 		update

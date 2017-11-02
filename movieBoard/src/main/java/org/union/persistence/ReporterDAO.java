@@ -1,5 +1,7 @@
 package org.union.persistence;
 
+import java.util.List;
+
 import org.union.domain.ReporterVO;
 
 public interface ReporterDAO {
@@ -12,5 +14,7 @@ public interface ReporterDAO {
 	public void update(ReporterVO vo);
 	
 	public void delete(Integer reporter_idx);
+	
+	public List<ReporterVO> listAll();
 	
 }

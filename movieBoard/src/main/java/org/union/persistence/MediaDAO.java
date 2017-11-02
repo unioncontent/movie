@@ -17,9 +17,17 @@ public interface MediaDAO {
 	
 	public void delete(Integer media_idx);
 	
-	public List<MediaVO> listSearch(SearchCriteria vo);
+	public List<MediaVO> listSearch(SearchCriteria criteria);
 	
-	public void updateTextType (CommunityVO vo);
+	public List<MediaVO> searchAll(SearchCriteria criteria);
 	
-	public void updateThumbnail (CommunityVO vo);
+	public Integer getTotalCount();
+	
+	public Integer mediaGetTotalCount(SearchCriteria criteria);
+	
+	public Integer reporterGetTotalCount(SearchCriteria criteria);
+	
+	public void updateTextType (MediaVO vo);
+	
+	public void updateThumbnail (MediaVO vo);
 }

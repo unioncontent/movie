@@ -1,5 +1,7 @@
 package org.union.persistence;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -52,6 +54,13 @@ public class ReporterDAOImpl implements ReporterDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+
+	@Override
+	public List<ReporterVO> listAll() {
+
+		return session.selectList(namespace + "listAll");
 	}
 
 }

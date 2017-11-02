@@ -47,6 +47,13 @@
  			reporter_idx = #{reporter_idx}
  	
  	</delete>
+ 	
+ 	<select id="listAll" resultType="ReporterVO">
+ 		select
+ 			*
+ 		from	
+ 			reporter_data
+ 	</select>
  
  </mapper>
   

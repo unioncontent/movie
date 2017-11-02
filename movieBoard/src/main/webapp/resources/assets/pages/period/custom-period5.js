@@ -1,7 +1,7 @@
 'use strict';
 $(document).ready(function() {
   /* 언론사 통계 순위 for문 */
-  for (var i = 2; i < 41; i++) {
+ /* for (var i = 2; i < 41; i++) {
     var check=""; // 20위이상 안보이게 하는 클래스 변수(more 클래스)
     if(i > 20){
       check="more";
@@ -9,7 +9,7 @@ $(document).ready(function() {
 
     $("#news-ranking").append("<tr class='"+check+"'><th scope='row'>"+i+"</th><td class='news' onclick='showModal('#news-Modal')'>언론사</td><td>3,294</td><td>13</td><td>11.74%</td></tr>");
     $("#press-ranking").append("<tr class='"+check+"'><th scope='row'>"+i+"</th><td class='press' onclick='showModal('#press-Modal')'>기자</td><td>언론사</td><td>1</td><td>0</td><td>0%</td></tr>");
-  }
+  }*/
 
   pieGraph1();
   pieGraph2();

@@ -143,7 +143,7 @@
                               <div class="col-md-6 col-xl-3 main-card">
                                 <div class="card social-widget-card">
                                   <div class="card-block-big bg-inverse">
-                                    <h3>0</h3>
+                                    <h3>${totalCount}</h3>
                                     <span class="m-t-10">전체검색</span>
                                     <i class="icofont icofont-search"></i>
                                   </div>
@@ -152,7 +152,7 @@
                               <div class="col-md-6 col-xl-3 main-card">
                                 <div class="card social-widget-card">
                                   <div class="card-block-big bg-news">
-                                    <h3>0</h3>
+                                    <h3>${mediaCount}</h3>
                                     <span class="m-t-10">언론사</span>
                                     <i class="icofont icofont-building-alt"></i>
                                   </div>
@@ -161,7 +161,7 @@
                               <div class="col-md-6 col-xl-3 main-card">
                                 <div class="card social-widget-card">
                                   <div class="card-block-big bg-success">
-                                    <h3>0</h3>
+                                    <h3>${pressCount}</h3>
                                     <span class="m-t-10">기자</span>
                                     <i class="icofont icofont-fountain-pen"></i>
                                   </div>
@@ -215,13 +215,15 @@
                                                 </tr>
                                             </thead>
                                             <tbody id="news-ranking">
+                                              <c:forEach items="${mediaList}" var="mediaList" varStatus="index">
                                               <tr>
-                                                <th scope="row">1</th>
-                                                <td class='news' onclick='showModal("#news-Modal")'>톱스타뉴스</td>
-                                                <td>3,294</td>
-                                                <td>13</td>
-                                                <td>11.74%</td>
+                                                <th scope="row">${index.count}</th>
+                                                <td class='news' onclick='showModal("#news-Modal")'>${mediaList.media}</td>
+                                                <td>${mediaList.allCount}</td>
+                                                <td>0</td>
+                                                <td>0%</td>
                                               </tr>
+                                              </c:forEach>
                                             </tbody>
                                           </table>
                                         </div>
@@ -268,14 +270,16 @@
                                             </tr>
                                           </thead>
                                           <tbody id="press-ranking">
-                                            <tr>
-                                              <th scope="row">1</th>
-                                              <td class='press' onclick='showModal("#press-Modal")'>김한준</td>
-                                              <td>엑스포츠뉴스</td>
-                                              <td>1</td>
-                                              <td>0</td>
-                                              <td>0%</td>
-                                            </tr>
+                                            <c:forEach items="${pressList}" var="pressList" varStatus="index">
+                                              <tr>
+                                                <th scope="row">${index.count}</th>
+                                                <td class='press' onclick='showModal("#press-Modal")'>${pressList.reporter}</td>
+                                                <td>${pressList.media}</td>
+                                                <td>${pressList.allCount}</td>
+                                                <td>0</td>
+                                                <td>0%</td>
+                                              </tr>
+                                            </c:forEach>
                                           </tbody>
                                         </table>
                                       </div>

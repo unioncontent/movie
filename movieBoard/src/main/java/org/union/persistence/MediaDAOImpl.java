@@ -68,9 +68,38 @@ public class MediaDAOImpl implements MediaDAO {
 		return session.selectList(namespace + "listSearch", vo);
 	}
 
+	
+	@Override
+	public List<MediaVO> searchAll(SearchCriteria criteria) {
+
+		return session.selectList(namespace + "searchAll", criteria);
+	}
+
+	
+	@Override
+	public Integer getTotalCount() {
+
+		return session.selectOne(namespace + "getTotalCount");
+	}
+	
+	
+	
+	@Override
+	public Integer mediaGetTotalCount(SearchCriteria criteria) {
+
+		return session.selectOne(namespace + "mediaGetTotalCount", criteria);
+	}
+
 
 	@Override
-	public void updateTextType(CommunityVO vo) {
+	public Integer reporterGetTotalCount(SearchCriteria criteria) {
+
+		return session.selectOne(namespace + "reporterGetTotalCount", criteria);
+	}
+	
+
+	@Override
+	public void updateTextType(MediaVO vo) {
 		try {
 			session.update(namespace + "updateTextType", vo);
 			
@@ -81,7 +110,7 @@ public class MediaDAOImpl implements MediaDAO {
 
 
 	@Override
-	public void updateThumbnail(CommunityVO vo) {
+	public void updateThumbnail(MediaVO vo) {
 		try {
 			session.update(namespace + "updateThumbnail", vo);
 			
@@ -89,5 +118,6 @@ public class MediaDAOImpl implements MediaDAO {
 			e.printStackTrace();
 		}
 	}
+
 
 }
