@@ -10,13 +10,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/classification/*")
 public class ClassificationController {
 
+	
 	private static Logger logger = LoggerFactory.getLogger(ClassificationController.class);
 	
-
+	
 	@GetMapping("/classification")
 	public void classificationGET() {
 		logger.info("classificationGET called....");
 	}
-	
-	
 }
