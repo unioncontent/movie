@@ -3826,6 +3826,13 @@ select.form-control-inverse,.search-select{
   }
 }
 
+@media only screen and (min-width: 412px) {
+  .input-time .time{
+    padding-right: 15px;
+    margin-left: 0;
+  }
+}
+
 @media only screen and (min-width: 600px){
   .btn-select > input{
     min-width: 180px;
@@ -3845,9 +3852,6 @@ select.form-control-inverse,.search-select{
   .btn-group{
     padding-left: 0px;
   }
-  .time{
-    margin-left: 10px;
-  }
 }
 
 @media (min-width: 1260px){
@@ -3857,9 +3861,13 @@ select.form-control-inverse,.search-select{
     right: 24px;
   }
   .input-time{
-    max-width: 774px;
+    max-width: 739px;
     position: absolute;
     right: 24px;
+  }
+  .input-time .time{
+    padding-right: 0;
+    margin-left: 0;
   }
 }
 
