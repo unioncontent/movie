@@ -1,18 +1,15 @@
 "use strict";
 
 $(window).resize(function(){
-  //dashboard card width size
   cardResize();
   window.areaChart.redraw();
 });
 
 $(document).ready(function() {
-  //dashboard card width size
   cardResize();
-  //cart
   areaChart();
-  //calendar
   settingCalendar();
+
   $("#mcalendar").width("500px");
   $(".save_btn").on("click", function() {
       $(".md-form-control").removeClass("md-valid");
@@ -40,6 +37,8 @@ $(document).ready(function() {
   $(document).on("click",".delete_todo",function() {
     $(this).parent().parent().parent().parent().fadeOut();
   });
+  $(".icofont-refresh").on("click",areaChart);
+  
 });
 
 function settingCalendar(){
@@ -118,7 +117,8 @@ function cardResize(){
 
 /*Area chart*/
 function areaChart() {
-    window.areaChart = Morris.Area({
+  $("#morris-extra-area").empty();
+  window.areaChart = Morris.Area({
       element: 'morris-extra-area',
       data: [
         {period: '2017-10-10 00:00:00',portal: 0,cumminty: 0,sns: 0},
@@ -159,5 +159,4 @@ function areaChart() {
       hideHover: 'auto'
 
     });
-
 }

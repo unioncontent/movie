@@ -7,6 +7,8 @@ $(window).on('resize',function(){
 
 $(document).ready(function() {
   linechart();
+  $(".icofont-refresh").on("click",linechart);
+
   //일괄처리 확인메시지
 	document.querySelector('.alert-confirm').onclick = function(){
 		swal({
@@ -26,6 +28,7 @@ $(document).ready(function() {
 
 /*line*/
 function linechart(){
+  $("#line-chart1").empty();
   window.lineChart = Morris.Line({
       element: 'line-chart1',
       data: [

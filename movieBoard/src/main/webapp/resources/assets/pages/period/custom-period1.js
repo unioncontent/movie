@@ -9,14 +9,20 @@ $(window).on('resize',function(){
 
 $(document).ready(function() {
   cardResize();
-  echart();
+  echart1();
+  echart2();
   linechart();
+
+  $("i[data-value='chart1']").on("click",linechart);
+  $("i[data-value='chart2']").on("click",echart1);
+  $("i[data-value='chart3']").on("click",echart2);
 });
 
 /*gauge*/
-function echart(){
-  var myChartGauge1 = echarts.init(document.getElementById('gauge1'));
-  var optionGauge1 = {
+function echart1(){
+  $("#gauge1").empty();
+  var myChartGauge = echarts.init(document.getElementById('gauge1'));
+  var optionGauge = {
     tooltip : {
       formatter: "{b} : {c}%"
     },
@@ -74,10 +80,12 @@ function echart(){
       }
     ]
   };
-  myChartGauge1.setOption(optionGauge1,true);
-
-  var myChartGauge2 = echarts.init(document.getElementById('gauge2'));
-  var optionGauge2 = {
+  myChartGauge.setOption(optionGauge,true);
+}
+function echart2(){
+  $("#gauge2").empty();
+  var myChartGauge = echarts.init(document.getElementById('gauge2'));
+  var optionGauge = {
     tooltip : {
       formatter: "{b} : {c}%"
     },
@@ -135,10 +143,11 @@ function echart(){
       }
     ]
   };
-  myChartGauge2.setOption(optionGauge2,true);
+  myChartGauge.setOption(optionGauge,true);
 }
 /*line*/
 function linechart(){
+  $("#line-chart1").empty();
   window.lineChart = Morris.Line({
       element: 'line-chart1',
       data: [

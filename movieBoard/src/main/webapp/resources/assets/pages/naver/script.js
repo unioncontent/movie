@@ -4,9 +4,16 @@ $(window).resize(function(){
 });
 
 $(document).ready(function() {
-  areaChart();
+  areaChart1();
+  pieChart();
+  $("i[data-value='chart1']").on("click",pieChart);
+  $("i[data-value='chart2']").on("click",areaChart1);
+});
 
-  var chart = c3.generate({
+/*pie chart*/
+function pieChart(){
+  $("#chart").empty();
+  c3.generate({
     bindto: '#chart',//chart id
     data: {
         columns: [
@@ -15,9 +22,9 @@ $(document).ready(function() {
             ['배우', 60],
         ],
         type: 'donut',
-        onclick: function(d, i) { console.log("onclick", d, i); },
-        onmouseover: function(d, i) { console.log("onmouseover", d, i); },
-        onmouseout: function(d, i) { console.log("onmouseout", d, i); }
+        // onclick: function(d, i) { console.log("onclick", d, i); },
+        // onmouseover: function(d, i) { console.log("onmouseover", d, i); },
+        // onmouseout: function(d, i) { console.log("onmouseout", d, i); }
     },
     color: {
         pattern: ['#4C5667', '#1ABC9C','#FF9F55']
@@ -26,13 +33,11 @@ $(document).ready(function() {
         title: "PC 메인노출량"
     }
   });
-
-});
-
-
+}
 /*Area chart*/
-function areaChart() {
-    window.areaChart = Morris.Area({
+function areaChart1() {
+  $("#morris-extra-area").empty();
+  window.areaChart = Morris.Area({
       element: 'morris-extra-area',
       data: [
         {period: '2017-10-10 00:00:00',total: 0,matching: 0},
@@ -71,7 +76,5 @@ function areaChart() {
       behaveLikeLine: true,
       gridLineColor: '#5FBEAA',
       hideHover: 'auto'
-
     });
-
 }
