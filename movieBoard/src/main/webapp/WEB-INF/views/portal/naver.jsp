@@ -72,6 +72,7 @@
             <div class="pcoded-inner-content">
               <div class="main-body">
                 <div class="page-wrapper">
+                  <!-- 네이버 관리 start -->
                   <div class="page-header">
                     <div class="page-header-title">
                       <h4>네이버관리</h4>
@@ -88,7 +89,6 @@
                       </ul>
                     </div>
                   </div>
-                  <!-- Page-body start -->
                   <div class="page-body">
                     <div class="row">
                       <!-- data setting start -->
@@ -122,408 +122,473 @@
 
                     <!-- data setting end -->
                     <div class="row">
-                        <!-- counter-card-1 start-->
-                        <div class="col-md-12 col-xl-4">
-                          <div class="card counter-card-1">
-                            <div class="card-block-big">
-                              <div>
-                                <h3>0</h3>
-                                <p>전체모니터링
-                                  <span class="f-right text-inverse">
-                                    <i class="icofont icofont-arrow-up"></i>
-                                    37.89%
-                                  </span>
-                                </p>
-                                <div class="progress ">
-                                  <div class="progress-bar progress-bar-striped progress-xs progress-bar-pink" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                              </div>
-                              <i class="icofont icofont-globe text-inverse"></i>
-                            </div>
-                          </div>
-                        </div>
-                        <!-- counter-card-1 end-->
-                        <!-- counter-card-2 start -->
-                        <div class="col-md-12 col-xl-4">
-                          <div class="card counter-card-1">
-                            <div class="card-block-big">
-                              <div>
-                                <h3>0</h3>
-                                <p>영화
-                                  <span class="f-right text-inverse">
-                                    <i class="icofont icofont-arrow-up"></i>
-                                    37.89%
-                                  </span>
-                                </p>
-                                <div class="progress ">
-                                  <div class="progress-bar progress-bar-striped progress-xs progress-bar-pink" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                              </div>
-                              <i class="icofont icofont-video-clapper text-inverse"></i>
-                            </div>
-                          </div>
-                        </div>
-                        <!-- counter-card-2 end -->
-                        <!-- counter-card-3 start -->
-                        <div class="col-md-12 col-xl-4">
-                          <div class="card counter-card-1">
-                            <div class="card-block-big">
-                              <div>
-                                <h3>0</h3>
-                                <p>배우
-                                  <span class="f-right text-inverse">
-                                    <i class="icofont icofont-arrow-up"></i>
-                                    37.89%
-                                  </span>
-                                </p>
-                                <div class="progress ">
-                                  <div class="progress-bar progress-bar-striped progress-xs progress-bar-pink" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                              </div>
-                              <i class="icofont icofont-user-alt-7 text-inverse"></i>
-                            </div>
-                          </div>
-                        </div>
-                        <!-- counter-card-3 end -->
-                        <!-- pc 메인노출 테이블 start -->
-                        <div class="col-md-6">
-                          <!-- Pc table start -->
-                          <div class="card">
-                            <div class="card-header">
-                                <h5>PC 메인 노출</h5>
-                                <span>TV연예 홈</span>
-                                <div class="card-header-right"><i class="icofont icofont-rounded-down"></i></div>
-                            </div>
-                            <div class="card-block table-border-style">
-                              <div class="table-responsive">
-                                <table class="table table-styling">
-                                  <thead>
-                                    <tr>
-                                      <th width="5%">영역</th>
-                                      <th width="10%">전체</th>
-                                      <th width="10%">매칭</th>
-                                    </tr>
-                                  </thead>
-                                  <tbody>
-                                    <tr>
-                                      <th scope="row">헤드라인기사</th>
-                                      <td>3</td>
-                                      <td>0</td>
-                                    </tr>
-                                    <tr>
-                                      <th scope="row">헤드라인 sub</th>
-                                      <td>3</td>
-                                      <td>0</td>
-                                    </tr>
-                                    <tr>
-                                      <th scope="row">아이템 기사</th>
-                                      <td>3</td>
-                                      <td>0</td>
-                                    </tr>
-                                    <tr class="bg-inverse">
-                                      <th scope="row">합계</th>
-                                      <td>0</td>
-                                      <td>0</td>
-                                    </tr>
-                                  </tbody>
-                                </table>
+                      <!-- counter-card-1 start-->
+                      <div class="col-md-12 col-xl-4">
+                        <div class="card counter-card-1">
+                          <div class="card-block-big">
+                            <div>
+                              <h3>0</h3>
+                              <p>전체모니터링
+                                <span class="f-right text-inverse">
+                                  <i class="icofont icofont-arrow-up"></i>
+                                  37.89%
+                                </span>
+                              </p>
+                              <div class="progress ">
+                                <div class="progress-bar progress-bar-striped progress-xs progress-bar-pink" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
                               </div>
                             </div>
-                          </div>
-                          <!-- Pc table end -->
-                        </div>
-                        <!-- pc 메인노출 테이블 end -->
-                        <!-- Donut chart start -->
-                        <div class="col-md-12 col-lg-6">
-                          <div class="card">
-                            <div class="card-header" style="border:0;">
-                              <div class="card-header-right">
-                                <i class="icofont icofont-rounded-down"></i>
-                                <i class="icofont icofont-refresh"></i>
-                              </div>
-                            </div>
-                            <div class="card-block">
-                              <div id="chart"></div>
-                            </div>
+                            <i class="icofont icofont-globe text-inverse"></i>
                           </div>
                         </div>
-                        <!-- Donut chart Ends -->
-                        <!-- Morris chart start -->
-                        <div class="col-md-12">
-                          <div class="card">
-                            <div class="card-header">
-                              <h5>검출량그래프</h5>
-                              <span>최근 24시간 검출된 데이터 그래프</span>
-                              <div class="card-header-right">
-                                <i class="icofont icofont-rounded-down"></i>
-                                <i class="icofont icofont-refresh"></i>
-                              </div>
-                            </div>
-                            <div class="card-block">
-                              <div id="morris-extra-area" style="height:470px;"></div>
-                            </div>
-                          </div>
-                        </div>
-                        <!-- Morris chart end -->
-                        <!-- pc,mobile순위 start -->
-                        <div class="col-md-6">
-                          <!-- Pc table start -->
-                          <div class="card">
-                            <div class="card-header">
-                              <h5>PC</h5>
-                              <span>Naver > 영화</span>
-                              <div class="card-header-right"><i class="icofont icofont-rounded-down"></i></div>
-                            </div>
-                            <div class="card-block table-border-style">
-                              <div class="table-responsive">
-                                <table class="table table-styling  table-xs">
-                                  <thead>
-                                    <tr>
-                                      <th width="5%">NO</th>
-                                      <th>등록날짜</th>
-                                      <th>제목</th>
-                                      <th>언론사</th>
-                                    </tr>
-                                  </thead>
-                                  <tbody>
-                                    <tr>
-                                      <th scope="row">1</th>
-                                      <td>2017-09-29 20:54:16</td>
-                                      <td>
-                                        <a href="https://www.naver.com" target="_blank">
-                                          <div class="nobr">[★SHOT!] "만삭의 아름다움"..이동건♥조윤희 동화 같은 결혼식 사진 공개</div>
-                                        </a>
-                                      </td>
-                                      <td>스포츠서울</td>
-                                    </tr>
-                                    <tr>
-                                      <th scope="row">2</th>
-                                      <td>2017-09-29 20:54:16</td>
-                                      <td>
-                                        <a href="https://www.naver.com" target="_blank">
-                                          <div class="nobr">[★SHOT!] "만삭의 아름다움"..이동건♥조윤희 동화 같은 결혼식 사진 공개</div>
-                                        </a>
-                                      </td>
-                                      <td>OSEN</td>
-                                    </tr>
-                                    <tr>
-                                      <th scope="row">3</th>
-                                      <td>2017-09-29 20:54:16</td>
-                                      <td>
-                                        <a href="https://www.naver.com" target="_blank">
-                                          <div class="nobr">[★SHOT!] "만삭의 아름다움"..이동건♥조윤희 동화 같은 결혼식 사진 공개</div>
-                                        </a>
-                                      </td>
-                                      <td>OSEN</td>
-                                    </tr>
-                                    <tr>
-                                      <th scope="row">4</th>
-                                      <td>2017-09-29 20:54:16</td>
-                                      <td>
-                                        <a href="https://www.naver.com" target="_blank">
-                                          <div class="nobr">[★SHOT!] "만삭의 아름다움"..이동건♥조윤희 동화 같은 결혼식 사진 공개</div>
-                                        </a>
-                                      </td>
-                                      <td>OSEN</td>
-                                    </tr>
-                                    <tr>
-                                      <th scope="row">5</th>
-                                      <td>2017-09-29 20:54:16</td>
-                                      <td>
-                                        <a href="https://www.naver.com" target="_blank">
-                                          <div class="nobr">[★SHOT!] "만삭의 아름다움"..이동건♥조윤희 동화 같은 결혼식 사진 공개</div>
-                                        </a>
-                                      </td>
-                                      <td>OSEN</td>
-                                    </tr>
-                                    <tr>
-                                      <th scope="row">6</th>
-                                      <td>2017-09-29 20:54:16</td>
-                                      <td>
-                                        <a href="https://www.naver.com" target="_blank">
-                                          <div class="nobr">[★SHOT!] "만삭의 아름다움"..이동건♥조윤희 동화 같은 결혼식 사진 공개</div>
-                                        </a>
-                                      </td>
-                                      <td>OSEN</td>
-                                    </tr>
-                                    <tr>
-                                      <th scope="row">7</th>
-                                      <td>2017-09-29 20:54:16</td>
-                                      <td>
-                                        <a href="https://www.naver.com" target="_blank">
-                                          <div class="nobr">[★SHOT!] "만삭의 아름다움"..이동건♥조윤희 동화 같은 결혼식 사진 공개</div>
-                                        </a>
-                                      </td>
-                                      <td>OSEN</td>
-                                    </tr>
-                                    <tr>
-                                      <th scope="row">8</th>
-                                      <td>2017-09-29 20:54:16</td>
-                                      <td>
-                                        <a href="https://www.naver.com" target="_blank">
-                                          <div class="nobr">[★SHOT!] "만삭의 아름다움"..이동건♥조윤희 동화 같은 결혼식 사진 공개</div>
-                                        </a>
-                                      </td>
-                                      <td>OSEN</td>
-                                    </tr>
-                                    <tr>
-                                      <th scope="row">9</th>
-                                      <td>2017-09-29 20:54:16</td>
-                                      <td>
-                                        <a href="https://www.naver.com" target="_blank">
-                                          <div class="nobr">[★SHOT!] "만삭의 아름다움"..이동건♥조윤희 동화 같은 결혼식 사진 공개</div>
-                                        </a>
-                                      </td>
-                                      <td>OSEN</td>
-                                    </tr>
-                                    <tr>
-                                      <th scope="row">10</th>
-                                      <td>2017-09-29 20:54:16</td>
-                                      <td>
-                                        <a href="https://www.naver.com" target="_blank">
-                                          <div class="nobr">[★SHOT!] "만삭의 아름다움"..이동건♥조윤희 동화 같은 결혼식 사진 공개</div>
-                                        </a>
-                                      </td>
-                                      <td>OSEN</td>
-                                    </tr>
-                                  </tbody>
-                                </table>
-                              </div>
-                            </div>
-                          </div>
-                          <!-- Pc table end -->
-                        </div>
-                        <div class="col-md-6">
-                          <!-- mobile table start -->
-                          <div class="card">
-                            <div class="card-header">
-                                <h5>Mobile</h5>
-                                <span>Naver > 영화</span>
-                                <div class="card-header-right"><i class="icofont icofont-rounded-down"></i></div>
-                            </div>
-                            <div class="card-block table-border-style">
-                              <div class="table-responsive">
-                                <table class="table table-styling  table-xs">
-                                  <thead>
-                                    <tr>
-                                      <th width="5%">NO</th>
-                                      <th>등록날짜</th>
-                                      <th>제목</th>
-                                      <th>언론사</th>
-                                    </tr>
-                                  </thead>
-                                  <tbody>
-                                    <tr>
-                                      <th scope="row">1</th>
-                                      <td>2017-09-29 20:54:16</td>
-                                      <td>
-                                        <a href="https://www.naver.com" target="_blank">
-                                          <div class="nobr">[★SHOT!] "만삭의 아름다움"..이동건♥조윤희 동화 같은 결혼식 사진 공개</div>
-                                        </a>
-                                      </td>
-                                      <td>스포츠서울</td>
-                                    </tr>
-                                    <tr>
-                                      <th scope="row">2</th>
-                                      <td>2017-09-29 20:54:16</td>
-                                      <td>
-                                        <a href="https://www.naver.com" target="_blank">
-                                          <div class="nobr">[★SHOT!] "만삭의 아름다움"..이동건♥조윤희 동화 같은 결혼식 사진 공개</div>
-                                        </a>
-                                      </td>
-                                      <td>OSEN</td>
-                                    </tr>
-                                    <tr>
-                                      <th scope="row">3</th>
-                                      <td>2017-09-29 20:54:16</td>
-                                      <td>
-                                        <a href="https://www.naver.com" target="_blank">
-                                          <div class="nobr">[★SHOT!] "만삭의 아름다움"..이동건♥조윤희 동화 같은 결혼식 사진 공개</div>
-                                        </a>
-                                      </td>
-                                      <td>OSEN</td>
-                                    </tr>
-                                    <tr>
-                                      <th scope="row">4</th>
-                                      <td>2017-09-29 20:54:16</td>
-                                      <td>
-                                        <a href="https://www.naver.com" target="_blank">
-                                          <div class="nobr">[★SHOT!] "만삭의 아름다움"..이동건♥조윤희 동화 같은 결혼식 사진 공개</div>
-                                        </a>
-                                      </td>
-                                      <td>OSEN</td>
-                                    </tr>
-                                    <tr>
-                                      <th scope="row">5</th>
-                                      <td>2017-09-29 20:54:16</td>
-                                      <td>
-                                        <a href="https://www.naver.com" target="_blank">
-                                          <div class="nobr">[★SHOT!] "만삭의 아름다움"..이동건♥조윤희 동화 같은 결혼식 사진 공개</div>
-                                        </a>
-                                      </td>
-                                      <td>OSEN</td>
-                                    </tr>
-                                    <tr>
-                                      <th scope="row">6</th>
-                                      <td>2017-09-29 20:54:16</td>
-                                      <td>
-                                        <a href="https://www.naver.com" target="_blank">
-                                          <div class="nobr">[★SHOT!] "만삭의 아름다움"..이동건♥조윤희 동화 같은 결혼식 사진 공개</div>
-                                        </a>
-                                      </td>
-                                      <td>OSEN</td>
-                                    </tr>
-                                    <tr>
-                                      <th scope="row">7</th>
-                                      <td>2017-09-29 20:54:16</td>
-                                      <td>
-                                        <a href="https://www.naver.com" target="_blank">
-                                          <div class="nobr">[★SHOT!] "만삭의 아름다움"..이동건♥조윤희 동화 같은 결혼식 사진 공개</div>
-                                        </a>
-                                      </td>
-                                      <td>OSEN</td>
-                                    </tr>
-                                    <tr>
-                                      <th scope="row">8</th>
-                                      <td>2017-09-29 20:54:16</td>
-                                      <td>
-                                        <a href="https://www.naver.com" target="_blank">
-                                          <div class="nobr">[★SHOT!] "만삭의 아름다움"..이동건♥조윤희 동화 같은 결혼식 사진 공개</div>
-                                        </a>
-                                      </td>
-                                      <td>OSEN</td>
-                                    </tr>
-                                    <tr>
-                                      <th scope="row">9</th>
-                                      <td>2017-09-29 20:54:16</td>
-                                      <td>
-                                        <a href="https://www.naver.com" target="_blank">
-                                          <div class="nobr">[★SHOT!] "만삭의 아름다움"..이동건♥조윤희 동화 같은 결혼식 사진 공개</div>
-                                        </a>
-                                      </td>
-                                      <td>OSEN</td>
-                                    </tr>
-                                    <tr>
-                                      <th scope="row">10</th>
-                                      <td>2017-09-29 20:54:16</td>
-                                      <td>
-                                        <a href="https://www.naver.com" target="_blank">
-                                          <div class="nobr">[★SHOT!] "만삭의 아름다움"..이동건♥조윤희 동화 같은 결혼식 사진 공개</div>
-                                        </a>
-                                      </td>
-                                      <td>OSEN</td>
-                                    </tr>
-                                  </tbody>
-                                </table>
-                              </div>
-                            </div>
-                          </div>
-                          <!-- mobile table end -->
-                        </div>
-                        <!-- pc,mobile순위 end -->
                       </div>
+                      <!-- counter-card-1 end-->
+                      <!-- counter-card-2 start -->
+                      <div class="col-md-12 col-xl-4">
+                        <div class="card counter-card-1">
+                          <div class="card-block-big">
+                            <div>
+                              <h3>0</h3>
+                              <p>영화
+                                <span class="f-right text-inverse">
+                                  <i class="icofont icofont-arrow-up"></i>
+                                  37.89%
+                                </span>
+                              </p>
+                              <div class="progress ">
+                                <div class="progress-bar progress-bar-striped progress-xs progress-bar-pink" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                              </div>
+                            </div>
+                            <i class="icofont icofont-video-clapper text-inverse"></i>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- counter-card-2 end -->
+                      <!-- counter-card-3 start -->
+                      <div class="col-md-12 col-xl-4">
+                        <div class="card counter-card-1">
+                          <div class="card-block-big">
+                            <div>
+                              <h3>0</h3>
+                              <p>배우
+                                <span class="f-right text-inverse">
+                                  <i class="icofont icofont-arrow-up"></i>
+                                  37.89%
+                                </span>
+                              </p>
+                              <div class="progress ">
+                                <div class="progress-bar progress-bar-striped progress-xs progress-bar-pink" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                              </div>
+                            </div>
+                            <i class="icofont icofont-user-alt-7 text-inverse"></i>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- counter-card-3 end -->
+                      <!-- pc 메인노출 테이블 start -->
+                      <div class="col-md-6">
+                        <!-- Pc table start -->
+                        <div class="card">
+                          <div class="card-header">
+                              <h5>PC 메인 노출</h5>
+                              <span>TV연예 홈</span>
+                              <div class="card-header-right"><i class="icofont icofont-rounded-down"></i></div>
+                          </div>
+                          <div class="card-block table-border-style">
+                            <div class="table-responsive">
+                              <table class="table table-styling">
+                                <thead>
+                                  <tr>
+                                    <th width="5%">영역</th>
+                                    <th width="10%">전체</th>
+                                    <th width="10%">매칭</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                    <th scope="row">헤드라인기사</th>
+                                    <td>3</td>
+                                    <td>0</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row">헤드라인 sub</th>
+                                    <td>3</td>
+                                    <td>0</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row">아이템 기사</th>
+                                    <td>3</td>
+                                    <td>0</td>
+                                  </tr>
+                                  <tr class="bg-inverse">
+                                    <th scope="row">합계</th>
+                                    <td>0</td>
+                                    <td>0</td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- Pc table end -->
+                      </div>
+                      <!-- pc 메인노출 테이블 end -->
+                      <!-- Donut chart start -->
+                      <div class="col-md-12 col-lg-6">
+                        <div class="card">
+                          <div class="card-header" style="border:0;">
+                            <div class="card-header-right">
+                              <i class="icofont icofont-rounded-down"></i>
+                              <i class="icofont icofont-refresh"></i>
+                            </div>
+                          </div>
+                          <div class="card-block">
+                            <div id="chart"></div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- Donut chart Ends -->
+                      <!-- Morris chart start -->
+                      <div class="col-md-12">
+                        <div class="card">
+                          <div class="card-header">
+                            <h5>검출량그래프</h5>
+                            <span>최근 24시간 검출된 데이터 그래프</span>
+                            <div class="card-header-right">
+                              <i class="icofont icofont-rounded-down"></i>
+                              <i class="icofont icofont-refresh"></i>
+                            </div>
+                          </div>
+                          <div class="card-block">
+                            <div id="morris-extra-area" style="height:470px;"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <!-- Page-body end -->
+                  <!-- 네이버 관리 end -->
+                  <!-- 네이버 영화 start-->
+                  <div class="page-header m-b-30">
+                    <div class="page-header-title">
+                      <h4>네이버영화</h4>
+                    </div>
+                  </div>
+                  <!-- Page-body start -->
+                  <div class="page-body">
+                    <div class="row">
+                    <!-- pc,mobile순위 start -->
+                    <div class="col-md-12">
+                      <!-- Pc table start -->
+                      <div class="card">
+                        <div class="card-header">
+                          <h5>PC</h5>
+                          <span>Naver > 영화</span>
+                          <div class="card-header-right"><i class="icofont icofont-rounded-down"></i></div>
+                        </div>
+                        <div class="card-block">
+                          <div class="table-responsive">
+                            <table class="table table-styling">
+                              <thead>
+                                <tr>
+                                  <th>NO</th>
+                                  <th>등록날짜</th>
+                                  <th>제목</th>
+                                  <th>키워드</th>
+                                  <th>언론사</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr>
+                                  <th scope="row">1</th>
+                                  <td>2017-09-29 20:54:16</td>
+                                  <td>
+                                    <a href="https://www.naver.com" target="_blank">
+                                      <div class="nobr">[★SHOT!] "만삭의 아름다움"..이동건♥조윤희 동화 같은 결혼식 사진 공개</div>
+                                    </a>
+                                  </td>
+                                  <td></td>
+                                  <td>스포츠서울</td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">2</th>
+                                  <td>2017-09-29 20:54:16</td>
+                                  <td>
+                                    <a href="https://www.naver.com" target="_blank">
+                                      <div class="nobr">[★SHOT!] "만삭의 아름다움"..이동건♥조윤희 동화 같은 결혼식 사진 공개</div>
+                                    </a>
+                                  </td>
+                                  <td></td>
+                                  <td>OSEN</td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">3</th>
+                                  <td>2017-09-29 20:54:16</td>
+                                  <td>
+                                    <a href="https://www.naver.com" target="_blank">
+                                      <div class="nobr">[★SHOT!] "만삭의 아름다움"..이동건♥조윤희 동화 같은 결혼식 사진 공개</div>
+                                    </a>
+                                  </td>
+                                  <td></td>
+                                  <td>OSEN</td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">4</th>
+                                  <td>2017-09-29 20:54:16</td>
+                                  <td>
+                                    <a href="https://www.naver.com" target="_blank">
+                                      <div class="nobr">[★SHOT!] "만삭의 아름다움"..이동건♥조윤희 동화 같은 결혼식 사진 공개</div>
+                                    </a>
+                                  </td>
+                                  <td></td>
+                                  <td>OSEN</td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">5</th>
+                                  <td>2017-09-29 20:54:16</td>
+                                  <td>
+                                    <a href="https://www.naver.com" target="_blank">
+                                      <div class="nobr">[★SHOT!] "만삭의 아름다움"..이동건♥조윤희 동화 같은 결혼식 사진 공개</div>
+                                    </a>
+                                  </td>
+                                  <td></td>
+                                  <td>OSEN</td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">6</th>
+                                  <td>2017-09-29 20:54:16</td>
+                                  <td>
+                                    <a href="https://www.naver.com" target="_blank">
+                                      <div class="nobr">[★SHOT!] "만삭의 아름다움"..이동건♥조윤희 동화 같은 결혼식 사진 공개</div>
+                                    </a>
+                                  </td>
+                                  <td></td>
+                                  <td>OSEN</td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">7</th>
+                                  <td>2017-09-29 20:54:16</td>
+                                  <td>
+                                    <a href="https://www.naver.com" target="_blank">
+                                      <div class="nobr">[★SHOT!] "만삭의 아름다움"..이동건♥조윤희 동화 같은 결혼식 사진 공개</div>
+                                    </a>
+                                  </td>
+                                  <td></td>
+                                  <td>OSEN</td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">8</th>
+                                  <td>2017-09-29 20:54:16</td>
+                                  <td>
+                                    <a href="https://www.naver.com" target="_blank">
+                                      <div class="nobr">[★SHOT!] "만삭의 아름다움"..이동건♥조윤희 동화 같은 결혼식 사진 공개</div>
+                                    </a>
+                                  </td>
+                                  <td></td>
+                                  <td>OSEN</td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">9</th>
+                                  <td>2017-09-29 20:54:16</td>
+                                  <td>
+                                    <a href="https://www.naver.com" target="_blank">
+                                      <div class="nobr">[★SHOT!] "만삭의 아름다움"..이동건♥조윤희 동화 같은 결혼식 사진 공개</div>
+                                    </a>
+                                  </td>
+                                  <td></td>
+                                  <td>OSEN</td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">10</th>
+                                  <td>2017-09-29 20:54:16</td>
+                                  <td>
+                                    <a href="https://www.naver.com" target="_blank">
+                                      <div class="nobr">[★SHOT!] "만삭의 아름다움"..이동건♥조윤희 동화 같은 결혼식 사진 공개</div>
+                                    </a>
+                                  </td>
+                                  <td></td>
+                                  <td>OSEN</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                          <ul class="pagination float-right">
+                              <li class="page-item">
+                                <a class="page-link" href="#" aria-label="Previous">
+                                  <span aria-hidden="true">«</span>
+                                  <span class="sr-only">Previous</span>
+                                </a>
+                              </li>
+                              <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                              <li class="page-item"><a class="page-link" href="#">2</a></li>
+                              <li class="page-item">
+                                <a class="page-link" href="#" aria-label="Next">
+                                  <span aria-hidden="true">»</span>
+                                  <span class="sr-only">Next</span>
+                                </a>
+                              </li>
+                            </ul>
+                        </div>
+                      </div>
+                      <!-- Pc table end -->
+                    </div>
+                    <div class="col-md-12">
+                      <!-- mobile table start -->
+                      <div class="card">
+                        <div class="card-header">
+                          <h5>MOBILE</h5>
+                          <span>Naver > 영화</span>
+                          <div class="card-header-right"><i class="icofont icofont-rounded-down"></i></div>
+                        </div>
+                        <div class="card-block">
+                          <div class="table-responsive">
+                            <table class="table table-styling">
+                              <thead>
+                                <tr>
+                                  <th>NO</th>
+                                  <th>등록날짜</th>
+                                  <th>제목</th>
+                                  <th>키워드</th>
+                                  <th>언론사</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr>
+                                  <th scope="row">1</th>
+                                  <td>2017-09-29 20:54:16</td>
+                                  <td>
+                                    <a href="https://www.naver.com" target="_blank">
+                                      <div class="nobr">[★SHOT!] "만삭의 아름다움"..이동건♥조윤희 동화 같은 결혼식 사진 공개</div>
+                                    </a>
+                                  </td>
+                                  <td></td>
+                                  <td>스포츠서울</td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">2</th>
+                                  <td>2017-09-29 20:54:16</td>
+                                  <td>
+                                    <a href="https://www.naver.com" target="_blank">
+                                      <div class="nobr">[★SHOT!] "만삭의 아름다움"..이동건♥조윤희 동화 같은 결혼식 사진 공개</div>
+                                    </a>
+                                  </td>
+                                  <td></td>
+                                  <td>OSEN</td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">3</th>
+                                  <td>2017-09-29 20:54:16</td>
+                                  <td>
+                                    <a href="https://www.naver.com" target="_blank">
+                                      <div class="nobr">[★SHOT!] "만삭의 아름다움"..이동건♥조윤희 동화 같은 결혼식 사진 공개</div>
+                                    </a>
+                                  </td>
+                                  <td></td>
+                                  <td>OSEN</td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">4</th>
+                                  <td>2017-09-29 20:54:16</td>
+                                  <td>
+                                    <a href="https://www.naver.com" target="_blank">
+                                      <div class="nobr">[★SHOT!] "만삭의 아름다움"..이동건♥조윤희 동화 같은 결혼식 사진 공개</div>
+                                    </a>
+                                  </td>
+                                  <td></td>
+                                  <td>OSEN</td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">5</th>
+                                  <td>2017-09-29 20:54:16</td>
+                                  <td>
+                                    <a href="https://www.naver.com" target="_blank">
+                                      <div class="nobr">[★SHOT!] "만삭의 아름다움"..이동건♥조윤희 동화 같은 결혼식 사진 공개</div>
+                                    </a>
+                                  </td>
+                                  <td></td>
+                                  <td>OSEN</td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">6</th>
+                                  <td>2017-09-29 20:54:16</td>
+                                  <td>
+                                    <a href="https://www.naver.com" target="_blank">
+                                      <div class="nobr">[★SHOT!] "만삭의 아름다움"..이동건♥조윤희 동화 같은 결혼식 사진 공개</div>
+                                    </a>
+                                  </td>
+                                  <td></td>
+                                  <td>OSEN</td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">7</th>
+                                  <td>2017-09-29 20:54:16</td>
+                                  <td>
+                                    <a href="https://www.naver.com" target="_blank">
+                                      <div class="nobr">[★SHOT!] "만삭의 아름다움"..이동건♥조윤희 동화 같은 결혼식 사진 공개</div>
+                                    </a>
+                                  </td>
+                                  <td></td>
+                                  <td>OSEN</td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">8</th>
+                                  <td>2017-09-29 20:54:16</td>
+                                  <td>
+                                    <a href="https://www.naver.com" target="_blank">
+                                      <div class="nobr">[★SHOT!] "만삭의 아름다움"..이동건♥조윤희 동화 같은 결혼식 사진 공개</div>
+                                    </a>
+                                  </td>
+                                  <td></td>
+                                  <td>OSEN</td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">9</th>
+                                  <td>2017-09-29 20:54:16</td>
+                                  <td>
+                                    <a href="https://www.naver.com" target="_blank">
+                                      <div class="nobr">[★SHOT!] "만삭의 아름다움"..이동건♥조윤희 동화 같은 결혼식 사진 공개</div>
+                                    </a>
+                                  </td>
+                                  <td></td>
+                                  <td>OSEN</td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">10</th>
+                                  <td>2017-09-29 20:54:16</td>
+                                  <td>
+                                    <a href="https://www.naver.com" target="_blank">
+                                      <div class="nobr">[★SHOT!] "만삭의 아름다움"..이동건♥조윤희 동화 같은 결혼식 사진 공개</div>
+                                    </a>
+                                  </td>
+                                  <td></td>
+                                  <td>OSEN</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                          <ul class="pagination float-right">
+                              <li class="page-item">
+                                <a class="page-link" href="#" aria-label="Previous">
+                                  <span aria-hidden="true">«</span>
+                                  <span class="sr-only">Previous</span>
+                                </a>
+                              </li>
+                              <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                              <li class="page-item"><a class="page-link" href="#">2</a></li>
+                              <li class="page-item">
+                                <a class="page-link" href="#" aria-label="Next">
+                                  <span aria-hidden="true">»</span>
+                                  <span class="sr-only">Next</span>
+                                </a>
+                              </li>
+                            </ul>
+                        </div>
+                      </div>
+                      <!-- mobile table end -->
+                    </div>
+                    <!-- pc,mobile순위 end -->
+                    </div>
+                  </div>
+                  <!-- 네이버 영화 end -->
                 </div>
               </div>
             </div>

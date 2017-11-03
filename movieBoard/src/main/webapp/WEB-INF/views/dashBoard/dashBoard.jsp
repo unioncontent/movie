@@ -100,8 +100,8 @@
                           <div class="card-block">
                             <h5>대표키워드</h5>
                             <ul>
-                              <li>
-                                <i class="icofont icofont-document-search"></i>
+                              <li style="min-height: 60px;">
+                                <i class="icofont icofont-document-search" style="line-height: 58px;"></i>
                               </li>
                               <li class="text-right">
                                 10
@@ -115,8 +115,8 @@
                           <div class="card-block">
                             <h5>블로그(Blog)검출</h5>
                             <ul>
-                              <li>
-                                <i class="icofont icofont-ui-text-chat"></i>
+                              <li style="min-height: 60px;">
+                                <i class="icofont icofont-ui-text-chat" style="line-height: 58px;"></i>
                               </li>
                               <li class="text-right">
                                 7,414
@@ -130,8 +130,8 @@
                           <div class="card-block">
                             <h5>카페(cafe)검출</h5>
                             <ul>
-                              <li>
-                                <i class="icofont icofont-ui-social-link"></i>
+                              <li style="min-height: 60px;">
+                                <i class="icofont icofont-ui-social-link" style="line-height: 58px;"></i>
                               </li>
                               <li class="text-right">
                                 24,287
@@ -145,8 +145,8 @@
                           <div class="card-block">
                             <h5>연관검색어검출</h5>
                             <ul>
-                              <li>
-                                <i class="icofont icofont-page"></i>
+                              <li style="min-height: 60px;">
+                                <i class="icofont icofont-page" style="line-height: 58px;"></i>
                               </li>
                               <li class="text-right">
                                 672
@@ -160,8 +160,8 @@
                           <div class="card-block">
                             <h5>지식인검출</h5>
                             <ul>
-                              <li>
-                                <i class="icofont icofont-hat-alt"></i>
+                              <li style="min-height: 60px;">
+                                <i class="icofont icofont-hat-alt" style="line-height: 58px;"></i>
                               </li>
                               <li class="text-right">
                                 15,081

@@ -1960,11 +1960,6 @@ img.comment-img {
     border-color: $primary-color;
 }
 
-#main {
-    margin-bottom: 20px;
-}
-
-
 /*====== User-card End ======*/
 
 
@@ -3760,19 +3755,19 @@ table.matrics-table tr:first-child td {
 }
 
 @media (min-width: 400px){
-  #keyword{
+  #keyword,#selectKeyword{
     margin-left: 0px;
   }
 }
 
 @media (min-width: 768px){
-  #keyword{
+  #keyword,#selectKeyword{
     margin-left: 15px;
   }
 }
 
 @media (min-width: 1200px){
-  #keyword{
+  #keyword,#selectKeyword{
     margin-left: 15px;
   }
 }

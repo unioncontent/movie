@@ -1547,9 +1547,6 @@ img.comment-img {
   background-color: #1abc9c;
   border-color: #1abc9c; }
 
-#main {
-  margin-bottom: 20px; }
-
 /*====== User-card End ======*/
 /**  =====================
       Offline css start
@@ -2939,13 +2936,13 @@ table.matrics-table tr:first-child td {
   padding-right: 20px; }
 
 @media (min-width: 400px) {
-  #keyword {
+  #keyword, #selectKeyword {
     margin-left: 0px; } }
 @media (min-width: 768px) {
-  #keyword {
+  #keyword, #selectKeyword {
     margin-left: 15px; } }
 @media (min-width: 1200px) {
-  #keyword {
+  #keyword, #selectKeyword {
     margin-left: 15px; } }
 #keyword ~ .col-md-6 .row {
   float: right;
