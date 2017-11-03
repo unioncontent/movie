@@ -128,12 +128,7 @@
                           <div class="card-block-big">
                             <div>
                               <h3>0</h3>
-                              <p>전체모니터링
-                                <span class="f-right text-inverse">
-                                  <i class="icofont icofont-arrow-up"></i>
-                                  37.89%
-                                </span>
-                              </p>
+                              <p>전체모니터링</p>
                               <div class="progress ">
                                 <div class="progress-bar progress-bar-striped progress-xs progress-bar-pink" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
                               </div>
@@ -149,12 +144,7 @@
                           <div class="card-block-big">
                             <div>
                               <h3>0</h3>
-                              <p>영화
-                                <span class="f-right text-inverse">
-                                  <i class="icofont icofont-arrow-up"></i>
-                                  37.89%
-                                </span>
-                              </p>
+                              <p>영화</p>
                               <div class="progress ">
                                 <div class="progress-bar progress-bar-striped progress-xs progress-bar-pink" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
                               </div>
@@ -170,12 +160,7 @@
                           <div class="card-block-big">
                             <div>
                               <h3>0</h3>
-                              <p>배우
-                                <span class="f-right text-inverse">
-                                  <i class="icofont icofont-arrow-up"></i>
-                                  37.89%
-                                </span>
-                              </p>
+                              <p>배우</p>
                               <div class="progress ">
                                 <div class="progress-bar progress-bar-striped progress-xs progress-bar-pink" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
                               </div>
