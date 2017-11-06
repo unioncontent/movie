@@ -36,6 +36,8 @@
   <link rel="stylesheet" type="text/css" href="../assets/pages/dashboard/horizontal-timeline/css/style.css">
   <!-- font awesome -->
   <link rel="stylesheet" type="text/css" href="../assets/icon/font-awesome/css/font-awesome.css">
+  <!-- Date-time picker css -->
+  <link rel="stylesheet" type="text/css" href="assets/pages/advance-elements/css/bootstrap-datetimepicker.css">
   <!-- Date-range picker css  -->
   <link rel="stylesheet" type="text/css" href="../bower_components/bootstrap-daterangepicker/daterangepicker.css">
   <!-- sweet alert framework -->
@@ -152,6 +154,7 @@
                               </span>
                             </div>
                             <button class="btn btn-warning alert-excel f-right p-r-5 p-l-5 m-l-15 m-b-10"><i class="icofont icofont-download-alt"></i>EXCEL</button>
+                            <button type="button" class="btn btn-inverse  waves-effect  f-right p-r-5 p-l-5 m-l-15 m-b-10" data-toggle="modal" data-target="#frmModal"><i class="ti-pencil-alt"></i>수동입력</button>
                             <button type="button" class="alert-confirm btn btn-primary waves-effect f-right p-r-0 p-l-5 m-l-15 m-b-10  f-right"><i class="icofont icofont-check-circled"></i>일괄처리</button>
                           </div>
                           <div class="card-block">
@@ -266,8 +269,140 @@
                       </div>
                       <!-- table end -->
                     </div>
-                  <!-- Page-body end -->
+                    <!-- frmModal start -->
+                    <div class="modal fade" id="frmModal" tabindex="-1" role="dialog">
+                      <div class="modal-dialog  modal-lg" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h4 class="modal-title">분류글 수동 입력</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                            <form id="frm">
+                              <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">소속사</label>
+                                <div class="col-sm-10">
+                                  <select name="select" class="form-control form-control-default" id="select1">
+                                    <option value="">소속사명</option>
+                                    <option value="">UAA</option>
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">연예인명</label>
+                                <div class="col-sm-10">
+                                  <select name="select" class="form-control form-control-default" id="select2">
+                                    <option value="">연예인명</option>
+                                    <option value="">강동원</option>
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">분류</label>
+                                <div class="col-sm-10">
+                                  <select name="select" class="form-control form-control-default">
+                                    <option value="">좋은글</option>
+                                    <option value="">나쁜글</option>
+                                    <option value="">관심글</option>
+                                    <option value="">기타</option>
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">검색어</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" placeholder="검색어">
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">사이트명</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" placeholder="사이트명" id="siteName">
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">게시판명</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" placeholder="게시판명">
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">컨텐츠 타입</label>
+                                <div class="col-sm-10">
+                                  <select name="select" class="form-control form-control-default">
+                                    <option value="1">board</option>
+                    			   				<option value="2">reply</option>
+                    			   				<option value="3">news</option>
+                    			   				<option value="4">descr</option>
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">게시판 번호</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" placeholder="게시판 번호" id="boardNum">
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">제목</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" placeholder="제목" id="title">
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">내용</label>
+                                <div class="col-sm-10">
+                                    <textarea rows="5" cols="5" class="form-control" placeholder="내용" id="content"></textarea>
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">작성자ID</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" placeholder="작성자ID">
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">작성자IP</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" placeholder="작성자IP">
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">작성일</label>
+                                <div class="col-sm-5">
+                                  <input type='text' class="form-control" id='datepicker'/>
+                                </div>
+                                <div class="col-sm-5">
+                                  <input type='text' class="form-control" id='datetimepicker'/>
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">URL</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" placeholder="URL">
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">이미지 등록</label>
+                                <div class="col-sm-10">
+                                    <input type="file" class="form-control">
+                                </div>
+                              </div>
+                            </form>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary waves-effect waves-light " id="submit">등록</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- frmModal end -->
+                  </div>
                 </div>
+                <!-- Page-body end -->
               </div>
             </div>
           </div>
@@ -337,13 +472,16 @@
   <script type="text/javascript" src="../assets/pages/advance-elements/moment-with-locales.min.js"></script>
   <!-- Date-range picker js -->
   <script type="text/javascript" src="../bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+  <!-- Bootstrap date-time-picker js -->
+  <script type="text/javascript" src="assets/pages/advance-elements/moment-with-locales.min.js"></script>
+  <script type="text/javascript" src="../bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+  <script type="text/javascript" src="assets/pages/advance-elements/bootstrap-datetimepicker.min.js"></script>
   <!-- Morris Chart js -->
   <script src="../bower_components/raphael/raphael.min.js"></script>
   <script src="../bower_components/morris.js/morris.js"></script>
   <!-- sweet alert js -->
   <script type="text/javascript" src="../bower_components/sweetalert/dist/sweetalert.min.js"></script>
   <script type="text/javascript" src="../assets/pages/division/script.js"></script>
-  <!-- sweet alert modal.js intialize js -->
   <!-- i18next.min.js -->
   <script type="text/javascript" src="../bower_components/i18next/i18next.min.js"></script>
   <script type="text/javascript" src="../bower_components/i18next-xhr-backend/i18nextXHRBackend.min.js"></script>
@@ -351,6 +489,7 @@
   <script type="text/javascript" src="../bower_components/jquery-i18next/jquery-i18next.min.js"></script>
   <!-- Custom js -->
   <script type="text/javascript" src="../assets/js/script.js"></script>
+  <script type="text/javascript" src="assets/pages/division/script2.js"></script>
   <script type="text/javascript" src="../assets/pages/picker.js"></script>
   <script src="../assets/js/pcoded.min.js"></script>
   <script src="../assets/js/demo-12.js"></script>

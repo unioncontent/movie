@@ -257,7 +257,7 @@ table td > a:hover {
       Modal css start
 ==========================  **/
 .modal {
-  z-index: 99999999999; }
+  z-index: 3001; }
 
 .bd-example .modal {
   display: block;
