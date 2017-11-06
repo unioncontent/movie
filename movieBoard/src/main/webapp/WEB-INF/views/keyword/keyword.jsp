@@ -140,15 +140,15 @@
                                 <td>3</td>
                                 <td>0</td>
                                 <td class="text-center">
-                                  <div class="btn-group btn-group-md text-center" style="padding-right: 0;">
-                                    <a href="editKeyword.html" class="tabledit-edit-button btn btn-primary waves-effect waves-light" style="margin-right: 5px;" data-toggle="tooltip" data-placement="top" data-original-title="키워드 추가">
-                                      <span class="icofont icofont-ui-edit"></span>
-                                    </a>
-                                    <button type="button" class="tabledit-delete-button btn btn-danger waves-effect waves-light alert-confirm1" data-toggle="tooltip" data-placement="top" data-original-title="삭제">
-                                      <span class="icofont icofont-ui-delete"></span>
-                                    </button>
-                                  </div>
-                                </td>
+  								  <div class="btn-group btn-group-md text-center" style="padding-right: 0;">
+    							    <a href="editKeyword.html" class="tabledit-edit-button btn btn-primary waves-effect waves-light" style="margin-right: 5px;" data-toggle="tooltip" data-placement="top" data-original-title="키워드 추가">
+      								  <span class="icofont icofont-ui-edit"></span>
+    								</a>
+    								<button type="button" class="tabledit-delete-button btn btn-danger waves-effect waves-light alert-confirm1" data-toggle="tooltip" data-placement="top" data-original-title="삭제" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'alert-confirm']);">
+      								  <span class="icofont icofont-ui-delete"></span>
+    								</button>
+  								  </div>
+								</td>
                               </tr>
                               <tr>
                                 <th scope="row">2</th>
