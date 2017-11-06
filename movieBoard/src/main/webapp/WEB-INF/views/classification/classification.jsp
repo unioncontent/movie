@@ -393,7 +393,7 @@
                             </form>
                           </div>
                           <div class="modal-footer">
-                            <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">취소</button>
                             <button type="button" class="btn btn-primary waves-effect waves-light " id="submit">등록</button>
                           </div>
                         </div>
