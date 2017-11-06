@@ -10,7 +10,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.union.domain.GraphVO;
 import org.union.domain.SNSVO;
 import org.union.domain.SearchCriteria;
 
@@ -46,7 +45,6 @@ public class SNSServiceTester {
 		
 		SimpleDateFormat date = new SimpleDateFormat("yyyy-mm-dd");
 		
-		List<GraphVO> graph = new ArrayList<GraphVO>();
 		
 		
 		for (SNSVO snsvo : list) {

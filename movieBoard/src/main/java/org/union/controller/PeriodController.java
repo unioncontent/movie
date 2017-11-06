@@ -11,10 +11,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.union.domain.PeriodComparator;
 import org.union.domain.PeriodMediaVO;
 import org.union.domain.SearchCriteria;
 import org.union.service.MediaService;
+import org.union.util.PeriodComparator;
 
 @Controller
 @RequestMapping("/period/*")

@@ -57,7 +57,20 @@ public class SNSDAOImpl implements SNSDAO {
 			e.printStackTrace();
 		}
 	}
+	
+	@Override
+	public List<SNSVO> listExtract(SearchCriteria cri) {
 
+		return session.selectList(namespace + "listExtract", cri);
+	}
+
+
+	@Override
+	public Integer getExtractCount(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "getExtractCount", cri);
+	}
+	
 
 	@Override
 	public List<SNSVO> facebookList(SearchCriteria cri) {

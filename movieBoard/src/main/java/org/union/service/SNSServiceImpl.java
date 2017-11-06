@@ -1,9 +1,13 @@
 package org.union.service;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.union.domain.ExtractVO;
 import org.union.domain.GraphVO;
 import org.union.domain.SNSVO;
 import org.union.domain.SearchCriteria;
@@ -44,6 +48,46 @@ public class SNSServiceImpl implements SNSService {
 		dao.delete(SNS_idx);
 	}
 
+	@Override
+	public List<ExtractVO> listExtract(SearchCriteria cri) {
+
+		try {
+			List<SNSVO> snsList = dao.listExtract(cri);
+			
+			List<ExtractVO> extractList = new ArrayList<ExtractVO>();
+			
+			SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			
+			for(int i = 0; i < snsList.size(); i++) {
+				ExtractVO vo = new ExtractVO();
+				
+				SNSVO data = snsList.get(i);
+				
+				vo.setSns_idx(data.getSns_idx());
+				vo.setDomain("sns");
+				vo.setDomainType(data.getSns_name());
+				vo.setTitle(data.getSns_title());
+				vo.setKeyword(data.getKeyword());
+				vo.setUrl(data.getUrl());
+				vo.setCreateDate(date.format(data.getCreateDate()));
+				vo.setWriteDate(data.getWriteDate());
+				extractList.add(vo);
+			}
+			
+			return extractList;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		
+	}
+	
+	@Override
+	public Integer getExtractCount (SearchCriteria cri) {
+
+		return dao.getExtractCount(cri);
+	}
 	
 	@Override
 	public List<SNSVO> facebookList(SearchCriteria cri) {

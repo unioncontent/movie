@@ -1,6 +1,5 @@
 package org.union.dao;
 
-import java.util.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 

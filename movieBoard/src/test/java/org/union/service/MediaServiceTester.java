@@ -10,11 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.union.domain.PeriodMediaVO;
-import org.union.domain.PeriodComparator;
 import org.union.domain.ReporterVO;
 import org.union.domain.SearchCriteria;
 import org.union.persistence.MediaDAO;
 import org.union.persistence.ReporterDAO;
+import org.union.util.PeriodComparator;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "file:src/main/webapp/WEB-INF/spring/root-context.xml" })

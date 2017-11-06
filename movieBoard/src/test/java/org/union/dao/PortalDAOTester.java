@@ -42,7 +42,6 @@ public class PortalDAOTester {
 
 		Date date =  new SimpleDateFormat("yyyy-mm-dd").parse(writeDate);
 		System.out.println(date);
-		vo.setWriteDate(date);
 		
 		vo.setKeyword("keyword");
 		vo.setKeyword_type(1);
@@ -66,7 +65,6 @@ public class PortalDAOTester {
 		vo.setPortal_name("네이버");
 		vo.setPortal_title("uuuuuuutitle");
 		vo.setDeviceType(1);
-		vo.setWriteDate(new Date());
 		vo.setKeyword("keyword");
 		vo.setKeyword_type(1);
 		vo.setUrl("url");

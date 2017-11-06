@@ -2,6 +2,7 @@ package org.union.service;
 
 import java.util.List;
 
+import org.union.domain.ExtractVO;
 import org.union.domain.GraphVO;
 import org.union.domain.SNSVO;
 import org.union.domain.SearchCriteria;
@@ -16,6 +17,10 @@ public interface SNSService {
 	public void modify(SNSVO vo);
 	
 	public void remove(Integer SNS_idx);
+	
+	public List<ExtractVO> listExtract(SearchCriteria cri);
+	
+	public Integer getExtractCount(SearchCriteria cri);
 	
 	public List<SNSVO> facebookList (SearchCriteria cri);
 	

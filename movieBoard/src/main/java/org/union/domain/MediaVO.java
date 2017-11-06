@@ -12,8 +12,8 @@ public class MediaVO {
 	private String reporter_name;
 	private String reporter_ID;
 	private String reporter_email;
-	private Date writeDate;
-	private Date last_writeDate;
+	private String writeDate;
+	private String last_writeDate;
 	private Date last_media_title;
 	private Date last_media_content;
 	private String keyword;
@@ -23,8 +23,6 @@ public class MediaVO {
 	private String thumbnail;
 	private Date createDate;
 	private Date updateDate;
-	
-	
 	public Integer getMedia_idx() {
 		return media_idx;
 	}
@@ -67,16 +65,16 @@ public class MediaVO {
 	public void setReporter_email(String reporter_email) {
 		this.reporter_email = reporter_email;
 	}
-	public Date getWriteDate() {
+	public String getWriteDate() {
 		return writeDate;
 	}
-	public void setWriteDate(Date writeDate) {
+	public void setWriteDate(String writeDate) {
 		this.writeDate = writeDate;
 	}
-	public Date getLast_writeDate() {
+	public String getLast_writeDate() {
 		return last_writeDate;
 	}
-	public void setLast_writeDate(Date last_writeDate) {
+	public void setLast_writeDate(String last_writeDate) {
 		this.last_writeDate = last_writeDate;
 	}
 	public Date getLast_media_title() {
@@ -133,8 +131,6 @@ public class MediaVO {
 	public void setUpdateDate(Date updateDate) {
 		this.updateDate = updateDate;
 	}
-	
-	
 	@Override
 	public String toString() {
 		return "MediaVO [media_idx=" + media_idx + ", media_name=" + media_name + ", media_title=" + media_title
@@ -145,5 +141,6 @@ public class MediaVO {
 				+ ", textType=" + textType + ", thumbnail=" + thumbnail + ", createDate=" + createDate + ", updateDate="
 				+ updateDate + "]";
 	}
+	
 	
 }

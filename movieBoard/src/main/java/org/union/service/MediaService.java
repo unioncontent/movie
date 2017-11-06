@@ -2,6 +2,7 @@ package org.union.service;
 
 import java.util.List;
 
+import org.union.domain.ExtractVO;
 import org.union.domain.MediaVO;
 import org.union.domain.PeriodMediaVO;
 import org.union.domain.SearchCriteria;
@@ -16,6 +17,10 @@ public interface MediaService {
 	public void modify(MediaVO vo);
 	
 	public void remove(Integer media_idx);
+	
+	public List<ExtractVO> listExtract(SearchCriteria cri);
+	
+	public Integer getExtractCount(SearchCriteria cri);
 	
 	public List<MediaVO> listSearch(SearchCriteria criteria);
 	

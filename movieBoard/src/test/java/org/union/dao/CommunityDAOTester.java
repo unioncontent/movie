@@ -40,7 +40,6 @@ public class CommunityDAOTester {
 		vo.setCommunity_content("강철비 ~~~~~~~~~~~~~~~~");
 		vo.setCommunity_writer("익명134");
 		vo.setCommunity_writer_IP("102.168.0.1");
-		vo.setWriteDate(new Date());
 		vo.setKeyword("강철비");
 		vo.setKeyword_type(2);
 		vo.setUrl("url");
@@ -79,6 +78,27 @@ public class CommunityDAOTester {
 	public void testDelete() {
 		
 		dao.delete(1);
+	}
+	
+	
+	@Test
+	public void testListExtract() {
+		
+		svo.setPage(2);
+		svo.setPerPageNum(30);
+		svo.setSelectKey("강철비");
+		svo.setStartDate("2017-11-05 00:00:00");
+		
+		dao.listExtract(svo);
+	}
+	
+	
+	@Test
+	public void testGetExtractCount() {
+		svo.setPage(2);
+		svo.setPerPageNum(30);
+		
+		dao.getExtractCount(svo);
 	}
 	
 	

@@ -5,6 +5,24 @@
   
  <mapper namespace="org.union.mappers.PortalMapper">
  
+ 
+ 	<sql id="search">
+ 		<if test="keyword != null">
+			<if test="searchType != null">
+				<if test="searchType == 't'.toString()">
+					and portal_title like concat('%', #{keyword}, '%')
+				</if>
+				<if test="searchType == 'c'.toString()">
+					and portal_title like concat('%', #{keyword}, '%')
+				</if>
+			</if>
+		</if>
+		<if test="selectKey != null">
+			and keyword = #{selectKey}
+		</if>
+	</sql>
+ 
+ 
  	<insert id="create">
  		insert into
  			portal_data(portal_type, portal_name, portal_title, deviceType, writeDate, keyword, keyword_type, url)
@@ -48,6 +66,49 @@
  			portal_idx = #{portal_idx}
  	
  	</delete>
+ 	
+ 	<select id="listExtract" resultType="PortalVO">
+		select
+			*
+		from 
+			portal_data
+		where
+			textType is null
+		<if test="startDate != null">
+		and
+			writeDate <![CDATA[>]]> #{startDate}
+		<if test="endDate != null">
+  		and 
+  			writeDate <![CDATA[<]]> #{endDate}
+  		</if>
+  		</if>
+		<include refid="search"></include>
+		order by
+			createDate desc
+		limit
+			#{startPage}, #{perPageNum}
+	
+	</select>
+ 
+ 	<select id="getExtractCount" resultType="Integer">
+		select
+			count(*)
+		from 
+			portal_data
+		where
+			textType is null
+		<if test="startDate != null">
+		and
+			writeDate <![CDATA[>]]> #{startDate}
+		<if test="endDate != null">
+  		and 
+  			writeDate <![CDATA[<]]> #{endDate}
+  		</if>
+  		</if>
+		<include refid="search"></include>
+	
+	
+	</select>
  
  	<select id="listSearch" resultType="PortalVO">
  		select 
@@ -61,7 +122,7 @@
 		or 
 			community_content like concat('%', #{keyword}, '%')
 		order 
-			by createdate
+			by createdate desc
 		limit  
 			#{startPage}, #{pageUnit}
  	

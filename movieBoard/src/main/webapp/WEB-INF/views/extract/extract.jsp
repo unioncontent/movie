@@ -98,8 +98,11 @@
                         <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left">
                           <option value="opt1">회사</option>
                         </select>
-                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="keyword">
-                          <option value="opt1">키워드</option>
+                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="selectKeyword">
+                          <option>키워드</option>
+                          <option value="택시">택시</option>
+                          <option value="강철비">강철비</option>
+                          <option value="살인자">살인자</option>
                         </select>
                       </div>
                       <div class="col-md-5">
@@ -126,25 +129,21 @@
                       <div class="col-lg-12">
                         <div class="card">
                           <div class="card-header">
-                            <select name="select" class="col-sm-1 form-control form-control-inverse m-r-10 m-b-10 p-r-5 f-left">
-                              <option value="">10</option>
-                              <option value="">30</option>
-                              <option value="">50</option>
-                              <option value="">100</option>
-                            </select>
-                            <select name="select" class="col-sm-1 form-control form-control-inverse m-r-10 m-b-10 f-left">
-                              <option value="">제목</option>
-                              <option value="">분류</option>
-                              <option value="">사이트명</option>
-                              <option value="">게시판명</option>
-                            </select>
-                            <div class="col-sm-3 input-group input-group-button input-group-inverse p-l-0 p-r-0 m-b-10 f-left">
-                              <input type="text" class="form-control" placeholder="">
-                              <span class="input-group-addon" id="basic-addon1">
-                                <button class="btn btn-inverse">검색</button>
+                            <select id= "selectPerPageNum" name="select" class="col-sm-1 form-control form-control-inverse m-r-10 m-b-10 p-r-5 f-left list-select">
+                                  <option id= "10" >10</option>
+                                  <option id = "50">50</option>
+                                  <option id = "100">100</option>
+                                </select>
+                                <select id = "selectSearchType" name="select" class="col-sm-1 form-control form-control-inverse m-r-10 m-b-10 f-left search-select">
+                                  <option id="t" value="t">제목</option>
+                                  <option id="c" value="c">게시글</option>
+                                </select>
+                                <div class="col-sm-3 input-group input-group-button input-group-inverse p-l-0 p-r-0 m-b-10 f-left btn-select">
+                                  <input id="keywordInput" type="text" class="form-control" placeholder="">
+                                  <span class="input-group-addon" id="basic-addon1">
+                                    <button id="searchBtn" class=" btn btn-inverse">검색</button>
                               </span>
                             </div>
-                            <button class="btn btn-warning alert-excel f-right p-r-5 p-l-5 m-l-15 m-b-10"><i class="icofont icofont-download-alt"></i>EXCEL</button>
                             <button type="button" class="alert-confirm btn btn-primary waves-effect f-right p-r-0 p-l-5 m-l-15 m-b-10  f-right"><i class="icofont icofont-check-circled"></i>일괄처리</button>
                           </div>
                           <div class="card-block">
@@ -164,20 +163,21 @@
                                   </tr>
                                 </thead>
                                 <tbody>
+                                  <c:forEach items="${extractList}" var="extractVO" varStatus="index">
                                   <tr>
-                                    <th scope="row">1</th>
-                                    <td>naver_web<br /><span class="text-muted">구분</span></td>
-                                    <td>우드파크온수매트</td>
-                                    <td>news<br /><span class="text-muted">()</span></td>
-                                    <td>온수매트기사<br /><span class="text-muted">우드파크</span></td>
+                                    <th scope="row">${index.count}</th>
+                                    <td>${extractVO.domainType}<br /><span class="text-muted"></span></td>
+                                    <td>${extractVO.company }</td>
+                                    <td>${extractVO.domain}<br /><span class="text-muted">()</span></td>
+                                    <td>키워드<br /><span class="text-muted">우드파크</span></td>
                                     <td>
-                                      <a href="https://www.naver.com" target="_blank">
-                                        <div class="nobr">찬바람 불어오니 온수매트 인기… 올해 6000억원대 시장 성장 전망</div>
+                                      <a href="${extractVO.url}" target="_blank">
+                                        <div class="nobr">${extractVO.title}</div>
                                       </a><br />
                                       <span class="text-muted"></span><br />
                                       <span class="text-success">14</span>
                                     </td>
-                                    <td>2017-10-23 07:46:00 /<br/>2017-10-23 07:46:00 </td>
+                                    <td>${extractVO.createDate} /<br/>${extractVO.writeDate }</td>
                                     <td>
                                       <div class="radios">
                                         <input type="radio" id="radio1" name="radios">
@@ -200,59 +200,34 @@
                                       <button class="btn btn-primary btn-sm alert-confirm2" data-toggle="tooltip" data-placement="top" data-original-title="즉시처리"><i class="icofont icofont-ui-check" style="margin-right:0"></i></button>
                                     </td>
                                   </tr>
-                                  <tr>
-                                    <th scope="row">2</th>
-                                    <td>naver_web<br /><span class="text-muted">구분</span></td>
-                                    <td>우드파크온수매트</td>
-                                    <td>news<br /><span class="text-muted">()</span></td>
-                                    <td>온수매트기사<br /><span class="text-muted">우드파크</span></td>
-                                    <td>
-                                      <a href="https://www.naver.com" target="_blank">
-                                        <div class="nobr">찬바람 불어오니 온수매트 인기… 올해 6000억원대 시장 성장 전망</div>
-                                      </a><br />
-                                      <span class="text-muted"></span><br />
-                                      <span class="text-success">14</span>
-                                    </td>
-                                    <td>2017-10-23 07:46:00 /<br/>2017-10-23 07:46:00 </td>
-                                    <td>
-                                      <div class="radios">
-                                        <input type="radio" id="radio7" name="radios1">
-                                        <label for="radio7">좋은글</label>
-                                        <input type="radio" id="radio8" name="radios1">
-                                        <label for="radio8">나쁜글</label>
-                                        <input type="radio" id="radio9" name="radios1">
-                                        <label for="radio9">관심글</label>
-                                        <br/>
-                                        <input type="radio" id="radio10" name="radios1">
-                                        <label for="radio10">기타글</label>
-                                        <input type="radio" id="radio11" name="radios1">
-                                        <label for="radio11">삭제글</label>
-                                        <input type="radio" id="radio12" name="radios1" checked>
-                                        <label for="radio12">미분류</label>
-                                      </div>
-                                    </td>
-                                    <td>
-                                      <button class="btn btn-danger btn-sm alert-confirm1" data-toggle="tooltip" data-placement="top" data-original-title="삭제"><i class="icofont icofont-ui-delete" style="margin-right:0"></i></button>
-                                      <button class="btn btn-primary btn-sm alert-confirm2" data-toggle="tooltip" data-placement="top" data-original-title="즉시처리"><i class="icofont icofont-ui-check" style="margin-right:0"></i></button>
-                                    </td>
-                                  </tr>
+                                  </c:forEach>
                                 </tbody>
                               </table>
                             </div>
                             <ul class="pagination float-right">
-                              <li class="page-item">
-                                <a class="page-link" href="#" aria-label="Previous">
-                                  <span aria-hidden="true">«</span>
-                                  <span class="sr-only">Previous</span>
-                                </a>
-                              </li>
-                              <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                              <li class="page-item">
-                                <a class="page-link" href="#" aria-label="Next">
-                                  <span aria-hidden="true">»</span>
-                                  <span class="sr-only">Next</span>
-                                </a>
-                              </li>
+                              <c:if test="${pageMaker.prev}">
+                                <li class="page-item">
+                                  <a class="page-link" href="extract${pageMaker.makeSearch(pageMaker.startPage - 1) }" aria-label="Previous">&laquo;
+                                    <span aria-hidden="true"></span>
+                                    <span class="sr-only">Previous</span>
+                                  </a>
+                                </li>
+                              </c:if>
+
+                              <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
+                                <li class= "${pageMaker.cri.page == idx? 'active':''} page-item">
+                                  <a class="page-link" href="extract${pageMaker.makeSearch(idx)}">${idx}</a>
+                                </li>
+                              </c:forEach>
+
+                              <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+                                <li class="page-item">
+                                  <a class="page-link" href="extract${pageMaker.makeSearch(pageMaker.endPage +1) }" aria-label="Next">&raquo;
+                                    <span aria-hidden="true"></span>
+                                    <span class="sr-only">Next</span>
+                                  </a>
+                                </li>
+                              </c:if>
                             </ul>
                           </div>
                         </div>
@@ -351,3 +326,15 @@
 </body>
 
 </html>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+	
+	  /* var selectOption = decodeURI(window.location.href.split("selectKey=")[1]);
+	  console.log(selectOption); */
+	  
+	  
+  }); // end ready...
+
+
+</script>
