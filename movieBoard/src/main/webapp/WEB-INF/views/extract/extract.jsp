@@ -384,6 +384,18 @@
   $(document).ready(function(){
 	  
 	  
+	  // 키보드 insertAll
+	  $(function() {
+    	$(document).keydown(function(e) {
+        	switch (e.which) {
+            case 65: // up key
+                console.log("a clicked....");
+                $("#insertAllBtn").trigger("click");
+                break;
+        	}
+    	});
+	  });
+	  
 	  // allBtn 클릭시
 	  $(".radiosAll input").on("click", function(event){
 		  console.log(event);
