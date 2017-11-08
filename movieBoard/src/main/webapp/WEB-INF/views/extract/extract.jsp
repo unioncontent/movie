@@ -390,7 +390,7 @@
         	switch (e.which) {
             case 65: // up key
                 console.log("a clicked....");
-                $("#insertAllBtn").trigger("click");
+                insertAll();
                 break;
         	}
     	});
@@ -437,58 +437,7 @@
 	  
 	  // 일괄처리버튼 클릭시
 	  $(document).on("click","#insertAllBtn",function(){
-		swal({
-					title: "일괄처리 하시겠습니까?",
-					text: "선택한 분류들로 일괄처리 됩니다.",
-					type: "warning",
-					showCancelButton: true,
-					confirmButtonClass: "btn-danger",
-					confirmButtonText: "YES",
-					closeOnConfirm: false
-				},
-				function(){
-					
-					var tr = $(".trList");
-					
-					var arr = [];
-					
-					for(var i = 0; i < tr.length; i++){
-						var idx = tr[i].children[0].value;
-						var table = tr[i].children[2].innerText;
-						var arr = tr[i].children[8].children[0].children;
-				
-
-						for (var l = 0; l < arr.length; l++) {
-							if (arr[l].type == "radio") {
-								
-								if (arr[l].checked) {
-									var textType = arr[l + 1].innerText;
-									
-									break;
-								}
-							}
-						}
-
-						if(textType != '미분류'){
-							$.ajax({
-								  type: "POST",
-								  url: "insert",
-								  data: {idx : idx, table : table, textType : textType},
-								  dataType: "json",
-								  success: function(data){
-									  console.log(data);
-								  }
-								  
-								}); 
-						}
-						
-					}
-					
-					
-					swal("Success!", "일괄처리가 완료되었습니다.", "success");
-					
-					location.reload();
-				});
+		insertAll();
 	});
 	  
 	  // 삭제버튼 클릭시
@@ -708,6 +657,61 @@
 
 		} 
 	}
+  
+  function insertAll(){
+	  swal({
+			title: "일괄처리 하시겠습니까?",
+			text: "선택한 분류들로 일괄처리 됩니다.",
+			type: "warning",
+			showCancelButton: true,
+			confirmButtonClass: "btn-danger",
+			confirmButtonText: "YES",
+			closeOnConfirm: false
+		},
+		function(){
+			
+			var tr = $(".trList");
+			
+			var arr = [];
+			
+			for(var i = 0; i < tr.length; i++){
+				var idx = tr[i].children[0].value;
+				var table = tr[i].children[2].innerText;
+				var arr = tr[i].children[8].children[0].children;
+		
+
+				for (var l = 0; l < arr.length; l++) {
+					if (arr[l].type == "radio") {
+						
+						if (arr[l].checked) {
+							var textType = arr[l + 1].innerText;
+							
+							break;
+						}
+					}
+				}
+
+				if(textType != '미분류'){
+					$.ajax({
+						  type: "POST",
+						  url: "insert",
+						  data: {idx : idx, table : table, textType : textType},
+						  dataType: "json",
+						  success: function(data){
+							  console.log(data);
+						  }
+						  
+						}); 
+				}
+				
+			}
+			
+			
+			swal("Success!", "일괄처리가 완료되었습니다.", "success");
+			
+			location.reload();
+		});
+  }
 
 	function searchList(event) {
 

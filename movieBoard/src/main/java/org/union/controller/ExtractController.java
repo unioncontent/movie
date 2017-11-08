@@ -87,7 +87,6 @@ public class ExtractController {
 
 		ExtractComparator comparator = new ExtractComparator();
 		Collections.sort(extractList, comparator);
-		logger.info(extractList.toString());
 		model.addAttribute("extractList", extractList);
 	}
 	
