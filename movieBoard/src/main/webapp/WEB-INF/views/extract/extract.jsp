@@ -164,8 +164,45 @@
                                   </tr>
                                 </thead>
                                 <tbody>
-                                  <c:forEach items="${extractList}" var="extractVO" varStatus="index">
                                   
+                                  <!-- 임시  전체클릭 버튼 -->
+                                  
+                                  <tr>
+                                    
+                                    <th scope="row">
+                                      0
+                                    </th>
+                                    <td>----------<span class="text-muted"></span></td>
+                                    <td>----------</td>
+                                    <td><span class="text-muted"></span></td>
+                                    <td>----------<span class="text-muted"></span></td>
+                                    <td>
+                                      <a href="http://sports.chosun.com/news/ntype.htm?id=201711020100009330000289&amp;servicedate=20171101" target="_blank">
+                                        <div class="nobr">----------</div>
+                                      </a>
+                                      <span class="text-muted"></span>
+                                      <span class="text-success"></span>
+                                    </td>
+                                    <td>----------</td>
+                                    <td>
+                                      <div class="radiosAll">
+                                        <input type="radio" id="allBtn1" name="radiosTest">
+                                        <label for="allBtn1">좋은글</label>
+                                        <input type="radio" id="allBtn2" name="radiosTest">
+                                        <label for="allBtn2">나쁜글</label>
+                                        <input type="radio" id="allBtn3" name="radiosTest">
+                                        <label for="allBtn3">관심글</label>
+                                        <br>
+                                        <input type="radio" id="allBtn4" name="radiosTest">
+                                        <label for="allBtn4">기타글</label>
+                                        <input type="radio" id="allBtn5" name="radiosTest">
+                                        <label for="allBtn5">삭제글</label>
+                                      </div>
+                                    </td>
+                                    
+                                  </tr>
+                                  
+                                  <c:forEach items="${extractList}" var="extractVO" varStatus="index">
                                   <tr class = "trList">
                                     <c:if test="${extractVO.sns_idx != null}">
                                       <input type="hidden" value="${extractVO.sns_idx}">
@@ -345,6 +382,45 @@
 
 <script type="text/javascript">
   $(document).ready(function(){
+	  
+	  
+	  // allBtn 클릭시
+	  $(".radiosAll input").on("click", function(event){
+		  console.log(event);
+		  
+		  var input = event.target.id;
+
+		  var btnNum = input.substr(6);
+		  
+		  var $trList = $(".trList");
+
+		  for(var i = 0; i < $trList.length; i++){
+			  $('#radio'+ btnNum + (i+1))[0].checked = true;
+		  } 
+		  
+		  
+		  
+		  /* var value;
+		  
+		  switch(input){
+		  
+		  case "allBtn1" : value = "좋은글"; break;
+		  case "allBtn2" : value = "나쁜글"; break;
+		  case "allBtn3" : value = "관심글"; break;
+		  case "allBtn4" : value = "기타글"; break;
+		  case "allBtn5" : value = "삭제글"; break;
+		  
+		  }
+		  
+		  console.log(value); */
+		  
+		  
+		  
+		  
+	  });
+	  
+	  
+	  
 	
 	  
 	  // 일괄처리버튼 클릭시
@@ -398,6 +474,8 @@
 					
 					
 					swal("Success!", "일괄처리가 완료되었습니다.", "success");
+					
+					location.reload();
 				});
 	});
 	  
@@ -414,7 +492,14 @@
 					},
 					function(){
 						
-						var tr = event.target.parentNode.parentNode;
+						var parent = event.target.parentNode;
+						if(parent.type == 'submit'){
+							console.log("button click...");
+							parent = parent.parentNode;
+						}
+						
+						var tr = parent.parentNode;
+						console.log(tr);
 						  
 						var idx = tr.children[0].value;
 						console.log(tr.children);  
@@ -438,6 +523,8 @@
 							}); 
 						
 						swal("Delete!", "삭제처리가 완료되었습니다.", "success");
+						
+						location.reload();
 					});
 	  });
 	  
@@ -458,6 +545,8 @@
 						insertType(event);
 						  
 						swal("Success!", "즉시처리가 완료되었습니다.", "success");
+						
+						location.reload();
 					});
 	  });
 	  
@@ -553,6 +642,11 @@
 	function insertType(event) {
 
 		var parent = event.target.parentNode;
+		if(parent.type == 'submit'){
+			console.log("button click...");
+			parent = parent.parentNode;
+		}
+		
 		var tr = parent.parentNode;
 		console.log(tr);
 		
@@ -581,7 +675,7 @@
 				if (arr[i].checked) {
 					var textType = arr[i + 1].innerText;
 
-					$.ajax({
+					 $.ajax({
 						type : "POST",
 						url : "insert",
 						data : {
@@ -594,13 +688,13 @@
 							console.log(data);
 						}
 
-					});
+					}); 
 
 					break;
 				}
 			}
 
-		}
+		} 
 	}
 
 	function searchList(event) {

@@ -50,7 +50,7 @@ public class CommunityServiceImpl implements CommunityService {
 			
 			List<ExtractVO> extractList = new ArrayList<ExtractVO>();
 			
-			SimpleDateFormat date = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+			SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 			
 			for(int i = 0; i < communityList.size(); i++) {
 				ExtractVO vo = new ExtractVO();
@@ -59,6 +59,7 @@ public class CommunityServiceImpl implements CommunityService {
 				vo.setDomain("community");
 				vo.setDomainType(data.getCommunity_name());
 				vo.setTitle(data.getCommunity_title());
+				vo.setContent(data.getCommunity_content());
 				vo.setKeyword(data.getKeyword());
 				vo.setUrl(data.getUrl());
 				vo.setCreateDate(date.format(data.getCreateDate()));

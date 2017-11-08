@@ -59,7 +59,7 @@ public class MediaServiceImpl implements MediaService {
 			
 			List<ExtractVO> extractList = new ArrayList<ExtractVO>();
 			
-			SimpleDateFormat date = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+			SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 			
 			for(int i = 0; i < mediaList.size(); i++) {
 				ExtractVO vo = new ExtractVO();
@@ -69,6 +69,7 @@ public class MediaServiceImpl implements MediaService {
 				vo.setDomain("media");
 				vo.setDomainType(data.getMedia_name());
 				vo.setTitle(data.getMedia_title());
+				vo.setContent(data.getMedia_content());
 				vo.setKeyword(data.getKeyword());
 				vo.setUrl(data.getUrl());
 				vo.setCreateDate(date.format(data.getCreateDate()));
