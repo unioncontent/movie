@@ -121,7 +121,7 @@
                                 <th width="10%">키워드</th>
                                 <th width="5%">검색어</th>
                                 <th width="5%">제외검색어</th>
-                                <th class="tabledit-toolbar-column" style="white-space: nowrap; width: 1%;"></th>
+                                <th width="4%"></th>
                               </tr>
                             </thead>
                             <tbody>
@@ -139,16 +139,16 @@
                                 </td>
                                 <td>3</td>
                                 <td>0</td>
-                                <td>
-                                  <div class="btn-group btn-group-sm" style="float: none;">
-                                    <a href="editKeyword.html" class="tabledit-edit-button btn btn-primary waves-effect waves-light" style="float: none;margin: 5px;" data-toggle="tooltip" data-placement="top" data-original-title="키워드 추가">
-                                      <span class="icofont icofont-ui-edit"></span>
-                                    </a>
-                                    <button type="button" class="tabledit-delete-button btn btn-danger waves-effect waves-light alert-confirm1" style="float: none;margin: 5px;" data-toggle="tooltip" data-placement="top" data-original-title="삭제" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'alert-confirm']);">
-                                      <span class="icofont icofont-ui-delete"></span>
-                                    </button>
-                                  </div>
-                                </td>
+                                <td class="text-center">
+  								  <div class="btn-group btn-group-md text-center" style="padding-right: 0;">
+    							    <a href="editKeyword.html" class="tabledit-edit-button btn btn-primary waves-effect waves-light" style="margin-right: 5px;" data-toggle="tooltip" data-placement="top" data-original-title="키워드 추가">
+      								  <span class="icofont icofont-ui-edit"></span>
+    								</a>
+    								<button type="button" class="tabledit-delete-button btn btn-danger waves-effect waves-light alert-confirm1" data-toggle="tooltip" data-placement="top" data-original-title="삭제" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'alert-confirm']);">
+      								  <span class="icofont icofont-ui-delete"></span>
+    								</button>
+  								  </div>
+								</td>
                               </tr>
                               <tr>
                                 <th scope="row">2</th>
@@ -164,12 +164,12 @@
                                 </td>
                                 <td>0</td>
                                 <td>0</td>
-                                <td>
-                                  <div class="btn-group btn-group-sm" style="float: none;">
-                                    <a href="editKeyword.html" class="tabledit-edit-button btn btn-primary waves-effect waves-light" style="float: none;margin: 5px;" data-toggle="tooltip" data-placement="top" data-original-title="키워드 추가">
+                                <td class="text-center">
+                                  <div class="btn-group btn-group-md text-center" style="padding-right: 0;">
+                                    <a href="editKeyword.html" class="tabledit-edit-button btn btn-primary waves-effect waves-light" style="margin-right: 5px;" data-toggle="tooltip" data-placement="top" data-original-title="키워드 추가">
                                       <span class="icofont icofont-ui-edit"></span>
                                     </a>
-                                    <button type="button" class="tabledit-delete-button btn btn-danger waves-effect waves-light alert-confirm1" style="float: none;margin: 5px;" data-toggle="tooltip" data-placement="top" data-original-title="삭제" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'alert-confirm']);">
+                                    <button type="button" class="tabledit-delete-button btn btn-danger waves-effect waves-light alert-confirm1" data-toggle="tooltip" data-placement="top" data-original-title="삭제">
                                       <span class="icofont icofont-ui-delete"></span>
                                     </button>
                                   </div>
@@ -177,22 +177,22 @@
                               </tr>
                             </tbody>
                           </table>
-                          <ul class="pagination f-right">
-                            <li class="page-item">
-                              <a class="page-link" href="#" aria-label="Previous">
-                                <span aria-hidden="true">«</span>
-                                <span class="sr-only">Previous</span>
-                              </a>
-                            </li>
-                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item">
-                              <a class="page-link" href="#" aria-label="Next">
-                                <span aria-hidden="true">»</span>
-                                <span class="sr-only">Next</span>
-                              </a>
-                            </li>
-                          </ul>
                         </div>
+                        <ul class="pagination f-right">
+                          <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Previous">
+                              <span aria-hidden="true">«</span>
+                              <span class="sr-only">Previous</span>
+                            </a>
+                          </li>
+                          <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                          <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Next">
+                              <span aria-hidden="true">»</span>
+                              <span class="sr-only">Next</span>
+                            </a>
+                          </li>
+                        </ul>
                       </div>
                     </div>
                     <!-- Filtering Foo-table card end -->
@@ -268,7 +268,6 @@
   <script type="text/javascript" src="../bower_components/classie/classie.js"></script>
   <!-- sweet alert js -->
   <script type="text/javascript" src="../bower_components/sweetalert/dist/sweetalert.min.js"></script>
-  <script type="text/javascript" src="../assets/pages/division/script.js"></script>
   <!-- i18next.min.js -->
   <script type="text/javascript" src="../bower_components/i18next/i18next.min.js"></script>
   <script type="text/javascript" src="../bower_components/i18next-xhr-backend/i18nextXHRBackend.min.js"></script>

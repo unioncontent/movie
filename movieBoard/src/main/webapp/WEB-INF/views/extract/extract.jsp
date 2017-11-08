@@ -98,8 +98,11 @@
                         <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left">
                           <option value="opt1">회사</option>
                         </select>
-                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="keyword">
-                          <option value="opt1">키워드</option>
+                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="selectKeyword">
+                          <option>키워드</option>
+                          <option value="택시">택시</option>
+                          <option value="강철비">강철비</option>
+                          <option value="살인자">살인자</option>
                         </select>
                       </div>
                       <div class="col-md-5">
@@ -126,134 +129,159 @@
                       <div class="col-lg-12">
                         <div class="card">
                           <div class="card-header">
-                            <select name="select" class="col-sm-1 form-control form-control-inverse m-r-10 m-b-10 p-r-5 f-left">
-                              <option value="">10</option>
-                              <option value="">30</option>
-                              <option value="">50</option>
-                              <option value="">100</option>
-                            </select>
-                            <select name="select" class="col-sm-1 form-control form-control-inverse m-r-10 m-b-10 f-left">
-                              <option value="">제목</option>
-                              <option value="">분류</option>
-                              <option value="">사이트명</option>
-                              <option value="">게시판명</option>
-                            </select>
-                            <div class="col-sm-3 input-group input-group-button input-group-inverse p-l-0 p-r-0 m-b-10 f-left">
-                              <input type="text" class="form-control" placeholder="">
-                              <span class="input-group-addon" id="basic-addon1">
-                                <button class="btn btn-inverse">검색</button>
+                            <select id= "selectPerPageNum" name="select" class="col-sm-1 form-control form-control-inverse m-r-10 m-b-10 p-r-5 f-left list-select">
+                                  <option id= "40" >40</option>
+                                  <option id = "80">80</option>
+                                  <option id = "160">120</option>
+                                  <option id = "200">200</option>
+                                </select>
+                                <select id = "selectSearchType" name="select" class="col-sm-1 form-control form-control-inverse m-r-10 m-b-10 f-left search-select">
+                                  <option id="t" value="t">제목</option>
+                                  <option id="c" value="c">게시글</option>
+                                </select>
+                                <div class="col-sm-3 input-group input-group-button input-group-inverse p-l-0 p-r-0 m-b-10 f-left btn-select">
+                                  <input id="keywordInput" type="text" class="form-control" placeholder="">
+                                  <span class="input-group-addon" id="basic-addon1">
+                                    <button id="searchBtn" class=" btn btn-inverse">검색</button>
                               </span>
                             </div>
-                            <button class="btn btn-warning alert-excel f-right p-r-5 p-l-5 m-l-15 m-b-10"><i class="icofont icofont-download-alt"></i>EXCEL</button>
-                            <button type="button" class="alert-confirm btn btn-primary waves-effect f-right p-r-0 p-l-5 m-l-15 m-b-10  f-right"><i class="icofont icofont-check-circled"></i>일괄처리</button>
+                            <button id = "insertAllBtn" type="button" class="alert-confirm btn btn-primary waves-effect f-right p-r-0 p-l-5 m-l-15 m-b-10  f-right"><i class="icofont icofont-check-circled"></i>일괄처리</button>
                           </div>
                           <div class="card-block">
                             <div class="table-responsive">
                               <table class="table table-hover">
                                 <thead>
                                   <tr>
-                                    <th width="5%">NO</th>
-                                    <th width="10%">사이트<br /><span class="text-muted">구분</span></th>
+                                    <th width="5%">No</th>
+                                    <th width="10%">페이지 분류<span class="text-muted"></span></th>
+                                    <th width="10%">페이지 명</th>
                                     <th width="10%">회사명</th>
-                                    <th width="10%">컨텐츠타입<br /><span class="text-muted">(랭킹)</span></th>
-                                    <th width="10%">게시판명<br /><span class="text-muted">키워드</span></th>
-                                    <th width="20%">제목<br /><span class="text-muted">타이틀</span><br /><span class="text-success">컨텐츠</span></th>
+                                    <th><span class="text-muted">키워드</span></th>
+                                    <th width="20%">제목 &<span class="text-muted"></span><span class="text-success"> 컨텐츠</span></th>
                                     <th width="10%">추출일 / 작성일</th>
                                     <th width="10%">분류변경</th>
                                     <th width="5%">분류처리</th>
                                   </tr>
                                 </thead>
                                 <tbody>
+                                  
+                                  <!-- 임시  전체클릭 버튼 -->
+                                  
                                   <tr>
-                                    <th scope="row">1</th>
-                                    <td>naver_web<br /><span class="text-muted">구분</span></td>
-                                    <td>우드파크온수매트</td>
-                                    <td>news<br /><span class="text-muted">()</span></td>
-                                    <td>온수매트기사<br /><span class="text-muted">우드파크</span></td>
+                                    
+                                    <th scope="row">
+                                      0
+                                    </th>
+                                    <td>----------<span class="text-muted"></span></td>
+                                    <td>----------</td>
+                                    <td><span class="text-muted"></span></td>
+                                    <td>----------<span class="text-muted"></span></td>
                                     <td>
-                                      <a href="https://www.naver.com" target="_blank">
-                                        <div class="nobr">찬바람 불어오니 온수매트 인기… 올해 6000억원대 시장 성장 전망</div>
-                                      </a><br />
-                                      <span class="text-muted"></span><br />
-                                      <span class="text-success">14</span>
+                                      <a href="http://sports.chosun.com/news/ntype.htm?id=201711020100009330000289&amp;servicedate=20171101" target="_blank">
+                                        <div class="nobr">----------</div>
+                                      </a>
+                                      <span class="text-muted"></span>
+                                      <span class="text-success"></span>
                                     </td>
-                                    <td>2017-10-23 07:46:00 /<br/>2017-10-23 07:46:00 </td>
+                                    <td>----------</td>
                                     <td>
-                                      <div class="radios">
-                                        <input type="radio" id="radio1" name="radios">
-                                        <label for="radio1">좋은글</label>
-                                        <input type="radio" id="radio2" name="radios">
-                                        <label for="radio2">나쁜글</label>
-                                        <input type="radio" id="radio3" name="radios">
-                                        <label for="radio3">관심글</label>
+                                      <div class="radiosAll">
+                                        <input type="radio" id="allBtn1" name="radiosTest">
+                                        <label for="allBtn1">좋은글</label>
+                                        <input type="radio" id="allBtn2" name="radiosTest">
+                                        <label for="allBtn2">나쁜글</label>
+                                        <input type="radio" id="allBtn3" name="radiosTest">
+                                        <label for="allBtn3">관심글</label>
+                                        <br>
+                                        <input type="radio" id="allBtn4" name="radiosTest">
+                                        <label for="allBtn4">기타글</label>
+                                        <input type="radio" id="allBtn5" name="radiosTest">
+                                        <label for="allBtn5">삭제글</label>
+                                      </div>
+                                    </td>
+                                    
+                                  </tr>
+                                  
+                                  <c:forEach items="${extractList}" var="extractVO" varStatus="index">
+                                  <tr class = "trList">
+                                    <c:if test="${extractVO.sns_idx != null}">
+                                      <input type="hidden" value="${extractVO.sns_idx}">
+                                    </c:if>
+                                    <c:if test="${extractVO.community_idx != null}">
+                                      <input type="hidden" value="${extractVO.community_idx}">
+                                    </c:if>
+                                    <c:if test="${extractVO.media_idx != null}">
+                                      <input type="hidden" value="${extractVO.media_idx}">
+                                    </c:if>
+                                    <c:if test="${extractVO.portal_idx != null}">
+                                      <input type="hidden" value="${extractVO.portal_idx}">
+                                    </c:if>
+                                    <th scope="row">
+                                      ${index.count}
+                                    </th>
+                                    <td>${extractVO.domain}<span class="text-muted"></span></td>
+                                    <td>${extractVO.domainType}</td>
+                                    <td>${extractVO.company}<span class="text-muted"></span></td>
+                                    <td>${extractVO.keyword}<span class="text-muted"></span></td>
+                                    <td>
+                                      <a href="${extractVO.url}" target="_blank">
+                                        <div class="nobr">${extractVO.title}</div>
+                                      </a>
+                                      <span class="text-muted"></span>
+                                      <span class="text-success">${extractVO.content}</span>
+                                    </td>
+                                    <td>${extractVO.createDate} /<br/>${extractVO.writeDate }</td>
+                                    <td>
+                                      <div class="radios${index.count}">
+                                        <input type="radio" id="radio1${index.count}" name="radios${index.count}">
+                                        <label for="radio1${index.count}">좋은글</label>
+                                        <input type="radio" id="radio2${index.count}" name="radios${index.count}">
+                                        <label for="radio2${index.count}">나쁜글</label>
+                                        <input type="radio" id="radio3${index.count}" name="radios${index.count}">
+                                        <label for="radio3${index.count}">관심글</label>
                                         <br/>
-                                        <input type="radio" id="radio4" name="radios">
-                                        <label for="radio4">기타글</label>
-                                        <input type="radio" id="radio5" name="radios">
-                                        <label for="radio5">삭제글</label>
-                                        <input type="radio" id="radio6" name="radios" checked>
-                                        <label for="radio6">미분류</label>
+                                        <input type="radio" id="radio4${index.count}" name="radios${index.count}">
+                                        <label for="radio4${index.count}">기타글</label>
+                                        <input type="radio" id="radio5${index.count}" name="radios${index.count}">
+                                        <label for="radio5${index.count}">삭제글</label>
+                                        <input type="radio" id="radio6${index.count}" name="radios${index.count}" checked>
+                                        <label for="radio6${index.count}">미분류</label>
                                       </div>
                                     </td>
                                     <td>
                                       <button class="btn btn-danger btn-sm alert-confirm1" data-toggle="tooltip" data-placement="top" data-original-title="삭제"><i class="icofont icofont-ui-delete" style="margin-right:0"></i></button>
-                                      <button class="btn btn-success btn-sm alert-confirm2" data-toggle="tooltip" data-placement="top" data-original-title="즉시처리"><i class="icofont icofont-ui-check" style="margin-right:0"></i></button>
+                                      <button class="btn btn-primary btn-sm alert-confirm2" data-toggle="tooltip" data-placement="top" data-original-title="즉시처리"><i class="icofont icofont-ui-check" style="margin-right:0"></i></button>
                                     </td>
                                   </tr>
-                                  <tr>
-                                    <th scope="row">2</th>
-                                    <td>naver_web<br /><span class="text-muted">구분</span></td>
-                                    <td>우드파크온수매트</td>
-                                    <td>news<br /><span class="text-muted">()</span></td>
-                                    <td>온수매트기사<br /><span class="text-muted">우드파크</span></td>
-                                    <td>
-                                      <a href="https://www.naver.com" target="_blank">
-                                        <div class="nobr">찬바람 불어오니 온수매트 인기… 올해 6000억원대 시장 성장 전망</div>
-                                      </a><br />
-                                      <span class="text-muted"></span><br />
-                                      <span class="text-success">14</span>
-                                    </td>
-                                    <td>2017-10-23 07:46:00 /<br/>2017-10-23 07:46:00 </td>
-                                    <td>
-                                      <div class="radios">
-                                        <input type="radio" id="radio7" name="radios1">
-                                        <label for="radio7">좋은글</label>
-                                        <input type="radio" id="radio8" name="radios1">
-                                        <label for="radio8">나쁜글</label>
-                                        <input type="radio" id="radio9" name="radios1">
-                                        <label for="radio9">관심글</label>
-                                        <br/>
-                                        <input type="radio" id="radio10" name="radios1">
-                                        <label for="radio10">기타글</label>
-                                        <input type="radio" id="radio11" name="radios1">
-                                        <label for="radio11">삭제글</label>
-                                        <input type="radio" id="radio12" name="radios1" checked>
-                                        <label for="radio12">미분류</label>
-                                      </div>
-                                    </td>
-                                    <td>
-                                      <button class="btn btn-danger btn-sm alert-confirm1" data-toggle="tooltip" data-placement="top" data-original-title="삭제"><i class="icofont icofont-ui-delete" style="margin-right:0"></i></button>
-                                      <button class="btn btn-success btn-sm alert-confirm2" data-toggle="tooltip" data-placement="top" data-original-title="즉시처리"><i class="icofont icofont-ui-check" style="margin-right:0"></i></button>
-                                    </td>
-                                  </tr>
+                                  </c:forEach>
                                 </tbody>
                               </table>
-                              <ul class="pagination float-right">
+                            </div>
+                            <ul class="pagination float-right">
+                              <c:if test="${pageMaker.prev}">
                                 <li class="page-item">
-                                  <a class="page-link" href="#" aria-label="Previous">
-                                    <span aria-hidden="true">«</span>
+                                  <a class="page-link" href="extract${pageMaker.makeSearch(pageMaker.startPage - 1) }" aria-label="Previous">&laquo;
+                                    <span aria-hidden="true"></span>
                                     <span class="sr-only">Previous</span>
                                   </a>
                                 </li>
-                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                              </c:if>
+
+                              <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
+                                <li class= "${pageMaker.cri.page == idx? 'active':''} page-item">
+                                  <a class="page-link" href="extract${pageMaker.makeSearch(idx)}">${idx}</a>
+                                </li>
+                              </c:forEach>
+
+                              <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
                                 <li class="page-item">
-                                  <a class="page-link" href="#" aria-label="Next">
-                                    <span aria-hidden="true">»</span>
+                                  <a class="page-link" href="extract${pageMaker.makeSearch(pageMaker.endPage +1) }" aria-label="Next">&raquo;
+                                    <span aria-hidden="true"></span>
                                     <span class="sr-only">Next</span>
                                   </a>
                                 </li>
-                              </ul>
-                            </div>
+                              </c:if>
+                            </ul>
                           </div>
                         </div>
                       </div>
@@ -351,3 +379,332 @@
 </body>
 
 </html>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+	  
+	  
+	  // allBtn 클릭시
+	  $(".radiosAll input").on("click", function(event){
+		  console.log(event);
+		  
+		  var input = event.target.id;
+
+		  var btnNum = input.substr(6);
+		  
+		  var $trList = $(".trList");
+
+		  for(var i = 0; i < $trList.length; i++){
+			  $('#radio'+ btnNum + (i+1))[0].checked = true;
+		  } 
+		  
+		  
+		  
+		  /* var value;
+		  
+		  switch(input){
+		  
+		  case "allBtn1" : value = "좋은글"; break;
+		  case "allBtn2" : value = "나쁜글"; break;
+		  case "allBtn3" : value = "관심글"; break;
+		  case "allBtn4" : value = "기타글"; break;
+		  case "allBtn5" : value = "삭제글"; break;
+		  
+		  }
+		  
+		  console.log(value); */
+		  
+		  
+		  
+		  
+	  });
+	  
+	  
+	  
+	
+	  
+	  // 일괄처리버튼 클릭시
+	  $(document).on("click","#insertAllBtn",function(){
+		swal({
+					title: "일괄처리 하시겠습니까?",
+					text: "선택한 분류들로 일괄처리 됩니다.",
+					type: "warning",
+					showCancelButton: true,
+					confirmButtonClass: "btn-danger",
+					confirmButtonText: "YES",
+					closeOnConfirm: false
+				},
+				function(){
+					
+					var tr = $(".trList");
+					
+					var arr = [];
+					
+					for(var i = 0; i < tr.length; i++){
+						var idx = tr[i].children[0].value;
+						var table = tr[i].children[2].innerText;
+						var arr = tr[i].children[8].children[0].children;
+				
+
+						for (var l = 0; l < arr.length; l++) {
+							if (arr[l].type == "radio") {
+								
+								if (arr[l].checked) {
+									var textType = arr[l + 1].innerText;
+									
+									break;
+								}
+							}
+						}
+
+						if(textType != '미분류'){
+							$.ajax({
+								  type: "POST",
+								  url: "insert",
+								  data: {idx : idx, table : table, textType : textType},
+								  dataType: "json",
+								  success: function(data){
+									  console.log(data);
+								  }
+								  
+								}); 
+						}
+						
+					}
+					
+					
+					swal("Success!", "일괄처리가 완료되었습니다.", "success");
+					
+					location.reload();
+				});
+	});
+	  
+	  // 삭제버튼 클릭시
+	  $(document).on("click",".alert-confirm1",function(event){
+			swal({
+						title: "삭제처리 하시겠습니까?",
+						text: "바로 삭제처리 됩니다.",
+						type: "warning",
+						showCancelButton: true,
+						confirmButtonClass: "btn-danger",
+						confirmButtonText: "YES",
+						closeOnConfirm: false
+					},
+					function(){
+						
+						var parent = event.target.parentNode;
+						if(parent.type == 'submit'){
+							console.log("button click...");
+							parent = parent.parentNode;
+						}
+						
+						var tr = parent.parentNode;
+						console.log(tr);
+						  
+						var idx = tr.children[0].value;
+						console.log(tr.children);  
+						
+						if(tr.children[2] != null){
+							var table = tr.children[2].innerText;
+						} 
+						  
+						console.log(idx);
+						console.log(table);
+						
+						$.ajax({
+							  type: "POST",
+							  url: "remove",
+							  data: {idx : idx, table : table},
+							  dataType: "json",
+							  success: function(data){
+								  console.log(data);
+							  }
+							  
+							}); 
+						
+						swal("Delete!", "삭제처리가 완료되었습니다.", "success");
+						
+						location.reload();
+					});
+	  });
+	  
+	  
+	  //즉시처리 버튼 클릭시
+	  $(document).on("click",".alert-confirm2",function(event){
+			swal({
+						title: "즉시처리 하시겠습니까?",
+						text: "선택된 분류로 즉시처리 됩니다.",
+						type: "warning",
+						showCancelButton: true,
+						confirmButtonClass: "btn-danger",
+						confirmButtonText: "YES",
+						closeOnConfirm: false
+					},
+					function(){
+						
+						insertType(event);
+						  
+						swal("Success!", "즉시처리가 완료되었습니다.", "success");
+						
+						location.reload();
+					});
+	  });
+	  
+	  /* $(".alert-confirm2").on("click", function(event){
+		  var tr = event.target.parentNode.parentNode;
+		  console.log(tr);
+		  
+		  var idx = tr.children[0].value;
+		  var table = tr.children[2].innerText;
+		  var arr = tr.children[8].children[0].children;
+		
+		  console.log(idx);
+		  console.log(table);
+		  console.log(arr); 
+		  
+		  for(var i = 0; i < arr.length; i++){
+			console.log(arr[i]);
+			if(arr[i].type == "radio"){
+				if(arr[i].checked){
+					var textType = arr[i+1].innerText;
+					
+					$.ajax({
+						  type: "POST",
+						  url: "insert",
+						  data: {idx : idx, table : table, textType : textType},
+						  dataType: "text",
+						  success: function(data){
+							  console.log(data);
+						  }
+						  
+						});
+					
+					break;
+				}
+			}
+			
+		  }   
+		  
+	  }); */
+	 
+	  
+	// content 길시에 ...으로 변경  
+	var $content = $(".text-success");
+	
+	var size = 25;
+	  
+	for (var i =1; i < $content.length; i++){
+		if($content[i].innerText.length >= size){
+			$content[i].textContent = $content[i].innerText.substr(0, size) + '...';
+		}
+	}
+	
+	var selectOption = decodeURI(window.location.href.split("selectKey=")[1]);
+	console.log(selectOption);
+
+
+
+	var $selectKeyword = $('#selectKeyword');
+
+	if(selectOption != 'undefined'){
+		for(var i = 0; i < $selectKeyword[0].length; i++ ){
+			if($selectKeyword[0][i].value == selectOption){
+				$selectKeyword[0][i].selected = 'selected';
+			}
+		}
+	}
+	$selectKeyword[0][0].disabled = true;
+
+	// 키워드 선택시
+	$selectKeyword.change(function(){
+		console.log("selectKeyword clicked....");
+		console.log($('#selectKeyword option:selected').val());
+
+		searchList();
+	});
+	
+	// 검색버튼 클릭시
+	$('#searchBtn').on("click", function(event){
+	  console.log("searchBtn clicked....");
+	  console.log($('#selectSearchType option:selected').val());
+
+	  if($('#keywordInput').val() == ''){
+		alert("검색어를 입력해주세요.");
+	  }else{
+		searchList();
+	  }
+	});
+	  
+	  
+  }); // end ready...
+  
+  
+	function insertType(event) {
+
+		var parent = event.target.parentNode;
+		if(parent.type == 'submit'){
+			console.log("button click...");
+			parent = parent.parentNode;
+		}
+		
+		var tr = parent.parentNode;
+		console.log(tr);
+		
+		if (tr.children[0].value != 'undefined') {
+			var idx = tr.children[0].value;
+			console.log(idx);
+		}
+
+		if (tr.children[2] != 'undefined') {
+			var table = tr.children[2].innerText;
+			console.log(table);
+		} else {
+			calcInsertData(event);
+		}
+
+		if (tr.children[8].children[0].children != 'undefined') {
+			var arr = tr.children[8].children[0].children;
+			console.log(arr);
+		} else {
+			clacInsertData(event);
+		}
+
+		for (var i = 0; i < arr.length; i++) {
+			console.log(arr[i]);
+			if (arr[i].type == "radio") {
+				if (arr[i].checked) {
+					var textType = arr[i + 1].innerText;
+
+					 $.ajax({
+						type : "POST",
+						url : "insert",
+						data : {
+							idx : idx,
+							table : table,
+							textType : textType
+						},
+						dataType : "json",
+						success : function(data) {
+							console.log(data);
+						}
+
+					}); 
+
+					break;
+				}
+			}
+
+		} 
+	}
+
+	function searchList(event) {
+
+		var makeQeury = '${pageMaker.makeQuery(1)}'.slice(0, -2);
+
+		self.location = "extract" + makeQeury
+				+ $('#selectPerPageNum option:selected').val() + "&searchType="
+				+ $("#selectSearchType option:selected").val() + "&keyword="
+				+ $('#keywordInput').val() + "&selectKey="
+				+ $('#selectKeyword option:selected').val();
+	}
+</script>

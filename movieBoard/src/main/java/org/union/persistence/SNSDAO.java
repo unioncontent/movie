@@ -17,6 +17,10 @@ public interface SNSDAO {
 	
 	public void delete(Integer SNS_idx);
 	
+	public List<SNSVO> listExtract(SearchCriteria cri);
+	
+	public Integer getExtractCount(SearchCriteria cri);
+	
 	public List<SNSVO> facebookList(SearchCriteria cri);
 	
 	public Integer facebookTotalCount(SearchCriteria  cri);

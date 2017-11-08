@@ -5,12 +5,29 @@
   
  <mapper namespace="org.union.mappers.MediaMapper">
  
+ 
+ 	<sql id="search">
+ 		<if test="keyword != null">
+			<if test="searchType != null">
+				<if test="searchType == 't'.toString()">
+					and media_title like concat('%', #{keyword}, '%')
+				</if>
+				<if test="searchType == 'c'.toString()">
+					and media_content like concat('%', #{keyword}, '%')
+				</if>
+			</if>
+		</if>
+		<if test="selectKey != null">
+			and keyword = #{selectKey}
+		</if>
+	</sql>
+ 
  	<insert id="create">
  		insert into
- 			media_data(media_name, media_title, media_content, reporter_name, reporter_ID,writeDate, last_writeDate, last_media_title, last_media_content, keyword, keyword_type, url)
+ 			media_data(media_name, media_title, media_content, reporter_name, reporter_ID, writeDate, last_writeDate, last_media_title, last_media_content, keyword, keyword_type, url)
  		values
- 			(#{media_name}, #{media_title}, #{media_content}, #{reporter_name}, #{reporter_ID}, #{writeDate}, #{keyword}, #{last_writeDate}, #{last_media_title},
- 			 #{last_media_content}, #{keyword_type}, #{url})
+ 			(#{media_name}, #{media_title}, #{media_content}, #{reporter_name}, #{reporter_ID}, #{writeDate}, #{last_writeDate}, #{last_media_title},
+ 			 #{last_media_content}, #{keyword}, #{keyword_type}, #{url})
  	
  	</insert>
  
@@ -61,6 +78,52 @@
  			
  	
  	</select>
+ 	
+ 	
+ 	<select id="listExtract" resultType="MediaVO">
+		select
+			*
+		from 
+			media_data
+		where
+			textType is null
+		<if test="startDate != null">
+		and
+			writeDate <![CDATA[>]]> #{startDate}
+		<if test="endDate != null">
+  		and 
+  			writeDate <![CDATA[<]]> #{endDate}
+  		</if>
+  		</if>
+		<include refid="search"></include>
+		order by
+			createDate desc
+		limit
+			#{startPage}, #{perPageNum}
+			
+	
+	</select>
+ 	
+ 	<select id="getExtractCount" resultType="Integer">
+		select
+			count(*)
+		from 
+			media_data
+		where
+			textType is null
+		<if test="startDate != null">
+		and
+			writeDate <![CDATA[>]]> #{startDate}
+		<if test="endDate != null">
+  		and 
+  			writeDate <![CDATA[<]]> #{endDate}
+  		</if>
+  		</if>
+		<include refid="search"></include>
+	
+	
+	</select>
+ 	
  
  	<select id="listSearch" resultType="MediaVO">
  		select 
@@ -74,7 +137,7 @@
 		or 
 			community_content like concat('%', #{keyword}, '%')
 		order 
-			by createdate
+			by createdate desc
 		limit  
 			#{startPage}, #{pageUnit}
  	

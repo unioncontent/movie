@@ -1,6 +1,5 @@
 package org.union.domain;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class SNSVO {

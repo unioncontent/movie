@@ -1,7 +1,6 @@
 package org.union.dao;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.junit.Before;
@@ -31,19 +30,20 @@ public class MediaDAOTester {
 	
 	@Test
 	public void testCreate() throws ParseException {
-
-		vo.setMedia_name("유니온스포츠");
-		vo.setMedia_title("강철비 흥행하나 기사");
+		
+		for(int i = 0; i < 20; i++) {
+		vo.setMedia_name(i + "유니온스포츠");
+		vo.setMedia_title(i + "강철비 흥행하나 기사");
 		vo.setMedia_content("강철비가 ~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 		vo.setReporter_name("김동진");
 		
 		
 		
 		vo.setKeyword("강철비");
-		vo.setKeyword_type(1);
 		vo.setUrl("urlurlurlurlurlurlurlurlurl");
 		
 		dao.create(vo);
+		}
 	}
 	
 	
@@ -61,9 +61,7 @@ public class MediaDAOTester {
 		vo.setMedia_title("강철비 흥행하나 기사");
 		vo.setMedia_content("강철비가 ~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 		vo.setReporter_name("김동진");
-		vo.setWriteDate(new Date());
 		vo.setKeyword("강철비");
-		vo.setKeyword_type(1);
 		vo.setUrl("urlurlurlurlurlurlurlurlurl");
 		vo.setMedia_idx(1);
 		

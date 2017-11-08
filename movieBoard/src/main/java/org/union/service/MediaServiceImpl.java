@@ -1,13 +1,13 @@
 package org.union.service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.union.domain.ExtractVO;
 import org.union.domain.MediaVO;
-import org.union.domain.PeriodComparator;
 import org.union.domain.PeriodMediaVO;
 import org.union.domain.ReporterVO;
 import org.union.domain.SearchCriteria;
@@ -50,6 +50,50 @@ public class MediaServiceImpl implements MediaService {
 		
 	}
 
+	
+	@Override
+	public List<ExtractVO> listExtract(SearchCriteria cri) {
+
+		try {
+			List<MediaVO> mediaList = mediaDAO.listExtract(cri);
+			
+			List<ExtractVO> extractList = new ArrayList<ExtractVO>();
+			
+			SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			
+			for(int i = 0; i < mediaList.size(); i++) {
+				ExtractVO vo = new ExtractVO();
+				MediaVO data = mediaList.get(i);
+				
+				vo.setMedia_idx(data.getMedia_idx());
+				vo.setDomain("media");
+				vo.setDomainType(data.getMedia_name());
+				vo.setTitle(data.getMedia_title());
+				vo.setContent(data.getMedia_content());
+				vo.setKeyword(data.getKeyword());
+				vo.setUrl(data.getUrl());
+				vo.setCreateDate(date.format(data.getCreateDate()));
+				vo.setWriteDate(data.getWriteDate());
+				
+				extractList.add(vo);
+			}
+			
+			return extractList;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	@Override
+	public Integer getExtractCount(SearchCriteria cri) {
+
+		return mediaDAO.getExtractCount(cri);
+	}
+
+	
+	
 	@Override
 	public List<MediaVO> listSearch(SearchCriteria vo) {
 

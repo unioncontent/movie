@@ -62,12 +62,26 @@ public class CommunityDAOImpl implements CommunityDAO {
 		}
 
 	}
+	
+	@Override
+	public List<CommunityVO> listExtract(SearchCriteria cri) {
+
+		return session.selectList(namespace + "listExtract", cri);
+	}
+
+	
+	@Override
+	public Integer getExtractCount(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "getExtractCount", cri);
+	}
+
 
 
 	@Override
-	public List<CommunityVO> listSearch(SearchCriteria vo) {
+	public List<CommunityVO> listSearch(SearchCriteria cri) {
 
-		return session.selectList(namespace + "listSearch", vo); 
+		return session.selectList(namespace + "listSearch", cri); 
 	}
 
 
@@ -90,4 +104,8 @@ public class CommunityDAOImpl implements CommunityDAO {
 		}
 	}
 
+
+	
+
+	
 }

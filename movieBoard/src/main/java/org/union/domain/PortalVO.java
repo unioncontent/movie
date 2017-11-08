@@ -10,16 +10,14 @@ public class PortalVO {
 	private String portal_type;
 	private String portal_title;
 	private Integer deviceType; // 1 = PC, 2 = Mobile
-	private Date writeDate;
+	private String writeDate;
 	private String keyword;
-	private Integer keyword_type;
+	private String keyword_type;
 	private String url;
 	private String textType;
 	private String thumbnail;
 	private Date createDate;
 	private Date updateDate;
-	
-	
 	public Integer getPortal_idx() {
 		return portal_idx;
 	}
@@ -50,10 +48,10 @@ public class PortalVO {
 	public void setDeviceType(Integer deviceType) {
 		this.deviceType = deviceType;
 	}
-	public Date getWriteDate() {
+	public String getWriteDate() {
 		return writeDate;
 	}
-	public void setWriteDate(Date writeDate) {
+	public void setWriteDate(String writeDate) {
 		this.writeDate = writeDate;
 	}
 	public String getKeyword() {
@@ -62,10 +60,10 @@ public class PortalVO {
 	public void setKeyword(String keyword) {
 		this.keyword = keyword;
 	}
-	public Integer getKeyword_type() {
+	public String getKeyword_type() {
 		return keyword_type;
 	}
-	public void setKeyword_type(Integer keyword_type) {
+	public void setKeyword_type(String keyword_type) {
 		this.keyword_type = keyword_type;
 	}
 	public String getUrl() {
@@ -98,8 +96,6 @@ public class PortalVO {
 	public void setUpdateDate(Date updateDate) {
 		this.updateDate = updateDate;
 	}
-	
-	
 	@Override
 	public String toString() {
 		return "PortalVO [portal_idx=" + portal_idx + ", portal_name=" + portal_name + ", portal_type=" + portal_type

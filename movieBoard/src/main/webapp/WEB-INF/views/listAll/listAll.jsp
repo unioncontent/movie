@@ -190,7 +190,7 @@
                                     </td>
                                     <td>
                                       <button class="btn btn-danger btn-sm alert-confirm1" data-toggle="tooltip" data-placement="top" data-original-title="삭제" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'alert-confirm']);"><i class="icofont icofont-ui-delete" style="margin-right:0"></i></button>
-                                      <button class="btn btn-success btn-sm alert-confirm2" data-toggle="tooltip" data-placement="top" data-original-title="즉시처리" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'alert-confirm']);"><i class="icofont icofont-ui-check" style="margin-right:0"></i></button>
+                                      <button class="btn btn-primary btn-sm alert-confirm2" data-toggle="tooltip" data-placement="top" data-original-title="즉시처리" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'alert-confirm']);"><i class="icofont icofont-ui-check" style="margin-right:0"></i></button>
                                     </td>
                                   </tr>
                                   <tr>
@@ -221,27 +221,27 @@
                                     </td>
                                     <td>
                                       <button class="btn btn-danger btn-sm alert-confirm1" data-toggle="tooltip" data-placement="top" data-original-title="삭제" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'alert-confirm']);"><i class="icofont icofont-ui-delete" style="margin-right:0"></i></button>
-                                      <button class="btn btn-success btn-sm alert-confirm2" data-toggle="tooltip" data-placement="top" data-original-title="즉시처리" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'alert-confirm']);"><i class="icofont icofont-ui-check" style="margin-right:0"></i></button>
+                                      <button class="btn btn-primary btn-sm alert-confirm2" data-toggle="tooltip" data-placement="top" data-original-title="즉시처리" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'alert-confirm']);"><i class="icofont icofont-ui-check" style="margin-right:0"></i></button>
                                     </td>
                                   </tr>
                                 </tbody>
                               </table>
-                              <ul class="pagination float-right">
-                                <li class="page-item">
-                                  <a class="page-link" href="#" aria-label="Previous">
-                                    <span aria-hidden="true">«</span>
-                                    <span class="sr-only">Previous</span>
-                                  </a>
-                                </li>
-                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item">
-                                  <a class="page-link" href="#" aria-label="Next">
-                                    <span aria-hidden="true">»</span>
-                                    <span class="sr-only">Next</span>
-                                  </a>
-                                </li>
-                              </ul>
                             </div>
+                            <ul class="pagination float-right">
+                              <li class="page-item">
+                                <a class="page-link" href="#" aria-label="Previous">
+                                  <span aria-hidden="true">«</span>
+                                  <span class="sr-only">Previous</span>
+                                </a>
+                              </li>
+                              <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                              <li class="page-item">
+                                <a class="page-link" href="#" aria-label="Next">
+                                  <span aria-hidden="true">»</span>
+                                  <span class="sr-only">Next</span>
+                                </a>
+                              </li>
+                            </ul>
                           </div>
                         </div>
                       </div>
@@ -347,10 +347,6 @@
   <!-- sweet alert js -->
   <script type="text/javascript" src="../bower_components/sweetalert/dist/sweetalert.min.js"></script>
   <script type="text/javascript" src="../assets/pages/division/script.js"></script>
-  <!-- sweet alert modal.js intialize js -->
-  <!-- modalEffects js nifty modal window effects -->
-  <script type="text/javascript" src="../assets/js/modalEffects.js"></script>
-  <script type="text/javascript" src="../assets/js/classie.js"></script>
   <!-- i18next.min.js -->
   <script type="text/javascript" src="../bower_components/i18next/i18next.min.js"></script>
   <script type="text/javascript" src="../bower_components/i18next-xhr-backend/i18nextXHRBackend.min.js"></script>

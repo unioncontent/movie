@@ -1039,7 +1039,7 @@ if (typeof jQuery === 'undefined') {
     $(document).off('focusin.bs.modal')
 
     this.$element
-      .removeClass('in')
+      .removeClass('in') // show로 변경!
       .off('click.dismiss.bs.modal')
       .off('mouseup.dismiss.bs.modal')
 
@@ -1122,7 +1122,7 @@ if (typeof jQuery === 'undefined') {
 
       if (doAnimate) this.$backdrop[0].offsetWidth // force reflow
 
-      this.$backdrop.addClass('in')
+      this.$backdrop.addClass('in') // show로 변경!
 
       if (!callback) return
 
@@ -1133,7 +1133,7 @@ if (typeof jQuery === 'undefined') {
         callback()
 
     } else if (!this.isShown && this.$backdrop) {
-      this.$backdrop.removeClass('in')
+      this.$backdrop.removeClass('in') // show로 변경!
 
       var callbackRemove = function () {
         that.removeBackdrop()

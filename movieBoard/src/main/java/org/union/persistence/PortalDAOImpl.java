@@ -58,6 +58,21 @@ public class PortalDAOImpl implements PortalDAO {
 		}
 	}
 
+	
+	@Override
+	public List<PortalVO> listExtract(SearchCriteria cri) {
+
+		return session.selectList(namespace + "listExtract", cri);
+		
+	}
+	
+	
+	@Override
+	public Integer getExtractCount(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "getExtractCount", cri);
+	}
+	
 
 	@Override
 	public List<PortalVO> listSearch(SearchCriteria vo) {
@@ -86,5 +101,7 @@ public class PortalDAOImpl implements PortalDAO {
 			e.printStackTrace();
 		}
 	}
+
+
 
 }

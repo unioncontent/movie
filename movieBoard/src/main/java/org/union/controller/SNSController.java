@@ -33,6 +33,13 @@ public class SNSController {
 	@GetMapping("/facebook")
 	public void facebookGET(@ModelAttribute("cri") SearchCriteria cri, Model model) throws Exception{
 		logger.info("facebookGET called....");
+		
+		if(cri.getSelectKey() != null) {
+			if(cri.getSelectKey().equals("키워드")) {
+				cri.setSelectKey(null);
+			}
+		}
+		
 		logger.info("cri : " + cri);
 		
 		PageMaker pageMaker = new PageMaker();
@@ -53,6 +60,13 @@ public class SNSController {
 	@GetMapping("/instagram")
 	public void instagramGET(@ModelAttribute("cri") SearchCriteria cri, Model model) throws Exception{
 		logger.info("instagramGET called....");
+		
+		if(cri.getSelectKey() != null) {
+			if(cri.getSelectKey().equals("키워드")) {
+				cri.setSelectKey(null);
+			}
+		}
+		
 		logger.info("cri : " + cri);
 		
 		PageMaker pageMaker = new PageMaker();
@@ -73,6 +87,13 @@ public class SNSController {
 	@GetMapping("/twitter")
 	public void twitterGET(@ModelAttribute("cri") SearchCriteria cri, Model model) throws Exception{
 		logger.info("twitterGET called....");
+		
+		if(cri.getSelectKey() != null) {
+			if(cri.getSelectKey().equals("키워드")) {
+				cri.setSelectKey(null);
+			}
+		}
+		
 		logger.info("cri : " + cri);
 		
 		PageMaker pageMaker = new PageMaker();

@@ -16,6 +16,10 @@ public interface PortalDAO {
 	
 	public void delete(Integer portal_idx);
 	
+	public List<PortalVO> listExtract(SearchCriteria cri);
+	
+	public Integer getExtractCount(SearchCriteria cri);
+	
 	public List<PortalVO> listSearch(SearchCriteria vo);
 	
 	public void updateTextType(PortalVO vo);

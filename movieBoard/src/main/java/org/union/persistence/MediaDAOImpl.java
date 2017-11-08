@@ -5,7 +5,6 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.union.domain.CommunityVO;
 import org.union.domain.MediaVO;
 import org.union.domain.SearchCriteria;
 
@@ -60,6 +59,19 @@ public class MediaDAOImpl implements MediaDAO {
 		}
 		
 	}
+	
+	@Override
+	public List<MediaVO> listExtract(SearchCriteria cri) {
+
+		return session.selectList(namespace + "listExtract", cri);
+	}
+
+	@Override
+	public Integer getExtractCount(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "getExtractCount", cri);
+	}
+
 
 
 	@Override

@@ -16,7 +16,11 @@ public interface CommunityDAO {
 
 	public void delete(Integer community_idx);
 	
-	public List<CommunityVO> listSearch(SearchCriteria vo);
+	public List<CommunityVO> listExtract(SearchCriteria cri);
+	
+	public Integer getExtractCount(SearchCriteria cri);
+	
+	public List<CommunityVO> listSearch(SearchCriteria cri);
 	
 	public void updateTextType (CommunityVO vo);
 	
