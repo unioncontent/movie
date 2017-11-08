@@ -41,7 +41,6 @@ public class CommunityDAOTester {
 		vo.setCommunity_writer("익명134");
 		vo.setCommunity_writer_IP("102.168.0.1");
 		vo.setKeyword("강철비");
-		vo.setKeyword_type(2);
 		vo.setUrl("url");
 		vo.setTextType("호감");
 		

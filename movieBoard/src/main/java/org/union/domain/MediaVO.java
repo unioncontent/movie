@@ -17,7 +17,7 @@ public class MediaVO {
 	private Date last_media_title;
 	private Date last_media_content;
 	private String keyword;
-	private Integer keyword_type;
+	private String keyword_type;
 	private String url;
 	private String textType;
 	private String thumbnail;
@@ -95,10 +95,10 @@ public class MediaVO {
 	public void setKeyword(String keyword) {
 		this.keyword = keyword;
 	}
-	public Integer getKeyword_type() {
+	public String getKeyword_type() {
 		return keyword_type;
 	}
-	public void setKeyword_type(Integer keyword_type) {
+	public void setKeyword_type(String keyword_type) {
 		this.keyword_type = keyword_type;
 	}
 	public String getUrl() {
@@ -141,6 +141,7 @@ public class MediaVO {
 				+ ", textType=" + textType + ", thumbnail=" + thumbnail + ", createDate=" + createDate + ", updateDate="
 				+ updateDate + "]";
 	}
+	
 	
 	
 }

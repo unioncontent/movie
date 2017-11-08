@@ -39,19 +39,20 @@ public class PortalServiceImpl implements PortalService {
 
 	@Override
 	public void remove(Integer portal_idx) {
-		// TODO Auto-generated method stub
 
+		portalDAO.delete(portal_idx);
 	}
 
 	@Override
 	public List<ExtractVO> listExtract(SearchCriteria cri) {
 
+		List<PortalVO> portalList = portalDAO.listExtract(cri);
+		
+		List<ExtractVO> extractList = new ArrayList<ExtractVO>();
+		
+		SimpleDateFormat date = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+		
 		try {
-			List<PortalVO> portalList = portalDAO.listExtract(cri);
-			
-			List<ExtractVO> extractList = new ArrayList<ExtractVO>();
-			
-			SimpleDateFormat date = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
 			
 			for(int i = 0; i < portalList.size(); i++) {
 				ExtractVO vo = new ExtractVO();
@@ -74,7 +75,7 @@ public class PortalServiceImpl implements PortalService {
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return extractList;
 		}
 	
 	}

@@ -44,7 +44,6 @@ public class PortalDAOTester {
 		System.out.println(date);
 		
 		vo.setKeyword("keyword");
-		vo.setKeyword_type(1);
 		vo.setUrl("url");
 	
 		dao.create(vo);
@@ -66,7 +65,6 @@ public class PortalDAOTester {
 		vo.setPortal_title("uuuuuuutitle");
 		vo.setDeviceType(1);
 		vo.setKeyword("keyword");
-		vo.setKeyword_type(1);
 		vo.setUrl("url");
 		vo.setPortal_idx(1);
 		

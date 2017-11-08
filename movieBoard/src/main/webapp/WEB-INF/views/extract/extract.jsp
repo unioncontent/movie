@@ -130,9 +130,10 @@
                         <div class="card">
                           <div class="card-header">
                             <select id= "selectPerPageNum" name="select" class="col-sm-1 form-control form-control-inverse m-r-10 m-b-10 p-r-5 f-left list-select">
-                                  <option id= "10" >10</option>
-                                  <option id = "50">50</option>
-                                  <option id = "100">100</option>
+                                  <option id= "40" >40</option>
+                                  <option id = "80">80</option>
+                                  <option id = "160">120</option>
+                                  <option id = "200">200</option>
                                 </select>
                                 <select id = "selectSearchType" name="select" class="col-sm-1 form-control form-control-inverse m-r-10 m-b-10 f-left search-select">
                                   <option id="t" value="t">제목</option>
@@ -144,19 +145,19 @@
                                     <button id="searchBtn" class=" btn btn-inverse">검색</button>
                               </span>
                             </div>
-                            <button type="button" class="alert-confirm btn btn-primary waves-effect f-right p-r-0 p-l-5 m-l-15 m-b-10  f-right"><i class="icofont icofont-check-circled"></i>일괄처리</button>
+                            <button id = "insertAllBtn" type="button" class="alert-confirm btn btn-primary waves-effect f-right p-r-0 p-l-5 m-l-15 m-b-10  f-right"><i class="icofont icofont-check-circled"></i>일괄처리</button>
                           </div>
                           <div class="card-block">
                             <div class="table-responsive">
                               <table class="table table-hover">
                                 <thead>
                                   <tr>
-                                    <th width="5%">NO</th>
-                                    <th width="10%">사이트<br /><span class="text-muted">구분</span></th>
+                                    <th width="5%">No</th>
+                                    <th width="10%">페이지 분류<span class="text-muted"></span></th>
+                                    <th width="10%">페이지 명</th>
                                     <th width="10%">회사명</th>
-                                    <th width="10%">컨텐츠타입<br /><span class="text-muted">(랭킹)</span></th>
-                                    <th width="10%">게시판명<br /><span class="text-muted">키워드</span></th>
-                                    <th width="20%">제목<br /><span class="text-muted">타이틀</span><br /><span class="text-success">컨텐츠</span></th>
+                                    <th><span class="text-muted">키워드</span></th>
+                                    <th width="20%">제목 &<span class="text-muted"></span><span class="text-success"> 컨텐츠</span></th>
                                     <th width="10%">추출일 / 작성일</th>
                                     <th width="10%">분류변경</th>
                                     <th width="5%">분류처리</th>
@@ -164,35 +165,50 @@
                                 </thead>
                                 <tbody>
                                   <c:forEach items="${extractList}" var="extractVO" varStatus="index">
-                                  <tr>
-                                    <th scope="row">${index.count}</th>
-                                    <td>${extractVO.domainType}<br /><span class="text-muted"></span></td>
-                                    <td>${extractVO.company }</td>
-                                    <td>${extractVO.domain}<br /><span class="text-muted">()</span></td>
-                                    <td>키워드<br /><span class="text-muted">우드파크</span></td>
+                                  
+                                  <tr class = "trList">
+                                    <c:if test="${extractVO.sns_idx != null}">
+                                      <input type="hidden" value="${extractVO.sns_idx}">
+                                    </c:if>
+                                    <c:if test="${extractVO.community_idx != null}">
+                                      <input type="hidden" value="${extractVO.community_idx}">
+                                    </c:if>
+                                    <c:if test="${extractVO.media_idx != null}">
+                                      <input type="hidden" value="${extractVO.media_idx}">
+                                    </c:if>
+                                    <c:if test="${extractVO.portal_idx != null}">
+                                      <input type="hidden" value="${extractVO.portal_idx}">
+                                    </c:if>
+                                    <th scope="row">
+                                      ${index.count}
+                                    </th>
+                                    <td>${extractVO.domain}<span class="text-muted"></span></td>
+                                    <td>${extractVO.domainType}</td>
+                                    <td>${extractVO.company}<span class="text-muted"></span></td>
+                                    <td>${extractVO.keyword}<span class="text-muted"></span></td>
                                     <td>
                                       <a href="${extractVO.url}" target="_blank">
                                         <div class="nobr">${extractVO.title}</div>
-                                      </a><br />
-                                      <span class="text-muted"></span><br />
-                                      <span class="text-success">14</span>
+                                      </a>
+                                      <span class="text-muted"></span>
+                                      <span class="text-success">${extractVO.content}</span>
                                     </td>
                                     <td>${extractVO.createDate} /<br/>${extractVO.writeDate }</td>
                                     <td>
-                                      <div class="radios">
-                                        <input type="radio" id="radio1" name="radios">
-                                        <label for="radio1">좋은글</label>
-                                        <input type="radio" id="radio2" name="radios">
-                                        <label for="radio2">나쁜글</label>
-                                        <input type="radio" id="radio3" name="radios">
-                                        <label for="radio3">관심글</label>
+                                      <div class="radios${index.count}">
+                                        <input type="radio" id="radio1${index.count}" name="radios${index.count}">
+                                        <label for="radio1${index.count}">좋은글</label>
+                                        <input type="radio" id="radio2${index.count}" name="radios${index.count}">
+                                        <label for="radio2${index.count}">나쁜글</label>
+                                        <input type="radio" id="radio3${index.count}" name="radios${index.count}">
+                                        <label for="radio3${index.count}">관심글</label>
                                         <br/>
-                                        <input type="radio" id="radio4" name="radios">
-                                        <label for="radio4">기타글</label>
-                                        <input type="radio" id="radio5" name="radios">
-                                        <label for="radio5">삭제글</label>
-                                        <input type="radio" id="radio6" name="radios" checked>
-                                        <label for="radio6">미분류</label>
+                                        <input type="radio" id="radio4${index.count}" name="radios${index.count}">
+                                        <label for="radio4${index.count}">기타글</label>
+                                        <input type="radio" id="radio5${index.count}" name="radios${index.count}">
+                                        <label for="radio5${index.count}">삭제글</label>
+                                        <input type="radio" id="radio6${index.count}" name="radios${index.count}" checked>
+                                        <label for="radio6${index.count}">미분류</label>
                                       </div>
                                     </td>
                                     <td>
@@ -330,11 +346,271 @@
 <script type="text/javascript">
   $(document).ready(function(){
 	
-	  /* var selectOption = decodeURI(window.location.href.split("selectKey=")[1]);
-	  console.log(selectOption); */
+	  
+	  // 일괄처리버튼 클릭시
+	  $(document).on("click","#insertAllBtn",function(){
+		swal({
+					title: "일괄처리 하시겠습니까?",
+					text: "선택한 분류들로 일괄처리 됩니다.",
+					type: "warning",
+					showCancelButton: true,
+					confirmButtonClass: "btn-danger",
+					confirmButtonText: "YES",
+					closeOnConfirm: false
+				},
+				function(){
+					
+					var tr = $(".trList");
+					
+					var arr = [];
+					
+					for(var i = 0; i < tr.length; i++){
+						var idx = tr[i].children[0].value;
+						var table = tr[i].children[2].innerText;
+						var arr = tr[i].children[8].children[0].children;
+				
+
+						for (var l = 0; l < arr.length; l++) {
+							if (arr[l].type == "radio") {
+								
+								if (arr[l].checked) {
+									var textType = arr[l + 1].innerText;
+									
+									break;
+								}
+							}
+						}
+
+						if(textType != '미분류'){
+							$.ajax({
+								  type: "POST",
+								  url: "insert",
+								  data: {idx : idx, table : table, textType : textType},
+								  dataType: "json",
+								  success: function(data){
+									  console.log(data);
+								  }
+								  
+								}); 
+						}
+						
+					}
+					
+					
+					swal("Success!", "일괄처리가 완료되었습니다.", "success");
+				});
+	});
+	  
+	  // 삭제버튼 클릭시
+	  $(document).on("click",".alert-confirm1",function(event){
+			swal({
+						title: "삭제처리 하시겠습니까?",
+						text: "바로 삭제처리 됩니다.",
+						type: "warning",
+						showCancelButton: true,
+						confirmButtonClass: "btn-danger",
+						confirmButtonText: "YES",
+						closeOnConfirm: false
+					},
+					function(){
+						
+						var tr = event.target.parentNode.parentNode;
+						  
+						var idx = tr.children[0].value;
+						console.log(tr.children);  
+						
+						if(tr.children[2] != null){
+							var table = tr.children[2].innerText;
+						} 
+						  
+						console.log(idx);
+						console.log(table);
+						
+						$.ajax({
+							  type: "POST",
+							  url: "remove",
+							  data: {idx : idx, table : table},
+							  dataType: "json",
+							  success: function(data){
+								  console.log(data);
+							  }
+							  
+							}); 
+						
+						swal("Delete!", "삭제처리가 완료되었습니다.", "success");
+					});
+	  });
+	  
+	  
+	  //즉시처리 버튼 클릭시
+	  $(document).on("click",".alert-confirm2",function(event){
+			swal({
+						title: "즉시처리 하시겠습니까?",
+						text: "선택된 분류로 즉시처리 됩니다.",
+						type: "warning",
+						showCancelButton: true,
+						confirmButtonClass: "btn-danger",
+						confirmButtonText: "YES",
+						closeOnConfirm: false
+					},
+					function(){
+						
+						insertType(event);
+						  
+						swal("Success!", "즉시처리가 완료되었습니다.", "success");
+					});
+	  });
+	  
+	  /* $(".alert-confirm2").on("click", function(event){
+		  var tr = event.target.parentNode.parentNode;
+		  console.log(tr);
+		  
+		  var idx = tr.children[0].value;
+		  var table = tr.children[2].innerText;
+		  var arr = tr.children[8].children[0].children;
+		
+		  console.log(idx);
+		  console.log(table);
+		  console.log(arr); 
+		  
+		  for(var i = 0; i < arr.length; i++){
+			console.log(arr[i]);
+			if(arr[i].type == "radio"){
+				if(arr[i].checked){
+					var textType = arr[i+1].innerText;
+					
+					$.ajax({
+						  type: "POST",
+						  url: "insert",
+						  data: {idx : idx, table : table, textType : textType},
+						  dataType: "text",
+						  success: function(data){
+							  console.log(data);
+						  }
+						  
+						});
+					
+					break;
+				}
+			}
+			
+		  }   
+		  
+	  }); */
+	 
+	  
+	// content 길시에 ...으로 변경  
+	var $content = $(".text-success");
+	
+	var size = 25;
+	  
+	for (var i =1; i < $content.length; i++){
+		if($content[i].innerText.length >= size){
+			$content[i].textContent = $content[i].innerText.substr(0, size) + '...';
+		}
+	}
+	
+	var selectOption = decodeURI(window.location.href.split("selectKey=")[1]);
+	console.log(selectOption);
+
+
+
+	var $selectKeyword = $('#selectKeyword');
+
+	if(selectOption != 'undefined'){
+		for(var i = 0; i < $selectKeyword[0].length; i++ ){
+			if($selectKeyword[0][i].value == selectOption){
+				$selectKeyword[0][i].selected = 'selected';
+			}
+		}
+	}
+	$selectKeyword[0][0].disabled = true;
+
+	// 키워드 선택시
+	$selectKeyword.change(function(){
+		console.log("selectKeyword clicked....");
+		console.log($('#selectKeyword option:selected').val());
+
+		searchList();
+	});
+	
+	// 검색버튼 클릭시
+	$('#searchBtn').on("click", function(event){
+	  console.log("searchBtn clicked....");
+	  console.log($('#selectSearchType option:selected').val());
+
+	  if($('#keywordInput').val() == ''){
+		alert("검색어를 입력해주세요.");
+	  }else{
+		searchList();
+	  }
+	});
 	  
 	  
   }); // end ready...
+  
+  
+	function insertType(event) {
 
+		var parent = event.target.parentNode;
+		var tr = parent.parentNode;
+		console.log(tr);
+		
+		if (tr.children[0].value != 'undefined') {
+			var idx = tr.children[0].value;
+			console.log(idx);
+		}
 
+		if (tr.children[2] != 'undefined') {
+			var table = tr.children[2].innerText;
+			console.log(table);
+		} else {
+			calcInsertData(event);
+		}
+
+		if (tr.children[8].children[0].children != 'undefined') {
+			var arr = tr.children[8].children[0].children;
+			console.log(arr);
+		} else {
+			clacInsertData(event);
+		}
+
+		for (var i = 0; i < arr.length; i++) {
+			console.log(arr[i]);
+			if (arr[i].type == "radio") {
+				if (arr[i].checked) {
+					var textType = arr[i + 1].innerText;
+
+					$.ajax({
+						type : "POST",
+						url : "insert",
+						data : {
+							idx : idx,
+							table : table,
+							textType : textType
+						},
+						dataType : "json",
+						success : function(data) {
+							console.log(data);
+						}
+
+					});
+
+					break;
+				}
+			}
+
+		}
+	}
+
+	function searchList(event) {
+
+		var makeQeury = '${pageMaker.makeQuery(1)}'.slice(0, -2);
+
+		self.location = "extract" + makeQeury
+				+ $('#selectPerPageNum option:selected').val() + "&searchType="
+				+ $("#selectSearchType option:selected").val() + "&keyword="
+				+ $('#keywordInput').val() + "&selectKey="
+				+ $('#selectKeyword option:selected').val();
+	}
 </script>

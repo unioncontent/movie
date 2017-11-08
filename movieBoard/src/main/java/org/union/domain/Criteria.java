@@ -41,6 +41,7 @@ public class Criteria {
 	}
 
 	public Integer getPerPageNum() {
+		
 		return perPageNum;
 	}
 

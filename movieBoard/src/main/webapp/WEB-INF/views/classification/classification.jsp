@@ -37,7 +37,7 @@
   <!-- font awesome -->
   <link rel="stylesheet" type="text/css" href="../assets/icon/font-awesome/css/font-awesome.css">
   <!-- Date-time picker css -->
-  <link rel="stylesheet" type="text/css" href="assets/pages/advance-elements/css/bootstrap-datetimepicker.css">
+  <link rel="stylesheet" type="text/css" href="../assets/pages/advance-elements/css/bootstrap-datetimepicker.css">
   <!-- Date-range picker css  -->
   <link rel="stylesheet" type="text/css" href="../bower_components/bootstrap-daterangepicker/daterangepicker.css">
   <!-- sweet alert framework -->
@@ -473,9 +473,9 @@
   <!-- Date-range picker js -->
   <script type="text/javascript" src="../bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
   <!-- Bootstrap date-time-picker js -->
-  <script type="text/javascript" src="assets/pages/advance-elements/moment-with-locales.min.js"></script>
+  <script type="text/javascript" src="../assets/pages/advance-elements/moment-with-locales.min.js"></script>
   <script type="text/javascript" src="../bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-  <script type="text/javascript" src="assets/pages/advance-elements/bootstrap-datetimepicker.min.js"></script>
+  <script type="text/javascript" src="../assets/pages/advance-elements/bootstrap-datetimepicker.min.js"></script>
   <!-- Morris Chart js -->
   <script src="../bower_components/raphael/raphael.min.js"></script>
   <script src="../bower_components/morris.js/morris.js"></script>
@@ -489,7 +489,7 @@
   <script type="text/javascript" src="../bower_components/jquery-i18next/jquery-i18next.min.js"></script>
   <!-- Custom js -->
   <script type="text/javascript" src="../assets/js/script.js"></script>
-  <script type="text/javascript" src="assets/pages/division/script2.js"></script>
+  <script type="text/javascript" src="../assets/pages/division/script2.js"></script>
   <script type="text/javascript" src="../assets/pages/picker.js"></script>
   <script src="../assets/js/pcoded.min.js"></script>
   <script src="../assets/js/demo-12.js"></script>

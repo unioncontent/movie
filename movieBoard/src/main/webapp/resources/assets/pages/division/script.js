@@ -17,7 +17,7 @@ $(document).ready(function () {
         });
 	});
   //일괄처리 확인메시지
-	$(document).on("click",".alert-confirm",function(){
+	/*$(document).on("click",".alert-confirm",function(){
 		swal({
 					title: "일괄처리 하시겠습니까?",
 					text: "선택한 분류들로 일괄처리 됩니다.",
@@ -30,9 +30,9 @@ $(document).ready(function () {
 				function(){
 					swal("Success!", "일괄처리가 완료되었습니다.", "success");
 				});
-	});
+	});*/
   //삭제처리 확인메시지
-	$(document).on("click",".alert-confirm1",function(){
+	/*$(document).on("click",".alert-confirm1",function(){
 		swal({
 					title: "삭제처리 하시겠습니까?",
 					text: "바로 삭제처리 됩니다.",
@@ -45,9 +45,9 @@ $(document).ready(function () {
 				function(){
 					swal("Delete!", "삭제처리가 완료되었습니다.", "success");
 				});
-  });
+  });*/
   //즉시처리 확인메시지
-	$(document).on("click",".alert-confirm2",function(){
+	/*$(document).on("click",".alert-confirm2",function(){
 		swal({
 					title: "즉시처리 하시겠습니까?",
 					text: "선택된 분류로 즉시처리 됩니다.",
@@ -58,9 +58,43 @@ $(document).ready(function () {
 					closeOnConfirm: false
 				},
 				function(){
+					var tr = event.target.parentNode.parentNode;
+					  console.log(tr);
+					  
+					  var idx = tr.children[0].value;
+					  var table = tr.children[2].innerText;
+					  var arr = tr.children[8].children[0].children;
+					
+					  console.log(idx);
+					  console.log(table);
+					  console.log(arr); 
+					  
+					  for(var i = 0; i < arr.length; i++){
+						console.log(arr[i]);
+						if(arr[i].type == "radio"){
+							if(arr[i].checked){
+								var textType = arr[i+1].innerText;
+								
+								$.ajax({
+									  type: "POST",
+									  url: "insert",
+									  data: {idx : idx, table : table, textType : textType},
+									  dataType: "text",
+									  success: function(data){
+										  console.log(data);
+									  }
+									  
+									});
+								
+								break;
+							}
+						}
+						
+					  }
+					  
 					swal("Success!", "즉시처리가 완료되었습니다.", "success");
 				});
-  });
+  });*/
   //이미지 보기 클릭시 모달
   $(".image").on("click",function(){
     $('#image-Modal').modal('show');

@@ -40,7 +40,6 @@ public class MediaDAOTester {
 		
 		
 		vo.setKeyword("강철비");
-		vo.setKeyword_type(1);
 		vo.setUrl("urlurlurlurlurlurlurlurlurl");
 		
 		dao.create(vo);
@@ -63,7 +62,6 @@ public class MediaDAOTester {
 		vo.setMedia_content("강철비가 ~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 		vo.setReporter_name("김동진");
 		vo.setKeyword("강철비");
-		vo.setKeyword_type(1);
 		vo.setUrl("urlurlurlurlurlurlurlurlurl");
 		vo.setMedia_idx(1);
 		

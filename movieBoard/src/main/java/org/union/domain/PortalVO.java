@@ -12,7 +12,7 @@ public class PortalVO {
 	private Integer deviceType; // 1 = PC, 2 = Mobile
 	private String writeDate;
 	private String keyword;
-	private Integer keyword_type;
+	private String keyword_type;
 	private String url;
 	private String textType;
 	private String thumbnail;
@@ -60,10 +60,10 @@ public class PortalVO {
 	public void setKeyword(String keyword) {
 		this.keyword = keyword;
 	}
-	public Integer getKeyword_type() {
+	public String getKeyword_type() {
 		return keyword_type;
 	}
-	public void setKeyword_type(Integer keyword_type) {
+	public void setKeyword_type(String keyword_type) {
 		this.keyword_type = keyword_type;
 	}
 	public String getUrl() {
@@ -103,5 +103,6 @@ public class PortalVO {
 				+ ", keyword=" + keyword + ", keyword_type=" + keyword_type + ", url=" + url + ", textType=" + textType
 				+ ", thumbnail=" + thumbnail + ", createDate=" + createDate + ", updateDate=" + updateDate + "]";
 	}
+	
 	
 }

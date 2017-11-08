@@ -39,8 +39,8 @@ public class CommunityServiceImpl implements CommunityService {
 
 	@Override
 	public void remove(Integer community_idx) {
-		// TODO Auto-generated method stub
 
+		communityDAO.delete(community_idx);
 	}
 
 	@Override

@@ -3,7 +3,6 @@ package org.union.service;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -67,6 +66,7 @@ public class SNSServiceImpl implements SNSService {
 				vo.setDomain("sns");
 				vo.setDomainType(data.getSns_name());
 				vo.setTitle(data.getSns_title());
+				vo.setContent(data.getSns_content());
 				vo.setKeyword(data.getKeyword());
 				vo.setUrl(data.getUrl());
 				vo.setCreateDate(date.format(data.getCreateDate()));

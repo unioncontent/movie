@@ -11,9 +11,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.union.domain.CommunityVO;
 import org.union.domain.ExtractVO;
+import org.union.domain.MediaVO;
 import org.union.domain.PageMaker;
+import org.union.domain.PortalVO;
+import org.union.domain.SNSVO;
 import org.union.domain.SearchCriteria;
 import org.union.service.CommunityService;
 import org.union.service.MediaService;
@@ -48,15 +54,27 @@ public class ExtractController {
 	@GetMapping("/extract")
 	public void extractGET(@ModelAttribute("cri") SearchCriteria cri, Model model) {
 		logger.info("extractGET called....");
-		logger.info("cri: " + cri);
+		
+		if(cri.getSelectKey() != null) {
+			if(cri.getSelectKey().equals("키워드")) {
+				cri.setSelectKey(null);
+			}
+		}
 		
 		PageMaker pageMaker = new PageMaker();
+		// 4번 리스트기 때문에  perPageNum / 4
+		if(cri.getPerPageNum() != 10) {
+			cri.setPerPageNum(cri.getPerPageNum()/4);
+		}
+		
+		logger.info("cri: " + cri);
+		
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(snsService.getExtractCount(cri) 
 								+ communityService.getExtractCount(cri)
 								+ portalService.getExtractCount(cri)
 								+ mediaService.getExtractCount(cri));
-		
+		logger.info("pageMaker: " + pageMaker);
 		model.addAttribute("pageMaker", pageMaker);
 		
 		List<ExtractVO> extractList = new ArrayList<ExtractVO>();
@@ -67,9 +85,85 @@ public class ExtractController {
 		listUtil.listAddList(extractList, portalService.listExtract(cri));
 		listUtil.listAddList(extractList, mediaService.listExtract(cri));
 
-		/*ExtractComparator comparator = new ExtractComparator();
+		ExtractComparator comparator = new ExtractComparator();
 		Collections.sort(extractList, comparator);
-		logger.info(extractList.toString());*/
+		logger.info(extractList.toString());
 		model.addAttribute("extractList", extractList);
+	}
+	
+	
+	@ResponseBody
+	@PostMapping("insert")
+	public String insertPOST(Integer idx, String table, String textType) {
+		logger.info("insertPOST called....");
+		
+		logger.info("idx: " + idx);
+		logger.info("table: " + table);
+		logger.info("textType: " + textType );
+		
+		if("sns".equals(table)) {
+			logger.info("sns");
+			SNSVO vo = new SNSVO();
+			vo.setSns_idx(idx);
+			vo.setTextType(textType);
+			
+			snsService.modifyTextType(vo);
+			
+		}else if("media".equals(table) ){
+			logger.info("media");
+			MediaVO vo = new MediaVO();
+			vo.setMedia_idx(idx);
+			vo.setTextType(textType);
+			
+			mediaService.modifyType(vo);
+			
+		}else if ("portal".equals(table)) {
+			logger.info("portal");
+			PortalVO vo = new PortalVO();
+			vo.setPortal_idx(idx);
+			vo.setTextType(textType);
+			
+			portalService.modifyType(vo);
+			
+		}else if ("community".equals(table)) {
+			logger.info("community");
+			CommunityVO vo = new CommunityVO();
+			vo.setCommunity_idx(idx);
+			vo.setTextType(textType);
+
+			communityService.modifyType(vo);
+			
+		}
+		
+		return "success";
+	}
+	
+	
+	@ResponseBody
+	@PostMapping("/remove")
+	public String removePOST(Integer idx, String table) {
+		logger.info("removePOST called....");
+		
+		logger.info("idx: " + idx);
+		logger.info("table: " + table);
+		
+		if("sns".equals(table)) {
+			logger.info("sns");
+			snsService.remove(idx);
+			
+		}else if("media".equals(table) ){
+			logger.info("media");
+			mediaService.remove(idx);
+			
+		}else if ("portal".equals(table)) {
+			logger.info("portal");
+			portalService.remove(idx);
+			
+		}else if ("community".equals(table)) {
+			logger.info("community");
+			communityService.remove(idx);
+		}
+		
+		return "success";
 	}
 }
