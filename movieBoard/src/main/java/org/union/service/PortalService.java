@@ -23,6 +23,8 @@ public interface PortalService {
 	
 	public List<PortalVO> listSearch(SearchCriteria vo);
 	
+	public Integer getSearchCount(SearchCriteria cri);
+	
 	public void modifyType(PortalVO vo);
 	
 	public void modifyThumbnail(PortalVO vo);

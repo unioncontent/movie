@@ -3,10 +3,8 @@ package org.union.domain;
 public class ExtractVO {
 
 	
-	private String domain, domainType, company,keyword, title, content, writeDate, createDate, url;
+	private String domain, domainType, company,keyword, title, content, writeDate, createDate, url, textType;
 	private Integer sns_idx, community_idx, media_idx, portal_idx;
-	
-	
 	public String getDomain() {
 		return domain;
 	}
@@ -61,6 +59,12 @@ public class ExtractVO {
 	public void setUrl(String url) {
 		this.url = url;
 	}
+	public String getTextType() {
+		return textType;
+	}
+	public void setTextType(String textType) {
+		this.textType = textType;
+	}
 	public Integer getSns_idx() {
 		return sns_idx;
 	}
@@ -89,8 +93,10 @@ public class ExtractVO {
 	public String toString() {
 		return "ExtractVO [domain=" + domain + ", domainType=" + domainType + ", company=" + company + ", keyword="
 				+ keyword + ", title=" + title + ", content=" + content + ", writeDate=" + writeDate + ", createDate="
-				+ createDate + ", url=" + url + ", sns_idx=" + sns_idx + ", community_idx=" + community_idx
-				+ ", media_idx=" + media_idx + ", portal_idx=" + portal_idx + "]";
+				+ createDate + ", url=" + url + ", textType=" + textType + ", sns_idx=" + sns_idx + ", community_idx="
+				+ community_idx + ", media_idx=" + media_idx + ", portal_idx=" + portal_idx + "]";
 	}
+	
+	
 	
 }

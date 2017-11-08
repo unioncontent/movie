@@ -20,15 +20,17 @@ public interface MediaDAO {
 	
 	public Integer getExtractCount(SearchCriteria cri);
 	
-	public List<MediaVO> listSearch(SearchCriteria criteria);
+	public List<MediaVO> listSearch(SearchCriteria cri);
 	
-	public List<MediaVO> searchAll(SearchCriteria criteria);
+	public Integer getSearchCount(SearchCriteria cri);
+	
+	public List<MediaVO> searchAll(SearchCriteria cri);
 	
 	public Integer getTotalCount();
 	
-	public Integer mediaGetTotalCount(SearchCriteria criteria);
+	public Integer mediaGetTotalCount(SearchCriteria cri);
 	
-	public Integer reporterGetTotalCount(SearchCriteria criteria);
+	public Integer reporterGetTotalCount(SearchCriteria cri);
 	
 	public void updateTextType (MediaVO vo);
 	

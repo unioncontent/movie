@@ -12,8 +12,59 @@
 		<org.springframework-version>4.3.4.RELEASE</org.springframework-version>
 		<org.aspectj-version>1.6.10</org.aspectj-version>
 		<org.slf4j-version>1.6.6</org.slf4j-version>
+		<poi.version>3.9</poi.version>
 	</properties>
+	
 	<dependencies>
+
+		<!-- apache poi --> 
+		<dependency> 
+			<groupId>org.apache.poi</groupId> 
+			<artifactId>poi</artifactId> 
+			<version>${poi.version}</version> 
+		</dependency> 
+		<dependency> 
+			<groupId>org.apache.poi</groupId> 
+			<artifactId>poi-ooxml</artifactId> 
+			<version>${poi.version}</version> 
+		</dependency> 
+		<dependency> 
+			<groupId>org.apache.poi</groupId> 
+			<artifactId>poi-ooxml-schemas</artifactId> 
+			<version>${poi.version}</version> 
+		</dependency> 
+		<dependency> 
+			<groupId>org.apache.poi</groupId> 
+			<artifactId>poi-contrib</artifactId> 
+			<version>3.7-beta3</version> 
+		</dependency> 
+		<!-- apache poi --> 
+		<dependency> 
+			<groupId>commons-beanutils</groupId> 
+			<artifactId>commons-beanutils</artifactId> 
+			<version>1.9.2</version> 
+		</dependency> 
+		<dependency> 
+			<groupId>commons-collections</groupId> 
+			<artifactId>commons-collections</artifactId> 
+			<version>3.2.1</version> 
+		</dependency> 
+		<dependency> 
+			<groupId>commons-digester</groupId> 
+			<artifactId>commons-digester</artifactId> 
+			<version>2.0</version> 
+		</dependency> 
+		<dependency> 
+			<groupId>org.apache.commons</groupId> 
+			<artifactId>commons-jexl</artifactId> 
+			<version>2.1.1</version> 
+		</dependency> 
+		<dependency> 
+			<groupId>net.sf.jxls</groupId> 
+			<artifactId>jxls-core</artifactId> 
+			<version>1.0.5</version> 
+		</dependency> 
+
 
 		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
 		<dependency>

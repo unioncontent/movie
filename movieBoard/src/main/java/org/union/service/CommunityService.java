@@ -23,6 +23,8 @@ public interface CommunityService {
 	
 	public List<CommunityVO> listSearch(SearchCriteria vo);
 	
+	public Integer getSearchCount(SearchCriteria cri);
+	
 	public void modifyType (CommunityVO vo);
 	
 	public void modifyThumbnail (CommunityVO vo);

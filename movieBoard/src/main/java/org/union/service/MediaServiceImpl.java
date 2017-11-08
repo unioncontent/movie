@@ -100,6 +100,13 @@ public class MediaServiceImpl implements MediaService {
 		return mediaDAO.listSearch(vo);
 	}
 	
+	@Override
+	public Integer getSearchCount(SearchCriteria cri) {
+
+		return mediaDAO.getSearchCount(cri);
+	}
+
+	
 	
 	@Override
 	public List<PeriodMediaVO> periodMedia(SearchCriteria criteria) {
@@ -200,6 +207,5 @@ public class MediaServiceImpl implements MediaService {
 
 		mediaDAO.updateThumbnail(vo);
 	}
-
 
 }

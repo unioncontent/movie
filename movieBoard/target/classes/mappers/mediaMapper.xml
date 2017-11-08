@@ -132,16 +132,24 @@
 			media_data
 		where 
 			textType is not null
-		and 
-			community_title like concat('%', #{keyword}, '%')
-		or 
-			community_content like concat('%', #{keyword}, '%')
+		<include refid="search"></include>
 		order 
 			by createdate desc
 		limit  
-			#{startPage}, #{pageUnit}
+			#{startPage}, #{perPageNum}
  	
  	</select>
+ 	
+ 	<select id = "getSearchCount" resultType="Integer">
+		select
+			count(*)
+		from
+			media_data
+		where
+			textType is not null
+		<include refid="search"></include>
+			
+	</select>
  	
  	<select id="getTotalCount" resultType="Integer">
  		select

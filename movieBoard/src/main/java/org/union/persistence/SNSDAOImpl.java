@@ -71,7 +71,21 @@ public class SNSDAOImpl implements SNSDAO {
 		return session.selectOne(namespace + "getExtractCount", cri);
 	}
 	
+	
+	@Override
+	public List<SNSVO> listSearch(SearchCriteria cri) {
 
+		return session.selectList(namespace + "listSearch", cri);
+	}
+
+
+	@Override
+	public Integer getSearchCount(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "getSearchCount", cri);
+	}
+
+	
 	@Override
 	public List<SNSVO> facebookList(SearchCriteria cri) {
 		

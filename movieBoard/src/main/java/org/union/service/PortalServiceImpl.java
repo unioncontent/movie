@@ -88,10 +88,17 @@ public class PortalServiceImpl implements PortalService {
 	
 
 	@Override
-	public List<PortalVO> listSearch(SearchCriteria vo) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<PortalVO> listSearch(SearchCriteria cri) {
+
+		return portalDAO.listSearch(cri);
 	}
+	
+	@Override
+	public Integer getSearchCount(SearchCriteria cri) {
+
+		return portalDAO.getSearchCount(cri);
+	}
+
 
 	@Override
 	public void modifyType(PortalVO vo) {

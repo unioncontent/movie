@@ -17,41 +17,41 @@ public class SNSServiceImpl implements SNSService {
 
 	
 	@Autowired
-	private SNSDAO dao;
+	private SNSDAO snsDAO;
 	
 	
 	@Override
 	public void regist(SNSVO vo) {
 
-		dao.create(vo);
+		snsDAO.create(vo);
 	}
 	
 
 	@Override
 	public SNSVO view(Integer SNS_idx) {
 
-		return dao.read(SNS_idx);
+		return snsDAO.read(SNS_idx);
 	}
 	
 
 	@Override
 	public void modify(SNSVO vo) {
 
-		dao.update(vo);
+		snsDAO.update(vo);
 	}
 	
 
 	@Override
 	public void remove(Integer SNS_idx) {
 
-		dao.delete(SNS_idx);
+		snsDAO.delete(SNS_idx);
 	}
 
 	@Override
 	public List<ExtractVO> listExtract(SearchCriteria cri) {
 
 		try {
-			List<SNSVO> snsList = dao.listExtract(cri);
+			List<SNSVO> snsList = snsDAO.listExtract(cri);
 			
 			List<ExtractVO> extractList = new ArrayList<ExtractVO>();
 			
@@ -86,69 +86,85 @@ public class SNSServiceImpl implements SNSService {
 	@Override
 	public Integer getExtractCount (SearchCriteria cri) {
 
-		return dao.getExtractCount(cri);
+		return snsDAO.getExtractCount(cri);
 	}
+	
+	
+	@Override
+	public List<SNSVO> listSearch(SearchCriteria cri) {
+
+		return snsDAO.listSearch(cri);
+	}
+
+
+	@Override
+	public Integer getSearchCount(SearchCriteria cri) {
+
+		return snsDAO.getSearchCount(cri);
+	}
+	
+	
 	
 	@Override
 	public List<SNSVO> facebookList(SearchCriteria cri) {
 
-		return dao.facebookList(cri);
+		return snsDAO.facebookList(cri);
 	}
 	
 	
 	@Override
 	public Integer facebookTotalCount(SearchCriteria  cri) {
 
-		return dao.facebookTotalCount(cri);
+		return snsDAO.facebookTotalCount(cri);
 	}
 	
 	
 	@Override
 	public List<SNSVO> instaList(SearchCriteria cri) {
 
-		return dao.instaList(cri);
+		return snsDAO.instaList(cri);
 	}
 
 
 	@Override
 	public Integer instaTotalCount(SearchCriteria cri) {
 
-		return dao.instaTotalCount(cri);
+		return snsDAO.instaTotalCount(cri);
 	}
 
 
 	@Override
 	public List<SNSVO> twitterList(SearchCriteria cri) {
 
-		return dao.twitterList(cri);
+		return snsDAO.twitterList(cri);
 	}
 
 
 	@Override
 	public Integer twitterTotalCount(SearchCriteria cri) {
 
-		return dao.twitterTotalCount(cri);
+		return snsDAO.twitterTotalCount(cri);
 	}
 	
 
 	@Override
 	public void modifyTextType(SNSVO vo) {
 
-		dao.updateTextType(vo);
+		snsDAO.updateTextType(vo);
 	}
 	
 
 	@Override
 	public void modifyThumbnail(SNSVO vo) {
 
-		dao.updateThumbnail(vo);
+		snsDAO.updateThumbnail(vo);
 	}
 
 
 	@Override
 	public List<SNSVO> getDateCount(GraphVO vo) {
 
-		return dao.getDateCount(vo);
+		return snsDAO.getDateCount(vo);
 	}
 
 

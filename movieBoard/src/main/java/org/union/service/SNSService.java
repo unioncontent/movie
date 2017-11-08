@@ -18,6 +18,10 @@ public interface SNSService {
 	
 	public void remove(Integer SNS_idx);
 	
+	public List<SNSVO> listSearch(SearchCriteria cri);
+	
+	public Integer getSearchCount(SearchCriteria cri);
+	
 	public List<ExtractVO> listExtract(SearchCriteria cri);
 	
 	public Integer getExtractCount(SearchCriteria cri);

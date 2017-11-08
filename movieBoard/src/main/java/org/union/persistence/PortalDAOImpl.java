@@ -79,6 +79,12 @@ public class PortalDAOImpl implements PortalDAO {
 		
 		return session.selectList(namespace + "listSearch", vo);
 	}
+	
+	@Override
+	public Integer getSearchCount(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "getSearchCount", cri);
+	}
 
 
 	@Override
@@ -101,7 +107,6 @@ public class PortalDAOImpl implements PortalDAO {
 			e.printStackTrace();
 		}
 	}
-
 
 
 }

@@ -83,11 +83,18 @@ public class CommunityServiceImpl implements CommunityService {
 	}
 
 	@Override
-	public List<CommunityVO> listSearch(SearchCriteria vo) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<CommunityVO> listSearch(SearchCriteria cri) {
+
+		return communityDAO.listSearch(cri);
 	}
 
+	@Override
+	public Integer getSearchCount(SearchCriteria cri) {
+
+		return communityDAO.getSearchCount(cri);
+	}
+
+	
 	@Override
 	public void modifyType(CommunityVO vo) {
 

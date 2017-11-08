@@ -91,6 +91,7 @@ public class PageMaker {
 		            .queryParam("perPageNum", cri.getPerPageNum())
 		            .queryParam("searchType", ((SearchCriteria)cri).getSearchType())
 		            .queryParam("keyword", ((SearchCriteria)cri).getKeyword())
+		            .queryParam("selectKey", ((SearchCriteria)cri).getSelectKey())
 		            .build();	            
 			
 			return uriComponents.toUriString();

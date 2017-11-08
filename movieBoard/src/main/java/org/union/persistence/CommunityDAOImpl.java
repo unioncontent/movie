@@ -84,6 +84,14 @@ public class CommunityDAOImpl implements CommunityDAO {
 		return session.selectList(namespace + "listSearch", cri); 
 	}
 
+	
+	@Override
+	public Integer getSearchCount(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "getSearchCount", cri);
+	}
+	
+	
 
 	@Override
 	public void updateTextType(CommunityVO vo) {
@@ -103,9 +111,6 @@ public class CommunityDAOImpl implements CommunityDAO {
 			e.printStackTrace();
 		}
 	}
-
-
-	
 
 	
 }

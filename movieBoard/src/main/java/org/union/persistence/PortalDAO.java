@@ -20,7 +20,9 @@ public interface PortalDAO {
 	
 	public Integer getExtractCount(SearchCriteria cri);
 	
-	public List<PortalVO> listSearch(SearchCriteria vo);
+	public List<PortalVO> listSearch(SearchCriteria cri);
+	
+	public Integer getSearchCount(SearchCriteria cri);
 	
 	public void updateTextType(PortalVO vo);
 	

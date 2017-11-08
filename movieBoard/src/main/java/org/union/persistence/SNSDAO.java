@@ -21,6 +21,10 @@ public interface SNSDAO {
 	
 	public Integer getExtractCount(SearchCriteria cri);
 	
+	public List<SNSVO> listSearch(SearchCriteria cri);
+	
+	public Integer getSearchCount(SearchCriteria cri);
+	
 	public List<SNSVO> facebookList(SearchCriteria cri);
 	
 	public Integer facebookTotalCount(SearchCriteria  cri);

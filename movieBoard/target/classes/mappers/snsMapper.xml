@@ -113,6 +113,32 @@
 	
 	
 	</select>
+	
+	<select id="listSearch" resultType="SNSVO">
+		select 
+			*
+		from 
+			sns_data
+		where 
+			textType is not null
+		<include refid="search"></include>
+		order 
+			by createdate desc
+		limit  
+			#{startPage}, #{perPageNum}
+	
+	</select>
+	
+	<select id = "getSearchCount" resultType="Integer">
+		select
+			count(*)
+		from
+			sns_data
+		where
+			textType is not null
+		<include refid="search"></include>
+			
+	</select>
  	
  	
  	<select id="facebookList" resultType="SNSVO">

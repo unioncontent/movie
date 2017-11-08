@@ -117,14 +117,11 @@
 			portal_data
 		where 
 			textType is not null
-		and 
-			community_title like concat('%', #{keyword}, '%')
-		or 
-			community_content like concat('%', #{keyword}, '%')
+		<include refid="search"></include>
 		order 
 			by createdate desc
 		limit  
-			#{startPage}, #{pageUnit}
+			#{startPage}, #{perPageNum}
  	
  	</select>
  	
@@ -137,6 +134,17 @@
 			portal_idx = #{portal_idx}
 	
 	</update>
+	
+	<select id = "getSearchCount" resultType="Integer">
+		select
+			count(*)
+		from
+			portal_data
+		where
+			textType is not null
+		<include refid="search"></include>
+			
+	</select>
 
 	<update id="updateThumbnail">
 		update
