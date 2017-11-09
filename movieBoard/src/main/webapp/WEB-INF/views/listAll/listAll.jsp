@@ -98,7 +98,7 @@
                         <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left">
                           <option value="opt1">회사</option>
                         </select>
-                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="keyword">
+                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left">
                           <option value="opt1">키워드</option>
                         </select>
                       </div>

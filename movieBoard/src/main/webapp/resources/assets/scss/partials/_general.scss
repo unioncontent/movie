@@ -3755,24 +3755,24 @@ table.matrics-table tr:first-child td {
 }
 
 @media (min-width: 400px){
-  #keyword,#selectKeyword{
+  .select-mleft{
     margin-left: 0px;
   }
 }
 
 @media (min-width: 768px){
-  #keyword,#selectKeyword{
+  .select-mleft{
     margin-left: 15px;
   }
 }
 
 @media (min-width: 1200px){
-  #keyword,#selectKeyword{
+  .select-mleft{
     margin-left: 15px;
   }
 }
 
-#keyword ~.col-md-6 .row{
+.select-mleft ~.col-md-6 .row{
   float: right;
   max-width: 700px;
 }

@@ -2936,15 +2936,15 @@ table.matrics-table tr:first-child td {
   padding-right: 20px; }
 
 @media (min-width: 400px) {
-  #keyword, #selectKeyword {
+  .select-left {
     margin-left: 0px; } }
 @media (min-width: 768px) {
-  #keyword, #selectKeyword {
+  .select-left {
     margin-left: 15px; } }
 @media (min-width: 1200px) {
-  #keyword, #selectKeyword {
+  .select-left {
     margin-left: 15px; } }
-#keyword ~ .col-md-6 .row {
+.select-left ~ .col-md-6 .row {
   float: right;
   max-width: 700px; }
 
