@@ -96,16 +96,27 @@
                     <div class="row">
                       <!-- data setting start -->
                       <div class="col-md-7">
+                      
+                        <c:if test="${user.user_name eq 'union'}">
                         <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left">
                           <option value="opt1">회사</option>
                         </select>
-                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="selectKeyword">
+                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left" id="selectKeyword">
                           <option>키워드</option>
                           <option value="택시">택시</option>
                           <option value="강철비">강철비</option>
                           <option value="살인자">살인자</option>
                         </select>
-                        <select name="select" class="col-md-1 form-control form-control-inverse m-r-10 m-b-10 p-r-5 f-left">
+                        </c:if>
+                        
+                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left" id="selectKeyword">
+                          <option>키워드</option>
+                          <c:forEach items="${keywordList}" var = "keywordList">
+                          <option value="${keywordList}">${keywordList}</option>
+                          </c:forEach>
+                        </select>
+                        
+                        <select name="select" class="col-md-1 form-control form-control-inverse m-r-10 m-b-10 p-r-5 f-left select-left">
                           <option value="opt1">분류</option>
                           <option value="opt1">좋은글</option>
                           <option value="opt1">나쁜글</option>
@@ -175,7 +186,7 @@
                                   </tr>
                                 </thead>
                                 <tbody>
-                               
+
                                   <c:forEach items="${classiList}" var="extractVO" varStatus="index">
                                   <tr class = "trList">
                                     <c:if test="${extractVO.sns_idx != null}">
@@ -221,7 +232,7 @@
                                         	<label for="radio5${index.count}">삭제글</label>
                                         	</c:when>
                                         </c:choose>
-                                        
+
                                         <c:choose>
                                         	<c:when test="${extractVO.textType eq '나쁜글'}">
                                         	<input type="radio" id="radio1${index.count}" name="radios${index.count}">
@@ -236,7 +247,7 @@
                                         	<label for="radio5${index.count}">삭제글</label>
                                         	</c:when>
                                         </c:choose>
-                                        
+
                                         <c:choose>
                                         	<c:when test="${extractVO.textType eq '관심글'}">
                                         	<input type="radio" id="radio1${index.count}" name="radios${index.count}">
@@ -251,7 +262,7 @@
                                         	<label for="radio5${index.count}">삭제글</label>
                                         	</c:when>
                                         </c:choose>
-                                        
+
                                         <c:choose>
                                         	<c:when test="${extractVO.textType eq '기타글'}">
                                         	<input type="radio" id="radio1${index.count}" name="radios${index.count}">
@@ -266,7 +277,7 @@
                                         	<label for="radio5${index.count}">삭제글</label>
                                         	</c:when>
                                         </c:choose>
-                                        
+
                                         <c:choose>
                                         	<c:when test="${extractVO.textType eq '삭제글'}">
                                         	<input type="radio" id="radio1${index.count}" name="radios${index.count}">
@@ -281,7 +292,7 @@
                                         	<label for="radio5${index.count}">삭제글</label>
                                         	</c:when>
                                         </c:choose>
-                                        
+
                                       </div>
                                     </td>
                                     <td>
@@ -554,18 +565,18 @@
 
 <script type="text/javascript">
 	$(document).ready(function(){
-		
-		// content 길시에 ...으로 변경  
+
+		// content 길시에 ...으로 변경
 		var $content = $(".text-success");
-		
+
 		var size = 25;
-		  
+
 		for (var i =1; i < $content.length; i++){
 			if($content[i].innerText.length >= size){
 				$content[i].textContent = $content[i].innerText.substr(0, size) + '...';
 			}
 		}
-		
+
 		var selectOption = decodeURI(window.location.href.split("selectKey=")[1]);
 		console.log(selectOption);
 
@@ -589,8 +600,8 @@
 
 			searchList();
 		});
-		
-		
+
+
 		//엑셀출력 확인메시지
 		$(document).on("click",".alert-excel",function(){
 	    swal({
@@ -603,23 +614,29 @@
 	          closeOnConfirm: false
 	        },
 	        function(){//엑셀 출력하겠다고 할 시 진행 함수
-	        	
+
 	        	$.ajax({
 					  type: "GET",
 					  url: "excel",
-					  data: {success : "success"},
+					  data: {searchType : $("#selectSearchType option:selected").val(),
+						     keyword : $('#keywordInput').val(),
+						     selectKey : $('#selectKeyword option:selected').val()
+						  },
 					  dataType : "text",
 					  success : function(){
-						  //swal("Success!", "엑셀출력 되었습니다.", "success");
-					  	self.location = "excel";
+						  self.location = "excel?"+ "searchType=" + $("#selectSearchType option:selected").val()
+								  + "&keyword=" + $('#keywordInput').val()
+								  + "&selectKey=" + $('#selectKeyword option:selected').val();
+						  
+						  swal("Success!", "엑셀출력 되었습니다.", "success");
 					  }
-					}); 
-	        	
-	          
+					});
+
+
 	        });
 		});
-		
-		
+
+
 		// 검색버튼 클릭시
 		$('#searchBtn').on("click", function(event){
 		  console.log("searchBtn clicked....");
@@ -631,8 +648,8 @@
 			searchList();
 		  }
 		});
-		
-		
+
+
 	}); // end ready...
 
 	function searchList(event) {
@@ -645,7 +662,7 @@
 				+ $('#keywordInput').val() + "&selectKey="
 				+ $('#selectKeyword option:selected').val();
 	}
-	
+
 </script>
 
 </html>

@@ -32,7 +32,6 @@ public class KeywordDAOTester {
 		vo.setUser_idx(2);
 		vo.setKeyword("키워드");
 		vo.setKeyword_property("영화");
-		vo.setKeyword_type(2);
 		
 		dao.create(vo);
 	}
@@ -51,7 +50,6 @@ public class KeywordDAOTester {
 		vo.setUser_idx(2);
 		vo.setKeyword("uu키워드");
 		vo.setKeyword_property("uu영화");
-		vo.setKeyword_type(2);
 		vo.setKeyword_idx(1);
 		
 		dao.update(vo);

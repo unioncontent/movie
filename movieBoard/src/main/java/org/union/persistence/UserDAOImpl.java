@@ -54,4 +54,18 @@ public class UserDAOImpl implements UserDAO {
 		}
 	}
 
+
+	@Override
+	public UserVO login(UserVO vo) {
+
+		return session.selectOne(namespace + "login", vo);
+	}
+
+
+	@Override
+	public UserVO readById(String user_id) {
+
+		return session.selectOne(namespace + "readById", user_id);
+	}
+
 }

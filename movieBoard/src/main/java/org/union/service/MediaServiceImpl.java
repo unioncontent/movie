@@ -208,4 +208,10 @@ public class MediaServiceImpl implements MediaService {
 		mediaDAO.updateThumbnail(vo);
 	}
 
+	@Override
+	public List<MediaVO> listAll(SearchCriteria cri) {
+
+		return mediaDAO.listAll(cri);
+	}
+
 }

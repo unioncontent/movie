@@ -1,5 +1,7 @@
 package org.union.persistence;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -51,6 +53,12 @@ public class KeywordDAOImpl implements KeywordDAO {
 			e.printStackTrace();
 		}
 		
+	}
+
+	@Override
+	public List<String> listByUser(Integer user_idx) {
+
+		return session.selectList(namespace + "listByUser", user_idx);
 	}
 
 }

@@ -3,6 +3,7 @@ package org.union.persistence;
 import java.util.List;
 
 import org.union.domain.GraphVO;
+import org.union.domain.MediaVO;
 import org.union.domain.SNSVO;
 import org.union.domain.SearchCriteria;
 
@@ -24,6 +25,8 @@ public interface SNSDAO {
 	public List<SNSVO> listSearch(SearchCriteria cri);
 	
 	public Integer getSearchCount(SearchCriteria cri);
+	
+	public List<SNSVO> listAll(SearchCriteria cri);
 	
 	public List<SNSVO> facebookList(SearchCriteria cri);
 	

@@ -24,6 +24,8 @@ public interface CommunityDAO {
 	
 	public Integer getSearchCount(SearchCriteria cri);
 	
+	public List<CommunityVO> listAll(SearchCriteria cri);
+	
 	public void updateTextType (CommunityVO vo);
 	
 	public void updateThumbnail (CommunityVO vo);

@@ -168,4 +168,11 @@ public class SNSServiceImpl implements SNSService {
 	}
 
 
+	@Override
+	public List<SNSVO> listAll(SearchCriteria cri) {
+
+		return snsDAO.listAll(cri);
+	}
+
+
 }

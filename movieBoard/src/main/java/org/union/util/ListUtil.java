@@ -41,10 +41,10 @@ public class ListUtil {
 				vo.setUrl(addList.get(i).getUrl());
 				vo.setCreateDate(date.format(addList.get(i).getCreateDate()));
 				vo.setTextType(addList.get(i).getTextType());
+				vo.setWriter(addList.get(i).getSns_writer());
 			
 				list.add(vo);
 			}
-			
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -70,6 +70,7 @@ public class ListUtil {
 				vo.setUrl(addList.get(i).getUrl());
 				vo.setCreateDate(date.format(addList.get(i).getCreateDate()));
 				vo.setTextType(addList.get(i).getTextType());
+				vo.setWriter(addList.get(i).getCommunity_writer());
 			
 				list.add(vo);
 			}
@@ -98,6 +99,7 @@ public class ListUtil {
 				vo.setUrl(addList.get(i).getUrl());
 				vo.setCreateDate(date.format(addList.get(i).getCreateDate()));
 				vo.setTextType(addList.get(i).getTextType());
+				vo.setWriter(addList.get(i).getReporter_name());
 			
 				list.add(vo);
 			}

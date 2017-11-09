@@ -13,4 +13,8 @@ public interface UserDAO {
 	
 	public void delete(Integer user_idx);
 	
+	public UserVO readById(String user_id);
+	
+	public UserVO login(UserVO vo);
+	
 }

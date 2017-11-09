@@ -24,6 +24,8 @@ public interface MediaDAO {
 	
 	public Integer getSearchCount(SearchCriteria cri);
 	
+	public List<MediaVO> listAll(SearchCriteria cri);
+	
 	public List<MediaVO> searchAll(SearchCriteria cri);
 	
 	public Integer getTotalCount();

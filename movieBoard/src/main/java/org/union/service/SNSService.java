@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.union.domain.ExtractVO;
 import org.union.domain.GraphVO;
+import org.union.domain.PortalVO;
 import org.union.domain.SNSVO;
 import org.union.domain.SearchCriteria;
 
@@ -25,6 +26,8 @@ public interface SNSService {
 	public List<ExtractVO> listExtract(SearchCriteria cri);
 	
 	public Integer getExtractCount(SearchCriteria cri);
+	
+	public List<SNSVO> listAll(SearchCriteria cri);
 	
 	public List<SNSVO> facebookList (SearchCriteria cri);
 	

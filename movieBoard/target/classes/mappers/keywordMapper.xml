@@ -44,5 +44,17 @@
 			keyword_idx = #{keyword_idx}
 		
 	</delete>
+	
+	<select id="listByUser" resultType="String">
+		select
+			keyword
+		from
+			keyword_data
+		where
+			user_idx = #{user_idx}
+		and
+			keyword_property = '포함'
+	
+	</select>
 
 </mapper>

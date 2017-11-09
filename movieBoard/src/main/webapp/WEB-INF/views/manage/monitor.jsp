@@ -180,61 +180,61 @@
                               </select>
                             </div>
                           </div>
-                            <div class="card-block">
-                              <form-radio class="table-responsive">
-                                <table class="table table-bordered">
-                                  <thead>
-                                    <tr>
-                                      <th width="5%">NO</th>
-                                      <th width="5%">분류</th>
-                                      <th width="5%">운영여부</th>
-                                      <th width="5%">아이디</th>
-                                      <th width="5%">사이트명</th>
-                                      <th width="30%">마지막 수집글 제목</th>
-                                      <th width="10%">날짜</th>
-                                      <th width="5%">상태</th>
-                                    </tr>
-                                  </thead>
-                                  <tbody>
-                                    <tr>
-                                      <th scope="row">1</th>
-                                      <td>언론사</td>
-                                      <td>운영중</td>
-                                      <td>tvreport</td>
-                                      <td>티비리포트</td>
-                                      <td>‘연중’ 김래원 37세의 싱글남 “외로울 때도 있다”</td>
-                                      <td>2017-09-29 23:08:17</td>
-                                      <td>
-                                        <div class="form-radio">
-                                          <!-- radio-success:정상/radio-danger:비정상 -->
-                                          <div class="radio radiofill radio-success  radio-inline">
-                                              <label>
-                                                  <input type="radio" name="radio" checked="checked">
-                                                  <i class="helper"></i>정상
-                                              </label>
-                                          </div>
+                          <div class="card-block">
+                            <div class="table-responsive">
+                              <table class="table table-bordered">
+                                <thead>
+                                  <tr>
+                                    <th width="5%">NO</th>
+                                    <th width="5%">분류</th>
+                                    <th width="5%">운영여부</th>
+                                    <th width="5%">아이디</th>
+                                    <th width="5%">사이트명</th>
+                                    <th width="30%">마지막 수집글 제목</th>
+                                    <th width="10%">날짜</th>
+                                    <th width="5%">상태</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                    <th scope="row">1</th>
+                                    <td>언론사</td>
+                                    <td>운영중</td>
+                                    <td>tvreport</td>
+                                    <td>티비리포트</td>
+                                    <td>‘연중’ 김래원 37세의 싱글남 “외로울 때도 있다”</td>
+                                    <td>2017-09-29 23:08:17</td>
+                                    <td>
+                                      <div class="form-radio">
+                                        <!-- radio-success:정상/radio-danger:비정상 -->
+                                        <div class="radio radiofill radio-success  radio-inline">
+                                            <label>
+                                                <input type="radio" name="radio" checked="checked">
+                                                <i class="helper"></i>정상
+                                            </label>
                                         </div>
-                                      </td>
-                                    </tr>
-                                  </tbody>
-                                </table>
-                              </div>
-                              <ul class="pagination float-right float-right">
-                                <li class="page-item">
-                                  <a class="page-link" href="#" aria-label="Previous">
-                                    <span aria-hidden="true">«</span>
-                                    <span class="sr-only">Previous</span>
-                                  </a>
-                                </li>
-                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item">
-                                  <a class="page-link" href="#" aria-label="Next">
-                                    <span aria-hidden="true">»</span>
-                                    <span class="sr-only">Next</span>
-                                  </a>
-                                </li>
-                              </ul>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
                             </div>
+                            <ul class="pagination float-right">
+                              <li class="page-item">
+                                <a class="page-link" href="#" aria-label="Previous">
+                                  <span aria-hidden="true">«</span>
+                                  <span class="sr-only">Previous</span>
+                                </a>
+                              </li>
+                              <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                              <li class="page-item">
+                                  <a class="page-link" href="#" aria-label="Next">
+                                      <span aria-hidden="true">»</span>
+                                      <span class="sr-only">Next</span>
+                                  </a>
+                              </li>
+                            </ul>
+                          </div>
                         </div>
                         <!-- table card end -->
                       </div>
