@@ -56,13 +56,13 @@ public class ExtractController {
 		logger.info("extractGET called....");
 		
 		if(cri.getSelectKey() != null) {
-			if(cri.getSelectKey().equals("키워드")) {
+			if(cri.getSelectKey().equals("�궎�썙�뱶")) {
 				cri.setSelectKey(null);
 			}
 		}
 		
 		PageMaker pageMaker = new PageMaker();
-		// 4번 리스트기 때문에  perPageNum / 4
+		// 4踰� 由ъ뒪�듃湲� �븣臾몄뿉  perPageNum / 4
 		if(cri.getPerPageNum() != 10) {
 			cri.setPerPageNum(cri.getPerPageNum()/4);
 		}
@@ -131,7 +131,7 @@ public class ExtractController {
 			vo.setTextType(textType);
 
 			communityService.modifyType(vo);
-			
+		
 		}
 		
 		return "success";
