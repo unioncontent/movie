@@ -96,6 +96,12 @@ public class CommunityServiceImpl implements CommunityService {
 
 	
 	@Override
+	public List<CommunityVO> listAll(SearchCriteria cri) {
+
+		return communityDAO.listAll(cri);
+	}
+	
+	@Override
 	public void modifyType(CommunityVO vo) {
 
 		communityDAO.updateTextType(vo);
@@ -106,5 +112,6 @@ public class CommunityServiceImpl implements CommunityService {
 		// TODO Auto-generated method stub
 
 	}
+
 
 }

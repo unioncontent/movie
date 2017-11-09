@@ -125,6 +125,17 @@
  	
  	</select>
  	
+ 	<select id="listAll" resultType="PortalVO">
+ 		select 
+			*
+		from 
+			portal_data
+		where 
+			textType is not null
+		<include refid="search"></include>
+ 	
+ 	</select>
+ 	
  	<update id="updateTextType">
 		update
 			portal_data

@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.union.domain.MediaVO;
 import org.union.domain.PortalVO;
 import org.union.domain.SearchCriteria;
 
@@ -86,6 +87,11 @@ public class PortalDAOImpl implements PortalDAO {
 		return session.selectOne(namespace + "getSearchCount", cri);
 	}
 
+	@Override
+	public List<PortalVO> listAll(SearchCriteria cri) {
+
+		return session.selectList(namespace + "listAll", cri);
+	}
 
 	@Override
 	public void updateTextType(PortalVO vo) {

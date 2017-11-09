@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.union.domain.GraphVO;
+import org.union.domain.MediaVO;
 import org.union.domain.SNSVO;
 import org.union.domain.SearchCriteria;
 
@@ -85,6 +86,11 @@ public class SNSDAOImpl implements SNSDAO {
 		return session.selectOne(namespace + "getSearchCount", cri);
 	}
 
+	@Override
+	public List<SNSVO> listAll(SearchCriteria cri) {
+
+		return session.selectList(namespace + "listAll", cri);
+	}
 	
 	@Override
 	public List<SNSVO> facebookList(SearchCriteria cri) {

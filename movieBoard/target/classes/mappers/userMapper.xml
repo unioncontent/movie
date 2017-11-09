@@ -53,4 +53,26 @@
  	
  	</delete>
  	
+ 	<select id="readById" resultType="UserVO">
+ 		select
+ 			*
+ 		from
+ 			user_data
+ 		where
+ 			user_id = #{user_id}
+ 	
+ 	</select>
+ 	
+ 	<select id="login" resultType="UserVO">
+ 		select
+ 			*
+ 		from
+ 			user_data
+ 		where
+ 			user_id = #{user_id}
+ 		and
+ 			user_pw = #{user_pw}
+ 	
+ 	</select>
+ 	
  </mapper>

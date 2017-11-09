@@ -2,6 +2,7 @@ package org.union.persistence;
 
 import java.util.List;
 
+import org.union.domain.MediaVO;
 import org.union.domain.PortalVO;
 import org.union.domain.SearchCriteria;
 
@@ -23,6 +24,8 @@ public interface PortalDAO {
 	public List<PortalVO> listSearch(SearchCriteria cri);
 	
 	public Integer getSearchCount(SearchCriteria cri);
+	
+	public List<PortalVO> listAll(SearchCriteria cri);
 	
 	public void updateTextType(PortalVO vo);
 	

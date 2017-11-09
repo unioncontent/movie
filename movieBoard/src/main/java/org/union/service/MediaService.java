@@ -26,6 +26,8 @@ public interface MediaService {
 	
 	public Integer getSearchCount(SearchCriteria cri);
 	
+	public List<MediaVO> listAll(SearchCriteria cri);
+	
 	public List<PeriodMediaVO> periodMedia(SearchCriteria criteria);
 	
 	public List<PeriodMediaVO> periodReporter(SearchCriteria criteria);

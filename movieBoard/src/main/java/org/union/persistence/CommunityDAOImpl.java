@@ -92,6 +92,12 @@ public class CommunityDAOImpl implements CommunityDAO {
 	}
 	
 	
+	@Override
+	public List<CommunityVO> listAll(SearchCriteria cri) {
+
+		return session.selectList(namespace + "listAll", cri);
+	}
+	
 
 	@Override
 	public void updateTextType(CommunityVO vo) {
@@ -112,5 +118,5 @@ public class CommunityDAOImpl implements CommunityDAO {
 		}
 	}
 
-	
+
 }

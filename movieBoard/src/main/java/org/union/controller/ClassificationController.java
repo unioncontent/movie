@@ -2,9 +2,7 @@ package org.union.controller;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,8 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.View;
 import org.union.domain.ExtractVO;
 import org.union.domain.PageMaker;
 import org.union.domain.SearchCriteria;
@@ -49,7 +47,7 @@ public class ClassificationController {
 	private static Logger logger = LoggerFactory.getLogger(ClassificationController.class);
 	
 	
-	List<ExtractVO> excelList;
+	//List<ExtractVO> excelList;
 	
 	@GetMapping("/classification")
 	public void classificationGET(@ModelAttribute("cri") SearchCriteria cri, Model model) {
@@ -97,12 +95,53 @@ public class ClassificationController {
 		
 		model.addAttribute("classiList", classiList);
 
-		excelList = classiList;
+		//excelList = classiList;
 	}
 	
 	
+	SearchCriteria localCri;
+	
+	@ResponseBody
 	@GetMapping("/excel")
-	public ModelAndView excelGET(ModelAndView model, ExcelView excelView, String success) {
+	public ModelAndView excelGET(ModelAndView model, ExcelView excelView, SearchCriteria cri) {
+		
+		logger.info("cri: " + cri);
+
+		List<ExtractVO> classiList = new ArrayList<ExtractVO>();
+		ListUtil listUtil = new ListUtil();
+
+		if(cri.getKeyword() == "") {
+			logger.info("keyword is null");
+			cri.setKeyword(null);
+			
+		} 
+		if(cri.getSelectKey() == "" || cri.getSelectKey() ==("키워드")) {
+			logger.info("selectKey is null");
+			cri.setSelectKey(null);
+		}
+		logger.info("cri: " + cri);
+		
+		localCri = cri;
+		
+		listUtil.listAddSNSList(classiList, snsService.listAll(localCri));
+		listUtil.listAddCommunityList(classiList, communityService.listAll(localCri));
+		listUtil.listAddPortalList(classiList, portalService.listAll(localCri));
+		listUtil.listAddMediaList(classiList, mediaService.listAll(localCri));
+		
+		ExtractComparator comparator = new ExtractComparator();
+		Collections.sort(classiList, comparator);
+		
+		
+		
+		model.addObject("list", classiList);
+		model.setView(excelView);
+		
+		return model;
+	}
+	
+	
+	/*@GetMapping("/excel")
+	public ModelAndView excelGET(ModelAndView model, ExcelView excelView, String url) {
 		
 		logger.info("excelList: " + excelList);
 		logger.info(success);
@@ -110,5 +149,5 @@ public class ClassificationController {
 		model.setView(excelView);
 
 		return model;
-	}
+	}*/
 }

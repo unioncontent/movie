@@ -141,6 +141,18 @@
 	</select>
  	
  	
+ 	<select id="listAll" resultType="SNSVO">
+		select 
+			*
+		from 
+			sns_data
+		where 
+			textType is not null
+		<include refid="search"></include>
+	
+	</select>
+ 	
+ 	
  	<select id="facebookList" resultType="SNSVO">
  		select 
 			*

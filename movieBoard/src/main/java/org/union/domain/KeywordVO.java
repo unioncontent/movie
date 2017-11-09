@@ -8,7 +8,8 @@ public class KeywordVO {
 	private Integer keyword_idx;
 	private Integer user_idx;
 	private String keyword;
-	private Integer keyword_type; 
+	private String keyword_main;
+	private String keyword_type; 
 	private String keyword_property; // 제외 or 포함
 	private Date createDate;
 	private Date updateDate;
@@ -32,10 +33,16 @@ public class KeywordVO {
 	public void setKeyword(String keyword) {
 		this.keyword = keyword;
 	}
-	public Integer getKeyword_type() {
+	public String getKeyword_main() {
+		return keyword_main;
+	}
+	public void setKeyword_main(String keyword_main) {
+		this.keyword_main = keyword_main;
+	}
+	public String getKeyword_type() {
 		return keyword_type;
 	}
-	public void setKeyword_type(Integer keyword_type) {
+	public void setKeyword_type(String keyword_type) {
 		this.keyword_type = keyword_type;
 	}
 	public String getKeyword_property() {
@@ -56,13 +63,11 @@ public class KeywordVO {
 	public void setUpdateDate(Date updateDate) {
 		this.updateDate = updateDate;
 	}
-	
-	
 	@Override
 	public String toString() {
 		return "KeywordVO [keyword_idx=" + keyword_idx + ", user_idx=" + user_idx + ", keyword=" + keyword
-				+ ", keyword_type=" + keyword_type + ", keyword_property=" + keyword_property + ", createDate="
-				+ createDate + ", updateDate=" + updateDate + "]";
+				+ ", keyword_main=" + keyword_main + ", keyword_type=" + keyword_type + ", keyword_property="
+				+ keyword_property + ", createDate=" + createDate + ", updateDate=" + updateDate + "]";
 	}
 	
 }

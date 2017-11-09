@@ -26,6 +26,9 @@ public class ExcelView extends AbstractXlsView {
 
 		try {
 			
+			System.out.println("ExcelView called....");
+			
+			
 			  HSSFSheet sheet = (HSSFSheet) wb.createSheet();
 			  int rowIdx = 0;
 
@@ -40,7 +43,8 @@ public class ExcelView extends AbstractXlsView {
 			  titleStyle.setBorderTop(HSSFCellStyle.BORDER_THIN);
 			  
 			  // 타이틀 설정
-			  String[] titleList = { "사이트", "키워드", "제목","내용","URL","작성날짜", "분류"};
+			  String[] titleList = { "사이트", "키워드", "작성자", "제목","내용","URL","작성날짜", "분류"};
+			  
 			 
 			  HSSFRow titleRow = sheet.createRow(rowIdx++);
 			  for (int i = 0; i < titleList.length; i++) {
@@ -63,7 +67,7 @@ public class ExcelView extends AbstractXlsView {
 
 			  // 데이터 추가
 			  List<ExtractVO> list = (List) model.get("list");
-			  
+
 			  for (ExtractVO vo : list) {
 			   HSSFRow dataRow = sheet.createRow(rowIdx++);
 			   
@@ -71,22 +75,24 @@ public class ExcelView extends AbstractXlsView {
 			    domainCell.setCellValue(new HSSFRichTextString(vo.getDomainType()));
 			    
 			    HSSFCell keywordCell = dataRow.createCell(1);
-			    
 			    keywordCell.setCellValue(new HSSFRichTextString(vo.getKeyword()));
 			    
-			    HSSFCell titleCell = dataRow.createCell(2);
+			    HSSFCell writerCell = dataRow.createCell(2);
+			    writerCell.setCellValue(new HSSFRichTextString(vo.getWriter()));
+			    
+			    HSSFCell titleCell = dataRow.createCell(3);
 			    titleCell.setCellValue(new HSSFRichTextString(vo.getTitle()));
 
-			    HSSFCell contentCell = dataRow.createCell(3);
+			    HSSFCell contentCell = dataRow.createCell(4);
 			    contentCell.setCellValue(new HSSFRichTextString(vo.getContent()));
 			    
-			    HSSFCell dateCell = dataRow.createCell(4);
+			    HSSFCell dateCell = dataRow.createCell(5);
 			    dateCell.setCellValue(new HSSFRichTextString(vo.getUrl()));
 			    
-			    HSSFCell urlCell = dataRow.createCell(5);
+			    HSSFCell urlCell = dataRow.createCell(6);
 			    urlCell.setCellValue(new HSSFRichTextString(vo.getWriteDate()));
 			    
-			    HSSFCell classiCell = dataRow.createCell(6);
+			    HSSFCell classiCell = dataRow.createCell(7);
 			    classiCell.setCellValue(new HSSFRichTextString(vo.getTextType()));
 			  
 
@@ -98,9 +104,10 @@ public class ExcelView extends AbstractXlsView {
 
 			  // 파일 다운로드 시작
 			  String fileInfo = String.format("attachment; filename=\"" + createFileName() + "\"");
+			  response.setContentType("application/x-msdownload");
 			  response.setHeader("Content-Disposition", fileInfo);
-			  
-			 
+			  System.out.println("fileInfo: " + fileInfo);
+			  System.out.println("response: " + response);
 			 
 			 
 			
@@ -113,7 +120,7 @@ public class ExcelView extends AbstractXlsView {
 	}
 		private String createFileName() {
 			  SimpleDateFormat fileFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");
-			  return new StringBuilder("User")
+			  return new StringBuilder("unioncontent")
 			    .append("-").append(fileFormat.format(new Date())).append(".xls").toString();
 			 }
 

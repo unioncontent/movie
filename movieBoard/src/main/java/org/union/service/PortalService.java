@@ -3,6 +3,7 @@ package org.union.service;
 import java.util.List;
 
 import org.union.domain.ExtractVO;
+import org.union.domain.MediaVO;
 import org.union.domain.PortalVO;
 import org.union.domain.SearchCriteria;
 
@@ -24,6 +25,8 @@ public interface PortalService {
 	public List<PortalVO> listSearch(SearchCriteria vo);
 	
 	public Integer getSearchCount(SearchCriteria cri);
+	
+	public List<PortalVO> listAll(SearchCriteria cri);
 	
 	public void modifyType(PortalVO vo);
 	

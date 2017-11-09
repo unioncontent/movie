@@ -101,7 +101,11 @@ public class MediaDAOImpl implements MediaDAO {
 		return session.selectOne(namespace + "getTotalCount");
 	}
 	
-	
+	@Override
+	public List<MediaVO> listAll(SearchCriteria cri) {
+
+		return session.selectList(namespace + "listAll", cri);
+	}
 	
 	@Override
 	public Integer mediaGetTotalCount(SearchCriteria criteria) {

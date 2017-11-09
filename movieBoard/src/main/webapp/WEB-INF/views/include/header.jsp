@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <!-- top menu start -->
 <nav class="navbar header-navbar pcoded-header" header-theme="theme4">
@@ -26,12 +29,12 @@
           <li class="user-profile header-notification">
             <a href="#!">
                 <img src="../assets/images/user.png" alt="User-Profile-Image">
-                <span>Union</span>
+                <span>${user.user_name}</span>
                 <i class="ti-angle-down"></i>
             </a>
             <ul class="show-notification profile-notification">
               <li>
-                <a href="#!">
+                <a href="../logout">
                   <i class="ti-layout-sidebar-left"></i> Logout
                 </a>
               </li>

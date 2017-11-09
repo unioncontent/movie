@@ -96,6 +96,8 @@
                     <div class="row">
                       <!-- data setting start -->
                       <div class="col-md-7">
+                      
+                        <c:if test="${user.user_name eq 'union'}">
                         <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left">
                           <option value="opt1">회사</option>
                         </select>
@@ -105,6 +107,15 @@
                           <option value="강철비">강철비</option>
                           <option value="살인자">살인자</option>
                         </select>
+                        </c:if>
+                        
+                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left" id="selectKeyword">
+                          <option>키워드</option>
+                          <c:forEach items="${keywordList}" var = "keywordList">
+                          <option value="${keywordList}">${keywordList}</option>
+                          </c:forEach>
+                        </select>
+                        
                         <select name="select" class="col-md-1 form-control form-control-inverse m-r-10 m-b-10 p-r-5 f-left select-left">
                           <option value="opt1">분류</option>
                           <option value="opt1">좋은글</option>
@@ -607,11 +618,17 @@
 	        	$.ajax({
 					  type: "GET",
 					  url: "excel",
-					  data: {success : "success"},
+					  data: {searchType : $("#selectSearchType option:selected").val(),
+						     keyword : $('#keywordInput').val(),
+						     selectKey : $('#selectKeyword option:selected').val()
+						  },
 					  dataType : "text",
 					  success : function(){
-						  //swal("Success!", "엑셀출력 되었습니다.", "success");
-					  	self.location = "excel";
+						  self.location = "excel?"+ "searchType=" + $("#selectSearchType option:selected").val()
+								  + "&keyword=" + $('#keywordInput').val()
+								  + "&selectKey=" + $('#selectKeyword option:selected').val();
+						  
+						  swal("Success!", "엑셀출력 되었습니다.", "success");
 					  }
 					});
 

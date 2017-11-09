@@ -112,4 +112,10 @@ public class PortalServiceImpl implements PortalService {
 
 	}
 
+	@Override
+	public List<PortalVO> listAll(SearchCriteria cri) {
+
+		return portalDAO.listAll(cri);
+	}
+
 }
