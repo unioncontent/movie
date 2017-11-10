@@ -111,6 +111,15 @@ public class CommunityDAOTester {
 	
 	
 	@Test
+	public void testListAll() {
+		
+		svo.setSearchType("t");
+		svo.setKeyword("나나");
+		dao.listAll(svo);
+	}
+	
+	
+	@Test
 	public void testUpdateTextType() {
 		
 		vo.setCommunity_idx(3);

@@ -615,7 +615,14 @@
 	        },
 	        function(){//엑셀 출력하겠다고 할 시 진행 함수
 
-	        	$.ajax({
+	        	self.location = "excel?"+ "searchType=" + $("#selectSearchType option:selected").val()
+				  + "&keyword=" + decodeURI(window.location.href.split("&keyword=")[1]).split("&selectKey")[0]
+				  + "&selectKey=" + $('#selectKeyword option:selected').val();
+	        
+		  
+		  		swal("Success!", "엑셀출력 되었습니다.", "success");
+	        	
+	        	/* $.ajax({
 					  type: "GET",
 					  url: "excel",
 					  data: {searchType : $("#selectSearchType option:selected").val(),
@@ -623,14 +630,10 @@
 						     selectKey : $('#selectKeyword option:selected').val()
 						  },
 					  dataType : "text",
-					  success : function(){
-						  self.location = "excel?"+ "searchType=" + $("#selectSearchType option:selected").val()
-								  + "&keyword=" + $('#keywordInput').val()
-								  + "&selectKey=" + $('#selectKeyword option:selected').val();
+					  success : function(){ */
 						  
-						  swal("Success!", "엑셀출력 되었습니다.", "success");
-					  }
-					});
+					 /*  }
+					}); */
 
 
 	        });

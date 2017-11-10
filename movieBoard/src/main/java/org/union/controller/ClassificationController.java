@@ -115,7 +115,7 @@ public class ClassificationController {
 			cri.setKeyword(null);
 			
 		} 
-		if(cri.getSelectKey() == "" || cri.getSelectKey() ==("키워드")) {
+		if(cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey()) ) {
 			logger.info("selectKey is null");
 			cri.setSelectKey(null);
 		}
@@ -123,10 +123,10 @@ public class ClassificationController {
 		
 		localCri = cri;
 		
-		listUtil.listAddSNSList(classiList, snsService.listAll(localCri));
-		listUtil.listAddCommunityList(classiList, communityService.listAll(localCri));
-		listUtil.listAddPortalList(classiList, portalService.listAll(localCri));
-		listUtil.listAddMediaList(classiList, mediaService.listAll(localCri));
+		listUtil.listAddSNSList(classiList, snsService.listAll(cri));
+		listUtil.listAddCommunityList(classiList, communityService.listAll(cri));
+		listUtil.listAddPortalList(classiList, portalService.listAll(cri));
+		listUtil.listAddMediaList(classiList, mediaService.listAll(cri));
 		
 		ExtractComparator comparator = new ExtractComparator();
 		Collections.sort(classiList, comparator);
