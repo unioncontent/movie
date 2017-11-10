@@ -149,6 +149,12 @@
 		where 
 			textType is not null
 		<include refid="search"></include>
+		<if test="startDate != null">
+			and createDate <![CDATA[>]]> #{startDate}
+			<if test="endDate != null">
+				and createDate <![CDATA[<]]> #{endDate}
+			</if>
+		</if>
 	
 	</select>
  	

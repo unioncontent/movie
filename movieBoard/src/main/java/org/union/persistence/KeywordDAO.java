@@ -16,4 +16,6 @@ public interface KeywordDAO {
 	public void delete(Integer keyword_idx);
 	
 	public List<String> listByUser(Integer user_idx);
+	
+	public KeywordVO readByKeyword(String keyword);
 }

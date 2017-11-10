@@ -45,7 +45,8 @@
                 <div class="col-sm-12">
                     <!-- Authentication card start -->
                     <div class="login-card card-block auth-body">
-                        <form class="md-float-material" action="<c:url value= 'loginAction?${_csrf.parameterName}=${_csrf.token}'/>" method="post" id="loginForm">
+                        <form class="md-float-material" action="<c:url value= 'loginAction'/>" method="post" id="loginForm">
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                             <div class="text-center">
                                 <img src="../assets/images/auth/logo.png" alt="logo.png">
                             </div>

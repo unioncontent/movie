@@ -86,7 +86,6 @@ public class CommunityDAOTester {
 		svo.setPage(2);
 		svo.setPerPageNum(30);
 		svo.setSelectKey("강철비");
-		svo.setStartDate("2017-11-05 00:00:00");
 		
 		dao.listExtract(svo);
 	}

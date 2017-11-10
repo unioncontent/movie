@@ -22,6 +22,7 @@ import org.union.domain.PortalVO;
 import org.union.domain.SNSVO;
 import org.union.domain.SearchCriteria;
 import org.union.service.CommunityService;
+import org.union.service.KeywordService;
 import org.union.service.MediaService;
 import org.union.service.PortalService;
 import org.union.service.SNSService;
@@ -49,6 +50,8 @@ public class ExtractController {
 	@Autowired
 	private MediaService mediaService;
 	
+	@Autowired
+	private KeywordService keywordService;
 	
 	
 	@GetMapping("/extract")

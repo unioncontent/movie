@@ -23,4 +23,10 @@ public class UserServiceImpl implements UserService{
 
 		return userDAO.readById(user_id);
 	}
+
+	@Override
+	public UserVO view(Integer user_idx) {
+
+		return userDAO.read(user_idx);
+	}
 }

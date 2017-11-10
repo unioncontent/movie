@@ -20,6 +20,12 @@
 		<if test="selectKey != null">
 			and keyword = #{selectKey}
 		</if>
+		<if test="startDate != null">
+			and createDate <![CDATA[>]]> #{startDate}
+			<if test="endDate != null">
+				and createDate <![CDATA[<]]> #{endDate}
+			</if>
+		</if>
 	</sql>
 
 	<insert id="create">

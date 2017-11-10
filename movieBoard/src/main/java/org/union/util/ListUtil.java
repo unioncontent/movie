@@ -3,14 +3,23 @@ package org.union.util;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.union.domain.CommunityVO;
 import org.union.domain.ExtractVO;
 import org.union.domain.MediaVO;
 import org.union.domain.PortalVO;
 import org.union.domain.SNSVO;
+import org.union.service.KeywordService;
 
+@Component
 public class ListUtil {
 	
+	/*@Autowired
+	private KeywordService keywordService;*/
+	
+	/*@Autowired
+	private UserService userService;*/
 	
 	SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 	
@@ -42,6 +51,13 @@ public class ListUtil {
 				vo.setCreateDate(date.format(addList.get(i).getCreateDate()));
 				vo.setTextType(addList.get(i).getTextType());
 				vo.setWriter(addList.get(i).getSns_writer());
+				
+				System.out.println(vo.getKeyword());
+				/*System.out.println(keywordService.viewByKeyword(vo.getKeyword()).getKeyword_idx());
+				System.out.println(userService.view(keywordService.viewByKeyword(vo.getKeyword()).getKeyword_idx()).getUser_name());
+				*/
+				/*vo.setCompany(
+						userService.view(keywordService.viewByKeyword(vo.getKeyword()).getUser_idx()).getUser_name());*/
 			
 				list.add(vo);
 			}
@@ -72,6 +88,7 @@ public class ListUtil {
 				vo.setTextType(addList.get(i).getTextType());
 				vo.setWriter(addList.get(i).getCommunity_writer());
 			
+				
 				list.add(vo);
 			}
 			
@@ -101,6 +118,7 @@ public class ListUtil {
 				vo.setTextType(addList.get(i).getTextType());
 				vo.setWriter(addList.get(i).getReporter_name());
 			
+				
 				list.add(vo);
 			}
 			
@@ -128,6 +146,7 @@ public class ListUtil {
 				vo.setCreateDate(date.format(addList.get(i).getCreateDate()));
 				vo.setTextType(addList.get(i).getTextType());
 			
+				
 				list.add(vo);
 			}
 

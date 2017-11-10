@@ -56,5 +56,15 @@
 			keyword_property = '포함'
 	
 	</select>
+	
+	<select id="readByKeyword" resultType="KeywordVO">
+		select
+			user_idx
+		from
+			keyword_data
+		where
+			keyword = #{keyword}
+	
+	</select>
 
 </mapper>

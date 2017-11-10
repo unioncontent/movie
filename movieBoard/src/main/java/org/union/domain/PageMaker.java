@@ -16,6 +16,10 @@ public class PageMaker {
 		
 		private Criteria cri;
 
+		
+		public void setDisplayPageNum(int displayPageNum) {
+			this.displayPageNum = displayPageNum;
+		}
 
 		public void setCri(Criteria cri) {
 			this.cri = cri;
@@ -30,10 +34,11 @@ public class PageMaker {
 		private void calcData() {
 			
 			endPage = (int) (Math.ceil(cri.getPage() / (double)displayPageNum ) * displayPageNum);
-
+			System.out.println("endPage: " + endPage);
 			startPage = (endPage - displayPageNum) + 1;
 		
 			int tempEndPage = (int)(Math.ceil(totalCount / (double)cri.getPerPageNum()));
+			System.out.println("tempEndPage: " +  tempEndPage);
 			if(endPage > tempEndPage){
 				endPage = tempEndPage;
 			}
@@ -92,6 +97,8 @@ public class PageMaker {
 		            .queryParam("searchType", ((SearchCriteria)cri).getSearchType())
 		            .queryParam("keyword", ((SearchCriteria)cri).getKeyword())
 		            .queryParam("selectKey", ((SearchCriteria)cri).getSelectKey())
+		            .queryParam("startDate", ((SearchCriteria)cri).getStartDate())
+		            .queryParam("endDate", ((SearchCriteria)cri).getEndDate())
 		            .build();	            
 			
 			return uriComponents.toUriString();

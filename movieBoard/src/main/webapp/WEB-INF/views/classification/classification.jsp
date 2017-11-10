@@ -202,7 +202,7 @@
                                       <input type="hidden" value="${extractVO.portal_idx}">
                                     </c:if>
                                     <th scope="row">
-                                      ${index.count}
+                                      ${totalCount -index.count +1 -minusCount}
                                     </th>
                                     <td>${extractVO.domain}<span class="text-muted"></span></td>
                                     <td>${extractVO.domainType}</td>
@@ -212,7 +212,7 @@
                                       <a href="${extractVO.url}" target="_blank">
                                         <div class="nobr">${extractVO.title}</div>
                                       </a>
-                                      <span class="text-muted"></span>
+                                      <span class="text-muted">${extractVO.company}</span>
                                       <span class="text-success">${extractVO.content}</span>
                                     </td>
                                     <td>${extractVO.createDate} /<br/>${extractVO.writeDate }</td>
@@ -307,7 +307,7 @@
                             <ul class="pagination float-right">
                               <c:if test="${pageMaker.prev}">
                                 <li class="page-item">
-                                  <a class="page-link" href="extract${pageMaker.makeSearch(pageMaker.startPage - 1) }" aria-label="Previous">&laquo;
+                                  <a class="page-link" href="classification${pageMaker.makeSearch(pageMaker.startPage - 1) }" aria-label="Previous">&laquo;
                                     <span aria-hidden="true"></span>
                                     <span class="sr-only">Previous</span>
                                   </a>
@@ -322,7 +322,7 @@
 
                               <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
                                 <li class="page-item">
-                                  <a class="page-link" href="extract${pageMaker.makeSearch(pageMaker.endPage +1) }" aria-label="Next">&raquo;
+                                  <a class="page-link" href="classification${pageMaker.makeSearch(pageMaker.endPage +1) }" aria-label="Next">&raquo;
                                     <span aria-hidden="true"></span>
                                     <span class="sr-only">Next</span>
                                   </a>
@@ -345,62 +345,46 @@
                             </button>
                           </div>
                           <div class="modal-body">
+                              
+                            <div class="modal-body">
                             <form id="frm">
+                              
                               <div class="form-group row">
-                                <label class="col-sm-2 col-form-label">소속사</label>
+                                <label class="col-sm-2 col-form-label">키워드</label>
                                 <div class="col-sm-10">
-                                  <select name="select" class="form-control form-control-default" id="select1">
-                                    <option value="">소속사명</option>
-                                    <option value="">UAA</option>
-                                  </select>
-                                </div>
-                              </div>
-                              <div class="form-group row">
-                                <label class="col-sm-2 col-form-label">연예인명</label>
-                                <div class="col-sm-10">
-                                  <select name="select" class="form-control form-control-default" id="select2">
-                                    <option value="">연예인명</option>
-                                    <option value="">강동원</option>
+                                  <select id="insertSelectKeyword" name="select" class="form-control form-control-default" >
+                                    <c:forEach items="${keywordList}" var="keyword">
+                                    <option value="${keyword}">${keyword}</option>
+                                    </c:forEach>
                                   </select>
                                 </div>
                               </div>
                               <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">분류</label>
                                 <div class="col-sm-10">
-                                  <select name="select" class="form-control form-control-default">
-                                    <option value="">좋은글</option>
-                                    <option value="">나쁜글</option>
-                                    <option value="">관심글</option>
-                                    <option value="">기타</option>
+                                  <select id="insertSelectType" name="select" class="form-control form-control-default">
+                                    <option value="좋은글">좋은글</option>
+                                    <option value="나쁜글">나쁜글</option>
+                                    <option value="관심글">관심글</option>
+                                    <option value="기타">기타</option>
                                   </select>
-                                </div>
-                              </div>
-                              <div class="form-group row">
-                                <label class="col-sm-2 col-form-label">검색어</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" placeholder="검색어">
                                 </div>
                               </div>
                               <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">사이트명</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" placeholder="사이트명" id="siteName">
+                                    <input id = "insertInputSite" type="text" class="form-control" placeholder="사이트명" id="siteName">
                                 </div>
                               </div>
-                              <div class="form-group row">
-                                <label class="col-sm-2 col-form-label">게시판명</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" placeholder="게시판명">
-                                </div>
-                              </div>
+                              
                               <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">컨텐츠 타입</label>
                                 <div class="col-sm-10">
-                                  <select name="select" class="form-control form-control-default">
-                                    <option value="1">board</option>
-                    			   				<option value="2">reply</option>
-                    			   				<option value="3">news</option>
-                    			   				<option value="4">descr</option>
+                                  <select id = "contentType" name="select" class="form-control form-control-default">
+                                    <option value="sns">sns</option>
+                    			   	<option value="community">community</option>
+                    			   	<option value="media">media</option>
+                    			   	<option value="portal">portal</option>
                                   </select>
                                 </div>
                               </div>
@@ -423,15 +407,15 @@
                                 </div>
                               </div>
                               <div class="form-group row">
-                                <label class="col-sm-2 col-form-label">작성자ID</label>
+                                <label class="col-sm-2 col-form-label">작성자</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" placeholder="작성자ID">
+                                    <input type="text" class="form-control" placeholder="작성자ID" id="writer">
                                 </div>
                               </div>
                               <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">작성자IP</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" placeholder="작성자IP">
+                                    <input type="text" class="form-control" placeholder="작성자IP" id="writer_IP">
                                 </div>
                               </div>
                               <div class="form-group row">
@@ -446,7 +430,7 @@
                               <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">URL</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" placeholder="URL">
+                                    <input id="url" type="text" class="form-control" placeholder="URL">
                                 </div>
                               </div>
                               <div class="form-group row">
@@ -459,7 +443,7 @@
                           </div>
                           <div class="modal-footer">
                             <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">취소</button>
-                            <button type="button" class="btn btn-primary waves-effect waves-light " id="submit">등록</button>
+                            <button id = "insertBtn" type="button" class="btn btn-primary waves-effect waves-light " id="submit">등록</button>
                           </div>
                         </div>
                       </div>
@@ -565,6 +549,91 @@
 
 <script type="text/javascript">
 	$(document).ready(function(){
+		
+		
+		// 수동입력 inserBtn 클릭시...
+		$("#insertBtn").on("click", function(){
+			var keyword = $("#insertSelectKeyword option:selected")[0].value;
+			console.log(keyword);
+			var textType = $("#insertSelectType option:selected")[0].value;
+			console.log(textType);
+			var domain = $("#contentType option:selected")[0].value;
+			console.log(domain);
+			var name = $("#insertInputSite").val();
+			console.log(name);
+			var board_number = $("#boardNum").val();
+			console.log(board_number);
+			var title = $("#title").val();
+			console.log(title);
+			var content = $("#content").val();
+			console.log(content);
+			var writer = $("#writer").val();
+			console.log(writer);
+			var writerIP = $("#writer_IP").val();
+			console.log(writerIP);
+			var date1 = $("#datepicker").val();
+			console.log(date1);
+			var date2 = $("#datetimepicker").val();
+			console.log(date2);
+			var url = $("#url").val();
+			console.log(url);
+			
+			date1 = date1.replace("/", "-").replace("/", "-");
+			var date = date1 + " " +date2;
+			
+			if(name == ''){
+				console.log("name is null;");
+				alert("사이트명을 작성해주세요.");
+			}
+			if(title == ''){
+				console.log("title is null;");
+				alert("title을 작성해주세요.");
+			}
+			if(content == ''){
+				console.log("content is null;");
+				alert("content를 작성해주세요.");
+			}
+			if(url == ''){
+				console.log("url is null;");
+				alert("url을 작성해주세요.");
+			}
+			
+			$.ajax({
+
+			      type : "POST",
+				  url : "insert",
+			 	  dataType : "json",
+			 	  data : { keyword: keyword, textType: textType, name : name, domain : domain,
+			 		  	   title : title, content: content, writeDate : date, url : url,
+			 		  	   board_number : board_number, writer : writer, writerIP : writerIP
+			 		  	  },
+			  	  error : function(){
+			      	alert('insert ajax error....');
+			  	  }/*,
+			  	   success : function(){
+			  		  console.log("success");
+			  	  } */
+			
+			
+			}); 
+		
+		});
+		
+		//캘린더 클릭시..
+		$('#fromDate').on('apply.daterangepicker', function(ev, picker) {
+			   var startDate = picker.startDate.format('YYYY-MM-DD');
+			   var endDate = picker.endDate.format('YYYY-MM-DD');
+			   
+			   console.log("startDate: " + startDate);
+			   console.log("endDate: " + endDate);
+			   
+			   self.location = "classification?"+ "searchType=" + $("#selectSearchType option:selected").val()
+				  + "&keyword=" + decodeURI(window.location.href.split("&keyword=")[1]).split("&selectKey")[0]
+				  + "&selectKey=" + $('#selectKeyword option:selected').val()
+				  + "&startDate=" + startDate
+	        	  + "&endDate=" +  endDate;
+		});
+		
 
 		// content 길시에 ...으로 변경
 		var $content = $(".text-success");
@@ -617,7 +686,9 @@
 
 	        	self.location = "excel?"+ "searchType=" + $("#selectSearchType option:selected").val()
 				  + "&keyword=" + decodeURI(window.location.href.split("&keyword=")[1]).split("&selectKey")[0]
-				  + "&selectKey=" + $('#selectKeyword option:selected').val();
+				  + "&selectKey=" + $('#selectKeyword option:selected').val()
+				  + "&startDate=" + decodeURI(window.location.href.split("&startDate=")[1]).split("&endDate")[0]
+	        	  + "&endDate=" +  decodeURI(window.location.href.split("&endDate=")[1]);
 	        
 		  
 		  		swal("Success!", "엑셀출력 되었습니다.", "success");
@@ -663,7 +734,9 @@
 				+ $('#selectPerPageNum option:selected').val() + "&searchType="
 				+ $("#selectSearchType option:selected").val() + "&keyword="
 				+ $('#keywordInput').val() + "&selectKey="
-				+ $('#selectKeyword option:selected').val();
+				+ $('#selectKeyword option:selected').val()
+				+ "&startDate=" + decodeURI(window.location.href.split("&startDate=")[1]).split("&endDate")[0]
+	        	+ "&endDate=" +  decodeURI(window.location.href.split("&endDate=")[1]);
 	}
 
 </script>
