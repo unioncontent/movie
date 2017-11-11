@@ -6,6 +6,11 @@
 <html lang="en">
 
 <head>
+
+<meta name="_csrf" content="${_csrf.token}" />
+<!-- default header name is X-CSRF-TOKEN -->
+<meta name="_csrf_header" content="${_csrf.headerName}"/>
+
   <title>OverWare</title>
   <!-- HTML5 Shim and Respond.js IE9 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -212,7 +217,7 @@
                                       <a href="${extractVO.url}" target="_blank">
                                         <div class="nobr">${extractVO.title}</div>
                                       </a>
-                                      <span class="text-muted">${extractVO.company}</span>
+                                      <span class="text-muted"></span>
                                       <span class="text-success">${extractVO.content}</span>
                                     </td>
                                     <td>${extractVO.createDate} /<br/>${extractVO.writeDate }</td>
@@ -373,7 +378,7 @@
                               <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">사이트명</label>
                                 <div class="col-sm-10">
-                                    <input id = "insertInputSite" type="text" class="form-control" placeholder="사이트명" id="siteName">
+                                    <input id = "insertInputSite" type="text" class="form-control" placeholder="사이트명">
                                 </div>
                               </div>
                               
@@ -550,6 +555,17 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		
+
+		// ajax 보안
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+
+		/* $(function() {
+		    $(document).ajaxSend(function(e, xhr, options) {
+		        xhr.setRequestHeader(header, token);
+		    });
+		});
+		 */
 		
 		// 수동입력 inserBtn 클릭시...
 		$("#insertBtn").on("click", function(){
@@ -559,8 +575,8 @@
 			console.log(textType);
 			var domain = $("#contentType option:selected")[0].value;
 			console.log(domain);
-			var name = $("#insertInputSite").val();
-			console.log(name);
+			var domainType = $("#insertInputSite").val();
+			console.log(domainType);
 			var board_number = $("#boardNum").val();
 			console.log(board_number);
 			var title = $("#title").val();
@@ -581,43 +597,88 @@
 			date1 = date1.replace("/", "-").replace("/", "-");
 			var date = date1 + " " +date2;
 			
-			if(name == ''){
-				console.log("name is null;");
+			//var stringData = "{'keyword':'"+ keyword+"', 'textType':'"+ textType + "', 'domain' :'"+ domain
+							+"', 'writeDate' :'"+ date+"', 'writer' :'"+ writer + "'";
+
+			
+			if(domainType == ''){
+				console.log("domainType is null;");
 				alert("사이트명을 작성해주세요.");
 			}
-			if(title == ''){
+			else if(title == ''){
 				console.log("title is null;");
 				alert("title을 작성해주세요.");
 			}
-			if(content == ''){
+			else if(content == ''){
 				console.log("content is null;");
 				alert("content를 작성해주세요.");
 			}
-			if(url == ''){
+			else if(url == ''){
 				console.log("url is null;");
 				alert("url을 작성해주세요.");
+			
+			}else{
+				//stringData  = stringData + ", 'domainType':'"+domainType+"', 'title': '" + title +"',"+ 
+				//"'content': '"+content + "', 'url': '" + url + "'";
+			
+				if(domainType == "community"){
+					//stringData = stringData + ", 'writerIP': " + writerIP + ", 'board_number': " + board_number + "}";
+				
+					$.ajax({
+
+				 		type : "POST",
+						url : "insert",
+					 	dataType : "json",
+					 	data : {keyword:keyword, textType:textType, domain :domain, writeDate :date,
+					 		writer :writer, domainType:domainType, title: title,content: content, url: url,
+					 		board_number : board_number, writerIP : writerIP},
+					 	beforeSend: function(xhr) {
+					 		  	  		if (header && token) {
+					 		  	        xhr.setRequestHeader(header, token);
+					 		  	    	}
+					 		  	},
+					  	error : function(e){
+					       alert('insert ajax error....');
+					  	},
+					  		success : function(){
+					  		swal("Success!", "등록 되었습니다.", "success");
+					  			console.log("success");
+					  	  } 
+					
+					
+					}); 
+					
+				}else{
+					//stringData = stringData + "}";
+					
+					$.ajax({
+
+				 		type : "POST",
+						url : "insert",
+					 	dataType : "json",
+					 	data : {keyword:keyword, textType:textType, domain :domain, writeDate :date,
+					 		writer :writer, domainType:domainType, title: title,content: content, url: url},
+					 	beforeSend: function(xhr) {
+					 		  	  		if (header && token) {
+					 		  	        xhr.setRequestHeader(header, token);
+					 		  	    	}
+					 		  	},
+					  	error : function(e){
+					       alert('insert ajax error....');
+					  	},
+					  	   success : function(){
+					  		 swal("Success!", "등록 되었습니다.", "success");
+					  		  console.log("success");
+					  	  } 
+					
+					
+					}); 
+				}
+			
 			}
 			
-			$.ajax({
-
-			      type : "POST",
-				  url : "insert",
-			 	  dataType : "json",
-			 	  data : { keyword: keyword, textType: textType, name : name, domain : domain,
-			 		  	   title : title, content: content, writeDate : date, url : url,
-			 		  	   board_number : board_number, writer : writer, writerIP : writerIP
-			 		  	  },
-			  	  error : function(){
-			      	alert('insert ajax error....');
-			  	  }/*,
-			  	   success : function(){
-			  		  console.log("success");
-			  	  } */
-			
-			
-			}); 
 		
-		});
+		}); // end insertBtn click...
 		
 		//캘린더 클릭시..
 		$('#fromDate').on('apply.daterangepicker', function(ev, picker) {

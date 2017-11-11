@@ -90,6 +90,12 @@ public class ExtractController {
 
 		ExtractComparator comparator = new ExtractComparator();
 		Collections.sort(extractList, comparator);
+		
+		// 회사 추가
+		
+		// 회사 추가
+		keywordService.viewByKeyword(extractList);
+		
 		model.addAttribute("extractList", extractList);
 	}
 	

@@ -52,7 +52,6 @@ public class ListUtil {
 				vo.setTextType(addList.get(i).getTextType());
 				vo.setWriter(addList.get(i).getSns_writer());
 				
-				System.out.println(vo.getKeyword());
 				/*System.out.println(keywordService.viewByKeyword(vo.getKeyword()).getKeyword_idx());
 				System.out.println(userService.view(keywordService.viewByKeyword(vo.getKeyword()).getKeyword_idx()).getUser_name());
 				*/

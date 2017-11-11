@@ -100,9 +100,9 @@
                         </select>
                         <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="selectKeyword">
                           <option>키워드</option>
-                          <option value="택시">택시</option>
-                          <option value="강철비">강철비</option>
-                          <option value="살인자">살인자</option>
+                          <c:forEach items="${keywordList}" var="keywordList">
+                          <option value = "${keywordList}">${keywordList}</option>
+                          </c:forEach>
                         </select>
                       </div>
                       <div class="col-md-5">

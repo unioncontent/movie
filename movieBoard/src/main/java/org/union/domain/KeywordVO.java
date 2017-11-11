@@ -7,6 +7,7 @@ public class KeywordVO {
 	
 	private Integer keyword_idx;
 	private Integer user_idx;
+	private String company_name;
 	private String keyword;
 	private String keyword_main;
 	private String keyword_type; 
@@ -26,6 +27,12 @@ public class KeywordVO {
 	}
 	public void setUser_idx(Integer user_idx) {
 		this.user_idx = user_idx;
+	}
+	public String getCompany_name() {
+		return company_name;
+	}
+	public void setCompany_name(String company_name) {
+		this.company_name = company_name;
 	}
 	public String getKeyword() {
 		return keyword;
@@ -65,9 +72,9 @@ public class KeywordVO {
 	}
 	@Override
 	public String toString() {
-		return "KeywordVO [keyword_idx=" + keyword_idx + ", user_idx=" + user_idx + ", keyword=" + keyword
-				+ ", keyword_main=" + keyword_main + ", keyword_type=" + keyword_type + ", keyword_property="
-				+ keyword_property + ", createDate=" + createDate + ", updateDate=" + updateDate + "]";
+		return "KeywordVO [keyword_idx=" + keyword_idx + ", user_idx=" + user_idx + ", company_name=" + company_name
+				+ ", keyword=" + keyword + ", keyword_main=" + keyword_main + ", keyword_type=" + keyword_type
+				+ ", keyword_property=" + keyword_property + ", createDate=" + createDate + ", updateDate=" + updateDate
+				+ "]";
 	}
-	
 }

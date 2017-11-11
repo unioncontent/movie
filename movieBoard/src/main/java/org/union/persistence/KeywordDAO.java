@@ -17,5 +17,7 @@ public interface KeywordDAO {
 	
 	public List<String> listByUser(Integer user_idx);
 	
+	public List<KeywordVO> listAll();
+	
 	public KeywordVO readByKeyword(String keyword);
 }

@@ -15,8 +15,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.union.domain.CommunityVO;
 import org.union.domain.ExtractVO;
+import org.union.domain.MediaVO;
 import org.union.domain.PageMaker;
+import org.union.domain.PortalVO;
+import org.union.domain.SNSVO;
 import org.union.domain.SearchCriteria;
 import org.union.service.CommunityService;
 import org.union.service.KeywordService;
@@ -190,18 +194,79 @@ public class ClassificationController {
 	}
 	
 	
-	
+	@ResponseBody
 	@PostMapping("/insert")
 		public void insertPOST(String keyword, String textType, String domain,
-				String name, Integer board_number, String title,
+				String domainType, String board_number, String title,
 				String content, String writer, String writerIP,
 				String writeDate, String url) {
 		
 		logger.info("insert called....");
 		
-		logger.info(keyword + textType + domain + name + board_number + title + content + writer + writerIP + writeDate
+		logger.info(keyword + textType + domain + domainType + board_number + title + content + writer + writerIP + writeDate
 				+ url);
+		try {
 			
+			if(domain.equals("sns")) {
+				SNSVO vo = new SNSVO();
+				vo.setSns_name(domainType);
+				vo.setSns_title(title);
+				vo.setSns_content(content);
+				vo.setWriteDate(writeDate);
+				vo.setSns_writer(writer);
+				vo.setKeyword(keyword);
+				vo.setTextType(textType);
+				vo.setUrl(url);
+				
+				snsService.regist(vo);
+				
+			}else if(domain.equals("portal")) {
+				PortalVO vo = new PortalVO();
+				vo.setPortal_name(domainType);
+				vo.setPortal_title(title);
+				vo.setWriteDate(writeDate);
+				vo.setKeyword(keyword);
+				vo.setTextType(textType);
+				vo.setUrl(url);
+				
+				portalService.regist(vo);
+				
+			}else if(domain.equals("media")) {
+				MediaVO vo = new MediaVO();
+				vo.setMedia_name(domainType);
+				vo.setMedia_title(title);
+				vo.setMedia_content(content);
+				vo.setWriteDate(writeDate);
+				vo.setReporter_name(writer);
+				vo.setKeyword(keyword);
+				vo.setTextType(textType);
+				vo.setUrl(url);
+				
+				mediaService.regist(vo);
+				
+			}else if(domain.equals("community")) {
+				CommunityVO vo = new CommunityVO();
+				vo.setCommunity_name(domainType);
+				vo.setCommunity_title(title);
+				vo.setCommunity_content(content);
+				vo.setCommunity_writer(writer);
+				vo.setCommunity_writer_IP(writerIP);
+				vo.setWriteDate(writeDate);
+				vo.setKeyword(keyword);
+				vo.setTextType(textType);
+				vo.setUrl(url);
+				
+				communityService.regist(vo);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.info(e.getMessage());
+		}
+		
+		
+		
+		
 	}
 	
 	/*@GetMapping("/excel")
