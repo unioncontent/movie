@@ -7,6 +7,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,11 +23,13 @@ import org.union.domain.PageMaker;
 import org.union.domain.PortalVO;
 import org.union.domain.SNSVO;
 import org.union.domain.SearchCriteria;
+import org.union.domain.UserVO;
 import org.union.service.CommunityService;
 import org.union.service.KeywordService;
 import org.union.service.MediaService;
 import org.union.service.PortalService;
 import org.union.service.SNSService;
+import org.union.service.UserService;
 import org.union.util.ExcelView;
 import org.union.util.ExtractComparator;
 import org.union.util.ListUtil;
@@ -50,6 +53,9 @@ public class ClassificationController {
 	
 	@Autowired
 	private KeywordService keywordService;
+	
+	@Autowired
+	private UserService userService;
 	
 	private static Logger logger = LoggerFactory.getLogger(ClassificationController.class);
 	
@@ -90,13 +96,11 @@ public class ClassificationController {
 		
 		PageMaker pageMaker = new PageMaker();
 		
-		
 		// 4번 리스트기 때문에  perPageNum / 4
 		if(cri.getPerPageNum() != 10) {
 			cri.setPerPageNum(cri.getPerPageNum()/4);
 		
 		}
-		
 		
 		logger.info("community: " + communityService.getSearchCount(cri));
 		logger.info("sns: " + snsService.getSearchCount(cri));
@@ -113,6 +117,15 @@ public class ClassificationController {
 		List<ExtractVO> classiList = new ArrayList<ExtractVO>();
 		ListUtil listUtil = new ListUtil();
 		
+		if(cri.getCompany() == null) {
+			logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+			UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
+			
+			if(!vo.getUser_name().equals("union")) {
+			cri.setCompany(vo.getUser_name());
+			}
+		}
+		
 		listUtil.listAddSNSList(classiList, snsService.listSearch(cri));
 		listUtil.listAddCommunityList(classiList, communityService.listSearch(cri));
 		listUtil.listAddPortalList(classiList, portalService.listSearch(cri));
@@ -128,12 +141,18 @@ public class ClassificationController {
 		logger.info("pageMaker: " + pageMaker);
 		model.addAttribute("pageMaker", pageMaker);
 		
+		// 회사 선택에 따른 키워드 재추출
+		if(cri.getCompany() != null) {
+			model.addAttribute("modelKeywordList", keywordService.listByUser(
+					userService.viewByName(cri.getCompany()).getUser_idx()));
+		}
 		
-		// 정렬
+		
+		// 리스트 정렬
 		ExtractComparator comparator = new ExtractComparator();
 		Collections.sort(classiList, comparator);
 		
-		// 회사 추가
+		// 리스트 회사 추가
 		keywordService.viewByKeyword(classiList);
 		
 		model.addAttribute("classiList", classiList);
@@ -184,7 +203,6 @@ public class ClassificationController {
 		
 		ExtractComparator comparator = new ExtractComparator();
 		Collections.sort(classiList, comparator);
-		
 		
 		
 		model.addObject("list", classiList);

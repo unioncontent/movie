@@ -1,7 +1,5 @@
 package org.union.controller;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -9,10 +7,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.union.domain.KeywordVO;
 import org.union.domain.UserVO;
 import org.union.service.KeywordService;
 import org.union.service.UserService;
@@ -37,28 +35,21 @@ public class UserController {
 		logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
 		UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
 		
+		
 		session.setAttribute("user", vo);
 		
-		/*List<String> companyList = new ArrayList<String>();
-		List<String> keywordList = new ArrayList<String>();
-		
 		if(vo.getUser_type() == 1) {
-			List<KeywordVO> list = keywordService.listAll();
-			
-			for (KeywordVO keywordVO : list) {
-				companyList.add(keywordVO.getCompany_name());
-				keywordList.add(keywordVO.getKeyword());
-			}
-			
-			
+			logger.info("관리자 접속");
+
+			session.setAttribute("companyList", userService.listAll());
+			session.setAttribute("keywordList", keywordService.listAll());
+		
 		}else {
+			logger.info("CP 접속");
 			
-		}*/
-		
-		List<String> keywordList = keywordService.listByUser(vo.getUser_idx());
-		
-		logger.info("keywordList: " + keywordList);
-		session.setAttribute("keywordList", keywordList);
+			session.setAttribute("keywordList", keywordService.listByUser(vo.getUser_idx()));
+			session.setAttribute("companyList", vo);
+		}
 		
 		
 		return "redirect:../dashBoard/dashBoard";

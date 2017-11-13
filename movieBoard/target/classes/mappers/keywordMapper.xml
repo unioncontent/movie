@@ -45,9 +45,9 @@
 		
 	</delete>
 	
-	<select id="listByUser" resultType="String">
-		select
-			keyword
+	<select id="listByUser" resultType="KeywordVO">
+		select distinct
+			keyword_main
 		from
 			keyword_data
 		where
@@ -68,8 +68,8 @@
 	</select>
 
 	<select id="listAll" resultType="KeywordVO">
-		select
-			*
+		select distinct
+			keyword_main, user_idx
 		from
 			keyword_data
 		where

@@ -99,6 +99,7 @@ public class PageMaker {
 		            .queryParam("selectKey", ((SearchCriteria)cri).getSelectKey())
 		            .queryParam("startDate", ((SearchCriteria)cri).getStartDate())
 		            .queryParam("endDate", ((SearchCriteria)cri).getEndDate())
+		            .queryParam("company", ((SearchCriteria)cri).getCompany())
 		            .build();	            
 			
 			return uriComponents.toUriString();

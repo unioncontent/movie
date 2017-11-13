@@ -47,11 +47,31 @@
  	
  	<delete id="delete">
  		delete from
- 			user_data
+ 			user_dataz
  		where
  			user_idx = #{user_idx}
  	
  	</delete>
+ 	
+ 	<select id="readByName" resultType="UserVO">
+ 		select
+ 			*
+ 		from
+ 			user_data
+ 		where
+ 			user_name = #{user_name}
+ 	
+ 	</select>
+ 	
+ 	<select id = "listAll" resultType="UserVO">
+ 		select
+ 			*
+ 		from
+ 			user_data
+ 		where 
+ 			user_name != 'union'
+ 	
+ 	</select>
  	
  	<select id="readById" resultType="UserVO">
  		select

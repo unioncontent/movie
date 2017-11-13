@@ -1,11 +1,11 @@
 package org.union.domain;
 
-import java.util.Date;
+
 
 public class SearchCriteria extends Criteria {
 
 	
-	private String searchType, keyword, selectKey;
+	private String searchType, keyword, selectKey, company;
 	private Integer total;
 	private String startDate, endDate;
 
@@ -74,10 +74,24 @@ public class SearchCriteria extends Criteria {
 	}
 
 
+	public String getCompany() {
+		
+		return company;
+		
+	}
+
+
+	public void setCompany(String company) {
+		
+		this.company = company;
+	}
+
+
 	@Override
 	public String toString() {
 		return "SearchCriteria [searchType=" + searchType + ", keyword=" + keyword + ", selectKey=" + selectKey
-				+ ", total=" + total + ", startDate=" + startDate + ", endDate=" + endDate + "]";
+				+ ", company=" + company + ", total=" + total + ", startDate=" + startDate + ", endDate=" + endDate
+				+ "]";
 	}
 
 

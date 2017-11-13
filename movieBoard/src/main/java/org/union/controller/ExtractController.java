@@ -7,6 +7,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,11 +22,13 @@ import org.union.domain.PageMaker;
 import org.union.domain.PortalVO;
 import org.union.domain.SNSVO;
 import org.union.domain.SearchCriteria;
+import org.union.domain.UserVO;
 import org.union.service.CommunityService;
 import org.union.service.KeywordService;
 import org.union.service.MediaService;
 import org.union.service.PortalService;
 import org.union.service.SNSService;
+import org.union.service.UserService;
 import org.union.util.ExtractComparator;
 import org.union.util.ListUtil;
 
@@ -53,32 +56,69 @@ public class ExtractController {
 	@Autowired
 	private KeywordService keywordService;
 	
+	@Autowired
+	private UserService userService;
+	
 	
 	@GetMapping("/extract")
 	public void extractGET(@ModelAttribute("cri") SearchCriteria cri, Model model) {
 		logger.info("extractGET called....");
 		
-		if(cri.getSelectKey() != null) {
-			if(cri.getSelectKey().equals("�궎�썙�뱶")) {
-				cri.setSelectKey(null);
+		if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
+			logger.info("keyword is null");
+			cri.setKeyword(null);
+			
+		} 
+		if(cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey()) ) {
+			logger.info("selectKey is null");
+			cri.setSelectKey(null);
+		}
+		
+		if("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate())
+				|| cri.getStartDate() == "" || cri.getEndDate() == ""){
+			cri.setStartDate(null);
+			cri.setEndDate(null);
+		
+		} 
+		if(cri.getStartDate() != null && cri.getEndDate() != null) {
+			if(cri.getStartDate().indexOf("00:00:00") < 0 && cri.getEndDate().indexOf("23:59:59") < 0){ 
+				cri.setStartDate(cri.getStartDate() + " 00:00:00"); 
+				cri.setEndDate(cri.getEndDate() + " 23:59:59"); 
 			}
+		
+		
 		}
 		
 		PageMaker pageMaker = new PageMaker();
-		// 4踰� 由ъ뒪�듃湲� �븣臾몄뿉  perPageNum / 4
+		
+		// 4번 리스트기 때문에  perPageNum / 4
 		if(cri.getPerPageNum() != 10) {
 			cri.setPerPageNum(cri.getPerPageNum()/4);
+		
 		}
 		
 		logger.info("cri: " + cri);
 		
-		pageMaker.setCri(cri);
-		pageMaker.setTotalCount(snsService.getExtractCount(cri) 
-								+ communityService.getExtractCount(cri)
-								+ portalService.getExtractCount(cri)
-								+ mediaService.getExtractCount(cri));
-		logger.info("pageMaker: " + pageMaker);
-		model.addAttribute("pageMaker", pageMaker);
+		logger.info("community: " + communityService.getExtractCount(cri));
+		logger.info("sns: " + snsService.getExtractCount(cri));
+		logger.info("portalService: " + portalService.getExtractCount(cri));
+		logger.info("media: " + mediaService.getExtractCount(cri));
+		
+		Integer totalCount = snsService.getExtractCount(cri) 
+				+ communityService.getExtractCount(cri)
+				+ portalService.getExtractCount(cri)
+				+ mediaService.getExtractCount(cri);
+
+		model.addAttribute("totalCount", totalCount);
+		
+		if(cri.getCompany() == null) {
+			logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+			UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
+			
+			if(!vo.getUser_name().equals("union")) {
+			cri.setCompany(vo.getUser_name());
+			}
+		}
 		
 		List<ExtractVO> extractList = new ArrayList<ExtractVO>();
 		ListUtil listUtil = new ListUtil();
@@ -88,10 +128,24 @@ public class ExtractController {
 		listUtil.listAddList(extractList, portalService.listExtract(cri));
 		listUtil.listAddList(extractList, mediaService.listExtract(cri));
 
+		cri.setPerPageNum(cri.getPerPageNum()*4);
+		
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(totalCount);
+		
+		model.addAttribute("minusCount", cri.getPerPageNum() * (cri.getPage()-1));
+		
+		logger.info("pageMaker: " + pageMaker);
+		model.addAttribute("pageMaker", pageMaker);
+		
+		// 회사 선택에 따른 키워드 재추출
+		if(cri.getCompany() != null) {
+			model.addAttribute("modelKeywordList", keywordService.listByUser(
+				userService.viewByName(cri.getCompany()).getUser_idx()));
+		}
+		
 		ExtractComparator comparator = new ExtractComparator();
 		Collections.sort(extractList, comparator);
-		
-		// 회사 추가
 		
 		// 회사 추가
 		keywordService.viewByKeyword(extractList);

@@ -1,5 +1,7 @@
 package org.union.service;
 
+import java.util.List;
+
 import org.union.domain.UserVO;
 
 public interface UserService {
@@ -10,4 +12,8 @@ public interface UserService {
 	public UserVO login(UserVO vo);
 	
 	public UserVO viewById(String user_id);
+	
+	public UserVO viewByName(String user_name);
+	
+	public List<UserVO> listAll();
 }

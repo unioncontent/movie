@@ -1,5 +1,7 @@
 package org.union.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.union.domain.UserVO;
@@ -28,5 +30,17 @@ public class UserServiceImpl implements UserService{
 	public UserVO view(Integer user_idx) {
 
 		return userDAO.read(user_idx);
+	}
+
+	@Override
+	public List<UserVO> listAll() {
+
+		return userDAO.listAll();
+	}
+
+	@Override
+	public UserVO viewByName(String user_name) {
+
+		return userDAO.readByName(user_name);
 	}
 }

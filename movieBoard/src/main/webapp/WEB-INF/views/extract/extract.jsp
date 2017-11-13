@@ -95,14 +95,30 @@
                     <div class="row">
                       <!-- data setting start -->
                       <div class="col-md-7">
-                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left">
-                          <option value="opt1">회사</option>
-                        </select>
-                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="selectKeyword">
-                          <option>키워드</option>
-                          <c:forEach items="${keywordList}" var="keywordList">
-                          <option value = "${keywordList}">${keywordList}</option>
+                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="selectCompany">
+                          <option>회사</option>
+                          <c:if test="${user.user_type == 1 }">
+                          <c:forEach items="${companyList}" var = "companyList">
+                          <option value="${companyList.user_name}">${companyList.user_name}</option>
                           </c:forEach>
+                          </c:if>
+                          <c:if test="${user.user_type == 2}">
+                          <option value="${companyList.user_name}">${companyList.user_name}</option>
+                          </c:if>
+                        </select>
+                        
+                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left" id="selectKeyword">
+                          <option>키워드</option>
+                          <c:if test="${modelKeywordList == null}" >
+                          	<c:forEach items="${keywordList}" var = "keywordList">
+                          <option value="${keywordList.keyword_main}">${keywordList.keyword_main}</option>
+                          </c:forEach>
+                          </c:if>
+                          <c:if test="${modelKeywordList != null}">
+                          	<c:forEach items="${modelKeywordList}" var = "keywordList">
+                          <option value="${keywordList.keyword_main}">${keywordList.keyword_main}</option>
+                          </c:forEach>
+                          </c:if>
                         </select>
                       </div>
                       <div class="col-md-5">
@@ -217,7 +233,7 @@
                                       <input type="hidden" value="${extractVO.portal_idx}">
                                     </c:if>
                                     <th scope="row">
-                                      ${index.count}
+                                      ${totalCount -index.count +1 -minusCount}
                                     </th>
                                     <td>${extractVO.domain}<span class="text-muted"></span></td>
                                     <td>${extractVO.domainType}</td>
@@ -560,27 +576,51 @@
 		}
 	}
 	
-	var selectOption = decodeURI(window.location.href.split("selectKey=")[1]);
-	console.log(selectOption);
+	var keywordOption = decodeURI(window.location.href.split("selectKey=")[1]).split("&startDate=")[0];
+	console.log("keywordOption: " + keywordOption);
 
 
 
 	var $selectKeyword = $('#selectKeyword');
 
-	if(selectOption != 'undefined'){
+	if(keywordOption != 'undefined'){
 		for(var i = 0; i < $selectKeyword[0].length; i++ ){
-			if($selectKeyword[0][i].value == selectOption){
+			if($selectKeyword[0][i].value == keywordOption){
 				$selectKeyword[0][i].selected = 'selected';
 			}
 		}
 	}
 	$selectKeyword[0][0].disabled = true;
+	
 
 	// 키워드 선택시
 	$selectKeyword.change(function(){
 		console.log("selectKeyword clicked....");
 		console.log($('#selectKeyword option:selected').val());
 
+		searchList();
+	});
+	
+	var companyOption = decodeURI(window.location.href.split("company=")[1]);
+
+
+	var $selectCompany = $('#selectCompany');
+	if(companyOption != 'undefined'){
+		for(var i = 0; i < $selectCompany[0].length; i++ ){
+
+			if($selectCompany[0].children[i].value == companyOption){
+				$selectCompany[0].children[i].selected = 'selected';
+			} 
+		}
+	}
+	$selectCompany[0][0].disabled = true;
+	
+	
+	// 회사 선택시
+	$selectCompany.change(function(){
+		console.log("selectCompany clicked....");
+		console.log($("#selectCompany option:selected").val());
+		
 		searchList();
 	});
 	
@@ -713,7 +753,7 @@
 		});
   }
 
-	function searchList(event) {
+  function searchList(event) {
 
 		var makeQeury = '${pageMaker.makeQuery(1)}'.slice(0, -2);
 
@@ -721,6 +761,9 @@
 				+ $('#selectPerPageNum option:selected').val() + "&searchType="
 				+ $("#selectSearchType option:selected").val() + "&keyword="
 				+ $('#keywordInput').val() + "&selectKey="
-				+ $('#selectKeyword option:selected').val();
+				+ $('#selectKeyword option:selected').val()
+				+ "&startDate=" + decodeURI(window.location.href.split("&startDate=")[1]).split("&endDate")[0]
+	        	+ "&endDate=" +  decodeURI(window.location.href.split("&endDate=")[1]).split("&company")[0]
+	        	+ "&company=" + $("#selectCompany option:selected").val();
 	}
 </script>

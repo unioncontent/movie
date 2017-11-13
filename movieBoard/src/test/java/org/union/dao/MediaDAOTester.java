@@ -31,19 +31,14 @@ public class MediaDAOTester {
 	@Test
 	public void testCreate() throws ParseException {
 		
-		for(int i = 0; i < 20; i++) {
-		vo.setMedia_name(i + "유니온스포츠");
-		vo.setMedia_title(i + "강철비 흥행하나 기사");
+		vo.setMedia_name("유니온스포츠");
+		vo.setMedia_title("강철비 흥행하나 기사");
 		vo.setMedia_content("강철비가 ~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 		vo.setReporter_name("김동진");
-		
-		
-		
 		vo.setKeyword("강철비");
 		vo.setUrl("urlurlurlurlurlurlurlurlurl");
 		
 		dao.create(vo);
-		}
 	}
 	
 	

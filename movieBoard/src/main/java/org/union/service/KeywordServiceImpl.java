@@ -24,7 +24,7 @@ public class KeywordServiceImpl implements KeywordService{
 	private UserDAO userDAO;
 	
 	@Override
-	public List<String> listByUser(Integer user_idx) {
+	public List<KeywordVO> listByUser(Integer user_idx) {
 
 		return keywordDAO.listByUser(user_idx);
 	}
@@ -43,6 +43,7 @@ public class KeywordServiceImpl implements KeywordService{
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			
 		}
 
 		return list;
