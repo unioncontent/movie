@@ -6,6 +6,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +18,10 @@ import org.union.domain.GraphVO;
 import org.union.domain.PageMaker;
 import org.union.domain.SNSVO;
 import org.union.domain.SearchCriteria;
+import org.union.domain.UserVO;
+import org.union.service.KeywordService;
 import org.union.service.SNSService;
+import org.union.service.UserService;
 
 @Controller
 @RequestMapping("/sns/*")
@@ -27,6 +31,12 @@ public class SNSController {
 	@Autowired
 	private SNSService service;
 	
+	@Autowired
+	private KeywordService keywordService;
+	
+	@Autowired
+	private UserService userService;
+	
 	private static Logger logger = LoggerFactory.getLogger(SNSController.class);
 	
 	
@@ -34,13 +44,55 @@ public class SNSController {
 	public void facebookGET(@ModelAttribute("cri") SearchCriteria cri, Model model) throws Exception{
 		logger.info("facebookGET called....");
 		
+		logger.info("before Cri: " + cri);
+		
+		if(cri.getKeyword() != null) {
+			if(cri.getKeyword().isEmpty()) {
+				cri.setKeyword(null);
+			}
+		}
 		if(cri.getSelectKey() != null) {
-			if(cri.getSelectKey().equals("키워드")) {
+			if(cri.getSelectKey().isEmpty() || cri.getSelectKey().equals("키워드")) {
 				cri.setSelectKey(null);
 			}
 		}
+		if(cri.getCompany() != null) {
+			if(cri.getCompany().isEmpty()) {
+				cri.setCompany(null);
+			}
+		}
+		if(cri.getCompany() == null || cri.getCompany().equals("회사")) {
+			logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+			UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
+			
+			if(!vo.getUser_name().equals("union")) {
+			cri.setCompany(vo.getUser_name());
+			
+			}else {
+				cri.setCompany(null);
+			}
+		}
+		if(cri.getTextType() != null) {
+			cri.setTextType(null);
+		}
+		if(cri.getStartDate() != null || cri.getEndDate() != null) {
+			cri.setStartDate(null);
+			cri.setEndDate(null);
+		}
 		
 		logger.info("cri : " + cri);
+		
+		// 회사 선택에 따른 키워드 재추출
+		if(cri.getCompany() != null) {
+			if(cri.getCompany().isEmpty() == false) {
+					
+				UserVO userVO  = userService.viewByName(cri.getCompany());
+				logger.info("userVO: " + userVO);
+					logger.info("keywordList: " + keywordService.listByUser(userVO.getUser_idx()));
+					model.addAttribute("modelKeywordList", keywordService.listByUser(
+					userService.viewByName(cri.getCompany()).getUser_idx()));
+			}
+		}
 		
 		PageMaker pageMaker = new PageMaker();
 		
@@ -52,7 +104,6 @@ public class SNSController {
 		List<SNSVO> list = new ArrayList<SNSVO>();
 		list = service.facebookList(cri);
 		model.addAttribute("facebookList", list);
-		logger.info("list: " + list);
 		
 		
 	}
@@ -79,7 +130,6 @@ public class SNSController {
 		List<SNSVO> list = new ArrayList<SNSVO>();
 		list = service.instaList(cri);
 		model.addAttribute("instagramList", list);
-		logger.info("list: " + list);
 		
 	}
 	
@@ -106,7 +156,6 @@ public class SNSController {
 		List<SNSVO> list = new ArrayList<SNSVO>();
 		list = service.twitterList(cri);
 		model.addAttribute("twitterList", list);
-		logger.info("list: " + list);
 		
 	}
 	
@@ -114,7 +163,7 @@ public class SNSController {
 	@PostMapping("/graph")
 	@ResponseBody
 	public List<GraphVO> graphPOST(String startDate, String endDate) throws Exception{
-		logger.info("grpahPOST called....");
+		//logger.info("grpahPOST called....");
 		
 		/*Date transStart = new SimpleDateFormat("yyyy-mm-dd").parse(startDate);
 		Date transEnd = new SimpleDateFormat("yyyy-mm-dd").parse(endDate);
@@ -127,11 +176,11 @@ public class SNSController {
 		vo.setStartDate(startDate + " 00:00:00");
 		vo.setEndDate(endDate + " 23:59:59");
 		vo.setSns_name("facebook");
-		logger.info("GRAPHVO: " +vo);
+		//logger.info("GRAPHVO: " +vo);
 		
 		
 		List<SNSVO> list= service.getDateCount(vo);
-		logger.info("list: " + list);
+		//logger.info("list: " + list);
 
 		List<GraphVO> graphList = new ArrayList<GraphVO>();
 		
@@ -180,7 +229,7 @@ public class SNSController {
 			
 		}// end for
 		
-		logger.info("graphList: " + graphList);
+		//logger.info("graphList: " + graphList);
 		
 		return graphList;
 		

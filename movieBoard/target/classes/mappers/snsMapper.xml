@@ -193,8 +193,6 @@
 		from 
 			sns_data
 		where 
-			textType is not null
-		and
 			sns_name = 'facebook'
 		<include refid="search"></include>
 		order 
@@ -222,8 +220,6 @@
 		from 
 			sns_data
 		where 
-			textType is not null
-		and
 			sns_name = 'instagram'
 		<include refid="search"></include>
 		order 
@@ -251,8 +247,6 @@
 		from 
 			sns_data
 		where 
-			textType is not null
-		and
 			sns_name = 'twitter'
 		<include refid="search"></include>
 		order 

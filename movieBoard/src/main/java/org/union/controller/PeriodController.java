@@ -46,22 +46,22 @@ public class PeriodController {
 		logger.info("mediaGET called....");
 		List<PeriodMediaVO> mediaList = mediaService.periodMedia(cri);
 		List<PeriodMediaVO> reporterList = mediaService.periodReporter(cri);
-
+		logger.info("1");
 		// 정렬
 		PeriodComparator comparator = new PeriodComparator();
 		Collections.sort(mediaList, comparator);
 		Collections.sort(reporterList, comparator);
-		
+		logger.info("2");
 		model.addAttribute("mediaCount", mediaList.size());
 		model.addAttribute("pressCount", reporterList.size());
 		model.addAttribute("totalCount", mediaService.getTotalCount());
-		
+		logger.info("3");
 		mediaList = mediaList.subList(0, 20);
 		reporterList = reporterList.subList(0, 20);
-		
+		logger.info("4");
 		model.addAttribute("pressList", reporterList);
 		model.addAttribute("mediaList", mediaList);
-		
+		logger.info("5");
 	}
 
 	@GetMapping("/sns")
