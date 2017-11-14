@@ -95,7 +95,7 @@
                         <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left">
                           <option value="opt1">회사</option>
                         </select>
-                        <select id = "selectKeyword"  name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left">
+                        <select id = "selectKeyword"  name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left  select-left">
                           <option>키워드</option>
                           <option value="택시">택시</option>
                           <option value="강철비">강철비</option>
@@ -185,7 +185,7 @@
                                       <th scope="row">${snsVO.sns_idx}</th>
                                       <td>${snsVO.writeDate}</td>
                                       <td>${snsVO.keyword}</td>
-                                      <td><a href="${snsVO.url}" target="_blank">${snsVO.sns_title}</a></td>
+                                      <td><a href="${snsVO.url}" target="_blank"><div class="nobr">${snsVO.sns_title}</div></a></td>
                                       <td>${snsVO.sns_writer}</td>
                                       <td>${snsVO.like_cnt}</td>
                                       <td>${snsVO.share_cnt}</td>
