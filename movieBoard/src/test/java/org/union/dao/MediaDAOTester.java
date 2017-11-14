@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.union.domain.MediaVO;
+import org.union.domain.SearchCriteria;
 import org.union.persistence.MediaDAO;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -21,10 +22,12 @@ public class MediaDAOTester {
 	MediaDAO dao;
 	
 	MediaVO vo;
+	SearchCriteria cri;
 	
 	@Before
 	public void setUp() throws Exception {
 		vo = new MediaVO();
+		cri = new SearchCriteria();
 	}
 
 	
@@ -69,4 +72,16 @@ public class MediaDAOTester {
 		
 		dao.delete(1);
 	}
+	
+	
+	@Test
+	private void testSearchList() throws Exception{
+		
+		cri.setSearchType("t");
+		cri.setSelectKey("꾼");
+		cri.setTextType("좋은글");
+		
+		dao.listSearch(cri);
+	}
+
 }

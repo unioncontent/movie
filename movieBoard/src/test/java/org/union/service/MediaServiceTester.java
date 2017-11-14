@@ -27,7 +27,8 @@ public class MediaServiceTester {
 	@Autowired
 	private ReporterDAO reporterDAO;
 	
-	
+	@Autowired
+	private MediaService mediaService;
 	
 	
 
@@ -69,5 +70,7 @@ public class MediaServiceTester {
 			
 			
 	}
-
+	
+	
+	
 }

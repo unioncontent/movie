@@ -91,6 +91,11 @@ public class ExtractController {
 				cri.setCompany(null);
 			}
 		}
+		if(cri.getTextType() != null) {
+			if(cri.getTextType().equals("undefined") || cri.getTextType().equals("분류") || cri.getTextType().isEmpty()) {
+				cri.setTextType(null);
+			}
+		}
 		
 		if(cri.getCompany() == null || cri.getCompany().equals("회사")) {
 			logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
@@ -98,6 +103,9 @@ public class ExtractController {
 			
 			if(!vo.getUser_name().equals("union")) {
 			cri.setCompany(vo.getUser_name());
+			
+			}else {
+				cri.setCompany(null);
 			}
 		}
 		
