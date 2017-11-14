@@ -37,9 +37,12 @@ public class KeywordServiceImpl implements KeywordService{
 
 				KeywordVO keywordVO = keywordDAO.readByKeyword(list.get(i).getKeyword());
 				
-				UserVO userVO = userDAO.read(keywordVO.getUser_idx());
+				if(keywordVO != null) {
+					UserVO userVO = userDAO.read(keywordVO.getUser_idx());
 
-				list.get(i).setCompany(userVO.getUser_name());
+					list.get(i).setCompany(userVO.getUser_name());
+				}
+				
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

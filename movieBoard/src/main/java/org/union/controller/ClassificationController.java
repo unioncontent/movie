@@ -87,9 +87,21 @@ public class ClassificationController {
 			if(cri.getStartDate().indexOf("00:00:00") < 0 && cri.getEndDate().indexOf("23:59:59") < 0){ 
 				cri.setStartDate(cri.getStartDate() + " 00:00:00"); 
 				cri.setEndDate(cri.getEndDate() + " 23:59:59"); 
+			}
+		}
+		if(cri.getCompany() != null) {
+			if(cri.getCompany().isEmpty()) {
+				cri.setCompany(null);
+			}
 		}
 		
-		
+		if(cri.getCompany() == null || cri.getCompany().equals("회사")) {
+			logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+			UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
+			
+			if(!vo.getUser_name().equals("union")) {
+			cri.setCompany(vo.getUser_name());
+			}
 		}
 		
 		logger.info("cri: " + cri);
@@ -117,14 +129,6 @@ public class ClassificationController {
 		List<ExtractVO> classiList = new ArrayList<ExtractVO>();
 		ListUtil listUtil = new ListUtil();
 		
-		if(cri.getCompany() == null) {
-			logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
-			UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
-			
-			if(!vo.getUser_name().equals("union")) {
-			cri.setCompany(vo.getUser_name());
-			}
-		}
 		
 		listUtil.listAddSNSList(classiList, snsService.listSearch(cri));
 		listUtil.listAddCommunityList(classiList, communityService.listSearch(cri));
@@ -143,8 +147,14 @@ public class ClassificationController {
 		
 		// 회사 선택에 따른 키워드 재추출
 		if(cri.getCompany() != null) {
-			model.addAttribute("modelKeywordList", keywordService.listByUser(
-					userService.viewByName(cri.getCompany()).getUser_idx()));
+			if(cri.getCompany().isEmpty() == false) {
+			
+				UserVO userVO  = userService.viewByName(cri.getCompany());
+				logger.info("userVO: " + userVO);
+			    logger.info("keywordList: " + keywordService.listByUser(userVO.getUser_idx()));
+				model.addAttribute("modelKeywordList", keywordService.listByUser(
+						userService.viewByName(cri.getCompany()).getUser_idx()));
+			}
 		}
 		
 		
