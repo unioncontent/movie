@@ -84,13 +84,37 @@ public class ClassificationController {
 		
 		} 
 		if(cri.getStartDate() != null && cri.getEndDate() != null) {
+			logger.info("not null");
+			logger.info(cri.getStartDate());
+			logger.info(cri.getEndDate());
 			if(cri.getStartDate().indexOf("00:00:00") < 0 && cri.getEndDate().indexOf("23:59:59") < 0){ 
 				cri.setStartDate(cri.getStartDate() + " 00:00:00"); 
 				cri.setEndDate(cri.getEndDate() + " 23:59:59"); 
+			}
+		}
+		if(cri.getCompany() != null) {
+			if(cri.getCompany().isEmpty()) {
+				cri.setCompany(null);
+			}
 		}
 		
-		
+		if(cri.getCompany() == null || cri.getCompany().equals("회사")) {
+			logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+			UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
+			
+			if(!vo.getUser_name().equals("union")) {
+			cri.setCompany(vo.getUser_name());
+			
+			}else {
+				cri.setCompany(null);
+			}
 		}
+		if(cri.getTextType() != null) {
+			if(cri.getTextType().equals("undefined") || cri.getTextType().equals("분류") || cri.getTextType().isEmpty()) {
+				cri.setTextType(null);
+			}
+		}
+		
 		
 		logger.info("cri: " + cri);
 		
@@ -117,14 +141,6 @@ public class ClassificationController {
 		List<ExtractVO> classiList = new ArrayList<ExtractVO>();
 		ListUtil listUtil = new ListUtil();
 		
-		if(cri.getCompany() == null) {
-			logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
-			UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
-			
-			if(!vo.getUser_name().equals("union")) {
-			cri.setCompany(vo.getUser_name());
-			}
-		}
 		
 		listUtil.listAddSNSList(classiList, snsService.listSearch(cri));
 		listUtil.listAddCommunityList(classiList, communityService.listSearch(cri));
@@ -143,8 +159,14 @@ public class ClassificationController {
 		
 		// 회사 선택에 따른 키워드 재추출
 		if(cri.getCompany() != null) {
-			model.addAttribute("modelKeywordList", keywordService.listByUser(
-					userService.viewByName(cri.getCompany()).getUser_idx()));
+			if(cri.getCompany().isEmpty() == false) {
+			
+				UserVO userVO  = userService.viewByName(cri.getCompany());
+				logger.info("userVO: " + userVO);
+			    logger.info("keywordList: " + keywordService.listByUser(userVO.getUser_idx()));
+				model.addAttribute("modelKeywordList", keywordService.listByUser(
+						userService.viewByName(cri.getCompany()).getUser_idx()));
+			}
 		}
 		
 		
@@ -282,19 +304,83 @@ public class ClassificationController {
 			logger.info(e.getMessage());
 		}
 		
-		
-		
-		
 	}
 	
-	/*@GetMapping("/excel")
-	public ModelAndView excelGET(ModelAndView model, ExcelView excelView, String url) {
+	
+	
+	@ResponseBody
+	@PostMapping("modify")
+	public String modifyPOST(Integer idx, String table, String textType) {
+		logger.info("insertPOST called....");
 		
-		logger.info("excelList: " + excelList);
-		logger.info(success);
-		model.addObject("list", excelList);
-		model.setView(excelView);
+		logger.info("idx: " + idx);
+		logger.info("table: " + table);
+		logger.info("textType: " + textType );
+		
+		if("sns".equals(table)) {
+			logger.info("sns");
+			SNSVO vo = new SNSVO();
+			vo.setSns_idx(idx);
+			vo.setTextType(textType);
+			
+			snsService.modifyTextType(vo);
+			
+		}else if("media".equals(table) ){
+			logger.info("media");
+			MediaVO vo = new MediaVO();
+			vo.setMedia_idx(idx);
+			vo.setTextType(textType);
+			
+			mediaService.modifyType(vo);
+			
+		}else if ("portal".equals(table)) {
+			logger.info("portal");
+			PortalVO vo = new PortalVO();
+			vo.setPortal_idx(idx);
+			vo.setTextType(textType);
+			
+			portalService.modifyType(vo);
+			
+		}else if ("community".equals(table)) {
+			logger.info("community");
+			CommunityVO vo = new CommunityVO();
+			vo.setCommunity_idx(idx);
+			vo.setTextType(textType);
 
-		return model;
-	}*/
+			communityService.modifyType(vo);
+		
+		}
+		
+		return "success";
+	}
+	
+	
+	@ResponseBody
+	@PostMapping("/remove")
+	public String removePOST(Integer idx, String table) {
+		logger.info("removePOST called....");
+		
+		logger.info("idx: " + idx);
+		logger.info("table: " + table);
+		
+		if("sns".equals(table)) {
+			logger.info("sns");
+			snsService.remove(idx);
+			
+		}else if("media".equals(table) ){
+			logger.info("media");
+			mediaService.remove(idx);
+			
+		}else if ("portal".equals(table)) {
+			logger.info("portal");
+			portalService.remove(idx);
+			
+		}else if ("community".equals(table)) {
+			logger.info("community");
+			communityService.remove(idx);
+		}
+		
+		return "success";
+	}
+	
 }

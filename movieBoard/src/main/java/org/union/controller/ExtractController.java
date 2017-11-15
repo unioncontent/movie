@@ -85,8 +85,28 @@ public class ExtractController {
 				cri.setStartDate(cri.getStartDate() + " 00:00:00"); 
 				cri.setEndDate(cri.getEndDate() + " 23:59:59"); 
 			}
+		}
+		if(cri.getCompany() != null) {
+			if(cri.getCompany().isEmpty()) {
+				cri.setCompany(null);
+			}
+		}
+		if(cri.getTextType() != null) {
+			if(cri.getTextType().equals("undefined") || cri.getTextType().equals("분류") || cri.getTextType().isEmpty()) {
+				cri.setTextType(null);
+			}
+		}
 		
-		
+		if(cri.getCompany() == null || cri.getCompany().equals("회사")) {
+			logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+			UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
+			
+			if(!vo.getUser_name().equals("union")) {
+			cri.setCompany(vo.getUser_name());
+			
+			}else {
+				cri.setCompany(null);
+			}
 		}
 		
 		PageMaker pageMaker = new PageMaker();
@@ -111,14 +131,6 @@ public class ExtractController {
 
 		model.addAttribute("totalCount", totalCount);
 		
-		if(cri.getCompany() == null) {
-			logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
-			UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
-			
-			if(!vo.getUser_name().equals("union")) {
-			cri.setCompany(vo.getUser_name());
-			}
-		}
 		
 		List<ExtractVO> extractList = new ArrayList<ExtractVO>();
 		ListUtil listUtil = new ListUtil();
@@ -140,8 +152,14 @@ public class ExtractController {
 		
 		// 회사 선택에 따른 키워드 재추출
 		if(cri.getCompany() != null) {
-			model.addAttribute("modelKeywordList", keywordService.listByUser(
-				userService.viewByName(cri.getCompany()).getUser_idx()));
+			if(cri.getCompany().isEmpty() == false) {
+			
+				UserVO userVO  = userService.viewByName(cri.getCompany());
+				logger.info("userVO: " + userVO);
+			    logger.info("keywordList: " + keywordService.listByUser(userVO.getUser_idx()));
+				model.addAttribute("modelKeywordList", keywordService.listByUser(
+						userService.viewByName(cri.getCompany()).getUser_idx()));
+			}
 		}
 		
 		ExtractComparator comparator = new ExtractComparator();

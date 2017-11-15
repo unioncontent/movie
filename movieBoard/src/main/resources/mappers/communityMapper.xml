@@ -34,15 +34,18 @@
 										keyword_property = '포함'
 									)
 					)
-			<if test="selectKey != null">
+		</if>
+		<if test="selectKey != null">
 				and keyword in (select keyword from keyword_data where keyword_main = #{selectKey})
 			</if>
-		</if>
 		<if test="startDate != null">
 			and createDate <![CDATA[>]]> #{startDate}
 			<if test="endDate != null">
 				and createDate <![CDATA[<]]> #{endDate}
 			</if>
+		</if>
+		<if test="textType != null">
+			and textType = #{textType}
 		</if>
 	</sql>
 

@@ -5,7 +5,7 @@ package org.union.domain;
 public class SearchCriteria extends Criteria {
 
 	
-	private String searchType, keyword, selectKey, company;
+	private String searchType, keyword, selectKey, company, textType;
 	private Integer total;
 	private String startDate, endDate;
 
@@ -86,11 +86,22 @@ public class SearchCriteria extends Criteria {
 		this.company = company;
 	}
 
+	
+
+	public String getTextType() {
+		return textType;
+	}
+
+
+	public void setTextType(String textType) {
+		this.textType = textType;
+	}
+
 
 	@Override
 	public String toString() {
 		return "SearchCriteria [searchType=" + searchType + ", keyword=" + keyword + ", selectKey=" + selectKey
-				+ ", company=" + company + ", total=" + total + ", startDate=" + startDate + ", endDate=" + endDate
+				+ ", company=" + company + ", textType=" + textType+ ",  total=" + total + ", startDate=" + startDate + ", endDate=" + endDate
 				+ "]";
 	}
 
