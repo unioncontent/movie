@@ -3,16 +3,13 @@ package org.union.util;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.union.domain.CommunityVO;
 import org.union.domain.ExtractVO;
 import org.union.domain.MediaVO;
 import org.union.domain.PortalVO;
 import org.union.domain.SNSVO;
-import org.union.service.KeywordService;
 
-@Component
 public class ListUtil {
 	
 	/*@Autowired
@@ -52,7 +49,6 @@ public class ListUtil {
 				vo.setTextType(addList.get(i).getTextType());
 				vo.setWriter(addList.get(i).getSns_writer());
 				
-				System.out.println(vo.getKeyword());
 				/*System.out.println(keywordService.viewByKeyword(vo.getKeyword()).getKeyword_idx());
 				System.out.println(userService.view(keywordService.viewByKeyword(vo.getKeyword()).getKeyword_idx()).getUser_name());
 				*/

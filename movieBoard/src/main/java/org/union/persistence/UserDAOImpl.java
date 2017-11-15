@@ -1,5 +1,7 @@
 package org.union.persistence;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -66,6 +68,20 @@ public class UserDAOImpl implements UserDAO {
 	public UserVO readById(String user_id) {
 
 		return session.selectOne(namespace + "readById", user_id);
+	}
+
+
+	@Override
+	public List<UserVO> listAll() {
+
+		return session.selectList(namespace + "listAll");
+	}
+
+
+	@Override
+	public UserVO readByName(String user_name) {
+
+		return session.selectOne(namespace + "readByName", user_name);
 	}
 
 }

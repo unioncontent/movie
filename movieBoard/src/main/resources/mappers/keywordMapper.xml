@@ -45,9 +45,9 @@
 		
 	</delete>
 	
-	<select id="listByUser" resultType="String">
-		select
-			keyword
+	<select id="listByUser" resultType="KeywordVO">
+		select distinct
+			keyword_main
 		from
 			keyword_data
 		where
@@ -64,6 +64,17 @@
 			keyword_data
 		where
 			keyword = #{keyword}
+	
+	</select>
+
+	<select id="listAll" resultType="KeywordVO">
+		select distinct
+			keyword_main, user_idx
+		from
+			keyword_data
+		where
+			keyword_property = '포함'
+		order by user_idx
 	
 	</select>
 

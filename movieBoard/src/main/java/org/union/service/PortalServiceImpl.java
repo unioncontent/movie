@@ -21,13 +21,14 @@ public class PortalServiceImpl implements PortalService {
 	
 	@Override
 	public void regist(PortalVO vo) {
-		// TODO Auto-generated method stub
+		
+		portalDAO.create(vo);
 
 	}
 
 	@Override
 	public PortalVO view(Integer portal_idx) {
-		// TODO Auto-generated method stub
+
 		return null;
 	}
 

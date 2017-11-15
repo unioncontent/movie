@@ -10,6 +10,7 @@ import org.union.domain.ExtractVO;
 import org.union.domain.GraphVO;
 import org.union.domain.SNSVO;
 import org.union.domain.SearchCriteria;
+import org.union.persistence.KeywordDAO;
 import org.union.persistence.SNSDAO;
 
 @Service
@@ -19,6 +20,8 @@ public class SNSServiceImpl implements SNSService {
 	@Autowired
 	private SNSDAO snsDAO;
 	
+	@Autowired
+	private KeywordDAO keywordDAO;
 	
 	@Override
 	public void regist(SNSVO vo) {

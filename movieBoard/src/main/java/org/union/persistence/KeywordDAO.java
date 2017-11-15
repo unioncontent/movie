@@ -15,7 +15,9 @@ public interface KeywordDAO {
 	
 	public void delete(Integer keyword_idx);
 	
-	public List<String> listByUser(Integer user_idx);
+	public List<KeywordVO> listByUser(Integer user_idx);
+	
+	public List<KeywordVO> listAll();
 	
 	public KeywordVO readByKeyword(String keyword);
 }

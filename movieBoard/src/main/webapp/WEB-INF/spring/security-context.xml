@@ -34,6 +34,9 @@
 
 
 		<security:intercept-url pattern="/extract/extract" access="ROLE_USER" />
+		<security:intercept-url pattern="/classification/classification" access="ROLE_USER" />
+		<security:intercept-url pattern="/sns/**" access="ROLE_USER" />
+		
 
 		<!-- <security:remember-me key="wmoskey"
 			token-validity-seconds="2419200" /> -->

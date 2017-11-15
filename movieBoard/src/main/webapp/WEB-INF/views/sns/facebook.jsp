@@ -7,9 +7,10 @@
 <html>
 <head>
 
-<meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
+<meta name="_csrf" content="${_csrf.token}" />
 <!-- default header name is X-CSRF-TOKEN -->
-<meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
+<meta name="_csrf_header" content="${_csrf.headerName}"/>
+
 <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -92,14 +93,30 @@
                     <div class="row">
                       <!-- data setting start -->
                       <div class="col-md-7">
-                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left">
-                          <option value="opt1">회사</option>
+                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="selectCompany">
+                          <option>회사</option>
+                          <c:if test="${user.user_type == 1 }">
+                          <c:forEach items="${companyList}" var = "companyList">
+                          <option value="${companyList.user_name}">${companyList.user_name}</option>
+                          </c:forEach>
+                          </c:if>
+                          <c:if test="${user.user_type == 2}">
+                          <option value="${companyList.user_name}">${companyList.user_name}</option>
+                          </c:if>
                         </select>
-                        <select id = "selectKeyword"  name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left">
+                        
+                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left" id="selectKeyword">
                           <option>키워드</option>
-                          <option value="택시">택시</option>
-                          <option value="강철비">강철비</option>
-                          <option value="살인자">살인자</option>
+                          <c:if test="${modelKeywordList == null}" >
+                          	<c:forEach items="${keywordList}" var = "keywordList">
+                          <option value="${keywordList.keyword_main}">${keywordList.keyword_main}</option>
+                          </c:forEach>
+                          </c:if>
+                          <c:if test="${modelKeywordList != null}">
+                          	<c:forEach items="${modelKeywordList}" var = "keywordList">
+                          <option value="${keywordList.keyword_main}">${keywordList.keyword_main}</option>
+                          </c:forEach>
+                          </c:if>
                         </select>
                       </div>
                       <div class="col-md-5">
@@ -162,7 +179,7 @@
                                     <button id="searchBtn" class=" btn btn-inverse">검색</button>
                                   </span>
                                 </div>
-                              <button class="btn btn-warning f-right alert-confirm" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'alert-confirm']);"><i class="icofont icofont-download-alt"></i>EXCEL</button>
+                              <button id = "excel" class="btn btn-warning f-right alert-confirm" ><i class="icofont icofont-download-alt"></i>EXCEL</button>
                           </div>
                           <div class="card-block">
                             <div class="table-responsive">
@@ -185,7 +202,7 @@
                                       <th scope="row">${snsVO.sns_idx}</th>
                                       <td>${snsVO.writeDate}</td>
                                       <td>${snsVO.keyword}</td>
-                                      <td><a href="${snsVO.url}" target="_blank">${snsVO.sns_title}</a></td>
+                                      <td><a href="${snsVO.url}" target="_blank"><div class="nobr">${snsVO.sns_title}</div></a></td>
                                       <td>${snsVO.sns_writer}</td>
                                       <td>${snsVO.like_cnt}</td>
                                       <td>${snsVO.share_cnt}</td>
@@ -317,8 +334,18 @@
 </body>
 
 <script type="text/javascript">
-  $(document).ready(function(){
 
+  //ajax 보안
+  var token = $("meta[name='_csrf']").attr("content");
+  var header = $("meta[name='_csrf_header']").attr("content");
+
+  $(function() {
+	  $(document).ajaxSend(function(e, xhr, options) {
+	  	  xhr.setRequestHeader(header, token);
+	  });
+  });
+
+  $(document).ready(function(){
 
 	// 페이징 css 제어
 	/* var pageNum = $(".page-item");
@@ -329,15 +356,45 @@
 	}  */
 
 
+	// 엑셀 출력시
+	$(document).on("click","#excel",function(){
+	    swal({
+	          title: "엑셀출력 하시겠습니까?",
+	          text: "현재 리스트가 엑셀출력 됩니다.",
+	          type: "warning",
+	          showCancelButton: true,
+	          confirmButtonClass: "btn-danger",
+	          confirmButtonText: "YES",
+	          closeOnConfirm: false
+	        },
+	        function(){//엑셀 출력하겠다고 할 시 진행 함수
+	        	
+	        	console.log("엑셀출력한다?");
+
+	        	self.location = "excel?"+ "searchType=" + $("#selectSearchType option:selected").val()
+				  + "&keyword=" + decodeURI(window.location.href.split("&keyword=")[1]).split("&selectKey")[0]
+				  + "&selectKey=" + $('#selectKeyword option:selected').val()
+				  + "&company=" + $("#selectCompany option:selected").val(); 
+
+	        	console.log(self.loaction);
+
+		  		swal("Success!", "엑셀출력 되었습니다.", "success");
+
+	        });
+		});
+
+	
+	
 	var date = getDate("week");
 	var startDate = date.startDate;
 	var endDate = date.endDate;
+	console.log("startDate: " + startDate);
+	console.log("endDate: " + endDate);
 
 	ajaxGraph(startDate, endDate);
 
 	var selectOption = decodeURI(window.location.href.split("selectKey=")[1]);
-	console.log(selectOption);
-
+	console.log("selectOption: " + selectOption);
 
 
 	var $selectKeyword = $('#selectKeyword');
@@ -357,6 +414,30 @@
 		console.log($('#selectKeyword option:selected').val());
 
 		searchList();
+	});
+	
+	var companyOption = decodeURI(window.location.href.split("company=")[1]).split("&textType")[0];
+
+
+	var $selectCompany = $('#selectCompany');
+	if(companyOption != 'undefined'){
+		for(var i = 0; i < $selectCompany[0].length; i++ ){
+
+			if($selectCompany[0].children[i].value == companyOption){
+				$selectCompany[0].children[i].selected = 'selected';
+			} 
+		}
+	}
+	$selectCompany[0][0].disabled = true;
+	
+	
+	// 회사 선택시
+	$selectCompany.change(function(){
+		console.log("selectCompany clicked....");
+		console.log($("#selectCompany option:selected").val());
+		
+		self.location = "facebook?"+ "company=" + $("#selectCompany option:selected").val();
+		
 	});
 
 
@@ -443,7 +524,9 @@ function searchList(event) {
 				  + "&keyword="
 				  + $('#keywordInput').val()
 				  + "&selectKey="
-				  + $('#selectKeyword option:selected').val();
+				  + $('#selectKeyword option:selected').val()
+				  + "&company="
+				  + $("#selectCompany option:selected").val();
 }
 
 // 그래프 함수
@@ -535,14 +618,7 @@ function getDate(type){
 
 }
 
-var token = $("meta[name='_csrf']").attr("content");
-var header = $("meta[name='_csrf_header']").attr("content");
 
-$(function() {
-    $(document).ajaxSend(function(e, xhr, options) {
-        xhr.setRequestHeader(header, token);
-    });
-});
 </script>
 
 </html>

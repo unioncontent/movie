@@ -18,8 +18,36 @@
 				</if>
 			</if>
 		</if>
+		<if test="company != null">
+			and
+			   keyword in (select 
+						keyword 
+					from 
+						keyword_data
+					where
+						user_idx = (select 
+										user_idx 
+									from 
+										user_data 
+									where 
+										user_name = #{company} 
+									and 
+										keyword_property = '포함'
+									)
+					)
+			
+		</if>
 		<if test="selectKey != null">
-			and keyword = #{selectKey}
+				and keyword in (select keyword from keyword_data where keyword_main = #{selectKey})
+			</if>
+		<if test="startDate != null">
+			and createDate <![CDATA[>]]> #{startDate}
+			<if test="endDate != null">
+				and createDate <![CDATA[<]]> #{endDate}
+			</if>
+		</if>
+		<if test="textType != null">
+			and textType = #{textType}
 		</if>
 	</sql>
  
@@ -165,8 +193,6 @@
 		from 
 			sns_data
 		where 
-			textType is not null
-		and
 			sns_name = 'facebook'
 		<include refid="search"></include>
 		order 
@@ -194,8 +220,6 @@
 		from 
 			sns_data
 		where 
-			textType is not null
-		and
 			sns_name = 'instagram'
 		<include refid="search"></include>
 		order 
@@ -223,8 +247,6 @@
 		from 
 			sns_data
 		where 
-			textType is not null
-		and
 			sns_name = 'twitter'
 		<include refid="search"></include>
 		order 

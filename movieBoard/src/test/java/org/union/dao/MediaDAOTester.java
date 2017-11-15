@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.union.domain.MediaVO;
+import org.union.domain.SearchCriteria;
 import org.union.persistence.MediaDAO;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -21,29 +22,26 @@ public class MediaDAOTester {
 	MediaDAO dao;
 	
 	MediaVO vo;
+	SearchCriteria cri;
 	
 	@Before
 	public void setUp() throws Exception {
 		vo = new MediaVO();
+		cri = new SearchCriteria();
 	}
 
 	
 	@Test
 	public void testCreate() throws ParseException {
 		
-		for(int i = 0; i < 20; i++) {
-		vo.setMedia_name(i + "유니온스포츠");
-		vo.setMedia_title(i + "강철비 흥행하나 기사");
+		vo.setMedia_name("유니온스포츠");
+		vo.setMedia_title("강철비 흥행하나 기사");
 		vo.setMedia_content("강철비가 ~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 		vo.setReporter_name("김동진");
-		
-		
-		
 		vo.setKeyword("강철비");
 		vo.setUrl("urlurlurlurlurlurlurlurlurl");
 		
 		dao.create(vo);
-		}
 	}
 	
 	
@@ -74,4 +72,16 @@ public class MediaDAOTester {
 		
 		dao.delete(1);
 	}
+	
+	
+	@Test
+	private void testSearchList() throws Exception{
+		
+		cri.setSearchType("t");
+		cri.setSelectKey("꾼");
+		cri.setTextType("좋은글");
+		
+		dao.listSearch(cri);
+	}
+
 }

@@ -114,7 +114,7 @@ public class MediaServiceImpl implements MediaService {
 		List<PeriodMediaVO> periodList = new ArrayList<PeriodMediaVO>();
 
 		List<ReporterVO> reporterList = reporterDAO.listAll();
-
+		System.out.println(1);
 		for (int i = 0; i < reporterList.size(); i++) {
 			PeriodMediaVO vo = new PeriodMediaVO();
 
@@ -124,8 +124,9 @@ public class MediaServiceImpl implements MediaService {
 			vo.setReporter(reporterList.get(i).getReporter_name());
 			
 			periodList.add(vo);
+			System.out.println(periodList);
 		}
-		
+		System.out.println(2);
 		for(int i = 0; i < periodList.size(); i++) {
 			for(int j = 0; j < periodList.size(); j++) {
 				if(i == j) {
@@ -143,7 +144,7 @@ public class MediaServiceImpl implements MediaService {
 		Collections.sort(periodList, comparator);
 		
 		periodList = periodList.subList(0, 20);*/
-		
+		System.out.println(3);
 		return periodList;
 	}
 	

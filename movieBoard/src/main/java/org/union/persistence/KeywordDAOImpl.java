@@ -56,7 +56,7 @@ public class KeywordDAOImpl implements KeywordDAO {
 	}
 
 	@Override
-	public List<String> listByUser(Integer user_idx) {
+	public List<KeywordVO> listByUser(Integer user_idx) {
 
 		return session.selectList(namespace + "listByUser", user_idx);
 	}
@@ -65,6 +65,12 @@ public class KeywordDAOImpl implements KeywordDAO {
 	public KeywordVO readByKeyword(String keyword) {
 
 		return session.selectOne(namespace + "readByKeyword",keyword);
+	}
+
+	@Override
+	public List<KeywordVO> listAll() {
+
+		return session.selectList(namespace + "listAll");
 	}
 
 }
