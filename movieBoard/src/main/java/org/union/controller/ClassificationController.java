@@ -126,11 +126,6 @@ public class ClassificationController {
 		
 		}
 		
-		logger.info("community: " + communityService.getSearchCount(cri));
-		logger.info("sns: " + snsService.getSearchCount(cri));
-		logger.info("portalService: " + portalService.getSearchCount(cri));
-		logger.info("media: " + mediaService.getSearchCount(cri));
-		
 		Integer totalCount = communityService.getSearchCount(cri)
 							+ snsService.getSearchCount(cri)
 							+ portalService.getSearchCount(cri)
@@ -139,8 +134,9 @@ public class ClassificationController {
 		model.addAttribute("totalCount", totalCount);
 		
 		List<ExtractVO> classiList = new ArrayList<ExtractVO>();
+		logger.info("before");
 		ListUtil listUtil = new ListUtil();
-		
+		logger.info("after");
 		
 		listUtil.listAddSNSList(classiList, snsService.listSearch(cri));
 		listUtil.listAddCommunityList(classiList, communityService.listSearch(cri));
@@ -188,6 +184,29 @@ public class ClassificationController {
 	@ResponseBody
 	@GetMapping("/excel")
 	public ModelAndView excelGET(ModelAndView model, ExcelView excelView, SearchCriteria cri) {
+		
+		if(cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey()) ) {
+			logger.info("selectKey is null");
+			cri.setSelectKey(null);
+		}
+		
+		if(cri.getCompany() != null) {
+			if(cri.getCompany().isEmpty()) {
+				cri.setCompany(null);
+			}
+		}
+		
+		if(cri.getCompany() == null || cri.getCompany().equals("회사")) {
+			logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+			UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
+			
+			if(!vo.getUser_name().equals("union")) {
+			cri.setCompany(vo.getUser_name());
+			
+			}else {
+				cri.setCompany(null);
+			}
+		}
 		
 		logger.info("cri: " + cri);
 

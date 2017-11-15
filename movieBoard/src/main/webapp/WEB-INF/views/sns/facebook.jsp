@@ -179,7 +179,7 @@
                                     <button id="searchBtn" class=" btn btn-inverse">검색</button>
                                   </span>
                                 </div>
-                              <button class="btn btn-warning f-right alert-confirm" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'alert-confirm']);"><i class="icofont icofont-download-alt"></i>EXCEL</button>
+                              <button id = "excel" class="btn btn-warning f-right alert-confirm" ><i class="icofont icofont-download-alt"></i>EXCEL</button>
                           </div>
                           <div class="card-block">
                             <div class="table-responsive">
@@ -356,6 +356,35 @@
 	}  */
 
 
+	// 엑셀 출력시
+	$(document).on("click","#excel",function(){
+	    swal({
+	          title: "엑셀출력 하시겠습니까?",
+	          text: "현재 리스트가 엑셀출력 됩니다.",
+	          type: "warning",
+	          showCancelButton: true,
+	          confirmButtonClass: "btn-danger",
+	          confirmButtonText: "YES",
+	          closeOnConfirm: false
+	        },
+	        function(){//엑셀 출력하겠다고 할 시 진행 함수
+	        	
+	        	console.log("엑셀출력한다?");
+
+	        	self.location = "excel?"+ "searchType=" + $("#selectSearchType option:selected").val()
+				  + "&keyword=" + decodeURI(window.location.href.split("&keyword=")[1]).split("&selectKey")[0]
+				  + "&selectKey=" + $('#selectKeyword option:selected').val()
+				  + "&company=" + $("#selectCompany option:selected").val(); 
+
+	        	console.log(self.loaction);
+
+		  		swal("Success!", "엑셀출력 되었습니다.", "success");
+
+	        });
+		});
+
+	
+	
 	var date = getDate("week");
 	var startDate = date.startDate;
 	var endDate = date.endDate;

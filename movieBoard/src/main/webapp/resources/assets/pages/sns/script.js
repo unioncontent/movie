@@ -5,7 +5,7 @@ $(window).on('resize',function(){
   }, 500);
 });
 
-$(document).ready(function() {
+/*$(document).ready(function() {
   linechart();
   $(".icofont-refresh").on("click",linechart);
 
@@ -24,7 +24,7 @@ $(document).ready(function() {
 					swal("Success!", "엑셀출력 되었습니다.", "success");
 				});
 	};
-});
+});*/
 
 /*line*/
 function linechart(){
