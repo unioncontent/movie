@@ -10,6 +10,7 @@ public class GraphVO {
 	private Integer likeCount;
 	private Integer shareCount;
 	private Integer replyCount;
+	private Integer facebookCount, instagramCount, twitterCount;
 	public String getStartDate() {
 		return startDate;
 	}
@@ -52,11 +53,30 @@ public class GraphVO {
 	public void setReplyCount(Integer replyCount) {
 		this.replyCount = replyCount;
 	}
+	public Integer getFacebookCount() {
+		return facebookCount;
+	}
+	public void setFacebookCount(Integer facebookCount) {
+		this.facebookCount = facebookCount;
+	}
+	public Integer getInstagramCount() {
+		return instagramCount;
+	}
+	public void setInstagramCount(Integer instagramCount) {
+		this.instagramCount = instagramCount;
+	}
+	public Integer getTwitterCount() {
+		return twitterCount;
+	}
+	public void setTwitterCount(Integer twitterCount) {
+		this.twitterCount = twitterCount;
+	}
 	@Override
 	public String toString() {
 		return "GraphVO [startDate=" + startDate + ", endDate=" + endDate + ", sns_name=" + sns_name + ", writeDate="
 				+ writeDate + ", likeCount=" + likeCount + ", shareCount=" + shareCount + ", replyCount=" + replyCount
-				+ "]";
+				+ ", facebookCount=" + facebookCount + ", instagramCount=" + instagramCount + ", twitterCount="
+				+ twitterCount + "]";
 	}
 	
 }

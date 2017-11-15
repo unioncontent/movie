@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StopWatch;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -65,8 +66,9 @@ public class ClassificationController {
 	@GetMapping("/classification")
 	public void classificationGET(@ModelAttribute("cri") SearchCriteria cri, Model model) {
 		logger.info("classificationGET called....");
-		
-		
+		StopWatch stopWatch = new StopWatch("clssification");
+
+		stopWatch.start("1");
 		if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
 			logger.info("keyword is null");
 			cri.setKeyword(null);
@@ -125,11 +127,13 @@ public class ClassificationController {
 			cri.setPerPageNum(cri.getPerPageNum()/4);
 		
 		}
-		
+		stopWatch.stop();
+		stopWatch.start("2");
 		Integer totalCount = communityService.getSearchCount(cri)
 							+ snsService.getSearchCount(cri)
 							+ portalService.getSearchCount(cri)
 							+ mediaService.getSearchCount(cri);
+		stopWatch.stop();
 		
 		model.addAttribute("totalCount", totalCount);
 		
@@ -137,12 +141,12 @@ public class ClassificationController {
 		logger.info("before");
 		ListUtil listUtil = new ListUtil();
 		logger.info("after");
-		
+		stopWatch.start("3");
 		listUtil.listAddSNSList(classiList, snsService.listSearch(cri));
 		listUtil.listAddCommunityList(classiList, communityService.listSearch(cri));
 		listUtil.listAddPortalList(classiList, portalService.listSearch(cri));
 		listUtil.listAddMediaList(classiList, mediaService.listSearch(cri));
-		
+		stopWatch.stop();
 		cri.setPerPageNum(cri.getPerPageNum()*4);
 		
 		pageMaker.setCri(cri);
@@ -152,6 +156,8 @@ public class ClassificationController {
 		
 		logger.info("pageMaker: " + pageMaker);
 		model.addAttribute("pageMaker", pageMaker);
+		
+		
 		
 		// 회사 선택에 따른 키워드 재추출
 		if(cri.getCompany() != null) {
@@ -175,6 +181,8 @@ public class ClassificationController {
 		
 		model.addAttribute("classiList", classiList);
 
+		logger.info(stopWatch.prettyPrint());
+		
 		//excelList = classiList;
 	}
 	
