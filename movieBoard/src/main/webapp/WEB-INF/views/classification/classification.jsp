@@ -101,7 +101,7 @@
                     <div class="row">
                       <!-- data setting start -->
                       <div class="col-md-7">
-                      
+
                         <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="selectCompany">
                           <option>회사</option>
                           <c:if test="${user.user_type == 1 }">
@@ -113,7 +113,7 @@
                           <option value="${companyList.user_name}">${companyList.user_name}</option>
                           </c:if>
                         </select>
-                        
+
                         <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left" id="selectKeyword">
                           <option>키워드</option>
                           <c:if test="${modelKeywordList == null}" >
@@ -127,7 +127,7 @@
                           </c:forEach>
                           </c:if>
                         </select>
-                        
+
                         <select name="select" class="col-md-1 form-control form-control-inverse m-r-10 m-b-10 p-r-5 f-left select-left">
                           <option value="opt1">분류</option>
                           <option value="opt1">좋은글</option>
@@ -187,11 +187,11 @@
                                 <thead>
                                   <tr>
                                     <th width="5%">No</th>
-                                    <th width="10%">페이지 분류<span class="text-muted"></span></th>
-                                    <th width="10%">페이지 명</th>
-                                    <th width="10%">회사명</th>
-                                    <th><span class="text-muted">키워드</span></th>
-                                    <th width="20%">제목 &<span class="text-muted"></span><span class="text-success"> 컨텐츠</span></th>
+                                    <th width="7%">페이지 분류<span class="text-muted"></span></th>
+                                    <th width="7%">페이지 명</th>
+                                    <th width="7%">회사명</th>
+                                    <th width="7%"><span class="text-muted">키워드</span></th>
+                                    <th width="30%">제목 &<span class="text-muted"></span><span class="text-success"> 컨텐츠</span></th>
                                     <th width="10%">추출일 / 작성일</th>
                                     <th width="10%">분류변경</th>
                                     <th width="5%">분류처리</th>
@@ -357,10 +357,10 @@
                             </button>
                           </div>
                           <div class="modal-body">
-                              
+
                             <div class="modal-body">
                             <form id="frm">
-                              
+
                               <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">키워드</label>
                                 <div class="col-sm-10">
@@ -388,7 +388,7 @@
                                     <input id = "insertInputSite" type="text" class="form-control" placeholder="사이트명">
                                 </div>
                               </div>
-                              
+
                               <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">컨텐츠 타입</label>
                                 <div class="col-sm-10">
@@ -561,7 +561,7 @@
 
 <script type="text/javascript">
 	$(document).ready(function(){
-		
+
 
 		// ajax 보안
 		var token = $("meta[name='_csrf']").attr("content");
@@ -573,7 +573,7 @@
 		    });
 		});
 		 */
-		
+
 		// 수동입력 inserBtn 클릭시...
 		$("#insertBtn").on("click", function(){
 			var keyword = $("#insertSelectKeyword option:selected")[0].value;
@@ -600,14 +600,14 @@
 			console.log(date2);
 			var url = $("#url").val();
 			console.log(url);
-			
+
 			date1 = date1.replace("/", "-").replace("/", "-");
 			var date = date1 + " " +date2;
-			
+
 			//var stringData = "{'keyword':'"+ keyword+"', 'textType':'"+ textType + "', 'domain' :'"+ domain
 							+"', 'writeDate' :'"+ date+"', 'writer' :'"+ writer + "'";
 
-			
+
 			if(domainType == ''){
 				console.log("domainType is null;");
 				alert("사이트명을 작성해주세요.");
@@ -623,14 +623,14 @@
 			else if(url == ''){
 				console.log("url is null;");
 				alert("url을 작성해주세요.");
-			
+
 			}else{
-				//stringData  = stringData + ", 'domainType':'"+domainType+"', 'title': '" + title +"',"+ 
+				//stringData  = stringData + ", 'domainType':'"+domainType+"', 'title': '" + title +"',"+
 				//"'content': '"+content + "', 'url': '" + url + "'";
-			
+
 				if(domainType == "community"){
 					//stringData = stringData + ", 'writerIP': " + writerIP + ", 'board_number': " + board_number + "}";
-				
+
 					$.ajax({
 
 				 		type : "POST",
@@ -650,14 +650,14 @@
 					  		success : function(){
 					  		swal("Success!", "등록 되었습니다.", "success");
 					  			console.log("success");
-					  	  } 
-					
-					
-					}); 
-					
+					  	  }
+
+
+					});
+
 				}else{
 					//stringData = stringData + "}";
-					
+
 					$.ajax({
 
 				 		type : "POST",
@@ -676,32 +676,32 @@
 					  	   success : function(){
 					  		 swal("Success!", "등록 되었습니다.", "success");
 					  		  console.log("success");
-					  	  } 
-					
-					
-					}); 
+					  	  }
+
+
+					});
 				}
-			
+
 			}
-			
-		
+
+
 		}); // end insertBtn click...
-		
+
 		//캘린더 클릭시..
 		$('#fromDate').on('apply.daterangepicker', function(ev, picker) {
 			   var startDate = picker.startDate.format('YYYY-MM-DD');
 			   var endDate = picker.endDate.format('YYYY-MM-DD');
-			   
+
 			   console.log("startDate: " + startDate);
 			   console.log("endDate: " + endDate);
-			   
+
 			   self.location = "classification?"+ "searchType=" + $("#selectSearchType option:selected").val()
 				  + "&keyword=" + decodeURI(window.location.href.split("&keyword=")[1]).split("&selectKey")[0]
 				  + "&selectKey=" + $('#selectKeyword option:selected').val()
 				  + "&startDate=" + startDate
 	        	  + "&endDate=" +  endDate;
 		});
-		
+
 
 		// content 길시에 ...으로 변경
 		var $content = $(".text-success");
@@ -729,7 +729,7 @@
 			}
 		}
 		$selectKeyword[0][0].disabled = true;
-		
+
 
 		// 키워드 선택시
 		$selectKeyword.change(function(){
@@ -738,7 +738,7 @@
 
 			searchList();
 		});
-		
+
 		var companyOption = decodeURI(window.location.href.split("company=")[1]);
 
 
@@ -748,17 +748,17 @@
 
 				if($selectCompany[0].children[i].value == companyOption){
 					$selectCompany[0].children[i].selected = 'selected';
-				} 
+				}
 			}
 		}
 		$selectCompany[0][0].disabled = true;
-		
-		
+
+
 		// 회사 선택시
 		$selectCompany.change(function(){
 			console.log("selectCompany clicked....");
 			console.log($("#selectCompany option:selected").val());
-			
+
 			searchList();
 		});
 
@@ -781,10 +781,10 @@
 				  + "&selectKey=" + $('#selectKeyword option:selected').val()
 				  + "&startDate=" + decodeURI(window.location.href.split("&startDate=")[1]).split("&endDate")[0]
 	        	  + "&endDate=" +  decodeURI(window.location.href.split("&endDate=")[1]);
-	        
-		  
+
+
 		  		swal("Success!", "엑셀출력 되었습니다.", "success");
-	        	
+
 	        	/* $.ajax({
 					  type: "GET",
 					  url: "excel",
@@ -794,7 +794,7 @@
 						  },
 					  dataType : "text",
 					  success : function(){ */
-						  
+
 					 /*  }
 					}); */
 
@@ -832,7 +832,7 @@
 	        	+ "&company=" + $("#selectCompany option:selected").val();
 	}
 
-	
+
 </script>
 
 </html>

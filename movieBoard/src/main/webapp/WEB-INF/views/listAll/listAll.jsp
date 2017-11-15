@@ -151,10 +151,10 @@
                                 <thead>
                                   <tr>
                                     <th width="5%">NO</th>
-                                    <th width="10%">회사명</th>
-                                    <th width="10%">컨텐츠타입</th>
-                                    <th width="10%">게시판명</th>
-                                    <th width="20%">제목</th>
+                                    <th width="7%">회사명</th>
+                                    <th width="7%">컨텐츠타입</th>
+                                    <th width="7%">게시판명</th>
+                                    <th width="30%">제목</th>
                                     <th width="10%">추출일 / 작성일</th>
                                     <th width="10%">분류변경</th>
                                     <th width="5%">이미지</th>
