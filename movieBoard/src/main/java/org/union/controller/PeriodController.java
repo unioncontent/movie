@@ -231,7 +231,7 @@ public class PeriodController {
 	
 	@ResponseBody
 	@GetMapping("/excel")
-	public ModelAndView excelGET(ModelAndView model, ExcelView excelView, SearchCriteria cri) {
+	public ModelAndView excelGET(ModelAndView model, ExcelView excelView, SearchCriteria cri, String part) {
 		
 		if(cri.getCompany() == null || cri.getCompany().equals("회사")) {
 			logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
@@ -263,7 +263,8 @@ public class PeriodController {
 		}
 		
 		logger.info("cri: " + cri);
-
+		logger.info("part: " + part);
+		
 		List<ExtractVO> classiList = new ArrayList<ExtractVO>();
 		ListUtil listUtil = new ListUtil();
 		listUtil.listAddSNSList(classiList, snsService.listExcel(cri));

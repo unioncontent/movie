@@ -491,6 +491,7 @@
         	self.location = "excel?"
 			  + "company=" + $("#selectCompany option:selected").val()
 			  + "&selectKey=" + $('#selectKeyword option:selected').val()
+			  + "&part=sns";
 
 	  		swal("Success!", "엑셀출력 되었습니다.", "success");
 
