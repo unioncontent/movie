@@ -102,14 +102,6 @@
 			community_data
 		where
 			textType is null
-		<if test="startDate != null">
-		and
-			writeDate <![CDATA[>]]> #{startDate}
-		<if test="endDate != null">
-  		and 
-  			writeDate <![CDATA[<]]> #{endDate}
-  		</if>
-  		</if>
 		<include refid="search"></include>
 		order by
 			createDate desc
@@ -126,19 +118,37 @@
 			community_data
 		where
 			textType is null
-		<if test="startDate != null">
-		and
-			writeDate <![CDATA[>]]> #{startDate}
-		<if test="endDate != null">
-  		and 
-  			writeDate <![CDATA[<]]> #{endDate}
-  		</if>
-  		</if>
 		<include refid="search"></include>
 	
 	
 	</select>
 	
+	<select id="listComplete" resultType="CommunityVO">
+		select 
+			*
+		from 
+			community_data
+		where 
+			textType is not null
+		and textType != '삭제글'
+		<include refid="search"></include>
+		order 
+			by createdate desc
+		limit  
+			#{startPage}, #{perPageNum}
+	
+	</select>
+	
+	<select id="getCompleteCount" resultType="Integer">
+		select
+			count(*)
+		from
+			community_data
+		where
+			textType is not null
+		and textType != '삭제글'
+		<include refid="search"></include>
+	</select>
 
 	<select id="listSearch" resultType="CommunityVO">
 		select 
@@ -174,6 +184,7 @@
 			community_data
 		where 
 			textType is not null
+		and textType != '삭제글'
 		<include refid="search"></include>
 	
 	</select>

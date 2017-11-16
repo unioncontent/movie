@@ -558,7 +558,7 @@
 	      type : "POST",
 		  url : "graph",
 	 	  dataType : "json",
-	 	  data : {startDate : startDate, endDate : endDate, 
+	 	  data : {startDate : startDate, endDate : endDate, part : "sns",
 	 		      company : $("#selectCompany option:selected").val(), selectKey : $("#selectKeyword option:selected").val()},
 	  	  error : function(){
 	      	alert('graphPOST ajax error....');

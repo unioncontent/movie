@@ -25,12 +25,12 @@ import org.union.domain.PageMaker;
 import org.union.domain.PeriodMediaVO;
 import org.union.domain.SearchCriteria;
 import org.union.domain.UserVO;
+import org.union.service.CommunityService;
 import org.union.service.KeywordService;
 import org.union.service.MediaService;
 import org.union.service.SNSService;
 import org.union.service.UserService;
 import org.union.util.ExcelView;
-import org.union.util.ExtractComparator;
 import org.union.util.ListUtil;
 import org.union.util.PeriodComparator;
 
@@ -42,6 +42,9 @@ public class PeriodController {
 
 	@Autowired
 	private MediaService mediaService;
+	
+	@Autowired
+	private CommunityService communityService;
 
 	@Autowired
 	private SNSService snsService;
@@ -58,8 +61,80 @@ public class PeriodController {
 	}
 
 	@GetMapping("/community")
-	public void communityGET() {
+	public void communityGET(@ModelAttribute("cri") SearchCriteria cri, Model model) {
 		logger.info("communityGET called....");
+		
+		cri.setKeyword(null);
+		cri.setTextType(null);
+		
+		if(cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey()) ) {
+			logger.info("selectKey is null");
+			cri.setSelectKey(null);
+		}
+		if("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate())
+				|| cri.getStartDate() == "" || cri.getEndDate() == ""){
+			cri.setStartDate(null);
+			cri.setEndDate(null);
+		
+		} 
+		if(cri.getStartDate() != null && cri.getEndDate() != null) {
+			if(cri.getStartDate().indexOf("00:00:00") < 0 && cri.getEndDate().indexOf("23:59:59") < 0){ 
+				cri.setStartDate(cri.getStartDate() + " 00:00:00"); 
+				cri.setEndDate(cri.getEndDate() + " 23:59:59"); 
+			}
+		}
+		if(cri.getCompany() != null) {
+			if(cri.getCompany().isEmpty()) {
+				cri.setCompany(null);
+			}
+		}
+		if(cri.getCompany() == null || cri.getCompany().equals("회사")) {
+			logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+			UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
+			
+			if(!vo.getUser_name().equals("union")) {
+			cri.setCompany(vo.getUser_name());
+			
+			}else {
+				cri.setCompany(null);
+			}
+		}
+
+		// 회사 선택에 따른 키워드 재추출
+		if (cri.getCompany() != null) {	
+			if (cri.getCompany().isEmpty() == false) {
+
+				UserVO userVO = userService.viewByName(cri.getCompany());
+				logger.info("userVO: " + userVO);
+				logger.info("keywordList: " + keywordService.listByUser(userVO.getUser_idx()));
+				model.addAttribute("modelKeywordList",
+						keywordService.listByUser(userService.viewByName(cri.getCompany()).getUser_idx()));
+			}
+		}
+		
+		logger.info("cri: " + cri);
+		
+		cri.setTextType("좋은글");
+		model.addAttribute("type1", communityService.getSearchCount(cri));
+		
+		cri.setTextType("나쁜글");
+		model.addAttribute("type2", communityService.getSearchCount(cri));
+		
+		cri.setTextType("관심글");
+		model.addAttribute("type3", communityService.getSearchCount(cri));
+		
+		cri.setTextType("기타글");
+		model.addAttribute("type4", communityService.getSearchCount(cri));
+		
+		cri.setTextType(null);
+		model.addAttribute("communityList", communityService.listComplete(cri));
+		
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(communityService.getCompleteCount(cri));
+		
+		logger.info("pageMaker: " + pageMaker);
+		model.addAttribute("pageMaker", pageMaker);
 	}
 
 	@GetMapping("/portal")
@@ -163,7 +238,7 @@ public class PeriodController {
 	
 	@PostMapping("/graph")
 	@ResponseBody
-	public List<GraphVO> graphPOST(String startDate, String endDate, String company, String selectKey) throws Exception{
+	public List<GraphVO> graphPOST(String startDate, String endDate, String company, String selectKey, String part) throws Exception{
 		logger.info("grpahPOST called....");
 		
 		logger.info("company: " + company);
@@ -195,6 +270,7 @@ public class PeriodController {
 		cri.setSelectKey(selectKey);
 		cri.setCompany(company);
 		logger.info("cri: " + cri);
+		logger.info("part: " + part);
 		
 		SimpleDateFormat standFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		
@@ -208,22 +284,54 @@ public class PeriodController {
 
 		List<GraphVO> graphList = new ArrayList<GraphVO>();
 		
-		while((transEnd.getTime() - cal.getTimeInMillis()) / (24 * 60 * 60 * 1000) > 0) {
+		if(part.equals("sns")) {
+			while((transEnd.getTime() - cal.getTimeInMillis()) / (24 * 60 * 60 * 1000) > 0) {
+				
+				cri.setStartDate(standFormat.format(cal.getTime()));
+				cal.add(Calendar.SECOND, (24 * 60 * 60) -1);
+				cri.setEndDate(standFormat.format(cal.getTime()));
+				
+				GraphVO graphVO = new GraphVO();
+				graphVO.setWriteDate(standFormat.format(cal.getTime()).toString().split(" ")[0]);
+				graphVO.setFacebookCount(snsService.facebookTotalCount(cri));
+				graphVO.setInstagramCount(snsService.instaTotalCount(cri));
+				graphVO.setTwitterCount(snsService.twitterTotalCount(cri));
+				
+				graphList.add(graphVO);
+				
+				cal.add(Calendar.SECOND, 1);
+			}
 		
-			cri.setStartDate(standFormat.format(cal.getTime()));
-			cal.add(Calendar.SECOND, (24 * 60 * 60) -1);
-			cri.setEndDate(standFormat.format(cal.getTime()));
-			
-			GraphVO graphVO = new GraphVO();
-			graphVO.setWriteDate(standFormat.format(cal.getTime()).toString().split(" ")[0]);
-			graphVO.setFacebookCount(snsService.facebookTotalCount(cri));
-			graphVO.setInstagramCount(snsService.instaTotalCount(cri));
-			graphVO.setTwitterCount(snsService.twitterTotalCount(cri));
-			
-			graphList.add(graphVO);
-			
-			cal.add(Calendar.SECOND, 1);
+		}else if(part.equals("community")) {
+				while((transEnd.getTime() - cal.getTimeInMillis()) / (24 * 60 * 60 * 1000) > 0) {
+				
+				cri.setStartDate(standFormat.format(cal.getTime()));
+				cal.add(Calendar.SECOND, (24 * 60 * 60) -1);
+				cri.setEndDate(standFormat.format(cal.getTime()));
+				
+				GraphVO graphVO = new GraphVO();
+				graphVO.setWriteDate(standFormat.format(cal.getTime()).toString().split(" ")[0]);
+				cri.setTextType("좋은글");
+				graphVO.setType1(communityService.getSearchCount(cri));
+				
+				cri.setTextType("나쁜글");
+				graphVO.setType2(communityService.getSearchCount(cri));
+				
+				cri.setTextType("관심글");
+				graphVO.setType3(communityService.getSearchCount(cri));
+				
+				cri.setTextType("기타글");
+				graphVO.setType4(communityService.getSearchCount(cri));
+				
+				cri.setTextType(null);
+				
+				graphList.add(graphVO);
+				
+				cal.add(Calendar.SECOND, 1);
+			}
 		}
+			
+		
 		
 		return graphList;
 		
@@ -267,7 +375,14 @@ public class PeriodController {
 		
 		List<ExtractVO> classiList = new ArrayList<ExtractVO>();
 		ListUtil listUtil = new ListUtil();
-		listUtil.listAddSNSList(classiList, snsService.listExcel(cri));
+		
+		if(part.equals("sns")) {
+			listUtil.listAddSNSList(classiList, snsService.listExcel(cri));
+		
+		}else if(part.equals("community")) {
+			listUtil.listAddCommunityList(classiList, communityService.listAll(cri));
+		}
+		
 		
 		model.addObject("list", classiList);
 		model.setView(excelView);
