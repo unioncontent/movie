@@ -3,6 +3,7 @@ package org.union.controller;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -17,13 +18,21 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+import org.union.domain.ExtractVO;
 import org.union.domain.GraphVO;
 import org.union.domain.PageMaker;
+import org.union.domain.PeriodMediaVO;
 import org.union.domain.SearchCriteria;
 import org.union.domain.UserVO;
 import org.union.service.KeywordService;
+import org.union.service.MediaService;
 import org.union.service.SNSService;
 import org.union.service.UserService;
+import org.union.util.ExcelView;
+import org.union.util.ExtractComparator;
+import org.union.util.ListUtil;
+import org.union.util.PeriodComparator;
 
 @Controller
 @RequestMapping("/period/*")
@@ -31,8 +40,8 @@ public class PeriodController {
 
 	private static Logger logger = LoggerFactory.getLogger(PeriodController.class);
 
-	/*@Autowired
-	private MediaService mediaService;*/
+	@Autowired
+	private MediaService mediaService;
 
 	@Autowired
 	private SNSService snsService;
@@ -61,20 +70,25 @@ public class PeriodController {
 
 	@GetMapping("/media")
 	public void mediaGET(@ModelAttribute("cri") SearchCriteria cri, Model model) {
-		/*
-		 * logger.info("mediaGET called...."); List<PeriodMediaVO> mediaList =
-		 * mediaService.periodMedia(cri); List<PeriodMediaVO> reporterList =
-		 * mediaService.periodReporter(cri); logger.info("1"); // 정렬 PeriodComparator
-		 * comparator = new PeriodComparator(); Collections.sort(mediaList, comparator);
-		 * Collections.sort(reporterList, comparator); logger.info("2");
-		 * model.addAttribute("mediaCount", mediaList.size());
-		 * model.addAttribute("pressCount", reporterList.size());
-		 * model.addAttribute("totalCount", mediaService.getTotalCount());
-		 * logger.info("3"); mediaList = mediaList.subList(0, 20); reporterList =
-		 * reporterList.subList(0, 20); logger.info("4");
-		 * model.addAttribute("pressList", reporterList);
-		 * model.addAttribute("mediaList", mediaList); logger.info("5");
-		 */
+		  logger.info("mediaGET called....");
+		
+		  List<PeriodMediaVO> mediaList = mediaService.periodMedia(cri);
+		  List<PeriodMediaVO> reporterList = mediaService.periodReporter(cri);
+		  
+		  PeriodComparator comparator = new PeriodComparator();
+		  Collections.sort(mediaList, comparator);
+		  Collections.sort(reporterList, comparator);
+		  
+		  model.addAttribute("mediaCount", mediaList.size());
+		  model.addAttribute("pressCount", reporterList.size());
+		  model.addAttribute("totalCount", mediaService.getTotalCount());
+		  
+		  mediaList = mediaList.subList(0, 20);
+		  reporterList = reporterList.subList(0, 20);
+		  
+		  model.addAttribute("pressList", reporterList);
+		  model.addAttribute("mediaList", mediaList);
+		 
 	}
 
 	@GetMapping("/sns")
@@ -118,7 +132,7 @@ public class PeriodController {
 		}
 
 		// 회사 선택에 따른 키워드 재추출
-		if (cri.getCompany() != null) {
+		if (cri.getCompany() != null) {	
 			if (cri.getCompany().isEmpty() == false) {
 
 				UserVO userVO = userService.viewByName(cri.getCompany());
@@ -149,40 +163,116 @@ public class PeriodController {
 	
 	@PostMapping("/graph")
 	@ResponseBody
-	public void graphPOST(String startDate, String endDate) throws Exception{
+	public List<GraphVO> graphPOST(String startDate, String endDate, String company, String selectKey) throws Exception{
 		logger.info("grpahPOST called....");
+		
+		logger.info("company: " + company);
+		logger.info("selectKey: " + selectKey);
+		
+		if(company == null || company.equals("회사")) {
+			logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+			UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
+			
+			if(!vo.getUser_name().equals("union")) {
+				company = vo.getUser_name();
+			
+			}else {
+				company = null;
+			}
+		}
+		if(selectKey != null) {
+			if(selectKey.isEmpty() || selectKey.equals("키워드")) {
+				selectKey = null;
+			}
+		}
 		
 		startDate = startDate + " 00:00:00";
 		endDate = endDate + " 23:59:59";
+		logger.info("startDate: " + startDate);
+		logger.info("endDate: " + endDate);
 		
 		SearchCriteria cri = new SearchCriteria();
-		List<GraphVO> list = new ArrayList<GraphVO>();
+		cri.setSelectKey(selectKey);
+		cri.setCompany(company);
+		logger.info("cri: " + cri);
 		
 		SimpleDateFormat standFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		
 		Date transStart = standFormat.parse(startDate);
 		Date transEnd = standFormat.parse(endDate);
 		
+		logger.info("gap: " + (transEnd.getTime() - transStart.getTime()) / (24 * 60 * 60 * 1000));
+		
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(transStart);
 
-		while((transEnd.getTime() - transStart.getTime()) / (24 * 60 * 60 * 1000) == 0) {
-			Calendar cal = Calendar.getInstance();
-			cal.setTime(transStart);
+		List<GraphVO> graphList = new ArrayList<GraphVO>();
+		
+		while((transEnd.getTime() - cal.getTimeInMillis()) / (24 * 60 * 60 * 1000) > 0) {
+		
+			cri.setStartDate(standFormat.format(cal.getTime()));
+			cal.add(Calendar.SECOND, (24 * 60 * 60) -1);
+			cri.setEndDate(standFormat.format(cal.getTime()));
 			
-			standFormat.format(cal.getTime());
+			GraphVO graphVO = new GraphVO();
+			graphVO.setWriteDate(standFormat.format(cal.getTime()).toString().split(" ")[0]);
+			graphVO.setFacebookCount(snsService.facebookTotalCount(cri));
+			graphVO.setInstagramCount(snsService.instaTotalCount(cri));
+			graphVO.setTwitterCount(snsService.twitterTotalCount(cri));
 			
-			snsService.facebookTotalCount(cri);
-			snsService.instaTotalCount(cri);
-			snsService.twitterTotalCount(cri);
+			graphList.add(graphVO);
+			
+			cal.add(Calendar.SECOND, 1);
 		}
 		
-		
-		
-
-
-		
-		
-	
+		return graphList;
 		
 	}
+	
+	@ResponseBody
+	@GetMapping("/excel")
+	public ModelAndView excelGET(ModelAndView model, ExcelView excelView, SearchCriteria cri) {
+		
+		if(cri.getCompany() == null || cri.getCompany().equals("회사")) {
+			logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+			UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
+			
+			if(!vo.getUser_name().equals("union")) {
+				cri.setCompany(vo.getUser_name());
+			
+			}else {
+				cri.setCompany(null);
+			}
+		}
+		if(cri.getSelectKey() != null) {
+			if(cri.getSelectKey().isEmpty() || cri.getSelectKey().equals("키워드")) {
+				cri.setSelectKey(null);
+			}
+		}
+		
+		if(cri.getCompany() == null || cri.getCompany().equals("회사")) {
+			logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+			UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
+			
+			if(!vo.getUser_name().equals("union")) {
+			cri.setCompany(vo.getUser_name());
+			
+			}else {
+				cri.setCompany(null);
+			}
+		}
+		
+		logger.info("cri: " + cri);
+
+		List<ExtractVO> classiList = new ArrayList<ExtractVO>();
+		ListUtil listUtil = new ListUtil();
+		listUtil.listAddSNSList(classiList, snsService.listExcel(cri));
+		
+		model.addObject("list", classiList);
+		model.setView(excelView);
+		
+		return model;
+	}
+
 	
 }

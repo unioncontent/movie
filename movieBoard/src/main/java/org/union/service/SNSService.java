@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.union.domain.ExtractVO;
 import org.union.domain.GraphVO;
-import org.union.domain.PortalVO;
 import org.union.domain.SNSVO;
 import org.union.domain.SearchCriteria;
 
@@ -22,6 +21,10 @@ public interface SNSService {
 	public List<SNSVO> listSearch(SearchCriteria cri);
 	
 	public Integer getSearchCount(SearchCriteria cri);
+	
+	public List<SNSVO> listExcel(SearchCriteria cri);
+	
+	public Integer listExcelCount(SearchCriteria cri);
 	
 	public List<ExtractVO> listExtract(SearchCriteria cri);
 	

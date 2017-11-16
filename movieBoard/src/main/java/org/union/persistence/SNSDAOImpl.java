@@ -6,7 +6,6 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.union.domain.GraphVO;
-import org.union.domain.MediaVO;
 import org.union.domain.SNSVO;
 import org.union.domain.SearchCriteria;
 
@@ -160,6 +159,20 @@ public class SNSDAOImpl implements SNSDAO {
 	public List<SNSVO> getDateCount(GraphVO vo) {
 
 		return session.selectList(namespace + "getDateCount", vo);
+	}
+
+
+	@Override
+	public List<SNSVO> listExcel(SearchCriteria cri) {
+
+		return session.selectList(namespace + "listExcel", cri);
+	}
+
+
+	@Override
+	public Integer listExcelCount(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "listExcelCount", cri);
 	}
 
 

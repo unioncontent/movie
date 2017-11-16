@@ -948,7 +948,8 @@
 	        	self.location = "excel?"+ "searchType=" + $("#selectSearchType option:selected").val()
 				  + "&keyword=" + decodeURI(window.location.href.split("&keyword=")[1]).split("&selectKey")[0]
 				  + "&selectKey=" + $('#selectKeyword option:selected').val()
-				  + "&company=" + $("#selectcompany option:selected").val();
+				  + "&company=" + $("#selectCompany option:selected").val()
+				  + "&textType=" + $("#selectTextType option:selected").val();
 
 
 		  		swal("Success!", "엑셀출력 되었습니다.", "success");

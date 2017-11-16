@@ -223,7 +223,7 @@
                                 <div class="card">
                                   <div class="card-header">
                                     <h5 class="card-header-text"> 검출데이터</h5>
-                                    <button class="btn btn-warning f-right alert-confirm" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'alert-confirm']);"><i class="icofont icofont-download-alt"></i>EXCEL</button>
+                                    <button id = "excel" class="btn btn-warning f-right alert-confirm"><i class="icofont icofont-download-alt"></i>EXCEL</button>
                                   </div>
                                   <div class="card-block">
                                     <!-- list satart -->
@@ -405,6 +405,15 @@
 
   $(document).ready(function(){
 	 
+	  
+	var date = getDate("week");
+	var startDate = date.startDate;
+	var endDate = date.endDate;
+	console.log("startDate: " + startDate);
+	console.log("endDate: " + endDate);
+
+	ajaxGraph(startDate, endDate);
+	  
 	// content 길시에 ...으로 변경
 	var $title = $(".title");
 	
@@ -412,7 +421,6 @@
 
 	for (var i =0; i < $title.length; i++){
 		if($title[i].innerText.length >= size){
-			console.log("길다..");
 			$title[i].children[0].text = $title[i].innerText.substr(0, size) + '...';
 		}
 	}
@@ -436,10 +444,14 @@
 	$selectKeyword.change(function(){
 		console.log("selectKeyword clicked....");
 		console.log($('#selectKeyword option:selected').val());
+		
+		self.location = "sns?"
+					  + "company=" + $("#selectCompany option:selected").val()
+					  + "&selectKey=" + $("#selectKeyword option:selected").val();
 
 	});
 	
-	var companyOption = decodeURI(window.location.href.split("company=")[1]).split("&textType")[0];
+	var companyOption = decodeURI(window.location.href.split("company=")[1]).split("&selectKey")[0];
 
 
 	var $selectCompany = $('#selectCompany');
@@ -459,8 +471,31 @@
 		console.log("selectCompany clicked....");
 		console.log($("#selectCompany option:selected").val());
 		
-		//self.location = "facebook?"+ "company=" + $("#selectCompany option:selected").val();
+		self.location = "sns?"+ "company=" + $("#selectCompany option:selected").val();
 		
+	});
+	
+	//엑셀출력 확인메시지
+	$(document).on("click","#excel",function(){
+    swal({
+          title: "엑셀출력 하시겠습니까?",
+          text: "현재 리스트가 엑셀출력 됩니다.",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonClass: "btn-danger",
+          confirmButtonText: "YES",
+          closeOnConfirm: false
+        },
+        function(){//엑셀 출력하겠다고 할 시 진행 함수
+
+        	self.location = "excel?"
+			  + "company=" + $("#selectCompany option:selected").val()
+			  + "&selectKey=" + $('#selectKeyword option:selected').val()
+
+	  		swal("Success!", "엑셀출력 되었습니다.", "success");
+
+
+        });
 	});
 	  
 	
@@ -510,17 +545,20 @@
 	   var endDate = picker.endDate.format('YYYY-MM-DD');
 
 	   ajaxGraph(startDate, endDate);
-	  
+	})
+	
   }); // end ready...
 
 	// 그래프 함수
 	function ajaxGraph(startDate, endDate){
+	  console.log(startDate + "/" + endDate);
 		$.ajax({
 
 	      type : "POST",
 		  url : "graph",
 	 	  dataType : "json",
-	 	  data : {startDate : startDate, endDate : endDate},
+	 	  data : {startDate : startDate, endDate : endDate, 
+	 		      company : $("#selectCompany option:selected").val(), selectKey : $("#selectKeyword option:selected").val()},
 	  	  error : function(){
 	      	alert('graphPOST ajax error....');
 	  	  },
@@ -530,7 +568,7 @@
 
 	  		for(var i = 0; i < data.length; i++){
 	  			console.log(data[i]);
-	  			script += '{"period":' + '"' + data[i].writeDate + '",'+ '"l1"'+ ':' + data[i].likeCount + ","+ '"l2"' + ':' + data[i].shareCount + ","+ '"l3"' + ':' + data[i].replyCount + "},";
+	  			script += '{"period":' + '"' + data[i].writeDate + '",'+ '"Facebook"'+ ':' + data[i].facebookCount + ","+ '"Twitter"' + ':' + data[i].twitterCount + ","+ '"Instagram"' + ':' + data[i].instagramCount + "},";
 
 	  			if(i == data.length-1){
 	  				script =  script.substr(0, script.length-1);
