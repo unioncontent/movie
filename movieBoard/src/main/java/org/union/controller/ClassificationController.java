@@ -180,17 +180,25 @@ public class ClassificationController {
 	}
 	
 	
-	SearchCriteria localCri;
 	
 	@ResponseBody
 	@GetMapping("/excel")
 	public ModelAndView excelGET(ModelAndView model, ExcelView excelView, SearchCriteria cri) {
 		
+		if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
+			logger.info("keyword is null");
+			cri.setKeyword(null);
+			
+		} 
 		if(cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey()) ) {
 			logger.info("selectKey is null");
 			cri.setSelectKey(null);
 		}
 		
+		if(cri.getStartDate() != null || cri.getEndDate() != null) {
+			cri.setStartDate(null);
+			cri.setEndDate(null);
+		}
 		if(cri.getCompany() != null) {
 			if(cri.getCompany().isEmpty()) {
 				cri.setCompany(null);
@@ -208,35 +216,17 @@ public class ClassificationController {
 				cri.setCompany(null);
 			}
 		}
+		if(cri.getTextType() != null) {
+			if(cri.getTextType().equals("undefined") || cri.getTextType().equals("분류") || cri.getTextType().isEmpty()) {
+				cri.setTextType(null);
+			}
+		}
 		
 		logger.info("cri: " + cri);
 
 		List<ExtractVO> classiList = new ArrayList<ExtractVO>();
 		ListUtil listUtil = new ListUtil();
-
-		if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
-			logger.info("keyword is null");
-			cri.setKeyword(null);
-			
-		} 
-		if(cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey()) ) {
-			logger.info("selectKey is null");
-			cri.setSelectKey(null);
-		}
 		
-		if("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate())) {
-			cri.setStartDate(null);
-			cri.setEndDate(null);
-		
-		}else if(cri.getStartDate() != null || cri.getEndDate() != null){ 
-			cri.setStartDate(cri.getStartDate() + " 00:00:00"); 
-			cri.setEndDate(cri.getEndDate() + " 23:59:59"); 
-		}
-		
-		
-		logger.info("cri: " + cri);
-		
-		localCri = cri;
 		
 		listUtil.listAddSNSList(classiList, snsService.listAll(cri));
 		listUtil.listAddCommunityList(classiList, communityService.listAll(cri));
