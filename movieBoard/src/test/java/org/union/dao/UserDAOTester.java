@@ -46,7 +46,7 @@ public class UserDAOTester {
 	@Test
 	public void testRead() {
 		
-		dao.read(1);
+		dao.read(7);
 	}
 
 	

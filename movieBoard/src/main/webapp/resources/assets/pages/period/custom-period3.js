@@ -1,4 +1,4 @@
-'use strict';
+/*'use strict';
 $(window).on('resize',function(){
   setTimeout(function(){
     cardResize();
@@ -26,7 +26,7 @@ $(document).ready(function() {
   };
 });
 
-/*line*/
+line
 function linechart(){
   $("#line-chart1").empty();
   window.lineChart = Morris.Line({
@@ -48,7 +48,7 @@ function linechart(){
       lineColors: ['#2ecc71', '#e74c3c', '#3498DB','#f1c40f']
   });
 }
-/* card resize*/
+ card resize
 function cardResize(){
   setTimeout(function(){
     if($(".tab-pane > .row").width() > 1200){
@@ -57,4 +57,4 @@ function cardResize(){
     }
   }, 400);
 
-}
+}*/

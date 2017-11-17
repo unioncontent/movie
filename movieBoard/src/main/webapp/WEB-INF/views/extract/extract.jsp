@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -106,7 +106,7 @@
                           <option value="${companyList.user_name}">${companyList.user_name}</option>
                           </c:if>
                         </select>
-                        
+
                         <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left" id="selectKeyword">
                           <option>키워드</option>
                           <c:if test="${modelKeywordList == null}" >
@@ -169,22 +169,22 @@
                                 <thead>
                                   <tr>
                                     <th width="5%">No</th>
-                                    <th width="10%">페이지 분류<span class="text-muted"></span></th>
-                                    <th width="10%">페이지 명</th>
-                                    <th width="10%">회사명</th>
-                                    <th><span class="text-muted">키워드</span></th>
-                                    <th width="20%">제목 &<span class="text-muted"></span><span class="text-success"> 컨텐츠</span></th>
+                                    <th width="7%">페이지 분류<span class="text-muted"></span></th>
+                                    <th width="7%">페이지 명</th>
+                                    <th width="7%">회사명</th>
+                                    <th width="7%"><span class="text-muted">키워드</span></th>
+                                    <th width="30%">제목 &<span class="text-muted"></span><span class="text-success"> 컨텐츠</span></th>
                                     <th width="10%">추출일 / 작성일</th>
                                     <th width="10%">분류변경</th>
                                     <th width="5%">분류처리</th>
                                   </tr>
                                 </thead>
                                 <tbody>
-                                  
+
                                   <!-- 임시  전체클릭 버튼 -->
-                                  
+
                                   <tr>
-                                    
+
                                     <th scope="row">
                                       0
                                     </th>
@@ -215,9 +215,9 @@
                                         <label for="allBtn5">삭제글</label>
                                       </div>
                                     </td>
-                                    
+
                                   </tr>
-                                  
+
                                   <c:forEach items="${extractList}" var="extractVO" varStatus="index">
                                   <tr class = "trList">
                                     <c:if test="${extractVO.sns_idx != null}">
@@ -398,8 +398,8 @@
 
 <script type="text/javascript">
   $(document).ready(function(){
-	  
-	  
+
+
 	  // 키보드 insertAll
 	  $(function() {
     	$(document).keydown(function(e) {
@@ -411,51 +411,51 @@
         	}
     	});
 	  });
-	  
+
 	  // allBtn 클릭시
 	  $(".radiosAll input").on("click", function(event){
 		  console.log(event);
-		  
+
 		  var input = event.target.id;
 
 		  var btnNum = input.substr(6);
-		  
+
 		  var $trList = $(".trList");
 
 		  for(var i = 0; i < $trList.length; i++){
 			  $('#radio'+ btnNum + (i+1))[0].checked = true;
-		  } 
-		  
-		  
-		  
+		  }
+
+
+
 		  /* var value;
-		  
+
 		  switch(input){
-		  
+
 		  case "allBtn1" : value = "좋은글"; break;
 		  case "allBtn2" : value = "나쁜글"; break;
 		  case "allBtn3" : value = "관심글"; break;
 		  case "allBtn4" : value = "기타글"; break;
 		  case "allBtn5" : value = "삭제글"; break;
-		  
+
 		  }
-		  
+
 		  console.log(value); */
-		  
-		  
-		  
-		  
+
+
+
+
 	  });
-	  
-	  
-	  
-	
-	  
+
+
+
+
+
 	  // 일괄처리버튼 클릭시
 	  $(document).on("click","#insertAllBtn",function(){
 		insertAll();
 	  });
-	  
+
 	  // 삭제버튼 클릭시
 	  $(document).on("click",".alert-confirm1",function(event){
 			swal({
@@ -468,26 +468,26 @@
 						closeOnConfirm: false
 					},
 					function(){
-						
+
 						var parent = event.target.parentNode;
 						if(parent.type == 'submit'){
 							console.log("button click...");
 							parent = parent.parentNode;
 						}
-						
+
 						var tr = parent.parentNode;
 						console.log(tr);
-						  
+
 						var idx = tr.children[0].value;
-						console.log(tr.children);  
-						
+						console.log(tr.children);
+
 						if(tr.children[2] != null){
 							var table = tr.children[2].innerText;
-						} 
-						  
+						}
+
 						console.log(idx);
 						console.log(table);
-						
+
 						$.ajax({
 							  type: "POST",
 							  url: "remove",
@@ -496,16 +496,16 @@
 							  success: function(data){
 								  console.log(data);
 							  }
-							  
-							}); 
-						
+
+							});
+
 						swal("Delete!", "삭제처리가 완료되었습니다.", "success");
-						
+
 						location.reload();
 					});
 	  });
-	  
-	  
+
+
 	  //즉시처리 버튼 클릭시
 	  $(document).on("click",".alert-confirm2",function(event){
 			swal({
@@ -518,11 +518,11 @@
 						closeOnConfirm: false
 					},
 					function(){
-						
+
 						insertType(event);
-						  
+
 						swal("Success!", "즉시처리가 완료되었습니다.", "success");
-						
+
 						location.reload();
 					});
 	  });
@@ -586,19 +586,18 @@
 						+ "&endDate=" +  endDate
 						+ "&company=" + $("#selectCompany option:selected").val();
 		})
-	  
 		
 	// content 길시에 ...으로 변경  
 	var $content = $(".text-success");
-	
+
 	var size = 25;
-	  
+
 	for (var i =1; i < $content.length; i++){
 		if($content[i].innerText.length >= size){
 			$content[i].textContent = $content[i].innerText.substr(0, size) + '...';
 		}
 	}
-	
+
 	var keywordOption = decodeURI(window.location.href.split("selectKey=")[1]).split("&startDate=")[0];
 	console.log("keywordOption: " + keywordOption);
 
@@ -612,7 +611,7 @@
 		}
 	}
 	$selectKeyword[0][0].disabled = true;
-	
+
 
 	// 키워드 선택시
 	$selectKeyword.change(function(){
@@ -620,7 +619,7 @@
 		console.log($('#selectKeyword option:selected').val());
 
 	});
-	
+
 	var companyOption = decodeURI(window.location.href.split("company=")[1]);
 
 
@@ -630,20 +629,20 @@
 
 			if($selectCompany[0].children[i].value == companyOption){
 				$selectCompany[0].children[i].selected = 'selected';
-			} 
+			}
 		}
 	}
 	$selectCompany[0][0].disabled = true;
-	
-	
+
+
 	// 회사 선택시
 	$selectCompany.change(function(){
 		console.log("selectCompany clicked....");
 		console.log($("#selectCompany option:selected").val());
-		
+
 		searchList();
 	});
-	
+
 	// 검색버튼 클릭시
 	$('#searchBtn').on("click", function(event){
 	  console.log("searchBtn clicked....");
@@ -655,11 +654,11 @@
 		searchList();
 	  }
 	});
-	  
-	  
+
+
   }); // end ready...
-  
-  
+
+
 	function insertType(event) {
 
 		var parent = event.target.parentNode;
@@ -667,10 +666,10 @@
 			console.log("button click...");
 			parent = parent.parentNode;
 		}
-		
+
 		var tr = parent.parentNode;
 		console.log(tr);
-		
+
 		if (tr.children[0].value != 'undefined') {
 			var idx = tr.children[0].value;
 			console.log(idx);
@@ -709,15 +708,15 @@
 							console.log(data);
 						}
 
-					}); 
+					});
 
 					break;
 				}
 			}
 
-		} 
+		}
 	}
-  
+
   function insertAll(){
 	  swal({
 			title: "일괄처리 하시겠습니까?",
@@ -729,23 +728,23 @@
 			closeOnConfirm: false
 		},
 		function(){
-			
+
 			var tr = $(".trList");
-			
+
 			var arr = [];
-			
+
 			for(var i = 0; i < tr.length; i++){
 				var idx = tr[i].children[0].value;
 				var table = tr[i].children[2].innerText;
 				var arr = tr[i].children[8].children[0].children;
-		
+
 
 				for (var l = 0; l < arr.length; l++) {
 					if (arr[l].type == "radio") {
-						
+
 						if (arr[l].checked) {
 							var textType = arr[l + 1].innerText;
-							
+
 							break;
 						}
 					}
@@ -760,15 +759,15 @@
 						  success: function(data){
 							  console.log(data);
 						  }
-						  
-						}); 
+
+						});
 				}
-				
+
 			}
-			
-			
+
+
 			swal("Success!", "일괄처리가 완료되었습니다.", "success");
-			
+
 			location.reload();
 		});
   }

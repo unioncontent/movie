@@ -15,6 +15,9 @@
       <![endif]-->
   <!-- Meta -->
   <meta charset="utf-8">
+  <meta name="_csrf" content="${_csrf.token}" />
+  <!-- default header name is X-CSRF-TOKEN -->
+  <meta name="_csrf_header" content="${_csrf.headerName}"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="description" content="Phoenixcoded">
@@ -102,11 +105,30 @@
                     <div class="row">
                       <!-- data setting start -->
                       <div class="col-md-7">
-                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left">
-                          <option value="opt1">회사</option>
+                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="selectCompany">
+                          <option>회사</option>
+                          <c:if test="${user.user_type == 1 }">
+                          <c:forEach items="${companyList}" var = "companyList">
+                          <option value="${companyList.user_name}">${companyList.user_name}</option>
+                          </c:forEach>
+                          </c:if>
+                          <c:if test="${user.user_type == 2}">
+                          <option value="${companyList.user_name}">${companyList.user_name}</option>
+                          </c:if>
                         </select>
-                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left">
-                          <option value="opt1">키워드</option>
+                        
+                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left" id="selectKeyword">
+                          <option>키워드</option>
+                          <c:if test="${modelKeywordList == null}" >
+                          	<c:forEach items="${keywordList}" var = "keywordList">
+                          <option value="${keywordList.keyword_main}">${keywordList.keyword_main}</option>
+                          </c:forEach>
+                          </c:if>
+                          <c:if test="${modelKeywordList != null}">
+                          	<c:forEach items="${modelKeywordList}" var = "keywordList">
+                          <option value="${keywordList.keyword_main}">${keywordList.keyword_main}</option>
+                          </c:forEach>
+                          </c:if>
                         </select>
                       </div>
                       <div class="col-md-5">
@@ -141,7 +163,7 @@
                               <div class="col-md-6 col-xl-3 main-card">
                                 <div class="card social-widget-card">
                                   <div class="card-block-big bg-inverse">
-                                    <h3>0</h3>
+                                    <h3>${facebookCount + twitterCount + instagramCount}</h3>
                                     <span class="m-t-10">전체검색</span>
                                     <i class="icofont icofont-search"></i>
                                   </div>
@@ -150,7 +172,7 @@
                               <div class="col-md-6 col-xl-3 main-card">
                                 <div class="card social-widget-card">
                                   <div class="card-block-big bg-facebook">
-                                    <h3>0</h3>
+                                    <h3>${facebookCount}</h3>
                                     <span class="m-t-10">페이스북</span>
                                     <i class="icofont icofont-social-facebook"></i>
                                   </div>
@@ -159,7 +181,7 @@
                               <div class="col-md-6 col-xl-3 main-card">
                                 <div class="card social-widget-card">
                                   <div class="card-block-big bg-twitter">
-                                    <h3>0</h3>
+                                    <h3>${twitterCount}</h3>
                                     <span class="m-t-10">트위터</span>
                                     <i class="icofont icofont-social-twitter"></i>
                                   </div>
@@ -168,7 +190,7 @@
                               <div class="col-md-6 col-xl-3 main-card">
                                 <div class="card social-widget-card">
                                   <div class="card-block-big bg-instagram">
-                                    <h3>0</h3>
+                                    <h3>${instagramCount}</h3>
                                     <span class="m-t-10">인스타그램</span>
                                     <i class="icofont icofont-social-instagram"></i>
                                   </div>
@@ -201,7 +223,7 @@
                                 <div class="card">
                                   <div class="card-header">
                                     <h5 class="card-header-text"> 검출데이터</h5>
-                                    <button class="btn btn-warning f-right alert-confirm" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'alert-confirm']);"><i class="icofont icofont-download-alt"></i>EXCEL</button>
+                                    <button id = "excel" class="btn btn-warning f-right alert-confirm"><i class="icofont icofont-download-alt"></i>EXCEL</button>
                                   </div>
                                   <div class="card-block">
                                     <!-- list satart -->
@@ -220,33 +242,45 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                         <c:forEach items="${snsList}" var="snsList">
                                           <tr>
-                                            <th scope="row">1</th>
-                                            <td>2017-10-17 15:00:00</td>
-                                            <td>디시인사이드</td>
-                                            <td>강철비</td>
-                                            <td><a href='https://www.naver.com/' target="_blank">강철비 굿</a></td>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
+                                            <th scope="row">${snsList.sns_idx}</th>
+                                            <td>${snsList.writeDate}</td>
+                                            <td>${snsList.sns_name}</td>
+                                            <td>${snsList.keyword}</td>
+                                            <td class="title"><a href='${snsList.url}' target="_blank">${snsList.sns_title}</a></td>
+                                            <td>${snsList.like_cnt}</td>
+                                            <td>${snsList.share_cnt}</td>
+                                            <td>${snsList.reply_cnt}</td>
                                           </tr>
+                                          </c:forEach>
                                         </tbody>
                                       </table>
                                     </div>
                                     <ul class="pagination float-right">
-                                      <li class="page-item">
-                                        <a class="page-link" href="#" aria-label="Previous">
-                                          <span aria-hidden="true">«</span>
-                                          <span class="sr-only">Previous</span>
-                                        </a>
-                                      </li>
-                                      <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                      <li class="page-item">
-                                        <a class="page-link" href="#" aria-label="Next">
-                                          <span aria-hidden="true">»</span>
-                                          <span class="sr-only">Next</span>
-                                        </a>
-                                      </li>
+                                      <c:if test="${pageMaker.prev}">
+                                <li class="page-item">
+                                  <a class="page-link" href="sns${pageMaker.makeSearch(pageMaker.startPage - 1) }" aria-label="Previous">&laquo;
+                                    <span aria-hidden="true"></span>
+                                    <span class="sr-only">Previous</span>
+                                  </a>
+                                </li>
+                              </c:if>
+
+                              <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
+                                <li class= "${pageMaker.cri.page == idx? 'active':''} page-item">
+                                  <a class="page-link" href="sns${pageMaker.makeSearch(idx)}">${idx}</a>
+                                </li>
+                              </c:forEach>
+
+                              <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+                                <li class="page-item">
+                                  <a class="page-link" href="sns${pageMaker.makeSearch(pageMaker.endPage +1) }" aria-label="Next">&raquo;
+                                    <span aria-hidden="true"></span>
+                                    <span class="sr-only">Next</span>
+                                  </a>
+                                </li>
+                              </c:if>
                                     </ul>
                                     <!-- list end -->
                                   </div>
@@ -356,5 +390,257 @@
   <script src="../assets/pages/period/custom-period4.js"></script>
   <script src="../assets/pages/picker.js"></script>
 </body>
+
+<script type="text/javascript">
+
+  //ajax 보안
+  var token = $("meta[name='_csrf']").attr("content");
+  var header = $("meta[name='_csrf_header']").attr("content");
+
+  $(function() {
+	  $(document).ajaxSend(function(e, xhr, options) {
+	  	xhr.setRequestHeader(header, token);
+	  });
+  });
+
+  $(document).ready(function(){
+	 
+	  
+	var date = getDate("week");
+	var startDate = date.startDate;
+	var endDate = date.endDate;
+	console.log("startDate: " + startDate);
+	console.log("endDate: " + endDate);
+
+	ajaxGraph(startDate, endDate);
+	  
+	// content 길시에 ...으로 변경
+	var $title = $(".title");
+	
+	var size = 25;
+
+	for (var i =0; i < $title.length; i++){
+		if($title[i].innerText.length >= size){
+			$title[i].children[0].text = $title[i].innerText.substr(0, size) + '...';
+		}
+	}
+	  
+	var selectOption = decodeURI(window.location.href.split("selectKey=")[1]);
+	console.log("selectOption: " + selectOption);
+
+
+	var $selectKeyword = $('#selectKeyword');
+
+	if(selectOption != 'undefined'){
+		for(var i = 0; i < $selectKeyword[0].length; i++ ){
+			if($selectKeyword[0][i].value == selectOption){
+				$selectKeyword[0][i].selected = 'selected';
+			}
+		}
+	}
+	$selectKeyword[0][0].disabled = true;
+
+	// 키워드 선택시
+	$selectKeyword.change(function(){
+		console.log("selectKeyword clicked....");
+		console.log($('#selectKeyword option:selected').val());
+		
+		self.location = "sns?"
+					  + "company=" + $("#selectCompany option:selected").val()
+					  + "&selectKey=" + $("#selectKeyword option:selected").val();
+
+	});
+	
+	var companyOption = decodeURI(window.location.href.split("company=")[1]).split("&selectKey")[0];
+
+
+	var $selectCompany = $('#selectCompany');
+	if(companyOption != 'undefined'){
+		for(var i = 0; i < $selectCompany[0].length; i++ ){
+
+			if($selectCompany[0].children[i].value == companyOption){
+				$selectCompany[0].children[i].selected = 'selected';
+			} 
+		}
+	}
+	$selectCompany[0][0].disabled = true;
+	
+	
+	// 회사 선택시
+	$selectCompany.change(function(){
+		console.log("selectCompany clicked....");
+		console.log($("#selectCompany option:selected").val());
+		
+		self.location = "sns?"+ "company=" + $("#selectCompany option:selected").val();
+		
+	});
+	
+	//엑셀출력 확인메시지
+	$(document).on("click","#excel",function(){
+    swal({
+          title: "엑셀출력 하시겠습니까?",
+          text: "현재 리스트가 엑셀출력 됩니다.",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonClass: "btn-danger",
+          confirmButtonText: "YES",
+          closeOnConfirm: false
+        },
+        function(){//엑셀 출력하겠다고 할 시 진행 함수
+
+        	self.location = "excel?"
+			  + "company=" + $("#selectCompany option:selected").val()
+			  + "&selectKey=" + $('#selectKeyword option:selected').val()
+			  + "&part=sns";
+
+	  		swal("Success!", "엑셀출력 되었습니다.", "success");
+
+
+        });
+	});
+	  
+	
+	// 당일 클릭시
+	$('#toDay').on("click", function(){
+	  console.log("toDay clicked....");
+	  var date = getDate("toDay");
+	  var endDate = date.endDate;
+
+	  ajaxGraph(endDate, endDate);
+	});
+
+	// 전일 클릭시
+	$('#yesterDay').on("click", function(){
+	  console.log("yesterDay clicked....");
+	  var date = getDate("yesterDay");
+	  var startDate = date.startDate;
+	  var endDate = date.endDate;
+
+	  ajaxGraph(startDate, endDate);
+	});
+
+	// 7일  클릭시
+	$('#week').on("click", function(){
+	  console.log("week clicked....");
+	  var date = getDate("week");
+	  var startDate = date.startDate;
+	  var endDate = date.endDate;
+
+	  ajaxGraph(startDate, endDate);
+	})
+
+	// 30일 클릭시
+	$('#month').on("click", function(){
+	  console.log("month clicked....");
+	  var date = getDate("month");
+	  var startDate = date.startDate;
+	  var endDate = date.endDate;
+
+	  ajaxGraph(startDate, endDate);
+	})
+
+
+	// 캘린더 클릭시
+	$('#fromDate').on('apply.daterangepicker', function(ev, picker) {
+	   var startDate = picker.startDate.format('YYYY-MM-DD');
+	   var endDate = picker.endDate.format('YYYY-MM-DD');
+
+	   ajaxGraph(startDate, endDate);
+	})
+	
+  }); // end ready...
+
+	// 그래프 함수
+	function ajaxGraph(startDate, endDate){
+	  console.log(startDate + "/" + endDate);
+		$.ajax({
+
+	      type : "POST",
+		  url : "graph",
+	 	  dataType : "json",
+	 	  data : {startDate : startDate, endDate : endDate, part : "sns",
+	 		      company : $("#selectCompany option:selected").val(), selectKey : $("#selectKeyword option:selected").val()},
+	  	  error : function(){
+	      	alert('graphPOST ajax error....');
+	  	  },
+	  	  success : function(data){
+
+	  		var script = "[";
+
+	  		for(var i = 0; i < data.length; i++){
+	  			console.log(data[i]);
+	  			script += '{"period":' + '"' + data[i].writeDate + '",'+ '"Facebook"'+ ':' + data[i].facebookCount + ","+ '"Twitter"' + ':' + data[i].twitterCount + ","+ '"Instagram"' + ':' + data[i].instagramCount + "},";
+
+	  			if(i == data.length-1){
+	  				script =  script.substr(0, script.length-1);
+	  				script += "]";
+	  			}
+	  		}
+	  		console.log(script);
+
+	  		// to json
+	  		var jsonScript = JSON.parse(script);
+
+	  		drawChart(jsonScript);
+
+	  	 }
+		});
+	}
+
+
+  function drawChart(data){
+     	// 그래프 초기화
+     	$('#line-chart1').children().remove();
+
+     	window.lineChart = Morris.Line({
+     	      element: 'line-chart1',
+     	      data: data,
+     	      xkey: 'period',
+     	      redraw: true,
+     	      ykeys: ['Facebook', 'Twitter', 'Instagram'],
+     	      hideHover: 'auto',
+     	      labels: ['페이스북', '트위터', '인스타그램'],
+     	      lineColors: ['#3B5998', '#4099FF', '#8632fb']
+     	  });
+     }
+
+  // 날짜 계산 함수
+  function getDate(type){
+  	console.log("TYPE : " + type);
+  	var date = new Date();
+
+   	var month = date.getMonth()+1;
+   	var day = date.getDate();
+   	var year = date.getFullYear();
+
+   	var endDate = year + "-" + month + "-" + day;
+   	var startDate;
+
+   	if(type == "yesterDay"){
+   		var calcDate = day-1;
+   		startDate = year + "-" + month + "-" + calcDate;
+
+   	}else if(type == "month"){
+   		var calcDate = month-1;
+   		startDate = year + "-" + calcDate + "-" + day;
+
+   	}else if(type == "week"){
+   		var calcDate = day-7;
+   		if(calcDate < 0){
+   			var lastDay = (new Date(year, month-1, 0)).getDate();
+   			calcDate += lastDay;
+   			month -= 1;
+   		}
+   		startDate = year + "-" + month + "-" + calcDate;
+   	}
+
+   	return {
+   		startDate : startDate,
+   		endDate : endDate
+   	}
+
+  }
+  
+</script>
 
 </html>

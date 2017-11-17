@@ -178,4 +178,18 @@ public class SNSServiceImpl implements SNSService {
 	}
 
 
+	@Override
+	public List<SNSVO> listExcel(SearchCriteria cri) {
+
+		return snsDAO.listExcel(cri);
+	}
+
+
+	@Override
+	public Integer listExcelCount(SearchCriteria cri) {
+
+		return snsDAO.listExcelCount(cri);
+	}
+
+
 }

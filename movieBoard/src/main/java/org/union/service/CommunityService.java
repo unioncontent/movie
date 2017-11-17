@@ -25,6 +25,10 @@ public interface CommunityService {
 	
 	public Integer getSearchCount(SearchCriteria cri);
 	
+	public List<CommunityVO> listComplete(SearchCriteria cri);
+	
+	public Integer getCompleteCount(SearchCriteria cri);
+	
 	public List<CommunityVO> listAll(SearchCriteria cri);
 	
 	public void modifyType (CommunityVO vo);

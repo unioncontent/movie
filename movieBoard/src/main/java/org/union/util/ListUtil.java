@@ -3,16 +3,13 @@ package org.union.util;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.union.domain.CommunityVO;
 import org.union.domain.ExtractVO;
 import org.union.domain.MediaVO;
 import org.union.domain.PortalVO;
 import org.union.domain.SNSVO;
-import org.union.service.KeywordService;
 
-@Component
 public class ListUtil {
 	
 	/*@Autowired

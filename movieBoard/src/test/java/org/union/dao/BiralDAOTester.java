@@ -1,6 +1,12 @@
 package org.union.dao;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -9,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.union.domain.BiralVO;
+import org.union.domain.GraphVO;
+import org.union.domain.SearchCriteria;
 import org.union.persistence.BiralDAO;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -69,5 +77,29 @@ public class BiralDAOTester {
 	public void testDelete() throws Exception{
 		
 		dao.delete(2);
+	}
+	
+	@Test
+	public void testTest() throws ParseException {
+		String startDate = "2017-11-18" + " 00:00:00";
+		String endDate = "2017-11-18" + " 23:59:59";
+		
+		SearchCriteria cri = new SearchCriteria();
+		List<GraphVO> list = new ArrayList<GraphVO>();
+		
+		SimpleDateFormat standFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		
+		Date transStart = standFormat.parse(startDate);
+		Date transEnd = standFormat.parse(endDate);
+		
+		Calendar cal = Calendar.getInstance();
+
+		cal.setTime(transStart);
+		cal.add(Calendar.DATE, +1);
+		
+		System.out.println(standFormat.format(cal.getTime()));
+		
+		long gapDays = (transEnd.getTime() - transStart.getTime()) / (24 * 60 * 60 * 1000);
+		System.out.println(gapDays);
 	}
 }

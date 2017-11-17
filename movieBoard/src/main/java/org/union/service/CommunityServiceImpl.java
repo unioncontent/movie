@@ -113,5 +113,17 @@ public class CommunityServiceImpl implements CommunityService {
 
 	}
 
+	@Override
+	public List<CommunityVO> listComplete(SearchCriteria cri) {
+
+		return communityDAO.listComplete(cri);
+	}
+
+	@Override
+	public Integer getCompleteCount(SearchCriteria cri) {
+
+		return communityDAO.getCompleteCount(cri);
+	}
+
 
 }

@@ -1,4 +1,4 @@
-'use strict';
+/*'use strict';
 $(window).on('resize',function(){
   setTimeout(function(){
     window.lineChart.redraw();
@@ -24,7 +24,7 @@ $(document).ready(function() {
   };
 });
 
-/*line*/
+line
 function linechart(){
   $("#line-chart1").empty();
   window.lineChart = Morris.Line({
@@ -46,3 +46,4 @@ function linechart(){
       lineColors: ['#3B5998', '#4099FF', '#8632fb']
   });
 }
+*/

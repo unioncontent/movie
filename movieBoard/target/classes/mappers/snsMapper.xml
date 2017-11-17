@@ -168,6 +168,15 @@
 			
 	</select>
  	
+ 	<select id="listExcel" resultType="SNSVO">
+ 		select * from sns_data where sns_idx > 0
+ 		<include refid="search"></include>
+ 	</select>
+ 	
+ 	<select id="listExcelCount" resultType="Integer">
+ 		select count(*) from sns_data where sns_idx > 0
+ 		<include refid="search"></include>
+ 	</select>
  	
  	<select id="listAll" resultType="SNSVO">
 		select 

@@ -119,4 +119,18 @@ public class CommunityDAOImpl implements CommunityDAO {
 	}
 
 
+	@Override
+	public List<CommunityVO> listComplete(SearchCriteria cri) {
+
+		return session.selectList(namespace + "listComplete", cri);
+	}
+
+
+	@Override
+	public Integer getCompleteCount(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "getCompleteCount", cri);
+	}
+
+
 }

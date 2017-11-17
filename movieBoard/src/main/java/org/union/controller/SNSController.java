@@ -1,6 +1,7 @@
 package org.union.controller;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+import org.union.domain.ExtractVO;
 import org.union.domain.GraphVO;
 import org.union.domain.PageMaker;
 import org.union.domain.SNSVO;
@@ -22,6 +25,9 @@ import org.union.domain.UserVO;
 import org.union.service.KeywordService;
 import org.union.service.SNSService;
 import org.union.service.UserService;
+import org.union.util.ExcelView;
+import org.union.util.ExtractComparator;
+import org.union.util.ListUtil;
 
 @Controller
 @RequestMapping("/sns/*")
@@ -29,7 +35,7 @@ public class SNSController {
 
 	
 	@Autowired
-	private SNSService service;
+	private SNSService snsService;
 	
 	@Autowired
 	private KeywordService keywordService;
@@ -43,8 +49,6 @@ public class SNSController {
 	@GetMapping("/facebook")
 	public void facebookGET(@ModelAttribute("cri") SearchCriteria cri, Model model) throws Exception{
 		logger.info("facebookGET called....");
-		
-		logger.info("before Cri: " + cri);
 		
 		if(cri.getKeyword() != null) {
 			if(cri.getKeyword().isEmpty()) {
@@ -97,12 +101,12 @@ public class SNSController {
 		PageMaker pageMaker = new PageMaker();
 		
 		pageMaker.setCri(cri);
-		pageMaker.setTotalCount(service.facebookTotalCount(cri));
+		pageMaker.setTotalCount(snsService.facebookTotalCount(cri));
 		model.addAttribute("pageMaker", pageMaker);
 		logger.info("pageMaker: " + pageMaker);
 		
 		List<SNSVO> list = new ArrayList<SNSVO>();
-		list = service.facebookList(cri);
+		list = snsService.facebookList(cri);
 		model.addAttribute("facebookList", list);
 		
 		
@@ -112,9 +116,51 @@ public class SNSController {
 	public void instagramGET(@ModelAttribute("cri") SearchCriteria cri, Model model) throws Exception{
 		logger.info("instagramGET called....");
 		
+		if(cri.getKeyword() != null) {
+			if(cri.getKeyword().isEmpty()) {
+				cri.setKeyword(null);
+			}
+		}
 		if(cri.getSelectKey() != null) {
-			if(cri.getSelectKey().equals("키워드")) {
+			if(cri.getSelectKey().isEmpty() || cri.getSelectKey().equals("키워드")) {
 				cri.setSelectKey(null);
+			}
+		}
+		if(cri.getCompany() != null) {
+			if(cri.getCompany().isEmpty()) {
+				cri.setCompany(null);
+			}
+		}
+		if(cri.getCompany() == null || cri.getCompany().equals("회사")) {
+			logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+			UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
+			
+			if(!vo.getUser_name().equals("union")) {
+			cri.setCompany(vo.getUser_name());
+			
+			}else {
+				cri.setCompany(null);
+			}
+		}
+		if(cri.getTextType() != null) {
+			cri.setTextType(null);
+		}
+		if(cri.getStartDate() != null || cri.getEndDate() != null) {
+			cri.setStartDate(null);
+			cri.setEndDate(null);
+		}
+		
+		logger.info("cri : " + cri);
+		
+		// 회사 선택에 따른 키워드 재추출
+		if(cri.getCompany() != null) {
+			if(cri.getCompany().isEmpty() == false) {
+					
+				UserVO userVO  = userService.viewByName(cri.getCompany());
+				logger.info("userVO: " + userVO);
+					logger.info("keywordList: " + keywordService.listByUser(userVO.getUser_idx()));
+					model.addAttribute("modelKeywordList", keywordService.listByUser(
+					userService.viewByName(cri.getCompany()).getUser_idx()));
 			}
 		}
 		
@@ -123,12 +169,12 @@ public class SNSController {
 		PageMaker pageMaker = new PageMaker();
 		
 		pageMaker.setCri(cri);
-		pageMaker.setTotalCount(service.instaTotalCount(cri));
+		pageMaker.setTotalCount(snsService.instaTotalCount(cri));
 		model.addAttribute("pageMaker", pageMaker);
 		logger.info("pageMaker: " + pageMaker);
 		
 		List<SNSVO> list = new ArrayList<SNSVO>();
-		list = service.instaList(cri);
+		list = snsService.instaList(cri);
 		model.addAttribute("instagramList", list);
 		
 	}
@@ -138,9 +184,51 @@ public class SNSController {
 	public void twitterGET(@ModelAttribute("cri") SearchCriteria cri, Model model) throws Exception{
 		logger.info("twitterGET called....");
 		
+		if(cri.getKeyword() != null) {
+			if(cri.getKeyword().isEmpty()) {
+				cri.setKeyword(null);
+			}
+		}
 		if(cri.getSelectKey() != null) {
-			if(cri.getSelectKey().equals("키워드")) {
+			if(cri.getSelectKey().isEmpty() || cri.getSelectKey().equals("키워드")) {
 				cri.setSelectKey(null);
+			}
+		}
+		if(cri.getCompany() != null) {
+			if(cri.getCompany().isEmpty()) {
+				cri.setCompany(null);
+			}
+		}
+		if(cri.getCompany() == null || cri.getCompany().equals("회사")) {
+			logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+			UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
+			
+			if(!vo.getUser_name().equals("union")) {
+			cri.setCompany(vo.getUser_name());
+			
+			}else {
+				cri.setCompany(null);
+			}
+		}
+		if(cri.getTextType() != null) {
+			cri.setTextType(null);
+		}
+		if(cri.getStartDate() != null || cri.getEndDate() != null) {
+			cri.setStartDate(null);
+			cri.setEndDate(null);
+		}
+		
+		logger.info("cri : " + cri);
+		
+		// 회사 선택에 따른 키워드 재추출
+		if(cri.getCompany() != null) {
+			if(cri.getCompany().isEmpty() == false) {
+					
+				UserVO userVO  = userService.viewByName(cri.getCompany());
+				logger.info("userVO: " + userVO);
+					logger.info("keywordList: " + keywordService.listByUser(userVO.getUser_idx()));
+					model.addAttribute("modelKeywordList", keywordService.listByUser(
+					userService.viewByName(cri.getCompany()).getUser_idx()));
 			}
 		}
 		
@@ -149,12 +237,12 @@ public class SNSController {
 		PageMaker pageMaker = new PageMaker();
 		
 		pageMaker.setCri(cri);
-		pageMaker.setTotalCount(service.twitterTotalCount(cri));
+		pageMaker.setTotalCount(snsService.twitterTotalCount(cri));
 		model.addAttribute("pageMaker", pageMaker);
 		logger.info("pageMaker: " + pageMaker);
 		
 		List<SNSVO> list = new ArrayList<SNSVO>();
-		list = service.twitterList(cri);
+		list = snsService.twitterList(cri);
 		model.addAttribute("twitterList", list);
 		
 	}
@@ -179,7 +267,7 @@ public class SNSController {
 		//logger.info("GRAPHVO: " +vo);
 		
 		
-		List<SNSVO> list= service.getDateCount(vo);
+		List<SNSVO> list= snsService.getDateCount(vo);
 		//logger.info("list: " + list);
 
 		List<GraphVO> graphList = new ArrayList<GraphVO>();
@@ -233,6 +321,57 @@ public class SNSController {
 		
 		return graphList;
 		
+	}
+	
+	@GetMapping("/excel")
+	public ModelAndView excelGET(ModelAndView model, ExcelView excelView, SearchCriteria cri) {
+		
+		logger.info("cri: " + cri);
+
+		List<ExtractVO> classiList = new ArrayList<ExtractVO>();
+		ListUtil listUtil = new ListUtil();
+
+		if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
+			logger.info("keyword is null");
+			cri.setKeyword(null);
+			
+		} 
+		if(cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey()) ) {
+			logger.info("selectKey is null");
+			cri.setSelectKey(null);
+		}
+		
+		if(cri.getCompany() != null) {
+			if(cri.getCompany().isEmpty()) {
+				cri.setCompany(null);
+			}
+		}
+		if(cri.getCompany() == null || cri.getCompany().equals("회사")) {
+			logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+			UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
+			
+			if(!vo.getUser_name().equals("union")) {
+			cri.setCompany(vo.getUser_name());
+			
+			}else {
+				cri.setCompany(null);
+			}
+		}
+		
+		
+		logger.info("cri: " + cri);
+		
+		
+		listUtil.listAddSNSList(classiList, snsService.listAll(cri));
+		
+		ExtractComparator comparator = new ExtractComparator();
+		Collections.sort(classiList, comparator);
+		
+		
+		model.addObject("list", classiList);
+		model.setView(excelView);
+		
+		return model;
 	}
 	
 }

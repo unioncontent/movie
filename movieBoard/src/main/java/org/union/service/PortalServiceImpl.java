@@ -92,6 +92,7 @@ public class PortalServiceImpl implements PortalService {
 	public List<PortalVO> listSearch(SearchCriteria cri) {
 
 		return portalDAO.listSearch(cri);
+		
 	}
 	
 	@Override
