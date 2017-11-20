@@ -54,6 +54,16 @@
  		from	
  			reporter_data
  	</select>
+ 	
+ 	<select id = "listChecked" resultType="ReporterVO">
+ 		select *
+ 		FROM union.reporter_data  
+ 		WHERE reporter_idx in (
+     		SELECT reporter_idx FROM (
+           SELECT reporter_idx FROM union.reporter_data GROUP BY reporter_media_name
+     	) as b
+ 		)
+ 	</select>
  
  </mapper>
   

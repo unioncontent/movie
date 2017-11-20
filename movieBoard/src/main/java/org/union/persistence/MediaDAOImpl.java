@@ -143,4 +143,18 @@ public class MediaDAOImpl implements MediaDAO {
 	}
 
 
+	@Override
+	public Integer mediaGetSearchCount(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "mediaGetSearchCount", cri);
+	}
+
+
+	@Override
+	public Integer reporterGetSearchCount(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "reporterGetSearchCount", cri);
+	}
+
+
 }

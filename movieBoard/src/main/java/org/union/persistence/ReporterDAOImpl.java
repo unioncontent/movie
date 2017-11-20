@@ -63,4 +63,11 @@ public class ReporterDAOImpl implements ReporterDAO {
 		return session.selectList(namespace + "listAll");
 	}
 
+
+	@Override
+	public List<ReporterVO> listChecked() {
+
+		return session.selectList(namespace  +"listChecked");
+	}
+
 }

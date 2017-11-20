@@ -34,6 +34,10 @@ public interface MediaDAO {
 	
 	public Integer reporterGetTotalCount(SearchCriteria cri);
 	
+	public Integer mediaGetSearchCount(SearchCriteria cri);
+	
+	public Integer reporterGetSearchCount(SearchCriteria cri);
+	
 	public void updateTextType (MediaVO vo);
 	
 	public void updateThumbnail (MediaVO vo);

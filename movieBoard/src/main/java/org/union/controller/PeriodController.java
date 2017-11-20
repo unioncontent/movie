@@ -235,6 +235,9 @@ public class PeriodController {
 		  Collections.sort(mediaList, comparator);
 		  Collections.sort(reporterList, comparator);
 		  
+		  logger.info("mediaList: " + mediaList);
+		  logger.info("reporterList: " + reporterList);
+		  
 		  model.addAttribute("mediaCount", mediaList.size());
 		  model.addAttribute("pressCount", reporterList.size());
 		  model.addAttribute("totalCount", mediaService.getTotalCount());
