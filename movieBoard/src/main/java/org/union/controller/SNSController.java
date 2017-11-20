@@ -250,7 +250,7 @@ public class SNSController {
 	
 	@PostMapping("/graph")
 	@ResponseBody
-	public List<GraphVO> graphPOST(String startDate, String endDate) throws Exception{
+	public List<GraphVO> graphPOST(String startDate, String endDate, String company, String selectKey, String part) throws Exception{
 		//logger.info("grpahPOST called....");
 		
 		/*Date transStart = new SimpleDateFormat("yyyy-mm-dd").parse(startDate);
@@ -260,10 +260,41 @@ public class SNSController {
 		long gapDays = (transEnd.getTime() - transStart.getTime()) / (24 * 60 * 60 * 1000);
 		logger.info("gap: " + gapDays);*/
 		
+		if(selectKey != null) {
+			if(selectKey.isEmpty() || selectKey.equals("키워드")) {
+				selectKey = null;
+			}
+		}
+		if(company != null) {
+			if(company.isEmpty()) {
+				company = null;
+			}
+		}
+		if(company == null || company.equals("회사")) {
+			logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+			UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
+			
+			if(!vo.getUser_name().equals("union")) {
+				company = vo.getUser_name();
+			
+			}else {
+				company = null;
+			}
+		}
+		
+		
 		GraphVO vo = new GraphVO();
 		vo.setStartDate(startDate + " 00:00:00");
 		vo.setEndDate(endDate + " 23:59:59");
-		vo.setSns_name("facebook");
+		vo.setCompany(company);
+		vo.setSelectKey(selectKey);
+		if(part.equals("facebook")) {
+			vo.setSns_name("facebook");
+		}else if(part.equals("twitter")){
+			vo.setSns_name("twitter");
+		}else if(part.equals("instagram")) {
+			vo.setSns_name("instagram");
+		}
 		//logger.info("GRAPHVO: " +vo);
 		
 		
