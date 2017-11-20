@@ -11,6 +11,7 @@ import org.union.domain.MediaVO;
 import org.union.domain.PeriodMediaVO;
 import org.union.domain.ReporterVO;
 import org.union.domain.SearchCriteria;
+import org.union.domain.TextTypeVO;
 import org.union.persistence.MediaDAO;
 import org.union.persistence.ReporterDAO;
 
@@ -229,6 +230,18 @@ public class MediaServiceImpl implements MediaService {
 	public List<MediaVO> listAll(SearchCriteria cri) {
 
 		return mediaDAO.listAll(cri);
+	}
+
+	@Override
+	public TextTypeVO naverMediaCount(SearchCriteria cri) {
+
+		return mediaDAO.naverMediaCount(cri);
+	}
+
+	@Override
+	public TextTypeVO daumMediaCount(SearchCriteria cri) {
+
+		return mediaDAO.daumMediaCount(cri);
 	}
 
 }

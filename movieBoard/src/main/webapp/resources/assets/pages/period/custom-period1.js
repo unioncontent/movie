@@ -4,7 +4,7 @@ $(window).on('resize',function(){
     echart1();
     echart2();
     cardResize();
-    window.lineChart.redraw();
+    //window.lineChart.redraw();
   }, 500);
 });
 
@@ -12,7 +12,7 @@ $(document).ready(function() {
   cardResize();
   echart1();
   echart2();
-  linechart();
+  //linechart();
 
   $("i[data-value='chart1']").on("click",linechart);
   $("i[data-value='chart2']").on("click",echart1);
@@ -146,7 +146,7 @@ function echart2(){
   };
   myChartGauge.setOption(optionGauge,true);
 }
-/*line*/
+/*line
 function linechart(){
   $("#line-chart1").empty();
   window.lineChart = Morris.Line({
@@ -167,7 +167,7 @@ function linechart(){
       labels: ['블로그', '카페', '지식인'],
       lineColors: ['#fb9678', '#7E81CB', '#01C0C8']
   });
-}
+}*/
 /* card resize*/
 function cardResize(){
   setTimeout(function(){

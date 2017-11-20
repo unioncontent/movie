@@ -6,6 +6,7 @@ import org.union.domain.ExtractVO;
 import org.union.domain.MediaVO;
 import org.union.domain.PeriodMediaVO;
 import org.union.domain.SearchCriteria;
+import org.union.domain.TextTypeVO;
 
 public interface MediaService {
 
@@ -17,6 +18,9 @@ public interface MediaService {
 	public void modify(MediaVO vo);
 	
 	public void remove(Integer media_idx);
+	
+	public TextTypeVO naverMediaCount(SearchCriteria cri);
+	public TextTypeVO daumMediaCount(SearchCriteria cri);
 	
 	public List<ExtractVO> listExtract(SearchCriteria cri);
 	

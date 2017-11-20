@@ -192,4 +192,25 @@ public class SNSServiceImpl implements SNSService {
 	}
 
 
+	@Override
+	public GraphVO facebookSum(SearchCriteria cri) {
+
+		return snsDAO.facebookSum(cri);
+	}
+
+
+	@Override
+	public GraphVO twitterSum(SearchCriteria cri) {
+
+		return snsDAO.twitterSum(cri);
+	}
+
+
+	@Override
+	public GraphVO instagramSum(SearchCriteria cri) {
+
+		return snsDAO.instagramSum(cri);
+	}
+
+
 }

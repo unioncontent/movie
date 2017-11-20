@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.union.domain.MediaVO;
 import org.union.domain.SearchCriteria;
+import org.union.domain.TextTypeVO;
 
 public interface MediaDAO {
 
@@ -15,6 +16,9 @@ public interface MediaDAO {
 	public void update(MediaVO vo);
 	
 	public void delete(Integer media_idx);
+	
+	public TextTypeVO naverMediaCount(SearchCriteria cri);
+	public TextTypeVO daumMediaCount(SearchCriteria cri);
 	
 	public List<MediaVO> listExtract(SearchCriteria cri);
 	

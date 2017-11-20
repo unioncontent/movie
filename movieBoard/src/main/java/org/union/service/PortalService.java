@@ -18,6 +18,11 @@ public interface PortalService {
 	
 	public void remove(Integer portal_idx);
 	
+	public TextTypeVO textTypeCount(SearchCriteria cri);
+	
+	public TextTypeVO blogTextType(SearchCriteria cri);
+	public TextTypeVO cafeTextType(SearchCriteria cri);
+	
 	public List<PortalVO> listNaver(SearchCriteria cri);
 	public Integer getNaverCount(SearchCriteria cri);
 	public List<TextTypeVO> naverTextTypeCount(String type);

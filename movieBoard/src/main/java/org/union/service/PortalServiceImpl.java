@@ -157,4 +157,22 @@ public class PortalServiceImpl implements PortalService {
 		return portalDAO.daumTextTypeCount(type);
 	}
 
+	@Override
+	public TextTypeVO textTypeCount(SearchCriteria cri) {
+
+		return portalDAO.textTypeCount(cri);
+	}
+
+	@Override
+	public TextTypeVO blogTextType(SearchCriteria cri) {
+
+		return portalDAO.blogTextTypeCount(cri);
+	}
+
+	@Override
+	public TextTypeVO cafeTextType(SearchCriteria cri) {
+
+		return portalDAO.cafeTextTypeCount(cri);
+	}
+
 }

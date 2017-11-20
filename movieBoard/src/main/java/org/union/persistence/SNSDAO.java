@@ -17,6 +17,10 @@ public interface SNSDAO {
 	
 	public void delete(Integer SNS_idx);
 	
+	public GraphVO facebookSum(SearchCriteria cri); 
+	public GraphVO twitterSum(SearchCriteria cri); 
+	public GraphVO instagramSum(SearchCriteria cri); 
+	
 	public List<SNSVO> listExtract(SearchCriteria cri);
 	
 	public Integer getExtractCount(SearchCriteria cri);

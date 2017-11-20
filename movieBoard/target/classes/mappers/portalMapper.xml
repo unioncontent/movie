@@ -118,6 +118,48 @@
  	
  	</select>
  	
+ 	<select id="textTypeCount" resultType="TextTypeVO">
+ 		select 
+		count(if(textType='좋은글', textType, null)) lik,
+		count(if(textType='나쁜글', textType, null)) dis,
+		count(if(textType='관심글', textType, null)) cu,
+		count(if(textType='기타글', textType, null)) etc,
+		count(if(textType is not null and texttype!='삭제글', textType, null)) al
+		from portal_data
+		where textType is not null
+		<include refid="search"></include>
+ 	</select>
+ 	
+ 	
+ 	<select id="blogTextTypeCount" resultType="TextTypeVO">
+ 	select 
+		count(if(textType='좋은글', textType, null)) lik,
+    	count(if(textType='나쁜글', textType, null)) dis,
+    	count(if(textType='관심글', textType, null)) cu,
+    	count(if(textType='기타글', textType, null)) etc,
+    	count(if(textType is not null and texttype!='삭제글', textType, null))
+	from 
+		union.portal_data
+	where 
+		portal_type = 'blog'
+ 	<include refid="search"></include>
+ 	</select>
+ 	
+ 	<select id="cafeTextTypeCount" resultType="TextTypeVO">
+ 	select 
+		count(if(textType='좋은글', textType, null)) lik,
+    	count(if(textType='나쁜글', textType, null)) dis,
+    	count(if(textType='관심글', textType, null)) cu,
+    	count(if(textType='기타글', textType, null)) etc,
+    	count(if(textType is not null and texttype!='삭제글', textType, null))
+	from 
+		union.portal_data
+	where 
+		portal_type = 'cafe'
+	<include refid="search"></include>
+ 	
+ 	</select>
+ 	
  	<select id="naverTextTypeCount" resultType="TextTypeVO">
  	select 
 		count(if(textType='좋은글', textType, null)) lik,

@@ -17,6 +17,11 @@ public interface PortalDAO {
 	
 	public void delete(Integer portal_idx);
 	
+	public TextTypeVO textTypeCount(SearchCriteria cri);
+	
+	public TextTypeVO blogTextTypeCount(SearchCriteria cri);
+	public TextTypeVO cafeTextTypeCount(SearchCriteria cri);
+	
 	public List<PortalVO> listNaver(SearchCriteria cri);
 	public Integer getNaverCount(SearchCriteria cri);
 	public List<TextTypeVO> naverTextTypeCount(String type);

@@ -18,6 +18,10 @@ public interface SNSService {
 	
 	public void remove(Integer SNS_idx);
 	
+	public GraphVO facebookSum(SearchCriteria cri); 
+	public GraphVO twitterSum(SearchCriteria cri); 
+	public GraphVO instagramSum(SearchCriteria cri); 
+	
 	public List<SNSVO> listSearch(SearchCriteria cri);
 	
 	public Integer getSearchCount(SearchCriteria cri);

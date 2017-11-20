@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.union.domain.MediaVO;
 import org.union.domain.SearchCriteria;
+import org.union.domain.TextTypeVO;
 
 @Repository
 public class MediaDAOImpl implements MediaDAO {
@@ -154,6 +155,20 @@ public class MediaDAOImpl implements MediaDAO {
 	public Integer reporterGetSearchCount(SearchCriteria cri) {
 
 		return session.selectOne(namespace + "reporterGetSearchCount", cri);
+	}
+
+
+	@Override
+	public TextTypeVO naverMediaCount(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "naverMediaCount", cri);
+	}
+
+
+	@Override
+	public TextTypeVO daumMediaCount(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "daumMediaCount", cri);
 	}
 
 

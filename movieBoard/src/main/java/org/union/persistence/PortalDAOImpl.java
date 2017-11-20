@@ -157,4 +157,25 @@ public class PortalDAOImpl implements PortalDAO {
 	}
 
 
+	@Override
+	public TextTypeVO textTypeCount(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "textTypeCount", cri);
+	}
+
+
+	@Override
+	public TextTypeVO blogTextTypeCount(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "blogTextTypeCount", cri);
+	}
+
+
+	@Override
+	public TextTypeVO cafeTextTypeCount(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "cafeTextTypeCount", cri);
+	}
+
+
 }

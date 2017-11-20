@@ -195,6 +195,32 @@
 	
 	</select>
  	
+ 	<select id="facebookSum" resultType="GraphVO">
+ 		select count(*) type1, sum(like_cnt) likeCount, sum(share_cnt) shareCount, sum(reply_cnt) replyCount
+		from union.sns_data
+		where textType is not null
+		and sns_name = 'facebook'
+		<include refid="search"></include>
+		group by keyword
+ 	</select>
+ 	
+ 	<select id="twitterSum" resultType="GraphVO">
+ 		select count(*) type1, sum(like_cnt) likeCount, sum(share_cnt) shareCount, sum(reply_cnt) replyCount
+		from union.sns_data
+		where textType is not null
+		and sns_name = 'twitter'
+		<include refid="search"></include>
+		group by keyword
+ 	</select>
+ 	
+ 	<select id="instagramSum" resultType="GraphVO">
+ 		select count(*) type1, sum(like_cnt) likeCount, sum(share_cnt) shareCount, sum(reply_cnt) replyCount
+		from union.sns_data
+		where textType is not null
+		and sns_name = 'instagram'
+		<include refid="search"></include>
+		group by keyword
+ 	</select>
  	
  	<select id="facebookList" resultType="SNSVO">
  		select 

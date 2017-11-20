@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.union.domain.CommunityVO;
 import org.union.domain.ExtractVO;
 import org.union.domain.SearchCriteria;
+import org.union.domain.TextTypeVO;
 import org.union.persistence.CommunityDAO;
 
 @Service
@@ -123,6 +124,12 @@ public class CommunityServiceImpl implements CommunityService {
 	public Integer getCompleteCount(SearchCriteria cri) {
 
 		return communityDAO.getCompleteCount(cri);
+	}
+
+	@Override
+	public TextTypeVO textTypeCount(SearchCriteria cri) {
+
+		return communityDAO.textTypeCount(cri);
 	}
 
 

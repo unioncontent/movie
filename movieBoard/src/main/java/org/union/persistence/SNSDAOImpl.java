@@ -176,4 +176,25 @@ public class SNSDAOImpl implements SNSDAO {
 	}
 
 
+	@Override
+	public GraphVO facebookSum(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "facebookSum", cri);
+	}
+
+
+	@Override
+	public GraphVO twitterSum(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "twitterSum", cri);
+	}
+
+
+	@Override
+	public GraphVO instagramSum(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "instagramSum", cri);
+	}
+
+
 }
