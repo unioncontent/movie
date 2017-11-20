@@ -94,6 +94,86 @@
  	
  	</delete>
  	
+ 	<select id="listNaver" resultType="PortalVO">
+ 		select * from portal_data 
+ 		where 
+ 			textType is not null
+ 		and
+ 			portal_name = 'naver'
+ 		<include refid="search"></include>
+		order 
+			by createdate desc
+		limit  
+			#{startPage}, #{perPageNum}
+ 	
+ 	</select>
+ 	
+ 	<select id="getNaverCount" resultType="Integer">
+ 		select count(*) from portal_data
+ 		where 
+ 			textType is not null
+ 		and
+ 			portal_name = 'naver'
+ 		<include refid="search"></include>
+ 	
+ 	</select>
+ 	
+ 	<select id="naverTextTypeCount" resultType="TextTypeVO">
+ 	select 
+		count(if(textType='좋은글', textType, null)) lik,
+    	count(if(textType='나쁜글', textType, null)) dis,
+    	count(if(textType='관심글', textType, null)) cu,
+    	count(if(textType='기타글', textType, null)) etc,
+    	count(if(textType is not null and texttype!='삭제글', textType, null))
+	from 
+		union.portal_data
+	where 
+		portal_name = 'naver'
+	and 
+		portal_type = #{type}
+ 	
+ 	</select>
+ 	
+ 	<select id="daumTextTypeCount" resultType="TextTypeVO">
+ 	select 
+		count(if(textType='좋은글', textType, null)) lik,
+    	count(if(textType='나쁜글', textType, null)) dis,
+    	count(if(textType='관심글', textType, null)) cu,
+    	count(if(textType='기타글', textType, null)) etc,
+    	count(if(textType is not null and texttype!='삭제글', textType, null))
+	from 
+		union.portal_data
+	where 
+		portal_name = 'daum'
+	and 
+		portal_type = #{type}
+ 	
+ 	</select>
+ 	
+ 	<select id="listDaum" resultType="PortalVO">
+ 		select * from portal_data 
+ 		where 
+ 			textType is not null
+ 		and
+ 			portal_name = 'daum'
+ 		<include refid="search"></include>
+		order 
+			by createdate desc
+		limit  
+			#{startPage}, #{perPageNum}
+ 	
+ 	</select>
+ 	
+ 	<select id="getDaumCount" resultType="Integer">
+ 		select count(*) from portal_data
+ 		where 
+ 			textType is not null
+ 		and
+ 			portal_name = 'daum'
+ 		<include refid="search"></include>
+ 	
+ 	</select>
+ 	
  	<select id="listExtract" resultType="PortalVO">
 		select
 			*

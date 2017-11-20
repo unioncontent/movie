@@ -1,4 +1,4 @@
-'use strict';
+/*'use strict';
 $(window).on('resize',function(){
   setTimeout(function(){
     window.lineChart.redraw();
@@ -24,7 +24,7 @@ $(document).ready(function() {
   };
 });
 
-/*line*/
+line
 function linechart(){
   $("#line-chart1").empty();
   window.lineChart = Morris.Line({
@@ -45,4 +45,4 @@ function linechart(){
       labels: ['네이버', '다음'],
       lineColors: ['#2ecc71', '#4099FF']
   });
-}
+}*/
