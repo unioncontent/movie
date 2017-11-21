@@ -346,7 +346,10 @@
                                                       <td>${blogTextType.dis + cafeTextType.dis}</td>
                                                       <td>${blogTextType.cu + cafeTextType.cu}</td>
                                                       <td>${blogTextType.etc + cafeTextType.etc}</td>
-                                                      <td>${blogTextType.al + cafeTextType.al}</td>
+                                                      <td>${blogTextType.lik + blogTextType.dis
+                                                      		+ blogTextType.cu + blogTextType.etc
+                                                      		+cafeTextType.lik + cafeTextType.dis
+                                                      		+ cafeTextType.cu + cafeTextType.etc}</td>
                                                   </tr>
                                               </tbody>
                                             </table>
@@ -718,8 +721,56 @@
 	   ajaxGraph(startDate, endDate);
 	})
 	
+	var disCount1 = ${portalTextType.dis + communityTextType.dis};
+	var totalCount1 = ${portalTextType.al + communityTextType.al};
+	
+	var value1 = Math.round((disCount1/totalCount1)*100);
+	
+	var name1 = makeName(value1);
+	
+	echart1(value1, name1);
+	
+	var disCount2 = ${blogTextType.dis + cafeTextType.dis};
+	var totalCount2 = ${blogTextType.lik + blogTextType.dis
+  					+ blogTextType.cu + blogTextType.etc
+  					+ cafeTextType.lik + cafeTextType.dis
+  					+ cafeTextType.cu + cafeTextType.etc};
+	
+  	var value2 = Math.round((disCount2/totalCount2)*100);
+	
+	var name2 = makeName(value2);
+	
+	echart2(value2, name2);
   }); // end ready...
 
+  
+  	// 그래프 상태 계산 함수
+  	function makeName(value){
+	  
+	  var name;
+	  
+	  if(value <=5){
+		  name = '아주좋음';
+	  
+	  }else if(5 < value <= 10){
+		  name = '쾌적';
+		  
+	  }else if(10 < value <= 20){
+		  name = '안정';
+		  
+	  }else if(20 < value <= 30){
+		  name = '주의';
+		  
+	  }else if(30 < value <= 100){
+		  name = '경고'
+	  
+	  }else{
+		  name = '미확인'
+	  }
+	  
+	  return name;
+  }
+  
 	// 그래프 함수
 	function ajaxGraph(startDate, endDate){
 	  console.log(startDate + "/" + endDate);
