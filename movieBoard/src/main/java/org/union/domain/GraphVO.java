@@ -12,6 +12,19 @@ public class GraphVO {
 	private Integer replyCount;
 	private Integer facebookCount, instagramCount, twitterCount;
 	private Integer type1, type2, type3, type4;
+	private String company, selectKey;
+	public String getCompany() {
+		return company;
+	}
+	public void setCompany(String company) {
+		this.company = company;
+	}
+	public String getSelectkey() {
+		return selectKey;
+	}
+	public void setSelectKey(String selectKey) {
+		this.selectKey = selectKey;
+	}
 	public String getStartDate() {
 		return startDate;
 	}

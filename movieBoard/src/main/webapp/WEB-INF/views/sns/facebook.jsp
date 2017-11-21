@@ -536,7 +536,8 @@ function ajaxGraph(startDate, endDate){
       type : "POST",
 	  url : "graph",
  	  dataType : "json",
- 	  data : {startDate : startDate, endDate : endDate},
+ 	  data : {startDate : startDate, endDate : endDate, company : $("#selectCompany option:selected").val(),
+ 		  selectKey : $("#selectKeyword option:selected").val(), part : "facebook"},
   	  error : function(){
       	alert('graphPOST ajax error....');
   	  },

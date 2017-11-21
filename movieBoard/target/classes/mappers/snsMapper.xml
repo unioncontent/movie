@@ -314,6 +314,28 @@
   			writeDate <![CDATA[<]]> #{endDate}
   		and 
   			sns_name = #{sns_name}
+  		<if test="company != null">
+			and
+			   keyword in (select 
+						keyword 
+					from 
+						keyword_data
+					where
+						user_idx = (select 
+										user_idx 
+									from 
+										user_data 
+									where 
+										user_name = #{company} 
+									and 
+										keyword_property = '포함'
+									)
+					)
+			
+		</if>
+		<if test="selectKey != null">
+				and keyword in (select keyword from keyword_data where keyword_main = #{selectKey})
+		</if>
   		order by  date_format(writeDate, '%x-%m-%d') desc
  	
  	</select>
