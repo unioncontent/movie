@@ -1,5 +1,6 @@
 package org.union.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.union.domain.CommunityVO;
@@ -17,6 +18,8 @@ public interface CommunityService {
 	public void modify(CommunityVO vo);
 
 	public void remove(Integer community_idx);
+	
+	public Integer countAll(Date date);
 	
 	public TextTypeVO textTypeCount(SearchCriteria cri);
 	

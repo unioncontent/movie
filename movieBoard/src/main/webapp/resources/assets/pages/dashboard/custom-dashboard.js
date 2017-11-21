@@ -7,10 +7,10 @@ $(window).resize(function(){
 
 $(document).ready(function() {
   cardResize();
-  areaChart();
-  settingCalendar();
+  //areaChart();
+  //settingCalendar();
 
-  $("#mcalendar").width("500px");
+  /*$("#mcalendar").width("500px");
   $(".save_btn").on("click", function() {
       $(".md-form-control").removeClass("md-valid");
       var saveTask = $('.save_task_todo').val();
@@ -33,15 +33,11 @@ $(document).ready(function() {
           $('.save_task_todo').val('');
           $("#flipFlop").modal('hide');
       }
-  });
-  $(document).on("click",".delete_todo",function() {
-    $(this).parent().parent().parent().parent().fadeOut();
-  });
-  $(".icofont-refresh").on("click",areaChart);
-
+  });*/
+  
 });
 
-function settingCalendar(){
+/*function settingCalendar(){
   var now = new Date();
   var year = now.getFullYear();
   var month = now.getMonth() + 1;
@@ -103,7 +99,7 @@ function settingCalendar(){
           console.log(view, y, m);
       }
   });
-}
+}*/
 
 function cardResize(){
   setTimeout(function(){
@@ -119,7 +115,7 @@ function cardResize(){
 }
 
 /*Area chart*/
-function areaChart() {
+/*function areaChart() {
   $("#morris-extra-area").empty();
   window.areaChart = Morris.Area({
       element: 'morris-extra-area',
@@ -162,4 +158,4 @@ function areaChart() {
       hideHover: 'auto'
 
     });
-}
+}*/

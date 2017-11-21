@@ -1,5 +1,6 @@
 package org.union.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.union.domain.ExtractVO;
@@ -17,6 +18,10 @@ public interface SNSService {
 	public void modify(SNSVO vo);
 	
 	public void remove(Integer SNS_idx);
+	
+	public Integer countAll(Date date);
+	
+	public GraphVO yesterdayCount(String name);
 	
 	public GraphVO facebookSum(SearchCriteria cri); 
 	public GraphVO twitterSum(SearchCriteria cri); 

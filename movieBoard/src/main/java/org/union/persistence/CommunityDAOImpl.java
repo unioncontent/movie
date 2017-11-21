@@ -1,5 +1,6 @@
 package org.union.persistence;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -138,6 +139,13 @@ public class CommunityDAOImpl implements CommunityDAO {
 	public TextTypeVO textTypeCount(SearchCriteria cri) {
 
 		return session.selectOne(namespace + "textTypeCount" ,cri);
+	}
+
+
+	@Override
+	public Integer countAll(Date date) {
+
+		return session.selectOne(namespace  +"countAll", date);
 	}
 
 

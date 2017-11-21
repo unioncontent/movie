@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<jsp:useBean id="currTime" class="java.util.Date" />
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 
@@ -15,6 +17,9 @@
       <![endif]-->
   <!-- Meta -->
   <meta charset="utf-8">
+   <meta name="_csrf" content="${_csrf.token}" />
+  <!-- default header name is X-CSRF-TOKEN -->
+  <meta name="_csrf_header" content="${_csrf.headerName}"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="description" content="Phoenixcoded">
@@ -104,7 +109,7 @@
                                 <i class="icofont icofont-document-search" style="line-height: 58px;"></i>
                               </li>
                               <li class="text-right">
-                                10
+                                ${keywordCount}
                               </li>
                             </ul>
                           </div>
@@ -119,7 +124,7 @@
                                 <i class="icofont icofont-ui-text-chat" style="line-height: 58px;"></i>
                               </li>
                               <li class="text-right">
-                                7,414
+                                ${blogCount.type3}
                               </li>
                             </ul>
                           </div>
@@ -134,7 +139,7 @@
                                 <i class="icofont icofont-ui-social-link" style="line-height: 58px;"></i>
                               </li>
                               <li class="text-right">
-                                24,287
+                                ${cafeCount.type3}
                               </li>
                             </ul>
                           </div>
@@ -149,7 +154,7 @@
                                 <i class="icofont icofont-page" style="line-height: 58px;"></i>
                               </li>
                               <li class="text-right">
-                                672
+                                ${relationCount}
                               </li>
                             </ul>
                           </div>
@@ -164,7 +169,7 @@
                                 <i class="icofont icofont-hat-alt" style="line-height: 58px;"></i>
                               </li>
                               <li class="text-right">
-                                15,081
+                                ${kintipCount.type3}
                               </li>
                             </ul>
                           </div>
@@ -192,7 +197,7 @@
                         <div class="card">
                           <div class="card-header">
                             <h5>플랫폼별 노출현황</h5>
-                            <span>2017-10-20 기준(최근 24시간)</span>
+                            <span><fmt:formatDate value="${currTime}" pattern="yyyy-MM-dd HH:mm:ss" /> 기준(최근 24시간)</span>
                             <div class="card-header-right">
                                 <i class="icofont icofont-rounded-down"></i>
                             </div>
@@ -210,33 +215,35 @@
                                 <tbody>
                                   <tr>
                                     <th scope="row">포털</th>
-                                    <td>11</td>
-                                    <td>1</td>
+                                    <td>${portalCount.type1}</td>
+                                    <td>${portalCount.type2}</td>
                                   </tr>
                                   <tr>
                                     <th scope="row">언론기사</th>
-                                    <td>0</td>
-                                    <td>0</td>
+                                    <td>${mediaCount.type1}</td>
+                                    <td>${mediaCount.type2}</td>
                                   </tr>
                                   <tr>
                                     <th scope="row">페이스북</th>
-                                    <td>0</td>
-                                    <td>0</td>
+                                    <td>${facebookCount.type1}</td>
+                                    <td>${facebookCount.type2}</td>
                                   </tr>
                                   <tr>
                                     <th scope="row">인스타그램</th>
-                                    <td>0</td>
-                                    <td>0</td>
+                                    <td>${instagramCount.type1}</td>
+                                    <td>${instagramCount.type2}</td>
                                   </tr>
                                   <tr>
                                     <th scope="row">트위터</th>
-                                    <td>0</td>
-                                    <td>0</td>
+                                    <td>${twitterCount.type1}</td>
+                                    <td>${twitterCount.type2}</td>
                                   </tr>
                                   <tr class="bg-inverse">
                                     <th scope="row">합계</th>
-                                    <td>0</td>
-                                    <td>0</td>
+                                    <td>${portalCount.type1 + mediaCount.type1 + facebookCount.type1
+                                    	+ instagramCount.type1 + twitterCount.type1}</td>
+                                    <td>${portalCount.type2 + mediaCount.type2 + facebookCount.type2
+                                    	+ instagramCount.type2 + twitterCount.type2}</td>
                                   </tr>
                                 </tbody>
                               </table>
@@ -248,7 +255,7 @@
                         <div class="card">
                           <div class="card-header">
                             <h5>포털 키워드 노출현황</h5>
-                            <span>2017-10-20 기준(최근 24시간)</span>
+                            <span><fmt:formatDate value="${currTime}" pattern="yyyy-MM-dd HH:mm:ss" /> 기준(최근 24시간)</span>
                             <div class="card-header-right">
                               <i class="icofont icofont-rounded-down"></i>
                             </div>
@@ -266,33 +273,33 @@
                                   <tbody>
                                     <tr>
                                       <th scope="row">블로그</th>
-                                      <td>0</td>
-                                      <td>0</td>
+                                      <td>${blogCount.type1}</td>
+                                      <td>${blogCount.type2}</td>
                                     </tr>
                                     <tr>
                                       <th scope="row">카페</th>
-                                      <td>0</td>
-                                      <td>0</td>
+                                      <td>${cafeCount.type1}</td>
+                                      <td>${cafeCount.type2}</td>
                                     </tr>
                                     <tr>
                                       <th scope="row">지식인/Tip</th>
-                                      <td>0</td>
-                                      <td>0</td>
+                                      <td>${kintipCount.type1}</td>
+                                      <td>${kintipCount.type2}</td>
                                     </tr>
                                     <tr>
-                                      <th scope="row">커뮤니티</th>
-                                      <td>0</td>
-                                      <td>0</td>
+                                      <th scope="row">웹문서</th>
+                                      <td>${webdocCount.type1}</td>
+                                      <td>${webdocCount.type2}</td>
                                     </tr>
                                     <tr>
                                       <th scope="row">언론</th>
-                                      <td>0</td>
-                                      <td>0</td>
+                                      <td>${mediaCount.type1}</td>
+                                      <td>${mediaCount.type2}</td>
                                     </tr>
                                     <tr class="bg-inverse">
                                       <th scope="row">합계</th>
-                                      <td>0</td>
-                                      <td>0</td>
+                                      <td>${blogCount.type1 + cafeCount.type1 + webdocCount.type1 + mediaCount.type1}</td>
+                                      <td>${blogCount.type2 + cafeCount.type2 + webdocCount.type2 + mediaCount.type2}</td>
                                     </tr>
                                   </tbody>
                               </table>
@@ -312,7 +319,7 @@
                         <div class="card">
                           <div class="card-header">
                             <h5><i class="icofont icofont-ui-calendar m-r-5"></i>주요 일정</h5>
-                            <span><p id="date">2017년 11월 1일</p><p id="data">1</p>건의 일정이 있습니다.</span>
+                            <span><p id="date"><fmt:formatDate value="${currTime}" pattern="yyyy 년  MM 월 dd 일" /></p><p id="data">1</p>건의 일정이 있습니다.</span>
                             <div class="card-header-right">
                                 <i class="icofont icofont-rounded-down"></i>
                             </div>
@@ -321,18 +328,7 @@
                             <section class="task-panel tasks-widget">
                               <div class="panel-body">
                                 <div class="task-content">
-                                  <div class="to-do-label">
-                                    <div class="checkbox-fade fade-in-info">
-                                      <label class="check-task">
-                                        <input type="checkbox" checked disabled>
-                                        <span class="cr"><i class="cr-icon icofont icofont-ui-check txt-info"></i></span>
-                                        <span class="task-title-sp">스케줄표시2</span>
-                                        <div class="f-right hidden-phone">
-                                          <i class="icofont icofont-ui-delete delete_todo"></i>
-                                        </div>
-                                      </label>
-                                    </div>
-                                  </div>
+                                  
                                 </div>
                                 <div>
                                   <a class="btn btn-info btn-add-task waves-effect waves-light m-t-10" href="#" data-toggle="modal" data-target="#flipFlop"><i class="icofont icofont-plus"></i> 일정 추가</a>
@@ -373,7 +369,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="save_btn btn btn-primary">Save</button>
+                    <button type="button" id = "insert" class="save_btn btn btn-primary">Save</button>
                     <button type="button" class="btn btn-default close_btn" data-dismiss="modal">Close</button>
                 </div>
             </div>
@@ -457,5 +453,225 @@
   <script src="../assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
   <script src="../assets/js/jquery.mousewheel.min.js"></script>
 </body>
+
+<script type="text/javascript">
+
+//ajax 보안
+var token = $("meta[name='_csrf']").attr("content");
+var header = $("meta[name='_csrf_header']").attr("content");
+
+$(function() {
+	  $(document).ajaxSend(function(e, xhr, options) {
+	  	xhr.setRequestHeader(header, token);
+	  });
+});
+
+$(document).ready(function(){
+	 
+	settingCalendar();
+	
+	$.ajax({
+
+	      type : "POST",
+		  url : "graph",
+	 	  dataType : "json",
+	 	  data : {success : 'success'},
+	  	  error : function(){
+	      	alert('graphPOST ajax error....');
+	  	  },
+	  	  success : function(data){
+
+	  		var script = "[";
+
+	  		
+			for(var i = 0; i < data.length; i++){
+
+				script += '{"period":' + '"' + data[i].writeDate + '",'
+						+ '"portal"'+ ':' + data[i].type1 + ","
+						+ '"cumminty"' + ':' + data[i].type2 + ","
+						+ '"sns"' + ':' + data[i].type3 + "},";
+
+				if(i == data.length-1){
+					script =  script.substr(0, script.length-1);
+					script += "]";
+				}
+			}
+			console.log(script);
+
+			// to json
+			var jsonScript = JSON.parse(script);
+		
+			areaChart(jsonScript);
+
+	  	 }
+	});
+	
+	 
+		 
+	$(document).on("click",".delete_todo",function() {
+	    $(this).parent().parent().parent().parent().fadeOut();
+	    
+	    var title = $(this).parent().parent()[0].children[2].innerText;
+	    
+	    $.ajax({
+
+  	      type : "POST",
+  		  url : "delete",
+  	 	  dataType : "text",
+  	 	  data : {title : title},
+  	 		error:function(request,status,error){
+  	 		      alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+  	 		     },
+  	  	  success : function(success){
+  	  		  console.log(success);
+  	  		location.reload();
+  	  	  }
+  	});
+	  });
+	  $(".icofont-refresh").on("click",areaChart);
+
+	  
+	  $("#mcalendar").width("500px");
+	  $(".save_btn").on("click", function() {
+	      $(".md-form-control").removeClass("md-valid");
+	      var saveTask = $('.save_task_todo').val();
+	      if (saveTask == "") {
+	          alert("일정을 적어주세요.");
+	      } else {
+	          var add_todo = $("<div class='to-do-label'>\
+	            <div class='checkbox-fade fade-in-info'>\
+	              <label class='check-task'>\
+	                <input type='checkbox' checked disabled>\
+	                <span class='cr'><i class='cr-icon icofont icofont-ui-check txt-info'></i></span>\
+	                <span class='task-title-sp'>"+saveTask+"</span>\
+	                <div class='f-right hidden-phone'>\
+	                  <i class='icofont icofont-ui-delete delete_todo'></i>\
+	                </div>\
+	              </label>\
+	            </div>\
+	          </div>"); 
+	          
+	          $.ajax({
+
+	    	      type : "POST",
+	    		  url : "insert",
+	    	 	  dataType : "text",
+	    	 	  data : {title : $('.save_task_todo').val(), date : $(".selected")[0].dataset.calendarDay},
+	    	 		error:function(request,status,error){
+	    	 		      alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	    	 		     },
+	    	  	  success : function(success){
+	    	  		  console.log(success);
+					location.reload();
+	    	  	  }
+	    	});
+	          
+	          $(add_todo).appendTo(".task-content").hide().fadeIn(300);
+	          $('.save_task_todo').val('');
+	          $("#flipFlop").modal('hide');
+	          
+	      }
+	      
+	  });
+	
+		  
+}); // end ready...
+
+function settingCalendar(){
+	
+	$.ajax({
+		type : "POST",
+		url : "listDate",
+	 	dataType : "json",
+	 	data : {success : 'success'},
+	 	error:function(request,status,error){
+	        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	       },
+	  	success : function(success){
+	  		  
+	  		var script = "[";
+	  		for(var i = 0; i < success.length; i++){
+
+	  		    script += '{"date": "'+ success[i].calendar_date + 
+	  		      		'","value":"' + success[i].calendar_title +'"},'
+	  		}
+
+	  		script = script.slice(0, -1);
+	  		script += "]";
+	  		
+	  		console.log("script: " + script);
+	  		
+	  		console.log(JSON.parse(script));
+			
+	  	// inline
+	  		  var $ca = $('#mcalendar').calendar({
+	  		      width: '300px',
+	  		      height: '280px',
+	  		      data: JSON.parse(script),
+	  		      date: new Date(),
+	  		      onSelected: function (view, date, data) {//날짜 선택시 이벤트
+	  		          console.log('date:' + date);//날짜
+	  		          console.log('data:' + (data || '없음'));//일정
+					  
+	  		          if(data != null && typeof data != "undefined") {//일정 있을때
+	  		            var data = data.split(",");
+	  		            //일정 건수 넣기
+	  		            $("#data").text(data.length);
+	  		            //스케줄 넣기 전 비우기
+	  		            $(".task-content").empty();
+	  		            $.each(data, function(key,value){
+	  		              $(".task-content").append("<div class='to-do-label'>\
+	  		                <div class='checkbox-fade fade-in-info'>\
+	  		                  <label class='check-task'>\
+	  		                    <input type='checkbox' checked disabled>\
+	  		                    <span class='cr'><i class='cr-icon icofont icofont-ui-check txt-info'></i></span>\
+	  		                    <span class='task-title-sp'>"+value+"</span>\
+	  		                    <div class='f-right hidden-phone'>\
+	  		                      <i class='icofont icofont-ui-delete delete_todo'></i>\
+	  		                    </div>\
+	  		                  </label>\
+	  		                </div>\
+	  		              </div>");
+	  		            });
+	  		          }
+	  		          else{//일정 없을때
+	  		            $("#data").text(0);
+	  		            $(".task-content").empty();
+	  		          }
+	  		          //선택된 날짜 대입
+	  		          var select = new Date(date);
+	  		        $("#date").text(select.getFullYear()+"년 "+(select.getMonth() + 1)+"월 "+select.getDate()+"일 ");
+	  		      },
+	  		      viewChange: function (view, y, m) {//날짜 변경될 때, ex) 10월에서 11월 / 2017년에서 2010년
+	  		          console.log(view, y, m);
+	  		      }
+	  		  });
+
+	  		  
+	  		}
+		})
+	}
+function areaChart(jsonScript) {
+	$("#morris-extra-area").empty();
+	window.areaChart = Morris.Area({
+		element: 'morris-extra-area',
+	    data: jsonScript,
+	    lineColors: ['#fb9678', '#7E81CB', '#01C0C8'],
+	    xkey: 'period',
+	    ykeys: ['portal', 'cumminty', 'sns'],
+	    labels: ['포털', '커뮤니티', 'SNS'],
+	    pointSize: 0,
+        lineWidth: 0,
+        resize: true,
+        fillOpacity: 0.8,
+        behaveLikeLine: true,
+        gridLineColor: '#5FBEAA',
+        hideHover: 'auto'
+	    });
+	}
+
+
+</script>
+
 
 </html>

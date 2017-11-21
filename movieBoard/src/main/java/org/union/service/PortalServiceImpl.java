@@ -2,11 +2,13 @@ package org.union.service;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.union.domain.ExtractVO;
+import org.union.domain.GraphVO;
 import org.union.domain.PortalVO;
 import org.union.domain.SearchCriteria;
 import org.union.domain.TextTypeVO;
@@ -173,6 +175,24 @@ public class PortalServiceImpl implements PortalService {
 	public TextTypeVO cafeTextType(SearchCriteria cri) {
 
 		return portalDAO.cafeTextTypeCount(cri);
+	}
+
+	@Override
+	public GraphVO toDayCount(String type) {
+
+		return portalDAO.toDayCount(type);
+	}
+
+	@Override
+	public GraphVO yesterdayCount() {
+
+		return portalDAO.yesterdayCount();
+	}
+
+	@Override
+	public Integer countAll(Date date) {
+
+		return portalDAO.countAll(date);
 	}
 
 }

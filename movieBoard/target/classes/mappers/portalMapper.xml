@@ -94,6 +94,30 @@
  	
  	</delete>
  	
+ 	<select id="countAll" resultType="Integer">
+		select count(*)
+		from portal_data
+		where createDate between date_add(#{date}, interval -1 hour) and #{date}
+	
+	</select>
+	
+ 	
+ 	<select id="toDayCount" resultType="GraphVO">
+ 		select count(if(portal_name = 'naver', portal_name, null)) type1,
+ 			 count(if(portal_name = 'daum', portal_name, null)) type2, count(*) type3  
+ 		from portal_data
+		where portal_type = #{type}
+		and date_add(now(), interval -1 day) <![CDATA[<]]> createDate
+		and createDate <![CDATA[<]]> now()
+ 	</select>
+ 	
+ 	<select id="yesterdayCount" resultType="GraphVO">
+ 		select count(if(createDate <![CDATA[<]]> date_add(now(), interval -1 day), createDate, null)) type1,
+	    count(if(createDate <![CDATA[>]]> date_add(now(), interval -1 day), createDate, null)) type2
+		from portal_data 
+		where createDate between date_add(now(), interval -2 day) and  date_add(now(), interval -0 day)
+ 	</select>
+ 	
  	<select id="listNaver" resultType="PortalVO">
  		select * from portal_data 
  		where 

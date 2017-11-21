@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.union.domain.ExtractVO;
+import org.union.domain.GraphVO;
 import org.union.domain.MediaVO;
 import org.union.domain.PeriodMediaVO;
 import org.union.domain.ReporterVO;
@@ -242,6 +243,12 @@ public class MediaServiceImpl implements MediaService {
 	public TextTypeVO daumMediaCount(SearchCriteria cri) {
 
 		return mediaDAO.daumMediaCount(cri);
+	}
+
+	@Override
+	public GraphVO yesterdayCount() {
+
+		return mediaDAO.yesterdayCount();
 	}
 
 }

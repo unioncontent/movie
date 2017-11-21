@@ -98,6 +98,22 @@
  			
  	</delete>
  	
+ 	<select id="countAll" resultType="Integer">
+		select count(*)
+		from sns_data
+		where createDate between date_add(#{date}, interval -1 hour) and #{date}
+	
+	</select>
+	
+ 	
+ 	<select id="yesterdayCount" resultType="GraphVO">
+ 		select count(if(createDate <![CDATA[<]]> date_add(now(), interval -1 day), createDate, null)) type1,
+	    count(if(createDate <![CDATA[>]]> date_add(now(), interval -1 day), createDate, null)) type2
+		from sns_data 
+		where createDate between date_add(now(), interval -2 day) and  date_add(now(), interval -0 day)
+		and  sns_name = #{name}
+ 	</select>
+ 	
  	<select id="listExtract" resultType="SNSVO">
 		select
 			*

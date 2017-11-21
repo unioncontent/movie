@@ -126,6 +126,13 @@
  	
  	</delete>
  	
+ 	<select id="yesterdayCount" resultType="GraphVO">
+ 		select count(if(createDate <![CDATA[<]]> date_add(now(), interval -1 day), createDate, null)) type1,
+	    count(if(createDate <![CDATA[>]]> date_add(now(), interval -1 day), createDate, null)) type2
+		from media_data 
+		where createDate between date_add(now(), interval -2 day) and  date_add(now(), interval -0 day)
+ 	</select>
+ 	
  	<select id="naverMediaCount" resultType="TextTypeVO">
  		select 
  		count(if(textType='좋은글', textType, null)) lik,

@@ -95,6 +95,13 @@
 	
 	</delete>
 	
+	<select id="countAll" resultType="Integer">
+		select count(*)
+		from community_data
+		where createDate between date_add(#{date}, interval -1 hour) and #{date}
+	
+	</select>
+	
 	<select id="textTypeCount" resultType="TextTypeVO">
  		select 
 		count(if(textType='좋은글', textType, null)) lik,

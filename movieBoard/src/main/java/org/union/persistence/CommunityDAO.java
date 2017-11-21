@@ -1,5 +1,6 @@
 package org.union.persistence;
 
+import java.util.Date;
 import java.util.List;
 
 import org.union.domain.CommunityVO;
@@ -16,6 +17,8 @@ public interface CommunityDAO {
 	public void update(CommunityVO vo);
 
 	public void delete(Integer community_idx);
+	
+	public Integer countAll(Date date);
 	
 	public TextTypeVO textTypeCount(SearchCriteria cri);
 	

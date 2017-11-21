@@ -2,6 +2,7 @@ package org.union.persistence;
 
 import java.util.List;
 
+import org.union.domain.GraphVO;
 import org.union.domain.MediaVO;
 import org.union.domain.SearchCriteria;
 import org.union.domain.TextTypeVO;
@@ -16,6 +17,8 @@ public interface MediaDAO {
 	public void update(MediaVO vo);
 	
 	public void delete(Integer media_idx);
+	
+	public GraphVO yesterdayCount();
 	
 	public TextTypeVO naverMediaCount(SearchCriteria cri);
 	public TextTypeVO daumMediaCount(SearchCriteria cri);

@@ -2,6 +2,7 @@ package org.union.service;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -130,6 +131,12 @@ public class CommunityServiceImpl implements CommunityService {
 	public TextTypeVO textTypeCount(SearchCriteria cri) {
 
 		return communityDAO.textTypeCount(cri);
+	}
+
+	@Override
+	public Integer countAll(Date date) {
+
+		return communityDAO.countAll(date);
 	}
 
 

@@ -1,8 +1,10 @@
 package org.union.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.union.domain.ExtractVO;
+import org.union.domain.GraphVO;
 import org.union.domain.PortalVO;
 import org.union.domain.SearchCriteria;
 import org.union.domain.TextTypeVO;
@@ -17,6 +19,12 @@ public interface PortalService {
 	public void modify(PortalVO vo);
 	
 	public void remove(Integer portal_idx);
+	
+	public Integer countAll(Date date);
+	
+	public GraphVO toDayCount(String type);
+	
+	public GraphVO yesterdayCount();
 	
 	public TextTypeVO textTypeCount(SearchCriteria cri);
 	

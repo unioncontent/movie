@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.union.domain.GraphVO;
 import org.union.domain.MediaVO;
 import org.union.domain.SearchCriteria;
 import org.union.domain.TextTypeVO;
@@ -169,6 +170,13 @@ public class MediaDAOImpl implements MediaDAO {
 	public TextTypeVO daumMediaCount(SearchCriteria cri) {
 
 		return session.selectOne(namespace + "daumMediaCount", cri);
+	}
+
+
+	@Override
+	public GraphVO yesterdayCount() {
+
+		return session.selectOne(namespace + "yesterdayCount");
 	}
 
 

@@ -1,10 +1,12 @@
 package org.union.persistence;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.union.domain.GraphVO;
 import org.union.domain.PortalVO;
 import org.union.domain.SearchCriteria;
 import org.union.domain.TextTypeVO;
@@ -175,6 +177,27 @@ public class PortalDAOImpl implements PortalDAO {
 	public TextTypeVO cafeTextTypeCount(SearchCriteria cri) {
 
 		return session.selectOne(namespace + "cafeTextTypeCount", cri);
+	}
+
+
+	@Override
+	public GraphVO toDayCount(String type) {
+
+		return session.selectOne(namespace + "toDayCount", type);
+	}
+
+
+	@Override
+	public GraphVO yesterdayCount() {
+
+		return session.selectOne(namespace + "yesterdayCount");
+	}
+
+
+	@Override
+	public Integer countAll(Date date) {
+
+		return session.selectOne(namespace + "countAll", date);
 	}
 
 
