@@ -314,6 +314,7 @@
   			writeDate <![CDATA[<]]> #{endDate}
   		and 
   			sns_name = #{sns_name}
+  		and writeDate is not null
   		<if test="company != null">
 			and
 			   keyword in (select 

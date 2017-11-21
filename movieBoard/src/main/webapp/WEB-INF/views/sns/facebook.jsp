@@ -383,15 +383,6 @@
 	        });
 		});
 
-	
-	
-	var date = getDate("week");
-	var startDate = date.startDate;
-	var endDate = date.endDate;
-	console.log("startDate: " + startDate);
-	console.log("endDate: " + endDate);
-
-	ajaxGraph(startDate, endDate);
 
 	var selectOption = decodeURI(window.location.href.split("selectKey=")[1]);
 	console.log("selectOption: " + selectOption);
@@ -503,10 +494,17 @@
 	   ajaxGraph(startDate, endDate);
 
 
-
 	// 그래프 함수
 
 }); // end
+
+	var date = getDate("week");
+	var startDate = date.startDate;
+	var endDate = date.endDate;
+	console.log("startDate: " + startDate);
+	console.log("endDate: " + endDate);
+
+	ajaxGraph(startDate, endDate);
 
 
 }); // end ready....

@@ -383,12 +383,6 @@ $(document).ready(function(){
 	        });
 		});
 
-	var date = getDate("week");
-	var startDate = date.startDate;
-	var endDate = date.endDate;
-
-	ajaxGraph(startDate, endDate);
-
 	var selectOption = decodeURI(window.location.href.split("selectKey=")[1]);
 	console.log("selectOption: " + selectOption);
 
@@ -500,6 +494,12 @@ $('#fromDate').on('apply.daterangepicker', function(ev, picker) {
 
 
 }); // end
+
+var date = getDate("week");
+var startDate = date.startDate;
+var endDate = date.endDate;
+
+ajaxGraph(startDate, endDate);
 
 }); // end ready....
 

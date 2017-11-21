@@ -349,6 +349,12 @@ public class SNSController {
 		}// end for
 		
 		//logger.info("graphList: " + graphList);
+		if(graphList.size() > 1) {
+			if(graphList.get(graphList.size()-1).getWriteDate() == null) {
+				logger.info("index last is null");
+				graphList.remove(graphList.size()-1);
+			}
+		}
 		
 		return graphList;
 		
