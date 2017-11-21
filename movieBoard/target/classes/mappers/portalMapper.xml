@@ -94,6 +94,152 @@
  	
  	</delete>
  	
+ 	<select id="countAll" resultType="Integer">
+		select count(*)
+		from portal_data
+		where createDate between date_add(#{date}, interval -1 hour) and #{date}
+	
+	</select>
+	
+ 	
+ 	<select id="toDayCount" resultType="GraphVO">
+ 		select count(if(portal_name = 'naver', portal_name, null)) type1,
+ 			 count(if(portal_name = 'daum', portal_name, null)) type2, count(*) type3  
+ 		from portal_data
+		where portal_type = #{type}
+		and date_add(now(), interval -1 day) <![CDATA[<]]> createDate
+		and createDate <![CDATA[<]]> now()
+ 	</select>
+ 	
+ 	<select id="yesterdayCount" resultType="GraphVO">
+ 		select count(if(createDate <![CDATA[<]]> date_add(now(), interval -1 day), createDate, null)) type1,
+	    count(if(createDate <![CDATA[>]]> date_add(now(), interval -1 day), createDate, null)) type2
+		from portal_data 
+		where createDate between date_add(now(), interval -2 day) and  date_add(now(), interval -0 day)
+ 	</select>
+ 	
+ 	<select id="listNaver" resultType="PortalVO">
+ 		select * from portal_data 
+ 		where 
+ 			textType is not null
+ 		and
+ 			portal_name = 'naver'
+ 		<include refid="search"></include>
+		order 
+			by createdate desc
+		limit  
+			#{startPage}, #{perPageNum}
+ 	
+ 	</select>
+ 	
+ 	<select id="getNaverCount" resultType="Integer">
+ 		select count(*) from portal_data
+ 		where 
+ 			textType is not null
+ 		and
+ 			portal_name = 'naver'
+ 		<include refid="search"></include>
+ 	
+ 	</select>
+ 	
+ 	<select id="textTypeCount" resultType="TextTypeVO">
+ 		select 
+		count(if(textType='좋은글', textType, null)) lik,
+		count(if(textType='나쁜글', textType, null)) dis,
+		count(if(textType='관심글', textType, null)) cu,
+		count(if(textType='기타글', textType, null)) etc,
+		count(if(textType is not null and texttype!='삭제글', textType, null)) al
+		from portal_data
+		where textType is not null
+		<include refid="search"></include>
+ 	</select>
+ 	
+ 	
+ 	<select id="blogTextTypeCount" resultType="TextTypeVO">
+ 	select 
+		count(if(textType='좋은글', textType, null)) lik,
+    	count(if(textType='나쁜글', textType, null)) dis,
+    	count(if(textType='관심글', textType, null)) cu,
+    	count(if(textType='기타글', textType, null)) etc,
+    	count(if(textType is not null and texttype!='삭제글', textType, null))
+	from 
+		union.portal_data
+	where 
+		portal_type = 'blog'
+ 	<include refid="search"></include>
+ 	</select>
+ 	
+ 	<select id="cafeTextTypeCount" resultType="TextTypeVO">
+ 	select 
+		count(if(textType='좋은글', textType, null)) lik,
+    	count(if(textType='나쁜글', textType, null)) dis,
+    	count(if(textType='관심글', textType, null)) cu,
+    	count(if(textType='기타글', textType, null)) etc,
+    	count(if(textType is not null and texttype!='삭제글', textType, null))
+	from 
+		union.portal_data
+	where 
+		portal_type = 'cafe'
+	<include refid="search"></include>
+ 	
+ 	</select>
+ 	
+ 	<select id="naverTextTypeCount" resultType="TextTypeVO">
+ 	select 
+		count(if(textType='좋은글', textType, null)) lik,
+    	count(if(textType='나쁜글', textType, null)) dis,
+    	count(if(textType='관심글', textType, null)) cu,
+    	count(if(textType='기타글', textType, null)) etc,
+    	count(if(textType is not null and texttype!='삭제글', textType, null))
+	from 
+		union.portal_data
+	where 
+		portal_name = 'naver'
+	and 
+		portal_type = #{type}
+ 	
+ 	</select>
+ 	
+ 	<select id="daumTextTypeCount" resultType="TextTypeVO">
+ 	select 
+		count(if(textType='좋은글', textType, null)) lik,
+    	count(if(textType='나쁜글', textType, null)) dis,
+    	count(if(textType='관심글', textType, null)) cu,
+    	count(if(textType='기타글', textType, null)) etc,
+    	count(if(textType is not null and texttype!='삭제글', textType, null))
+	from 
+		union.portal_data
+	where 
+		portal_name = 'daum'
+	and 
+		portal_type = #{type}
+ 	
+ 	</select>
+ 	
+ 	<select id="listDaum" resultType="PortalVO">
+ 		select * from portal_data 
+ 		where 
+ 			textType is not null
+ 		and
+ 			portal_name = 'daum'
+ 		<include refid="search"></include>
+		order 
+			by createdate desc
+		limit  
+			#{startPage}, #{perPageNum}
+ 	
+ 	</select>
+ 	
+ 	<select id="getDaumCount" resultType="Integer">
+ 		select count(*) from portal_data
+ 		where 
+ 			textType is not null
+ 		and
+ 			portal_name = 'daum'
+ 		<include refid="search"></include>
+ 	
+ 	</select>
+ 	
  	<select id="listExtract" resultType="PortalVO">
 		select
 			*

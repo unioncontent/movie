@@ -2,6 +2,7 @@ package org.union.service;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.union.domain.CommunityVO;
 import org.union.domain.ExtractVO;
 import org.union.domain.SearchCriteria;
+import org.union.domain.TextTypeVO;
 import org.union.persistence.CommunityDAO;
 
 @Service
@@ -123,6 +125,18 @@ public class CommunityServiceImpl implements CommunityService {
 	public Integer getCompleteCount(SearchCriteria cri) {
 
 		return communityDAO.getCompleteCount(cri);
+	}
+
+	@Override
+	public TextTypeVO textTypeCount(SearchCriteria cri) {
+
+		return communityDAO.textTypeCount(cri);
+	}
+
+	@Override
+	public Integer countAll(Date date) {
+
+		return communityDAO.countAll(date);
 	}
 
 

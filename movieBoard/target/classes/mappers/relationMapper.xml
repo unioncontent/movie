@@ -42,6 +42,14 @@
  			relation_idx = #{relation_idx}
  	
  	</delete>
+ 	
+ 	<select id="todayCount" resultType="Integer">
+ 		select count(*)
+ 		from relation_data
+		where date_add(now(), interval -1 day) <![CDATA[<]]> createDate
+		and createDate <![CDATA[<]]> now()
+ 		
+ 	</select>
  
  
  </mapper>

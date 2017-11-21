@@ -17,4 +17,6 @@ public interface ReporterDAO {
 	
 	public List<ReporterVO> listAll();
 	
+	public List<ReporterVO> listChecked();
+	
 }

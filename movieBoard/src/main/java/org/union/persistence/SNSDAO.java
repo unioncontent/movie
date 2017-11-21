@@ -1,5 +1,6 @@
 package org.union.persistence;
 
+import java.util.Date;
 import java.util.List;
 
 import org.union.domain.GraphVO;
@@ -16,6 +17,14 @@ public interface SNSDAO {
 	public void update(SNSVO vo);
 	
 	public void delete(Integer SNS_idx);
+	
+	public Integer countAll(Date date);
+	
+	public GraphVO yesterdayCount(String name);
+	
+	public GraphVO facebookSum(SearchCriteria cri); 
+	public GraphVO twitterSum(SearchCriteria cri); 
+	public GraphVO instagramSum(SearchCriteria cri); 
 	
 	public List<SNSVO> listExtract(SearchCriteria cri);
 	

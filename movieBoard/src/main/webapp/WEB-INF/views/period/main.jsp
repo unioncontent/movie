@@ -15,6 +15,9 @@
       <![endif]-->
   <!-- Meta -->
   <meta charset="utf-8">
+  <meta name="_csrf" content="${_csrf.token}" />
+  <!-- default header name is X-CSRF-TOKEN -->
+  <meta name="_csrf_header" content="${_csrf.headerName}"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="description" content="Phoenixcoded">
@@ -100,17 +103,36 @@
                     <div class="row">
                       <!-- data setting start -->
                       <div class="col-md-7">
-                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left">
-                          <option value="opt1">회사</option>
+                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="selectCompany">
+                          <option>회사</option>
+                          <c:if test="${user.user_type == 1 }">
+                          <c:forEach items="${companyList}" var = "companyList">
+                          <option value="${companyList.user_name}">${companyList.user_name}</option>
+                          </c:forEach>
+                          </c:if>
+                          <c:if test="${user.user_type == 2}">
+                          <option value="${companyList.user_name}">${companyList.user_name}</option>
+                          </c:if>
                         </select>
-                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left">
-                          <option value="opt1">키워드</option>
+                        
+                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left" id="selectKeyword">
+                          <option>키워드</option>
+                          <c:if test="${modelKeywordList == null}" >
+                          	<c:forEach items="${keywordList}" var = "keywordList">
+                          <option value="${keywordList.keyword_main}">${keywordList.keyword_main}</option>
+                          </c:forEach>
+                          </c:if>
+                          <c:if test="${modelKeywordList != null}">
+                          	<c:forEach items="${modelKeywordList}" var = "keywordList">
+                          <option value="${keywordList.keyword_main}">${keywordList.keyword_main}</option>
+                          </c:forEach>
+                          </c:if>
                         </select>
                       </div>
                       <div class="col-md-5">
                          <!-- date picker start -->
                         <div class="row">
-                          <div class="btn-group float-right m-b-10 p-l-15 p-r-10" role="group">
+                          <<div class="btn-group float-right m-b-10 p-l-15 p-r-10" role="group">
                             <button id="toDay" type="button" class="btn btn-inverse btn-sm waves-effect waves-light">당일</button>
                             <button id="yesterDay" type="button" class="btn btn-inverse btn-sm waves-effect waves-light">전일</button>
                             <button id="week" type="button" class="btn btn-inverse btn-sm waves-effect waves-light">최근7일</button>
@@ -139,7 +161,7 @@
                               <div class="col-md-6 col-xl-2 main-card">
                                 <div class="card social-widget-card">
                                   <div class="card-block-big bg-inverse">
-                                    <h3>0</h3>
+                                    <h3>${portalCount+communityCount+snsCount+mediaCount}</h3>
                                     <span class="m-t-10">전체검색</span>
                                     <i class="icofont icofont-search"></i>
                                   </div>
@@ -148,7 +170,7 @@
                               <div class="col-md-6 col-xl-2 main-card">
                                 <div class="card social-widget-card">
                                   <div class="card-block-big bg-primary">
-                                    <h3>0</h3>
+                                    <h3>${portalCount}</h3>
                                     <span class="m-t-10">포털검색</span>
                                     <i class="icofont icofont-web"></i>
                                   </div>
@@ -157,7 +179,7 @@
                               <div class="col-md-6 col-xl-2 main-card">
                                 <div class="card social-widget-card">
                                   <div class="card-block-big bg-success">
-                                    <h3>0</h3>
+                                    <h3>${communityCount}</h3>
                                     <span class="m-t-10">커뮤니티검색</span>
                                     <i class="icofont icofont-users"></i>
                                   </div>
@@ -166,7 +188,7 @@
                               <div class="col-md-6 col-xl-2 main-card">
                                 <div class="card social-widget-card">
                                   <div class="card-block-big bg-twitter">
-                                    <h3>0</h3>
+                                    <h3>${snsCount}</h3>
                                     <span class="m-t-10">SNS검색</span>
                                     <i class="icofont icofont-social-twitter"></i>
                                   </div>
@@ -175,7 +197,7 @@
                               <div class="col-md-6 col-xl-2 main-card">
                                   <div class="card social-widget-card">
                                     <div class="card-block-big bg-news">
-                                      <h3>0</h3>
+                                      <h3>${mediaCount}</h3>
                                       <span class="m-t-10">언론사검색</span>
                                       <i class="icofont icofont-building-alt"></i>
                                     </div>
@@ -234,37 +256,29 @@
                                                   </tr>
                                               </thead>
                                               <tbody>
-                                                  <tr>
+                                                  <tr height="63px">
                                                       <th scope="row">포털</th>
-                                                      <td>1</td>
-                                                      <td>1</td>
-                                                      <td>0</td>
-                                                      <td>0</td>
-                                                      <td>1</td>
+                                                      <td>${portalTextType.lik}</td>
+                                                      <td>${portalTextType.dis}</td>
+                                                      <td>${portalTextType.cu}</td>
+                                                      <td>${portalTextType.etc}</td>
+                                                      <td>${portalTextType.al}</td>
                                                   </tr>
-                                                  <tr>
+                                                  <tr height="63px">
                                                       <th scope="row">커뮤니티</th>
-                                                      <td>0</td>
-                                                      <td>1</td>
-                                                      <td>0</td>
-                                                      <td>0</td>
-                                                      <td>2</td>
+                                                      <td>${communityTextType.lik}</td>
+                                                      <td>${communityTextType.dis}</td>
+                                                      <td>${communityTextType.cu}</td>
+                                                      <td>${communityTextType.etc}</td>
+                                                      <td>${communityTextType.al}</td>
                                                   </tr>
-                                                  <tr>
-                                                      <th scope="row">댓글</th>
-                                                      <td>1</td>
-                                                      <td>1</td>
-                                                      <td>0</td>
-                                                      <td>0</td>
-                                                      <td>1</td>
-                                                  </tr>
-                                                  <tr>
+                                                  <tr height="63px">
                                                       <th scope="row">합계</th>
-                                                      <td>1</td>
-                                                      <td>2</td>
-                                                      <td>0</td>
-                                                      <td>0</td>
-                                                      <td>3</td>
+                                                      <td>${portalTextType.lik+communityTextType.lik}</td>
+                                                      <td>${portalTextType.dis+communityTextType.dis}</td>
+                                                      <td>${portalTextType.cu+communityTextType.cu}</td>
+                                                      <td>${portalTextType.etc+communityTextType.etc}</td>
+                                                      <td>${portalTextType.al+communityTextType.al}</td>
                                                   </tr>
                                               </tbody>
                                             </table>
@@ -310,27 +324,32 @@
                                               <tbody>
                                                   <tr height="63px">
                                                       <th scope="row">블로그 여론</th>
-                                                      <td>1</td>
-                                                      <td>1</td>
-                                                      <td>0</td>
-                                                      <td>0</td>
-                                                      <td>1</td>
+                                                      <td>${blogTextType.lik}</td>
+                                                      <td>${blogTextType.dis}</td>
+                                                      <td>${blogTextType.cu}</td>
+                                                      <td>${blogTextType.etc}</td>
+                                                      <td>${blogTextType.lik + blogTextType.dis
+                                                      		+ blogTextType.cu + blogTextType.etc}</td>
                                                   </tr>
                                                   <tr height="63px">
                                                       <th scope="row">카페여론</th>
-                                                      <td>0</td>
-                                                      <td>1</td>
-                                                      <td>0</td>
-                                                      <td>0</td>
-                                                      <td>2</td>
+                                                      <td>${cafeTextType.lik}</td>
+                                                      <td>${cafeTextType.dis}</td>
+                                                      <td>${cafeTextType.cu}</td>
+                                                      <td>${cafeTextType.etc}</td>
+                                                      <td>${cafeTextType.lik + cafeTextType.dis
+                                                      		+ cafeTextType.cu + cafeTextType.etc}</td>
                                                   </tr>
                                                   <tr height="63px">
-                                                      <th scope="row">기사 댓글</th>
-                                                      <td>1</td>
-                                                      <td>1</td>
-                                                      <td>0</td>
-                                                      <td>0</td>
-                                                      <td>1</td>
+                                                      <th scope="row">합계</th>
+                                                      <td>${blogTextType.lik + cafeTextType.lik}</td>
+                                                      <td>${blogTextType.dis + cafeTextType.dis}</td>
+                                                      <td>${blogTextType.cu + cafeTextType.cu}</td>
+                                                      <td>${blogTextType.etc + cafeTextType.etc}</td>
+                                                      <td>${blogTextType.lik + blogTextType.dis
+                                                      		+ blogTextType.cu + blogTextType.etc
+                                                      		+cafeTextType.lik + cafeTextType.dis
+                                                      		+ cafeTextType.cu + cafeTextType.etc}</td>
                                                   </tr>
                                               </tbody>
                                             </table>
@@ -371,35 +390,43 @@
                                             <tbody>
                                                 <tr>
                                                     <th scope="row">Facebook</th>
-                                                    <td>1</td>
-                                                    <td>1</td>
-                                                    <td>0</td>
-                                                    <td>0</td>
-                                                    <td>1</td>
+                                                    <td>${facebookTT.type1}</td>
+                                                    <td>${facebookTT.likeCount}</td>
+                                                    <td>${facebookTT.shareCount}</td>
+                                                    <td>${facebookTT.replyCount}</td>
+                                                    <td>${facebookTT.type1+facebookTT.likeCount+facebookTT.shareCount+
+                                                    facebookTT.replyCount}</td>
                                                 </tr>
                                                 <tr>
                                                     <th scope="row">Twitter</th>
-                                                    <td>0</td>
-                                                    <td>1</td>
-                                                    <td>0</td>
-                                                    <td>0</td>
-                                                    <td>2</td>
+                                                    <td>${twitterTT.type1}</td>
+                                                    <td>${twitterTT.likeCount}</td>
+                                                    <td>${twitterTT.shareCount}</td>
+                                                    <td>${twitterTT.replyCount}</td>
+                                                    <td>${twitterTT.type1+twitterTT.likeCount+twitterTT.shareCount
+                                                    +twitterTT.replyCount}</td>
                                                 </tr>
                                                 <tr>
                                                     <th scope="row">Instagram</th>
-                                                    <td>1</td>
-                                                    <td>1</td>
-                                                    <td>0</td>
-                                                    <td>0</td>
-                                                    <td>1</td>
+                                                    <td>${instagramTT.type1}</td>
+                                                    <td>${instagramTT.likeCount}</td>
+                                                    <td>${instagramTT.shareCount}</td>
+                                                    <td>${instagramTT.replyCount}</td>
+                                                    <td>${instagramTT.type1+instagramTT.likeCount+instagramTT.shareCount+
+                                                    instagramTT.replyCount}</td>
                                                 </tr>
                                                 <tr>
                                                     <th scope="row">합계</th>
-                                                    <td>1</td>
-                                                    <td>2</td>
-                                                    <td>0</td>
-                                                    <td>0</td>
-                                                    <td>3</td>
+                                                    <td>${facebookTT.type1 + twitterTT.type1 + instagramTT.type1}</td>
+                                                    <td>${facebookTT.likeCount + twitterTT.likeCount + instagramTT.likeCount}</td>
+                                                    <td>${facebookTT.shareCount + twitterTT.shareCount + instagramTT.shareCount}</td>
+                                                    <td>${facebookTT.replyCount + twitterTT.replyCount + instagramTT.replyCount}</td>
+                                                    <td>${facebookTT.type1+facebookTT.likeCount+facebookTT.shareCount
+                                                    + facebookTT.replyCount
+                                                    + twitterTT.type1+twitterTT.likeCount+twitterTT.shareCount
+                                                    + twitterTT.replyCount
+                                                    + instagramTT.type1+intagramTT.likeCount+instagramTT.shareCount
+                                                    + instagramTT.replyCount}</td>
                                                 </tr>
                                             </tbody>
                                           </table>
@@ -436,19 +463,19 @@
                                             <tbody>
                                                 <tr height="92px">
                                                     <th scope="row">NAVER기사</th>
-                                                    <td>1</td>
-                                                    <td>1</td>
-                                                    <td>0</td>
-                                                    <td>0</td>
-                                                    <td>1</td>
+                                                    <td>${naverMediaCount.lik}</td>
+                                                    <td>${naverMediaCount.dis}</td>
+                                                    <td>${naverMediaCount.cu}</td>
+                                                    <td>${naverMediaCount.etc}</td>
+                                                    <td>${naverMediaCount.al}</td>
                                                 </tr>
                                                 <tr height="92px">
                                                     <th scope="row">DAUM기사</th>
-                                                    <td>1</td>
-                                                    <td>1</td>
-                                                    <td>0</td>
-                                                    <td>0</td>
-                                                    <td>1</td>
+                                                    <td>${daumMediaCount.lik}</td>
+                                                    <td>${daumMediaCount.dis}</td>
+                                                    <td>${daumMediaCount.cu}</td>
+                                                    <td>${daumMediaCount.etc}</td>
+                                                    <td>${daumMediaCount.al}</td>
                                                 </tr>
                                             </tbody>
                                           </table>
@@ -560,5 +587,285 @@
   <script src="../assets/pages/period/custom-period1.js"></script>
   <script src="../assets/pages/picker.js"></script>
 </body>
+
+<script type="text/javascript">
+
+  //ajax 보안
+  var token = $("meta[name='_csrf']").attr("content");
+  var header = $("meta[name='_csrf_header']").attr("content");
+
+  $(function() {
+	  $(document).ajaxSend(function(e, xhr, options) {
+	  	xhr.setRequestHeader(header, token);
+	  });
+  });
+
+  $(document).ready(function(){
+	 
+	  
+	var date = getDate("week");
+	var startDate = date.startDate;
+	var endDate = date.endDate;
+	console.log("startDate: " + startDate);
+	console.log("endDate: " + endDate);
+
+	ajaxGraph(startDate, endDate);
+	  
+	// content 길시에 ...으로 변경
+	var $title = $(".title");
+	
+	var size = 25;
+
+	for (var i =0; i < $title.length; i++){
+		if($title[i].innerText.length >= size){
+			$title[i].children[0].text = $title[i].innerText.substr(0, size) + '...';
+		}
+	}
+	  
+	var selectOption = decodeURI(window.location.href.split("selectKey=")[1]);
+	console.log("selectOption: " + selectOption);
+
+
+	var $selectKeyword = $('#selectKeyword');
+
+	if(selectOption != 'undefined'){
+		for(var i = 0; i < $selectKeyword[0].length; i++ ){
+			if($selectKeyword[0][i].value == selectOption){
+				$selectKeyword[0][i].selected = 'selected';
+			}
+		}
+	}
+	$selectKeyword[0][0].disabled = true;
+
+	// 키워드 선택시
+	$selectKeyword.change(function(){
+		console.log("selectKeyword clicked....");
+		console.log($('#selectKeyword option:selected').val());
+		
+		self.location = "main?"
+					  + "company=" + $("#selectCompany option:selected").val()
+					  + "&selectKey=" + $("#selectKeyword option:selected").val();
+
+	});
+	
+	var companyOption = decodeURI(window.location.href.split("company=")[1]).split("&selectKey")[0];
+
+
+	var $selectCompany = $('#selectCompany');
+	if(companyOption != 'undefined'){
+		for(var i = 0; i < $selectCompany[0].length; i++ ){
+
+			if($selectCompany[0].children[i].value == companyOption){
+				$selectCompany[0].children[i].selected = 'selected';
+			} 
+		}
+	}
+	$selectCompany[0][0].disabled = true;
+	
+	
+	// 회사 선택시
+	$selectCompany.change(function(){
+		console.log("selectCompany clicked....");
+		console.log($("#selectCompany option:selected").val());
+		
+		self.location = "main?"+ "company=" + $("#selectCompany option:selected").val();
+		
+	});
+	
+	
+	// 당일 클릭시
+	$('#toDay').on("click", function(){
+	  console.log("toDay clicked....");
+	  var date = getDate("toDay");
+	  var endDate = date.endDate;
+
+	  ajaxGraph(endDate, endDate);
+	});
+
+	// 전일 클릭시
+	$('#yesterDay').on("click", function(){
+	  console.log("yesterDay clicked....");
+	  var date = getDate("yesterDay");
+	  var startDate = date.startDate;
+	  var endDate = date.endDate;
+
+	  ajaxGraph(startDate, endDate);
+	});
+
+	// 7일  클릭시
+	$('#week').on("click", function(){
+	  console.log("week clicked....");
+	  var date = getDate("week");
+	  var startDate = date.startDate;
+	  var endDate = date.endDate;
+
+	  ajaxGraph(startDate, endDate);
+	})
+
+	// 30일 클릭시
+	$('#month').on("click", function(){
+	  console.log("month clicked....");
+	  var date = getDate("month");
+	  var startDate = date.startDate;
+	  var endDate = date.endDate;
+
+	  ajaxGraph(startDate, endDate);
+	})
+
+
+	// 캘린더 클릭시
+	$('#fromDate').on('apply.daterangepicker', function(ev, picker) {
+	   var startDate = picker.startDate.format('YYYY-MM-DD');
+	   var endDate = picker.endDate.format('YYYY-MM-DD');
+
+	   ajaxGraph(startDate, endDate);
+	})
+	
+	var disCount1 = ${portalTextType.dis + communityTextType.dis};
+	var totalCount1 = ${portalTextType.al + communityTextType.al};
+	
+	var value1 = Math.round((disCount1/totalCount1)*100);
+	
+	var name1 = makeName(value1);
+	
+	echart1(value1, name1);
+	
+	var disCount2 = ${blogTextType.dis + cafeTextType.dis};
+	var totalCount2 = ${blogTextType.lik + blogTextType.dis
+  					+ blogTextType.cu + blogTextType.etc
+  					+ cafeTextType.lik + cafeTextType.dis
+  					+ cafeTextType.cu + cafeTextType.etc};
+	
+  	var value2 = Math.round((disCount2/totalCount2)*100);
+	
+	var name2 = makeName(value2);
+	
+	echart2(value2, name2);
+  }); // end ready...
+
+  
+  	// 그래프 상태 계산 함수
+  	function makeName(value){
+	  
+	  var name;
+	  
+	  if(value <=5){
+		  name = '아주좋음';
+	  
+	  }else if(5 < value <= 10){
+		  name = '쾌적';
+		  
+	  }else if(10 < value <= 20){
+		  name = '안정';
+		  
+	  }else if(20 < value <= 30){
+		  name = '주의';
+		  
+	  }else if(30 < value <= 100){
+		  name = '경고'
+	  
+	  }else{
+		  name = '미확인'
+	  }
+	  
+	  return name;
+  }
+  
+	// 그래프 함수
+	function ajaxGraph(startDate, endDate){
+	  console.log(startDate + "/" + endDate);
+		$.ajax({
+
+	      type : "POST",
+		  url : "graph",
+	 	  dataType : "json",
+	 	  data : {startDate : startDate, endDate : endDate, part : "main",
+	 		      company : $("#selectCompany option:selected").val(), selectKey : $("#selectKeyword option:selected").val()},
+	  	  error : function(){
+	      	alert('graphPOST ajax error....');
+	  	  },
+	  	  success : function(data){
+
+	  		var script = "[";
+
+	  		for(var i = 0; i < data.length; i++){
+	  			console.log(data[i]);
+	  			script += '{"period":' + '"' + data[i].writeDate + '",'
+	  					+ '"l1"'+ ':' + data[i].type1 + ","
+	  					+ '"l2"' + ':' + data[i].type2 + ","
+	  					+ '"l3"' + ':' + data[i].type3 + ","
+	  					+ '"l4"' + ':' + data[i].type4 + "},";
+
+	  			if(i == data.length-1){
+	  				script =  script.substr(0, script.length-1);
+	  				script += "]";
+	  			}
+	  		}
+	  		console.log(script);
+
+	  		// to json
+	  		var jsonScript = JSON.parse(script);
+
+	  		drawChart(jsonScript);
+
+	  	 }
+		});
+	}
+
+
+  function drawChart(data){
+     	// 그래프 초기화
+     	$('#line-chart1').children().remove();
+
+     	window.lineChart = Morris.Line({
+     	      element: 'line-chart1',
+     	      data: data,
+     	      xkey: 'period',
+     	      redraw: true,
+     	      ykeys: ['l1', 'l2', 'l3', 'l4'],
+     	      hideHover: 'auto',
+     	      labels: ['포털', '커뮤니티', 'SNS', '언론사'],
+     	      lineColors: ['#2ecc71', '#e74c3c', '#3498DB','#f1c40f']
+     	  });
+     }
+
+  // 날짜 계산 함수
+  function getDate(type){
+  	console.log("TYPE : " + type);
+  	var date = new Date();
+
+   	var month = date.getMonth()+1;
+   	var day = date.getDate();
+   	var year = date.getFullYear();
+
+   	var endDate = year + "-" + month + "-" + day;
+   	var startDate;
+
+   	if(type == "yesterDay"){
+   		var calcDate = day-1;
+   		startDate = year + "-" + month + "-" + calcDate;
+
+   	}else if(type == "month"){
+   		var calcDate = month-1;
+   		startDate = year + "-" + calcDate + "-" + day;
+
+   	}else if(type == "week"){
+   		var calcDate = day-7;
+   		if(calcDate < 0){
+   			var lastDay = (new Date(year, month-1, 0)).getDate();
+   			calcDate += lastDay;
+   			month -= 1;
+   		}
+   		startDate = year + "-" + month + "-" + calcDate;
+   	}
+
+   	return {
+   		startDate : startDate,
+   		endDate : endDate
+   	}
+
+  }
+  
+</script>
 
 </html>

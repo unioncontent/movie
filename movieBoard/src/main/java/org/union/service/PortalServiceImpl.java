@@ -2,13 +2,16 @@ package org.union.service;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.union.domain.ExtractVO;
+import org.union.domain.GraphVO;
 import org.union.domain.PortalVO;
 import org.union.domain.SearchCriteria;
+import org.union.domain.TextTypeVO;
 import org.union.persistence.PortalDAO;
 
 @Service
@@ -118,6 +121,78 @@ public class PortalServiceImpl implements PortalService {
 	public List<PortalVO> listAll(SearchCriteria cri) {
 
 		return portalDAO.listAll(cri);
+	}
+
+	@Override
+	public List<PortalVO> listNaver(SearchCriteria cri) {
+
+		return portalDAO.listNaver(cri);
+	}
+
+	@Override
+	public Integer getNaverCount(SearchCriteria cri) {
+
+		return portalDAO.getNaverCount(cri);
+	}
+
+	@Override
+	public List<PortalVO> listDaum(SearchCriteria cri) {
+
+		return portalDAO.listDaum(cri);
+	}
+
+	@Override
+	public Integer getDaumCount(SearchCriteria cri) {
+
+		return portalDAO.getDaumCount(cri);
+	}
+
+	@Override
+	public List<TextTypeVO> naverTextTypeCount(String type) {
+
+		return portalDAO.naverTextTypeCount(type);
+	}
+
+	@Override
+	public List<TextTypeVO> daumTextTypeCount(String type) {
+
+		return portalDAO.daumTextTypeCount(type);
+	}
+
+	@Override
+	public TextTypeVO textTypeCount(SearchCriteria cri) {
+
+		return portalDAO.textTypeCount(cri);
+	}
+
+	@Override
+	public TextTypeVO blogTextType(SearchCriteria cri) {
+
+		return portalDAO.blogTextTypeCount(cri);
+	}
+
+	@Override
+	public TextTypeVO cafeTextType(SearchCriteria cri) {
+
+		return portalDAO.cafeTextTypeCount(cri);
+	}
+
+	@Override
+	public GraphVO toDayCount(String type) {
+
+		return portalDAO.toDayCount(type);
+	}
+
+	@Override
+	public GraphVO yesterdayCount() {
+
+		return portalDAO.yesterdayCount();
+	}
+
+	@Override
+	public Integer countAll(Date date) {
+
+		return portalDAO.countAll(date);
 	}
 
 }

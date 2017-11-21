@@ -28,6 +28,7 @@ import org.union.domain.UserVO;
 import org.union.service.CommunityService;
 import org.union.service.KeywordService;
 import org.union.service.MediaService;
+import org.union.service.PortalService;
 import org.union.service.SNSService;
 import org.union.service.UserService;
 import org.union.util.ExcelView;
@@ -47,6 +48,9 @@ public class PeriodController {
 	private CommunityService communityService;
 
 	@Autowired
+	private PortalService portalService;
+	
+	@Autowired
 	private SNSService snsService;
 
 	@Autowired
@@ -56,8 +60,77 @@ public class PeriodController {
 	private UserService userService;
 
 	@GetMapping("/main")
-	public void mainGET() {
+	public void mainGET(@ModelAttribute("cri") SearchCriteria cri, Model model) {
 		logger.info("mainGET called....");
+		
+		cri.setKeyword(null);
+		cri.setTextType(null);
+		
+		if(cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey()) ) {
+			logger.info("selectKey is null");
+			cri.setSelectKey(null);
+		}
+		if("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate())
+				|| cri.getStartDate() == "" || cri.getEndDate() == ""){
+			cri.setStartDate(null);
+			cri.setEndDate(null);
+		
+		} 
+		if(cri.getStartDate() != null && cri.getEndDate() != null) {
+			if(cri.getStartDate().indexOf("00:00:00") < 0 && cri.getEndDate().indexOf("23:59:59") < 0){ 
+				cri.setStartDate(cri.getStartDate() + " 00:00:00"); 
+				cri.setEndDate(cri.getEndDate() + " 23:59:59"); 
+			}
+		}
+		if(cri.getCompany() != null) {
+			if(cri.getCompany().isEmpty()) {
+				cri.setCompany(null);
+			}
+		}
+		if(cri.getCompany() == null || cri.getCompany().equals("회사")) {
+			logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+			UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
+			
+			if(!vo.getUser_name().equals("union")) {
+			cri.setCompany(vo.getUser_name());
+			
+			}else {
+				cri.setCompany(null);
+			}
+		}
+
+		// 회사 선택에 따른 키워드 재추출
+		if (cri.getCompany() != null) {	
+			if (cri.getCompany().isEmpty() == false) {
+
+				UserVO userVO = userService.viewByName(cri.getCompany());
+				logger.info("userVO: " + userVO);
+				logger.info("keywordList: " + keywordService.listByUser(userVO.getUser_idx()));
+				model.addAttribute("modelKeywordList",
+						keywordService.listByUser(userService.viewByName(cri.getCompany()).getUser_idx()));
+			}
+		}
+		
+		logger.info("cri: " + cri);
+		
+		model.addAttribute("portalCount", portalService.getSearchCount(cri));
+		model.addAttribute("communityCount", communityService.getSearchCount(cri));
+		model.addAttribute("snsCount", snsService.getSearchCount(cri));
+		model.addAttribute("mediaCount", mediaService.getSearchCount(cri));
+		
+		model.addAttribute("portalTextType", portalService.textTypeCount(cri));
+		model.addAttribute("communityTextType", communityService.textTypeCount(cri));
+		
+		model.addAttribute("blogTextType", portalService.blogTextType(cri));
+		model.addAttribute("cafeTextType", portalService.cafeTextType(cri));
+		
+		model.addAttribute("facebookTT", snsService.facebookSum(cri));
+		model.addAttribute("twitterTT", snsService.twitterSum(cri));
+		model.addAttribute("instagramTT", snsService.instagramSum(cri));
+		
+		model.addAttribute("naverMediaCount", mediaService.naverMediaCount(cri));
+		model.addAttribute("daumMediaCount", mediaService.daumMediaCount(cri));
+		
 	}
 
 	@GetMapping("/community")
@@ -138,8 +211,85 @@ public class PeriodController {
 	}
 
 	@GetMapping("/portal")
-	public void portalGET() {
+	public void portalGET(@ModelAttribute("cri") SearchCriteria cri, Model model) {
 		logger.info("portalGET called....");
+		
+		cri.setKeyword(null);
+		cri.setTextType(null);
+		
+		if(cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey()) ) {
+			logger.info("selectKey is null");
+			cri.setSelectKey(null);
+		}
+		if("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate())
+				|| cri.getStartDate() == "" || cri.getEndDate() == ""){
+			cri.setStartDate(null);
+			cri.setEndDate(null);
+		
+		} 
+		if(cri.getStartDate() != null && cri.getEndDate() != null) {
+			if(cri.getStartDate().indexOf("00:00:00") < 0 && cri.getEndDate().indexOf("23:59:59") < 0){ 
+				cri.setStartDate(cri.getStartDate() + " 00:00:00"); 
+				cri.setEndDate(cri.getEndDate() + " 23:59:59"); 
+			}
+		}
+		if(cri.getCompany() != null) {
+			if(cri.getCompany().isEmpty()) {
+				cri.setCompany(null);
+			}
+		}
+		if(cri.getCompany() == null || cri.getCompany().equals("회사")) {
+			logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+			UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
+			
+			if(!vo.getUser_name().equals("union")) {
+			cri.setCompany(vo.getUser_name());
+			
+			}else {
+				cri.setCompany(null);
+			}
+		}
+
+		// 회사 선택에 따른 키워드 재추출
+		if (cri.getCompany() != null) {	
+			if (cri.getCompany().isEmpty() == false) {
+
+				UserVO userVO = userService.viewByName(cri.getCompany());
+				logger.info("userVO: " + userVO);
+				logger.info("keywordList: " + keywordService.listByUser(userVO.getUser_idx()));
+				model.addAttribute("modelKeywordList",
+						keywordService.listByUser(userService.viewByName(cri.getCompany()).getUser_idx()));
+			}
+		}
+		
+		logger.info("cri: " + cri);
+		
+		Integer naverCount = portalService.getNaverCount(cri);
+		Integer daumCount = portalService.getDaumCount(cri);
+		
+		model.addAttribute("naverCount", naverCount);
+		model.addAttribute("daumCount", daumCount);
+		
+		model.addAttribute("portalList", portalService.listSearch(cri));
+		
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(portalService.getSearchCount(cri));
+		
+		logger.info("pageMaker: " + pageMaker);
+		model.addAttribute("pageMaker", pageMaker);
+		
+		model.addAttribute("naver1", portalService.naverTextTypeCount("blog"));
+		logger.info("naver1: " + portalService.naverTextTypeCount("blog"));
+		model.addAttribute("naver2", portalService.naverTextTypeCount("cafe"));
+		model.addAttribute("naver3", portalService.naverTextTypeCount("kintip"));
+		model.addAttribute("naver4", portalService.naverTextTypeCount("webdoc"));
+		
+		model.addAttribute("daum1", portalService.daumTextTypeCount("blog"));
+		logger.info("daum1: " + portalService.daumTextTypeCount("blog"));
+		model.addAttribute("daum2", portalService.daumTextTypeCount("cafe"));
+		model.addAttribute("daum3", portalService.daumTextTypeCount("kintip"));
+		model.addAttribute("daum4", portalService.daumTextTypeCount("webdoc"));
 
 	}
 
@@ -153,6 +303,9 @@ public class PeriodController {
 		  PeriodComparator comparator = new PeriodComparator();
 		  Collections.sort(mediaList, comparator);
 		  Collections.sort(reporterList, comparator);
+		  
+		  logger.info("mediaList: " + mediaList);
+		  logger.info("reporterList: " + reporterList);
 		  
 		  model.addAttribute("mediaCount", mediaList.size());
 		  model.addAttribute("pressCount", reporterList.size());
@@ -329,6 +482,42 @@ public class PeriodController {
 				
 				cal.add(Calendar.SECOND, 1);
 			}
+		}else if(part.equals("portal")) {
+			while((transEnd.getTime() - cal.getTimeInMillis()) / (24 * 60 * 60 * 1000) > 0) {
+				
+			cri.setStartDate(standFormat.format(cal.getTime()));
+			cal.add(Calendar.SECOND, (24 * 60 * 60) -1);
+			cri.setEndDate(standFormat.format(cal.getTime()));
+				
+			GraphVO graphVO = new GraphVO();
+			graphVO.setWriteDate(standFormat.format(cal.getTime()).toString().split(" ")[0]);
+			graphVO.setType1(portalService.getNaverCount(cri));
+			graphVO.setType2(portalService.getDaumCount(cri));
+				
+			graphList.add(graphVO);
+				
+			cal.add(Calendar.SECOND, 1);
+			}
+			
+			
+		}else if(part.equals("main")) {
+			while((transEnd.getTime() - cal.getTimeInMillis()) / (24 * 60 * 60 * 1000) > 0) {
+				
+				cri.setStartDate(standFormat.format(cal.getTime()));
+				cal.add(Calendar.SECOND, (24 * 60 * 60) -1);
+				cri.setEndDate(standFormat.format(cal.getTime()));
+					
+				GraphVO graphVO = new GraphVO();
+				graphVO.setWriteDate(standFormat.format(cal.getTime()).toString().split(" ")[0]);
+				graphVO.setType1(portalService.getSearchCount(cri));
+				graphVO.setType2(communityService.getSearchCount(cri));
+				graphVO.setType3(snsService.getSearchCount(cri));
+				graphVO.setType4(mediaService.getSearchCount(cri));
+					
+				graphList.add(graphVO);
+					
+				cal.add(Calendar.SECOND, 1);
+				}
 		}
 			
 		
@@ -381,6 +570,9 @@ public class PeriodController {
 		
 		}else if(part.equals("community")) {
 			listUtil.listAddCommunityList(classiList, communityService.listAll(cri));
+		
+		}else if(part.equals("portal")){
+			listUtil.listAddPortalList(classiList, portalService.listAll(cri));
 		}
 		
 		

@@ -1,10 +1,12 @@
 package org.union.persistence;
 
+import java.util.Date;
 import java.util.List;
 
-import org.union.domain.MediaVO;
+import org.union.domain.GraphVO;
 import org.union.domain.PortalVO;
 import org.union.domain.SearchCriteria;
+import org.union.domain.TextTypeVO;
 
 public interface PortalDAO {
 
@@ -16,6 +18,25 @@ public interface PortalDAO {
 	public void update(PortalVO vo);
 	
 	public void delete(Integer portal_idx);
+	
+	public Integer countAll(Date date);
+	
+	public GraphVO toDayCount(String type);
+	
+	public GraphVO yesterdayCount();
+	
+	public TextTypeVO textTypeCount(SearchCriteria cri);
+	
+	public TextTypeVO blogTextTypeCount(SearchCriteria cri);
+	public TextTypeVO cafeTextTypeCount(SearchCriteria cri);
+	
+	public List<PortalVO> listNaver(SearchCriteria cri);
+	public Integer getNaverCount(SearchCriteria cri);
+	public List<TextTypeVO> naverTextTypeCount(String type);
+	
+	public List<PortalVO> listDaum(SearchCriteria cri);
+	public Integer getDaumCount(SearchCriteria cri);
+	public List<TextTypeVO> daumTextTypeCount(String type);
 	
 	public List<PortalVO> listExtract(SearchCriteria cri);
 	

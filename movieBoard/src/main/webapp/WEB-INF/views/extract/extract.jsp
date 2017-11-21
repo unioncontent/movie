@@ -15,6 +15,9 @@
       <![endif]-->
   <!-- Meta -->
   <meta charset="utf-8">
+  <meta name="_csrf" content="${_csrf.token}" />
+  <!-- default header name is X-CSRF-TOKEN -->
+  <meta name="_csrf_header" content="${_csrf.headerName}"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="description" content="Phoenixcoded">
@@ -397,6 +400,17 @@
 </html>
 
 <script type="text/javascript">
+
+//ajax 보안
+var token = $("meta[name='_csrf']").attr("content");
+var header = $("meta[name='_csrf_header']").attr("content");
+
+$(function() {
+	  $(document).ajaxSend(function(e, xhr, options) {
+	  	xhr.setRequestHeader(header, token);
+	  });
+});
+
   $(document).ready(function(){
 
 

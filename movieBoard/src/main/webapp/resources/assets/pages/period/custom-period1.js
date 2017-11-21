@@ -1,26 +1,26 @@
-'use strict';
+/*'use strict';
 $(window).on('resize',function(){
   setTimeout(function(){
     echart1();
     echart2();
     cardResize();
-    window.lineChart.redraw();
+    //window.lineChart.redraw();
   }, 500);
-});
+});*/
 
-$(document).ready(function() {
+/*$(document).ready(function() {
   cardResize();
   echart1();
   echart2();
-  linechart();
+  //linechart();
 
   $("i[data-value='chart1']").on("click",linechart);
   $("i[data-value='chart2']").on("click",echart1);
   $("i[data-value='chart3']").on("click",echart2);
-});
+});*/
 
 /*gauge*/
-function echart1(){
+function echart1(value, name){
   $("#gauge1").empty();
   var myChartGauge = echarts.init(document.getElementById('gauge1'));
   var optionGauge = {
@@ -77,13 +77,13 @@ function echart1(){
             }
         },
 
-        data:[{value: 5, name: '아주좋음'}]
+        data:[{value: value, name: name}]
       }
     ]
   };
   myChartGauge.setOption(optionGauge,true);
 }
-function echart2(){
+function echart2(value, name){
   $("#gauge2").empty();
   var myChartGauge = echarts.init(document.getElementById('gauge2'));
   var optionGauge = {
@@ -140,13 +140,13 @@ function echart2(){
             }
         },
 
-        data:[{value: 90, name: '경고'}]
+        data:[{value: value, name: name}]
       }
     ]
   };
   myChartGauge.setOption(optionGauge,true);
 }
-/*line*/
+/*line
 function linechart(){
   $("#line-chart1").empty();
   window.lineChart = Morris.Line({
@@ -167,7 +167,7 @@ function linechart(){
       labels: ['블로그', '카페', '지식인'],
       lineColors: ['#fb9678', '#7E81CB', '#01C0C8']
   });
-}
+}*/
 /* card resize*/
 function cardResize(){
   setTimeout(function(){

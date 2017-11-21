@@ -54,4 +54,11 @@ public class RelationDAOImpl implements RelationDAO {
 		}
 	}
 
+
+	@Override
+	public Integer todayCount() {
+
+		return session.selectOne(namespace + "todayCount");
+	}
+
 }

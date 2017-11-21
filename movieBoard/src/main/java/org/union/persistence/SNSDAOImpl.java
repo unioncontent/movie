@@ -1,5 +1,6 @@
 package org.union.persistence;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -173,6 +174,41 @@ public class SNSDAOImpl implements SNSDAO {
 	public Integer listExcelCount(SearchCriteria cri) {
 
 		return session.selectOne(namespace + "listExcelCount", cri);
+	}
+
+
+	@Override
+	public GraphVO facebookSum(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "facebookSum", cri);
+	}
+
+
+	@Override
+	public GraphVO twitterSum(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "twitterSum", cri);
+	}
+
+
+	@Override
+	public GraphVO instagramSum(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "instagramSum", cri);
+	}
+
+
+	@Override
+	public GraphVO yesterdayCount(String name) {
+
+		return session.selectOne(namespace + "yesterdayCount", name);
+	}
+
+
+	@Override
+	public Integer countAll(Date date) {
+
+		return session.selectOne(namespace + "countAll", date);
 	}
 
 

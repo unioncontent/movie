@@ -13,4 +13,6 @@ public interface RelationDAO {
 	
 	public void delete(Integer relation_idx);
 	
+	public Integer todayCount();
+	
 }

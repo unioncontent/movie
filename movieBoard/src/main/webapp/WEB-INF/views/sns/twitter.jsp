@@ -384,12 +384,6 @@ $(document).ready(function(){
 	        });
 		});
 
-	var date = getDate("week");
-	var startDate = date.startDate;
-	var endDate = date.endDate;
-
-	ajaxGraph(startDate, endDate);
-
 	var selectOption = decodeURI(window.location.href.split("selectKey=")[1]);
 	console.log("selectOption: " + selectOption);
 
@@ -501,6 +495,11 @@ $('#fromDate').on('apply.daterangepicker', function(ev, picker) {
 
 }); // end
 
+var date = getDate("week");
+var startDate = date.startDate;
+var endDate = date.endDate;
+
+ajaxGraph(startDate, endDate);
 
 
 }); // end ready....
@@ -511,7 +510,8 @@ function ajaxGraph(startDate, endDate){
         type : "POST",
     	  url : "graph",
      	  dataType : "json",
-     	  data : {startDate : startDate, endDate : endDate},
+     	  data : {startDate : startDate, endDate : endDate, company : $("#selectCompany option:selected").val(),
+     		  selectKey : $("#selectKeyword option:selected").val(), part : "twitter"},
       	error : function(){
           	alert('graphPOST ajax error....');
       	},

@@ -2,6 +2,7 @@ package org.union.service;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +21,8 @@ public class SNSServiceImpl implements SNSService {
 	@Autowired
 	private SNSDAO snsDAO;
 	
-	@Autowired
-	private KeywordDAO keywordDAO;
+	/*@Autowired
+	private KeywordDAO keywordDAO;*/
 	
 	@Override
 	public void regist(SNSVO vo) {
@@ -189,6 +190,41 @@ public class SNSServiceImpl implements SNSService {
 	public Integer listExcelCount(SearchCriteria cri) {
 
 		return snsDAO.listExcelCount(cri);
+	}
+
+
+	@Override
+	public GraphVO facebookSum(SearchCriteria cri) {
+
+		return snsDAO.facebookSum(cri);
+	}
+
+
+	@Override
+	public GraphVO twitterSum(SearchCriteria cri) {
+
+		return snsDAO.twitterSum(cri);
+	}
+
+
+	@Override
+	public GraphVO instagramSum(SearchCriteria cri) {
+
+		return snsDAO.instagramSum(cri);
+	}
+
+
+	@Override
+	public GraphVO yesterdayCount(String name) {
+
+		return snsDAO.yesterdayCount(name);
+	}
+
+
+	@Override
+	public Integer countAll(Date date) {
+
+		return snsDAO.countAll(date);
 	}
 
 

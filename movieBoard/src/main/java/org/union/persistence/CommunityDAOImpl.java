@@ -1,5 +1,6 @@
 package org.union.persistence;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.union.domain.CommunityVO;
 import org.union.domain.SearchCriteria;
+import org.union.domain.TextTypeVO;
 
 @Repository
 public class CommunityDAOImpl implements CommunityDAO {
@@ -130,6 +132,20 @@ public class CommunityDAOImpl implements CommunityDAO {
 	public Integer getCompleteCount(SearchCriteria cri) {
 
 		return session.selectOne(namespace + "getCompleteCount", cri);
+	}
+
+
+	@Override
+	public TextTypeVO textTypeCount(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "textTypeCount" ,cri);
+	}
+
+
+	@Override
+	public Integer countAll(Date date) {
+
+		return session.selectOne(namespace  +"countAll", date);
 	}
 
 

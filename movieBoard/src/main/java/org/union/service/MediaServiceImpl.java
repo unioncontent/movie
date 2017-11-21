@@ -7,10 +7,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.union.domain.ExtractVO;
+import org.union.domain.GraphVO;
 import org.union.domain.MediaVO;
 import org.union.domain.PeriodMediaVO;
 import org.union.domain.ReporterVO;
 import org.union.domain.SearchCriteria;
+import org.union.domain.TextTypeVO;
 import org.union.persistence.MediaDAO;
 import org.union.persistence.ReporterDAO;
 
@@ -113,13 +115,22 @@ public class MediaServiceImpl implements MediaService {
 
 		List<PeriodMediaVO> periodList = new ArrayList<PeriodMediaVO>();
 
-		List<ReporterVO> reporterList = reporterDAO.listAll();
+		List<ReporterVO> reporterList = reporterDAO.listChecked();
 
+		
 		for (int i = 0; i < reporterList.size(); i++) {
 			PeriodMediaVO vo = new PeriodMediaVO();
 
 			criteria.setKeyword(reporterList.get(i).getReporter_media_name());
 			vo.setAllCount(mediaDAO.mediaGetTotalCount(criteria));
+			vo.setSearchCount(mediaDAO.mediaGetSearchCount(criteria));
+			if(vo.getAllCount() != 0) {
+				vo.setMatchPercent((vo.getSearchCount()/vo.getAllCount())*100);
+			
+			}else {
+				vo.setMatchPercent(0);
+			}
+			
 			vo.setMedia(reporterList.get(i).getReporter_media_name());
 			vo.setReporter(reporterList.get(i).getReporter_name());
 			
@@ -127,7 +138,7 @@ public class MediaServiceImpl implements MediaService {
 
 		}
 
-		for(int i = 0; i < periodList.size(); i++) {
+		/*for(int i = 0; i < periodList.size(); i++) {
 			for(int j = 0; j < periodList.size(); j++) {
 				if(i == j) {
 					
@@ -137,7 +148,7 @@ public class MediaServiceImpl implements MediaService {
 					periodList.remove(j);
 				}
 			}
-		}
+		}*/
 		
 		/*PeriodComparator comparator = new PeriodComparator();
 		
@@ -159,8 +170,15 @@ public class MediaServiceImpl implements MediaService {
 		for (int i = 0; i < reporterList.size(); i++) {
 			PeriodMediaVO vo = new PeriodMediaVO();
 
-			criteria.setKeyword(reporterList.get(i).getReporter_media_name());
-			vo.setAllCount(mediaDAO.mediaGetTotalCount(criteria));
+			criteria.setKeyword(reporterList.get(i).getReporter_name());
+			vo.setAllCount(mediaDAO.reporterGetTotalCount(criteria));
+			vo.setSearchCount(mediaDAO.reporterGetSearchCount(criteria));
+			if(vo.getAllCount() != 0) {
+				vo.setMatchPercent((vo.getSearchCount()/vo.getAllCount())*100);
+			
+			}else {
+				vo.setMatchPercent(0);
+			}
 			vo.setMedia(reporterList.get(i).getReporter_media_name());
 			vo.setReporter(reporterList.get(i).getReporter_name());
 			
@@ -213,6 +231,24 @@ public class MediaServiceImpl implements MediaService {
 	public List<MediaVO> listAll(SearchCriteria cri) {
 
 		return mediaDAO.listAll(cri);
+	}
+
+	@Override
+	public TextTypeVO naverMediaCount(SearchCriteria cri) {
+
+		return mediaDAO.naverMediaCount(cri);
+	}
+
+	@Override
+	public TextTypeVO daumMediaCount(SearchCriteria cri) {
+
+		return mediaDAO.daumMediaCount(cri);
+	}
+
+	@Override
+	public GraphVO yesterdayCount() {
+
+		return mediaDAO.yesterdayCount();
 	}
 
 }

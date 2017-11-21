@@ -2,8 +2,10 @@ package org.union.persistence;
 
 import java.util.List;
 
+import org.union.domain.GraphVO;
 import org.union.domain.MediaVO;
 import org.union.domain.SearchCriteria;
+import org.union.domain.TextTypeVO;
 
 public interface MediaDAO {
 
@@ -15,6 +17,11 @@ public interface MediaDAO {
 	public void update(MediaVO vo);
 	
 	public void delete(Integer media_idx);
+	
+	public GraphVO yesterdayCount();
+	
+	public TextTypeVO naverMediaCount(SearchCriteria cri);
+	public TextTypeVO daumMediaCount(SearchCriteria cri);
 	
 	public List<MediaVO> listExtract(SearchCriteria cri);
 	
@@ -33,6 +40,10 @@ public interface MediaDAO {
 	public Integer mediaGetTotalCount(SearchCriteria cri);
 	
 	public Integer reporterGetTotalCount(SearchCriteria cri);
+	
+	public Integer mediaGetSearchCount(SearchCriteria cri);
+	
+	public Integer reporterGetSearchCount(SearchCriteria cri);
 	
 	public void updateTextType (MediaVO vo);
 	
