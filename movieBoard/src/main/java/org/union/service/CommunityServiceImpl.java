@@ -139,5 +139,17 @@ public class CommunityServiceImpl implements CommunityService {
 		return communityDAO.countAll(date);
 	}
 
+	@Override
+	public List<CommunityVO> allPageList(SearchCriteria cri) {
+
+		return communityDAO.allPageList(cri);
+	}
+
+	@Override
+	public Integer allPageCount(SearchCriteria cri) {
+
+		return communityDAO.allPageCount(cri);
+	}
+
 
 }

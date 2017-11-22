@@ -201,4 +201,17 @@ public class PortalDAOImpl implements PortalDAO {
 	}
 
 
+	@Override
+	public List<PortalVO> allPageList(SearchCriteria cri) {
+	
+		return session.selectList(namespace + "allPageList", cri);
+	}
+
+
+	@Override
+	public Integer allPageCount(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "allPageCount", cri);
+	}
+
 }

@@ -98,6 +98,30 @@
  			
  	</delete>
  	
+ 	<select id="allPageList" resultType="SNSVO">
+		select
+			*
+		from
+			sns_data
+		where
+			url is not null
+		<include refid="search"></include>
+		order 
+			by updateDate desc
+		limit  
+			#{startPage}, #{perPageNum}
+	</select>
+	
+	<select id="allPageCount" resultType="Integer">
+		select
+			count(*)
+		from
+			sns_data
+		where
+			url is not null
+		<include refid="search"></include>
+	</select>
+ 	
  	<select id="countAll" resultType="Integer">
 		select count(*)
 		from sns_data

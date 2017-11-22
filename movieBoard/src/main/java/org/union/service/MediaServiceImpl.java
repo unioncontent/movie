@@ -251,4 +251,16 @@ public class MediaServiceImpl implements MediaService {
 		return mediaDAO.yesterdayCount();
 	}
 
+	@Override
+	public List<MediaVO> allPageList(SearchCriteria cri) {
+
+		return mediaDAO.allPageList(cri);
+	}
+
+	@Override
+	public Integer allPageCount(SearchCriteria cri) {
+
+		return mediaDAO.allPageCount(cri);
+	}
+
 }

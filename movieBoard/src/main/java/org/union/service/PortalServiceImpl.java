@@ -195,4 +195,16 @@ public class PortalServiceImpl implements PortalService {
 		return portalDAO.countAll(date);
 	}
 
+	@Override
+	public List<PortalVO> allPageList(SearchCriteria cri) {
+
+		return portalDAO.allPageList(cri);
+	}
+
+	@Override
+	public Integer allPageCount(SearchCriteria cri) {
+
+		return portalDAO.allPageCount(cri);
+	}
+
 }

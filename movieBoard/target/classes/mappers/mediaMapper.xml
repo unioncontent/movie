@@ -126,6 +126,30 @@
  	
  	</delete>
  	
+ 	<select id="allPageList" resultType="MediaVO">
+		select
+			*
+		from
+			media_data
+		where
+			url is not null
+		<include refid="search"></include>
+		order 
+			by updateDate desc
+		limit  
+			#{startPage}, #{perPageNum}
+	</select>
+	
+	<select id="allPageCount" resultType="Integer">
+		select
+			count(*)
+		from
+			media_data
+		where
+			url is not null
+		<include refid="search"></include>
+	</select>
+ 	
  	<select id="yesterdayCount" resultType="GraphVO">
  		select count(if(createDate <![CDATA[<]]> date_add(now(), interval -1 day), createDate, null)) type1,
 	    count(if(createDate <![CDATA[>]]> date_add(now(), interval -1 day), createDate, null)) type2

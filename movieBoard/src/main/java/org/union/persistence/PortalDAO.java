@@ -19,6 +19,9 @@ public interface PortalDAO {
 	
 	public void delete(Integer portal_idx);
 	
+	public List<PortalVO> allPageList(SearchCriteria cri);
+	public Integer allPageCount(SearchCriteria cri);
+	
 	public Integer countAll(Date date);
 	
 	public GraphVO toDayCount(String type);

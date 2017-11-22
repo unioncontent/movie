@@ -228,4 +228,18 @@ public class SNSServiceImpl implements SNSService {
 	}
 
 
+	@Override
+	public List<SNSVO> allPageList(SearchCriteria cri) {
+
+		return snsDAO.allPageList(cri);
+	}
+
+
+	@Override
+	public Integer allPageCount(SearchCriteria cri) {
+
+		return snsDAO.allPageCount(cri);
+	}
+
+
 }

@@ -19,6 +19,9 @@ public interface CommunityService {
 
 	public void remove(Integer community_idx);
 	
+	public List<CommunityVO> allPageList(SearchCriteria cri);
+	public Integer allPageCount(SearchCriteria cri);
+	
 	public Integer countAll(Date date);
 	
 	public TextTypeVO textTypeCount(SearchCriteria cri);

@@ -20,6 +20,9 @@ public interface PortalService {
 	
 	public void remove(Integer portal_idx);
 	
+	public List<PortalVO> allPageList(SearchCriteria cri);
+	public Integer allPageCount(SearchCriteria cri);
+	
 	public Integer countAll(Date date);
 	
 	public GraphVO toDayCount(String type);
