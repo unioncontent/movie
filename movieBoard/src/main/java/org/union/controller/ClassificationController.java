@@ -171,6 +171,8 @@ public class ClassificationController {
 		ExtractComparator comparator = new ExtractComparator();
 		Collections.sort(classiList, comparator);
 		
+		logger.info("시간왜이럼: " + classiList);
+		
 		// 리스트 회사 추가
 		keywordService.viewByKeyword(classiList);
 		
@@ -246,7 +248,7 @@ public class ClassificationController {
 	
 	@ResponseBody
 	@PostMapping("/insert")
-		public void insertPOST(String keyword, String textType, String domain,
+	public void insertPOST(String keyword, String textType, String domain,
 				String domainType, String board_number, String title,
 				String content, String writer, String writerIP,
 				String writeDate, String url) {

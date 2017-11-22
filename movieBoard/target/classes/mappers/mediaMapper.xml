@@ -299,9 +299,10 @@
  	
  	<update id="updateTextType">
 		update
-			media_data, updateDate
+			media_data
 		set
-			textType = #{textType}, now()
+			textType = #{textType}, 
+			updateDate = now()
 		where
 			media_idx = #{media_idx}
 	

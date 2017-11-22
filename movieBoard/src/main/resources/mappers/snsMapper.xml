@@ -359,9 +359,10 @@
  	
  	<update id="updateTextType">
 		update
-			sns_data, updateDate
+			sns_data
 		set
-			textType = #{textType}, now()
+			textType = #{textType}, 
+			updateDate = now()
 		where
 			sns_idx = #{sns_idx}
 	

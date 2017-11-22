@@ -311,9 +311,10 @@
  	
  	<update id="updateTextType">
 		update
-			portal_data, updateDate
+			portal_data
 		set
-			textType = #{textType}, updateDate
+			textType = #{textType},
+			updateDate = now()
 		where
 			portal_idx = #{portal_idx}
 	
