@@ -204,7 +204,6 @@
                                     <tr>
                                       <th width="5%">NO</th>
                                       <th width="5%">회사명</th>
-                                      <th width="5%">사업자등록번호</th>
                                       <th width="5%">ID</th>
                                       <th width="5%">PW</th>
                                       <th width="5%">대표자명</th>
@@ -216,37 +215,23 @@
                                     </tr>
                                   </thead>
                                   <tbody>
-                                    <tr>
-                                      <th scope="row">1</th>
-                                      <td>쇼박스</td>
-                                      <td></td>
-                                      <td>showbox</td>
-                                      <td>1234</td>
-                                      <td>유정훈</td>
-                                      <td>02-3218-5500</td>
-                                      <td></td>
-                                      <td></td>
-                                      <td>서울 강남구 논현동 91-6 916빌딩</td>
+                                  	<c:forEach items="${userList}" var="userVO">
+                                  	  <tr>
+                                      <th scope="row">${userVO.user_idx}</th>
+                                      <td>${userVO.company_name}</td>
+                                      <td>${userVO.user_ID}</td>
+                                      <td>${userVO.user_PW}</td>
+                                      <td>${userVO.company_licensee}</td>
+                                      <td>${userVO.user_phoneNum}</td>
+									  <td>${userVO.user_name}</td>
+                                      <td>${userVO.user_email}</td>
+                                      <td>${userVO.company_location}</td>
                                       <td></td>
                                     </tr>
+                                  	</c:forEach>
                                   </tbody>
                                 </table>
                               </div>
-                              <ul class="pagination float-right float-right">
-                                <li class="page-item">
-                                  <a class="page-link" href="#" aria-label="Previous">
-                                    <span aria-hidden="true">«</span>
-                                    <span class="sr-only">Previous</span>
-                                  </a>
-                                </li>
-                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item">
-                                  <a class="page-link" href="#" aria-label="Next">
-                                    <span aria-hidden="true">»</span>
-                                    <span class="sr-only">Next</span>
-                                  </a>
-                                </li>
-                              </ul>
                             </div>
                         </div>
                         <!-- table card end -->
