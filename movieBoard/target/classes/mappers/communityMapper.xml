@@ -178,7 +178,7 @@
 			textType is not null
 		<include refid="search"></include>
 		order 
-			by createdate desc
+			by updateDate desc
 		limit  
 			#{startPage}, #{perPageNum}
 	
@@ -210,9 +210,9 @@
 
 	<update id="updateTextType">
 		update
-			community_data
+			community_data, updateDate
 		set
-			textType = #{textType}
+			textType = #{textType}, now()
 		where
 			community_idx = #{community_idx}
 	

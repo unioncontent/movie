@@ -219,7 +219,7 @@
 			textType is not null
 		<include refid="search"></include>
 		order 
-			by createdate desc
+			by updateDate desc
 		limit  
 			#{startPage}, #{perPageNum}
  	
@@ -299,9 +299,9 @@
  	
  	<update id="updateTextType">
 		update
-			media_data
+			media_data, updateDate
 		set
-			textType = #{textType}
+			textType = #{textType}, now()
 		where
 			media_idx = #{media_idx}
 	

@@ -103,11 +103,12 @@ public class DashBaordController {
 			
 			graphList.add(graphVO);
 			
-			cal.add(Calendar.HOUR, 1);
+			cal.add(Calendar.HOUR, -1);
 			
 		}
 		
 
+		logger.info("graphList: " + graphList);
 		return graphList;
 	}
 	

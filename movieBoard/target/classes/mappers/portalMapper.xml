@@ -292,7 +292,7 @@
 			textType is not null
 		<include refid="search"></include>
 		order 
-			by createdate desc
+			by updateDate desc
 		limit  
 			#{startPage}, #{perPageNum}
  	
@@ -311,9 +311,9 @@
  	
  	<update id="updateTextType">
 		update
-			portal_data
+			portal_data, updateDate
 		set
-			textType = #{textType}
+			textType = #{textType}, updateDate
 		where
 			portal_idx = #{portal_idx}
 	
