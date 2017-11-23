@@ -5,6 +5,20 @@
   
  <mapper namespace = "org.union.mappers.ReporterMapper">
  
+ 	<sql id="search">
+ 		<if test="keyword != null">
+			<if test="searchType != null">
+				<if test="searchType == 't'.toString()">
+					and reporter_name like concat('%', #{keyword}, '%')
+				</if>
+				<if test="searchType == 'c'.toString()">
+					and reporter_media_name like concat('%', #{keyword}, '%')
+				</if>
+			</if>
+		</if>
+	</sql>
+ 
+ 
  	<insert id="create">
  		insert into
  			reporter_data(reporter_media_name, reporter_name, reporter_ID, reporter_email, reporter_phoneNum, reporter_part_name, reporter_memo)
@@ -64,6 +78,33 @@
      	) as b
  		)
  	</select>
+ 	
+ 	<select id="listSearch" resultType="ReporterVO">
+ 		select 
+			*
+		from 
+			reporter_data
+		where 
+			reporter_idx > 0
+		<include refid="search"></include>
+		order 
+			by updateDate desc
+		limit  
+			#{startPage}, #{perPageNum}
+ 	
+ 	</select>
+ 	
+	
+	<select id = "getSearchCount" resultType="Integer">
+		select
+			count(*)
+		from
+			reporter_data
+		where
+			reporter_idx > 0
+		<include refid="search"></include>
+			
+	</select>
  
  </mapper>
   
