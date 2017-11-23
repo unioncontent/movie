@@ -163,6 +163,13 @@ public class ListAllController {
 		keywordService.viewByKeyword(extractList);
 		
 		model.addAttribute("extractList", extractList);
+		
+		logger.info("textType: " + extractList.get(0).getTextType());
+		logger.info("textType: " + extractList.get(1).getTextType());
+		logger.info("textType: " + extractList.get(2).getTextType());
+		logger.info("textType: " + extractList.get(3).getTextType());
+		logger.info("textType: " + extractList.get(4).getTextType());
+		
 	}
 	
 	@ResponseBody

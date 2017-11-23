@@ -163,7 +163,7 @@
                                  <button id="searchBtn" class=" btn btn-inverse">검색</button>
                                </span>
                             </div>
-                            <button type="button" class="alert-confirm btn btn-primary waves-effect f-right p-r-0 p-l-5 m-l-15 m-b-10  f-right" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'alert-confirm']);"><i class="icofont icofont-check-circled"></i>일괄처리</button>
+                            <button id="insertAllBtn" type="button" class="alert-confirm btn btn-primary waves-effect f-right p-r-0 p-l-5 m-l-15 m-b-10  f-right" ><i class="icofont icofont-check-circled"></i>일괄처리</button>
                           </div>
                           <div class="card-block">
                             <div class="table-responsive">
@@ -213,19 +213,109 @@
                                     <td>${extractVO.createDate} /<br/>${extractVO.writeDate }</td>
                                     <td>
                                       <div class="radios${index.count}">
-                                        <input type="radio" id="radio1${index.count}" name="radios${index.count}">
-                                        <label for="radio1${index.count}">좋은글</label>
-                                        <input type="radio" id="radio2${index.count}" name="radios${index.count}">
-                                        <label for="radio2${index.count}">나쁜글</label>
-                                        <input type="radio" id="radio3${index.count}" name="radios${index.count}">
-                                        <label for="radio3${index.count}">관심글</label>
-                                        <br/>
-                                        <input type="radio" id="radio4${index.count}" name="radios${index.count}">
-                                        <label for="radio4${index.count}">기타글</label>
-                                        <input type="radio" id="radio5${index.count}" name="radios${index.count}">
-                                        <label for="radio5${index.count}">삭제글</label>
-                                        <input type="radio" id="radio6${index.count}" name="radios${index.count}" checked>
-                                        <label for="radio6${index.count}">미분류</label>
+                                        <c:choose>
+                                        	<c:when test="${extractVO.textType eq '좋은글'}">
+                                        	<input type="radio" id="radio1${index.count}" name="radios${index.count}" checked>
+                                        	<label for="radio1${index.count}">좋은글</label>
+                                        	<input type="radio" id="radio2${index.count}" name="radios${index.count}">
+                                        	<label for="radio2${index.count}">나쁜글</label>
+                                        	<input type="radio" id="radio3${index.count}" name="radios${index.count}">
+                                        	<label for="radio3${index.count}">관심글</label><br>
+                                        	<input type="radio" id="radio4${index.count}" name="radios${index.count}">
+                                        	<label for="radio4${index.count}">기타글</label>
+                                        	<input type="radio" id="radio5${index.count}" name="radios${index.count}">
+                                        	<label for="radio5${index.count}">삭제글</label>
+                                        	<input type="radio" id="radio6${index.count}" name="radios${index.count}">
+                                        	<label for="radio6${index.count}">미분류</label>
+                                        	</c:when>
+                                        </c:choose>
+
+                                        <c:choose>
+                                        	<c:when test="${extractVO.textType eq '나쁜글'}">
+                                        	<input type="radio" id="radio1${index.count}" name="radios${index.count}">
+                                        	<label for="radio1${index.count}">좋은글</label>
+                                        	<input type="radio" id="radio2${index.count}" name="radios${index.count}" checked>
+                                        	<label for="radio2${index.count}">나쁜글</label>
+                                        	<input type="radio" id="radio3${index.count}" name="radios${index.count}">
+                                        	<label for="radio3${index.count}">관심글</label><br>
+                                        	<input type="radio" id="radio4${index.count}" name="radios${index.count}">
+                                        	<label for="radio4${index.count}">기타글</label>
+                                        	<input type="radio" id="radio5${index.count}" name="radios${index.count}">
+                                        	<label for="radio5${index.count}">삭제글</label>
+                                        	<input type="radio" id="radio6${index.count}" name="radios${index.count}">
+                                        	<label for="radio6${index.count}">미분류</label>
+                                        	</c:when>
+                                        </c:choose>
+
+                                        <c:choose>
+                                        	<c:when test="${extractVO.textType eq '관심글'}">
+                                        	<input type="radio" id="radio1${index.count}" name="radios${index.count}">
+                                        	<label for="radio1${index.count}">좋은글</label>
+                                        	<input type="radio" id="radio2${index.count}" name="radios${index.count}">
+                                        	<label for="radio2${index.count}">나쁜글</label>
+                                        	<input type="radio" id="radio3${index.count}" name="radios${index.count}" checked>
+                                        	<label for="radio3${index.count}">관심글</label><br>
+                                        	<input type="radio" id="radio4${index.count}" name="radios${index.count}">
+                                        	<label for="radio4${index.count}">기타글</label>
+                                        	<input type="radio" id="radio5${index.count}" name="radios${index.count}">
+                                        	<label for="radio5${index.count}">삭제글</label>
+                                        	<input type="radio" id="radio6${index.count}" name="radios${index.count}">
+                                        	<label for="radio6${index.count}">미분류</label>
+                                        	</c:when>
+                                        </c:choose>
+
+                                        <c:choose>
+                                        	<c:when test="${extractVO.textType eq '기타글'}">
+                                        	<input type="radio" id="radio1${index.count}" name="radios${index.count}">
+                                        	<label for="radio1${index.count}">좋은글</label>
+                                        	<input type="radio" id="radio2${index.count}" name="radios${index.count}">
+                                        	<label for="radio2${index.count}">나쁜글</label>
+                                        	<input type="radio" id="radio3${index.count}" name="radios${index.count}">
+                                        	<label for="radio3${index.count}">관심글</label><br>
+                                        	<input type="radio" id="radio4${index.count}" name="radios${index.count}" checked>
+                                        	<label for="radio4${index.count}">기타글</label>
+                                        	<input type="radio" id="radio5${index.count}" name="radios${index.count}">
+                                        	<label for="radio5${index.count}">삭제글</label>
+                                        	<input type="radio" id="radio6${index.count}" name="radios${index.count}">
+                                        	<label for="radio6${index.count}">미분류</label>
+                                        	</c:when>
+                                        </c:choose>
+
+                                        <c:choose>
+                                        	<c:when test="${extractVO.textType eq '삭제글'}">
+                                        	<input type="radio" id="radio1${index.count}" name="radios${index.count}">
+                                        	<label for="radio1${index.count}">좋은글</label>
+                                        	<input type="radio" id="radio2${index.count}" name="radios${index.count}">
+                                        	<label for="radio2${index.count}">나쁜글</label>
+                                        	<input type="radio" id="radio3${index.count}" name="radios${index.count}">
+                                        	<label for="radio3${index.count}">관심글</label><br>
+                                        	<input type="radio" id="radio4${index.count}" name="radios${index.count}">
+                                        	<label for="radio4${index.count}">기타글</label>
+                                        	<input type="radio" id="radio5${index.count}" name="radios${index.count}" checked>
+                                        	<label for="radio5${index.count}">삭제글</label>
+											<input type="radio" id="radio6${index.count}" name="radios${index.count}">
+                                        	<label for="radio6${index.count}">미분류</label>
+                                        	</c:when>
+                                        </c:choose>
+                                        
+                                        
+                                        <c:choose>
+                                        	<c:when test="${extractVO.textType eq null}">
+                                        	<input type="radio" id="radio1${index.count}" name="radios${index.count}">
+                                        	<label for="radio1${index.count}">좋은글</label>
+                                        	<input type="radio" id="radio2${index.count}" name="radios${index.count}">
+                                        	<label for="radio2${index.count}">나쁜글</label>
+                                        	<input type="radio" id="radio3${index.count}" name="radios${index.count}">
+                                        	<label for="radio3${index.count}">관심글</label><br>
+                                        	<input type="radio" id="radio4${index.count}" name="radios${index.count}">
+                                        	<label for="radio4${index.count}">기타글</label>
+                                        	<input type="radio" id="radio5${index.count}" name="radios${index.count}">
+                                        	<label for="radio5${index.count}">삭제글</label>
+											<input type="radio" id="radio6${index.count}" name="radios${index.count}" checked>
+                                        	<label for="radio6${index.count}">미분류</label>
+                                        	</c:when>
+                                        </c:choose>
+                                        
                                       </div>
                                     </td>
                                     <td>
@@ -394,7 +484,7 @@ $(function() {
 });
 
   $(document).ready(function(){
-
+	
 	  
 	  var startDateOption = decodeURI(window.location.href.split("startDate=")[1]).split("&endDate=")[0];
 		var endDateOption = decodeURI(window.location.href.split("endDate=")[1]);
