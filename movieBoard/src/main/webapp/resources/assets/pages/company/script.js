@@ -10,7 +10,7 @@ $(document).ready(function () {
 			closeOnConfirm: false,
 			inputPlaceholder: "아이디 입력"
 		}, function (inputValue) {
-			if (inputValue === false){
+			/*if (inputValue === false){
         swal.showInputError("아이디를 다시 입력해 주세요.");
         return false;
       }
@@ -18,15 +18,42 @@ $(document).ready(function () {
         swal.showInputError("아이디를 다시 입력해 주세요.");
         return false;
       }
-			if (inputValue === "union") {
+			if (inputValue === "fail") {
 				swal.showInputError("아이디가 중복됩니다. 다시 입력해 주세요.");
 				return false
-			}
-      $("#id").val(inputValue);
+			}*/
+			
+			var $user_ID = $("#id").val();
+			
+			$.ajax({
+				type: "POST",
+				url: "idCheck",
+				dataType: "text",
+				data: {user_ID : inputValue},
+				success: function(data){
+						console.log(data);
+						
+						if(data == 'fail'){
+							swal.showInputError("아이디가 중복됩니다. 다시 입력해 주세요.");
+						
+						}else if(data == 'success'){
+							swal("중복확인!", inputValue+"는 사용가능한 아이디입니다.", "success");
+							
+							$("#id").val(inputValue);
+						    $("#idCheck").val("true");
+						    $("#id").removeClass("form-control-danger");
+						    $("#id").siblings().children("p").text("");
+						}
+						
+						//swal("중복확인!", inputValue+"는 사용가능한 아이디입니다.", "success");
+				}
+						  
+			}); // end ajax... 
+      /*$("#id").val(inputValue);
       $("#idCheck").val("true");
       $("#id").removeClass("form-control-danger");
       $("#id").siblings().children("p").text("");
-			swal("중복확인!", inputValue+"는 사용가능한 아이디입니다.", "success");
+			swal("중복확인!", inputValue+"는 사용가능한 아이디입니다.", "success");*/
 		});
 	};
 

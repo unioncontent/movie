@@ -15,6 +15,9 @@
       <![endif]-->
   <!-- Meta -->
   <meta charset="utf-8">
+  <meta name="_csrf" content="${_csrf.token}" />
+  <!-- default header name is X-CSRF-TOKEN -->
+  <meta name="_csrf_header" content="${_csrf.headerName}"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="description" content="Phoenixcoded">
@@ -100,7 +103,9 @@
                                 </div>
                             </div>
                             <div class="card-block">
-                                <form>
+                                <form action="/manage/companyInsert" method="post">
+                                  <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+    							  <input type="hidden" name="_csrf_header" value="${_csrf.headerName}"/>
                                   <div class="form-group row">
                                       <label class="col-sm-2 col-form-label">* 회사분류</label>
                                       <div class="col-sm-5">
@@ -108,13 +113,7 @@
                                           <div class="radio radio-inline">
                                             <label>
                                               <input type="radio" name="radio" checked="checked">
-                                              <i class="helper"></i>MCP
-                                            </label>
-                                          </div>
-                                          <div class="radio radio-inline">
-                                            <label>
-                                              <input type="radio" name="radio">
-                                              <i class="helper"></i>CP
+                                              <i class="helper"></i>Client
                                             </label>
                                           </div>
                                         </div>
@@ -124,68 +123,68 @@
                                   <div class="form-group row">
                                       <label class="col-sm-2 col-form-label">* 회사명</label>
                                       <div class="col-sm-5">
-                                          <input type="text" class="form-control" id="company">
+                                          <input name = "company_name" type="text" class="form-control" id="company">
                                           <span class="messages"><p class="text-danger error"></p></span>
                                       </div>
                                   </div>
                                   <div class="form-group row">
-                                      <label class="col-sm-2 col-form-label">아이디</label>
+                                      <label class="col-sm-2 col-form-label">* 아이디</label>
                                       <div class="col-sm-5">
-                                        <input type="text" class="form-control" id="id">
+                                        <input name = "user_ID" type="text" class="form-control" id="id">
                                         <input type="hidden" id="idCheck"/>
                                         <span class="messages"><p class="text-danger error"></p></span>
                                       </div>
                                       <div class="col-sm-1 btn-check">
-                                        <button type="button" class="btn btn-md btn-inverse alert-prompt" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'alert-prompt']);">
+                                        <button id="idCheck" type="button" class="btn btn-md btn-inverse alert-prompt" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'alert-prompt']);">
                                           <i class="icofont icofont-user-alt-3"></i>
                                           중복체크
                                         </button>
                                       </div>
                                   </div>
                                   <div class="form-group row">
-                                      <label class="col-sm-2 col-form-label">비밀번호</label>
+                                      <label class="col-sm-2 col-form-label">* 비밀번호</label>
                                       <div class="col-sm-5">
-                                          <input type="password" class="form-control" id="pw">
+                                          <input name = "user_PW" type="password" class="form-control" id="pw">
                                           <span class="messages"><p class="text-danger error"></p></span>
                                       </div>
                                   </div>
                                   <div class="form-group row">
                                       <label class="col-sm-2 col-form-label">* 대표자명</label>
                                       <div class="col-sm-5">
-                                          <input type="text" class="form-control" id="boss">
+                                          <input name = "company_licensee" type="text" class="form-control" id="licensee">
                                           <span class="messages"><p class="text-danger error"></p></span>
                                       </div>
                                   </div>
                                   <div class="form-group row">
                                       <label class="col-sm-2 col-form-label">* 주소</label>
                                       <div class="col-sm-5">
-                                          <input type="text" class="form-control" id="address">
+                                          <input type="text" class="form-control" id="location">
                                           <span class="messages"><p class="text-danger error"></p></span>
                                       </div>
                                   </div>
                                   <div class="form-group row">
-                                      <label class="col-sm-2 col-form-label">사업자등록번호</label>
+                                      <label class="col-sm-2 col-form-label">e-mail</label>
                                       <div class="col-sm-5">
-                                          <input type="email" class="form-control">
+                                          <input name = "user_email" type="email" class="form-control">
                                       </div>
                                   </div>
                                   <div class="form-group row">
-                                      <label class="col-sm-2 col-form-label">* 연락처</label>
+                                      <label class="col-sm-2 col-form-label">* 연락처 (- 없이 입력해주세요)</label>
                                       <div class="col-sm-5">
-                                          <input type="text" class="form-control mob_no" data-mask="9999-999-999" id="phone">
-                                          <span class="messages"><p class="text-danger error"></p></span>
+                                          <input name = "user_phoneNum" type="text" class="form-control mob_no" data-mask="9999-999-999" id="phone">
+                                          <span class="phoneNumber"><p class="text-danger error"></p></span>
                                       </div>
                                   </div>
                                   <div class="form-group row">
                                       <label class="col-sm-2 col-form-label">회사로고</label>
                                       <div class="col-sm-5">
-                                          <input type="file" class="form-control">
+                                          <input name = "thumbnail" type="image" class="form-control">
                                       </div>
                                   </div>
                                   <div class="row">
                                       <label class="col-sm-2"></label>
                                       <div class="col-sm-5">
-                                          <button type="submit" class="btn btn-primary m-b-0">등록</button>
+                                          <button id = "insertBtn" type="submit" class="btn btn-primary m-b-0">등록</button>
                                       </div>
                                     </div>
                                 </form>
@@ -319,5 +318,44 @@
   <script src="../assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
   <script src="../assets/js/jquery.mousewheel.min.js"></script>
 </body>
+
+<script type="text/javascript">
+
+	//ajax 보안
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+
+	$(function() {
+    	$(document).ajaxSend(function(e, xhr, options) {
+        	xhr.setRequestHeader(header, token);
+    	});
+	});
+	
+
+	$(document).ready(function(){
+		var company_name = $("#company").val();
+		console.log("company_name: " + company_name);
+		
+		var user_ID = $("#id").val();
+		console.log("user_ID: " + user_ID);
+		
+		var user_PW = $("#pw").val();
+		
+		var company_licensee = $("#licensee").val();
+		
+		
+		/* $("#idCheck").on("click", function(){
+			console.log("중복체크 클릭");
+			
+			var $user_ID = $("#id").val();
+			
+			
+			
+		}); // end idCheck click... */
+		
+	}); // end ready...
+
+</script>
+
 
 </html>
