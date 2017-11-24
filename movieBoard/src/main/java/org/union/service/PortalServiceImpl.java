@@ -207,4 +207,16 @@ public class PortalServiceImpl implements PortalService {
 		return portalDAO.allPageCount(cri);
 	}
 
+	@Override
+	public Integer getTypeOfMovieCount(SearchCriteria cri) {
+
+		return portalDAO.getTypeOfMovieCount(cri);
+	}
+
+	@Override
+	public Integer getTypeOfActorCount(SearchCriteria cri) {
+
+		return portalDAO.getTypeOfActorCount(cri);
+	}
+
 }

@@ -1,9 +1,12 @@
 package org.union.persistence;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.union.domain.NaverMovieVO;
+import org.union.domain.SearchCriteria;
 
 @Repository
 public class NaverMovieDAOImpl implements NaverMovieDAO {
@@ -52,6 +55,20 @@ public class NaverMovieDAOImpl implements NaverMovieDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+
+	@Override
+	public List<NaverMovieVO> searchList(SearchCriteria cri) {
+
+		return session.selectList(namespace + "searchList", cri);
+	}
+
+
+	@Override
+	public Integer getSearchCount(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "getSearchCount", cri);
 	}
 
 }

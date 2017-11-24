@@ -383,7 +383,7 @@
                                               <td>${portalList.createDate}</td>
                                               <td>${portalList.portal_name}</td>
                                               <td>${portalList.portal_type}</td>
-                                              <td>${portalList.keyword}</td>
+                                              <td>${portalList.keyword}< /td>
                                               <td class="title"><a href='${portalList.url}' target="_blank">${portalList.portal_title}</a></td>
                                               <td>${portalList.textType}</td>
                                             </tr>

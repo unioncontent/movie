@@ -94,6 +94,34 @@
  	
  	</delete>
  	
+ 	<select id="getTypeOfMovieCount" resultType="Integer">
+ 		select
+ 			count(*)
+ 		from
+ 			portal_data
+ 		where
+ 			portal_name = 'naver'
+ 		and
+ 			keyword_type = '영화'
+ 	
+ 	<include refid="search"></include>
+ 	
+ 	</select>
+ 	
+ 	<select id="getTypeOfActorCount" resultType="Integer">
+ 		select
+ 			count(*)
+ 		from
+ 			portal_data
+ 		where
+ 			portal_name = 'naver'
+ 		and
+ 			keyword_type = '배우'
+ 	
+ 	<include refid="search"></include>
+ 	
+ 	</select>
+ 	
  	<select id="allPageList" resultType="PortalVO">
 		select
 			*
