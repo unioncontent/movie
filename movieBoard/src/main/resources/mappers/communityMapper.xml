@@ -178,7 +178,7 @@
 			textType is not null
 		<include refid="search"></include>
 		order 
-			by createdate desc
+			by updateDate desc
 		limit  
 			#{startPage}, #{perPageNum}
 	
@@ -193,6 +193,31 @@
 			textType is not null
 		<include refid="search"></include>
 			
+	</select>
+	
+	
+	<select id="allPageList" resultType="CommunityVO">
+		select
+			*
+		from
+			community_data
+		where
+			url is not null
+		<include refid="search"></include>
+		order 
+			by updateDate desc
+		limit  
+			#{startPage}, #{perPageNum}
+	</select>
+	
+	<select id="allPageCount" resultType="Integer">
+		select
+			count(*)
+		from
+			community_data
+		where
+			url is not null
+		<include refid="search"></include>
 	</select>
 	
 	
@@ -213,6 +238,7 @@
 			community_data
 		set
 			textType = #{textType}
+			updateDate = now()
 		where
 			community_idx = #{community_idx}
 	

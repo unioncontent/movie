@@ -572,7 +572,104 @@
 		        xhr.setRequestHeader(header, token);
 		    });
 		});
-		 
+		
+		
+		var startDateOption = decodeURI(window.location.href.split("startDate=")[1]).split("&endDate=")[0];
+		var endDateOption = decodeURI(window.location.href.split("endDate=")[1]);
+		console.log("startDateOption: " + startDateOption);
+		console.log("endDateOption: " + endDateOption);
+		
+		if(startDateOption != 'undefined' && endDateOption != 'undefined'
+				&& startDateOption != '' && endDateOption != ''){
+			$("#fromDate").val(startDateOption + " - " + endDateOption);
+		}
+		
+		
+		
+		var companyOption = decodeURI(window.location.href.split("company=")[1]).split("&selectkey")[0];
+		console.log("companyOption: " + companyOption);
+
+		var $selectCompany = $('#selectCompany');
+		if(companyOption != 'undefined'){
+			for(var i = 0; i < $selectCompany[0].length; i++ ){
+
+				if($selectCompany[0].children[i].value == companyOption){
+					$selectCompany[0].children[i].selected = 'selected';
+				}
+			}
+		}
+		$selectCompany[0][0].disabled = true;
+
+
+		// 회사 선택시
+		$selectCompany.change(function(){
+			console.log("selectCompany clicked....");
+			console.log($("#selectCompany option:selected").val());
+
+			self.location = "classification?"+ "company=" + $("#selectCompany option:selected").val();
+			
+		});
+		
+
+		var keywordOption = decodeURI(window.location.href.split("selectkey=")[1]).split("&textType")[0];
+		console.log("keywordOption: " + keywordOption);
+		console.log(decodeURI(window.location.href.split("&selectkey=")[1]));
+
+
+
+		var $selectKeyword = $('#selectKeyword');
+
+		if(keywordOption != 'undefined'){
+			for(var i = 0; i < $selectKeyword[0].length; i++ ){
+				if($selectKeyword[0][i].value == keywordOption){
+					$selectKeyword[0][i].selected = 'selected';
+				}
+			}
+		}
+		$selectKeyword[0][0].disabled = true;
+
+
+		// 키워드 선택시
+		$selectKeyword.change(function(){
+			console.log("selectKeyword clicked....");
+			console.log($('#selectKeyword option:selected').val());
+			
+			self.location = "classification?"
+							+ "company=" + $("#selectCompany option:selected").val()
+							+ "&selectkey=" + $('#selectKeyword option:selected').val();
+
+			//searchList();
+		});
+
+
+		var textOption = decodeURI(window.location.href.split("textType=")[1]).split("&searchType")[0];
+		console.log("textOption: " + textOption);
+
+
+
+		var $selectTextType = $('#selectTextType');
+
+		if(selectTextType != 'undefined'){
+			for(var i = 0; i < $selectTextType[0].length; i++ ){
+				if($selectTextType[0][i].value == textOption){
+					$selectTextType[0][i].selected = 'selected';
+				}
+			}
+		}
+		$selectTextType[0][0].disabled = true;
+		
+
+		// 분류 선택시
+		$selectTextType.change(function(){
+			console.log("selectTextType clicked....");
+			console.log($('#selectTextType option:selected').val());
+			
+			self.location = "classification?"
+				+ "company=" + $("#selectCompany option:selected").val()
+				+ "&selectkey=" + $('#selectKeyword option:selected').val()
+				+ "&textType=" + $('#selectTextType option:selected').val();
+
+		});
 		
 		
 		// 일괄처리버튼 클릭시
@@ -682,8 +779,8 @@
 			date1 = date1.replace("/", "-").replace("/", "-");
 			var date = date1 + " " +date2;
 
-			//var stringData = "{'keyword':'"+ keyword+"', 'textType':'"+ textType + "', 'domain' :'"+ domain
-							+"', 'writeDate' :'"+ date+"', 'writer' :'"+ writer + "'";
+			/* var stringData = "{'keyword':'"+ keyword+"', 'textType':'"+ textType + "', 'domain' :'"+ domain
+							+"', 'writeDate' :'"+ date+"', 'writer' :'"+ writer + "'"; */
 
 
 			if(domainType == ''){
@@ -717,17 +814,14 @@
 					 	data : {keyword:keyword, textType:textType, domain :domain, writeDate :date,
 					 		writer :writer, domainType:domainType, title: title,content: content, url: url,
 					 		board_number : board_number, writerIP : writerIP},
-					 	beforeSend: function(xhr) {
-					 		  	  		if (header && token) {
-					 		  	        xhr.setRequestHeader(header, token);
-					 		  	    	}
-					 		  	},
 					  	error : function(e){
 					       alert('insert ajax error....');
 					  	},
 					  		success : function(){
-					  		swal("Success!", "등록 되었습니다.", "success");
+					  			swal("Success!", "등록 되었습니다.", "success");
 					  			console.log("success");
+					  			
+					  			location.reload();
 					  	  }
 
 
@@ -740,20 +834,16 @@
 
 				 		type : "POST",
 						url : "insert",
-					 	dataType : "json",
+					 	dataType : "text",
 					 	data : {keyword:keyword, textType:textType, domain :domain, writeDate :date,
 					 		writer :writer, domainType:domainType, title: title,content: content, url: url},
-					 	beforeSend: function(xhr) {
-					 		  	  		if (header && token) {
-					 		  	        xhr.setRequestHeader(header, token);
-					 		  	    	}
-					 		  	},
 					  	error : function(e){
-					       alert('insert ajax error....');
+					       alert('등록 실패');
 					  	},
 					  	   success : function(){
-					  		 swal("Success!", "등록 되었습니다.", "success");
-					  		  console.log("success");
+					  	   	   swal("Success!", "등록 되었습니다.", "success");
+					  		   console.log("success");
+					  		   location.reload();
 					  	  }
 
 
@@ -769,15 +859,12 @@
 		$('#toDay').on("click", function(){
 		  console.log("toDay clicked....");
 		  var date = getDate("toDay");
+		  var startDate = date.startDate;
 		  var endDate = date.endDate;
 
-		  self.location = "classification?"+ "searchType=" + $("#selectSearchType option:selected").val()
-		  + "&keyword=" + decodeURI(window.location.href.split("&keyword=")[1]).split("&selectKey")[0]
-		  + "&selectKey=" + $('#selectKeyword option:selected').val()
-		  + "&startDate=" + endDate
-    	  + "&endDate=" +  endDate
-    	  + "&company=" + $("#selectCompany option:selected").val()
-    	  + "&textType=" + $("#selectTextType option:selected").val();
+		  $("#fromDate").val(endDate + " - " + endDate)
+		  console.log($("#fromDate").val());
+		  searchList(); 
 		});
 
 		// 전일 클릭시
@@ -787,13 +874,9 @@
 		  var startDate = date.startDate;
 		  var endDate = date.endDate;
 
-		  self.location = "classification?"+ "searchType=" + $("#selectSearchType option:selected").val()
-		  + "&keyword=" + decodeURI(window.location.href.split("&keyword=")[1]).split("&selectKey")[0]
-		  + "&selectKey=" + $('#selectKeyword option:selected').val()
-		  + "&startDate=" + startDate
-    	  + "&endDate=" +  endDate
-    	  + "&company=" + $("#selectCompany option:selected").val()
-    	  + "&textType=" + $("#selectTextType option:selected").val();
+		  $("#fromDate").val(startDate + " - " + endDate)
+		  console.log($("#fromDate").val());
+		  searchList();
 		});
 
 		// 7일  클릭시
@@ -803,13 +886,9 @@
 		  var startDate = date.startDate;
 		  var endDate = date.endDate;
 
-		  self.location = "classification?"+ "searchType=" + $("#selectSearchType option:selected").val()
-		  + "&keyword=" + decodeURI(window.location.href.split("&keyword=")[1]).split("&selectKey")[0]
-		  + "&selectKey=" + $('#selectKeyword option:selected').val()
-		  + "&startDate=" + startDate
-    	  + "&endDate=" +  endDate
-    	  + "&company=" + $("#selectCompany option:selected").val()
-    	  + "&textType=" + $("#selectTextType option:selected").val();
+		  $("#fromDate").val(startDate + " - " + endDate)
+		  console.log($("#fromDate").val());
+		  searchList();
 		})
 
 		// 30일 클릭시
@@ -818,32 +897,26 @@
 		  var date = getDate("month");
 		  var startDate = date.startDate;
 		  var endDate = date.endDate;
-
-		  self.location = "classification?"+ "searchType=" + $("#selectSearchType option:selected").val()
-		  + "&keyword=" + decodeURI(window.location.href.split("&keyword=")[1]).split("&selectKey")[0]
-		  + "&selectKey=" + $('#selectKeyword option:selected').val()
-		  + "&startDate=" + startDate
-    	  + "&endDate=" +  endDate
-    	  + "&company=" + $("#selectCompany option:selected").val()
-    	  + "&textType=" + $("#selectTextType option:selected").val();
+		
+		  $("#fromDate").val(startDate + " - " + endDate)
+		  console.log($("#fromDate").val());
+		  
+		  searchList();
+		 
 		})
 		
 		
 		
 		//캘린더 클릭시..
-		/* $('#fromDate').on('apply.daterangepicker', function(ev, picker) {
+		$('#fromDate').on('apply.daterangepicker', function(ev, picker) {
 			   var startDate = picker.startDate.format('YYYY-MM-DD');
 			   var endDate = picker.endDate.format('YYYY-MM-DD');
 
 			   console.log("startDate: " + startDate);
 			   console.log("endDate: " + endDate);
 
-			    self.location = "classification?"+ "searchType=" + $("#selectSearchType option:selected").val()
-				  + "&keyword=" + decodeURI(window.location.href.split("&keyword=")[1]).split("&selectKey")[0]
-				  + "&selectKey=" + $('#selectKeyword option:selected').val()
-				  + "&startDate=" + startDate
-	        	  + "&endDate=" +  endDate; 
-		}); */
+			   searchList();
+		}); 
 
 
 		// content 길시에 ...으로 변경
@@ -857,79 +930,7 @@
 			}
 		}
 
-		var keywordOption = decodeURI(window.location.href.split("selectKey=")[1]).split("&startDate=")[0];
-		console.log("keywordOption: " + keywordOption);
-
-
-
-		var $selectKeyword = $('#selectKeyword');
-
-		if(keywordOption != 'undefined'){
-			for(var i = 0; i < $selectKeyword[0].length; i++ ){
-				if($selectKeyword[0][i].value == keywordOption){
-					$selectKeyword[0][i].selected = 'selected';
-				}
-			}
-		}
-		$selectKeyword[0][0].disabled = true;
-
-
-		// 키워드 선택시
-		$selectKeyword.change(function(){
-			console.log("selectKeyword clicked....");
-			console.log($('#selectKeyword option:selected').val());
-
-			//searchList();
-		});
-
-		var companyOption = decodeURI(window.location.href.split("company=")[1]).split("&textType")[0];
-
-
-		var $selectCompany = $('#selectCompany');
-		if(companyOption != 'undefined'){
-			for(var i = 0; i < $selectCompany[0].length; i++ ){
-
-				if($selectCompany[0].children[i].value == companyOption){
-					$selectCompany[0].children[i].selected = 'selected';
-				}
-			}
-		}
-		$selectCompany[0][0].disabled = true;
-
-
-		// 회사 선택시
-		$selectCompany.change(function(){
-			console.log("selectCompany clicked....");
-			console.log($("#selectCompany option:selected").val());
-
-			self.location = "classification?"+ "company=" + $("#selectCompany option:selected").val();
-			
-		});
-
-
-		var textOption = decodeURI(window.location.href.split("textType=")[1]);
-		console.log("textOption: " + textOption);
-
-
-
-		var $selectTextType = $('#selectTextType');
-
-		if(selectTextType != 'undefined'){
-			for(var i = 0; i < $selectTextType[0].length; i++ ){
-				if($selectTextType[0][i].value == textOption){
-					$selectTextType[0][i].selected = 'selected';
-				}
-			}
-		}
-		$selectTextType[0][0].disabled = true;
 		
-
-		// 분류 선택시
-		$selectTextType.change(function(){
-			console.log("selectTextType clicked....");
-			console.log($('#selectTextType option:selected').val());
-
-		});
 		
 		
 		//엑셀출력 확인메시지
@@ -987,16 +988,17 @@
 	
 	function makeDateFormat(date, index){
 		var splitDate = date.split(" - ")[index];
-		if(date.split(" - ")[0] == date.split(" - ")[1]){
+		/* if(date.split(" - ")[0] == date.split(" - ")[1]){
 			console.log("날짜 미설정...");
+			console.log(date);
 			return "";
 			
-		}else {
+		}else { */
 			if(splitDate != undefined){
 				var returnDate = splitDate.replace("/", "-").replace("/", "-")
 				return returnDate;
 			}
-		}
+		//}
 		
 		
 	}
@@ -1006,17 +1008,15 @@
 
 		var makeQeury = '${pageMaker.makeQuery(1)}'.slice(0, -2);
 
-		self.location = "classification" + makeQeury
-				+ $('#selectPerPageNum option:selected').val() + "&searchType="
-				+ $("#selectSearchType option:selected").val() + "&keyword="
-				+ $('#keywordInput').val() + "&selectKey="
-				+ $('#selectKeyword option:selected').val()
-				/* + "&startDate=" + decodeURI(window.location.href.split("&startDate=")[1]).split("&endDate")[0]
-	        	+ "&endDate=" +  decodeURI(window.location.href.split("&endDate=")[1]).split("&company")[0] */
-	        	+ "&startDate=" + makeDateFormat($("#fromDate").val(), 0)
-	        	+ "&endDate=" +  makeDateFormat($("#fromDate").val(), 1)
-	        	+ "&company=" + $("#selectCompany option:selected").val()
-	        	+ "&textType=" + $("#selectTextType option:selected").val();
+		self.location = "classification" 
+					  + makeQeury + $('#selectPerPageNum option:selected').val() 
+					  + "&company=" + $("#selectCompany option:selected").val()
+			          + "&selectKey=" + $('#selectKeyword option:selected').val()
+			          + "&textType=" + $("#selectTextType option:selected").val()
+					  + "&searchType=" + $("#selectSearchType option:selected").val() 
+					  + "&keyword=" + $('#keywordInput').val() 
+	        		  + "&startDate=" + makeDateFormat($("#fromDate").val(), 0)
+	        		  + "&endDate=" +  makeDateFormat($("#fromDate").val(), 1);
 	}
 
 	//날짜 계산 함수
@@ -1047,6 +1047,9 @@
 	   			month -= 1;
 	   		}
 	   		startDate = year + "-" + month + "-" + calcDate;
+	   	}else if(type =='toDay'){
+	   		startDate = endDate
+	   		
 	   	}
 
 	   	return {

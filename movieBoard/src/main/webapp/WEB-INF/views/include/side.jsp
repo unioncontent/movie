@@ -120,7 +120,7 @@
           <li class=" ">
             <a href="../manage/monitor" data-i18n="nav.advance-components.grid-stack">
               <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-              <span class="pcoded-mtext">모니터링현황</span>
+              <span class="pcoded-mtext">모니터링등록</span>
               <span class="pcoded-mcaret"></span>
             </a>
           </li>

@@ -1,23 +1,23 @@
-/*'use strict';
+'use strict';
 $(window).on('resize',function(){
   setTimeout(function(){
-    echart1();
-    echart2();
+    //echart1();
+    //echart2();
     cardResize();
     //window.lineChart.redraw();
   }, 500);
-});*/
+});
 
-/*$(document).ready(function() {
+$(document).ready(function() {
   cardResize();
-  echart1();
-  echart2();
+  //echart1();
+  //echart2();
   //linechart();
 
-  $("i[data-value='chart1']").on("click",linechart);
-  $("i[data-value='chart2']").on("click",echart1);
-  $("i[data-value='chart3']").on("click",echart2);
-});*/
+  //$("i[data-value='chart1']").on("click",linechart);
+  //$("i[data-value='chart2']").on("click",echart1);
+  //$("i[data-value='chart3']").on("click",echart2);
+});
 
 /*gauge*/
 function echart1(value, name){

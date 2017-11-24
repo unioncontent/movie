@@ -18,7 +18,7 @@ public class ListUtil {
 	/*@Autowired
 	private UserService userService;*/
 	
-	SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+	SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
 	
 
 	public List<ExtractVO> listAddList(List<ExtractVO> list, List<ExtractVO> addList) {
@@ -45,7 +45,7 @@ public class ListUtil {
 				vo.setWriteDate(addList.get(i).getWriteDate());
 				vo.setSns_idx(addList.get(i).getSns_idx());
 				vo.setUrl(addList.get(i).getUrl());
-				vo.setCreateDate(date.format(addList.get(i).getCreateDate()));
+				vo.setCreateDate(date.format(addList.get(i).getUpdateDate()));
 				vo.setTextType(addList.get(i).getTextType());
 				vo.setWriter(addList.get(i).getSns_writer());
 				
@@ -80,7 +80,7 @@ public class ListUtil {
 				vo.setWriteDate(addList.get(i).getWriteDate());
 				vo.setSns_idx(addList.get(i).getCommunity_idx());
 				vo.setUrl(addList.get(i).getUrl());
-				vo.setCreateDate(date.format(addList.get(i).getCreateDate()));
+				vo.setCreateDate(date.format(addList.get(i).getUpdateDate()));
 				vo.setTextType(addList.get(i).getTextType());
 				vo.setWriter(addList.get(i).getCommunity_writer());
 			
@@ -110,7 +110,7 @@ public class ListUtil {
 				vo.setWriteDate(addList.get(i).getWriteDate());
 				vo.setSns_idx(addList.get(i).getMedia_idx());
 				vo.setUrl(addList.get(i).getUrl());
-				vo.setCreateDate(date.format(addList.get(i).getCreateDate()));
+				vo.setCreateDate(date.format(addList.get(i).getUpdateDate()));
 				vo.setTextType(addList.get(i).getTextType());
 				vo.setWriter(addList.get(i).getReporter_name());
 			
@@ -139,7 +139,7 @@ public class ListUtil {
 				vo.setWriteDate(addList.get(i).getWriteDate());
 				vo.setSns_idx(addList.get(i).getPortal_idx());
 				vo.setUrl(addList.get(i).getUrl());
-				vo.setCreateDate(date.format(addList.get(i).getCreateDate()));
+				vo.setCreateDate(date.format(addList.get(i).getUpdateDate()));
 				vo.setTextType(addList.get(i).getTextType());
 			
 				

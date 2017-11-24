@@ -18,6 +18,9 @@ public interface MediaDAO {
 	
 	public void delete(Integer media_idx);
 	
+	public List<MediaVO> allPageList(SearchCriteria cri);
+	public Integer allPageCount(SearchCriteria cri);
+	
 	public GraphVO yesterdayCount();
 	
 	public TextTypeVO naverMediaCount(SearchCriteria cri);

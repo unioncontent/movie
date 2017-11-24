@@ -18,6 +18,9 @@ public interface SNSDAO {
 	
 	public void delete(Integer SNS_idx);
 	
+	public List<SNSVO> allPageList(SearchCriteria cri);
+	public Integer allPageCount(SearchCriteria cri);
+	
 	public Integer countAll(Date date);
 	
 	public GraphVO yesterdayCount(String name);

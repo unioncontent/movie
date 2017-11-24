@@ -1,4 +1,4 @@
-/*'use strict';
+'use strict';
 $(window).on('resize',function(){
   setTimeout(function(){
     cardResize();
@@ -6,7 +6,7 @@ $(window).on('resize',function(){
   }, 500);
 });
 
-$(document).ready(function() {
+/*$(document).ready(function() {
   cardResize();
   linechart();
   $(".icofont-refresh").on("click",linechart);

@@ -212,4 +212,18 @@ public class SNSDAOImpl implements SNSDAO {
 	}
 
 
+	@Override
+	public List<SNSVO> allPageList(SearchCriteria cri) {
+
+		return session.selectList(namespace + "allPageList", cri);
+	}
+
+
+	@Override
+	public Integer allPageCount(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "allPageCount", cri);
+	}
+
+
 }

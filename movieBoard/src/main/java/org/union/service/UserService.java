@@ -7,6 +7,8 @@ import org.union.domain.UserVO;
 public interface UserService {
 
 	
+	public void insert(UserVO vo);
+	
 	public UserVO view(Integer user_idx);
 	
 	public UserVO login(UserVO vo);

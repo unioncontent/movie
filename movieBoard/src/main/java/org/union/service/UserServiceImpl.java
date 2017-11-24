@@ -43,4 +43,14 @@ public class UserServiceImpl implements UserService{
 
 		return userDAO.readByName(user_name);
 	}
+
+	@Override
+	public void insert(UserVO vo) {
+
+		try {
+			userDAO.create(vo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

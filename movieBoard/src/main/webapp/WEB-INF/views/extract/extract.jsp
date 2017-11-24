@@ -413,6 +413,75 @@ $(function() {
 
   $(document).ready(function(){
 
+	  
+	  var startDateOption = decodeURI(window.location.href.split("startDate=")[1]).split("&endDate=")[0];
+		var endDateOption = decodeURI(window.location.href.split("endDate=")[1]);
+		console.log("startDateOption: " + startDateOption);
+		console.log("endDateOption: " + endDateOption);
+		
+		if(startDateOption != 'undefined' && endDateOption != 'undefined'
+				&& startDateOption != '' && endDateOption != ''){
+			$("#fromDate").val(startDateOption + " - " + endDateOption);
+		}
+		
+		
+		
+		var companyOption = decodeURI(window.location.href.split("company=")[1]).split("&selectkey")[0];
+		console.log("companyOption: " + companyOption);
+
+		var $selectCompany = $('#selectCompany');
+		if(companyOption != 'undefined'){
+			for(var i = 0; i < $selectCompany[0].length; i++ ){
+
+				if($selectCompany[0].children[i].value == companyOption){
+					$selectCompany[0].children[i].selected = 'selected';
+				}
+			}
+		}
+		$selectCompany[0][0].disabled = true;
+
+
+		// 회사 선택시
+		$selectCompany.change(function(){
+			console.log("selectCompany clicked....");
+			console.log($("#selectCompany option:selected").val());
+
+			self.location = "extract?"+ "company=" + $("#selectCompany option:selected").val();
+			
+		});
+		
+
+		var keywordOption = decodeURI(window.location.href.split("selectkey=")[1]).split("&textType")[0];
+		console.log("keywordOption: " + keywordOption);
+		console.log(decodeURI(window.location.href.split("&selectkey=")[1]));
+
+
+
+		var $selectKeyword = $('#selectKeyword');
+
+		if(keywordOption != 'undefined'){
+			for(var i = 0; i < $selectKeyword[0].length; i++ ){
+				if($selectKeyword[0][i].value == keywordOption){
+					$selectKeyword[0][i].selected = 'selected';
+				}
+			}
+		}
+		$selectKeyword[0][0].disabled = true;
+
+
+		// 키워드 선택시
+		$selectKeyword.change(function(){
+			console.log("selectKeyword clicked....");
+			console.log($('#selectKeyword option:selected').val());
+			
+			self.location = "extract?"
+							+ "company=" + $("#selectCompany option:selected").val()
+							+ "&selectkey=" + $('#selectKeyword option:selected').val();
+
+			//searchList();
+		});
+	  
+	  
 
 	  // 키보드 insertAll
 	  $(function() {
@@ -546,14 +615,12 @@ $(function() {
 		$('#toDay').on("click", function(){
 		  console.log("toDay clicked....");
 		  var date = getDate("toDay");
+		  var startDate = date.startDate;
 		  var endDate = date.endDate;
 
-		  self.location = "extract?"+ "searchType=" + $("#selectSearchType option:selected").val()
-		  				+ "&keyword=" + decodeURI(window.location.href.split("&keyword=")[1]).split("&selectKey")[0]
-		  				+ "&selectKey=" + $('#selectKeyword option:selected').val()
-		  				+ "&startDate=" + endDate
-    	  				+ "&endDate=" +  endDate
-    	  				+ "&company=" + $("#selectCompany option:selected").val();
+		  $("#fromDate").val(endDate + " - " + endDate)
+		  console.log($("#fromDate").val());
+		  searchList(); 
 		});
 
 		// 전일 클릭시
@@ -563,12 +630,9 @@ $(function() {
 		  var startDate = date.startDate;
 		  var endDate = date.endDate;
 
-		  self.location = "extract?"+ "searchType=" + $("#selectSearchType option:selected").val()
-						+ "&keyword=" + decodeURI(window.location.href.split("&keyword=")[1]).split("&selectKey")[0]
-						+ "&selectKey=" + $('#selectKeyword option:selected').val()
-						+ "&startDate=" + startDate
-						+ "&endDate=" +  endDate
-						+ "&company=" + $("#selectCompany option:selected").val();
+		  $("#fromDate").val(startDate + " - " + endDate)
+		  console.log($("#fromDate").val());
+		  searchList();
 		});
 
 		// 7일  클릭시
@@ -578,12 +642,9 @@ $(function() {
 		  var startDate = date.startDate;
 		  var endDate = date.endDate;
 
-		  self.location = "extract?"+ "searchType=" + $("#selectSearchType option:selected").val()
-						+ "&keyword=" + decodeURI(window.location.href.split("&keyword=")[1]).split("&selectKey")[0]
-						+ "&selectKey=" + $('#selectKeyword option:selected').val()
-						+ "&startDate=" + startDate
-						+ "&endDate=" +  endDate
-						+ "&company=" + $("#selectCompany option:selected").val();
+		  $("#fromDate").val(startDate + " - " + endDate)
+		  console.log($("#fromDate").val());
+		  searchList();
 		})
 
 		// 30일 클릭시
@@ -592,13 +653,12 @@ $(function() {
 		  var date = getDate("month");
 		  var startDate = date.startDate;
 		  var endDate = date.endDate;
-
-		  self.location = "extract?"+ "searchType=" + $("#selectSearchType option:selected").val()
-						+ "&keyword=" + decodeURI(window.location.href.split("&keyword=")[1]).split("&selectKey")[0]
-						+ "&selectKey=" + $('#selectKeyword option:selected').val()
-						+ "&startDate=" + startDate
-						+ "&endDate=" +  endDate
-						+ "&company=" + $("#selectCompany option:selected").val();
+		
+		  $("#fromDate").val(startDate + " - " + endDate)
+		  console.log($("#fromDate").val());
+		  
+		  searchList();
+		 
 		})
 		
 	// content 길시에 ...으로 변경  
@@ -612,50 +672,18 @@ $(function() {
 		}
 	}
 
-	var keywordOption = decodeURI(window.location.href.split("selectKey=")[1]).split("&startDate=")[0];
-	console.log("keywordOption: " + keywordOption);
+	
+	//캘린더 클릭시..
+	$('#fromDate').on('apply.daterangepicker', function(ev, picker) {
+		   var startDate = picker.startDate.format('YYYY-MM-DD');
+		   var endDate = picker.endDate.format('YYYY-MM-DD');
 
-	var $selectKeyword = $('#selectKeyword');
+		   console.log("startDate: " + startDate);
+		   console.log("endDate: " + endDate);
 
-	if(keywordOption != 'undefined'){
-		for(var i = 0; i < $selectKeyword[0].length; i++ ){
-			if($selectKeyword[0][i].value == keywordOption){
-				$selectKeyword[0][i].selected = 'selected';
-			}
-		}
-	}
-	$selectKeyword[0][0].disabled = true;
-
-
-	// 키워드 선택시
-	$selectKeyword.change(function(){
-		console.log("selectKeyword clicked....");
-		console.log($('#selectKeyword option:selected').val());
-
-	});
-
-	var companyOption = decodeURI(window.location.href.split("company=")[1]);
-
-
-	var $selectCompany = $('#selectCompany');
-	if(companyOption != 'undefined'){
-		for(var i = 0; i < $selectCompany[0].length; i++ ){
-
-			if($selectCompany[0].children[i].value == companyOption){
-				$selectCompany[0].children[i].selected = 'selected';
-			}
-		}
-	}
-	$selectCompany[0][0].disabled = true;
-
-
-	// 회사 선택시
-	$selectCompany.change(function(){
-		console.log("selectCompany clicked....");
-		console.log($("#selectCompany option:selected").val());
-
-		searchList();
-	});
+		   searchList();
+	}); 
+	
 
 	// 검색버튼 클릭시
 	$('#searchBtn').on("click", function(event){
@@ -789,16 +817,10 @@ $(function() {
   
   function makeDateFormat(date, index){
 		var splitDate = date.split(" - ")[index];
-		if(date.split(" - ")[0] == date.split(" - ")[1]){
-			console.log("날짜 미설정...");
-			return "";
-			
-		}else {
 			if(splitDate != undefined){
 				var returnDate = splitDate.replace("/", "-").replace("/", "-")
 				return returnDate;
 			}
-		}
 		
 		
 	}
@@ -809,13 +831,13 @@ $(function() {
 		var makeQeury = '${pageMaker.makeQuery(1)}'.slice(0, -2);
 
 		self.location = "extract" + makeQeury
-						+ $('#selectPerPageNum option:selected').val() + "&searchType="
-						+ $("#selectSearchType option:selected").val() + "&keyword="
-						+ $('#keywordInput').val() + "&selectKey="
-						+ $('#selectKeyword option:selected').val()
+						+ $('#selectPerPageNum option:selected').val() 
+    					+ "&company=" + $("#selectCompany option:selected").val()
+						+ "&selectKey=" + $('#selectKeyword option:selected').val()
+						+ "&searchType=" + $("#selectSearchType option:selected").val() 
+						+ "&keyword=" + $('#keywordInput').val() 
     					+ "&startDate=" + makeDateFormat($("#fromDate").val(), 0)
     					+ "&endDate=" +  makeDateFormat($("#fromDate").val(), 1)
-    					+ "&company=" + $("#selectCompany option:selected").val()
 	}
   
 //날짜 계산 함수
@@ -846,6 +868,10 @@ $(function() {
    			month -= 1;
    		}
    		startDate = year + "-" + month + "-" + calcDate;
+   	
+   	}else if(type =='toDay'){
+   		startDate = endDate
+   		
    	}
 
    	return {

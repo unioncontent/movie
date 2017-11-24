@@ -99,95 +99,56 @@
                                 </div>
                             </div>
                             <div class="card-block">
-                                <form>
+                                <form id="insertForm" action="/media/pressInsert" method="post">
+                                  <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+    							  <input type="hidden" name="_csrf_header" value="${_csrf.headerName}"/>
                                   <div class="form-group row">
                                     <label class="col-sm-2 col-form-label">* 언론사명</label>
                                     <div class="col-sm-5">
-                                        <select class="js-example-basic-single form-control" name="select" id="newsName">
-                                            <option value="">선택</option>
-                                            <option value="">YTN</option>
-                                        </select>
+                                        <input name = "reporter_media_name" type="text" class="form-control" id="newsNewName1" placeholder="언론사명">
+                                          <span class="messages"><p class="text-danger error"></p></span>
                                         <span class="messages"><p class="text-danger error"></p></span>
                                     </div>
                                   </div>
                                   <div class="form-group row">
-                                      <label class="col-sm-2 col-form-label">
-                                        <div class="f-left">* 언론사 신규등록</div>
-                                      </label>
-                                      <div class="col-sm-5">
-                                          <input type="text" class="form-control" id="newsNewName1" placeholder="언론사명">
-                                          <span class="messages"><p class="text-danger error"></p></span>
-                                      </div>
-                                      <div class="checkbox-fade fade-in-primary p-t-5">
-                                        <label>
-                                          <input type="checkbox" id="checkbox">
-                                          <span class="cr">
-                                            <i class="cr-icon icofont icofont-ui-check txt-primary"></i>
-                                          </span>
-                                          <span>신규등록 시 체크</span>
-                                        </label>
-                                      </div>
-                                  </div>
-                                  <div class="form-group row">
-                                      <label class="col-sm-2 col-form-label">* 검색언론사명</label>
-                                      <div class="col-sm-5">
-                                          <input type="text" class="form-control" id="serachNewsName" >
-                                          <span class="messages"><p class="text-danger error"></p></span>
-                                      </div>
-                                  </div>
-                                  <div class="form-group row">
                                       <label class="col-sm-2 col-form-label">* 기자명</label>
                                       <div class="col-sm-5">
-                                          <input type="text" class="form-control" id="pressName" >
-                                          <span class="messages"><p class="text-danger error"></p></span>
-                                      </div>
-                                  </div>
-                                  <div class="form-group row">
-                                      <label class="col-sm-2 col-form-label">* 기자분류</label>
-                                      <div class="col-sm-5">
-                                          <select name="select" class="form-control" id="press-select">
-                                              <option value="">선택</option>
-                                              <option value="">보도기자</option>
-                                              <option value="">촬영기자</option>
-                                              <option value="">취재기자</option>
-                                              <option value="">포토기자</option>
-                                              <option value="">기타</option>
-                                          </select>
+                                          <input name = "reporter_name" type="text" class="form-control" id="pressName" >
                                           <span class="messages"><p class="text-danger error"></p></span>
                                       </div>
                                   </div>
                                   <div class="form-group row">
                                       <label class="col-sm-2 col-form-label">부서명</label>
                                       <div class="col-sm-5">
-                                          <input type="text" class="form-control">
+                                          <input name = "reporter_part_name" type="text" class="form-control">
                                           <span class="messages"><p class="text-danger error"></p></span>
                                       </div>
                                   </div>
                                   <div class="form-group row">
                                       <label class="col-sm-2 col-form-label">이메일</label>
                                       <div class="col-sm-5">
-                                          <input type="email" class="form-control">
+                                          <input name="reporter_email" type="email" class="form-control">
                                           <span class="messages"><p class="text-danger error"></p></span>
                                       </div>
                                   </div>
                                   <div class="form-group row">
                                       <label class="col-sm-2 col-form-label">연락처</label>
                                       <div class="col-sm-5">
-                                          <input type="text" class="form-control mob_no" data-mask="9999-999-999">
+                                          <input name="reporter_phoneNum" type="text" class="form-control mob_no" data-mask="9999-999-999">
                                           <span class="messages"><p class="text-danger error"></p></span>
                                       </div>
                                   </div>
                                   <div class="form-group row">
                                       <label class="col-sm-2 col-form-label">메모</label>
                                       <div class="col-sm-5">
-                                          <input type="text" class="form-control">
+                                          <input name="reporter_memo" type="text" class="form-control">
                                           <span class="messages"><p class="text-danger error"></p></span>
                                       </div>
                                   </div>
                                   <div class="row">
                                       <label class="col-sm-2"></label>
                                       <div class="col-sm-10">
-                                          <button type="submit" class="btn btn-primary m-b-0">등록</button>
+                                          <button id="insertBtn" type="submit" class="btn btn-primary m-b-0">등록</button>
                                       </div>
                                     </div>
                                 </form>
@@ -201,20 +162,20 @@
                               <div class="">
                                 <div class="col-md-6 p-r-0 f-right press-setting">
                                   <div class="col-sm-5 input-group input-group-button input-group-inverse p-l-0 p-r-0 m-b-10 m-l-10 f-right btn-select">
-                                    <input type="text" class="form-control" placeholder="">
+                                    <input id="keywordInput" type="text" class="form-control" placeholder="">
                                     <span class="input-group-addon" id="basic-addon1">
-                                      <button class="btn btn-inverse">검색</button>
+                                      <button id="searchBtn" class="btn btn-inverse">검색</button>
                                     </span>
                                   </div>
-                                  <select name="select" class="col-sm-2 form-control form-control-inverse m-l-10 m-b-10 f-right search-select">
-                                    <option value="">기자명</option>
-                                    <option value="">언론사명</option>
+                                  <select id = "selectSearchType" name="select" class="col-sm-2 form-control form-control-inverse m-l-10 m-b-10 f-right search-select">
+                                    <option value="t">기자명</option>
+                                    <option value="c">언론사명</option>
                                   </select>
-                                  <select name="select" class="col-sm-1 form-control form-control-inverse m-l-10 m-b-10 p-r-5 f-right  list-select">
-                                    <option value="">10</option>
-                                    <option value="">30</option>
-                                    <option value="">50</option>
-                                    <option value="">100</option>
+                                  <select id="selectPerPageNum" name="select" class="col-sm-1 form-control form-control-inverse m-l-10 m-b-10 p-r-5 f-right  list-select">
+                                    <option value="10">10</option>
+                                    <option value="30">30</option>
+                                    <option value="50">50</option>
+                                    <option value="100">100</option>
                                   </select>
                                 </div>
                               </div>
@@ -227,7 +188,6 @@
                                       <th width="5%">NO</th>
                                       <th width="5%">언론사명</th>
                                       <th width="5%">검색언론사명</th>
-                                      <th width="5%">언론사ID</th>
                                       <th width="5%">부서</th>
                                       <th width="5%">기자명</th>
                                       <th width="5%">기자ID</th>
@@ -236,35 +196,46 @@
                                     </tr>
                                   </thead>
                                   <tbody>
+                                    <c:forEach items="${reporterList}" var="reporterList" varStatus="index">
                                     <tr>
-                                      <th scope="row">1</th>
-                                      <td>일간스포츠</td>
-                                      <td>일간스포츠</td>
-                                      <td>PA10163</td>
-                                      <td></td>
-                                      <td>정여진</td>
-                                      <td>P10163</td>
-                                      <td>jeong.yeojin@jtbc.co.kr</td>
+                                      <th scope="row">${index.count}</th>
+                                      <td>${reporterList.reporter_media_name}</td>
+                                      <td>${reporterList.reporter_media_name}</td>
+                                      <td>${reporterList.reporter_part_name}</td>
+                                      <td>${reporterList.reporter_name}</td>
+                                      <td>${reporterList.reporter_email}</td>
+                                      <td>${reporterList.reporter_phoneNum}</td>
                                       <td></td>
                                     </tr>
+                                    </c:forEach>
                                   </tbody>
                                 </table>
                               </div>
-                              <ul class="pagination float-right">
+                               <ul class="pagination float-right">
+                              <c:if test="${pageMaker.prev}">
                                 <li class="page-item">
-                                  <a class="page-link" href="#" aria-label="Previous">
-                                    <span aria-hidden="true">«</span>
+                                  <a class="page-link" href="press${pageMaker.makeSearch(pageMaker.startPage - 1) }" aria-label="Previous">&laquo;
+                                    <span aria-hidden="true"></span>
                                     <span class="sr-only">Previous</span>
                                   </a>
                                 </li>
-                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#" aria-label="Next">
-                                        <span aria-hidden="true">»</span>
-                                        <span class="sr-only">Next</span>
-                                    </a>
+                              </c:if>
+
+                              <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
+                                <li class= "${pageMaker.cri.page == idx? 'active':''} page-item">
+                                  <a class="page-link" href="press${pageMaker.makeSearch(idx)}">${idx}</a>
                                 </li>
-                              </ul>
+                              </c:forEach>
+
+                              <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+                                <li class="page-item">
+                                  <a class="page-link" href="press${pageMaker.makeSearch(pageMaker.endPage +1) }" aria-label="Next">&raquo;
+                                    <span aria-hidden="true"></span>
+                                    <span class="sr-only">Next</span>
+                                  </a>
+                                </li>
+                              </c:if>
+                            </ul>
                             </div>
                         </div>
                         <!-- table card end -->
@@ -352,5 +323,34 @@
   <script src="../assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
   <script src="../assets/js/jquery.mousewheel.min.js"></script>
 </body>
+
+<script type="text/javascript">
+
+	$(document).ready(function(){
+		
+		// 검색 버튼 클릭시
+		$("#searchBtn").on("click", function(){
+			searchList();
+		});
+		
+		/* // 등록 버튼 클릭시
+		$("#insertBtn").on("click", function(){
+			$("#insertForm").submit();
+		}); */
+		
+		
+	}); // end ready...
+	
+	function searchList(event) {
+
+		var makeQeury = '${pageMaker.makeQuery(1)}'.slice(0, -2);
+
+		self.location = "press" 
+					  + makeQeury + $('#selectPerPageNum option:selected').val() 
+					  + "&searchType=" + $("#selectSearchType option:selected").val() 
+					  + "&keyword=" + $('#keywordInput').val(); 
+	}
+
+</script>
 
 </html>
