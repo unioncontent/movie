@@ -498,7 +498,7 @@ $(function() {
 		
 		
 		
-		var companyOption = decodeURI(window.location.href.split("company=")[1]).split("&selectkey")[0];
+		var companyOption = decodeURI(window.location.href.split("company=")[1]).split("&selectKey")[0];
 		console.log("companyOption: " + companyOption);
 
 		var $selectCompany = $('#selectCompany');
@@ -523,9 +523,9 @@ $(function() {
 		});
 		
 
-		var keywordOption = decodeURI(window.location.href.split("selectkey=")[1]).split("&textType")[0];
+		var keywordOption = decodeURI(window.location.href.split("selectKey=")[1]).split("&textType")[0];
 		console.log("keywordOption: " + keywordOption);
-		console.log(decodeURI(window.location.href.split("&selectkey=")[1]));
+		console.log(decodeURI(window.location.href.split("&selectKey=")[1]));
 
 
 
@@ -548,7 +548,7 @@ $(function() {
 			
 			self.location = "listAll?"
 							+ "company=" + $("#selectCompany option:selected").val()
-							+ "&selectkey=" + $('#selectKeyword option:selected').val();
+							+ "&selectKey=" + $('#selectKeyword option:selected').val();
 
 			//searchList();
 		});

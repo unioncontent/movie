@@ -84,4 +84,15 @@ public class MediaDAOTester {
 		dao.listSearch(cri);
 	}
 
+	
+	@Test
+	private void testAllPageList() throws Exception{
+		
+		cri.setSearchType("t");
+		cri.setSelectKey("꾼");
+		cri.setStartDate("2017-11-23 00:00:00");
+		cri.setEndDate("2017-11-24 23:59:59");
+		
+		dao.allPageList(cri);
+	}
 }

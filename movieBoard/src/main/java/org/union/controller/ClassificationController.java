@@ -171,7 +171,6 @@ public class ClassificationController {
 		ExtractComparator comparator = new ExtractComparator();
 		Collections.sort(classiList, comparator);
 		
-		logger.info("시간왜이럼: " + classiList);
 		
 		// 리스트 회사 추가
 		keywordService.viewByKeyword(classiList);
