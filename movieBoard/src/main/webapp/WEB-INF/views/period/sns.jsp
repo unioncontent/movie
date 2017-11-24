@@ -242,9 +242,9 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                         <c:forEach items="${snsList}" var="snsList">
+                                         <c:forEach items="${snsList}" var="snsList" varStatus="index">
                                           <tr>
-                                            <th scope="row">${snsList.sns_idx}</th>
+                                            <th scope="row">${totalCount -index.count +1 -minusCount}</th>
                                             <td>${snsList.writeDate}</td>
                                             <td>${snsList.sns_name}</td>
                                             <td>${snsList.keyword}</td>

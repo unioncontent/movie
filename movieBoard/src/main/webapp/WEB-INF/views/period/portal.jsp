@@ -377,9 +377,9 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                          <c:forEach items="${portalList}" var="portalList">
+                                          <c:forEach items="${portalList}" var="portalList" varStatus="index">
                                             <tr>
-                                              <th scope="row">${portalList.portal_idx}</th>
+                                              <th scope="row">${${totalCount -index.count +1 -minusCount}}</th>
                                               <td>${portalList.createDate}</td>
                                               <td>${portalList.portal_name}</td>
                                               <td>${portalList.portal_type}</td>

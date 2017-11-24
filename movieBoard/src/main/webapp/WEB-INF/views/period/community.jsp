@@ -249,9 +249,9 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                          <c:forEach items="${communityList}" var="communityList">
+                                          <c:forEach items="${communityList}" var="communityList" varStatus="index">
                                           <tr>
-                                            <th scope="row">${communityList.community_idx}</th>
+                                            <th scope="row">${totalCount -index.count +1 -minusCount}</th>
                                             <td>${communityList.writeDate}</td>
                                             <td>${communityList.community_name}</td>
                                             <td>${communityList.keyword}</td>
