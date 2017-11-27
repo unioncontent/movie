@@ -94,25 +94,44 @@
                     <div class="row">
                       <!-- data setting start -->
                       <div class="col-md-6">
-                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left">
-                          <option value="opt1">회사</option>
+                       <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="selectCompany">
+                          <option>회사</option>
+                          <c:if test="${user.user_type == 1 }">
+                          <c:forEach items="${companyList}" var = "companyList">
+                          <option value="${companyList.user_name}">${companyList.user_name}</option>
+                          </c:forEach>
+                          </c:if>
+                          <c:if test="${user.user_type == 2}">
+                          <option value="${companyList.user_name}">${companyList.user_name}</option>
+                          </c:if>
                         </select>
-                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left">
-                          <option value="opt1">키워드</option>
+                        
+                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left" id="selectKeyword">
+                          <option>키워드</option>
+                          <c:if test="${modelKeywordList == null}" >
+                          	<c:forEach items="${keywordList}" var = "keywordList">
+                          <option value="${keywordList.keyword_main}">${keywordList.keyword_main}</option>
+                          </c:forEach>
+                          </c:if>
+                          <c:if test="${modelKeywordList != null}">
+                          	<c:forEach items="${modelKeywordList}" var = "keywordList">
+                          <option value="${keywordList.keyword_main}">${keywordList.keyword_main}</option>
+                          </c:forEach>
+                          </c:if>
                         </select>
                       </div>
                       <div class="col-md-6 input-time">
                         <!-- date picker start -->
                         <div class="row">
                           <div class="btn-group float-right m-b-10 p-l-15 p-r-10" role="group">
-                            <button type="button" class="btn btn-inverse btn-sm waves-effect waves-light">당일</button>
-                            <button type="button" class="btn btn-inverse btn-sm waves-effect waves-light">전일</button>
-                            <button type="button" class="btn btn-inverse btn-sm waves-effect waves-light">최근7일</button>
-                            <button type="button" class="btn btn-inverse btn-sm waves-effect waves-light">최근30일</button>
+                            <button id="toDay" type="button" class="btn btn-inverse btn-sm waves-effect waves-light">당일</button>
+                            <button id="yesterDay" type="button" class="btn btn-inverse btn-sm waves-effect waves-light">전일</button>
+                            <button id="week" type="button" class="btn btn-inverse btn-sm waves-effect waves-light">최근7일</button>
+                            <button id="month" type="button" class="btn btn-inverse btn-sm waves-effect waves-light">최근30일</button>
                           </div>
                           <div class="input-group float-right date col p-l-15 p-r-15 m-b-10">
                             <input type="text" id="fromDate" class="form-control form-control-inverse" value="">
-                            <span class="input-group-addon bg-inverse" onclick="$('#fromDate').click();">
+                            <span class="input-group-addon bg-inverse">
                               <span class="icofont icofont-ui-calendar"></span>
                             </span>
                           </div>
@@ -131,37 +150,37 @@
                         <!-- tab header start -->
                         <div class="tab-header">
                           <ul class="nav nav-tabs nav-vtabs md-tabs tab-timeline" role="tablist" id="mytab">
-                            <a class="nav-item" href="mngViral.html">
+                            <a class="nav-item" href="viral">
                               <li class="nav-link active">
                                 <p>바이럴관리</p>
                                 <div class="slide"></div>
                               </li>
                             </a>
-                            <a class="nav-item" href="viralBlog.html">
+                            <a class="nav-item" href="v_blog">
                               <li class="nav-link">
                                 <p>블로그관리</p>
                                 <div class="slide"></div>
                               </li>
                             </a>
-                            <a class="nav-item" href="viralCafe.html">
+                            <a class="nav-item" href="v_cafe">
                               <li class="nav-link">
                                   <p>카페관리</p>
                                   <div class="slide"></div>
                               </li>
                             </a>
-                            <a class="nav-item" href="viralKinTip.html">
+                            <a class="nav-item" href="v_kin">
                               <li class="nav-link">
                                 <p>지식인/Tip관리</p>
                                 <div class="slide"></div>
                               </li>
                             </a>
-                            <a class="nav-item" href="viralWeb.html">
+                            <a class="nav-item" href="v_web">
                               <li class="nav-link">
                                 <p>웹문서관리</p>
                                 <div class="slide"></div>
                               </li>
                             </a>
-                            <a class="nav-item" href="viralRword.html">
+                            <a class="nav-item" href="v_relation">
                               <li class="nav-link">
                                 <p>연관검색어관리</p>
                                 <div class="slide"></div>
@@ -180,15 +199,15 @@
                                 <div class="card user-activity-card">
                                   <div class="card-block-big viral-card p-b-20">
                                       <h5>BOLG</h5>
-                                      <h3 class="user-number">195</h3>
+                                      <h3 class="user-number">${nb1 + nb2 + db1 + db2}</h3>
                                       <div class="row">
                                         <div class="col-sm-6">
                                           <p>본사계정</p>
-                                          <h6>12</h6>
+                                          <h6>${nb1 + db1}</h6>
                                         </div>
                                         <div class="col-sm-6">
                                           <p>외부계정</p>
-                                          <h6>5</h6>
+                                          <h6>${nb2 + db2}</h6>
                                         </div>
                                       </div>
                                       <i class="icofont icofont-ui-note link"></i>
@@ -199,15 +218,15 @@
                                 <div class="card user-activity-card">
                                   <div class="card-block-big viral-card p-b-20">
                                       <h5>CAFE</h5>
-                                      <h3 class="user-number">1234</h3>
+                                      <h3 class="user-number">${nc1+nc2+dc1+dc2}</h3>
                                       <div class="row">
                                         <div class="col-sm-6">
                                           <p>본사계정</p>
-                                          <h6>102</h6>
+                                          <h6>${nc1+dc1}</h6>
                                         </div>
                                         <div class="col-sm-6">
                                           <p>외부계정</p>
-                                          <h6>150</h6>
+                                          <h6>${nc2+dc2}</h6>
                                         </div>
                                       </div>
                                       <i class="icofont icofont-users link"></i>
@@ -218,15 +237,15 @@
                                 <div class="card user-activity-card">
                                   <div class="card-block-big viral-card p-b-20">
                                       <h5>지식인 / TIP</h5>
-                                      <h3 class="user-number">1234</h3>
+                                      <h3 class="user-number">${nk1+nk2+dk1+dk2}</h3>
                                       <div class="row">
                                         <div class="col-sm-6">
                                           <p>본사계정</p>
-                                          <h6>102</h6>
+                                          <h6>${nk1+dk1}</h6>
                                         </div>
                                         <div class="col-sm-6">
                                           <p>외부계정</p>
-                                          <h6>150</h6>
+                                          <h6>${nk2+dk2}</h6>
                                         </div>
                                       </div>
                                       <i class="icofont icofont-hat-alt link"></i>
@@ -237,15 +256,15 @@
                                 <div class="card user-activity-card">
                                   <div class="card-block-big viral-card p-b-20">
                                       <h5>웹문서</h5>
-                                      <h3 class="user-number">1234</h3>
+                                      <h3 class="user-number">${nw1+nw2+dw1+dw2}</h3>
                                       <div class="row">
                                         <div class="col-sm-6">
                                           <p>본사계정</p>
-                                          <h6>102</h6>
+                                          <h6>${nw1+dw1}</h6>
                                         </div>
                                         <div class="col-sm-6">
                                           <p>외부계정</p>
-                                          <h6>150</h6>
+                                          <h6>${nw2+dw2}</h6>
                                         </div>
                                       </div>
                                       <i class="icofont icofont-web link"></i>
@@ -253,48 +272,6 @@
                                 </div>
                               </div>
                               <!-- top cards end -->
-                              <!-- naver/daum 그래프 start -->
-                              <div class="col-lg-12">
-                                <div class="card">
-                                  <div class="card-header">
-                                    <h5 class="card-header-text">
-                                      <i class="icofont icofont-chart-line m-r-5"></i>
-                                      NAVER / DAUM 그래프
-                                    </h5>
-                                    <div class="card-header-right">
-                                      <i class="icofont icofont-rounded-down"></i>
-                                      <i class="icofont icofont-refresh"></i>
-                                    </div>
-                                  </div>
-                                  <div class="card-block">
-                                    <!-- chart start -->
-                                    <div class="m-b-35" id="line-chart1"></div>
-                                    <!-- chart end -->
-                                  </div>
-                                </div>
-                              </div>
-                              <!-- naver/daum 그래프 end -->
-                              <!-- 그래프2 start -->
-                              <div class="col-lg-12">
-                                <div class="card">
-                                  <div class="card-header">
-                                    <h5 class="card-header-text">
-                                      <i class="icofont icofont-chart-line m-r-5"></i>
-                                      블로그 / 카페 / 지식인 / 웹문서 그래프
-                                    </h5>
-                                    <div class="card-header-right">
-                                      <i class="icofont icofont-rounded-down"></i>
-                                      <i class="icofont icofont-refresh"></i>
-                                    </div>
-                                  </div>
-                                  <div class="card-block">
-                                    <!-- chart start -->
-                                    <div class="m-b-35" id="line-chart2"></div>
-                                    <!-- chart end -->
-                                  </div>
-                                </div>
-                              </div>
-                              <!-- 그래프2 end -->
                               <!-- Naver테이블 start-->
                               <div class="col-md-6">
                                 <div class="card">
@@ -318,28 +295,28 @@
                                             <tbody>
                                                 <tr>
                                                     <th scope="row">블로그</th>
-                                                    <td>1</td>
-                                                    <td>0</td>
+                                                    <td>${nb1}</td>
+                                                    <td>${nb2}</td>
                                                 </tr>
                                                 <tr>
                                                     <th scope="row">카페</th>
-                                                    <td>2</td>
-                                                    <td>0</td>
+                                                    <td>${nc1}</td>
+                                                    <td>${nc2}</td>
                                                 </tr>
                                                 <tr>
                                                     <th scope="row">TIP</th>
-                                                    <td>3</td>
-                                                    <td>0</td>
+                                                    <td>${nk1}</td>
+                                                    <td>${nk2}</td>
                                                 </tr>
                                                 <tr>
                                                     <th scope="row">웹문서</th>
-                                                    <td>4</td>
-                                                    <td>0</td>
+                                                    <td>${nw1}</td>
+                                                    <td>${nw2}</td>
                                                 </tr>
                                                 <tr class="bg-inverse">
                                                     <th scope="row">합계</th>
-                                                    <td>0</td>
-                                                    <td>0</td>
+                                                    <td>${nb1+nc1+nk1+nw1}</td>
+                                                    <td>${nb2+nc2+nk2+nw2}</td>
                                                 </tr>
                                             </tbody>
                                           </table>
@@ -370,30 +347,30 @@
                                               </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
+                                               <tr>
                                                     <th scope="row">블로그</th>
-                                                    <td>1</td>
-                                                    <td>0</td>
+                                                    <td>${db1}</td>
+                                                    <td>${db2}</td>
                                                 </tr>
                                                 <tr>
                                                     <th scope="row">카페</th>
-                                                    <td>2</td>
-                                                    <td>0</td>
+                                                    <td>${dc1}</td>
+                                                    <td>${dc2}</td>
                                                 </tr>
                                                 <tr>
                                                     <th scope="row">TIP</th>
-                                                    <td>3</td>
-                                                    <td>0</td>
+                                                    <td>${dk1}</td>
+                                                    <td>${dk2}</td>
                                                 </tr>
                                                 <tr>
                                                     <th scope="row">웹문서</th>
-                                                    <td>4</td>
-                                                    <td>0</td>
+                                                    <td>${dw1}</td>
+                                                    <td>${dw2}</td>
                                                 </tr>
                                                 <tr class="bg-inverse">
                                                     <th scope="row">합계</th>
-                                                    <td>0</td>
-                                                    <td>0</td>
+                                                    <td>${db1+dc1+dk1+dw1}</td>
+                                                    <td>${db2+dc2+dk2+dw2}</td>
                                                 </tr>
                                             </tbody>
                                           </table>
@@ -501,5 +478,250 @@
   <script src="../assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
   <script src="../assets/js/jquery.mousewheel.min.js"></script>
 </body>
+
+<script type="text/javascript">
+
+	$(document).ready(function(){
+		
+
+		var companyOption = decodeURI(window.location.href.split("company=")[1]).split("&")[0];
+		console.log("companyOption: " + companyOption);
+
+		var $selectCompany = $('#selectCompany');
+		if(companyOption != 'undefined'){
+			for(var i = 0; i < $selectCompany[0].length; i++ ){
+
+				if($selectCompany[0].children[i].value == companyOption){
+					$selectCompany[0].children[i].selected = 'selected';
+				}
+			}
+		}
+		$selectCompany[0][0].disabled = true;
+
+
+		// 회사 선택시
+		$selectCompany.change(function(){
+			console.log("selectCompany clicked....");
+			console.log($("#selectCompany option:selected").val());
+
+			self.location = "viral?"+ "company=" + $("#selectCompany option:selected").val();
+			
+		});
+		
+
+		var keywordOption = decodeURI(window.location.href.split("selectKey=")[1]).split("&")[0];
+		console.log("keywordOption: " + keywordOption);
+		console.log(decodeURI(window.location.href.split("&")[1]));
+
+
+
+		var $selectKeyword = $('#selectKeyword');
+
+		if(keywordOption != 'undefined'){
+			for(var i = 0; i < $selectKeyword[0].length; i++ ){
+				if($selectKeyword[0][i].value == keywordOption){
+					$selectKeyword[0][i].selected = 'selected';
+				}
+			}
+		}
+		$selectKeyword[0][0].disabled = true;
+
+
+		// 키워드 선택시
+		$selectKeyword.change(function(){
+			console.log("selectKeyword clicked....");
+			console.log($('#selectKeyword option:selected').val());
+			
+			self.location = "viral?"
+							+ "company=" + $("#selectCompany option:selected").val()
+							+ "&selectKey=" + $('#selectKeyword option:selected').val();
+
+		});
+		
+		// hour 설정
+		$time = $("#time");
+		
+		$time.attr("disabled", true);
+		
+		
+		$(".ui-corner-all").on("click", function(){
+			console.log("$time click....");
+			
+			console.log($("#fromDate").val());
+			
+			console.log($("#fromDate").val().split(" - ")[0]);
+			
+			console.log($time.val().split(" "));
+			
+			
+		});
+		
+		var startDateOption = decodeURI(window.location.href.split("startDate=")[1]).split("&endDate=")[0];
+		var endDateOption = decodeURI(window.location.href.split("endDate=")[1]);
+		console.log("startDateOption: " + startDateOption);
+		console.log("endDateOption: " + endDateOption);
+		
+		
+		
+		if(startDateOption == endDateOption){
+			console.log("startDate == endDate")
+			$time.attr("disabled", false);
+		}
+		
+		if(startDateOption != 'undefined' && endDateOption != 'undefined'
+				&& startDateOption != '' && endDateOption != ''){
+			
+			$("#fromDate").val(startDateOption + " - " + endDateOption);
+			
+		}else{
+			var date = getDate("toDay");
+			var startDate = date.startDate;
+			var endDate = date.endDate;
+
+			$("#fromDate").val(startDate + " - " + endDate);
+			
+		}
+
+		
+		
+		// 당일 클릭시
+		$('#toDay').on("click", function(){
+		  console.log("toDay clicked....");
+		  var date = getDate("toDay");
+		  var startDate = date.startDate;
+		  var endDate = date.endDate;
+
+		  $("#fromDate").val(endDate + " - " + endDate)
+		  console.log($("#fromDate").val());
+		  searchList(); 
+		});
+
+		// 전일 클릭시
+		$('#yesterDay').on("click", function(){
+		  console.log("yesterDay clicked....");
+		  var date = getDate("yesterDay");
+		  var startDate = date.startDate;
+		  var endDate = date.endDate;
+
+		  $("#fromDate").val(startDate + " - " + endDate)
+		  console.log($("#fromDate").val());
+		  searchList();
+		});
+
+		// 7일  클릭시
+		$('#week').on("click", function(){
+		  console.log("week clicked....");
+		  var date = getDate("week");
+		  var startDate = date.startDate;
+		  var endDate = date.endDate;
+
+		  $("#fromDate").val(startDate + " - " + endDate)
+		  console.log($("#fromDate").val());
+		  searchList();
+		})
+
+		// 30일 클릭시
+		$('#month').on("click", function(){
+		  console.log("month clicked....");
+		  var date = getDate("month");
+		  var startDate = date.startDate;
+		  var endDate = date.endDate;
+		
+		  $("#fromDate").val(startDate + " - " + endDate)
+		  console.log($("#fromDate").val());
+		  
+		  searchList();
+		 
+		})
+		
+		// content 길시에 ...으로 변경  
+		var $content = $(".text-success");
+	
+		var size = 25;
+	
+		for (var i =1; i < $content.length; i++){
+			if($content[i].innerText.length >= size){
+				$content[i].textContent = $content[i].innerText.substr(0, size) + '...';
+			}
+		}
+	
+		
+		//캘린더 클릭시..
+		$('#fromDate').on('apply.daterangepicker', function(ev, picker) {
+			   var startDate = picker.startDate.format('YYYY-MM-DD');
+			   var endDate = picker.endDate.format('YYYY-MM-DD');
+	
+			   console.log("startDate: " + startDate);
+			   console.log("endDate: " + endDate);
+	
+			   searchList();
+		}); 
+		
+	}); // end ready...
+
+	
+	function makeDateFormat(date, index){
+		var splitDate = date.split(" - ")[index];
+			if(splitDate != undefined){
+				var returnDate = splitDate.replace("/", "-").replace("/", "-")
+				return returnDate;
+			}
+		
+		
+	}
+	makeDateFormat($("#fromDate").val());
+
+    function searchList(event) {
+
+		var makeQeury = '${pageMaker.makeQuery(1)}'.slice(0, -2);
+
+		self.location = "viral?" 
+    					+ "&company=" + $("#selectCompany option:selected").val()
+						+ "&selectKey=" + $('#selectKeyword option:selected').val()
+    					+ "&startDate=" + makeDateFormat($("#fromDate").val(), 0)
+    					+ "&endDate=" +  makeDateFormat($("#fromDate").val(), 1)
+	 	}
+  
+	//날짜 계산 함수
+    function getDate(type){
+  		console.log("TYPE : " + type);
+  		var date = new Date();
+
+   		var month = date.getMonth()+1;
+   		 day = date.getDate();
+   		var year = date.getFullYear();
+
+   		var endDate = year + "-" + month + "-" + day;
+   		var startDate;
+
+   		if(type == "yesterDay"){
+   			var calcDate = day-1;
+   			startDate = year + "-" + month + "-" + calcDate;
+
+   		}else if(type == "month"){
+   			var calcDate = month-1;
+   			startDate = year + "-" + calcDate + "-" + day;
+
+   		}else if(type == "week"){
+   			var calcDate = day-7;
+   			if(calcDate < 0){
+   				var lastDay = (new Date(year, month-1, 0)).getDate();
+   				calcDate += lastDay;
+   				month -= 1;
+   			}
+   		startDate = year + "-" + month + "-" + calcDate;
+   	
+   		}else if(type =='toDay'){
+   			startDate = endDate
+   		
+   		}
+
+   		return {
+   			startDate : startDate,
+   			endDate : endDate
+   		}
+
+  	}
+</script>
 
 </html>

@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.union.mapper.ViralMapper">
+
+	<sql id="search">
+		<if test="company != null">
+			and
+			   keyword in (select 
+						keyword 
+					from 
+						keyword_data
+					where
+						user_idx = (select 
+										user_idx 
+									from 
+										user_data 
+									where 
+										user_name = #{company} 
+									and 
+										keyword_property = '포함'
+									)
+					)
+		</if>
+		<if test="selectKey != null">
+				and keyword in (select keyword from keyword_data where keyword_main = #{selectKey})
+		</if>
+		<if test="startDate != null">
+			<if test="endDate != null">
+				and viral_time <![CDATA[>=]]> #{startDate}
+				and viral_time <![CDATA[<=]]> #{endDate}
+			</if>
+			<if test="endDate == null">
+				and viral_time = #{startDate}
+			</if>
+		</if>
+		
+		<if test="portal_name != null">
+			<if test="portal_name == 'naver'.toString()">
+				and portal_name = 'naver'
+			</if>
+			<if test="portal_name == 'daum'.toString()">
+				and portal_name = 'daum'
+			</if>
+			<if test="portal_name == 'all'.toString()">
+				and portal_name = 'naver' or portal_name = 'daum' 
+			</if>
+		</if>
+		
+		<if test="portal_type != null">
+			<if test="portal_type == 'blog'.toString()">
+				and portal_type = 'blog'
+			</if>
+			<if test="portal_type == 'cafe'.toString()">
+				and portal_type = 'cafe'
+			</if>
+			<if test="portal_type == 'kintip'.toString()">
+				and portal_type = 'kintip'
+			</if>
+			<if test="portal_type == 'webdoc'.toString()">
+				and portal_type = 'webdoc'
+			</if>
+			<if test="portal_type =='relation'.toString()">
+				and portal_type = 'relation'
+			</if>
+			<if test="portal_type == 'all'.toString()">
+				and portal_type = 'blog' or portal_type = 'cafe' or portal_type = 'kintip'
+				or portal_type = 'webdoc' or portal_type = 'relation'
+			</if>
+		</if>
+		
+	</sql>
+
+
+	<insert id="create">
+		insert into 
+			viral_data(user_idx,viral_time, portal_name, portal_type, viral_title, viral_rank, viral_isUser, keyword, url, writeDate)
+		values 
+			( #{user_idx}, #{viral_time}, #{portal_name}, #{portal_type}, #{viral_title}, #{viral_rank}, #{viral_isUser}, #{keyword}, #{url}, #{writeDate})
+            
+	</insert>
+
+	<select id="read" resultType="ViralVO">
+		select 
+			*
+		from 
+			viral_data
+		where
+			viral_idx = #{viral_idx}
+		
+	</select>
+	
+	<update id="update">
+		update 
+			viral_data
+		set 
+			viral_title = #{viral_title},
+            viral_rank = #{viral_rank},
+            user_idx = #{user_idx},
+            keyword = #{keyword},
+            url = #{url},
+            writeDate = #{writeDate},
+            updateDate = now()
+		where 
+			viral_idx = #{viral_idx}
+			
+	</update>
+	
+	<delete id="delete">
+		delete from
+			viral_data
+		where
+			viral_idx = #{viral_idx}
+			
+	</delete>
+	
+	<select id="searchInList" resultType="ViralVO">
+		select
+			*
+		from
+			viral_data
+		where 
+			viral_isUser = 1
+		<include refid="search"></include>
+	
+	</select>
+	
+	<select id="searchOutList" resultType="ViralVO">
+		select
+			*
+		from
+			viral_data
+		where 
+			viral_isUser = 2
+		<include refid="search"></include>
+	
+	</select>
+	
+	<select id="getSearchInCount" resultType="Integer">
+		select
+			count(*)
+		from
+			viral_data
+		where
+			viral_isUser = 1
+		<include refid="search"></include>
+	
+	</select>
+	
+	<select id="getSearchOutCount" resultType="Integer">
+		select
+			count(*)
+		from
+			viral_data
+		where
+			viral_isUser = 2
+		<include refid="search"></include>
+	
+	</select>
+	
+</mapper>

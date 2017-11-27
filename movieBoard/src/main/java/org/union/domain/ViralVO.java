@@ -2,14 +2,17 @@ package org.union.domain;
 
 import java.util.Date;
 
-public class BiralVO {
+public class ViralVO {
 
 	
-	private Integer biral_idx;
+	private Integer viral_idx;
 	private Integer user_idx;
-	private Integer biral_isUser;
-	private Integer biral_rank;
-	private String biral_title;
+	private String viral_time;
+	private String portal_name;
+	private String portal_type;
+	private Integer viral_isUser;
+	private Integer viral_rank;
+	private String viral_title;
 	private Date writeDate;
 	private String keyword;
 	private String url;
@@ -19,11 +22,11 @@ public class BiralVO {
 	private Date updateDate;
 	
 	
-	public Integer getBiral_idx() {
-		return biral_idx;
+	public Integer getViral_idx() {
+		return viral_idx;
 	}
-	public void setBiral_idx(Integer biral_idx) {
-		this.biral_idx = biral_idx;
+	public void setViral_idx(Integer viral_idx) {
+		this.viral_idx = viral_idx;
 	}
 	public Integer getUser_idx() {
 		return user_idx;
@@ -31,23 +34,41 @@ public class BiralVO {
 	public void setUser_idx(Integer user_idx) {
 		this.user_idx = user_idx;
 	}
-	public Integer getBiral_isUser() {
-		return biral_isUser;
+	public String getViral_time() {
+		return viral_time;
 	}
-	public void setBiral_isUser(Integer biral_isUser) {
-		this.biral_isUser = biral_isUser;
+	public void setViral_time(String viral_time) {
+		this.viral_time = viral_time;
 	}
-	public Integer getBiral_rank() {
-		return biral_rank;
+	public String getPortal_name() {
+		return portal_name;
 	}
-	public void setBiral_rank(Integer biral_rank) {
-		this.biral_rank = biral_rank;
+	public void setPortal_name(String portal_name) {
+		this.portal_name = portal_name;
 	}
-	public String getBiral_title() {
-		return biral_title;
+	public String getPortal_type() {
+		return portal_type;
 	}
-	public void setBiral_title(String biral_title) {
-		this.biral_title = biral_title;
+	public void setPortal_type(String portal_type) {
+		this.portal_type = portal_type;
+	}
+	public Integer getViral_isUser() {
+		return viral_isUser;
+	}
+	public void setViral_isUser(Integer viral_isUser) {
+		this.viral_isUser = viral_isUser;
+	}
+	public Integer getViral_rank() {
+		return viral_rank;
+	}
+	public void setViral_rank(Integer viral_rank) {
+		this.viral_rank = viral_rank;
+	}
+	public String getViral_title() {
+		return viral_title;
+	}
+	public void setViral_title(String viral_title) {
+		this.viral_title = viral_title;
 	}
 	public Date getWriteDate() {
 		return writeDate;
@@ -91,14 +112,13 @@ public class BiralVO {
 	public void setUpdateDate(Date updateDate) {
 		this.updateDate = updateDate;
 	}
-	
-	
 	@Override
 	public String toString() {
-		return "BiralVO [biral_idx=" + biral_idx + ", user_idx=" + user_idx + ", biral_isUser=" + biral_isUser
-				+ ", biral_rank=" + biral_rank + ", biral_title=" + biral_title + ", writeDate=" + writeDate
+		return "ViralVO [viral_idx=" + viral_idx + ", user_idx=" + user_idx + ", viral_time=" + viral_time
+				+ ", portal_name=" + portal_name + ", portal_type=" + portal_type + ", viral_isUser=" + viral_isUser
+				+ ", viral_rank=" + viral_rank + ", viral_title=" + viral_title + ", writeDate=" + writeDate
 				+ ", keyword=" + keyword + ", url=" + url + ", textType=" + textType + ", thumbnail=" + thumbnail
 				+ ", createDate=" + createDate + ", updateDate=" + updateDate + "]";
 	}
-	
+
 }

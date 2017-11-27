@@ -28,6 +28,7 @@ import org.union.service.KeywordService;
 import org.union.service.NaverMovieService;
 import org.union.service.PortalService;
 import org.union.service.UserService;
+import org.union.service.ViralService;
 
 @Controller
 @RequestMapping("/portal/*")
@@ -47,6 +48,9 @@ public class PortalController {
 
 	@Autowired
 	private KeywordService keywordService;
+	
+	@Autowired
+	private ViralService viralService;
 
 	private static Logger logger = LoggerFactory.getLogger(PortalController.class);
 
@@ -242,7 +246,132 @@ public class PortalController {
 	}
 
 	@GetMapping("/viral")
-	public void viralGET() {
+	public void viralGET(@ModelAttribute("cri") SearchCriteria cri, Model model) {
 		logger.info("viralGET called....");
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
+		
+		cri.setKeyword(null);
+		cri.setTextType(null);
+		
+		if (cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey())) {
+			logger.info("selectKey is null");
+			cri.setSelectKey(null);
+		}
+
+		if ("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate()) || cri.getStartDate() == ""
+				|| cri.getEndDate() == "") {
+			logger.info("startDate : " + sdf.format(new Date()).split(":")[0] + " 0000");
+			cri.setStartDate(sdf.format(new Date()).split(":")[0] + ":00:00");
+			cri.setEndDate(null);
+		}
+		
+		// startDate, endDate 모두 값 O
+		if (cri.getStartDate() != null && cri.getEndDate() != null) {
+			if (cri.getStartDate().indexOf("00:00:00") < 0 && cri.getEndDate().indexOf("23:59:59") < 0) {
+				cri.setStartDate(cri.getStartDate() + " 00:00:00");
+				cri.setEndDate(cri.getEndDate() + " 23:59:59");
+			}
+		}
+		if (cri.getCompany() != null) {
+			if (cri.getCompany().isEmpty()) {
+				cri.setCompany(null);
+			}
+		}
+
+		if (cri.getCompany() == null || cri.getCompany().equals("회사")) {
+			logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+			UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
+
+			if (!vo.getUser_name().equals("union")) {
+				cri.setCompany(vo.getUser_name());
+
+			} else {
+				cri.setCompany(null);
+			}
+		}
+
+		// 회사 선택에 따른 키워드 재추출
+		if (cri.getCompany() != null) {
+			if (cri.getCompany().isEmpty() == false) {
+
+				UserVO userVO = userService.viewByName(cri.getCompany());
+				logger.info("userVO: " + userVO);
+				logger.info("keywordList: " + keywordService.listByUser(userVO.getUser_idx()));
+				model.addAttribute("modelKeywordList",
+						keywordService.listByUser(userService.viewByName(cri.getCompany()).getUser_idx()));
+			}
+		}
+
+		logger.info("cri: " + cri);
+		
+		// start naver
+		cri.setPortal_name("naver");
+		
+		cri.setPortal_type("blog");
+		model.addAttribute("nb1", viralService.getSearchInCount(cri));
+		model.addAttribute("nb2", viralService.getSearchOutCount(cri));
+		logger.info(viralService.getSearchInCount(cri) +"/" + viralService.getSearchOutCount(cri));
+		
+		cri.setPortal_type("cafe");
+		model.addAttribute("nc1", viralService.getSearchInCount(cri));
+		model.addAttribute("nc2", viralService.getSearchOutCount(cri));
+		logger.info(viralService.getSearchInCount(cri) +"/" + viralService.getSearchOutCount(cri));
+		
+		cri.setPortal_type("kintip");
+		model.addAttribute("nk1", viralService.getSearchInCount(cri));
+		model.addAttribute("nk2", viralService.getSearchOutCount(cri));
+		logger.info(viralService.getSearchInCount(cri) +"/" + viralService.getSearchOutCount(cri));
+		
+		cri.setPortal_type("webdoc");
+		model.addAttribute("nw1", viralService.getSearchInCount(cri));
+		model.addAttribute("nw2", viralService.getSearchOutCount(cri));
+		logger.info(viralService.getSearchInCount(cri) +"/" + viralService.getSearchOutCount(cri));
+		// end naver
+		
+		// start daum
+		cri.setPortal_name("daum");
+
+		cri.setPortal_type("blog");
+		model.addAttribute("db1", viralService.getSearchInCount(cri));
+		model.addAttribute("db2", viralService.getSearchOutCount(cri));
+		
+		cri.setPortal_type("cafe");
+		model.addAttribute("dc1", viralService.getSearchInCount(cri));
+		model.addAttribute("dc2", viralService.getSearchOutCount(cri));
+		
+		cri.setPortal_type("kintip");
+		model.addAttribute("dk1", viralService.getSearchInCount(cri));
+		model.addAttribute("dk2", viralService.getSearchOutCount(cri));
+		
+		cri.setPortal_type("webdoc");
+		model.addAttribute("dw1", viralService.getSearchInCount(cri));
+		model.addAttribute("dw2", viralService.getSearchOutCount(cri));
+		
+	}
+	
+	@GetMapping("/v_blog")
+	public void v_blogGET(@ModelAttribute("cri") SearchCriteria cri, Model model) {
+		logger.info("v_blogGET called....");
+	}
+	
+	@GetMapping("/v_cafe")
+	public void v_cafeGET(@ModelAttribute("cri") SearchCriteria cri, Model model) {
+		logger.info("v_cafeGET called....");
+	}
+	
+	@GetMapping("/v_kin")
+	public void v_kinGET(@ModelAttribute("cri") SearchCriteria cri, Model model) {
+		logger.info("v_kinGET called....");
+	}
+	
+	@GetMapping("/v_web")
+	public void v_webGET(@ModelAttribute("cri") SearchCriteria cri, Model model) {
+		logger.info("v_webGET called....");
+	}
+	
+	@GetMapping("/v_relation")
+	public void v_relationGET(@ModelAttribute("cri") SearchCriteria cri, Model model) {
+		logger.info("v_relationGET called....");
 	}
 }
