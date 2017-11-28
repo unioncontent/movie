@@ -20,6 +20,8 @@ public interface ViralDAO {
 	
 	public List<ViralVO> searchOutList(SearchCriteria cri);
 	
+	public List<ViralVO> searchAllList(SearchCriteria cri);
+	
 	public Integer getSearchInCount(SearchCriteria cri);
 	
 	public Integer getSearchOutCount(SearchCriteria cri);

@@ -66,7 +66,7 @@ $(document).ready(function() {
   };
 
   /*본사계정변경*/
-  document.querySelector('.alert-confirm1').onclick = function(){
+  /*document.querySelector('.alert-confirm1').onclick = function(){
     swal({
           title: "본사계정으로 변경하시겠습니까?",
           text: "선택된 리스트가 본사계정으로 변경됩니다.",
@@ -79,10 +79,10 @@ $(document).ready(function() {
         function(){
           swal("Success!", "본사계정으로 변경되었습니다.", "success");
         });
-  };
+  };*/
 
   /*외부계정변경*/
-  document.querySelector('.alert-confirm2').onclick = function(){
+  /*document.querySelector('.alert-confirm2').onclick = function(){
     swal({
           title: "외부계정으로 변경하시겠습니까?",
           text: "선택된 리스트가 외부계정으로 변경됩니다.",
@@ -95,7 +95,7 @@ $(document).ready(function() {
         function(){
           swal("Success!", "외부계정으로 변경되었습니다.", "success");
         });
-  };
+  };*/
 
   /*전체선택*/
   $('#allCheck').on("click",function(){

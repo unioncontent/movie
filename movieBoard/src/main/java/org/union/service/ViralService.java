@@ -11,6 +11,8 @@ public interface ViralService {
 	public List<ViralVO> searchInList(SearchCriteria cri);
 
 	public List<ViralVO> searchOutList(SearchCriteria cri);
+	
+	public List<ViralVO> searchAllList(SearchCriteria cri);
 
 	public Integer getSearchInCount(SearchCriteria cri);
 

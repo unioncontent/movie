@@ -124,7 +124,8 @@
 		where 
 			viral_isUser = 1
 		<include refid="search"></include>
-	
+		order by viral_time desc, keyword, viral_rank
+		
 	</select>
 	
 	<select id="searchOutList" resultType="ViralVO">
@@ -135,7 +136,20 @@
 		where 
 			viral_isUser = 2
 		<include refid="search"></include>
+		order by viral_time desc, keyword, viral_rank
+		
+	</select>
 	
+	<select id="searchAllList" resultType="ViralVO">
+		select
+			*
+		from
+			viral_data
+		where 
+			keyword is not null
+		<include refid="search"></include>
+		order by viral_time desc, keyword, viral_rank
+		
 	</select>
 	
 	<select id="getSearchInCount" resultType="Integer">

@@ -358,6 +358,82 @@ public class PortalController {
 	@GetMapping("/v_blog")
 	public void v_blogGET(@ModelAttribute("cri") SearchCriteria cri, Model model) {
 		logger.info("v_blogGET called....");
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
+		
+		if (cri.getCompany() != null) {
+			if (cri.getCompany().isEmpty()) {
+				cri.setCompany(null);
+			}
+		}
+
+		if (cri.getCompany() == null || cri.getCompany().equals("회사")) {
+			logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+			UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
+
+			if (!vo.getUser_name().equals("union")) {
+				cri.setCompany(vo.getUser_name());
+
+			} else {
+				cri.setCompany(null);
+			}
+		}
+
+		// 회사 선택에 따른 키워드 재추출
+		if (cri.getCompany() != null) {
+			if (cri.getCompany().isEmpty() == false) {
+
+				UserVO userVO = userService.viewByName(cri.getCompany());
+				logger.info("userVO: " + userVO);
+				logger.info("keywordList: " + keywordService.listByUser(userVO.getUser_idx()));
+				model.addAttribute("modelKeywordList",
+						keywordService.listByUser(userService.viewByName(cri.getCompany()).getUser_idx()));
+			}
+		}
+		
+		if (cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey())) {
+			logger.info("selectKey is null");
+			cri.setSelectKey(null);
+		}
+
+		
+		// startDate format
+		if ("undefined".equals(cri.getStartDate())  || cri.getStartDate() == "") {
+			cri.setStartDate(null);
+		}
+		if(cri.getEndDate() == "" || "undefined".equals(cri.getEndDate())) {
+			cri.setEndDate(null);
+		}
+		
+		if(cri.getStartDate() == null && cri.getEndDate() == null) {
+			String currentDate = sdf.format(new Date());
+			currentDate = currentDate.split(":")[0];
+			currentDate = currentDate + ":00:00";
+			
+			cri.setStartDate(currentDate);
+		}
+		
+		// startDate, endDate 모두 값 O
+		if (cri.getStartDate() != null && cri.getEndDate() != null) {
+			if (cri.getStartDate().indexOf("00:00:00") < 0 && cri.getEndDate().indexOf("23:59:59") < 0) {
+				cri.setStartDate(cri.getStartDate() + " 00:00:00");
+				cri.setEndDate(cri.getEndDate() + " 23:59:59");
+			}
+		}
+		
+		// 사이트 미설정시
+		if(cri.getPortal_name() == null) {
+			cri.setPortal_type("all");
+		}
+
+		// 키워드 설정 
+		// 
+		
+		cri.setPortal_type("blog");
+		model.addAttribute("blog1", viralService.getSearchInCount(cri));
+		model.addAttribute("blog2", viralService.getSearchOutCount(cri));
+		
+		model.addAttribute("blogList", viralService.searchAllList(cri));
 	}
 	
 	@GetMapping("/v_cafe")

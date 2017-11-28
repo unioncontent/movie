@@ -76,7 +76,14 @@ public class ViralDAOImpl implements ViralDAO {
 		return session.selectList(namespace + "searchOutList", cri);
 	}
 
+	
+	@Override
+	public List<ViralVO> searchAllList(SearchCriteria cri) {
 
+		return session.selectList(namespace + "searchAllList", cri);
+	}
+
+	
 	@Override
 	public Integer getSearchInCount(SearchCriteria cri) {
 

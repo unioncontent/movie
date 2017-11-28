@@ -29,6 +29,12 @@ public class ViralServiceImpl implements ViralService {
 	}
 
 	@Override
+	public List<ViralVO> searchAllList(SearchCriteria cri) {
+
+		return viralDAO.searchAllList(cri);
+	}
+	
+	@Override
 	public Integer getSearchInCount(SearchCriteria cri) {
 
 		return viralDAO.getSearchInCount(cri);
