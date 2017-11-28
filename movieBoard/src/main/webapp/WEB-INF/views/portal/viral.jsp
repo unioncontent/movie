@@ -543,7 +543,47 @@
 		
 		$time.attr("disabled", true);
 		
+		var startDateOption = decodeURI(window.location.href.split("startDate=")[1]).split("&endDate=")[0];
+		var endDateOption = decodeURI(window.location.href.split("endDate=")[1]);
+		console.log("startDateOption: " + startDateOption);
+		console.log("endDateOption: " + endDateOption);
 		
+		
+		if(startDateOption != 'undefined' && endDateOption != 'undefined'
+				&& startDateOption != '' && endDateOption != ''){
+			
+			$("#fromDate").val(startDateOption + " - " + endDateOption);
+			
+			var date = new Date;
+			$time.val(date.toString().split("2017 ")[1].split(":")[0] + ":00");
+			
+			if(startDateOption == endDateOption){
+				console.log("startDate == endDate")
+				$time.attr("disabled", false);
+			}
+			
+		}else{
+			var date = getDate("toDay");
+			var startDate = date.startDate;
+			var endDate = date.endDate;
+
+			$("#fromDate").val(startDate.split(" ")[0] + " - " + endDate);
+			
+			console.log("startDate == endDate")
+			$time.attr("disabled", false);
+			$time.val(startDateOption.split(" ")[1]);		
+			console.log(startDateOption.split(" ")[1]);
+			
+			if($time.val() == ""){
+				console.log(" ");
+				
+				var date = new Date;
+				$time.val(date.toString().split("2017 ")[1].split(":")[0] + ":00")
+			}
+		}
+
+		
+		// time 클릭시
 		$(".ui-corner-all").on("click", function(){
 			console.log("$time click....");
 			
@@ -551,38 +591,8 @@
 			
 			console.log($("#fromDate").val().split(" - ")[0]);
 			
-			console.log($time.val().split(" "));
-			
-			
+			searchList($time.val());
 		});
-		
-		var startDateOption = decodeURI(window.location.href.split("startDate=")[1]).split("&endDate=")[0];
-		var endDateOption = decodeURI(window.location.href.split("endDate=")[1]);
-		console.log("startDateOption: " + startDateOption);
-		console.log("endDateOption: " + endDateOption);
-		
-		
-		
-		if(startDateOption == endDateOption){
-			console.log("startDate == endDate")
-			$time.attr("disabled", false);
-		}
-		
-		if(startDateOption != 'undefined' && endDateOption != 'undefined'
-				&& startDateOption != '' && endDateOption != ''){
-			
-			$("#fromDate").val(startDateOption + " - " + endDateOption);
-			
-		}else{
-			var date = getDate("toDay");
-			var startDate = date.startDate;
-			var endDate = date.endDate;
-
-			$("#fromDate").val(startDate + " - " + endDate);
-			
-		}
-
-		
 		
 		// 당일 클릭시
 		$('#toDay').on("click", function(){
@@ -671,16 +681,34 @@
 	}
 	makeDateFormat($("#fromDate").val());
 
-    function searchList(event) {
+    function searchList(time) {
 
-		var makeQeury = '${pageMaker.makeQuery(1)}'.slice(0, -2);
+    	if(time == null){
+    		console.log("time is null");
+    		
+    		var makeQeury = '${pageMaker.makeQuery(1)}'.slice(0, -2);
 
-		self.location = "viral?" 
-    					+ "&company=" + $("#selectCompany option:selected").val()
-						+ "&selectKey=" + $('#selectKeyword option:selected').val()
-    					+ "&startDate=" + makeDateFormat($("#fromDate").val(), 0)
-    					+ "&endDate=" +  makeDateFormat($("#fromDate").val(), 1)
-	 	}
+    		self.location = "viral?" 
+        					+ "&company=" + $("#selectCompany option:selected").val()
+    						+ "&selectKey=" + $('#selectKeyword option:selected').val()
+        					+ "&startDate=" + makeDateFormat($("#fromDate").val(), 0)
+        					+ "&endDate=" +  makeDateFormat($("#fromDate").val(), 1)
+    		
+    	}else{
+    		console.log("time is not null");
+    		console.log(time);
+    		
+    		var makeQeury = '${pageMaker.makeQuery(1)}'.slice(0, -2);
+
+    		self.location = "viral?" 
+        					+ "&company=" + $("#selectCompany option:selected").val()
+    						+ "&selectKey=" + $('#selectKeyword option:selected').val()
+        					+ "&startDate=" + makeDateFormat($("#fromDate").val(), 0) + " " + time
+        					+ "&endDate=";
+    	}
+    	
+		
+	}
   
 	//날짜 계산 함수
     function getDate(type){

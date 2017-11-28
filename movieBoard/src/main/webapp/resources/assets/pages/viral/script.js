@@ -1,14 +1,14 @@
 'use strict';
 
 $(document).ready(function() {
-
+	
   $('#time').timepicker({
-    timeFormat: 'h:mm p',
+    timeFormat: 'HH:mm',
     interval: 60,
-    minTime: '00:00',
-    maxTime: '24:00',
-    defaultTime: '12:00',
-    startTime: '00:00',
+    defaultTime:'00:00',
+    pick12HourFormat: false,
+    pickDate: false,
+    pickSeconds: false,
     dynamic: true,
     dropdown: true,
     scrollbar: true

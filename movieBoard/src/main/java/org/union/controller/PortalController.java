@@ -259,11 +259,20 @@ public class PortalController {
 			cri.setSelectKey(null);
 		}
 
-		if ("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate()) || cri.getStartDate() == ""
-				|| cri.getEndDate() == "") {
-			logger.info("startDate : " + sdf.format(new Date()).split(":")[0] + " 0000");
-			cri.setStartDate(sdf.format(new Date()).split(":")[0] + ":00:00");
+		// startDate format
+		if ("undefined".equals(cri.getStartDate())  || cri.getStartDate() == "") {
+			cri.setStartDate(null);
+		}
+		if(cri.getEndDate() == "" || "undefined".equals(cri.getEndDate())) {
 			cri.setEndDate(null);
+		}
+		
+		if(cri.getStartDate() == null && cri.getEndDate() == null) {
+			String currentDate = sdf.format(new Date());
+			currentDate = currentDate.split(":")[0];
+			currentDate = currentDate + ":00:00";
+			
+			cri.setStartDate(currentDate);
 		}
 		
 		// startDate, endDate 모두 값 O
@@ -311,22 +320,18 @@ public class PortalController {
 		cri.setPortal_type("blog");
 		model.addAttribute("nb1", viralService.getSearchInCount(cri));
 		model.addAttribute("nb2", viralService.getSearchOutCount(cri));
-		logger.info(viralService.getSearchInCount(cri) +"/" + viralService.getSearchOutCount(cri));
 		
 		cri.setPortal_type("cafe");
 		model.addAttribute("nc1", viralService.getSearchInCount(cri));
 		model.addAttribute("nc2", viralService.getSearchOutCount(cri));
-		logger.info(viralService.getSearchInCount(cri) +"/" + viralService.getSearchOutCount(cri));
 		
 		cri.setPortal_type("kintip");
 		model.addAttribute("nk1", viralService.getSearchInCount(cri));
 		model.addAttribute("nk2", viralService.getSearchOutCount(cri));
-		logger.info(viralService.getSearchInCount(cri) +"/" + viralService.getSearchOutCount(cri));
 		
 		cri.setPortal_type("webdoc");
 		model.addAttribute("nw1", viralService.getSearchInCount(cri));
 		model.addAttribute("nw2", viralService.getSearchOutCount(cri));
-		logger.info(viralService.getSearchInCount(cri) +"/" + viralService.getSearchOutCount(cri));
 		// end naver
 		
 		// start daum
