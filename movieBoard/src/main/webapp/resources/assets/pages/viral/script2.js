@@ -38,16 +38,16 @@ $(document).ready(function() {
 
   /*시간선택*/
   $('#time').timepicker({
-    timeFormat: 'h:mm p',
-    interval: 60,
-    minTime: '12:00am',
-    maxTime: '11:00pm',
-    defaultTime: '12:00am',
-    startTime: '12:00am',
-    dynamic: true,
-    dropdown: true,
-    scrollbar: true
-  });
+	    timeFormat: 'HH:mm',
+	    interval: 60,
+	    defaultTime:'00:00',
+	    pick12HourFormat: false,
+	    pickDate: false,
+	    pickSeconds: false,
+	    dynamic: true,
+	    dropdown: true,
+	    scrollbar: true
+	  });
 
   /*엑셀출력*/
   document.querySelector('.alert-confirm').onclick = function(){
