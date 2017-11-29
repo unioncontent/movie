@@ -42,6 +42,8 @@
   <link rel="stylesheet" type="text/css" href="../bower_components/bootstrap-daterangepicker/daterangepicker.css">
   <!-- jquery timepicker css -->
   <link rel="stylesheet" href="../bower_components/jquery-timepicker-1.3.5/jquery.timepicker.min.css">
+  <!-- Nvd3 chart css -->
+  <link rel="stylesheet" href="../bower_components/nvd3/build/nv.d3.css" type="text/css" media="all">
   <!-- Redial css -->
   <link rel="stylesheet" href="../assets/pages/chart/radial/css/radial.css" type="text/css" media="all">
   <!-- Style.css -->
@@ -111,7 +113,7 @@
                           <option value="${companyList.user_name}">${companyList.user_name}</option>
                           </c:if>
                         </select>
-                        
+
                         <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left" id="selectKeyword">
                           <option>키워드</option>
                           <c:if test="${modelKeywordList == null}" >
@@ -278,6 +280,7 @@
                                               <th>키워드</th>
                                               <th>업데이트일시</th>
                                               <th>계정분류</th>
+                                              <th>히스토리</th>
                                             </tr>
                                           </thead>
                                           <tbody>
@@ -291,10 +294,41 @@
                                                 <td>${viralVO.viral_time}</td>
                                                 <c:if test="${viralVO.isUser == 1}">
                                                 <td>본사</td>
+<<<<<<< HEAD
                                               	</c:if>
                                               	<c:if test="${viralVO.isUser == 2}">
+=======
+                                                <td>
+                                                  <button class="btn btn-inverse btn-modal btn-sm"><i class="icofont icofont-chart-bar-graph m-r-0"></i></button>
+                                                </td>
+                                              </tr>
+                                              <tr>
+                                                <td>
+                                                  <div class="checkbox-fade fade-in-primary">
+                                                    <label>
+                                                      <input type="checkbox" id="checkbox" class="checkbox">
+                                                      <span class="cr">
+                                                        <i class="cr-icon icofont icofont-ui-check txt-primary"></i>
+                                                      </span>
+                                                    </label>
+                                                  </div>
+                                                </td>
+                                                <th scope="row">2</th>
+                                                <td>2017-10-30</td>
+                                                <td>네이버</td>
+                                                <td>온수매트 싱글 추천 : 일월 온수매트</td>
+                                                <td>20</td>
+                                                <td>싱글온수매트</td>
+                                                <td>2017-10-30 14:00</td>
+>>>>>>> branch 'master' of https://github.com/unioncontent/movie.git
                                                 <td>외부</td>
+<<<<<<< HEAD
                                               	</c:if>
+=======
+                                                <td>
+                                                  <button class="btn btn-inverse btn-modal btn-sm"><i class="icofont icofont-chart-bar-graph m-r-0"></i></button>
+                                                </td>
+>>>>>>> branch 'master' of https://github.com/unioncontent/movie.git
                                               </tr>
                                               </c:forEach>
                                           </tbody>
@@ -312,6 +346,23 @@
                       </div>
                     </div>
                   </div>
+                  <!-- modal image show start -->
+                  <div class="modal fade" id="history-Modal" tabindex="-1" role="dialog">
+                    <div class="modal-dialog modal-lg" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h4 class="modal-title">순위변동량</h4>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          <div id="barchart" class="nvd-chart"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- modal image show end -->
                   <!-- page-body end -->
                 </div>
               </div>
@@ -392,6 +443,9 @@
   <script type="text/javascript" src="../bower_components/jquery-i18next/jquery-i18next.min.js"></script>
   <!-- sweet alert js -->
   <script type="text/javascript" src="../bower_components/sweetalert/dist/sweetalert.min.js"></script>
+  <!-- NVD3 chart -->
+  <script src="../bower_components/d3/d3.js"></script>
+  <script src="../bower_components/nvd3/build/nv.d3.js"></script>
   <!-- knob js -->
   <script src="../bower_components/aterrien/jQuery-Knob/js/jquery.knob.js"></script>
   <!-- Custom js -->

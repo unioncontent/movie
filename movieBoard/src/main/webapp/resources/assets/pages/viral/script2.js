@@ -32,7 +32,16 @@ $(window).on('resize',function() {
         }
     });
 });
+
 $(document).ready(function() {
+  ///////////////////히스토리 그래프 추가////////////////////////
+  /* 모달 보이기*/
+  $('.btn-modal').on('click',function(){
+    $('#history-Modal').modal('show');
+    setTimeout(barChart, 300);
+  });
+  ///////////////////히스토리 그래프 추가////////////////////////
+
   /*계정 버튼 설명*/
   $('[data-toggle="tooltip"]').tooltip();
 
@@ -138,3 +147,78 @@ $(document).ready(function() {
       }
   });
 });
+
+///////////////////히스토리 그래프 추가////////////////////////
+function barChart(){
+  $('.nvd3-svg').remove();
+  /*Bar chart start*/
+  nv.addGraph(function() {
+      var chart = nv.models.multiBarChart()
+          .x(function(d) { return d.label }) //Specify the data accessors.
+          .y(function(d) { return d.value })
+          .forceY([1,100])
+      ;
+      chart.groupSpacing(0.8);
+      chart.reduceXTicks(false);
+      chart.showLegend(false);
+      chart.showControls(false);
+      chart.groupSpacing(0.5);
+      chart.yAxis.tickFormat(function(d, i){
+        return d+"위" //"Year1 Year2, etc depending on the tick value - 0,1,2,3,4"
+      });
+      d3.select('#barchart').append('svg')
+          .datum(barData())
+          .call(chart);
+
+
+      nv.utils.windowResize(chart.update);
+
+      return chart;
+  });
+}
+function barData() {
+  return [{
+    values: [{
+        "label": "2017.11.01",
+        "value": 29,
+        "color": "#01C0C8"
+    }, {
+        "label": "2017.11.02",
+        "value": 10,
+        "color": "#01C0C8"
+    }, {
+        "label": "2017.11.03",
+        "value": 6,
+        "color": "#01C0C8"
+    }, {
+        "label": "2017.11.04",
+        "value": 50,
+        "color": "#01C0C8"
+    }, {
+        "label": "2017.11.05",
+        "value": 1,
+        "color": "#01C0C8"
+    }, {
+        "label": "2017.11.06",
+        "value": 1,
+        "color": "#01C0C8"
+    }, {
+        "label": "2017.11.07",
+        "value": 10,
+        "color": "#01C0C8"
+    }, {
+        "label": "2017.11.08",
+        "value": 30,
+        "color": "#01C0C8"
+    }, {
+        "label": "2017.11.09",
+        "value": 50,
+        "color": "#01C0C8"
+    }, {
+        "label": "2017.11.10",
+        "value": 10,
+        "color": "#01C0C8"
+    }]
+  }]
+}
+///////////////////히스토리 그래프 추가////////////////////////
