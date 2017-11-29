@@ -174,4 +174,25 @@
 	
 	</select>
 	
+	<select id="getHistoryCount" resultType="Integer">
+		select
+			count(*)
+		from
+			viral_history_data
+		where
+			viral_time is not null
+		<include refid="search"></include>
+	
+	</select>
+	
+	<select id="getHistoryRank" resultType="GraphVO">
+		select viral_time writeDate, viral_rank type1 from viral_history_data 
+		where url = #{url} 
+		group by viral_time 
+		order by viral_time desc 
+		limit 1, 10
+	
+	
+	</select>
+	
 </mapper>

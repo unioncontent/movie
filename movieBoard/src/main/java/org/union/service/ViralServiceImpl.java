@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.union.domain.GraphVO;
 import org.union.domain.SearchCriteria;
 import org.union.domain.ViralVO;
 import org.union.persistence.ViralDAO;
@@ -44,6 +45,18 @@ public class ViralServiceImpl implements ViralService {
 	public Integer getSearchOutCount(SearchCriteria cri) {
 
 		return viralDAO.getSearchOutCount(cri);
+	}
+
+	@Override
+	public Integer getHistoryCount(SearchCriteria cri) {
+
+		return viralDAO.getHistoryCount(cri);
+	}
+
+	@Override
+	public List<GraphVO> getHistoryRank(String url) {
+
+		return viralDAO.getHistoryRank(url);
 	}
 
 }

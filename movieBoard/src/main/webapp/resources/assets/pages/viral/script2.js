@@ -106,14 +106,14 @@ $(document).ready(function() {
         });
   };*/
 
-  /*전체선택*/
+ /* 전체선택
   $('#allCheck').on("click",function(){
     if($("#allCheck").prop("checked")){
       $(".checkbox").prop("checked",true);
     }else{
       $(".checkbox").prop("checked",false);
     }
-  });
+  });*/
 
   /*점유율 그래프 생성*/
   $(".dial").knob({
@@ -156,7 +156,7 @@ function barChart(){
       var chart = nv.models.multiBarChart()
           .x(function(d) { return d.label }) //Specify the data accessors.
           .y(function(d) { return d.value })
-          .forceY([1,100])
+          .forceY([100,1])
       ;
       chart.groupSpacing(0.8);
       chart.reduceXTicks(false);

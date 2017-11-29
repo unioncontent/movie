@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.union.domain.GraphVO;
 import org.union.domain.SearchCriteria;
 import org.union.domain.ViralVO;
 
@@ -95,6 +96,20 @@ public class ViralDAOImpl implements ViralDAO {
 	public Integer getSearchOutCount(SearchCriteria cri) {
 
 		return session.selectOne(namespace + "getSearchOutCount", cri);
+	}
+
+
+	@Override
+	public Integer getHistoryCount(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "getHistoryCount", cri);
+	}
+
+
+	@Override
+	public List<GraphVO> getHistoryRank(String url) {
+
+		return session.selectList(namespace + "getHistoryRank", url);
 	}
 
 }

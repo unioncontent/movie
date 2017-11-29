@@ -294,25 +294,16 @@
                                                 <td>${viralVO.viral_time}</td>
                                                 <c:if test="${viralVO.isUser == 1}">
                                                 <td>본사</td>
-<<<<<<< HEAD
                                               	</c:if>
                                               	<c:if test="${viralVO.isUser == 2}">
-=======
+                                              	<td>외부</td>
+                                              	</c:if>
                                                 <td>
                                                   <button class="btn btn-inverse btn-modal btn-sm"><i class="icofont icofont-chart-bar-graph m-r-0"></i></button>
                                                 </td>
                                               </tr>
+                                              </c:forEach>
                                               <tr>
-                                                <td>
-                                                  <div class="checkbox-fade fade-in-primary">
-                                                    <label>
-                                                      <input type="checkbox" id="checkbox" class="checkbox">
-                                                      <span class="cr">
-                                                        <i class="cr-icon icofont icofont-ui-check txt-primary"></i>
-                                                      </span>
-                                                    </label>
-                                                  </div>
-                                                </td>
                                                 <th scope="row">2</th>
                                                 <td>2017-10-30</td>
                                                 <td>네이버</td>
@@ -320,17 +311,11 @@
                                                 <td>20</td>
                                                 <td>싱글온수매트</td>
                                                 <td>2017-10-30 14:00</td>
->>>>>>> branch 'master' of https://github.com/unioncontent/movie.git
                                                 <td>외부</td>
-<<<<<<< HEAD
-                                              	</c:if>
-=======
                                                 <td>
                                                   <button class="btn btn-inverse btn-modal btn-sm"><i class="icofont icofont-chart-bar-graph m-r-0"></i></button>
                                                 </td>
->>>>>>> branch 'master' of https://github.com/unioncontent/movie.git
                                               </tr>
-                                              </c:forEach>
                                           </tbody>
                                         </table>
                                       </div>
@@ -457,5 +442,9 @@
   <script src="../assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
   <script src="../assets/js/jquery.mousewheel.min.js"></script>
 </body>
+
+<script type="text/javascript">
+
+</script>
 
 </html>
