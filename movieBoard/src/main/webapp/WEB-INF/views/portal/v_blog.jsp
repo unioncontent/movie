@@ -198,26 +198,20 @@
                                 <div class="card user-activity-card">
                                   <div class="card-header">
                                     <h5><i class="icofont icofont-ui-v-card"></i></h5>
-                                    <h5>전체 계정 현황</h5>
+                                    <h5>전체 블로그 현황</h5>
                                   </div>
                                   <div class="card-block-big">
                                     <div class="row">
                                       <div class="col-sm-6">
                                         <div class="text-center">
-                                          <h1 class="text-inverse f-w-600">${blog1}</h1>
-                                          <h6 class="text-muted m-t-10">본사계정</h6>
-                                        </div>
-                                      </div>
-                                      <div class="col-sm-6">
-                                        <div class="text-center">
-                                          <h1 class="text-muted f-w-600">${blog2}</h1>
-                                          <h6 class="text-muted m-t-10">외부계정</h6>
+                                          <h1 class="text-inverse f-w-600">0</h1>
+                                          <h6 class="text-muted m-t-10">전체</h6>
                                         </div>
                                       </div>
                                     </div>
+                                    </div>
                                   </div>
                                 </div>
-                              </div>
                               <div class="col-md-6 col-xl-3">
                                 <div class="card user-activity-card">
                                  <div class="card-header">
@@ -228,13 +222,13 @@
                                     <div class="row">
                                       <div class="col-sm-6">
                                         <div class="text-center">
-                                          <h1 class="text-inverse f-w-600">0</h1>
+                                          <h1 class="text-inverse f-w-600">${blog1}</h1>
                                           <h6 class="text-muted m-t-10">본사계정</h6>
                                         </div>
                                       </div>
                                       <div class="col-sm-6">
                                         <div class="text-center">
-                                          <h1 class="text-muted f-w-600">0</h1>
+                                          <h1 class="text-muted f-w-600">${blog2}</h1>
                                           <h6 class="text-muted m-t-10">외부계정</h6>
                                         </div>
                                       </div>
@@ -262,18 +256,13 @@
                                   </div>
                                 </div>
                               </div>
+                            </div>
                               <!-- top cards end -->
                               <div class="col-md-12">
                                 <div class="card">
                                   <div class="card-header">
                                     <div class="col-md-1 btn-viral f-right p-r-0">
                                       <button class="btn col-md-12 btn-warning alert-confirm" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'alert-confirm']);"><i class="icofont icofont-download-alt"></i>EXCEL</button>
-                                    </div>
-                                    <div class="col-md-1 btn-viral f-right p-r-0">
-                                      <button class="btn col-md-12 btn-default alert-confirm2" data-toggle="tooltip" data-placement="top" data-original-title="외부계정으로 변경"><i class="icofont icofont-check-circled"></i>외부계정</button>
-                                    </div>
-                                    <div class="col-md-1 btn-viral f-right p-r-0">
-                                      <button class="btn col-md-12 btn-inverse alert-confirm1" data-toggle="tooltip" data-placement="top" data-original-title="본사계정으로 변경"><i class="icofont icofont-check-circled"></i>본사계정</button>
                                     </div>
                                   </div>
                                   <div class="card-block">
@@ -282,67 +271,32 @@
                                         <table class="table table-styling table-checkbox">
                                           <thead>
                                             <tr>
-                                              <th>
-                                                <div class="checkbox-fade fade-in-primary">
-                                                  <label>
-                                                    <input type="checkbox" id="allCheck">
-                                                    <span class="cr">
-                                                      <i class="cr-icon icofont icofont-ui-check txt-primary"></i>
-                                                    </span>
-                                                  </label>
-                                                </div>
-                                              </th>
-                                              <th>NO</th>
+                                              <th>순위</th>
                                               <th>등록일</th>
                                               <th>구분</th>
                                               <th>제목</th>
-                                              <th>순위</th>
                                               <th>키워드</th>
                                               <th>업데이트일시</th>
                                               <th>계정분류</th>
                                             </tr>
                                           </thead>
                                           <tbody>
+                                          	  <c:forEach items="${blogList}" var="viralVO">
                                               <tr>
-                                                <td>
-                                                  <div class="checkbox-fade fade-in-primary">
-                                                    <label>
-                                                      <input type="checkbox" id="checkbox" class="checkbox">
-                                                      <span class="cr">
-                                                        <i class="cr-icon icofont icofont-ui-check txt-primary"></i>
-                                                      </span>
-                                                    </label>
-                                                  </div>
-                                                </td>
-                                                <th scope="row">1</th>
-                                                <td>2017-10-30</td>
-                                                <td>네이버</td>
-                                                <td>온수매트 싱글 추천 : 일월 온수매트</td>
-                                                <td>20</td>
-                                                <td>싱글온수매트</td>
-                                                <td>2017-10-30 14:00</td>
+                                                <th scope="row">${viralVO.viral_rank}</th>
+                                                <td>${viralVO.writeDate}</td>
+                                                <td>${viralVO.portal_name}</td>
+                                                <td>${viralVO.viral_title}</td>
+                                                <td>${viralVO.viral_keyword}</td>
+                                                <td>${viralVO.viral_time}</td>
+                                                <c:if test="${viralVO.isUser == 1}">
                                                 <td>본사</td>
-                                              </tr>
-                                              <tr>
-                                                <td>
-                                                  <div class="checkbox-fade fade-in-primary">
-                                                    <label>
-                                                      <input type="checkbox" id="checkbox" class="checkbox">
-                                                      <span class="cr">
-                                                        <i class="cr-icon icofont icofont-ui-check txt-primary"></i>
-                                                      </span>
-                                                    </label>
-                                                  </div>
-                                                </td>
-                                                <th scope="row">2</th>
-                                                <td>2017-10-30</td>
-                                                <td>네이버</td>
-                                                <td>온수매트 싱글 추천 : 일월 온수매트</td>
-                                                <td>20</td>
-                                                <td>싱글온수매트</td>
-                                                <td>2017-10-30 14:00</td>
+                                              	</c:if>
+                                              	<c:if test="${viralVO.isUser == 2}">
                                                 <td>외부</td>
+                                              	</c:if>
                                               </tr>
+                                              </c:forEach>
                                           </tbody>
                                         </table>
                                       </div>
