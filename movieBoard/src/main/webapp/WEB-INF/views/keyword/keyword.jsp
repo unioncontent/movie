@@ -107,7 +107,7 @@
                           </div>
                         </div>
                         <div class="col-md-1 p-r-0 f-right">
-                          <a href="createKeyword.html" class="btn btn-primary float-right">등록</a>
+                          <a href="create" class="btn btn-primary float-right">등록</a>
                         </div>
                       </div>
                       <div class="card-block">
@@ -141,7 +141,7 @@
                                 <td>0</td>
                                 <td class="text-center">
   								  <div class="btn-group btn-group-md text-center" style="padding-right: 0;">
-    							    <a href="editKeyword.html" class="tabledit-edit-button btn btn-primary waves-effect waves-light" style="margin-right: 5px;" data-toggle="tooltip" data-placement="top" data-original-title="키워드 추가">
+    							    <a href="modify" class="tabledit-edit-button btn btn-primary waves-effect waves-light" style="margin-right: 5px;" data-toggle="tooltip" data-placement="top" data-original-title="키워드 추가">
       								  <span class="icofont icofont-ui-edit"></span>
     								</a>
     								<button type="button" class="tabledit-delete-button btn btn-danger waves-effect waves-light alert-confirm1" data-toggle="tooltip" data-placement="top" data-original-title="삭제" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'alert-confirm']);">

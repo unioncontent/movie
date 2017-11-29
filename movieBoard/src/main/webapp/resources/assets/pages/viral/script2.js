@@ -36,10 +36,7 @@ $(window).on('resize',function() {
 $(document).ready(function() {
   ///////////////////히스토리 그래프 추가////////////////////////
   /* 모달 보이기*/
-  $('.btn-modal').on('click',function(){
-    $('#history-Modal').modal('show');
-    setTimeout(barChart, 300);
-  });
+  
   ///////////////////히스토리 그래프 추가////////////////////////
 
   /*계정 버튼 설명*/
@@ -149,9 +146,9 @@ $(document).ready(function() {
 });
 
 ///////////////////히스토리 그래프 추가////////////////////////
-function barChart(){
+/*function barChart(){
   $('.nvd3-svg').remove();
-  /*Bar chart start*/
+  Bar chart start
   nv.addGraph(function() {
       var chart = nv.models.multiBarChart()
           .x(function(d) { return d.label }) //Specify the data accessors.
@@ -220,5 +217,5 @@ function barData() {
         "color": "#01C0C8"
     }]
   }]
-}
+}*/
 ///////////////////히스토리 그래프 추가////////////////////////

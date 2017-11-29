@@ -15,6 +15,9 @@
       <![endif]-->
   <!-- Meta -->
   <meta charset="utf-8">
+  <meta name="_csrf" content="${_csrf.token}" />
+  <!-- default header name is X-CSRF-TOKEN -->
+  <meta name="_csrf_header" content="${_csrf.headerName}"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="description" content="Phoenixcoded">
@@ -128,7 +131,6 @@
                           </c:if>
                         </select>
                         <select id="selectSite" name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left">
-                          <option value="사이트">사이트</option>
                           <option value="네이버">네이버</option>
                           <option value="다음">다음</option>
                         </select>
@@ -191,7 +193,7 @@
                                       <li>
                                         <i class="icofont icofont-document-search"></i>
                                       </li>
-                                      <li class="text-right">${blog1+blog2}</li>
+                                      <li class="text-right">${blog0+blog1+blog2}</li>
                                     </ul>
                                   </div>
                                 </div>
@@ -206,7 +208,7 @@
                                     <div class="row">
                                       <div class="col-sm-6">
                                         <div class="text-center">
-                                          <h1 class="text-inverse f-w-600">0</h1>
+                                          <h1 class="text-inverse f-w-600">${blog0}</h1>
                                           <h6 class="text-muted m-t-10">전체</h6>
                                         </div>
                                       </div>
@@ -289,7 +291,7 @@
                                                 <th scope="row">${viralVO.viral_rank}</th>
                                                 <td>${viralVO.writeDate}</td>
                                                 <td>${viralVO.portal_name}</td>
-                                                <td>${viralVO.viral_title}</td>
+                                                <td>${viralVO.viral_title}<a href="${viralVO.url}"></a></td>
                                                 <td>${viralVO.viral_keyword}</td>
                                                 <td>${viralVO.viral_time}</td>
                                                 <c:if test="${viralVO.isUser == 1}">
@@ -307,7 +309,7 @@
                                                 <th scope="row">2</th>
                                                 <td>2017-10-30</td>
                                                 <td>네이버</td>
-                                                <td>온수매트 싱글 추천 : 일월 온수매트</td>
+                                                <td>온수매트 싱글 추천 : 일월 온수매트<a href="url"></a></td>
                                                 <td>20</td>
                                                 <td>싱글온수매트</td>
                                                 <td>2017-10-30 14:00</td>
@@ -443,7 +445,218 @@
   <script src="../assets/js/jquery.mousewheel.min.js"></script>
 </body>
 
+
 <script type="text/javascript">
+	
+	//ajax 보안
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+
+	$(function() {
+		$(document).ajaxSend(function(e, xhr, options) {
+	  		xhr.setRequestHeader(header, token);
+	  	});
+	});
+
+	$(document).ready(function(){
+		
+		// 회사 selectbox 유지.
+		var companyOption = decodeURI(window.location.href.split("company=")[1]).split("&")[0];
+		console.log("companyOption: " + companyOption);
+
+		var $selectCompany = $('#selectCompany');
+		if(companyOption != 'undefined'){
+			for(var i = 0; i < $selectCompany[0].length; i++ ){
+
+				if($selectCompany[0].children[i].value == companyOption){
+					$selectCompany[0].children[i].selected = 'selected';
+				}
+			}
+		}
+		$selectCompany[0][0].disabled = true;
+
+		// 회사 선택시
+		$selectCompany.change(function(){
+			console.log($("#selectCompany option:selected").val());
+
+			searchList();
+			
+		});
+		
+		// 키워드 selectbox 유지.
+		var keywordOption = decodeURI(window.location.href.split("selectKey=")[1]).split("&")[0];
+		console.log("keywordOption: " + keywordOption);
+
+		var $selectKeyword = $('#selectKeyword');
+
+		if(keywordOption != 'undefined'){
+			for(var i = 0; i < $selectKeyword[0].length; i++ ){
+				if($selectKeyword[0][i].value == keywordOption){
+					$selectKeyword[0][i].selected = 'selected';
+				}
+			}
+		}
+		$selectKeyword[0][0].disabled = true;
+
+
+		// 키워드 선택시
+		$selectKeyword.change(function(){
+			console.log($('#selectKeyword option:selected').val());
+			
+			searchList();
+
+		});
+		
+		
+		// 사이트 selectbox 유지
+		var siteOption = decodeURI(window.location.href.split("portal_name=")[1]);
+		console.log("siteOption: " + siteOption);
+
+		var $selectSite = $("#selectSite");
+
+		if(selectOption != 'undefined'){
+			for(var i = 0; i < $selectSite[0].length; i++ ){
+				if($selectSite[0][i].value == siteOption){
+					$selectSite[0][i].selected = 'selected';
+				}
+			}
+		}
+		
+		// 사이트 선택시
+		$selectSite.change(function(){
+			console.log($selectSite.val());
+			
+			searchList();
+			
+		});
+		
+		// 모달 버튼 클릭시.
+		var modal = $('.btn-modal');
+		
+		modal.on('click',function(){
+			$('#history-Modal').modal('show');
+		  	setTimeout(barChart, 300);
+		  	
+		  	var a = ((modal.parent().parent()[0]).children[3]).children[0];
+		  	var url = a.getAttribute("href");
+						  	
+		  	$.ajax({
+				type : "POST",
+			  	url : "graph",
+		 	  	dataType : "text",
+		 	  	data : {url : url},
+		  	  	success : function(list){
+		  	  		
+		  	  	var script = '[ values: ';
+		  	  		
+		  	  	for(var i = 0; i < list.size; i++){
+
+		  	  		var value = '[{';
+					value += '"label"' + ':' + '"' + list[i].writeDate + '"';
+					value += '"value"' + ':' + '"' + list[i].type1 + '"';
+					value += '"color"' + ':' + '"#01C0C8"';
+					value += '}],'
+					
+					script += value;
+	
+	  	  		}
+		  	  	
+		  	  	script.substr(0, script.length -1);
+		  	  	
+		  	  	script += ']';
+		  	  	
+		  	  	console.log(script);
+
+		  	  	barChart(script);
+		  	  		
+		  	  	}
+		  	}); 
+		});
+	
+	
+	}); // end ready...
+
+	function barData() {
+	  return [{
+	    values: [{
+	        "label": "2017.11.01",
+	        "value": 29,
+	        "color": "#01C0C8"
+	    }, {
+	        "label": "2017.11.02",
+	        "value": 10,
+	        "color": "#01C0C8"
+	    }, {
+	        "label": "2017.11.03",
+	        "value": 6,
+	        "color": "#01C0C8"
+	    }, {
+	        "label": "2017.11.04",
+	        "value": 50,
+	        "color": "#01C0C8"
+	    }, {
+	        "label": "2017.11.05",
+	        "value": 1,
+	        "color": "#01C0C8"
+	    }, {
+	        "label": "2017.11.06",
+	        "value": 1,
+	        "color": "#01C0C8"
+	    }, {
+	        "label": "2017.11.07",
+	        "value": 10,
+	        "color": "#01C0C8"
+	    }, {
+	        "label": "2017.11.08",
+	        "value": 30,
+	        "color": "#01C0C8"
+	    }, {
+	        "label": "2017.11.09",
+	        "value": 50,
+	        "color": "#01C0C8"
+	    }, {
+	        "label": "2017.11.10",
+	        "value": 10,
+	        "color": "#01C0C8"
+	    }]
+	  }]
+	}
+
+	function barChart(barData){
+		$('.nvd3-svg').remove();
+	  	/*Bar chart start*/
+	  	nv.addGraph(function() {
+	      	var chart = nv.models.multiBarChart()
+	          	.x(function(d) { return d.label }) //Specify the data accessors.
+	          	.y(function(d) { return d.value })
+	          	.forceY([100,1]);
+	      	
+	      	chart.groupSpacing(0.8);
+	      	chart.reduceXTicks(false);
+	      	chart.showLegend(false);
+	      	chart.showControls(false);
+	      	chart.groupSpacing(0.5);
+	      	chart.yAxis.tickFormat(function(d, i){
+	        return d+"위" //"Year1 Year2, etc depending on the tick value - 0,1,2,3,4"
+	      	});
+	      	d3.select('#barchart').append('svg')
+	          	.datum(barData)
+	          	.call(chart);
+
+
+	      	nv.utils.windowResize(chart.update);
+
+	      	return chart;
+	  	});
+	}
+	
+	function searchList() {
+
+    	self.location = "viral?" 
+        					+ "&company=" + $("#selectCompany option:selected").val()
+    						+ "&selectKey=" + $('#selectKeyword option:selected').val()
+    						+ "$portal_name=" + $("#selectSite option:selected").val();
+    }
 
 </script>
 

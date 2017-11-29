@@ -17,4 +17,17 @@ public class KeywordController {
 	public void keywordGET() {
 		logger.info("keywordGET called....");
 	}
+	
+	
+	@GetMapping("/create")
+	public void createGET() {
+		logger.info("createGET called....");
+	}
+
+	
+	@GetMapping("/modify")
+	public void modifyGET() {
+		logger.info("keywordGET called....");
+	}
+	
 }

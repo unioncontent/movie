@@ -516,7 +516,7 @@
 	}); // end ready...
 
 	
-    function searchList(time) {
+    function searchList() {
 
     	self.location = "viral?" 
         					+ "&company=" + $("#selectCompany option:selected").val()

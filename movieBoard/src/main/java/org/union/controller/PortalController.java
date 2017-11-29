@@ -433,6 +433,8 @@ public class PortalController {
 		// 
 		
 		cri.setPortal_type("blog");
+		
+		model.addAttribute("blog0", viralService.getHistoryCount(cri));
 		model.addAttribute("blog1", viralService.getSearchInCount(cri));
 		model.addAttribute("blog2", viralService.getSearchOutCount(cri));
 		
@@ -457,5 +459,13 @@ public class PortalController {
 	@GetMapping("/v_relation")
 	public void v_relationGET(@ModelAttribute("cri") SearchCriteria cri, Model model) {
 		logger.info("v_relationGET called....");
+	}
+	
+	@ResponseBody
+	@PostMapping("/historyGraph")
+	public List<GraphVO> historyGraphPOST(String url){
+		logger.info("historyGraphPOST called....");
+		
+		return viralService.getHistoryRank(url);
 	}
 }
