@@ -359,7 +359,10 @@ public class PortalController {
 	public void v_blogGET(@ModelAttribute("cri") SearchCriteria cri, Model model) {
 		logger.info("v_blogGET called....");
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
+		//SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
+		
+		cri.setStartDate(null);
+		cri.setEndDate(null);
 		
 		if (cri.getCompany() != null) {
 			if (cri.getCompany().isEmpty()) {
@@ -397,7 +400,7 @@ public class PortalController {
 		}
 
 		
-		// startDate format
+		/*// startDate format
 		if ("undefined".equals(cri.getStartDate())  || cri.getStartDate() == "") {
 			cri.setStartDate(null);
 		}
@@ -419,7 +422,7 @@ public class PortalController {
 				cri.setStartDate(cri.getStartDate() + " 00:00:00");
 				cri.setEndDate(cri.getEndDate() + " 23:59:59");
 			}
-		}
+		}*/
 		
 		// 사이트 미설정시
 		if(cri.getPortal_name() == null) {

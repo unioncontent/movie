@@ -131,30 +131,6 @@
                           <option value="다음">다음</option>
                         </select>
                       </div>
-                      <div class="col-md-6 input-time">
-                        <!-- date picker start -->
-                        <div class="row">
-                           <div class="btn-group float-right m-b-10 p-l-15 p-r-10" role="group">
-                            <button id="toDay" type="button" class="btn btn-inverse btn-sm waves-effect waves-light">당일</button>
-                            <button id="yesterDay" type="button" class="btn btn-inverse btn-sm waves-effect waves-light">전일</button>
-                            <button id="week" type="button" class="btn btn-inverse btn-sm waves-effect waves-light">최근7일</button>
-                            <button id="month" type="button" class="btn btn-inverse btn-sm waves-effect waves-light">최근30일</button>
-                          </div>
-                          <div class="input-group float-right date col p-l-15 p-r-15 m-b-10">
-                            <input type="text" id="fromDate" class="form-control form-control-inverse" value="">
-                            <span class="input-group-addon bg-inverse">
-                              <span class="icofont icofont-ui-calendar"></span>
-                            </span>
-                          </div>
-                          <div class="input-group float-right date time col-sm-3 p-l-15 p-r-15 m-b-10">
-                            <input type="text" id="time" class="timepicker form-control form-control-inverse">
-                            <span class="input-group-addon bg-inverse" onclick="$('#time').click();">
-                              <span class="icofont icofont-clock-time"></span>
-                            </span>
-                          </div>
-                        </div>
-                        <!-- date picker end -->
-                      </div>
                       <!-- data setting end -->
                       <div class="col-lg-12">
                         <!-- tab header start -->
@@ -290,15 +266,6 @@
                               <div class="col-md-12">
                                 <div class="card">
                                   <div class="card-header">
-                                    <select name="select" class="col-sm-1 form-control form-control-inverse m-r-10 m-b-10 f-left search-select">
-                                      <option value="">제목</option>
-                                    </select>
-                                    <div class="col-sm-3 input-group input-group-button input-group-inverse p-l-0 p-r-0 m-b-10 f-left btn-select">
-                                      <input type="text" class="form-control" placeholder="">
-                                      <span class="input-group-addon" id="basic-addon1">
-                                        <button class="btn btn-inverse">검색</button>
-                                      </span>
-                                    </div>
                                     <div class="col-md-1 btn-viral f-right p-r-0">
                                       <button class="btn col-md-12 btn-warning alert-confirm" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'alert-confirm']);"><i class="icofont icofont-download-alt"></i>EXCEL</button>
                                     </div>

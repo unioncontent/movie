@@ -36,7 +36,7 @@ $(document).ready(function() {
   /*계정 버튼 설명*/
   $('[data-toggle="tooltip"]').tooltip();
 
-  /*시간선택*/
+  /*시간선택
   $('#time').timepicker({
 	    timeFormat: 'HH:mm',
 	    interval: 60,
@@ -47,7 +47,7 @@ $(document).ready(function() {
 	    dynamic: true,
 	    dropdown: true,
 	    scrollbar: true
-	  });
+	  });*/
 
   /*엑셀출력*/
   document.querySelector('.alert-confirm').onclick = function(){
