@@ -259,7 +259,7 @@ public class PortalController {
 			cri.setSelectKey(null);
 		}
 
-		// startDate format
+		/*// startDate format
 		if ("undefined".equals(cri.getStartDate())  || cri.getStartDate() == "") {
 			cri.setStartDate(null);
 		}
@@ -281,7 +281,7 @@ public class PortalController {
 				cri.setStartDate(cri.getStartDate() + " 00:00:00");
 				cri.setEndDate(cri.getEndDate() + " 23:59:59");
 			}
-		}
+		}*/
 		if (cri.getCompany() != null) {
 			if (cri.getCompany().isEmpty()) {
 				cri.setCompany(null);

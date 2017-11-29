@@ -120,32 +120,6 @@
                           </c:if>
                         </select>
                       </div>
-                      <div class="col-md-6 input-time">
-                        <!-- date picker start -->
-                        <div class="row">
-                          <div class="btn-group float-right m-b-10 p-l-15 p-r-10" role="group">
-                            <button id="toDay" type="button" class="btn btn-inverse btn-sm waves-effect waves-light">당일</button>
-                            <button id="yesterDay" type="button" class="btn btn-inverse btn-sm waves-effect waves-light">전일</button>
-                            <button id="week" type="button" class="btn btn-inverse btn-sm waves-effect waves-light">최근7일</button>
-                            <button id="month" type="button" class="btn btn-inverse btn-sm waves-effect waves-light">최근30일</button>
-                          </div>
-                          <div class="input-group float-right date col p-l-15 p-r-15 m-b-10">
-                            <input type="text" id="fromDate" class="form-control form-control-inverse" value="">
-                            <span class="input-group-addon bg-inverse">
-                              <span class="icofont icofont-ui-calendar"></span>
-                            </span>
-                          </div>
-                          <div class="input-group float-right date time col-sm-3 p-l-15 p-r-15 m-b-10">
-                            <input type="text" id="time" class="timepicker form-control form-control-inverse">
-                            <span class="input-group-addon bg-inverse" onclick="$('#time').click();">
-                              <span class="icofont icofont-clock-time"></span>
-                            </span>
-                          </div>
-
-                        </div>
-                        <!-- date picker end -->
-                      </div>
-                      <!-- data setting end -->
                       <div class="col-lg-12">
                         <!-- tab header start -->
                         <div class="tab-header">
@@ -538,179 +512,21 @@
 
 		});
 		
-		// hour 설정
-		$time = $("#time");
-		
-		$time.attr("disabled", true);
-		
-		var startDateOption = decodeURI(window.location.href.split("startDate=")[1]).split("&endDate=")[0];
-		var endDateOption = decodeURI(window.location.href.split("endDate=")[1]);
-		console.log("startDateOption: " + startDateOption);
-		console.log("endDateOption: " + endDateOption);
-		
-		
-		if(startDateOption != 'undefined' && endDateOption != 'undefined'
-				&& startDateOption != '' && endDateOption != ''){
-			
-			$("#fromDate").val(startDateOption + " - " + endDateOption);
-			
-			var date = new Date;
-			$time.val(date.toString().split("2017 ")[1].split(":")[0] + ":00");
-			
-			if(startDateOption == endDateOption){
-				console.log("startDate == endDate")
-				$time.attr("disabled", false);
-			}
-			
-		}else{
-			var date = getDate("toDay");
-			var startDate = date.startDate;
-			var endDate = date.endDate;
-
-			$("#fromDate").val(startDate.split(" ")[0] + " - " + endDate);
-			
-			console.log("startDate == endDate")
-			$time.attr("disabled", false);
-			$time.val(startDateOption.split(" ")[1]);		
-			console.log(startDateOption.split(" ")[1]);
-			
-			if($time.val() == ""){
-				console.log(" ");
-				
-				var date = new Date;
-				$time.val(date.toString().split("2017 ")[1].split(":")[0] + ":00")
-			}
-		}
-
-		
-		// time 클릭시
-		$(".ui-corner-all").on("click", function(){
-			console.log("$time click....");
-			
-			console.log($("#fromDate").val());
-			
-			console.log($("#fromDate").val().split(" - ")[0]);
-			
-			searchList($time.val());
-		});
-		
-		// 당일 클릭시
-		$('#toDay').on("click", function(){
-		  console.log("toDay clicked....");
-		  var date = getDate("toDay");
-		  var startDate = date.startDate;
-		  var endDate = date.endDate;
-
-		  $("#fromDate").val(endDate + " - " + endDate)
-		  console.log($("#fromDate").val());
-		  searchList(); 
-		});
-
-		// 전일 클릭시
-		$('#yesterDay').on("click", function(){
-		  console.log("yesterDay clicked....");
-		  var date = getDate("yesterDay");
-		  var startDate = date.startDate;
-		  var endDate = date.endDate;
-
-		  $("#fromDate").val(startDate + " - " + endDate)
-		  console.log($("#fromDate").val());
-		  searchList();
-		});
-
-		// 7일  클릭시
-		$('#week').on("click", function(){
-		  console.log("week clicked....");
-		  var date = getDate("week");
-		  var startDate = date.startDate;
-		  var endDate = date.endDate;
-
-		  $("#fromDate").val(startDate + " - " + endDate)
-		  console.log($("#fromDate").val());
-		  searchList();
-		})
-
-		// 30일 클릭시
-		$('#month').on("click", function(){
-		  console.log("month clicked....");
-		  var date = getDate("month");
-		  var startDate = date.startDate;
-		  var endDate = date.endDate;
-		
-		  $("#fromDate").val(startDate + " - " + endDate)
-		  console.log($("#fromDate").val());
-		  
-		  searchList();
-		 
-		})
-		
-		// content 길시에 ...으로 변경  
-		var $content = $(".text-success");
-	
-		var size = 25;
-	
-		for (var i =1; i < $content.length; i++){
-			if($content[i].innerText.length >= size){
-				$content[i].textContent = $content[i].innerText.substr(0, size) + '...';
-			}
-		}
-	
-		
-		//캘린더 클릭시..
-		$('#fromDate').on('apply.daterangepicker', function(ev, picker) {
-			   var startDate = picker.startDate.format('YYYY-MM-DD');
-			   var endDate = picker.endDate.format('YYYY-MM-DD');
-	
-			   console.log("startDate: " + startDate);
-			   console.log("endDate: " + endDate);
-	
-			   searchList();
-		}); 
 		
 	}); // end ready...
 
 	
-	function makeDateFormat(date, index){
-		var splitDate = date.split(" - ")[index];
-			if(splitDate != undefined){
-				var returnDate = splitDate.replace("/", "-").replace("/", "-")
-				return returnDate;
-			}
-		
-		
-	}
-	makeDateFormat($("#fromDate").val());
-
     function searchList(time) {
 
-    	if(time == null){
-    		console.log("time is null");
-    		
-    		var makeQeury = '${pageMaker.makeQuery(1)}'.slice(0, -2);
-
-    		self.location = "viral?" 
+    	self.location = "viral?" 
         					+ "&company=" + $("#selectCompany option:selected").val()
-    						+ "&selectKey=" + $('#selectKeyword option:selected').val()
-        					+ "&startDate=" + makeDateFormat($("#fromDate").val(), 0)
-        					+ "&endDate=" +  makeDateFormat($("#fromDate").val(), 1)
-    		
-    	}else{
-    		console.log("time is not null");
-    		console.log(time);
-    		
-    		var makeQeury = '${pageMaker.makeQuery(1)}'.slice(0, -2);
-
-    		self.location = "viral?" 
-        					+ "&company=" + $("#selectCompany option:selected").val()
-    						+ "&selectKey=" + $('#selectKeyword option:selected').val()
-        					+ "&startDate=" + makeDateFormat($("#fromDate").val(), 0) + " " + time
-        					+ "&endDate=";
-    	}
+    						+ "&selectKey=" + $('#selectKeyword option:selected').val();
+    }
     	
 		
-	}
+}
   
-	//날짜 계산 함수
+	/* //날짜 계산 함수
     function getDate(type){
   		console.log("TYPE : " + type);
   		var date = new Date();
@@ -749,7 +565,7 @@
    			endDate : endDate
    		}
 
-  	}
+  	} */
 </script>
 
 </html>
