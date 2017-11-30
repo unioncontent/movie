@@ -184,7 +184,7 @@ public class ClassificationController {
 	
 	@ResponseBody
 	@GetMapping("/excel")
-	public ModelAndView excelGET(ModelAndView model, ExcelView excelView, SearchCriteria cri) {
+	public ModelAndView excelGET(@ModelAttribute("cri") ModelAndView model, ExcelView excelView, SearchCriteria cri) {
 		
 		if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
 			logger.info("keyword is null");
@@ -196,9 +196,20 @@ public class ClassificationController {
 			cri.setSelectKey(null);
 		}
 		
-		if(cri.getStartDate() != null || cri.getEndDate() != null) {
+		if("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate())
+				|| cri.getStartDate() == "" || cri.getEndDate() == ""){
 			cri.setStartDate(null);
 			cri.setEndDate(null);
+		
+		} 
+		if(cri.getStartDate() != null && cri.getEndDate() != null) {
+			logger.info("not null");
+			logger.info(cri.getStartDate());
+			logger.info(cri.getEndDate());
+			if(cri.getStartDate().indexOf("00:00:00") < 0 && cri.getEndDate().indexOf("23:59:59") < 0){ 
+				cri.setStartDate(cri.getStartDate() + " 00:00:00"); 
+				cri.setEndDate(cri.getEndDate() + " 23:59:59"); 
+			}
 		}
 		if(cri.getCompany() != null) {
 			if(cri.getCompany().isEmpty()) {
@@ -229,10 +240,10 @@ public class ClassificationController {
 		ListUtil listUtil = new ListUtil();
 		
 		
-		listUtil.listAddSNSList(classiList, snsService.listAll(cri));
-		listUtil.listAddCommunityList(classiList, communityService.listAll(cri));
-		listUtil.listAddPortalList(classiList, portalService.listAll(cri));
-		listUtil.listAddMediaList(classiList, mediaService.listAll(cri));
+		listUtil.listAddSNSList(classiList, snsService.listSearch(cri));
+		listUtil.listAddCommunityList(classiList, communityService.listSearch(cri));
+		listUtil.listAddPortalList(classiList, portalService.listSearch(cri));
+		listUtil.listAddMediaList(classiList, mediaService.listSearch(cri));
 		
 		ExtractComparator comparator = new ExtractComparator();
 		Collections.sort(classiList, comparator);

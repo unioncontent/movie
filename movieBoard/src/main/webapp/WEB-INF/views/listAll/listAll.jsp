@@ -486,8 +486,8 @@ $(function() {
   $(document).ready(function(){
 	
 	  
-	  var startDateOption = decodeURI(window.location.href.split("startDate=")[1]).split("&endDate=")[0];
-		var endDateOption = decodeURI(window.location.href.split("endDate=")[1]);
+	  	var startDateOption = decodeURI(window.location.href.split("startDate=")[1]).split("&")[0];
+		var endDateOption = decodeURI(window.location.href.split("endDate=")[1]).split("&")[0];
 		console.log("startDateOption: " + startDateOption);
 		console.log("endDateOption: " + endDateOption);
 		
@@ -498,7 +498,7 @@ $(function() {
 		
 		
 		
-		var companyOption = decodeURI(window.location.href.split("company=")[1]).split("&selectKey")[0];
+		var companyOption = decodeURI(window.location.href.split("company=")[1]).split("&")[0];
 		console.log("companyOption: " + companyOption);
 
 		var $selectCompany = $('#selectCompany');
@@ -523,7 +523,7 @@ $(function() {
 		});
 		
 
-		var keywordOption = decodeURI(window.location.href.split("selectKey=")[1]).split("&textType")[0];
+		var keywordOption = decodeURI(window.location.href.split("selectKey=")[1]).split("&")[0];
 		console.log("keywordOption: " + keywordOption);
 		console.log(decodeURI(window.location.href.split("&selectKey=")[1]));
 

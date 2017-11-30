@@ -292,12 +292,12 @@
                                                 <td>${viralVO.writeDate}</td>
                                                 <td>${viralVO.portal_name}</td>
                                                 <td>${viralVO.viral_title}<a href="${viralVO.url}"></a></td>
-                                                <td>${viralVO.viral_keyword}</td>
+                                                <td>${viralVO.keyword}</td>
                                                 <td>${viralVO.viral_time}</td>
-                                                <c:if test="${viralVO.isUser == 1}">
+                                                <c:if test="${viralVO.viral_isUser == 1}">
                                                 <td>본사</td>
                                               	</c:if>
-                                              	<c:if test="${viralVO.isUser == 2}">
+                                              	<c:if test="${viralVO.viral_isUser == 2}">
                                               	<td>외부</td>
                                               	</c:if>
                                                 <td>

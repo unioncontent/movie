@@ -431,8 +431,10 @@ public class PortalController {
 
 		// 키워드 설정 
 		// 
-		
+
 		cri.setPortal_type("blog");
+		
+		logger.info("cri: " + cri);
 		
 		model.addAttribute("blog0", viralService.getHistoryCount(cri));
 		model.addAttribute("blog1", viralService.getSearchInCount(cri));
