@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,6 +15,9 @@
       <![endif]-->
   <!-- Meta -->
   <meta charset="utf-8">
+  <meta name="_csrf" content="${_csrf.token}" />
+  <!-- default header name is X-CSRF-TOKEN -->
+  <meta name="_csrf_header" content="${_csrf.headerName}"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="description" content="Phoenixcoded">
@@ -55,208 +60,14 @@
     </div>
   </div>
   <!-- Pre-loader end -->
-
   <div id="pcoded" class="pcoded">
     <div class="pcoded-overlay-box"></div>
     <div class="pcoded-container navbar-wrapper">
-      <nav class="navbar header-navbar pcoded-header" header-theme="theme4">
-        <div class="navbar-wrapper">
-          <div class="navbar-logo">
-            <a class="mobile-menu" id="mobile-collapse" href="#!">
-              <i class="ti-menu"></i>
-            </a>
-            <a href="dashboard.html">
-              <img class="img-fluid" src="../assets/images/logo.png" alt="Theme-Logo" />
-            </a>
-            <a class="mobile-options">
-              <i class="ti-more"></i>
-            </a>
-          </div>
-          <div class="navbar-container container-fluid">
-            <div>
-              <ul class="nav-left">
-                <li>
-                  <div class="sidebar_toggle"><a href="javascript:void(0)"><i class="ti-menu"></i></a></div>
-                </li>
-              </ul>
-              <ul class="nav-right">
-                <li class="user-profile header-notification">
-                  <a href="#!">
-                      <img src="../assets/images/user.png" alt="User-Profile-Image">
-                      <span>Union</span>
-                      <i class="ti-angle-down"></i>
-                  </a>
-                  <ul class="show-notification profile-notification">
-                      <li>
-                          <a href="#!">
-                              <i class="ti-layout-sidebar-left"></i> Logout
-                          </a>
-                      </li>
-                  </ul>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </nav>
+     <jsp:include page='../include/header.jsp' />
       <div class="pcoded-main-container">
         <div class="pcoded-wrapper">
           <!-- left menu start -->
-          <nav class="pcoded-navbar">
-            <div class="pcoded-inner-navbar main-menu">
-              <div class="">
-                <div class="main-menu-header">
-                  <img class="img-50" src="../assets/images/avatar-blank.png" alt="User-Profile-Image">
-                  <div class="user-details">
-                    <span id="more-details">Union</span>
-                  </div>
-                </div>
-              </div>
-              <ul class="pcoded-item pcoded-left-item">
-                <li class="">
-                  <a href="dashboard.html">
-                    <span class="pcoded-micon"><i class="ti-home"></i></span>
-                    <span class="pcoded-mtext">대시보드</span>
-                    <span class="pcoded-mcaret"></span>
-                  </a>
-                </li>
-                <li class="">
-                  <a href="period.html">
-                    <span class="pcoded-micon"><i class="ti-bar-chart-alt"></i></span>
-                    <span class="pcoded-mtext">통계보고서</span>
-                    <span class="pcoded-mcaret"></span>
-                  </a>
-                </li>
-                <li class="pcoded-hasmenu">
-                  <a href="javascript:void(0)">
-                    <span class="pcoded-micon"><i class="ti-world"></i></span>
-                    <span class="pcoded-mtext">포털관리</span>
-                    <span class="pcoded-mcaret"></span>
-                  </a>
-                  <ul class="pcoded-submenu">
-                    <li class="">
-                      <a href="mngNaver.html">
-                        <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                        <span class="pcoded-mtext">네이버관리</span>
-                        <span class="pcoded-mcaret"></span>
-                      </a>
-                    </li>
-                    <li class=" ">
-                      <a href="mngViral.html">
-                        <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                        <span class="pcoded-mtext">바이럴관리</span>
-                        <span class="pcoded-mcaret"></span>
-                      </a>
-                    </li>
-                  </ul>
-                </li>
-                <li class="pcoded-hasmenu">
-                  <a href="javascript:void(0)">
-                    <span class="pcoded-micon"><i class="ti-facebook"></i></span>
-                    <span class="pcoded-mtext">SNS관리</span>
-                    <span class="pcoded-mcaret"></span>
-                  </a>
-                  <ul class="pcoded-submenu">
-                    <li class=" ">
-                      <a href="mngFacebook.html">
-                        <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                        <span class="pcoded-mtext">페이스북관리</span>
-                        <span class="pcoded-mcaret"></span>
-                      </a>
-                    </li>
-                    <li class=" ">
-                      <a href="mngTwitter.html">
-                        <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                        <span class="pcoded-mtext">트위터관리</span>
-                        <span class="pcoded-mcaret"></span>
-                      </a>
-                    </li>
-                    <li class=" ">
-                      <a href="mngInstagram.html">
-                        <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                        <span class="pcoded-mtext">인스타그램관리</span>
-                        <span class="pcoded-mcaret"></span>
-                      </a>
-                    </li>
-                  </ul>
-                </li>
-                <li class="pcoded-hasmenu">
-                  <a href="javascript:void(0)">
-                    <span class="pcoded-micon"><i class="ti-notepad"></i></span>
-                    <span class="pcoded-mtext">언론사관리</span>
-                    <span class="pcoded-mcaret"></span>
-                  </a>
-                  <ul class="pcoded-submenu">
-                    <li class=" ">
-                      <a href="mngNews.html">
-                        <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                        <span class="pcoded-mtext">언론사 기사글 관리</span>
-                        <span class="pcoded-mcaret"></span>
-                      </a>
-                    </li>
-                    <li class=" ">
-                      <a href="mngPress.html">
-                        <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                        <span class="pcoded-mtext">기자관리</span>
-                        <span class="pcoded-mcaret"></span>
-                      </a>
-                    </li>
-                  </ul>
-                </li>
-                <li class="pcoded-hasmenu">
-                  <a href="javascript:void(0)">
-                    <span class="pcoded-micon"><i class="ti-harddrives"></i></span>
-                    <span class="pcoded-mtext">운영관리</span>
-                    <span class="pcoded-mcaret"></span>
-                  </a>
-                  <ul class="pcoded-submenu">
-                    <li class=" ">
-                      <a href="mngCompany.html">
-                        <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                        <span class="pcoded-mtext">거래처관리</span>
-                        <span class="pcoded-mcaret"></span>
-                      </a>
-                    </li>
-                    <li class=" ">
-                      <a href="monitoring.html">
-                        <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                        <span class="pcoded-mtext">모니터링현황</span>
-                        <span class="pcoded-mcaret"></span>
-                      </a>
-                    </li>
-                  </ul>
-                </li>
-                <li class="active">
-                  <a href="mngKeyword.html">
-                    <span class="pcoded-micon"><i class="ti-ink-pen"></i></span>
-                    <span class="pcoded-mtext">키워드관리</span>
-                    <span class="pcoded-mcaret"></span>
-                  </a>
-                </li>
-                <li class="">
-                  <a href="mngExtract.html">
-                    <span class="pcoded-micon"><i class="ti-search"></i></span>
-                    <span class="pcoded-mtext">추출글관리</span>
-                    <span class="pcoded-mcaret"></span>
-                  </a>
-                </li>
-                <li class="">
-                  <a href="mngClassifiCation.html" data-i18n="nav.advance-components.main">
-                    <span class="pcoded-micon"><i class="ti-filter"></i></span>
-                    <span class="pcoded-mtext">분류글관리</span>
-                    <span class="pcoded-mcaret"></span>
-                  </a>
-                </li>
-                <li class="">
-                  <a href="mngAllList.html" data-i18n="nav.advance-components.main">
-                    <span class="pcoded-micon"><i class="ti-menu"></i></span>
-                    <span class="pcoded-mtext">전체글관리</span>
-                    <span class="pcoded-mcaret"></span>
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </nav>
+          <jsp:include page='../include/side.jsp' />
           <!-- left menu end -->
           <div class="pcoded-content">
             <div class="pcoded-inner-content">
@@ -287,9 +98,10 @@
                               <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">회사명</label>
                                 <div class="col-sm-5">
-                                  <select name="select" class="form-control" id="company">
-                                    <option value="opt1">선택</option>
-                                    <option value="opt2">쇼박스</option>
+                                  <select name="select" class="form-control" id="selectCompany">
+                                    <c:forEach items="${companyList}" var="company">
+                                    <option value="${company.company_name}">${company.company_name}</option>
+                                    </c:forEach>
                                   </select>
                                   <span class="messages"><p class="text-danger error"></p></span>
                                 </div>
@@ -302,7 +114,7 @@
                                     <span class="messages"><p class="text-danger error"></p></span>
                                   </div>
                                   <div class="col-sm-1 btn-check">
-                                    <button type="button" class="btn btn-sm btn-inverse alert-prompt" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'alert-prompt']);">
+                                    <button id="checkMainBtn" type="button" class="btn btn-sm btn-inverse alert-prompt" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'alert-prompt']);">
                                       <i class="icofont icofont icofont-ui-check"></i>
                                       중복체크
                                     </button>
@@ -311,7 +123,7 @@
                               <div class="row">
                                 <label class="col-sm-2"></label>
                                 <div class="col-sm-10">
-                                    <button type="button" class="submit btn btn-primary m-b-0">등록</button>
+                                    <button id="insertBtn" type="button" class="submit btn btn-primary m-b-0">등록</button>
                                 </div>
                               </div>
                             </form>
@@ -498,5 +310,95 @@
   <script src="../assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
   <script src="../assets/js/jquery.mousewheel.min.js"></script>
 </body>
+
+<script type="text/javascript">
+
+	//ajax 보안
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	
+	$(function() {
+		  $(document).ajaxSend(function(e, xhr, options) {
+		  	xhr.setRequestHeader(header, token);
+		  });
+	});
+	
+	
+	$(document).ready(function(){
+		
+		document.querySelector('.alert-prompt').onclick = function(){
+		    swal({
+		      title: "✓ 대표 키워드 중복체크",
+		      text: "키워드를 입력해주세요.",
+		      type: "input",
+		      showCancelButton: true,
+		      closeOnConfirm: false,
+		      inputValue:$("#keywordName").val(),
+		      inputPlaceholder: "대표 키워드 입력"
+		    }, function (inputValue) {
+		    	
+		    	$.ajax({
+
+					type : "POST",
+				  	url : "checkMain",
+			 	  	dataType : "text",
+			 	  	data : {keyword_main : inputValue},
+			  	  	success : function(data){
+			  	  	if (inputValue === false){
+				        swal.showInputError("키워드를 다시 입력해 주세요.");
+				        return false;
+				      }
+				      if (inputValue == ""){
+				        swal.showInputError("키워드를 다시 입력해 주세요.");
+				        return false;
+				      }
+				      if (data != 0) {
+				        swal.showInputError("키워드가 중복됩니다. 다시 입력해 주세요.");
+				        return false
+				      }
+				      
+				      $("#keywordName").val(inputValue);
+				      $("#keywordCheck").val("true");
+				      $("#keywordName").removeClass("form-control-danger");
+				      $("#keywordName").siblings().children("p").text("");
+				      swal("중복확인!", inputValue+"는 사용가능한 키워드입니다.", "success");
+			  	  	}
+				});
+		      
+		    });
+		  };
+		
+		  $("#insertBtn").on("click", function(){
+
+			  	var check=true;
+			    if($("#company option:selected").text() == "선택"){
+			      check = requiredMessage("company","회사명을 선택해주세요.");
+			    }
+			    if($("#keywordName").val() == ""){
+			      check = requiredMessage("keywordName","키워드를 입력해주세요.");
+			    }
+			    //키워드가 입력되어 있는데 중복체크 안했을 경우
+			    if($("#keywordName").val() != "" && $("#keywordCheck").val() == ""){
+			      check = requiredMessage("keywordName","키워드 중복확인 해주세요.");
+			    }
+			    
+			  $.ajax({
+
+					type : "POST",
+				  	url : "insertMain",
+			 	  	dataType : "text",
+			 	  	data : {keyword_main : $("#keywordName").val(), 
+			 	  			company : $("#selectCompany option:selected").val()
+			 	  		},
+			  		success : function(msg){
+			  			console.log(msg);
+			  			self.location = msg;
+			  		}
+			  });
+		  });
+		
+	}); // end ready...
+
+</script>
 
 </html>

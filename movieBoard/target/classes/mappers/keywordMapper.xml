@@ -77,5 +77,50 @@
 		order by user_idx
 	
 	</select>
+	
+	<select id="listPage" resultType="KeywordListVO">
+		select 
+			keyword_main, 
+    		count(if(keyword_property = '포함', keyword_property, null)) first,
+    		count(if(keyword_property = '제외', keyword_property, null)) second,
+    		createDate,
+    		(select company_name from user_data  b where b.user_idx = a.user_idx) company
+		from keyword_data a 
+		group by keyword_main
+	
+	</select>
+	
+	<insert id="createMain">
+		insert keyword_data (user_idx, keyword_main)
+		values ((select user_idx from user_data b where company_name = #{company}), #{keyword_main})
+	</insert>
+	
+	<select id="listByMain">
+		select * from keyword_data where keyword_main = #{keyword_main}
+	
+	</select>
+	
+	<insert id="createKeyword">
+		insert keyword_data (user_idx, keyword_main, keyword, keyword_property, keyword_type)
+		values
+			(
+		    (select user_idx from keyword_data a where keyword_main = #{keyword_main} group by keyword_main),
+		    #{keyword_main},
+		    #{keyword},
+		    #{keyword_property},
+		    #{keyword_type}
+		    )
+		
+	</insert>
+	
+	<delete id="deleteMain">
+		delete from keyword_data where keyword_main = #{keyword_main}
+	
+	</delete>
+
+	<select id="checkMain" resultType="Integer">
+		select count(*) from keyword_data where keyword_main = #{keyword_main}
+	
+	</select>
 
 </mapper>
