@@ -15,7 +15,6 @@
       <![endif]-->
   <!-- Meta -->
   <meta charset="utf-8">
-  <meta charset="utf-8">
   <meta name="_csrf" content="${_csrf.token}" />
   <!-- default header name is X-CSRF-TOKEN -->
   <meta name="_csrf_header" content="${_csrf.headerName}"/>
@@ -262,7 +261,7 @@
                           <div class="card">
                             <div class="card-header">
                               <h5>검출량그래프</h5>
-                              <span>최근 24시간 검출된 데이터 그래프</span>
+                              <span>데이터 그래프</span>
                               <div class="card-header-right">
                                 <i class="icofont icofont-rounded-down"></i>
                                 <i class="icofont icofont-refresh" data-value="chart2"></i>

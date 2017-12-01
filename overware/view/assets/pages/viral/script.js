@@ -11,12 +11,9 @@ $(document).ready(function() {
   $("i[data-value='chart2']").on("click",linechart2);
 
   $('#time').timepicker({
-    timeFormat: 'h:mm p',
+    timeFormat: 'H:mm',
     interval: 60,
-    minTime: '12:00am',
-    maxTime: '11:00pm',
-    defaultTime: '12:00am',
-    startTime: '12:00am',
+    defaultTime: '00:00',
     dynamic: true,
     dropdown: true,
     scrollbar: true

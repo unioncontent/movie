@@ -59,6 +59,6 @@ public class KeywordDAOTester {
 	@Test
 	public void testDelete() {
 		
-		dao.delete(1);
+		//dao.delete(1);
 	}
 }
