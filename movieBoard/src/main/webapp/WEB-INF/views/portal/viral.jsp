@@ -523,11 +523,9 @@
     						+ "&selectKey=" + $('#selectKeyword option:selected').val();
     }
     	
-		
-}
   
-	/* //날짜 계산 함수
-    function getDate(type){
+	 //날짜 계산 함수
+    /*function getDate(type){
   		console.log("TYPE : " + type);
   		var date = new Date();
 

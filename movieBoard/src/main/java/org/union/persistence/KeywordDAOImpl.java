@@ -47,9 +47,9 @@ public class KeywordDAOImpl implements KeywordDAO {
 	}
 
 	@Override
-	public void delete(Integer keyword_idx) {
+	public void delete(String keyword) {
 		try {
-			session.delete(namespace + "delete", keyword_idx);
+			session.delete(namespace + "delete", keyword);
 			
 		} catch (Exception e) {
 			e.printStackTrace();

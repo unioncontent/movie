@@ -148,7 +148,7 @@
 		where 
 			keyword is not null
 		<include refid="search"></include>
-		order by viral_time desc, keyword, viral_rank
+		order by portal_name desc, viral_time desc, keyword, viral_rank;
 		
 	</select>
 	

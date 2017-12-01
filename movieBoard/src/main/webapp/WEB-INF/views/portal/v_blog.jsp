@@ -294,30 +294,15 @@
                                                 <td>${viralVO.viral_title}<a href="${viralVO.url}"></a></td>
                                                 <td>${viralVO.keyword}</td>
                                                 <td>${viralVO.viral_time}</td>
-                                                <c:if test="${viralVO.viral_isUser == 1}">
-                                                <td>본사</td>
-                                              	</c:if>
-                                              	<c:if test="${viralVO.viral_isUser == 2}">
-                                              	<td>외부</td>
-                                              	</c:if>
+                                                <td>
+                                                <c:if test="${viralVO.viral_isUser == 1}">본사</c:if>
+                                              	<c:if test="${viralVO.viral_isUser == 2}">외부</c:if>
+                                              	</td>
                                                 <td>
                                                   <button class="btn btn-inverse btn-modal btn-sm"><i class="icofont icofont-chart-bar-graph m-r-0"></i></button>
                                                 </td>
                                               </tr>
                                               </c:forEach>
-                                              <tr>
-                                                <th scope="row">2</th>
-                                                <td>2017-10-30</td>
-                                                <td>네이버</td>
-                                                <td>온수매트 싱글 추천 : 일월 온수매트<a href="url"></a></td>
-                                                <td>20</td>
-                                                <td>싱글온수매트</td>
-                                                <td>2017-10-30 14:00</td>
-                                                <td>외부</td>
-                                                <td>
-                                                  <button class="btn btn-inverse btn-modal btn-sm"><i class="icofont icofont-chart-bar-graph m-r-0"></i></button>
-                                                </td>
-                                              </tr>
                                           </tbody>
                                         </table>
                                       </div>
@@ -514,7 +499,7 @@
 
 		var $selectSite = $("#selectSite");
 
-		if(selectOption != 'undefined'){
+		if(siteOption != 'undefined'){
 			for(var i = 0; i < $selectSite[0].length; i++ ){
 				if($selectSite[0][i].value == siteOption){
 					$selectSite[0][i].selected = 'selected';
@@ -652,10 +637,10 @@
 	
 	function searchList() {
 
-    	self.location = "viral?" 
+    	self.location = "v_blog?" 
         					+ "&company=" + $("#selectCompany option:selected").val()
     						+ "&selectKey=" + $('#selectKeyword option:selected').val()
-    						+ "$portal_name=" + $("#selectSite option:selected").val();
+    						+ "&portal_name=" + $("#selectSite option:selected").val();
     }
 
 </script>

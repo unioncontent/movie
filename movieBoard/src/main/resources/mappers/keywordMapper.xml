@@ -41,7 +41,7 @@
 		delete from
 			keyword_data
 		where
-			keyword_idx = #{keyword_idx}
+			keyword = #{keyword}
 		
 	</delete>
 	
@@ -95,7 +95,7 @@
 		values ((select user_idx from user_data b where company_name = #{company}), #{keyword_main})
 	</insert>
 	
-	<select id="listByMain">
+	<select id="listByMain" resultType="KeywordVO">
 		select * from keyword_data where keyword_main = #{keyword_main}
 	
 	</select>

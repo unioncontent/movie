@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,6 +15,9 @@
       <![endif]-->
   <!-- Meta -->
   <meta charset="utf-8">
+  <meta name="_csrf" content="${_csrf.token}" />
+  <!-- default header name is X-CSRF-TOKEN -->
+  <meta name="_csrf_header" content="${_csrf.headerName}"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="description" content="Phoenixcoded">
@@ -59,204 +64,11 @@
   <div id="pcoded" class="pcoded">
     <div class="pcoded-overlay-box"></div>
     <div class="pcoded-container navbar-wrapper">
-      <nav class="navbar header-navbar pcoded-header" header-theme="theme4">
-        <div class="navbar-wrapper">
-          <div class="navbar-logo">
-            <a class="mobile-menu" id="mobile-collapse" href="#!">
-              <i class="ti-menu"></i>
-            </a>
-            <a href="dashboard.html">
-              <img class="img-fluid" src="../assets/images/logo.png" alt="Theme-Logo" />
-            </a>
-            <a class="mobile-options">
-              <i class="ti-more"></i>
-            </a>
-          </div>
-          <div class="navbar-container container-fluid">
-            <div>
-              <ul class="nav-left">
-                <li>
-                  <div class="sidebar_toggle"><a href="javascript:void(0)"><i class="ti-menu"></i></a></div>
-                </li>
-              </ul>
-              <ul class="nav-right">
-                <li class="user-profile header-notification">
-                  <a href="#!">
-                      <img src="../assets/images/user.png" alt="User-Profile-Image">
-                      <span>Union</span>
-                      <i class="ti-angle-down"></i>
-                  </a>
-                  <ul class="show-notification profile-notification">
-                      <li>
-                          <a href="#!">
-                              <i class="ti-layout-sidebar-left"></i> Logout
-                          </a>
-                      </li>
-                  </ul>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </nav>
+      <jsp:include page='../include/header.jsp' />
       <div class="pcoded-main-container">
         <div class="pcoded-wrapper">
           <!-- left menu start -->
-          <nav class="pcoded-navbar">
-            <div class="pcoded-inner-navbar main-menu">
-              <div class="">
-                <div class="main-menu-header">
-                  <img class="img-50" src="../assets/images/avatar-blank.png" alt="User-Profile-Image">
-                  <div class="user-details">
-                    <span id="more-details">Union</span>
-                  </div>
-                </div>
-              </div>
-              <ul class="pcoded-item pcoded-left-item">
-                <li class="">
-                  <a href="dashboard.html">
-                    <span class="pcoded-micon"><i class="ti-home"></i></span>
-                    <span class="pcoded-mtext" data-i18n="nav.dash.main">대시보드</span>
-                    <span class="pcoded-mcaret"></span>
-                  </a>
-                </li>
-                <li class="">
-                  <a href="period.html">
-                    <span class="pcoded-micon"><i class="ti-bar-chart-alt"></i></span>
-                    <span class="pcoded-mtext">통계보고서</span>
-                    <span class="pcoded-mcaret"></span>
-                  </a>
-                </li>
-                <li class="pcoded-hasmenu">
-                  <a href="javascript:void(0)">
-                    <span class="pcoded-micon"><i class="ti-world"></i></span>
-                    <span class="pcoded-mtext">포털관리</span>
-                    <span class="pcoded-mcaret"></span>
-                  </a>
-                  <ul class="pcoded-submenu">
-                    <li class="">
-                      <a href="mngNaver.html">
-                        <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                        <span class="pcoded-mtext">네이버관리</span>
-                        <span class="pcoded-mcaret"></span>
-                      </a>
-                    </li>
-                    <li class=" ">
-                      <a href="mngViral.html">
-                        <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                        <span class="pcoded-mtext">바이럴관리</span>
-                        <span class="pcoded-mcaret"></span>
-                      </a>
-                    </li>
-                  </ul>
-                </li>
-                <li class="pcoded-hasmenu">
-                  <a href="javascript:void(0)">
-                    <span class="pcoded-micon"><i class="ti-facebook"></i></span>
-                    <span class="pcoded-mtext">SNS관리</span>
-                    <span class="pcoded-mcaret"></span>
-                  </a>
-                  <ul class="pcoded-submenu">
-                    <li class=" ">
-                      <a href="mngFacebook.html">
-                        <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                        <span class="pcoded-mtext">페이스북관리</span>
-                        <span class="pcoded-mcaret"></span>
-                      </a>
-                    </li>
-                    <li class=" ">
-                      <a href="mngTwitter.html">
-                        <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                        <span class="pcoded-mtext">트위터관리</span>
-                        <span class="pcoded-mcaret"></span>
-                      </a>
-                    </li>
-                    <li class=" ">
-                      <a href="mngInstagram.html">
-                        <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                        <span class="pcoded-mtext">인스타그램관리</span>
-                        <span class="pcoded-mcaret"></span>
-                      </a>
-                    </li>
-                  </ul>
-                </li>
-                <li class="pcoded-hasmenu">
-                  <a href="javascript:void(0)">
-                    <span class="pcoded-micon"><i class="ti-notepad"></i></span>
-                    <span class="pcoded-mtext">언론사관리</span>
-                    <span class="pcoded-mcaret"></span>
-                  </a>
-                  <ul class="pcoded-submenu">
-                    <li class=" ">
-                      <a href="mngNews.html">
-                        <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                        <span class="pcoded-mtext">언론사 기사글 관리</span>
-                        <span class="pcoded-mcaret"></span>
-                      </a>
-                    </li>
-                    <li class=" ">
-                      <a href="mngPress.html">
-                        <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                        <span class="pcoded-mtext">기자관리</span>
-                        <span class="pcoded-mcaret"></span>
-                      </a>
-                    </li>
-                  </ul>
-                </li>
-                <li class="pcoded-hasmenu">
-                  <a href="javascript:void(0)">
-                    <span class="pcoded-micon"><i class="ti-harddrives"></i></span>
-                    <span class="pcoded-mtext">운영관리</span>
-                    <span class="pcoded-mcaret"></span>
-                  </a>
-                  <ul class="pcoded-submenu">
-                    <li class=" ">
-                      <a href="mngCompany.html">
-                        <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                        <span class="pcoded-mtext">거래처관리</span>
-                        <span class="pcoded-mcaret"></span>
-                      </a>
-                    </li>
-                    <li class=" ">
-                      <a href="monitoring.html">
-                        <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                        <span class="pcoded-mtext">모니터링현황</span>
-                        <span class="pcoded-mcaret"></span>
-                      </a>
-                    </li>
-                  </ul>
-                </li>
-                <li class="active">
-                  <a href="mngKeyword.html">
-                    <span class="pcoded-micon"><i class="ti-ink-pen"></i></span>
-                    <span class="pcoded-mtext">키워드관리</span>
-                    <span class="pcoded-mcaret"></span>
-                  </a>
-                </li>
-                <li class="">
-                  <a href="mngExtract.html">
-                    <span class="pcoded-micon"><i class="ti-search"></i></span>
-                    <span class="pcoded-mtext">추출글관리</span>
-                    <span class="pcoded-mcaret"></span>
-                  </a>
-                </li>
-                <li class="">
-                  <a href="mngClassifiCation.html" data-i18n="nav.advance-components.main">
-                    <span class="pcoded-micon"><i class="ti-filter"></i></span>
-                    <span class="pcoded-mtext">분류글관리</span>
-                    <span class="pcoded-mcaret"></span>
-                  </a>
-                </li>
-                <li class="">
-                  <a href="mngAllList.html" data-i18n="nav.advance-components.main">
-                    <span class="pcoded-micon"><i class="ti-menu"></i></span>
-                    <span class="pcoded-mtext">전체글관리</span>
-                    <span class="pcoded-mcaret"></span>
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </nav>
+          <jsp:include page='../include/side.jsp' />
           <!-- left menu end -->
           <div class="pcoded-content">
             <div class="pcoded-inner-content">
@@ -295,14 +107,11 @@
                                   <tr class="bg-inverse">
                                     <th width="5%">컨텐츠명</th>
                                     <th width="5%">CP사</th>
-                                    <th width="5%">설명</th>
-                                    <th width="5%">컨텐츠ID</th>
                                   </tr>
                                 </thead>
                                 <tbody>
                                   <tr>
-                                    <td>
-                                      산양산삼
+                                    <td>${keyword_main}
                                       <div class="label-main">
                                         <label class="label label-success">관리</label>
                                       </div>
@@ -310,9 +119,7 @@
                                         <label class="label label-danger">비관리</label>
                                       </div> -->
                                     </td>
-                                    <td>청유심</td>
-                                    <td></td>
-                                    <td>12</td>
+                                    <td>${company_name}</td>
                                   </tr>
                                 </tbody>
                               </table>
@@ -349,33 +156,35 @@
                                         <div class="form-radio">
                                           <div class="radio radiofill radio-primary radio-inline">
                                             <label>
-                                              <input type="radio" name="member" value="free" data-bv-field="member">
+                                              <input type="radio" name="property" value="movie" data-bv-field="member">
                                               <i class="helper"></i>영화
                                             </label>
                                           </div>
                                           <div class="radio radiofill radio-primary radio-inline">
                                             <label>
-                                              <input type="radio" name="member" value="personal" data-bv-field="member">
+                                              <input type="radio" name="property" value="actor" data-bv-field="member">
                                               <i class="helper"></i>배우
                                             </label>
                                           </div>
                                           <div class="radio radiofill radio-primary radio-inline">
                                             <label>
-                                              <input type="radio" name="member" value="personal" data-bv-field="member">
+                                              <input type="radio" name="property" value="etc" data-bv-field="member">
                                               <i class="helper"></i>기타
                                             </label>
                                           </div>
                                         </div>
                                       </td>
-                                      <td><button class="btn btn-success btn-sm" id="puls"><i class="icofont icofont-plus" style="margin-right:0"></i></button></td>
+                                      <td><button class="btn btn-success btn-sm" id="insertKeywordBtn"><i class="icofont icofont-plus" style="margin-right:0"></i></button></td>
                                     </tr>
+                                    <c:forEach items="${keywordList}" var="keyword" varStatus="index">
                                     <tr>
-                                      <th scope="row"  class="centerTh">1</th>
-                                      <td>산양산삼</td>
-                                      <td></td>
-                                      <td></td>
-                                      <td><button class="btn btn-danger btn-sm"><i class="icofont icofont-garbage" style="margin-right:0"></i></button></td>
+                                      <th scope="row"class="centerTh">${index.count}</th>
+                                      <td ><c:if test="${keyword.keyword_property == '포함'}">${keyword.keyword}</c:if></td>
+                                      <td><c:if test="${keyword.keyword_property == '제외'}">${keyword.keyword}</c:if></td>
+                                      <td>${keyword.keyword_type}</td>
+                                      <td><button class="remove_keyword btn btn-danger btn-sm"><i class="icofont icofont-garbage" style="margin-right:0"></i></button></td>
                                     </tr>
+                                    </c:forEach>
                                   </tbody>
                                 </table>
                               </div>
@@ -472,4 +281,131 @@
   <script src="../assets/js/jquery.mousewheel.min.js"></script>
 </body>
 
+<script type="text/javascript">
+
+	//ajax 보안
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	
+	$(function() {
+		  $(document).ajaxSend(function(e, xhr, options) {
+		  	xhr.setRequestHeader(header, token);
+		  });
+	});
+
+	$(document).ready(function(){
+		
+		// 삭제 버튼 클릭시
+		$(".remove_keyword").on("click", function(event){
+			
+			var div = event.target.parentNode;
+			
+			console.log(div);
+			console.log(div.type);
+			
+			if(div.type == 'submit'){
+				console.log("button click...");
+				div = div.parentNode;
+			} 
+
+			var tr = div.parentNode;
+			console.log(tr.children);
+			
+			var td = tr.children[1];
+			console.log(td);
+			
+			var keyword_main = td.childNodes[0];
+			
+
+			if(keyword_main == undefined){
+				td = tr.children[2];
+				console.log(td);
+				
+				keyword_main = td.childNodes[0];
+				
+			}
+			
+			console.log(keyword_main.data);
+			
+			$.ajax({
+
+				type : "POST",
+			  	url : "removeKeyword",
+		 	  	dataType : "text",
+		 	  	data : {keyword : keyword_main.data}
+			
+			});
+			
+			setTimeout(function(){ location.reload(); }, 1000);
+		});
+		
+		
+		// 추가 버튼 클릭시
+		$("#insertKeywordBtn").on("click", function(){
+
+			var pSearch = $("#pSearch").val();
+
+			var dSearch = $("#dSearch").val();
+					
+
+			if(pSearch != ''){
+				$.ajax({
+
+					type : "POST",
+				  	url : "insertKeyword",
+			 	  	dataType : "json",
+			 	  	data : {keyword_main : '${keyword_main}', keyword : pSearch, keyword_property : '포함',
+			 	  			keyword_type : getType()}
+				
+				});
+			}
+			
+			if(dSearch != ''){
+				$.ajax({
+
+					type : "POST",
+				  	url : "insertKeyword",
+			 	  	dataType : "json",
+			 	  	data : {keyword_main : '${keyword_main}', keyword : dSearch, keyword_property : '제외',
+			 	  			keyword_type : getType()}
+				
+				});
+				
+			}
+			
+			
+			setTimeout(function(){ location.reload(); }, 1000);
+		});
+		
+	});// end ready...
+	
+	
+	function getType(){
+		
+		if($("input[name=property]:checked")[0] == undefined){
+
+			return '';
+		}else{
+
+			var type = $("input[name=property]:checked")[0].value;
+			
+			if(type == 'movie'){
+				return '영화';
+			}
+			
+			if(type == 'actor'){
+				return '배우';
+			}
+			if(type == 'etc'){
+				return '기타';
+			}
+			
+		}
+		
+	}
+	
+
+</script>
+
 </html>
+

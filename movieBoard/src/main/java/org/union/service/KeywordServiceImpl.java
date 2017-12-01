@@ -133,4 +133,10 @@ public class KeywordServiceImpl implements KeywordService{
 		keywordDAO.deleteMain(keyword_main);
 	}
 
+	@Override
+	public void remove(String keyword) {
+
+		keywordDAO.delete(keyword);
+	}
+
 }

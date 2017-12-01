@@ -125,9 +125,9 @@
                                 <td>${keyword.second }</td>
                                 <td class="text-center">
   								  <div class="btn-group btn-group-md text-center" style="padding-right: 0;">
-    							    <a href="modify" class="tabledit-edit-button btn btn-primary waves-effect waves-light" style="margin-right: 5px;" data-toggle="tooltip" data-placement="top" data-original-title="키워드 추가">
+    							    <button type="button" class="tabledit-edit-button btn btn-primary waves-effect waves-light" style="margin-right: 5px;" data-toggle="tooltip" data-placement="top" data-original-title="키워드 추가">
       								  <span class="icofont icofont-ui-edit"></span>
-    								</a>
+    								</button>
     								<button type="button" class="tabledit-delete-button btn btn-danger waves-effect waves-light alert-confirm1" data-toggle="tooltip" data-placement="top" data-original-title="삭제">
       								  <span class="icofont icofont-ui-delete"></span>
     								</button>
@@ -241,6 +241,28 @@
 	});	
 
 	$(document).ready(function(){
+		
+		// 수정 버튼 클릭
+		$(".tabledit-edit-button").on("click", function(event){
+			var div = event.target.parentNode;
+			
+			if(div.type == 'button'){
+				console.log("button click...");
+				div = div.parentNode;
+			} 
+
+			var tr = div.parentNode.parentNode;
+			console.log(tr);
+			
+			var td = tr.children[3];
+			console.log(td);
+			
+			var keyword_main = td.childNodes[0];
+			console.log(keyword_main.data);
+			
+			self.location = "modify?keyword_main=" + keyword_main.data;
+			
+		});
 
 		// 삭제 버튼 클릭
 		$(".tabledit-delete-button").on("click", function(event){

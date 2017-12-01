@@ -14,7 +14,7 @@ public interface KeywordDAO {
 	
 	public void update(KeywordVO vo);
 	
-	public void delete(Integer keyword_idx);
+	public void delete(String keyword);
 	
 	public List<KeywordVO> listByUser(Integer user_idx);
 	

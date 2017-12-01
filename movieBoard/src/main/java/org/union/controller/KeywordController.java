@@ -1,15 +1,19 @@
 package org.union.controller;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.union.domain.KeywordListVO;
+import org.union.domain.KeywordVO;
 import org.union.service.KeywordService;
 import org.union.service.UserService;
 
@@ -41,6 +45,7 @@ public class KeywordController {
 		model.addAttribute("companyList", userService.listAll());
 	}
 	
+	
 	@ResponseBody
 	@PostMapping("/checkMain")
 	public Integer checkMainPOST(String keyword_main) {
@@ -64,10 +69,6 @@ public class KeywordController {
 		return "keyword";
 	}
 	
-	@GetMapping("/modify")
-	public void modifyGET() {
-		logger.info("keywordGET called....");
-	}
 	
 	@ResponseBody
 	@PostMapping("/removeMain")
@@ -79,4 +80,42 @@ public class KeywordController {
 		return "success";
 	}
 	
+	@GetMapping("/modify")
+	public void modifyGET(@ModelAttribute("keyword_main") String keyword_main, Model model) {
+		logger.info("keywordGET called....");
+		
+		logger.info("keyword_main: " + keyword_main);
+		
+		List<KeywordVO> list = keywordService.listByMain(keyword_main);
+		
+		logger.info(list.toString());
+		
+		model.addAttribute("keyword_main", keyword_main);
+		model.addAttribute("company_name", userService.view(list.get(0).getUser_idx()).getCompany_name());
+		
+		model.addAttribute("keywordList", list);
+		
+	}
+	
+	@ResponseBody
+	@PostMapping("/insertKeyword")
+	public void insertKeywordPOST(KeywordVO vo) {
+		logger.info("insertKeywordPOST called....");
+		
+		logger.info("keywordVO: " + vo);
+		
+		keywordService.insertKeyword(vo);
+	}
+	
+	
+	@ResponseBody
+	@PostMapping("/removeKeyword")
+	public void removeKeywordPOST(String keyword) {
+		logger.info("removeKeywordPOST called....");
+		
+		logger.info("keyword: " + keyword);
+		
+		keywordService.remove(keyword);
+		
+	}
 }

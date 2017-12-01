@@ -9,6 +9,8 @@ import org.union.domain.KeywordVO;
 public interface KeywordService {
 
 	
+	public void remove(String keyword);
+	
 	public List<KeywordVO> listByUser(Integer user_idx);
 	 
 	public List<ExtractVO> viewByKeyword(List<ExtractVO> list);
