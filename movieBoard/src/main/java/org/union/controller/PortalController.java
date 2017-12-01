@@ -425,7 +425,7 @@ public class PortalController {
 		}*/
 		
 		// 사이트 미설정시
-		if(cri.getPortal_name() == null) {
+		if(cri.getPortal_name() == null || cri.getPortal_name().equals("사이트")) {
 			cri.setPortal_type("all");
 		}
 
@@ -440,7 +440,10 @@ public class PortalController {
 		model.addAttribute("blog1", viralService.getSearchInCount(cri));
 		model.addAttribute("blog2", viralService.getSearchOutCount(cri));
 		
-		model.addAttribute("blogList", viralService.searchAllList(cri));
+		if(cri.getCompany() != null) {
+			model.addAttribute("blogList", viralService.searchAllList(cri));
+		}
+		
 	}
 	
 	@GetMapping("/v_cafe")
@@ -468,6 +471,8 @@ public class PortalController {
 	public List<GraphVO> historyGraphPOST(String url){
 		logger.info("historyGraphPOST called....");
 		
-		return viralService.getHistoryRank(url);
+		List<GraphVO> list=  viralService.getHistoryRank(url);
+		
+		return list;
 	}
 }

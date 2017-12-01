@@ -131,6 +131,7 @@
                           </c:if>
                         </select>
                         <select id="selectSite" name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left">
+                          <option value="사이트">사이트</option>
                           <option value="네이버">네이버</option>
                           <option value="다음">다음</option>
                         </select>
@@ -286,6 +287,7 @@
                                             </tr>
                                           </thead>
                                           <tbody>
+                                              <c:if test="${blogList eq null }"><h3>회사를 선택해주세요.</h3></c:if>                                          	  
                                           	  <c:forEach items="${blogList}" var="viralVO">
                                               <tr>
                                                 <th scope="row">${viralVO.viral_rank}</th>
@@ -507,6 +509,8 @@
 			}
 		}
 		
+		$selectSite[0][0].disabled = true;
+		
 		// 사이트 선택시
 		$selectSite.change(function(){
 			console.log($selectSite.val());
@@ -519,102 +523,66 @@
 		var modal = $('.btn-modal');
 		
 		modal.on('click',function(){
-			$('#history-Modal').modal('show');
-		  	setTimeout(barChart, 300);
-		  	
-		  	var a = ((modal.parent().parent()[0]).children[3]).children[0];
-		  	var url = a.getAttribute("href");
+			
+			var a = ((modal.parent().parent()[0]).children[3]).children[0];
+		  	var url = a.getAttribute("href"); 
 						  	
 		  	$.ajax({
 				type : "POST",
-			  	url : "graph",
-		 	  	dataType : "text",
+			  	url : "historyGraph",
+		 	  	dataType : "json",
 		 	  	data : {url : url},
 		  	  	success : function(list){
 		  	  		
-		  	  	var script = '[ values: ';
+		  	  	var script = '[{"values": [';
 		  	  		
-		  	  	for(var i = 0; i < list.size; i++){
+		  	  	for(var i = 0; i < list.length; i++){
 
-		  	  		var value = '[{';
-					value += '"label"' + ':' + '"' + list[i].writeDate + '"';
-					value += '"value"' + ':' + '"' + list[i].type1 + '"';
+		  	  		var value = '{';
+					value = value + '"label"' + ':' + '"' + (list[i].writeDate).split(" ")[1] + '",';
+					value += '"value"' + ':' + '' + (100- list[i].type1) + ',';
 					value += '"color"' + ':' + '"#01C0C8"';
-					value += '}],'
+					value += '},'
 					
 					script += value;
 	
 	  	  		}
+
+		  	  	script = script.slice(0, -1);
 		  	  	
-		  	  	script.substr(0, script.length -1);
-		  	  	
-		  	  	script += ']';
+		  	  	script += ']}]';
 		  	  	
 		  	  	console.log(script);
+		  	  	
+		  	  	var jsonScript = JSON.parse(script);
 
-		  	  	barChart(script);
-		  	  		
+		  	  	console.log(jsonScript);
+		  	  	barScript = jsonScript;
+
+		  	  	$('#history-Modal').modal('show');
+			  	setTimeout(barChart, 300);
+		  	  	
 		  	  	}
 		  	}); 
 		});
 	
-	
 	}); // end ready...
 
-	function barData() {
-	  return [{
-	    values: [{
-	        "label": "2017.11.01",
-	        "value": 29,
-	        "color": "#01C0C8"
-	    }, {
-	        "label": "2017.11.02",
-	        "value": 10,
-	        "color": "#01C0C8"
-	    }, {
-	        "label": "2017.11.03",
-	        "value": 6,
-	        "color": "#01C0C8"
-	    }, {
-	        "label": "2017.11.04",
-	        "value": 50,
-	        "color": "#01C0C8"
-	    }, {
-	        "label": "2017.11.05",
-	        "value": 1,
-	        "color": "#01C0C8"
-	    }, {
-	        "label": "2017.11.06",
-	        "value": 1,
-	        "color": "#01C0C8"
-	    }, {
-	        "label": "2017.11.07",
-	        "value": 10,
-	        "color": "#01C0C8"
-	    }, {
-	        "label": "2017.11.08",
-	        "value": 30,
-	        "color": "#01C0C8"
-	    }, {
-	        "label": "2017.11.09",
-	        "value": 50,
-	        "color": "#01C0C8"
-	    }, {
-	        "label": "2017.11.10",
-	        "value": 10,
-	        "color": "#01C0C8"
-	    }]
-	  }]
-	}
-
-	function barChart(barData){
+	var barScript = '';
+	
+	function barChart(){
+		console.log("barChartCalled...");
 		$('.nvd3-svg').remove();
 	  	/*Bar chart start*/
+
+	  	//var dataValue = barData;
+	  	console.log(barScript);
+	  	
 	  	nv.addGraph(function() {
 	      	var chart = nv.models.multiBarChart()
 	          	.x(function(d) { return d.label }) //Specify the data accessors.
 	          	.y(function(d) { return d.value })
-	          	.forceY([100,1]);
+	          	.forceY([0,100]);
 	      	
 	      	chart.groupSpacing(0.8);
 	      	chart.reduceXTicks(false);
@@ -622,10 +590,11 @@
 	      	chart.showControls(false);
 	      	chart.groupSpacing(0.5);
 	      	chart.yAxis.tickFormat(function(d, i){
-	        return d+"위" //"Year1 Year2, etc depending on the tick value - 0,1,2,3,4"
+	        return 100-d+"위" //"Year1 Year2, etc depending on the tick value - 0,1,2,3,4"
 	      	});
+	   		console.log(barScript);
 	      	d3.select('#barchart').append('svg')
-	          	.datum(barData)
+	          	.datum(barScript)
 	          	.call(chart);
 
 
