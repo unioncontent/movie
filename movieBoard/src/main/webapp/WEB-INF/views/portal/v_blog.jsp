@@ -256,7 +256,7 @@
                                       <h5>점유율 %</h5>
                                       <div class="text-center">
                                         <!-- data-width:그래프 넓이 / data-height:그래프 높이 / data-fgColor:그래프 색상 / data-readonly:그래프 안움직이게-->
-                                        <input type="text" class="dial" value="50" data-width="150" data-height="150" data-fgColor="#5d9cec" data-displayprevious="true" data-displayInput="true" data-readonly="true">
+                                        <input type="text" class="dial" data-width="150" data-height="150" data-fgColor="#5d9cec" data-displayprevious="true" data-displayInput="true" data-readonly="true">
                                       </div>
                                   </div>
                                 </div>
@@ -293,7 +293,7 @@
                                                 <th scope="row">${viralVO.viral_rank}</th>
                                                 <td>${viralVO.writeDate}</td>
                                                 <td>${viralVO.portal_name}</td>
-                                                <td>${viralVO.viral_title}<a href="${viralVO.url}"></a></td>
+                                                <td><a href="${viralVO.url}">${viralVO.viral_title}</a></td>
                                                 <td>${viralVO.keyword}</td>
                                                 <td>${viralVO.viral_time}</td>
                                                 <td>
@@ -446,6 +446,13 @@
 	});
 
 	$(document).ready(function(){
+
+		
+		//점유율 그래프 
+		var first = '${blog1}';
+		var second = '${blog2}';
+		
+		$(".dial").val(first/(first+second));
 		
 		// 회사 selectbox 유지.
 		var companyOption = decodeURI(window.location.href.split("company=")[1]).split("&")[0];
@@ -521,12 +528,18 @@
 		
 		// 모달 버튼 클릭시.
 		var modal = $('.btn-modal');
-		
-		modal.on('click',function(){
+		modal.on('click',function(event){
 			
-			var a = ((modal.parent().parent()[0]).children[3]).children[0];
-		  	var url = a.getAttribute("href"); 
-						  	
+		  	var button = event.target;
+
+		  	if(button.type != 'submit'){
+		  		button = $(button).parent();
+		  	}
+		  	
+		  	var tr = $(button).parent().parent()[0];
+
+		  	var url = tr.children[3].children[0].getAttribute("href");
+
 		  	$.ajax({
 				type : "POST",
 			  	url : "historyGraph",

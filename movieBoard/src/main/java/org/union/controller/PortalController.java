@@ -249,8 +249,6 @@ public class PortalController {
 	public void viralGET(@ModelAttribute("cri") SearchCriteria cri, Model model) {
 		logger.info("viralGET called....");
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
-		
 		cri.setKeyword(null);
 		cri.setTextType(null);
 		
@@ -399,36 +397,21 @@ public class PortalController {
 			cri.setSelectKey(null);
 		}
 
-		
-		/*// startDate format
-		if ("undefined".equals(cri.getStartDate())  || cri.getStartDate() == "") {
-			cri.setStartDate(null);
-		}
-		if(cri.getEndDate() == "" || "undefined".equals(cri.getEndDate())) {
-			cri.setEndDate(null);
-		}
-		
-		if(cri.getStartDate() == null && cri.getEndDate() == null) {
-			String currentDate = sdf.format(new Date());
-			currentDate = currentDate.split(":")[0];
-			currentDate = currentDate + ":00:00";
-			
-			cri.setStartDate(currentDate);
-		}
-		
-		// startDate, endDate 모두 값 O
-		if (cri.getStartDate() != null && cri.getEndDate() != null) {
-			if (cri.getStartDate().indexOf("00:00:00") < 0 && cri.getEndDate().indexOf("23:59:59") < 0) {
-				cri.setStartDate(cri.getStartDate() + " 00:00:00");
-				cri.setEndDate(cri.getEndDate() + " 23:59:59");
-			}
-		}*/
-		
 		// 사이트 미설정시
 		if(cri.getPortal_name() == null || cri.getPortal_name().equals("사이트")) {
 			cri.setPortal_type("all");
 		}
-
+		
+		if(cri.getPortal_name() != null) {
+			if(cri.getPortal_name().equals("네이버")) {
+				cri.setPortal_name("naver");
+			}
+			if(cri.getPortal_name().equals("다음")) {
+				cri.setPortal_name("daum");
+			}
+		}
+		
+		
 		// 키워드 설정 
 		// 
 
