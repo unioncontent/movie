@@ -134,7 +134,21 @@
 		order 
 			by updateDate desc
 		limit  
-			#{startPage}, #{perPageNum}
+		#{startPage}, #{perPageNum}
+		
+	</select>
+	
+	<select id="allPage" resultType="MediaVO">
+		select
+			*
+		from
+			media_data
+		where
+			url is not null
+		<include refid="search"></include>
+		order 
+			by updateDate desc
+		
 	</select>
 	
 	<select id="allPageCount" resultType="Integer">
