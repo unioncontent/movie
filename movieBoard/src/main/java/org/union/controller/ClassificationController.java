@@ -119,30 +119,29 @@ public class ClassificationController {
 		
 		PageMaker pageMaker = new PageMaker();
 		
-		// 4번 리스트기 때문에  perPageNum / 4
+		// 4번 리스트기 때문에  perPageNum / 3
 		if(cri.getPerPageNum() != 10) {
-			cri.setPerPageNum(cri.getPerPageNum()/4);
+			cri.setPerPageNum(cri.getPerPageNum()/3);
 		
 		}
 
 		Integer totalCount = communityService.getSearchCount(cri)
-							+ snsService.getSearchCount(cri)
 							+ portalService.getSearchCount(cri)
 							+ mediaService.getSearchCount(cri);
+		
+		logger.info("totalCount: " + totalCount);
 		
 		model.addAttribute("totalCount", totalCount);
 		
 		List<ExtractVO> classiList = new ArrayList<ExtractVO>();
-		logger.info("before");
+		
 		ListUtil listUtil = new ListUtil();
-		logger.info("after");
 
-		listUtil.listAddSNSList(classiList, snsService.listSearch(cri));
 		listUtil.listAddCommunityList(classiList, communityService.listSearch(cri));
 		listUtil.listAddPortalList(classiList, portalService.listSearch(cri));
 		listUtil.listAddMediaList(classiList, mediaService.listSearch(cri));
 
-		cri.setPerPageNum(cri.getPerPageNum()*4);
+		cri.setPerPageNum(cri.getPerPageNum()*3);
 		
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(totalCount);
@@ -240,10 +239,9 @@ public class ClassificationController {
 		ListUtil listUtil = new ListUtil();
 		
 		
-		listUtil.listAddSNSList(classiList, snsService.listSearch(cri));
-		listUtil.listAddCommunityList(classiList, communityService.listSearch(cri));
-		listUtil.listAddPortalList(classiList, portalService.listSearch(cri));
-		listUtil.listAddMediaList(classiList, mediaService.listSearch(cri));
+		listUtil.listAddCommunityList(classiList, communityService.listAll(cri));
+		listUtil.listAddPortalList(classiList, portalService.listAll(cri));
+		listUtil.listAddMediaList(classiList, mediaService.listAll(cri));
 		
 		ExtractComparator comparator = new ExtractComparator();
 		Collections.sort(classiList, comparator);

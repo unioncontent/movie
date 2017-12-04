@@ -29,8 +29,8 @@
 				and keyword in (select keyword from keyword_data where keyword_main = #{selectKey})
 		</if>
 		<if test="startDate != null and endDate != null">
-			and createDate <![CDATA[>]]> #{startDate}
-			and createDate <![CDATA[<]]> #{endDate}
+			and updateDate <![CDATA[>]]> #{startDate}
+			and updateDate <![CDATA[<]]> #{endDate}
 		</if>
  	</sql>
  	<sql id="search">
@@ -66,8 +66,8 @@
 				and keyword in (select keyword from keyword_data where keyword_main = #{selectKey})
 			</if>
 		<if test="startDate != null and endDate != null">
-			and createDate <![CDATA[>]]> #{startDate}
-			and createDate <![CDATA[<]]> #{endDate}
+			and updateDate <![CDATA[>]]> #{startDate}
+			and updateDate <![CDATA[<]]> #{endDate}
 		</if>
 		<if test="textType != null">
 			and textType = #{textType}
@@ -76,10 +76,11 @@
  
  	<insert id="create">
  		insert into
- 			media_data(media_name, media_title, media_content, reporter_name, reporter_ID, writeDate, last_writeDate, last_media_title, last_media_content, keyword, keyword_type, url)
+ 			media_data(media_name, media_title, media_content, reporter_name, reporter_ID, writeDate, last_writeDate, last_media_title, 
+ 			last_media_content, keyword, keyword_type, url, textType)
  		values
  			(#{media_name}, #{media_title}, #{media_content}, #{reporter_name}, #{reporter_ID}, #{writeDate}, #{last_writeDate}, #{last_media_title},
- 			 #{last_media_content}, #{keyword}, #{keyword_type}, #{url})
+ 			 #{last_media_content}, #{keyword}, #{keyword_type}, #{url}, #{textType})
  	
  	</insert>
  

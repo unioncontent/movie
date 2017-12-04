@@ -162,10 +162,10 @@
                         <div class="card">
                           <div class="card-header">
                             <select id= "selectPerPageNum" name="select" class="col-sm-1 form-control form-control-inverse m-r-10 m-b-10 p-r-5 f-left list-select">
-                                  <option id= "40" >40</option>
-                                  <option id = "80">80</option>
-                                  <option id = "160">120</option>
-                                  <option id = "200">200</option>
+                                  <option id= "30" >30</option>
+                                  <option id = "60">60</option>
+                                  <option id = "120">120</option>
+                                  <option id = "150">150</option>
                                 </select>
                                 <select id = "selectSearchType" name="select" class="col-sm-1 form-control form-control-inverse m-r-10 m-b-10 f-left search-select">
                                   <option id="t" value="t">제목</option>
@@ -633,7 +633,7 @@
 			
 			self.location = "classification?"
 							+ "company=" + $("#selectCompany option:selected").val()
-							+ "&selectkey=" + $('#selectKeyword option:selected').val();
+							+ "&selectKey=" + $('#selectKeyword option:selected').val();
 
 			//searchList();
 		});
@@ -798,7 +798,7 @@
 				//stringData  = stringData + ", 'domainType':'"+domainType+"', 'title': '" + title +"',"+
 				//"'content': '"+content + "', 'url': '" + url + "'";
 
-				if(domainType == "community"){
+				if(domain == "community"){
 					//stringData = stringData + ", 'writerIP': " + writerIP + ", 'board_number': " + board_number + "}";
 
 					$.ajax({
@@ -809,9 +809,6 @@
 					 	data : {keyword:keyword, textType:textType, domain :domain, writeDate :date,
 					 		writer :writer, domainType:domainType, title: title,content: content, url: url,
 					 		board_number : board_number, writerIP : writerIP},
-					  	error : function(e){
-					       alert('insert ajax error....');
-					  	},
 					  		success : function(){
 					  			swal("Success!", "등록 되었습니다.", "success");
 					  			console.log("success");
@@ -832,9 +829,6 @@
 					 	dataType : "text",
 					 	data : {keyword:keyword, textType:textType, domain :domain, writeDate :date,
 					 		writer :writer, domainType:domainType, title: title,content: content, url: url},
-					  	error : function(e){
-					       alert('등록 실패');
-					  	},
 					  	   success : function(){
 					  	   	   swal("Success!", "등록 되었습니다.", "success");
 					  		   console.log("success");
@@ -942,7 +936,7 @@
 	        function(){//엑셀 출력하겠다고 할 시 진행 함수
 
 	        	self.location = "excel?"+ "searchType=" + $("#selectSearchType option:selected").val()
-				  + "&keyword=" + decodeURI(window.location.href.split("&keyword=")[1]).split("&selectKey")[0]
+				  + "&keyword=" + decodeURI(window.location.href.split("&keyword=")[1]).split("&")[0]
 				  + "&selectKey=" + $('#selectKeyword option:selected').val()
 				  + "&company=" + $("#selectCompany option:selected").val()
 				  + "&textType=" + $("#selectTextType option:selected").val();

@@ -39,9 +39,9 @@
 				and keyword in (select keyword from keyword_data where keyword_main = #{selectKey})
 			</if>
 		<if test="startDate != null">
-			and createDate <![CDATA[>]]> #{startDate}
+			and updateDate <![CDATA[>]]> #{startDate}
 			<if test="endDate != null">
-				and createDate <![CDATA[<]]> #{endDate}
+				and updateDate <![CDATA[<]]> #{endDate}
 			</if>
 		</if>
 		<if test="textType != null">
@@ -52,9 +52,10 @@
  
  	<insert id="create">
  		insert into
- 			portal_data(portal_type, portal_name, portal_title, deviceType, writeDate, keyword, keyword_type, url)
+ 			portal_data(portal_type, portal_name, portal_title, deviceType, writeDate, keyword, keyword_type, url, textType)
  		values
- 			(#{portal_type}, #{portal_name}, #{portal_title}, #{deviceType}, #{writeDate}, #{keyword}, #{keyword_type}, #{url})
+ 			(#{portal_type}, #{portal_name}, #{portal_title}, #{deviceType}, #{writeDate}, #{keyword},
+ 			 #{keyword_type}, #{url}, #{textType})
  	
  	</insert>
  
