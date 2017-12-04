@@ -473,7 +473,7 @@ $(function() {
 			
 			self.location = "extract?"
 							+ "company=" + $("#selectCompany option:selected").val()
-							+ "&selectkey=" + $('#selectKeyword option:selected').val();
+							+ "&selectKey=" + $('#selectKeyword option:selected').val();
 
 			//searchList();
 		});
