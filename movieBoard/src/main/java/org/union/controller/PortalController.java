@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -18,6 +19,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+import org.union.domain.ExtractVO;
 import org.union.domain.GraphVO;
 import org.union.domain.NaverMovieVO;
 import org.union.domain.PageMaker;
@@ -29,6 +32,9 @@ import org.union.service.NaverMovieService;
 import org.union.service.PortalService;
 import org.union.service.UserService;
 import org.union.service.ViralService;
+import org.union.util.ExcelView;
+import org.union.util.ExtractComparator;
+import org.union.util.ListUtil;
 
 @Controller
 @RequestMapping("/portal/*")
@@ -398,16 +404,15 @@ public class PortalController {
 		}
 
 		// 사이트 미설정시
-		if(cri.getPortal_name() == null || cri.getPortal_name().equals("사이트")) {
-			cri.setPortal_type("all");
-		}
-		
 		if(cri.getPortal_name() != null) {
 			if(cri.getPortal_name().equals("네이버")) {
 				cri.setPortal_name("naver");
 			}
 			if(cri.getPortal_name().equals("다음")) {
 				cri.setPortal_name("daum");
+			}
+			if(cri.getPortal_name().equals("사이트")) {
+				cri.setPortal_name("all");
 			}
 		}
 		
@@ -432,21 +437,277 @@ public class PortalController {
 	@GetMapping("/v_cafe")
 	public void v_cafeGET(@ModelAttribute("cri") SearchCriteria cri, Model model) {
 		logger.info("v_cafeGET called....");
+		
+		cri.setStartDate(null);
+		cri.setEndDate(null);
+		
+		if (cri.getCompany() != null) {
+			if (cri.getCompany().isEmpty()) {
+				cri.setCompany(null);
+			}
+		}
+
+		if (cri.getCompany() == null || cri.getCompany().equals("회사")) {
+			logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+			UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
+
+			if (!vo.getUser_name().equals("union")) {
+				cri.setCompany(vo.getUser_name());
+
+			} else {
+				cri.setCompany(null);
+			}
+		}
+
+		// 회사 선택에 따른 키워드 재추출
+		if (cri.getCompany() != null) {
+			if (cri.getCompany().isEmpty() == false) {
+
+				UserVO userVO = userService.viewByName(cri.getCompany());
+				logger.info("userVO: " + userVO);
+				logger.info("keywordList: " + keywordService.listByUser(userVO.getUser_idx()));
+				model.addAttribute("modelKeywordList",
+						keywordService.listByUser(userService.viewByName(cri.getCompany()).getUser_idx()));
+			}
+		}
+		
+		if (cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey())) {
+			logger.info("selectKey is null");
+			cri.setSelectKey(null);
+		}
+
+		// 사이트 미설정시
+		if(cri.getPortal_name() != null) {
+			if(cri.getPortal_name().equals("네이버")) {
+				cri.setPortal_name("naver");
+			}
+			if(cri.getPortal_name().equals("다음")) {
+				cri.setPortal_name("daum");
+			}
+			if(cri.getPortal_name().equals("사이트")) {
+				cri.setPortal_name("all");
+			}
+		}
+		
+		
+		// 키워드 설정 
+		// 
+
+		cri.setPortal_type("cafe");
+		
+		logger.info("cri: " + cri);
+		
+		model.addAttribute("blog0", viralService.getHistoryCount(cri));
+		model.addAttribute("blog1", viralService.getSearchInCount(cri));
+		model.addAttribute("blog2", viralService.getSearchOutCount(cri));
+		
+		if(cri.getCompany() != null) {
+			model.addAttribute("blogList", viralService.searchAllList(cri));
+		}
 	}
 	
 	@GetMapping("/v_kin")
 	public void v_kinGET(@ModelAttribute("cri") SearchCriteria cri, Model model) {
 		logger.info("v_kinGET called....");
+		
+		cri.setStartDate(null);
+		cri.setEndDate(null);
+		
+		if (cri.getCompany() != null) {
+			if (cri.getCompany().isEmpty()) {
+				cri.setCompany(null);
+			}
+		}
+
+		if (cri.getCompany() == null || cri.getCompany().equals("회사")) {
+			logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+			UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
+
+			if (!vo.getUser_name().equals("union")) {
+				cri.setCompany(vo.getUser_name());
+
+			} else {
+				cri.setCompany(null);
+			}
+		}
+
+		// 회사 선택에 따른 키워드 재추출
+		if (cri.getCompany() != null) {
+			if (cri.getCompany().isEmpty() == false) {
+
+				UserVO userVO = userService.viewByName(cri.getCompany());
+				logger.info("userVO: " + userVO);
+				logger.info("keywordList: " + keywordService.listByUser(userVO.getUser_idx()));
+				model.addAttribute("modelKeywordList",
+						keywordService.listByUser(userService.viewByName(cri.getCompany()).getUser_idx()));
+			}
+		}
+		
+		if (cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey())) {
+			logger.info("selectKey is null");
+			cri.setSelectKey(null);
+		}
+
+		// 사이트 미설정시
+		if(cri.getPortal_name() != null) {
+			if(cri.getPortal_name().equals("네이버")) {
+				cri.setPortal_name("naver");
+			}
+			if(cri.getPortal_name().equals("다음")) {
+				cri.setPortal_name("daum");
+			}
+			if(cri.getPortal_name().equals("사이트")) {
+				cri.setPortal_name("all");
+			}
+		}
+		
+		cri.setPortal_type("kintip");
+		
+		logger.info("cri: " + cri);
+		
+		model.addAttribute("blog0", viralService.getHistoryCount(cri));
+		model.addAttribute("blog1", viralService.getSearchInCount(cri));
+		model.addAttribute("blog2", viralService.getSearchOutCount(cri));
+		
+		if(cri.getCompany() != null) {
+			model.addAttribute("blogList", viralService.searchAllList(cri));
+		}
 	}
 	
 	@GetMapping("/v_web")
 	public void v_webGET(@ModelAttribute("cri") SearchCriteria cri, Model model) {
 		logger.info("v_webGET called....");
+		
+		cri.setStartDate(null);
+		cri.setEndDate(null);
+		
+		if (cri.getCompany() != null) {
+			if (cri.getCompany().isEmpty()) {
+				cri.setCompany(null);
+			}
+		}
+
+		if (cri.getCompany() == null || cri.getCompany().equals("회사")) {
+			logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+			UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
+
+			if (!vo.getUser_name().equals("union")) {
+				cri.setCompany(vo.getUser_name());
+
+			} else {
+				cri.setCompany(null);
+			}
+		}
+
+		// 회사 선택에 따른 키워드 재추출
+		if (cri.getCompany() != null) {
+			if (cri.getCompany().isEmpty() == false) {
+
+				UserVO userVO = userService.viewByName(cri.getCompany());
+				logger.info("userVO: " + userVO);
+				logger.info("keywordList: " + keywordService.listByUser(userVO.getUser_idx()));
+				model.addAttribute("modelKeywordList",
+						keywordService.listByUser(userService.viewByName(cri.getCompany()).getUser_idx()));
+			}
+		}
+		
+		if (cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey())) {
+			logger.info("selectKey is null");
+			cri.setSelectKey(null);
+		}
+
+		// 사이트 미설정시
+		if(cri.getPortal_name() != null) {
+			if(cri.getPortal_name().equals("네이버")) {
+				cri.setPortal_name("naver");
+			}
+			if(cri.getPortal_name().equals("다음")) {
+				cri.setPortal_name("daum");
+			}
+			if(cri.getPortal_name().equals("사이트")) {
+				cri.setPortal_name("all");
+			}
+		}
+		
+		cri.setPortal_type("webdoc");
+		
+		logger.info("cri: " + cri);
+		
+		model.addAttribute("blog0", viralService.getHistoryCount(cri));
+		model.addAttribute("blog1", viralService.getSearchInCount(cri));
+		model.addAttribute("blog2", viralService.getSearchOutCount(cri));
+		
+		if(cri.getCompany() != null) {
+			model.addAttribute("blogList", viralService.searchAllList(cri));
+		}
 	}
 	
 	@GetMapping("/v_relation")
 	public void v_relationGET(@ModelAttribute("cri") SearchCriteria cri, Model model) {
 		logger.info("v_relationGET called....");
+		
+		cri.setStartDate(null);
+		cri.setEndDate(null);
+		
+		if (cri.getCompany() != null) {
+			if (cri.getCompany().isEmpty()) {
+				cri.setCompany(null);
+			}
+		}
+
+		if (cri.getCompany() == null || cri.getCompany().equals("회사")) {
+			logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+			UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
+
+			if (!vo.getUser_name().equals("union")) {
+				cri.setCompany(vo.getUser_name());
+
+			} else {
+				cri.setCompany(null);
+			}
+		}
+
+		// 회사 선택에 따른 키워드 재추출
+		if (cri.getCompany() != null) {
+			if (cri.getCompany().isEmpty() == false) {
+
+				UserVO userVO = userService.viewByName(cri.getCompany());
+				logger.info("userVO: " + userVO);
+				logger.info("keywordList: " + keywordService.listByUser(userVO.getUser_idx()));
+				model.addAttribute("modelKeywordList",
+						keywordService.listByUser(userService.viewByName(cri.getCompany()).getUser_idx()));
+			}
+		}
+		
+		if (cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey())) {
+			logger.info("selectKey is null");
+			cri.setSelectKey(null);
+		}
+
+		// 사이트 미설정시
+		if(cri.getPortal_name() != null) {
+			if(cri.getPortal_name().equals("네이버")) {
+				cri.setPortal_name("naver");
+			}
+			if(cri.getPortal_name().equals("다음")) {
+				cri.setPortal_name("daum");
+			}
+			if(cri.getPortal_name().equals("사이트")) {
+				cri.setPortal_name("all");
+			}
+		}
+		
+		cri.setPortal_type("relation");
+		
+		logger.info("cri: " + cri);
+		
+		model.addAttribute("blog0", viralService.getHistoryCount(cri));
+		model.addAttribute("blog1", viralService.getSearchInCount(cri));
+		model.addAttribute("blog2", viralService.getSearchOutCount(cri));
+		
+		if(cri.getCompany() != null) {
+			model.addAttribute("blogList", viralService.searchAllList(cri));
+		}
 	}
 	
 	@ResponseBody
@@ -457,5 +718,66 @@ public class PortalController {
 		List<GraphVO> list=  viralService.getHistoryRank(url);
 		
 		return list;
+	}
+	
+	@ResponseBody
+	@GetMapping("/excel")
+	public ModelAndView excelGET(@ModelAttribute("cri") ModelAndView model, ExcelView excelView, SearchCriteria cri) {
+		logger.info("excelGET called....");
+		
+		cri.setStartDate(null);
+		cri.setEndDate(null);
+		
+		if (cri.getCompany() != null) {
+			if (cri.getCompany().isEmpty()) {
+				cri.setCompany(null);
+			}
+		}
+
+		if (cri.getCompany() == null || cri.getCompany().equals("회사")) {
+			logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+			UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
+
+			if (!vo.getUser_name().equals("union")) {
+				cri.setCompany(vo.getUser_name());
+
+			} else {
+				cri.setCompany(null);
+			}
+		}
+
+		if (cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey())) {
+			logger.info("selectKey is null");
+			cri.setSelectKey(null);
+		}
+
+		// 사이트 미설정시
+		if(cri.getPortal_name() != null) {
+			if(cri.getPortal_name().equals("네이버")) {
+				cri.setPortal_name("naver");
+			}
+			if(cri.getPortal_name().equals("다음")) {
+				cri.setPortal_name("daum");
+			}
+			if(cri.getPortal_name().equals("사이트")) {
+				cri.setPortal_name("all");
+			}
+		}
+		
+		logger.info("cri: " + cri);
+
+		List<ExtractVO> classiList = new ArrayList<ExtractVO>();
+		ListUtil listUtil = new ListUtil();
+		
+		listUtil.listAddViralList(classiList, viralService.searchAllList(cri));
+		
+		ExtractComparator comparator = new ExtractComparator();
+		Collections.sort(classiList, comparator);
+		
+		
+		model.addObject("list", classiList);
+		model.setView(excelView);
+		
+		return model;
 	}
 }

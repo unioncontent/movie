@@ -168,7 +168,7 @@
 
 		var li = window.document.getElementsByClassName(domain)[0];
 		
-		li.className += " active";
+		li.className += " active pcoded-trigger";
 		
 		console.log(li);
 		
