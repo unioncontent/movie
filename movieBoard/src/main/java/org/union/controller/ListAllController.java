@@ -110,18 +110,17 @@ public class ListAllController {
 		
 		PageMaker pageMaker = new PageMaker();
 		
-		// 4번 리스트기 때문에  perPageNum / 4
+		// 3번 리스트기 때문에  perPageNum / 3
 		if(cri.getPerPageNum() != 10) {
-			cri.setPerPageNum(cri.getPerPageNum()/4);
+			cri.setPerPageNum(cri.getPerPageNum()/3);
 		
 		}
 		
 		logger.info("cri: " + cri);
 		
-		Integer totalCount = snsService.allPageCount(cri) 
-				+ communityService.allPageCount(cri)
-				+ portalService.allPageCount(cri)
-				+ mediaService.allPageCount(cri);
+		Integer totalCount = + communityService.allPageCount(cri)
+							+ portalService.allPageCount(cri)
+							+ mediaService.allPageCount(cri);
 
 		model.addAttribute("totalCount", totalCount);
 		
@@ -129,12 +128,11 @@ public class ListAllController {
 		List<ExtractVO> extractList = new ArrayList<ExtractVO>();
 		ListUtil listUtil = new ListUtil();
 		
-		listUtil.listAddSNSList(extractList, snsService.allPageList(cri));
 		listUtil.listAddCommunityList(extractList, communityService.allPageList(cri));
 		listUtil.listAddPortalList(extractList, portalService.allPageList(cri));
 		listUtil.listAddMediaList(extractList, mediaService.allPageList(cri));
 
-		cri.setPerPageNum(cri.getPerPageNum()*4);
+		cri.setPerPageNum(cri.getPerPageNum()*3);
 		
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(totalCount);
