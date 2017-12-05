@@ -191,7 +191,7 @@
                                   <div class="card-block-big card1">
                                     <h5>전체건수</h5>
                                     <ul>
-                                      <li>
+                                      <li class="p-t-10">
                                         <i class="icofont icofont-document-search"></i>
                                       </li>
                                       <li class="text-right">${blog0+blog1+blog2}</li>
@@ -252,7 +252,7 @@
                               </div> -->
                               <div class="col-md-6 col-xl-3">
                                 <div class="card user-activity-card">
-                                  <div class="card-block-big"style="padding-top: 17px;padding-bottom: 8px;">
+                                  <div class="card-block-big"style="padding-top: 17px;padding-bottom: 17px;">
                                       <h5>점유율 %</h5>
                                       <div class="text-center">
                                         <!-- data-width:그래프 넓이 / data-height:그래프 높이 / data-fgColor:그래프 색상 / data-readonly:그래프 안움직이게-->
