@@ -156,7 +156,7 @@
                               </span>
                             </div>
                             <button class="btn btn-warning alert-confirm f-right p-r-5 p-l-5 m-l-15 m-b-10" ><i class="icofont icofont-download-alt"></i>EXCEL</button>
-                            <button id="insertAllBtn" type="button" class="alert-success-msg btn btn-success waves-effect f-right p-r-5 p-l-5 m-l-15 m-b-10"><i class="icofont icofont-check-circled"></i>선택처리</button>
+                            <!-- <button id="insertAllBtn" type="button" class="alert-success-msg btn btn-success waves-effect f-right p-r-5 p-l-5 m-l-15 m-b-10"><i class="icofont icofont-check-circled"></i>선택처리</button> -->
                           </div>
                           <div class="card-block">
                             <div class="table-responsive">

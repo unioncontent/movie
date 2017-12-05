@@ -111,23 +111,21 @@ public class ExtractController {
 		
 		PageMaker pageMaker = new PageMaker();
 		
-		// 4번 리스트기 때문에  perPageNum / 4
+		// 3번 리스트기 때문에  perPageNum / 3
 		if(cri.getPerPageNum() != 10) {
-			cri.setPerPageNum(cri.getPerPageNum()/4);
+			cri.setPerPageNum(cri.getPerPageNum()/3);
 		
 		}
 		
 		logger.info("cri: " + cri);
 		
 		logger.info("community: " + communityService.getExtractCount(cri));
-		logger.info("sns: " + snsService.getExtractCount(cri));
 		logger.info("portalService: " + portalService.getExtractCount(cri));
 		logger.info("media: " + mediaService.getExtractCount(cri));
 		
-		Integer totalCount = snsService.getExtractCount(cri) 
-				+ communityService.getExtractCount(cri)
-				+ portalService.getExtractCount(cri)
-				+ mediaService.getExtractCount(cri);
+		Integer totalCount = + communityService.getExtractCount(cri)
+							+ portalService.getExtractCount(cri)
+							+ mediaService.getExtractCount(cri);
 
 		model.addAttribute("totalCount", totalCount);
 		
@@ -135,12 +133,11 @@ public class ExtractController {
 		List<ExtractVO> extractList = new ArrayList<ExtractVO>();
 		ListUtil listUtil = new ListUtil();
 		
-		listUtil.listAddList(extractList, snsService.listExtract(cri));
 		listUtil.listAddList(extractList, communityService.listExtract(cri));
 		listUtil.listAddList(extractList, portalService.listExtract(cri));
 		listUtil.listAddList(extractList, mediaService.listExtract(cri));
 
-		cri.setPerPageNum(cri.getPerPageNum()*4);
+		cri.setPerPageNum(cri.getPerPageNum()*3);
 		
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(totalCount);

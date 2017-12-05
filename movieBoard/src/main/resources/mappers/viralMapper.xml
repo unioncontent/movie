@@ -45,7 +45,7 @@
 				and portal_name = 'daum'
 			</if>
 			<if test="portal_name == 'all'.toString()">
-				and portal_name = 'naver' or portal_name = 'daum' 
+				and portal_name is not null
 			</if>
 		</if>
 		
@@ -66,8 +66,7 @@
 				and portal_type = 'relation'
 			</if>
 			<if test="portal_type == 'all'.toString()">
-				and portal_type = 'blog' or portal_type = 'cafe' or portal_type = 'kintip'
-				or portal_type = 'webdoc' or portal_type = 'relation'
+				and portal_type is not null
 			</if>
 		</if>
 		

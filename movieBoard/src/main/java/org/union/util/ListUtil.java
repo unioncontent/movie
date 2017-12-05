@@ -3,12 +3,12 @@ package org.union.util;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-import org.springframework.stereotype.Component;
 import org.union.domain.CommunityVO;
 import org.union.domain.ExtractVO;
 import org.union.domain.MediaVO;
 import org.union.domain.PortalVO;
 import org.union.domain.SNSVO;
+import org.union.domain.ViralVO;
 
 public class ListUtil {
 	
@@ -83,6 +83,33 @@ public class ListUtil {
 				vo.setCreateDate(date.format(addList.get(i).getUpdateDate()));
 				vo.setTextType(addList.get(i).getTextType());
 				vo.setWriter(addList.get(i).getCommunity_writer());
+			
+				
+				list.add(vo);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return list;
+	}
+	
+	public List<ExtractVO> listAddViralList(List<ExtractVO> list, List<ViralVO> addList) {
+
+		try {
+
+			for(int i = 0; i < addList.size(); i++) {
+				ExtractVO vo = new ExtractVO();
+				
+				vo.setDomain("viral");
+				vo.setDomainType(addList.get(i).getPortal_name());
+				vo.setKeyword(addList.get(i).getKeyword());
+				vo.setTitle(addList.get(i).getViral_title());
+				vo.setContent(addList.get(i).getPortal_type());
+				vo.setPortal_idx(addList.get(i).getViral_idx());
+				vo.setUrl(addList.get(i).getUrl());
+				vo.setCreateDate(date.format(addList.get(i).getUpdateDate()));
 			
 				
 				list.add(vo);

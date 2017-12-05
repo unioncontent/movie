@@ -15,6 +15,9 @@
       <![endif]-->
   <!-- Meta -->
   <meta charset="utf-8">
+  <meta name="_csrf" content="${_csrf.token}" />
+  <!-- default header name is X-CSRF-TOKEN -->
+  <meta name="_csrf_header" content="${_csrf.headerName}"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="description" content="Phoenixcoded">
@@ -42,6 +45,8 @@
   <link rel="stylesheet" type="text/css" href="../bower_components/bootstrap-daterangepicker/daterangepicker.css">
   <!-- jquery timepicker css -->
   <link rel="stylesheet" href="../bower_components/jquery-timepicker-1.3.5/jquery.timepicker.min.css">
+  <!-- Nvd3 chart css -->
+  <link rel="stylesheet" href="../bower_components/nvd3/build/nv.d3.css" type="text/css" media="all">
   <!-- Redial css -->
   <link rel="stylesheet" href="../assets/pages/chart/radial/css/radial.css" type="text/css" media="all">
   <!-- Style.css -->
@@ -100,41 +105,36 @@
                     <div class="row">
                       <!-- data setting start -->
                       <div class="col-md-6">
-                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left">
+                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="selectCompany">
                           <option>회사</option>
+                          <c:if test="${user.user_type == 1 }">
+                          <c:forEach items="${companyList}" var = "companyList">
+                          <option value="${companyList.user_name}">${companyList.user_name}</option>
+                          </c:forEach>
+                          </c:if>
+                          <c:if test="${user.user_type == 2}">
+                          <option value="${companyList.user_name}">${companyList.user_name}</option>
+                          </c:if>
                         </select>
-                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left">
+
+                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left" id="selectKeyword">
                           <option>키워드</option>
+                          <c:if test="${modelKeywordList == null}" >
+                          	<c:forEach items="${keywordList}" var = "keywordList">
+                          <option value="${keywordList.keyword_main}">${keywordList.keyword_main}</option>
+                          </c:forEach>
+                          </c:if>
+                          <c:if test="${modelKeywordList != null}">
+                          	<c:forEach items="${modelKeywordList}" var = "keywordList">
+                          <option value="${keywordList.keyword_main}">${keywordList.keyword_main}</option>
+                          </c:forEach>
+                          </c:if>
                         </select>
-                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left">
-                          <option>사이트</option>
-                          <option>네이버</option>
-                          <option>다음</option>
+                        <select id="selectSite" name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left">
+                          <option value="사이트">사이트</option>
+                          <option value="네이버">네이버</option>
+                          <option value="다음">다음</option>
                         </select>
-                      </div>
-                      <div class="col-md-6 input-time">
-                        <!-- date picker start -->
-                        <div class="row">
-                          <div class="btn-group float-right m-b-10 p-l-15 p-r-10" role="group">
-                            <button type="button" class="btn btn-inverse btn-sm waves-effect waves-light">당일</button>
-                            <button type="button" class="btn btn-inverse btn-sm waves-effect waves-light">전일</button>
-                            <button type="button" class="btn btn-inverse btn-sm waves-effect waves-light">최근7일</button>
-                            <button type="button" class="btn btn-inverse btn-sm waves-effect waves-light">최근30일</button>
-                          </div>
-                          <div class="input-group float-right date col p-l-15 p-r-15 m-b-10">
-                            <input type="text" id="fromDate" class="form-control form-control-inverse" value="">
-                            <span class="input-group-addon bg-inverse" onclick="$('#fromDate').click();">
-                              <span class="icofont icofont-ui-calendar"></span>
-                            </span>
-                          </div>
-                          <div class="input-group float-right date time col-sm-3 p-l-15 p-r-15 m-b-10">
-                            <input type="text" id="time" class="timepicker form-control form-control-inverse">
-                            <span class="input-group-addon bg-inverse" onclick="$('#time').click();">
-                              <span class="icofont icofont-clock-time"></span>
-                            </span>
-                          </div>
-                        </div>
-                        <!-- date picker end -->
                       </div>
                       <!-- data setting end -->
                       <div class="col-lg-12">
@@ -194,7 +194,7 @@
                                       <li>
                                         <i class="icofont icofont-document-search"></i>
                                       </li>
-                                      <li class="text-right">300건</li>
+                                      <li class="text-right">${blog0+blog1+blog2}</li>
                                     </ul>
                                   </div>
                                 </div>
@@ -203,26 +203,20 @@
                                 <div class="card user-activity-card">
                                   <div class="card-header">
                                     <h5><i class="icofont icofont-ui-v-card"></i></h5>
-                                    <h5>전체 계정 현황</h5>
+                                    <h5>전체 카페 현황</h5>
                                   </div>
                                   <div class="card-block-big">
                                     <div class="row">
                                       <div class="col-sm-6">
                                         <div class="text-center">
-                                          <h1 class="text-inverse f-w-600">150</h1>
-                                          <h6 class="text-muted m-t-10">본사계정</h6>
-                                        </div>
-                                      </div>
-                                      <div class="col-sm-6">
-                                        <div class="text-center">
-                                          <h1 class="text-muted f-w-600">150</h1>
-                                          <h6 class="text-muted m-t-10">외부계정</h6>
+                                          <h1 class="text-inverse f-w-600">${blog0}</h1>
+                                          <h6 class="text-muted m-t-10">전체</h6>
                                         </div>
                                       </div>
                                     </div>
+                                    </div>
                                   </div>
                                 </div>
-                              </div>
                               <div class="col-md-6 col-xl-3">
                                 <div class="card user-activity-card">
                                  <div class="card-header">
@@ -233,13 +227,13 @@
                                     <div class="row">
                                       <div class="col-sm-6">
                                         <div class="text-center">
-                                          <h1 class="text-inverse f-w-600">150</h1>
+                                          <h1 class="text-inverse f-w-600">${blog1}</h1>
                                           <h6 class="text-muted m-t-10">본사계정</h6>
                                         </div>
                                       </div>
                                       <div class="col-sm-6">
                                         <div class="text-center">
-                                          <h1 class="text-muted f-w-600">150</h1>
+                                          <h1 class="text-muted f-w-600">${blog2}</h1>
                                           <h6 class="text-muted m-t-10">외부계정</h6>
                                         </div>
                                       </div>
@@ -262,32 +256,18 @@
                                       <h5>점유율 %</h5>
                                       <div class="text-center">
                                         <!-- data-width:그래프 넓이 / data-height:그래프 높이 / data-fgColor:그래프 색상 / data-readonly:그래프 안움직이게-->
-                                        <input type="text" class="dial" value="60" data-width="150" data-height="150" data-fgColor="#5d9cec" data-displayprevious="true" data-displayInput="true" data-readonly="true">
+                                        <input type="text" class="dial" data-width="150" data-height="150" data-fgColor="#5d9cec" data-displayprevious="true" data-displayInput="true" data-readonly="true">
                                       </div>
                                   </div>
                                 </div>
                               </div>
+                            </div>
                               <!-- top cards end -->
                               <div class="col-md-12">
                                 <div class="card">
                                   <div class="card-header">
-                                    <select name="select" class="col-sm-1 form-control form-control-inverse m-r-10 m-b-10 f-left search-select">
-                                      <option value="">제목</option>
-                                    </select>
-                                    <div class="col-sm-3 input-group input-group-button input-group-inverse p-l-0 p-r-0 m-b-10 f-left btn-select">
-                                      <input type="text" class="form-control" placeholder="">
-                                      <span class="input-group-addon" id="basic-addon1">
-                                        <button class="btn btn-inverse">검색</button>
-                                      </span>
-                                    </div>
                                     <div class="col-md-1 btn-viral f-right p-r-0">
                                       <button class="btn col-md-12 btn-warning alert-confirm" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'alert-confirm']);"><i class="icofont icofont-download-alt"></i>EXCEL</button>
-                                    </div>
-                                    <div class="col-md-1 btn-viral f-right p-r-0">
-                                      <button class="btn col-md-12 btn-default alert-confirm2" data-toggle="tooltip" data-placement="top" data-original-title="외부계정으로 변경"><i class="icofont icofont-check-circled"></i>외부계정</button>
-                                    </div>
-                                    <div class="col-md-1 btn-viral f-right p-r-0">
-                                      <button class="btn col-md-12 btn-inverse alert-confirm1" data-toggle="tooltip" data-placement="top" data-original-title="본사계정으로 변경"><i class="icofont icofont-check-circled"></i>본사계정</button>
                                     </div>
                                   </div>
                                   <div class="card-block">
@@ -296,86 +276,39 @@
                                         <table class="table table-styling table-checkbox">
                                           <thead>
                                             <tr>
-                                              <th>
-                                                <div class="checkbox-fade fade-in-primary">
-                                                  <label>
-                                                    <input type="checkbox" id="allCheck">
-                                                    <span class="cr">
-                                                      <i class="cr-icon icofont icofont-ui-check txt-primary"></i>
-                                                    </span>
-                                                  </label>
-                                                </div>
-                                              </th>
-                                              <th>NO</th>
+                                              <th>순위</th>
                                               <th>등록일</th>
                                               <th>구분</th>
                                               <th>제목</th>
-                                              <th>순위</th>
                                               <th>키워드</th>
                                               <th>업데이트일시</th>
                                               <th>계정분류</th>
+                                              <th>히스토리</th>
                                             </tr>
                                           </thead>
                                           <tbody>
+                                              <c:if test="${blogList eq null }"><h3>회사를 선택해주세요.</h3></c:if>                                          	  
+                                          	  <c:forEach items="${blogList}" var="viralVO">
                                               <tr>
+                                                <th scope="row">${viralVO.viral_rank}</th>
+                                                <td>${viralVO.writeDate}</td>
+                                                <td>${viralVO.portal_name}</td>
+                                                <td><a href="${viralVO.url}">${viralVO.viral_title}</a></td>
+                                                <td>${viralVO.keyword}</td>
+                                                <td>${viralVO.viral_time}</td>
                                                 <td>
-                                                  <div class="checkbox-fade fade-in-primary">
-                                                    <label>
-                                                      <input type="checkbox" id="checkbox" class="checkbox">
-                                                      <span class="cr">
-                                                        <i class="cr-icon icofont icofont-ui-check txt-primary"></i>
-                                                      </span>
-                                                    </label>
-                                                  </div>
-                                                </td>
-                                                <th scope="row">1</th>
-                                                <td>2017-10-30</td>
-                                                <td>네이버</td>
-                                                <td>온수매트 싱글 추천 : 일월 온수매트</td>
-                                                <td>20</td>
-                                                <td>싱글온수매트</td>
-                                                <td>2017-10-30 14:00</td>
-                                                <td>본사</td>
-                                              </tr>
-                                              <tr>
+                                                <c:if test="${viralVO.viral_isUser == 1}">본사</c:if>
+                                              	<c:if test="${viralVO.viral_isUser == 2}">외부</c:if>
+                                              	</td>
                                                 <td>
-                                                  <div class="checkbox-fade fade-in-primary">
-                                                    <label>
-                                                      <input type="checkbox" id="checkbox" class="checkbox">
-                                                      <span class="cr">
-                                                        <i class="cr-icon icofont icofont-ui-check txt-primary"></i>
-                                                      </span>
-                                                    </label>
-                                                  </div>
+                                                  <button class="btn btn-inverse btn-modal btn-sm"><i class="icofont icofont-chart-bar-graph m-r-0"></i></button>
                                                 </td>
-                                                <th scope="row">2</th>
-                                                <td>2017-10-30</td>
-                                                <td>네이버</td>
-                                                <td>온수매트 싱글 추천 : 일월 온수매트</td>
-                                                <td>20</td>
-                                                <td>싱글온수매트</td>
-                                                <td>2017-10-30 14:00</td>
-                                                <td>외부</td>
                                               </tr>
+                                              </c:forEach>
                                           </tbody>
                                         </table>
                                       </div>
                                     </div>
-                                    <ul class="pagination float-right">
-                                      <li class="page-item">
-                                        <a class="page-link" href="#" aria-label="Previous">
-                                          <span aria-hidden="true">«</span>
-                                          <span class="sr-only">Previous</span>
-                                        </a>
-                                      </li>
-                                      <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                      <li class="page-item">
-                                        <a class="page-link" href="#" aria-label="Next">
-                                          <span aria-hidden="true">»</span>
-                                          <span class="sr-only">Next</span>
-                                        </a>
-                                      </li>
-                                    </ul>
                                   </div>
                                 </div>
                               </div>
@@ -387,6 +320,23 @@
                       </div>
                     </div>
                   </div>
+                  <!-- modal image show start -->
+                  <div class="modal fade" id="history-Modal" tabindex="-1" role="dialog">
+                    <div class="modal-dialog modal-lg" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h4 class="modal-title">순위변동량</h4>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          <div id="barchart" class="nvd-chart"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- modal image show end -->
                   <!-- page-body end -->
                 </div>
               </div>
@@ -467,6 +417,9 @@
   <script type="text/javascript" src="../bower_components/jquery-i18next/jquery-i18next.min.js"></script>
   <!-- sweet alert js -->
   <script type="text/javascript" src="../bower_components/sweetalert/dist/sweetalert.min.js"></script>
+  <!-- NVD3 chart -->
+  <script src="../bower_components/d3/d3.js"></script>
+  <script src="../bower_components/nvd3/build/nv.d3.js"></script>
   <!-- knob js -->
   <script src="../bower_components/aterrien/jQuery-Knob/js/jquery.knob.js"></script>
   <!-- Custom js -->
@@ -478,5 +431,226 @@
   <script src="../assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
   <script src="../assets/js/jquery.mousewheel.min.js"></script>
 </body>
+
+
+<script type="text/javascript">
+	
+	//ajax 보안
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+
+	$(function() {
+		$(document).ajaxSend(function(e, xhr, options) {
+	  		xhr.setRequestHeader(header, token);
+	  	});
+	});
+
+	$(document).ready(function(){
+
+		
+		//점유율 그래프 
+		var first = '${blog1}';
+		var second = '${blog2}';
+		
+		$(".dial").val(first/(first+second));
+		
+		// 회사 selectbox 유지.
+		var companyOption = decodeURI(window.location.href.split("company=")[1]).split("&")[0];
+		console.log("companyOption: " + companyOption);
+
+		var $selectCompany = $('#selectCompany');
+		if(companyOption != 'undefined'){
+			for(var i = 0; i < $selectCompany[0].length; i++ ){
+
+				if($selectCompany[0].children[i].value == companyOption){
+					$selectCompany[0].children[i].selected = 'selected';
+				}
+			}
+		}
+		$selectCompany[0][0].disabled = true;
+
+		// 회사 선택시
+		$selectCompany.change(function(){
+			console.log($("#selectCompany option:selected").val());
+
+			searchList();
+			
+		});
+		
+		// 키워드 selectbox 유지.
+		var keywordOption = decodeURI(window.location.href.split("selectKey=")[1]).split("&")[0];
+		console.log("keywordOption: " + keywordOption);
+
+		var $selectKeyword = $('#selectKeyword');
+
+		if(keywordOption != 'undefined'){
+			for(var i = 0; i < $selectKeyword[0].length; i++ ){
+				if($selectKeyword[0][i].value == keywordOption){
+					$selectKeyword[0][i].selected = 'selected';
+				}
+			}
+		}
+		$selectKeyword[0][0].disabled = true;
+
+
+		// 키워드 선택시
+		$selectKeyword.change(function(){
+			console.log($('#selectKeyword option:selected').val());
+			
+			searchList();
+
+		});
+		
+		
+		// 사이트 selectbox 유지
+		var siteOption = decodeURI(window.location.href.split("portal_name=")[1]);
+		console.log("siteOption: " + siteOption);
+
+		var $selectSite = $("#selectSite");
+
+		if(siteOption != 'undefined'){
+			for(var i = 0; i < $selectSite[0].length; i++ ){
+				if($selectSite[0][i].value == siteOption){
+					$selectSite[0][i].selected = 'selected';
+				}
+			}
+		}
+		
+		$selectSite[0][0].disabled = true;
+		
+		// 사이트 선택시
+		$selectSite.change(function(){
+			console.log($selectSite.val());
+			
+			searchList();
+			
+		});
+		
+		// 모달 버튼 클릭시.
+		var modal = $('.btn-modal');
+		modal.on('click',function(event){
+			
+		  	var button = event.target;
+
+		  	if(button.type != 'submit'){
+		  		button = $(button).parent();
+		  	}
+		  	
+		  	var tr = $(button).parent().parent()[0];
+
+		  	var url = tr.children[3].children[0].getAttribute("href");
+
+		  	$.ajax({
+				type : "POST",
+			  	url : "historyGraph",
+		 	  	dataType : "json",
+		 	  	data : {url : url},
+		  	  	success : function(list){
+		  	  		
+		  	  	var script = '[{"values": [';
+		  	  		
+		  	  	for(var i = 0; i < list.length; i++){
+
+		  	  		var value = '{';
+					value = value + '"label"' + ':' + '"' + (list[i].writeDate).split(" ")[1] + '",';
+					value += '"value"' + ':' + '' + (100- list[i].type1) + ',';
+					value += '"color"' + ':' + '"#01C0C8"';
+					value += '},'
+					
+					script += value;
+	
+	  	  		}
+
+		  	  	script = script.slice(0, -1);
+		  	  	
+		  	  	script += ']}]';
+		  	  	
+		  	  	console.log(script);
+		  	  	
+		  	  	var jsonScript = JSON.parse(script);
+
+		  	  	console.log(jsonScript);
+		  	  	barScript = jsonScript;
+
+		  	  	$('#history-Modal').modal('show');
+			  	setTimeout(barChart, 300);
+		  	  	
+		  	  	}
+		  	}); 
+		});
+		
+		// 엑셀 출력
+		//엑셀출력 확인메시지
+		$(document).on("click",".alert-confirm",function(){
+	    swal({
+	          title: "엑셀출력 하시겠습니까?",
+	          text: "현재 리스트가 엑셀출력 됩니다.",
+	          type: "warning",
+	          showCancelButton: true,
+	          confirmButtonClass: "btn-danger",
+	          confirmButtonText: "YES",
+	          closeOnConfirm: false
+	        },
+	        function(){//엑셀 출력하겠다고 할 시 진행 함수
+
+	        	self.location = "excel?"+
+				  + "&company=" + $("#selectCompany option:selected").val()
+				  + "&selectKey=" + $('#selectKeyword option:selected').val()
+				  + "&portal_name=" + $("#selectSite option:selected").val()
+				  + "&portal_type=" + "cafe";
+
+
+		  		swal("Success!", "엑셀출력 되었습니다.", "success");
+
+	        });
+		});
+	
+	}); // end ready...
+
+	var barScript = '';
+	
+	function barChart(){
+		console.log("barChartCalled...");
+		$('.nvd3-svg').remove();
+	  	/*Bar chart start*/
+
+	  	//var dataValue = barData;
+	  	console.log(barScript);
+	  	
+	  	nv.addGraph(function() {
+	      	var chart = nv.models.multiBarChart()
+	          	.x(function(d) { return d.label }) //Specify the data accessors.
+	          	.y(function(d) { return d.value })
+	          	.forceY([0,100]);
+	      	
+	      	chart.groupSpacing(0.8);
+	      	chart.reduceXTicks(false);
+	      	chart.showLegend(false);
+	      	chart.showControls(false);
+	      	chart.groupSpacing(0.5);
+	      	chart.yAxis.tickFormat(function(d, i){
+	        return 100-d+"위" //"Year1 Year2, etc depending on the tick value - 0,1,2,3,4"
+	      	});
+	   		console.log(barScript);
+	      	d3.select('#barchart').append('svg')
+	          	.datum(barScript)
+	          	.call(chart);
+
+
+	      	nv.utils.windowResize(chart.update);
+
+	      	return chart;
+	  	});
+	}
+	
+	function searchList() {
+
+    	self.location = "v_cafe?" 
+        					+ "&company=" + $("#selectCompany option:selected").val()
+    						+ "&selectKey=" + $('#selectKeyword option:selected').val()
+    						+ "&portal_name=" + $("#selectSite option:selected").val();
+    }
+
+</script>
 
 </html>

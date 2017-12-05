@@ -263,4 +263,10 @@ public class MediaServiceImpl implements MediaService {
 		return mediaDAO.allPageCount(cri);
 	}
 
+	@Override
+	public List<MediaVO> allPage(SearchCriteria cri) {
+
+		return mediaDAO.allPage(cri);
+	}
+
 }
