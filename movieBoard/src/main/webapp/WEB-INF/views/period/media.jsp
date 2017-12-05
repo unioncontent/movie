@@ -353,7 +353,7 @@
                                         <thead>
                                             <tr>
                                               <th width="5%">NO</th>
-                                              <th width="15%">등록날짜</th>
+                                              <th width="10%">등록날짜</th>
                                               <th width="5%">언론사</th>
                                               <th width="5%">기자</th>
                                               <th width="40%">제목</th>
@@ -369,6 +369,7 @@
                                             <td>김아무개</td>
                                             <td><a href='https://www.naver.com/' target="_blank">강철비 굿</a></td>
                                             <td>강철비</td>
+                                            <td></td>
                                           </tr>
                                         </tbody>
                                       </table>
