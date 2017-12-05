@@ -193,11 +193,12 @@ public class MediaController {
 		}
 		
 		logger.info("cri: " + cri);
-		
+		logger.info("perPageNum: " + cri.getPerPageNum());
+		logger.info("getStartPage: " + cri.getStartPage());
 		ListUtil util = new ListUtil();
 		List<ExtractVO> extractList = new ArrayList<ExtractVO>();
 		
-		model.addObject("list", util.listAddMediaList(extractList, mediaService.listAll(cri)));
+		model.addObject("list", util.listAddMediaList(extractList, mediaService.allPage(cri)));
 		model.setView(excelView);
 		
 		return model;

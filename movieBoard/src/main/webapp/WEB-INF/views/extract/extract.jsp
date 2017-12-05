@@ -149,10 +149,10 @@
                         <div class="card">
                           <div class="card-header">
                             <select id= "selectPerPageNum" name="select" class="col-sm-1 form-control form-control-inverse m-r-10 m-b-10 p-r-5 f-left list-select">
-                                  <option id= "40" >40</option>
-                                  <option id = "80">80</option>
-                                  <option id = "160">120</option>
-                                  <option id = "200">200</option>
+                                  <option id= "30" >30</option>
+                                  <option id = "60">60</option>
+                                  <option id = "120">120</option>
+                                  <option id = "150">150</option>
                                 </select>
                                 <select id = "selectSearchType" name="select" class="col-sm-1 form-control form-control-inverse m-r-10 m-b-10 f-left search-select">
                                   <option id="t" value="t">제목</option>
@@ -473,7 +473,7 @@ $(function() {
 			
 			self.location = "extract?"
 							+ "company=" + $("#selectCompany option:selected").val()
-							+ "&selectkey=" + $('#selectKeyword option:selected').val();
+							+ "&selectKey=" + $('#selectKeyword option:selected').val();
 
 			//searchList();
 		});
