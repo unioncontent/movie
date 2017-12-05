@@ -93,52 +93,40 @@
                   <div class="page-body">
                     <div class="row">
                       <div class="col-md-12">
-                        <div class="card">
-                          <div class="card-header">
-                            <h5></h5>
-                            <div class="card-header-right">
-                              <i class="icofont icofont-rounded-down"></i>
-                            </div>
-                          </div>
-                          <div class="card-block  table-border-style">
-                            <div class="table-responsive">
-                              <table class="table table-bordered result">
-                                <thead>
-                                  <tr class="bg-inverse">
-                                    <th width="5%">컨텐츠명</th>
-                                    <th width="5%">CP사</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                  <tr>
-                                    <td>${keyword_main}
-                                      <div class="label-main">
-                                        <label class="label label-success">관리</label>
-                                      </div>
-                                      <!-- <div class="label-main">
-                                        <label class="label label-danger">비관리</label>
-                                      </div> -->
-                                    </td>
-                                    <td>${company_name}</td>
-                                  </tr>
-                                </tbody>
-                              </table>
-                            </div>
-                          </div>
-                        </div>
+                        <table class="table table-columned table-lg f-16 result">
+                          <thead>
+                            <tr class="bg-inverse">
+                              <th width="5%" class="text-center">컨텐츠명</th>
+                              <th width="5%" class="text-center">CP사</th>
+                            </tr>
+                          </thead>
+                          <tbody class="text-center bg-white">
+                            <tr>
+                              <td>${keyword_main}
+                                <div class="label-main">
+                                  <label class="label label-success">관리</label>
+                                </div>
+                                <!-- <div class="label-main">
+                                  <label class="label label-danger">비관리</label>
+                                </div> -->
+                              </td>
+                              <td>${company_name}</td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                       <div class="col-md-12">
                           <div class="card">
-                            <div class="card-block">
+                            <div class="card-block table-border-style">
                               <div class="table-responsive">
-                                <table class="table table-bordered">
+                                <table class="table table-columned table-striped">
                                   <thead>
                                     <tr>
-                                      <th class="tabledit-view-mode"></th>
-                                      <th class="tabledit-view-mode">검색어</th>
-                                      <th class="tabledit-view-mode">제외검색어</th>
-                                      <th class="tabledit-view-mode">영화구분</th>
-                                      <th class="tabledit-view-mode">작업</th>
+                                      <th></th>
+                                      <th>검색어</th>
+                                      <th>제외검색어</th>
+                                      <th>영화구분</th>
+                                      <th>작업</th>
                                     </tr>
                                   </thead>
                                   <tbody>
@@ -286,7 +274,7 @@
 	//ajax 보안
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
-	
+
 	$(function() {
 		  $(document).ajaxSend(function(e, xhr, options) {
 		  	xhr.setRequestHeader(header, token);
@@ -294,59 +282,59 @@
 	});
 
 	$(document).ready(function(){
-		
+
 		// 삭제 버튼 클릭시
 		$(".remove_keyword").on("click", function(event){
-			
+
 			var div = event.target.parentNode;
-			
+
 			console.log(div);
 			console.log(div.type);
-			
+
 			if(div.type == 'submit'){
 				console.log("button click...");
 				div = div.parentNode;
-			} 
+			}
 
 			var tr = div.parentNode;
 			console.log(tr.children);
-			
+
 			var td = tr.children[1];
 			console.log(td);
-			
+
 			var keyword_main = td.childNodes[0];
-			
+
 
 			if(keyword_main == undefined){
 				td = tr.children[2];
 				console.log(td);
-				
+
 				keyword_main = td.childNodes[0];
-				
+
 			}
-			
+
 			console.log(keyword_main.data);
-			
+
 			$.ajax({
 
 				type : "POST",
 			  	url : "removeKeyword",
 		 	  	dataType : "text",
 		 	  	data : {keyword : keyword_main.data}
-			
+
 			});
-			
+
 			setTimeout(function(){ location.reload(); }, 1000);
 		});
-		
-		
+
+
 		// 추가 버튼 클릭시
 		$("#insertKeywordBtn").on("click", function(){
 
 			var pSearch = $("#pSearch").val();
 
 			var dSearch = $("#dSearch").val();
-					
+
 
 			if(pSearch != ''){
 				$.ajax({
@@ -356,10 +344,10 @@
 			 	  	dataType : "json",
 			 	  	data : {keyword_main : '${keyword_main}', keyword : pSearch, keyword_property : '포함',
 			 	  			keyword_type : getType()}
-				
+
 				});
 			}
-			
+
 			if(dSearch != ''){
 				$.ajax({
 
@@ -368,44 +356,43 @@
 			 	  	dataType : "json",
 			 	  	data : {keyword_main : '${keyword_main}', keyword : dSearch, keyword_property : '제외',
 			 	  			keyword_type : getType()}
-				
+
 				});
-				
+
 			}
-			
-			
+
+
 			setTimeout(function(){ location.reload(); }, 1000);
 		});
-		
+
 	});// end ready...
-	
-	
+
+
 	function getType(){
-		
+
 		if($("input[name=property]:checked")[0] == undefined){
 
 			return '';
 		}else{
 
 			var type = $("input[name=property]:checked")[0].value;
-			
+
 			if(type == 'movie'){
 				return '영화';
 			}
-			
+
 			if(type == 'actor'){
 				return '배우';
 			}
 			if(type == 'etc'){
 				return '기타';
 			}
-			
+
 		}
-		
+
 	}
-	
+
 
 </script>
 
 </html>
-

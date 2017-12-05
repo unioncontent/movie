@@ -8,13 +8,12 @@
 .keywordResult{
   display: none;
 }
-.result th,.result td{
-  text-align: center;
-}
 .centerTh{
   text-align: center;
 }
-
+.table td, .table th{
+  vertical-align: middle;
+}
 @media (max-width: 412px){
   .btn-check{
     padding-left: 15px;
