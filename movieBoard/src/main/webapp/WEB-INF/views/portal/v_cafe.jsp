@@ -261,7 +261,6 @@
                                   </div>
                                 </div>
                               </div>
-                            </div>
                               <!-- top cards end -->
                               <div class="col-md-12">
                                 <div class="card">
@@ -287,7 +286,7 @@
                                             </tr>
                                           </thead>
                                           <tbody>
-                                              <c:if test="${blogList eq null }"><h3>회사를 선택해주세요.</h3></c:if>                                          	  
+                                              <c:if test="${blogList eq null }"><h3>회사를 선택해주세요.</h3></c:if>
                                           	  <c:forEach items="${blogList}" var="viralVO">
                                               <tr>
                                                 <th scope="row">${viralVO.viral_rank}</th>
@@ -434,7 +433,7 @@
 
 
 <script type="text/javascript">
-	
+
 	//ajax 보안
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
@@ -447,13 +446,13 @@
 
 	$(document).ready(function(){
 
-		
-		//점유율 그래프 
+
+		//점유율 그래프
 		var first = '${blog1}';
 		var second = '${blog2}';
-		
+
 		$(".dial").val(first/(first+second));
-		
+
 		// 회사 selectbox 유지.
 		var companyOption = decodeURI(window.location.href.split("company=")[1]).split("&")[0];
 		console.log("companyOption: " + companyOption);
@@ -474,9 +473,9 @@
 			console.log($("#selectCompany option:selected").val());
 
 			searchList();
-			
+
 		});
-		
+
 		// 키워드 selectbox 유지.
 		var keywordOption = decodeURI(window.location.href.split("selectKey=")[1]).split("&")[0];
 		console.log("keywordOption: " + keywordOption);
@@ -496,12 +495,12 @@
 		// 키워드 선택시
 		$selectKeyword.change(function(){
 			console.log($('#selectKeyword option:selected').val());
-			
+
 			searchList();
 
 		});
-		
-		
+
+
 		// 사이트 selectbox 유지
 		var siteOption = decodeURI(window.location.href.split("portal_name=")[1]);
 		console.log("siteOption: " + siteOption);
@@ -515,27 +514,27 @@
 				}
 			}
 		}
-		
+
 		$selectSite[0][0].disabled = true;
-		
+
 		// 사이트 선택시
 		$selectSite.change(function(){
 			console.log($selectSite.val());
-			
+
 			searchList();
-			
+
 		});
-		
+
 		// 모달 버튼 클릭시.
 		var modal = $('.btn-modal');
 		modal.on('click',function(event){
-			
+
 		  	var button = event.target;
 
 		  	if(button.type != 'submit'){
 		  		button = $(button).parent();
 		  	}
-		  	
+
 		  	var tr = $(button).parent().parent()[0];
 
 		  	var url = tr.children[3].children[0].getAttribute("href");
@@ -546,9 +545,9 @@
 		 	  	dataType : "json",
 		 	  	data : {url : url},
 		  	  	success : function(list){
-		  	  		
+
 		  	  	var script = '[{"values": [';
-		  	  		
+
 		  	  	for(var i = 0; i < list.length; i++){
 
 		  	  		var value = '{';
@@ -556,17 +555,17 @@
 					value += '"value"' + ':' + '' + (100- list[i].type1) + ',';
 					value += '"color"' + ':' + '"#01C0C8"';
 					value += '},'
-					
+
 					script += value;
-	
+
 	  	  		}
 
 		  	  	script = script.slice(0, -1);
-		  	  	
+
 		  	  	script += ']}]';
-		  	  	
+
 		  	  	console.log(script);
-		  	  	
+
 		  	  	var jsonScript = JSON.parse(script);
 
 		  	  	console.log(jsonScript);
@@ -574,11 +573,11 @@
 
 		  	  	$('#history-Modal').modal('show');
 			  	setTimeout(barChart, 300);
-		  	  	
+
 		  	  	}
-		  	}); 
+		  	});
 		});
-		
+
 		// 엑셀 출력
 		//엑셀출력 확인메시지
 		$(document).on("click",".alert-confirm",function(){
@@ -604,11 +603,11 @@
 
 	        });
 		});
-	
+
 	}); // end ready...
 
 	var barScript = '';
-	
+
 	function barChart(){
 		console.log("barChartCalled...");
 		$('.nvd3-svg').remove();
@@ -616,13 +615,13 @@
 
 	  	//var dataValue = barData;
 	  	console.log(barScript);
-	  	
+
 	  	nv.addGraph(function() {
 	      	var chart = nv.models.multiBarChart()
 	          	.x(function(d) { return d.label }) //Specify the data accessors.
 	          	.y(function(d) { return d.value })
 	          	.forceY([0,100]);
-	      	
+
 	      	chart.groupSpacing(0.8);
 	      	chart.reduceXTicks(false);
 	      	chart.showLegend(false);
@@ -642,10 +641,10 @@
 	      	return chart;
 	  	});
 	}
-	
+
 	function searchList() {
 
-    	self.location = "v_cafe?" 
+    	self.location = "v_cafe?"
         					+ "&company=" + $("#selectCompany option:selected").val()
     						+ "&selectKey=" + $('#selectKeyword option:selected').val()
     						+ "&portal_name=" + $("#selectSite option:selected").val();
