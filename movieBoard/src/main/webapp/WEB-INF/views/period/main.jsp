@@ -114,7 +114,7 @@
                           <option value="${companyList.user_name}">${companyList.user_name}</option>
                           </c:if>
                         </select>
-                        
+
                         <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left" id="selectKeyword">
                           <option>키워드</option>
                           <c:if test="${modelKeywordList == null}" >
@@ -132,7 +132,7 @@
                       <div class="col-md-5">
                          <!-- date picker start -->
                         <div class="row">
-                          <<div class="btn-group float-right m-b-10 p-l-15 p-r-10" role="group">
+                          <div class="btn-group float-right m-b-10 p-l-15 p-r-10" role="group">
                             <button id="toDay" type="button" class="btn btn-inverse btn-sm waves-effect waves-light">당일</button>
                             <button id="yesterDay" type="button" class="btn btn-inverse btn-sm waves-effect waves-light">전일</button>
                             <button id="week" type="button" class="btn btn-inverse btn-sm waves-effect waves-light">최근7일</button>
@@ -601,8 +601,8 @@
   });
 
   $(document).ready(function(){
-	 
-	  
+
+
 	var date = getDate("week");
 	var startDate = date.startDate;
 	var endDate = date.endDate;
@@ -610,10 +610,10 @@
 	console.log("endDate: " + endDate);
 
 	ajaxGraph(startDate, endDate);
-	  
+
 	// content 길시에 ...으로 변경
 	var $title = $(".title");
-	
+
 	var size = 25;
 
 	for (var i =0; i < $title.length; i++){
@@ -621,7 +621,7 @@
 			$title[i].children[0].text = $title[i].innerText.substr(0, size) + '...';
 		}
 	}
-	  
+
 	var selectOption = decodeURI(window.location.href.split("selectKey=")[1]);
 	console.log("selectOption: " + selectOption);
 
@@ -641,13 +641,13 @@
 	$selectKeyword.change(function(){
 		console.log("selectKeyword clicked....");
 		console.log($('#selectKeyword option:selected').val());
-		
+
 		self.location = "main?"
 					  + "company=" + $("#selectCompany option:selected").val()
 					  + "&selectKey=" + $("#selectKeyword option:selected").val();
 
 	});
-	
+
 	var companyOption = decodeURI(window.location.href.split("company=")[1]).split("&selectKey")[0];
 
 
@@ -657,22 +657,22 @@
 
 			if($selectCompany[0].children[i].value == companyOption){
 				$selectCompany[0].children[i].selected = 'selected';
-			} 
+			}
 		}
 	}
 	$selectCompany[0][0].disabled = true;
-	
-	
+
+
 	// 회사 선택시
 	$selectCompany.change(function(){
 		console.log("selectCompany clicked....");
 		console.log($("#selectCompany option:selected").val());
-		
+
 		self.location = "main?"+ "company=" + $("#selectCompany option:selected").val();
-		
+
 	});
-	
-	
+
+
 	// 당일 클릭시
 	$('#toDay').on("click", function(){
 	  console.log("toDay clicked....");
@@ -720,57 +720,57 @@
 
 	   ajaxGraph(startDate, endDate);
 	})
-	
+
 	var disCount1 = ${portalTextType.dis + communityTextType.dis};
 	var totalCount1 = ${portalTextType.al + communityTextType.al};
-	
+
 	var value1 = Math.round((disCount1/totalCount1)*100);
-	
+
 	var name1 = makeName(value1);
-	
+
 	echart1(value1, name1);
-	
+
 	var disCount2 = ${blogTextType.dis + cafeTextType.dis};
 	var totalCount2 = ${blogTextType.lik + blogTextType.dis
   					+ blogTextType.cu + blogTextType.etc
   					+ cafeTextType.lik + cafeTextType.dis
   					+ cafeTextType.cu + cafeTextType.etc};
-	
+
   	var value2 = Math.round((disCount2/totalCount2)*100);
-	
+
 	var name2 = makeName(value2);
-	
+
 	echart2(value2, name2);
   }); // end ready...
 
-  
+
   	// 그래프 상태 계산 함수
   	function makeName(value){
-	  
+
 	  var name;
-	  
+
 	  if(value <=5){
 		  name = '아주좋음';
-	  
+
 	  }else if(5 < value <= 10){
 		  name = '쾌적';
-		  
+
 	  }else if(10 < value <= 20){
 		  name = '안정';
-		  
+
 	  }else if(20 < value <= 30){
 		  name = '주의';
-		  
+
 	  }else if(30 < value <= 100){
 		  name = '경고'
-	  
+
 	  }else{
 		  name = '미확인'
 	  }
-	  
+
 	  return name;
   }
-  
+
 	// 그래프 함수
 	function ajaxGraph(startDate, endDate){
 	  console.log(startDate + "/" + endDate);
@@ -865,7 +865,7 @@
    	}
 
   }
-  
+
 </script>
 
 </html>

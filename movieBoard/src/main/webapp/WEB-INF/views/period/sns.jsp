@@ -116,7 +116,7 @@
                           <option value="${companyList.user_name}">${companyList.user_name}</option>
                           </c:if>
                         </select>
-                        
+
                         <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left" id="selectKeyword">
                           <option>키워드</option>
                           <c:if test="${modelKeywordList == null}" >
@@ -225,17 +225,17 @@
                                     <h5 class="card-header-text"> 검출데이터</h5>
                                     <button id = "excel" class="btn btn-warning f-right alert-confirm"><i class="icofont icofont-download-alt"></i>EXCEL</button>
                                   </div>
-                                  <div class="card-block">
+                                  <div class="card-block table-border-style">
                                     <!-- list satart -->
                                     <div class="table-responsive">
-                                      <table class="table table-bordered">
+                                      <table class="table">
                                         <thead>
                                             <tr>
                                               <th width="5%">NO</th>
-                                              <th width="15%">등록날짜</th>
-                                              <th width="5%">플랫폼</th>
-                                              <th width="5%">키워드</th>
-                                              <th width="40%">제목</th>
+                                              <th width="10%">등록날짜</th>
+                                              <th width="10%">플랫폼</th>
+                                              <th width="10%">키워드</th>
+                                              <th width="30%">제목</th>
                                               <th width="10%">좋아요</th>
                                               <th width="10%">공유</th>
                                               <th width="10%">댓글</th>
@@ -255,33 +255,39 @@
                                           </tr>
                                           </c:forEach>
                                         </tbody>
+                                        <tfoot>
+                                          <tr>
+                                            <td colspan="8">
+                                              <ul class="pagination float-right">
+                                                <c:if test="${pageMaker.prev}">
+                                                  <li class="page-item">
+                                                    <a class="page-link" href="sns${pageMaker.makeSearch(pageMaker.startPage - 1) }" aria-label="Previous">&laquo;
+                                                      <span aria-hidden="true"></span>
+                                                      <span class="sr-only">Previous</span>
+                                                    </a>
+                                                  </li>
+                                                </c:if>
+
+                                                <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
+                                                  <li class= "${pageMaker.cri.page == idx? 'active':''} page-item">
+                                                    <a class="page-link" href="sns${pageMaker.makeSearch(idx)}">${idx}</a>
+                                                  </li>
+                                                </c:forEach>
+
+                                                <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+                                                  <li class="page-item">
+                                                    <a class="page-link" href="sns${pageMaker.makeSearch(pageMaker.endPage +1) }" aria-label="Next">&raquo;
+                                                      <span aria-hidden="true"></span>
+                                                      <span class="sr-only">Next</span>
+                                                    </a>
+                                                  </li>
+                                                </c:if>
+                                              </ul>
+                                            </td>
+                                          </tr>
+                                        </tfoot>
                                       </table>
                                     </div>
-                                    <ul class="pagination float-right">
-                                      <c:if test="${pageMaker.prev}">
-                                <li class="page-item">
-                                  <a class="page-link" href="sns${pageMaker.makeSearch(pageMaker.startPage - 1) }" aria-label="Previous">&laquo;
-                                    <span aria-hidden="true"></span>
-                                    <span class="sr-only">Previous</span>
-                                  </a>
-                                </li>
-                              </c:if>
-
-                              <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
-                                <li class= "${pageMaker.cri.page == idx? 'active':''} page-item">
-                                  <a class="page-link" href="sns${pageMaker.makeSearch(idx)}">${idx}</a>
-                                </li>
-                              </c:forEach>
-
-                              <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-                                <li class="page-item">
-                                  <a class="page-link" href="sns${pageMaker.makeSearch(pageMaker.endPage +1) }" aria-label="Next">&raquo;
-                                    <span aria-hidden="true"></span>
-                                    <span class="sr-only">Next</span>
-                                  </a>
-                                </li>
-                              </c:if>
-                                    </ul>
                                     <!-- list end -->
                                   </div>
                               </div>
@@ -404,8 +410,8 @@
   });
 
   $(document).ready(function(){
-	 
-	  
+
+
 	var date = getDate("week");
 	var startDate = date.startDate;
 	var endDate = date.endDate;
@@ -413,10 +419,10 @@
 	console.log("endDate: " + endDate);
 
 	ajaxGraph(startDate, endDate);
-	  
+
 	// content 길시에 ...으로 변경
 	var $title = $(".title");
-	
+
 	var size = 25;
 
 	for (var i =0; i < $title.length; i++){
@@ -424,7 +430,7 @@
 			$title[i].children[0].text = $title[i].innerText.substr(0, size) + '...';
 		}
 	}
-	  
+
 	var selectOption = decodeURI(window.location.href.split("selectKey=")[1]);
 	console.log("selectOption: " + selectOption);
 
@@ -444,13 +450,13 @@
 	$selectKeyword.change(function(){
 		console.log("selectKeyword clicked....");
 		console.log($('#selectKeyword option:selected').val());
-		
+
 		self.location = "sns?"
 					  + "company=" + $("#selectCompany option:selected").val()
 					  + "&selectKey=" + $("#selectKeyword option:selected").val();
 
 	});
-	
+
 	var companyOption = decodeURI(window.location.href.split("company=")[1]).split("&selectKey")[0];
 
 
@@ -460,21 +466,21 @@
 
 			if($selectCompany[0].children[i].value == companyOption){
 				$selectCompany[0].children[i].selected = 'selected';
-			} 
+			}
 		}
 	}
 	$selectCompany[0][0].disabled = true;
-	
-	
+
+
 	// 회사 선택시
 	$selectCompany.change(function(){
 		console.log("selectCompany clicked....");
 		console.log($("#selectCompany option:selected").val());
-		
+
 		self.location = "sns?"+ "company=" + $("#selectCompany option:selected").val();
-		
+
 	});
-	
+
 	//엑셀출력 확인메시지
 	$(document).on("click","#excel",function(){
     swal({
@@ -498,8 +504,8 @@
 
         });
 	});
-	  
-	
+
+
 	// 당일 클릭시
 	$('#toDay').on("click", function(){
 	  console.log("toDay clicked....");
@@ -547,7 +553,7 @@
 
 	   ajaxGraph(startDate, endDate);
 	})
-	
+
   }); // end ready...
 
 	// 그래프 함수
@@ -640,7 +646,7 @@
    	}
 
   }
-  
+
 </script>
 
 </html>
