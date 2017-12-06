@@ -162,16 +162,16 @@
                                   <input id="keywordInput" type="text" class="form-control" placeholder="">
                                   <span class="input-group-addon" id="basic-addon1">
                                     <button id="searchBtn" class=" btn btn-inverse">검색</button>
-                              </span>
-                              <div class="btn-group f-right p-r-0">
-                              <button type="button" class="btn btn-primary btn-outline-primary btn-sm waves-effect waves-light">좋은글</button>
-                              <button type="button" class="btn btn-primary btn-outline-primary btn-sm waves-effect waves-light">나쁜글</button>
-                              <button type="button" class="btn btn-primary btn-outline-primary btn-sm waves-effect waves-light">관심글</button>
-                              <button type="button" class="btn btn-primary btn-outline-primary btn-sm waves-effect waves-light">기타글</button>
-                              <button type="button" class="btn btn-primary btn-outline-primary btn-sm waves-effect waves-light">삭제글</button>
-                              <button type="button" class="alert-confirm btn btn-sm btn-primary waves-effect f-right p-b-10"><i class="icofont icofont-exchange" style="margin: 0px;"></i></button>
-                            </div>
-                            </div>
+                                  </span>
+                                </div>
+                                <div class="btn-group f-right p-r-0">
+                                  <button type="button" class="btn btn-primary btn-outline-primary btn-sm waves-effect waves-light">좋은글</button>
+                                  <button type="button" class="btn btn-primary btn-outline-primary btn-sm waves-effect waves-light">나쁜글</button>
+                                  <button type="button" class="btn btn-primary btn-outline-primary btn-sm waves-effect waves-light">관심글</button>
+                                  <button type="button" class="btn btn-primary btn-outline-primary btn-sm waves-effect waves-light">기타글</button>
+                                  <button type="button" class="btn btn-primary btn-outline-primary btn-sm waves-effect waves-light">삭제글</button>
+                                  <button type="button" class="alert-confirm btn btn-sm btn-primary waves-effect f-right p-b-10"><i class="icofont icofont-exchange" style="margin: 0px;font-size: 16px;"></i></button>
+                                </div>
                             <%-- <button id = "insertAllBtn" type="button" class="alert-confirm btn btn-primary waves-effect f-right p-r-0 p-l-5 m-l-15 m-b-10  f-right"><i class="icofont icofont-check-circled"></i>일괄처리</button> --%>
                           </div>
                           <div class="card-block table-border-style">
