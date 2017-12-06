@@ -77,7 +77,7 @@ public class SNSDAOTester {
 		graph.setEndDate(endDate);
 		graph.setSns_name("facebook");
 		
-		System.out.println(dao.getDateCount(graph));
+		//System.out.println(dao.getDateCount(graph));
 		
 		
 		

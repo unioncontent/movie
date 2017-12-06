@@ -10,7 +10,7 @@ public interface KeywordDAO {
 	
 	public void create(KeywordVO vo);
 	
-	public KeywordVO read(Integer keyword_idx);
+	public KeywordVO read(String keyword);
 	
 	public void update(KeywordVO vo);
 	

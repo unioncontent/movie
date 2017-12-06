@@ -116,7 +116,7 @@
                           <option value="${companyList.user_name}">${companyList.user_name}</option>
                           </c:if>
                         </select>
-                        
+
                         <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left" id="selectKeyword">
                           <option>키워드</option>
                           <c:if test="${modelKeywordList == null}" >
@@ -361,20 +361,20 @@
                                     <h5 class="card-header-text"> 검출데이터</h5>
                                     <button id = "excel" class="btn btn-warning f-right alert-confirm" ><i class="icofont icofont-download-alt"></i>EXCEL</button>
                                   </div>
-                                  <div class="card-block">
+                                  <div class="card-block table-border-style">
                                     <!-- list satart -->
                                     <div class="table-responsive">
-                                      <table class="table table-bordered">
+                                      <table class="table">
                                         <thead>
-                                            <tr>
-                                              <th width="5%">NO</th>
-                                              <th width="15%">등록날짜</th>
-                                              <th width="10%">플랫폼</th>
-                                              <th width="10%">카테고리</th>
-                                              <th width="10%">키워드</th>
-                                              <th width="40%">제목</th>
-                                              <th width="10%">분류</th>
-                                            </tr>
+                                          <tr>
+                                            <th width="5%">NO</th>
+                                            <th width="10%">등록날짜</th>
+                                            <th width="10%">플랫폼</th>
+                                            <th width="10%">카테고리</th>
+                                            <th width="10%">키워드</th>
+                                            <th width="40%">제목</th>
+                                            <th width="10%">분류</th>
+                                          </tr>
                                         </thead>
                                         <tbody>
                                           <c:forEach items="${portalList}" var="portalList" varStatus="index">
@@ -383,39 +383,45 @@
                                               <td>${portalList.createDate}</td>
                                               <td>${portalList.portal_name}</td>
                                               <td>${portalList.portal_type}</td>
-                                              <td>${portalList.keyword}< /td>
+                                              <td>${portalList.keyword}</td>
                                               <td class="title"><a href='${portalList.url}' target="_blank">${portalList.portal_title}</a></td>
                                               <td>${portalList.textType}</td>
                                             </tr>
                                           </c:forEach>
                                         </tbody>
+                                        <tfoot>
+                                          <tr>
+                                            <td colspan="7">
+                                              <ul class="pagination float-right">
+                                                <c:if test="${pageMaker.prev}">
+                                              		<li class="page-item">
+                                                		  <a class="page-link" href="portal${pageMaker.makeSearch(pageMaker.startPage - 1) }" aria-label="Previous">&laquo;
+                                                  		<span aria-hidden="true"></span>
+                                                  		<span class="sr-only">Previous</span>
+                                                		  </a>
+                                              		</li>
+                                        	      </c:if>
+
+                                          		  <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
+                                              		<li class= "${pageMaker.cri.page == idx? 'active':''} page-item">
+                                                		  <a class="page-link" href="portal${pageMaker.makeSearch(idx)}">${idx}</a>
+                                              		</li>
+                                          		  </c:forEach>
+
+                                          		  <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+                                              		<li class="page-item">
+                                              		  <a class="page-link" href="portal${pageMaker.makeSearch(pageMaker.endPage +1) }" aria-label="Next">&raquo;
+                                                		<span aria-hidden="true"></span>
+                                                		<span class="sr-only">Next</span>
+                                              		  </a>
+                                              		</li>
+                                          		  </c:if>
+                                          		</ul>
+                                            </td>
+                                          </tr>
+                                        </tfoot>
                                       </table>
                                     </div>
-                                    <ul class="pagination float-right">
-                                      <c:if test="${pageMaker.prev}">
-                                		<li class="page-item">
-                                  		  <a class="page-link" href="portal${pageMaker.makeSearch(pageMaker.startPage - 1) }" aria-label="Previous">&laquo;
-                                    		<span aria-hidden="true"></span>
-                                    		<span class="sr-only">Previous</span>
-                                  		  </a>
-                                		</li>
-                              	      </c:if>
-
-                              		  <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
-                                		<li class= "${pageMaker.cri.page == idx? 'active':''} page-item">
-                                  		  <a class="page-link" href="portal${pageMaker.makeSearch(idx)}">${idx}</a>
-                                		</li>
-                              		  </c:forEach>
-
-                              		  <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-                                		<li class="page-item">
-                                  		  <a class="page-link" href="portal${pageMaker.makeSearch(pageMaker.endPage +1) }" aria-label="Next">&raquo;
-                                    		<span aria-hidden="true"></span>
-                                    		<span class="sr-only">Next</span>
-                                  		  </a>
-                                		</li>
-                              		  </c:if>
-                            		</ul>
                                     <!-- list end -->
                                   </div>
                               </div>
@@ -537,8 +543,8 @@ $(function() {
 });
 
 $(document).ready(function(){
-	 
-	  
+
+
 	var date = getDate("week");
 	var startDate = date.startDate;
 	var endDate = date.endDate;
@@ -546,10 +552,10 @@ $(document).ready(function(){
 	console.log("endDate: " + endDate);
 
 	ajaxGraph(startDate, endDate);
-	  
+
 	// content 길시에 ...으로 변경
 	var $title = $(".title");
-	
+
 	var size = 25;
 
 	for (var i =0; i < $title.length; i++){
@@ -557,7 +563,7 @@ $(document).ready(function(){
 			$title[i].children[0].text = $title[i].innerText.substr(0, size) + '...';
 		}
 	}
-	  
+
 	var selectOption = decodeURI(window.location.href.split("selectKey=")[1]);
 	console.log("selectOption: " + selectOption);
 
@@ -577,13 +583,13 @@ $(document).ready(function(){
 	$selectKeyword.change(function(){
 		console.log("selectKeyword clicked....");
 		console.log($('#selectKeyword option:selected').val());
-		
+
 		self.location = "portal?"
 					  + "company=" + $("#selectCompany option:selected").val()
 					  + "&selectKey=" + $("#selectKeyword option:selected").val();
 
 	});
-	
+
 	var companyOption = decodeURI(window.location.href.split("company=")[1]).split("&selectKey")[0];
 
 
@@ -593,21 +599,21 @@ $(document).ready(function(){
 
 			if($selectCompany[0].children[i].value == companyOption){
 				$selectCompany[0].children[i].selected = 'selected';
-			} 
+			}
 		}
 	}
 	$selectCompany[0][0].disabled = true;
-	
-	
+
+
 	// 회사 선택시
 	$selectCompany.change(function(){
 		console.log("selectCompany clicked....");
 		console.log($("#selectCompany option:selected").val());
-		
+
 		self.location = "portal?"+ "company=" + $("#selectCompany option:selected").val();
-		
+
 	});
-	
+
 	//엑셀출력 확인메시지
 	$(document).on("click","#excel",function(){
   swal({
@@ -631,8 +637,8 @@ $(document).ready(function(){
 
       });
 	});
-	  
-	
+
+
 	// 당일 클릭시
 	$('#toDay').on("click", function(){
 	  console.log("toDay clicked....");
@@ -680,7 +686,7 @@ $(document).ready(function(){
 
 	   ajaxGraph(startDate, endDate);
 	})
-	
+
   });
 
 //그래프 함수

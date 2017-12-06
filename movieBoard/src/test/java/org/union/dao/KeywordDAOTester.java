@@ -40,7 +40,7 @@ public class KeywordDAOTester {
 	@Test
 	public void testRead() {
 		
-		dao.read(1);
+		dao.read("현빈");
 	}
 
 

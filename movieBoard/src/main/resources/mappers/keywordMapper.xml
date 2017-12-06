@@ -19,7 +19,7 @@
 		from
 			keyword_data
 		where
-			keyword_idx = #{keyword_idx}
+			keyword = #{keyword}
 	
 	</select>
 

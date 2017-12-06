@@ -100,12 +100,12 @@
                           <a href="create" class="btn btn-primary float-right">등록</a>
                         </div>
                       </div>
-                      <div class="card-block">
+                      <div class="card-block table-border-style">
                         <div class="table-responsive">
                           <table class="table table-bordered">
                             <thead>
                               <tr>
-                                <th width="5%">NO</th>
+                                <th width="1%">NO</th>
                                 <th width="5%">등록일</th>
                                 <th width="10%">회사명</th>
                                 <th width="10%">키워드</th>
@@ -233,57 +233,57 @@
 	//ajax 보안
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
-	
+
 	$(function() {
 		  $(document).ajaxSend(function(e, xhr, options) {
 		  	xhr.setRequestHeader(header, token);
 		  });
-	});	
+	});
 
 	$(document).ready(function(){
-		
+
 		// 수정 버튼 클릭
 		$(".tabledit-edit-button").on("click", function(event){
 			var div = event.target.parentNode;
-			
+
 			if(div.type == 'button'){
 				console.log("button click...");
 				div = div.parentNode;
-			} 
+			}
 
 			var tr = div.parentNode.parentNode;
 			console.log(tr);
-			
+
 			var td = tr.children[3];
 			console.log(td);
-			
+
 			var keyword_main = td.childNodes[0];
 			console.log(keyword_main.data);
-			
+
 			self.location = "modify?keyword_main=" + keyword_main.data;
-			
+
 		});
 
 		// 삭제 버튼 클릭
 		$(".tabledit-delete-button").on("click", function(event){
 			var div = event.target.parentNode;
-			
+
 			if(div.type == 'button'){
 				console.log("button click...");
 				div = div.parentNode;
-			} 
+			}
 
 			var tr = div.parentNode.parentNode;
 			console.log(tr);
-			
+
 			var td = tr.children[3];
 			console.log(td);
-			
+
 			var keyword_main = td.childNodes[0];
 			console.log(keyword_main.data);
-			
-			
-			
+
+
+
 			$.ajax({
 
 				type : "POST",
@@ -291,18 +291,18 @@
 		 	  	dataType : "text",
 		 	  	data : {keyword_main : keyword_main.data},
 		 	  	success : function(data){
-		 	  		
+
 		 	  		if(data == "success"){
-						location.reload(); 
+						location.reload();
 		 	  		}
-		 	  		
+
 		 	  	}
-			}); 
-			
+			});
+
 		});
-		
+
 	});
-	
+
 </script>
 
 </html>

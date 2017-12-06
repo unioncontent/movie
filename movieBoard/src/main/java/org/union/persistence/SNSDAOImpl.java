@@ -157,9 +157,9 @@ public class SNSDAOImpl implements SNSDAO {
 
 
 	@Override
-	public List<SNSVO> getDateCount(GraphVO vo) {
+	public List<SNSVO> getDateCount(SearchCriteria cri) {
 
-		return session.selectList(namespace + "getDateCount", vo);
+		return session.selectList(namespace + "getDateCount", cri);
 	}
 
 
