@@ -265,7 +265,9 @@ public class MediaServiceImpl implements MediaService {
 	@Override
 	public List<MediaVO> allPageList(SearchCriteria cri) {
 
-		return mediaDAO.allPageList(cri);
+		List<MediaVO> list = mediaDAO.allPageList(cri);
+		
+		return list;
 	}
 
 	@Override
@@ -277,7 +279,13 @@ public class MediaServiceImpl implements MediaService {
 	@Override
 	public List<MediaVO> allPage(SearchCriteria cri) {
 
-		return mediaDAO.allPage(cri);
+		List<MediaVO> list=  mediaDAO.allPage(cri);
+		
+		for (MediaVO mediaVO : list) {
+			mediaVO.setKeyword_main(keywordDAO.read(mediaVO.getKeyword()).getKeyword_main());
+		}
+		
+		return list;
 	}
 
 }

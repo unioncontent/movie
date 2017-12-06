@@ -146,11 +146,11 @@
                               <option value="100">100</option>
                             </select>
                             <select id = "selectSearchType" name="select" class="col-sm-1 form-control form-control-inverse m-r-10 m-b-10 f-left search-select">
-							  <option id="t" value="t">기자명</option>
-                              <option id="c" value="c">언론사명</option>
+							  <option id="r" value="r">기자명</option>
+                              <option id="m" value="m">언론사명</option>
                             </select>
                             <div class="col-sm-2 input-group input-group-button input-group-inverse p-l-0 p-r-0 m-b-10 f-left btn-select">
-                              <input type="text" class="form-control" placeholder="">
+                              <input id="keywordInput" type="text" class="form-control" placeholder="">
                               <span class="input-group-addon" id="basic-addon1">
                                 <button id="searchBtn" class="btn btn-inverse">검색</button>
                               </span>
@@ -463,8 +463,7 @@
 			console.log("selectKeyword clicked....");
 			console.log($('#selectKeyword option:selected').val());
 			
-			self.location = "news?"
-							+ "selectKey=" + $('#selectKeyword option:selected').val(); 
+			searchList();
 
 		});
 	  
@@ -575,9 +574,11 @@
 	        },
 	        function(){//엑셀 출력하겠다고 할 시 진행 함수
 
-	        	self.location = "excel?"+ "searchType=" + $("#selectSearchType option:selected").val()
-				  + "&keyword=" + decodeURI(window.location.href.split("&keyword=")[1]).split("&selectKey")[0]
-				  + "&selectKey=" + $('#selectKeyword option:selected').val();
+	        	self.location = "excel?"+ "searchType=" + decodeURI(window.location.href.split("&searchType=")[1]).split("&")[0]
+					 	+ "&keyword=" + decodeURI(window.location.href.split("&keyword=")[1]).split("&")[0]
+			        	+ "&selectKey=" + $('#selectKeyword option:selected').val()
+						+ "&startDate=" + makeDateFormat($("#fromDate").val(), 0)
+						+ "&endDate=" +  makeDateFormat($("#fromDate").val(), 1)
 
 
 		  		swal("Success!", "엑셀출력 되었습니다.", "success");
