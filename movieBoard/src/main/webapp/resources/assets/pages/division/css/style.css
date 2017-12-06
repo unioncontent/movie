@@ -2,13 +2,16 @@
   vertical-align: middle;
   text-align: center;
 }*/
+.btn-primary:focus{
+  color: #13866f;
+}
 .table > thead > tr > th{
   vertical-align: middle;
 }
 
 input[type=radio]{
-		display:none;
-	}
+	display:none;
+}
 
 input[type=radio] + label{
 	display:inline-block;
