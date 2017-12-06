@@ -165,12 +165,12 @@
                                   </span>
                                 </div>
                                 <div class="btn-group f-right p-r-0">
-                                  <button type="button" class="btn btn-primary btn-outline-primary btn-sm waves-effect waves-light">좋은글</button>
-                                  <button type="button" class="btn btn-primary btn-outline-primary btn-sm waves-effect waves-light">나쁜글</button>
-                                  <button type="button" class="btn btn-primary btn-outline-primary btn-sm waves-effect waves-light">관심글</button>
-                                  <button type="button" class="btn btn-primary btn-outline-primary btn-sm waves-effect waves-light">기타글</button>
-                                  <button type="button" class="btn btn-primary btn-outline-primary btn-sm waves-effect waves-light">삭제글</button>
-                                  <button type="button" class="alert-confirm btn btn-sm btn-primary waves-effect f-right p-b-10"><i class="icofont icofont-exchange" style="margin: 0px;font-size: 16px;"></i></button>
+                                  <button type="button" id="allBtn1" class="radiosBtn btn btn-primary btn-outline-primary btn-sm waves-effect waves-light">좋은글</button>
+                                  <button type="button" id="allBtn2" class="radiosBtn btn btn-primary btn-outline-primary btn-sm waves-effect waves-light">나쁜글</button>
+                                  <button type="button" id="allBtn3" class="radiosBtn btn btn-primary btn-outline-primary btn-sm waves-effect waves-light">관심글</button>
+                                  <button type="button" id="allBtn4" class="radiosBtn btn btn-primary btn-outline-primary btn-sm waves-effect waves-light">기타글</button>
+                                  <button type="button" id="allBtn5" class="radiosBtn btn btn-primary btn-outline-primary btn-sm waves-effect waves-light">삭제글</button>
+                                  <button type="button" id="insertAllBtn" class="alert-confirm btn btn-sm btn-primary waves-effect f-right p-b-10"><i class="icofont icofont-exchange" style="margin: 0px;font-size: 16px;"></i></button>
                                 </div>
                             <%-- <button id = "insertAllBtn" type="button" class="alert-confirm btn btn-primary waves-effect f-right p-r-0 p-l-5 m-l-15 m-b-10  f-right"><i class="icofont icofont-check-circled"></i>일괄처리</button> --%>
                           </div>
@@ -501,7 +501,7 @@ $(function() {
 	  });
 
 	  // allBtn 클릭시
-	  $(".radiosAll input").on("click", function(event){
+	  $(".radiosBtn").on("click", function(event){
 		  console.log(event);
 
 		  var input = event.target.id;
