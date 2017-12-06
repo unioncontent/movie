@@ -524,7 +524,7 @@ $(function() {
 			console.log("selectCompany clicked....");
 			console.log($("#selectCompany option:selected").val());
 
-			self.location = "listAll?"+ "company=" + $("#selectCompany option:selected").val();
+			searchList();
 
 		});
 
@@ -552,9 +552,7 @@ $(function() {
 			console.log("selectKeyword clicked....");
 			console.log($('#selectKeyword option:selected').val());
 
-			self.location = "listAll?"
-							+ "company=" + $("#selectCompany option:selected").val()
-							+ "&selectKey=" + $('#selectKeyword option:selected').val();
+			searchList();
 
 			//searchList();
 		});
