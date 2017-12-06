@@ -334,13 +334,13 @@
  	
  	<select id="getDateCount" resultType="SNSVO">
  		select 
- 			date_format(writeDate, '%x-%m-%d') writeDate, like_cnt, reply_cnt, share_cnt, sns_name
+ 			date_format(createDate, '%x-%m-%d') writeDate, like_cnt, reply_cnt, share_cnt, sns_name
   		from 
   			sns_data
   		where 
-  			sns_name = #{sns_name}
+  			sns_name = #{portal_name}
   		<include refid="search"></include>
-  		order by  date_format(writeDate, '%x-%m-%d') desc
+  		order by  date_format(createDate, '%x-%m-%d') desc
  	
  	</select>
  	
