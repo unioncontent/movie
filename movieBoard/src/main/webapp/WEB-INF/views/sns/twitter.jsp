@@ -204,7 +204,7 @@
                                 <tbody>
                                   <c:forEach items="${twitterList}" var="snsVO">
                                     <tr>
-                                      <th scope="row">${snsVO.sns_idx}</th>
+                                      <th scope="row">${totalCount - minusCount - index.count +1}</th>
                                       <td>${snsVO.writeDate}</td>
                                       <td>${snsVO.keyword}</td>
                                       <td><a href="${snsVO.url}" target="_blank"><div class="nobr">${snsVO.sns_title}</div></a></td>
@@ -344,19 +344,41 @@
 
 <script type="text/javascript">
 
-//ajax 보안
-var token = $("meta[name='_csrf']").attr("content");
-var header = $("meta[name='_csrf_header']").attr("content");
+  //ajax 보안
+  var token = $("meta[name='_csrf']").attr("content");
+  var header = $("meta[name='_csrf_header']").attr("content");
 
-$(function() {
+  $(function() {
 	  $(document).ajaxSend(function(e, xhr, options) {
 	  	  xhr.setRequestHeader(header, token);
 	  });
-});
+  });
 
+  $(document).ready(function(){
 
-$(document).ready(function(){
-	
+	  var $fromDate = $("#fromDate");
+	  
+	  var startDateOption = decodeURI(window.location.href.split("startDate=")[1]).split("&")[0];
+	  var endDateOption = decodeURI(window.location.href.split("endDate=")[1]).split("&")[0];
+	  console.log("startDateOption: " + startDateOption);
+	  console.log("endDateOption: " + endDateOption);
+		
+	  if(startDateOption != 'undefined' && endDateOption != 'undefined'
+			&& startDateOption != '' && endDateOption != ''){
+		  $fromDate.val(startDateOption + " - " + endDateOption);
+	  		
+	  		
+		}
+	  
+
+	  var graphStart = $fromDate.val().split(" - ")[0].replace("/", "-").replace("/", "-");
+	  var graphEnd = $fromDate.val().split(" - ")[1].replace("/", "-").replace("/", "-");
+
+	  console.log("graphStart: " + graphStart);
+	  console.log("graphEnd: " + graphEnd);
+	  
+	  ajaxGraph(graphStart, graphEnd);
+	  
 	// 엑셀 출력시
 	$(document).on("click","#excel",function(){
 	    swal({
@@ -372,19 +394,24 @@ $(document).ready(function(){
 	        	
 	        	console.log("엑셀출력한다?");
 
-	        	self.location = "excel?"+ "searchType=" + $("#selectSearchType option:selected").val()
-				  + "&keyword=" + decodeURI(window.location.href.split("&keyword=")[1]).split("&selectKey")[0]
-				  + "&selectKey=" + $('#selectKeyword option:selected').val()
-				  + "&company=" + $("#selectCompany option:selected").val(); 
-
-	        	console.log(self.loaction);
+	        	self.location = "excel?"
+	        		  +"searchType=" + decodeURI(window.location.href.split("&searchType=")[1]).split("&")[0]
+			 		  + "&keyword=" + decodeURI(window.location.href.split("&keyword=")[1]).split("&")[0]
+					  + "&selectKey="
+					  + $('#selectKeyword option:selected').val()
+					  + "&company="
+					  + $("#selectCompany option:selected").val()
+					  + "&startDate=" + makeDateFormat($("#fromDate").val(), 0)
+					  + "&endDate=" +  makeDateFormat($("#fromDate").val(), 1)
+					  + "&portal_name=twitter";
 
 		  		swal("Success!", "엑셀출력 되었습니다.", "success");
 
 	        });
 		});
 
-	var selectOption = decodeURI(window.location.href.split("selectKey=")[1]);
+
+	var selectOption = decodeURI(window.location.href.split("selectKey=")[1]).split("&")[0];
 	console.log("selectOption: " + selectOption);
 
 
@@ -407,7 +434,7 @@ $(document).ready(function(){
 		searchList();
 	});
 	
-	var companyOption = decodeURI(window.location.href.split("company=")[1]).split("&textType")[0];
+	var companyOption = decodeURI(window.location.href.split("company=")[1]).split("&")[0];
 
 
 	var $selectCompany = $('#selectCompany');
@@ -427,10 +454,9 @@ $(document).ready(function(){
 		console.log("selectCompany clicked....");
 		console.log($("#selectCompany option:selected").val());
 		
-		self.location = "twitter?"+ "company=" + $("#selectCompany option:selected").val();
+		searchList();
 		
 	});
-
 
 
 	// 검색 클릭시
@@ -447,146 +473,71 @@ $(document).ready(function(){
     });
 
 
+	// 당일 클릭시
+	$('#toDay').on("click", function(){
+	  console.log("toDay clicked....");
+	  var date = getDate("toDay");
+	  var startDate = date.startDate;
+	  var endDate = date.endDate;
 
-// 당일 클릭시
-$('#toDay').on("click", function(){
-	console.log("toDay clicked....");
-	var date = getDate("toDay");
-	var endDate = date.endDate;
+	  $("#fromDate").val(endDate + " - " + endDate)
+	  console.log($("#fromDate").val());
+	  searchList(); 
+	});
 
-	ajaxGraph(endDate, endDate);
-});
+	// 전일 클릭시
+	$('#yesterDay').on("click", function(){
+	  console.log("yesterDay clicked....");
+	  var date = getDate("yesterDay");
+	  var startDate = date.startDate;
+	  var endDate = date.endDate;
 
-$('#yesterDay').on("click", function(){
-	console.log("yesterDay clicked....");
-	var date = getDate("yesterDay");
-	var startDate = date.startDate;
-	var endDate = date.endDate;
+	  $("#fromDate").val(startDate + " - " + endDate)
+	  console.log($("#fromDate").val());
+	  searchList();
+	});
 
-	ajaxGraph(startDate, endDate);
-});
+	// 7일  클릭시
+	$('#week').on("click", function(){
+	  console.log("week clicked....");
+	  var date = getDate("week");
+	  var startDate = date.startDate;
+	  var endDate = date.endDate;
 
-$('#week').on("click", function(){
-	console.log("week clicked....");
-	var date = getDate("week");
-	var startDate = date.startDate;
-	var endDate = date.endDate;
+	  $("#fromDate").val(startDate + " - " + endDate)
+	  console.log($("#fromDate").val());
+	  searchList();
+	})
 
-	ajaxGraph(startDate, endDate);
-})
-
-$('#month').on("click", function(){
-	console.log("month clicked....");
-	var date = getDate("month");
-	var startDate = date.startDate;
-	var endDate = date.endDate;
-
-	ajaxGraph(startDate, endDate);
-})
-
-
-// 캘린더 클릭시
-$('#fromDate').on('apply.daterangepicker', function(ev, picker) {
-	   var startDate = picker.startDate.format('YYYY-MM-DD');
-	   var endDate = picker.endDate.format('YYYY-MM-DD');
-
-	   ajaxGraph(startDate, endDate);
+	// 30일 클릭시
+	$('#month').on("click", function(){
+	  console.log("month clicked....");
+	  var date = getDate("month");
+	  var startDate = date.startDate;
+	  var endDate = date.endDate;
+	
+	  $("#fromDate").val(startDate + " - " + endDate)
+	  console.log($("#fromDate").val());
+	  
+	  searchList();
+	 
+	})
 
 
-}); // end
+	// 캘린더 클릭시
+	$('#fromDate').on('apply.daterangepicker', function(ev, picker) {	
+		   var startDate = picker.startDate.format('YYYY-MM-DD');
+		   var endDate = picker.endDate.format('YYYY-MM-DD');
 
-var date = getDate("week");
-var startDate = date.startDate;
-var endDate = date.endDate;
+		   console.log("startDate: " + startDate);
+		   console.log("endDate: " + endDate);
 
-ajaxGraph(startDate, endDate);
+		   searchList();
+
+	});
 
 
 }); // end ready....
-
-function ajaxGraph(startDate, endDate){
-	$.ajax({
-
-        type : "POST",
-    	  url : "graph",
-     	  dataType : "json",
-     	  data : {startDate : startDate, endDate : endDate, company : $("#selectCompany option:selected").val(),
-     		  selectKey : $("#selectKeyword option:selected").val(), part : "twitter"},
-      	error : function(){
-          	alert('graphPOST ajax error....');
-      	},
-      	success : function(data){
-
-      		var script = "[";
-
-      		for(var i = 0; i < data.length; i++){
-      			console.log(data[i]);
-      			script += '{"period":' + '"' + data[i].writeDate + '",'+ '"l1"'+ ':' + data[i].likeCount + ","+ '"l2"' + ':' + data[i].shareCount + ","+ '"l3"' + ':' + data[i].replyCount + "},";
-
-      			if(i == data.length-1){
-      				script =  script.substr(0, script.length-1);
-      				script += "]";
-      			}
-      		}
-      		console.log(script);
-
-      		// to json
-      		var jsonScript = JSON.parse(script);
-
-      		drawChart(jsonScript);
-
-      	}
-  	});
-}
-
-
-function getDate(type){
-	console.log("TYPE : " + type);
-	var date = new Date();
-
-	 	var month = date.getMonth()+1;
-	 	var day = date.getDate();
-	 	var year = date.getFullYear();
-
-	 	var endDate = year + "-" + month + "-" + day;
-	 	var startDate;
-
-	 	if(type == "yesterDay"){
-	 		var calcDate = day-1;
-	 		startDate = year + "-" + month + "-" + calcDate;
-
-	 	}else if(type == "month"){
-	 		var calcDate = month-1;
-	 		startDate = year + "-" + calcDate + "-" + day;
-
-	 	}else if(type == "week"){
-	 		var calcDate = day-7;
-	 		startDate = year + "-" + month + "-" + calcDate;
-	 	}
-
-	 	return {
-	 		startDate : startDate,
-	 		endDate : endDate
-	 	}
-
-}
-
-	// 그래프 함수
-function drawChart(data){
-		// 그래프 초기화
-		$('#line-chart1').children().remove();
-
-		window.lineChart = Morris.Line({
-		      element: 'line-chart1',
-		      data: data,
-		      xkey: 'period',
-		      redraw: true,
-		      ykeys: ['l1', 'l2', 'l3'],
-		      hideHover: 'auto',
-		      labels: ['좋아요', '공유', '댓글'],
-		      lineColors: ['#fb9678', '#7E81CB', '#01C0C8']
-		  });
-	}
 
 //list URL 함수
 function searchList(event) {
@@ -603,6 +554,114 @@ function searchList(event) {
 				  + "&selectKey="
 				  + $('#selectKeyword option:selected').val()
 				  + "&company="
-				  + $("#selectCompany option:selected").val();
+				  + $("#selectCompany option:selected").val()
+				  + "&startDate=" + makeDateFormat($("#fromDate").val(), 0)
+				  + "&endDate=" +  makeDateFormat($("#fromDate").val(), 1);
 }
+
+// 그래프 함수
+function ajaxGraph(startDate, endDate){
+	$.ajax({
+
+      type : "POST",
+	  url : "graph",
+ 	  dataType : "json",
+ 	  data : {startDate : startDate, endDate : endDate, company : $("#selectCompany option:selected").val(),
+ 		  selectKey : $("#selectKeyword option:selected").val(),
+ 		  searchType: decodeURI(window.location.href.split("&searchType=")[1]).split("&")[0], 
+ 		  keyword : decodeURI(window.location.href.split("&keyword=")[1]).split("&")[0], 
+ 		  portal_name : "twitter"},
+  	  error : function(){
+      	alert('graphPOST ajax error....');
+  	  },
+  	  success : function(data){
+  		  console.log(data);
+  		  
+  		var script = "[";
+
+  		for(var i = 0; i < data.length; i++){
+  			console.log(data[i]);
+  			script += '{"period":' + '"' + data[i].writeDate + '",'+ '"l1"'+ ':' + data[i].likeCount + ","+ '"l2"' + ':' + data[i].shareCount + ","+ '"l3"' + ':' + data[i].replyCount + "},";
+
+  			if(i == data.length-1){
+  				script =  script.substr(0, script.length-1);
+  				script += "]";
+  			}
+  		}
+  		console.log(script);
+
+  		// to json
+  		var jsonScript = JSON.parse(script);
+
+  		drawChart(jsonScript);
+
+  	 }
+	});
+}
+
+
+function drawChart(data){
+   	// 그래프 초기화
+   	$('#line-chart1').children().remove();
+
+   	window.lineChart = Morris.Line({
+   	      element: 'line-chart1',
+   	      data: data,
+   	      xkey: 'period',
+   	      redraw: true,
+   	      ykeys: ['l1', 'l2', 'l3'],
+   	      hideHover: 'auto',
+   	      labels: ['좋아요', '공유', '댓글'],
+   	      lineColors: ['#fb9678', '#7E81CB', '#01C0C8']
+   	  });
+   }
+
+// 날짜 계산 함수
+function getDate(type){
+	console.log("TYPE : " + type);
+	var date = new Date();
+
+ 	var month = date.getMonth()+1;
+ 	var day = date.getDate();
+ 	var year = date.getFullYear();
+
+ 	var endDate = year + "-" + month + "-" + day;
+ 	var startDate;
+
+ 	if(type == "yesterDay"){
+ 		var calcDate = day-1;
+ 		startDate = year + "-" + month + "-" + calcDate;
+
+ 	}else if(type == "month"){
+ 		var calcDate = month-1;
+ 		startDate = year + "-" + calcDate + "-" + day;
+
+ 	}else if(type == "week"){
+ 		var calcDate = day-7;
+ 		if(calcDate < 0){
+ 			var lastDay = (new Date(year, month-1, 0)).getDate();
+ 			calcDate += lastDay;
+ 			month -= 1;
+ 		}
+ 		startDate = year + "-" + month + "-" + calcDate;
+ 	}
+
+ 	return {
+ 		startDate : startDate,
+ 		endDate : endDate
+ 	}
+
+}
+
+function makeDateFormat(date, index){
+	var splitDate = date.split(" - ")[index];
+		if(splitDate != undefined){
+			var returnDate = splitDate.replace("/", "-").replace("/", "-")
+			return returnDate;
+		}
+	
+	
+}
+
+
 </script>
