@@ -43,7 +43,7 @@ public class ExcelView extends AbstractXlsView {
 			  titleStyle.setBorderTop(HSSFCellStyle.BORDER_THIN);
 			  
 			  // 타이틀 설정
-			  String[] titleList = { "사이트", "키워드", "작성자", "제목","내용","URL","작성날짜", "분류"};
+			  String[] titleList = { "사이트", "대표 키워드", "키워드", "작성자", "제목","내용","URL","작성날짜", "분류"};
 			  
 			 
 			  HSSFRow titleRow = sheet.createRow(rowIdx++);
@@ -74,25 +74,28 @@ public class ExcelView extends AbstractXlsView {
 			    HSSFCell domainCell = dataRow.createCell(0);
 			    domainCell.setCellValue(new HSSFRichTextString(vo.getDomainType()));
 			    
-			    HSSFCell keywordCell = dataRow.createCell(1);
+			    HSSFCell keyword_mainCell = dataRow.createCell(1);
+			    keyword_mainCell.setCellValue(new HSSFRichTextString(vo.getKeyword_main()));
+			    
+			    HSSFCell keywordCell = dataRow.createCell(2);
 			    keywordCell.setCellValue(new HSSFRichTextString(vo.getKeyword()));
 			    
-			    HSSFCell writerCell = dataRow.createCell(2);
+			    HSSFCell writerCell = dataRow.createCell(3);
 			    writerCell.setCellValue(new HSSFRichTextString(vo.getWriter()));
 			    
-			    HSSFCell titleCell = dataRow.createCell(3);
+			    HSSFCell titleCell = dataRow.createCell(4);
 			    titleCell.setCellValue(new HSSFRichTextString(vo.getTitle()));
 
-			    HSSFCell contentCell = dataRow.createCell(4);
+			    HSSFCell contentCell = dataRow.createCell(5);
 			    contentCell.setCellValue(new HSSFRichTextString(vo.getContent()));
 			    
-			    HSSFCell dateCell = dataRow.createCell(5);
+			    HSSFCell dateCell = dataRow.createCell(6);
 			    dateCell.setCellValue(new HSSFRichTextString(vo.getUrl()));
 			    
-			    HSSFCell urlCell = dataRow.createCell(6);
+			    HSSFCell urlCell = dataRow.createCell(7);
 			    urlCell.setCellValue(new HSSFRichTextString(vo.getWriteDate()));
 			    
-			    HSSFCell classiCell = dataRow.createCell(7);
+			    HSSFCell classiCell = dataRow.createCell(8);
 			    classiCell.setCellValue(new HSSFRichTextString(vo.getTextType()));
 			  
 

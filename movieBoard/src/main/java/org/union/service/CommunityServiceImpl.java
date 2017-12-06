@@ -12,6 +12,7 @@ import org.union.domain.ExtractVO;
 import org.union.domain.SearchCriteria;
 import org.union.domain.TextTypeVO;
 import org.union.persistence.CommunityDAO;
+import org.union.persistence.KeywordDAO;
 
 @Service
 public class CommunityServiceImpl implements CommunityService {
@@ -20,6 +21,8 @@ public class CommunityServiceImpl implements CommunityService {
 	@Autowired
 	private CommunityDAO communityDAO;
 	
+	@Autowired
+	private KeywordDAO keywordDAO;
 	
 	
 	@Override
@@ -99,8 +102,14 @@ public class CommunityServiceImpl implements CommunityService {
 	
 	@Override
 	public List<CommunityVO> listAll(SearchCriteria cri) {
+		
+		List<CommunityVO> list = communityDAO.listAll(cri);
+		
+		for (CommunityVO communityVO : list) {
+			communityVO.setKeyword_main(keywordDAO.read(communityVO.getKeyword()).getKeyword_main());
+		}
 
-		return communityDAO.listAll(cri);
+		return list;
 	}
 	
 	@Override
