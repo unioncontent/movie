@@ -6,6 +6,9 @@ $(window).on('resize',function(){
   }, 500);
 });
 
+$(document).ready(function() {
+  cardResize();
+});
 /*$(document).ready(function() {
   cardResize();
   linechart();

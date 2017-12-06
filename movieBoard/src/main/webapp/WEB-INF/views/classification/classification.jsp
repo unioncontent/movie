@@ -181,7 +181,7 @@
                             <button type="button" class="btn btn-inverse  waves-effect  f-right p-r-5 p-l-5 m-l-15 m-b-10" data-toggle="modal" data-target="#frmModal"><i class="ti-pencil-alt"></i>수동입력</button>
                             <button id="insertAllBtn" type="button" class="alert-confirm btn btn-primary waves-effect f-right p-r-0 p-l-5 m-l-15 m-b-10  f-right"><i class="icofont icofont-check-circled"></i>일괄처리</button>
                           </div>
-                          <div class="card-block">
+                          <div class="card-block table-border-style">
                             <div class="table-responsive">
                               <table class="table table-hover">
                                 <thead>
@@ -198,7 +198,6 @@
                                   </tr>
                                 </thead>
                                 <tbody>
-
                                   <c:forEach items="${classiList}" var="extractVO" varStatus="index">
                                   <tr class = "trList">
                                     <c:if test="${extractVO.sns_idx != null}">
@@ -237,7 +236,7 @@
                                         	<input type="radio" id="radio2${index.count}" name="radios${index.count}">
                                         	<label for="radio2${index.count}">나쁜글</label>
                                         	<input type="radio" id="radio3${index.count}" name="radios${index.count}">
-                                        	<label for="radio3${index.count}">관심글</label><br>
+                                        	<label for="radio3${index.count}">관심글</label>
                                         	<input type="radio" id="radio4${index.count}" name="radios${index.count}">
                                         	<label for="radio4${index.count}">기타글</label>
                                         	<input type="radio" id="radio5${index.count}" name="radios${index.count}">
@@ -252,7 +251,7 @@
                                         	<input type="radio" id="radio2${index.count}" name="radios${index.count}" checked>
                                         	<label for="radio2${index.count}">나쁜글</label>
                                         	<input type="radio" id="radio3${index.count}" name="radios${index.count}">
-                                        	<label for="radio3${index.count}">관심글</label><br>
+                                        	<label for="radio3${index.count}">관심글</label>
                                         	<input type="radio" id="radio4${index.count}" name="radios${index.count}">
                                         	<label for="radio4${index.count}">기타글</label>
                                         	<input type="radio" id="radio5${index.count}" name="radios${index.count}">
@@ -267,7 +266,7 @@
                                         	<input type="radio" id="radio2${index.count}" name="radios${index.count}">
                                         	<label for="radio2${index.count}">나쁜글</label>
                                         	<input type="radio" id="radio3${index.count}" name="radios${index.count}" checked>
-                                        	<label for="radio3${index.count}">관심글</label><br>
+                                        	<label for="radio3${index.count}">관심글</label>
                                         	<input type="radio" id="radio4${index.count}" name="radios${index.count}">
                                         	<label for="radio4${index.count}">기타글</label>
                                         	<input type="radio" id="radio5${index.count}" name="radios${index.count}">
@@ -282,7 +281,7 @@
                                         	<input type="radio" id="radio2${index.count}" name="radios${index.count}">
                                         	<label for="radio2${index.count}">나쁜글</label>
                                         	<input type="radio" id="radio3${index.count}" name="radios${index.count}">
-                                        	<label for="radio3${index.count}">관심글</label><br>
+                                        	<label for="radio3${index.count}">관심글</label>
                                         	<input type="radio" id="radio4${index.count}" name="radios${index.count}" checked>
                                         	<label for="radio4${index.count}">기타글</label>
                                         	<input type="radio" id="radio5${index.count}" name="radios${index.count}">
@@ -297,7 +296,7 @@
                                         	<input type="radio" id="radio2${index.count}" name="radios${index.count}">
                                         	<label for="radio2${index.count}">나쁜글</label>
                                         	<input type="radio" id="radio3${index.count}" name="radios${index.count}">
-                                        	<label for="radio3${index.count}">관심글</label><br>
+                                        	<label for="radio3${index.count}">관심글</label>
                                         	<input type="radio" id="radio4${index.count}" name="radios${index.count}">
                                         	<label for="radio4${index.count}">기타글</label>
                                         	<input type="radio" id="radio5${index.count}" name="radios${index.count}" checked>
@@ -314,33 +313,37 @@
                                   </tr>
                                   </c:forEach>
                                 </tbody>
+                                <tfoot>
+                                  <tr>
+                                    <td colspan="9">
+                                      <ul class="pagination float-right">
+                                        <c:if test="${pageMaker.prev}">
+                                          <li class="page-item">
+                                            <a class="page-link" href="classification${pageMaker.makeSearch(pageMaker.startPage - 1) }" aria-label="Previous">&laquo;
+                                              <span aria-hidden="true"></span>
+                                              <span class="sr-only">Previous</span>
+                                            </a>
+                                          </li>
+                                        </c:if>
+                                        <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
+                                          <li class= "${pageMaker.cri.page == idx? 'active':''} page-item">
+                                            <a class="page-link" href="classification${pageMaker.makeSearch(idx)}">${idx}</a>
+                                          </li>
+                                        </c:forEach>
+                                        <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+                                          <li class="page-item">
+                                            <a class="page-link" href="classification${pageMaker.makeSearch(pageMaker.endPage +1) }" aria-label="Next">&raquo;
+                                              <span aria-hidden="true"></span>
+                                              <span class="sr-only">Next</span>
+                                            </a>
+                                          </li>
+                                        </c:if>
+                                      </ul>
+                                    </td>
+                                  </tr>
+                                </tfoot>
                               </table>
                             </div>
-                            <ul class="pagination float-right">
-                              <c:if test="${pageMaker.prev}">
-                                <li class="page-item">
-                                  <a class="page-link" href="classification${pageMaker.makeSearch(pageMaker.startPage - 1) }" aria-label="Previous">&laquo;
-                                    <span aria-hidden="true"></span>
-                                    <span class="sr-only">Previous</span>
-                                  </a>
-                                </li>
-                              </c:if>
-
-                              <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
-                                <li class= "${pageMaker.cri.page == idx? 'active':''} page-item">
-                                  <a class="page-link" href="classification${pageMaker.makeSearch(idx)}">${idx}</a>
-                                </li>
-                              </c:forEach>
-
-                              <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-                                <li class="page-item">
-                                  <a class="page-link" href="classification${pageMaker.makeSearch(pageMaker.endPage +1) }" aria-label="Next">&raquo;
-                                    <span aria-hidden="true"></span>
-                                    <span class="sr-only">Next</span>
-                                  </a>
-                                </li>
-                              </c:if>
-                            </ul>
                           </div>
                         </div>
                       </div>
@@ -572,20 +575,20 @@
 		        xhr.setRequestHeader(header, token);
 		    });
 		});
-		
-		
+
+
 		var startDateOption = decodeURI(window.location.href.split("startDate=")[1]).split("&")[0];
 		var endDateOption = decodeURI(window.location.href.split("endDate=")[1]).split("&")[0];
 		console.log("startDateOption: " + startDateOption);
 		console.log("endDateOption: " + endDateOption);
-		
+
 		if(startDateOption != 'undefined' && endDateOption != 'undefined'
 				&& startDateOption != '' && endDateOption != ''){
 			$("#fromDate").val(startDateOption + " - " + endDateOption);
 		}
-		
-		
-		
+
+
+
 		var companyOption = decodeURI(window.location.href.split("company=")[1]).split("&")[0];
 		console.log("companyOption: " + companyOption);
 
@@ -606,10 +609,10 @@
 			console.log("selectCompany clicked....");
 			console.log($("#selectCompany option:selected").val());
 
-			self.location = "classification?"+ "company=" + $("#selectCompany option:selected").val();
-			
+			searchList();
+
 		});
-		
+
 
 		var keywordOption = decodeURI(window.location.href.split("selectKey=")[1]).split("&")[0];
 		console.log("keywordOption: " + keywordOption);
@@ -630,12 +633,8 @@
 		$selectKeyword.change(function(){
 			console.log("selectKeyword clicked....");
 			console.log($('#selectKeyword option:selected').val());
-			
-			self.location = "classification?"
-							+ "company=" + $("#selectCompany option:selected").val()
-							+ "&selectKey=" + $('#selectKeyword option:selected').val();
 
-			//searchList();
+			searchList();
 		});
 
 
@@ -652,26 +651,22 @@
 			}
 		}
 		$selectTextType[0][0].disabled = true;
-		
+
 
 		// 분류 선택시
 		$selectTextType.change(function(){
 			console.log("selectTextType clicked....");
 			console.log($('#selectTextType option:selected').val());
-			
-			self.location = "classification?"
-				+ "company=" + $("#selectCompany option:selected").val()
-				+ "&selectkey=" + $('#selectKeyword option:selected').val()
-				+ "&textType=" + $('#selectTextType option:selected').val();
 
+			searchList();
 		});
-		
-		
+
+
 		// 일괄처리버튼 클릭시
 		$(document).on("click","#insertAllBtn",function(){
 			insertAll();
 		});
-		  
+
 		// 삭제버튼 클릭시
 		$(document).on("click",".alert-confirm1",function(event){
 			swal({
@@ -689,20 +684,20 @@
 					console.log("button click...");
 					parent = parent.parentNode;
 				}
-							
+
 				var tr = parent.parentNode;
 				console.log(tr);
-							  
+
 				var idx = tr.children[0].value;
-				console.log(tr.children);  
-							
+				console.log(tr.children);
+
 				if(tr.children[2] != null){
 					var table = tr.children[2].innerText;
-				} 
-							  
+				}
+
 				console.log(idx);
 				console.log(table);
-							
+
 				$.ajax({
 						type: "POST",
 						url: "remove",
@@ -711,16 +706,16 @@
 						success: function(data){
 								console.log(data);
 						}
-								  
-				}); 
-							
+
+				});
+
 				swal("Delete!", "삭제처리가 완료되었습니다.", "success");
-							
+
 				location.reload();
 			});
 		});
-		  
-		  
+
+
 		  //즉시처리 버튼 클릭시
 		  $(document).on("click",".alert-confirm2",function(event){
 				swal({
@@ -733,16 +728,16 @@
 							closeOnConfirm: false
 						},
 						function(){
-							
+
 							insertType(event);
-							  
+
 							swal("Success!", "즉시처리가 완료되었습니다.", "success");
-							
+
 							location.reload();
 						});
 		  });
-		
-		  
+
+
 
 		// 수동입력 inserBtn 클릭시...
 		$("#insertBtn").on("click", function(){
@@ -812,7 +807,7 @@
 					  		success : function(){
 					  			swal("Success!", "등록 되었습니다.", "success");
 					  			console.log("success");
-					  			
+
 					  			location.reload();
 					  	  }
 
@@ -842,8 +837,8 @@
 
 
 		}); // end insertBtn click...
-		
-		
+
+
 		// 당일 클릭시
 		$('#toDay').on("click", function(){
 		  console.log("toDay clicked....");
@@ -853,7 +848,7 @@
 
 		  $("#fromDate").val(endDate + " - " + endDate)
 		  console.log($("#fromDate").val());
-		  searchList(); 
+		  searchList();
 		});
 
 		// 전일 클릭시
@@ -886,16 +881,16 @@
 		  var date = getDate("month");
 		  var startDate = date.startDate;
 		  var endDate = date.endDate;
-		
+
 		  $("#fromDate").val(startDate + " - " + endDate)
 		  console.log($("#fromDate").val());
-		  
+
 		  searchList();
-		 
+
 		})
-		
-		
-		
+
+
+
 		//캘린더 클릭시..
 		$('#fromDate').on('apply.daterangepicker', function(ev, picker) {
 			   var startDate = picker.startDate.format('YYYY-MM-DD');
@@ -905,7 +900,7 @@
 			   console.log("endDate: " + endDate);
 
 			   searchList();
-		}); 
+		});
 
 
 		// content 길시에 ...으로 변경
@@ -919,9 +914,9 @@
 			}
 		}
 
-		
-		
-		
+
+
+
 		//엑셀출력 확인메시지
 		$(document).on("click",".alert-excel",function(){
 	    swal({
@@ -935,11 +930,13 @@
 	        },
 	        function(){//엑셀 출력하겠다고 할 시 진행 함수
 
-	        	self.location = "excel?"+ "searchType=" + $("#selectSearchType option:selected").val()
-				  + "&keyword=" + decodeURI(window.location.href.split("&keyword=")[1]).split("&")[0]
-				  + "&selectKey=" + $('#selectKeyword option:selected').val()
-				  + "&company=" + $("#selectCompany option:selected").val()
-				  + "&textType=" + $("#selectTextType option:selected").val();
+	        	self.location = "excel?"+  "searchType=" + decodeURI(window.location.href.split("&searchType=")[1]).split("&")[0]
+			 	  + "&keyword=" + decodeURI(window.location.href.split("&keyword=")[1]).split("&")[0]
+	        	  + "&company=" + $("#selectCompany option:selected").val()
+		          + "&selectKey=" + $('#selectKeyword option:selected').val()
+		          + "&textType=" + $("#selectTextType option:selected").val()
+	      		  + "&startDate=" + makeDateFormat($("#fromDate").val(), 0)
+	      		  + "&endDate=" +  makeDateFormat($("#fromDate").val(), 1);
 
 
 		  		swal("Success!", "엑셀출력 되었습니다.", "success");
@@ -968,42 +965,42 @@
 		  console.log($('#selectSearchType option:selected').val());
 
 		  searchList();
-		  
+
 		});
 
 
 	}); // end ready...
 
-	
+
 	function makeDateFormat(date, index){
 		var splitDate = date.split(" - ")[index];
 		/* if(date.split(" - ")[0] == date.split(" - ")[1]){
 			console.log("날짜 미설정...");
 			console.log(date);
 			return "";
-			
+
 		}else { */
 			if(splitDate != undefined){
 				var returnDate = splitDate.replace("/", "-").replace("/", "-")
 				return returnDate;
 			}
 		//}
-		
-		
+
+
 	}
 	makeDateFormat($("#fromDate").val());
-	
+
 	function searchList(event) {
 
 		var makeQeury = '${pageMaker.makeQuery(1)}'.slice(0, -2);
 
-		self.location = "classification" 
-					  + makeQeury + $('#selectPerPageNum option:selected').val() 
+		self.location = "classification"
+					  + makeQeury + $('#selectPerPageNum option:selected').val()
 					  + "&company=" + $("#selectCompany option:selected").val()
 			          + "&selectKey=" + $('#selectKeyword option:selected').val()
 			          + "&textType=" + $("#selectTextType option:selected").val()
-					  + "&searchType=" + $("#selectSearchType option:selected").val() 
-					  + "&keyword=" + $('#keywordInput').val() 
+					  + "&searchType=" + $("#selectSearchType option:selected").val()
+					  + "&keyword=" + $('#keywordInput').val()
 	        		  + "&startDate=" + makeDateFormat($("#fromDate").val(), 0)
 	        		  + "&endDate=" +  makeDateFormat($("#fromDate").val(), 1);
 	}
@@ -1038,7 +1035,7 @@
 	   		startDate = year + "-" + month + "-" + calcDate;
 	   	}else if(type =='toDay'){
 	   		startDate = endDate
-	   		
+
 	   	}
 
 	   	return {
@@ -1047,7 +1044,7 @@
 	   	}
 
 	  }
-	
+
 	  function insertType(event) {
 
 			var parent = event.target.parentNode;
@@ -1055,10 +1052,10 @@
 				console.log("button click...");
 				parent = parent.parentNode;
 			}
-			
+
 			var tr = parent.parentNode;
 			console.log(tr);
-			
+
 			if (tr.children[0].value != 'undefined') {
 				var idx = tr.children[0].value;
 				console.log(idx);
@@ -1071,7 +1068,7 @@
 				calcInsertData(event);
 			}
 
-	
+
 			if (tr.children[8].children[0].children != 'undefined') {
 				var arr = tr.children[8].children[0].children;
 				console.log(arr);
@@ -1098,15 +1095,15 @@
 								console.log(data);
 							}
 
-						}); 
+						});
 
 						break;
 					}
 				}
 
-			} 
+			}
 		}
-	  
+
 	  function insertAll(){
 		  swal({
 				title: "일괄처리 하시겠습니까?",
@@ -1118,23 +1115,23 @@
 				closeOnConfirm: false
 			},
 			function(){
-				
+
 				var tr = $(".trList");
-				
+
 				var arr = [];
-				
+
 				for(var i = 0; i < tr.length; i++){
 					var idx = tr[i].children[0].value;
 					var table = tr[i].children[2].innerText;
 					var arr = tr[i].children[8].children[0].children;
-			
+
 
 					for (var l = 0; l < arr.length; l++) {
 						if (arr[l].type == "radio") {
-							
+
 							if (arr[l].checked) {
 								var textType = arr[l + 1].innerText;
-								
+
 								break;
 							}
 						}
@@ -1149,19 +1146,19 @@
 							  success: function(data){
 								  console.log(data);
 							  }
-							  
-							}); 
+
+							});
 					}
-					
+
 				}
-				
-				
+
+
 				swal("Success!", "일괄처리가 완료되었습니다.", "success");
-				
+
 				location.reload();
 			});
 	  }
-	
+
 </script>
 
 </html>

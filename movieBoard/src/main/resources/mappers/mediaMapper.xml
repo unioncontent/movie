@@ -42,6 +42,12 @@
 				<if test="searchType == 'c'.toString()">
 					and media_content like concat('%', #{keyword}, '%')
 				</if>
+				<if test="searchType == 'm'.toString()">
+					and media_name like concat('%', #{keyword}, '%')
+				</if>
+				<if test="searchType == 'r'.toString()">
+					and reporter_name like concat('%', #{keyword}, '%')
+				</if>
 			</if>
 		</if>
 		<if test="company != null">

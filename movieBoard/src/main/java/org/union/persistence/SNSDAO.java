@@ -55,7 +55,7 @@ public interface SNSDAO {
 	
 	public Integer twitterTotalCount(SearchCriteria cri);
 	
-	public List<SNSVO> getDateCount(GraphVO vo);
+	public List<SNSVO> getDateCount(SearchCriteria cri);
 	
 	public void updateTextType(SNSVO vo);
 	

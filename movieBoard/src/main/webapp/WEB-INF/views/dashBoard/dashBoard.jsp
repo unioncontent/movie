@@ -184,7 +184,6 @@
                             <span>최근 24시간 블로그, 카페, 지식인에서 검출된 데이터 그래프</span>
                             <div class="card-header-right">
                               <i class="icofont icofont-rounded-down"></i>
-                              <i class="icofont icofont-refresh"></i>
                             </div>
                           </div>
                           <div class="card-block">
@@ -505,9 +504,8 @@ $(document).ready(function(){
 			areaChart(jsonScript);
 
 	  	 }
-	});
+	});	
 	
-	 
 		 
 	$(document).on("click",".delete_todo",function() {
 	    $(this).parent().parent().parent().parent().fadeOut();
@@ -524,12 +522,12 @@ $(document).ready(function(){
   	 		      alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
   	 		     },
   	  	  success : function(success){
-  	  		  console.log(success);
-  	  		location.reload();
+  	  		  	console.log(success);
+  	  			location.reload();
   	  	  }
   	});
 	  });
-	  $(".icofont-refresh").on("click",areaChart);
+	
 
 	  
 	  $("#mcalendar").width("500px");

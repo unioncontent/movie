@@ -1,5 +1,7 @@
 package org.union.persistence;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -23,6 +25,18 @@ public class MonitorDAOImpl implements MonitorDAO{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public List<MonitorVO> pageAll() {
+
+		return session.selectList(namespace + "pageAll");
+	}
+
+	@Override
+	public MonitorVO checkLast(String domain) {
+
+		return session.selectOne(namespace + "checkLast", domain);
 	}
 
 }

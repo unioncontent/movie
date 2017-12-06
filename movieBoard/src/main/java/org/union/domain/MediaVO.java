@@ -16,6 +16,7 @@ public class MediaVO {
 	private String last_writeDate;
 	private Date last_media_title;
 	private Date last_media_content;
+	private String keyword_main;
 	private String keyword;
 	private String keyword_type;
 	private String url;
@@ -23,6 +24,13 @@ public class MediaVO {
 	private String thumbnail;
 	private Date createDate;
 	private Date updateDate;
+	
+	public String getKeyword_main() {
+		return keyword_main;
+	}
+	public void setKeyword_main(String keyword_main) {
+		this.keyword_main = keyword_main;
+	}
 	public Integer getMedia_idx() {
 		return media_idx;
 	}

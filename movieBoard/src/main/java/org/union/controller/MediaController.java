@@ -165,9 +165,20 @@ public class MediaController {
 			cri.setSelectKey(null);
 		}
 		
-		if(cri.getStartDate() != null || cri.getEndDate() != null) {
+		if("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate())
+				|| cri.getStartDate() == "" || cri.getEndDate() == ""){
 			cri.setStartDate(null);
 			cri.setEndDate(null);
+		
+		} 
+		if(cri.getStartDate() != null && cri.getEndDate() != null) {
+			logger.info("not null");
+			logger.info(cri.getStartDate());
+			logger.info(cri.getEndDate());
+			if(cri.getStartDate().indexOf("00:00:00") < 0 && cri.getEndDate().indexOf("23:59:59") < 0){ 
+				cri.setStartDate(cri.getStartDate() + " 00:00:00"); 
+				cri.setEndDate(cri.getEndDate() + " 23:59:59"); 
+			}
 		}
 		if(cri.getCompany() != null) {
 			if(cri.getCompany().isEmpty()) {

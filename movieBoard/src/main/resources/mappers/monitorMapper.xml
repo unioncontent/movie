@@ -11,4 +11,39 @@
 	
 	</insert>
 
+
+	<select id="pageAll" resultType="MonitorVO">
+		select *
+		from monitor_data
+	
+	</select>
+	
+	<select id="checkLast" parameterType="String" resultType="MonitorVO">
+	
+		<if test="_parameter == 'media'.toString()">
+			select media_title title, url url, createDate 
+			from media_data 
+			where createDate >=  date_format(now(), '%x-%m-%d') 
+			order by createDate desc 
+			limit 1
+		</if>
+		
+		<if test="_parameter == 'portal'.toString()">
+			select portal_title title, url url, createDate
+			from portal_data 
+			where createDate >=  date_format(now(), '%x-%m-%d') 
+			order by createDate desc 
+			limit 1
+		</if>
+		
+		<if test="_parameter == 'community'.toString()">
+			select community_title title, url url, createDate 
+			from community_data 
+			where createDate >=  date_format(now(), '%x-%m-%d') 
+			order by createDate desc 
+			limit 1
+		</if>
+		
+	
+	</select>
 </mapper>

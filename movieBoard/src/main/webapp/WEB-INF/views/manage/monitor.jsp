@@ -68,7 +68,7 @@
                 <div class="page-wrapper">
                   <div class="page-header">
                     <div class="page-header-title">
-                      <h4>모니터링등록</h4>
+                      <h4>모니터링 현황</h4>
                     </div>
                     <div class="page-header-breadcrumb">
                       <ul class="breadcrumb-title">
@@ -78,7 +78,7 @@
                           </a>
                         </li>
                         <li class="breadcrumb-item"><a href="#!">운영관리</a></li>
-                        <li class="breadcrumb-item"><a href="#!">모니터링등록</a></li>
+                        <li class="breadcrumb-item"><a href="#!">모니터링 현황</a></li>
                       </ul>
                     </div>
                   </div>
@@ -89,31 +89,6 @@
                         <div class="card">
                           <div class="card-header">
                             <h3 class="card-header-text f-left m-t-15 m-b-15">모니터링 리스트</h3>
-                            <div class="col-md-6 p-r-0 f-right monitoring-setting">
-                              <div class="col-sm-5 input-group input-group-button input-group-inverse p-l-0 p-r-0 m-b-10 m-l-10 f-right">
-                                <input type="text" class="form-control" placeholder="">
-                                <span class="input-group-addon" id="basic-addon1">
-                                  <button class="btn btn-inverse">검색</button>
-                                </span>
-                              </div>
-                              <select name="select" class="col-sm-2 form-control form-control-inverse m-l-10 m-b-10 f-right">
-                                <option value="">정상</option>
-                                <option value="">비정상</option>
-                              </select>
-                              <select name="select" class="col-sm-2 form-control form-control-inverse m-l-10 m-b-10 f-right">
-                                <option value="">전체</option>
-                                <option value="">포털</option>
-                                <option value="">커뮤니티</option>
-                                <option value="">SNS</option>
-                                <option value="">언론사</option>
-                              </select>
-                              <select name="select" class="col-sm-1 form-control form-control-inverse m-l-10 m-b-10 p-r-5 f-right">
-                                <option value="">10</option>
-                                <option value="">30</option>
-                                <option value="">50</option>
-                                <option value="">100</option>
-                              </select>
-                            </div>
                           </div>
                           <div class="card-block">
                             <div class="table-responsive">
@@ -131,44 +106,42 @@
                                   </tr>
                                 </thead>
                                 <tbody>
+                                  <c:forEach items="${monitorList}" var="monitor" varStatus="index">
                                   <tr>
-                                    <th scope="row">1</th>
-                                    <td>언론사</td>
-                                    <td>운영중</td>
-                                    <td>tvreport</td>
-                                    <td>티비리포트</td>
-                                    <td>‘연중’ 김래원 37세의 싱글남 “외로울 때도 있다”</td>
-                                    <td>2017-09-29 23:08:17</td>
+                                    <th scope="row">${index.count}</th>
+                                    <td>${monitor.monitor_domain}</td>
+                                    <td>
+                                    <c:if test="${monitor.checkCondition == true}">운영중</c:if>
+                                    <c:if test="${monitor.checkCondition == false}">미운영</c:if>
+                                    </td>
+                                    <td>${monitor.monitor_id}</td>
+                                    <td>${monitor.monitor_site}</td>
+                                    <td><a href="${monitor.url}" target="_blank">${monitor.title}</a></td>
+                                    <td>${monitor.createDate}</td>
                                     <td>
                                       <div class="form-radio">
                                         <!-- radio-success:정상/radio-danger:비정상 -->
                                         <div class="radio radiofill radio-success  radio-inline">
+                                            <c:if test="${monitor.checkCondition == true}">
                                             <label>
                                                 <input type="radio" name="radio" checked="checked">
                                                 <i class="helper"></i>정상
                                             </label>
+                                            </c:if>
+                                            <c:if test="${monitor.checkCondition == false}">
+                                            <label>
+                                                <input type="radio" name="radio">
+                                                <i class="helper"></i>비정상
+                                            </label>
+                                            </c:if>
                                         </div>
                                       </div>
                                     </td>
                                   </tr>
+                                  </c:forEach>
                                 </tbody>
                               </table>
                             </div>
-                            <ul class="pagination float-right">
-                              <li class="page-item">
-                                <a class="page-link" href="#" aria-label="Previous">
-                                  <span aria-hidden="true">«</span>
-                                  <span class="sr-only">Previous</span>
-                                </a>
-                              </li>
-                              <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                              <li class="page-item">
-                                  <a class="page-link" href="#" aria-label="Next">
-                                      <span aria-hidden="true">»</span>
-                                      <span class="sr-only">Next</span>
-                                  </a>
-                              </li>
-                            </ul>
                           </div>
                         </div>
                         <!-- Form Inputs card end -->

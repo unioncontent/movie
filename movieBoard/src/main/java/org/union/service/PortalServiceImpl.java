@@ -7,11 +7,13 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.union.domain.CommunityVO;
 import org.union.domain.ExtractVO;
 import org.union.domain.GraphVO;
 import org.union.domain.PortalVO;
 import org.union.domain.SearchCriteria;
 import org.union.domain.TextTypeVO;
+import org.union.persistence.KeywordDAO;
 import org.union.persistence.PortalDAO;
 
 @Service
@@ -21,6 +23,8 @@ public class PortalServiceImpl implements PortalService {
 	@Autowired
 	private PortalDAO portalDAO;
 	
+	@Autowired
+	private KeywordDAO keywordDAO;
 	
 	@Override
 	public void regist(PortalVO vo) {
@@ -120,7 +124,13 @@ public class PortalServiceImpl implements PortalService {
 	@Override
 	public List<PortalVO> listAll(SearchCriteria cri) {
 
-		return portalDAO.listAll(cri);
+		List<PortalVO> list = portalDAO.listAll(cri);
+		
+		for (PortalVO portalVO : list) {
+			portalVO.setKeyword_main(keywordDAO.read(portalVO.getKeyword()).getKeyword_main());
+		}
+
+		return list;
 	}
 
 	@Override

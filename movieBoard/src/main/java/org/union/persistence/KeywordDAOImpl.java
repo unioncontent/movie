@@ -31,9 +31,9 @@ public class KeywordDAOImpl implements KeywordDAO {
 	}
 
 	@Override
-	public KeywordVO read(Integer keyword_idx) {
+	public KeywordVO read(String keyword) {
 
-		return session.selectOne(namespace + "read", keyword_idx);
+		return session.selectOne(namespace + "read", keyword);
 	}
 
 	@Override
