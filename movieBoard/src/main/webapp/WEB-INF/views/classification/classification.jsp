@@ -609,7 +609,7 @@
 			console.log("selectCompany clicked....");
 			console.log($("#selectCompany option:selected").val());
 
-			self.location = "classification?"+ "company=" + $("#selectCompany option:selected").val();
+			searchList();
 
 		});
 
@@ -634,11 +634,7 @@
 			console.log("selectKeyword clicked....");
 			console.log($('#selectKeyword option:selected').val());
 
-			self.location = "classification?"
-							+ "company=" + $("#selectCompany option:selected").val()
-							+ "&selectKey=" + $('#selectKeyword option:selected').val();
-
-			//searchList();
+			searchList();
 		});
 
 
@@ -662,11 +658,7 @@
 			console.log("selectTextType clicked....");
 			console.log($('#selectTextType option:selected').val());
 
-			self.location = "classification?"
-				+ "company=" + $("#selectCompany option:selected").val()
-				+ "&selectkey=" + $('#selectKeyword option:selected').val()
-				+ "&textType=" + $('#selectTextType option:selected').val();
-
+			searchList();
 		});
 
 
