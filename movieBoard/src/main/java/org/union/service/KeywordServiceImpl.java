@@ -139,4 +139,10 @@ public class KeywordServiceImpl implements KeywordService{
 		keywordDAO.delete(keyword);
 	}
 
+	@Override
+	public KeywordVO view(String keyword) {
+
+		return keywordDAO.read(keyword);
+	}
+
 }
