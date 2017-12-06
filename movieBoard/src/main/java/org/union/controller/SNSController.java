@@ -51,12 +51,12 @@ public class SNSController {
 		logger.info("facebookGET called....");
 		
 		if(cri.getKeyword() != null) {
-			if(cri.getKeyword().isEmpty()) {
+			if(cri.getKeyword().isEmpty() || cri.getKeyword().equals("undefined")) {
 				cri.setKeyword(null);
 			}
 		}
 		if(cri.getSelectKey() != null) {
-			if(cri.getSelectKey().isEmpty() || cri.getSelectKey().equals("키워드")) {
+			if(cri.getSelectKey().isEmpty() || cri.getSelectKey().equals("키워드")){
 				cri.setSelectKey(null);
 			}
 		}
@@ -79,12 +79,22 @@ public class SNSController {
 		if(cri.getTextType() != null) {
 			cri.setTextType(null);
 		}
-		if(cri.getStartDate() != null || cri.getEndDate() != null) {
+		if("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate())
+				|| cri.getStartDate() == "" || cri.getEndDate() == ""){
 			cri.setStartDate(null);
 			cri.setEndDate(null);
+		
+		} 
+		if(cri.getStartDate() != null && cri.getEndDate() != null) {
+			logger.info("not null");
+			logger.info(cri.getStartDate());
+			logger.info(cri.getEndDate());
+			if(cri.getStartDate().indexOf("00:00:00") < 0 && cri.getEndDate().indexOf("23:59:59") < 0){ 
+				cri.setStartDate(cri.getStartDate() + " 00:00:00"); 
+				cri.setEndDate(cri.getEndDate() + " 23:59:59"); 
+			}
 		}
 		
-		logger.info("cri : " + cri);
 		
 		// 회사 선택에 따른 키워드 재추출
 		if(cri.getCompany() != null) {
@@ -98,10 +108,16 @@ public class SNSController {
 			}
 		}
 		
+		logger.info("cri : " + cri);
+		
 		PageMaker pageMaker = new PageMaker();
 		
+		Integer totalCount = snsService.facebookTotalCount(cri);
+		model.addAttribute("totalCount", totalCount);
+		model.addAttribute("minusCount", cri.getPerPageNum() * (cri.getPage()-1));
+		
 		pageMaker.setCri(cri);
-		pageMaker.setTotalCount(snsService.facebookTotalCount(cri));
+		pageMaker.setTotalCount(totalCount);
 		model.addAttribute("pageMaker", pageMaker);
 		logger.info("pageMaker: " + pageMaker);
 		
@@ -117,12 +133,12 @@ public class SNSController {
 		logger.info("instagramGET called....");
 		
 		if(cri.getKeyword() != null) {
-			if(cri.getKeyword().isEmpty()) {
+			if(cri.getKeyword().isEmpty() || cri.getKeyword().equals("undefined")) {
 				cri.setKeyword(null);
 			}
 		}
 		if(cri.getSelectKey() != null) {
-			if(cri.getSelectKey().isEmpty() || cri.getSelectKey().equals("키워드")) {
+			if(cri.getSelectKey().isEmpty() || cri.getSelectKey().equals("키워드")){
 				cri.setSelectKey(null);
 			}
 		}
@@ -145,12 +161,22 @@ public class SNSController {
 		if(cri.getTextType() != null) {
 			cri.setTextType(null);
 		}
-		if(cri.getStartDate() != null || cri.getEndDate() != null) {
+		if("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate())
+				|| cri.getStartDate() == "" || cri.getEndDate() == ""){
 			cri.setStartDate(null);
 			cri.setEndDate(null);
+		
+		} 
+		if(cri.getStartDate() != null && cri.getEndDate() != null) {
+			logger.info("not null");
+			logger.info(cri.getStartDate());
+			logger.info(cri.getEndDate());
+			if(cri.getStartDate().indexOf("00:00:00") < 0 && cri.getEndDate().indexOf("23:59:59") < 0){ 
+				cri.setStartDate(cri.getStartDate() + " 00:00:00"); 
+				cri.setEndDate(cri.getEndDate() + " 23:59:59"); 
+			}
 		}
 		
-		logger.info("cri : " + cri);
 		
 		// 회사 선택에 따른 키워드 재추출
 		if(cri.getCompany() != null) {
@@ -168,8 +194,12 @@ public class SNSController {
 		
 		PageMaker pageMaker = new PageMaker();
 		
+		Integer totalCount = snsService.instaTotalCount(cri);
+		model.addAttribute("totalCount", totalCount);
+		model.addAttribute("minusCount", cri.getPerPageNum() * (cri.getPage()-1));
+		
 		pageMaker.setCri(cri);
-		pageMaker.setTotalCount(snsService.instaTotalCount(cri));
+		pageMaker.setTotalCount(totalCount);
 		model.addAttribute("pageMaker", pageMaker);
 		logger.info("pageMaker: " + pageMaker);
 		
@@ -185,12 +215,12 @@ public class SNSController {
 		logger.info("twitterGET called....");
 		
 		if(cri.getKeyword() != null) {
-			if(cri.getKeyword().isEmpty()) {
+			if(cri.getKeyword().isEmpty() || cri.getKeyword().equals("undefined")) {
 				cri.setKeyword(null);
 			}
 		}
 		if(cri.getSelectKey() != null) {
-			if(cri.getSelectKey().isEmpty() || cri.getSelectKey().equals("키워드")) {
+			if(cri.getSelectKey().isEmpty() || cri.getSelectKey().equals("키워드")){
 				cri.setSelectKey(null);
 			}
 		}
@@ -213,12 +243,22 @@ public class SNSController {
 		if(cri.getTextType() != null) {
 			cri.setTextType(null);
 		}
-		if(cri.getStartDate() != null || cri.getEndDate() != null) {
+		if("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate())
+				|| cri.getStartDate() == "" || cri.getEndDate() == ""){
 			cri.setStartDate(null);
 			cri.setEndDate(null);
+		
+		} 
+		if(cri.getStartDate() != null && cri.getEndDate() != null) {
+			logger.info("not null");
+			logger.info(cri.getStartDate());
+			logger.info(cri.getEndDate());
+			if(cri.getStartDate().indexOf("00:00:00") < 0 && cri.getEndDate().indexOf("23:59:59") < 0){ 
+				cri.setStartDate(cri.getStartDate() + " 00:00:00"); 
+				cri.setEndDate(cri.getEndDate() + " 23:59:59"); 
+			}
 		}
 		
-		logger.info("cri : " + cri);
 		
 		// 회사 선택에 따른 키워드 재추출
 		if(cri.getCompany() != null) {
@@ -236,8 +276,12 @@ public class SNSController {
 		
 		PageMaker pageMaker = new PageMaker();
 		
+		Integer totalCount = snsService.twitterTotalCount(cri);
+		model.addAttribute("totalCount", totalCount);
+		model.addAttribute("minusCount", cri.getPerPageNum() * (cri.getPage()-1));
+		
 		pageMaker.setCri(cri);
-		pageMaker.setTotalCount(snsService.twitterTotalCount(cri));
+		pageMaker.setTotalCount(totalCount);
 		model.addAttribute("pageMaker", pageMaker);
 		logger.info("pageMaker: " + pageMaker);
 		
@@ -250,8 +294,8 @@ public class SNSController {
 	
 	@PostMapping("/graph")
 	@ResponseBody
-	public List<GraphVO> graphPOST(String startDate, String endDate, String company, String selectKey, String part) throws Exception{
-		//logger.info("grpahPOST called....");
+	public List<GraphVO> graphPOST(SearchCriteria cri) throws Exception{
+		logger.info("grpahPOST called....");
 		
 		/*Date transStart = new SimpleDateFormat("yyyy-mm-dd").parse(startDate);
 		Date transEnd = new SimpleDateFormat("yyyy-mm-dd").parse(endDate);
@@ -363,21 +407,16 @@ public class SNSController {
 	@GetMapping("/excel")
 	public ModelAndView excelGET(ModelAndView model, ExcelView excelView, SearchCriteria cri) {
 		
-		logger.info("cri: " + cri);
-
-		List<ExtractVO> classiList = new ArrayList<ExtractVO>();
-		ListUtil listUtil = new ListUtil();
-
-		if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
-			logger.info("keyword is null");
-			cri.setKeyword(null);
-			
-		} 
-		if(cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey()) ) {
-			logger.info("selectKey is null");
-			cri.setSelectKey(null);
+		if(cri.getKeyword() != null) {
+			if(cri.getKeyword().isEmpty() || cri.getKeyword().equals("undefined")) {
+				cri.setKeyword(null);
+			}
 		}
-		
+		if(cri.getSelectKey() != null) {
+			if(cri.getSelectKey().isEmpty() || cri.getSelectKey().equals("키워드")){
+				cri.setSelectKey(null);
+			}
+		}
 		if(cri.getCompany() != null) {
 			if(cri.getCompany().isEmpty()) {
 				cri.setCompany(null);
@@ -394,11 +433,30 @@ public class SNSController {
 				cri.setCompany(null);
 			}
 		}
+		if(cri.getTextType() != null) {
+			cri.setTextType(null);
+		}
+		if("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate())
+				|| cri.getStartDate() == "" || cri.getEndDate() == ""){
+			cri.setStartDate(null);
+			cri.setEndDate(null);
 		
+		} 
+		if(cri.getStartDate() != null && cri.getEndDate() != null) {
+			logger.info("not null");
+			logger.info(cri.getStartDate());
+			logger.info(cri.getEndDate());
+			if(cri.getStartDate().indexOf("00:00:00") < 0 && cri.getEndDate().indexOf("23:59:59") < 0){ 
+				cri.setStartDate(cri.getStartDate() + " 00:00:00"); 
+				cri.setEndDate(cri.getEndDate() + " 23:59:59"); 
+			}
+		}
 		
 		logger.info("cri: " + cri);
-		
-		
+
+		List<ExtractVO> classiList = new ArrayList<ExtractVO>();
+		ListUtil listUtil = new ListUtil();
+
 		listUtil.listAddSNSList(classiList, snsService.listAll(cri));
 		
 		ExtractComparator comparator = new ExtractComparator();

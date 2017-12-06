@@ -21,8 +21,8 @@ public class SNSServiceImpl implements SNSService {
 	@Autowired
 	private SNSDAO snsDAO;
 	
-	/*@Autowired
-	private KeywordDAO keywordDAO;*/
+	@Autowired
+	private KeywordDAO keywordDAO;
 	
 	@Override
 	public void regist(SNSVO vo) {
@@ -175,7 +175,13 @@ public class SNSServiceImpl implements SNSService {
 	@Override
 	public List<SNSVO> listAll(SearchCriteria cri) {
 
-		return snsDAO.listAll(cri);
+		List<SNSVO> list = snsDAO.listAll(cri);
+
+		for (SNSVO snsvo : list) {
+			snsvo.setKeyword_main(keywordDAO.read(snsvo.getKeyword()).getKeyword_main());
+		}
+		
+		return list;
 	}
 
 

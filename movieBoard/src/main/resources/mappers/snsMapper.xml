@@ -40,11 +40,9 @@
 		<if test="selectKey != null">
 				and keyword in (select keyword from keyword_data where keyword_main = #{selectKey})
 			</if>
-		<if test="startDate != null">
-			and createDate <![CDATA[>]]> #{startDate}
-			<if test="endDate != null">
-				and createDate <![CDATA[<]]> #{endDate}
-			</if>
+		<if test="startDate != null and endDate != null">
+			and createDate <![CDATA[>=]]> #{startDate}
+			and createDate <![CDATA[<=]]> #{endDate}
 		</if>
 		<if test="textType != null">
 			and textType = #{textType}
@@ -224,14 +222,9 @@
 		from 
 			sns_data
 		where 
-			textType is not null
+			url is not null
 		<include refid="search"></include>
-		<if test="startDate != null">
-			and createDate <![CDATA[>]]> #{startDate}
-			<if test="endDate != null">
-				and createDate <![CDATA[<]]> #{endDate}
-			</if>
-		</if>
+		and sns_name = #{portal_name}
 	
 	</select>
  	
@@ -271,7 +264,6 @@
 			by createdate desc
 		limit  
 			#{startPage}, #{perPageNum}
- 	
  	</select>
  	
  	<select id="facebookTotalCount" resultType="Integer">
@@ -346,34 +338,8 @@
   		from 
   			sns_data
   		where 
-  			writeDate <![CDATA[>]]> #{startDate}
-  		and 
-  			writeDate <![CDATA[<]]> #{endDate}
-  		and 
   			sns_name = #{sns_name}
-  		and writeDate is not null
-  		<if test="company != null">
-			and
-			   keyword in (select 
-						keyword 
-					from 
-						keyword_data
-					where
-						user_idx = (select 
-										user_idx 
-									from 
-										user_data 
-									where 
-										user_name = #{company} 
-									and 
-										keyword_property = '포함'
-									)
-					)
-			
-		</if>
-		<if test="selectKey != null">
-				and keyword in (select keyword from keyword_data where keyword_main = #{selectKey})
-		</if>
+  		<include refid="search"></include>
   		order by  date_format(writeDate, '%x-%m-%d') desc
  	
  	</select>
