@@ -371,14 +371,6 @@
 		}
 	  
 
-	  var graphStart = $fromDate.val().split(" - ")[0].replace("/", "-").replace("/", "-");
-	  var graphEnd = $fromDate.val().split(" - ")[1].replace("/", "-").replace("/", "-");
-
-	  console.log("graphStart: " + graphStart);
-	  console.log("graphEnd: " + graphEnd);
-	  
-	  ajaxGraph(graphStart, graphEnd);
-	  
 	// 엑셀 출력시
 	$(document).on("click","#excel",function(){
 	    swal({
@@ -457,6 +449,14 @@
 		searchList();
 		
 	});
+	
+	var graphStart = $fromDate.val().split(" - ")[0].replace("/", "-").replace("/", "-");
+	var graphEnd = $fromDate.val().split(" - ")[1].replace("/", "-").replace("/", "-");
+
+	console.log("graphStart: " + graphStart);
+	console.log("graphEnd: " + graphEnd);
+	  
+	ajaxGraph(graphStart, graphEnd);
 
 
 	// 검색 클릭시

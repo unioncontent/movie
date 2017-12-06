@@ -166,9 +166,9 @@ public class SNSServiceImpl implements SNSService {
 
 
 	@Override
-	public List<SNSVO> getDateCount(GraphVO vo) {
+	public List<SNSVO> getDateCount(SearchCriteria cri) {
 
-		return snsDAO.getDateCount(vo);
+		return snsDAO.getDateCount(cri);
 	}
 
 

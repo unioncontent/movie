@@ -361,14 +361,6 @@
 		}
 	  
 
-	  var graphStart = $fromDate.val().split(" - ")[0].replace("/", "-").replace("/", "-");
-	  var graphEnd = $fromDate.val().split(" - ")[1].replace("/", "-").replace("/", "-");
-
-	  console.log("graphStart: " + graphStart);
-	  console.log("graphEnd: " + graphEnd);
-	  
-	  ajaxGraph(graphStart, graphEnd);
-	  
 	// 엑셀 출력시
 	$(document).on("click","#excel",function(){
 	    swal({
@@ -449,6 +441,14 @@
 	});
 
 
+	var graphStart = $fromDate.val().split(" - ")[0].replace("/", "-").replace("/", "-");
+	var graphEnd = $fromDate.val().split(" - ")[1].replace("/", "-").replace("/", "-");
+
+	console.log("graphStart: " + graphStart);
+    console.log("graphEnd: " + graphEnd);
+	  
+    ajaxGraph(graphStart, graphEnd);
+	
 	// 검색 클릭시
 	$('#searchBtn').on("click", function(event){
 	  console.log("searchBtn clicked....");
@@ -562,8 +562,11 @@ function ajaxGraph(startDate, endDate){
       type : "POST",
 	  url : "graph",
  	  dataType : "json",
- 	  data : {startDate : startDate, endDate : endDate, company : $("#selectCompany option:selected").val(),
- 		  selectKey : $("#selectKeyword option:selected").val(), part : "facebook"},
+ 	 data : {startDate : startDate, endDate : endDate, company : $("#selectCompany option:selected").val(),
+		  selectKey : $("#selectKeyword option:selected").val(),
+		  searchType: decodeURI(window.location.href.split("&searchType=")[1]).split("&")[0], 
+		  keyword : decodeURI(window.location.href.split("&keyword=")[1]).split("&")[0], 
+		  portal_name : "facebook"},
   	  error : function(){
       	alert('graphPOST ajax error....');
   	  },
