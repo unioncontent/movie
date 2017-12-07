@@ -23,6 +23,8 @@ public interface MediaService {
 	public List<MediaVO> allPageList(SearchCriteria cri);
 	public Integer allPageCount(SearchCriteria cri);
 	
+	public List<MediaVO> allPage(SearchCriteria cri);
+	
 	public GraphVO yesterdayCount();
 	
 	public TextTypeVO naverMediaCount(SearchCriteria cri);

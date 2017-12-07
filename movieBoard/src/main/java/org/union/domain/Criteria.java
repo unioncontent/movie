@@ -17,7 +17,7 @@ public class Criteria {
 	public Integer getStartPage() {
 		return (this.page - 1) * perPageNum;
 	}
-
+	
 	public Criteria() {
 		this.perPageNum = 10;
 		this.page = 1;

@@ -203,8 +203,14 @@ public class PeriodController {
 		model.addAttribute("communityList", communityService.listComplete(cri));
 		
 		PageMaker pageMaker = new PageMaker();
+		
+		Integer totalCount = communityService.getCompleteCount(cri);
+		
 		pageMaker.setCri(cri);
-		pageMaker.setTotalCount(communityService.getCompleteCount(cri));
+		pageMaker.setTotalCount(totalCount);
+		
+		model.addAttribute("totalCount", totalCount);
+		model.addAttribute("minusCount", cri.getPerPageNum() * (cri.getPage()-1));
 		
 		logger.info("pageMaker: " + pageMaker);
 		model.addAttribute("pageMaker", pageMaker);
@@ -273,8 +279,14 @@ public class PeriodController {
 		model.addAttribute("portalList", portalService.listSearch(cri));
 		
 		PageMaker pageMaker = new PageMaker();
+		
+		Integer totalCount = portalService.getSearchCount(cri);
+		
 		pageMaker.setCri(cri);
-		pageMaker.setTotalCount(portalService.getSearchCount(cri));
+		pageMaker.setTotalCount(totalCount);
+		
+		model.addAttribute("totalCount", totalCount);
+		model.addAttribute("minusCount", cri.getPerPageNum() * (cri.getPage()-1));
 		
 		logger.info("pageMaker: " + pageMaker);
 		model.addAttribute("pageMaker", pageMaker);
@@ -381,8 +393,14 @@ public class PeriodController {
 		model.addAttribute("snsList", snsService.listSearch(cri));
 		
 		PageMaker pageMaker = new PageMaker();
+		
+		Integer totalCount = snsService.getSearchCount(cri);
+		
 		pageMaker.setCri(cri);
-		pageMaker.setTotalCount(snsService.getSearchCount(cri));
+		pageMaker.setTotalCount(totalCount);
+		
+		model.addAttribute("totalCount", totalCount);
+		model.addAttribute("minusCount", cri.getPerPageNum() * (cri.getPage()-1));
 		
 		logger.info("pageMaker: " + pageMaker);
 		model.addAttribute("pageMaker", pageMaker);
@@ -438,7 +456,7 @@ public class PeriodController {
 		List<GraphVO> graphList = new ArrayList<GraphVO>();
 		
 		if(part.equals("sns")) {
-			while((transEnd.getTime() - cal.getTimeInMillis()) / (24 * 60 * 60 * 1000) > 0) {
+			while((transEnd.getTime() - cal.getTimeInMillis()) / (24 * 60 * 60 * 1000) > -1) {
 				
 				cri.setStartDate(standFormat.format(cal.getTime()));
 				cal.add(Calendar.SECOND, (24 * 60 * 60) -1);
@@ -456,7 +474,7 @@ public class PeriodController {
 			}
 		
 		}else if(part.equals("community")) {
-				while((transEnd.getTime() - cal.getTimeInMillis()) / (24 * 60 * 60 * 1000) > 0) {
+				while((transEnd.getTime() - cal.getTimeInMillis()) / (24 * 60 * 60 * 1000) > -1) {
 				
 				cri.setStartDate(standFormat.format(cal.getTime()));
 				cal.add(Calendar.SECOND, (24 * 60 * 60) -1);
@@ -483,7 +501,7 @@ public class PeriodController {
 				cal.add(Calendar.SECOND, 1);
 			}
 		}else if(part.equals("portal")) {
-			while((transEnd.getTime() - cal.getTimeInMillis()) / (24 * 60 * 60 * 1000) > 0) {
+			while((transEnd.getTime() - cal.getTimeInMillis()) / (24 * 60 * 60 * 1000) > -1) {
 				
 			cri.setStartDate(standFormat.format(cal.getTime()));
 			cal.add(Calendar.SECOND, (24 * 60 * 60) -1);
@@ -501,7 +519,7 @@ public class PeriodController {
 			
 			
 		}else if(part.equals("main")) {
-			while((transEnd.getTime() - cal.getTimeInMillis()) / (24 * 60 * 60 * 1000) > 0) {
+			while((transEnd.getTime() - cal.getTimeInMillis()) / (24 * 60 * 60 * 1000) > -1) {
 				
 				cri.setStartDate(standFormat.format(cal.getTime()));
 				cal.add(Calendar.SECOND, (24 * 60 * 60) -1);

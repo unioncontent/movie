@@ -3,13 +3,19 @@ package org.union.domain;
 public class ExtractVO {
 
 	
-	private String domain, domainType, company,keyword, title, content, writeDate,writer, createDate, url, textType;
+	private String domain, domainType, company,keyword_main, keyword, title, content, writeDate,writer, createDate, url, textType;
 	private Integer sns_idx, community_idx, media_idx, portal_idx;
 	public String getDomain() {
 		return domain;
 	}
 	public void setDomain(String domain) {
 		this.domain = domain;
+	}
+	public String getKeyword_main() {
+		return keyword_main;
+	}
+	public void setKeyword_main(String keyword_main) {
+		this.keyword_main = keyword_main;
 	}
 	public String getDomainType() {
 		return domainType;
@@ -97,12 +103,11 @@ public class ExtractVO {
 	}
 	@Override
 	public String toString() {
-		return "ExtractVO [domain=" + domain + ", domainType=" + domainType + ", company=" + company + ", keyword="
-				+ keyword + ", title=" + title + ", content=" + content + ", writeDate=" + writeDate + ", writer="
-				+ writer + ", createDate=" + createDate + ", url=" + url + ", textType=" + textType + ", sns_idx="
-				+ sns_idx + ", community_idx=" + community_idx + ", media_idx=" + media_idx + ", portal_idx="
-				+ portal_idx + "]";
+		return "ExtractVO [domain=" + domain + ", domainType=" + domainType + ", company=" + company + ", keyword_main="
+				+ keyword_main + ", keyword=" + keyword + ", title=" + title + ", content=" + content + ", writeDate="
+				+ writeDate + ", writer=" + writer + ", createDate=" + createDate + ", url=" + url + ", textType="
+				+ textType + ", sns_idx=" + sns_idx + ", community_idx=" + community_idx + ", media_idx=" + media_idx
+				+ ", portal_idx=" + portal_idx + "]";
 	}
-	
 	
 }

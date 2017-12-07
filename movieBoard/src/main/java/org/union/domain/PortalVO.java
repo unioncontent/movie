@@ -11,6 +11,7 @@ public class PortalVO {
 	private String portal_title;
 	private Integer deviceType; // 1 = PC, 2 = Mobile
 	private String writeDate;
+	private String keyword_main;
 	private String keyword;
 	private String keyword_type;
 	private String url;
@@ -95,6 +96,13 @@ public class PortalVO {
 	}
 	public void setUpdateDate(Date updateDate) {
 		this.updateDate = updateDate;
+	}
+	
+	public String getKeyword_main() {
+		return keyword_main;
+	}
+	public void setKeyword_main(String keyword_main) {
+		this.keyword_main = keyword_main;
 	}
 	@Override
 	public String toString() {

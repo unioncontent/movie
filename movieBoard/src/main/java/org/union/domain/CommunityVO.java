@@ -12,6 +12,13 @@ public class CommunityVO {
 	private String community_writer;
 	private String community_writer_IP;
 	private String writeDate;
+	private String keyword_main;
+	public String getKeyword_main() {
+		return keyword_main;
+	}
+	public void setKeyword_main(String keyword_main) {
+		this.keyword_main = keyword_main;
+	}
 	private String keyword;
 	private String keyword_type;
 	private String url;

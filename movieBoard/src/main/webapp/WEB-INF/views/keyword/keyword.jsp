@@ -15,6 +15,9 @@
       <![endif]-->
   <!-- Meta -->
   <meta charset="utf-8">
+  <meta name="_csrf" content="${_csrf.token}" />
+  <!-- default header name is X-CSRF-TOKEN -->
+  <meta name="_csrf_header" content="${_csrf.headerName}"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="description" content="Phoenixcoded">
@@ -93,29 +96,16 @@
                     <!-- Filtering Foo-table card start -->
                     <div class="card">
                       <div class="card-header">
-                        <div class="col-md-7 f-left">
-                          <div class="row">
-                            <select name="select" class="col-sm-2 form-control form-control-inverse m-r-10 m-b-10">
-                              <option value="">MCP선택</option>
-                            </select>
-                            <select name="select" class="col-sm-2 form-control form-control-inverse m-r-10 m-b-10">
-                              <option value="">CP선택</option>
-                            </select>
-                            <select name="select" class="col-sm-2 form-control form-control-inverse m-r-10 m-b-10">
-                              <option value="">10</option>
-                            </select>
-                          </div>
-                        </div>
                         <div class="col-md-1 p-r-0 f-right">
-                          <a href="createKeyword.html" class="btn btn-primary float-right">등록</a>
+                          <a href="create" class="btn btn-primary float-right">등록</a>
                         </div>
                       </div>
-                      <div class="card-block">
+                      <div class="card-block table-border-style">
                         <div class="table-responsive">
                           <table class="table table-bordered">
                             <thead>
                               <tr>
-                                <th width="5%">NO</th>
+                                <th width="1%">NO</th>
                                 <th width="5%">등록일</th>
                                 <th width="10%">회사명</th>
                                 <th width="10%">키워드</th>
@@ -125,74 +115,29 @@
                               </tr>
                             </thead>
                             <tbody>
+                              <c:forEach items="${mainList}" var="keyword" varStatus="index">
                               <tr>
-                                <th scope="row">1</th>
-                                <td>2017-10-24</td>
-                                <td>
-                                  우드파크온수매트
-                                </td>
-                                <td>
-                                  우드파크
-                                  <div class="label-main">
-                                    <label class="label label-primary">관리중</label>
-                                  </div>
-                                </td>
-                                <td>3</td>
-                                <td>0</td>
+                                <th scope="row">${index.count}</th>
+                                <td>${keyword.createDate}</td>
+                                <td>${keyword.company}</td>
+                                <td>${keyword.keyword_main}</td>
+                                <td>${keyword.first}</td>
+                                <td>${keyword.second }</td>
                                 <td class="text-center">
   								  <div class="btn-group btn-group-md text-center" style="padding-right: 0;">
-    							    <a href="editKeyword.html" class="tabledit-edit-button btn btn-primary waves-effect waves-light" style="margin-right: 5px;" data-toggle="tooltip" data-placement="top" data-original-title="키워드 추가">
+    							    <button type="button" class="tabledit-edit-button btn btn-primary waves-effect waves-light" style="margin-right: 5px;" data-toggle="tooltip" data-placement="top" data-original-title="키워드 추가">
       								  <span class="icofont icofont-ui-edit"></span>
-    								</a>
-    								<button type="button" class="tabledit-delete-button btn btn-danger waves-effect waves-light alert-confirm1" data-toggle="tooltip" data-placement="top" data-original-title="삭제" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'alert-confirm']);">
+    								</button>
+    								<button type="button" class="tabledit-delete-button btn btn-danger waves-effect waves-light alert-confirm1" data-toggle="tooltip" data-placement="top" data-original-title="삭제">
       								  <span class="icofont icofont-ui-delete"></span>
     								</button>
   								  </div>
 								</td>
                               </tr>
-                              <tr>
-                                <th scope="row">2</th>
-                                <td>2017-10-24</td>
-                                <td>
-                                  (주)글로스퍼
-                                </td>
-                                <td>
-                                  하이콘
-                                  <div class="label-main">
-                                    <label class="label label-danger">비관리</label>
-                                  </div>
-                                </td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td class="text-center">
-                                  <div class="btn-group btn-group-md text-center" style="padding-right: 0;">
-                                    <a href="editKeyword.html" class="tabledit-edit-button btn btn-primary waves-effect waves-light" style="margin-right: 5px;" data-toggle="tooltip" data-placement="top" data-original-title="키워드 추가">
-                                      <span class="icofont icofont-ui-edit"></span>
-                                    </a>
-                                    <button type="button" class="tabledit-delete-button btn btn-danger waves-effect waves-light alert-confirm1" data-toggle="tooltip" data-placement="top" data-original-title="삭제">
-                                      <span class="icofont icofont-ui-delete"></span>
-                                    </button>
-                                  </div>
-                                </td>
-                              </tr>
+                              </c:forEach>
                             </tbody>
                           </table>
                         </div>
-                        <ul class="pagination f-right">
-                          <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Previous">
-                              <span aria-hidden="true">«</span>
-                              <span class="sr-only">Previous</span>
-                            </a>
-                          </li>
-                          <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                          <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Next">
-                              <span aria-hidden="true">»</span>
-                              <span class="sr-only">Next</span>
-                            </a>
-                          </li>
-                        </ul>
                       </div>
                     </div>
                     <!-- Filtering Foo-table card end -->
@@ -281,5 +226,83 @@
   <script src="../assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
   <script src="../assets/js/jquery.mousewheel.min.js"></script>
 </body>
+
+
+<script type="text/javascript">
+
+	//ajax 보안
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+
+	$(function() {
+		  $(document).ajaxSend(function(e, xhr, options) {
+		  	xhr.setRequestHeader(header, token);
+		  });
+	});
+
+	$(document).ready(function(){
+
+		// 수정 버튼 클릭
+		$(".tabledit-edit-button").on("click", function(event){
+			var div = event.target.parentNode;
+
+			if(div.type == 'button'){
+				console.log("button click...");
+				div = div.parentNode;
+			}
+
+			var tr = div.parentNode.parentNode;
+			console.log(tr);
+
+			var td = tr.children[3];
+			console.log(td);
+
+			var keyword_main = td.childNodes[0];
+			console.log(keyword_main.data);
+
+			self.location = "modify?keyword_main=" + keyword_main.data;
+
+		});
+
+		// 삭제 버튼 클릭
+		$(".tabledit-delete-button").on("click", function(event){
+			var div = event.target.parentNode;
+
+			if(div.type == 'button'){
+				console.log("button click...");
+				div = div.parentNode;
+			}
+
+			var tr = div.parentNode.parentNode;
+			console.log(tr);
+
+			var td = tr.children[3];
+			console.log(td);
+
+			var keyword_main = td.childNodes[0];
+			console.log(keyword_main.data);
+
+
+
+			$.ajax({
+
+				type : "POST",
+			  	url : "removeMain",
+		 	  	dataType : "text",
+		 	  	data : {keyword_main : keyword_main.data},
+		 	  	success : function(data){
+
+		 	  		if(data == "success"){
+						location.reload();
+		 	  		}
+
+		 	  	}
+			});
+
+		});
+
+	});
+
+</script>
 
 </html>

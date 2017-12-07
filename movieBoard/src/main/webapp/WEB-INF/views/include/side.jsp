@@ -13,21 +13,21 @@
       </div>
     </div>
     <ul class="pcoded-item pcoded-left-item">
-      <li class="">
+      <li class="dashBoard">
         <a href="../dashBoard/dashBoard">
           <span class="pcoded-micon"><i class="ti-home"></i></span>
           <span class="pcoded-mtext" data-i18n="nav.dash.main">대시보드</span>
           <span class="pcoded-mcaret"></span>
         </a>
       </li>
-      <li class="">
+      <li class="period">
         <a href="../period/main">
           <span class="pcoded-micon"><i class="ti-bar-chart-alt"></i></span>
           <span class="pcoded-mtext">통계보고서</span>
           <span class="pcoded-mcaret"></span>
         </a>
       </li>
-      <li class="pcoded-hasmenu">
+      <li class="pcoded-hasmenu portal">
         <a href="javascript:void(0)" data-i18n="nav.advance-components.main">
           <span class="pcoded-micon"><i class="ti-world"></i></span>
           <span class="pcoded-mtext">포털관리</span>
@@ -50,7 +50,7 @@
           </li>
         </ul>
       </li>
-      <li class="pcoded-hasmenu">
+      <li class="pcoded-hasmenu sns">
         <a href="javascript:void(0)" data-i18n="nav.advance-components.main">
           <span class="pcoded-micon"><i class="ti-facebook"></i></span>
           <span class="pcoded-mtext">SNS관리</span>
@@ -80,7 +80,7 @@
           </li>
         </ul>
       </li>
-      <li class="pcoded-hasmenu">
+      <li class="pcoded-hasmenu media">
         <a href="javascript:void(0)" data-i18n="nav.advance-components.main">
           <span class="pcoded-micon"><i class="ti-notepad"></i></span>
           <span class="pcoded-mtext">언론사관리</span>
@@ -103,7 +103,7 @@
           </li>
         </ul>
       </li>
-      <li class="pcoded-hasmenu">
+      <li class="pcoded-hasmenu manage">
         <a href="javascript:void(0)" data-i18n="nav.advance-components.main">
           <span class="pcoded-micon"><i class="ti-harddrives"></i></span>
           <span class="pcoded-mtext">운영관리</span>
@@ -120,34 +120,34 @@
           <li class=" ">
             <a href="../manage/monitor" data-i18n="nav.advance-components.grid-stack">
               <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-              <span class="pcoded-mtext">모니터링등록</span>
+              <span class="pcoded-mtext">모니터링 현황</span>
               <span class="pcoded-mcaret"></span>
             </a>
           </li>
         </ul>
       </li>
-      <li class="">
+      <li class="keyword">
         <a href="../keyword/keyword" data-i18n="nav.advance-components.main">
           <span class="pcoded-micon"><i class="ti-ink-pen"></i></span>
           <span class="pcoded-mtext">키워드관리</span>
           <span class="pcoded-mcaret"></span>
         </a>
       </li>
-      <li class="">
+      <li class="extract">
         <a href="../extract/extract" data-i18n="nav.advance-components.main">
           <span class="pcoded-micon"><i class="ti-search"></i></span>
           <span class="pcoded-mtext">추출글관리</span>
           <span class="pcoded-mcaret"></span>
         </a>
       </li>
-      <li class="">
+      <li class="classification">
         <a href="../classification/classification" data-i18n="nav.advance-components.main">
           <span class="pcoded-micon"><i class="ti-filter"></i></span>
           <span class="pcoded-mtext">분류글관리</span>
           <span class="pcoded-mcaret"></span>
         </a>
    
-        <li class="">
+        <li class="listAll">
           <a href="../listAll/listAll" data-i18n="nav.advance-components.main">
             <span class="pcoded-micon"><i class="ti-menu"></i></span>
             <span class="pcoded-mtext">전체글관리</span>
@@ -158,4 +158,20 @@
     </ul>
   </div>
 </nav>
+
+<script type="text/javascript">
+
+		// 해당 페이지 active 추가
+		var url = location.href;
+
+		var domain = url.split("8080/")[1].split("/")[0];
+
+		var li = window.document.getElementsByClassName(domain)[0];
+		
+		li.className += " active pcoded-trigger";
+		
+		console.log(li);
+		
+	
+</script>
 <!-- left menu end -->

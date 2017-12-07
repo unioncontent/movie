@@ -1,6 +1,9 @@
 package org.union.persistence;
 
+import java.util.List;
+
 import org.union.domain.NaverMovieVO;
+import org.union.domain.SearchCriteria;
 
 public interface NaverMovieDAO {
 
@@ -12,4 +15,9 @@ public interface NaverMovieDAO {
 	public void update(NaverMovieVO vo);
 	
 	public void delete(Integer NM_idx);
+	
+	public List<NaverMovieVO> searchList(SearchCriteria cri);
+	
+	public Integer getSearchCount(SearchCriteria cri);
+	
 }

@@ -39,9 +39,9 @@
 				and keyword in (select keyword from keyword_data where keyword_main = #{selectKey})
 			</if>
 		<if test="startDate != null">
-			and createDate <![CDATA[>]]> #{startDate}
+			and updateDate <![CDATA[>]]> #{startDate}
 			<if test="endDate != null">
-				and createDate <![CDATA[<]]> #{endDate}
+				and updateDate <![CDATA[<]]> #{endDate}
 			</if>
 		</if>
 		<if test="textType != null">
@@ -52,9 +52,10 @@
  
  	<insert id="create">
  		insert into
- 			portal_data(portal_type, portal_name, portal_title, deviceType, writeDate, keyword, keyword_type, url)
+ 			portal_data(portal_type, portal_name, portal_title, deviceType, writeDate, keyword, keyword_type, url, textType)
  		values
- 			(#{portal_type}, #{portal_name}, #{portal_title}, #{deviceType}, #{writeDate}, #{keyword}, #{keyword_type}, #{url})
+ 			(#{portal_type}, #{portal_name}, #{portal_title}, #{deviceType}, #{writeDate}, #{keyword},
+ 			 #{keyword_type}, #{url}, #{textType})
  	
  	</insert>
  
@@ -93,6 +94,34 @@
  			portal_idx = #{portal_idx}
  	
  	</delete>
+ 	
+ 	<select id="getTypeOfMovieCount" resultType="Integer">
+ 		select
+ 			count(*)
+ 		from
+ 			portal_data
+ 		where
+ 			portal_name = 'naver'
+ 		and
+ 			keyword_type = '영화'
+ 	
+ 	<include refid="search"></include>
+ 	
+ 	</select>
+ 	
+ 	<select id="getTypeOfActorCount" resultType="Integer">
+ 		select
+ 			count(*)
+ 		from
+ 			portal_data
+ 		where
+ 			portal_name = 'naver'
+ 		and
+ 			keyword_type = '배우'
+ 	
+ 	<include refid="search"></include>
+ 	
+ 	</select>
  	
  	<select id="allPageList" resultType="PortalVO">
 		select
