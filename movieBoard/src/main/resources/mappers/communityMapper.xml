@@ -39,9 +39,9 @@
 				and keyword in (select keyword from keyword_data where keyword_main = #{selectKey})
 			</if>
 		<if test="startDate != null">
-			and createDate <![CDATA[>]]> #{startDate}
+			and updateDate <![CDATA[>]]> #{startDate}
 			<if test="endDate != null">
-				and createDate <![CDATA[<]]> #{endDate}
+				and updateDate <![CDATA[<]]> #{endDate}
 			</if>
 		</if>
 		<if test="textType != null">
@@ -51,9 +51,9 @@
 
 	<insert id="create">
 		insert into
-			community_data(community_name, community_title, community_content, community_writer, community_writer_IP, writeDate, keyword, keyword_type, url, board_number)
+			community_data(community_name, community_title, community_content, community_writer, community_writer_IP, writeDate, keyword, keyword_type, url, board_number, textType)
 		values
-			(#{community_name}, #{community_title}, #{community_content}, #{community_writer}, #{community_writer_IP}, #{writeDate}, #{keyword}, #{keyword_type}, #{url}, #{board_number})
+			(#{community_name}, #{community_title}, #{community_content}, #{community_writer}, #{community_writer_IP}, #{writeDate}, #{keyword}, #{keyword_type}, #{url}, #{board_number}, #{textType})
 	
 	</insert>
 
@@ -228,7 +228,6 @@
 			community_data
 		where 
 			textType is not null
-		and textType != '삭제글'
 		<include refid="search"></include>
 	
 	</select>
@@ -237,7 +236,7 @@
 		update
 			community_data
 		set
-			textType = #{textType}
+			textType = #{textType},
 			updateDate = now()
 		where
 			community_idx = #{community_idx}

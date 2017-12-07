@@ -349,16 +349,16 @@
                                     </div>
                                     <!-- list satart -->
                                     <div class="table-responsive">
-                                      <table class="table table-bordered">
+                                      <table class="table">
                                         <thead>
                                             <tr>
                                               <th width="5%">NO</th>
-                                              <th width="15%">등록날짜</th>
-                                              <th width="5%">언론사</th>
-                                              <th width="5%">기자</th>
-                                              <th width="40%">제목</th>
+                                              <th width="10%">등록날짜</th>
+                                              <th width="10%">언론사</th>
+                                              <th width="10%">기자</th>
+                                              <th width="30%">제목</th>
                                               <th width="10%">키워드</th>
-                                              <th width="5%">여론현황</th>
+                                              <th width="10%">여론현황</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -369,24 +369,31 @@
                                             <td>김아무개</td>
                                             <td><a href='https://www.naver.com/' target="_blank">강철비 굿</a></td>
                                             <td>강철비</td>
+                                            <td></td>
                                           </tr>
                                         </tbody>
+                                        <tfoot>
+                                          <tr>
+                                            <td colspan="7">
+                                              <ul class="pagination float-right">
+                                                <li class="page-item">
+                                                  <a class="page-link" href="#" aria-label="Previous">
+                                                    <span aria-hidden="true">«</span>
+                                                    <span class="sr-only">Previous</span>
+                                                  </a>
+                                                </li>
+                                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                                <li class="page-item">
+                                                  <a class="page-link" href="#" aria-label="Next">
+                                                    <span aria-hidden="true">»</span>
+                                                    <span class="sr-only">Next</span>
+                                                  </a>
+                                                </li>
+                                              </ul>
+                                            </td>
+                                          </tr>
+                                        </tfoot>
                                       </table>
-                                      <ul class="pagination float-right">
-                                        <li class="page-item">
-                                          <a class="page-link" href="#" aria-label="Previous">
-                                            <span aria-hidden="true">«</span>
-                                            <span class="sr-only">Previous</span>
-                                          </a>
-                                        </li>
-                                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                        <li class="page-item">
-                                          <a class="page-link" href="#" aria-label="Next">
-                                            <span aria-hidden="true">»</span>
-                                            <span class="sr-only">Next</span>
-                                          </a>
-                                        </li>
-                                      </ul>
                                     </div>
                                     <!-- list end -->
                                   </div>
@@ -404,9 +411,9 @@
                         <div class="modal-dialog modal-lg" role="document">
                           <div class="modal-content">
                             <div class="modal-header">
-                              <h4 class="modal-title">상세정보</h4>
+                              <h5 class="modal-title">언론사 상세정보</h5>
                               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
+                                <span aria-hidden="true"><i class="icofont icofont-close-line"></i></span>
                               </button>
                             </div>
                             <div class="modal-body">
@@ -418,23 +425,23 @@
                                   <!-- list satart -->
                                   <div class="table-border-style">
                                     <div class="table-responsive">
-                                      <table class="table table-de table-styling table-bordered">
+                                      <table class="table table-sm">
                                         <tbody>
                                           <tr>
-                                            <th scope="row" width="30%">언론사명</th>
-                                            <td style="text-align:left">톱스타뉴스</td>
+                                            <th class="b-r-1" width="30%">언론사명</th>
+                                            <td>톱스타뉴스</td>
                                           </tr>
                                           <tr>
-                                            <th scope="row">URL</th>
-                                            <td style="text-align:left"></td>
+                                            <th class="b-r-1">URL</th>
+                                            <td></td>
                                           </tr>
                                           <tr>
-                                            <th scope="row">연락처</th>
-                                            <td style="text-align:left">000-000-000</td>
+                                            <th class="b-r-1">연락처</th>
+                                            <td>000-000-000</td>
                                           </tr>
                                           <tr>
-                                            <th scope="row">메모</th>
-                                            <td style="text-align:left"></td>
+                                            <th class="b-r-1">메모</th>
+                                            <td></td>
                                           </tr>
                                         </tbody>
                                       </table>
@@ -451,12 +458,12 @@
                                   <!-- list satart -->
                                   <div class="table-border-style">
                                     <div class="table-responsive">
-                                      <table class="table table-styling table-bordered">
+                                      <table class="table">
                                         <thead>
                                           <tr>
-                                            <th>전체기사</th>
-                                            <th>NAVER</th>
-                                            <th>DAUM</th>
+                                            <th class="b-b-1">전체기사</th>
+                                            <th class="b-b-1">NAVER</th>
+                                            <th class="b-b-1">DAUM</th>
                                           </tr>
                                         </thead>
                                         <tbody>
@@ -480,21 +487,21 @@
                                   <!-- list satart -->
                                   <div class="table-border-style">
                                     <div class="table-responsive">
-                                      <table class="table table-styling table-bordered">
+                                      <table class="table">
                                         <thead>
                                           <tr>
-                                            <th colspan="4">전체기사</th>
-                                            <th colspan="4">매칭기사</th>
+                                            <th colspan="4" class="b-b-1 b-r-1">전체기사</th>
+                                            <th colspan="4" class="b-b-1">매칭기사</th>
                                           </tr>
                                           <tr>
-                                            <th>전체기사수</th>
-                                            <th>호흥</th>
-                                            <th>비호흥(악성)</th>
-                                            <th>관심</th>
-                                            <th>전체기사수</th>
-                                            <th>호흥</th>
-                                            <th>비호흥(악성)</th>
-                                            <th>관심</th>
+                                            <th class="b-b-1">전체기사수</th>
+                                            <th class="b-b-1">호흥</th>
+                                            <th class="b-b-1">비호흥(악성)</th>
+                                            <th class="b-b-1 b-r-1">관심</th>
+                                            <th class="b-b-1">전체기사수</th>
+                                            <th class="b-b-1">호흥</th>
+                                            <th class="b-b-1">비호흥(악성)</th>
+                                            <th class="b-b-1">관심</th>
                                           </tr>
                                         </thead>
                                         <tbody>
@@ -528,9 +535,9 @@
                         <div class="modal-dialog modal-lg" role="document">
                           <div class="modal-content">
                             <div class="modal-header">
-                              <h4 class="modal-title">상세정보</h4>
+                              <h5 class="modal-title">기자 상세정보</h5>
                               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
+                                <span aria-hidden="true"><i class="icofont icofont-close-line"></i></span>
                               </button>
                             </div>
                             <div class="modal-body">
@@ -542,23 +549,23 @@
                                   <!-- list satart -->
                                   <div class="table-border-style">
                                     <div class="table-responsive">
-                                      <table class="table table-de table-styling table-bordered">
+                                      <table class="table table-sm">
                                         <tbody>
                                           <tr>
-                                            <th scope="row" width="30%">이름</th>
-                                            <td style="text-align:left">김한준</td>
+                                            <th class="b-r-1" width="30%">이름</th>
+                                            <td>김한준</td>
                                           </tr>
                                           <tr>
-                                            <th scope="row">언론사명</th>
-                                            <td style="text-align:left"></td>
+                                            <th class="b-r-1">언론사명</th>
+                                            <td></td>
                                           </tr>
                                           <tr>
-                                            <th scope="row">이메일</th>
-                                            <td style="text-align:left"></td>
+                                            <th class="b-r-1">이메일</th>
+                                            <td></td>
                                           </tr>
                                           <tr>
-                                            <th scope="row">연락처</th>
-                                            <td style="text-align:left">000-000-000</td>
+                                            <th class="b-r-1">연락처</th>
+                                            <td>000-000-000</td>
                                           </tr>
                                         </tbody>
                                       </table>
@@ -575,12 +582,12 @@
                                   <!-- list satart -->
                                   <div class="table-border-style">
                                     <div class="table-responsive">
-                                      <table class="table table-styling table-bordered">
+                                      <table class="table">
                                         <thead>
                                           <tr>
-                                            <th>전체기사</th>
-                                            <th>NAVER</th>
-                                            <th>DAUM</th>
+                                            <th class="b-b-1">전체기사</th>
+                                            <th class="b-b-1">NAVER</th>
+                                            <th class="b-b-1">DAUM</th>
                                           </tr>
                                         </thead>
                                         <tbody>
@@ -604,21 +611,21 @@
                                   <!-- list satart -->
                                   <div class="table-border-style">
                                     <div class="table-responsive">
-                                      <table class="table table-styling table-bordered">
+                                      <table class="table">
                                         <thead>
                                           <tr>
-                                            <th colspan="4">전체기사</th>
-                                            <th colspan="4">매칭기사</th>
+                                            <th colspan="4" class="b-b-1 b-r-1">전체기사</th>
+                                            <th colspan="4" class="b-b-1">매칭기사</th>
                                           </tr>
                                           <tr>
-                                            <th>전체기사수</th>
-                                            <th>호흥</th>
-                                            <th>비호흥(악성)</th>
-                                            <th>관심</th>
-                                            <th>전체기사수</th>
-                                            <th>호흥</th>
-                                            <th>비호흥(악성)</th>
-                                            <th>관심</th>
+                                            <th class="b-b-1">전체기사수</th>
+                                            <th class="b-b-1">호흥</th>
+                                            <th class="b-b-1">비호흥(악성)</th>
+                                            <th class="b-b-1 b-r-1">관심</th>
+                                            <th class="b-b-1">전체기사수</th>
+                                            <th class="b-b-1">호흥</th>
+                                            <th class="b-b-1">비호흥(악성)</th>
+                                            <th class="b-b-1">관심</th>
                                           </tr>
                                         </thead>
                                         <tbody>

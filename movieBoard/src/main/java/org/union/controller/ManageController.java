@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.union.domain.MonitorVO;
 import org.union.domain.UserVO;
 import org.union.service.MonitorService;
 import org.union.service.UserService;
@@ -76,14 +75,14 @@ public class ManageController {
 	
 	
 	@GetMapping("/monitor")
-	public void monitorGET() {
+	public void monitorGET(Model model) {
 		logger.info("monitorGET called....");
 		
-		
+		model.addAttribute("monitorList", monitorService.pageAll());
 	}
 	
 	
-	@PostMapping("/monitorInsert")
+	/*@PostMapping("/monitorInsert")
 	public String monitorInsertPOST(MonitorVO vo) {
 		logger.info("monitorInsertPOST called....");
 		
@@ -93,5 +92,5 @@ public class ManageController {
 	
 		
 		return "redirect:/manage/monitor";
-	}
+	}*/
 }

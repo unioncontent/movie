@@ -149,10 +149,10 @@
                         <div class="card">
                           <div class="card-header">
                             <select id= "selectPerPageNum" name="select" class="col-sm-1 form-control form-control-inverse m-r-10 m-b-10 p-r-5 f-left list-select">
-                                  <option id= "40" >40</option>
-                                  <option id = "80">80</option>
-                                  <option id = "160">120</option>
-                                  <option id = "200">200</option>
+                                  <option id= "30" >30</option>
+                                  <option id = "60">60</option>
+                                  <option id = "120">120</option>
+                                  <option id = "150">150</option>
                                 </select>
                                 <select id = "selectSearchType" name="select" class="col-sm-1 form-control form-control-inverse m-r-10 m-b-10 f-left search-select">
                                   <option id="t" value="t">제목</option>
@@ -162,11 +162,19 @@
                                   <input id="keywordInput" type="text" class="form-control" placeholder="">
                                   <span class="input-group-addon" id="basic-addon1">
                                     <button id="searchBtn" class=" btn btn-inverse">검색</button>
-                              </span>
-                            </div>
-                            <button id = "insertAllBtn" type="button" class="alert-confirm btn btn-primary waves-effect f-right p-r-0 p-l-5 m-l-15 m-b-10  f-right"><i class="icofont icofont-check-circled"></i>일괄처리</button>
+                                  </span>
+                                </div>
+                                <div class="btn-group f-right p-r-0">
+                                  <button type="button" id="allBtn1" class="radiosBtn btn btn-primary btn-outline-primary btn-sm waves-effect waves-light">좋은글</button>
+                                  <button type="button" id="allBtn2" class="radiosBtn btn btn-primary btn-outline-primary btn-sm waves-effect waves-light">나쁜글</button>
+                                  <button type="button" id="allBtn3" class="radiosBtn btn btn-primary btn-outline-primary btn-sm waves-effect waves-light">관심글</button>
+                                  <button type="button" id="allBtn4" class="radiosBtn btn btn-primary btn-outline-primary btn-sm waves-effect waves-light">기타글</button>
+                                  <button type="button" id="allBtn5" class="radiosBtn btn btn-primary btn-outline-primary btn-sm waves-effect waves-light">삭제글</button>
+                                  <button type="button" id="insertAllBtn" class="alert-confirm btn btn-sm btn-primary waves-effect f-right p-b-10"><i class="icofont icofont-exchange" style="margin: 0px;font-size: 16px;"></i></button>
+                                </div>
+                            <%-- <button id = "insertAllBtn" type="button" class="alert-confirm btn btn-primary waves-effect f-right p-r-0 p-l-5 m-l-15 m-b-10  f-right"><i class="icofont icofont-check-circled"></i>일괄처리</button> --%>
                           </div>
-                          <div class="card-block">
+                          <div class="card-block table-border-style">
                             <div class="table-responsive">
                               <table class="table table-hover">
                                 <thead>
@@ -186,7 +194,7 @@
 
                                   <!-- 임시  전체클릭 버튼 -->
 
-                                  <tr>
+                                  <!-- <tr style="display:none;">
 
                                     <th scope="row">
                                       0
@@ -219,7 +227,7 @@
                                       </div>
                                     </td>
 
-                                  </tr>
+                                  </tr> -->
 
                                   <c:forEach items="${extractList}" var="extractVO" varStatus="index">
                                   <tr class = "trList">
@@ -274,33 +282,37 @@
                                   </tr>
                                   </c:forEach>
                                 </tbody>
+                                <tfoot>
+                                  <tr>
+                                    <td colspan="9">
+                                      <ul class="pagination float-right">
+                                        <c:if test="${pageMaker.prev}">
+                                          <li class="page-item">
+                                            <a class="page-link" href="extract${pageMaker.makeSearch(pageMaker.startPage - 1) }" aria-label="Previous">&laquo;
+                                              <span aria-hidden="true"></span>
+                                              <span class="sr-only">Previous</span>
+                                            </a>
+                                          </li>
+                                        </c:if>
+                                        <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
+                                          <li class= "${pageMaker.cri.page == idx? 'active':''} page-item">
+                                            <a class="page-link" href="extract${pageMaker.makeSearch(idx)}">${idx}</a>
+                                          </li>
+                                        </c:forEach>
+                                        <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+                                          <li class="page-item">
+                                            <a class="page-link" href="extract${pageMaker.makeSearch(pageMaker.endPage +1) }" aria-label="Next">&raquo;
+                                              <span aria-hidden="true"></span>
+                                              <span class="sr-only">Next</span>
+                                            </a>
+                                          </li>
+                                        </c:if>
+                                      </ul>
+                                    </td>
+                                  </tr>
+                                </tfoot>
                               </table>
                             </div>
-                            <ul class="pagination float-right">
-                              <c:if test="${pageMaker.prev}">
-                                <li class="page-item">
-                                  <a class="page-link" href="extract${pageMaker.makeSearch(pageMaker.startPage - 1) }" aria-label="Previous">&laquo;
-                                    <span aria-hidden="true"></span>
-                                    <span class="sr-only">Previous</span>
-                                  </a>
-                                </li>
-                              </c:if>
-
-                              <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
-                                <li class= "${pageMaker.cri.page == idx? 'active':''} page-item">
-                                  <a class="page-link" href="extract${pageMaker.makeSearch(idx)}">${idx}</a>
-                                </li>
-                              </c:forEach>
-
-                              <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-                                <li class="page-item">
-                                  <a class="page-link" href="extract${pageMaker.makeSearch(pageMaker.endPage +1) }" aria-label="Next">&raquo;
-                                    <span aria-hidden="true"></span>
-                                    <span class="sr-only">Next</span>
-                                  </a>
-                                </li>
-                              </c:if>
-                            </ul>
                           </div>
                         </div>
                       </div>
@@ -413,20 +425,20 @@ $(function() {
 
   $(document).ready(function(){
 
-	  
-	  var startDateOption = decodeURI(window.location.href.split("startDate=")[1]).split("&endDate=")[0];
-		var endDateOption = decodeURI(window.location.href.split("endDate=")[1]);
+
+	  	var startDateOption = decodeURI(window.location.href.split("startDate=")[1]).split("&")[0];
+		var endDateOption = decodeURI(window.location.href.split("endDate=")[1]).split("&")[0];
 		console.log("startDateOption: " + startDateOption);
 		console.log("endDateOption: " + endDateOption);
-		
+
 		if(startDateOption != 'undefined' && endDateOption != 'undefined'
 				&& startDateOption != '' && endDateOption != ''){
 			$("#fromDate").val(startDateOption + " - " + endDateOption);
 		}
-		
-		
-		
-		var companyOption = decodeURI(window.location.href.split("company=")[1]).split("&selectkey")[0];
+
+
+
+		var companyOption = decodeURI(window.location.href.split("company=")[1]).split("&")[0];
 		console.log("companyOption: " + companyOption);
 
 		var $selectCompany = $('#selectCompany');
@@ -446,16 +458,13 @@ $(function() {
 			console.log("selectCompany clicked....");
 			console.log($("#selectCompany option:selected").val());
 
-			self.location = "extract?"+ "company=" + $("#selectCompany option:selected").val();
-			
+			searchList();
+
 		});
-		
 
-		var keywordOption = decodeURI(window.location.href.split("selectkey=")[1]).split("&textType")[0];
+
+		var keywordOption = decodeURI(window.location.href.split("selectKey=")[1]).split("&")[0];
 		console.log("keywordOption: " + keywordOption);
-		console.log(decodeURI(window.location.href.split("&selectkey=")[1]));
-
-
 
 		var $selectKeyword = $('#selectKeyword');
 
@@ -473,15 +482,11 @@ $(function() {
 		$selectKeyword.change(function(){
 			console.log("selectKeyword clicked....");
 			console.log($('#selectKeyword option:selected').val());
-			
-			self.location = "extract?"
-							+ "company=" + $("#selectCompany option:selected").val()
-							+ "&selectkey=" + $('#selectKeyword option:selected').val();
 
-			//searchList();
+			searchList();
 		});
-	  
-	  
+
+
 
 	  // 키보드 insertAll
 	  $(function() {
@@ -496,7 +501,7 @@ $(function() {
 	  });
 
 	  // allBtn 클릭시
-	  $(".radiosAll input").on("click", function(event){
+	  $(".radiosBtn").on("click", function(event){
 		  console.log(event);
 
 		  var input = event.target.id;
@@ -609,7 +614,7 @@ $(function() {
 						location.reload();
 					});
 	  });
-	
+
 
 		// 당일 클릭시
 		$('#toDay').on("click", function(){
@@ -620,7 +625,7 @@ $(function() {
 
 		  $("#fromDate").val(endDate + " - " + endDate)
 		  console.log($("#fromDate").val());
-		  searchList(); 
+		  searchList();
 		});
 
 		// 전일 클릭시
@@ -653,15 +658,15 @@ $(function() {
 		  var date = getDate("month");
 		  var startDate = date.startDate;
 		  var endDate = date.endDate;
-		
+
 		  $("#fromDate").val(startDate + " - " + endDate)
 		  console.log($("#fromDate").val());
-		  
+
 		  searchList();
-		 
+
 		})
-		
-	// content 길시에 ...으로 변경  
+
+	// content 길시에 ...으로 변경
 	var $content = $(".text-success");
 
 	var size = 25;
@@ -672,7 +677,7 @@ $(function() {
 		}
 	}
 
-	
+
 	//캘린더 클릭시..
 	$('#fromDate').on('apply.daterangepicker', function(ev, picker) {
 		   var startDate = picker.startDate.format('YYYY-MM-DD');
@@ -682,8 +687,8 @@ $(function() {
 		   console.log("endDate: " + endDate);
 
 		   searchList();
-	}); 
-	
+	});
+
 
 	// 검색버튼 클릭시
 	$('#searchBtn').on("click", function(event){
@@ -813,16 +818,16 @@ $(function() {
 			location.reload();
 		});
   }
-  
-  
+
+
   function makeDateFormat(date, index){
 		var splitDate = date.split(" - ")[index];
 			if(splitDate != undefined){
 				var returnDate = splitDate.replace("/", "-").replace("/", "-")
 				return returnDate;
 			}
-		
-		
+
+
 	}
 	makeDateFormat($("#fromDate").val());
 
@@ -831,15 +836,15 @@ $(function() {
 		var makeQeury = '${pageMaker.makeQuery(1)}'.slice(0, -2);
 
 		self.location = "extract" + makeQeury
-						+ $('#selectPerPageNum option:selected').val() 
+						+ $('#selectPerPageNum option:selected').val()
     					+ "&company=" + $("#selectCompany option:selected").val()
 						+ "&selectKey=" + $('#selectKeyword option:selected').val()
-						+ "&searchType=" + $("#selectSearchType option:selected").val() 
-						+ "&keyword=" + $('#keywordInput').val() 
+						+ "&searchType=" + $("#selectSearchType option:selected").val()
+						+ "&keyword=" + $('#keywordInput').val()
     					+ "&startDate=" + makeDateFormat($("#fromDate").val(), 0)
     					+ "&endDate=" +  makeDateFormat($("#fromDate").val(), 1)
 	}
-  
+
 //날짜 계산 함수
   function getDate(type){
   	console.log("TYPE : " + type);
@@ -868,10 +873,10 @@ $(function() {
    			month -= 1;
    		}
    		startDate = year + "-" + month + "-" + calcDate;
-   	
+
    	}else if(type =='toDay'){
    		startDate = endDate
-   		
+
    	}
 
    	return {

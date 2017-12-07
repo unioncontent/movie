@@ -34,7 +34,9 @@
 
 		<security:intercept-url pattern="/dashBoard/dashBoard" access="ROLE_USER" />
 		<security:intercept-url pattern="/period/**" access="ROLE_USER" />
+		<security:intercept-url pattern="/portal/**" access="ROLE_USER" />
 		<security:intercept-url pattern="/sns/**" access="ROLE_USER" />
+		<security:intercept-url pattern="/media/**" access="ROLE_USER" />
 		<security:intercept-url pattern="/manage/**" access="ROLE_USER" />
 		<security:intercept-url pattern="/extract/extract" access="ROLE_USER" />
 		<security:intercept-url pattern="/classification/classification" access="ROLE_USER" />

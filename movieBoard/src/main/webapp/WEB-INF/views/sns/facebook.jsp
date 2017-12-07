@@ -148,7 +148,6 @@
                             </h5>
                             <div class="card-header-right">
                               <i class="icofont icofont-rounded-down"></i>
-                              <i class="icofont icofont-refresh"></i>
                             </div>
                           </div>
                           <div class="card-block">
@@ -187,7 +186,7 @@
                                 <thead>
                                   <tr>
                                     <th width="5%">NO</th>
-                                    <th width="10%">등록날짜</th>
+                                    <th width="10%">작성날짜</th>
                                     <th width="5%">키워드</th>
                                     <th width="30%">제목</th>
                                     <th width="5%">글쓴이</th>
@@ -197,9 +196,9 @@
                                   </tr>
                                 </thead>
                                 <tbody>
-                                  <c:forEach items="${facebookList}" var="snsVO">
+                                  <c:forEach items="${facebookList}" var="snsVO" varStatus="index">
                                     <tr>
-                                      <th scope="row">${snsVO.sns_idx}</th>
+                                      <th scope="row">${totalCount - minusCount - index.count +1}</th>
                                       <td>${snsVO.writeDate}</td>
                                       <td>${snsVO.keyword}</td>
                                       <td><a href="${snsVO.url}" target="_blank"><div class="nobr">${snsVO.sns_title}</div></a></td>
@@ -347,14 +346,20 @@
 
   $(document).ready(function(){
 
-	// 페이징 css 제어
-	/* var pageNum = $(".page-item");
-	var urlPage = decodeURI((window.location.href.split("page=")[1]).split("&")[0]);
-
-	for (var i = 0; i < pageNum.length; i++){
-		pageNum[i].children[0].text == urlPage? pageNum[i].classList.add("active") : console.log("not matching");
-	}  */
-
+	  var $fromDate = $("#fromDate");
+	  
+	  var startDateOption = decodeURI(window.location.href.split("startDate=")[1]).split("&")[0];
+	  var endDateOption = decodeURI(window.location.href.split("endDate=")[1]).split("&")[0];
+	  console.log("startDateOption: " + startDateOption);
+	  console.log("endDateOption: " + endDateOption);
+		
+	  if(startDateOption != 'undefined' && endDateOption != 'undefined'
+			&& startDateOption != '' && endDateOption != ''){
+		  $fromDate.val(startDateOption + " - " + endDateOption);
+	  		
+	  		
+		}
+	  
 
 	// 엑셀 출력시
 	$(document).on("click","#excel",function(){
@@ -371,12 +376,16 @@
 	        	
 	        	console.log("엑셀출력한다?");
 
-	        	self.location = "excel?"+ "searchType=" + $("#selectSearchType option:selected").val()
-				  + "&keyword=" + decodeURI(window.location.href.split("&keyword=")[1]).split("&selectKey")[0]
-				  + "&selectKey=" + $('#selectKeyword option:selected').val()
-				  + "&company=" + $("#selectCompany option:selected").val(); 
-
-	        	console.log(self.loaction);
+	        	self.location = "excel?"
+	        		  +"searchType=" + decodeURI(window.location.href.split("&searchType=")[1]).split("&")[0]
+			 		  + "&keyword=" + decodeURI(window.location.href.split("&keyword=")[1]).split("&")[0]
+					  + "&selectKey="
+					  + $('#selectKeyword option:selected').val()
+					  + "&company="
+					  + $("#selectCompany option:selected").val()
+					  + "&startDate=" + makeDateFormat($("#fromDate").val(), 0)
+					  + "&endDate=" +  makeDateFormat($("#fromDate").val(), 1)
+					  + "&portal_name=facebook";
 
 		  		swal("Success!", "엑셀출력 되었습니다.", "success");
 
@@ -384,7 +393,7 @@
 		});
 
 
-	var selectOption = decodeURI(window.location.href.split("selectKey=")[1]);
+	var selectOption = decodeURI(window.location.href.split("selectKey=")[1]).split("&")[0];
 	console.log("selectOption: " + selectOption);
 
 
@@ -407,7 +416,7 @@
 		searchList();
 	});
 	
-	var companyOption = decodeURI(window.location.href.split("company=")[1]).split("&textType")[0];
+	var companyOption = decodeURI(window.location.href.split("company=")[1]).split("&")[0];
 
 
 	var $selectCompany = $('#selectCompany');
@@ -427,11 +436,19 @@
 		console.log("selectCompany clicked....");
 		console.log($("#selectCompany option:selected").val());
 		
-		self.location = "facebook?"+ "company=" + $("#selectCompany option:selected").val();
+		searchList();
 		
 	});
 
 
+	var graphStart = $fromDate.val().split(" - ")[0].replace("/", "-").replace("/", "-");
+	var graphEnd = $fromDate.val().split(" - ")[1].replace("/", "-").replace("/", "-");
+
+	console.log("graphStart: " + graphStart);
+    console.log("graphEnd: " + graphEnd);
+	  
+    ajaxGraph(graphStart, graphEnd);
+	
 	// 검색 클릭시
 	$('#searchBtn').on("click", function(event){
 	  console.log("searchBtn clicked....");
@@ -450,9 +467,12 @@
 	$('#toDay').on("click", function(){
 	  console.log("toDay clicked....");
 	  var date = getDate("toDay");
+	  var startDate = date.startDate;
 	  var endDate = date.endDate;
 
-	  ajaxGraph(endDate, endDate);
+	  $("#fromDate").val(endDate + " - " + endDate)
+	  console.log($("#fromDate").val());
+	  searchList(); 
 	});
 
 	// 전일 클릭시
@@ -462,7 +482,9 @@
 	  var startDate = date.startDate;
 	  var endDate = date.endDate;
 
-	  ajaxGraph(startDate, endDate);
+	  $("#fromDate").val(startDate + " - " + endDate)
+	  console.log($("#fromDate").val());
+	  searchList();
 	});
 
 	// 7일  클릭시
@@ -472,7 +494,9 @@
 	  var startDate = date.startDate;
 	  var endDate = date.endDate;
 
-	  ajaxGraph(startDate, endDate);
+	  $("#fromDate").val(startDate + " - " + endDate)
+	  console.log($("#fromDate").val());
+	  searchList();
 	})
 
 	// 30일 클릭시
@@ -481,30 +505,32 @@
 	  var date = getDate("month");
 	  var startDate = date.startDate;
 	  var endDate = date.endDate;
-
-	  ajaxGraph(startDate, endDate);
+	
+	  $("#fromDate").val(startDate + " - " + endDate)
+	  console.log($("#fromDate").val());
+	  
+	  searchList();
+	 
 	})
 
 
 	// 캘린더 클릭시
-	$('#fromDate').on('apply.daterangepicker', function(ev, picker) {
-	   var startDate = picker.startDate.format('YYYY-MM-DD');
-	   var endDate = picker.endDate.format('YYYY-MM-DD');
+	$('#fromDate').on('apply.daterangepicker', function(ev, picker) {	
+		   var startDate = picker.startDate.format('YYYY-MM-DD');
+		   var endDate = picker.endDate.format('YYYY-MM-DD');
 
-	   ajaxGraph(startDate, endDate);
+		   console.log("startDate: " + startDate);
+		   console.log("endDate: " + endDate);
 
+		   searchList();
 
-	// 그래프 함수
+	});
 
-}); // end
-
-	var date = getDate("week");
+	/* var date = getDate("week");
 	var startDate = date.startDate;
 	var endDate = date.endDate;
 	console.log("startDate: " + startDate);
-	console.log("endDate: " + endDate);
-
-	ajaxGraph(startDate, endDate);
+	console.log("endDate: " + endDate); */
 
 
 }); // end ready....
@@ -524,7 +550,9 @@ function searchList(event) {
 				  + "&selectKey="
 				  + $('#selectKeyword option:selected').val()
 				  + "&company="
-				  + $("#selectCompany option:selected").val();
+				  + $("#selectCompany option:selected").val()
+				  + "&startDate=" + makeDateFormat($("#fromDate").val(), 0)
+				  + "&endDate=" +  makeDateFormat($("#fromDate").val(), 1);
 }
 
 // 그래프 함수
@@ -534,8 +562,11 @@ function ajaxGraph(startDate, endDate){
       type : "POST",
 	  url : "graph",
  	  dataType : "json",
- 	  data : {startDate : startDate, endDate : endDate, company : $("#selectCompany option:selected").val(),
- 		  selectKey : $("#selectKeyword option:selected").val(), part : "facebook"},
+ 	 data : {startDate : startDate, endDate : endDate, company : $("#selectCompany option:selected").val(),
+		  selectKey : $("#selectKeyword option:selected").val(),
+		  searchType: decodeURI(window.location.href.split("&searchType=")[1]).split("&")[0], 
+		  keyword : decodeURI(window.location.href.split("&keyword=")[1]).split("&")[0], 
+		  portal_name : "facebook"},
   	  error : function(){
       	alert('graphPOST ajax error....');
   	  },
@@ -615,6 +646,16 @@ function getDate(type){
  		endDate : endDate
  	}
 
+}
+
+function makeDateFormat(date, index){
+	var splitDate = date.split(" - ")[index];
+		if(splitDate != undefined){
+			var returnDate = splitDate.replace("/", "-").replace("/", "-")
+			return returnDate;
+		}
+	
+	
 }
 
 

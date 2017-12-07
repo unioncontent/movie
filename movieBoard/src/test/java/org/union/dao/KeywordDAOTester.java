@@ -40,7 +40,7 @@ public class KeywordDAOTester {
 	@Test
 	public void testRead() {
 		
-		dao.read(1);
+		dao.read("현빈");
 	}
 
 
@@ -59,6 +59,6 @@ public class KeywordDAOTester {
 	@Test
 	public void testDelete() {
 		
-		dao.delete(1);
+		//dao.delete(1);
 	}
 }

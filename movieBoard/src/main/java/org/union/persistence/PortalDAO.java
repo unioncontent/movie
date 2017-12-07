@@ -19,6 +19,9 @@ public interface PortalDAO {
 	
 	public void delete(Integer portal_idx);
 	
+	public Integer getTypeOfMovieCount(SearchCriteria cri);
+	public Integer getTypeOfActorCount(SearchCriteria cri);
+	
 	public List<PortalVO> allPageList(SearchCriteria cri);
 	public Integer allPageCount(SearchCriteria cri);
 	

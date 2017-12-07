@@ -193,4 +193,11 @@ public class MediaDAOImpl implements MediaDAO {
 		return session.selectOne(namespace + "allPageCount", cri);
 	}
 
+
+	@Override
+	public List<MediaVO> allPage(SearchCriteria cri) {
+
+		return session.selectList(namespace + "allPage", cri);
+	}
+
 }

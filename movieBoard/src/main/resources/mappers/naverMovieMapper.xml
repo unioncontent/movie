@@ -6,6 +6,44 @@
  
  <mapper namespace="org.union.mappers.NaverMovieMapper">
  
+ 	<sql id="search">
+ 		<if test="keyword != null">
+			<if test="searchType != null">
+				<if test="searchType == 't'.toString()">
+					and NM_title like concat('%', #{keyword}, '%')
+				</if>
+			</if>
+		</if>
+		<if test="company != null">
+			and
+			   keyword in (select 
+						keyword 
+					from 
+						keyword_data
+					where
+						user_idx = (select 
+										user_idx 
+									from 
+										user_data 
+									where 
+										user_name = #{company} 
+									and 
+										keyword_property = '포함'
+									)
+					)
+		</if>
+		<if test="selectKey != null">
+				and keyword in (select keyword from keyword_data where keyword_main = #{selectKey})
+			</if>
+		<if test="startDate != null and endDate != null">
+			and createDate <![CDATA[>]]> #{startDate}
+			and createDate <![CDATA[<]]> #{endDate}
+		</if>
+		<if test="textType != null">
+			and textType = #{textType}
+		</if>
+	</sql>
+ 
  	<insert id="create">
  		insert into
  			NaverMovie_data(NM_title, NM_media_name, NM_reporter_name, writeDate, keyword, keyword_type, url)
@@ -48,5 +86,33 @@
  			NM_idx = #{NM_idx}
  	
  	</delete>
+ 	
+ 	<select id="searchList" resultType="NaverMovieVO">
+ 		select
+ 			*
+ 		from
+ 			naverMovie_data
+ 		where
+ 			url is not null
+ 			
+ 		<include refid="search"></include>
+		
+		order 
+			by updateDate desc
+		limit  
+			#{startPage}, #{perPageNum}
+	</select>
+
+	<select id="getSearchCount" resultType="Integer">
+		select
+			count(*)
+		from
+			naverMovie_data
+		where 
+			url is not null
+		
+		<include refid="search"></include>	
+	
+	</select> 	
  	
  </mapper>

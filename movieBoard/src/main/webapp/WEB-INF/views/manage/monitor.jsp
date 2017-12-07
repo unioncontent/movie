@@ -68,7 +68,7 @@
                 <div class="page-wrapper">
                   <div class="page-header">
                     <div class="page-header-title">
-                      <h4>모니터링등록</h4>
+                      <h4>모니터링 현황</h4>
                     </div>
                     <div class="page-header-breadcrumb">
                       <ul class="breadcrumb-title">
@@ -78,7 +78,7 @@
                           </a>
                         </li>
                         <li class="breadcrumb-item"><a href="#!">운영관리</a></li>
-                        <li class="breadcrumb-item"><a href="#!">모니터링등록</a></li>
+                        <li class="breadcrumb-item"><a href="#!">모니터링 현황</a></li>
                       </ul>
                     </div>
                   </div>
@@ -87,45 +87,62 @@
                       <div class="col-lg-12">
                         <!-- Form Inputs card start -->
                         <div class="card">
-                            <div class="card-header">
-                                <h5>모니터링등록</h5>
-                                <div class="card-header-right">
-                                    <i class="icofont icofont-rounded-down"></i>
-                                </div>
+                          <div class="card-header">
+                            <h3 class="card-header-text f-left m-t-15 m-b-15">모니터링 리스트</h3>
+                          </div>
+                          <div class="card-block">
+                            <div class="table-responsive">
+                              <table class="table table-bordered">
+                                <thead>
+                                  <tr>
+                                    <th width="5%">NO</th>
+                                    <th width="5%">분류</th>
+                                    <th width="5%">운영여부</th>
+                                    <th width="5%">아이디</th>
+                                    <th width="5%">사이트명</th>
+                                    <th width="30%">마지막 수집글 제목</th>
+                                    <th width="10%">날짜</th>
+                                    <th width="5%">상태</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <c:forEach items="${monitorList}" var="monitor" varStatus="index">
+                                  <tr>
+                                    <th scope="row">${index.count}</th>
+                                    <td>${monitor.monitor_domain}</td>
+                                    <td>
+                                    <c:if test="${monitor.checkCondition == true}">운영중</c:if>
+                                    <c:if test="${monitor.checkCondition == false}">미운영</c:if>
+                                    </td>
+                                    <td>${monitor.monitor_id}</td>
+                                    <td>${monitor.monitor_site}</td>
+                                    <td><a href="${monitor.url}" target="_blank">${monitor.title}</a></td>
+                                    <td>${monitor.createDate}</td>
+                                    <td>
+                                      <div class="form-radio">
+                                        <!-- radio-success:정상/radio-danger:비정상 -->
+                                        <div class="radio radiofill radio-success  radio-inline">
+                                            <c:if test="${monitor.checkCondition == true}">
+                                            <label>
+                                                <input type="radio" name="radio" checked="checked">
+                                                <i class="helper"></i>정상
+                                            </label>
+                                            </c:if>
+                                            <c:if test="${monitor.checkCondition == false}">
+                                            <label>
+                                                <input type="radio" name="radio">
+                                                <i class="helper"></i>비정상
+                                            </label>
+                                            </c:if>
+                                        </div>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                  </c:forEach>
+                                </tbody>
+                              </table>
                             </div>
-                            <div class="card-block">
-                                <form action="/manage/monitorInsert" method="post">
-                                  <input type="hidden" name="_csrf" value="${_csrf.token}"/>
-    							  <input type="hidden" name="_csrf_header" value="${_csrf.headerName}"/>
-                                  <div class="form-group row">
-                                      <label class="col-sm-2 col-form-label">사이트명</label>
-                                      <div class="col-sm-5">
-                                          <input name ="monitor_site" type="text" class="form-control">
-                                          <span class="messages"><p class="text-danger error"></p></span>
-                                      </div>
-                                  </div>
-                                  <div class="form-group row">
-                                      <label class="col-sm-2 col-form-label">아이디</label>
-                                      <div class="col-sm-5">
-                                          <input name = "monitor_user" type="text" class="form-control">
-                                          <span class="messages"><p class="text-danger error"></p></span>
-                                      </div>
-                                  </div>
-                                  <div class="form-group row">
-                                      <label class="col-sm-2 col-form-label">사이트 구분</label>
-                                       <div class="col-sm-5">
-                                          <input name = "monitor_domain" type="text" class="form-control">
-                                          <span class="messages"><p class="text-danger error"></p></span>
-                                      </div>
-                                  </div>
-                                  <div class="row">
-                                      <label class="col-sm-2"></label>
-                                      <div class="col-sm-10">
-                                          <button type="submit" class="btn btn-primary m-b-0">등록</button>
-                                      </div>
-                                    </div>
-                                </form>
-                            </div>
+                          </div>
                         </div>
                         <!-- Form Inputs card end -->
                       </div>

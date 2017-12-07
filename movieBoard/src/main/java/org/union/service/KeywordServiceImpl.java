@@ -1,13 +1,11 @@
 package org.union.service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.union.domain.ExtractVO;
+import org.union.domain.KeywordListVO;
 import org.union.domain.KeywordVO;
 import org.union.domain.UserVO;
 import org.union.persistence.KeywordDAO;
@@ -97,6 +95,54 @@ public class KeywordServiceImpl implements KeywordService{
 		}
 		
 		return keywordList;
+	}
+
+	@Override
+	public List<KeywordListVO> listPage() {
+
+		return keywordDAO.listPage();
+	}
+
+	@Override
+	public void insertMain(KeywordListVO vo) {
+
+		keywordDAO.createMain(vo);
+	}
+
+	@Override
+	public List<KeywordVO> listByMain(String keyword_main) {
+
+		return keywordDAO.listByMain(keyword_main);
+	}
+
+	@Override
+	public void insertKeyword(KeywordVO vo) {
+
+		keywordDAO.createKeyword(vo);
+	}
+
+	@Override
+	public Integer checkMain(String keyword_main) {
+
+		return keywordDAO.checkMain(keyword_main);
+	}
+
+	@Override
+	public void removeMain(String keyword_main) {
+
+		keywordDAO.deleteMain(keyword_main);
+	}
+
+	@Override
+	public void remove(String keyword) {
+
+		keywordDAO.delete(keyword);
+	}
+
+	@Override
+	public KeywordVO view(String keyword) {
+
+		return keywordDAO.read(keyword);
 	}
 
 }

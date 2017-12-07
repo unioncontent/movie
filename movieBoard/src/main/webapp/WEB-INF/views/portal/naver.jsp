@@ -15,6 +15,9 @@
       <![endif]-->
   <!-- Meta -->
   <meta charset="utf-8">
+  <meta name="_csrf" content="${_csrf.token}" />
+  <!-- default header name is X-CSRF-TOKEN -->
+  <meta name="_csrf_header" content="${_csrf.headerName}"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="description" content="Phoenixcoded">
@@ -95,21 +98,40 @@
                     <!-- data setting start -->
                     <div class="row">
                       <div class="col-md-7">
-                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left">
-                          <option value="opt1">회사</option>
+                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="selectCompany">
+                          <option>회사</option>
+                          <c:if test="${user.user_type == 1 }">
+                          <c:forEach items="${companyList}" var = "companyList">
+                          <option value="${companyList.user_name}">${companyList.user_name}</option>
+                          </c:forEach>
+                          </c:if>
+                          <c:if test="${user.user_type == 2}">
+                          <option value="${companyList.user_name}">${companyList.user_name}</option>
+                          </c:if>
                         </select>
-                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left">
-                          <option value="opt1">키워드</option>
+                        
+                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left" id="selectKeyword">
+                          <option>키워드</option>
+                          <c:if test="${modelKeywordList == null}" >
+                          	<c:forEach items="${keywordList}" var = "keywordList">
+                          <option value="${keywordList.keyword_main}">${keywordList.keyword_main}</option>
+                          </c:forEach>
+                          </c:if>
+                          <c:if test="${modelKeywordList != null}">
+                          	<c:forEach items="${modelKeywordList}" var = "keywordList">
+                          <option value="${keywordList.keyword_main}">${keywordList.keyword_main}</option>
+                          </c:forEach>
+                          </c:if>
                         </select>
                       </div>
                       <div class="col-md-5">
                         <!-- date picker start -->
                         <div class="row">
                           <div class="btn-group float-right m-b-10 p-l-15 p-r-10" role="group">
-                            <button type="button" class="btn btn-inverse btn-sm waves-effect waves-light">당일</button>
-                            <button type="button" class="btn btn-inverse btn-sm waves-effect waves-light">전일</button>
-                            <button type="button" class="btn btn-inverse btn-sm waves-effect waves-light">최근7일</button>
-                            <button type="button" class="btn btn-inverse btn-sm waves-effect waves-light">최근30일</button>
+                            <button id="toDay" type="button" class="btn btn-inverse btn-sm waves-effect waves-light">당일</button>
+                            <button id="yesterDay" type="button" class="btn btn-inverse btn-sm waves-effect waves-light">전일</button>
+                            <button id="week" type="button" class="btn btn-inverse btn-sm waves-effect waves-light">최근7일</button>
+                            <button id="month" type="button" class="btn btn-inverse btn-sm waves-effect waves-light">최근30일</button>
                           </div>
                           <div class="input-group float-right date col p-l-15 p-r-15 m-b-10">
                             <input type="text" id="fromDate" class="form-control form-control-inverse" value="">
@@ -117,7 +139,6 @@
                               <span class="icofont icofont-ui-calendar"></span>
                             </span>
                           </div>
-
                         </div>
                         <!-- date picker end -->
                       </div>
@@ -129,7 +150,7 @@
                           <div class="card counter-card-1">
                             <div class="card-block-big">
                               <div>
-                                <h3>0</h3>
+                                <h3>${movieCount + actorCount}</h3>
                                 <p>전체모니터링</p>
                                 <div class="progress ">
                                   <div class="progress-bar progress-bar-striped progress-xs progress-bar-pink" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
@@ -145,7 +166,7 @@
                           <div class="card counter-card-1">
                             <div class="card-block-big">
                               <div>
-                                <h3>0</h3>
+                                <h3>${movieCount}</h3>
                                 <p>영화</p>
                                 <div class="progress ">
                                   <div class="progress-bar progress-bar-striped progress-xs progress-bar-pink" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
@@ -161,7 +182,7 @@
                           <div class="card counter-card-1">
                             <div class="card-block-big">
                               <div>
-                                <h3>0</h3>
+                                <h3>${actorCount}</h3>
                                 <p>배우</p>
                                 <div class="progress ">
                                   <div class="progress-bar progress-bar-striped progress-xs progress-bar-pink" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
@@ -194,23 +215,23 @@
                                   <tbody>
                                     <tr>
                                       <th scope="row">헤드라인기사</th>
-                                      <td>3</td>
-                                      <td>0</td>
+                                      <td>${etTotalCount1}</td>
+                                      <td>${etSearchCount1}</td>
                                     </tr>
                                     <tr>
                                       <th scope="row">헤드라인 sub</th>
-                                      <td>3</td>
-                                      <td>0</td>
+                                      <td>${etTotalCount2}</td>
+                                      <td>${etSearchCount2}</td>
                                     </tr>
                                     <tr>
                                       <th scope="row">아이템 기사</th>
-                                      <td>3</td>
-                                      <td>0</td>
+                                      <td>${etTotalCount3}</td>
+                                      <td>${etSearchCount3}</td>
                                     </tr>
                                     <tr class="bg-inverse">
                                       <th scope="row">합계</th>
-                                      <td>0</td>
-                                      <td>0</td>
+                                      <td>${etTotalCount1 + etTotalCount2 + etTotalCount3}</td>
+                                      <td>${etSearchCount1 + etSearchCount2 + etSearchCount3}</td>
                                     </tr>
                                   </tbody>
                                 </table>
@@ -240,7 +261,7 @@
                           <div class="card">
                             <div class="card-header">
                               <h5>검출량그래프</h5>
-                              <span>최근 24시간 검출된 데이터 그래프</span>
+                              <span>데이터 그래프</span>
                               <div class="card-header-right">
                                 <i class="icofont icofont-rounded-down"></i>
                                 <i class="icofont icofont-refresh" data-value="chart2"></i>
@@ -286,292 +307,51 @@
                                 </tr>
                               </thead>
                               <tbody>
+                                <c:forEach items="${movieList}" var="movieList" varStatus="index">
                                 <tr>
-                                  <th scope="row">1</th>
-                                  <td>2017-09-29 20:54:16</td>
+                                  <th scope="row">${totalCount -index.count +1 -minusCount}</th>
+                                  <td>${movieList.writeDate}</td>
                                   <td>
-                                    <a href="https://www.naver.com" target="_blank">
-                                      <div class="nobr">[★SHOT!] "만삭의 아름다움"..이동건♥조윤희 동화 같은 결혼식 사진 공개</div>
+                                    <a href="${movieList.url}" target="_blank">
+                                      <div class="nobr content">${movieList.NM_title}</div>
                                     </a>
                                   </td>
-                                  <td></td>
-                                  <td>스포츠서울</td>
+                                  <td>${movieList.keyword}</td>
+                                  <td>${movieList.NM_media_name}</td>
                                 </tr>
-                                <tr>
-                                  <th scope="row">2</th>
-                                  <td>2017-09-29 20:54:16</td>
-                                  <td>
-                                    <a href="https://www.naver.com" target="_blank">
-                                      <div class="nobr">[★SHOT!] "만삭의 아름다움"..이동건♥조윤희 동화 같은 결혼식 사진 공개</div>
-                                    </a>
-                                  </td>
-                                  <td></td>
-                                  <td>OSEN</td>
-                                </tr>
-                                <tr>
-                                  <th scope="row">3</th>
-                                  <td>2017-09-29 20:54:16</td>
-                                  <td>
-                                    <a href="https://www.naver.com" target="_blank">
-                                      <div class="nobr">[★SHOT!] "만삭의 아름다움"..이동건♥조윤희 동화 같은 결혼식 사진 공개</div>
-                                    </a>
-                                  </td>
-                                  <td></td>
-                                  <td>OSEN</td>
-                                </tr>
-                                <tr>
-                                  <th scope="row">4</th>
-                                  <td>2017-09-29 20:54:16</td>
-                                  <td>
-                                    <a href="https://www.naver.com" target="_blank">
-                                      <div class="nobr">[★SHOT!] "만삭의 아름다움"..이동건♥조윤희 동화 같은 결혼식 사진 공개</div>
-                                    </a>
-                                  </td>
-                                  <td></td>
-                                  <td>OSEN</td>
-                                </tr>
-                                <tr>
-                                  <th scope="row">5</th>
-                                  <td>2017-09-29 20:54:16</td>
-                                  <td>
-                                    <a href="https://www.naver.com" target="_blank">
-                                      <div class="nobr">[★SHOT!] "만삭의 아름다움"..이동건♥조윤희 동화 같은 결혼식 사진 공개</div>
-                                    </a>
-                                  </td>
-                                  <td></td>
-                                  <td>OSEN</td>
-                                </tr>
-                                <tr>
-                                  <th scope="row">6</th>
-                                  <td>2017-09-29 20:54:16</td>
-                                  <td>
-                                    <a href="https://www.naver.com" target="_blank">
-                                      <div class="nobr">[★SHOT!] "만삭의 아름다움"..이동건♥조윤희 동화 같은 결혼식 사진 공개</div>
-                                    </a>
-                                  </td>
-                                  <td></td>
-                                  <td>OSEN</td>
-                                </tr>
-                                <tr>
-                                  <th scope="row">7</th>
-                                  <td>2017-09-29 20:54:16</td>
-                                  <td>
-                                    <a href="https://www.naver.com" target="_blank">
-                                      <div class="nobr">[★SHOT!] "만삭의 아름다움"..이동건♥조윤희 동화 같은 결혼식 사진 공개</div>
-                                    </a>
-                                  </td>
-                                  <td></td>
-                                  <td>OSEN</td>
-                                </tr>
-                                <tr>
-                                  <th scope="row">8</th>
-                                  <td>2017-09-29 20:54:16</td>
-                                  <td>
-                                    <a href="https://www.naver.com" target="_blank">
-                                      <div class="nobr">[★SHOT!] "만삭의 아름다움"..이동건♥조윤희 동화 같은 결혼식 사진 공개</div>
-                                    </a>
-                                  </td>
-                                  <td></td>
-                                  <td>OSEN</td>
-                                </tr>
-                                <tr>
-                                  <th scope="row">9</th>
-                                  <td>2017-09-29 20:54:16</td>
-                                  <td>
-                                    <a href="https://www.naver.com" target="_blank">
-                                      <div class="nobr">[★SHOT!] "만삭의 아름다움"..이동건♥조윤희 동화 같은 결혼식 사진 공개</div>
-                                    </a>
-                                  </td>
-                                  <td></td>
-                                  <td>OSEN</td>
-                                </tr>
-                                <tr>
-                                  <th scope="row">10</th>
-                                  <td>2017-09-29 20:54:16</td>
-                                  <td>
-                                    <a href="https://www.naver.com" target="_blank">
-                                      <div class="nobr">[★SHOT!] "만삭의 아름다움"..이동건♥조윤희 동화 같은 결혼식 사진 공개</div>
-                                    </a>
-                                  </td>
-                                  <td></td>
-                                  <td>OSEN</td>
-                                </tr>
+                                </c:forEach>
                               </tbody>
                             </table>
                           </div>
                           <ul class="pagination float-right">
-                            <li class="page-item">
-                              <a class="page-link" href="#" aria-label="Previous">
-                                <span aria-hidden="true">«</span>
-                                <span class="sr-only">Previous</span>
-                              </a>
-                            </li>
-                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item">
-                              <a class="page-link" href="#" aria-label="Next">
-                                <span aria-hidden="true">»</span>
-                                <span class="sr-only">Next</span>
-                              </a>
-                            </li>
-                          </ul>
+							<c:if test="${pageMaker.prev}">
+                              <li class="page-item">
+                                <a class="page-link" href="naver${pageMaker.makeSearch(pageMaker.startPage - 1) }" aria-label="Previous">&laquo;
+                                  <span aria-hidden="true"></span>
+                                  <span class="sr-only">Previous</span>
+                                 </a>
+                               </li>
+                             </c:if>
+
+                             <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
+                              <li class= "${pageMaker.cri.page == idx? 'active':''} page-item">
+                                <a class="page-link" href="naver${pageMaker.makeSearch(idx)}">${idx}</a>
+                              </li>
+                              </c:forEach>
+
+                              	<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+                                	<li class="page-item">
+                                  	<a class="page-link" href="naver${pageMaker.makeSearch(pageMaker.endPage +1) }" aria-label="Next">&raquo;
+                                    	<span aria-hidden="true"></span>
+                                    	<span class="sr-only">Next</span>
+                                  	  </a>
+                                	</li>
+                              	  </c:if>
+							</ul>
                         </div>
                       </div>
                       <!-- Pc table end -->
                     </div>
-                    <div class="col-md-12">
-                      <!-- mobile table start -->
-                      <div class="card">
-                        <div class="card-header">
-                          <h5>MOBILE</h5>
-                          <span>Naver > 영화</span>
-                          <div class="card-header-right"><i class="icofont icofont-rounded-down"></i></div>
-                        </div>
-                        <div class="card-block">
-                          <div class="table-responsive">
-                            <table class="table table-styling">
-                              <thead>
-                                <tr>
-                                  <th>NO</th>
-                                  <th>등록날짜</th>
-                                  <th>제목</th>
-                                  <th>키워드</th>
-                                  <th>언론사</th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                <tr>
-                                  <th scope="row">1</th>
-                                  <td>2017-09-29 20:54:16</td>
-                                  <td>
-                                    <a href="https://www.naver.com" target="_blank">
-                                      <div class="nobr">[★SHOT!] "만삭의 아름다움"..이동건♥조윤희 동화 같은 결혼식 사진 공개</div>
-                                    </a>
-                                  </td>
-                                  <td></td>
-                                  <td>스포츠서울</td>
-                                </tr>
-                                <tr>
-                                  <th scope="row">2</th>
-                                  <td>2017-09-29 20:54:16</td>
-                                  <td>
-                                    <a href="https://www.naver.com" target="_blank">
-                                      <div class="nobr">[★SHOT!] "만삭의 아름다움"..이동건♥조윤희 동화 같은 결혼식 사진 공개</div>
-                                    </a>
-                                  </td>
-                                  <td></td>
-                                  <td>OSEN</td>
-                                </tr>
-                                <tr>
-                                  <th scope="row">3</th>
-                                  <td>2017-09-29 20:54:16</td>
-                                  <td>
-                                    <a href="https://www.naver.com" target="_blank">
-                                      <div class="nobr">[★SHOT!] "만삭의 아름다움"..이동건♥조윤희 동화 같은 결혼식 사진 공개</div>
-                                    </a>
-                                  </td>
-                                  <td></td>
-                                  <td>OSEN</td>
-                                </tr>
-                                <tr>
-                                  <th scope="row">4</th>
-                                  <td>2017-09-29 20:54:16</td>
-                                  <td>
-                                    <a href="https://www.naver.com" target="_blank">
-                                      <div class="nobr">[★SHOT!] "만삭의 아름다움"..이동건♥조윤희 동화 같은 결혼식 사진 공개</div>
-                                    </a>
-                                  </td>
-                                  <td></td>
-                                  <td>OSEN</td>
-                                </tr>
-                                <tr>
-                                  <th scope="row">5</th>
-                                  <td>2017-09-29 20:54:16</td>
-                                  <td>
-                                    <a href="https://www.naver.com" target="_blank">
-                                      <div class="nobr">[★SHOT!] "만삭의 아름다움"..이동건♥조윤희 동화 같은 결혼식 사진 공개</div>
-                                    </a>
-                                  </td>
-                                  <td></td>
-                                  <td>OSEN</td>
-                                </tr>
-                                <tr>
-                                  <th scope="row">6</th>
-                                  <td>2017-09-29 20:54:16</td>
-                                  <td>
-                                    <a href="https://www.naver.com" target="_blank">
-                                      <div class="nobr">[★SHOT!] "만삭의 아름다움"..이동건♥조윤희 동화 같은 결혼식 사진 공개</div>
-                                    </a>
-                                  </td>
-                                  <td></td>
-                                  <td>OSEN</td>
-                                </tr>
-                                <tr>
-                                  <th scope="row">7</th>
-                                  <td>2017-09-29 20:54:16</td>
-                                  <td>
-                                    <a href="https://www.naver.com" target="_blank">
-                                      <div class="nobr">[★SHOT!] "만삭의 아름다움"..이동건♥조윤희 동화 같은 결혼식 사진 공개</div>
-                                    </a>
-                                  </td>
-                                  <td></td>
-                                  <td>OSEN</td>
-                                </tr>
-                                <tr>
-                                  <th scope="row">8</th>
-                                  <td>2017-09-29 20:54:16</td>
-                                  <td>
-                                    <a href="https://www.naver.com" target="_blank">
-                                      <div class="nobr">[★SHOT!] "만삭의 아름다움"..이동건♥조윤희 동화 같은 결혼식 사진 공개</div>
-                                    </a>
-                                  </td>
-                                  <td></td>
-                                  <td>OSEN</td>
-                                </tr>
-                                <tr>
-                                  <th scope="row">9</th>
-                                  <td>2017-09-29 20:54:16</td>
-                                  <td>
-                                    <a href="https://www.naver.com" target="_blank">
-                                      <div class="nobr">[★SHOT!] "만삭의 아름다움"..이동건♥조윤희 동화 같은 결혼식 사진 공개</div>
-                                    </a>
-                                  </td>
-                                  <td></td>
-                                  <td>OSEN</td>
-                                </tr>
-                                <tr>
-                                  <th scope="row">10</th>
-                                  <td>2017-09-29 20:54:16</td>
-                                  <td>
-                                    <a href="https://www.naver.com" target="_blank">
-                                      <div class="nobr">[★SHOT!] "만삭의 아름다움"..이동건♥조윤희 동화 같은 결혼식 사진 공개</div>
-                                    </a>
-                                  </td>
-                                  <td></td>
-                                  <td>OSEN</td>
-                                </tr>
-                              </tbody>
-                            </table>
-                          </div>
-                          <ul class="pagination float-right">
-                            <li class="page-item">
-                              <a class="page-link" href="#" aria-label="Previous">
-                                <span aria-hidden="true">«</span>
-                                <span class="sr-only">Previous</span>
-                              </a>
-                            </li>
-                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item">
-                              <a class="page-link" href="#" aria-label="Next">
-                                <span aria-hidden="true">»</span>
-                                <span class="sr-only">Next</span>
-                              </a>
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
-                      <!-- mobile table end -->
-                    </div>
-                    <!-- pc,mobile순위 end -->
                     </div>
                   </div>
                   <!-- 네이버 영화 end -->
@@ -665,5 +445,328 @@
   <script src="../assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
   <script src="../assets/js/jquery.mousewheel.min.js"></script>
 </body>
+
+
+<script type="text/javascript">
+
+
+	//ajax 보안
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	
+	$(function() {
+		  $(document).ajaxSend(function(e, xhr, options) {
+		  	xhr.setRequestHeader(header, token);
+		  });
+	});
+
+	$(document).ready(function(){
+		
+
+		var companyOption = decodeURI(window.location.href.split("company=")[1]).split("&")[0];
+		console.log("companyOption: " + companyOption);
+
+		var $selectCompany = $('#selectCompany');
+		if(companyOption != 'undefined'){
+			for(var i = 0; i < $selectCompany[0].length; i++ ){
+
+				if($selectCompany[0].children[i].value == companyOption){
+					$selectCompany[0].children[i].selected = 'selected';
+				}
+			}
+		}
+		$selectCompany[0][0].disabled = true;
+
+
+		// 회사 선택시
+		$selectCompany.change(function(){
+			console.log("selectCompany clicked....");
+			console.log($("#selectCompany option:selected").val());
+
+			self.location = "naver?"+ "company=" + $("#selectCompany option:selected").val();
+			
+		});
+		
+
+		var keywordOption = decodeURI(window.location.href.split("selectKey=")[1]).split("&")[0];
+		console.log("keywordOption: " + keywordOption);
+		console.log(decodeURI(window.location.href.split("&")[1]));
+
+
+
+		var $selectKeyword = $('#selectKeyword');
+
+		if(keywordOption != 'undefined'){
+			for(var i = 0; i < $selectKeyword[0].length; i++ ){
+				if($selectKeyword[0][i].value == keywordOption){
+					$selectKeyword[0][i].selected = 'selected';
+				}
+			}
+		}
+		$selectKeyword[0][0].disabled = true;
+
+
+		// 키워드 선택시
+		$selectKeyword.change(function(){
+			console.log("selectKeyword clicked....");
+			console.log($('#selectKeyword option:selected').val());
+			
+			self.location = "naver?"
+							+ "company=" + $("#selectCompany option:selected").val()
+							+ "&selectKey=" + $('#selectKeyword option:selected').val();
+
+		});
+		
+		
+		var startDateOption = decodeURI(window.location.href.split("startDate=")[1]).split("&endDate=")[0];
+		var endDateOption = decodeURI(window.location.href.split("endDate=")[1]);
+		console.log("startDateOption: " + startDateOption);
+		console.log("endDateOption: " + endDateOption);
+		
+		if(startDateOption != 'undefined' && endDateOption != 'undefined'
+				&& startDateOption != '' && endDateOption != ''){
+			$("#fromDate").val(startDateOption + " - " + endDateOption);
+			
+			ajaxGraph(startDateOption, endDateOption);
+		
+		}else{
+			var date = getDate("week");
+			var startDate = date.startDate;
+			var endDate = date.endDate;
+
+			ajaxGraph(startDate, endDate);
+		}
+
+		pieChart();
+		
+		
+		// 당일 클릭시
+		$('#toDay').on("click", function(){
+		  console.log("toDay clicked....");
+		  var date = getDate("toDay");
+		  var startDate = date.startDate;
+		  var endDate = date.endDate;
+
+		  $("#fromDate").val(endDate + " - " + endDate)
+		  console.log($("#fromDate").val());
+		  searchList(); 
+		});
+
+		// 전일 클릭시
+		$('#yesterDay').on("click", function(){
+		  console.log("yesterDay clicked....");
+		  var date = getDate("yesterDay");
+		  var startDate = date.startDate;
+		  var endDate = date.endDate;
+
+		  $("#fromDate").val(startDate + " - " + endDate)
+		  console.log($("#fromDate").val());
+		  searchList();
+		});
+
+		// 7일  클릭시
+		$('#week').on("click", function(){
+		  console.log("week clicked....");
+		  var date = getDate("week");
+		  var startDate = date.startDate;
+		  var endDate = date.endDate;
+
+		  $("#fromDate").val(startDate + " - " + endDate)
+		  console.log($("#fromDate").val());
+		  searchList();
+		})
+
+		// 30일 클릭시
+		$('#month').on("click", function(){
+		  console.log("month clicked....");
+		  var date = getDate("month");
+		  var startDate = date.startDate;
+		  var endDate = date.endDate;
+		
+		  $("#fromDate").val(startDate + " - " + endDate)
+		  console.log($("#fromDate").val());
+		  
+		  searchList();
+		 
+		})
+		
+		// content 길시에 ...으로 변경  
+		var $content = $(".text-success");
+	
+		var size = 25;
+	
+		for (var i =1; i < $content.length; i++){
+			if($content[i].innerText.length >= size){
+				$content[i].textContent = $content[i].innerText.substr(0, size) + '...';
+			}
+		}
+	
+		
+		//캘린더 클릭시..
+		$('#fromDate').on('apply.daterangepicker', function(ev, picker) {
+			   var startDate = picker.startDate.format('YYYY-MM-DD');
+			   var endDate = picker.endDate.format('YYYY-MM-DD');
+	
+			   console.log("startDate: " + startDate);
+			   console.log("endDate: " + endDate);
+	
+			   searchList();
+		}); 
+		
+	}); // end ready...
+
+	
+	//그래프 함수
+	function ajaxGraph(startDate, endDate){
+		console.log(startDate + "/" + endDate);
+		$.ajax({
+
+			type : "POST",
+		  	url : "graph",
+	 	  	dataType : "json",
+	 	  	data : {startDate : startDate, endDate : endDate,
+	 		      company : $("#selectCompany option:selected").val(), selectKey : $("#selectKeyword option:selected").val()},
+	  	  	error : function(){
+	      	alert('graphPOST ajax error....');
+	  	  	},
+	  	  	success : function(data){
+
+	  			var script = "[";
+
+	  			for(var i = 0; i < data.length; i++){
+	  				console.log(data[i]);
+	  				script += '{"period":' + '"' + data[i].writeDate + '",'
+	  						+ '"total"'+ ':' + data[i].type1 + ","
+	  						+ '"matching"' + ':' + data[i].type2 + "},";
+
+	  				if(i == data.length-1){
+	  					script =  script.substr(0, script.length-1);
+	  					script += "]";
+	  				}
+	  			}
+	  			
+	  		console.log(script);
+
+	  		// to json
+	  		var jsonScript = JSON.parse(script);
+
+	  		drawChart(jsonScript);
+
+	  	 	}
+		});
+	}
+
+
+	function drawChart(data){
+			$("#morris-extra-area").empty();
+			window.areaChart = Morris.Area({
+	   			element: 'morris-extra-area',
+				data: data,
+				lineColors: ['#4C5667', '#1ABC9C'],
+				xkey: 'period',
+				ykeys: ['total', 'matching'],
+				labels: ['전체', '매칭'],
+				pointSize: 0,
+				lineWidth: 0,
+				resize: true,
+				fillOpacity: 0.8,
+				behaveLikeLine: true,
+				gridLineColor: '#5FBEAA',
+				hideHover: 'auto'
+			});
+	}
+	
+	
+	
+
+	/*pie chart*/
+	function pieChart(){
+	  $("#chart").empty();
+	  c3.generate({
+	    bindto: '#chart',//chart id
+	    data: {
+	        columns: [
+	            ['전체', "${movieCount+actorCount}"],
+	            ['영화', "${movieCount}"],
+	            ['배우', "${actorCount}"],
+	        ],
+	        type: 'donut',
+	        // onclick: function(d, i) { console.log("onclick", d, i); },
+	        // onmouseover: function(d, i) { console.log("onmouseover", d, i); },
+	        // onmouseout: function(d, i) { console.log("onmouseout", d, i); }
+	    },
+	    color: {
+	        pattern: ['#4C5667', '#1ABC9C','#FF9F55']
+	    },
+	    donut: {
+	        title: "PC 메인노출량"
+	    }
+	  });
+	}
+	
+	function makeDateFormat(date, index){
+		var splitDate = date.split(" - ")[index];
+			if(splitDate != undefined){
+				var returnDate = splitDate.replace("/", "-").replace("/", "-")
+				return returnDate;
+			}
+		
+		
+	}
+	makeDateFormat($("#fromDate").val());
+
+    function searchList(event) {
+
+		var makeQeury = '${pageMaker.makeQuery(1)}'.slice(0, -2);
+
+		self.location = "naver" + makeQeury
+						+ '10' 
+    					+ "&company=" + $("#selectCompany option:selected").val()
+						+ "&selectKey=" + $('#selectKeyword option:selected').val()
+    					+ "&startDate=" + makeDateFormat($("#fromDate").val(), 0)
+    					+ "&endDate=" +  makeDateFormat($("#fromDate").val(), 1)
+	 	}
+  
+	//날짜 계산 함수
+    function getDate(type){
+  		console.log("TYPE : " + type);
+  		var date = new Date();
+
+   		var month = date.getMonth()+1;
+   		 day = date.getDate();
+   		var year = date.getFullYear();
+
+   		var endDate = year + "-" + month + "-" + day;
+   		var startDate;
+
+   		if(type == "yesterDay"){
+   			var calcDate = day-1;
+   			startDate = year + "-" + month + "-" + calcDate;
+
+   		}else if(type == "month"){
+   			var calcDate = month-1;
+   			startDate = year + "-" + calcDate + "-" + day;
+
+   		}else if(type == "week"){
+   			var calcDate = day-7;
+   			if(calcDate < 0){
+   				var lastDay = (new Date(year, month-1, 0)).getDate();
+   				calcDate += lastDay;
+   				month -= 1;
+   			}
+   		startDate = year + "-" + month + "-" + calcDate;
+   	
+   		}else if(type =='toDay'){
+   			startDate = endDate
+   		
+   		}
+
+   		return {
+   			startDate : startDate,
+   			endDate : endDate
+   		}
+
+  	}
+</script>
 
 </html>

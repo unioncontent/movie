@@ -10,9 +10,11 @@ import org.union.domain.ExtractVO;
 import org.union.domain.GraphVO;
 import org.union.domain.MediaVO;
 import org.union.domain.PeriodMediaVO;
+import org.union.domain.PortalVO;
 import org.union.domain.ReporterVO;
 import org.union.domain.SearchCriteria;
 import org.union.domain.TextTypeVO;
+import org.union.persistence.KeywordDAO;
 import org.union.persistence.MediaDAO;
 import org.union.persistence.ReporterDAO;
 
@@ -25,6 +27,9 @@ public class MediaServiceImpl implements MediaService {
 	
 	@Autowired
 	ReporterDAO reporterDAO;
+	
+	@Autowired
+	private KeywordDAO keywordDAO;
 	
 	
 	@Override
@@ -230,7 +235,13 @@ public class MediaServiceImpl implements MediaService {
 	@Override
 	public List<MediaVO> listAll(SearchCriteria cri) {
 
-		return mediaDAO.listAll(cri);
+		List<MediaVO> list = mediaDAO.listAll(cri);
+		
+		for (MediaVO mediaVO : list) {
+			mediaVO.setKeyword_main(keywordDAO.read(mediaVO.getKeyword()).getKeyword_main());
+		}
+
+		return list;
 	}
 
 	@Override
@@ -254,13 +265,27 @@ public class MediaServiceImpl implements MediaService {
 	@Override
 	public List<MediaVO> allPageList(SearchCriteria cri) {
 
-		return mediaDAO.allPageList(cri);
+		List<MediaVO> list = mediaDAO.allPageList(cri);
+		
+		return list;
 	}
 
 	@Override
 	public Integer allPageCount(SearchCriteria cri) {
 
 		return mediaDAO.allPageCount(cri);
+	}
+
+	@Override
+	public List<MediaVO> allPage(SearchCriteria cri) {
+
+		List<MediaVO> list=  mediaDAO.allPage(cri);
+		
+		for (MediaVO mediaVO : list) {
+			mediaVO.setKeyword_main(keywordDAO.read(mediaVO.getKeyword()).getKeyword_main());
+		}
+		
+		return list;
 	}
 
 }

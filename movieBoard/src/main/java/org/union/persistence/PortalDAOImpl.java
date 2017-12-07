@@ -214,4 +214,18 @@ public class PortalDAOImpl implements PortalDAO {
 		return session.selectOne(namespace + "allPageCount", cri);
 	}
 
+
+	@Override
+	public Integer getTypeOfMovieCount(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "getTypeOfMovieCount", cri);
+	}
+
+
+	@Override
+	public Integer getTypeOfActorCount(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "getTypeOfActorCount", cri);
+	}
+
 }
