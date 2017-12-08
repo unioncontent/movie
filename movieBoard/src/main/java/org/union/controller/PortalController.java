@@ -362,11 +362,24 @@ public class PortalController {
 	@GetMapping("/v_blog")
 	public void v_blogGET(@ModelAttribute("cri") SearchCriteria cri, Model model) {
 		logger.info("v_blogGET called....");
+
+		logger.info("beforeCri: " + cri);
 		
-		//SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
+		if("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate())
+				|| cri.getStartDate() == "" || cri.getEndDate() == ""){
+			cri.setStartDate(null);
+			cri.setEndDate(null);
 		
-		cri.setStartDate(null);
-		cri.setEndDate(null);
+		} 
+		if(cri.getStartDate() != null && cri.getEndDate() != null) {
+			logger.info("not null");
+			logger.info(cri.getStartDate());
+			logger.info(cri.getEndDate());
+			if(cri.getStartDate().indexOf("00:00:00") < 0 && cri.getEndDate().indexOf("23:59:59") < 0){ 
+				cri.setStartDate(cri.getStartDate() + " 00:00:00"); 
+				cri.setEndDate(cri.getEndDate() + " 23:59:59"); 
+			}
+		}
 		
 		if (cri.getCompany() != null) {
 			if (cri.getCompany().isEmpty()) {
@@ -424,13 +437,39 @@ public class PortalController {
 		
 		logger.info("cri: " + cri);
 		
-		model.addAttribute("blog0", viralService.getHistoryCount(cri));
-		model.addAttribute("blog1", viralService.getSearchInCount(cri));
-		model.addAttribute("blog2", viralService.getSearchOutCount(cri));
+		PageMaker pageMaker = new PageMaker();
+		Integer totalCount = 0;
 		
-		if(cri.getCompany() != null) {
+		if(cri.getCompany() != null && cri.getSelectKey() != null) {
+			
+			totalCount = viralService.getHistoryCount(cri);
+			
+			model.addAttribute("blog0", totalCount);
+			model.addAttribute("historyList", viralService.historyPage(cri));
+			
+			model.addAttribute("pageMaker", pageMaker);
+			
+			cri.setStartDate(cri.getStartDate().split(" ")[0]);
+			cri.setEndDate(cri.getEndDate().split(" ")[0]);
+			pageMaker.setCri(cri);
+			pageMaker.setTotalCount(totalCount);
+			
+			cri.setEndDate(null);
+			model.addAttribute("blog1", viralService.getSearchInCount(cri));
+			model.addAttribute("blog2", viralService.getSearchOutCount(cri));
 			model.addAttribute("blogList", viralService.searchAllList(cri));
+			
+			// endDate null로 셋팅한 것 복원.
+		}else {
+			
+			pageMaker.setCri(cri);
+			pageMaker.setTotalCount(totalCount);
+			
+			model.addAttribute("pageMaker", pageMaker);
+			
 		}
+		
+		pageMaker.setCri(cri);
 		
 	}
 	

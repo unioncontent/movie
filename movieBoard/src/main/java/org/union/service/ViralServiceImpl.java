@@ -59,4 +59,10 @@ public class ViralServiceImpl implements ViralService {
 		return viralDAO.getHistoryRank(url);
 	}
 
+	@Override
+	public List<ViralVO> historyPage(SearchCriteria cri) {
+
+		return viralDAO.historyPage(cri);
+	}
+
 }

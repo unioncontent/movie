@@ -29,11 +29,10 @@
 		</if>
 		<if test="startDate != null">
 			<if test="endDate != null">
-				and viral_time <![CDATA[>=]]> #{startDate}
-				and viral_time <![CDATA[<=]]> #{endDate}
+				and createDate <![CDATA[>=]]> #{startDate}
+				and createDate <![CDATA[<=]]> #{endDate}
 			</if>
 			<if test="endDate == null">
-				and viral_time = #{startDate}
 			</if>
 		</if>
 		
@@ -174,13 +173,32 @@
 	</select>
 	
 	<select id="getHistoryCount" resultType="Integer">
+		select count(*) as count
+		from (
+    			select
+					*
+				from
+					viral_history_data
+				where
+					viral_time is not null
+				<include refid="search"></include>
+				group by url
+        
+        	) as rowData
+		
+	</select>
+	
+	<select id="historyPage" resultType="ViralVO">
 		select
-			count(*)
+			*
 		from
 			viral_history_data
 		where
 			viral_time is not null
 		<include refid="search"></include>
+		group by url
+	
+		limit #{startPage}, #{perPageNum}
 	
 	</select>
 	
