@@ -186,8 +186,8 @@
 	
 	<select id="getHistoryRank" resultType="GraphVO">
 		select viral_time writeDate, viral_rank type1 from viral_history_data 
-		where url = #{url} 
-		group by viral_time 
+		where url = #{url}
+		group by date_format(viral_time, '%x-%m-%d') 
 		order by viral_time desc 
 		limit 1, 10
 	

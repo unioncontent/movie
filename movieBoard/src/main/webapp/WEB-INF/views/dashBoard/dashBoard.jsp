@@ -475,9 +475,6 @@ $(document).ready(function(){
 		  url : "graph",
 	 	  dataType : "json",
 	 	  data : {success : 'success'},
-	  	  error : function(){
-	      	alert('graphPOST ajax error....');
-	  	  },
 	  	  success : function(data){
 
 	  		  console.log(data);

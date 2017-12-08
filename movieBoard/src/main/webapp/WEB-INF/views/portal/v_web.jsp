@@ -264,6 +264,15 @@
 
                               <!-- top cards end -->
                               <div class="col-md-12">
+                                <c:if test="${blogList eq null }">
+                                  <div class="card borderless-card">
+                                    <div class="card-block warning-breadcrumb bg-white">
+                                      <div class="breadcrumb-header">
+                                        <h5 class="text-inverse"><i class="icofont icofont-warning text-warning"></i> 회사를 선택해주세요.</h5>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </c:if>
                                 <div class="card">
                                   <div class="card-header">
                                     <div class="col-md-1 btn-viral f-right p-r-0">
@@ -287,7 +296,6 @@
                                             </tr>
                                           </thead>
                                           <tbody>
-                                              <c:if test="${blogList eq null }"><h3>회사를 선택해주세요.</h3></c:if>
                                           	  <c:forEach items="${blogList}" var="viralVO">
                                               <tr>
                                                 <th scope="row">${viralVO.viral_rank}</th>

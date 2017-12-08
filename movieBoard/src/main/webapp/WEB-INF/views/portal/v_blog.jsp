@@ -560,7 +560,7 @@
 		  	  	for(var i = 0; i < list.length; i++){
 
 		  	  		var value = '{';
-					value = value + '"label"' + ':' + '"' + (list[i].writeDate).split(" ")[1] + '",';
+					value = value + '"label"' + ':' + '"' + (list[i].writeDate).split(" ")[0] + '",';
 					value += '"value"' + ':' + '' + (100- list[i].type1) + ',';
 					value += '"color"' + ':' + '"#01C0C8"';
 					value += '},'
