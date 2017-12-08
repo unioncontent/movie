@@ -189,7 +189,7 @@
                               <div class="col-md-6 col-xl-3">
                                 <div class="card client-blocks">
                                   <div class="card-block-big card1">
-                                    <h5>전체건수</h5>
+                                    <h5 class="mt">전체건수</h5>
                                     <ul>
                                       <li class="p-t-10">
                                         <i class="icofont icofont-document-search"></i>
@@ -200,59 +200,36 @@
                                 </div>
                               </div>
                               <div class="col-md-6 col-xl-3">
-                                <div class="card user-activity-card">
-                                  <div class="card-header">
-                                    <h5><i class="icofont icofont-ui-v-card"></i></h5>
-                                    <h5>전체 블로그 현황</h5>
-                                  </div>
-                                  <div class="card-block-big">
-                                    <div class="row">
-                                      <div class="col-sm-6">
-                                        <div class="text-center">
-                                          <h1 class="text-inverse f-w-600">${blog0}</h1>
-                                          <h6 class="text-muted m-t-10">전체</h6>
-                                        </div>
-                                      </div>
-                                    </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              <div class="col-md-6 col-xl-3">
-                                <div class="card user-activity-card">
-                                 <div class="card-header">
-                                    <h5><i class="icofont icofont-clock-time"></i></h5>
-                                    <h5>실시간 블로그 현황</h5>
-                                  </div>
-                                 <div class="card-block-big">
-                                    <div class="row">
-                                      <div class="col-sm-6">
-                                        <div class="text-center">
-                                          <h1 class="text-inverse f-w-600">${blog1}</h1>
-                                          <h6 class="text-muted m-t-10">본사계정</h6>
-                                        </div>
-                                      </div>
-                                      <div class="col-sm-6">
-                                        <div class="text-center">
-                                          <h1 class="text-muted f-w-600">${blog2}</h1>
-                                          <h6 class="text-muted m-t-10">외부계정</h6>
-                                        </div>
-                                      </div>
-                                    </div>
+                                <div class="card client-blocks">
+                                  <div class="card-block-big card1">
+                                    <h5>본사계정</h5>
+                                    <h6>실시간 블로그 현황</h6>
+                                    <ul>
+                                      <li class="p-t-10">
+                                        <i class="icofont icofont-user-suited"></i>
+                                      </li>
+                                      <li class="text-right">${blog1}</li>
+                                    </ul>
                                   </div>
                                 </div>
                               </div>
-                              <!-- <div class="col-md-6 col-xl-3">
-                                <div class="card bg-primary large-widget-card">
-                                  <div class="card-block-big">
-                                      <h4>5127 k</h4>
-                                      <h6>Line of code</h6>
-                                      <i class="icofont icofont-code-alt"></i>
+                              <div class="col-md-6 col-xl-3">
+                                <div class="card client-blocks">
+                                  <div class="card-block-big card1">
+                                    <h5>외부계정</h5>
+                                    <h6>실시간 블로그 현황</h6>
+                                    <ul>
+                                      <li class="p-t-10">
+                                        <i class="icofont icofont-users"></i>
+                                      </li>
+                                      <li class="text-right">${blog2}</li>
+                                    </ul>
                                   </div>
                                 </div>
-                              </div> -->
+                              </div>
                               <div class="col-md-6 col-xl-3">
                                 <div class="card user-activity-card">
-                                  <div class="card-block-big"style="padding-top: 17px;padding-bottom: 17px;">
+                                  <div class="card-block-big"style="padding-top: 17px;padding-bottom: 12px;">
                                       <h5>점유율 %</h5>
                                       <div class="text-center">
                                         <!-- data-width:그래프 넓이 / data-height:그래프 높이 / data-fgColor:그래프 색상 / data-readonly:그래프 안움직이게-->
@@ -274,48 +251,50 @@
                                 </c:if>
                                 <div class="card">
                                   <div class="card-header">
-                                    <div class="col-md-1 btn-viral f-right p-r-0">
+                                    <%-- <div class="col-md-1 btn-viral f-right p-r-0">
                                       <button class="btn col-md-12 btn-warning alert-confirm" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'alert-confirm']);"><i class="icofont icofont-download-alt"></i>EXCEL</button>
+                                    </div> --%>
+                                    <h5 class="card-header-text">실시간 블로그 TOP 100</h5>
+                                    <div class="card-header-right">
+                                      <i class="icofont icofont-rounded-down"></i>
                                     </div>
                                   </div>
-                                  <div class="card-block">
-                                    <div class="table-border-style">
-                                      <div class="table-responsive">
-                                        <table class="table table-styling table-checkbox">
-                                          <thead>
+                                  <div class="card-block table-border-style">
+                                    <div class="table-responsive">
+                                      <table class="table table-styling table-checkbox">
+                                        <thead>
+                                          <tr>
+                                            <th>순위</th>
+                                            <th>등록일</th>
+                                            <th>구분</th>
+                                            <th>제목</th>
+                                            <th>키워드</th>
+                                            <th>업데이트일시</th>
+                                            <th>계정분류</th>
+                                            <th>히스토리</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                            <%-- <c:if test="${blogList eq null }"><h3>회사를 선택해주세요.</h3></c:if>                                          	   --%>
+                                        	  <c:forEach items="${blogList}" var="viralVO">
                                             <tr>
-                                              <th>순위</th>
-                                              <th>등록일</th>
-                                              <th>구분</th>
-                                              <th>제목</th>
-                                              <th>키워드</th>
-                                              <th>업데이트일시</th>
-                                              <th>계정분류</th>
-                                              <th>히스토리</th>
+                                              <th scope="row">${viralVO.viral_rank}</th>
+                                              <td>${viralVO.writeDate}</td>
+                                              <td>${viralVO.portal_name}</td>
+                                              <td><a href="${viralVO.url}">${viralVO.viral_title}</a></td>
+                                              <td>${viralVO.keyword}</td>
+                                              <td>${viralVO.viral_time}</td>
+                                              <td>
+                                              <c:if test="${viralVO.viral_isUser == 1}">본사</c:if>
+                                            	<c:if test="${viralVO.viral_isUser == 2}">외부</c:if>
+                                            	</td>
+                                              <td>
+                                                <button class="btn btn-inverse btn-modal btn-sm"><i class="icofont icofont-chart-bar-graph m-r-0"></i></button>
+                                              </td>
                                             </tr>
-                                          </thead>
-                                          <tbody>
-                                              <%-- <c:if test="${blogList eq null }"><h3>회사를 선택해주세요.</h3></c:if>                                          	   --%>
-                                          	  <c:forEach items="${blogList}" var="viralVO">
-                                              <tr>
-                                                <th scope="row">${viralVO.viral_rank}</th>
-                                                <td>${viralVO.writeDate}</td>
-                                                <td>${viralVO.portal_name}</td>
-                                                <td><a href="${viralVO.url}">${viralVO.viral_title}</a></td>
-                                                <td>${viralVO.keyword}</td>
-                                                <td>${viralVO.viral_time}</td>
-                                                <td>
-                                                <c:if test="${viralVO.viral_isUser == 1}">본사</c:if>
-                                              	<c:if test="${viralVO.viral_isUser == 2}">외부</c:if>
-                                              	</td>
-                                                <td>
-                                                  <button class="btn btn-inverse btn-modal btn-sm"><i class="icofont icofont-chart-bar-graph m-r-0"></i></button>
-                                                </td>
-                                              </tr>
-                                              </c:forEach>
-                                          </tbody>
-                                        </table>
-                                      </div>
+                                            </c:forEach>
+                                        </tbody>
+                                      </table>
                                     </div>
                                   </div>
                                 </div>
