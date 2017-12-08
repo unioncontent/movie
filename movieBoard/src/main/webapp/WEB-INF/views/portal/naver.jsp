@@ -483,7 +483,7 @@
 			console.log("selectCompany clicked....");
 			console.log($("#selectCompany option:selected").val());
 
-			self.location = "naver?"+ "company=" + $("#selectCompany option:selected").val();
+			searchList();
 			
 		});
 		
@@ -511,9 +511,7 @@
 			console.log("selectKeyword clicked....");
 			console.log($('#selectKeyword option:selected').val());
 			
-			self.location = "naver?"
-							+ "company=" + $("#selectCompany option:selected").val()
-							+ "&selectKey=" + $('#selectKeyword option:selected').val();
+			searchList();
 
 		});
 		
