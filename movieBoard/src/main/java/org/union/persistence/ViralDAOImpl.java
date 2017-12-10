@@ -112,4 +112,11 @@ public class ViralDAOImpl implements ViralDAO {
 		return session.selectList(namespace + "getHistoryRank", url);
 	}
 
+
+	@Override
+	public List<ViralVO> historyPage(SearchCriteria cri) {
+
+		return session.selectList(namespace + "historyPage", cri);
+	}
+
 }

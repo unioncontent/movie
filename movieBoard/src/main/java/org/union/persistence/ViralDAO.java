@@ -27,6 +27,8 @@ public interface ViralDAO {
 	
 	public Integer getSearchOutCount(SearchCriteria cri);
 	
+	public List<ViralVO> historyPage(SearchCriteria cri);
+	
 	public Integer getHistoryCount(SearchCriteria cri);
 	
 	public List<GraphVO> getHistoryRank (String url);
