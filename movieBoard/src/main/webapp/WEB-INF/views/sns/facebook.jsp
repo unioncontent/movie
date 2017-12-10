@@ -357,7 +357,6 @@
 			&& startDateOption != '' && endDateOption != ''){
 		  $fromDate.val(startDateOption + " - " + endDateOption);
 	  		
-	  		
 		}
 	  
 
