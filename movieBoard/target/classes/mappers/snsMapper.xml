@@ -186,7 +186,7 @@
 		from 
 			sns_data
 		where 
-			textType is not null
+			url is not null
 		<include refid="search"></include>
 		order 
 			by updateDate desc
@@ -201,7 +201,7 @@
 		from
 			sns_data
 		where
-			textType is not null
+			url is not null
 		<include refid="search"></include>
 			
 	</select>

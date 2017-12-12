@@ -245,7 +245,9 @@
                                          <c:forEach items="${snsList}" var="snsList" varStatus="index">
                                           <tr>
                                             <th scope="row">${totalCount -index.count +1 -minusCount}</th>
-                                            <td>${snsList.writeDate}</td>
+                                            <td>
+                                              <fmt:formatDate value="${snsList.updateDate}" pattern="yyyy-MM-dd kk:mm:ss"/>
+                                            </td>
                                             <td>${snsList.sns_name}</td>
                                             <td>${snsList.keyword}</td>
                                             <td class="title"><a href='${snsList.url}' target="_blank">${snsList.sns_title}</a></td>
@@ -411,14 +413,18 @@
 
   $(document).ready(function(){
 
+	  var $fromDate = $("#fromDate");
 
-	var date = getDate("week");
-	var startDate = date.startDate;
-	var endDate = date.endDate;
-	console.log("startDate: " + startDate);
-	console.log("endDate: " + endDate);
-
-	ajaxGraph(startDate, endDate);
+	  var startDateOption = decodeURI(window.location.href.split("startDate=")[1]).split("&")[0].split(" ")[0];
+	  var endDateOption = decodeURI(window.location.href.split("endDate=")[1]).split("&")[0].split(" ")[0];
+	  console.log("startDateOption: " + startDateOption);
+	  console.log("endDateOption: " + endDateOption);
+		
+	  if(startDateOption != 'undefined' && endDateOption != 'undefined'
+			&& startDateOption != '' && endDateOption != ''){
+		  $fromDate.val(startDateOption + " - " + endDateOption);
+	  		
+		}
 
 	// content 길시에 ...으로 변경
 	var $title = $(".title");
@@ -431,7 +437,7 @@
 		}
 	}
 
-	var selectOption = decodeURI(window.location.href.split("selectKey=")[1]);
+	var selectOption = decodeURI(window.location.href.split("selectKey=")[1]).split("&")[0];
 	console.log("selectOption: " + selectOption);
 
 
@@ -451,13 +457,11 @@
 		console.log("selectKeyword clicked....");
 		console.log($('#selectKeyword option:selected').val());
 
-		self.location = "sns?"
-					  + "company=" + $("#selectCompany option:selected").val()
-					  + "&selectKey=" + $("#selectKeyword option:selected").val();
+		searchList();
 
 	});
 
-	var companyOption = decodeURI(window.location.href.split("company=")[1]).split("&selectKey")[0];
+	var companyOption = decodeURI(window.location.href.split("company=")[1]).split("&")[0];
 
 
 	var $selectCompany = $('#selectCompany');
@@ -477,7 +481,7 @@
 		console.log("selectCompany clicked....");
 		console.log($("#selectCompany option:selected").val());
 
-		self.location = "sns?"+ "company=" + $("#selectCompany option:selected").val();
+		searchList();
 
 	});
 
@@ -495,9 +499,11 @@
         function(){//엑셀 출력하겠다고 할 시 진행 함수
 
         	self.location = "excel?"
-			  + "company=" + $("#selectCompany option:selected").val()
-			  + "&selectKey=" + $('#selectKeyword option:selected').val()
-			  + "&part=sns";
+        		+ "company=" + $("#selectCompany option:selected").val()
+    			  + "&selectKey=" + $('#selectKeyword option:selected').val()
+    			  + "&part=sns"
+    			  + "&startDate=" + makeDateFormat($("#fromDate").val(), 0)
+    			  + "&endDate=" +  makeDateFormat($("#fromDate").val(), 1);
 
 	  		swal("Success!", "엑셀출력 되었습니다.", "success");
 
@@ -506,13 +512,24 @@
 	});
 
 
+	var graphStart = $fromDate.val().split(" - ")[0].replace("/", "-").replace("/", "-");
+	var graphEnd = $fromDate.val().split(" - ")[1].replace("/", "-").replace("/", "-");
+
+	console.log("graphStart: " + graphStart);
+    console.log("graphEnd: " + graphEnd);
+	  
+    ajaxGraph(graphStart, graphEnd);
+	
 	// 당일 클릭시
 	$('#toDay').on("click", function(){
 	  console.log("toDay clicked....");
 	  var date = getDate("toDay");
+	  var startDate = date.startDate;
 	  var endDate = date.endDate;
 
-	  ajaxGraph(endDate, endDate);
+	  $("#fromDate").val(endDate + " - " + endDate)
+	  console.log($("#fromDate").val());
+	  searchList(); 
 	});
 
 	// 전일 클릭시
@@ -522,7 +539,9 @@
 	  var startDate = date.startDate;
 	  var endDate = date.endDate;
 
-	  ajaxGraph(startDate, endDate);
+	  $("#fromDate").val(startDate + " - " + endDate)
+	  console.log($("#fromDate").val());
+	  searchList();
 	});
 
 	// 7일  클릭시
@@ -532,7 +551,9 @@
 	  var startDate = date.startDate;
 	  var endDate = date.endDate;
 
-	  ajaxGraph(startDate, endDate);
+	  $("#fromDate").val(startDate + " - " + endDate)
+	  console.log($("#fromDate").val());
+	  searchList();
 	})
 
 	// 30일 클릭시
@@ -541,18 +562,25 @@
 	  var date = getDate("month");
 	  var startDate = date.startDate;
 	  var endDate = date.endDate;
-
-	  ajaxGraph(startDate, endDate);
+	
+	  $("#fromDate").val(startDate + " - " + endDate)
+	  console.log($("#fromDate").val());
+	  
+	  searchList();
+	 
 	})
-
 
 	// 캘린더 클릭시
-	$('#fromDate').on('apply.daterangepicker', function(ev, picker) {
-	   var startDate = picker.startDate.format('YYYY-MM-DD');
-	   var endDate = picker.endDate.format('YYYY-MM-DD');
+	$('#fromDate').on('apply.daterangepicker', function(ev, picker) {	
+		   var startDate = picker.startDate.format('YYYY-MM-DD');
+		   var endDate = picker.endDate.format('YYYY-MM-DD');
 
-	   ajaxGraph(startDate, endDate);
-	})
+		   console.log("startDate: " + startDate);
+		   console.log("endDate: " + endDate);
+
+		   searchList();
+
+	});
 
   }); // end ready...
 
@@ -646,6 +674,32 @@
    	}
 
   }
+  
+  function makeDateFormat(date, index){
+		var splitDate = date.split(" - ")[index];
+			if(splitDate != undefined){
+				var returnDate = splitDate.replace("/", "-").replace("/", "-")
+				return returnDate;
+			}
+		
+		
+	}
+
+	//list URL 함수
+	function searchList(event) {
+
+		var makeQeury = '${pageMaker.makeQuery(1)}'.slice(0,-2);
+
+		self.location = "sns"
+					  + makeQeury
+					  + "10"
+					  + "&selectKey="
+					  + $('#selectKeyword option:selected').val()
+					  + "&company="
+					  + $("#selectCompany option:selected").val()
+					  + "&startDate=" + makeDateFormat($("#fromDate").val(), 0)
+					  + "&endDate=" +  makeDateFormat($("#fromDate").val(), 1);
+	}
 
 </script>
 

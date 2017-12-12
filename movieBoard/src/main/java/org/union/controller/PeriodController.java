@@ -559,6 +559,20 @@ public class PeriodController {
 				cri.setCompany(null);
 			}
 		}
+		
+		if("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate())
+				|| cri.getStartDate() == "" || cri.getEndDate() == ""){
+			cri.setStartDate(null);
+			cri.setEndDate(null);
+		
+		} 
+		if(cri.getStartDate() != null && cri.getEndDate() != null) {
+			if(cri.getStartDate().indexOf("00:00:00") < 0 && cri.getEndDate().indexOf("23:59:59") < 0){ 
+				cri.setStartDate(cri.getStartDate() + " 00:00:00"); 
+				cri.setEndDate(cri.getEndDate() + " 23:59:59"); 
+			}
+		}
+		
 		if(cri.getSelectKey() != null) {
 			if(cri.getSelectKey().isEmpty() || cri.getSelectKey().equals("키워드")) {
 				cri.setSelectKey(null);
