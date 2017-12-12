@@ -33,7 +33,6 @@ public class NaverMovieDAOTester {
 		vo.setNM_title("네이버타이틀");
 		vo.setNM_media_name("네이버네임");
 		vo.setNM_reporter_name("기자이름");
-		vo.setWriteDate(new Date());
 		vo.setKeyword("키워드");
 		vo.setKeyword_type(2);
 		vo.setUrl("url");
@@ -55,7 +54,6 @@ public class NaverMovieDAOTester {
 		vo.setNM_title("업뎃업뎃네이버타이틀");
 		vo.setNM_media_name("네이버네임");
 		vo.setNM_reporter_name("기자이름");
-		vo.setWriteDate(new Date());
 		vo.setKeyword("키워드");
 		vo.setKeyword_type(2);
 		vo.setUrl("url");

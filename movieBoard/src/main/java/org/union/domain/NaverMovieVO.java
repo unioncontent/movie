@@ -11,7 +11,7 @@ public class NaverMovieVO {
 	private String NM_reporter_name;
 	private String NM_reporter_ID;
 	private String NM_reporter_email;
-	private Date writeDate;
+	private String writeDate;
 	private String keyword;
 	private Integer keyword_type;
 	private String url;
@@ -57,10 +57,11 @@ public class NaverMovieVO {
 	public void setNM_reporter_email(String nM_reporter_email) {
 		NM_reporter_email = nM_reporter_email;
 	}
-	public Date getWriteDate() {
+	
+	public String getWriteDate() {
 		return writeDate;
 	}
-	public void setWriteDate(Date writeDate) {
+	public void setWriteDate(String writeDate) {
 		this.writeDate = writeDate;
 	}
 	public String getKeyword() {

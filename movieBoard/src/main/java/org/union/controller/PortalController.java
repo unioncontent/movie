@@ -454,10 +454,14 @@ public class PortalController {
 			pageMaker.setCri(cri);
 			pageMaker.setTotalCount(totalCount);
 			
+			String tempEndDate = cri.getEndDate();
+			
 			cri.setEndDate(null);
 			model.addAttribute("blog1", viralService.getSearchInCount(cri));
 			model.addAttribute("blog2", viralService.getSearchOutCount(cri));
 			model.addAttribute("blogList", viralService.searchAllList(cri));
+			
+			cri.setEndDate(tempEndDate);
 			
 			// endDate null로 셋팅한 것 복원.
 		}else {
