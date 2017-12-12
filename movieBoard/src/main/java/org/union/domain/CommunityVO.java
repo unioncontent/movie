@@ -22,7 +22,7 @@ public class CommunityVO {
 	private String keyword;
 	private String keyword_type;
 	private String url;
-	private Integer board_number;
+	private Long board_number;
 	private String textType;
 	private String thumbnail;
 	private Date createDate;
@@ -87,10 +87,10 @@ public class CommunityVO {
 	public void setUrl(String url) {
 		this.url = url;
 	}
-	public Integer getBoard_number() {
+	public Long getBoard_number() {
 		return board_number;
 	}
-	public void setBoard_number(Integer board_number) {
+	public void setBoard_number(Long board_number) {
 		this.board_number = board_number;
 	}
 	public String getTextType() {

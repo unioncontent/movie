@@ -303,6 +303,8 @@
  			media_data
  		where
  			media_name = #{keyword}
+ 		and updateDate <![CDATA[>]]> #{startDate}
+		and updateDate <![CDATA[<]]> #{endDate}	
  	
  	</select>
  	
