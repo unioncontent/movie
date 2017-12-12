@@ -261,7 +261,7 @@
 			sns_name = 'facebook'
 		<include refid="search"></include>
 		order 
-			by createdate desc
+			by writeDate desc
 		limit  
 			#{startPage}, #{perPageNum}
  	</select>
@@ -287,7 +287,7 @@
 			sns_name = 'instagram'
 		<include refid="search"></include>
 		order 
-			by createdate desc
+			by writeDate desc
 		limit  
 			#{startPage}, #{perPageNum}
  	
@@ -314,7 +314,7 @@
 			sns_name = 'twitter'
 		<include refid="search"></include>
 		order 
-			by createdate desc
+			by writeDate desc
 		limit  
 			#{startPage}, #{perPageNum}
  	

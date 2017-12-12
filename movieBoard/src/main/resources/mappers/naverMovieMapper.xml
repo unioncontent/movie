@@ -98,7 +98,7 @@
  		<include refid="search"></include>
 		
 		order 
-			by updateDate desc
+			by writeDate desc
 		limit  
 			#{startPage}, #{perPageNum}
 	</select>

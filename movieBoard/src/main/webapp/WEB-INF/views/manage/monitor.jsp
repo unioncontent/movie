@@ -124,7 +124,7 @@
                                         <div class="radio radiofill radio-success  radio-inline">
                                             <c:if test="${monitor.checkCondition == true}">
                                             <label>
-                                                <input type="radio" name="radio" checked="checked">
+                                                <input type="radio" name="radio${index.count}" checked="checked">
                                                 <i class="helper"></i>정상
                                             </label>
                                             </c:if>
