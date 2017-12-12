@@ -308,6 +308,53 @@ public class PeriodController {
 	@GetMapping("/media")
 	public void mediaGET(@ModelAttribute("cri") SearchCriteria cri, Model model) {
 		  logger.info("mediaGET called....");
+		  
+		  if(cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey()) ) {
+				logger.info("selectKey is null");
+				cri.setSelectKey(null);
+			}
+			if("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate())
+					|| cri.getStartDate() == "" || cri.getEndDate() == ""){
+				cri.setStartDate(null);
+				cri.setEndDate(null);
+			
+			} 
+			if(cri.getStartDate() != null && cri.getEndDate() != null) {
+				if(cri.getStartDate().indexOf("00:00:00") < 0 && cri.getEndDate().indexOf("23:59:59") < 0){ 
+					cri.setStartDate(cri.getStartDate() + " 00:00:00"); 
+					cri.setEndDate(cri.getEndDate() + " 23:59:59"); 
+				}
+			}
+			if(cri.getCompany() != null) {
+				if(cri.getCompany().isEmpty()) {
+					cri.setCompany(null);
+				}
+			}
+			if(cri.getCompany() == null || cri.getCompany().equals("회사")) {
+				logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+				UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
+				
+				if(!vo.getUser_name().equals("union")) {
+				cri.setCompany(vo.getUser_name());
+				
+				}else {
+					cri.setCompany(null);
+				}
+			}
+
+			// 회사 선택에 따른 키워드 재추출
+			if (cri.getCompany() != null) {	
+				if (cri.getCompany().isEmpty() == false) {
+
+					UserVO userVO = userService.viewByName(cri.getCompany());
+					logger.info("userVO: " + userVO);
+					logger.info("keywordList: " + keywordService.listByUser(userVO.getUser_idx()));
+					model.addAttribute("modelKeywordList",
+							keywordService.listByUser(userService.viewByName(cri.getCompany()).getUser_idx()));
+				}
+			}
+			
+			logger.info("cri: " + cri);
 		
 		  List<PeriodMediaVO> mediaList = mediaService.periodMedia(cri);
 		  List<PeriodMediaVO> reporterList = mediaService.periodReporter(cri);
@@ -315,9 +362,6 @@ public class PeriodController {
 		  PeriodComparator comparator = new PeriodComparator();
 		  Collections.sort(mediaList, comparator);
 		  Collections.sort(reporterList, comparator);
-		  
-		  logger.info("mediaList: " + mediaList);
-		  logger.info("reporterList: " + reporterList);
 		  
 		  model.addAttribute("mediaCount", mediaList.size());
 		  model.addAttribute("pressCount", reporterList.size());
@@ -328,7 +372,17 @@ public class PeriodController {
 		  
 		  model.addAttribute("pressList", reporterList);
 		  model.addAttribute("mediaList", mediaList);
-		 
+		  
+		  
+		  // 리스트
+		  model.addAttribute("searchList", mediaService.listSearch(cri));
+
+		  PageMaker pageMaker = new PageMaker();
+		  
+		  pageMaker.setCri(cri);
+		  pageMaker.setTotalCount(mediaService.getTotalCount());
+		  
+		  model.addAttribute("pageMaker", pageMaker);
 	}
 
 	@GetMapping("/sns")
