@@ -51,7 +51,7 @@
   <script type="text/javascript" src="../bower_components/bootstrap/js/bootstrap.min.js"></script>
 
 <script type="text/javascript" >
-	var selectOption = decodeURI(window.location.href.split("period/")[1]);
+	var selectOption = decodeURI(window.location.href.split("period/")[1]).split("?")[0];
 	console.log(selectOption);
 	
 	if(selectOption == 'main'){

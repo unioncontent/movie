@@ -348,8 +348,8 @@
 
 	  var $fromDate = $("#fromDate");
 	  
-	  var startDateOption = decodeURI(window.location.href.split("startDate=")[1]).split("&")[0];
-	  var endDateOption = decodeURI(window.location.href.split("endDate=")[1]).split("&")[0];
+	  var startDateOption = decodeURI(window.location.href.split("startDate=")[1]).split("&")[0].split(" ")[0];
+	  var endDateOption = decodeURI(window.location.href.split("endDate=")[1]).split("&")[0].split(" ")[0];;
 	  console.log("startDateOption: " + startDateOption);
 	  console.log("endDateOption: " + endDateOption);
 		
