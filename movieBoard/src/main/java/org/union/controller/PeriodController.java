@@ -502,7 +502,8 @@ public class PeriodController {
 		Date transStart = standFormat.parse(startDate);
 		Date transEnd = standFormat.parse(endDate);
 		
-		logger.info("gap: " + (transEnd.getTime() - transStart.getTime()) / (24 * 60 * 60 * 1000));
+		Long gap = (transEnd.getTime() - transStart.getTime()) / (24 * 60 * 60 * 1000);
+		logger.info("gap: " + gap);
 		
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(transStart);
@@ -510,10 +511,10 @@ public class PeriodController {
 		List<GraphVO> graphList = new ArrayList<GraphVO>();
 		
 		if(part.equals("sns")) {
-			while((transEnd.getTime() - cal.getTimeInMillis()) / (24 * 60 * 60 * 1000) > -1) {
+			for(int i = 0; i < gap +1; i++) {
 				
 				cri.setStartDate(standFormat.format(cal.getTime()));
-				cal.add(Calendar.SECOND, (24 * 60 * 60) -1);
+				cal.add(Calendar.SECOND, ((24 * 60 * 60) -1));
 				cri.setEndDate(standFormat.format(cal.getTime()));
 				
 				GraphVO graphVO = new GraphVO();
@@ -528,7 +529,7 @@ public class PeriodController {
 			}
 		
 		}else if(part.equals("community")) {
-				while((transEnd.getTime() - cal.getTimeInMillis()) / (24 * 60 * 60 * 1000) > -1) {
+			for(int i = 0; i < gap +1; i++) {
 				
 				cri.setStartDate(standFormat.format(cal.getTime()));
 				cal.add(Calendar.SECOND, (24 * 60 * 60) -1);
@@ -555,7 +556,7 @@ public class PeriodController {
 				cal.add(Calendar.SECOND, 1);
 			}
 		}else if(part.equals("portal")) {
-			while((transEnd.getTime() - cal.getTimeInMillis()) / (24 * 60 * 60 * 1000) > -1) {
+			for(int i = 0; i < gap +1; i++) {
 				
 			cri.setStartDate(standFormat.format(cal.getTime()));
 			cal.add(Calendar.SECOND, (24 * 60 * 60) -1);
@@ -573,7 +574,7 @@ public class PeriodController {
 			
 			
 		}else if(part.equals("main")) {
-			while((transEnd.getTime() - cal.getTimeInMillis()) / (24 * 60 * 60 * 1000) > -1) {
+			for(int i = 0; i < gap +1; i++) {
 				
 				cri.setStartDate(standFormat.format(cal.getTime()));
 				cal.add(Calendar.SECOND, (24 * 60 * 60) -1);
@@ -592,7 +593,6 @@ public class PeriodController {
 				}
 		}
 			
-		
 		
 		return graphList;
 		

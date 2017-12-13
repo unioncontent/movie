@@ -1,5 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <!-- left menu start -->
 <nav class="pcoded-navbar" pcoded-header-position="relative">
@@ -16,35 +18,35 @@
       <li class="dashBoard">
         <a href="../dashBoard/dashBoard">
           <span class="pcoded-micon"><i class="ti-home"></i></span>
-          <span class="pcoded-mtext" data-i18n="nav.dash.main">´ë½Ãº¸µå</span>
+          <span class="pcoded-mtext" data-i18n="nav.dash.main">ëŒ€ì‹œë³´ë“œ</span>
           <span class="pcoded-mcaret"></span>
         </a>
       </li>
       <li class="period">
         <a href="../period/main">
           <span class="pcoded-micon"><i class="ti-bar-chart-alt"></i></span>
-          <span class="pcoded-mtext">Åë°èº¸°í¼­</span>
+          <span class="pcoded-mtext">í†µê³„ë³´ê³ ì„œ</span>
           <span class="pcoded-mcaret"></span>
         </a>
       </li>
       <li class="pcoded-hasmenu portal">
         <a href="javascript:void(0)" data-i18n="nav.advance-components.main">
           <span class="pcoded-micon"><i class="ti-world"></i></span>
-          <span class="pcoded-mtext">Æ÷ÅÐ°ü¸®</span>
+          <span class="pcoded-mtext">í¬í„¸ê´€ë¦¬</span>
           <span class="pcoded-mcaret"></span>
         </a>
         <ul class="pcoded-submenu">
           <li class="">
             <a href="../portal/naver" data-i18n="nav.advance-components.draggable">
               <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-              <span class="pcoded-mtext">³×ÀÌ¹ö°ü¸®</span>
+              <span class="pcoded-mtext">ë„¤ì´ë²„ê´€ë¦¬</span>
               <span class="pcoded-mcaret"></span>
             </a>
           </li>
           <li class=" ">
             <a href="../portal/viral" data-i18n="nav.advance-components.grid-stack">
               <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-              <span class="pcoded-mtext">¹ÙÀÌ·²°ü¸®</span>
+              <span class="pcoded-mtext">ë°”ì´ëŸ´ê´€ë¦¬</span>
               <span class="pcoded-mcaret"></span>
             </a>
           </li>
@@ -53,28 +55,28 @@
       <li class="pcoded-hasmenu sns">
         <a href="javascript:void(0)" data-i18n="nav.advance-components.main">
           <span class="pcoded-micon"><i class="ti-facebook"></i></span>
-          <span class="pcoded-mtext">SNS°ü¸®</span>
+          <span class="pcoded-mtext">SNSê´€ë¦¬</span>
           <span class="pcoded-mcaret"></span>
         </a>
         <ul class="pcoded-submenu">
           <li class=" ">
             <a href="../sns/facebook" data-i18n="nav.advance-components.draggable">
               <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-              <span class="pcoded-mtext">ÆäÀÌ½ººÏ°ü¸®</span>
+              <span class="pcoded-mtext">íŽ˜ì´ìŠ¤ë¶ê´€ë¦¬</span>
               <span class="pcoded-mcaret"></span>
             </a>
           </li>
           <li class=" ">
             <a href="../sns/twitter" data-i18n="nav.advance-components.grid-stack">
               <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-              <span class="pcoded-mtext">Æ®À§ÅÍ°ü¸®</span>
+              <span class="pcoded-mtext">íŠ¸ìœ„í„°ê´€ë¦¬</span>
               <span class="pcoded-mcaret"></span>
             </a>
           </li>
           <li class=" ">
             <a href="../sns/instagram" data-i18n="nav.advance-components.grid-stack">
               <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-              <span class="pcoded-mtext">ÀÎ½ºÅ¸±×·¥°ü¸®</span>
+              <span class="pcoded-mtext">ì¸ìŠ¤íƒ€ê·¸ëž¨ê´€ë¦¬</span>
               <span class="pcoded-mcaret"></span>
             </a>
           </li>
@@ -83,74 +85,81 @@
       <li class="pcoded-hasmenu media">
         <a href="javascript:void(0)" data-i18n="nav.advance-components.main">
           <span class="pcoded-micon"><i class="ti-notepad"></i></span>
-          <span class="pcoded-mtext">¾ð·Ð»ç°ü¸®</span>
+          <span class="pcoded-mtext">ì–¸ë¡ ì‚¬ê´€ë¦¬</span>
           <span class="pcoded-mcaret"></span>
         </a>
         <ul class="pcoded-submenu">
           <li class=" ">
             <a href="../media/news" data-i18n="nav.advance-components.draggable">
               <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-              <span class="pcoded-mtext">¾ð·Ð»ç ±â»ç±Û °ü¸®</span>
+              <span class="pcoded-mtext">ì–¸ë¡ ì‚¬ ê¸°ì‚¬ê¸€ ê´€ë¦¬</span>
               <span class="pcoded-mcaret"></span>
             </a>
           </li>
-          <li class=" ">
+          <c:if test="${user.user_name == 'union'}">
+          	<li class=" ">
             <a href="../media/press" data-i18n="nav.advance-components.grid-stack">
               <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-              <span class="pcoded-mtext">±âÀÚ°ü¸®</span>
+              <span class="pcoded-mtext">ê¸°ìžê´€ë¦¬</span>
               <span class="pcoded-mcaret"></span>
             </a>
           </li>
+          </c:if>
+          
         </ul>
       </li>
       <li class="pcoded-hasmenu manage">
         <a href="javascript:void(0)" data-i18n="nav.advance-components.main">
           <span class="pcoded-micon"><i class="ti-harddrives"></i></span>
-          <span class="pcoded-mtext">¿î¿µ°ü¸®</span>
+          <span class="pcoded-mtext">ìš´ì˜ê´€ë¦¬</span>
           <span class="pcoded-mcaret"></span>
         </a>
         <ul class="pcoded-submenu">
+          <c:if test="${user.user_name == 'union'}">
           <li class=" ">
             <a href="../manage/company" data-i18n="nav.advance-components.draggable">
               <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-              <span class="pcoded-mtext">°Å·¡Ã³°ü¸®</span>
+              <span class="pcoded-mtext">ê±°ëž˜ì²˜ê´€ë¦¬</span>
               <span class="pcoded-mcaret"></span>
             </a>
           </li>
+          </c:if>
           <li class=" ">
             <a href="../manage/monitor" data-i18n="nav.advance-components.grid-stack">
               <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-              <span class="pcoded-mtext">¸ð´ÏÅÍ¸µ ÇöÈ²</span>
+              <span class="pcoded-mtext">ëª¨ë‹ˆí„°ë§ í˜„í™©</span>
               <span class="pcoded-mcaret"></span>
             </a>
           </li>
         </ul>
       </li>
+      <c:if test="${user.user_name == 'union'}">
       <li class="keyword">
         <a href="../keyword/keyword" data-i18n="nav.advance-components.main">
           <span class="pcoded-micon"><i class="ti-ink-pen"></i></span>
-          <span class="pcoded-mtext">Å°¿öµå°ü¸®</span>
+          <span class="pcoded-mtext">í‚¤ì›Œë“œê´€ë¦¬</span>
           <span class="pcoded-mcaret"></span>
         </a>
       </li>
+      </c:if>
       <li class="extract">
         <a href="../extract/extract" data-i18n="nav.advance-components.main">
           <span class="pcoded-micon"><i class="ti-search"></i></span>
-          <span class="pcoded-mtext">ÃßÃâ±Û°ü¸®</span>
+          <span class="pcoded-mtext">ì¶”ì¶œê¸€ê´€ë¦¬</span>
           <span class="pcoded-mcaret"></span>
         </a>
       </li>
       <li class="classification">
         <a href="../classification/classification" data-i18n="nav.advance-components.main">
           <span class="pcoded-micon"><i class="ti-filter"></i></span>
-          <span class="pcoded-mtext">ºÐ·ù±Û°ü¸®</span>
+          <span class="pcoded-mtext">ë¶„ë¥˜ê¸€ê´€ë¦¬</span>
           <span class="pcoded-mcaret"></span>
         </a>
    
         <li class="listAll">
           <a href="../listAll/listAll" data-i18n="nav.advance-components.main">
             <span class="pcoded-micon"><i class="ti-menu"></i></span>
-            <span class="pcoded-mtext">ÀüÃ¼±Û°ü¸®</span>
+            <span class="pcoded-mtext">ì „ì²´ê¸€ê´€ë¦¬</span>
             <span class="pcoded-mcaret"></span>
           </a>
         </li>
@@ -161,7 +170,7 @@
 
 <script type="text/javascript">
 
-		// ÇØ´ç ÆäÀÌÁö active Ãß°¡
+		// í•´ë‹¹ íŽ˜ì´ì§€ active ì¶”ê°€
 		var url = location.href;
 
 		var domain = url.split("8080/")[1].split("/")[0];

@@ -766,6 +766,7 @@ function drawChart(data){
  	      element: 'line-chart1',
  	      data: data,
  	      xkey: 'period',
+ 	     xLabels : 'day',
  	      redraw: true,
  	      ykeys: ['naver', 'daum'],
  	      hideHover: 'auto',
