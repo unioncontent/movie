@@ -63,23 +63,14 @@
                                     <span class="md-line"></span>
                                 </div>
                                 <div class="input-group">
-                                    <input name = "password" type="password" class="form-control" placeholder="Password">
+                                    <input onkeyup="enter_login();" name = "password" type="password" class="form-control" placeholder="Password">
                                     <span class="md-line"></span>
-                                </div>
-                                <div class="row m-t-25 text-left">
-                                    <div class="col-sm-7 col-xs-12">
-                                        <div class="checkbox-fade fade-in-primary">
-                                            <label>
-                                                <input type="checkbox" value="">
-                                                <span class="cr"><i class="cr-icon icofont icofont-ui-check txt-primary"></i></span>
-                                                <span class="text-inverse">Remember ID</span>
-                                            </label>
-                                        </div>
-                                    </div>
                                 </div>
                                 <div class="row m-t-30">
                                     <div class="col-md-12">
-                                      <button type="button" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20" onclick="$('#loginForm').submit();">Sign in</button>
+                                      <button id='loginBtn' type="button" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20" 
+                                      onclick="login();" >Sign in</button>
+
                                     </div>
                                 </div>
                             </div>
@@ -157,5 +148,30 @@
     <!-- Custom js -->
     <script type="text/javascript" src="../assets/js/script.js"></script>
 </body>
+
+<script type="text/javascript">
+
+
+	$(document).ready(function(event){
+		
+		
+		
+	});
+
+	function login(){
+		$('#loginForm').submit();
+	}
+
+		
+	function enter_login(){
+		if(event.keyCode == 13){
+
+			login();
+			//$("loginBtn").trigger("click");
+		}
+	}
+		
+	
+</script>
 
 </html>
