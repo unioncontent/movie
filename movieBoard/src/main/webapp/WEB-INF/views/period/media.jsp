@@ -923,6 +923,9 @@
 
 		});
 		
+		
+		pieGraph1();
+		
 	});
 
 	
@@ -988,6 +991,102 @@
 					  + $("#selectCompany option:selected").val()
 					  + "&startDate=" + makeDateFormat($("#fromDate").val(), 0)
 					  + "&endDate=" +  makeDateFormat($("#fromDate").val(), 1);
+	}
+	
+	//graph
+	function pieGraph1(){
+	  /* 그래프1 */
+	  $("#donutchart").empty();
+	  nv.addGraph(function() {
+	    var chart = nv.models.pieChart()
+	        .x(function(d) {
+	            return d.label })
+	        .y(function(d) {
+	            return d.value })
+	        .showLabels(true) //Display pie labels
+	        .labelThreshold(.05) //Configure the minimum slice size for labels to show up
+	        .labelType("percent") //Configure what type of data to show in the label. Can be "key", "value" or "percent"
+	        .donut(true) //Turn on Donut mode. Makes pie chart look tasty!
+	        .donutRatio(0.35) //Configure how big you want the donut hole size to be.
+	    ;
+
+	    d3.select("#donutchart").append('svg')
+	        .datum(pieData1())
+	        .transition().duration(350)
+	        .call(chart);
+	    nv.utils.windowResize(chart.update);
+
+	    return chart;
+	  });
+	}
+	function pieGraph2(){
+	  /* 그래프2 */
+	  $("#donutchart2").empty();
+	  nv.addGraph(function() {
+	    var chart = nv.models.pieChart()
+	        .x(function(d) {
+	            return d.label })
+	        .y(function(d) {
+	            return d.value })
+	        .showLabels(true) //Display pie labels
+	        .labelThreshold(.05) //Configure the minimum slice size for labels to show up
+	        .labelType("percent") //Configure what type of data to show in the label. Can be "key", "value" or "percent"
+	        .donut(true) //Turn on Donut mode. Makes pie chart look tasty!
+	        .donutRatio(0.35) //Configure how big you want the donut hole size to be.
+	    ;
+
+	    d3.select("#donutchart2").append('svg')
+	        .datum(pieData2())
+	        .transition().duration(350)
+	        .call(chart);
+	    nv.utils.windowResize(chart.update);
+
+	    return chart;
+	  });
+	}
+
+	//data
+	function pieData1() {
+		console.log('${mediaTypeCount.lik}');
+		console.log('${mediaTypeCount.dis}');
+		console.log('${mediaTypeCount.cu}');
+		console.log('${mediaTypeCount.etc}');
+	    return [{
+	        "label": "좋은기사",
+	        "value": '${mediaTypeCount.lik}',
+	        "color": "#2ecc71"
+	    },{
+	        "label": "나쁜기사",
+	        "value": '${mediaTypeCount.dis}',
+	        "color": "#e74c3c"
+	    },{
+	        "label": "관심기사",
+	        "value": '${mediaTypeCount.cu}',
+	        "color": "#FF9F55"
+	    },   {
+	        "label": "기타기사",
+	        "value": '${mediaTypeCount.etc}',
+	        "color": "#f1c40f"
+	    }];
+	}
+	function pieData2() {
+	  return [{
+	      "label": "좋은기사",
+	      "value": '${pressTypeCount.lik}',
+	      "color": "#2ecc71"
+	  },{
+	      "label": "나쁜기사",
+	      "value": '${pressTypeCount.dis}',
+	      "color": "#e74c3c"
+	  },{
+	      "label": "관심기사",
+	      "value": '${pressTypeCount.cu}',
+	      "color": "#FF9F55"
+	  },   {
+	      "label": "기타기사",
+	      "value": '${pressTypeCount.etc}',
+	      "color": "#f1c40f"
+	  }];
 	}
 </script>
 

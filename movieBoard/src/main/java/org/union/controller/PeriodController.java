@@ -24,6 +24,7 @@ import org.union.domain.GraphVO;
 import org.union.domain.PageMaker;
 import org.union.domain.PeriodMediaVO;
 import org.union.domain.SearchCriteria;
+import org.union.domain.TextTypeVO;
 import org.union.domain.UserVO;
 import org.union.service.CommunityService;
 import org.union.service.KeywordService;
@@ -388,11 +389,11 @@ public class PeriodController {
 		  model.addAttribute("pageMaker", pageMaker);
 		  
 		  cri.setKeyword(keyword);
-		  
-		  logger.info(mediaService.periodTextTypeCount(cri) + "");
+
+		  model.addAttribute("mediaTypeCount", mediaService.periodTextTypeCount(cri));
 		  
 		  cri.setTextType("press");
-		  logger.info(mediaService.periodTextTypeCount(cri) + "");
+		  model.addAttribute("pressTypeCount", mediaService.periodTextTypeCount(cri));
 		  
 		  
 	}

@@ -290,9 +290,9 @@ function showModal(element){
   $(element).modal('show');
 }
 
-//graph
+/*//graph
 function pieGraph1(){
-  /* 그래프1 */
+   그래프1 
   $("#donutchart").empty();
   nv.addGraph(function() {
     var chart = nv.models.pieChart()
@@ -317,7 +317,7 @@ function pieGraph1(){
   });
 }
 function pieGraph2(){
-  /* 그래프2 */
+   그래프2 
   $("#donutchart2").empty();
   nv.addGraph(function() {
     var chart = nv.models.pieChart()
@@ -344,21 +344,25 @@ function pieGraph2(){
 
 //data
 function pieData1() {
+	
+	var text = '${mediaTypeCount}';
+	console.log(text);
+	
     return [{
         "label": "좋은기사",
-        "value": 50,
+        "value": text.lik,
         "color": "#2ecc71"
     },{
         "label": "나쁜기사",
-        "value": 10,
+        "value": text.dis,
         "color": "#e74c3c"
     },{
         "label": "관심기사",
-        "value": 5,
+        "value": text.cu,
         "color": "#FF9F55"
     },   {
         "label": "기타기사",
-        "value": 5,
+        "value": text.etc,
         "color": "#f1c40f"
     }];
 }
@@ -380,7 +384,7 @@ function pieData2() {
       "value": 70,
       "color": "#f1c40f"
   }];
-}
+}*/
 
 //more
 function moreRanking(moreName,morehtml){
