@@ -208,7 +208,7 @@
                               <div class="col-md-6 col-xl-3">
                                 <div class="card client-blocks">
                                   <div class="card-block-big card1">
-                                    <h5 class="mt">전체건수</h5>
+                                    <h5 class="mt" style="font-size: 25px;">전체건수</h5>
                                     <ul>
                                       <li class="p-t-10">
                                         <i class="icofont icofont-document-search"></i>
@@ -386,7 +386,7 @@
                             </ul>
                                   </div>
                                 </div>
-                                
+
                               </div>
                             </div>
                           </div>
@@ -524,18 +524,18 @@
 	$(document).ready(function(){
 
 		var $fromDate = $("#fromDate");
-		  
+
 		  var startDateOption = decodeURI(window.location.href.split("startDate=")[1]).split("&")[0].split(" ")[0];
 		  var endDateOption = decodeURI(window.location.href.split("endDate=")[1]).split("&")[0].split(" ")[0];
 		  console.log("startDateOption: " + startDateOption);
 		  console.log("endDateOption: " + endDateOption);
-			
+
 		  if(startDateOption != 'undefined' && endDateOption != 'undefined'
 				&& startDateOption != '' && endDateOption != ''){
 			  $fromDate.val(startDateOption + " - " + endDateOption);
-		  		
+
 			}
-		
+
 
 		//점유율 그래프
 		var first = '${blog1}';
@@ -614,7 +614,7 @@
 			searchList();
 
 		});
-		
+
 
 		// 모달 버튼 클릭시.
 		var modal = $('.btn-modal');
@@ -668,7 +668,7 @@
 		  	  	}
 		  	});
 		});
-		
+
 		// 당일 클릭시
 		$('#toDay').on("click", function(){
 		  console.log("toDay clicked....");
@@ -678,7 +678,7 @@
 
 		  $("#fromDate").val(endDate + " - " + endDate)
 		  console.log($("#fromDate").val());
-		  searchList(); 
+		  searchList();
 		});
 
 		// 전일 클릭시
@@ -711,17 +711,17 @@
 		  var date = getDate("month");
 		  var startDate = date.startDate;
 		  var endDate = date.endDate;
-		
+
 		  $("#fromDate").val(startDate + " - " + endDate)
 		  console.log($("#fromDate").val());
-		  
+
 		  searchList();
-		 
+
 		})
 
 
 		// 캘린더 클릭시
-		$('#fromDate').on('apply.daterangepicker', function(ev, picker) {	
+		$('#fromDate').on('apply.daterangepicker', function(ev, picker) {
 			   var startDate = picker.startDate.format('YYYY-MM-DD');
 			   var endDate = picker.endDate.format('YYYY-MM-DD');
 
@@ -797,21 +797,21 @@
 	}
 
 	function searchList() {
-		
+
 		var makeQeury = '${pageMaker.makeQuery(1)}'.slice(0,-2);
 
 		console.log(makeQeury);
-		
+
     	self.location = "v_blog"
     						+ makeQeury + '10'
         					+ "&company=" + $("#selectCompany option:selected").val()
     						+ "&selectKey=" + $('#selectKeyword option:selected').val()
     						+ "&portal_name=" + $("#selectSite option:selected").val()
     						+ "&startDate=" + makeDateFormat($("#fromDate").val(), 0)
-				 			+ "&endDate=" +  makeDateFormat($("#fromDate").val(), 1); 
+				 			+ "&endDate=" +  makeDateFormat($("#fromDate").val(), 1);
     }
 
-	
+
 	// 날짜 계산 함수
 	function getDate(type){
 		console.log("TYPE : " + type);
@@ -855,8 +855,8 @@
 				var returnDate = splitDate.replace("/", "-").replace("/", "-")
 				return returnDate;
 			}
-		
-		
+
+
 	}
 
 </script>

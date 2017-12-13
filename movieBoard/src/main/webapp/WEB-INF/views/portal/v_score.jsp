@@ -299,7 +299,7 @@
                           <option>키워드</option>
                         </select>
                       </div>
-                      <div class="col-md-6 input-time">
+                      <div class="col-md-5">
                         <!-- date picker start -->
                         <div class="row">
                           <div class="btn-group float-right m-b-10 p-l-15 p-r-10" role="group">
@@ -322,39 +322,39 @@
                         <!-- tab header start -->
                         <div class="tab-header">
                           <ul class="nav nav-tabs nav-vtabs md-tabs tab-timeline" role="tablist" id="mytab">
-                            <a class="nav-item" href="viral">
-                              <li class="nav-link ">
+                            <a class="nav-item" href="mngViral.html">
+                              <li class="nav-link">
                                 <p>바이럴관리</p>
                                 <div class="slide"></div>
                               </li>
                             </a>
-                            <a class="nav-item" href="v_blog">
+                            <a class="nav-item" href="viralBlog.html">
                               <li class="nav-link">
                                 <p>블로그관리</p>
                                 <div class="slide"></div>
                               </li>
                             </a>
-                            <a class="nav-item" href="v_cafe">
+                            <a class="nav-item" href="viralCafe.html">
                               <li class="nav-link">
                                   <p>카페관리</p>
                                   <div class="slide"></div>
                               </li>
                             </a>
-                            <a class="nav-item" href="v_kin">
-                              <li class="nav-link">
+                            <a class="nav-item" href="viralKinTip.html">
+                              <li class="nav-linke">
                                 <p>지식인/Tip관리</p>
                                 <div class="slide"></div>
                               </li>
                             </a>
-                            <a class="nav-item" href="v_web">
-                              <li class="nav-link ">
+                            <a class="nav-item" href="viralWeb.html">
+                              <li class="nav-link">
                                 <p>웹문서관리</p>
                                 <div class="slide"></div>
                               </li>
                             </a>
-                            <a class="nav-item" href="v_relation">
+                            <a class="nav-item" href="viralRword.html">
                               <li class="nav-link active">
-                                <p>평점관리</p>
+                                <p>연관검색어관리</p>
                                 <div class="slide"></div>
                               </li>
                             </a>
@@ -366,9 +366,9 @@
                               <div class="col-md-6 col-xl-3">
                                 <div class="card client-blocks">
                                   <div class="card-block-big card1">
-                                    <h5>전체건수</h5>
+                                    <h5 class="mt"  style="font-size: 25px;     padding-top: 5px;">전체건수</h5>
                                     <ul>
-                                      <li>
+                                      <li class="p-t-10">
                                         <i class="icofont icofont-document-search"></i>
                                       </li>
                                       <li class="text-right">300건</li>
@@ -448,7 +448,7 @@
                               </div> -->
                               <div class="col-md-6 col-xl-3">
                                 <div class="card user-activity-card">
-                                  <div class="card-block-big" style="padding-top: 17px;padding-bottom: 8px;">
+                                  <div class="card-block-big" style="padding-top: 31px;padding-bottom: 8px;">
                                     <div class="row">
                                       <div class="col-sm-6">
                                         <dl class="dl-horizontal row">
