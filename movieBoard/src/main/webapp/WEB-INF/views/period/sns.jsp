@@ -630,6 +630,7 @@
      	      element: 'line-chart1',
      	      data: data,
      	      xkey: 'period',
+     	     xLabels : 'day',
      	      redraw: true,
      	      ykeys: ['Facebook', 'Twitter', 'Instagram'],
      	      hideHover: 'auto',
