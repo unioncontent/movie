@@ -78,7 +78,8 @@ public class MediaDAOImpl implements MediaDAO {
 
 	@Override
 	public List<MediaVO> listSearch(SearchCriteria vo) {
-
+		
+		System.out.println("vo in dao: " + vo); 
 		return session.selectList(namespace + "listSearch", vo);
 	}
 
@@ -96,14 +97,6 @@ public class MediaDAOImpl implements MediaDAO {
 		return session.selectList(namespace + "searchAll", criteria);
 	}
 
-	
-	@Override
-	public Integer getTotalCount() {
-
-		return session.selectOne(namespace + "getTotalCount");
-	}
-	
-	@Override
 	public List<MediaVO> listAll(SearchCriteria cri) {
 
 		return session.selectList(namespace + "listAll", cri);
@@ -198,6 +191,27 @@ public class MediaDAOImpl implements MediaDAO {
 	public List<MediaVO> allPage(SearchCriteria cri) {
 
 		return session.selectList(namespace + "allPage", cri);
+	}
+
+
+	@Override
+	public Integer getTotalCount(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "getTotalCount", cri);
+		
+	}
+
+	@Override
+	public Integer getMatchCount(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "getMatchCount", cri);
+	}
+
+
+	@Override
+	public TextTypeVO periodTextTypeCount(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "periodTextTypeCount", cri);
 	}
 
 }

@@ -365,7 +365,8 @@ public class PeriodController {
 		  
 		  model.addAttribute("mediaCount", mediaList.size());
 		  model.addAttribute("pressCount", reporterList.size());
-		  model.addAttribute("totalCount", mediaService.getTotalCount());
+		  model.addAttribute("totalCount", mediaService.getTotalCount(cri));
+		  model.addAttribute("matchCount", mediaService.getMatchCount(cri));
 		  
 		  mediaList = mediaList.subList(0, 20);
 		  reporterList = reporterList.subList(0, 20);
@@ -375,14 +376,25 @@ public class PeriodController {
 		  
 		  
 		  // 리스트
+		  String keyword=  cri.getKeyword();
+		  cri.setKeyword(null);
 		  model.addAttribute("searchList", mediaService.listSearch(cri));
-
+		  logger.info("list: " + mediaService.listSearch(cri));
 		  PageMaker pageMaker = new PageMaker();
 		  
 		  pageMaker.setCri(cri);
-		  pageMaker.setTotalCount(mediaService.getTotalCount());
+		  pageMaker.setTotalCount(mediaService.getSearchCount(cri));
 		  
 		  model.addAttribute("pageMaker", pageMaker);
+		  
+		  cri.setKeyword(keyword);
+		  
+		  logger.info(mediaService.periodTextTypeCount(cri) + "");
+		  
+		  cri.setTextType("press");
+		  logger.info(mediaService.periodTextTypeCount(cri) + "");
+		  
+		  
 	}
 
 	@GetMapping("/sns")
