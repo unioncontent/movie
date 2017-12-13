@@ -171,9 +171,9 @@
                                 <div class="slide"></div>
                               </li>
                             </a>
-                            <a class="nav-item" href="v_relation">
+                            <a class="nav-item" href="v_score">
                               <li class="nav-link">
-                                <p>연관검색어관리</p>
+                                <p>평점관리</p>
                                 <div class="slide"></div>
                               </li>
                             </a>
