@@ -68,204 +68,11 @@
   <div id="pcoded" class="pcoded">
     <div class="pcoded-overlay-box"></div>
     <div class="pcoded-container navbar-wrapper">
-      <nav class="navbar header-navbar pcoded-header" header-theme="theme4">
-        <div class="navbar-wrapper">
-          <div class="navbar-logo">
-            <a class="mobile-menu" id="mobile-collapse" href="#!">
-              <i class="ti-menu"></i>
-            </a>
-            <a href="dashboard.html">
-              <img class="img-fluid" src="../assets/images/logo.png" alt="Theme-Logo" />
-            </a>
-            <a class="mobile-options">
-              <i class="ti-more"></i>
-            </a>
-          </div>
-          <div class="navbar-container container-fluid">
-            <div>
-              <ul class="nav-left">
-                <li>
-                  <div class="sidebar_toggle"><a href="javascript:void(0)"><i class="ti-menu"></i></a></div>
-                </li>
-              </ul>
-              <ul class="nav-right">
-                <li class="user-profile header-notification">
-                  <a href="#!">
-                      <img src="../assets/images/user.png" alt="User-Profile-Image">
-                      <span>Union</span>
-                      <i class="ti-angle-down"></i>
-                  </a>
-                  <ul class="show-notification profile-notification">
-                      <li>
-                          <a href="#!">
-                              <i class="ti-layout-sidebar-left"></i> Logout
-                          </a>
-                      </li>
-                  </ul>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </nav>
+        <jsp:include page='../include/header.jsp' />
       <div class="pcoded-main-container">
         <div class="pcoded-wrapper">
           <!-- left menu start -->
-          <nav class="pcoded-navbar">
-            <div class="pcoded-inner-navbar main-menu">
-              <div class="">
-                <div class="main-menu-header">
-                  <img class="img-50" src="../assets/images/avatar-blank.png" alt="User-Profile-Image">
-                  <div class="user-details">
-                    <span id="more-details">Union</span>
-                  </div>
-                </div>
-              </div>
-              <ul class="pcoded-item pcoded-left-item">
-                <li class="">
-                  <a href="dashboard.html">
-                    <span class="pcoded-micon"><i class="ti-home"></i></span>
-                    <span class="pcoded-mtext" data-i18n="nav.dash.main">대시보드</span>
-                    <span class="pcoded-mcaret"></span>
-                  </a>
-                </li>
-                <li class="">
-                  <a href="period.html">
-                    <span class="pcoded-micon"><i class="ti-bar-chart-alt"></i></span>
-                    <span class="pcoded-mtext">통계보고서</span>
-                    <span class="pcoded-mcaret"></span>
-                  </a>
-                </li>
-                <li class="pcoded-hasmenu active pcoded-trigger">
-                  <a href="javascript:void(0)">
-                    <span class="pcoded-micon"><i class="ti-world"></i></span>
-                    <span class="pcoded-mtext">포털관리</span>
-                    <span class="pcoded-mcaret"></span>
-                  </a>
-                  <ul class="pcoded-submenu">
-                    <li class="">
-                      <a href="mngNaver.html">
-                        <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                        <span class="pcoded-mtext">네이버관리</span>
-                        <span class="pcoded-mcaret"></span>
-                      </a>
-                    </li>
-                    <li class=" ">
-                      <a href="mngViral.html">
-                        <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                        <span class="pcoded-mtext">바이럴관리</span>
-                        <span class="pcoded-mcaret"></span>
-                      </a>
-                    </li>
-                  </ul>
-                </li>
-                <li class="pcoded-hasmenu">
-                  <a href="javascript:void(0)">
-                    <span class="pcoded-micon"><i class="ti-facebook"></i></span>
-                    <span class="pcoded-mtext">SNS관리</span>
-                    <span class="pcoded-mcaret"></span>
-                  </a>
-                  <ul class="pcoded-submenu">
-                    <li class=" ">
-                      <a href="mngFacebook.html">
-                        <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                        <span class="pcoded-mtext">페이스북관리</span>
-                        <span class="pcoded-mcaret"></span>
-                      </a>
-                    </li>
-                    <li class=" ">
-                      <a href="mngTwitter.html">
-                        <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                        <span class="pcoded-mtext">트위터관리</span>
-                        <span class="pcoded-mcaret"></span>
-                      </a>
-                    </li>
-                    <li class=" ">
-                      <a href="mngInstagram.html">
-                        <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                        <span class="pcoded-mtext">인스타그램관리</span>
-                        <span class="pcoded-mcaret"></span>
-                      </a>
-                    </li>
-                  </ul>
-                </li>
-                <li class="pcoded-hasmenu">
-                  <a href="javascript:void(0)">
-                    <span class="pcoded-micon"><i class="ti-notepad"></i></span>
-                    <span class="pcoded-mtext">언론사관리</span>
-                    <span class="pcoded-mcaret"></span>
-                  </a>
-                  <ul class="pcoded-submenu">
-                    <li class=" ">
-                      <a href="mngNews.html">
-                        <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                        <span class="pcoded-mtext">언론사 기사글 관리</span>
-                        <span class="pcoded-mcaret"></span>
-                      </a>
-                    </li>
-                    <li class=" ">
-                      <a href="mngPress.html">
-                        <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                        <span class="pcoded-mtext">기자관리</span>
-                        <span class="pcoded-mcaret"></span>
-                      </a>
-                    </li>
-                  </ul>
-                </li>
-                <li class="pcoded-hasmenu">
-                  <a href="javascript:void(0)">
-                    <span class="pcoded-micon"><i class="ti-harddrives"></i></span>
-                    <span class="pcoded-mtext">운영관리</span>
-                    <span class="pcoded-mcaret"></span>
-                  </a>
-                  <ul class="pcoded-submenu">
-                    <li class=" ">
-                      <a href="mngCompany.html">
-                        <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                        <span class="pcoded-mtext">거래처관리</span>
-                        <span class="pcoded-mcaret"></span>
-                      </a>
-                    </li>
-                    <li class=" ">
-                      <a href="monitoring.html">
-                        <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                        <span class="pcoded-mtext">모니터링현황</span>
-                        <span class="pcoded-mcaret"></span>
-                      </a>
-                    </li>
-                  </ul>
-                </li>
-                <li class="">
-                  <a href="mngKeyword.html">
-                    <span class="pcoded-micon"><i class="ti-ink-pen"></i></span>
-                    <span class="pcoded-mtext">키워드관리</span>
-                    <span class="pcoded-mcaret"></span>
-                  </a>
-                </li>
-                <li class="">
-                  <a href="mngExtract.html">
-                    <span class="pcoded-micon"><i class="ti-search"></i></span>
-                    <span class="pcoded-mtext">추출글관리</span>
-                    <span class="pcoded-mcaret"></span>
-                  </a>
-                </li>
-                <li class="">
-                  <a href="mngClassifiCation.html" data-i18n="nav.advance-components.main">
-                    <span class="pcoded-micon"><i class="ti-filter"></i></span>
-                    <span class="pcoded-mtext">분류글관리</span>
-                    <span class="pcoded-mcaret"></span>
-                  </a>
-                </li>
-                <li class="">
-                  <a href="mngAllList.html" data-i18n="nav.advance-components.main">
-                    <span class="pcoded-micon"><i class="ti-menu"></i></span>
-                    <span class="pcoded-mtext">전체글관리</span>
-                    <span class="pcoded-mcaret"></span>
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </nav>
+            <jsp:include page='../include/side.jsp' />
           <!-- left menu end -->
           <div class="pcoded-content">
             <div class="pcoded-inner-content">
@@ -278,7 +85,7 @@
                     <div class="page-header-breadcrumb">
                       <ul class="breadcrumb-title">
                         <li class="breadcrumb-item">
-                          <a href="dashboard.html">
+                          <a href="../dashBoard/dashBoard">
                             <i class="icofont icofont-home"></i>
                           </a>
                         </li>
@@ -292,25 +99,44 @@
                     <div class="row">
                       <!-- data setting start -->
                       <div class="col-md-6">
-                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left">
+                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="selectCompany">
                           <option>회사</option>
+                          <c:if test="${user.user_type == 1 }">
+                          <c:forEach items="${companyList}" var = "companyList">
+                          <option value="${companyList.user_name}">${companyList.user_name}</option>
+                          </c:forEach>
+                          </c:if>
+                          <c:if test="${user.user_type == 2}">
+                          <option value="${companyList.user_name}">${companyList.user_name}</option>
+                          </c:if>
                         </select>
-                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left">
+
+                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left" id="selectKeyword">
                           <option>키워드</option>
+                          <c:if test="${modelKeywordList == null}" >
+                          	<c:forEach items="${keywordList}" var = "keywordList">
+                          <option value="${keywordList.keyword_main}">${keywordList.keyword_main}</option>
+                          </c:forEach>
+                          </c:if>
+                          <c:if test="${modelKeywordList != null}">
+                          	<c:forEach items="${modelKeywordList}" var = "keywordList">
+                          <option value="${keywordList.keyword_main}">${keywordList.keyword_main}</option>
+                          </c:forEach>
+                          </c:if>
                         </select>
                       </div>
                       <div class="col-md-5">
                         <!-- date picker start -->
                         <div class="row">
                           <div class="btn-group float-right m-b-10 p-l-15 p-r-10" role="group">
-                            <button type="button" class="btn btn-inverse btn-sm waves-effect waves-light">당일</button>
-                            <button type="button" class="btn btn-inverse btn-sm waves-effect waves-light">전일</button>
-                            <button type="button" class="btn btn-inverse btn-sm waves-effect waves-light">최근7일</button>
-                            <button type="button" class="btn btn-inverse btn-sm waves-effect waves-light">최근30일</button>
+                            <button id="toDay" type="button" class="btn btn-inverse btn-sm waves-effect waves-light">당일</button>
+                            <button id="yesterDay" type="button" class="btn btn-inverse btn-sm waves-effect waves-light">전일</button>
+                            <button id="week" type="button" class="btn btn-inverse btn-sm waves-effect waves-light">최근7일</button>
+                            <button id="month" type="button" class="btn btn-inverse btn-sm waves-effect waves-light">최근30일</button>
                           </div>
                           <div class="input-group float-right date col p-l-15 p-r-15 m-b-10">
                             <input type="text" id="fromDate" class="form-control form-control-inverse" value="">
-                            <span class="input-group-addon bg-inverse" onclick="$('#fromDate').click();">
+                            <span class="input-group-addon bg-inverse">
                               <span class="icofont icofont-ui-calendar"></span>
                             </span>
                           </div>
@@ -354,7 +180,7 @@
                             </a>
                             <a class="nav-item" href="viralRword.html">
                               <li class="nav-link active">
-                                <p>연관검색어관리</p>
+                                <p>평점관리</p>
                                 <div class="slide"></div>
                               </li>
                             </a>
@@ -371,7 +197,7 @@
                                       <li class="p-t-10">
                                         <i class="icofont icofont-document-search"></i>
                                       </li>
-                                      <li class="text-right">300건</li>
+                                      <li class="text-right">${totalCount}</li>
                                     </ul>
                                   </div>
                                 </div>
@@ -385,7 +211,13 @@
                                         <span>점수 범위 : 10 ~ 8</span>
                                       </div>
                                       <div class="card-block-big text-center typography">
-                                        <h2 class="text-success" style="font-weight: 600;">223<small style="font-size:20px; font-weight: 400;">/ 27%</small></h2>
+                                        <h2 class="text-success" style="font-weight: 600;">${textType.lik}
+                                        <c:if test="${textType.al != 0}">
+                                          <small style="font-size:20px; font-weight: 400;"><br /> 
+                                        <fmt:parseNumber var="pages" integerOnly="true" value="${(textType.lik/textType.al) * 100}"> 
+                                        </fmt:parseNumber> ${pages}%</small>
+                                        </c:if>
+                                          </h2>
                                       </div>
                                     </div>
                                   </div>
@@ -396,7 +228,13 @@
                                         <span>점수 범위 : 7 ~ 5</span>
                                       </div>
                                       <div class="card-block-big text-center typography">
-                                        <h2 class="text-primary" style="font-weight: 600;">223<small style="font-size:20px; font-weight: 400;">/ 27%</small></h2>
+                                        <h2 class="text-primary" style="font-weight: 600;">${textType.cu}
+                                        <c:if test="${textType.al != 0}">
+                                         <small style="font-size:20px; font-weight: 400;"><br />
+                                        <fmt:parseNumber var="pages" integerOnly="true" value="${(textType.cu/textType.al) * 100}"> 
+                                        </fmt:parseNumber> ${pages}%</small>
+                                        </c:if>
+                                        </h2>
                                       </div>
                                     </div>
                                   </div>
@@ -407,7 +245,13 @@
                                         <span>점수 범위 : 4 ~ 2</span>
                                       </div>
                                       <div class="card-block-big text-center typography">
-                                        <h2 class="text-warning" style="font-weight: 600;">223<small style="font-size:20px; font-weight: 400;">/ 27%</small></h2>
+                                        <h2 class="text-warning" style="font-weight: 600;">${textType.dis}
+                                        <c:if test="${textType.al != 0}">
+                                        <small style="font-size:20px; font-weight: 400;"><br />
+                                        <fmt:parseNumber var="pages" integerOnly="true" value="${(textType.dis/textType.al) * 100}"> 
+                                        </fmt:parseNumber> ${pages}%</small>
+										</c:if>
+                                        </h2>
                                       </div>
                                     </div>
                                   </div>
@@ -418,7 +262,13 @@
                                         <span>점수 범위 : 1</span>
                                       </div>
                                       <div class="card-block-big text-center typography">
-                                        <h2 class="text-danger" style="font-weight: 600;">223<small style="font-size:20px; font-weight: 400;">/ 27%</small></h2>
+                                        <h2 class="text-danger" style="font-weight: 600;">${textType.etc}
+                                        <c:if test="${textType.al != 0}">
+                                        <small style="font-size:20px; font-weight: 400;"><br /> 
+                                        <fmt:parseNumber var="pages" integerOnly="true" value="${(textType.etc/textType.al) * 100}"> 
+                                        </fmt:parseNumber> ${pages}%</small>
+										</c:if>                                        
+                                        </h2>
                                       </div>
                                     </div>
                                   </div>
@@ -452,21 +302,28 @@
                                     <div class="row">
                                       <div class="col-sm-6">
                                         <dl class="dl-horizontal row">
-                                          <dt class="col-sm-5">10 ~ 8</dt>
+                                          <dt class="col-sm-5">10</dt>
                                           <dd class="col-sm-7"><label class="label label-success">아주좋음</label></dd>
-                                          <dt class="col-sm-5">8 ~ 6</dt>
+                                          <dt class="col-sm-5">8 ~ 9</dt>
                                           <dd class="col-sm-7"><label class="label label-primary">좋음</label></dd>
-                                          <dt class="col-sm-5">6 ~ 5</dt>
+                                          <dt class="col-sm-5">6 ~ 7</dt>
                                           <dd class="col-sm-7"><label class="label label-info">양호</label></dd>
-                                          <dt class="col-sm-5">5 ~ 3</dt>
+                                          <dt class="col-sm-5">5 ~ 4</dt>
                                           <dd class="col-sm-7"><label class="label label-warning">주의</label></dd>
-                                          <dt class="col-sm-5">2 ~ 1</dt>
+                                          <dt class="col-sm-5">4 ~ 1</dt>
                                           <dd class="col-sm-7"><label class="label label-danger">경고</label></dd>
                                         </dl>
                                       </div>
                                       <div class="col-sm-6">
                                         <h4 class="sub-title">분류비율표</h4><br />
-                                        <h2 class="text-success text-center"><strong>아주좋음</strong></h2>
+                                        <h2 class="text-success text-center">
+                                          <strong>
+                                            <c:if test="${scoreCount == 1 or scoreCount == 2 or scoreCount == 3}">경고</c:if>
+                                            <c:if test="${scoreCount == 4 or scoreCount == 5}">주의</c:if>
+                                            <c:if test="${scoreCount == 6 or scoreCount == 7}">양호</c:if>
+                                            <c:if test="${scoreCount == 8 or scoreCount == 9}">좋음</c:if>
+                                            <c:if test="${scoreCount == 10}">아주좋음</c:if>
+                                          </strong></h2>
                                       </div>
                                     </div>
                                   </div>
@@ -491,33 +348,45 @@
                                           </tr>
                                         </thead>
                                         <tbody>
+                                          <c:forEach items="${scoreList}" var="score" varStatus="index">
                                           <tr>
-                                            <th>1</th>
-                                            <td>2017-12-13</td>
-                                            <td>Naver</td>
-                                            <td>강철비굿</td>
-                                            <td>강철비</td>
-                                            <td>10</td>
+                                            <th>${totalCount - minusCount - index.count + 1}</th>
+                                            <td>${score.writeDate}</td>
+                                            <td>${score.portal_name}</td>
+                                            <td><a class = 'title_score' href="${score.url}">${score.portal_title}</a></td>
+                                            <td>${score.keyword}</td>
+                                            <td>${score.score}</td>
                                           </tr>
+                                          </c:forEach>
                                         </tbody>
                                         <tfoot>
                                           <tr>
                                             <td colspan="6">
-                                              <ul class="pagination float-right">
-                                                <li class="page-item">
-                                                  <a class="page-link" href="#" aria-label="Previous">
-                                                    <span aria-hidden="true">«</span>
-                                                    <span class="sr-only">Previous</span>
-                                                  </a>
-                                                </li>
-                                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                                <li class="page-item">
-                                                  <a class="page-link" href="#" aria-label="Next">
-                                                    <span aria-hidden="true">»</span>
-                                                    <span class="sr-only">Next</span>
-                                                  </a>
-                                                </li>
-                                              </ul>
+                                               <ul class="pagination float-right">
+					                              <c:if test="${pageMaker.prev}">
+					                                <li class="page-item">
+					                                  <a class="page-link" href="v_score${pageMaker.makeSearch(pageMaker.startPage - 1) }" aria-label="Previous">&laquo;
+					                                    <span aria-hidden="true"></span>
+					                                    <span class="sr-only">Previous</span>
+					                                  </a>
+					                                </li>
+					                              </c:if>
+					
+					                              <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
+					                                <li class= "${pageMaker.cri.page == idx? 'active':''} page-item">
+					                                  <a class="page-link" href="v_score${pageMaker.makeSearch(idx)}">${idx}</a>
+					                                </li>
+					                              </c:forEach>
+					
+					                              <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+					                                <li class="page-item">
+					                                  <a class="page-link" href="v_score${pageMaker.makeSearch(pageMaker.endPage +1) }" aria-label="Next">&raquo;
+					                                    <span aria-hidden="true"></span>
+					                                    <span class="sr-only">Next</span>
+					                                  </a>
+					                                </li>
+					                              </c:if>
+					                            </ul>
                                             </td>
                                           </tr>
                                         </tfoot>
@@ -623,5 +492,212 @@
   <script src="../assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
   <script src="../assets/js/jquery.mousewheel.min.js"></script>
 </body>
+
+<script type="text/javascript">
+
+	$(document).ready(function(){
+		
+		// title 길시에 ...으로 변경  
+		var $content = $(".title_score");
+
+		var size = 25;
+	
+		for (var i =0; i < $content.length; i++){
+			if($content[i].innerText.length >= size){
+				$content[i].textContent = $content[i].innerText.substr(0, size) + '...';
+			}
+		}
+		
+		var $fromDate = $("#fromDate");
+		
+		var startDateOption = decodeURI(window.location.href.split("startDate=")[1]).split("&")[0].split(" ")[0];
+		var endDateOption = decodeURI(window.location.href.split("endDate=")[1]).split("&")[0].split(" ")[0];
+		console.log("startDateOption: " + startDateOption);
+		console.log("endDateOption: " + endDateOption);
+
+		if(startDateOption != 'undefined' && endDateOption != 'undefined'
+				&& startDateOption != '' && endDateOption != ''){
+			
+			$fromDate.val(startDateOption + " - " + endDateOption);
+		}
+		
+		
+		// 회사 selectbox 유지.
+		var companyOption = decodeURI(window.location.href.split("company=")[1]).split("&")[0];
+		console.log("companyOption: " + companyOption);
+
+		var $selectCompany = $('#selectCompany');
+		if(companyOption != 'undefined'){
+			for(var i = 0; i < $selectCompany[0].length; i++ ){
+
+				if($selectCompany[0].children[i].value == companyOption){
+					$selectCompany[0].children[i].selected = 'selected';
+				}
+			}
+		}
+		$selectCompany[0][0].disabled = true;
+
+		// 회사 선택시
+		$selectCompany.change(function(){
+			console.log($("#selectCompany option:selected").val());
+
+			searchList();
+
+		});
+
+		// 키워드 selectbox 유지.
+		var keywordOption = decodeURI(window.location.href.split("selectKey=")[1]).split("&")[0];
+		console.log("keywordOption: " + keywordOption);
+
+		var $selectKeyword = $('#selectKeyword');
+
+		if(keywordOption != 'undefined'){
+			for(var i = 0; i < $selectKeyword[0].length; i++ ){
+				if($selectKeyword[0][i].value == keywordOption){
+					$selectKeyword[0][i].selected = 'selected';
+				}
+			}
+		}
+		$selectKeyword[0][0].disabled = true;
+
+
+		// 키워드 선택시
+		$selectKeyword.change(function(){
+			console.log($('#selectKeyword option:selected').val());
+
+			searchList();
+
+		});
+		
+		// 당일 클릭시
+		$('#toDay').on("click", function(){
+		  console.log("toDay clicked....");
+		  var date = getDate("toDay");
+		  var startDate = date.startDate;
+		  var endDate = date.endDate;
+
+		  $("#fromDate").val(endDate + " - " + endDate)
+		  console.log($("#fromDate").val());
+		  searchList();
+		});
+
+		// 전일 클릭시
+		$('#yesterDay').on("click", function(){
+		  console.log("yesterDay clicked....");
+		  var date = getDate("yesterDay");
+		  var startDate = date.startDate;
+		  var endDate = date.endDate;
+
+		  $("#fromDate").val(startDate + " - " + endDate)
+		  console.log($("#fromDate").val());
+		  searchList();
+		});
+
+		// 7일  클릭시
+		$('#week').on("click", function(){
+		  console.log("week clicked....");
+		  var date = getDate("week");
+		  var startDate = date.startDate;
+		  var endDate = date.endDate;
+
+		  $("#fromDate").val(startDate + " - " + endDate)
+		  console.log($("#fromDate").val());
+		  searchList();
+		})
+
+		// 30일 클릭시
+		$('#month').on("click", function(){
+		  console.log("month clicked....");
+		  var date = getDate("month");
+		  var startDate = date.startDate;
+		  var endDate = date.endDate;
+
+		  $("#fromDate").val(startDate + " - " + endDate)
+		  console.log($("#fromDate").val());
+
+		  searchList();
+
+		})
+
+
+		// 캘린더 클릭시
+		$('#fromDate').on('apply.daterangepicker', function(ev, picker) {
+			   var startDate = picker.startDate.format('YYYY-MM-DD');
+			   var endDate = picker.endDate.format('YYYY-MM-DD');
+
+			   console.log("startDate: " + startDate);
+			   console.log("endDate: " + endDate);
+
+			   searchList();
+
+		});
+		
+	}); // end ready...
+	
+
+	function searchList() {
+
+		var makeQeury = '${pageMaker.makeQuery(1)}'.slice(0,-2);
+
+		console.log(makeQeury);
+
+    	self.location = "v_score"
+    						+ makeQeury + '10'
+        					+ "&company=" + $("#selectCompany option:selected").val()
+    						+ "&selectKey=" + $('#selectKeyword option:selected').val()
+    						+ "&portal_name=" + $("#selectSite option:selected").val()
+    						+ "&startDate=" + makeDateFormat($("#fromDate").val(), 0)
+				 			+ "&endDate=" +  makeDateFormat($("#fromDate").val(), 1);
+    }
+
+
+	// 날짜 계산 함수
+	function getDate(type){
+		console.log("TYPE : " + type);
+		var date = new Date();
+
+	 	var month = date.getMonth()+1;
+	 	var day = date.getDate();
+	 	var year = date.getFullYear();
+
+	 	var endDate = year + "-" + month + "-" + day;
+	 	var startDate;
+
+	 	if(type == "yesterDay"){
+	 		var calcDate = day-1;
+	 		startDate = year + "-" + month + "-" + calcDate;
+
+	 	}else if(type == "month"){
+	 		var calcDate = month-1;
+	 		startDate = year + "-" + calcDate + "-" + day;
+
+	 	}else if(type == "week"){
+	 		var calcDate = day-7;
+	 		if(calcDate < 0){
+	 			var lastDay = (new Date(year, month-1, 0)).getDate();
+	 			calcDate += lastDay;
+	 			month -= 1;
+	 		}
+	 		startDate = year + "-" + month + "-" + calcDate;
+	 	}
+
+	 	return {
+	 		startDate : startDate,
+	 		endDate : endDate
+	 	}
+
+	}
+
+	function makeDateFormat(date, index){
+		var splitDate = date.split(" - ")[index];
+			if(splitDate != undefined){
+				var returnDate = splitDate.replace("/", "-").replace("/", "-")
+				return returnDate;
+			}
+
+
+	}
+
+</script>
 
 </html>

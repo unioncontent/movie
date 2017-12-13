@@ -7,7 +7,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.union.domain.CommunityVO;
 import org.union.domain.ExtractVO;
 import org.union.domain.GraphVO;
 import org.union.domain.PortalVO;
@@ -227,6 +226,43 @@ public class PortalServiceImpl implements PortalService {
 	public Integer getTypeOfActorCount(SearchCriteria cri) {
 
 		return portalDAO.getTypeOfActorCount(cri);
+	}
+
+	@Override
+	public Integer getScoreCount(SearchCriteria cri) {
+
+		return portalDAO.getScoreCount(cri);
+	}
+
+	@Override
+	public List<PortalVO> getScoreList(SearchCriteria cri) {
+
+		return portalDAO.getScoreList(cri);
+	}
+
+	@Override
+	public TextTypeVO getScoreTextType(SearchCriteria cri) {
+
+		return portalDAO.getScoreTextType(cri);
+	}
+
+	@Override
+	public Integer getOnlyScore(SearchCriteria cri) {
+
+		List<Integer> list = portalDAO.getOnlyScore(cri);
+		
+		Integer totalCount = 0;
+		
+		if(list.size() != 0) {
+			for (Integer integer : list) {
+				totalCount += integer;
+			}
+			
+			totalCount = totalCount/list.size();
+			
+		}
+
+		return totalCount;
 	}
 
 }
