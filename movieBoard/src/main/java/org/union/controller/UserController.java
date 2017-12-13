@@ -59,7 +59,7 @@ public class UserController {
 	public String logout() {
 		logger.info("logout...");
 		
-		return "../logoutAction";
+		return "redirect:../logoutAction";
 	}
 	
 	@GetMapping("/login")
