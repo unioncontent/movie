@@ -170,6 +170,15 @@
                               </div>
                               <div class="col-md-6 col-xl-3 main-card">
                                 <div class="card social-widget-card">
+                                  <div class="card-block-big bg-info">
+                                    <h3>${matchCount}</h3>
+                                    <span class="m-t-10">매칭</span>
+                                    <i class="icofont icofont-connection"></i>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-md-6 col-xl-3 main-card">
+                                <div class="card social-widget-card">
                                   <div class="card-block-big bg-news">
                                     <h3>${mediaCount}</h3>
                                     <span class="m-t-10">언론사</span>
@@ -186,22 +195,12 @@
                                   </div>
                                 </div>
                               </div>
-                              <div class="col-md-6 col-xl-3 main-card">
-                                <div class="card social-widget-card">
-                                  <div class="card-block-big bg-info">
-                                    <h3>0</h3>
-                                    <span class="m-t-10">매칭</span>
-                                    <i class="icofont icofont-connection"></i>
-                                  </div>
-                                </div>
-                              </div>
                               <!-- top cards end -->
                               <!-- 언론사,기자 통계 start -->
                               <div class="col-md-6">
                                 <div class="card">
                                   <div class="card-header">
                                     <h5>언론사 통계</h5>
-                                    <span>(2017-09-19 ~ 2017-10-19)</span>
                                     <div class="card-header-right">
                                       <i class="icofont icofont-rounded-down"></i>
                                       <i class="icofont icofont-listing-number" data-toggle="tooltip" data-placement="top" data-original-title="순위 더보기" onclick="moreRanking('언론사','newsMore')"></i>
@@ -239,8 +238,8 @@
                                                 <th scope="row">${index.count}</th>
                                                 <td class='news' onclick='showModal("#news-Modal")'>${mediaList.media}</td>
                                                 <td>${mediaList.allCount}</td>
-                                                <td>0</td>
-                                                <td>0%</td>
+                                                <td>${mediaList.searchCount}</td>
+                                                <td>${mediaList.matchPercent}%</td>
                                               </tr>
                                               </c:forEach>
                                             </tbody>
@@ -255,7 +254,6 @@
                                 <div class="card">
                                   <div class="card-header">
                                     <h5>기자 통계</h5>
-                                    <span>(2017-09-19 ~ 2017-10-19)</span>
                                     <div class="card-header-right">
                                       <i class="icofont icofont-rounded-down"></i>
                                       <i class="icofont icofont-listing-number" data-toggle="tooltip" data-placement="top" data-original-title="순위 더보기" onclick="moreRanking('기자','pressMore')"></i>
@@ -362,9 +360,9 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                          <c:forEach items="${searchList}" var = "mediaVO">
+                                          <c:forEach items="${searchList}" var = "mediaVO" varStatus="index">
                                           <tr>
-                                            <th scope="row">1</th>
+                                            <th scope="row">${index.count}</th>
                                             <td>
                                             <fmt:formatDate value="${mediaVO.updateDate}" pattern="yyyy-MM-dd kk:mm:ss"/>
                                             </td>

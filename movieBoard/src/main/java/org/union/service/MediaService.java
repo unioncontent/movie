@@ -20,6 +20,8 @@ public interface MediaService {
 	
 	public void remove(Integer media_idx);
 	
+	public TextTypeVO periodTextTypeCount(SearchCriteria cri);
+	
 	public List<MediaVO> allPageList(SearchCriteria cri);
 	public Integer allPageCount(SearchCriteria cri);
 	
@@ -44,7 +46,8 @@ public interface MediaService {
 	
 	public List<PeriodMediaVO> periodReporter(SearchCriteria criteria);
 	
-	public Integer getTotalCount();
+	public Integer getTotalCount(SearchCriteria criteria);
+	public Integer getMatchCount(SearchCriteria criteria);
 	
 	public Integer mediaGetTotalCount(SearchCriteria criteria);
 	
