@@ -18,6 +18,8 @@ public interface MediaDAO {
 	
 	public void delete(Integer media_idx);
 	
+	public TextTypeVO periodTextTypeCount(SearchCriteria cri);
+	
 	public List<MediaVO> allPageList(SearchCriteria cri);
 	public Integer allPageCount(SearchCriteria cri);
 	
@@ -40,7 +42,8 @@ public interface MediaDAO {
 	
 	public List<MediaVO> searchAll(SearchCriteria cri);
 	
-	public Integer getTotalCount();
+	public Integer getTotalCount(SearchCriteria cri);
+	public Integer getMatchCount(SearchCriteria cri);
 	
 	public Integer mediaGetTotalCount(SearchCriteria cri);
 	

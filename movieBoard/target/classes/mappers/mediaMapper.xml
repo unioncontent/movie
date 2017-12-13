@@ -195,6 +195,24 @@
  		from media_data where keyword='press' and media_name = 'daum'
  		<include refid="search"></include>
  	</select>
+ 	
+ 	<select id="periodTextTypeCount" resultType="TextTypeVO">
+ 		select  
+ 		count(if(textType='좋은글', textType, null)) lik,
+		count(if(textType='나쁜글', textType, null)) dis,
+		count(if(textType='관심글', textType, null)) cu,
+		count(if(textType='기타글', textType, null)) etc,
+		count(if(textType is not null and texttype!='삭제글', textType, null)) al
+ 		from media_data where textType is not null
+ 		<if test="textType != 'press'.toString()">
+  		and 
+  			keyword = press
+  		</if>
+  		<if test="textType != null">
+		<include refid="periodSearch"></include>
+  		</if>
+ 		
+ 	</select>
  
  	<select id="searchAll" resultType="MediaVO">
  		select
@@ -282,7 +300,20 @@
  			count(*)
  		from
  			media_data
+ 		<if test="startDate != null and endDate != null">
+			where updateDate <![CDATA[>]]> #{startDate}
+			and updateDate <![CDATA[<]]> #{endDate}
+		</if>
+ 	</select>
  	
+ 	<select id="getMatchCount" resultType="Integer">
+ 		select
+ 			count(*)
+ 		from
+ 			media_data
+ 		where 
+ 			media_idx > 0
+ 		<include refid="periodSearch"></include>
  	</select>
  	
  	<select id="listAll" resultType="MediaVO">
@@ -303,8 +334,10 @@
  			media_data
  		where
  			media_name = #{keyword}
- 		and updateDate <![CDATA[>]]> #{startDate}
-		and updateDate <![CDATA[<]]> #{endDate}	
+ 		<if test="startDate != null and endDate != null">
+			and updateDate <![CDATA[>]]> #{startDate}
+			and updateDate <![CDATA[<]]> #{endDate}
+		</if>
  	
  	</select>
  	
@@ -315,6 +348,10 @@
  			media_data
  		where
  			reporter_name = #{keyword}
+ 		<if test="startDate != null and endDate != null">
+			and updateDate <![CDATA[>]]> #{startDate}
+			and updateDate <![CDATA[<]]> #{endDate}
+		</if>
  	
  	</select>
  	
