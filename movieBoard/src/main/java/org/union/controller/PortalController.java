@@ -685,9 +685,9 @@ public class PortalController {
 		}
 	}
 	
-	@GetMapping("/v_relation")
-	public void v_relationGET(@ModelAttribute("cri") SearchCriteria cri, Model model) {
-		logger.info("v_relationGET called....");
+	@GetMapping("/v_score")
+	public void v_scoreGET(@ModelAttribute("cri") SearchCriteria cri, Model model) {
+		logger.info("v_scoreGET called....");
 		
 		cri.setStartDate(null);
 		cri.setEndDate(null);
@@ -740,7 +740,7 @@ public class PortalController {
 			}
 		}
 		
-		cri.setPortal_type("relation");
+		/*cri.setPortal_type("relation");
 		
 		logger.info("cri: " + cri);
 		
@@ -750,7 +750,7 @@ public class PortalController {
 		
 		if(cri.getCompany() != null) {
 			model.addAttribute("blogList", viralService.searchAllList(cri));
-		}
+		}*/
 	}
 	
 	@ResponseBody
