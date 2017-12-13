@@ -187,7 +187,7 @@
                             </div>
                           </div>
                           <div class="card-block">
-                            <div id="morris-extra-area" style="height:470px;"></div>
+                            <div id="morris-extra-area" style="height:300px;"></div>
                           </div>
                         </div>
                       </div>
@@ -327,7 +327,7 @@
                             <section class="task-panel tasks-widget">
                               <div class="panel-body">
                                 <div class="task-content">
-                                  
+
                                 </div>
                                 <div>
                                   <a class="btn btn-info btn-add-task waves-effect waves-light m-t-10" href="#" data-toggle="modal" data-target="#flipFlop"><i class="icofont icofont-plus"></i> 일정 추가</a>
@@ -466,9 +466,9 @@ $(function() {
 });
 
 $(document).ready(function(){
-	 
+
 	settingCalendar();
-	
+
 	$.ajax({
 
 	      type : "POST",
@@ -480,7 +480,7 @@ $(document).ready(function(){
 	  		  console.log(data);
 	  		var script = "[";
 
-	  		
+
 			for(var i = 0; i < data.length; i++){
 
 				script += '{"period":' + '"' + data[i].writeDate + '",'
@@ -497,18 +497,18 @@ $(document).ready(function(){
 
 			// to json
 			var jsonScript = JSON.parse(script);
-		
+
 			areaChart(jsonScript);
 
 	  	 }
-	});	
-	
-		 
+	});
+
+
 	$(document).on("click",".delete_todo",function() {
 	    $(this).parent().parent().parent().parent().fadeOut();
-	    
+
 	    var title = $(this).parent().parent()[0].children[2].innerText;
-	    
+
 	    $.ajax({
 
   	      type : "POST",
@@ -524,9 +524,9 @@ $(document).ready(function(){
   	  	  }
   	});
 	  });
-	
 
-	  
+
+
 	  $("#mcalendar").width("500px");
 	  $(".save_btn").on("click", function() {
 	      $(".md-form-control").removeClass("md-valid");
@@ -545,8 +545,8 @@ $(document).ready(function(){
 	                </div>\
 	              </label>\
 	            </div>\
-	          </div>"); 
-	          
+	          </div>");
+
 	          $.ajax({
 
 	    	      type : "POST",
@@ -561,20 +561,20 @@ $(document).ready(function(){
 					location.reload();
 	    	  	  }
 	    	});
-	          
+
 	          $(add_todo).appendTo(".task-content").hide().fadeIn(300);
 	          $('.save_task_todo').val('');
 	          $("#flipFlop").modal('hide');
-	          
+
 	      }
-	      
+
 	  });
-	
-		  
+
+
 }); // end ready...
 
 function settingCalendar(){
-	
+
 	$.ajax({
 		type : "POST",
 		url : "listDate",
@@ -584,21 +584,21 @@ function settingCalendar(){
 	        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 	       },
 	  	success : function(success){
-	  		  
+
 	  		var script = "[";
 	  		for(var i = 0; i < success.length; i++){
 
-	  		    script += '{"date": "'+ success[i].calendar_date + 
+	  		    script += '{"date": "'+ success[i].calendar_date +
 	  		      		'","value":"' + success[i].calendar_title +'"},'
 	  		}
 
 	  		script = script.slice(0, -1);
 	  		script += "]";
-	  		
+
 	  		console.log("script: " + script);
-	  		
+
 	  		console.log(JSON.parse(script));
-			
+
 	  	// inline
 	  		  var $ca = $('#mcalendar').calendar({
 	  		      width: '300px',
@@ -608,7 +608,7 @@ function settingCalendar(){
 	  		      onSelected: function (view, date, data) {//날짜 선택시 이벤트
 	  		          console.log('date:' + date);//날짜
 	  		          console.log('data:' + (data || '없음'));//일정
-					  
+
 	  		          if(data != null && typeof data != "undefined") {//일정 있을때
 	  		            var data = data.split(",");
 	  		            //일정 건수 넣기
@@ -643,7 +643,7 @@ function settingCalendar(){
 	  		      }
 	  		  });
 
-	  		  
+
 	  		}
 		})
 	}
