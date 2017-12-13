@@ -849,6 +849,7 @@
      	      element: 'line-chart1',
      	      data: data,
      	      xkey: 'period',
+     	     xLabels : 'day',
      	      redraw: true,
      	      ykeys: ['l1', 'l2', 'l3', 'l4'],
      	      hideHover: 'auto',
