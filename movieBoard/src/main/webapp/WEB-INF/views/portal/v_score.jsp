@@ -322,39 +322,39 @@
                         <!-- tab header start -->
                         <div class="tab-header">
                           <ul class="nav nav-tabs nav-vtabs md-tabs tab-timeline" role="tablist" id="mytab">
-                            <a class="nav-item" href="mngViral.html">
-                              <li class="nav-link">
+                            <a class="nav-item" href="viral">
+                              <li class="nav-link ">
                                 <p>바이럴관리</p>
                                 <div class="slide"></div>
                               </li>
                             </a>
-                            <a class="nav-item" href="viralBlog.html">
+                            <a class="nav-item" href="v_blog">
                               <li class="nav-link">
                                 <p>블로그관리</p>
                                 <div class="slide"></div>
                               </li>
                             </a>
-                            <a class="nav-item" href="viralCafe.html">
+                            <a class="nav-item" href="v_cafe">
                               <li class="nav-link">
                                   <p>카페관리</p>
                                   <div class="slide"></div>
                               </li>
                             </a>
-                            <a class="nav-item" href="viralKinTip.html">
-                              <li class="nav-linke">
+                            <a class="nav-item" href="v_kin">
+                              <li class="nav-link">
                                 <p>지식인/Tip관리</p>
                                 <div class="slide"></div>
                               </li>
                             </a>
-                            <a class="nav-item" href="viralWeb.html">
-                              <li class="nav-link">
+                            <a class="nav-item" href="v_web">
+                              <li class="nav-link ">
                                 <p>웹문서관리</p>
                                 <div class="slide"></div>
                               </li>
                             </a>
-                            <a class="nav-item" href="viralRword.html">
+                            <a class="nav-item" href="v_relation">
                               <li class="nav-link active">
-                                <p>연관검색어관리</p>
+                                <p>평점관리</p>
                                 <div class="slide"></div>
                               </li>
                             </a>
