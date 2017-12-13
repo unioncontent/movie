@@ -206,7 +206,7 @@
  		from media_data where textType is not null
  		<if test="textType != 'press'.toString()">
   		and 
-  			keyword = press
+  			keyword = 'press'
   		</if>
   		<if test="textType != null">
 		<include refid="periodSearch"></include>
