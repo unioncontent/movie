@@ -38,6 +38,7 @@
 		<security:intercept-url pattern="/sns/**" access="ROLE_USER" />
 		<security:intercept-url pattern="/media/**" access="ROLE_USER" />
 		<security:intercept-url pattern="/manage/**" access="ROLE_USER" />
+		<security:intercept-url pattern="/keyword/**" access="ROLE_USER" />
 		<security:intercept-url pattern="/extract/extract" access="ROLE_USER" />
 		<security:intercept-url pattern="/classification/classification" access="ROLE_USER" />
 		<security:intercept-url pattern="/listAll/listAll" access="ROLE_USER" />
