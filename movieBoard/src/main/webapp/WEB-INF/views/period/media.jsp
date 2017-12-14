@@ -239,7 +239,7 @@
                                                 <td class='news' onclick='showModal("#news-Modal")'>${mediaList.media}</td>
                                                 <td>${mediaList.allCount}</td>
                                                 <td>${mediaList.searchCount}</td>
-                                                <td>${mediaList.matchPercent}%</td>
+                                                <td><fmt:parseNumber value="${mediaList.matchPercent}" integerOnly="true"></fmt:parseNumber>%</td>
                                               </tr>
                                               </c:forEach>
                                             </tbody>
@@ -362,7 +362,7 @@
                                         <tbody>
                                           <c:forEach items="${searchList}" var = "mediaVO" varStatus="index">
                                           <tr>
-                                            <th scope="row">${index.count}</th>
+                                            <th scope="row">${totalCount - minusCount - index.count + 1}</th>
                                             <td>
                                             <fmt:formatDate value="${mediaVO.updateDate}" pattern="yyyy-MM-dd kk:mm:ss"/>
                                             </td>
@@ -925,6 +925,7 @@
 		
 		
 		pieGraph1();
+		pieGraph2();
 		
 	});
 
@@ -1047,6 +1048,7 @@
 
 	//data
 	function pieData1() {
+		console.log("media count");
 		console.log('${mediaTypeCount.lik}');
 		console.log('${mediaTypeCount.dis}');
 		console.log('${mediaTypeCount.cu}');
@@ -1070,6 +1072,11 @@
 	    }];
 	}
 	function pieData2() {
+		console.log("press count");
+		console.log('${pressTypeCount.lik}');
+		console.log('${pressTypeCount.dis}');
+		console.log('${pressTypeCount.cu}');
+		console.log('${pressTypeCount.etc}');
 	  return [{
 	      "label": "좋은기사",
 	      "value": '${pressTypeCount.lik}',

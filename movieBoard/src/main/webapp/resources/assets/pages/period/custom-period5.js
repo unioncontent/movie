@@ -11,8 +11,8 @@ $(document).ready(function() {
     $("#press-ranking").append("<tr class='"+check+"'><th scope='row'>"+i+"</th><td class='press' onclick='showModal('#press-Modal')'>기자</td><td>언론사</td><td>1</td><td>0</td><td>0%</td></tr>");
   }*/
 
-  pieGraph1();
-  pieGraph2();
+  /*pieGraph1();
+  pieGraph2();*/
   document.querySelector('.alert-confirm').onclick = function(){
     swal({
           title: "엑셀출력 하시겠습니까?",
