@@ -278,7 +278,7 @@ public class PeriodController {
 		model.addAttribute("daumCount", daumCount);
 		
 		model.addAttribute("portalList", portalService.listSearch(cri));
-		
+		logger.info("list: " + portalService.listSearch(cri));
 		PageMaker pageMaker = new PageMaker();
 		
 		Integer totalCount = portalService.getSearchCount(cri);
@@ -396,12 +396,13 @@ public class PeriodController {
 		  pageMaker.setTotalCount(totalCount);
 		  
 		  model.addAttribute("pageMaker", pageMaker);
-		  model.addAttribute("totalCount", totalCount);
+		  model.addAttribute("totalCountPage", totalCount);
 		  model.addAttribute("minusCount", cri.getPerPageNum() * (cri.getPage()-1));
 		  
 		  cri.setKeyword(keyword);
 
 		  model.addAttribute("mediaTypeCount", mediaService.periodTextTypeCount(cri));
+		  logger.info(mediaService.periodTextTypeCount(cri) + "");
 		  
 		  cri.setTextType("press");
 		  model.addAttribute("pressTypeCount", mediaService.periodTextTypeCount(cri));
@@ -683,6 +684,9 @@ public class PeriodController {
 		
 		}else if(part.equals("portal")){
 			listUtil.listAddPortalList(classiList, portalService.listAll(cri));
+		
+		}else if(part.equals("media")) {
+			listUtil.listAddMediaList(classiList, mediaService.listSearch(cri));
 		}
 		
 		

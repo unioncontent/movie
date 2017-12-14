@@ -13,7 +13,7 @@ $(document).ready(function() {
 
   /*pieGraph1();
   pieGraph2();*/
-  document.querySelector('.alert-confirm').onclick = function(){
+  /*document.querySelector('.alert-confirm').onclick = function(){
     swal({
           title: "엑셀출력 하시겠습니까?",
           text: "현재 리스트가 엑셀출력 됩니다.",
@@ -26,7 +26,7 @@ $(document).ready(function() {
         function(){//엑셀 출력하겠다고 할 시 진행 함수
           swal("Success!", "엑셀출력 되었습니다.", "success");
         });
-  };
+  };*/
   $('[data-toggle="tooltip"]').tooltip();
 
   $("i[data-value='chart1']").on("click",pieGraph1);

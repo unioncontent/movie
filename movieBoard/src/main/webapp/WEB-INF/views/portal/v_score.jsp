@@ -99,7 +99,8 @@
                     <div class="row">
                       <!-- data setting start -->
                       <div class="col-md-6">
-                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="selectCompany">
+                        <c:if test="${user.user_name == 'union'}">
+                         <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="selectCompany">
                           <option>회사</option>
                           <c:if test="${user.user_type == 1 }">
                           <c:forEach items="${companyList}" var = "companyList">
@@ -110,6 +111,21 @@
                           <option value="${companyList.user_name}">${companyList.user_name}</option>
                           </c:if>
                         </select>
+						</c:if>
+						
+						<c:if test="${user.user_name != 'union'}">
+                         <select style="display: none;" name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="selectCompany">
+                          <option>회사</option>
+                          <c:if test="${user.user_type == 1 }">
+                          <c:forEach items="${companyList}" var = "companyList">
+                          <option value="${companyList.user_name}">${companyList.user_name}</option>
+                          </c:forEach>
+                          </c:if>
+                          <c:if test="${user.user_type == 2}">
+                          <option value="${companyList.user_name}">${companyList.user_name}</option>
+                          </c:if>
+                        </select>
+						</c:if>
 
                         <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left" id="selectKeyword">
                           <option>키워드</option>
@@ -203,77 +219,88 @@
                                 </div>
                               </div>
                               <div class="col-md-6 col-xl-6">
-                                <div class="row">
-                                  <div class="col p-l-0 p-r-0">
-                                    <div class="card user-activity-card" style="border-radius: 0;">
-                                      <div class="card-header">
-                                        <h5>좋은글</h5>
-                                        <span>점수 범위 : 10 ~ 8</span>
-                                      </div>
-                                      <div class="card-block-big text-center typography">
-                                        <h2 class="text-success" style="font-weight: 600;">${textType.lik}
-                                        <c:if test="${textType.al != 0}">
-                                          <small style="font-size:20px; font-weight: 400;"><br /> 
-                                        <fmt:parseNumber var="pages" integerOnly="true" value="${(textType.lik/textType.al) * 100}"> 
-                                        </fmt:parseNumber> ${pages}%</small>
-                                        </c:if>
-                                          </h2>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div class="col p-l-0 p-r-0">
-                                    <div class="card user-activity-card" style="border-radius: 0;">
-                                      <div class="card-header">
-                                        <h5>관심글</h5>
-                                        <span>점수 범위 : 7 ~ 5</span>
-                                      </div>
-                                      <div class="card-block-big text-center typography">
-                                        <h2 class="text-primary" style="font-weight: 600;">${textType.cu}
-                                        <c:if test="${textType.al != 0}">
-                                         <small style="font-size:20px; font-weight: 400;"><br />
-                                        <fmt:parseNumber var="pages" integerOnly="true" value="${(textType.cu/textType.al) * 100}"> 
-                                        </fmt:parseNumber> ${pages}%</small>
-                                        </c:if>
-                                        </h2>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div class="col p-l-0 p-r-0">
-                                    <div class="card user-activity-card" style="border-radius: 0;">
-                                      <div class="card-header">
-                                        <h5>나쁜글</h5>
-                                        <span>점수 범위 : 4 ~ 2</span>
-                                      </div>
-                                      <div class="card-block-big text-center typography">
-                                        <h2 class="text-warning" style="font-weight: 600;">${textType.dis}
-                                        <c:if test="${textType.al != 0}">
-                                        <small style="font-size:20px; font-weight: 400;"><br />
-                                        <fmt:parseNumber var="pages" integerOnly="true" value="${(textType.dis/textType.al) * 100}"> 
-                                        </fmt:parseNumber> ${pages}%</small>
-										</c:if>
-                                        </h2>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div class="col p-l-0 p-r-0">
-                                    <div class="card user-activity-card" style="border-radius: 0;">
-                                      <div class="card-header">
-                                        <h5>악성글</h5>
-                                        <span>점수 범위 : 1</span>
-                                      </div>
-                                      <div class="card-block-big text-center typography">
-                                        <h2 class="text-danger" style="font-weight: 600;">${textType.etc}
-                                        <c:if test="${textType.al != 0}">
-                                        <small style="font-size:20px; font-weight: 400;"><br /> 
-                                        <fmt:parseNumber var="pages" integerOnly="true" value="${(textType.etc/textType.al) * 100}"> 
-                                        </fmt:parseNumber> ${pages}%</small>
-										</c:if>                                        
-                                        </h2>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
+							  <div class="row">
+							    <div class="col p-l-0 p-r-0">
+							      <div class="card user-activity-card" style="border-radius: 0;">
+							        <div class="card-header">
+							          <div>
+							            <h5>좋은글</h5>
+							            <span>점수 범위 : 10 ~ 8</span>
+							          </div>
+							        </div>
+							        <div class="card-block-big text-center typography" style="padding-left: 5px;padding-right: 5px;">
+							          <div style="height: 50px;display: inline-block;">
+							            <h1 class="text-success" style="font-weight: 600;margin-bottom: 0;float: left;">${textType.lik}</h1>
+							            <label class="badge badge-inverse" style="float: left;">
+							              <c:if test="${textType.al != 0}">
+							              <fmt:parseNumber var="pages" integerOnly="true" value="${(textType.lik/textType.al) * 100}"> 
+                                          </fmt:parseNumber> ${pages}%
+                                          </c:if>
+							            </label>
+							          </div>
+							        </div>
+							      </div>
+							    </div>
+							    <div class="col p-l-0 p-r-0">
+							      <div class="card user-activity-card" style="border-radius: 0;">
+							        <div class="card-header">
+							          <h5>관심글</h5>
+							          <span>점수 범위 : 7 ~ 5</span>
+							        </div>
+							        <div class="card-block-big text-center typography" style="padding-left: 5px;padding-right: 5px;">
+							          <div style="height: 50px;display: inline-block;">
+							            <h1 class="text-primary" style="font-weight: 600;margin-bottom: 0;float: left;">${textType.cu}</h1>
+							            <label class="badge badge-inverse" style="float: left;">
+							            <c:if test="${textType.al != 0}">
+							              <fmt:parseNumber var="pages" integerOnly="true" value="${(textType.cu/textType.al) * 100}"> 
+                                          </fmt:parseNumber> ${pages}%
+                                          </c:if>
+							            </label>
+							          </div>
+							        </div>
+							      </div>
+							    </div>
+							    <div class="col p-l-0 p-r-0">
+							      <div class="card user-activity-card" style="border-radius: 0;">
+							        <div class="card-header">
+							          <h5>나쁜글</h5>
+							          <span>점수 범위 : 4 ~ 2</span>
+							        </div>
+							        <div class="card-block-big text-center typography" style="padding-left: 5px;padding-right: 5px;">
+							          <div style="height: 50px;display: inline-block;">
+							            <h1 class="text-warning" style="font-weight: 600;margin-bottom: 0;float: left;">${textType.dis}</h1>
+							            <label class="badge badge-inverse" style="float: left;">
+							            <c:if test="${textType.al != 0}">
+							              <fmt:parseNumber var="pages" integerOnly="true" value="${(textType.dis/textType.al) * 100}"> 
+                                          </fmt:parseNumber> ${pages}%
+                                          </c:if>
+							            
+							            </label>
+							          </div>
+							        </div>
+							      </div>
+							    </div>
+							    <div class="col p-l-0 p-r-0">
+							      <div class="card user-activity-card" style="border-radius: 0;">
+							        <div class="card-header">
+							          <h5>악성글</h5>
+							          <span>점수 범위 : 1</span>
+							        </div>
+							        <div class="card-block-big text-center typography"  style="padding-left: 5px;padding-right: 5px;">
+							          <div style="height: 50px;display: inline-block;">
+							            <h1 class="text-danger" style="font-weight: 600;margin-bottom: 0;float: left;">${textType.etc}</h1>
+							            <label class="badge badge-inverse" style="float: left;">
+							            <c:if test="${textType.al != 0}">
+							              <fmt:parseNumber var="pages" integerOnly="true" value="${(textType.etc/textType.al) * 100}"> 
+                                          </fmt:parseNumber> ${pages}%
+                                          </c:if>
+							            </label>
+							          </div>
+							        </div>
+							      </div>
+							    </div>
+							  </div>
+							</div>
                               <!-- <div class="col-md-6 col-xl-6">
                                 <div class="card table-card group-widget">
                                   <div class="row-table">
@@ -315,19 +342,18 @@
                                         </dl>
                                       </div>
                                       <div class="col-sm-6">
-                                        <h4 class="sub-title">분류비율표</h4><br />
-                                        <h2 class="text-success text-center">
-                                          <strong>
+									    <h4 class="sub-title">분류비율표</h4><br>
+										<h2 class="text-info text-center typography">
+										  <strong>
                                             <c:if test="${scoreCount == 1 or scoreCount == 2 or scoreCount == 3}">경고</c:if>
                                             <c:if test="${scoreCount == 4 or scoreCount == 5}">주의</c:if>
                                             <c:if test="${scoreCount == 6 or scoreCount == 7}">양호</c:if>
                                             <c:if test="${scoreCount == 8 or scoreCount == 9}">좋음</c:if>
                                             <c:if test="${scoreCount == 10}">아주좋음</c:if>
                                           </strong>
-                                          <small style="font-size:20px; font-weight: 400;"><br /> 
-                                          ${scoreCount} 점</small>
-                                          </h2>
-                                      </div>
+										  <small style="margin-left: 0;">${scoreCount}</small>
+									    </h2>
+									  </div>
                                     </div>
                                   </div>
                                 </div>

@@ -93,7 +93,8 @@
                     <div class="row">
                       <!-- data setting start -->
                       <div class="col-md-7">
-                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="selectCompany">
+                        <c:if test="${user.user_name == 'union'}">
+                         <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="selectCompany">
                           <option>회사</option>
                           <c:if test="${user.user_type == 1 }">
                           <c:forEach items="${companyList}" var = "companyList">
@@ -104,6 +105,21 @@
                           <option value="${companyList.user_name}">${companyList.user_name}</option>
                           </c:if>
                         </select>
+						</c:if>
+						
+						<c:if test="${user.user_name != 'union'}">
+                         <select style="display: none;" name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="selectCompany">
+                          <option>회사</option>
+                          <c:if test="${user.user_type == 1 }">
+                          <c:forEach items="${companyList}" var = "companyList">
+                          <option value="${companyList.user_name}">${companyList.user_name}</option>
+                          </c:forEach>
+                          </c:if>
+                          <c:if test="${user.user_type == 2}">
+                          <option value="${companyList.user_name}">${companyList.user_name}</option>
+                          </c:if>
+                        </select>
+						</c:if>
                         
                         <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left" id="selectKeyword">
                           <option>키워드</option>
@@ -173,7 +189,7 @@
                                   <option id="c" value="c">게시글</option>
                                 </select>
                                 <div class="col-sm-3 input-group input-group-button input-group-inverse p-l-0 p-r-0 m-b-10 f-left btn-select">
-                                  <input id="keywordInput" type="text" class="form-control" placeholder="">
+                                   <input onkeyup="if(event.keyCode == 13){$('#searchBtn').trigger('click');};"id="keywordInput" type="text" class="form-control" placeholder="">
                                   <span class="input-group-addon" id="basic-addon1">
                                     <button id="searchBtn" class=" btn btn-inverse">검색</button>
                                   </span>
