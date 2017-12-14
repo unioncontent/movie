@@ -79,7 +79,6 @@ public class MediaDAOImpl implements MediaDAO {
 	@Override
 	public List<MediaVO> listSearch(SearchCriteria vo) {
 		
-		System.out.println("vo in dao: " + vo); 
 		return session.selectList(namespace + "listSearch", vo);
 	}
 

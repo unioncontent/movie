@@ -91,11 +91,11 @@
                     <div class="page-header-breadcrumb">
                       <ul class="breadcrumb-title">
                         <li class="breadcrumb-item">
-                          <a href="dashboard.html">
+                          <a href="../dashBoard/dashBoard">
                             <i class="icofont icofont-home"></i>
                           </a>
                         </li>
-                        <li class="breadcrumb-item"><a href="mngViral.html">바이럴관리</a></li>
+                        <li class="breadcrumb-item"><a href="viral">바이럴관리</a></li>
                         <li class="breadcrumb-item"><a href="#!">카페관리</a></li>
                       </ul>
                     </div>
@@ -136,6 +136,25 @@
                           <option value="다음">다음</option>
                         </select>
                       </div>
+                      <div class="col-md-5">
+                         <!-- date picker start -->
+                        <div class="row">
+                          <div class="btn-group float-right m-b-10 p-l-15 p-r-10" role="group">
+                            <button id="toDay" type="button" class="btn btn-inverse btn-sm waves-effect waves-light">당일</button>
+                            <button id="yesterDay" type="button" class="btn btn-inverse btn-sm waves-effect waves-light">전일</button>
+                            <button id="week" type="button" class="btn btn-inverse btn-sm waves-effect waves-light">최근7일</button>
+                            <button id="month" type="button" class="btn btn-inverse btn-sm waves-effect waves-light">최근30일</button>
+                          </div>
+                          <div class="input-group float-right date col p-l-15 p-r-15 m-b-10">
+                            <input type="text" id="fromDate" class="form-control form-control-inverse" value="">
+                            <span class="input-group-addon bg-inverse">
+                              <span class="icofont icofont-ui-calendar"></span>
+                            </span>
+                          </div>
+                        </div>
+                        <!-- date picker end -->
+                      </div>
+                      <!-- data setting end -->
                       <!-- data setting end -->
                       <div class="col-lg-12">
                         <!-- tab header start -->
@@ -148,7 +167,7 @@
                               </li>
                             </a>
                             <a class="nav-item" href="v_blog">
-                              <li class="nav-link">
+                              <li class="nav-link ">
                                 <p>블로그관리</p>
                                 <div class="slide"></div>
                               </li>
@@ -189,70 +208,47 @@
                               <div class="col-md-6 col-xl-3">
                                 <div class="card client-blocks">
                                   <div class="card-block-big card1">
-                                    <h5>전체건수</h5>
+                                    <h5 class="mt" style="font-size: 25px;">전체건수</h5>
                                     <ul>
                                       <li class="p-t-10">
                                         <i class="icofont icofont-document-search"></i>
                                       </li>
-                                      <li class="text-right">${blog0+blog1+blog2}</li>
+                                      <li class="text-right">${blog0}</li>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-md-6 col-xl-3">
+                                <div class="card client-blocks">
+                                  <div class="card-block-big card1">
+                                    <h5>본사계정</h5>
+                                    <h6>실시간 카페 현황</h6>
+                                    <ul>
+                                      <li class="p-t-10">
+                                        <i class="icofont icofont-user-suited"></i>
+                                      </li>
+                                      <li class="text-right">${blog1}</li>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-md-6 col-xl-3">
+                                <div class="card client-blocks">
+                                  <div class="card-block-big card1">
+                                    <h5>외부계정</h5>
+                                    <h6>실시간 카페 현황</h6>
+                                    <ul>
+                                      <li class="p-t-10">
+                                        <i class="icofont icofont-users"></i>
+                                      </li>
+                                      <li class="text-right">${blog2}</li>
                                     </ul>
                                   </div>
                                 </div>
                               </div>
                               <div class="col-md-6 col-xl-3">
                                 <div class="card user-activity-card">
-                                  <div class="card-header">
-                                    <h5><i class="icofont icofont-ui-v-card"></i></h5>
-                                    <h5>전체 카페 현황</h5>
-                                  </div>
-                                  <div class="card-block-big">
-                                    <div class="row">
-                                      <div class="col-sm-6">
-                                        <div class="text-center">
-                                          <h1 class="text-inverse f-w-600">${blog0}</h1>
-                                          <h6 class="text-muted m-t-10">전체</h6>
-                                        </div>
-                                      </div>
-                                    </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              <div class="col-md-6 col-xl-3">
-                                <div class="card user-activity-card">
-                                 <div class="card-header">
-                                    <h5><i class="icofont icofont-clock-time"></i></h5>
-                                    <h5>실시간 카페 현황</h5>
-                                  </div>
-                                 <div class="card-block-big">
-                                    <div class="row">
-                                      <div class="col-sm-6">
-                                        <div class="text-center">
-                                          <h1 class="text-inverse f-w-600">${blog1}</h1>
-                                          <h6 class="text-muted m-t-10">본사계정</h6>
-                                        </div>
-                                      </div>
-                                      <div class="col-sm-6">
-                                        <div class="text-center">
-                                          <h1 class="text-muted f-w-600">${blog2}</h1>
-                                          <h6 class="text-muted m-t-10">외부계정</h6>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              <!-- <div class="col-md-6 col-xl-3">
-                                <div class="card bg-primary large-widget-card">
-                                  <div class="card-block-big">
-                                      <h4>5127 k</h4>
-                                      <h6>Line of code</h6>
-                                      <i class="icofont icofont-code-alt"></i>
-                                  </div>
-                                </div>
-                              </div> -->
-                              <div class="col-md-6 col-xl-3">
-                                <div class="card user-activity-card">
-                                  <div class="card-block-big"style="padding-top: 17px;padding-bottom: 17px;">
+                                  <div class="card-block-big"style="padding-top: 17px;padding-bottom: 12px;">
                                       <h5>점유율 %</h5>
                                       <div class="text-center">
                                         <!-- data-width:그래프 넓이 / data-height:그래프 높이 / data-fgColor:그래프 색상 / data-readonly:그래프 안움직이게-->
@@ -267,57 +263,130 @@
                                   <div class="card borderless-card">
                                     <div class="card-block warning-breadcrumb bg-white">
                                       <div class="breadcrumb-header">
-                                        <h5 class="text-inverse"><i class="icofont icofont-warning text-warning"></i> 회사를 선택해주세요.</h5>
+                                        <h5 class="text-inverse"><i class="icofont icofont-warning text-warning"></i> 회사&키워드를 선택해주세요.</h5>
                                       </div>
                                     </div>
                                   </div>
                                 </c:if>
                                 <div class="card">
                                   <div class="card-header">
-                                    <div class="col-md-1 btn-viral f-right p-r-0">
+                                    <%-- <div class="col-md-1 btn-viral f-right p-r-0">
                                       <button class="btn col-md-12 btn-warning alert-confirm" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'alert-confirm']);"><i class="icofont icofont-download-alt"></i>EXCEL</button>
+                                    </div> --%>
+                                    <h5 class="card-header-text">실시간 카페 TOP 100</h5>
+                                    <div class="card-header-right">
+                                      <i class="icofont icofont-rounded-down icon-up"></i>
                                     </div>
                                   </div>
-                                  <div class="card-block">
-                                    <div class="table-border-style">
-                                      <div class="table-responsive">
-                                        <table class="table table-styling table-checkbox">
-                                          <thead>
+                                  <div class="card-block table-border-style" style="display: none;">
+                                    <div class="table-responsive">
+                                      <table class="table table-styling table-checkbox">
+                                        <thead>
+                                          <tr>
+                                            <th>순위</th>
+                                            <th>등록일</th>
+                                            <th>구분</th>
+                                            <th>제목</th>
+                                            <th>키워드</th>
+                                            <th>업데이트일시</th>
+                                            <th>계정분류</th>
+                                            <th>히스토리</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                            <%-- <c:if test="${blogList eq null }"><h3>회사를 선택해주세요.</h3></c:if>                                          	   --%>
+                                        	  <c:forEach items="${blogList}" var="viralVO">
                                             <tr>
-                                              <th>순위</th>
-                                              <th>등록일</th>
-                                              <th>구분</th>
-                                              <th>제목</th>
-                                              <th>키워드</th>
-                                              <th>업데이트일시</th>
-                                              <th>계정분류</th>
-                                              <th>히스토리</th>
+                                              <th scope="row">${viralVO.viral_rank}</th>
+                                              <td>${viralVO.writeDate}</td>
+                                              <td>${viralVO.portal_name}</td>
+                                              <td><a href="${viralVO.url}">${viralVO.viral_title}</a></td>
+                                              <td>${viralVO.keyword}</td>
+                                              <td>${viralVO.viral_time}</td>
+                                              <td>
+                                              <c:if test="${viralVO.viral_isUser == 1}">본사</c:if>
+                                            	<c:if test="${viralVO.viral_isUser == 2}">외부</c:if>
+                                            	</td>
+                                              <td>
+                                                <button class="btn btn-inverse btn-modal btn-sm"><i class="icofont icofont-chart-bar-graph m-r-0"></i></button>
+                                              </td>
                                             </tr>
-                                          </thead>
-                                          <tbody>
-                                          	  <c:forEach items="${blogList}" var="viralVO">
-                                              <tr>
-                                                <th scope="row">${viralVO.viral_rank}</th>
-                                                <td>${viralVO.writeDate}</td>
-                                                <td>${viralVO.portal_name}</td>
-                                                <td><a href="${viralVO.url}">${viralVO.viral_title}</a></td>
-                                                <td>${viralVO.keyword}</td>
-                                                <td>${viralVO.viral_time}</td>
-                                                <td>
-                                                <c:if test="${viralVO.viral_isUser == 1}">본사</c:if>
-                                              	<c:if test="${viralVO.viral_isUser == 2}">외부</c:if>
-                                              	</td>
-                                                <td>
-                                                  <button class="btn btn-inverse btn-modal btn-sm"><i class="icofont icofont-chart-bar-graph m-r-0"></i></button>
-                                                </td>
-                                              </tr>
-                                              </c:forEach>
-                                          </tbody>
-                                        </table>
-                                      </div>
+                                            </c:forEach>
+                                        </tbody>
+                                      </table>
                                     </div>
                                   </div>
                                 </div>
+                                <div class="card">
+                                  <div class="card-header">
+                                    <%-- <div class="col-md-1 btn-viral f-right p-r-0">
+                                      <button class="btn col-md-12 btn-warning alert-confirm" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'alert-confirm']);"><i class="icofont icofont-download-alt"></i>EXCEL</button>
+                                    </div> --%>
+                                    <h5 class="card-header-text">전체 리스트</h5>
+                                    <div class="card-header-right">
+                                      <i class="icofont icofont-rounded-down"></i>
+                                    </div>
+                                  </div>
+                                  <div class="card-block table-border-style">
+                                    <div class="table-responsive">
+                                      <table class="table table-styling table-checkbox">
+                                        <thead>
+                                          <tr>
+                                            <th>순위</th>
+                                            <th>등록일</th>
+                                            <th>구분</th>
+                                            <th>제목</th>
+                                            <th>키워드</th>
+                                            <th>업데이트일시</th>
+                                            <th>계정분류</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                        	  <c:forEach items="${historyList}" var="viralVO" varStatus="index">
+                                            <tr>
+                                              <th scope="row">${index.count}</th>
+                                              <td>${viralVO.writeDate}</td>
+                                              <td>${viralVO.portal_name}</td>
+                                              <td><a href="${viralVO.url}">${viralVO.viral_title}</a></td>
+                                              <td>${viralVO.keyword}</td>
+                                              <td>${viralVO.viral_time}</td>
+                                              <td>
+                                              <c:if test="${viralVO.viral_isUser == 1}">본사</c:if>
+                                            	<c:if test="${viralVO.viral_isUser == 2}">외부</c:if>
+                                            	</td>
+                                            </tr>
+                                            </c:forEach>
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                    <ul class="pagination float-right">
+                              <c:if test="${pageMaker.prev}">
+                                <li class="page-item">
+                                  <a class="page-link" href="v_cafe${pageMaker.makeSearch(pageMaker.startPage - 1) }" aria-label="Previous">&laquo;
+                                    <span aria-hidden="true"></span>
+                                    <span class="sr-only">Previous</span>
+                                  </a>
+                                </li>
+                              </c:if>
+
+                              <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
+                                <li class= "${pageMaker.cri.page == idx? 'active':''} page-item">
+                                  <a class="page-link" href="v_cafe${pageMaker.makeSearch(idx)}">${idx}</a>
+                                </li>
+                              </c:forEach>
+
+                              <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+                                <li class="page-item">
+                                  <a class="page-link" href="v_cafe${pageMaker.makeSearch(pageMaker.endPage +1) }" aria-label="Next">&raquo;
+                                    <span aria-hidden="true"></span>
+                                    <span class="sr-only">Next</span>
+                                  </a>
+                                </li>
+                              </c:if>
+                            </ul>
+                                  </div>
+                                </div>
+
                               </div>
                             </div>
                           </div>
@@ -454,6 +523,19 @@
 
 	$(document).ready(function(){
 
+		var $fromDate = $("#fromDate");
+
+		  var startDateOption = decodeURI(window.location.href.split("startDate=")[1]).split("&")[0].split(" ")[0];
+		  var endDateOption = decodeURI(window.location.href.split("endDate=")[1]).split("&")[0].split(" ")[0];
+		  console.log("startDateOption: " + startDateOption);
+		  console.log("endDateOption: " + endDateOption);
+
+		  if(startDateOption != 'undefined' && endDateOption != 'undefined'
+				&& startDateOption != '' && endDateOption != ''){
+			  $fromDate.val(startDateOption + " - " + endDateOption);
+
+			}
+
 
 		//점유율 그래프
 		var first = '${blog1}';
@@ -510,7 +592,7 @@
 
 
 		// 사이트 selectbox 유지
-		var siteOption = decodeURI(window.location.href.split("portal_name=")[1]);
+		var siteOption = decodeURI(window.location.href.split("portal_name=")[1]).split("&")[0];
 		console.log("siteOption: " + siteOption);
 
 		var $selectSite = $("#selectSite");
@@ -532,6 +614,7 @@
 			searchList();
 
 		});
+
 
 		// 모달 버튼 클릭시.
 		var modal = $('.btn-modal');
@@ -559,7 +642,7 @@
 		  	  	for(var i = 0; i < list.length; i++){
 
 		  	  		var value = '{';
-					value = value + '"label"' + ':' + '"' + (list[i].writeDate).split(" ")[1] + '",';
+					value = value + '"label"' + ':' + '"' + (list[i].writeDate).split(" ")[0] + '",';
 					value += '"value"' + ':' + '' + (100- list[i].type1) + ',';
 					value += '"color"' + ':' + '"#01C0C8"';
 					value += '},'
@@ -586,9 +669,72 @@
 		  	});
 		});
 
+		// 당일 클릭시
+		$('#toDay').on("click", function(){
+		  console.log("toDay clicked....");
+		  var date = getDate("toDay");
+		  var startDate = date.startDate;
+		  var endDate = date.endDate;
+
+		  $("#fromDate").val(endDate + " - " + endDate)
+		  console.log($("#fromDate").val());
+		  searchList();
+		});
+
+		// 전일 클릭시
+		$('#yesterDay').on("click", function(){
+		  console.log("yesterDay clicked....");
+		  var date = getDate("yesterDay");
+		  var startDate = date.startDate;
+		  var endDate = date.endDate;
+
+		  $("#fromDate").val(startDate + " - " + endDate)
+		  console.log($("#fromDate").val());
+		  searchList();
+		});
+
+		// 7일  클릭시
+		$('#week').on("click", function(){
+		  console.log("week clicked....");
+		  var date = getDate("week");
+		  var startDate = date.startDate;
+		  var endDate = date.endDate;
+
+		  $("#fromDate").val(startDate + " - " + endDate)
+		  console.log($("#fromDate").val());
+		  searchList();
+		})
+
+		// 30일 클릭시
+		$('#month').on("click", function(){
+		  console.log("month clicked....");
+		  var date = getDate("month");
+		  var startDate = date.startDate;
+		  var endDate = date.endDate;
+
+		  $("#fromDate").val(startDate + " - " + endDate)
+		  console.log($("#fromDate").val());
+
+		  searchList();
+
+		})
+
+
+		// 캘린더 클릭시
+		$('#fromDate').on('apply.daterangepicker', function(ev, picker) {
+			   var startDate = picker.startDate.format('YYYY-MM-DD');
+			   var endDate = picker.endDate.format('YYYY-MM-DD');
+
+			   console.log("startDate: " + startDate);
+			   console.log("endDate: " + endDate);
+
+			   searchList();
+
+		});
+
 		// 엑셀 출력
 		//엑셀출력 확인메시지
-		$(document).on("click",".alert-confirm",function(){
+		/* $(document).on("click",".alert-confirm",function(){
 	    swal({
 	          title: "엑셀출력 하시겠습니까?",
 	          text: "현재 리스트가 엑셀출력 됩니다.",
@@ -604,13 +750,13 @@
 				  + "&company=" + $("#selectCompany option:selected").val()
 				  + "&selectKey=" + $('#selectKeyword option:selected').val()
 				  + "&portal_name=" + $("#selectSite option:selected").val()
-				  + "&portal_type=" + "cafe";
+				  + "&portal_type=" + "blog";
 
 
 		  		swal("Success!", "엑셀출력 되었습니다.", "success");
 
 	        });
-		});
+		}); */
 
 	}); // end ready...
 
@@ -652,11 +798,66 @@
 
 	function searchList() {
 
-    	self.location = "v_cafe?"
+		var makeQeury = '${pageMaker.makeQuery(1)}'.slice(0,-2);
+
+		console.log(makeQeury);
+
+    	self.location = "v_cafe"
+    						+ makeQeury + '10'
         					+ "&company=" + $("#selectCompany option:selected").val()
     						+ "&selectKey=" + $('#selectKeyword option:selected').val()
-    						+ "&portal_name=" + $("#selectSite option:selected").val();
+    						+ "&portal_name=" + $("#selectSite option:selected").val()
+    						+ "&startDate=" + makeDateFormat($("#fromDate").val(), 0)
+				 			+ "&endDate=" +  makeDateFormat($("#fromDate").val(), 1);
     }
+
+
+	// 날짜 계산 함수
+	function getDate(type){
+		console.log("TYPE : " + type);
+		var date = new Date();
+
+	 	var month = date.getMonth()+1;
+	 	var day = date.getDate();
+	 	var year = date.getFullYear();
+
+	 	var endDate = year + "-" + month + "-" + day;
+	 	var startDate;
+
+	 	if(type == "yesterDay"){
+	 		var calcDate = day-1;
+	 		startDate = year + "-" + month + "-" + calcDate;
+
+	 	}else if(type == "month"){
+	 		var calcDate = month-1;
+	 		startDate = year + "-" + calcDate + "-" + day;
+
+	 	}else if(type == "week"){
+	 		var calcDate = day-7;
+	 		if(calcDate < 0){
+	 			var lastDay = (new Date(year, month-1, 0)).getDate();
+	 			calcDate += lastDay;
+	 			month -= 1;
+	 		}
+	 		startDate = year + "-" + month + "-" + calcDate;
+	 	}
+
+	 	return {
+	 		startDate : startDate,
+	 		endDate : endDate
+	 	}
+
+	}
+
+	function makeDateFormat(date, index){
+		var splitDate = date.split(" - ")[index];
+			if(splitDate != undefined){
+				var returnDate = splitDate.replace("/", "-").replace("/", "-")
+				return returnDate;
+			}
+
+
+	}
 
 </script>
 

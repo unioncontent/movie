@@ -24,6 +24,7 @@ import org.union.domain.GraphVO;
 import org.union.domain.PageMaker;
 import org.union.domain.PeriodMediaVO;
 import org.union.domain.SearchCriteria;
+import org.union.domain.TextTypeVO;
 import org.union.domain.UserVO;
 import org.union.service.CommunityService;
 import org.union.service.KeywordService;
@@ -366,7 +367,14 @@ public class PeriodController {
 		  model.addAttribute("mediaCount", mediaList.size());
 		  model.addAttribute("pressCount", reporterList.size());
 		  model.addAttribute("totalCount", mediaService.getTotalCount(cri));
-		  model.addAttribute("matchCount", mediaService.getMatchCount(cri));
+		  
+		  if(cri.getSelectKey() == null && cri.getCompany() == null) {
+			  model.addAttribute("matchCount", 0);
+		  
+		  }else {
+			  model.addAttribute("matchCount", mediaService.getMatchCount(cri));
+		  }
+		  
 		  
 		  mediaList = mediaList.subList(0, 20);
 		  reporterList = reporterList.subList(0, 20);
@@ -382,17 +390,21 @@ public class PeriodController {
 		  logger.info("list: " + mediaService.listSearch(cri));
 		  PageMaker pageMaker = new PageMaker();
 		  
+		  Integer totalCount = mediaService.getSearchCount(cri);
+		  
 		  pageMaker.setCri(cri);
-		  pageMaker.setTotalCount(mediaService.getSearchCount(cri));
+		  pageMaker.setTotalCount(totalCount);
 		  
 		  model.addAttribute("pageMaker", pageMaker);
+		  model.addAttribute("totalCount", totalCount);
+		  model.addAttribute("minusCount", cri.getPerPageNum() * (cri.getPage()-1));
 		  
 		  cri.setKeyword(keyword);
-		  
-		  logger.info(mediaService.periodTextTypeCount(cri) + "");
+
+		  model.addAttribute("mediaTypeCount", mediaService.periodTextTypeCount(cri));
 		  
 		  cri.setTextType("press");
-		  logger.info(mediaService.periodTextTypeCount(cri) + "");
+		  model.addAttribute("pressTypeCount", mediaService.periodTextTypeCount(cri));
 		  
 		  
 	}
