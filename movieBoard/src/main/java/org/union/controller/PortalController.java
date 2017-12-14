@@ -479,8 +479,21 @@ public class PortalController {
 	public void v_cafeGET(@ModelAttribute("cri") SearchCriteria cri, Model model) {
 		logger.info("v_cafeGET called....");
 		
-		cri.setStartDate(null);
-		cri.setEndDate(null);
+		if("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate())
+				|| cri.getStartDate() == "" || cri.getEndDate() == ""){
+			cri.setStartDate(null);
+			cri.setEndDate(null);
+		
+		} 
+		if(cri.getStartDate() != null && cri.getEndDate() != null) {
+			logger.info("not null");
+			logger.info(cri.getStartDate());
+			logger.info(cri.getEndDate());
+			if(cri.getStartDate().indexOf("00:00:00") < 0 && cri.getEndDate().indexOf("23:59:59") < 0){ 
+				cri.setStartDate(cri.getStartDate() + " 00:00:00"); 
+				cri.setEndDate(cri.getEndDate() + " 23:59:59"); 
+			}
+		}
 		
 		if (cri.getCompany() != null) {
 			if (cri.getCompany().isEmpty()) {
@@ -529,30 +542,68 @@ public class PortalController {
 				cri.setPortal_name("all");
 			}
 		}
-		
-		
-		// 키워드 설정 
-		// 
 
 		cri.setPortal_type("cafe");
 		
 		logger.info("cri: " + cri);
+		PageMaker pageMaker = new PageMaker();
+		Integer totalCount = 0;
 		
-		model.addAttribute("blog0", viralService.getHistoryCount(cri));
-		model.addAttribute("blog1", viralService.getSearchInCount(cri));
-		model.addAttribute("blog2", viralService.getSearchOutCount(cri));
-		
-		if(cri.getCompany() != null) {
+		if(cri.getCompany() != null && cri.getSelectKey() != null) {
+			
+			totalCount = viralService.getHistoryCount(cri);
+			
+			model.addAttribute("blog0", totalCount);
+			model.addAttribute("historyList", viralService.historyPage(cri));
+			
+			model.addAttribute("pageMaker", pageMaker);
+			
+			cri.setStartDate(cri.getStartDate().split(" ")[0]);
+			cri.setEndDate(cri.getEndDate().split(" ")[0]);
+			pageMaker.setCri(cri);
+			pageMaker.setTotalCount(totalCount);
+			
+			String tempEndDate = cri.getEndDate();
+			
+			cri.setEndDate(null);
+			model.addAttribute("blog1", viralService.getSearchInCount(cri));
+			model.addAttribute("blog2", viralService.getSearchOutCount(cri));
 			model.addAttribute("blogList", viralService.searchAllList(cri));
+			
+			cri.setEndDate(tempEndDate);
+			
+			// endDate null로 셋팅한 것 복원.
+		}else {
+			
+			pageMaker.setCri(cri);
+			pageMaker.setTotalCount(totalCount);
+			
+			model.addAttribute("pageMaker", pageMaker);
+			
 		}
+		
+		pageMaker.setCri(cri);
 	}
 	
 	@GetMapping("/v_kin")
 	public void v_kinGET(@ModelAttribute("cri") SearchCriteria cri, Model model) {
 		logger.info("v_kinGET called....");
 		
-		cri.setStartDate(null);
-		cri.setEndDate(null);
+		if("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate())
+				|| cri.getStartDate() == "" || cri.getEndDate() == ""){
+			cri.setStartDate(null);
+			cri.setEndDate(null);
+		
+		} 
+		if(cri.getStartDate() != null && cri.getEndDate() != null) {
+			logger.info("not null");
+			logger.info(cri.getStartDate());
+			logger.info(cri.getEndDate());
+			if(cri.getStartDate().indexOf("00:00:00") < 0 && cri.getEndDate().indexOf("23:59:59") < 0){ 
+				cri.setStartDate(cri.getStartDate() + " 00:00:00"); 
+				cri.setEndDate(cri.getEndDate() + " 23:59:59"); 
+			}
+		}
 		
 		if (cri.getCompany() != null) {
 			if (cri.getCompany().isEmpty()) {
@@ -601,26 +652,68 @@ public class PortalController {
 				cri.setPortal_name("all");
 			}
 		}
-		
+
 		cri.setPortal_type("kintip");
 		
 		logger.info("cri: " + cri);
+		PageMaker pageMaker = new PageMaker();
+		Integer totalCount = 0;
 		
-		model.addAttribute("blog0", viralService.getHistoryCount(cri));
-		model.addAttribute("blog1", viralService.getSearchInCount(cri));
-		model.addAttribute("blog2", viralService.getSearchOutCount(cri));
-		
-		if(cri.getCompany() != null) {
+		if(cri.getCompany() != null && cri.getSelectKey() != null) {
+			
+			totalCount = viralService.getHistoryCount(cri);
+			
+			model.addAttribute("blog0", totalCount);
+			model.addAttribute("historyList", viralService.historyPage(cri));
+			
+			model.addAttribute("pageMaker", pageMaker);
+			
+			cri.setStartDate(cri.getStartDate().split(" ")[0]);
+			cri.setEndDate(cri.getEndDate().split(" ")[0]);
+			pageMaker.setCri(cri);
+			pageMaker.setTotalCount(totalCount);
+			
+			String tempEndDate = cri.getEndDate();
+			
+			cri.setEndDate(null);
+			model.addAttribute("blog1", viralService.getSearchInCount(cri));
+			model.addAttribute("blog2", viralService.getSearchOutCount(cri));
 			model.addAttribute("blogList", viralService.searchAllList(cri));
+			
+			cri.setEndDate(tempEndDate);
+			
+			// endDate null로 셋팅한 것 복원.
+		}else {
+			
+			pageMaker.setCri(cri);
+			pageMaker.setTotalCount(totalCount);
+			
+			model.addAttribute("pageMaker", pageMaker);
+			
 		}
+		
+		pageMaker.setCri(cri);
 	}
 	
 	@GetMapping("/v_web")
 	public void v_webGET(@ModelAttribute("cri") SearchCriteria cri, Model model) {
 		logger.info("v_webGET called....");
 		
-		cri.setStartDate(null);
-		cri.setEndDate(null);
+		if("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate())
+				|| cri.getStartDate() == "" || cri.getEndDate() == ""){
+			cri.setStartDate(null);
+			cri.setEndDate(null);
+		
+		} 
+		if(cri.getStartDate() != null && cri.getEndDate() != null) {
+			logger.info("not null");
+			logger.info(cri.getStartDate());
+			logger.info(cri.getEndDate());
+			if(cri.getStartDate().indexOf("00:00:00") < 0 && cri.getEndDate().indexOf("23:59:59") < 0){ 
+				cri.setStartDate(cri.getStartDate() + " 00:00:00"); 
+				cri.setEndDate(cri.getEndDate() + " 23:59:59"); 
+			}
+		}
 		
 		if (cri.getCompany() != null) {
 			if (cri.getCompany().isEmpty()) {
@@ -669,18 +762,47 @@ public class PortalController {
 				cri.setPortal_name("all");
 			}
 		}
-		
+
 		cri.setPortal_type("webdoc");
 		
 		logger.info("cri: " + cri);
+		PageMaker pageMaker = new PageMaker();
+		Integer totalCount = 0;
 		
-		model.addAttribute("blog0", viralService.getHistoryCount(cri));
-		model.addAttribute("blog1", viralService.getSearchInCount(cri));
-		model.addAttribute("blog2", viralService.getSearchOutCount(cri));
-		
-		if(cri.getCompany() != null) {
+		if(cri.getCompany() != null && cri.getSelectKey() != null) {
+			
+			totalCount = viralService.getHistoryCount(cri);
+			
+			model.addAttribute("blog0", totalCount);
+			model.addAttribute("historyList", viralService.historyPage(cri));
+			
+			model.addAttribute("pageMaker", pageMaker);
+			
+			cri.setStartDate(cri.getStartDate().split(" ")[0]);
+			cri.setEndDate(cri.getEndDate().split(" ")[0]);
+			pageMaker.setCri(cri);
+			pageMaker.setTotalCount(totalCount);
+			
+			String tempEndDate = cri.getEndDate();
+			
+			cri.setEndDate(null);
+			model.addAttribute("blog1", viralService.getSearchInCount(cri));
+			model.addAttribute("blog2", viralService.getSearchOutCount(cri));
 			model.addAttribute("blogList", viralService.searchAllList(cri));
+			
+			cri.setEndDate(tempEndDate);
+			
+			// endDate null로 셋팅한 것 복원.
+		}else {
+			
+			pageMaker.setCri(cri);
+			pageMaker.setTotalCount(totalCount);
+			
+			model.addAttribute("pageMaker", pageMaker);
+			
 		}
+		
+		pageMaker.setCri(cri);
 	}
 	
 	@GetMapping("/v_score")

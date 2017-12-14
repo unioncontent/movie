@@ -95,7 +95,7 @@
                             <i class="icofont icofont-home"></i>
                           </a>
                         </li>
-                        <li class="breadcrumb-item"><a href="mngViral.html">바이럴관리</a></li>
+                        <li class="breadcrumb-item"><a href="viral">바이럴관리</a></li>
                         <li class="breadcrumb-item"><a href="#!">블로그관리</a></li>
                       </ul>
                     </div>
