@@ -148,37 +148,37 @@
                         <!-- tab header start -->
                         <div class="tab-header">
                           <ul class="nav nav-tabs nav-vtabs md-tabs tab-timeline" role="tablist" id="mytab">
-                            <a class="nav-item" href="mngViral.html">
-                              <li class="nav-link">
+                            <a class="nav-item" href="viral">
+                              <li class="nav-link ">
                                 <p>바이럴관리</p>
                                 <div class="slide"></div>
                               </li>
                             </a>
-                            <a class="nav-item" href="viralBlog.html">
+                            <a class="nav-item" href="v_blog">
                               <li class="nav-link">
                                 <p>블로그관리</p>
                                 <div class="slide"></div>
                               </li>
                             </a>
-                            <a class="nav-item" href="viralCafe.html">
+                            <a class="nav-item" href="v_cafe">
                               <li class="nav-link">
                                   <p>카페관리</p>
                                   <div class="slide"></div>
                               </li>
                             </a>
-                            <a class="nav-item" href="viralKinTip.html">
-                              <li class="nav-linke">
+                            <a class="nav-item" href="v_kin">
+                              <li class="nav-link">
                                 <p>지식인/Tip관리</p>
                                 <div class="slide"></div>
                               </li>
                             </a>
-                            <a class="nav-item" href="viralWeb.html">
+                            <a class="nav-item" href="v_web">
                               <li class="nav-link">
                                 <p>웹문서관리</p>
                                 <div class="slide"></div>
                               </li>
                             </a>
-                            <a class="nav-item" href="viralRword.html">
+                            <a class="nav-item" href="v_score">
                               <li class="nav-link active">
                                 <p>평점관리</p>
                                 <div class="slide"></div>
@@ -323,7 +323,10 @@
                                             <c:if test="${scoreCount == 6 or scoreCount == 7}">양호</c:if>
                                             <c:if test="${scoreCount == 8 or scoreCount == 9}">좋음</c:if>
                                             <c:if test="${scoreCount == 10}">아주좋음</c:if>
-                                          </strong></h2>
+                                          </strong>
+                                          <small style="font-size:20px; font-weight: 400;"><br /> 
+                                          ${scoreCount} 점</small>
+                                          </h2>
                                       </div>
                                     </div>
                                   </div>
