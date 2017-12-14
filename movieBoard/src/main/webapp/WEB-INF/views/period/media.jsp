@@ -104,7 +104,8 @@
                     <div class="row">
                       <!-- data setting start -->
                       <div class="col-md-7">
-                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="selectCompany">
+                       <c:if test="${user.user_name == 'union'}">
+                         <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="selectCompany">
                           <option>회사</option>
                           <c:if test="${user.user_type == 1 }">
                           <c:forEach items="${companyList}" var = "companyList">
@@ -115,6 +116,21 @@
                           <option value="${companyList.user_name}">${companyList.user_name}</option>
                           </c:if>
                         </select>
+						</c:if>
+						
+						<c:if test="${user.user_name != 'union'}">
+                         <select style="display: none;" name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="selectCompany">
+                          <option>회사</option>
+                          <c:if test="${user.user_type == 1 }">
+                          <c:forEach items="${companyList}" var = "companyList">
+                          <option value="${companyList.user_name}">${companyList.user_name}</option>
+                          </c:forEach>
+                          </c:if>
+                          <c:if test="${user.user_type == 2}">
+                          <option value="${companyList.user_name}">${companyList.user_name}</option>
+                          </c:if>
+                        </select>
+						</c:if>
 
                         <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left" id="selectKeyword">
                           <option>키워드</option>
@@ -362,7 +378,7 @@
                                         <tbody>
                                           <c:forEach items="${searchList}" var = "mediaVO" varStatus="index">
                                           <tr>
-                                            <th scope="row">${totalCount - minusCount - index.count + 1}</th>
+                                            <th scope="row">${totalCountPage - minusCount - index.count + 1}</th>
                                             <td>
                                             <fmt:formatDate value="${mediaVO.updateDate}" pattern="yyyy-MM-dd kk:mm:ss"/>
                                             </td>
@@ -927,6 +943,30 @@
 		pieGraph1();
 		pieGraph2();
 		
+		// 엑셀 출력
+		document.querySelector('.alert-confirm').onclick = function(){
+		    swal({
+		          title: "엑셀출력 하시겠습니까?",
+		          text: "현재 리스트가 엑셀출력 됩니다.",
+		          type: "warning",
+		          showCancelButton: true,
+		          confirmButtonClass: "btn-danger",
+		          confirmButtonText: "YES",
+		          closeOnConfirm: false
+		        },
+		        function(){//엑셀 출력하겠다고 할 시 진행 함수
+		          
+		        	self.location = "excel?"
+		  			  + "company=" + $("#selectCompany option:selected").val()
+		  			  + "&selectKey=" + $('#selectKeyword option:selected').val()
+		  			  + "&part=media"
+		  			  + "&startDate=" + makeDateFormat($("#fromDate").val(), 0)
+		  			  + "&endDate=" +  makeDateFormat($("#fromDate").val(), 1);
+
+		  	  		swal("Success!", "엑셀출력 되었습니다.", "success");
+		        });
+		  };
+		
 	});
 
 	
@@ -1053,7 +1093,32 @@
 		console.log('${mediaTypeCount.dis}');
 		console.log('${mediaTypeCount.cu}');
 		console.log('${mediaTypeCount.etc}');
-	    return [{
+	    
+		return [{
+		      "label": "좋은기사",
+		      "value": '${pressTypeCount.lik}',
+		      "color": "#2ecc71"
+		  },{
+		      "label": "나쁜기사",
+		      "value": '${pressTypeCount.dis}',
+		      "color": "#e74c3c"
+		  },{
+		      "label": "관심기사",
+		      "value": '${pressTypeCount.cu}',
+		      "color": "#FF9F55"
+		  },   {
+		      "label": "기타기사",
+		      "value": '${pressTypeCount.etc}',
+		      "color": "#f1c40f"
+		  }];
+	}
+	function pieData2() {
+		console.log("press count");
+		console.log('${pressTypeCount.lik}');
+		console.log('${pressTypeCount.dis}');
+		console.log('${pressTypeCount.cu}');
+		console.log('${pressTypeCount.etc}');
+		return [{
 	        "label": "좋은기사",
 	        "value": '${mediaTypeCount.lik}',
 	        "color": "#2ecc71"
@@ -1070,30 +1135,6 @@
 	        "value": '${mediaTypeCount.etc}',
 	        "color": "#f1c40f"
 	    }];
-	}
-	function pieData2() {
-		console.log("press count");
-		console.log('${pressTypeCount.lik}');
-		console.log('${pressTypeCount.dis}');
-		console.log('${pressTypeCount.cu}');
-		console.log('${pressTypeCount.etc}');
-	  return [{
-	      "label": "좋은기사",
-	      "value": '${pressTypeCount.lik}',
-	      "color": "#2ecc71"
-	  },{
-	      "label": "나쁜기사",
-	      "value": '${pressTypeCount.dis}',
-	      "color": "#e74c3c"
-	  },{
-	      "label": "관심기사",
-	      "value": '${pressTypeCount.cu}',
-	      "color": "#FF9F55"
-	  },   {
-	      "label": "기타기사",
-	      "value": '${pressTypeCount.etc}',
-	      "color": "#f1c40f"
-	  }];
 	}
 </script>
 
