@@ -150,7 +150,7 @@
                               <option id="m" value="m">언론사명</option>
                             </select>
                             <div class="col-sm-2 input-group input-group-button input-group-inverse p-l-0 p-r-0 m-b-10 f-left btn-select">
-                              <input id="keywordInput" type="text" class="form-control" placeholder="">
+                               <input onkeyup="if(event.keyCode == 13){$('#searchBtn').trigger('click');};"id="keywordInput" type="text" class="form-control" placeholder="">
                               <span class="input-group-addon" id="basic-addon1">
                                 <button id="searchBtn" class="btn btn-inverse">검색</button>
                               </span>
@@ -178,7 +178,7 @@
                                     <input type="hidden" value="${mediaList.media_idx}">
                                     <th width="5%">${totalCount -index.count +1 -minusCount}</th>
                                     <th width="10%">${mediaList.writeDate}</th>
-                                    <th width="40%" class="text-success">${mediaList.media_title}</th>
+                                    <th width="40%" class="text-success"><a href="${mediaList.url}" target="_blank">${mediaList.media_title}</a></th>
                                     <th width="5%">${mediaList.media_name}</th>
                                     <th width="5%">${mediaList.reporter_name}</th>
                                     <th width="5%">${mediaList.keyword}</th>
@@ -526,7 +526,7 @@
 		})
 		
 		// content 길시에 ...으로 변경  
-		var $content = $(".text-success");
+		var $content = $(".text-success").children();
 	
 		var size = 25;
 	

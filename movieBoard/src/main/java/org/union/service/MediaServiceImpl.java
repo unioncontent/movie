@@ -104,6 +104,20 @@ public class MediaServiceImpl implements MediaService {
 	@Override
 	public List<MediaVO> listSearch(SearchCriteria vo) {
 
+		List<MediaVO> list = mediaDAO.listSearch(vo);
+		
+		for (MediaVO mediaVO : list) {
+			if(mediaVO.getKeyword() != null && !mediaVO.getKeyword().equals("press")) {
+				
+				try {
+					mediaVO.setKeyword_main(keywordDAO.read(mediaVO.getKeyword()).getKeyword_main());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+			}
+		}
+		
 		return mediaDAO.listSearch(vo);
 	}
 	

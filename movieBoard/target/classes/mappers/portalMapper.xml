@@ -231,6 +231,7 @@
  		select count(*) from portal_data
  		where 
  			textType is not null
+ 		and score is null 
  		and
  			portal_name = 'naver'
  		<include refid="search"></include>
@@ -329,6 +330,7 @@
  		select count(*) from portal_data
  		where 
  			textType is not null
+ 		and score is null 
  		and
  			portal_name = 'daum'
  		<include refid="search"></include>
@@ -385,6 +387,8 @@
 			portal_data
 		where 
 			textType is not null
+		and
+			score is null
 		<include refid="search"></include>
 		order 
 			by updateDate desc
@@ -446,6 +450,7 @@
 			portal_data
 		where 
 			textType is not null
+		and score is null
 		<include refid="search"></include>
  	
  	</select>
@@ -468,6 +473,8 @@
 			portal_data
 		where
 			textType is not null
+		and
+			score is null
 		<include refid="search"></include>
 			
 	</select>
