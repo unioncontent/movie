@@ -367,7 +367,14 @@ public class PeriodController {
 		  model.addAttribute("mediaCount", mediaList.size());
 		  model.addAttribute("pressCount", reporterList.size());
 		  model.addAttribute("totalCount", mediaService.getTotalCount(cri));
-		  model.addAttribute("matchCount", mediaService.getMatchCount(cri));
+		  
+		  if(cri.getSelectKey() == null && cri.getCompany() == null) {
+			  model.addAttribute("matchCount", 0);
+		  
+		  }else {
+			  model.addAttribute("matchCount", mediaService.getMatchCount(cri));
+		  }
+		  
 		  
 		  mediaList = mediaList.subList(0, 20);
 		  reporterList = reporterList.subList(0, 20);
@@ -383,10 +390,14 @@ public class PeriodController {
 		  logger.info("list: " + mediaService.listSearch(cri));
 		  PageMaker pageMaker = new PageMaker();
 		  
+		  Integer totalCount = mediaService.getSearchCount(cri);
+		  
 		  pageMaker.setCri(cri);
-		  pageMaker.setTotalCount(mediaService.getSearchCount(cri));
+		  pageMaker.setTotalCount(totalCount);
 		  
 		  model.addAttribute("pageMaker", pageMaker);
+		  model.addAttribute("totalCount", totalCount);
+		  model.addAttribute("minusCount", cri.getPerPageNum() * (cri.getPage()-1));
 		  
 		  cri.setKeyword(keyword);
 
