@@ -8,9 +8,8 @@
   <div class="pcoded-inner-navbar main-menu">
     <div class="">
       <div class="main-menu-header">
-        <img class="img-50" src="../assets/images/avatar-blank.png" alt="User-Profile-Image">
         <div class="user-details">
-          <span id="more-details">Union</span>
+          <span id="more-details">Union Content</span>
         </div>
       </div>
     </div>
@@ -177,9 +176,10 @@
 
 		var li = window.document.getElementsByClassName(domain)[0];
 		
-		li.className += " active pcoded-trigger";
-		
 		console.log(li);
+		if(li != undefined){
+			li.className += " active pcoded-trigger";
+		}
 		
 	
 </script>

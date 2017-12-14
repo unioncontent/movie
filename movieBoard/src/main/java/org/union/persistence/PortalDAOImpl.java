@@ -228,4 +228,32 @@ public class PortalDAOImpl implements PortalDAO {
 		return session.selectOne(namespace + "getTypeOfActorCount", cri);
 	}
 
+
+	@Override
+	public Integer getScoreCount(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "getScoreCount", cri);
+	}
+
+
+	@Override
+	public List<PortalVO> getScoreList(SearchCriteria cri) {
+
+		return session.selectList(namespace + "getScoreList", cri);
+	}
+
+
+	@Override
+	public TextTypeVO getScoreTextType(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "getScoreTextType", cri);
+	}
+
+
+	@Override
+	public List<Integer> getOnlyScore(SearchCriteria cri) {
+
+		return session.selectList(namespace + "getOnlyScore", cri);
+	}
+
 }
