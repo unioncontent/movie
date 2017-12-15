@@ -10,31 +10,31 @@
 	<div class="tab-header">
 		<ul class="nav nav-tabs md-tabs tab-timeline" role="tablist"
 			id="mytab">
-			<a class="nav-item" href="../period/main">
+			<a class="nav-item">
 				<li id="main" class="nav-link">
 					<p>통계보고서</p>
 					<div class="slide"></div>
 			</li>
 			</a>
-			<a class="nav-item" href="../period/portal">
+			<a class="nav-item">
 				<li id="portal" class="nav-link">
 					<p>포털통계</p>
 					<div class="slide"></div>
 			</li>
 			</a>
-			<a class="nav-item" href="../period/community">
+			<a class="nav-item">
 				<li id="community" class="nav-link">
 					<p>커뮤니티통계</p>
 					<div class="slide"></div>
 			</li>
 			</a>
-			<a class="nav-item" href="../period/sns">
+			<a class="nav-item">
 				<li id="sns" class="nav-link">
 					<p>SNS통계</p>
 					<div class="slide"></div>
 			</li>
 			</a>
-			<a class="nav-item" href="../period/media">
+			<a class="nav-item">
 				<li id="media" class="nav-link">
 					<p>언론사통계</p>
 					<div class="slide"></div>
@@ -69,4 +69,21 @@
 	}else if(selectOption == 'media'){
 		$("#media").addClass('active');
 	}
+	
+	$(".nav-item").on("click", function(event){
+
+		var part = event.currentTarget.children[0].id;
+
+		var parameter = decodeURI(window.location.href.split("period/")[1]).split("?")[1];
+		console.log("parameter: " + parameter);
+
+		if(parameter == undefined){
+			self.location = "../period/" + part;
+		
+		}else{
+			self.location = "../period/" + part + "?" + parameter;
+		}
+		
+	});
+	
 </script>

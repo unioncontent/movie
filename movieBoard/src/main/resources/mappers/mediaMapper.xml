@@ -377,7 +377,7 @@
  		from
  			media_data
  		where
- 			reporter_name = #{keyword}
+ 			reporter_name like concat('%', #{keyword}, '%')
  	    <include refid="periodSearch"></include>
  	</select>
  	
@@ -402,6 +402,77 @@
 			media_idx = #{media_idx}
 	
 	</update>
+	
+	<select id="getMediaPortalCount" resultType="TextTypeVO">
+		select
+			count(if(media_name='naver', media_name, null)) lik,
+			count(if(media_name='daum', media_name, null)) dis
+		from
+			media_data
+		where
+			media_content like concat('%', #{keyword}, '%')
+		<include refid="periodSearch"></include>
+	</select>
+	
+ 	<select id="getMediaTextTypeTotalCount" resultType="TextTypeVO">
+	 	select
+			count(if(textType='좋은글', textType, null)) lik,
+			count(if(textType='나쁜글', textType, null)) dis,
+			count(if(textType='관심글', textType, null)) cu
+		from
+			media_data
+		where
+			media_content like concat('%', #{keyword}, '%')
+	
+ 	</select>
  	
+ 	<select id="getMediaTextTypeSearchCount" resultType="TextTypeVO">
+	 	select
+			count(if(textType='좋은글', textType, null)) lik,
+			count(if(textType='나쁜글', textType, null)) dis,
+			count(if(textType='관심글', textType, null)) cu
+		from
+			media_data
+		where
+			media_content like concat('%', #{keyword}, '%')
+		<include refid="periodSearch"></include>
+		
+ 	</select>
+ 	
+ 	<select id="getPressPortalCount" resultType="TextTypeVO">
+		select
+			count(if(media_name='naver', media_name, null)) lik,
+			count(if(media_name='daum', media_name, null)) dis
+		from
+			media_data
+		where
+			reporter_name like concat('%', #{keyword}, '%')
+		<include refid="periodSearch"></include>
+	</select>
+	
+ 	<select id="getPressTextTypeTotalCount" resultType="TextTypeVO">
+	 	select
+			count(if(textType='좋은글', textType, null)) lik,
+			count(if(textType='나쁜글', textType, null)) dis,
+			count(if(textType='관심글', textType, null)) cu
+		from
+			media_data
+		where
+			reporter_name like concat('%', #{keyword}, '%')
+	
+ 	</select>
+ 	
+ 	<select id="getPressTextTypeSearchCount" resultType="TextTypeVO">
+	 	select
+			count(if(textType='좋은글', textType, null)) lik,
+			count(if(textType='나쁜글', textType, null)) dis,
+			count(if(textType='관심글', textType, null)) cu
+		from
+			media_data
+		where
+			reporter_name like concat('%', #{keyword}, '%')
+		<include refid="periodSearch"></include>
+		
+ 	</select>
  
  </mapper>

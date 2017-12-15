@@ -57,4 +57,13 @@ public interface MediaService {
 	
 	public void modifyThumbnail(MediaVO vo);
 	
+	public TextTypeVO getMediaPortalCount(SearchCriteria cri);
+	public TextTypeVO getMediaTextTypeTotalCount(SearchCriteria cri);
+	public TextTypeVO getMediaTextTypeSearchCount(SearchCriteria cri);
+	
+	public TextTypeVO getPressPortalCount(SearchCriteria cri);
+	public TextTypeVO getPressTextTypeTotalCount(SearchCriteria cri);
+	public TextTypeVO getPressTextTypeSearchCount(SearchCriteria cri);
+	
+	
 }

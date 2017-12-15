@@ -330,4 +330,40 @@ public class MediaServiceImpl implements MediaService {
 		return mediaDAO.periodTextTypeCount(cri);
 	}
 
+	@Override
+	public TextTypeVO getMediaPortalCount(SearchCriteria cri) {
+
+		return mediaDAO.getMediaPortalCount(cri);
+	}
+
+	@Override
+	public TextTypeVO getMediaTextTypeTotalCount(SearchCriteria cri) {
+
+		return mediaDAO.getMediaTextTypeTotalCount(cri);
+	}
+
+	@Override
+	public TextTypeVO getMediaTextTypeSearchCount(SearchCriteria cri) {
+
+		return mediaDAO.getMediaTextTypeSearchCount(cri);
+	}
+
+	@Override
+	public TextTypeVO getPressPortalCount(SearchCriteria cri) {
+
+		return mediaDAO.getPressPortalCount(cri);
+	}
+
+	@Override
+	public TextTypeVO getPressTextTypeTotalCount(SearchCriteria cri) {
+
+		return mediaDAO.getPressTextTypeTotalCount(cri);
+	}
+
+	@Override
+	public TextTypeVO getPressTextTypeSearchCount(SearchCriteria cri) {
+
+		return mediaDAO.getPressTextTypeSearchCount(cri);
+	}
+
 }

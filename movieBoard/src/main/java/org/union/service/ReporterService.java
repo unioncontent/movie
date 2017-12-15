@@ -14,4 +14,6 @@ public interface ReporterService {
 	public List<ReporterVO> listSearch(SearchCriteria cri);
 	
 	public Integer getSearchCount(SearchCriteria cri);
+	
+	public ReporterVO readByName(String reporter_name);
 }

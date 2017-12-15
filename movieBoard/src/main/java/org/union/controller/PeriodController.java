@@ -23,6 +23,7 @@ import org.union.domain.ExtractVO;
 import org.union.domain.GraphVO;
 import org.union.domain.PageMaker;
 import org.union.domain.PeriodMediaVO;
+import org.union.domain.ReporterVO;
 import org.union.domain.SearchCriteria;
 import org.union.domain.TextTypeVO;
 import org.union.domain.UserVO;
@@ -30,6 +31,7 @@ import org.union.service.CommunityService;
 import org.union.service.KeywordService;
 import org.union.service.MediaService;
 import org.union.service.PortalService;
+import org.union.service.ReporterService;
 import org.union.service.SNSService;
 import org.union.service.UserService;
 import org.union.util.ExcelView;
@@ -59,6 +61,9 @@ public class PeriodController {
 
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private ReporterService reporterService;	
 
 	@GetMapping("/main")
 	public void mainGET(@ModelAttribute("cri") SearchCriteria cri, Model model) {
@@ -410,6 +415,62 @@ public class PeriodController {
 		  
 	}
 
+	@ResponseBody
+	@PostMapping("/getTextType")
+	public List<TextTypeVO> getTextType(String url, String part, String keyword){
+		logger.info("getTextType called....");
+
+		SearchCriteria cri  = new SearchCriteria();
+		
+		if(!url.equals("undefined")) {
+			String company = url.split("company")[1].split("&")[0];
+			String selectKey = url.split("selectKey")[1].split("&")[0];
+			String startDate = url.split("startDate")[1].split("&")[0] + " 00:00:00";
+			String endDate = url.split("endDate")[1].split("&")[0] + " 23:59:50";
+			
+			cri.setCompany(company);
+			cri.setSelectKey(selectKey);
+			cri.setStartDate(startDate);
+			cri.setEndDate(endDate);
+		}
+		
+		cri.setKeyword(keyword);
+		
+		logger.info("cri: " + cri);
+		
+		List<TextTypeVO> list = new ArrayList<TextTypeVO>();
+		
+		if(part.equals("media")) {
+			list.add(mediaService.getMediaPortalCount(cri));
+			list.add(mediaService.getMediaTextTypeTotalCount(cri));
+			list.add(mediaService.getMediaTextTypeSearchCount(cri));
+			
+		}else if(part.equals("press")) {
+			list.add(mediaService.getPressPortalCount(cri));
+			list.add(mediaService.getPressTextTypeTotalCount(cri));
+			list.add(mediaService.getPressTextTypeSearchCount(cri));
+			
+			TextTypeVO textTypeVO = new TextTypeVO();
+			ReporterVO reporterVO = reporterService.readByName(keyword);
+			
+			try {
+				textTypeVO.setName1(reporterVO.getReporter_name());
+				textTypeVO.setName2(reporterVO.getReporter_media_name());
+				if(reporterVO.getReporter_email() != null) {
+					textTypeVO.setEmail(reporterVO.getReporter_email());
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				
+			}finally {
+				list.add(textTypeVO);
+			}
+			
+		}
+		
+		return list;
+	}
+	
 	@GetMapping("/sns")
 	public void snsGET(@ModelAttribute("cri") SearchCriteria cri, Model model) {
 		logger.info("snsGET called....");
