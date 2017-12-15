@@ -12,6 +12,8 @@ public interface ReporterDAO {
 	
 	public ReporterVO read(Integer reporter_idx);
 	
+	public ReporterVO readByName(String reporter_name);
+	
 	public void update(ReporterVO vo);
 	
 	public void delete(Integer reporter_idx);

@@ -286,8 +286,75 @@ $(document).ready(function() {
 });
 
 //modal
-function showModal(element){
-  $(element).modal('show');
+function showModal(element, event){
+	
+	console.log(event);
+	
+	var url = decodeURI(window.location.href.split("/media?")[1]);
+	var part = "";
+	
+	if(element.indexOf("news") >= 0){
+		part = 'media';
+	}else if(element.indexOf("press") >= 0){
+		part = 'press';
+	}
+	
+	$.ajax({
+		type : "POST",
+	  	url : "getTextType",
+ 	  	dataType : "json",
+ 	  	data : {url : url, part : part, keyword : event},
+  	  	success : function(list){
+  	  		
+  	  		console.log(list);
+  	  		
+  	  		if(part == 'media'){
+  	  			$("#mediaName")[0].innerText = event;
+  	  			$("#media1_1")[0].innerText = list[0].lik + list[0].dis;
+  	  			$("#media1_2")[0].innerText = list[0].lik;
+  	  			$("#media1_3")[0].innerText = list[0].dis;
+  	  			
+  	  			$("#media2_1")[0].innerText = list[1].lik + list[1].dis + list[1].cu;
+  	  			$("#media2_2")[0].innerText = list[1].lik;
+  	  			$("#media2_3")[0].innerText = list[1].dis;
+  	  			$("#media2_4")[0].innerText = list[1].cu;
+
+  	  			$("#media3_1")[0].innerText = list[2].lik + list[2].dis + list[2].cu;
+  	  			$("#media3_2")[0].innerText = list[2].lik;
+  	  			$("#media3_3")[0].innerText = list[2].dis;
+  	  			$("#media3_4")[0].innerText = list[2].cu;
+  	  			
+  	  		
+  	  		}else if(part == 'press'){
+  	  			
+  	  			$("#press1_1")[0].innerText = list[0].lik + list[0].dis;
+	  			$("#press1_2")[0].innerText = list[0].lik;
+	  			$("#press1_3")[0].innerText = list[0].dis;
+	  			
+	  			$("#press2_1")[0].innerText = list[1].lik + list[1].dis + list[1].cu;
+	  			$("#press2_2")[0].innerText = list[1].lik;
+	  			$("#press2_3")[0].innerText = list[1].dis;
+	  			$("#press2_4")[0].innerText = list[1].cu;
+
+	  			$("#press3_1")[0].innerText = list[2].lik + list[2].dis + list[2].cu;
+	  			$("#press3_2")[0].innerText = list[2].lik;
+	  			$("#press3_3")[0].innerText = list[2].dis;
+	  			$("#press3_4")[0].innerText = list[2].cu;
+	  			
+	  			$("#pressName")[0].innerText = list[3].name1;
+	  			$("#pressMediaName")[0].innerText = list[3].name2;
+	  			$("#pressEmail")[0].innerText = list[3].email;
+	  			$("#pressphoneNumber")[0].innerText = list[3].phoneNumber;
+  	  		}
+  	  		
+  	  		$(element).modal('show');
+  	  	}
+	});
+	
+}
+
+function makeModalContent(list){
+	
 }
 
 /*//graph
