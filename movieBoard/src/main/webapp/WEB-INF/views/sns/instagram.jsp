@@ -111,7 +111,7 @@
                           </c:if>
                         </select>
 						</c:if>
-						
+
 						<c:if test="${user.user_name != 'union'}">
                          <select style="display: none;" name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="selectCompany">
                           <option>회사</option>
@@ -125,7 +125,7 @@
                           </c:if>
                         </select>
 						</c:if>
-                        
+
                         <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left" id="selectKeyword">
                           <option>키워드</option>
                           <c:if test="${modelKeywordList == null}" >
@@ -208,7 +208,7 @@
                                     <th width="5%">NO</th>
                                     <th width="10%">등록날짜</th>
                                     <th width="5%">키워드</th>
-                                    <th width="30%">제목</th>
+                                    <th width="20%">제목</th>
                                     <th width="5%">글쓴이</th>
                                     <th width="5%">좋아요</th>
                                     <th width="5%">공유</th>
@@ -221,7 +221,7 @@
                                       <th scope="row">${totalCount - minusCount - index.count +1}</th>
                                       <td>${snsVO.writeDate}</td>
                                       <td>${snsVO.keyword}</td>
-                                      <td><a href="${snsVO.url}" target="_blank"><div class="nobr">${snsVO.sns_title}</div></a></td>
+                                      <td><a href="${snsVO.url}" target="_blank">${snsVO.sns_title}</div></td>
                                       <td>${snsVO.sns_writer}</td>
                                       <td>${snsVO.like_cnt}</td>
                                       <td>${snsVO.share_cnt}</td>
@@ -371,19 +371,19 @@
   $(document).ready(function(){
 
 	  var $fromDate = $("#fromDate");
-	  
+
 	  var startDateOption = decodeURI(window.location.href.split("startDate=")[1]).split("&")[0].split(" ")[0];
 	  var endDateOption = decodeURI(window.location.href.split("endDate=")[1]).split("&")[0].split(" ")[0];
 	  console.log("startDateOption: " + startDateOption);
 	  console.log("endDateOption: " + endDateOption);
-		
+
 	  if(startDateOption != 'undefined' && endDateOption != 'undefined'
 			&& startDateOption != '' && endDateOption != ''){
 		  $fromDate.val(startDateOption + " - " + endDateOption);
-	  		
-	  		
+
+
 		}
-	  
+
 
 	// 엑셀 출력시
 	$(document).on("click","#excel",function(){
@@ -397,7 +397,7 @@
 	          closeOnConfirm: false
 	        },
 	        function(){//엑셀 출력하겠다고 할 시 진행 함수
-	        	
+
 	        	console.log("엑셀출력한다?");
 
 	        	self.location = "excel?"
@@ -439,7 +439,7 @@
 
 		searchList();
 	});
-	
+
 	var companyOption = decodeURI(window.location.href.split("company=")[1]).split("&")[0];
 
 
@@ -449,27 +449,27 @@
 
 			if($selectCompany[0].children[i].value == companyOption){
 				$selectCompany[0].children[i].selected = 'selected';
-			} 
+			}
 		}
 	}
 	$selectCompany[0][0].disabled = true;
-	
-	
+
+
 	// 회사 선택시
 	$selectCompany.change(function(){
 		console.log("selectCompany clicked....");
 		console.log($("#selectCompany option:selected").val());
-		
+
 		searchList();
-		
+
 	});
-	
+
 	 var graphStart = $fromDate.val().split(" - ")[0].replace("/", "-").replace("/", "-");
 	  var graphEnd = $fromDate.val().split(" - ")[1].replace("/", "-").replace("/", "-");
 
 	  console.log("graphStart: " + graphStart);
 	  console.log("graphEnd: " + graphEnd);
-	  
+
 	  ajaxGraph(graphStart, graphEnd);
 
 
@@ -496,7 +496,7 @@
 
 	  $("#fromDate").val(endDate + " - " + endDate)
 	  console.log($("#fromDate").val());
-	  searchList(); 
+	  searchList();
 	});
 
 	// 전일 클릭시
@@ -529,17 +529,17 @@
 	  var date = getDate("month");
 	  var startDate = date.startDate;
 	  var endDate = date.endDate;
-	
+
 	  $("#fromDate").val(startDate + " - " + endDate)
 	  console.log($("#fromDate").val());
-	  
+
 	  searchList();
-	 
+
 	})
 
 
 	// 캘린더 클릭시
-	$('#fromDate').on('apply.daterangepicker', function(ev, picker) {	
+	$('#fromDate').on('apply.daterangepicker', function(ev, picker) {
 		   var startDate = picker.startDate.format('YYYY-MM-DD');
 		   var endDate = picker.endDate.format('YYYY-MM-DD');
 
@@ -581,10 +581,10 @@ function ajaxGraph(startDate, endDate){
  	  dataType : "json",
  	 data : {startDate : startDate, endDate : endDate, company : $("#selectCompany option:selected").val(),
 		  selectKey : $("#selectKeyword option:selected").val(),
-		  searchType: decodeURI(window.location.href.split("&searchType=")[1]).split("&")[0], 
-		  keyword : decodeURI(window.location.href.split("&keyword=")[1]).split("&")[0], 
+		  searchType: decodeURI(window.location.href.split("&searchType=")[1]).split("&")[0],
+		  keyword : decodeURI(window.location.href.split("&keyword=")[1]).split("&")[0],
 		  portal_name : "instagram"},
-  	  error : function(){												 
+  	  error : function(){
       	alert('graphPOST ajax error....');
   	  },
   	  success : function(data){
@@ -672,8 +672,8 @@ function makeDateFormat(date, index){
 			var returnDate = splitDate.replace("/", "-").replace("/", "-")
 			return returnDate;
 		}
-	
-	
+
+
 }
 
 
