@@ -98,7 +98,7 @@
                     <!-- data setting start -->
                     <div class="row">
                       <div class="col-md-7">
-                        <<c:if test="${user.user_name == 'union'}">
+                        <c:if test="${user.user_name == 'union'}">
                          <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="selectCompany">
                           <option>회사</option>
                           <c:if test="${user.user_type == 1 }">
@@ -166,7 +166,7 @@
                           <div class="card counter-card-1">
                             <div class="card-block-big">
                               <div>
-                                <h3>${movieCount + actorCount}</h3>
+                                <h3><fmt:formatNumber value="${movieCount + actorCount}" groupingUsed="true"/></h3>
                                 <p>전체모니터링</p>
                                 <div class="progress ">
                                   <div class="progress-bar progress-bar-striped progress-xs progress-bar-pink" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
@@ -182,7 +182,7 @@
                           <div class="card counter-card-1">
                             <div class="card-block-big">
                               <div>
-                                <h3>${movieCount}</h3>
+                                <h3><fmt:formatNumber value="${movieCount}" groupingUsed="true"/></h3>
                                 <p>영화</p>
                                 <div class="progress ">
                                   <div class="progress-bar progress-bar-striped progress-xs progress-bar-pink" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
@@ -198,7 +198,7 @@
                           <div class="card counter-card-1">
                             <div class="card-block-big">
                               <div>
-                                <h3>${actorCount}</h3>
+                                <h3><fmt:formatNumber value="${actorCount}" groupingUsed="true"/></h3>
                                 <p>배우</p>
                                 <div class="progress ">
                                   <div class="progress-bar progress-bar-striped progress-xs progress-bar-pink" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
@@ -231,23 +231,23 @@
                                   <tbody>
                                     <tr>
                                       <th scope="row">헤드라인기사</th>
-                                      <td>${etTotalCount1}</td>
-                                      <td>${etSearchCount1}</td>
+                                      <td><fmt:formatNumber value="${etTotalCount1}" groupingUsed="true"/></td>
+                                      <td><fmt:formatNumber value="${etSearchCount1}" groupingUsed="true"/></td>
                                     </tr>
                                     <tr>
                                       <th scope="row">헤드라인 sub</th>
-                                      <td>${etTotalCount2}</td>
-                                      <td>${etSearchCount2}</td>
+                                      <td><fmt:formatNumber value="${etTotalCount2}" groupingUsed="true"/></td>
+                                      <td><fmt:formatNumber value="${etSearchCount2}" groupingUsed="true"/></td>
                                     </tr>
                                     <tr>
                                       <th scope="row">아이템 기사</th>
-                                      <td>${etTotalCount3}</td>
-                                      <td>${etSearchCount3}</td>
+                                       <td><fmt:formatNumber value="${etTotalCount3}" groupingUsed="true"/></td>
+                                      <td><fmt:formatNumber value="${etSearchCount3}" groupingUsed="true"/></td>
                                     </tr>
                                     <tr class="bg-inverse">
                                       <th scope="row">합계</th>
-                                      <td>${etTotalCount1 + etTotalCount2 + etTotalCount3}</td>
-                                      <td>${etSearchCount1 + etSearchCount2 + etSearchCount3}</td>
+                                      <td><fmt:formatNumber value="${etTotalCount1 + etTotalCount2 + etTotalCount3}" groupingUsed="true"/></td>
+                                      <td><fmt:formatNumber value="${etSearchCount1 + etSearchCount2 + etSearchCount3}" groupingUsed="true"/></td>
                                     </tr>
                                   </tbody>
                                 </table>

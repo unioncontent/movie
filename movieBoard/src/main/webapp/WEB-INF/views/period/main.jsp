@@ -177,7 +177,7 @@
                               <div class="col-md-6 col-xl-2 main-card">
                                 <div class="card social-widget-card">
                                   <div class="card-block-big bg-inverse">
-                                    <h3>${portalCount+communityCount+snsCount+mediaCount}</h3>
+                                    <h3><fmt:formatNumber value="${portalCount+communityCount+snsCount+mediaCount}" groupingUsed="true"/></h3>
                                     <span class="m-t-10">전체검색</span>
                                     <i class="icofont icofont-search"></i>
                                   </div>
@@ -186,7 +186,7 @@
                               <div class="col-md-6 col-xl-2 main-card">
                                 <div class="card social-widget-card">
                                   <div class="card-block-big bg-primary">
-                                    <h3>${portalCount}</h3>
+                                    <h3><fmt:formatNumber value="${portalCount}" groupingUsed="true"/></h3>
                                     <span class="m-t-10">포털검색</span>
                                     <i class="icofont icofont-web"></i>
                                   </div>
@@ -195,7 +195,7 @@
                               <div class="col-md-6 col-xl-2 main-card">
                                 <div class="card social-widget-card">
                                   <div class="card-block-big bg-success">
-                                    <h3>${communityCount}</h3>
+                                    <h3><fmt:formatNumber value="${communityCount}" groupingUsed="true"/></h3>
                                     <span class="m-t-10">커뮤니티검색</span>
                                     <i class="icofont icofont-users"></i>
                                   </div>
@@ -204,7 +204,7 @@
                               <div class="col-md-6 col-xl-2 main-card">
                                 <div class="card social-widget-card">
                                   <div class="card-block-big bg-twitter">
-                                    <h3>${snsCount}</h3>
+                                    <h3><fmt:formatNumber value="${snsCount}" groupingUsed="true"/></h3>
                                     <span class="m-t-10">SNS검색</span>
                                     <i class="icofont icofont-social-twitter"></i>
                                   </div>
@@ -213,7 +213,7 @@
                               <div class="col-md-6 col-xl-2 main-card">
                                   <div class="card social-widget-card">
                                     <div class="card-block-big bg-news">
-                                      <h3>${mediaCount}</h3>
+                                      <h3><fmt:formatNumber value="${mediaCount}" groupingUsed="true"/></h3>
                                       <span class="m-t-10">언론사검색</span>
                                       <i class="icofont icofont-building-alt"></i>
                                     </div>
@@ -274,27 +274,30 @@
                                               <tbody>
                                                   <tr height="63px">
                                                       <th scope="row">포털</th>
-                                                      <td>${portalTextType.lik}</td>
-                                                      <td>${portalTextType.dis}</td>
-                                                      <td>${portalTextType.cu}</td>
-                                                      <td>${portalTextType.etc}</td>
-                                                      <td>${portalTextType.al}</td>
+                                                      <td><fmt:formatNumber value="${portalTextType.lik}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${portalTextType.dis}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${portalTextType.cu}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${portalTextType.etc}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${portalTextType.lik + portalTextType.dis + portalTextType.cu
+                                                       + portalTextType.etc}" groupingUsed="true"/></td>
                                                   </tr>
                                                   <tr height="63px">
                                                       <th scope="row">커뮤니티</th>
-                                                      <td>${communityTextType.lik}</td>
-                                                      <td>${communityTextType.dis}</td>
-                                                      <td>${communityTextType.cu}</td>
-                                                      <td>${communityTextType.etc}</td>
-                                                      <td>${communityTextType.al}</td>
+                                                      <td><fmt:formatNumber value="${communityTextType.lik}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${communityTextType.dis}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${communityTextType.cu}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${communityTextType.etc}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${communityTextType.lik + communityTextType.dis + communityTextType.cu
+                                                       + communityTextType.etc}" groupingUsed="true"/></td>
                                                   </tr>
                                                   <tr height="63px">
                                                       <th scope="row">합계</th>
-                                                      <td>${portalTextType.lik+communityTextType.lik}</td>
-                                                      <td>${portalTextType.dis+communityTextType.dis}</td>
-                                                      <td>${portalTextType.cu+communityTextType.cu}</td>
-                                                      <td>${portalTextType.etc+communityTextType.etc}</td>
-                                                      <td>${portalTextType.al+communityTextType.al}</td>
+                                                      <td><fmt:formatNumber value="${portalTextType.lik}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${portalTextType.dis}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${portalTextType.cu}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${portalTextType.etc}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${portalTextType.lik + portalTextType.dis + portalTextType.cu
+                                                       + portalTextType.etc}" groupingUsed="true"/></td>
                                                   </tr>
                                               </tbody>
                                             </table>
@@ -340,32 +343,32 @@
                                               <tbody>
                                                   <tr height="63px">
                                                       <th scope="row">블로그 여론</th>
-                                                      <td>${blogTextType.lik}</td>
-                                                      <td>${blogTextType.dis}</td>
-                                                      <td>${blogTextType.cu}</td>
-                                                      <td>${blogTextType.etc}</td>
-                                                      <td>${blogTextType.lik + blogTextType.dis
-                                                      		+ blogTextType.cu + blogTextType.etc}</td>
+                                                      <td><fmt:formatNumber value="${blogTextType.lik}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${blogTextType.dis}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${blogTextType.cu}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${blogTextType.etc}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${blogTextType.lik + blogTextType.dis + blogTextType.cu
+                                                       + blogTextType.etc}" groupingUsed="true"/></td>
                                                   </tr>
                                                   <tr height="63px">
                                                       <th scope="row">카페여론</th>
-                                                      <td>${cafeTextType.lik}</td>
-                                                      <td>${cafeTextType.dis}</td>
-                                                      <td>${cafeTextType.cu}</td>
-                                                      <td>${cafeTextType.etc}</td>
-                                                      <td>${cafeTextType.lik + cafeTextType.dis
-                                                      		+ cafeTextType.cu + cafeTextType.etc}</td>
+                                                      <td><fmt:formatNumber value="${cafeTextType.lik}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${cafeTextType.dis}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${cafeTextType.cu}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${cafeTextType.etc}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${cafeTextType.lik + cafeTextType.dis + cafeTextType.cu
+                                                       + cafeTextType.etc}" groupingUsed="true"/></td>
                                                   </tr>
                                                   <tr height="63px">
                                                       <th scope="row">합계</th>
-                                                      <td>${blogTextType.lik + cafeTextType.lik}</td>
-                                                      <td>${blogTextType.dis + cafeTextType.dis}</td>
-                                                      <td>${blogTextType.cu + cafeTextType.cu}</td>
-                                                      <td>${blogTextType.etc + cafeTextType.etc}</td>
-                                                      <td>${blogTextType.lik + blogTextType.dis
+                                                      <td><fmt:formatNumber value="${blogTextType.lik + cafeTextType.lik}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${blogTextType.dis + cafeTextType.dis}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${blogTextType.cu + cafeTextType.cu}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${blogTextType.etc + cafeTextType.etc}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${blogTextType.lik + blogTextType.dis
                                                       		+ blogTextType.cu + blogTextType.etc
                                                       		+cafeTextType.lik + cafeTextType.dis
-                                                      		+ cafeTextType.cu + cafeTextType.etc}</td>
+                                                      		+ cafeTextType.cu + cafeTextType.etc}" groupingUsed="true"/></td>
                                                   </tr>
                                               </tbody>
                                             </table>
@@ -406,43 +409,43 @@
                                             <tbody>
                                                 <tr>
                                                     <th scope="row">Facebook</th>
-                                                    <td>${facebookTT.type1}</td>
-                                                    <td>${facebookTT.likeCount}</td>
-                                                    <td>${facebookTT.shareCount}</td>
-                                                    <td>${facebookTT.replyCount}</td>
-                                                    <td>${facebookTT.type1+facebookTT.likeCount+facebookTT.shareCount+
-                                                    facebookTT.replyCount}</td>
+                                                      <td><fmt:formatNumber value="${facebookTT.type1}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${facebookTT.likeCount}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${facebookTT.shareCount}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${facebookTT.replyCount}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${facebookTT.type1+facebookTT.likeCount+facebookTT.shareCount+
+                                                    facebookTT.replyCount}" groupingUsed="true"/></td>
                                                 </tr>
                                                 <tr>
                                                     <th scope="row">Twitter</th>
-                                                    <td>${twitterTT.type1}</td>
-                                                    <td>${twitterTT.likeCount}</td>
-                                                    <td>${twitterTT.shareCount}</td>
-                                                    <td>${twitterTT.replyCount}</td>
-                                                    <td>${twitterTT.type1+twitterTT.likeCount+twitterTT.shareCount
-                                                    +twitterTT.replyCount}</td>
+                                                    <td><fmt:formatNumber value="${twitterTT.type1}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${twitterTT.likeCount}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${twitterTT.shareCount}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${twitterTT.replyCount}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${twitterTT.type1+twitterTT.likeCount+twitterTT.shareCount+
+                                                    twitterTT.replyCount}" groupingUsed="true"/></td>
                                                 </tr>
                                                 <tr>
                                                     <th scope="row">Instagram</th>
-                                                    <td>${instagramTT.type1}</td>
-                                                    <td>${instagramTT.likeCount}</td>
-                                                    <td>${instagramTT.shareCount}</td>
-                                                    <td>${instagramTT.replyCount}</td>
-                                                    <td>${instagramTT.type1+instagramTT.likeCount+instagramTT.shareCount+
-                                                    instagramTT.replyCount}</td>
+                                                    <td><fmt:formatNumber value="${instagramTT.type1}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${instagramTT.likeCount}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${instagramTT.shareCount}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${instagramTT.replyCount}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${instagramTT.type1+instagramTT.likeCount+instagramTT.shareCount+
+                                                    instagramTT.replyCount}" groupingUsed="true"/></td>
                                                 </tr>
                                                 <tr>
                                                     <th scope="row">합계</th>
-                                                    <td>${facebookTT.type1 + twitterTT.type1 + instagramTT.type1}</td>
-                                                    <td>${facebookTT.likeCount + twitterTT.likeCount + instagramTT.likeCount}</td>
-                                                    <td>${facebookTT.shareCount + twitterTT.shareCount + instagramTT.shareCount}</td>
-                                                    <td>${facebookTT.replyCount + twitterTT.replyCount + instagramTT.replyCount}</td>
-                                                    <td>${facebookTT.type1+facebookTT.likeCount+facebookTT.shareCount
+                                                    <td><fmt:formatNumber value="${facebookTT.type1 + twitterTT.type1 + instagramTT.type1}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${facebookTT.likeCount + twitterTT.likeCount + instagramTT.likeCount}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${facebookTT.shareCount + twitterTT.shareCount + instagramTT.shareCount}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${facebookTT.replyCount + twitterTT.replyCount + instagramTT.replyCount}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${facebookTT.type1+facebookTT.likeCount+facebookTT.shareCount
                                                     + facebookTT.replyCount
                                                     + twitterTT.type1+twitterTT.likeCount+twitterTT.shareCount
                                                     + twitterTT.replyCount
                                                     + instagramTT.type1+intagramTT.likeCount+instagramTT.shareCount
-                                                    + instagramTT.replyCount}</td>
+                                                    + instagramTT.replyCount}" groupingUsed="true"/></td>
                                                 </tr>
                                             </tbody>
                                           </table>
@@ -479,19 +482,21 @@
                                             <tbody>
                                                 <tr height="92px">
                                                     <th scope="row">NAVER기사</th>
-                                                    <td>${naverMediaCount.lik}</td>
-                                                    <td>${naverMediaCount.dis}</td>
-                                                    <td>${naverMediaCount.cu}</td>
-                                                    <td>${naverMediaCount.etc}</td>
-                                                    <td>${naverMediaCount.al}</td>
+                                                    <td><fmt:formatNumber value="${naverMediaCount.lik}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${naverMediaCount.dis}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${naverMediaCount.cu}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${naverMediaCount.etc}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${naverMediaCount.lik + naverMediaCount.dis + naverMediaCount.cu
+                                                       + naverMediaCount.etc}" groupingUsed="true"/></td>
                                                 </tr>
                                                 <tr height="92px">
                                                     <th scope="row">DAUM기사</th>
-                                                    <td>${daumMediaCount.lik}</td>
-                                                    <td>${daumMediaCount.dis}</td>
-                                                    <td>${daumMediaCount.cu}</td>
-                                                    <td>${daumMediaCount.etc}</td>
-                                                    <td>${daumMediaCount.al}</td>
+                                                    <td><fmt:formatNumber value="${daumMediaCount.lik}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${daumMediaCount.dis}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${daumMediaCount.cu}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${daumMediaCount.etc}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${daumMediaCount.lik + daumMediaCount.dis + daumMediaCount.cu
+                                                       + daumMediaCount.etc}" groupingUsed="true"/></td>
                                                 </tr>
                                             </tbody>
                                           </table>

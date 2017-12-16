@@ -76,11 +76,20 @@
 
 		var parameter = decodeURI(window.location.href.split("period/")[1]).split("?")[1];
 		console.log("parameter: " + parameter);
-
+		
+		
 		if(parameter == undefined){
 			self.location = "../period/" + part;
 		
 		}else{
+			
+			var first = parameter.split("page=")[0];
+			var second = parameter.split("page=")[1];
+			
+			second = "1" + second.substr(1);
+			
+			parameter = first + "page=" + second;
+			
 			self.location = "../period/" + part + "?" + parameter;
 		}
 		

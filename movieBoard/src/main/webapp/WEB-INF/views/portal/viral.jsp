@@ -189,15 +189,15 @@
                                 <div class="card user-activity-card">
                                   <div class="card-block-big viral-card p-b-20">
                                       <h5>BOLG</h5>
-                                      <h3 class="user-number">${nb1 + nb2 + db1 + db2}</h3>
+                                      <h3 class="user-number"><fmt:formatNumber value="${nb1 + nb2 + db1 + db2}" groupingUsed="true"/></h3>
                                       <div class="row">
                                         <div class="col-sm-6">
                                           <p>본사계정</p>
-                                          <h6>${nb1 + db1}</h6>
+                                          <h6><fmt:formatNumber value="${nb1 + db1}" groupingUsed="true"/></h6>
                                         </div>
                                         <div class="col-sm-6">
                                           <p>외부계정</p>
-                                          <h6>${nb2 + db2}</h6>
+                                          <h6><fmt:formatNumber value="${nb2 + db2}" groupingUsed="true"/></h6>
                                         </div>
                                       </div>
                                       <i class="icofont icofont-ui-note link"></i>
@@ -208,15 +208,15 @@
                                 <div class="card user-activity-card">
                                   <div class="card-block-big viral-card p-b-20">
                                       <h5>CAFE</h5>
-                                      <h3 class="user-number">${nc1+nc2+dc1+dc2}</h3>
+                                      <h3 class="user-number"><fmt:formatNumber value="${nc1+nc2+dc1+dc2}" groupingUsed="true"/></h3>
                                       <div class="row">
                                         <div class="col-sm-6">
                                           <p>본사계정</p>
-                                          <h6>${nc1+dc1}</h6>
+                                          <h6><fmt:formatNumber value="${nc1+dc1}" groupingUsed="true"/></h6>
                                         </div>
                                         <div class="col-sm-6">
                                           <p>외부계정</p>
-                                          <h6>${nc2+dc2}</h6>
+                                          <h6><fmt:formatNumber value="${nc2+dc2}" groupingUsed="true"/></h6>
                                         </div>
                                       </div>
                                       <i class="icofont icofont-users link"></i>
@@ -227,15 +227,15 @@
                                 <div class="card user-activity-card">
                                   <div class="card-block-big viral-card p-b-20">
                                       <h5>지식인 / TIP</h5>
-                                      <h3 class="user-number">${nk1+nk2+dk1+dk2}</h3>
+                                      <h3 class="user-number"><fmt:formatNumber value="${nk1+nk2+dk1+dk2}" groupingUsed="true"/></h3>
                                       <div class="row">
                                         <div class="col-sm-6">
                                           <p>본사계정</p>
-                                          <h6>${nk1+dk1}</h6>
+                                          <h6><fmt:formatNumber value="${nk1+dk1}" groupingUsed="true"/></h6>
                                         </div>
                                         <div class="col-sm-6">
                                           <p>외부계정</p>
-                                          <h6>${nk2+dk2}</h6>
+                                          <h6><fmt:formatNumber value="${nk2+dk2}" groupingUsed="true"/></h6>
                                         </div>
                                       </div>
                                       <i class="icofont icofont-hat-alt link"></i>
@@ -246,15 +246,15 @@
                                 <div class="card user-activity-card">
                                   <div class="card-block-big viral-card p-b-20">
                                       <h5>웹문서</h5>
-                                      <h3 class="user-number">${nw1+nw2+dw1+dw2}</h3>
+                                      <h3 class="user-number"><fmt:formatNumber value="${nw1+nw2+dw1+dw2}" groupingUsed="true"/></h3>
                                       <div class="row">
                                         <div class="col-sm-6">
                                           <p>본사계정</p>
-                                          <h6>${nw1+dw1}</h6>
+                                          <h6><fmt:formatNumber value="${nw1+dw1}" groupingUsed="true"/></h6>
                                         </div>
                                         <div class="col-sm-6">
                                           <p>외부계정</p>
-                                          <h6>${nw2+dw2}</h6>
+                                          <h6><fmt:formatNumber value="${nw2+dw2}" groupingUsed="true"/></h6>
                                         </div>
                                       </div>
                                       <i class="icofont icofont-web link"></i>
@@ -285,28 +285,28 @@
                                             <tbody>
                                                 <tr>
                                                     <th scope="row">블로그</th>
-                                                    <td>${nb1}</td>
-                                                    <td>${nb2}</td>
+                                                    <td><fmt:formatNumber value="${nb1}" groupingUsed="true"/></td>
+                                                    <td><fmt:formatNumber value="${nb2}" groupingUsed="true"/></td>
                                                 </tr>
                                                 <tr>
                                                     <th scope="row">카페</th>
-                                                    <td>${nc1}</td>
-                                                    <td>${nc2}</td>
+                                                    <td><fmt:formatNumber value="${nc1}" groupingUsed="true"/></td>
+                                                    <td><fmt:formatNumber value="${nc1}" groupingUsed="true"/></td>
                                                 </tr>
                                                 <tr>
                                                     <th scope="row">TIP</th>
-                                                    <td>${nk1}</td>
-                                                    <td>${nk2}</td>
+                                                    <td><fmt:formatNumber value="${nk1}" groupingUsed="true"/></td>
+                                                    <td><fmt:formatNumber value="${nk2}" groupingUsed="true"/></td>
                                                 </tr>
                                                 <tr>
                                                     <th scope="row">웹문서</th>
-                                                    <td>${nw1}</td>
-                                                    <td>${nw2}</td>
+                                                    <td><fmt:formatNumber value="${nw1}" groupingUsed="true"/></td>
+                                                    <td><fmt:formatNumber value="${nw2}" groupingUsed="true"/></td>
                                                 </tr>
                                                 <tr class="bg-inverse">
                                                     <th scope="row">합계</th>
-                                                    <td>${nb1+nc1+nk1+nw1}</td>
-                                                    <td>${nb2+nc2+nk2+nw2}</td>
+                                                    <td><fmt:formatNumber value="${nb1+nc1+nk1+nw1}" groupingUsed="true"/></td>
+                                                    <td><fmt:formatNumber value="${nb2+nc2+nk2+nw2}" groupingUsed="true"/></td>
                                                 </tr>
                                             </tbody>
                                           </table>
@@ -339,28 +339,28 @@
                                             <tbody>
                                                <tr>
                                                     <th scope="row">블로그</th>
-                                                    <td>${db1}</td>
-                                                    <td>${db2}</td>
+                                                    <td><fmt:formatNumber value="${db1}" groupingUsed="true"/></td>
+                                                    <td><fmt:formatNumber value="${db1}" groupingUsed="true"/></td>
                                                 </tr>
                                                 <tr>
                                                     <th scope="row">카페</th>
-                                                    <td>${dc1}</td>
-                                                    <td>${dc2}</td>
+                                                    <td><fmt:formatNumber value="${dc1}" groupingUsed="true"/></td>
+                                                    <td><fmt:formatNumber value="${dc2}" groupingUsed="true"/></td>
                                                 </tr>
                                                 <tr>
                                                     <th scope="row">TIP</th>
-                                                    <td>${dk1}</td>
-                                                    <td>${dk2}</td>
+                                                    <td><fmt:formatNumber value="${dk1}" groupingUsed="true"/></td>
+                                                    <td><fmt:formatNumber value="${dk2}" groupingUsed="true"/></td>
                                                 </tr>
                                                 <tr>
                                                     <th scope="row">웹문서</th>
-                                                    <td>${dw1}</td>
-                                                    <td>${dw2}</td>
+                                                    <td><fmt:formatNumber value="${dw1}" groupingUsed="true"/></td>
+                                                    <td><fmt:formatNumber value="${dw2}" groupingUsed="true"/></td>
                                                 </tr>
                                                 <tr class="bg-inverse">
                                                     <th scope="row">합계</th>
-                                                    <td>${db1+dc1+dk1+dw1}</td>
-                                                    <td>${db2+dc2+dk2+dw2}</td>
+                                                    <td><fmt:formatNumber value="${db1+dc1+dk1+dw1}" groupingUsed="true"/></td>
+                                                    <td><fmt:formatNumber value="${db2+dc2+dk2+dw2}" groupingUsed="true"/></td>
                                                 </tr>
                                             </tbody>
                                           </table>

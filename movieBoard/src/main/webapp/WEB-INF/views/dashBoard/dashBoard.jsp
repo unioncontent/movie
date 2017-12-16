@@ -109,7 +109,7 @@
                                 <i class="icofont icofont-document-search" style="line-height: 58px;"></i>
                               </li>
                               <li class="text-right">
-                                ${keywordCount}
+                                <fmt:formatNumber value="${keywordCount}" groupingUsed="true"/>
                               </li>
                             </ul>
                           </div>
@@ -124,7 +124,7 @@
                                 <i class="icofont icofont-ui-text-chat" style="line-height: 58px;"></i>
                               </li>
                               <li class="text-right">
-                                ${blogCount.type3}
+                                <fmt:formatNumber value="${blogCount.type3}" groupingUsed="true"/>
                               </li>
                             </ul>
                           </div>
@@ -139,7 +139,7 @@
                                 <i class="icofont icofont-ui-social-link" style="line-height: 58px;"></i>
                               </li>
                               <li class="text-right">
-                                ${cafeCount.type3}
+                                <fmt:formatNumber value="${cafeCount.type3}" groupingUsed="true"/>
                               </li>
                             </ul>
                           </div>
@@ -154,7 +154,7 @@
                                 <i class="icofont icofont-page" style="line-height: 58px;"></i>
                               </li>
                               <li class="text-right">
-                                ${relationCount}
+                                <fmt:formatNumber value="${relationCount}" groupingUsed="true"/>
                               </li>
                             </ul>
                           </div>
@@ -169,7 +169,7 @@
                                 <i class="icofont icofont-hat-alt" style="line-height: 58px;"></i>
                               </li>
                               <li class="text-right">
-                                ${kintipCount.type3}
+                                <fmt:formatNumber value="${kintipCount.type3}" groupingUsed="true"/>
                               </li>
                             </ul>
                           </div>
@@ -214,35 +214,35 @@
                                 <tbody>
                                   <tr>
                                     <th scope="row">포털</th>
-                                    <td>${portalCount.type1}</td>
-                                    <td>${portalCount.type2}</td>
+                                    <td><fmt:formatNumber value="${portalCount.type1}" groupingUsed="true"/></td>
+                                    <td><fmt:formatNumber value="${portalCount.type2}" groupingUsed="true"/></td>
                                   </tr>
                                   <tr>
                                     <th scope="row">언론기사</th>
-                                    <td>${mediaCount.type1}</td>
-                                    <td>${mediaCount.type2}</td>
+                                    <td><fmt:formatNumber value="${mediaCount.type1}" groupingUsed="true"/></td>
+                                    <td><fmt:formatNumber value="${mediaCount.type2}" groupingUsed="true"/></td>
                                   </tr>
                                   <tr>
                                     <th scope="row">페이스북</th>
-                                    <td>${facebookCount.type1}</td>
-                                    <td>${facebookCount.type2}</td>
+                                    <td><fmt:formatNumber value="${facebookCount.type1}" groupingUsed="true"/></td>
+                                    <td><fmt:formatNumber value="${facebookCount.type2}" groupingUsed="true"/></td>
                                   </tr>
                                   <tr>
                                     <th scope="row">인스타그램</th>
-                                    <td>${instagramCount.type1}</td>
-                                    <td>${instagramCount.type2}</td>
+                                    <td><fmt:formatNumber value="${instagramCount.type1}" groupingUsed="true"/></td>
+                                    <td><fmt:formatNumber value="${instagramCount.type2}" groupingUsed="true"/></td>
                                   </tr>
                                   <tr>
                                     <th scope="row">트위터</th>
-                                    <td>${twitterCount.type1}</td>
-                                    <td>${twitterCount.type2}</td>
+                                    <td><fmt:formatNumber value="${twitterCount.type1}" groupingUsed="true"/></td>
+                                    <td><fmt:formatNumber value="${twitterCount.type2}" groupingUsed="true"/></td>
                                   </tr>
                                   <tr class="bg-inverse">
                                     <th scope="row">합계</th>
-                                    <td>${portalCount.type1 + mediaCount.type1 + facebookCount.type1
-                                    	+ instagramCount.type1 + twitterCount.type1}</td>
-                                    <td>${portalCount.type2 + mediaCount.type2 + facebookCount.type2
-                                    	+ instagramCount.type2 + twitterCount.type2}</td>
+                                    <td><fmt:formatNumber value="${portalCount.type1 + mediaCount.type1 + facebookCount.type1
+                                    	+ instagramCount.type1 + twitterCount.type1}" groupingUsed="true"/></td>
+                                    <td><fmt:formatNumber value="${portalCount.type2 + mediaCount.type2 + facebookCount.type2
+                                    	+ instagramCount.type2 + twitterCount.type2}" groupingUsed="true"/></td>
                                   </tr>
                                 </tbody>
                               </table>
@@ -272,33 +272,35 @@
                                   <tbody>
                                     <tr>
                                       <th scope="row">블로그</th>
-                                      <td>${blogCount.type1}</td>
-                                      <td>${blogCount.type2}</td>
+                                      <td><fmt:formatNumber value="${blogCount.type1}" groupingUsed="true"/></td>
+                                      <td><fmt:formatNumber value="${blogCount.type2}" groupingUsed="true"/></td>
                                     </tr>
                                     <tr>
                                       <th scope="row">카페</th>
-                                      <td>${cafeCount.type1}</td>
-                                      <td>${cafeCount.type2}</td>
+                                      <td><fmt:formatNumber value="${cafeCount.type1}" groupingUsed="true"/></td>
+                                      <td><fmt:formatNumber value="${cafeCount.type2}" groupingUsed="true"/></td>
                                     </tr>
                                     <tr>
                                       <th scope="row">지식인/Tip</th>
-                                      <td>${kintipCount.type1}</td>
-                                      <td>${kintipCount.type2}</td>
+                                      <td><fmt:formatNumber value="${kintipCount.type1}" groupingUsed="true"/></td>
+                                      <td><fmt:formatNumber value="${kintipCount.type2}" groupingUsed="true"/></td>
                                     </tr>
                                     <tr>
                                       <th scope="row">웹문서</th>
-                                      <td>${webdocCount.type1}</td>
-                                      <td>${webdocCount.type2}</td>
+                                      <td><fmt:formatNumber value="${webdocCount.type1}" groupingUsed="true"/></td>
+                                      <td><fmt:formatNumber value="${webdocCount.type2}" groupingUsed="true"/></td>
                                     </tr>
                                     <tr>
                                       <th scope="row">언론</th>
-                                      <td>${mediaCount.type1}</td>
-                                      <td>${mediaCount.type2}</td>
+                                      <td><fmt:formatNumber value="${mediaCount.type1}" groupingUsed="true"/></td>
+                                      <td><fmt:formatNumber value="${mediaCount.type2}" groupingUsed="true"/></td>
                                     </tr>
                                     <tr class="bg-inverse">
                                       <th scope="row">합계</th>
-                                      <td>${blogCount.type1 + cafeCount.type1 + webdocCount.type1 + mediaCount.type1}</td>
-                                      <td>${blogCount.type2 + cafeCount.type2 + webdocCount.type2 + mediaCount.type2}</td>
+                                      <td><fmt:formatNumber value="${blogCount.type1 + cafeCount.type1 + 
+                                       kintipCount.type1 + webdocCount.type1 + mediaCount.type1}" groupingUsed="true"/></td>
+                                      <td><fmt:formatNumber value="${blogCount.type2 + cafeCount.type2 + 
+                                       kintipCount.type2 + webdocCount.type2 + mediaCount.type2}" groupingUsed="true"/></td>
                                     </tr>
                                   </tbody>
                               </table>

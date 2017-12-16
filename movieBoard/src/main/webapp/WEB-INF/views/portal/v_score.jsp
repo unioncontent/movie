@@ -213,7 +213,7 @@
                                       <li class="p-t-10">
                                         <i class="icofont icofont-document-search"></i>
                                       </li>
-                                      <li class="text-right">${totalCount}</li>
+                                      <li class="text-right"><fmt:formatNumber value="${totalCount}" groupingUsed="true"/></li>
                                     </ul>
                                   </div>
                                 </div>
@@ -230,7 +230,7 @@
 							        </div>
 							        <div class="card-block-big text-center typography" style="padding-left: 5px;padding-right: 5px;">
 							          <div style="height: 50px;display: inline-block;">
-							            <h1 class="text-success" style="font-weight: 600;margin-bottom: 0;float: left;">${textType.lik}</h1>
+							            <h1 class="text-success" style="font-weight: 600;margin-bottom: 0;float: left;"><fmt:formatNumber value="${textType.lik}" groupingUsed="true"/></h1>
 							            <label class="badge badge-inverse" style="float: left;">
 							              <c:if test="${textType.al != 0}">
 							              <fmt:parseNumber var="pages" integerOnly="true" value="${(textType.lik/textType.al) * 100}"> 
@@ -249,7 +249,7 @@
 							        </div>
 							        <div class="card-block-big text-center typography" style="padding-left: 5px;padding-right: 5px;">
 							          <div style="height: 50px;display: inline-block;">
-							            <h1 class="text-primary" style="font-weight: 600;margin-bottom: 0;float: left;">${textType.cu}</h1>
+							            <h1 class="text-primary" style="font-weight: 600;margin-bottom: 0;float: left;"><fmt:formatNumber value="${textType.cu}" groupingUsed="true"/></h1>
 							            <label class="badge badge-inverse" style="float: left;">
 							            <c:if test="${textType.al != 0}">
 							              <fmt:parseNumber var="pages" integerOnly="true" value="${(textType.cu/textType.al) * 100}"> 
@@ -268,7 +268,7 @@
 							        </div>
 							        <div class="card-block-big text-center typography" style="padding-left: 5px;padding-right: 5px;">
 							          <div style="height: 50px;display: inline-block;">
-							            <h1 class="text-warning" style="font-weight: 600;margin-bottom: 0;float: left;">${textType.dis}</h1>
+							            <h1 class="text-warning" style="font-weight: 600;margin-bottom: 0;float: left;"><fmt:formatNumber value="${textType.dis}" groupingUsed="true"/></h1>
 							            <label class="badge badge-inverse" style="float: left;">
 							            <c:if test="${textType.al != 0}">
 							              <fmt:parseNumber var="pages" integerOnly="true" value="${(textType.dis/textType.al) * 100}"> 
@@ -288,7 +288,7 @@
 							        </div>
 							        <div class="card-block-big text-center typography"  style="padding-left: 5px;padding-right: 5px;">
 							          <div style="height: 50px;display: inline-block;">
-							            <h1 class="text-danger" style="font-weight: 600;margin-bottom: 0;float: left;">${textType.etc}</h1>
+							            <h1 class="text-danger" style="font-weight: 600;margin-bottom: 0;float: left;"><fmt:formatNumber value="${textType.etc}" groupingUsed="true"/></h1>
 							            <label class="badge badge-inverse" style="float: left;">
 							            <c:if test="${textType.al != 0}">
 							              <fmt:parseNumber var="pages" integerOnly="true" value="${(textType.etc/textType.al) * 100}"> 
