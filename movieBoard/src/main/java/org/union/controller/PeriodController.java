@@ -315,6 +315,9 @@ public class PeriodController {
 	public void mediaGET(@ModelAttribute("cri") SearchCriteria cri, Model model) {
 		  logger.info("mediaGET called....");
 		  
+		  cri.setTextType(null);
+		  cri.setKeyword(null);
+		  
 		  if(cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey()) ) {
 				logger.info("selectKey is null");
 				cri.setSelectKey(null);
@@ -404,14 +407,14 @@ public class PeriodController {
 		  model.addAttribute("totalCountPage", totalCount);
 		  model.addAttribute("minusCount", cri.getPerPageNum() * (cri.getPage()-1));
 		  
-		  cri.setKeyword(keyword);
+		  //cri.setKeyword(keyword);
 
 		  model.addAttribute("mediaTypeCount", mediaService.periodTextTypeCount(cri));
 		  logger.info(mediaService.periodTextTypeCount(cri) + "");
 		  
 		  cri.setTextType("press");
 		  model.addAttribute("pressTypeCount", mediaService.periodTextTypeCount(cri));
-		  
+		  //cri.setTextType(null);
 		  
 	}
 
@@ -747,7 +750,7 @@ public class PeriodController {
 			listUtil.listAddPortalList(classiList, portalService.listAll(cri));
 		
 		}else if(part.equals("media")) {
-			listUtil.listAddMediaList(classiList, mediaService.listSearch(cri));
+			listUtil.listAddMediaList(classiList, mediaService.listAll(cri));
 		}
 		
 		

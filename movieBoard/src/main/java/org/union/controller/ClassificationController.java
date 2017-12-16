@@ -288,6 +288,8 @@ public class ClassificationController {
 				vo.setKeyword(keyword);
 				vo.setTextType(textType);
 				vo.setUrl(url);
+				vo.setDeviceType(1);
+				vo.setKeyword_type("수동");
 				
 				portalService.regist(vo);
 				

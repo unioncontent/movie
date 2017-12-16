@@ -229,7 +229,7 @@
                                       <li class="p-t-10">
                                         <i class="icofont icofont-document-search"></i>
                                       </li>
-                                      <li class="text-right">${blog0}</li>
+                                      <li class="text-right"><fmt:formatNumber value="${blog0}" groupingUsed="true"/></li>
                                     </ul>
                                   </div>
                                 </div>

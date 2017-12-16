@@ -818,15 +818,14 @@
 
 				 		type : "POST",
 						url : "insert",
-					 	dataType : "json",
+					 	dataType : "text",
 					 	data : {keyword:keyword, textType:textType, domain :domain, writeDate :date,
 					 		writer :writer, domainType:domainType, title: title,content: content, url: url,
 					 		board_number : board_number, writerIP : writerIP},
 					  		success : function(){
 					  			swal("Success!", "등록 되었습니다.", "success");
-					  			console.log("success");
-
-					  			location.reload();
+						  		   console.log("success");
+						  		   location.reload();
 					  	  }
 
 

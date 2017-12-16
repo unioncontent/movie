@@ -181,7 +181,7 @@
                               <div class="col-md-6 col-xl-3 main-card">
                                 <div class="card social-widget-card">
                                   <div class="card-block-big bg-inverse">
-                                    <h3>${totalCount}</h3>
+                                    <h3><fmt:formatNumber value="${totalCount}" groupingUsed="true"/></h3>
                                     <span class="m-t-10">전체검색</span>
                                     <i class="icofont icofont-search"></i>
                                   </div>
@@ -190,7 +190,7 @@
                               <div class="col-md-6 col-xl-3 main-card">
                                 <div class="card social-widget-card">
                                   <div class="card-block-big bg-info">
-                                    <h3>${matchCount}</h3>
+                                    <h3><fmt:formatNumber value="${matchCount}" groupingUsed="true"/></h3>
                                     <span class="m-t-10">매칭</span>
                                     <i class="icofont icofont-connection"></i>
                                   </div>
@@ -199,7 +199,7 @@
                               <div class="col-md-6 col-xl-3 main-card">
                                 <div class="card social-widget-card">
                                   <div class="card-block-big bg-news">
-                                    <h3>${mediaCount}</h3>
+                                    <h3><fmt:formatNumber value="${mediaCount}" groupingUsed="true"/></h3>
                                     <span class="m-t-10">언론사</span>
                                     <i class="icofont icofont-building-alt"></i>
                                   </div>
@@ -208,7 +208,7 @@
                               <div class="col-md-6 col-xl-3 main-card">
                                 <div class="card social-widget-card">
                                   <div class="card-block-big bg-success">
-                                    <h3>${pressCount}</h3>
+                                    <h3><fmt:formatNumber value="${pressCount}" groupingUsed="true"/></h3>
                                     <span class="m-t-10">기자</span>
                                     <i class="icofont icofont-fountain-pen"></i>
                                   </div>
@@ -255,8 +255,8 @@
                                               <tr>
                                                 <th scope="row">${index.count}</th>
                                                 <td class='news' onclick='showModal("#news-Modal", "${mediaList.media}")'>${mediaList.media}</td>
-                                                <td>${mediaList.allCount}</td>
-                                                <td>${mediaList.searchCount}</td>
+                                                <td><fmt:formatNumber value="${mediaList.allCount}" groupingUsed="true"/></td>
+                                                <td><fmt:formatNumber value="${mediaList.searchCount}" groupingUsed="true"/></td>
                                                 <td><fmt:parseNumber value="${mediaList.matchPercent}" integerOnly="true"></fmt:parseNumber>%</td>
                                               </tr>
                                               </c:forEach>
@@ -309,9 +309,9 @@
                                                 <th scope="row">${index.count}</th>
                                                 <td class='press' onclick='showModal("#press-Modal", "${pressList.reporter}")'>${pressList.reporter}</td>
                                                 <td>${pressList.media}</td>
-                                                <td>${pressList.allCount}</td>
-                                                <td>0</td>
-                                                <td>0%</td>
+                                                <td><fmt:formatNumber value="${pressList.allCount}" groupingUsed="true"/></td>
+                                                <td><fmt:formatNumber value="${pressList.searchCount}" groupingUsed="true"/></td>
+                                                <td><fmt:parseNumber value="${pressList.matchPercent}" integerOnly="true"></fmt:parseNumber>%</td>
                                               </tr>
                                             </c:forEach>
                                           </tbody>
@@ -397,7 +397,7 @@
                                               <ul class="pagination float-right">
                                                 <c:if test="${pageMaker.prev}">
                                               		<li class="page-item">
-                                                		  <a class="page-link" href="portal${pageMaker.makeSearch(pageMaker.startPage - 1) }" aria-label="Previous">&laquo;
+                                                		  <a class="page-link" href="media${pageMaker.makeSearch(pageMaker.startPage - 1) }" aria-label="Previous">&laquo;
                                                   		<span aria-hidden="true"></span>
                                                   		<span class="sr-only">Previous</span>
                                                 		  </a>
@@ -406,13 +406,13 @@
 
                                           		  <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
                                               		<li class= "${pageMaker.cri.page == idx? 'active':''} page-item">
-                                                		  <a class="page-link" href="portal${pageMaker.makeSearch(idx)}">${idx}</a>
+                                                		  <a class="page-link" href="media${pageMaker.makeSearch(idx)}">${idx}</a>
                                               		</li>
                                           		  </c:forEach>
 
                                           		  <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
                                               		<li class="page-item">
-                                              		  <a class="page-link" href="portal${pageMaker.makeSearch(pageMaker.endPage +1) }" aria-label="Next">&raquo;
+                                              		  <a class="page-link" href="media${pageMaker.makeSearch(pageMaker.endPage +1) }" aria-label="Next">&raquo;
                                                 		<span aria-hidden="true"></span>
                                                 		<span class="sr-only">Next</span>
                                               		  </a>

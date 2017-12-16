@@ -343,8 +343,9 @@ function showModal(element, event){
 	  			
 	  			$("#pressName")[0].innerText = list[3].name1;
 	  			$("#pressMediaName")[0].innerText = list[3].name2;
-	  			$("#pressEmail")[0].innerText = list[3].email;
-	  			$("#pressphoneNumber")[0].innerText = list[3].phoneNumber;
+	  			if(list[3].email != undefined){
+	  				$("#pressEmail")[0].innerText = list[3].email;
+	  			}
   	  		}
   	  		
   	  		$(element).modal('show');
