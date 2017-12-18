@@ -93,6 +93,18 @@ public class CommunityDAOImpl implements CommunityDAO {
 		return session.selectOne(namespace + "getSearchCount", cri);
 	}
 	
+	@Override
+	public List<CommunityVO> wlistSearch(SearchCriteria cri) {
+
+		return session.selectList(namespace + "wlistSearch", cri); 
+	}
+
+	
+	@Override
+	public Integer wgetSearchCount(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "wgetSearchCount", cri);
+	}
 	
 	@Override
 	public List<CommunityVO> listAll(SearchCriteria cri) {
@@ -160,6 +172,13 @@ public class CommunityDAOImpl implements CommunityDAO {
 	public Integer allPageCount(SearchCriteria cri) {
 
 		return session.selectOne(namespace + "allPageCount", cri);
+	}
+
+
+	@Override
+	public List<CommunityVO> wPageSearch(SearchCriteria cri) {
+
+		return session.selectList(namespace + "wPageSearch", cri);
 	}
 
 

@@ -39,6 +39,11 @@ public interface MediaService {
 	public List<MediaVO> listSearch(SearchCriteria criteria);
 	
 	public Integer getSearchCount(SearchCriteria cri);
+
+	public List<MediaVO> wlistSearch(SearchCriteria criteria);
+	public List<MediaVO> wPageSearch(SearchCriteria criteria);
+	
+	public Integer wgetSearchCount(SearchCriteria cri);
 	
 	public List<MediaVO> listAll(SearchCriteria cri);
 	

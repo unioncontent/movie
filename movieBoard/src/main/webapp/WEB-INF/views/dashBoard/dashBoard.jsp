@@ -148,13 +148,13 @@
                       <div class="col-md-4 col-xl-3 main-card">
                         <div class="card client-blocks ">
                           <div class="card-block">
-                            <h5>연관검색어검출</h5>
+                            <h5>평점관리검출</h5>
                             <ul>
                               <li style="min-height: 60px;">
                                 <i class="icofont icofont-page" style="line-height: 58px;"></i>
                               </li>
                               <li class="text-right">
-                                <fmt:formatNumber value="${relationCount}" groupingUsed="true"/>
+                                <fmt:formatNumber value="${relationCount.type1 + relationCount.type2}" groupingUsed="true"/>
                               </li>
                             </ul>
                           </div>

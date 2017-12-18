@@ -3,6 +3,7 @@ package org.union.service;
 import java.util.Date;
 import java.util.List;
 
+import org.union.domain.CommunityVO;
 import org.union.domain.ExtractVO;
 import org.union.domain.GraphVO;
 import org.union.domain.PortalVO;
@@ -24,6 +25,7 @@ public interface PortalService {
 	public List<PortalVO> getScoreList(SearchCriteria cri);
 	public TextTypeVO getScoreTextType(SearchCriteria cri);
 	public Integer getOnlyScore(SearchCriteria cri);
+	public List<PortalVO> wPageSearch(SearchCriteria cri);
 	
 	public Integer getTypeOfMovieCount(SearchCriteria cri);
 	public Integer getTypeOfActorCount(SearchCriteria cri);
@@ -57,6 +59,10 @@ public interface PortalService {
 	public List<PortalVO> listSearch(SearchCriteria vo);
 	
 	public Integer getSearchCount(SearchCriteria cri);
+
+	public List<PortalVO> wlistSearch(SearchCriteria vo);
+	
+	public Integer wgetSearchCount(SearchCriteria cri);
 	
 	public List<PortalVO> listAll(SearchCriteria cri);
 	

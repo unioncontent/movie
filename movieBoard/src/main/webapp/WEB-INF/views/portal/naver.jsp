@@ -700,9 +700,8 @@
 	    bindto: '#chart',//chart id
 	    data: {
 	        columns: [
-	            ['전체', "${movieCount+actorCount}"],
 	            ['영화', "${movieCount}"],
-	            ['배우', "${actorCount}"],
+	            ['배우', "${actorCount}"]
 	        ],
 	        type: 'donut',
 	        // onclick: function(d, i) { console.log("onclick", d, i); },
