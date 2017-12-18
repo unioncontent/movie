@@ -99,6 +99,18 @@ public class CommunityServiceImpl implements CommunityService {
 		return communityDAO.getSearchCount(cri);
 	}
 
+	@Override
+	public List<CommunityVO> wlistSearch(SearchCriteria cri) {
+
+		return communityDAO.wlistSearch(cri);
+	}
+
+	@Override
+	public Integer wgetSearchCount(SearchCriteria cri) {
+
+		return communityDAO.wgetSearchCount(cri);
+	}
+
 	
 	@Override
 	public List<CommunityVO> listAll(SearchCriteria cri) {
@@ -158,6 +170,18 @@ public class CommunityServiceImpl implements CommunityService {
 	public Integer allPageCount(SearchCriteria cri) {
 
 		return communityDAO.allPageCount(cri);
+	}
+
+	@Override
+	public List<CommunityVO> wPageSearch(SearchCriteria cri) {
+		
+		List<CommunityVO> list = communityDAO.wPageSearch(cri);
+		
+		for (CommunityVO communityVO : list) {
+			communityVO.setKeyword_main(keywordDAO.read(communityVO.getKeyword()).getKeyword_main());
+		}
+
+		return list;
 	}
 
 

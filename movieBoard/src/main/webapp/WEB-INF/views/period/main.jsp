@@ -651,7 +651,7 @@
 		}
 	}
 
-	var selectOption = decodeURI(window.location.href.split("selectKey=")[1]);
+	var selectOption = decodeURI(window.location.href.split("selectKey=")[1]).split("&")[0];
 	console.log("selectOption: " + selectOption);
 
 

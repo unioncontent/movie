@@ -119,10 +119,10 @@ public class PeriodController {
 		
 		logger.info("cri: " + cri);
 		
-		model.addAttribute("portalCount", portalService.getSearchCount(cri));
-		model.addAttribute("communityCount", communityService.getSearchCount(cri));
+		model.addAttribute("portalCount", portalService.wgetSearchCount(cri));
+		model.addAttribute("communityCount", communityService.wgetSearchCount(cri));
 		model.addAttribute("snsCount", snsService.getSearchCount(cri));
-		model.addAttribute("mediaCount", mediaService.getSearchCount(cri));
+		model.addAttribute("mediaCount", mediaService.wgetSearchCount(cri));
 		
 		model.addAttribute("portalTextType", portalService.textTypeCount(cri));
 		model.addAttribute("communityTextType", communityService.textTypeCount(cri));
@@ -194,16 +194,16 @@ public class PeriodController {
 		logger.info("cri: " + cri);
 		
 		cri.setTextType("좋은글");
-		model.addAttribute("type1", communityService.getSearchCount(cri));
+		model.addAttribute("type1", communityService.wgetSearchCount(cri));
 		
 		cri.setTextType("나쁜글");
-		model.addAttribute("type2", communityService.getSearchCount(cri));
+		model.addAttribute("type2", communityService.wgetSearchCount(cri));
 		
 		cri.setTextType("관심글");
-		model.addAttribute("type3", communityService.getSearchCount(cri));
+		model.addAttribute("type3", communityService.wgetSearchCount(cri));
 		
 		cri.setTextType("기타글");
-		model.addAttribute("type4", communityService.getSearchCount(cri));
+		model.addAttribute("type4", communityService.wgetSearchCount(cri));
 		
 		cri.setTextType(null);
 		model.addAttribute("communityList", communityService.listComplete(cri));
@@ -282,11 +282,11 @@ public class PeriodController {
 		model.addAttribute("naverCount", naverCount);
 		model.addAttribute("daumCount", daumCount);
 		
-		model.addAttribute("portalList", portalService.listSearch(cri));
-		logger.info("list: " + portalService.listSearch(cri));
+		model.addAttribute("portalList", portalService.wlistSearch(cri));
+		logger.info("list: " + portalService.wlistSearch(cri));
 		PageMaker pageMaker = new PageMaker();
 		
-		Integer totalCount = portalService.getSearchCount(cri);
+		Integer totalCount = portalService.wgetSearchCount(cri);
 		
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(totalCount);
@@ -298,13 +298,11 @@ public class PeriodController {
 		model.addAttribute("pageMaker", pageMaker);
 		
 		model.addAttribute("naver1", portalService.naverTextTypeCount("blog"));
-		logger.info("naver1: " + portalService.naverTextTypeCount("blog"));
 		model.addAttribute("naver2", portalService.naverTextTypeCount("cafe"));
 		model.addAttribute("naver3", portalService.naverTextTypeCount("kintip"));
 		model.addAttribute("naver4", portalService.naverTextTypeCount("webdoc"));
 		
 		model.addAttribute("daum1", portalService.daumTextTypeCount("blog"));
-		logger.info("daum1: " + portalService.daumTextTypeCount("blog"));
 		model.addAttribute("daum2", portalService.daumTextTypeCount("cafe"));
 		model.addAttribute("daum3", portalService.daumTextTypeCount("kintip"));
 		model.addAttribute("daum4", portalService.daumTextTypeCount("webdoc"));
@@ -376,7 +374,7 @@ public class PeriodController {
 		  model.addAttribute("pressCount", reporterList.size());
 		  model.addAttribute("totalCount", mediaService.getTotalCount(cri));
 		  
-		  if(cri.getSelectKey() == null && cri.getCompany() == null) {
+		  if(cri.getSelectKey() == null) {
 			  model.addAttribute("matchCount", 0);
 		  
 		  }else {
@@ -394,11 +392,10 @@ public class PeriodController {
 		  // 리스트
 		  String keyword=  cri.getKeyword();
 		  cri.setKeyword(null);
-		  model.addAttribute("searchList", mediaService.listSearch(cri));
-		  logger.info("list: " + mediaService.listSearch(cri));
+		  model.addAttribute("searchList", mediaService.wlistSearch(cri));
 		  PageMaker pageMaker = new PageMaker();
 		  
-		  Integer totalCount = mediaService.getSearchCount(cri);
+		  Integer totalCount = mediaService.wgetSearchCount(cri);
 		  
 		  pageMaker.setCri(cri);
 		  pageMaker.setTotalCount(totalCount);
@@ -744,13 +741,13 @@ public class PeriodController {
 			listUtil.listAddSNSList(classiList, snsService.listExcel(cri));
 		
 		}else if(part.equals("community")) {
-			listUtil.listAddCommunityList(classiList, communityService.listAll(cri));
+			listUtil.listAddCommunityList(classiList, communityService.wPageSearch(cri));
 		
 		}else if(part.equals("portal")){
-			listUtil.listAddPortalList(classiList, portalService.listAll(cri));
+			listUtil.listAddPortalList(classiList, portalService.wPageSearch(cri));
 		
 		}else if(part.equals("media")) {
-			listUtil.listAddMediaList(classiList, mediaService.listAll(cri));
+			listUtil.listAddMediaList(classiList, mediaService.wPageSearch(cri));
 		}
 		
 		

@@ -41,8 +41,8 @@
 				and keyword in (select keyword from keyword_data where keyword_main = #{selectKey})
 			</if>
 		<if test="startDate != null and endDate != null">
-			and createDate <![CDATA[>=]]> #{startDate}
-			and createDate <![CDATA[<=]]> #{endDate}
+			and writeDate <![CDATA[>=]]> #{startDate}
+			and writeDate <![CDATA[<=]]> #{endDate}
 		</if>
 		<if test="textType != null">
 			and textType = #{textType}
@@ -129,10 +129,10 @@
 	
  	
  	<select id="yesterdayCount" resultType="GraphVO">
- 		select count(if(createDate <![CDATA[<]]> date_add(now(), interval -1 day), createDate, null)) type1,
-	    count(if(createDate <![CDATA[>]]> date_add(now(), interval -1 day), createDate, null)) type2
+ 		select count(if(writeDate <![CDATA[<]]> date_add(now(), interval -1 day), writeDate, null)) type1,
+	    count(if(writeDate <![CDATA[>]]> date_add(now(), interval -1 day), writeDate, null)) type2
 		from sns_data 
-		where createDate between date_add(now(), interval -2 day) and  date_add(now(), interval -0 day)
+		where writeDate between date_add(now(), interval -2 day) and  date_add(now(), interval -0 day)
 		and  sns_name = #{name}
  	</select>
  	

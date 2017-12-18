@@ -127,6 +127,32 @@ public class MediaServiceImpl implements MediaService {
 		return mediaDAO.getSearchCount(cri);
 	}
 
+	@Override
+	public List<MediaVO> wlistSearch(SearchCriteria vo) {
+
+		List<MediaVO> list = mediaDAO.wlistSearch(vo);
+		
+		for (MediaVO mediaVO : list) {
+			if(mediaVO.getKeyword() != null && !mediaVO.getKeyword().equals("press")) {
+				
+				try {
+					mediaVO.setKeyword_main(keywordDAO.read(mediaVO.getKeyword()).getKeyword_main());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+			}
+		}
+		
+		return mediaDAO.listSearch(vo);
+	}
+	
+	@Override
+	public Integer wgetSearchCount(SearchCriteria cri) {
+
+		return mediaDAO.wgetSearchCount(cri);
+	}
+
 	
 	
 	@Override
@@ -364,6 +390,12 @@ public class MediaServiceImpl implements MediaService {
 	public TextTypeVO getPressTextTypeSearchCount(SearchCriteria cri) {
 
 		return mediaDAO.getPressTextTypeSearchCount(cri);
+	}
+
+	@Override
+	public List<MediaVO> wPageSearch(SearchCriteria cri) {
+
+		return mediaDAO.wPageSearch(cri);
 	}
 
 }

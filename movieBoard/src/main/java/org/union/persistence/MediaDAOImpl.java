@@ -89,6 +89,18 @@ public class MediaDAOImpl implements MediaDAO {
 		return session.selectOne(namespace + "getSearchCount", cri);
 	}
 	
+	@Override
+	public List<MediaVO> wlistSearch(SearchCriteria vo) {
+		
+		return session.selectList(namespace + "wlistSearch", vo);
+	}
+
+	
+	@Override
+	public Integer wgetSearchCount(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "wgetSearchCount", cri);
+	}
 	
 	@Override
 	public List<MediaVO> searchAll(SearchCriteria criteria) {
@@ -253,6 +265,13 @@ public class MediaDAOImpl implements MediaDAO {
 	public TextTypeVO getPressTextTypeSearchCount(SearchCriteria cri) {
 		
 		return session.selectOne(namespace + "getPressTextTypeSearchCount", cri);
+	}
+
+
+	@Override
+	public List<MediaVO> wPageSearch(SearchCriteria cri) {
+
+		return session.selectList(namespace + "wPageSearch", cri);
 	}
 
 }

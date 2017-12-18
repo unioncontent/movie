@@ -35,8 +35,12 @@ public interface MediaDAO {
 	public Integer getExtractCount(SearchCriteria cri);
 	
 	public List<MediaVO> listSearch(SearchCriteria cri);
-	
 	public Integer getSearchCount(SearchCriteria cri);
+
+	public List<MediaVO> wlistSearch(SearchCriteria cri);
+	public List<MediaVO> wPageSearch(SearchCriteria cri);
+	public Integer wgetSearchCount(SearchCriteria cri);
+	
 	
 	public List<MediaVO> listAll(SearchCriteria cri);
 	

@@ -11,31 +11,31 @@
 		<ul class="nav nav-tabs md-tabs tab-timeline" role="tablist"
 			id="mytab">
 			<a class="nav-item">
-				<li id="main" class="nav-link">
+				<li id="main" class="nav-link" style="cursor:pointer;">
 					<p>통계보고서</p>
 					<div class="slide"></div>
 			</li>
 			</a>
 			<a class="nav-item">
-				<li id="portal" class="nav-link">
+				<li id="portal" class="nav-link" style="cursor:pointer;">
 					<p>포털통계</p>
 					<div class="slide"></div>
 			</li>
 			</a>
 			<a class="nav-item">
-				<li id="community" class="nav-link">
+				<li id="community" class="nav-link" style="cursor:pointer;">
 					<p>커뮤니티통계</p>
 					<div class="slide"></div>
 			</li>
 			</a>
 			<a class="nav-item">
-				<li id="sns" class="nav-link">
+				<li id="sns" class="nav-link" style="cursor:pointer;">
 					<p>SNS통계</p>
 					<div class="slide"></div>
 			</li>
 			</a>
 			<a class="nav-item">
-				<li id="media" class="nav-link">
+				<li id="media" class="nav-link" style="cursor:pointer;">
 					<p>언론사통계</p>
 					<div class="slide"></div>
 			</li>
@@ -83,12 +83,16 @@
 		
 		}else{
 			
-			var first = parameter.split("page=")[0];
-			var second = parameter.split("page=")[1];
+			if(parameter.indexOf("page=") >= 0){
+				var first = parameter.split("page=")[0];
+				var second = parameter.split("page=")[1];
+				
+				second = "1" + second.substr(1);
+				
+				parameter = first + "page=" + second;
+			}
 			
-			second = "1" + second.substr(1);
 			
-			parameter = first + "page=" + second;
 			
 			self.location = "../period/" + part + "?" + parameter;
 		}

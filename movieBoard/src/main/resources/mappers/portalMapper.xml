@@ -147,7 +147,7 @@
  		and
  			keyword_type = '영화'
  	
- 	<include refid="search"></include>
+ 	<include refid="search_writeDate"></include>
  	
  	</select>
  	
@@ -161,7 +161,7 @@
  		and
  			keyword_type = '배우'
  	
- 	<include refid="search"></include>
+ 	<include refid="search_writeDate"></include>
  	
  	</select>
  	
@@ -202,15 +202,15 @@
  			 count(if(portal_name = 'daum', portal_name, null)) type2, count(*) type3  
  		from portal_data
 		where portal_type = #{type}
-		and date_add(now(), interval -1 day) <![CDATA[<]]> createDate
-		and createDate <![CDATA[<]]> now()
+		and date_add(now(), interval -1 day) <![CDATA[<]]> writeDate
+		and writeDate <![CDATA[<]]> now()
  	</select>
  	
  	<select id="yesterdayCount" resultType="GraphVO">
- 		select count(if(createDate <![CDATA[<]]> date_add(now(), interval -1 day), createDate, null)) type1,
-	    count(if(createDate <![CDATA[>]]> date_add(now(), interval -1 day), createDate, null)) type2
+ 		select count(if(writeDate <![CDATA[<]]> date_add(now(), interval -1 day), writeDate, null)) type1,
+	    count(if(writeDate <![CDATA[>]]> date_add(now(), interval -1 day), writeDate, null)) type2
 		from portal_data 
-		where createDate between date_add(now(), interval -2 day) and  date_add(now(), interval -0 day)
+		where writeDate between date_add(now(), interval -2 day) and  date_add(now(), interval -0 day)
  	</select>
  	
  	<select id="listNaver" resultType="PortalVO">
@@ -234,7 +234,7 @@
  		and score is null 
  		and
  			portal_name = 'naver'
- 		<include refid="search"></include>
+ 		<include refid="search_writeDate"></include>
  	
  	</select>
  	
@@ -247,7 +247,7 @@
 		count(if(textType is not null and texttype!='삭제글', textType, null)) al
 		from portal_data
 		where textType is not null
-		<include refid="search"></include>
+		<include refid="search_writeDate"></include>
  	</select>
  	
  	
@@ -262,7 +262,7 @@
 		union.portal_data
 	where 
 		portal_type = 'blog'
- 	<include refid="search"></include>
+ 	<include refid="search_writeDate"></include>
  	</select>
  	
  	<select id="cafeTextTypeCount" resultType="TextTypeVO">
@@ -276,7 +276,7 @@
 		union.portal_data
 	where 
 		portal_type = 'cafe'
-	<include refid="search"></include>
+	<include refid="search_writeDate"></include>
  	
  	</select>
  	
@@ -333,7 +333,7 @@
  		and score is null 
  		and
  			portal_name = 'daum'
- 		<include refid="search"></include>
+ 		<include refid="search_writeDate"></include>
  	
  	</select>
  	
@@ -390,6 +390,23 @@
 		and
 			score is null
 		<include refid="search"></include>
+		order 
+			by updateDate desc
+		limit  
+			#{startPage}, #{perPageNum}
+ 	
+ 	</select>
+ 	
+ 	<select id="wlistSearch" resultType="PortalVO">
+ 		select 
+			*
+		from 
+			portal_data
+		where 
+			textType is not null
+		and
+			score is null
+		<include refid="search_writeDate"></include>
 		order 
 			by updateDate desc
 		limit  
@@ -477,6 +494,34 @@
 			score is null
 		<include refid="search"></include>
 			
+	</select>
+	
+	<select id = "wgetSearchCount" resultType="Integer">
+		select
+			count(*)
+		from
+			portal_data
+		where
+			textType is not null
+		and
+			score is null
+		<include refid="search_writeDate"></include>
+			
+	</select>
+	
+	<select id="wPageSearch" resultType="PortalVO">
+		select 
+			*
+		from 
+			portal_data
+		where 
+			textType is not null
+		and
+			score is null
+		<include refid="search_writeDate"></include>
+		order 
+			by writeDate desc
+	
 	</select>
 
 	<update id="updateThumbnail">
