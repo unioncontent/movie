@@ -109,7 +109,6 @@ public class ExtractController {
 			}
 		}
 		
-		PageMaker pageMaker = new PageMaker();
 		
 		// 3번 리스트기 때문에  perPageNum / 3
 		if(cri.getPerPageNum() != 10) {
@@ -133,11 +132,15 @@ public class ExtractController {
 		List<ExtractVO> extractList = new ArrayList<ExtractVO>();
 		ListUtil listUtil = new ListUtil();
 		
+		logger.info("time checing list: " + communityService.listExtract(cri));
+		
 		listUtil.listAddList(extractList, communityService.listExtract(cri));
 		listUtil.listAddList(extractList, portalService.listExtract(cri));
 		listUtil.listAddList(extractList, mediaService.listExtract(cri));
 
 		cri.setPerPageNum(cri.getPerPageNum()*3);
+		
+		PageMaker pageMaker = new PageMaker();
 		
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(totalCount);

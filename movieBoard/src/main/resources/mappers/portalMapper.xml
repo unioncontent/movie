@@ -344,14 +344,6 @@
 			portal_data
 		where
 			textType is null
-		<if test="startDate != null">
-		and
-			writeDate <![CDATA[>]]> #{startDate}
-		<if test="endDate != null">
-  		and 
-  			writeDate <![CDATA[<]]> #{endDate}
-  		</if>
-  		</if>
 		<include refid="search"></include>
 		order by
 			createDate desc
@@ -367,14 +359,6 @@
 			portal_data
 		where
 			textType is null
-		<if test="startDate != null">
-		and
-			writeDate <![CDATA[>]]> #{startDate}
-		<if test="endDate != null">
-  		and 
-  			writeDate <![CDATA[<]]> #{endDate}
-  		</if>
-  		</if>
 		<include refid="search"></include>
 	
 	
