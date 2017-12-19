@@ -447,8 +447,8 @@ $(function() {
   $(document).ready(function(){
 
 
-	  	var startDateOption = decodeURI(window.location.href.split("startDate=")[1]).split("&")[0];
-		var endDateOption = decodeURI(window.location.href.split("endDate=")[1]).split("&")[0];
+	  	var startDateOption = decodeURI(window.location.href.split("startDate=")[1]).split("&")[0].split(" ")[0];
+		var endDateOption = decodeURI(window.location.href.split("endDate=")[1]).split("&")[0].split(" ")[0];
 		console.log("startDateOption: " + startDateOption);
 		console.log("endDateOption: " + endDateOption);
 
@@ -716,11 +716,7 @@ $(function() {
 	  console.log("searchBtn clicked....");
 	  console.log($('#selectSearchType option:selected').val());
 
-	  if($('#keywordInput').val() == ''){
-		alert("검색어를 입력해주세요.");
-	  }else{
 		searchList();
-	  }
 	});
 
 
