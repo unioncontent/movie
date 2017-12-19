@@ -23,6 +23,7 @@ import org.union.domain.ExtractVO;
 import org.union.domain.GraphVO;
 import org.union.domain.PageMaker;
 import org.union.domain.PeriodMediaVO;
+import org.union.domain.ReporterVO;
 import org.union.domain.SearchCriteria;
 import org.union.domain.TextTypeVO;
 import org.union.domain.UserVO;
@@ -30,6 +31,7 @@ import org.union.service.CommunityService;
 import org.union.service.KeywordService;
 import org.union.service.MediaService;
 import org.union.service.PortalService;
+import org.union.service.ReporterService;
 import org.union.service.SNSService;
 import org.union.service.UserService;
 import org.union.util.ExcelView;
@@ -59,6 +61,9 @@ public class PeriodController {
 
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private ReporterService reporterService;	
 
 	@GetMapping("/main")
 	public void mainGET(@ModelAttribute("cri") SearchCriteria cri, Model model) {
@@ -114,10 +119,10 @@ public class PeriodController {
 		
 		logger.info("cri: " + cri);
 		
-		model.addAttribute("portalCount", portalService.getSearchCount(cri));
-		model.addAttribute("communityCount", communityService.getSearchCount(cri));
+		model.addAttribute("portalCount", portalService.wgetSearchCount(cri));
+		model.addAttribute("communityCount", communityService.wgetSearchCount(cri));
 		model.addAttribute("snsCount", snsService.getSearchCount(cri));
-		model.addAttribute("mediaCount", mediaService.getSearchCount(cri));
+		model.addAttribute("mediaCount", mediaService.wgetSearchCount(cri));
 		
 		model.addAttribute("portalTextType", portalService.textTypeCount(cri));
 		model.addAttribute("communityTextType", communityService.textTypeCount(cri));
@@ -189,16 +194,16 @@ public class PeriodController {
 		logger.info("cri: " + cri);
 		
 		cri.setTextType("좋은글");
-		model.addAttribute("type1", communityService.getSearchCount(cri));
+		model.addAttribute("type1", communityService.wgetSearchCount(cri));
 		
 		cri.setTextType("나쁜글");
-		model.addAttribute("type2", communityService.getSearchCount(cri));
+		model.addAttribute("type2", communityService.wgetSearchCount(cri));
 		
 		cri.setTextType("관심글");
-		model.addAttribute("type3", communityService.getSearchCount(cri));
+		model.addAttribute("type3", communityService.wgetSearchCount(cri));
 		
 		cri.setTextType("기타글");
-		model.addAttribute("type4", communityService.getSearchCount(cri));
+		model.addAttribute("type4", communityService.wgetSearchCount(cri));
 		
 		cri.setTextType(null);
 		model.addAttribute("communityList", communityService.listComplete(cri));
@@ -277,11 +282,11 @@ public class PeriodController {
 		model.addAttribute("naverCount", naverCount);
 		model.addAttribute("daumCount", daumCount);
 		
-		model.addAttribute("portalList", portalService.listSearch(cri));
-		logger.info("list: " + portalService.listSearch(cri));
+		model.addAttribute("portalList", portalService.wlistSearch(cri));
+		logger.info("list: " + portalService.wlistSearch(cri));
 		PageMaker pageMaker = new PageMaker();
 		
-		Integer totalCount = portalService.getSearchCount(cri);
+		Integer totalCount = portalService.wgetSearchCount(cri);
 		
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(totalCount);
@@ -293,13 +298,11 @@ public class PeriodController {
 		model.addAttribute("pageMaker", pageMaker);
 		
 		model.addAttribute("naver1", portalService.naverTextTypeCount("blog"));
-		logger.info("naver1: " + portalService.naverTextTypeCount("blog"));
 		model.addAttribute("naver2", portalService.naverTextTypeCount("cafe"));
 		model.addAttribute("naver3", portalService.naverTextTypeCount("kintip"));
 		model.addAttribute("naver4", portalService.naverTextTypeCount("webdoc"));
 		
 		model.addAttribute("daum1", portalService.daumTextTypeCount("blog"));
-		logger.info("daum1: " + portalService.daumTextTypeCount("blog"));
 		model.addAttribute("daum2", portalService.daumTextTypeCount("cafe"));
 		model.addAttribute("daum3", portalService.daumTextTypeCount("kintip"));
 		model.addAttribute("daum4", portalService.daumTextTypeCount("webdoc"));
@@ -309,6 +312,9 @@ public class PeriodController {
 	@GetMapping("/media")
 	public void mediaGET(@ModelAttribute("cri") SearchCriteria cri, Model model) {
 		  logger.info("mediaGET called....");
+		  
+		  cri.setTextType(null);
+		  cri.setKeyword(null);
 		  
 		  if(cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey()) ) {
 				logger.info("selectKey is null");
@@ -368,7 +374,7 @@ public class PeriodController {
 		  model.addAttribute("pressCount", reporterList.size());
 		  model.addAttribute("totalCount", mediaService.getTotalCount(cri));
 		  
-		  if(cri.getSelectKey() == null && cri.getCompany() == null) {
+		  if(cri.getSelectKey() == null) {
 			  model.addAttribute("matchCount", 0);
 		  
 		  }else {
@@ -386,11 +392,10 @@ public class PeriodController {
 		  // 리스트
 		  String keyword=  cri.getKeyword();
 		  cri.setKeyword(null);
-		  model.addAttribute("searchList", mediaService.listSearch(cri));
-		  logger.info("list: " + mediaService.listSearch(cri));
+		  model.addAttribute("searchList", mediaService.wlistSearch(cri));
 		  PageMaker pageMaker = new PageMaker();
 		  
-		  Integer totalCount = mediaService.getSearchCount(cri);
+		  Integer totalCount = mediaService.wgetSearchCount(cri);
 		  
 		  pageMaker.setCri(cri);
 		  pageMaker.setTotalCount(totalCount);
@@ -399,17 +404,73 @@ public class PeriodController {
 		  model.addAttribute("totalCountPage", totalCount);
 		  model.addAttribute("minusCount", cri.getPerPageNum() * (cri.getPage()-1));
 		  
-		  cri.setKeyword(keyword);
+		  //cri.setKeyword(keyword);
 
 		  model.addAttribute("mediaTypeCount", mediaService.periodTextTypeCount(cri));
 		  logger.info(mediaService.periodTextTypeCount(cri) + "");
 		  
 		  cri.setTextType("press");
 		  model.addAttribute("pressTypeCount", mediaService.periodTextTypeCount(cri));
-		  
+		  //cri.setTextType(null);
 		  
 	}
 
+	@ResponseBody
+	@PostMapping("/getTextType")
+	public List<TextTypeVO> getTextType(String url, String part, String keyword){
+		logger.info("getTextType called....");
+
+		SearchCriteria cri  = new SearchCriteria();
+		
+		if(!url.equals("undefined")) {
+			String company = url.split("company")[1].split("&")[0];
+			String selectKey = url.split("selectKey")[1].split("&")[0];
+			String startDate = url.split("startDate")[1].split("&")[0] + " 00:00:00";
+			String endDate = url.split("endDate")[1].split("&")[0] + " 23:59:50";
+			
+			cri.setCompany(company);
+			cri.setSelectKey(selectKey);
+			cri.setStartDate(startDate);
+			cri.setEndDate(endDate);
+		}
+		
+		cri.setKeyword(keyword);
+		
+		logger.info("cri: " + cri);
+		
+		List<TextTypeVO> list = new ArrayList<TextTypeVO>();
+		
+		if(part.equals("media")) {
+			list.add(mediaService.getMediaPortalCount(cri));
+			list.add(mediaService.getMediaTextTypeTotalCount(cri));
+			list.add(mediaService.getMediaTextTypeSearchCount(cri));
+			
+		}else if(part.equals("press")) {
+			list.add(mediaService.getPressPortalCount(cri));
+			list.add(mediaService.getPressTextTypeTotalCount(cri));
+			list.add(mediaService.getPressTextTypeSearchCount(cri));
+			
+			TextTypeVO textTypeVO = new TextTypeVO();
+			ReporterVO reporterVO = reporterService.readByName(keyword);
+			
+			try {
+				textTypeVO.setName1(reporterVO.getReporter_name());
+				textTypeVO.setName2(reporterVO.getReporter_media_name());
+				if(reporterVO.getReporter_email() != null) {
+					textTypeVO.setEmail(reporterVO.getReporter_email());
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				
+			}finally {
+				list.add(textTypeVO);
+			}
+			
+		}
+		
+		return list;
+	}
+	
 	@GetMapping("/sns")
 	public void snsGET(@ModelAttribute("cri") SearchCriteria cri, Model model) {
 		logger.info("snsGET called....");
@@ -680,13 +741,13 @@ public class PeriodController {
 			listUtil.listAddSNSList(classiList, snsService.listExcel(cri));
 		
 		}else if(part.equals("community")) {
-			listUtil.listAddCommunityList(classiList, communityService.listAll(cri));
+			listUtil.listAddCommunityList(classiList, communityService.wPageSearch(cri));
 		
 		}else if(part.equals("portal")){
-			listUtil.listAddPortalList(classiList, portalService.listAll(cri));
+			listUtil.listAddPortalList(classiList, portalService.wPageSearch(cri));
 		
 		}else if(part.equals("media")) {
-			listUtil.listAddMediaList(classiList, mediaService.listSearch(cri));
+			listUtil.listAddMediaList(classiList, mediaService.wPageSearch(cri));
 		}
 		
 		

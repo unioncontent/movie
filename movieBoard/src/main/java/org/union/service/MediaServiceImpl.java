@@ -127,6 +127,32 @@ public class MediaServiceImpl implements MediaService {
 		return mediaDAO.getSearchCount(cri);
 	}
 
+	@Override
+	public List<MediaVO> wlistSearch(SearchCriteria vo) {
+
+		List<MediaVO> list = mediaDAO.wlistSearch(vo);
+		
+		for (MediaVO mediaVO : list) {
+			if(mediaVO.getKeyword() != null && !mediaVO.getKeyword().equals("press")) {
+				
+				try {
+					mediaVO.setKeyword_main(keywordDAO.read(mediaVO.getKeyword()).getKeyword_main());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+			}
+		}
+		
+		return mediaDAO.listSearch(vo);
+	}
+	
+	@Override
+	public Integer wgetSearchCount(SearchCriteria cri) {
+
+		return mediaDAO.wgetSearchCount(cri);
+	}
+
 	
 	
 	@Override
@@ -328,6 +354,48 @@ public class MediaServiceImpl implements MediaService {
 	public TextTypeVO periodTextTypeCount(SearchCriteria cri) {
 
 		return mediaDAO.periodTextTypeCount(cri);
+	}
+
+	@Override
+	public TextTypeVO getMediaPortalCount(SearchCriteria cri) {
+
+		return mediaDAO.getMediaPortalCount(cri);
+	}
+
+	@Override
+	public TextTypeVO getMediaTextTypeTotalCount(SearchCriteria cri) {
+
+		return mediaDAO.getMediaTextTypeTotalCount(cri);
+	}
+
+	@Override
+	public TextTypeVO getMediaTextTypeSearchCount(SearchCriteria cri) {
+
+		return mediaDAO.getMediaTextTypeSearchCount(cri);
+	}
+
+	@Override
+	public TextTypeVO getPressPortalCount(SearchCriteria cri) {
+
+		return mediaDAO.getPressPortalCount(cri);
+	}
+
+	@Override
+	public TextTypeVO getPressTextTypeTotalCount(SearchCriteria cri) {
+
+		return mediaDAO.getPressTextTypeTotalCount(cri);
+	}
+
+	@Override
+	public TextTypeVO getPressTextTypeSearchCount(SearchCriteria cri) {
+
+		return mediaDAO.getPressTextTypeSearchCount(cri);
+	}
+
+	@Override
+	public List<MediaVO> wPageSearch(SearchCriteria cri) {
+
+		return mediaDAO.wPageSearch(cri);
 	}
 
 }

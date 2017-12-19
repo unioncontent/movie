@@ -179,7 +179,7 @@
                               <div class="col-md-6 col-xl-3 main-card">
                                 <div class="card social-widget-card">
                                   <div class="card-block-big bg-inverse">
-                                    <h3>${facebookCount + twitterCount + instagramCount}</h3>
+                                    <h3><fmt:formatNumber value="${facebookCount + twitterCount + instagramCount}" groupingUsed="true"/></h3>
                                     <span class="m-t-10">전체검색</span>
                                     <i class="icofont icofont-search"></i>
                                   </div>
@@ -188,7 +188,7 @@
                               <div class="col-md-6 col-xl-3 main-card">
                                 <div class="card social-widget-card">
                                   <div class="card-block-big bg-facebook">
-                                    <h3>${facebookCount}</h3>
+                                    <h3><fmt:formatNumber value="${facebookCount}" groupingUsed="true"/></h3>
                                     <span class="m-t-10">페이스북</span>
                                     <i class="icofont icofont-social-facebook"></i>
                                   </div>
@@ -197,7 +197,7 @@
                               <div class="col-md-6 col-xl-3 main-card">
                                 <div class="card social-widget-card">
                                   <div class="card-block-big bg-twitter">
-                                    <h3>${twitterCount}</h3>
+                                    <h3><fmt:formatNumber value="${twitterCount}" groupingUsed="true"/></h3>
                                     <span class="m-t-10">트위터</span>
                                     <i class="icofont icofont-social-twitter"></i>
                                   </div>
@@ -206,7 +206,7 @@
                               <div class="col-md-6 col-xl-3 main-card">
                                 <div class="card social-widget-card">
                                   <div class="card-block-big bg-instagram">
-                                    <h3>${instagramCount}</h3>
+                                    <h3><fmt:formatNumber value="${instagramCount}" groupingUsed="true"/></h3>
                                     <span class="m-t-10">인스타그램</span>
                                     <i class="icofont icofont-social-instagram"></i>
                                   </div>

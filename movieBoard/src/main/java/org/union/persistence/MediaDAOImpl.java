@@ -89,6 +89,18 @@ public class MediaDAOImpl implements MediaDAO {
 		return session.selectOne(namespace + "getSearchCount", cri);
 	}
 	
+	@Override
+	public List<MediaVO> wlistSearch(SearchCriteria vo) {
+		
+		return session.selectList(namespace + "wlistSearch", vo);
+	}
+
+	
+	@Override
+	public Integer wgetSearchCount(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "wgetSearchCount", cri);
+	}
 	
 	@Override
 	public List<MediaVO> searchAll(SearchCriteria criteria) {
@@ -211,6 +223,55 @@ public class MediaDAOImpl implements MediaDAO {
 	public TextTypeVO periodTextTypeCount(SearchCriteria cri) {
 
 		return session.selectOne(namespace + "periodTextTypeCount", cri);
+	}
+
+
+	@Override
+	public TextTypeVO getMediaPortalCount(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "getMediaPortalCount", cri);
+	}
+
+
+	@Override
+	public TextTypeVO getMediaTextTypeTotalCount(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "getMediaTextTypeTotalCount", cri);
+	}
+
+
+	@Override
+	public TextTypeVO getMediaTextTypeSearchCount(SearchCriteria cri) {
+		
+		return session.selectOne(namespace + "getMediaTextTypeSearchCount", cri);
+	}
+
+
+	@Override
+	public TextTypeVO getPressPortalCount(SearchCriteria cri) {
+		
+		return session.selectOne(namespace + "getPressPortalCount", cri);
+	}
+
+
+	@Override
+	public TextTypeVO getPressTextTypeTotalCount(SearchCriteria cri) {
+		
+		return session.selectOne(namespace + "getPressTextTypeTotalCount", cri);
+	}
+
+
+	@Override
+	public TextTypeVO getPressTextTypeSearchCount(SearchCriteria cri) {
+		
+		return session.selectOne(namespace + "getPressTextTypeSearchCount", cri);
+	}
+
+
+	@Override
+	public List<MediaVO> wPageSearch(SearchCriteria cri) {
+
+		return session.selectList(namespace + "wPageSearch", cri);
 	}
 
 }

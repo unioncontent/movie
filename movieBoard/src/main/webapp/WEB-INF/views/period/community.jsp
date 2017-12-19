@@ -179,7 +179,7 @@
                               <div class="col-md-6 col-xl-2 main-card">
                                 <div class="card social-widget-card">
                                   <div class="card-block-big bg-inverse">
-                                    <h3>${type1 + type2 + type3 + type4}</h3>
+                                    <h3><fmt:formatNumber value="${type1 + type2 + type3 + type4}" groupingUsed="true"/></h3>
                                     <span class="m-t-10">전체검색</span>
                                     <i class="icofont icofont-search"></i>
                                   </div>
@@ -188,7 +188,7 @@
                               <div class="col-md-6 col-xl-2 main-card">
                                 <div class="card social-widget-card">
                                   <div class="card-block-big bg-success">
-                                    <h3>${type1}</h3>
+                                    <h3><fmt:formatNumber value="${type1}" groupingUsed="true"/></h3>
                                     <span class="m-t-10">좋은글</span>
                                     <i class="icofont icofont-emo-simple-smile"></i>
                                   </div>
@@ -197,7 +197,7 @@
                               <div class="col-md-6 col-xl-2 main-card">
                                 <div class="card social-widget-card">
                                   <div class="card-block-big bg-danger">
-                                    <h3>${type2}</h3>
+                                    <h3><fmt:formatNumber value="${type2}" groupingUsed="true"/></h3>
                                     <span class="m-t-10">나쁜글</span>
                                     <i class="icofont icofont-emo-angry"></i>
                                   </div>
@@ -206,7 +206,7 @@
                               <div class="col-md-6 col-xl-2 main-card">
                                 <div class="card social-widget-card">
                                   <div class="card-block-big bg-info">
-                                    <h3>${type3}</h3>
+                                    <h3><fmt:formatNumber value="${type3}" groupingUsed="true"/></h3>
                                     <span class="m-t-10">관심글</span>
                                     <i class="icofont icofont-emo-open-mouth"></i>
                                   </div>
@@ -215,7 +215,7 @@
                               <div class="col-md-6 col-xl-2 main-card">
                                 <div class="card social-widget-card">
                                   <div class="card-block-big bg-warning">
-                                    <h3>${type4}</h3>
+                                    <h3><fmt:formatNumber value="${type4}" groupingUsed="true"/></h3>
                                     <span class="m-t-10">기타</span>
                                     <i class="icofont icofont-emo-expressionless"></i>
                                   </div>
