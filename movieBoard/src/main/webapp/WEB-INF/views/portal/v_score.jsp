@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -112,7 +112,7 @@
                           </c:if>
                         </select>
 						</c:if>
-						
+
 						<c:if test="${user.user_name != 'union'}">
                          <select style="display: none;" name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="selectCompany">
                           <option>회사</option>
@@ -219,88 +219,85 @@
                                 </div>
                               </div>
                               <div class="col-md-6 col-xl-6">
-							  <div class="row">
-							    <div class="col p-l-0 p-r-0">
-							      <div class="card user-activity-card" style="border-radius: 0;">
-							        <div class="card-header">
-							          <div>
-							            <h5>좋은글</h5>
-							            <span>점수 범위 : 10 ~ 8</span>
-							          </div>
-							        </div>
-							        <div class="card-block-big text-center typography" style="padding-left: 5px;padding-right: 5px;">
-							          <div style="height: 50px;display: inline-block;">
-							            <h1 class="text-success" style="font-weight: 600;margin-bottom: 0;float: left;"><fmt:formatNumber value="${textType.lik}" groupingUsed="true"/></h1>
-							            <label class="badge badge-inverse" style="float: left;">
-							              <c:if test="${textType.al != 0}">
-							              <fmt:parseNumber var="pages" integerOnly="true" value="${(textType.lik/textType.al) * 100}"> 
-                                          </fmt:parseNumber> ${pages}%
+              							    <div class="col-sm-3 p-l-0 p-r-0 f-left">
+              							      <div class="card user-activity-card" style="border-radius: 0;">
+              							        <div class="card-header">
+              							          <div>
+              							            <h5>좋은글</h5>
+              							            <span>점수 범위 : 10 ~ 8</span>
+              							          </div>
+              							        </div>
+              							        <div class="card-block-big text-center typography" style="padding-left: 5px;padding-right: 5px;">
+              							          <div style="height: 50px;display: inline-block;">
+              							            <h1 class="text-success f-left">${textType.lik}</h1>
+              							            <label class="badge badge-inverse f-left">
+              							              <c:if test="${textType.al != 0}">
+                							              <fmt:parseNumber var="pages" integerOnly="true" value="${(textType.lik/textType.al) * 100}"></fmt:parseNumber>
+                                            ${pages}%
                                           </c:if>
-							            </label>
-							          </div>
-							        </div>
-							      </div>
-							    </div>
-							    <div class="col p-l-0 p-r-0">
-							      <div class="card user-activity-card" style="border-radius: 0;">
-							        <div class="card-header">
-							          <h5>관심글</h5>
-							          <span>점수 범위 : 7 ~ 5</span>
-							        </div>
-							        <div class="card-block-big text-center typography" style="padding-left: 5px;padding-right: 5px;">
-							          <div style="height: 50px;display: inline-block;">
-							            <h1 class="text-primary" style="font-weight: 600;margin-bottom: 0;float: left;"><fmt:formatNumber value="${textType.cu}" groupingUsed="true"/></h1>
-							            <label class="badge badge-inverse" style="float: left;">
-							            <c:if test="${textType.al != 0}">
-							              <fmt:parseNumber var="pages" integerOnly="true" value="${(textType.cu/textType.al) * 100}"> 
-                                          </fmt:parseNumber> ${pages}%
+              							            </label>
+              							          </div>
+              							        </div>
+              							      </div>
+              							    </div>
+              							    <div class="col-sm-3 p-l-0 p-r-0 f-left">
+              							      <div class="card user-activity-card" style="border-radius: 0;">
+              							        <div class="card-header">
+              							          <h5>관심글</h5>
+              							          <span>점수 범위 : 7 ~ 5</span>
+              							        </div>
+              							        <div class="card-block-big text-center typography" style="padding-left: 5px;padding-right: 5px;">
+              							          <div style="height: 50px;display: inline-block;">
+              							            <h1 class="text-primary f-left">${textType.cu}</h1>
+              							            <label class="badge badge-inverse f-left">
+                							            <c:if test="${textType.al != 0}">
+                							              <fmt:parseNumber var="pages" integerOnly="true" value="${(textType.cu/textType.al) * 100}"></fmt:parseNumber>
+                                            ${pages}%
                                           </c:if>
-							            </label>
-							          </div>
-							        </div>
-							      </div>
-							    </div>
-							    <div class="col p-l-0 p-r-0">
-							      <div class="card user-activity-card" style="border-radius: 0;">
-							        <div class="card-header">
-							          <h5>나쁜글</h5>
-							          <span>점수 범위 : 4 ~ 2</span>
-							        </div>
-							        <div class="card-block-big text-center typography" style="padding-left: 5px;padding-right: 5px;">
-							          <div style="height: 50px;display: inline-block;">
-							            <h1 class="text-warning" style="font-weight: 600;margin-bottom: 0;float: left;"><fmt:formatNumber value="${textType.dis}" groupingUsed="true"/></h1>
-							            <label class="badge badge-inverse" style="float: left;">
-							            <c:if test="${textType.al != 0}">
-							              <fmt:parseNumber var="pages" integerOnly="true" value="${(textType.dis/textType.al) * 100}"> 
-                                          </fmt:parseNumber> ${pages}%
+              							            </label>
+              							          </div>
+              							        </div>
+              							      </div>
+              							    </div>
+              							    <div class="col-sm-3 p-l-0 p-r-0 f-left">
+              							      <div class="card user-activity-card" style="border-radius: 0;">
+              							        <div class="card-header">
+              							          <h5>나쁜글</h5>
+              							          <span>점수 범위 : 4 ~ 2</span>
+              							        </div>
+              							        <div class="card-block-big text-center typography" style="padding-left: 5px;padding-right: 5px;">
+              							          <div style="height: 50px;display: inline-block;">
+              							            <h1 class="text-warning f-left">${textType.dis}</h1>
+              							            <label class="badge badge-inverse f-left">
+                							            <c:if test="${textType.al != 0}">
+                							              <fmt:parseNumber var="pages" integerOnly="true" value="${(textType.dis/textType.al) * 100}"></fmt:parseNumber>
+                                            ${pages}%
                                           </c:if>
-							            
-							            </label>
-							          </div>
-							        </div>
-							      </div>
-							    </div>
-							    <div class="col p-l-0 p-r-0">
-							      <div class="card user-activity-card" style="border-radius: 0;">
-							        <div class="card-header">
-							          <h5>악성글</h5>
-							          <span>점수 범위 : 1</span>
-							        </div>
-							        <div class="card-block-big text-center typography"  style="padding-left: 5px;padding-right: 5px;">
-							          <div style="height: 50px;display: inline-block;">
-							            <h1 class="text-danger" style="font-weight: 600;margin-bottom: 0;float: left;"><fmt:formatNumber value="${textType.etc}" groupingUsed="true"/></h1>
-							            <label class="badge badge-inverse" style="float: left;">
-							            <c:if test="${textType.al != 0}">
-							              <fmt:parseNumber var="pages" integerOnly="true" value="${(textType.etc/textType.al) * 100}"> 
-                                          </fmt:parseNumber> ${pages}%
+              							            </label>
+              							          </div>
+              							        </div>
+              							      </div>
+              							    </div>
+              							    <div class="col-sm-3 p-l-0 p-r-0 f-left">
+              							      <div class="card user-activity-card" style="border-radius: 0;">
+              							        <div class="card-header">
+              							          <h5>악성글</h5>
+              							          <span>점수 범위 : 1</span>
+              							        </div>
+              							        <div class="card-block-big text-center typography"  style="padding-left: 5px;padding-right: 5px;">
+              							          <div style="height: 50px;display: inline-block;">
+              							            <h1 class="text-danger f-left">${textType.etc}</h1>
+              							            <label class="badge badge-inverse f-left">
+                							            <c:if test="${textType.al != 0}">
+                							              <fmt:parseNumber var="pages" integerOnly="true" value="${(textType.etc/textType.al) * 100}"></fmt:parseNumber>
+                                            ${pages}%
                                           </c:if>
-							            </label>
-							          </div>
-							        </div>
-							      </div>
-							    </div>
-							  </div>
-							</div>
+              							            </label>
+              							          </div>
+              							        </div>
+              							      </div>
+              							    </div>
+                							</div>
                               <!-- <div class="col-md-6 col-xl-6">
                                 <div class="card table-card group-widget">
                                   <div class="row-table">
@@ -328,7 +325,7 @@
                                   <div class="card-block-big" style="padding-top: 31px;padding-bottom: 8px;">
                                     <div class="row">
                                       <div class="col-sm-6">
-                                        <dl class="dl-horizontal row">
+                                        <dl class="dl-horizontal row text-center">
                                           <dt class="col-sm-5">10</dt>
                                           <dd class="col-sm-7"><label class="label label-success">아주좋음</label></dd>
                                           <dt class="col-sm-5">8 ~ 9</dt>
@@ -342,18 +339,16 @@
                                         </dl>
                                       </div>
                                       <div class="col-sm-6">
-									    <h4 class="sub-title">분류비율표</h4><br>
-										<h2 class="text-info text-center typography">
-										  <strong>
-                                            <c:if test="${scoreCount == 1 or scoreCount == 2 or scoreCount == 3}">경고</c:if>
-                                            <c:if test="${scoreCount == 4 or scoreCount == 5}">주의</c:if>
-                                            <c:if test="${scoreCount == 6 or scoreCount == 7}">양호</c:if>
-                                            <c:if test="${scoreCount == 8 or scoreCount == 9}">좋음</c:if>
-                                            <c:if test="${scoreCount == 10}">아주좋음</c:if>
-                                          </strong>
-										  <small style="margin-left: 0;">${scoreCount}</small>
-									    </h2>
-									  </div>
+                  									    <h4 class="sub-title">분류비율표</h4>
+                    										<h2 class="text-info text-center typography p-t-5 p-b-25 m-b-0">
+                                          <c:if test="${scoreCount == 1 or scoreCount == 2 or scoreCount == 3}"><strong class="text-danger">경고</strong></c:if>
+                                          <c:if test="${scoreCount == 4 or scoreCount == 5}"><strong class="text-warning">주의</strong></c:if>
+                                          <c:if test="${scoreCount == 6 or scoreCount == 7}"><strong class="text-info">양호</strong></c:if>
+                                          <c:if test="${scoreCount == 8 or scoreCount == 9}"><strong class="text-primary">좋음</strong></c:if>
+                                          <c:if test="${scoreCount == 10}"><strong class="text-success">아주좋음</strong></c:if>
+                    										  <small style="margin-left: 0;">${scoreCount}</small>
+                  									    </h2>
+                  									  </div>
                                     </div>
                                   </div>
                                 </div>
@@ -392,30 +387,30 @@
                                           <tr>
                                             <td colspan="6">
                                                <ul class="pagination float-right">
-					                              <c:if test="${pageMaker.prev}">
-					                                <li class="page-item">
-					                                  <a class="page-link" href="v_score${pageMaker.makeSearch(pageMaker.startPage - 1) }" aria-label="Previous">&laquo;
-					                                    <span aria-hidden="true"></span>
-					                                    <span class="sr-only">Previous</span>
-					                                  </a>
-					                                </li>
-					                              </c:if>
-					
-					                              <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
-					                                <li class= "${pageMaker.cri.page == idx? 'active':''} page-item">
-					                                  <a class="page-link" href="v_score${pageMaker.makeSearch(idx)}">${idx}</a>
-					                                </li>
-					                              </c:forEach>
-					
-					                              <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-					                                <li class="page-item">
-					                                  <a class="page-link" href="v_score${pageMaker.makeSearch(pageMaker.endPage +1) }" aria-label="Next">&raquo;
-					                                    <span aria-hidden="true"></span>
-					                                    <span class="sr-only">Next</span>
-					                                  </a>
-					                                </li>
-					                              </c:if>
-					                            </ul>
+        					                              <c:if test="${pageMaker.prev}">
+        					                                <li class="page-item">
+        					                                  <a class="page-link" href="v_score${pageMaker.makeSearch(pageMaker.startPage - 1) }" aria-label="Previous">&laquo;
+        					                                    <span aria-hidden="true"></span>
+        					                                    <span class="sr-only">Previous</span>
+        					                                  </a>
+        					                                </li>
+        					                              </c:if>
+
+        					                              <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
+        					                                <li class= "${pageMaker.cri.page == idx? 'active':''} page-item">
+        					                                  <a class="page-link" href="v_score${pageMaker.makeSearch(idx)}">${idx}</a>
+        					                                </li>
+        					                              </c:forEach>
+
+        					                              <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+        					                                <li class="page-item">
+        					                                  <a class="page-link" href="v_score${pageMaker.makeSearch(pageMaker.endPage +1) }" aria-label="Next">&raquo;
+        					                                    <span aria-hidden="true"></span>
+        					                                    <span class="sr-only">Next</span>
+        					                                  </a>
+        					                                </li>
+        					                              </c:if>
+        					                            </ul>
                                             </td>
                                           </tr>
                                         </tfoot>
@@ -525,20 +520,20 @@
 <script type="text/javascript">
 
 	$(document).ready(function(){
-		
-		// title 길시에 ...으로 변경  
+
+		// title 길시에 ...으로 변경
 		var $content = $(".title_score");
 
 		var size = 25;
-	
+
 		for (var i =0; i < $content.length; i++){
 			if($content[i].innerText.length >= size){
 				$content[i].textContent = $content[i].innerText.substr(0, size) + '...';
 			}
 		}
-		
+
 		var $fromDate = $("#fromDate");
-		
+
 		var startDateOption = decodeURI(window.location.href.split("startDate=")[1]).split("&")[0].split(" ")[0];
 		var endDateOption = decodeURI(window.location.href.split("endDate=")[1]).split("&")[0].split(" ")[0];
 		console.log("startDateOption: " + startDateOption);
@@ -546,11 +541,11 @@
 
 		if(startDateOption != 'undefined' && endDateOption != 'undefined'
 				&& startDateOption != '' && endDateOption != ''){
-			
+
 			$fromDate.val(startDateOption + " - " + endDateOption);
 		}
-		
-		
+
+
 		// 회사 selectbox 유지.
 		var companyOption = decodeURI(window.location.href.split("company=")[1]).split("&")[0];
 		console.log("companyOption: " + companyOption);
@@ -597,7 +592,7 @@
 			searchList();
 
 		});
-		
+
 		// 당일 클릭시
 		$('#toDay').on("click", function(){
 		  console.log("toDay clicked....");
@@ -660,9 +655,9 @@
 			   searchList();
 
 		});
-		
+
 	}); // end ready...
-	
+
 
 	function searchList() {
 
