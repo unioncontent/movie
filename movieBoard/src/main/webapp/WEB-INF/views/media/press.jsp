@@ -157,86 +157,92 @@
                         <!-- Form Inputs card end -->
                         <!-- table card start -->
                         <div class="card">
-                            <div class="card-header">
-                              <h3 class="card-header-text f-left m-t-15 m-b-15">기자리스트</h3>
-                              <div class="">
-                                <div class="col-md-6 p-r-0 f-right press-setting">
-                                  <div class="col-sm-5 input-group input-group-button input-group-inverse p-l-0 p-r-0 m-b-10 m-l-10 f-right btn-select">
-                                    <input id="keywordInput" type="text" class="form-control" placeholder="">
-                                    <span class="input-group-addon" id="basic-addon1">
-                                      <button id="searchBtn" class="btn btn-inverse">검색</button>
-                                    </span>
-                                  </div>
-                                  <select id = "selectSearchType" name="select" class="col-sm-2 form-control form-control-inverse m-l-10 m-b-10 f-right search-select">
-                                    <option value="t">기자명</option>
-                                    <option value="c">언론사명</option>
-                                  </select>
-                                  <select id="selectPerPageNum" name="select" class="col-sm-1 form-control form-control-inverse m-l-10 m-b-10 p-r-5 f-right  list-select">
-                                    <option value="10">10</option>
-                                    <option value="30">30</option>
-                                    <option value="50">50</option>
-                                    <option value="100">100</option>
-                                  </select>
+                          <div class="card-header">
+                            <h3 class="card-header-text f-left m-t-15 m-b-15">기자리스트</h3>
+                            <div class="">
+                              <div class="col-md-6 p-r-0 f-right press-setting">
+                                <div class="col-sm-5 input-group input-group-button input-group-inverse p-l-0 p-r-0 m-b-10 m-l-10 f-right btn-select">
+                                  <input id="keywordInput" type="text" class="form-control" placeholder="">
+                                  <span class="input-group-addon" id="basic-addon1">
+                                    <button id="searchBtn" class="btn btn-inverse">검색</button>
+                                  </span>
                                 </div>
+                                <select id = "selectSearchType" name="select" class="col-sm-2 form-control form-control-inverse m-l-10 m-b-10 f-right search-select">
+                                  <option value="t">기자명</option>
+                                  <option value="c">언론사명</option>
+                                </select>
+                                <select id="selectPerPageNum" name="select" class="col-sm-1 form-control form-control-inverse m-l-10 m-b-10 p-r-5 f-right  list-select">
+                                  <option value="10">10</option>
+                                  <option value="30">30</option>
+                                  <option value="50">50</option>
+                                  <option value="100">100</option>
+                                </select>
                               </div>
                             </div>
-                            <div class="card-block">
-                              <div class="table-responsive">
-                                <table class="table table-bordered">
-                                  <thead>
-                                    <tr>
-                                      <th width="5%">NO</th>
-                                      <th width="5%">언론사명</th>
-                                      <th width="5%">검색언론사명</th>
-                                      <th width="5%">부서</th>
-                                      <th width="5%">기자명</th>
-                                      <th width="5%">기자ID</th>
-                                      <th width="10%">이메일</th>
-                                      <th width="10%">연락처</th>
-                                    </tr>
-                                  </thead>
-                                  <tbody>
-                                    <c:forEach items="${reporterList}" var="reporterList" varStatus="index">
-                                    <tr>
-                                      <th scope="row">${index.count}</th>
-                                      <td>${reporterList.reporter_media_name}</td>
-                                      <td>${reporterList.reporter_media_name}</td>
-                                      <td>${reporterList.reporter_part_name}</td>
-                                      <td>${reporterList.reporter_name}</td>
-                                      <td>${reporterList.reporter_email}</td>
-                                      <td>${reporterList.reporter_phoneNum}</td>
-                                      <td></td>
-                                    </tr>
-                                    </c:forEach>
-                                  </tbody>
-                                </table>
-                              </div>
-                               <ul class="pagination float-right">
-                              <c:if test="${pageMaker.prev}">
-                                <li class="page-item">
-                                  <a class="page-link" href="press${pageMaker.makeSearch(pageMaker.startPage - 1) }" aria-label="Previous">&laquo;
-                                    <span aria-hidden="true"></span>
-                                    <span class="sr-only">Previous</span>
-                                  </a>
-                                </li>
-                              </c:if>
+                          </div>
+                          <div class="card-block">
+                            <div class="table-responsive">
+                              <table class="table table-bordered">
+                                <thead>
+                                  <tr>
+                                    <th width="5%">NO</th>
+                                    <th width="5%">언론사명</th>
+                                    <th width="5%">검색언론사명</th>
+                                    <th width="5%">부서</th>
+                                    <th width="5%">기자명</th>
+                                    <th width="5%">기자ID</th>
+                                    <th width="10%">이메일</th>
+                                    <th width="10%">연락처</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <c:forEach items="${reporterList}" var="reporterList" varStatus="index">
+                                  <tr>
+                                    <th scope="row">${index.count}</th>
+                                    <td>${reporterList.reporter_media_name}</td>
+                                    <td>${reporterList.reporter_media_name}</td>
+                                    <td>${reporterList.reporter_part_name}</td>
+                                    <td>${reporterList.reporter_name}</td>
+                                    <td>${reporterList.reporter_email}</td>
+                                    <td>${reporterList.reporter_phoneNum}</td>
+                                    <td></td>
+                                  </tr>
+                                  </c:forEach>
+                                </tbody>
+                                <tfoot>
+                                  <tr>
+                                    <td colspan="8">
+                                      <ul class="pagination float-right">
+                                       <c:if test="${pageMaker.prev}">
+                                         <li class="page-item">
+                                           <a class="page-link" href="news${pageMaker.makeSearch(pageMaker.startPage - 1) }" aria-label="Previous">&laquo;
+                                             <span aria-hidden="true"></span>
+                                             <span class="sr-only">Previous</span>
+                                           </a>
+                                         </li>
+                                       </c:if>
 
-                              <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
-                                <li class= "${pageMaker.cri.page == idx? 'active':''} page-item">
-                                  <a class="page-link" href="press${pageMaker.makeSearch(idx)}">${idx}</a>
-                                </li>
-                              </c:forEach>
+                                       <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
+                                         <li class= "${pageMaker.cri.page == idx? 'active':''} page-item">
+                                           <a class="page-link" href="news${pageMaker.makeSearch(idx)}">${idx}</a>
+                                         </li>
+                                       </c:forEach>
 
-                              <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-                                <li class="page-item">
-                                  <a class="page-link" href="press${pageMaker.makeSearch(pageMaker.endPage +1) }" aria-label="Next">&raquo;
-                                    <span aria-hidden="true"></span>
-                                    <span class="sr-only">Next</span>
-                                  </a>
-                                </li>
-                              </c:if>
-                            </ul>
+                                       <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+                                         <li class="page-item">
+                                           <a class="page-link" href="news${pageMaker.makeSearch(pageMaker.endPage +1) }" aria-label="Next">&raquo;
+                                             <span aria-hidden="true"></span>
+                                             <span class="sr-only">Next</span>
+                                           </a>
+                                         </li>
+                                       </c:if>
+                                     </ul>
+                                    </td>
+                                  </tr>
+                                </tfoot>
+                              </table>
                             </div>
+                          </div>
                         </div>
                         <!-- table card end -->
                       </div>
@@ -327,28 +333,28 @@
 <script type="text/javascript">
 
 	$(document).ready(function(){
-		
+
 		// 검색 버튼 클릭시
 		$("#searchBtn").on("click", function(){
 			searchList();
 		});
-		
+
 		/* // 등록 버튼 클릭시
 		$("#insertBtn").on("click", function(){
 			$("#insertForm").submit();
 		}); */
-		
-		
+
+
 	}); // end ready...
-	
+
 	function searchList(event) {
 
 		var makeQeury = '${pageMaker.makeQuery(1)}'.slice(0, -2);
 
-		self.location = "press" 
-					  + makeQeury + $('#selectPerPageNum option:selected').val() 
-					  + "&searchType=" + $("#selectSearchType option:selected").val() 
-					  + "&keyword=" + $('#keywordInput').val(); 
+		self.location = "press"
+					  + makeQeury + $('#selectPerPageNum option:selected').val()
+					  + "&searchType=" + $("#selectSearchType option:selected").val()
+					  + "&keyword=" + $('#keywordInput').val();
 	}
 
 </script>
