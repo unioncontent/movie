@@ -387,30 +387,30 @@
                                           <tr>
                                             <td colspan="6">
                                                <ul class="pagination float-right">
-					                              <c:if test="${pageMaker.prev}">
-					                                <li class="page-item">
-					                                  <a class="page-link" href="v_score${pageMaker.makeSearch(pageMaker.startPage - 1) }" aria-label="Previous">&laquo;
-					                                    <span aria-hidden="true"></span>
-					                                    <span class="sr-only">Previous</span>
-					                                  </a>
-					                                </li>
-					                              </c:if>
+        					                              <c:if test="${pageMaker.prev}">
+        					                                <li class="page-item">
+        					                                  <a class="page-link" href="v_score${pageMaker.makeSearch(pageMaker.startPage - 1) }" aria-label="Previous">&laquo;
+        					                                    <span aria-hidden="true"></span>
+        					                                    <span class="sr-only">Previous</span>
+        					                                  </a>
+        					                                </li>
+        					                              </c:if>
 
-					                              <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
-					                                <li class= "${pageMaker.cri.page == idx? 'active':''} page-item">
-					                                  <a class="page-link" href="v_score${pageMaker.makeSearch(idx)}">${idx}</a>
-					                                </li>
-					                              </c:forEach>
+        					                              <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
+        					                                <li class= "${pageMaker.cri.page == idx? 'active':''} page-item">
+        					                                  <a class="page-link" href="v_score${pageMaker.makeSearch(idx)}">${idx}</a>
+        					                                </li>
+        					                              </c:forEach>
 
-					                              <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-					                                <li class="page-item">
-					                                  <a class="page-link" href="v_score${pageMaker.makeSearch(pageMaker.endPage +1) }" aria-label="Next">&raquo;
-					                                    <span aria-hidden="true"></span>
-					                                    <span class="sr-only">Next</span>
-					                                  </a>
-					                                </li>
-					                              </c:if>
-					                            </ul>
+        					                              <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+        					                                <li class="page-item">
+        					                                  <a class="page-link" href="v_score${pageMaker.makeSearch(pageMaker.endPage +1) }" aria-label="Next">&raquo;
+        					                                    <span aria-hidden="true"></span>
+        					                                    <span class="sr-only">Next</span>
+        					                                  </a>
+        					                                </li>
+        					                              </c:if>
+        					                            </ul>
                                             </td>
                                           </tr>
                                         </tfoot>

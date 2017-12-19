@@ -102,7 +102,7 @@
                       </div>
                       <div class="card-block table-border-style">
                         <div class="table-responsive">
-                          <table class="table table-bordered">
+                          <table class="table table-bordered table-sm">
                             <thead>
                               <tr>
                                 <th width="1%">NO</th>
@@ -292,7 +292,7 @@
 				closeOnConfirm: false
 			},
 			function(){
-				
+
 				$.ajax({
 
 					type : "POST",
@@ -307,7 +307,7 @@
 
 			 	  	}
 				});
-				
+
 				swal("Success!", "삭제처리가 완료되었습니다.", "success");
 			});
 

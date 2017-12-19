@@ -118,7 +118,7 @@
                           </c:if>
                         </select>
 						</c:if>
-						
+
 						<c:if test="${user.user_name != 'union'}">
                          <select style="display: none;" name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="selectCompany">
                           <option>회사</option>
@@ -373,33 +373,39 @@
                                             </tr>
                                             </c:forEach>
                                         </tbody>
+                                        <tfoot>
+                                          <tr>
+                                            <td colspan="7">
+                                              <ul class="pagination float-right">
+                                                <c:if test="${pageMaker.prev}">
+                                                  <li class="page-item">
+                                                    <a class="page-link" href="v_blog${pageMaker.makeSearch(pageMaker.startPage - 1) }" aria-label="Previous">&laquo;
+                                                      <span aria-hidden="true"></span>
+                                                      <span class="sr-only">Previous</span>
+                                                    </a>
+                                                  </li>
+                                                </c:if>
+
+                                                <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
+                                                  <li class= "${pageMaker.cri.page == idx? 'active':''} page-item">
+                                                    <a class="page-link" href="v_blog${pageMaker.makeSearch(idx)}">${idx}</a>
+                                                  </li>
+                                                </c:forEach>
+
+                                                <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+                                                  <li class="page-item">
+                                                    <a class="page-link" href="v_blog${pageMaker.makeSearch(pageMaker.endPage +1) }" aria-label="Next">&raquo;
+                                                      <span aria-hidden="true"></span>
+                                                      <span class="sr-only">Next</span>
+                                                    </a>
+                                                  </li>
+                                                </c:if>
+                                              </ul>
+                                            </td>
+                                          </tr>
+                                        </tfoot>
                                       </table>
                                     </div>
-                                    <ul class="pagination float-right">
-                              <c:if test="${pageMaker.prev}">
-                                <li class="page-item">
-                                  <a class="page-link" href="v_kin${pageMaker.makeSearch(pageMaker.startPage - 1) }" aria-label="Previous">&laquo;
-                                    <span aria-hidden="true"></span>
-                                    <span class="sr-only">Previous</span>
-                                  </a>
-                                </li>
-                              </c:if>
-
-                              <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
-                                <li class= "${pageMaker.cri.page == idx? 'active':''} page-item">
-                                  <a class="page-link" href="v_kin${pageMaker.makeSearch(idx)}">${idx}</a>
-                                </li>
-                              </c:forEach>
-
-                              <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-                                <li class="page-item">
-                                  <a class="page-link" href="v_kin${pageMaker.makeSearch(pageMaker.endPage +1) }" aria-label="Next">&raquo;
-                                    <span aria-hidden="true"></span>
-                                    <span class="sr-only">Next</span>
-                                  </a>
-                                </li>
-                              </c:if>
-                            </ul>
                                   </div>
                                 </div>
 
