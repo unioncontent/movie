@@ -196,62 +196,66 @@
                                 </div>
                               <button id = "excel" class="btn btn-warning f-right alert-confirm" ><i class="icofont icofont-download-alt"></i>EXCEL</button>
                           </div>
-                          <div class="card-block">
-                            <div class="table-responsive">
-                              <table class="table table-bordered">
-                                <thead>
+                          <div class="card-block table-border-style table-responsive">
+                            <table class="table table-bordered table-sm table-fixed">
+                              <thead>
+                                <tr>
+                                  <th width="5%">NO</th>
+                                  <th width="7%">작성날짜</th>
+                                  <th width="5%">키워드</th>
+                                  <th width="15%">제목</th>
+                                  <th width="5%">글쓴이</th>
+                                  <th width="5%">좋아요</th>
+                                  <th width="5%">공유</th>
+                                  <th width="5%">댓글</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <c:forEach items="${facebookList}" var="snsVO" varStatus="index">
                                   <tr>
-                                    <th width="5%">NO</th>
-                                    <th width="10%">작성날짜</th>
-                                    <th width="5%">키워드</th>
-                                    <th width="20%">제목</th>
-                                    <th width="5%">글쓴이</th>
-                                    <th width="5%">좋아요</th>
-                                    <th width="5%">공유</th>
-                                    <th width="5%">댓글</th>
+                                    <th scope="row">${totalCount - minusCount - index.count +1}</th>
+                                    <td>${snsVO.writeDate}</td>
+                                    <td>${snsVO.keyword}</td>
+                                    <td><div class="title-nowrap"><a href="${snsVO.url}" target="_blank">${snsVO.sns_title}</a></div></td>
+                                    <td><div class="writer-nowrap">${snsVO.sns_writer}</div></td>
+                                    <td>${snsVO.like_cnt}</td>
+                                    <td>${snsVO.share_cnt}</td>
+                                    <td>${snsVO.reply_cnt}</td>
                                   </tr>
-                                </thead>
-                                <tbody>
-                                  <c:forEach items="${facebookList}" var="snsVO" varStatus="index">
-                                    <tr>
-                                      <th scope="row">${totalCount - minusCount - index.count +1}</th>
-                                      <td>${snsVO.writeDate}</td>
-                                      <td>${snsVO.keyword}</td>
-                                      <td><a href="${snsVO.url}" target="_blank">${snsVO.sns_title}</div></td>
-                                      <td>${snsVO.sns_writer}</td>
-                                      <td>${snsVO.like_cnt}</td>
-                                      <td>${snsVO.share_cnt}</td>
-                                      <td>${snsVO.reply_cnt}</td>
-                                    </tr>
-                                  </c:forEach>
-                                </tbody>
-                              </table>
-                            </div>
-                            <ul class="pagination float-right">
-                              <c:if test="${pageMaker.prev}">
-                                <li class="page-item">
-                                  <a class="page-link" href="facebook${pageMaker.makeSearch(pageMaker.startPage - 1) }" aria-label="Previous">&laquo;
-                                    <span aria-hidden="true"></span>
-                                    <span class="sr-only">Previous</span>
-                                  </a>
-                                </li>
-                              </c:if>
+                                </c:forEach>
+                              </tbody>
+                              <tfoot>
+                                <tr>
+                                  <td colspan="8">
+                                    <ul class="pagination float-right">
+                                      <c:if test="${pageMaker.prev}">
+                                        <li class="page-item">
+                                          <a class="page-link" href="facebook${pageMaker.makeSearch(pageMaker.startPage - 1) }" aria-label="Previous">&laquo;
+                                            <span aria-hidden="true"></span>
+                                            <span class="sr-only">Previous</span>
+                                          </a>
+                                        </li>
+                                      </c:if>
 
-                              <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
-                                <li class= "${pageMaker.cri.page == idx? 'active':''} page-item">
-                                  <a class="page-link" href="facebook${pageMaker.makeSearch(idx)}">${idx}</a>
-                                </li>
-                              </c:forEach>
+                                      <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
+                                        <li class= "${pageMaker.cri.page == idx? 'active':''} page-item">
+                                          <a class="page-link" href="facebook${pageMaker.makeSearch(idx)}">${idx}</a>
+                                        </li>
+                                      </c:forEach>
 
-                              <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-                                <li class="page-item">
-                                  <a class="page-link" href="facebook${pageMaker.makeSearch(pageMaker.endPage +1) }" aria-label="Next">&raquo;
-                                    <span aria-hidden="true"></span>
-                                    <span class="sr-only">Next</span>
-                                  </a>
-                                </li>
-                              </c:if>
-                            </ul>
+                                      <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+                                        <li class="page-item">
+                                          <a class="page-link" href="facebook${pageMaker.makeSearch(pageMaker.endPage +1) }" aria-label="Next">&raquo;
+                                            <span aria-hidden="true"></span>
+                                            <span class="sr-only">Next</span>
+                                          </a>
+                                        </li>
+                                      </c:if>
+                                    </ul>
+                                  </td>
+                                </tr>
+                              </tfoot>
+                            </table>
                           </div>
                         </div>
                       </div>
