@@ -1,7 +1,7 @@
 .text-center td,.text-center th{
   text-align: center;
 }
-.table-checkbox tr > td:first-child,.table-checkbox tr > th:first-child{
+.table-checkbox tr > td,.table-checkbox tr > th{
   text-align: center;
 }
 .modal-body{

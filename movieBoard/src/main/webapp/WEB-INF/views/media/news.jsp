@@ -100,7 +100,7 @@
                   <div class="page-body">
                     <div class="row">
                       <div class="col-md-7">
-                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left" id="selectKeyword">
+                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 m-l-0 f-left select-left" id="selectKeyword">
                           <option>키워드</option>
                           <c:if test="${modelKeywordList == null}" >
                           	<c:forEach items="${keywordList}" var = "keywordList">
@@ -177,12 +177,12 @@
                                   <tr class = "trList">
                                     <input type="hidden" value="${mediaList.media_idx}">
                                     <th width="5%">${totalCount -index.count +1 -minusCount}</th>
-                                    <th width="10%">${mediaList.writeDate}</th>
-                                    <th width="40%" class="text-success"><a href="${mediaList.url}" target="_blank">${mediaList.media_title}</a></th>
-                                    <th width="5%">${mediaList.media_name}</th>
-                                    <th width="5%">${mediaList.reporter_name}</th>
-                                    <th width="5%">${mediaList.keyword}</th>
-                                   	<th width="5%"> <div class="radios${index.count}">
+                                    <td width="10%">${mediaList.writeDate}</td>
+                                    <td width="40%" class="text-success"><a href="${mediaList.url}" target="_blank">${mediaList.media_title}</a></td>
+                                    <td width="5%">${mediaList.media_name}</td>
+                                    <td width="5%">${mediaList.reporter_name}</td>
+                                    <td width="5%">${mediaList.keyword}</td>
+                                   	<td width="5%"> <div class="radios${index.count}">
                                         <c:choose>
                                         	<c:when test="${mediaList.textType eq '좋은글'}">
                                         	<input type="radio" id="radio1${index.count}" name="radios${index.count}" checked>
@@ -263,12 +263,12 @@
                                         	<label for="radio4${index.count}">기타글</label>
                                         	<input type="radio" id="radio5${index.count}" name="radios${index.count}" checked>
                                         	<label for="radio5${index.count}">삭제글</label>
-											<input type="radio" id="radio6${index.count}" name="radios${index.count}">
+                    											<input type="radio" id="radio6${index.count}" name="radios${index.count}">
                                         	<label for="radio6${index.count}">미분류</label>
                                         	</c:when>
                                         </c:choose>
-                                        
-                                        
+
+
                                         <c:choose>
                                         	<c:when test="${mediaList.textType eq null}">
                                         	<input type="radio" id="radio1${index.count}" name="radios${index.count}">
@@ -281,42 +281,48 @@
                                         	<label for="radio4${index.count}">기타글</label>
                                         	<input type="radio" id="radio5${index.count}" name="radios${index.count}">
                                         	<label for="radio5${index.count}">삭제글</label>
-											<input type="radio" id="radio6${index.count}" name="radios${index.count}" checked>
+                    											<input type="radio" id="radio6${index.count}" name="radios${index.count}" checked>
                                         	<label for="radio6${index.count}">미분류</label>
                                         	</c:when>
                                         </c:choose>
-                                        
-                                      </div></th>
+
+                                      </div></td>
                                   </tr>
                                   </c:forEach>
                                 </tbody>
+                                <tfoot>
+                                  <tr>
+                                    <td colspan="7">
+                                      <ul class="pagination float-right">
+                                       <c:if test="${pageMaker.prev}">
+                                         <li class="page-item">
+                                           <a class="page-link" href="news${pageMaker.makeSearch(pageMaker.startPage - 1) }" aria-label="Previous">&laquo;
+                                             <span aria-hidden="true"></span>
+                                             <span class="sr-only">Previous</span>
+                                           </a>
+                                         </li>
+                                       </c:if>
+
+                                       <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
+                                         <li class= "${pageMaker.cri.page == idx? 'active':''} page-item">
+                                           <a class="page-link" href="news${pageMaker.makeSearch(idx)}">${idx}</a>
+                                         </li>
+                                       </c:forEach>
+
+                                       <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+                                         <li class="page-item">
+                                           <a class="page-link" href="news${pageMaker.makeSearch(pageMaker.endPage +1) }" aria-label="Next">&raquo;
+                                             <span aria-hidden="true"></span>
+                                             <span class="sr-only">Next</span>
+                                           </a>
+                                         </li>
+                                       </c:if>
+                                     </ul>
+                                    </td>
+                                  </tr>
+                                </tfoot>
                               </table>
                             </div>
-                             <ul class="pagination float-right">
-                              <c:if test="${pageMaker.prev}">
-                                <li class="page-item">
-                                  <a class="page-link" href="news${pageMaker.makeSearch(pageMaker.startPage - 1) }" aria-label="Previous">&laquo;
-                                    <span aria-hidden="true"></span>
-                                    <span class="sr-only">Previous</span>
-                                  </a>
-                                </li>
-                              </c:if>
-
-                              <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
-                                <li class= "${pageMaker.cri.page == idx? 'active':''} page-item">
-                                  <a class="page-link" href="news${pageMaker.makeSearch(idx)}">${idx}</a>
-                                </li>
-                              </c:forEach>
-
-                              <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-                                <li class="page-item">
-                                  <a class="page-link" href="news${pageMaker.makeSearch(pageMaker.endPage +1) }" aria-label="Next">&raquo;
-                                    <span aria-hidden="true"></span>
-                                    <span class="sr-only">Next</span>
-                                  </a>
-                                </li>
-                              </c:if>
-                            </ul>
                           </div>
                         </div>
                       </div>
@@ -425,20 +431,20 @@
 	  		xhr.setRequestHeader(header, token);
 	  	});
 	});
-	
-	
+
+
 	$(document).ready(function(){
-		
+
 		var startDateOption = decodeURI(window.location.href.split("startDate=")[1]).split("&endDate=")[0];
 		var endDateOption = decodeURI(window.location.href.split("endDate=")[1]);
 		console.log("startDateOption: " + startDateOption);
 		console.log("endDateOption: " + endDateOption);
-		
+
 		if(startDateOption != 'undefined' && endDateOption != 'undefined'
 				&& startDateOption != '' && endDateOption != ''){
 			$("#fromDate").val(startDateOption + " - " + endDateOption);
 		}
-		
+
 
 		var keywordOption = decodeURI(window.location.href.split("selectKey=")[1]).split("&searchType")[0].split("&startDate")[0];
 		console.log("keywordOption: " + keywordOption);
@@ -462,19 +468,19 @@
 		$selectKeyword.change(function(){
 			console.log("selectKeyword clicked....");
 			console.log($('#selectKeyword option:selected').val());
-			
+
 			searchList();
 
 		});
-	  
-	  
+
+
 	  // 일괄처리버튼 클릭시
 	  $(document).on("click","#insertAllBtn",function(){
 		  console.log("insertAll click...");
 		insertAll();
 	  });
 
-		
+
 		// 당일 클릭시
 		$('#toDay').on("click", function(){
 		  console.log("toDay clicked....");
@@ -484,7 +490,7 @@
 
 		  $("#fromDate").val(endDate + " - " + endDate)
 		  console.log($("#fromDate").val());
-		  searchList(); 
+		  searchList();
 		});
 
 		// 전일 클릭시
@@ -517,51 +523,51 @@
 		  var date = getDate("month");
 		  var startDate = date.startDate;
 		  var endDate = date.endDate;
-		
+
 		  $("#fromDate").val(startDate + " - " + endDate)
 		  console.log($("#fromDate").val());
-		  
+
 		  searchList();
-		 
+
 		})
-		
-		// content 길시에 ...으로 변경  
+
+		// content 길시에 ...으로 변경
 		var $content = $(".text-success").children();
-	
+
 		var size = 25;
-	
+
 		for (var i =1; i < $content.length; i++){
 			if($content[i].innerText.length >= size){
 				$content[i].textContent = $content[i].innerText.substr(0, size) + '...';
 			}
 		}
-	
-		
+
+
 		//캘린더 클릭시..
 		$('#fromDate').on('apply.daterangepicker', function(ev, picker) {
 			   var startDate = picker.startDate.format('YYYY-MM-DD');
 			   var endDate = picker.endDate.format('YYYY-MM-DD');
-	
+
 			   console.log("startDate: " + startDate);
 			   console.log("endDate: " + endDate);
-	
+
 			   searchList();
-		}); 
-		
-	
+		});
+
+
 		// 검색버튼 클릭시
 		$('#searchBtn').on("click", function(event){
 		  console.log("searchBtn clicked....");
 		  console.log($('#selectSearchType option:selected').val());
-	
+
 		  if($('#keywordInput').val() == ''){
 			alert("검색어를 입력해주세요.");
 		  }else{
 			searchList();
 		  }
 		});
-		
-		//엑셀출력 확인메시지			
+
+		//엑셀출력 확인메시지
 		$(document).on("click",".alert-confirm",function(){
 	    swal({
 	          title: "엑셀출력 하시겠습니까?",
@@ -586,10 +592,10 @@
 
 	        });
 		});
-		
+
 	}); // end ready...
-	
-	
+
+
 	function insertAll(){
 		  swal({
 				title: "일괄처리 하시겠습니까?",
@@ -603,7 +609,7 @@
 			function(){
 
 				var tr = $(".trList");
-				
+
 				var arr = [];
 
 				for(var i = 0; i < tr.length; i++){
@@ -646,16 +652,16 @@
 				//location.reload();
 			});
 	  }
-	  
-	  
+
+
 	  function makeDateFormat(date, index){
 			var splitDate = date.split(" - ")[index];
 				if(splitDate != undefined){
 					var returnDate = splitDate.replace("/", "-").replace("/", "-")
 					return returnDate;
 				}
-			
-			
+
+
 		}
 		makeDateFormat($("#fromDate").val());
 
@@ -664,14 +670,14 @@
 			var makeQeury = '${pageMaker.makeQuery(1)}'.slice(0, -2);
 
 			self.location = "news" + makeQeury
-							+ $('#selectPerPageNum option:selected').val() 
+							+ $('#selectPerPageNum option:selected').val()
 							+ "&selectKey=" + $('#selectKeyword option:selected').val()
-							+ "&searchType=" + $("#selectSearchType option:selected").val() 
-							+ "&keyword=" + $('#keywordInput').val() 
+							+ "&searchType=" + $("#selectSearchType option:selected").val()
+							+ "&keyword=" + $('#keywordInput').val()
 	    					+ "&startDate=" + makeDateFormat($("#fromDate").val(), 0)
 	    					+ "&endDate=" +  makeDateFormat($("#fromDate").val(), 1)
 		}
-	  
+
 	//날짜 계산 함수
 	  function getDate(type){
 	  	console.log("TYPE : " + type);
@@ -700,10 +706,10 @@
 	   			month -= 1;
 	   		}
 	   		startDate = year + "-" + month + "-" + calcDate;
-	   	
+
 	   	}else if(type =='toDay'){
 	   		startDate = endDate
-	   		
+
 	   	}
 
 	   	return {

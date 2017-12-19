@@ -111,7 +111,7 @@
                           </c:if>
                         </select>
 						</c:if>
-						
+
 						<c:if test="${user.user_name != 'union'}">
                          <select style="display: none;" name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="selectCompany">
                           <option>회사</option>
@@ -125,7 +125,7 @@
                           </c:if>
                         </select>
 						</c:if>
-                        
+
                         <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left" id="selectKeyword">
                           <option>키워드</option>
                           <c:if test="${modelKeywordList == null}" >
@@ -220,7 +220,7 @@
                             </div>
                             <div class="card-block table-border-style">
                               <div class="table-responsive">
-                                <table class="table table-styling">
+                                <table class="table">
                                   <thead>
                                     <tr>
                                       <th width="5%">영역</th>
@@ -310,9 +310,9 @@
                           <span>Naver > 영화</span>
                           <div class="card-header-right"><i class="icofont icofont-rounded-down"></i></div>
                         </div>
-                        <div class="card-block">
+                        <div class="card-block table-border-style">
                           <div class="table-responsive">
-                            <table class="table table-styling">
+                            <table class="table">
                               <thead>
                                 <tr>
                                   <th>NO</th>
@@ -337,33 +337,38 @@
                                 </tr>
                                 </c:forEach>
                               </tbody>
+                              <tfoot>
+                                <tr>
+                                  <td colspan="5">
+                                    <ul class="pagination float-right">
+                        							<c:if test="${pageMaker.prev}">
+                                        <li class="page-item">
+                                          <a class="page-link" href="naver${pageMaker.makeSearch(pageMaker.startPage - 1) }" aria-label="Previous">&laquo;
+                                            <span aria-hidden="true"></span>
+                                            <span class="sr-only">Previous</span>
+                                           </a>
+                                         </li>
+                                      </c:if>
+                                      <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
+                                        <li class= "${pageMaker.cri.page == idx? 'active':''} page-item">
+                                          <a class="page-link" href="naver${pageMaker.makeSearch(idx)}">${idx}</a>
+                                        </li>
+                                      </c:forEach>
+                                      <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+                                        <li class="page-item">
+                                          <a class="page-link" href="naver${pageMaker.makeSearch(pageMaker.endPage +1) }" aria-label="Next">&raquo;
+                                          	<span aria-hidden="true"></span>
+                                          	<span class="sr-only">Next</span>
+                                            </a>
+                                      	</li>
+                                      </c:if>
+                        						</ul>
+                                  </td>
+                                </tr>
+                              </tfoot>
                             </table>
                           </div>
-                          <ul class="pagination float-right">
-							<c:if test="${pageMaker.prev}">
-                              <li class="page-item">
-                                <a class="page-link" href="naver${pageMaker.makeSearch(pageMaker.startPage - 1) }" aria-label="Previous">&laquo;
-                                  <span aria-hidden="true"></span>
-                                  <span class="sr-only">Previous</span>
-                                 </a>
-                               </li>
-                             </c:if>
 
-                             <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
-                              <li class= "${pageMaker.cri.page == idx? 'active':''} page-item">
-                                <a class="page-link" href="naver${pageMaker.makeSearch(idx)}">${idx}</a>
-                              </li>
-                              </c:forEach>
-
-                              	<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-                                	<li class="page-item">
-                                  	<a class="page-link" href="naver${pageMaker.makeSearch(pageMaker.endPage +1) }" aria-label="Next">&raquo;
-                                    	<span aria-hidden="true"></span>
-                                    	<span class="sr-only">Next</span>
-                                  	  </a>
-                                	</li>
-                              	  </c:if>
-							</ul>
                         </div>
                       </div>
                       <!-- Pc table end -->
@@ -469,7 +474,7 @@
 	//ajax 보안
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
-	
+
 	$(function() {
 		  $(document).ajaxSend(function(e, xhr, options) {
 		  	xhr.setRequestHeader(header, token);
@@ -477,7 +482,7 @@
 	});
 
 	$(document).ready(function(){
-		
+
 
 		var companyOption = decodeURI(window.location.href.split("company=")[1]).split("&")[0];
 		console.log("companyOption: " + companyOption);
@@ -500,9 +505,9 @@
 			console.log($("#selectCompany option:selected").val());
 
 			searchList();
-			
+
 		});
-		
+
 
 		var keywordOption = decodeURI(window.location.href.split("selectKey=")[1]).split("&")[0];
 		console.log("keywordOption: " + keywordOption);
@@ -526,23 +531,23 @@
 		$selectKeyword.change(function(){
 			console.log("selectKeyword clicked....");
 			console.log($('#selectKeyword option:selected').val());
-			
+
 			searchList();
 
 		});
-		
-		
+
+
 		var startDateOption = decodeURI(window.location.href.split("startDate=")[1]).split("&endDate=")[0];
 		var endDateOption = decodeURI(window.location.href.split("endDate=")[1]);
 		console.log("startDateOption: " + startDateOption);
 		console.log("endDateOption: " + endDateOption);
-		
+
 		if(startDateOption != 'undefined' && endDateOption != 'undefined'
 				&& startDateOption != '' && endDateOption != ''){
 			$("#fromDate").val(startDateOption + " - " + endDateOption);
-			
+
 			ajaxGraph(startDateOption, endDateOption);
-		
+
 		}else{
 			var date = getDate("week");
 			var startDate = date.startDate;
@@ -552,8 +557,8 @@
 		}
 
 		pieChart();
-		
-		
+
+
 		// 당일 클릭시
 		$('#toDay').on("click", function(){
 		  console.log("toDay clicked....");
@@ -563,7 +568,7 @@
 
 		  $("#fromDate").val(endDate + " - " + endDate)
 		  console.log($("#fromDate").val());
-		  searchList(); 
+		  searchList();
 		});
 
 		// 전일 클릭시
@@ -596,40 +601,40 @@
 		  var date = getDate("month");
 		  var startDate = date.startDate;
 		  var endDate = date.endDate;
-		
+
 		  $("#fromDate").val(startDate + " - " + endDate)
 		  console.log($("#fromDate").val());
-		  
+
 		  searchList();
-		 
+
 		})
-		
-		// content 길시에 ...으로 변경  
+
+		// content 길시에 ...으로 변경
 		var $content = $(".text-success");
-	
+
 		var size = 25;
-	
+
 		for (var i =1; i < $content.length; i++){
 			if($content[i].innerText.length >= size){
 				$content[i].textContent = $content[i].innerText.substr(0, size) + '...';
 			}
 		}
-	
-		
+
+
 		//캘린더 클릭시..
 		$('#fromDate').on('apply.daterangepicker', function(ev, picker) {
 			   var startDate = picker.startDate.format('YYYY-MM-DD');
 			   var endDate = picker.endDate.format('YYYY-MM-DD');
-	
+
 			   console.log("startDate: " + startDate);
 			   console.log("endDate: " + endDate);
-	
+
 			   searchList();
-		}); 
-		
+		});
+
 	}); // end ready...
 
-	
+
 	//그래프 함수
 	function ajaxGraph(startDate, endDate){
 		console.log(startDate + "/" + endDate);
@@ -658,7 +663,7 @@
 	  					script += "]";
 	  				}
 	  			}
-	  			
+
 	  		console.log(script);
 
 	  		// to json
@@ -689,9 +694,9 @@
 				hideHover: 'auto'
 			});
 	}
-	
-	
-	
+
+
+
 
 	/*pie chart*/
 	function pieChart(){
@@ -716,15 +721,15 @@
 	    }
 	  });
 	}
-	
+
 	function makeDateFormat(date, index){
 		var splitDate = date.split(" - ")[index];
 			if(splitDate != undefined){
 				var returnDate = splitDate.replace("/", "-").replace("/", "-")
 				return returnDate;
 			}
-		
-		
+
+
 	}
 	makeDateFormat($("#fromDate").val());
 
@@ -733,13 +738,13 @@
 		var makeQeury = '${pageMaker.makeQuery(1)}'.slice(0, -2);
 
 		self.location = "naver" + makeQeury
-						+ '10' 
+						+ '10'
     					+ "&company=" + $("#selectCompany option:selected").val()
 						+ "&selectKey=" + $('#selectKeyword option:selected').val()
     					+ "&startDate=" + makeDateFormat($("#fromDate").val(), 0)
     					+ "&endDate=" +  makeDateFormat($("#fromDate").val(), 1)
 	 	}
-  
+
 	//날짜 계산 함수
     function getDate(type){
   		console.log("TYPE : " + type);
@@ -768,10 +773,10 @@
    				month -= 1;
    			}
    		startDate = year + "-" + month + "-" + calcDate;
-   	
+
    		}else if(type =='toDay'){
    			startDate = endDate
-   		
+
    		}
 
    		return {
