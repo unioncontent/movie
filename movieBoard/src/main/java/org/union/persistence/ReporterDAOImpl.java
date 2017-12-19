@@ -85,4 +85,11 @@ public class ReporterDAOImpl implements ReporterDAO {
 		return session.selectOne(namespace + "getSearchCount", cri);
 	}
 
+
+	@Override
+	public ReporterVO readByName(String reporter_name) {
+
+		return session.selectOne(namespace + "readByName", reporter_name);
+	}
+
 }

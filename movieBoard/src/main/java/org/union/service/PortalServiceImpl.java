@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.union.domain.CommunityVO;
 import org.union.domain.ExtractVO;
 import org.union.domain.GraphVO;
 import org.union.domain.PortalVO;
@@ -107,6 +108,18 @@ public class PortalServiceImpl implements PortalService {
 		return portalDAO.getSearchCount(cri);
 	}
 
+	@Override
+	public List<PortalVO> wlistSearch(SearchCriteria cri) {
+
+		return portalDAO.wlistSearch(cri);
+		
+	}
+	
+	@Override
+	public Integer wgetSearchCount(SearchCriteria cri) {
+
+		return portalDAO.wgetSearchCount(cri);
+	}
 
 	@Override
 	public void modifyType(PortalVO vo) {
@@ -263,6 +276,18 @@ public class PortalServiceImpl implements PortalService {
 		}
 
 		return totalCount;
+	}
+
+	@Override
+	public List<PortalVO> wPageSearch(SearchCriteria cri) {
+
+		List<PortalVO> list = portalDAO.wPageSearch(cri);
+		
+		for (PortalVO portalVO : list) {
+			portalVO.setKeyword_main(keywordDAO.read(portalVO.getKeyword()).getKeyword_main());
+		}
+
+		return list;
 	}
 
 }

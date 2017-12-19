@@ -15,6 +15,9 @@
       <![endif]-->
   <!-- Meta -->
   <meta charset="utf-8">
+  <meta name="_csrf" content="${_csrf.token}" />
+  <!-- default header name is X-CSRF-TOKEN -->
+  <meta name="_csrf_header" content="${_csrf.headerName}"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="description" content="Phoenixcoded">
@@ -178,7 +181,7 @@
                               <div class="col-md-6 col-xl-3 main-card">
                                 <div class="card social-widget-card">
                                   <div class="card-block-big bg-inverse">
-                                    <h3>${totalCount}</h3>
+                                    <h3><fmt:formatNumber value="${totalCount}" groupingUsed="true"/></h3>
                                     <span class="m-t-10">전체검색</span>
                                     <i class="icofont icofont-search"></i>
                                   </div>
@@ -187,7 +190,7 @@
                               <div class="col-md-6 col-xl-3 main-card">
                                 <div class="card social-widget-card">
                                   <div class="card-block-big bg-info">
-                                    <h3>${matchCount}</h3>
+                                    <h3><fmt:formatNumber value="${matchCount}" groupingUsed="true"/></h3>
                                     <span class="m-t-10">매칭</span>
                                     <i class="icofont icofont-connection"></i>
                                   </div>
@@ -196,7 +199,7 @@
                               <div class="col-md-6 col-xl-3 main-card">
                                 <div class="card social-widget-card">
                                   <div class="card-block-big bg-news">
-                                    <h3>${mediaCount}</h3>
+                                    <h3><fmt:formatNumber value="${mediaCount}" groupingUsed="true"/></h3>
                                     <span class="m-t-10">언론사</span>
                                     <i class="icofont icofont-building-alt"></i>
                                   </div>
@@ -205,7 +208,7 @@
                               <div class="col-md-6 col-xl-3 main-card">
                                 <div class="card social-widget-card">
                                   <div class="card-block-big bg-success">
-                                    <h3>${pressCount}</h3>
+                                    <h3><fmt:formatNumber value="${pressCount}" groupingUsed="true"/></h3>
                                     <span class="m-t-10">기자</span>
                                     <i class="icofont icofont-fountain-pen"></i>
                                   </div>
@@ -219,7 +222,6 @@
                                     <h5>언론사 통계</h5>
                                     <div class="card-header-right">
                                       <i class="icofont icofont-rounded-down"></i>
-                                      <i class="icofont icofont-listing-number" data-toggle="tooltip" data-placement="top" data-original-title="순위 더보기" onclick="moreRanking('언론사','newsMore')"></i>
                                     </div>
                                   </div>
                                   <div class="card-block table-border-style">
@@ -252,9 +254,9 @@
                                               <c:forEach items="${mediaList}" var="mediaList" varStatus="index">
                                               <tr>
                                                 <th scope="row">${index.count}</th>
-                                                <td class='news' onclick='showModal("#news-Modal")'>${mediaList.media}</td>
-                                                <td>${mediaList.allCount}</td>
-                                                <td>${mediaList.searchCount}</td>
+                                                <td class='news' onclick='showModal("#news-Modal", "${mediaList.media}")'>${mediaList.media}</td>
+                                                <td><fmt:formatNumber value="${mediaList.allCount}" groupingUsed="true"/></td>
+                                                <td><fmt:formatNumber value="${mediaList.searchCount}" groupingUsed="true"/></td>
                                                 <td><fmt:parseNumber value="${mediaList.matchPercent}" integerOnly="true"></fmt:parseNumber>%</td>
                                               </tr>
                                               </c:forEach>
@@ -272,7 +274,6 @@
                                     <h5>기자 통계</h5>
                                     <div class="card-header-right">
                                       <i class="icofont icofont-rounded-down"></i>
-                                      <i class="icofont icofont-listing-number" data-toggle="tooltip" data-placement="top" data-original-title="순위 더보기" onclick="moreRanking('기자','pressMore')"></i>
                                     </div>
                                   </div>
                                   <div class="card-block table-border-style">
@@ -306,11 +307,11 @@
                                             <c:forEach items="${pressList}" var="pressList" varStatus="index">
                                               <tr>
                                                 <th scope="row">${index.count}</th>
-                                                <td class='press' onclick='showModal("#press-Modal")'>${pressList.reporter}</td>
+                                                <td class='press' onclick='showModal("#press-Modal", "${pressList.reporter}")'>${pressList.reporter}</td>
                                                 <td>${pressList.media}</td>
-                                                <td>${pressList.allCount}</td>
-                                                <td>0</td>
-                                                <td>0%</td>
+                                                <td><fmt:formatNumber value="${pressList.allCount}" groupingUsed="true"/></td>
+                                                <td><fmt:formatNumber value="${pressList.searchCount}" groupingUsed="true"/></td>
+                                                <td><fmt:parseNumber value="${pressList.matchPercent}" integerOnly="true"></fmt:parseNumber>%</td>
                                               </tr>
                                             </c:forEach>
                                           </tbody>
@@ -396,7 +397,7 @@
                                               <ul class="pagination float-right">
                                                 <c:if test="${pageMaker.prev}">
                                               		<li class="page-item">
-                                                		  <a class="page-link" href="portal${pageMaker.makeSearch(pageMaker.startPage - 1) }" aria-label="Previous">&laquo;
+                                                		  <a class="page-link" href="media${pageMaker.makeSearch(pageMaker.startPage - 1) }" aria-label="Previous">&laquo;
                                                   		<span aria-hidden="true"></span>
                                                   		<span class="sr-only">Previous</span>
                                                 		  </a>
@@ -405,13 +406,13 @@
 
                                           		  <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
                                               		<li class= "${pageMaker.cri.page == idx? 'active':''} page-item">
-                                                		  <a class="page-link" href="portal${pageMaker.makeSearch(idx)}">${idx}</a>
+                                                		  <a class="page-link" href="media${pageMaker.makeSearch(idx)}">${idx}</a>
                                               		</li>
                                           		  </c:forEach>
 
                                           		  <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
                                               		<li class="page-item">
-                                              		  <a class="page-link" href="portal${pageMaker.makeSearch(pageMaker.endPage +1) }" aria-label="Next">&raquo;
+                                              		  <a class="page-link" href="media${pageMaker.makeSearch(pageMaker.endPage +1) }" aria-label="Next">&raquo;
                                                 		<span aria-hidden="true"></span>
                                                 		<span class="sr-only">Next</span>
                                               		  </a>
@@ -457,19 +458,7 @@
                                         <tbody>
                                           <tr>
                                             <th class="b-r-1" width="30%">언론사명</th>
-                                            <td>톱스타뉴스</td>
-                                          </tr>
-                                          <tr>
-                                            <th class="b-r-1">URL</th>
-                                            <td></td>
-                                          </tr>
-                                          <tr>
-                                            <th class="b-r-1">연락처</th>
-                                            <td>000-000-000</td>
-                                          </tr>
-                                          <tr>
-                                            <th class="b-r-1">메모</th>
-                                            <td></td>
+                                            <td id = 'mediaName'>톱스타뉴스</td>
                                           </tr>
                                         </tbody>
                                       </table>
@@ -496,9 +485,9 @@
                                         </thead>
                                         <tbody>
                                           <tr>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
+                                            <td id='media1_1'>0</td>
+                                            <td id='media1_2'>0</td>
+                                            <td id='media1_3'>0</td>
                                           </tr>
                                         </tbody>
                                       </table>
@@ -522,26 +511,26 @@
                                             <th colspan="4" class="b-b-1">매칭기사</th>
                                           </tr>
                                           <tr>
-                                            <th class="b-b-1">전체기사수</th>
-                                            <th class="b-b-1">호흥</th>
-                                            <th class="b-b-1">비호흥(악성)</th>
-                                            <th class="b-b-1 b-r-1">관심</th>
-                                            <th class="b-b-1">전체기사수</th>
-                                            <th class="b-b-1">호흥</th>
-                                            <th class="b-b-1">비호흥(악성)</th>
-                                            <th class="b-b-1">관심</th>
+                                            <th class="b-b-1" >전체기사수</th>
+                                            <th class="b-b-1" >호흥</th>
+                                            <th class="b-b-1" >비호흥(악성)</th>
+                                            <th class="b-b-1 b-r-1" >관심</th>
+                                            <th class="b-b-1" >전체기사수</th>
+                                            <th class="b-b-1" >호흥</th>
+                                            <th class="b-b-1" >비호흥(악성)</th>
+                                            <th class="b-b-1" >관심</th>
                                           </tr>
                                         </thead>
                                         <tbody>
                                           <tr>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
+                                            <td id='media2_1'>0</td>
+                                            <td id='media2_2'>0</td>
+                                            <td id='media2_3'>0</td>
+                                            <td id='media2_4'>0</td>
+                                            <td id='media3_1'>0</td>
+                                            <td id='media3_2'>0</td>
+                                            <td id='media3_3'>0</td>
+                                            <td id='media3_4'>0</td>
                                           </tr>
                                         </tbody>
                                       </table>
@@ -581,19 +570,19 @@
                                         <tbody>
                                           <tr>
                                             <th class="b-r-1" width="30%">이름</th>
-                                            <td>김한준</td>
+                                            <td id='pressName'>김한준</td>
                                           </tr>
                                           <tr>
                                             <th class="b-r-1">언론사명</th>
-                                            <td></td>
+                                            <td id = 'pressMediaName'></td>
                                           </tr>
                                           <tr>
-                                            <th class="b-r-1">이메일</th>
-                                            <td></td>
+                                            <th class="b-r-1" >이메일</th>
+                                            <td id = 'pressEmail'></td>
                                           </tr>
                                           <tr>
                                             <th class="b-r-1">연락처</th>
-                                            <td>000-000-000</td>
+                                            <td id = 'pressPhoneNumber'></td>
                                           </tr>
                                         </tbody>
                                       </table>
@@ -620,9 +609,9 @@
                                         </thead>
                                         <tbody>
                                           <tr>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
+                                            <td id = 'press1_1'>0</td>
+                                            <td id = 'press1_2'>0</td>
+                                            <td id = 'press1_3'>0</td>
                                           </tr>
                                         </tbody>
                                       </table>
@@ -658,14 +647,14 @@
                                         </thead>
                                         <tbody>
                                           <tr>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
+                                            <td id = 'press2_1'>0</td>
+                                            <td id = 'press2_2'>0</td>
+                                            <td id = 'press2_3'>0</td>
+                                            <td id = 'press2_4'>0</td>
+                                            <td id = 'press3_1'>0</td>
+                                            <td id = 'press3_2'>0</td>
+                                            <td id = 'press3_3'>0</td>
+                                            <td id = 'press3_4'>0</td>
                                           </tr>
                                         </tbody>
                                       </table>
@@ -806,6 +795,17 @@
 
 	$(document).ready(function(){
 		
+		
+		//ajax 보안
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+
+		$(function() {
+			$(document).ajaxSend(function(e, xhr, options) {
+		  		xhr.setRequestHeader(header, token);
+		  	});
+		});
+		
 		var $fromDate = $("#fromDate");
 		  
 		var startDateOption = decodeURI(window.location.href.split("startDate=")[1]).split("&")[0].split(" ")[0];
@@ -875,7 +875,6 @@
 		console.log("graphStart: " + graphStart);
 	    console.log("graphEnd: " + graphEnd);
 		  
-	    //ajaxGraph(graphStart, graphEnd);
 		
 		// 당일 클릭시
 		$('#toDay').on("click", function(){

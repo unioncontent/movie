@@ -3,6 +3,7 @@ package org.union.persistence;
 import java.util.Date;
 import java.util.List;
 
+import org.union.domain.CommunityVO;
 import org.union.domain.GraphVO;
 import org.union.domain.PortalVO;
 import org.union.domain.SearchCriteria;
@@ -26,6 +27,7 @@ public interface PortalDAO {
 	
 	public Integer getTypeOfMovieCount(SearchCriteria cri);
 	public Integer getTypeOfActorCount(SearchCriteria cri);
+	public List<PortalVO> wPageSearch(SearchCriteria cri);
 	
 	public List<PortalVO> allPageList(SearchCriteria cri);
 	public Integer allPageCount(SearchCriteria cri);
@@ -54,8 +56,10 @@ public interface PortalDAO {
 	public Integer getExtractCount(SearchCriteria cri);
 	
 	public List<PortalVO> listSearch(SearchCriteria cri);
-	
 	public Integer getSearchCount(SearchCriteria cri);
+
+	public List<PortalVO> wlistSearch(SearchCriteria cri);
+	public Integer wgetSearchCount(SearchCriteria cri);
 	
 	public List<PortalVO> listAll(SearchCriteria cri);
 	

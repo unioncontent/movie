@@ -36,8 +36,8 @@
 				and keyword in (select keyword from keyword_data where keyword_main = #{selectKey})
 			</if>
 		<if test="startDate != null and endDate != null">
-			and createDate <![CDATA[>]]> #{startDate}
-			and createDate <![CDATA[<]]> #{endDate}
+			and writeDate <![CDATA[>]]> #{startDate}
+			and writeDate <![CDATA[<]]> #{endDate}
 		</if>
 		<if test="textType != null">
 			and textType = #{textType}

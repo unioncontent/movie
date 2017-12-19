@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.union.domain.CommunityVO;
 import org.union.domain.GraphVO;
 import org.union.domain.PortalVO;
 import org.union.domain.SearchCriteria;
@@ -89,6 +90,18 @@ public class PortalDAOImpl implements PortalDAO {
 		return session.selectOne(namespace + "getSearchCount", cri);
 	}
 
+	@Override
+	public List<PortalVO> wlistSearch(SearchCriteria vo) {
+		
+		return session.selectList(namespace + "wlistSearch", vo);
+	}
+	
+	@Override
+	public Integer wgetSearchCount(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "wgetSearchCount", cri);
+	}
+	
 	@Override
 	public List<PortalVO> listAll(SearchCriteria cri) {
 
@@ -254,6 +267,13 @@ public class PortalDAOImpl implements PortalDAO {
 	public List<Integer> getOnlyScore(SearchCriteria cri) {
 
 		return session.selectList(namespace + "getOnlyScore", cri);
+	}
+
+
+	@Override
+	public List<PortalVO> wPageSearch(SearchCriteria cri) {
+
+		return session.selectList(namespace + "wPageSearch", cri);
 	}
 
 }
