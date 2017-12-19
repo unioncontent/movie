@@ -132,8 +132,6 @@ public class ExtractController {
 		List<ExtractVO> extractList = new ArrayList<ExtractVO>();
 		ListUtil listUtil = new ListUtil();
 		
-		logger.info("time checing list: " + communityService.listExtract(cri));
-		
 		listUtil.listAddList(extractList, communityService.listExtract(cri));
 		listUtil.listAddList(extractList, portalService.listExtract(cri));
 		listUtil.listAddList(extractList, mediaService.listExtract(cri));
