@@ -465,12 +465,12 @@
                                     <input id="url" type="text" class="form-control" placeholder="URL">
                                 </div>
                               </div>
-                              <div class="form-group row">
+                              <!-- <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">이미지 등록</label>
                                 <div class="col-sm-10">
                                     <input type="file" class="form-control">
                                 </div>
-                              </div>
+                              </div> -->
                             </form>
                           </div>
                           <div class="modal-footer">

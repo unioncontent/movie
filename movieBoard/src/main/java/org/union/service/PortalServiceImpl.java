@@ -58,7 +58,7 @@ public class PortalServiceImpl implements PortalService {
 		
 		List<ExtractVO> extractList = new ArrayList<ExtractVO>();
 		
-		SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
 		
 		try {
 			
