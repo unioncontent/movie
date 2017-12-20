@@ -184,5 +184,18 @@ public class CommunityServiceImpl implements CommunityService {
 		return list;
 	}
 
+	@Override
+	public List<CommunityVO> allPage(SearchCriteria cri) {
+
+		List<CommunityVO> list = communityDAO.allPage(cri);
+		
+		for (CommunityVO communityVO : list) {
+			communityVO.setKeyword_main(keywordDAO.read(communityVO.getKeyword()).getKeyword_main());
+		}
+
+		return list;
+		
+	}
+
 
 }
