@@ -17,6 +17,7 @@ import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.web.servlet.view.document.AbstractXlsView;
 import org.union.domain.ExtractVO;
+import org.union.domain.SNSVO;
 
 public class ExcelView extends AbstractXlsView {
 
@@ -42,68 +43,141 @@ public class ExcelView extends AbstractXlsView {
 			  titleStyle.setBorderBottom(HSSFCellStyle.BORDER_THIN);
 			  titleStyle.setBorderTop(HSSFCellStyle.BORDER_THIN);
 			  
-			  // 타이틀 설정
-			  String[] titleList = { "사이트", "대표 키워드", "키워드", "작성자", "제목","내용","URL","작성날짜", "분류"};
-			  
-			 
-			  HSSFRow titleRow = sheet.createRow(rowIdx++);
-			  for (int i = 0; i < titleList.length; i++) {
-			   HSSFCell cell = titleRow.createCell(i);
-			   cell.setCellValue(new HSSFRichTextString(titleList[i]));
-			   cell.setCellStyle(titleStyle);
+			  if(model.get("part") != null) {
+				// 타이틀 설정
+				  String[] titleList = { "사이트", "대표 키워드", "키워드", "작성자", "제목","내용","URL","작성날짜", "좋아요", "공유", "댓글"};
+				  
+				 
+				  HSSFRow titleRow = sheet.createRow(rowIdx++);
+				  for (int i = 0; i < titleList.length; i++) {
+				   HSSFCell cell = titleRow.createCell(i);
+				   cell.setCellValue(new HSSFRichTextString(titleList[i]));
+				   cell.setCellStyle(titleStyle);
+				  }
+
+				  // 엑셀 서식 설정
+				  HSSFCellStyle numStyle = (HSSFCellStyle) wb.createCellStyle();
+				  
+				  numStyle.setDataFormat(wb.createDataFormat().getFormat("#,##0"));
+
+				  HSSFCellStyle percentStyle = (HSSFCellStyle) wb.createCellStyle();
+				  percentStyle.setDataFormat(wb.createDataFormat().getFormat("0%"));
+
+				  HSSFCellStyle dateStyle = (HSSFCellStyle) wb.createCellStyle();
+				  dateStyle.setDataFormat(wb.createDataFormat().getFormat("yyyy/mm/dd"));
+
+
+				  // 데이터 추가
+				  List<SNSVO> list = (List) model.get("snsList");
+
+				  for (SNSVO vo : list) {
+				   HSSFRow dataRow = sheet.createRow(rowIdx++);
+				   
+				    HSSFCell domainCell = dataRow.createCell(0);
+				    domainCell.setCellValue(new HSSFRichTextString(vo.getSns_name()));
+				    
+				    HSSFCell keyword_mainCell = dataRow.createCell(1);
+				    keyword_mainCell.setCellValue(new HSSFRichTextString(vo.getKeyword_main()));
+				    
+				    HSSFCell keywordCell = dataRow.createCell(2);
+				    keywordCell.setCellValue(new HSSFRichTextString(vo.getKeyword()));
+				    
+				    HSSFCell writerCell = dataRow.createCell(3);
+				    writerCell.setCellValue(new HSSFRichTextString(vo.getSns_writer()));
+				    
+				    HSSFCell titleCell = dataRow.createCell(4);
+				    titleCell.setCellValue(new HSSFRichTextString(vo.getSns_title()));
+
+				    HSSFCell contentCell = dataRow.createCell(5);
+				    contentCell.setCellValue(new HSSFRichTextString(vo.getSns_content()));
+				    
+				    HSSFCell dateCell = dataRow.createCell(6);
+				    dateCell.setCellValue(new HSSFRichTextString(vo.getUrl()));
+				    
+				    HSSFCell urlCell = dataRow.createCell(7);
+				    urlCell.setCellValue(new HSSFRichTextString(vo.getWriteDate()));
+				    
+				    HSSFCell likeCell = dataRow.createCell(8);
+				    likeCell.setCellValue(new HSSFRichTextString(vo.getLike_cnt().toString()));
+				    
+				    HSSFCell shareCell = dataRow.createCell(9);
+				    shareCell.setCellValue(new HSSFRichTextString(vo.getShare_cnt().toString()));
+				    
+				    HSSFCell replyCell = dataRow.createCell(10);
+				    replyCell.setCellValue(new HSSFRichTextString(vo.getReply_cnt().toString()));
+				  
+
+				  }
+
+				  for (int i = 0; i < titleList.length; i++) {
+				   sheet.autoSizeColumn((short)i);
+				  }
+			  }else {
+				// 타이틀 설정
+				  String[] titleList = { "사이트", "대표 키워드", "키워드", "작성자", "제목","내용","URL","작성날짜", "분류"};
+				  
+				 
+				  HSSFRow titleRow = sheet.createRow(rowIdx++);
+				  for (int i = 0; i < titleList.length; i++) {
+				   HSSFCell cell = titleRow.createCell(i);
+				   cell.setCellValue(new HSSFRichTextString(titleList[i]));
+				   cell.setCellStyle(titleStyle);
+				  }
+
+				  // 엑셀 서식 설정
+				  HSSFCellStyle numStyle = (HSSFCellStyle) wb.createCellStyle();
+				  
+				  numStyle.setDataFormat(wb.createDataFormat().getFormat("#,##0"));
+
+				  HSSFCellStyle percentStyle = (HSSFCellStyle) wb.createCellStyle();
+				  percentStyle.setDataFormat(wb.createDataFormat().getFormat("0%"));
+
+				  HSSFCellStyle dateStyle = (HSSFCellStyle) wb.createCellStyle();
+				  dateStyle.setDataFormat(wb.createDataFormat().getFormat("yyyy/mm/dd"));
+
+
+				  // 데이터 추가
+				  List<ExtractVO> list = (List) model.get("list");
+
+				  for (ExtractVO vo : list) {
+				   HSSFRow dataRow = sheet.createRow(rowIdx++);
+				   
+				    HSSFCell domainCell = dataRow.createCell(0);
+				    domainCell.setCellValue(new HSSFRichTextString(vo.getDomainType()));
+				    
+				    HSSFCell keyword_mainCell = dataRow.createCell(1);
+				    keyword_mainCell.setCellValue(new HSSFRichTextString(vo.getKeyword_main()));
+				    
+				    HSSFCell keywordCell = dataRow.createCell(2);
+				    keywordCell.setCellValue(new HSSFRichTextString(vo.getKeyword()));
+				    
+				    HSSFCell writerCell = dataRow.createCell(3);
+				    writerCell.setCellValue(new HSSFRichTextString(vo.getWriter()));
+				    
+				    HSSFCell titleCell = dataRow.createCell(4);
+				    titleCell.setCellValue(new HSSFRichTextString(vo.getTitle()));
+
+				    HSSFCell contentCell = dataRow.createCell(5);
+				    contentCell.setCellValue(new HSSFRichTextString(vo.getContent()));
+				    
+				    HSSFCell dateCell = dataRow.createCell(6);
+				    dateCell.setCellValue(new HSSFRichTextString(vo.getUrl()));
+				    
+				    HSSFCell urlCell = dataRow.createCell(7);
+				    urlCell.setCellValue(new HSSFRichTextString(vo.getWriteDate()));
+				    
+				    HSSFCell classiCell = dataRow.createCell(8);
+				    classiCell.setCellValue(new HSSFRichTextString(vo.getTextType()));
+				  
+
+				  }
+
+				  for (int i = 0; i < titleList.length; i++) {
+				   sheet.autoSizeColumn((short)i);
+				  }
 			  }
-
-			  // 엑셀 서식 설정
-			  HSSFCellStyle numStyle = (HSSFCellStyle) wb.createCellStyle();
 			  
-			  numStyle.setDataFormat(wb.createDataFormat().getFormat("#,##0"));
-
-			  HSSFCellStyle percentStyle = (HSSFCellStyle) wb.createCellStyle();
-			  percentStyle.setDataFormat(wb.createDataFormat().getFormat("0%"));
-
-			  HSSFCellStyle dateStyle = (HSSFCellStyle) wb.createCellStyle();
-			  dateStyle.setDataFormat(wb.createDataFormat().getFormat("yyyy/mm/dd"));
-
-
-			  // 데이터 추가
-			  List<ExtractVO> list = (List) model.get("list");
-
-			  for (ExtractVO vo : list) {
-			   HSSFRow dataRow = sheet.createRow(rowIdx++);
-			   
-			    HSSFCell domainCell = dataRow.createCell(0);
-			    domainCell.setCellValue(new HSSFRichTextString(vo.getDomainType()));
-			    
-			    HSSFCell keyword_mainCell = dataRow.createCell(1);
-			    keyword_mainCell.setCellValue(new HSSFRichTextString(vo.getKeyword_main()));
-			    
-			    HSSFCell keywordCell = dataRow.createCell(2);
-			    keywordCell.setCellValue(new HSSFRichTextString(vo.getKeyword()));
-			    
-			    HSSFCell writerCell = dataRow.createCell(3);
-			    writerCell.setCellValue(new HSSFRichTextString(vo.getWriter()));
-			    
-			    HSSFCell titleCell = dataRow.createCell(4);
-			    titleCell.setCellValue(new HSSFRichTextString(vo.getTitle()));
-
-			    HSSFCell contentCell = dataRow.createCell(5);
-			    contentCell.setCellValue(new HSSFRichTextString(vo.getContent()));
-			    
-			    HSSFCell dateCell = dataRow.createCell(6);
-			    dateCell.setCellValue(new HSSFRichTextString(vo.getUrl()));
-			    
-			    HSSFCell urlCell = dataRow.createCell(7);
-			    urlCell.setCellValue(new HSSFRichTextString(vo.getWriteDate()));
-			    
-			    HSSFCell classiCell = dataRow.createCell(8);
-			    classiCell.setCellValue(new HSSFRichTextString(vo.getTextType()));
 			  
-
-			  }
-
-			  for (int i = 0; i < titleList.length; i++) {
-			   sheet.autoSizeColumn((short)i);
-			  }
 
 			  // 파일 다운로드 시작
 			  String fileInfo = String.format("attachment; filename=\"" + createFileName() + "\"");

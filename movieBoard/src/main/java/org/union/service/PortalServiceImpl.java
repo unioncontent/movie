@@ -290,4 +290,16 @@ public class PortalServiceImpl implements PortalService {
 		return list;
 	}
 
+	@Override
+	public List<PortalVO> allPage(SearchCriteria cri) {
+
+		List<PortalVO> list = portalDAO.allPage(cri);
+		
+		for (PortalVO portalVO : list) {
+			portalVO.setKeyword_main(keywordDAO.read(portalVO.getKeyword()).getKeyword_main());
+		}
+		
+		return list;
+	}
+
 }

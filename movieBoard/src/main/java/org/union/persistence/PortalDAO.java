@@ -31,6 +31,7 @@ public interface PortalDAO {
 	
 	public List<PortalVO> allPageList(SearchCriteria cri);
 	public Integer allPageCount(SearchCriteria cri);
+	public List<PortalVO> allPage(SearchCriteria cri);
 	
 	public Integer countAll(Date date);
 	

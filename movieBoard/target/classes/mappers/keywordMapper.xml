@@ -20,7 +20,7 @@
 			keyword_data
 		where
 			keyword = #{keyword}
-	
+		limit 0, 1
 	</select>
 
 	<update id="update">
