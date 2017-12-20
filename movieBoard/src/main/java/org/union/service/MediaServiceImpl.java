@@ -66,7 +66,7 @@ public class MediaServiceImpl implements MediaService {
 			
 			List<ExtractVO> extractList = new ArrayList<ExtractVO>();
 			
-			SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
 			
 			for(int i = 0; i < mediaList.size(); i++) {
 				ExtractVO vo = new ExtractVO();
