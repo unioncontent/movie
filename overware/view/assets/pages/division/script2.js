@@ -1,6 +1,6 @@
 'use strict';
 $(document).ready(function () {
-  //modal date picker
+
   $('#datetimepicker').datetimepicker({
     locale : 'ko',
     format: 'hh:mm:ss',
@@ -56,5 +56,43 @@ $(document).ready(function () {
       // swal("success!", "등록에 성공하였습니다.", "success");
       // swal("error!", "등록에 실패하였습니다.", "error");
     }
+  });
+
+  //이미지다운 확인메시지
+  $(document).on("click",".alert-image",function(){
+    swal({
+          title: "이미지다운 하시겠습니까?",
+          text: "현재 리스트 이미지가 다운됩니다.",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonClass: "btn-danger",
+          confirmButtonText: "YES",
+          closeOnConfirm: false
+        },
+        function(){
+          swal("Success!", "이미지다운 되었습니다.", "success");
+        });
+  });
+  //이미지 보기 클릭시 모달
+  $(".image").on("click",function(){
+    $('#imageModal').modal('show');
+  });
+  //이미지업로드 클릭시
+  $(document).on("click",".alert-upload",function(){
+    $("#imageModal").modal("hide");
+
+    //이미지처리메시지 - 성공시
+    swal("Success!", "이미지업로드가 되었습니다.", "success");
+    //이미지처리메시지 - 실패시
+    // swal("error!", "이미지업로드가 실패했습니다.", "error");
+  });
+  //이미지삭제 클릭시
+  $(document).on("click",".alert-delete",function(){
+    $("#imageModal").modal("hide");
+
+    //이미지처리메시지 - 성공시
+    swal("Success!", "이미지삭제가 되었습니다.", "success");
+    //이미지처리메시지 - 실패시
+    // swal("Delete!", "이미지삭제가 실패했습니다.", "error");
   });
 });
