@@ -276,4 +276,11 @@ public class PortalDAOImpl implements PortalDAO {
 		return session.selectList(namespace + "wPageSearch", cri);
 	}
 
+
+	@Override
+	public List<PortalVO> allPage(SearchCriteria cri) {
+
+		return session.selectList(namespace + "allPage", cri);
+	}
+
 }

@@ -179,6 +179,18 @@
 			#{startPage}, #{perPageNum}
 	</select>
 	
+	<select id="allPage" resultType="PortalVO">
+		select
+			*
+		from
+			portal_data
+		where
+			url is not null
+		<include refid="search"></include>
+		order 
+			by updateDate desc
+	</select>
+	
 	<select id="allPageCount" resultType="Integer">
 		select
 			count(*)

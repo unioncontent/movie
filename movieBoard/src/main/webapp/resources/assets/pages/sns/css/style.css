@@ -5,7 +5,7 @@
 .table-fixed{
   table-layout: fixed;
 }
-.table-fixed tfoot > tr > td{
+.table.table-sm td, .table.table-sm th{
   padding: .75rem;
 }
 .title-nowrap{
@@ -14,7 +14,8 @@
   text-overflow: ellipsis;
 }
 .writer-nowrap{
-  width: 139px;
+  width: 127px;
   overflow: hidden;
   text-overflow: ellipsis;
 }
+ 
