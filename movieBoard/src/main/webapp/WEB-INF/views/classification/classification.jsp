@@ -414,7 +414,6 @@
                                 <label class="col-sm-2 col-form-label">컨텐츠 타입</label>
                                 <div class="col-sm-10">
                                   <select id = "contentType" name="select" class="form-control form-control-default">
-                                    <option value="sns">sns</option>
                     			   	<option value="community">community</option>
                     			   	<option value="media">media</option>
                     			   	<option value="portal">portal</option>
@@ -466,12 +465,12 @@
                                     <input id="url" type="text" class="form-control" placeholder="URL">
                                 </div>
                               </div>
-                              <div class="form-group row">
+                              <!-- <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">이미지 등록</label>
                                 <div class="col-sm-10">
                                     <input type="file" class="form-control">
                                 </div>
-                              </div>
+                              </div> -->
                             </form>
                           </div>
                           <div class="modal-footer">
@@ -595,8 +594,8 @@
 		});
 
 
-		var startDateOption = decodeURI(window.location.href.split("startDate=")[1]).split("&")[0];
-		var endDateOption = decodeURI(window.location.href.split("endDate=")[1]).split("&")[0];
+		var startDateOption = decodeURI(window.location.href.split("startDate=")[1]).split("&")[0].split(" ")[0];
+		var endDateOption = decodeURI(window.location.href.split("endDate=")[1]).split("&")[0].split(" ")[0];
 		console.log("startDateOption: " + startDateOption);
 		console.log("endDateOption: " + endDateOption);
 

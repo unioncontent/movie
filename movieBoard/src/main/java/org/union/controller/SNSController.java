@@ -465,15 +465,12 @@ public class SNSController {
 		logger.info("cri: " + cri);
 
 		List<ExtractVO> classiList = new ArrayList<ExtractVO>();
-		ListUtil listUtil = new ListUtil();
 
-		listUtil.listAddSNSList(classiList, snsService.listAll(cri));
-		
 		ExtractComparator comparator = new ExtractComparator();
 		Collections.sort(classiList, comparator);
 		
-		
-		model.addObject("list", classiList);
+		model.addObject("part", "sns");
+		model.addObject("snsList", snsService.listAll(cri));
 		model.setView(excelView);
 		
 		return model;

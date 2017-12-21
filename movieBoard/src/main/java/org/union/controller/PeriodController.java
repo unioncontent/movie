@@ -374,7 +374,7 @@ public class PeriodController {
 		  model.addAttribute("pressCount", reporterList.size());
 		  model.addAttribute("totalCount", mediaService.getTotalCount(cri));
 		  
-		  if(cri.getSelectKey() == null) {
+		  if(cri.getSelectKey() == null && cri.getCompany() == null) {
 			  model.addAttribute("matchCount", 0);
 		  
 		  }else {
@@ -738,7 +738,8 @@ public class PeriodController {
 		ListUtil listUtil = new ListUtil();
 		
 		if(part.equals("sns")) {
-			listUtil.listAddSNSList(classiList, snsService.listExcel(cri));
+			model.addObject("snsList", snsService.listExcel(cri));
+			model.addObject("part", "sns");
 		
 		}else if(part.equals("community")) {
 			listUtil.listAddCommunityList(classiList, communityService.wPageSearch(cri));

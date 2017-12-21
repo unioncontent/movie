@@ -182,4 +182,11 @@ public class CommunityDAOImpl implements CommunityDAO {
 	}
 
 
+	@Override
+	public List<CommunityVO> allPage(SearchCriteria cri) {
+
+		return session.selectList(namespace + "allPage", cri);
+	}
+
+
 }

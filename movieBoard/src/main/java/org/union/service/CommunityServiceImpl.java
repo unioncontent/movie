@@ -55,7 +55,7 @@ public class CommunityServiceImpl implements CommunityService {
 			
 			List<ExtractVO> extractList = new ArrayList<ExtractVO>();
 			
-			SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
 			
 			for(int i = 0; i < communityList.size(); i++) {
 				ExtractVO vo = new ExtractVO();
@@ -182,6 +182,19 @@ public class CommunityServiceImpl implements CommunityService {
 		}
 
 		return list;
+	}
+
+	@Override
+	public List<CommunityVO> allPage(SearchCriteria cri) {
+
+		List<CommunityVO> list = communityDAO.allPage(cri);
+		
+		for (CommunityVO communityVO : list) {
+			communityVO.setKeyword_main(keywordDAO.read(communityVO.getKeyword()).getKeyword_main());
+		}
+
+		return list;
+		
 	}
 
 

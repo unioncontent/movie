@@ -348,9 +348,11 @@
  			count(*)
  		from
  			media_data
+ 		where
+ 			textType is not null
  		<if test="startDate != null and endDate != null">
-			where updateDate <![CDATA[>]]> #{startDate}
-			and updateDate <![CDATA[<]]> #{endDate}
+			and writeDate <![CDATA[>]]> #{startDate}
+			and writeDate <![CDATA[<]]> #{endDate}
 		</if>
  	</select>
  	

@@ -179,6 +179,7 @@
                                  <button id="searchBtn" class=" btn btn-inverse">검색</button>
                                </span>
                             </div>
+                            <button class="btn btn-warning alert-excel f-right p-r-5 p-l-5 m-l-15 m-b-10"><i class="icofont icofont-download-alt"></i>EXCEL</button>
                             <c:if test="${user.user_name == 'union'}">
                             <button id="insertAllBtn" type="button" class="alert-confirm btn btn-primary waves-effect f-right p-r-0 p-l-5 m-l-15 m-b-10  f-right" ><i class="icofont icofont-check-circled"></i>일괄처리</button>
                           	</c:if>
@@ -510,8 +511,8 @@ $(function() {
   $(document).ready(function(){
 
 
-	  	var startDateOption = decodeURI(window.location.href.split("startDate=")[1]).split("&")[0];
-		var endDateOption = decodeURI(window.location.href.split("endDate=")[1]).split("&")[0];
+	  var startDateOption = decodeURI(window.location.href.split("startDate=")[1]).split("&")[0].split(" ")[0];
+		var endDateOption = decodeURI(window.location.href.split("endDate=")[1]).split("&")[0].split(" ")[0];
 		console.log("startDateOption: " + startDateOption);
 		console.log("endDateOption: " + endDateOption);
 
@@ -737,6 +738,32 @@ $(function() {
 	  }else{
 		searchList();
 	  }
+	});
+	
+	//엑셀출력 확인메시지
+	$(document).on("click",".alert-excel",function(){
+    swal({
+          title: "엑셀출력 하시겠습니까?",
+          text: "현재 리스트가 엑셀출력 됩니다.",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonClass: "btn-danger",
+          confirmButtonText: "YES",
+          closeOnConfirm: false
+        },
+        function(){//엑셀 출력하겠다고 할 시 진행 함수
+
+        	self.location = "excel?"+  "searchType=" + decodeURI(window.location.href.split("&searchType=")[1]).split("&")[0]
+		 	  + "&keyword=" + decodeURI(window.location.href.split("&keyword=")[1]).split("&")[0]
+        	  + "&company=" + $("#selectCompany option:selected").val()
+	          + "&selectKey=" + $('#selectKeyword option:selected').val()
+      		  + "&startDate=" + makeDateFormat($("#fromDate").val(), 0)
+      		  + "&endDate=" +  makeDateFormat($("#fromDate").val(), 1);
+
+
+	  		swal("Success!", "엑셀출력 되었습니다.", "success");
+
+        });
 	});
 
 
