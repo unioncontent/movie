@@ -115,7 +115,7 @@
                           </c:if>
                         </select>
 						</c:if>
-						
+
 						<c:if test="${user.user_name != 'union'}">
                          <select style="display: none;" name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="selectCompany">
                           <option>회사</option>
@@ -194,6 +194,7 @@
                               </span>
                             </div>
                             <button class="btn btn-warning alert-excel f-right p-r-5 p-l-5 m-l-15 m-b-10"><i class="icofont icofont-download-alt"></i>EXCEL</button>
+                            <button class="btn btn-info alert-image f-right p-r-5 p-l-5 m-l-15 m-b-10"><i class="icofont icofont-file-image"></i>IMAGE</button>
                             <c:if test="${user.user_name == 'union'}">
                             <button type="button" class="btn btn-inverse  waves-effect  f-right p-r-5 p-l-5 m-l-15 m-b-10" data-toggle="modal" data-target="#frmModal"><i class="ti-pencil-alt"></i>수동입력</button>
                             <button id="insertAllBtn" type="button" class="alert-confirm btn btn-primary waves-effect f-right p-r-0 p-l-5 m-l-15 m-b-10  f-right"><i class="icofont icofont-check-circled"></i>일괄처리</button>
@@ -233,15 +234,15 @@
                                     <th scope="row">
                                       ${totalCount -index.count +1 -minusCount}
                                     </th>
-                                    <td>${extractVO.domain}<span class="text-muted"></span></td>
+                                    <td>${extractVO.domain}</td>
                                     <td>${extractVO.domainType}</td>
-                                    <td>${extractVO.company}<span class="text-muted"></span></td>
-                                    <td>${extractVO.keyword}<span class="text-muted"></span></td>
+                                    <td>${extractVO.company}</td>
+                                    <td>${extractVO.keyword}</td>
                                     <td>
+                                      <div class="image btn-list-image"><i class="icofont icofont-ui-image"></i></div>
                                       <a href="${extractVO.url}" target="_blank">
                                         <div class="nobr">${extractVO.title}</div>
                                       </a>
-                                      <span class="text-muted"></span>
                                       <span class="text-success">${extractVO.content}</span>
                                     </td>
                                     <td>${extractVO.createDate} /<br/>${extractVO.writeDate }</td>
@@ -261,7 +262,6 @@
                                         	<label for="radio5${index.count}">삭제글</label>
                                         	</c:when>
                                         </c:choose>
-
                                         <c:choose>
                                         	<c:when test="${extractVO.textType eq '나쁜글'}">
                                         	<input type="radio" id="radio1${index.count}" name="radios${index.count}">
@@ -276,7 +276,6 @@
                                         	<label for="radio5${index.count}">삭제글</label>
                                         	</c:when>
                                         </c:choose>
-
                                         <c:choose>
                                         	<c:when test="${extractVO.textType eq '관심글'}">
                                         	<input type="radio" id="radio1${index.count}" name="radios${index.count}">
@@ -291,7 +290,6 @@
                                         	<label for="radio5${index.count}">삭제글</label>
                                         	</c:when>
                                         </c:choose>
-
                                         <c:choose>
                                         	<c:when test="${extractVO.textType eq '기타글'}">
                                         	<input type="radio" id="radio1${index.count}" name="radios${index.count}">
@@ -306,7 +304,6 @@
                                         	<label for="radio5${index.count}">삭제글</label>
                                         	</c:when>
                                         </c:choose>
-
                                         <c:choose>
                                         	<c:when test="${extractVO.textType eq '삭제글'}">
                                         	<input type="radio" id="radio1${index.count}" name="radios${index.count}">
@@ -321,7 +318,6 @@
                                         	<label for="radio5${index.count}">삭제글</label>
                                         	</c:when>
                                         </c:choose>
-
                                       </div>
                                     </td>
                                     <td>
@@ -378,10 +374,8 @@
                             </button>
                           </div>
                           <div class="modal-body">
-
                             <div class="modal-body">
                             <form id="frm">
-
                               <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">키워드</label>
                                 <div class="col-sm-10">
@@ -409,14 +403,13 @@
                                     <input id = "insertInputSite" type="text" class="form-control" placeholder="사이트명">
                                 </div>
                               </div>
-
                               <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">컨텐츠 타입</label>
                                 <div class="col-sm-10">
                                   <select id = "contentType" name="select" class="form-control form-control-default">
-                    			   	<option value="community">community</option>
-                    			   	<option value="media">media</option>
-                    			   	<option value="portal">portal</option>
+                          			   	<option value="community">community</option>
+                          			   	<option value="media">media</option>
+                          			   	<option value="portal">portal</option>
                                   </select>
                                 </div>
                               </div>
@@ -481,6 +474,29 @@
                       </div>
                     </div>
                     <!-- frmModal end -->
+                    <!-- modal image show start -->
+                    <div class="modal fade" id="imageModal" tabindex="-1" role="dialog">
+                      <div class="modal-dialog modal-lg" role="document">
+                          <div class="modal-content">
+                              <div class="modal-header">
+                                  <h4 class="modal-title">이미지수정</h4>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                  </button>
+                              </div>
+                              <div class="modal-body">
+                                <div class="imageBox"><img src="assets/images/capture/Koala.jpg"></div>
+                                <input type="file" class="form-control">
+                              </div>
+                              <div class="modal-footer">
+                                  <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">취소</button>
+                                  <button type="button" class="btn btn-danger waves-effect alert-delete">삭제</button>
+                                  <button type="button" class="btn btn-primary waves-effect waves-light alert-upload">업로드</button>
+                              </div>
+                          </div>
+                      </div>
+                    </div>
+                    <!-- modal image show end -->
                   </div>
                 </div>
                 <!-- Page-body end -->
