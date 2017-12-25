@@ -450,11 +450,10 @@ public class PortalController {
 			pageMaker.setCri(cri);
 			pageMaker.setTotalCount(totalCount);
 			
-<<<<<<< HEAD
+
 			model.addAttribute("pageMaker", pageMaker);
-=======
+
 			String tempEndDate = cri.getEndDate();
->>>>>>> branch 'master' of https://github.com/unioncontent/movie.git
 			
 			cri.setEndDate(null);
 			model.addAttribute("blog1", viralService.getSearchInCount(cri));
