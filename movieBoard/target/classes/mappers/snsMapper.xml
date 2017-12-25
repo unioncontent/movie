@@ -41,8 +41,8 @@
 				and keyword in (select keyword from keyword_data where keyword_main = #{selectKey})
 			</if>
 		<if test="startDate != null and endDate != null">
-			and createDate <![CDATA[>=]]> #{startDate}
-			and createDate <![CDATA[<=]]> #{endDate}
+			and writeDate <![CDATA[>=]]> #{startDate}
+			and writeDate <![CDATA[<=]]> #{endDate}
 		</if>
 		<if test="textType != null">
 			and textType = #{textType}
@@ -129,10 +129,10 @@
 	
  	
  	<select id="yesterdayCount" resultType="GraphVO">
- 		select count(if(createDate <![CDATA[<]]> date_add(now(), interval -1 day), createDate, null)) type1,
-	    count(if(createDate <![CDATA[>]]> date_add(now(), interval -1 day), createDate, null)) type2
+ 		select count(if(writeDate <![CDATA[<]]> date_add(now(), interval -1 day), writeDate, null)) type1,
+	    count(if(writeDate <![CDATA[>]]> date_add(now(), interval -1 day), writeDate, null)) type2
 		from sns_data 
-		where createDate between date_add(now(), interval -2 day) and  date_add(now(), interval -0 day)
+		where writeDate between date_add(now(), interval -2 day) and  date_add(now(), interval -0 day)
 		and  sns_name = #{name}
  	</select>
  	
@@ -186,7 +186,7 @@
 		from 
 			sns_data
 		where 
-			textType is not null
+			url is not null
 		<include refid="search"></include>
 		order 
 			by updateDate desc
@@ -201,7 +201,7 @@
 		from
 			sns_data
 		where
-			textType is not null
+			url is not null
 		<include refid="search"></include>
 			
 	</select>
@@ -231,24 +231,21 @@
  	<select id="facebookSum" resultType="GraphVO">
  		select count(*) type1, sum(like_cnt) likeCount, sum(share_cnt) shareCount, sum(reply_cnt) replyCount
 		from union.sns_data
-		where textType is not null
-		and sns_name = 'facebook'
+		where sns_name = 'facebook'
 		<include refid="search"></include>
  	</select>
  	
  	<select id="twitterSum" resultType="GraphVO">
  		select count(*) type1, sum(like_cnt) likeCount, sum(share_cnt) shareCount, sum(reply_cnt) replyCount
 		from union.sns_data
-		where textType is not null
-		and sns_name = 'twitter'
+		where sns_name = 'twitter'
 		<include refid="search"></include>
  	</select>
  	
  	<select id="instagramSum" resultType="GraphVO">
  		select count(*) type1, sum(like_cnt) likeCount, sum(share_cnt) shareCount, sum(reply_cnt) replyCount
 		from union.sns_data
-		where textType is not null
-		and sns_name = 'instagram'
+		where sns_name = 'instagram'
 		<include refid="search"></include>
  	</select>
  	
@@ -261,7 +258,7 @@
 			sns_name = 'facebook'
 		<include refid="search"></include>
 		order 
-			by createdate desc
+			by writeDate desc
 		limit  
 			#{startPage}, #{perPageNum}
  	</select>
@@ -287,7 +284,7 @@
 			sns_name = 'instagram'
 		<include refid="search"></include>
 		order 
-			by createdate desc
+			by writeDate desc
 		limit  
 			#{startPage}, #{perPageNum}
  	
@@ -314,7 +311,7 @@
 			sns_name = 'twitter'
 		<include refid="search"></include>
 		order 
-			by createdate desc
+			by writeDate desc
 		limit  
 			#{startPage}, #{perPageNum}
  	

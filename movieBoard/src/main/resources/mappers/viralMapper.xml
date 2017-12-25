@@ -61,8 +61,8 @@
 			<if test="portal_type == 'webdoc'.toString()">
 				and portal_type = 'webdoc'
 			</if>
-			<if test="portal_type =='relation'.toString()">
-				and portal_type = 'relation'
+			<if test="portal_type =='score'.toString()">
+				and portal_type = 'score'
 			</if>
 			<if test="portal_type == 'all'.toString()">
 				and portal_type is not null

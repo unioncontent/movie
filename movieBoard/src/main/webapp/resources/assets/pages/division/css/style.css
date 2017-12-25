@@ -1,7 +1,13 @@
-/*.table td,.table th{
-  vertical-align: middle;
-  text-align: center;
-}*/
+.btn-list-image{
+  margin-right: 0;
+  display: inline-block;
+  float: right;
+  height: 21px;
+  width: 21px;
+  font-size: 14px;
+  padding: 6px;
+  color: gray;
+}
 .btn-primary:focus{
   color: #13866f;
 }

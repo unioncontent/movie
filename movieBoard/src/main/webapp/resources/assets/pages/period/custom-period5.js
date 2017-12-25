@@ -11,9 +11,9 @@ $(document).ready(function() {
     $("#press-ranking").append("<tr class='"+check+"'><th scope='row'>"+i+"</th><td class='press' onclick='showModal('#press-Modal')'>기자</td><td>언론사</td><td>1</td><td>0</td><td>0%</td></tr>");
   }*/
 
-  pieGraph1();
-  pieGraph2();
-  document.querySelector('.alert-confirm').onclick = function(){
+  /*pieGraph1();
+  pieGraph2();*/
+  /*document.querySelector('.alert-confirm').onclick = function(){
     swal({
           title: "엑셀출력 하시겠습니까?",
           text: "현재 리스트가 엑셀출력 됩니다.",
@@ -26,7 +26,7 @@ $(document).ready(function() {
         function(){//엑셀 출력하겠다고 할 시 진행 함수
           swal("Success!", "엑셀출력 되었습니다.", "success");
         });
-  };
+  };*/
   $('[data-toggle="tooltip"]').tooltip();
 
   $("i[data-value='chart1']").on("click",pieGraph1);
@@ -286,13 +286,81 @@ $(document).ready(function() {
 });
 
 //modal
-function showModal(element){
-  $(element).modal('show');
+function showModal(element, event){
+	
+	console.log(event);
+	
+	var url = decodeURI(window.location.href.split("/media?")[1]);
+	var part = "";
+	
+	if(element.indexOf("news") >= 0){
+		part = 'media';
+	}else if(element.indexOf("press") >= 0){
+		part = 'press';
+	}
+	
+	$.ajax({
+		type : "POST",
+	  	url : "getTextType",
+ 	  	dataType : "json",
+ 	  	data : {url : url, part : part, keyword : event},
+  	  	success : function(list){
+  	  		
+  	  		console.log(list);
+  	  		
+  	  		if(part == 'media'){
+  	  			$("#mediaName")[0].innerText = event;
+  	  			$("#media1_1")[0].innerText = list[0].lik + list[0].dis;
+  	  			$("#media1_2")[0].innerText = list[0].lik;
+  	  			$("#media1_3")[0].innerText = list[0].dis;
+  	  			
+  	  			$("#media2_1")[0].innerText = list[1].lik + list[1].dis + list[1].cu;
+  	  			$("#media2_2")[0].innerText = list[1].lik;
+  	  			$("#media2_3")[0].innerText = list[1].dis;
+  	  			$("#media2_4")[0].innerText = list[1].cu;
+
+  	  			$("#media3_1")[0].innerText = list[2].lik + list[2].dis + list[2].cu;
+  	  			$("#media3_2")[0].innerText = list[2].lik;
+  	  			$("#media3_3")[0].innerText = list[2].dis;
+  	  			$("#media3_4")[0].innerText = list[2].cu;
+  	  			
+  	  		
+  	  		}else if(part == 'press'){
+  	  			
+  	  			$("#press1_1")[0].innerText = list[0].lik + list[0].dis;
+	  			$("#press1_2")[0].innerText = list[0].lik;
+	  			$("#press1_3")[0].innerText = list[0].dis;
+	  			
+	  			$("#press2_1")[0].innerText = list[1].lik + list[1].dis + list[1].cu;
+	  			$("#press2_2")[0].innerText = list[1].lik;
+	  			$("#press2_3")[0].innerText = list[1].dis;
+	  			$("#press2_4")[0].innerText = list[1].cu;
+
+	  			$("#press3_1")[0].innerText = list[2].lik + list[2].dis + list[2].cu;
+	  			$("#press3_2")[0].innerText = list[2].lik;
+	  			$("#press3_3")[0].innerText = list[2].dis;
+	  			$("#press3_4")[0].innerText = list[2].cu;
+	  			
+	  			$("#pressName")[0].innerText = list[3].name1;
+	  			$("#pressMediaName")[0].innerText = list[3].name2;
+	  			if(list[3].email != undefined){
+	  				$("#pressEmail")[0].innerText = list[3].email;
+	  			}
+  	  		}
+  	  		
+  	  		$(element).modal('show');
+  	  	}
+	});
+	
 }
 
-//graph
+function makeModalContent(list){
+	
+}
+
+/*//graph
 function pieGraph1(){
-  /* 그래프1 */
+   그래프1 
   $("#donutchart").empty();
   nv.addGraph(function() {
     var chart = nv.models.pieChart()
@@ -317,7 +385,7 @@ function pieGraph1(){
   });
 }
 function pieGraph2(){
-  /* 그래프2 */
+   그래프2 
   $("#donutchart2").empty();
   nv.addGraph(function() {
     var chart = nv.models.pieChart()
@@ -344,21 +412,25 @@ function pieGraph2(){
 
 //data
 function pieData1() {
+	
+	var text = '${mediaTypeCount}';
+	console.log(text);
+	
     return [{
         "label": "좋은기사",
-        "value": 50,
+        "value": text.lik,
         "color": "#2ecc71"
     },{
         "label": "나쁜기사",
-        "value": 10,
+        "value": text.dis,
         "color": "#e74c3c"
     },{
         "label": "관심기사",
-        "value": 5,
+        "value": text.cu,
         "color": "#FF9F55"
     },   {
         "label": "기타기사",
-        "value": 5,
+        "value": text.etc,
         "color": "#f1c40f"
     }];
 }
@@ -380,7 +452,7 @@ function pieData2() {
       "value": 70,
       "color": "#f1c40f"
   }];
-}
+}*/
 
 //more
 function moreRanking(moreName,morehtml){

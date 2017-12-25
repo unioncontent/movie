@@ -95,4 +95,26 @@ public class MediaDAOTester {
 		
 		dao.allPageList(cri);
 	}
+	
+	@Test
+	private void testGetTotalCount() throws Exception{
+		
+		cri.setSelectKey("신과함께");
+		cri.setStartDate("2017-11-14 00:00:00");
+		cri.setEndDate("2017-12-14 00:00:00");
+		
+		dao.getTotalCount(cri);
+	}
+	
+	@Test
+	private void testExtract() throws Exception{
+		
+		cri.setStartDate("2017-12-18 00:00:00");
+		cri.setEndDate("2017-12-18 23:59:59");
+		cri.setCompany("NEW");
+		cri.setSelectKey("강철비");
+		
+		dao.getExtractCount(cri);
+		
+	}
 }

@@ -49,6 +49,48 @@
 		</if>
 	</sql>
  
+ 	<sql id="search_writeDate">
+ 		<if test="keyword != null">
+			<if test="searchType != null">
+				<if test="searchType == 't'.toString()">
+					and portal_title like concat('%', #{keyword}, '%')
+				</if>
+				<if test="searchType == 'c'.toString()">
+					and portal_title like concat('%', #{keyword}, '%')
+				</if>
+			</if>
+		</if>
+		<if test="company != null">
+			and
+			   keyword in (select 
+						keyword 
+					from 
+						keyword_data
+					where
+						user_idx = (select 
+										user_idx 
+									from 
+										user_data 
+									where 
+										user_name = #{company} 
+									and 
+										keyword_property = '포함'
+									)
+					)
+		</if>
+		<if test="selectKey != null">
+				and keyword in (select keyword from keyword_data where keyword_main = #{selectKey})
+			</if>
+		<if test="startDate != null">
+			and writeDate <![CDATA[>]]> #{startDate}
+			<if test="endDate != null">
+				and writeDate <![CDATA[<]]> #{endDate}
+			</if>
+		</if>
+		<if test="textType != null">
+			and textType = #{textType}
+		</if>
+	</sql>
  
  	<insert id="create">
  		insert into
@@ -105,7 +147,7 @@
  		and
  			keyword_type = '영화'
  	
- 	<include refid="search"></include>
+ 	<include refid="search_writeDate"></include>
  	
  	</select>
  	
@@ -119,7 +161,7 @@
  		and
  			keyword_type = '배우'
  	
- 	<include refid="search"></include>
+ 	<include refid="search_writeDate"></include>
  	
  	</select>
  	
@@ -135,6 +177,18 @@
 			by updateDate desc
 		limit  
 			#{startPage}, #{perPageNum}
+	</select>
+	
+	<select id="allPage" resultType="PortalVO">
+		select
+			*
+		from
+			portal_data
+		where
+			url is not null
+		<include refid="search"></include>
+		order 
+			by updateDate desc
 	</select>
 	
 	<select id="allPageCount" resultType="Integer">
@@ -160,15 +214,15 @@
  			 count(if(portal_name = 'daum', portal_name, null)) type2, count(*) type3  
  		from portal_data
 		where portal_type = #{type}
-		and date_add(now(), interval -1 day) <![CDATA[<]]> createDate
-		and createDate <![CDATA[<]]> now()
+		and date_add(now(), interval -1 day) <![CDATA[<]]> writeDate
+		and writeDate <![CDATA[<]]> now()
  	</select>
  	
  	<select id="yesterdayCount" resultType="GraphVO">
- 		select count(if(createDate <![CDATA[<]]> date_add(now(), interval -1 day), createDate, null)) type1,
-	    count(if(createDate <![CDATA[>]]> date_add(now(), interval -1 day), createDate, null)) type2
+ 		select count(if(writeDate <![CDATA[<]]> date_add(now(), interval -1 day), writeDate, null)) type1,
+	    count(if(writeDate <![CDATA[>]]> date_add(now(), interval -1 day), writeDate, null)) type2
 		from portal_data 
-		where createDate between date_add(now(), interval -2 day) and  date_add(now(), interval -0 day)
+		where writeDate between date_add(now(), interval -2 day) and  date_add(now(), interval -0 day)
  	</select>
  	
  	<select id="listNaver" resultType="PortalVO">
@@ -189,9 +243,10 @@
  		select count(*) from portal_data
  		where 
  			textType is not null
+ 		and score is null 
  		and
  			portal_name = 'naver'
- 		<include refid="search"></include>
+ 		<include refid="search_writeDate"></include>
  	
  	</select>
  	
@@ -204,7 +259,7 @@
 		count(if(textType is not null and texttype!='삭제글', textType, null)) al
 		from portal_data
 		where textType is not null
-		<include refid="search"></include>
+		<include refid="search_writeDate"></include>
  	</select>
  	
  	
@@ -219,7 +274,7 @@
 		union.portal_data
 	where 
 		portal_type = 'blog'
- 	<include refid="search"></include>
+ 	<include refid="search_writeDate"></include>
  	</select>
  	
  	<select id="cafeTextTypeCount" resultType="TextTypeVO">
@@ -233,7 +288,7 @@
 		union.portal_data
 	where 
 		portal_type = 'cafe'
-	<include refid="search"></include>
+	<include refid="search_writeDate"></include>
  	
  	</select>
  	
@@ -287,9 +342,10 @@
  		select count(*) from portal_data
  		where 
  			textType is not null
+ 		and score is null 
  		and
  			portal_name = 'daum'
- 		<include refid="search"></include>
+ 		<include refid="search_writeDate"></include>
  	
  	</select>
  	
@@ -300,14 +356,6 @@
 			portal_data
 		where
 			textType is null
-		<if test="startDate != null">
-		and
-			writeDate <![CDATA[>]]> #{startDate}
-		<if test="endDate != null">
-  		and 
-  			writeDate <![CDATA[<]]> #{endDate}
-  		</if>
-  		</if>
 		<include refid="search"></include>
 		order by
 			createDate desc
@@ -323,14 +371,6 @@
 			portal_data
 		where
 			textType is null
-		<if test="startDate != null">
-		and
-			writeDate <![CDATA[>]]> #{startDate}
-		<if test="endDate != null">
-  		and 
-  			writeDate <![CDATA[<]]> #{endDate}
-  		</if>
-  		</if>
 		<include refid="search"></include>
 	
 	
@@ -343,12 +383,77 @@
 			portal_data
 		where 
 			textType is not null
+		and
+			score is null
 		<include refid="search"></include>
 		order 
 			by updateDate desc
 		limit  
 			#{startPage}, #{perPageNum}
  	
+ 	</select>
+ 	
+ 	<select id="wlistSearch" resultType="PortalVO">
+ 		select 
+			*
+		from 
+			portal_data
+		where 
+			textType is not null
+		and
+			score is null
+		<include refid="search_writeDate"></include>
+		order 
+			by updateDate desc
+		limit  
+			#{startPage}, #{perPageNum}
+ 	
+ 	</select>
+ 	
+ 	<select id="getScoreList" resultType="PortalVO">
+ 		select 
+			*
+		from 
+			portal_data
+		where 
+			portal_type = 'score'
+		<include refid="search_writeDate"></include>
+		order 
+			by updateDate desc
+		limit  
+			#{startPage}, #{perPageNum}
+ 	
+ 	</select>
+
+	<select id="getScoreCount" resultType="Integer">
+ 		select 
+			count(*)
+		from 
+			portal_data
+		where 
+			portal_type = 'score'
+		<include refid="search_writeDate"></include>
+ 	</select> 	
+ 	
+ 	<select id="getScoreTextType" resultType="TextTypeVO">
+ 		select  
+ 		count(if(textType='좋은글', textType, null)) lik,
+		count(if(textType='나쁜글', textType, null)) dis,
+		count(if(textType='관심글', textType, null)) cu,
+		count(if(textType='악성글', textType, null)) etc,
+		count(if(textType is not null and texttype!='삭제글', textType, null)) al
+ 		from portal_data where portal_type = 'score'
+ 		<include refid="search_writeDate"></include>
+ 	</select>
+ 	
+ 	<select id="getOnlyScore" resultType="Integer">
+ 		select
+ 			score
+ 		from
+ 			portal_data
+ 		where score is not null
+ 		<include refid="search_writeDate"></include>
+ 		
  	</select>
  	
  	<select id="listAll" resultType="PortalVO">
@@ -358,6 +463,7 @@
 			portal_data
 		where 
 			textType is not null
+		and score is null
 		<include refid="search"></include>
  	
  	</select>
@@ -380,8 +486,38 @@
 			portal_data
 		where
 			textType is not null
+		and
+			score is null
 		<include refid="search"></include>
 			
+	</select>
+	
+	<select id = "wgetSearchCount" resultType="Integer">
+		select
+			count(*)
+		from
+			portal_data
+		where
+			textType is not null
+		and
+			score is null
+		<include refid="search_writeDate"></include>
+			
+	</select>
+	
+	<select id="wPageSearch" resultType="PortalVO">
+		select 
+			*
+		from 
+			portal_data
+		where 
+			textType is not null
+		and
+			score is null
+		<include refid="search_writeDate"></include>
+		order 
+			by writeDate desc
+	
 	</select>
 
 	<update id="updateThumbnail">

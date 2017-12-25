@@ -85,7 +85,7 @@
                     <div class="page-header-breadcrumb">
                       <ul class="breadcrumb-title">
                         <li class="breadcrumb-item">
-                          <a href="dashboard.html">
+                          <a href="../dashBoard/dashBoard">
                             <i class="icofont icofont-home"></i>
                           </a>
                         </li>
@@ -99,7 +99,8 @@
                     <div class="row">
                       <!-- data setting start -->
                       <div class="col-md-7">
-                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="selectCompany">
+                        <c:if test="${user.user_name == 'union'}">
+                         <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="selectCompany">
                           <option>회사</option>
                           <c:if test="${user.user_type == 1 }">
                           <c:forEach items="${companyList}" var = "companyList">
@@ -110,7 +111,22 @@
                           <option value="${companyList.user_name}">${companyList.user_name}</option>
                           </c:if>
                         </select>
-                        
+						</c:if>
+
+						<c:if test="${user.user_name != 'union'}">
+                         <select style="display: none;" name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="selectCompany">
+                          <option>회사</option>
+                          <c:if test="${user.user_type == 1 }">
+                          <c:forEach items="${companyList}" var = "companyList">
+                          <option value="${companyList.user_name}">${companyList.user_name}</option>
+                          </c:forEach>
+                          </c:if>
+                          <c:if test="${user.user_type == 2}">
+                          <option value="${companyList.user_name}">${companyList.user_name}</option>
+                          </c:if>
+                        </select>
+						</c:if>
+
                         <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left" id="selectKeyword">
                           <option>키워드</option>
                           <c:if test="${modelKeywordList == null}" >
@@ -179,70 +195,73 @@
                                   <option id="c">게시글</option>
                                 </select>
                             <div class="col-sm-3 input-group input-group-button input-group-inverse p-l-0 p-r-0 m-b-10 f-left btn-select">
-                              <input id="keywordInput" type="text" class="form-control" placeholder="">
+                               <input onkeyup="if(event.keyCode == 13){$('#searchBtn').trigger('click');};"id="keywordInput" type="text" class="form-control" placeholder="">
                               <span class="input-group-addon" id="basic-addon1">
                                 <button id="searchBtn" class="btn btn-inverse">검색</button>
                               </span>
                             </div>
                             <button id="excel" class="btn btn-warning f-right alert-confirm"><i class="icofont icofont-download-alt"></i>EXCEL</button>
                           </div>
-                          <div class="card-block">
-                            <div class="table-responsive">
-                              <table class="table table-bordered">
-                                <thead>
+                          <div class="card-block table-border-style  table-responsive">
+                            <table class="table table-bordered table-sm table-fixed">
+                              <thead>
+                                <tr>
+                                  <th width="5%">NO</th>
+                                  <th width="7%">작성날짜</th>
+                                  <th width="5%">키워드</th>
+                                  <th width="15%">제목</th>
+                                  <th width="5%">글쓴이</th>
+                                  <th width="5%">좋아요</th>
+                                  <th width="5%">공유</th>
+                                  <th width="5%">댓글</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <c:forEach items="${twitterList}" var="snsVO" varStatus="index">
                                   <tr>
-                                    <th width="5%">NO</th>
-                                    <th width="10%">등록날짜</th>
-                                    <th width="5%">키워드</th>
-                                    <th width="30%">제목</th>
-                                    <th width="5%">글쓴이</th>
-                                    <th width="5%">좋아요</th>
-                                    <th width="5%">공유</th>
-                                    <th width="5%">댓글</th>
+                                    <th scope="row">${totalCount - minusCount - index.count +1}</th>
+                                    <td>${snsVO.writeDate}</td>
+                                    <td>${snsVO.keyword}</td>
+                                    <td><a href="${snsVO.url}" target="_blank">${snsVO.sns_title}</div></td>
+                                    <td><div class="writer-nowrap">${snsVO.sns_writer}</div></td>
+                                    <td>${snsVO.like_cnt}</td>
+                                    <td>${snsVO.share_cnt}</td>
+                                    <td>${snsVO.reply_cnt}</td>
                                   </tr>
-                                </thead>
-                                <tbody>
-                                  <c:forEach items="${twitterList}" var="snsVO">
-                                    <tr>
-                                      <th scope="row">${totalCount - minusCount - index.count +1}</th>
-                                      <td>${snsVO.writeDate}</td>
-                                      <td>${snsVO.keyword}</td>
-                                      <td><a href="${snsVO.url}" target="_blank"><div class="nobr">${snsVO.sns_title}</div></a></td>
-                                      <td>${snsVO.sns_writer}</td>
-                                      <td>${snsVO.like_cnt}</td>
-                                      <td>${snsVO.share_cnt}</td>
-                                      <td>${snsVO.reply_cnt}</td>
-                                    </tr>
-                                  </c:forEach>
-                                </tbody>
-                              </table>
-                            </div>
-                            <ul class="pagination float-right">
+                                </c:forEach>
+                              </tbody>
+                              <tfoot>
+                                <tr>
+                                  <td colspan="8">
+                                    <ul class="pagination float-right">
+                                      <c:if test="${pageMaker.prev}">
+                                        <li class="page-item">
+                                          <a class="page-link" href="twitter${pageMaker.makeSearch(pageMaker.startPage - 1) }" aria-label="Previous">&laquo;
+                                            <span aria-hidden="true"></span>
+                                            <span class="sr-only">Previous</span>
+                                          </a>
+                                        </li>
+                                      </c:if>
 
-                              <c:if test="${pageMaker.prev}">
-                                <li class="page-item">
-                                  <a class="page-link" href="twitter${pageMaker.makeSearch(pageMaker.startPage - 1) }" aria-label="Previous">&laquo;
-                                    <span aria-hidden="true"></span>
-                                    <span class="sr-only">Previous</span>
-                                  </a>
-                                </li>
-                              </c:if>
+                                      <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
+                                        <li class= "${pageMaker.cri.page == idx? 'active':''} page-item">
+                                          <a class="page-link" href="twitter${pageMaker.makeSearch(idx)}">${idx}</a>
+                                        </li>
+                                      </c:forEach>
 
-                              <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
-                                <li class= "${pageMaker.cri.page == idx? 'active':''} page-item">
-                                  <a class="page-link" href="twitter${pageMaker.makeSearch(idx)}">${idx}</a>
-                                </li>
-                              </c:forEach>
-
-                              <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-                                <li class="page-item">
-                                  <a class="page-link" href="twitter${pageMaker.makeSearch(pageMaker.endPage +1) }" aria-label="Next">&raquo;
-                                    <span aria-hidden="true"></span>
-                                    <span class="sr-only">Next</span>
-                                  </a>
-                                </li>
-                              </c:if>
-                            </ul>
+                                      <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+                                        <li class="page-item">
+                                          <a class="page-link" href="twitter${pageMaker.makeSearch(pageMaker.endPage +1) }" aria-label="Next">&raquo;
+                                            <span aria-hidden="true"></span>
+                                            <span class="sr-only">Next</span>
+                                          </a>
+                                        </li>
+                                      </c:if>
+                                    </ul>
+                                  </td>
+                                </tr>
+                              </tfoot>
+                            </table>
                           </div>
                         </div>
                       </div>
@@ -357,19 +376,19 @@
   $(document).ready(function(){
 
 	  var $fromDate = $("#fromDate");
-	  
-	  var startDateOption = decodeURI(window.location.href.split("startDate=")[1]).split("&")[0];
-	  var endDateOption = decodeURI(window.location.href.split("endDate=")[1]).split("&")[0];
+
+	  var startDateOption = decodeURI(window.location.href.split("startDate=")[1]).split("&")[0].split(" ")[0];
+	  var endDateOption = decodeURI(window.location.href.split("endDate=")[1]).split("&")[0].split(" ")[0];
 	  console.log("startDateOption: " + startDateOption);
 	  console.log("endDateOption: " + endDateOption);
-		
+
 	  if(startDateOption != 'undefined' && endDateOption != 'undefined'
 			&& startDateOption != '' && endDateOption != ''){
 		  $fromDate.val(startDateOption + " - " + endDateOption);
-	  		
-	  		
+
+
 		}
-	  
+
 
 	// 엑셀 출력시
 	$(document).on("click","#excel",function(){
@@ -383,7 +402,7 @@
 	          closeOnConfirm: false
 	        },
 	        function(){//엑셀 출력하겠다고 할 시 진행 함수
-	        	
+
 	        	console.log("엑셀출력한다?");
 
 	        	self.location = "excel?"
@@ -425,7 +444,7 @@
 
 		searchList();
 	});
-	
+
 	var companyOption = decodeURI(window.location.href.split("company=")[1]).split("&")[0];
 
 
@@ -435,27 +454,27 @@
 
 			if($selectCompany[0].children[i].value == companyOption){
 				$selectCompany[0].children[i].selected = 'selected';
-			} 
+			}
 		}
 	}
 	$selectCompany[0][0].disabled = true;
-	
-	
+
+
 	// 회사 선택시
 	$selectCompany.change(function(){
 		console.log("selectCompany clicked....");
 		console.log($("#selectCompany option:selected").val());
-		
+
 		searchList();
-		
+
 	});
-	
+
 	var graphStart = $fromDate.val().split(" - ")[0].replace("/", "-").replace("/", "-");
 	var graphEnd = $fromDate.val().split(" - ")[1].replace("/", "-").replace("/", "-");
 
 	console.log("graphStart: " + graphStart);
 	console.log("graphEnd: " + graphEnd);
-	  
+
 	ajaxGraph(graphStart, graphEnd);
 
 
@@ -482,7 +501,7 @@
 
 	  $("#fromDate").val(endDate + " - " + endDate)
 	  console.log($("#fromDate").val());
-	  searchList(); 
+	  searchList();
 	});
 
 	// 전일 클릭시
@@ -515,17 +534,17 @@
 	  var date = getDate("month");
 	  var startDate = date.startDate;
 	  var endDate = date.endDate;
-	
+
 	  $("#fromDate").val(startDate + " - " + endDate)
 	  console.log($("#fromDate").val());
-	  
+
 	  searchList();
-	 
+
 	})
 
 
 	// 캘린더 클릭시
-	$('#fromDate').on('apply.daterangepicker', function(ev, picker) {	
+	$('#fromDate').on('apply.daterangepicker', function(ev, picker) {
 		   var startDate = picker.startDate.format('YYYY-MM-DD');
 		   var endDate = picker.endDate.format('YYYY-MM-DD');
 
@@ -568,15 +587,15 @@ function ajaxGraph(startDate, endDate){
  	  dataType : "json",
  	  data : {startDate : startDate, endDate : endDate, company : $("#selectCompany option:selected").val(),
  		  selectKey : $("#selectKeyword option:selected").val(),
- 		  searchType: decodeURI(window.location.href.split("&searchType=")[1]).split("&")[0], 
- 		  keyword : decodeURI(window.location.href.split("&keyword=")[1]).split("&")[0], 
+ 		  searchType: decodeURI(window.location.href.split("&searchType=")[1]).split("&")[0],
+ 		  keyword : decodeURI(window.location.href.split("&keyword=")[1]).split("&")[0],
  		  portal_name : "twitter"},
   	  error : function(){
       	alert('graphPOST ajax error....');
   	  },
   	  success : function(data){
   		  console.log(data);
-  		  
+
   		var script = "[";
 
   		for(var i = 0; i < data.length; i++){
@@ -608,6 +627,7 @@ function drawChart(data){
    	      element: 'line-chart1',
    	      data: data,
    	      xkey: 'period',
+   	      xLabels : 'day',
    	      redraw: true,
    	      ykeys: ['l1', 'l2', 'l3'],
    	      hideHover: 'auto',
@@ -659,8 +679,8 @@ function makeDateFormat(date, index){
 			var returnDate = splitDate.replace("/", "-").replace("/", "-")
 			return returnDate;
 		}
-	
-	
+
+
 }
 
 

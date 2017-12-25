@@ -33,4 +33,10 @@ public class ReporterServiceImpl implements ReporterService {
 		return reporterDAO.getSearchCount(cri);
 	}
 
+	@Override
+	public ReporterVO readByName(String reporter_name) {
+
+		return reporterDAO.readByName(reporter_name);
+	}
+
 }

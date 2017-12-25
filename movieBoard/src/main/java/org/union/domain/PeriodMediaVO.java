@@ -7,7 +7,7 @@ public class PeriodMediaVO {
 	private String reporter;
 	private Integer allCount;
 	private Integer searchCount;
-	private Integer matchPercent;
+	private double matchPercent;
 	
 	
 	public String getMedia() {
@@ -34,10 +34,10 @@ public class PeriodMediaVO {
 	public void setSearchCount(Integer searchCount) {
 		this.searchCount = searchCount;
 	}
-	public Integer getMatchPercent() {
+	public double getMatchPercent() {
 		return matchPercent;
 	}
-	public void setMatchPercent(Integer matchPercent) {
+	public void setMatchPercent(double matchPercent) {
 		this.matchPercent = matchPercent;
 	}
 	@Override

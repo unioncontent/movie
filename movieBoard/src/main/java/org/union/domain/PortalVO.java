@@ -19,6 +19,8 @@ public class PortalVO {
 	private String thumbnail;
 	private Date createDate;
 	private Date updateDate;
+	private String writer;
+	private Integer score;
 	public Integer getPortal_idx() {
 		return portal_idx;
 	}
@@ -54,6 +56,12 @@ public class PortalVO {
 	}
 	public void setWriteDate(String writeDate) {
 		this.writeDate = writeDate;
+	}
+	public String getKeyword_main() {
+		return keyword_main;
+	}
+	public void setKeyword_main(String keyword_main) {
+		this.keyword_main = keyword_main;
 	}
 	public String getKeyword() {
 		return keyword;
@@ -97,20 +105,25 @@ public class PortalVO {
 	public void setUpdateDate(Date updateDate) {
 		this.updateDate = updateDate;
 	}
-	
-	public String getKeyword_main() {
-		return keyword_main;
+	public String getWriter() {
+		return writer;
 	}
-	public void setKeyword_main(String keyword_main) {
-		this.keyword_main = keyword_main;
+	public void setWriter(String writer) {
+		this.writer = writer;
+	}
+	public Integer getScore() {
+		return score;
+	}
+	public void setScore(Integer score) {
+		this.score = score;
 	}
 	@Override
 	public String toString() {
 		return "PortalVO [portal_idx=" + portal_idx + ", portal_name=" + portal_name + ", portal_type=" + portal_type
 				+ ", portal_title=" + portal_title + ", deviceType=" + deviceType + ", writeDate=" + writeDate
-				+ ", keyword=" + keyword + ", keyword_type=" + keyword_type + ", url=" + url + ", textType=" + textType
-				+ ", thumbnail=" + thumbnail + ", createDate=" + createDate + ", updateDate=" + updateDate + "]";
+				+ ", keyword_main=" + keyword_main + ", keyword=" + keyword + ", keyword_type=" + keyword_type
+				+ ", url=" + url + ", textType=" + textType + ", thumbnail=" + thumbnail + ", createDate=" + createDate
+				+ ", updateDate=" + updateDate + ", writer=" + writer + ", score=" + score + "]";
 	}
-	
 	
 }

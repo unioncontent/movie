@@ -20,6 +20,7 @@ public interface CommunityDAO {
 	
 	public List<CommunityVO> allPageList(SearchCriteria cri);
 	public Integer allPageCount(SearchCriteria cri);
+	public List<CommunityVO> allPage(SearchCriteria cri);
 	
 	public Integer countAll(Date date);
 	
@@ -32,6 +33,12 @@ public interface CommunityDAO {
 	public List<CommunityVO> listSearch(SearchCriteria cri);
 	
 	public Integer getSearchCount(SearchCriteria cri);
+
+	public List<CommunityVO> wlistSearch(SearchCriteria cri);
+	public List<CommunityVO> wPageSearch(SearchCriteria cri);
+	
+	public Integer wgetSearchCount(SearchCriteria cri);
+	
 	
 	public List<CommunityVO> listComplete(SearchCriteria cri);
 	
