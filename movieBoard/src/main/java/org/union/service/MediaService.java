@@ -20,6 +20,8 @@ public interface MediaService {
 	
 	public void remove(Integer media_idx);
 	
+	public TextTypeVO periodTextTypeCount(SearchCriteria cri);
+	
 	public List<MediaVO> allPageList(SearchCriteria cri);
 	public Integer allPageCount(SearchCriteria cri);
 	
@@ -37,6 +39,11 @@ public interface MediaService {
 	public List<MediaVO> listSearch(SearchCriteria criteria);
 	
 	public Integer getSearchCount(SearchCriteria cri);
+
+	public List<MediaVO> wlistSearch(SearchCriteria criteria);
+	public List<MediaVO> wPageSearch(SearchCriteria criteria);
+	
+	public Integer wgetSearchCount(SearchCriteria cri);
 	
 	public List<MediaVO> listAll(SearchCriteria cri);
 	
@@ -44,7 +51,8 @@ public interface MediaService {
 	
 	public List<PeriodMediaVO> periodReporter(SearchCriteria criteria);
 	
-	public Integer getTotalCount();
+	public Integer getTotalCount(SearchCriteria criteria);
+	public Integer getMatchCount(SearchCriteria criteria);
 	
 	public Integer mediaGetTotalCount(SearchCriteria criteria);
 	
@@ -53,5 +61,14 @@ public interface MediaService {
 	public void modifyType(MediaVO vo);
 	
 	public void modifyThumbnail(MediaVO vo);
+	
+	public TextTypeVO getMediaPortalCount(SearchCriteria cri);
+	public TextTypeVO getMediaTextTypeTotalCount(SearchCriteria cri);
+	public TextTypeVO getMediaTextTypeSearchCount(SearchCriteria cri);
+	
+	public TextTypeVO getPressPortalCount(SearchCriteria cri);
+	public TextTypeVO getPressTextTypeTotalCount(SearchCriteria cri);
+	public TextTypeVO getPressTextTypeSearchCount(SearchCriteria cri);
+	
 	
 }

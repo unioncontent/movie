@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 import org.union.domain.CommunityVO;
 import org.union.domain.ExtractVO;
 import org.union.domain.MediaVO;
@@ -29,6 +30,7 @@ import org.union.service.MediaService;
 import org.union.service.PortalService;
 import org.union.service.SNSService;
 import org.union.service.UserService;
+import org.union.util.ExcelView;
 import org.union.util.ExtractComparator;
 import org.union.util.ListUtil;
 
@@ -162,6 +164,75 @@ public class ListAllController {
 		
 		model.addAttribute("extractList", extractList);
 		
+	}
+	
+	@ResponseBody
+	@GetMapping("/excel")
+	public ModelAndView excelGET(@ModelAttribute("cri") ModelAndView model, ExcelView excelView, SearchCriteria cri) {
+		
+		if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
+			logger.info("keyword is null");
+			cri.setKeyword(null);
+			
+		} 
+		if(cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey()) ) {
+			logger.info("selectKey is null");
+			cri.setSelectKey(null);
+		}
+		
+		if("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate())
+				|| cri.getStartDate() == "" || cri.getEndDate() == ""){
+			cri.setStartDate(null);
+			cri.setEndDate(null);
+		
+		} 
+		if(cri.getStartDate() != null && cri.getEndDate() != null) {
+			if(cri.getStartDate().indexOf("00:00:00") < 0 && cri.getEndDate().indexOf("23:59:59") < 0){ 
+				cri.setStartDate(cri.getStartDate() + " 00:00:00"); 
+				cri.setEndDate(cri.getEndDate() + " 23:59:59"); 
+			}
+		}
+		if(cri.getCompany() != null) {
+			if(cri.getCompany().isEmpty()) {
+				cri.setCompany(null);
+			}
+		}
+		
+		if(cri.getCompany() == null || cri.getCompany().equals("회사")) {
+			logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+			UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
+			
+			if(!vo.getUser_name().equals("union")) {
+			cri.setCompany(vo.getUser_name());
+			
+			}else {
+				cri.setCompany(null);
+			}
+		}
+		if(cri.getTextType() != null) {
+			if(cri.getTextType().equals("undefined") || cri.getTextType().equals("분류") || cri.getTextType().isEmpty()) {
+				cri.setTextType(null);
+			}
+		}
+		
+		logger.info("cri: " + cri);
+
+		List<ExtractVO> extractList = new ArrayList<ExtractVO>();
+		ListUtil listUtil = new ListUtil();
+		
+		
+		listUtil.listAddCommunityList(extractList, communityService.allPage(cri));
+		listUtil.listAddPortalList(extractList, portalService.allPage(cri));
+		listUtil.listAddMediaList(extractList, mediaService.allPage(cri));
+		
+		ExtractComparator comparator = new ExtractComparator();
+		Collections.sort(extractList, comparator);
+		
+		
+		model.addObject("list", extractList);
+		model.setView(excelView);
+		
+		return model;
 	}
 	
 	@ResponseBody

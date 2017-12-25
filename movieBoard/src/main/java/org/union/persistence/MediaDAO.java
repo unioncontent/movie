@@ -18,6 +18,8 @@ public interface MediaDAO {
 	
 	public void delete(Integer media_idx);
 	
+	public TextTypeVO periodTextTypeCount(SearchCriteria cri);
+	
 	public List<MediaVO> allPageList(SearchCriteria cri);
 	public Integer allPageCount(SearchCriteria cri);
 	
@@ -33,14 +35,19 @@ public interface MediaDAO {
 	public Integer getExtractCount(SearchCriteria cri);
 	
 	public List<MediaVO> listSearch(SearchCriteria cri);
-	
 	public Integer getSearchCount(SearchCriteria cri);
+
+	public List<MediaVO> wlistSearch(SearchCriteria cri);
+	public List<MediaVO> wPageSearch(SearchCriteria cri);
+	public Integer wgetSearchCount(SearchCriteria cri);
+	
 	
 	public List<MediaVO> listAll(SearchCriteria cri);
 	
 	public List<MediaVO> searchAll(SearchCriteria cri);
 	
-	public Integer getTotalCount();
+	public Integer getTotalCount(SearchCriteria cri);
+	public Integer getMatchCount(SearchCriteria cri);
 	
 	public Integer mediaGetTotalCount(SearchCriteria cri);
 	
@@ -53,4 +60,13 @@ public interface MediaDAO {
 	public void updateTextType (MediaVO vo);
 	
 	public void updateThumbnail (MediaVO vo);
+	
+	public TextTypeVO getMediaPortalCount(SearchCriteria cri);
+	public TextTypeVO getMediaTextTypeTotalCount(SearchCriteria cri);
+	public TextTypeVO getMediaTextTypeSearchCount(SearchCriteria cri);
+	
+	public TextTypeVO getPressPortalCount(SearchCriteria cri);
+	public TextTypeVO getPressTextTypeTotalCount(SearchCriteria cri);
+	public TextTypeVO getPressTextTypeSearchCount(SearchCriteria cri);
+	
 }

@@ -66,7 +66,7 @@ public class MediaServiceImpl implements MediaService {
 			
 			List<ExtractVO> extractList = new ArrayList<ExtractVO>();
 			
-			SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
 			
 			for(int i = 0; i < mediaList.size(); i++) {
 				ExtractVO vo = new ExtractVO();
@@ -104,6 +104,20 @@ public class MediaServiceImpl implements MediaService {
 	@Override
 	public List<MediaVO> listSearch(SearchCriteria vo) {
 
+		List<MediaVO> list = mediaDAO.listSearch(vo);
+		
+		for (MediaVO mediaVO : list) {
+			if(mediaVO.getKeyword() != null && !mediaVO.getKeyword().equals("press")) {
+				
+				try {
+					mediaVO.setKeyword_main(keywordDAO.read(mediaVO.getKeyword()).getKeyword_main());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+			}
+		}
+		
 		return mediaDAO.listSearch(vo);
 	}
 	
@@ -111,6 +125,32 @@ public class MediaServiceImpl implements MediaService {
 	public Integer getSearchCount(SearchCriteria cri) {
 
 		return mediaDAO.getSearchCount(cri);
+	}
+
+	@Override
+	public List<MediaVO> wlistSearch(SearchCriteria vo) {
+
+		List<MediaVO> list = mediaDAO.wlistSearch(vo);
+		
+		for (MediaVO mediaVO : list) {
+			if(mediaVO.getKeyword() != null && !mediaVO.getKeyword().equals("press")) {
+				
+				try {
+					mediaVO.setKeyword_main(keywordDAO.read(mediaVO.getKeyword()).getKeyword_main());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+			}
+		}
+		
+		return mediaDAO.listSearch(vo);
+	}
+	
+	@Override
+	public Integer wgetSearchCount(SearchCriteria cri) {
+
+		return mediaDAO.wgetSearchCount(cri);
 	}
 
 	
@@ -128,10 +168,18 @@ public class MediaServiceImpl implements MediaService {
 
 			criteria.setKeyword(reporterList.get(i).getReporter_media_name());
 			vo.setAllCount(mediaDAO.mediaGetTotalCount(criteria));
-			vo.setSearchCount(mediaDAO.mediaGetSearchCount(criteria));
-			if(vo.getAllCount() != 0) {
-				vo.setMatchPercent((vo.getSearchCount()/vo.getAllCount())*100);
 			
+			Integer searchCount = mediaDAO.mediaGetSearchCount(criteria);
+			if(criteria.getCompany() == null && criteria.getSelectKey() == null) {
+				vo.setSearchCount(0);
+			
+			}else {
+				vo.setSearchCount(searchCount);
+			}
+			
+			if(vo.getSearchCount() != 0 && vo.getAllCount() != 0) {
+				vo.setMatchPercent(Math.ceil(((double)vo.getSearchCount()/(double)vo.getAllCount())*100));
+				
 			}else {
 				vo.setMatchPercent(0);
 			}
@@ -177,13 +225,22 @@ public class MediaServiceImpl implements MediaService {
 
 			criteria.setKeyword(reporterList.get(i).getReporter_name());
 			vo.setAllCount(mediaDAO.reporterGetTotalCount(criteria));
-			vo.setSearchCount(mediaDAO.reporterGetSearchCount(criteria));
-			if(vo.getAllCount() != 0) {
-				vo.setMatchPercent((vo.getSearchCount()/vo.getAllCount())*100);
 			
+			Integer searchCount = mediaDAO.reporterGetSearchCount(criteria);
+			if(criteria.getCompany() == null && criteria.getSelectKey() == null) {
+				vo.setSearchCount(0);
+			
+			}else {
+				vo.setSearchCount(searchCount);
+			}
+			
+			if(vo.getSearchCount() != 0 && vo.getAllCount() != 0) {
+				vo.setMatchPercent(Math.ceil(((double)vo.getSearchCount()/(double)vo.getAllCount())*100));
+				
 			}else {
 				vo.setMatchPercent(0);
 			}
+			
 			vo.setMedia(reporterList.get(i).getReporter_media_name());
 			vo.setReporter(reporterList.get(i).getReporter_name());
 			
@@ -197,13 +254,6 @@ public class MediaServiceImpl implements MediaService {
 		periodList = periodList.subList(0, 20);*/
 		
 		return periodList;
-	}
-	
-
-	@Override
-	public Integer getTotalCount() {
-
-		return mediaDAO.getTotalCount();
 	}
 	
 	
@@ -286,6 +336,66 @@ public class MediaServiceImpl implements MediaService {
 		}
 		
 		return list;
+	}
+
+	@Override
+	public Integer getTotalCount(SearchCriteria cri) {
+
+		return mediaDAO.getTotalCount(cri);
+	}
+
+	@Override
+	public Integer getMatchCount(SearchCriteria cri) {
+
+		return mediaDAO.getMatchCount(cri);
+	}
+
+	@Override
+	public TextTypeVO periodTextTypeCount(SearchCriteria cri) {
+
+		return mediaDAO.periodTextTypeCount(cri);
+	}
+
+	@Override
+	public TextTypeVO getMediaPortalCount(SearchCriteria cri) {
+
+		return mediaDAO.getMediaPortalCount(cri);
+	}
+
+	@Override
+	public TextTypeVO getMediaTextTypeTotalCount(SearchCriteria cri) {
+
+		return mediaDAO.getMediaTextTypeTotalCount(cri);
+	}
+
+	@Override
+	public TextTypeVO getMediaTextTypeSearchCount(SearchCriteria cri) {
+
+		return mediaDAO.getMediaTextTypeSearchCount(cri);
+	}
+
+	@Override
+	public TextTypeVO getPressPortalCount(SearchCriteria cri) {
+
+		return mediaDAO.getPressPortalCount(cri);
+	}
+
+	@Override
+	public TextTypeVO getPressTextTypeTotalCount(SearchCriteria cri) {
+
+		return mediaDAO.getPressTextTypeTotalCount(cri);
+	}
+
+	@Override
+	public TextTypeVO getPressTextTypeSearchCount(SearchCriteria cri) {
+
+		return mediaDAO.getPressTextTypeSearchCount(cri);
+	}
+
+	@Override
+	public List<MediaVO> wPageSearch(SearchCriteria cri) {
+
+		return mediaDAO.wPageSearch(cri);
 	}
 
 }

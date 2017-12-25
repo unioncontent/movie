@@ -36,6 +36,16 @@
  			reporter_idx = #{reporter_idx}
  	
  	</select>
+ 	
+ 	<select id="readByName" resultType="ReporterVO">
+ 		select
+ 			*
+ 		from
+ 			reporter_data
+ 		where
+ 			reporter_name = #{reporter_name}
+ 		limit 0, 1
+ 	</select>
  
  	<update id="update">
  		update

@@ -86,7 +86,7 @@
                     <div class="page-header-breadcrumb">
                       <ul class="breadcrumb-title">
                         <li class="breadcrumb-item">
-                          <a href="dashboard.html">
+                          <a href="../dashBoard/dashBoard">
                             <i class="icofont icofont-home"></i>
                           </a>
                         </li>
@@ -109,7 +109,7 @@
                                 <i class="icofont icofont-document-search" style="line-height: 58px;"></i>
                               </li>
                               <li class="text-right">
-                                ${keywordCount}
+                                <fmt:formatNumber value="${keywordCount}" groupingUsed="true"/>
                               </li>
                             </ul>
                           </div>
@@ -124,7 +124,7 @@
                                 <i class="icofont icofont-ui-text-chat" style="line-height: 58px;"></i>
                               </li>
                               <li class="text-right">
-                                ${blogCount.type3}
+                                <fmt:formatNumber value="${blogCount.type3}" groupingUsed="true"/>
                               </li>
                             </ul>
                           </div>
@@ -139,7 +139,7 @@
                                 <i class="icofont icofont-ui-social-link" style="line-height: 58px;"></i>
                               </li>
                               <li class="text-right">
-                                ${cafeCount.type3}
+                                <fmt:formatNumber value="${cafeCount.type3}" groupingUsed="true"/>
                               </li>
                             </ul>
                           </div>
@@ -148,13 +148,13 @@
                       <div class="col-md-4 col-xl-3 main-card">
                         <div class="card client-blocks ">
                           <div class="card-block">
-                            <h5>연관검색어검출</h5>
+                            <h5>평점관리검출</h5>
                             <ul>
                               <li style="min-height: 60px;">
                                 <i class="icofont icofont-page" style="line-height: 58px;"></i>
                               </li>
                               <li class="text-right">
-                                ${relationCount}
+                                <fmt:formatNumber value="${relationCount.type1 + relationCount.type2}" groupingUsed="true"/>
                               </li>
                             </ul>
                           </div>
@@ -169,7 +169,7 @@
                                 <i class="icofont icofont-hat-alt" style="line-height: 58px;"></i>
                               </li>
                               <li class="text-right">
-                                ${kintipCount.type3}
+                                <fmt:formatNumber value="${kintipCount.type3}" groupingUsed="true"/>
                               </li>
                             </ul>
                           </div>
@@ -187,7 +187,7 @@
                             </div>
                           </div>
                           <div class="card-block">
-                            <div id="morris-extra-area" style="height:470px;"></div>
+                            <div id="morris-extra-area" style="height:300px;"></div>
                           </div>
                         </div>
                       </div>
@@ -214,35 +214,35 @@
                                 <tbody>
                                   <tr>
                                     <th scope="row">포털</th>
-                                    <td>${portalCount.type1}</td>
-                                    <td>${portalCount.type2}</td>
+                                    <td><fmt:formatNumber value="${portalCount.type1}" groupingUsed="true"/></td>
+                                    <td><fmt:formatNumber value="${portalCount.type2}" groupingUsed="true"/></td>
                                   </tr>
                                   <tr>
                                     <th scope="row">언론기사</th>
-                                    <td>${mediaCount.type1}</td>
-                                    <td>${mediaCount.type2}</td>
+                                    <td><fmt:formatNumber value="${mediaCount.type1}" groupingUsed="true"/></td>
+                                    <td><fmt:formatNumber value="${mediaCount.type2}" groupingUsed="true"/></td>
                                   </tr>
                                   <tr>
                                     <th scope="row">페이스북</th>
-                                    <td>${facebookCount.type1}</td>
-                                    <td>${facebookCount.type2}</td>
+                                    <td><fmt:formatNumber value="${facebookCount.type1}" groupingUsed="true"/></td>
+                                    <td><fmt:formatNumber value="${facebookCount.type2}" groupingUsed="true"/></td>
                                   </tr>
                                   <tr>
                                     <th scope="row">인스타그램</th>
-                                    <td>${instagramCount.type1}</td>
-                                    <td>${instagramCount.type2}</td>
+                                    <td><fmt:formatNumber value="${instagramCount.type1}" groupingUsed="true"/></td>
+                                    <td><fmt:formatNumber value="${instagramCount.type2}" groupingUsed="true"/></td>
                                   </tr>
                                   <tr>
                                     <th scope="row">트위터</th>
-                                    <td>${twitterCount.type1}</td>
-                                    <td>${twitterCount.type2}</td>
+                                    <td><fmt:formatNumber value="${twitterCount.type1}" groupingUsed="true"/></td>
+                                    <td><fmt:formatNumber value="${twitterCount.type2}" groupingUsed="true"/></td>
                                   </tr>
                                   <tr class="bg-inverse">
                                     <th scope="row">합계</th>
-                                    <td>${portalCount.type1 + mediaCount.type1 + facebookCount.type1
-                                    	+ instagramCount.type1 + twitterCount.type1}</td>
-                                    <td>${portalCount.type2 + mediaCount.type2 + facebookCount.type2
-                                    	+ instagramCount.type2 + twitterCount.type2}</td>
+                                    <td><fmt:formatNumber value="${portalCount.type1 + mediaCount.type1 + facebookCount.type1
+                                    	+ instagramCount.type1 + twitterCount.type1}" groupingUsed="true"/></td>
+                                    <td><fmt:formatNumber value="${portalCount.type2 + mediaCount.type2 + facebookCount.type2
+                                    	+ instagramCount.type2 + twitterCount.type2}" groupingUsed="true"/></td>
                                   </tr>
                                 </tbody>
                               </table>
@@ -272,33 +272,35 @@
                                   <tbody>
                                     <tr>
                                       <th scope="row">블로그</th>
-                                      <td>${blogCount.type1}</td>
-                                      <td>${blogCount.type2}</td>
+                                      <td><fmt:formatNumber value="${blogCount.type1}" groupingUsed="true"/></td>
+                                      <td><fmt:formatNumber value="${blogCount.type2}" groupingUsed="true"/></td>
                                     </tr>
                                     <tr>
                                       <th scope="row">카페</th>
-                                      <td>${cafeCount.type1}</td>
-                                      <td>${cafeCount.type2}</td>
+                                      <td><fmt:formatNumber value="${cafeCount.type1}" groupingUsed="true"/></td>
+                                      <td><fmt:formatNumber value="${cafeCount.type2}" groupingUsed="true"/></td>
                                     </tr>
                                     <tr>
                                       <th scope="row">지식인/Tip</th>
-                                      <td>${kintipCount.type1}</td>
-                                      <td>${kintipCount.type2}</td>
+                                      <td><fmt:formatNumber value="${kintipCount.type1}" groupingUsed="true"/></td>
+                                      <td><fmt:formatNumber value="${kintipCount.type2}" groupingUsed="true"/></td>
                                     </tr>
                                     <tr>
                                       <th scope="row">웹문서</th>
-                                      <td>${webdocCount.type1}</td>
-                                      <td>${webdocCount.type2}</td>
+                                      <td><fmt:formatNumber value="${webdocCount.type1}" groupingUsed="true"/></td>
+                                      <td><fmt:formatNumber value="${webdocCount.type2}" groupingUsed="true"/></td>
                                     </tr>
                                     <tr>
                                       <th scope="row">언론</th>
-                                      <td>${mediaCount.type1}</td>
-                                      <td>${mediaCount.type2}</td>
+                                      <td><fmt:formatNumber value="${mediaCount.type1}" groupingUsed="true"/></td>
+                                      <td><fmt:formatNumber value="${mediaCount.type2}" groupingUsed="true"/></td>
                                     </tr>
                                     <tr class="bg-inverse">
                                       <th scope="row">합계</th>
-                                      <td>${blogCount.type1 + cafeCount.type1 + webdocCount.type1 + mediaCount.type1}</td>
-                                      <td>${blogCount.type2 + cafeCount.type2 + webdocCount.type2 + mediaCount.type2}</td>
+                                      <td><fmt:formatNumber value="${blogCount.type1 + cafeCount.type1 + 
+                                       kintipCount.type1 + webdocCount.type1 + mediaCount.type1}" groupingUsed="true"/></td>
+                                      <td><fmt:formatNumber value="${blogCount.type2 + cafeCount.type2 + 
+                                       kintipCount.type2 + webdocCount.type2 + mediaCount.type2}" groupingUsed="true"/></td>
                                     </tr>
                                   </tbody>
                               </table>
@@ -327,7 +329,7 @@
                             <section class="task-panel tasks-widget">
                               <div class="panel-body">
                                 <div class="task-content">
-                                  
+
                                 </div>
                                 <div>
                                   <a class="btn btn-info btn-add-task waves-effect waves-light m-t-10" href="#" data-toggle="modal" data-target="#flipFlop"><i class="icofont icofont-plus"></i> 일정 추가</a>
@@ -466,9 +468,9 @@ $(function() {
 });
 
 $(document).ready(function(){
-	 
+
 	settingCalendar();
-	
+
 	$.ajax({
 
 	      type : "POST",
@@ -480,7 +482,7 @@ $(document).ready(function(){
 	  		  console.log(data);
 	  		var script = "[";
 
-	  		
+
 			for(var i = 0; i < data.length; i++){
 
 				script += '{"period":' + '"' + data[i].writeDate + '",'
@@ -497,18 +499,18 @@ $(document).ready(function(){
 
 			// to json
 			var jsonScript = JSON.parse(script);
-		
+
 			areaChart(jsonScript);
 
 	  	 }
-	});	
-	
-		 
+	});
+
+
 	$(document).on("click",".delete_todo",function() {
 	    $(this).parent().parent().parent().parent().fadeOut();
-	    
+
 	    var title = $(this).parent().parent()[0].children[2].innerText;
-	    
+
 	    $.ajax({
 
   	      type : "POST",
@@ -524,9 +526,9 @@ $(document).ready(function(){
   	  	  }
   	});
 	  });
-	
 
-	  
+
+
 	  $("#mcalendar").width("500px");
 	  $(".save_btn").on("click", function() {
 	      $(".md-form-control").removeClass("md-valid");
@@ -545,8 +547,8 @@ $(document).ready(function(){
 	                </div>\
 	              </label>\
 	            </div>\
-	          </div>"); 
-	          
+	          </div>");
+
 	          $.ajax({
 
 	    	      type : "POST",
@@ -561,20 +563,20 @@ $(document).ready(function(){
 					location.reload();
 	    	  	  }
 	    	});
-	          
+
 	          $(add_todo).appendTo(".task-content").hide().fadeIn(300);
 	          $('.save_task_todo').val('');
 	          $("#flipFlop").modal('hide');
-	          
+
 	      }
-	      
+
 	  });
-	
-		  
+
+
 }); // end ready...
 
 function settingCalendar(){
-	
+
 	$.ajax({
 		type : "POST",
 		url : "listDate",
@@ -584,21 +586,21 @@ function settingCalendar(){
 	        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 	       },
 	  	success : function(success){
-	  		  
+
 	  		var script = "[";
 	  		for(var i = 0; i < success.length; i++){
 
-	  		    script += '{"date": "'+ success[i].calendar_date + 
+	  		    script += '{"date": "'+ success[i].calendar_date +
 	  		      		'","value":"' + success[i].calendar_title +'"},'
 	  		}
 
 	  		script = script.slice(0, -1);
 	  		script += "]";
-	  		
+
 	  		console.log("script: " + script);
-	  		
+
 	  		console.log(JSON.parse(script));
-			
+
 	  	// inline
 	  		  var $ca = $('#mcalendar').calendar({
 	  		      width: '300px',
@@ -608,7 +610,7 @@ function settingCalendar(){
 	  		      onSelected: function (view, date, data) {//날짜 선택시 이벤트
 	  		          console.log('date:' + date);//날짜
 	  		          console.log('data:' + (data || '없음'));//일정
-					  
+
 	  		          if(data != null && typeof data != "undefined") {//일정 있을때
 	  		            var data = data.split(",");
 	  		            //일정 건수 넣기
@@ -643,7 +645,7 @@ function settingCalendar(){
 	  		      }
 	  		  });
 
-	  		  
+
 	  		}
 		})
 	}

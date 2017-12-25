@@ -84,7 +84,7 @@
                     <div class="page-header-breadcrumb">
                       <ul class="breadcrumb-title">
                         <li class="breadcrumb-item">
-                          <a href="dashboard.html">
+                          <a href="../dashBoard/dashBoard">
                             <i class="icofont icofont-home"></i>
                           </a>
                         </li>
@@ -98,7 +98,8 @@
                     <div class="row">
                       <!-- data setting start -->
                       <div class="col-md-7">
-                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="selectCompany">
+                        <c:if test="${user.user_name == 'union'}">
+                         <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="selectCompany">
                           <option>회사</option>
                           <c:if test="${user.user_type == 1 }">
                           <c:forEach items="${companyList}" var = "companyList">
@@ -109,7 +110,21 @@
                           <option value="${companyList.user_name}">${companyList.user_name}</option>
                           </c:if>
                         </select>
-
+						</c:if>
+						
+						<c:if test="${user.user_name != 'union'}">
+                         <select style="display: none;" name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="selectCompany">
+                          <option>회사</option>
+                          <c:if test="${user.user_type == 1 }">
+                          <c:forEach items="${companyList}" var = "companyList">
+                          <option value="${companyList.user_name}">${companyList.user_name}</option>
+                          </c:forEach>
+                          </c:if>
+                          <c:if test="${user.user_type == 2}">
+                          <option value="${companyList.user_name}">${companyList.user_name}</option>
+                          </c:if>
+                        </select>
+						</c:if>
                         <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left" id="selectKeyword">
                           <option>키워드</option>
                           <c:if test="${modelKeywordList == null}" >
@@ -159,11 +174,12 @@
                                   <option id="c" value="c">게시글</option>
                                 </select>
                                 <div class="col-sm-3 input-group input-group-button input-group-inverse p-l-0 p-r-0 m-b-10 f-left btn-select">
-                                  <input id="keywordInput" type="text" class="form-control" placeholder="">
+                                   <input onkeyup="if(event.keyCode == 13){$('#searchBtn').trigger('click');};"id="keywordInput" type="text" class="form-control" placeholder="">
                                   <span class="input-group-addon" id="basic-addon1">
                                     <button id="searchBtn" class=" btn btn-inverse">검색</button>
                                   </span>
                                 </div>
+                                <c:if test="${user.user_name == 'union'}">
                                 <div class="btn-group f-right p-r-0">
                                   <button type="button" id="allBtn1" class="radiosBtn btn btn-primary btn-outline-primary btn-sm waves-effect waves-light">좋은글</button>
                                   <button type="button" id="allBtn2" class="radiosBtn btn btn-primary btn-outline-primary btn-sm waves-effect waves-light">나쁜글</button>
@@ -172,6 +188,7 @@
                                   <button type="button" id="allBtn5" class="radiosBtn btn btn-primary btn-outline-primary btn-sm waves-effect waves-light">삭제글</button>
                                   <button type="button" id="insertAllBtn" class="alert-confirm btn btn-sm btn-primary waves-effect f-right p-b-10"><i class="icofont icofont-exchange" style="margin: 0px;font-size: 16px;"></i></button>
                                 </div>
+                                </c:if>
                             <%-- <button id = "insertAllBtn" type="button" class="alert-confirm btn btn-primary waves-effect f-right p-r-0 p-l-5 m-l-15 m-b-10  f-right"><i class="icofont icofont-check-circled"></i>일괄처리</button> --%>
                           </div>
                           <div class="card-block table-border-style">
@@ -187,7 +204,9 @@
                                     <th width="30%">제목 &<span class="text-muted"></span><span class="text-success"> 컨텐츠</span></th>
                                     <th width="10%">추출일 / 작성일</th>
                                     <th width="10%">분류변경</th>
+                                    <c:if test="${user.user_name == 'union'}">
                                     <th width="5%">분류처리</th>
+                                    </c:if>
                                   </tr>
                                 </thead>
                                 <tbody>
@@ -275,10 +294,12 @@
                                         <label for="radio6${index.count}">미분류</label>
                                       </div>
                                     </td>
+                                    <c:if test="${user.user_name == 'union'}">
                                     <td>
                                       <button class="btn btn-danger btn-sm alert-confirm1" data-toggle="tooltip" data-placement="top" data-original-title="삭제"><i class="icofont icofont-ui-delete" style="margin-right:0"></i></button>
                                       <button class="btn btn-primary btn-sm alert-confirm2" data-toggle="tooltip" data-placement="top" data-original-title="즉시처리"><i class="icofont icofont-ui-check" style="margin-right:0"></i></button>
                                     </td>
+                                    </c:if>
                                   </tr>
                                   </c:forEach>
                                 </tbody>
@@ -426,8 +447,8 @@ $(function() {
   $(document).ready(function(){
 
 
-	  	var startDateOption = decodeURI(window.location.href.split("startDate=")[1]).split("&")[0];
-		var endDateOption = decodeURI(window.location.href.split("endDate=")[1]).split("&")[0];
+	  	var startDateOption = decodeURI(window.location.href.split("startDate=")[1]).split("&")[0].split(" ")[0];
+		var endDateOption = decodeURI(window.location.href.split("endDate=")[1]).split("&")[0].split(" ")[0];
 		console.log("startDateOption: " + startDateOption);
 		console.log("endDateOption: " + endDateOption);
 
@@ -695,11 +716,7 @@ $(function() {
 	  console.log("searchBtn clicked....");
 	  console.log($('#selectSearchType option:selected').val());
 
-	  if($('#keywordInput').val() == ''){
-		alert("검색어를 입력해주세요.");
-	  }else{
 		searchList();
-	  }
 	});
 
 

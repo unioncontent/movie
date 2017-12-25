@@ -90,7 +90,7 @@
                     <div class="page-header-breadcrumb">
                       <ul class="breadcrumb-title">
                         <li class="breadcrumb-item">
-                          <a href="dashboard.html">
+                          <a href="../dashBoard/dashBoard">
                             <i class="icofont icofont-home"></i>
                           </a>
                         </li>
@@ -105,7 +105,8 @@
                     <div class="row">
                       <!-- data setting start -->
                       <div class="col-md-7">
-                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="selectCompany">
+                        <c:if test="${user.user_name == 'union'}">
+                         <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="selectCompany">
                           <option>회사</option>
                           <c:if test="${user.user_type == 1 }">
                           <c:forEach items="${companyList}" var = "companyList">
@@ -116,6 +117,21 @@
                           <option value="${companyList.user_name}">${companyList.user_name}</option>
                           </c:if>
                         </select>
+						</c:if>
+						
+						<c:if test="${user.user_name != 'union'}">
+                         <select style="display: none;" name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="selectCompany">
+                          <option>회사</option>
+                          <c:if test="${user.user_type == 1 }">
+                          <c:forEach items="${companyList}" var = "companyList">
+                          <option value="${companyList.user_name}">${companyList.user_name}</option>
+                          </c:forEach>
+                          </c:if>
+                          <c:if test="${user.user_type == 2}">
+                          <option value="${companyList.user_name}">${companyList.user_name}</option>
+                          </c:if>
+                        </select>
+						</c:if>
 
                         <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left" id="selectKeyword">
                           <option>키워드</option>
@@ -163,7 +179,7 @@
                               <div class="col-md-6 col-xl-4 main-card">
                                 <div class="card social-widget-card">
                                   <div class="card-block-big bg-inverse">
-                                    <h3>${naverCount + daumCount}</h3>
+                                    <h3><fmt:formatNumber value="${naverCount + daumCount}" groupingUsed="true"/></h3>
                                     <span class="m-t-10">전체검색</span>
                                     <i class="icofont icofont-search"></i>
                                   </div>
@@ -172,7 +188,7 @@
                               <div class="col-md-6 col-xl-4 main-card">
                                 <div class="card social-widget-card">
                                   <div class="card-block-big bg-success">
-                                    <h3>${naverCount}</h3>
+                                   <h3><fmt:formatNumber value="${naverCount}" groupingUsed="true"/></h3>
                                     <span class="m-t-10">네이버</span>
                                     <i class="icofont">N</i>
                                   </div>
@@ -181,7 +197,7 @@
                               <div class="col-md-6 col-xl-4 main-card">
                                 <div class="card social-widget-card">
                                   <div class="card-block-big bg-twitter">
-                                    <h3>${daumCount}</h3>
+                                   <h3><fmt:formatNumber value="${daumCount}" groupingUsed="true"/></h3>
                                     <span class="m-t-10">다음</span>
                                     <i class="icofont">D</i>
                                   </div>
@@ -236,41 +252,45 @@
                                               <tr>
                                                   <th scope="row">블로그</th>
                                                   <c:forEach items="${naver1}" var="count">
-                                                  <td>${count.lik}</td>
-                                                  <td>${count.dis}</td>
-                                                  <td>${count.cu}</td>
-                                                  <td>${count.etc}</td>
-                                                  <td>${count.al}</td>
+                                                  <td><fmt:formatNumber value="${count.lik}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${count.dis}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${count.cu}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${count.etc}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${count.lik + count.dis + count.cu
+                                                       + count.etc}" groupingUsed="true"/></td>
                                                   </c:forEach>
                                               </tr>
                                               <tr>
                                                   <th scope="row">카페</th>
                                                   <c:forEach items="${naver2}" var="count">
-                                                  <td>${count.lik}</td>
-                                                  <td>${count.dis}</td>
-                                                  <td>${count.cu}</td>
-                                                  <td>${count.etc}</td>
-                                                  <td>${count.al}</td>
+                                                  <td><fmt:formatNumber value="${count.lik}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${count.dis}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${count.cu}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${count.etc}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${count.lik + count.dis + count.cu
+                                                       + count.etc}" groupingUsed="true"/></td>
                                                   </c:forEach>
                                               </tr>
                                               <tr>
                                                   <th scope="row">지식인</th>
                                                   <c:forEach items="${naver3}" var="count">
-                                                  <td>${count.lik}</td>
-                                                  <td>${count.dis}</td>
-                                                  <td>${count.cu}</td>
-                                                  <td>${count.etc}</td>
-                                                  <td>${count.al}</td>
+                                                  <td><fmt:formatNumber value="${count.lik}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${count.dis}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${count.cu}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${count.etc}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${count.lik + count.dis + count.cu
+                                                       + count.etc}" groupingUsed="true"/></td>
                                                   </c:forEach>
                                               </tr>
                                               <tr>
                                                   <th scope="row">웹문서</th>
                                                   <c:forEach items="${naver4}" var="count">
-                                                  <td>${count.lik}</td>
-                                                  <td>${count.dis}</td>
-                                                  <td>${count.cu}</td>
-                                                  <td>${count.etc}</td>
-                                                  <td>${count.al}</td>
+                                                  <td><fmt:formatNumber value="${count.lik}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${count.dis}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${count.cu}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${count.etc}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${count.lik + count.dis + count.cu
+                                                       + count.etc}" groupingUsed="true"/></td>
                                                   </c:forEach>
                                               </tr>
                                           </tbody>
@@ -309,41 +329,45 @@
                                               <tr>
                                                   <th scope="row">블로그</th>
                                                   <c:forEach items="${daum1}" var="count">
-                                                  <td>${count.lik}</td>
-                                                  <td>${count.dis}</td>
-                                                  <td>${count.cu}</td>
-                                                  <td>${count.etc}</td>
-                                                  <td>${count.al}</td>
+                                                  <td><fmt:formatNumber value="${count.lik}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${count.dis}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${count.cu}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${count.etc}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${count.lik + count.dis + count.cu
+                                                       + count.etc}" groupingUsed="true"/></td>
                                                   </c:forEach>
                                               </tr>
                                               <tr>
                                                   <th scope="row">카페</th>
                                                   <c:forEach items="${daum2}" var="count">
-                                                  <td>${count.lik}</td>
-                                                  <td>${count.dis}</td>
-                                                  <td>${count.cu}</td>
-                                                  <td>${count.etc}</td>
-                                                  <td>${count.al}</td>
+                                                  <td><fmt:formatNumber value="${count.lik}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${count.dis}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${count.cu}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${count.etc}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${count.lik + count.dis + count.cu
+                                                       + count.etc}" groupingUsed="true"/></td>
                                                   </c:forEach>
                                               </tr>
                                               <tr>
                                                   <th scope="row">Tip</th>
                                                   <c:forEach items="${daum3}" var="count">
-                                                  <td>${count.lik}</td>
-                                                  <td>${count.dis}</td>
-                                                  <td>${count.cu}</td>
-                                                  <td>${count.etc}</td>
-                                                  <td>${count.al}</td>
+                                                  <td><fmt:formatNumber value="${count.lik}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${count.dis}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${count.cu}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${count.etc}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${count.lik + count.dis + count.cu
+                                                       + count.etc}" groupingUsed="true"/></td>
                                                   </c:forEach>
                                               </tr>
                                               <tr>
                                                   <th scope="row">웹문서</th>
                                                   <c:forEach items="${daum4}" var="count">
-                                                  <td>${count.lik}</td>
-                                                  <td>${count.dis}</td>
-                                                  <td>${count.cu}</td>
-                                                  <td>${count.etc}</td>
-                                                  <td>${count.al}</td>
+                                                  <td><fmt:formatNumber value="${count.lik}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${count.dis}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${count.cu}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${count.etc}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${count.lik + count.dis + count.cu
+                                                       + count.etc}" groupingUsed="true"/></td>
                                                   </c:forEach>
                                               </tr>
                                           </tbody>
@@ -380,7 +404,9 @@
                                           <c:forEach items="${portalList}" var="portalList" varStatus="index">
                                             <tr>
                                               <th scope="row">${totalCount -index.count +1 -minusCount}</th>
-                                              <td>${portalList.createDate}</td>
+                                              <td>
+                                              	<fmt:formatDate value="${portalList.updateDate}" pattern="yyyy-MM-dd kk:mm:ss"/>
+                                              </td>
                                               <td>${portalList.portal_name}</td>
                                               <td>${portalList.portal_type}</td>
                                               <td>${portalList.keyword}</td>
@@ -545,13 +571,18 @@ $(function() {
 $(document).ready(function(){
 
 
-	var date = getDate("week");
-	var startDate = date.startDate;
-	var endDate = date.endDate;
-	console.log("startDate: " + startDate);
-	console.log("endDate: " + endDate);
-
-	ajaxGraph(startDate, endDate);
+	var $fromDate = $("#fromDate");
+	  
+	var startDateOption = decodeURI(window.location.href.split("startDate=")[1]).split("&")[0].split(" ")[0];
+	  var endDateOption = decodeURI(window.location.href.split("endDate=")[1]).split("&")[0].split(" ")[0];
+	  console.log("startDateOption: " + startDateOption);
+	  console.log("endDateOption: " + endDateOption);
+		
+	  if(startDateOption != 'undefined' && endDateOption != 'undefined'
+			&& startDateOption != '' && endDateOption != ''){
+		  $fromDate.val(startDateOption + " - " + endDateOption);
+	  		
+		}
 
 	// content 길시에 ...으로 변경
 	var $title = $(".title");
@@ -564,7 +595,7 @@ $(document).ready(function(){
 		}
 	}
 
-	var selectOption = decodeURI(window.location.href.split("selectKey=")[1]);
+	var selectOption = decodeURI(window.location.href.split("selectKey=")[1]).split("&")[0];
 	console.log("selectOption: " + selectOption);
 
 
@@ -584,13 +615,11 @@ $(document).ready(function(){
 		console.log("selectKeyword clicked....");
 		console.log($('#selectKeyword option:selected').val());
 
-		self.location = "portal?"
-					  + "company=" + $("#selectCompany option:selected").val()
-					  + "&selectKey=" + $("#selectKeyword option:selected").val();
+		searchList();
 
 	});
 
-	var companyOption = decodeURI(window.location.href.split("company=")[1]).split("&selectKey")[0];
+	var companyOption = decodeURI(window.location.href.split("company=")[1]).split("&")[0];
 
 
 	var $selectCompany = $('#selectCompany');
@@ -610,7 +639,7 @@ $(document).ready(function(){
 		console.log("selectCompany clicked....");
 		console.log($("#selectCompany option:selected").val());
 
-		self.location = "portal?"+ "company=" + $("#selectCompany option:selected").val();
+		searchList();
 
 	});
 
@@ -630,7 +659,9 @@ $(document).ready(function(){
       	self.location = "excel?"
 			  + "company=" + $("#selectCompany option:selected").val()
 			  + "&selectKey=" + $('#selectKeyword option:selected').val()
-			  + "&part=portal";
+			  + "&part=portal"
+			  + "&startDate=" + makeDateFormat($("#fromDate").val(), 0)
+			  + "&endDate=" +  makeDateFormat($("#fromDate").val(), 1);
 
 	  		swal("Success!", "엑셀출력 되었습니다.", "success");
 
@@ -639,13 +670,24 @@ $(document).ready(function(){
 	});
 
 
+	var graphStart = $fromDate.val().split(" - ")[0].replace("/", "-").replace("/", "-");
+	var graphEnd = $fromDate.val().split(" - ")[1].replace("/", "-").replace("/", "-");
+
+	console.log("graphStart: " + graphStart);
+    console.log("graphEnd: " + graphEnd);
+	  
+    ajaxGraph(graphStart, graphEnd);
+	
 	// 당일 클릭시
 	$('#toDay').on("click", function(){
 	  console.log("toDay clicked....");
 	  var date = getDate("toDay");
+	  var startDate = date.startDate;
 	  var endDate = date.endDate;
 
-	  ajaxGraph(endDate, endDate);
+	  $("#fromDate").val(endDate + " - " + endDate)
+	  console.log($("#fromDate").val());
+	  searchList(); 
 	});
 
 	// 전일 클릭시
@@ -655,7 +697,9 @@ $(document).ready(function(){
 	  var startDate = date.startDate;
 	  var endDate = date.endDate;
 
-	  ajaxGraph(startDate, endDate);
+	  $("#fromDate").val(startDate + " - " + endDate)
+	  console.log($("#fromDate").val());
+	  searchList();
 	});
 
 	// 7일  클릭시
@@ -665,7 +709,9 @@ $(document).ready(function(){
 	  var startDate = date.startDate;
 	  var endDate = date.endDate;
 
-	  ajaxGraph(startDate, endDate);
+	  $("#fromDate").val(startDate + " - " + endDate)
+	  console.log($("#fromDate").val());
+	  searchList();
 	})
 
 	// 30일 클릭시
@@ -674,18 +720,25 @@ $(document).ready(function(){
 	  var date = getDate("month");
 	  var startDate = date.startDate;
 	  var endDate = date.endDate;
-
-	  ajaxGraph(startDate, endDate);
+	
+	  $("#fromDate").val(startDate + " - " + endDate)
+	  console.log($("#fromDate").val());
+	  
+	  searchList();
+	 
 	})
-
 
 	// 캘린더 클릭시
-	$('#fromDate').on('apply.daterangepicker', function(ev, picker) {
-	   var startDate = picker.startDate.format('YYYY-MM-DD');
-	   var endDate = picker.endDate.format('YYYY-MM-DD');
+	$('#fromDate').on('apply.daterangepicker', function(ev, picker) {	
+		   var startDate = picker.startDate.format('YYYY-MM-DD');
+		   var endDate = picker.endDate.format('YYYY-MM-DD');
 
-	   ajaxGraph(startDate, endDate);
-	})
+		   console.log("startDate: " + startDate);
+		   console.log("endDate: " + endDate);
+
+		   searchList();
+
+	});
 
   });
 
@@ -737,6 +790,7 @@ function drawChart(data){
  	      element: 'line-chart1',
  	      data: data,
  	      xkey: 'period',
+ 	     xLabels : 'day',
  	      redraw: true,
  	      ykeys: ['naver', 'daum'],
  	      hideHover: 'auto',
@@ -780,6 +834,32 @@ function getDate(type){
 		endDate : endDate
 	}
 
+}
+
+function makeDateFormat(date, index){
+	var splitDate = date.split(" - ")[index];
+		if(splitDate != undefined){
+			var returnDate = splitDate.replace("/", "-").replace("/", "-")
+			return returnDate;
+		}
+	
+	
+}
+
+//list URL 함수
+function searchList(event) {
+
+	var makeQeury = '${pageMaker.makeQuery(1)}'.slice(0,-2);
+
+	self.location = "portal"
+				  + makeQeury
+				  + "10"
+				  + "&selectKey="
+				  + $('#selectKeyword option:selected').val()
+				  + "&company="
+				  + $("#selectCompany option:selected").val()
+				  + "&startDate=" + makeDateFormat($("#fromDate").val(), 0)
+				  + "&endDate=" +  makeDateFormat($("#fromDate").val(), 1);
 }
 </script>
 

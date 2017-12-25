@@ -15,6 +15,9 @@
       <![endif]-->
   <!-- Meta -->
   <meta charset="utf-8">
+  <meta name="_csrf" content="${_csrf.token}" />
+  <!-- default header name is X-CSRF-TOKEN -->
+  <meta name="_csrf_header" content="${_csrf.headerName}"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="description" content="Phoenixcoded">
@@ -89,7 +92,7 @@
                     <div class="page-header-breadcrumb">
                       <ul class="breadcrumb-title">
                         <li class="breadcrumb-item">
-                          <a href="dashboard.html">
+                          <a href="../dashBoard/dashBoard">
                             <i class="icofont icofont-home"></i>
                           </a>
                         </li>
@@ -104,11 +107,46 @@
                     <div class="row">
                       <!-- data setting start -->
                       <div class="col-md-7">
-                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left">
-                          <option value="opt1">회사</option>
+                       <c:if test="${user.user_name == 'union'}">
+                         <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="selectCompany">
+                          <option>회사</option>
+                          <c:if test="${user.user_type == 1 }">
+                          <c:forEach items="${companyList}" var = "companyList">
+                          <option value="${companyList.user_name}">${companyList.user_name}</option>
+                          </c:forEach>
+                          </c:if>
+                          <c:if test="${user.user_type == 2}">
+                          <option value="${companyList.user_name}">${companyList.user_name}</option>
+                          </c:if>
                         </select>
-                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left">
-                          <option value="opt1">키워드</option>
+						</c:if>
+						
+						<c:if test="${user.user_name != 'union'}">
+                         <select style="display: none;" name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="selectCompany">
+                          <option>회사</option>
+                          <c:if test="${user.user_type == 1 }">
+                          <c:forEach items="${companyList}" var = "companyList">
+                          <option value="${companyList.user_name}">${companyList.user_name}</option>
+                          </c:forEach>
+                          </c:if>
+                          <c:if test="${user.user_type == 2}">
+                          <option value="${companyList.user_name}">${companyList.user_name}</option>
+                          </c:if>
+                        </select>
+						</c:if>
+
+                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left" id="selectKeyword">
+                          <option>키워드</option>
+                          <c:if test="${modelKeywordList == null}" >
+                          	<c:forEach items="${keywordList}" var = "keywordList">
+                          <option value="${keywordList.keyword_main}">${keywordList.keyword_main}</option>
+                          </c:forEach>
+                          </c:if>
+                          <c:if test="${modelKeywordList != null}">
+                          	<c:forEach items="${modelKeywordList}" var = "keywordList">
+                          <option value="${keywordList.keyword_main}">${keywordList.keyword_main}</option>
+                          </c:forEach>
+                          </c:if>
                         </select>
                       </div>
                       <div class="col-md-5">
@@ -143,7 +181,7 @@
                               <div class="col-md-6 col-xl-3 main-card">
                                 <div class="card social-widget-card">
                                   <div class="card-block-big bg-inverse">
-                                    <h3>${totalCount}</h3>
+                                    <h3><fmt:formatNumber value="${totalCount}" groupingUsed="true"/></h3>
                                     <span class="m-t-10">전체검색</span>
                                     <i class="icofont icofont-search"></i>
                                   </div>
@@ -151,8 +189,17 @@
                               </div>
                               <div class="col-md-6 col-xl-3 main-card">
                                 <div class="card social-widget-card">
+                                  <div class="card-block-big bg-info">
+                                    <h3><fmt:formatNumber value="${matchCount}" groupingUsed="true"/></h3>
+                                    <span class="m-t-10">매칭</span>
+                                    <i class="icofont icofont-connection"></i>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-md-6 col-xl-3 main-card">
+                                <div class="card social-widget-card">
                                   <div class="card-block-big bg-news">
-                                    <h3>${mediaCount}</h3>
+                                    <h3><fmt:formatNumber value="${mediaCount}" groupingUsed="true"/></h3>
                                     <span class="m-t-10">언론사</span>
                                     <i class="icofont icofont-building-alt"></i>
                                   </div>
@@ -161,18 +208,9 @@
                               <div class="col-md-6 col-xl-3 main-card">
                                 <div class="card social-widget-card">
                                   <div class="card-block-big bg-success">
-                                    <h3>${pressCount}</h3>
+                                    <h3><fmt:formatNumber value="${pressCount}" groupingUsed="true"/></h3>
                                     <span class="m-t-10">기자</span>
                                     <i class="icofont icofont-fountain-pen"></i>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="col-md-6 col-xl-3 main-card">
-                                <div class="card social-widget-card">
-                                  <div class="card-block-big bg-info">
-                                    <h3>0</h3>
-                                    <span class="m-t-10">매칭</span>
-                                    <i class="icofont icofont-connection"></i>
                                   </div>
                                 </div>
                               </div>
@@ -182,10 +220,8 @@
                                 <div class="card">
                                   <div class="card-header">
                                     <h5>언론사 통계</h5>
-                                    <span>(2017-09-19 ~ 2017-10-19)</span>
                                     <div class="card-header-right">
                                       <i class="icofont icofont-rounded-down"></i>
-                                      <i class="icofont icofont-listing-number" data-toggle="tooltip" data-placement="top" data-original-title="순위 더보기" onclick="moreRanking('언론사','newsMore')"></i>
                                     </div>
                                   </div>
                                   <div class="card-block table-border-style">
@@ -218,10 +254,10 @@
                                               <c:forEach items="${mediaList}" var="mediaList" varStatus="index">
                                               <tr>
                                                 <th scope="row">${index.count}</th>
-                                                <td class='news' onclick='showModal("#news-Modal")'>${mediaList.media}</td>
-                                                <td>${mediaList.allCount}</td>
-                                                <td>0</td>
-                                                <td>0%</td>
+                                                <td class='news' onclick='showModal("#news-Modal", "${mediaList.media}")'>${mediaList.media}</td>
+                                                <td><fmt:formatNumber value="${mediaList.allCount}" groupingUsed="true"/></td>
+                                                <td><fmt:formatNumber value="${mediaList.searchCount}" groupingUsed="true"/></td>
+                                                <td><fmt:parseNumber value="${mediaList.matchPercent}" integerOnly="true"></fmt:parseNumber>%</td>
                                               </tr>
                                               </c:forEach>
                                             </tbody>
@@ -236,10 +272,8 @@
                                 <div class="card">
                                   <div class="card-header">
                                     <h5>기자 통계</h5>
-                                    <span>(2017-09-19 ~ 2017-10-19)</span>
                                     <div class="card-header-right">
                                       <i class="icofont icofont-rounded-down"></i>
-                                      <i class="icofont icofont-listing-number" data-toggle="tooltip" data-placement="top" data-original-title="순위 더보기" onclick="moreRanking('기자','pressMore')"></i>
                                     </div>
                                   </div>
                                   <div class="card-block table-border-style">
@@ -273,11 +307,11 @@
                                             <c:forEach items="${pressList}" var="pressList" varStatus="index">
                                               <tr>
                                                 <th scope="row">${index.count}</th>
-                                                <td class='press' onclick='showModal("#press-Modal")'>${pressList.reporter}</td>
+                                                <td class='press' onclick='showModal("#press-Modal", "${pressList.reporter}")'>${pressList.reporter}</td>
                                                 <td>${pressList.media}</td>
-                                                <td>${pressList.allCount}</td>
-                                                <td>0</td>
-                                                <td>0%</td>
+                                                <td><fmt:formatNumber value="${pressList.allCount}" groupingUsed="true"/></td>
+                                                <td><fmt:formatNumber value="${pressList.searchCount}" groupingUsed="true"/></td>
+                                                <td><fmt:parseNumber value="${pressList.matchPercent}" integerOnly="true"></fmt:parseNumber>%</td>
                                               </tr>
                                             </c:forEach>
                                           </tbody>
@@ -328,25 +362,6 @@
                                     <h5 class="card-header-text m-b-10"> 검출데이터</h5>
                                     <button class="btn btn-warning f-right alert-confirm" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'alert-confirm']);"><i class="icofont icofont-download-alt"></i>EXCEL</button>
                                   </div>
-                                  <div class="card-block">
-                                    <select name="select" class="col-sm-1 form-control form-control-inverse p-l-10 m-r-10 m-b-10 p-r-5 f-left list-select">
-                                      <option value="">10</option>
-                                      <option value="">30</option>
-                                      <option value="">50</option>
-                                      <option value="">100</option>
-                                    </select>
-                                    <select name="select" class="col-sm-1 form-control form-control-inverse m-r-10 m-b-10 f-left search-select">
-                                      <option value="">제목</option>
-                                      <option value="">기자</option>
-                                      <option value="">언론사</option>
-                                      <option value="">키워드</option>
-                                    </select>
-                                    <div class="col-sm-3 input-group input-group-button input-group-inverse p-l-0 p-r-0 m-b-10 f-left btn-select">
-                                      <input type="text" class="form-control" placeholder="">
-                                      <span class="input-group-addon" id="basic-addon1">
-                                        <button class="btn btn-inverse">검색</button>
-                                      </span>
-                                    </div>
                                     <!-- list satart -->
                                     <div class="table-responsive">
                                       <table class="table">
@@ -362,34 +377,48 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                          <c:forEach items="${searchList}" var = "mediaVO" varStatus="index">
                                           <tr>
-                                            <th scope="row">1</th>
-                                            <td>2017-10-17 15:00:00</td>
-                                            <td>스포츠서울</td>
-                                            <td>김아무개</td>
-                                            <td><a href='https://www.naver.com/' target="_blank">강철비 굿</a></td>
-                                            <td>강철비</td>
-                                            <td></td>
+                                            <th scope="row">${totalCountPage - minusCount - index.count + 1}</th>
+                                            <td>
+                                            <fmt:formatDate value="${mediaVO.updateDate}" pattern="yyyy-MM-dd kk:mm:ss"/>
+                                            </td>
+                                            <td>${mediaVO.media_name}</td>
+                                            <td>${mediaVO.reporter_name}</td>
+                                            <td><a href='${mediaVO.url}' target="_blank">${mediaVO.media_title}</a></td>
+                                            <td>${mediaVO.keyword}</td>
+                                            <td>${mediaVO.textType}</td>
                                           </tr>
+                                          </c:forEach>
                                         </tbody>
                                         <tfoot>
                                           <tr>
                                             <td colspan="7">
                                               <ul class="pagination float-right">
-                                                <li class="page-item">
-                                                  <a class="page-link" href="#" aria-label="Previous">
-                                                    <span aria-hidden="true">«</span>
-                                                    <span class="sr-only">Previous</span>
-                                                  </a>
-                                                </li>
-                                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                                <li class="page-item">
-                                                  <a class="page-link" href="#" aria-label="Next">
-                                                    <span aria-hidden="true">»</span>
-                                                    <span class="sr-only">Next</span>
-                                                  </a>
-                                                </li>
-                                              </ul>
+                                                <c:if test="${pageMaker.prev}">
+                                              		<li class="page-item">
+                                                		  <a class="page-link" href="media${pageMaker.makeSearch(pageMaker.startPage - 1) }" aria-label="Previous">&laquo;
+                                                  		<span aria-hidden="true"></span>
+                                                  		<span class="sr-only">Previous</span>
+                                                		  </a>
+                                              		</li>
+                                        	      </c:if>
+
+                                          		  <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
+                                              		<li class= "${pageMaker.cri.page == idx? 'active':''} page-item">
+                                                		  <a class="page-link" href="media${pageMaker.makeSearch(idx)}">${idx}</a>
+                                              		</li>
+                                          		  </c:forEach>
+
+                                          		  <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+                                              		<li class="page-item">
+                                              		  <a class="page-link" href="media${pageMaker.makeSearch(pageMaker.endPage +1) }" aria-label="Next">&raquo;
+                                                		<span aria-hidden="true"></span>
+                                                		<span class="sr-only">Next</span>
+                                              		  </a>
+                                              		</li>
+                                          		  </c:if>
+                                          		</ul>
                                             </td>
                                           </tr>
                                         </tfoot>
@@ -429,19 +458,7 @@
                                         <tbody>
                                           <tr>
                                             <th class="b-r-1" width="30%">언론사명</th>
-                                            <td>톱스타뉴스</td>
-                                          </tr>
-                                          <tr>
-                                            <th class="b-r-1">URL</th>
-                                            <td></td>
-                                          </tr>
-                                          <tr>
-                                            <th class="b-r-1">연락처</th>
-                                            <td>000-000-000</td>
-                                          </tr>
-                                          <tr>
-                                            <th class="b-r-1">메모</th>
-                                            <td></td>
+                                            <td id = 'mediaName'>톱스타뉴스</td>
                                           </tr>
                                         </tbody>
                                       </table>
@@ -468,9 +485,9 @@
                                         </thead>
                                         <tbody>
                                           <tr>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
+                                            <td id='media1_1'>0</td>
+                                            <td id='media1_2'>0</td>
+                                            <td id='media1_3'>0</td>
                                           </tr>
                                         </tbody>
                                       </table>
@@ -494,26 +511,26 @@
                                             <th colspan="4" class="b-b-1">매칭기사</th>
                                           </tr>
                                           <tr>
-                                            <th class="b-b-1">전체기사수</th>
-                                            <th class="b-b-1">호흥</th>
-                                            <th class="b-b-1">비호흥(악성)</th>
-                                            <th class="b-b-1 b-r-1">관심</th>
-                                            <th class="b-b-1">전체기사수</th>
-                                            <th class="b-b-1">호흥</th>
-                                            <th class="b-b-1">비호흥(악성)</th>
-                                            <th class="b-b-1">관심</th>
+                                            <th class="b-b-1" >전체기사수</th>
+                                            <th class="b-b-1" >호흥</th>
+                                            <th class="b-b-1" >비호흥(악성)</th>
+                                            <th class="b-b-1 b-r-1" >관심</th>
+                                            <th class="b-b-1" >전체기사수</th>
+                                            <th class="b-b-1" >호흥</th>
+                                            <th class="b-b-1" >비호흥(악성)</th>
+                                            <th class="b-b-1" >관심</th>
                                           </tr>
                                         </thead>
                                         <tbody>
                                           <tr>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
+                                            <td id='media2_1'>0</td>
+                                            <td id='media2_2'>0</td>
+                                            <td id='media2_3'>0</td>
+                                            <td id='media2_4'>0</td>
+                                            <td id='media3_1'>0</td>
+                                            <td id='media3_2'>0</td>
+                                            <td id='media3_3'>0</td>
+                                            <td id='media3_4'>0</td>
                                           </tr>
                                         </tbody>
                                       </table>
@@ -553,19 +570,19 @@
                                         <tbody>
                                           <tr>
                                             <th class="b-r-1" width="30%">이름</th>
-                                            <td>김한준</td>
+                                            <td id='pressName'>김한준</td>
                                           </tr>
                                           <tr>
                                             <th class="b-r-1">언론사명</th>
-                                            <td></td>
+                                            <td id = 'pressMediaName'></td>
                                           </tr>
                                           <tr>
-                                            <th class="b-r-1">이메일</th>
-                                            <td></td>
+                                            <th class="b-r-1" >이메일</th>
+                                            <td id = 'pressEmail'></td>
                                           </tr>
                                           <tr>
                                             <th class="b-r-1">연락처</th>
-                                            <td>000-000-000</td>
+                                            <td id = 'pressPhoneNumber'></td>
                                           </tr>
                                         </tbody>
                                       </table>
@@ -592,9 +609,9 @@
                                         </thead>
                                         <tbody>
                                           <tr>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
+                                            <td id = 'press1_1'>0</td>
+                                            <td id = 'press1_2'>0</td>
+                                            <td id = 'press1_3'>0</td>
                                           </tr>
                                         </tbody>
                                       </table>
@@ -630,14 +647,14 @@
                                         </thead>
                                         <tbody>
                                           <tr>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
+                                            <td id = 'press2_1'>0</td>
+                                            <td id = 'press2_2'>0</td>
+                                            <td id = 'press2_3'>0</td>
+                                            <td id = 'press2_4'>0</td>
+                                            <td id = 'press3_1'>0</td>
+                                            <td id = 'press3_2'>0</td>
+                                            <td id = 'press3_3'>0</td>
+                                            <td id = 'press3_4'>0</td>
                                           </tr>
                                         </tbody>
                                       </table>
@@ -773,5 +790,351 @@
   <script src="../assets/pages/period/custom-period5.js"></script>
   <script src="../assets/pages/picker.js"></script>
 </body>
+
+<script type="text/javascript">
+
+	$(document).ready(function(){
+		
+		
+		//ajax 보안
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+
+		$(function() {
+			$(document).ajaxSend(function(e, xhr, options) {
+		  		xhr.setRequestHeader(header, token);
+		  	});
+		});
+		
+		var $fromDate = $("#fromDate");
+		  
+		var startDateOption = decodeURI(window.location.href.split("startDate=")[1]).split("&")[0].split(" ")[0];
+		var endDateOption = decodeURI(window.location.href.split("endDate=")[1]).split("&")[0].split(" ")[0];
+		console.log("startDateOption: " + startDateOption);
+		console.log("endDateOption: " + endDateOption);
+			
+		if(startDateOption != 'undefined' && endDateOption != 'undefined'
+				&& startDateOption != '' && endDateOption != ''){
+			  
+			$fromDate.val(startDateOption + " - " + endDateOption);
+		  		
+		}
+		
+		var selectOption = decodeURI(window.location.href.split("selectKey=")[1]).split("&")[0];
+		console.log("selectOption: " + selectOption);
+
+
+		var $selectKeyword = $('#selectKeyword');
+
+		if(selectOption != 'undefined'){
+			for(var i = 0; i < $selectKeyword[0].length; i++ ){
+				if($selectKeyword[0][i].value == selectOption){
+					$selectKeyword[0][i].selected = 'selected';
+				}
+			}
+		}
+		$selectKeyword[0][0].disabled = true;
+
+		// 키워드 선택시
+		$selectKeyword.change(function(){
+			console.log("selectKeyword clicked....");
+			console.log($('#selectKeyword option:selected').val());
+
+			searchList();
+
+		});
+
+		var companyOption = decodeURI(window.location.href.split("company=")[1]).split("&")[0];
+
+
+		var $selectCompany = $('#selectCompany');
+		if(companyOption != 'undefined'){
+			for(var i = 0; i < $selectCompany[0].length; i++ ){
+
+				if($selectCompany[0].children[i].value == companyOption){
+					$selectCompany[0].children[i].selected = 'selected';
+				}
+			}
+		}
+		$selectCompany[0][0].disabled = true;
+
+
+		// 회사 선택시
+		$selectCompany.change(function(){
+			console.log("selectCompany clicked....");
+			console.log($("#selectCompany option:selected").val());
+
+			searchList();
+
+		});
+		
+		
+		var graphStart = $fromDate.val().split(" - ")[0].replace("/", "-").replace("/", "-");
+		var graphEnd = $fromDate.val().split(" - ")[1].replace("/", "-").replace("/", "-");
+
+		console.log("graphStart: " + graphStart);
+	    console.log("graphEnd: " + graphEnd);
+		  
+		
+		// 당일 클릭시
+		$('#toDay').on("click", function(){
+		  console.log("toDay clicked....");
+		  var date = getDate("toDay");
+		  var startDate = date.startDate;
+		  var endDate = date.endDate;
+
+		  $("#fromDate").val(endDate + " - " + endDate)
+		  console.log($("#fromDate").val());
+		  searchList(); 
+		});
+
+		// 전일 클릭시
+		$('#yesterDay').on("click", function(){
+		  console.log("yesterDay clicked....");
+		  var date = getDate("yesterDay");
+		  var startDate = date.startDate;
+		  var endDate = date.endDate;
+
+		  $("#fromDate").val(startDate + " - " + endDate)
+		  console.log($("#fromDate").val());
+		  searchList();
+		});
+
+		// 7일  클릭시
+		$('#week').on("click", function(){
+		  console.log("week clicked....");
+		  var date = getDate("week");
+		  var startDate = date.startDate;
+		  var endDate = date.endDate;
+
+		  $("#fromDate").val(startDate + " - " + endDate)
+		  console.log($("#fromDate").val());
+		  searchList();
+		})
+
+		// 30일 클릭시
+		$('#month').on("click", function(){
+		  console.log("month clicked....");
+		  var date = getDate("month");
+		  var startDate = date.startDate;
+		  var endDate = date.endDate;
+		
+		  $("#fromDate").val(startDate + " - " + endDate)
+		  console.log($("#fromDate").val());
+		  
+		  searchList();
+		 
+		})
+
+		// 캘린더 클릭시
+		$('#fromDate').on('apply.daterangepicker', function(ev, picker) {	
+			var startDate = picker.startDate.format('YYYY-MM-DD');
+			var endDate = picker.endDate.format('YYYY-MM-DD');
+
+			console.log("startDate: " + startDate);
+			console.log("endDate: " + endDate);
+
+			searchList();
+
+		});
+		
+		
+		pieGraph1();
+		pieGraph2();
+		
+		// 엑셀 출력
+		document.querySelector('.alert-confirm').onclick = function(){
+		    swal({
+		          title: "엑셀출력 하시겠습니까?",
+		          text: "현재 리스트가 엑셀출력 됩니다.",
+		          type: "warning",
+		          showCancelButton: true,
+		          confirmButtonClass: "btn-danger",
+		          confirmButtonText: "YES",
+		          closeOnConfirm: false
+		        },
+		        function(){//엑셀 출력하겠다고 할 시 진행 함수
+		          
+		        	self.location = "excel?"
+		  			  + "company=" + $("#selectCompany option:selected").val()
+		  			  + "&selectKey=" + $('#selectKeyword option:selected').val()
+		  			  + "&part=media"
+		  			  + "&startDate=" + makeDateFormat($("#fromDate").val(), 0)
+		  			  + "&endDate=" +  makeDateFormat($("#fromDate").val(), 1);
+
+		  	  		swal("Success!", "엑셀출력 되었습니다.", "success");
+		        });
+		  };
+		
+	});
+
+	
+	
+	// 날짜 계산 함수
+	function getDate(type){
+		console.log("TYPE : " + type);
+		var date = new Date();
+
+		var month = date.getMonth()+1;
+		var day = date.getDate();
+		var year = date.getFullYear();
+
+		var endDate = year + "-" + month + "-" + day;
+		var startDate;
+
+		if(type == "yesterDay"){
+			var calcDate = day-1;
+			startDate = year + "-" + month + "-" + calcDate;
+
+		}else if(type == "month"){
+			var calcDate = month-1;
+			startDate = year + "-" + calcDate + "-" + day;
+
+		}else if(type == "week"){
+			var calcDate = day-7;
+			if(calcDate < 0){
+				var lastDay = (new Date(year, month-1, 0)).getDate();
+				calcDate += lastDay;
+				month -= 1;
+			}
+			startDate = year + "-" + month + "-" + calcDate;
+		}
+
+		return {
+			startDate : startDate,
+			endDate : endDate
+		}
+
+	}
+
+	function makeDateFormat(date, index){
+		var splitDate = date.split(" - ")[index];
+			if(splitDate != undefined){
+				var returnDate = splitDate.replace("/", "-").replace("/", "-")
+				return returnDate;
+			}
+		
+		
+	}
+
+	//list URL 함수
+	function searchList(event) {
+
+		var makeQeury = '${pageMaker.makeQuery(1)}'.slice(0,-2);
+
+		self.location = "media"
+					  + makeQeury
+					  + "10"
+					  + "&selectKey="
+					  + $('#selectKeyword option:selected').val()
+					  + "&company="
+					  + $("#selectCompany option:selected").val()
+					  + "&startDate=" + makeDateFormat($("#fromDate").val(), 0)
+					  + "&endDate=" +  makeDateFormat($("#fromDate").val(), 1);
+	}
+	
+	//graph
+	function pieGraph1(){
+	  /* 그래프1 */
+	  $("#donutchart").empty();
+	  nv.addGraph(function() {
+	    var chart = nv.models.pieChart()
+	        .x(function(d) {
+	            return d.label })
+	        .y(function(d) {
+	            return d.value })
+	        .showLabels(true) //Display pie labels
+	        .labelThreshold(.05) //Configure the minimum slice size for labels to show up
+	        .labelType("percent") //Configure what type of data to show in the label. Can be "key", "value" or "percent"
+	        .donut(true) //Turn on Donut mode. Makes pie chart look tasty!
+	        .donutRatio(0.35) //Configure how big you want the donut hole size to be.
+	    ;
+
+	    d3.select("#donutchart").append('svg')
+	        .datum(pieData1())
+	        .transition().duration(350)
+	        .call(chart);
+	    nv.utils.windowResize(chart.update);
+
+	    return chart;
+	  });
+	}
+	function pieGraph2(){
+	  /* 그래프2 */
+	  $("#donutchart2").empty();
+	  nv.addGraph(function() {
+	    var chart = nv.models.pieChart()
+	        .x(function(d) {
+	            return d.label })
+	        .y(function(d) {
+	            return d.value })
+	        .showLabels(true) //Display pie labels
+	        .labelThreshold(.05) //Configure the minimum slice size for labels to show up
+	        .labelType("percent") //Configure what type of data to show in the label. Can be "key", "value" or "percent"
+	        .donut(true) //Turn on Donut mode. Makes pie chart look tasty!
+	        .donutRatio(0.35) //Configure how big you want the donut hole size to be.
+	    ;
+
+	    d3.select("#donutchart2").append('svg')
+	        .datum(pieData2())
+	        .transition().duration(350)
+	        .call(chart);
+	    nv.utils.windowResize(chart.update);
+
+	    return chart;
+	  });
+	}
+
+	//data
+	function pieData1() {
+		console.log("media count");
+		console.log('${mediaTypeCount.lik}');
+		console.log('${mediaTypeCount.dis}');
+		console.log('${mediaTypeCount.cu}');
+		console.log('${mediaTypeCount.etc}');
+	    
+		return [{
+		      "label": "좋은기사",
+		      "value": '${pressTypeCount.lik}',
+		      "color": "#2ecc71"
+		  },{
+		      "label": "나쁜기사",
+		      "value": '${pressTypeCount.dis}',
+		      "color": "#e74c3c"
+		  },{
+		      "label": "관심기사",
+		      "value": '${pressTypeCount.cu}',
+		      "color": "#FF9F55"
+		  },   {
+		      "label": "기타기사",
+		      "value": '${pressTypeCount.etc}',
+		      "color": "#f1c40f"
+		  }];
+	}
+	function pieData2() {
+		console.log("press count");
+		console.log('${pressTypeCount.lik}');
+		console.log('${pressTypeCount.dis}');
+		console.log('${pressTypeCount.cu}');
+		console.log('${pressTypeCount.etc}');
+		return [{
+	        "label": "좋은기사",
+	        "value": '${mediaTypeCount.lik}',
+	        "color": "#2ecc71"
+	    },{
+	        "label": "나쁜기사",
+	        "value": '${mediaTypeCount.dis}',
+	        "color": "#e74c3c"
+	    },{
+	        "label": "관심기사",
+	        "value": '${mediaTypeCount.cu}',
+	        "color": "#FF9F55"
+	    },   {
+	        "label": "기타기사",
+	        "value": '${mediaTypeCount.etc}',
+	        "color": "#f1c40f"
+	    }];
+	}
+</script>
 
 </html>

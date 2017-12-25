@@ -59,7 +59,7 @@ public class SNSServiceImpl implements SNSService {
 			
 			List<ExtractVO> extractList = new ArrayList<ExtractVO>();
 			
-			SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
 			
 			for(int i = 0; i < snsList.size(); i++) {
 				ExtractVO vo = new ExtractVO();

@@ -64,7 +64,7 @@ public class DashBaordController {
 		model.addAttribute("mediaCount", portalService.toDayCount("media"));
 		
 		model.addAttribute("keywordCount", keywordService.listAll().size());
-		model.addAttribute("relationCount", relationService.todayCount());
+		model.addAttribute("relationCount", portalService.toDayCount("score"));
 		
 		model.addAttribute("portalCount", portalService.yesterdayCount());
 		model.addAttribute("mediaCount", mediaService.yesterdayCount());

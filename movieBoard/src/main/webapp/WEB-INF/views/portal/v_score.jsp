@@ -1,8 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -15,9 +15,6 @@
       <![endif]-->
   <!-- Meta -->
   <meta charset="utf-8">
-  <meta name="_csrf" content="${_csrf.token}" />
-  <!-- default header name is X-CSRF-TOKEN -->
-  <meta name="_csrf_header" content="${_csrf.headerName}"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="description" content="Phoenixcoded">
@@ -45,8 +42,6 @@
   <link rel="stylesheet" type="text/css" href="../bower_components/bootstrap-daterangepicker/daterangepicker.css">
   <!-- jquery timepicker css -->
   <link rel="stylesheet" href="../bower_components/jquery-timepicker-1.3.5/jquery.timepicker.min.css">
-  <!-- Nvd3 chart css -->
-  <link rel="stylesheet" href="../bower_components/nvd3/build/nv.d3.css" type="text/css" media="all">
   <!-- Redial css -->
   <link rel="stylesheet" href="../assets/pages/chart/radial/css/radial.css" type="text/css" media="all">
   <!-- Style.css -->
@@ -73,12 +68,11 @@
   <div id="pcoded" class="pcoded">
     <div class="pcoded-overlay-box"></div>
     <div class="pcoded-container navbar-wrapper">
-
-      <jsp:include page='../include/header.jsp' />
+        <jsp:include page='../include/header.jsp' />
       <div class="pcoded-main-container">
         <div class="pcoded-wrapper">
           <!-- left menu start -->
-          <jsp:include page='../include/side.jsp' />
+            <jsp:include page='../include/side.jsp' />
           <!-- left menu end -->
           <div class="pcoded-content">
             <div class="pcoded-inner-content">
@@ -86,7 +80,7 @@
                 <div class="page-wrapper">
                   <div class="page-header">
                     <div class="page-header-title">
-                      <h4>블로그관리</h4>
+                      <h4>평점관리</h4>
                     </div>
                     <div class="page-header-breadcrumb">
                       <ul class="breadcrumb-title">
@@ -95,8 +89,8 @@
                             <i class="icofont icofont-home"></i>
                           </a>
                         </li>
-                        <li class="breadcrumb-item"><a href="viral">바이럴관리</a></li>
-                        <li class="breadcrumb-item"><a href="#!">블로그관리</a></li>
+                        <li class="breadcrumb-item"><a href="mngViral.html">바이럴관리</a></li>
+                        <li class="breadcrumb-item"><a href="#!">평점관리</a></li>
                       </ul>
                     </div>
                   </div>
@@ -146,14 +140,9 @@
                           </c:forEach>
                           </c:if>
                         </select>
-                        <select id="selectSite" name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left">
-                          <option value="사이트">사이트</option>
-                          <option value="네이버">네이버</option>
-                          <option value="다음">다음</option>
-                        </select>
                       </div>
                       <div class="col-md-5">
-                         <!-- date picker start -->
+                        <!-- date picker start -->
                         <div class="row">
                           <div class="btn-group float-right m-b-10 p-l-15 p-r-10" role="group">
                             <button id="toDay" type="button" class="btn btn-inverse btn-sm waves-effect waves-light">당일</button>
@@ -171,7 +160,6 @@
                         <!-- date picker end -->
                       </div>
                       <!-- data setting end -->
-                      <!-- data setting end -->
                       <div class="col-lg-12">
                         <!-- tab header start -->
                         <div class="tab-header">
@@ -183,7 +171,7 @@
                               </li>
                             </a>
                             <a class="nav-item" href="v_blog">
-                              <li class="nav-link active">
+                              <li class="nav-link">
                                 <p>블로그관리</p>
                                 <div class="slide"></div>
                               </li>
@@ -207,200 +195,222 @@
                               </li>
                             </a>
                             <a class="nav-item" href="v_score">
-                              <li class="nav-link">
+                              <li class="nav-link active">
                                 <p>평점관리</p>
                                 <div class="slide"></div>
                               </li>
                             </a>
                           </ul>
                         </div>
-                        <!-- tab header end -->
-                        <!-- tab-content start -->
                         <div class="tab-content">
-                          <!-- tab1 main start -->
                           <div class="tab-pane fade show active" id="main" role="tabpanel">
                             <div class="row">
-                              <!-- top cards start -->
                               <div class="col-md-6 col-xl-3">
                                 <div class="card client-blocks">
                                   <div class="card-block-big card1">
-                                    <h5 class="mt" style="font-size: 25px;">전체건수</h5>
+                                    <h5 class="mt"  style="font-size: 25px;     padding-top: 5px;">전체건수</h5>
                                     <ul>
                                       <li class="p-t-10">
                                         <i class="icofont icofont-document-search"></i>
                                       </li>
-                                      <li class="text-right"><fmt:formatNumber value="${blog0}" groupingUsed="true"/></li>
+                                      <li class="text-right"><fmt:formatNumber value="${totalCount}" groupingUsed="true"/></li>
                                     </ul>
                                   </div>
                                 </div>
                               </div>
-                              <div class="col-md-6 col-xl-3">
-                                <div class="card client-blocks">
-                                  <div class="card-block-big card1">
-                                    <h5>본사계정</h5>
-                                    <h6>실시간 블로그 현황</h6>
-                                    <ul>
-                                      <li class="p-t-10">
-                                        <i class="icofont icofont-user-suited"></i>
-                                      </li>
-                                      <li class="text-right">${blog1}</li>
-                                    </ul>
+                              <div class="col-md-6 col-xl-6">
+              							    <div class="col-sm-3 p-l-0 p-r-0 f-left">
+              							      <div class="card user-activity-card" style="border-radius: 0;">
+              							        <div class="card-header">
+              							          <div>
+              							            <h5>좋은글</h5>
+              							            <span>점수 범위 : 10 ~ 8</span>
+              							          </div>
+              							        </div>
+              							        <div class="card-block-big text-center typography" style="padding-left: 5px;padding-right: 5px;">
+              							          <div style="height: 50px;display: inline-block;">
+              							            <h1 class="text-success f-left">${textType.lik}</h1>
+              							            <label class="badge badge-inverse f-left">
+              							              <c:if test="${textType.al != 0}">
+                							              <fmt:parseNumber var="pages" integerOnly="true" value="${(textType.lik/textType.al) * 100}"></fmt:parseNumber>
+                                            ${pages}%
+                                          </c:if>
+              							            </label>
+              							          </div>
+              							        </div>
+              							      </div>
+              							    </div>
+              							    <div class="col-sm-3 p-l-0 p-r-0 f-left">
+              							      <div class="card user-activity-card" style="border-radius: 0;">
+              							        <div class="card-header">
+              							          <h5>관심글</h5>
+              							          <span>점수 범위 : 7 ~ 5</span>
+              							        </div>
+              							        <div class="card-block-big text-center typography" style="padding-left: 5px;padding-right: 5px;">
+              							          <div style="height: 50px;display: inline-block;">
+              							            <h1 class="text-primary f-left">${textType.cu}</h1>
+              							            <label class="badge badge-inverse f-left">
+                							            <c:if test="${textType.al != 0}">
+                							              <fmt:parseNumber var="pages" integerOnly="true" value="${(textType.cu/textType.al) * 100}"></fmt:parseNumber>
+                                            ${pages}%
+                                          </c:if>
+              							            </label>
+              							          </div>
+              							        </div>
+              							      </div>
+              							    </div>
+              							    <div class="col-sm-3 p-l-0 p-r-0 f-left">
+              							      <div class="card user-activity-card" style="border-radius: 0;">
+              							        <div class="card-header">
+              							          <h5>나쁜글</h5>
+              							          <span>점수 범위 : 4 ~ 2</span>
+              							        </div>
+              							        <div class="card-block-big text-center typography" style="padding-left: 5px;padding-right: 5px;">
+              							          <div style="height: 50px;display: inline-block;">
+              							            <h1 class="text-warning f-left">${textType.dis}</h1>
+              							            <label class="badge badge-inverse f-left">
+                							            <c:if test="${textType.al != 0}">
+                							              <fmt:parseNumber var="pages" integerOnly="true" value="${(textType.dis/textType.al) * 100}"></fmt:parseNumber>
+                                            ${pages}%
+                                          </c:if>
+              							            </label>
+              							          </div>
+              							        </div>
+              							      </div>
+              							    </div>
+              							    <div class="col-sm-3 p-l-0 p-r-0 f-left">
+              							      <div class="card user-activity-card" style="border-radius: 0;">
+              							        <div class="card-header">
+              							          <h5>악성글</h5>
+              							          <span>점수 범위 : 1</span>
+              							        </div>
+              							        <div class="card-block-big text-center typography"  style="padding-left: 5px;padding-right: 5px;">
+              							          <div style="height: 50px;display: inline-block;">
+              							            <h1 class="text-danger f-left">${textType.etc}</h1>
+              							            <label class="badge badge-inverse f-left">
+                							            <c:if test="${textType.al != 0}">
+                							              <fmt:parseNumber var="pages" integerOnly="true" value="${(textType.etc/textType.al) * 100}"></fmt:parseNumber>
+                                            ${pages}%
+                                          </c:if>
+              							            </label>
+              							          </div>
+              							        </div>
+              							      </div>
+              							    </div>
+                							</div>
+                              <!-- <div class="col-md-6 col-xl-6">
+                                <div class="card table-card group-widget">
+                                  <div class="row-table">
+                                    <div class="col bg-primary card-block-big">
+                                      <i class="icofont icofont-music"></i>
+                                      <p class="ng-tns-c16-68">1,586</p>
+                                    </div>
+                                    <div class="col bg-dark-primary card-block-big">
+                                      <i class="icofont icofont-video-clapper"></i>
+                                      <p class="ng-tns-c16-68">1,743</p>
+                                    </div>
+                                    <div class="col bg-darkest-primary card-block-big">
+                                      <i class="icofont icofont-email"></i>
+                                      <p class="ng-tns-c16-68">1,096</p>
+                                    </div>
+                                    <div class="col bg-darkest-primary card-block-big">
+                                      <i class="icofont icofont-email"></i>
+                                      <p class="ng-tns-c16-68">1,096</p>
+                                    </div>
                                   </div>
                                 </div>
-                              </div>
-                              <div class="col-md-6 col-xl-3">
-                                <div class="card client-blocks">
-                                  <div class="card-block-big card1">
-                                    <h5>외부계정</h5>
-                                    <h6>실시간 블로그 현황</h6>
-                                    <ul>
-                                      <li class="p-t-10">
-                                        <i class="icofont icofont-users"></i>
-                                      </li>
-                                      <li class="text-right">${blog2}</li>
-                                    </ul>
-                                  </div>
-                                </div>
-                              </div>
+                              </div> -->
                               <div class="col-md-6 col-xl-3">
                                 <div class="card user-activity-card">
-                                  <div class="card-block-big"style="padding-top: 17px;padding-bottom: 12px;">
-                                      <h5>점유율 %</h5>
-                                      <div class="text-center">
-                                        <!-- data-width:그래프 넓이 / data-height:그래프 높이 / data-fgColor:그래프 색상 / data-readonly:그래프 안움직이게-->
-                                        <input type="text" class="dial" data-width="150" data-height="150" data-fgColor="#5d9cec" data-displayprevious="true" data-displayInput="true" data-readonly="true">
+                                  <div class="card-block-big" style="padding-top: 31px;padding-bottom: 8px;">
+                                    <div class="row">
+                                      <div class="col-sm-6">
+                                        <dl class="dl-horizontal row text-center">
+                                          <dt class="col-sm-5">10</dt>
+                                          <dd class="col-sm-7"><label class="label label-success">아주좋음</label></dd>
+                                          <dt class="col-sm-5">8 ~ 9</dt>
+                                          <dd class="col-sm-7"><label class="label label-primary">좋음</label></dd>
+                                          <dt class="col-sm-5">6 ~ 7</dt>
+                                          <dd class="col-sm-7"><label class="label label-info">양호</label></dd>
+                                          <dt class="col-sm-5">5 ~ 4</dt>
+                                          <dd class="col-sm-7"><label class="label label-warning">주의</label></dd>
+                                          <dt class="col-sm-5">4 ~ 1</dt>
+                                          <dd class="col-sm-7"><label class="label label-danger">경고</label></dd>
+                                        </dl>
                                       </div>
+                                      <div class="col-sm-6">
+                  									    <h4 class="sub-title">분류비율표</h4>
+                    										<h2 class="text-info text-center typography p-t-5 p-b-25 m-b-0">
+                                          <c:if test="${scoreCount == 1 or scoreCount == 2 or scoreCount == 3}"><strong class="text-danger">경고</strong></c:if>
+                                          <c:if test="${scoreCount == 4 or scoreCount == 5}"><strong class="text-warning">주의</strong></c:if>
+                                          <c:if test="${scoreCount == 6 or scoreCount == 7}"><strong class="text-info">양호</strong></c:if>
+                                          <c:if test="${scoreCount == 8 or scoreCount == 9}"><strong class="text-primary">좋음</strong></c:if>
+                                          <c:if test="${scoreCount == 10}"><strong class="text-success">아주좋음</strong></c:if>
+                    										  <small style="margin-left: 0;">${scoreCount}</small>
+                  									    </h2>
+                  									  </div>
+                                    </div>
                                   </div>
                                 </div>
                               </div>
-                              <!-- top cards end -->
                               <div class="col-md-12">
-                                <c:if test="${blogList eq null }">
-                                  <div class="card borderless-card">
-                                    <div class="card-block warning-breadcrumb bg-white">
-                                      <div class="breadcrumb-header">
-                                        <h5 class="text-inverse"><i class="icofont icofont-warning text-warning"></i> 키워드를 선택해주세요.</h5>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </c:if>
                                 <div class="card">
                                   <div class="card-header">
-                                    <%-- <div class="col-md-1 btn-viral f-right p-r-0">
-                                      <button class="btn col-md-12 btn-warning alert-confirm" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'alert-confirm']);"><i class="icofont icofont-download-alt"></i>EXCEL</button>
-                                    </div> --%>
-                                    <h5 class="card-header-text">실시간 블로그 TOP 100</h5>
-                                    <div class="card-header-right">
-                                      <i class="icofont icofont-rounded-down icon-up"></i>
-                                    </div>
-                                  </div>
-                                  <div class="card-block table-border-style" style="display: none;">
-                                    <div class="table-responsive">
-                                      <table class="table table-styling table-checkbox">
-                                        <thead>
-                                          <tr>
-                                            <th>순위</th>
-                                            <th>등록일</th>
-                                            <th>구분</th>
-                                            <th>제목</th>
-                                            <th>키워드</th>
-                                            <th>업데이트일시</th>
-                                            <th>계정분류</th>
-                                            <th>히스토리</th>
-                                          </tr>
-                                        </thead>
-                                        <tbody>
-                                            <%-- <c:if test="${blogList eq null }"><h3>회사를 선택해주세요.</h3></c:if>                                          	   --%>
-                                        	  <c:forEach items="${blogList}" var="viralVO">
-                                            <tr>
-                                              <th scope="row">${viralVO.viral_rank}</th>
-                                              <td>${viralVO.writeDate}</td>
-                                              <td>${viralVO.portal_name}</td>
-                                              <td><a href="${viralVO.url}">${viralVO.viral_title}</a></td>
-                                              <td>${viralVO.keyword}</td>
-                                              <td>${viralVO.viral_time}</td>
-                                              <td>
-                                              <c:if test="${viralVO.viral_isUser == 1}">본사</c:if>
-                                            	<c:if test="${viralVO.viral_isUser == 2}">외부</c:if>
-                                            	</td>
-                                              <td>
-                                                <button class="btn btn-inverse btn-modal btn-sm"><i class="icofont icofont-chart-bar-graph m-r-0"></i></button>
-                                              </td>
-                                            </tr>
-                                            </c:forEach>
-                                        </tbody>
-                                      </table>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="card">
-                                  <div class="card-header">
-                                    <%-- <div class="col-md-1 btn-viral f-right p-r-0">
-                                      <button class="btn col-md-12 btn-warning alert-confirm" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'alert-confirm']);"><i class="icofont icofont-download-alt"></i>EXCEL</button>
-                                    </div> --%>
-                                    <h5 class="card-header-text">전체 리스트</h5>
-                                    <div class="card-header-right">
-                                      <i class="icofont icofont-rounded-down"></i>
-                                    </div>
+                                    <h5>평점 관리 리스트</h5>
                                   </div>
                                   <div class="card-block table-border-style">
                                     <div class="table-responsive">
                                       <table class="table table-styling table-checkbox">
                                         <thead>
                                           <tr>
-                                            <th>순위</th>
+                                            <th>NO</th>
                                             <th>등록일</th>
                                             <th>구분</th>
-                                            <th>제목</th>
+                                            <th>내용</th>
                                             <th>키워드</th>
-                                            <th>업데이트일시</th>
-                                            <th>계정분류</th>
+                                            <th>점수</th>
                                           </tr>
                                         </thead>
                                         <tbody>
-                                        	  <c:forEach items="${historyList}" var="viralVO" varStatus="index">
-                                            <tr>
-                                              <th scope="row">${index.count}</th>
-                                              <td>${viralVO.writeDate}</td>
-                                              <td>${viralVO.portal_name}</td>
-                                              <td><a href="${viralVO.url}">${viralVO.viral_title}</a></td>
-                                              <td>${viralVO.keyword}</td>
-                                              <td>${viralVO.viral_time}</td>
-                                              <td>
-                                              <c:if test="${viralVO.viral_isUser == 1}">본사</c:if>
-                                            	<c:if test="${viralVO.viral_isUser == 2}">외부</c:if>
-                                            	</td>
-                                            </tr>
-                                            </c:forEach>
+                                          <c:forEach items="${scoreList}" var="score" varStatus="index">
+                                          <tr>
+                                            <th>${totalCount - minusCount - index.count + 1}</th>
+                                            <td>${score.writeDate}</td>
+                                            <td>${score.portal_name}</td>
+                                            <td><a class = 'title_score' href="${score.url}">${score.portal_title}</a></td>
+                                            <td>${score.keyword}</td>
+                                            <td>${score.score}</td>
+                                          </tr>
+                                          </c:forEach>
                                         </tbody>
                                         <tfoot>
                                           <tr>
-                                            <td colspan="7">
-                                              <ul class="pagination float-right">
-                                                <c:if test="${pageMaker.prev}">
-                                                  <li class="page-item">
-                                                    <a class="page-link" href="v_blog${pageMaker.makeSearch(pageMaker.startPage - 1) }" aria-label="Previous">&laquo;
-                                                      <span aria-hidden="true"></span>
-                                                      <span class="sr-only">Previous</span>
-                                                    </a>
-                                                  </li>
-                                                </c:if>
+                                            <td colspan="6">
+                                               <ul class="pagination float-right">
+        					                              <c:if test="${pageMaker.prev}">
+        					                                <li class="page-item">
+        					                                  <a class="page-link" href="v_score${pageMaker.makeSearch(pageMaker.startPage - 1) }" aria-label="Previous">&laquo;
+        					                                    <span aria-hidden="true"></span>
+        					                                    <span class="sr-only">Previous</span>
+        					                                  </a>
+        					                                </li>
+        					                              </c:if>
 
-                                                <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
-                                                  <li class= "${pageMaker.cri.page == idx? 'active':''} page-item">
-                                                    <a class="page-link" href="v_blog${pageMaker.makeSearch(idx)}">${idx}</a>
-                                                  </li>
-                                                </c:forEach>
+        					                              <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
+        					                                <li class= "${pageMaker.cri.page == idx? 'active':''} page-item">
+        					                                  <a class="page-link" href="v_score${pageMaker.makeSearch(idx)}">${idx}</a>
+        					                                </li>
+        					                              </c:forEach>
 
-                                                <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-                                                  <li class="page-item">
-                                                    <a class="page-link" href="v_blog${pageMaker.makeSearch(pageMaker.endPage +1) }" aria-label="Next">&raquo;
-                                                      <span aria-hidden="true"></span>
-                                                      <span class="sr-only">Next</span>
-                                                    </a>
-                                                  </li>
-                                                </c:if>
-                                              </ul>
+        					                              <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+        					                                <li class="page-item">
+        					                                  <a class="page-link" href="v_score${pageMaker.makeSearch(pageMaker.endPage +1) }" aria-label="Next">&raquo;
+        					                                    <span aria-hidden="true"></span>
+        					                                    <span class="sr-only">Next</span>
+        					                                  </a>
+        					                                </li>
+        					                              </c:if>
+        					                            </ul>
                                             </td>
                                           </tr>
                                         </tfoot>
@@ -408,33 +418,13 @@
                                     </div>
                                   </div>
                                 </div>
-
                               </div>
                             </div>
                           </div>
-                          <!-- tab1 main end -->
-                        </div>
-                        <!-- tab-content end -->
-                      </div>
-                    </div>
-                  </div>
-                  <!-- modal image show start -->
-                  <div class="modal fade" id="history-Modal" tabindex="-1" role="dialog">
-                    <div class="modal-dialog modal-lg" role="document">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h4 class="modal-title">순위변동량</h4>
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                              <span aria-hidden="true">&times;</span>
-                          </button>
-                        </div>
-                        <div class="modal-body">
-                          <div id="barchart" class="nvd-chart"></div>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <!-- modal image show end -->
                   <!-- page-body end -->
                 </div>
               </div>
@@ -515,9 +505,6 @@
   <script type="text/javascript" src="../bower_components/jquery-i18next/jquery-i18next.min.js"></script>
   <!-- sweet alert js -->
   <script type="text/javascript" src="../bower_components/sweetalert/dist/sweetalert.min.js"></script>
-  <!-- NVD3 chart -->
-  <script src="../bower_components/d3/d3.js"></script>
-  <script src="../bower_components/nvd3/build/nv.d3.js"></script>
   <!-- knob js -->
   <script src="../bower_components/aterrien/jQuery-Knob/js/jquery.knob.js"></script>
   <!-- Custom js -->
@@ -530,40 +517,34 @@
   <script src="../assets/js/jquery.mousewheel.min.js"></script>
 </body>
 
-
 <script type="text/javascript">
-
-	//ajax 보안
-	var token = $("meta[name='_csrf']").attr("content");
-	var header = $("meta[name='_csrf_header']").attr("content");
-
-	$(function() {
-		$(document).ajaxSend(function(e, xhr, options) {
-	  		xhr.setRequestHeader(header, token);
-	  	});
-	});
 
 	$(document).ready(function(){
 
+		// title 길시에 ...으로 변경
+		var $content = $(".title_score");
+
+		var size = 25;
+
+		for (var i =0; i < $content.length; i++){
+			if($content[i].innerText.length >= size){
+				$content[i].textContent = $content[i].innerText.substr(0, size) + '...';
+			}
+		}
+
 		var $fromDate = $("#fromDate");
 
-		  var startDateOption = decodeURI(window.location.href.split("startDate=")[1]).split("&")[0].split(" ")[0];
-		  var endDateOption = decodeURI(window.location.href.split("endDate=")[1]).split("&")[0].split(" ")[0];
-		  console.log("startDateOption: " + startDateOption);
-		  console.log("endDateOption: " + endDateOption);
+		var startDateOption = decodeURI(window.location.href.split("startDate=")[1]).split("&")[0].split(" ")[0];
+		var endDateOption = decodeURI(window.location.href.split("endDate=")[1]).split("&")[0].split(" ")[0];
+		console.log("startDateOption: " + startDateOption);
+		console.log("endDateOption: " + endDateOption);
 
-		  if(startDateOption != 'undefined' && endDateOption != 'undefined'
+		if(startDateOption != 'undefined' && endDateOption != 'undefined'
 				&& startDateOption != '' && endDateOption != ''){
-			  $fromDate.val(startDateOption + " - " + endDateOption);
 
-			}
+			$fromDate.val(startDateOption + " - " + endDateOption);
+		}
 
-
-		//점유율 그래프
-		var first = '${blog1}';
-		var second = '${blog2}';
-
-		$(".dial").val(first/(first+second));
 
 		// 회사 selectbox 유지.
 		var companyOption = decodeURI(window.location.href.split("company=")[1]).split("&")[0];
@@ -610,85 +591,6 @@
 
 			searchList();
 
-		});
-
-
-		// 사이트 selectbox 유지
-		var siteOption = decodeURI(window.location.href.split("portal_name=")[1]).split("&")[0];
-		console.log("siteOption: " + siteOption);
-
-		var $selectSite = $("#selectSite");
-
-		if(siteOption != 'undefined'){
-			for(var i = 0; i < $selectSite[0].length; i++ ){
-				if($selectSite[0][i].value == siteOption){
-					$selectSite[0][i].selected = 'selected';
-				}
-			}
-		}
-
-		$selectSite[0][0].disabled = true;
-
-		// 사이트 선택시
-		$selectSite.change(function(){
-			console.log($selectSite.val());
-
-			searchList();
-
-		});
-
-
-		// 모달 버튼 클릭시.
-		var modal = $('.btn-modal');
-		modal.on('click',function(event){
-
-		  	var button = event.target;
-
-		  	if(button.type != 'submit'){
-		  		button = $(button).parent();
-		  	}
-
-		  	var tr = $(button).parent().parent()[0];
-
-		  	var url = tr.children[3].children[0].getAttribute("href");
-
-		  	$.ajax({
-				type : "POST",
-			  	url : "historyGraph",
-		 	  	dataType : "json",
-		 	  	data : {url : url},
-		  	  	success : function(list){
-
-		  	  	var script = '[{"values": [';
-
-		  	  	for(var i = 0; i < list.length; i++){
-
-		  	  		var value = '{';
-					value = value + '"label"' + ':' + '"' + (list[i].writeDate).split(" ")[0] + '",';
-					value += '"value"' + ':' + '' + (100- list[i].type1) + ',';
-					value += '"color"' + ':' + '"#01C0C8"';
-					value += '},'
-
-					script += value;
-
-	  	  		}
-
-		  	  	script = script.slice(0, -1);
-
-		  	  	script += ']}]';
-
-		  	  	console.log(script);
-
-		  	  	var jsonScript = JSON.parse(script);
-
-		  	  	console.log(jsonScript);
-		  	  	barScript = jsonScript;
-
-		  	  	$('#history-Modal').modal('show');
-			  	setTimeout(barChart, 300);
-
-		  	  	}
-		  	});
 		});
 
 		// 당일 클릭시
@@ -754,69 +656,8 @@
 
 		});
 
-		// 엑셀 출력
-		//엑셀출력 확인메시지
-		/* $(document).on("click",".alert-confirm",function(){
-	    swal({
-	          title: "엑셀출력 하시겠습니까?",
-	          text: "현재 리스트가 엑셀출력 됩니다.",
-	          type: "warning",
-	          showCancelButton: true,
-	          confirmButtonClass: "btn-danger",
-	          confirmButtonText: "YES",
-	          closeOnConfirm: false
-	        },
-	        function(){//엑셀 출력하겠다고 할 시 진행 함수
-
-	        	self.location = "excel?"+
-				  + "&company=" + $("#selectCompany option:selected").val()
-				  + "&selectKey=" + $('#selectKeyword option:selected').val()
-				  + "&portal_name=" + $("#selectSite option:selected").val()
-				  + "&portal_type=" + "blog";
-
-
-		  		swal("Success!", "엑셀출력 되었습니다.", "success");
-
-	        });
-		}); */
-
 	}); // end ready...
 
-	var barScript = '';
-
-	function barChart(){
-		console.log("barChartCalled...");
-		$('.nvd3-svg').remove();
-	  	/*Bar chart start*/
-
-	  	//var dataValue = barData;
-	  	console.log(barScript);
-
-	  	nv.addGraph(function() {
-	      	var chart = nv.models.multiBarChart()
-	          	.x(function(d) { return d.label }) //Specify the data accessors.
-	          	.y(function(d) { return d.value })
-	          	.forceY([0,100]);
-
-	      	chart.groupSpacing(0.8);
-	      	chart.reduceXTicks(false);
-	      	chart.showLegend(false);
-	      	chart.showControls(false);
-	      	chart.groupSpacing(0.5);
-	      	chart.yAxis.tickFormat(function(d, i){
-	        return 100-d+"위" //"Year1 Year2, etc depending on the tick value - 0,1,2,3,4"
-	      	});
-	   		console.log(barScript);
-	      	d3.select('#barchart').append('svg')
-	          	.datum(barScript)
-	          	.call(chart);
-
-
-	      	nv.utils.windowResize(chart.update);
-
-	      	return chart;
-	  	});
-	}
 
 	function searchList() {
 
@@ -824,7 +665,7 @@
 
 		console.log(makeQeury);
 
-    	self.location = "v_blog"
+    	self.location = "v_score"
     						+ makeQeury + '10'
         					+ "&company=" + $("#selectCompany option:selected").val()
     						+ "&selectKey=" + $('#selectKeyword option:selected').val()

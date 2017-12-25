@@ -84,7 +84,7 @@
                     <div class="page-header-breadcrumb">
                       <ul class="breadcrumb-title">
                         <li class="breadcrumb-item">
-                          <a href="dashboard.html">
+                          <a href="../dashBoard/dashBoard">
                             <i class="icofont icofont-home"></i>
                           </a>
                         </li>
@@ -98,6 +98,7 @@
                     <div class="row">
                       <!-- data setting start -->
                       <div class="col-md-7">
+                      <c:if test="${user.user_name == 'union'}">
                          <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="selectCompany">
                           <option>회사</option>
                           <c:if test="${user.user_type == 1 }">
@@ -109,7 +110,22 @@
                           <option value="${companyList.user_name}">${companyList.user_name}</option>
                           </c:if>
                         </select>
-
+						</c:if>
+						
+						<c:if test="${user.user_name != 'union'}">
+                         <select style="display: none;" name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="selectCompany">
+                          <option>회사</option>
+                          <c:if test="${user.user_type == 1 }">
+                          <c:forEach items="${companyList}" var = "companyList">
+                          <option value="${companyList.user_name}">${companyList.user_name}</option>
+                          </c:forEach>
+                          </c:if>
+                          <c:if test="${user.user_type == 2}">
+                          <option value="${companyList.user_name}">${companyList.user_name}</option>
+                          </c:if>
+                        </select>
+						</c:if>
+						
                         <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left" id="selectKeyword">
                           <option>키워드</option>
                           <c:if test="${modelKeywordList == null}" >
@@ -158,12 +174,15 @@
                                   <option id="c" value="c">게시글</option>
                                 </select>
                             <div class="col-sm-3 input-group input-group-button input-group-inverse p-l-0 p-r-0 m-b-10 f-left btn-select">
-                               <input id="keywordInput" type="text" class="form-control" placeholder="">
+                               <input onkeyup="if(event.keyCode == 13){$('#searchBtn').trigger('click');};"id="keywordInput" type="text" class="form-control" placeholder="">
                                <span class="input-group-addon" id="basic-addon1">
                                  <button id="searchBtn" class=" btn btn-inverse">검색</button>
                                </span>
                             </div>
+                            <button class="btn btn-warning alert-excel f-right p-r-5 p-l-5 m-l-15 m-b-10"><i class="icofont icofont-download-alt"></i>EXCEL</button>
+                            <c:if test="${user.user_name == 'union'}">
                             <button id="insertAllBtn" type="button" class="alert-confirm btn btn-primary waves-effect f-right p-r-0 p-l-5 m-l-15 m-b-10  f-right" ><i class="icofont icofont-check-circled"></i>일괄처리</button>
+                          	</c:if>
                           </div>
                           <div class="card-block">
                             <div class="table-responsive">
@@ -492,8 +511,8 @@ $(function() {
   $(document).ready(function(){
 
 
-	  	var startDateOption = decodeURI(window.location.href.split("startDate=")[1]).split("&")[0];
-		var endDateOption = decodeURI(window.location.href.split("endDate=")[1]).split("&")[0];
+	  var startDateOption = decodeURI(window.location.href.split("startDate=")[1]).split("&")[0].split(" ")[0];
+		var endDateOption = decodeURI(window.location.href.split("endDate=")[1]).split("&")[0].split(" ")[0];
 		console.log("startDateOption: " + startDateOption);
 		console.log("endDateOption: " + endDateOption);
 
@@ -719,6 +738,32 @@ $(function() {
 	  }else{
 		searchList();
 	  }
+	});
+	
+	//엑셀출력 확인메시지
+	$(document).on("click",".alert-excel",function(){
+    swal({
+          title: "엑셀출력 하시겠습니까?",
+          text: "현재 리스트가 엑셀출력 됩니다.",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonClass: "btn-danger",
+          confirmButtonText: "YES",
+          closeOnConfirm: false
+        },
+        function(){//엑셀 출력하겠다고 할 시 진행 함수
+
+        	self.location = "excel?"+  "searchType=" + decodeURI(window.location.href.split("&searchType=")[1]).split("&")[0]
+		 	  + "&keyword=" + decodeURI(window.location.href.split("&keyword=")[1]).split("&")[0]
+        	  + "&company=" + $("#selectCompany option:selected").val()
+	          + "&selectKey=" + $('#selectKeyword option:selected').val()
+      		  + "&startDate=" + makeDateFormat($("#fromDate").val(), 0)
+      		  + "&endDate=" +  makeDateFormat($("#fromDate").val(), 1);
+
+
+	  		swal("Success!", "엑셀출력 되었습니다.", "success");
+
+        });
 	});
 
 

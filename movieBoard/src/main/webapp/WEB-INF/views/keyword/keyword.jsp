@@ -83,7 +83,7 @@
                     <div class="page-header-breadcrumb">
                       <ul class="breadcrumb-title">
                         <li class="breadcrumb-item">
-                          <a href="dashboard.html">
+                          <a href="../dashBoard/dashBoard">
                             <i class="icofont icofont-home"></i>
                           </a>
                         </li>
@@ -102,7 +102,7 @@
                       </div>
                       <div class="card-block table-border-style">
                         <div class="table-responsive">
-                          <table class="table table-bordered">
+                          <table class="table table-bordered table-sm">
                             <thead>
                               <tr>
                                 <th width="1%">NO</th>
@@ -282,22 +282,35 @@
 			var keyword_main = td.childNodes[0];
 			console.log(keyword_main.data);
 
+			swal({
+				title: "삭제처리 하시겠습니까?",
+				text: "해당 키워드가 삭제처리 됩니다.",
+				type: "warning",
+				showCancelButton: true,
+				confirmButtonClass: "btn-danger",
+				confirmButtonText: "YES",
+				closeOnConfirm: false
+			},
+			function(){
 
+				$.ajax({
 
-			$.ajax({
+					type : "POST",
+				  	url : "removeMain",
+			 	  	dataType : "text",
+			 	  	data : {keyword_main : keyword_main.data},
+			 	  	success : function(data){
 
-				type : "POST",
-			  	url : "removeMain",
-		 	  	dataType : "text",
-		 	  	data : {keyword_main : keyword_main.data},
-		 	  	success : function(data){
+			 	  		if(data == "success"){
+							location.reload();
+			 	  		}
 
-		 	  		if(data == "success"){
-						location.reload();
-		 	  		}
+			 	  	}
+				});
 
-		 	  	}
+				swal("Success!", "삭제처리가 완료되었습니다.", "success");
 			});
+
 
 		});
 

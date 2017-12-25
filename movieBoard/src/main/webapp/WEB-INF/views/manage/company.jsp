@@ -81,7 +81,7 @@
                     <div class="page-header-breadcrumb">
                       <ul class="breadcrumb-title">
                         <li class="breadcrumb-item">
-                          <a href="dashboard.html">
+                          <a href="../dashBoard/dashBoard">
                             <i class="icofont icofont-home"></i>
                           </a>
                         </li>
@@ -196,7 +196,7 @@
                             <div class="card-header">
                               <h5 class="card-header-text">거래처리스트</h3>
                             </div>
-                            <div class="card-block">
+                            <div class="card-block table-border-style">
                               <div class="table-responsive">
                                 <table class="table table-bordered">
                                   <thead>
@@ -222,7 +222,7 @@
                                       <td>${userVO.user_PW}</td>
                                       <td>${userVO.company_licensee}</td>
                                       <td>${userVO.user_phoneNum}</td>
-									  <td>${userVO.user_name}</td>
+                  									  <td>${userVO.user_name}</td>
                                       <td>${userVO.user_email}</td>
                                       <td>${userVO.company_location}</td>
                                       <td></td>
@@ -330,29 +330,29 @@
         	xhr.setRequestHeader(header, token);
     	});
 	});
-	
+
 
 	$(document).ready(function(){
 		var company_name = $("#company").val();
 		console.log("company_name: " + company_name);
-		
+
 		var user_ID = $("#id").val();
 		console.log("user_ID: " + user_ID);
-		
+
 		var user_PW = $("#pw").val();
-		
+
 		var company_licensee = $("#licensee").val();
-		
-		
+
+
 		/* $("#idCheck").on("click", function(){
 			console.log("중복체크 클릭");
-			
+
 			var $user_ID = $("#id").val();
-			
-			
-			
+
+
+
 		}); // end idCheck click... */
-		
+
 	}); // end ready...
 
 </script>

@@ -58,7 +58,7 @@ public class PortalServiceImpl implements PortalService {
 		
 		List<ExtractVO> extractList = new ArrayList<ExtractVO>();
 		
-		SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
 		
 		try {
 			
@@ -108,6 +108,18 @@ public class PortalServiceImpl implements PortalService {
 		return portalDAO.getSearchCount(cri);
 	}
 
+	@Override
+	public List<PortalVO> wlistSearch(SearchCriteria cri) {
+
+		return portalDAO.wlistSearch(cri);
+		
+	}
+	
+	@Override
+	public Integer wgetSearchCount(SearchCriteria cri) {
+
+		return portalDAO.wgetSearchCount(cri);
+	}
 
 	@Override
 	public void modifyType(PortalVO vo) {
@@ -227,6 +239,67 @@ public class PortalServiceImpl implements PortalService {
 	public Integer getTypeOfActorCount(SearchCriteria cri) {
 
 		return portalDAO.getTypeOfActorCount(cri);
+	}
+
+	@Override
+	public Integer getScoreCount(SearchCriteria cri) {
+
+		return portalDAO.getScoreCount(cri);
+	}
+
+	@Override
+	public List<PortalVO> getScoreList(SearchCriteria cri) {
+
+		return portalDAO.getScoreList(cri);
+	}
+
+	@Override
+	public TextTypeVO getScoreTextType(SearchCriteria cri) {
+
+		return portalDAO.getScoreTextType(cri);
+	}
+
+	@Override
+	public Integer getOnlyScore(SearchCriteria cri) {
+
+		List<Integer> list = portalDAO.getOnlyScore(cri);
+		
+		Integer totalCount = 0;
+		
+		if(list.size() != 0) {
+			for (Integer integer : list) {
+				totalCount += integer;
+			}
+			
+			totalCount = totalCount/list.size();
+			
+		}
+
+		return totalCount;
+	}
+
+	@Override
+	public List<PortalVO> wPageSearch(SearchCriteria cri) {
+
+		List<PortalVO> list = portalDAO.wPageSearch(cri);
+		
+		for (PortalVO portalVO : list) {
+			portalVO.setKeyword_main(keywordDAO.read(portalVO.getKeyword()).getKeyword_main());
+		}
+
+		return list;
+	}
+
+	@Override
+	public List<PortalVO> allPage(SearchCriteria cri) {
+
+		List<PortalVO> list = portalDAO.allPage(cri);
+		
+		for (PortalVO portalVO : list) {
+			portalVO.setKeyword_main(keywordDAO.read(portalVO.getKeyword()).getKeyword_main());
+		}
+		
+		return list;
 	}
 
 }

@@ -13,6 +13,7 @@
 }
 .table td, .table th{
   vertical-align: middle;
+  text-align: center;
 }
 @media (max-width: 412px){
   .btn-check{
