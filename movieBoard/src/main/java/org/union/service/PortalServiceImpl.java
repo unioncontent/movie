@@ -129,8 +129,8 @@ public class PortalServiceImpl implements PortalService {
 
 	@Override
 	public void modifyThumbnail(PortalVO vo) {
-		// TODO Auto-generated method stub
 
+		portalDAO.updateThumbnail(vo);
 	}
 
 	@Override

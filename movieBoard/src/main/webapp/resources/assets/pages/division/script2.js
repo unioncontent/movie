@@ -73,19 +73,28 @@ $(document).ready(function () {
           swal("Success!", "이미지다운 되었습니다.", "success");
         });
   });
+  
+  var domain = "";
+  var idx = "";
+  
   //이미지 보기 클릭시 모달
   $(".image").on("click",function(event){
-
-	  var thumbName = event.target.parentElement.parentElement.children[0].value;
+	  
+	  var tr = event.target.parentElement.parentElement.parentElement.children;
+	  
+	  domain = tr[2].innerHTML;
+	  idx = tr[0].value;
+	  
+	  var thumbName = tr[6].children[0].value;
 	  console.log(thumbName);
+	  
 	  
 	  var path = '../classification/show?name=' + thumbName;
 	  $("#thumbnail").attr("src", path);
-    $('#imageModal').modal('show');
+	  $('#imageModal').modal('show');
   });
   //이미지업로드 클릭시
   $(document).on("click",".alert-upload",function(){
-    $("#imageModal").modal("hide");
 
 /*    var formObj = $("#imageForm");
     
@@ -94,11 +103,14 @@ $(document).ready(function () {
     formObj.submit();
     */
 
-    console.log($("#imageIinput")[0]);
-    
+	  console.log(domain);
+	  
+    console.log($("#imageIinput")[0].files[0]);
+    uploadImage($("#imageIinput")[0].files[0], domain, idx);
     
     //이미지처리메시지 - 성공시
     
+    $("#imageModal").modal("hide");
     
     
     swal("Success!", "이미지업로드가 되었습니다.", "success");
@@ -118,31 +130,24 @@ $(document).ready(function () {
   });
 });
 
-function uploadImage(event,fn){
-	var files = event.originalEvent.dataTransfer.files;
-	var file = files[0];
+function uploadImage(file, domain, idx){
 	var formData = new FormData();
-	if(checkImageType(file.type)){
 		
-		formData.append("file", file);
+	formData.append("file", file);
+	formData.append("domain", domain);
+	formData.append("idx", idx);
 
-		$.ajax({
-			url : '/uploadAjax',
-			data : formData,
-			dataType : 'text',
-			processData : false,
-			contentType : false,
-			method : 'POST',
-			success : function(data) {
-				console.log(data);
+	$.ajax({
+		url : '/uploadAjax',
+		data : formData,
+		dataType : 'text',
+		processData : false,
+		contentType : false,
+		method : 'POST',
+		success : function(data) {
+			console.log(data);
 
-				if(checkImageType(data)){
-					fn(data);
-
-				}	
-			}
-		});
-	}else{
-		alert("이미지 파일로 올려주세요!");				
-	}
+		}
+	});
+	
 }
