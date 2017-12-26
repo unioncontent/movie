@@ -74,14 +74,33 @@ $(document).ready(function () {
         });
   });
   //이미지 보기 클릭시 모달
-  $(".image").on("click",function(){
+  $(".image").on("click",function(event){
+
+	  var thumbName = event.target.parentElement.parentElement.children[0].value;
+	  console.log(thumbName);
+	  
+	  var path = '../classification/show?name=' + thumbName;
+	  $("#thumbnail").attr("src", path);
     $('#imageModal').modal('show');
   });
   //이미지업로드 클릭시
   $(document).on("click",".alert-upload",function(){
     $("#imageModal").modal("hide");
 
+/*    var formObj = $("#imageForm");
+    
+    formObj.attr("action", "uploadFile");
+	formObj.attr("method", "post");
+    formObj.submit();
+    */
+
+    console.log($("#imageIinput")[0]);
+    
+    
     //이미지처리메시지 - 성공시
+    
+    
+    
     swal("Success!", "이미지업로드가 되었습니다.", "success");
     //이미지처리메시지 - 실패시
     // swal("error!", "이미지업로드가 실패했습니다.", "error");
@@ -90,9 +109,40 @@ $(document).ready(function () {
   $(document).on("click",".alert-delete",function(){
     $("#imageModal").modal("hide");
 
+    // db textType 삭제...
+    
     //이미지처리메시지 - 성공시
     swal("Success!", "이미지삭제가 되었습니다.", "success");
     //이미지처리메시지 - 실패시
     // swal("Delete!", "이미지삭제가 실패했습니다.", "error");
   });
 });
+
+function uploadImage(event,fn){
+	var files = event.originalEvent.dataTransfer.files;
+	var file = files[0];
+	var formData = new FormData();
+	if(checkImageType(file.type)){
+		
+		formData.append("file", file);
+
+		$.ajax({
+			url : '/uploadAjax',
+			data : formData,
+			dataType : 'text',
+			processData : false,
+			contentType : false,
+			method : 'POST',
+			success : function(data) {
+				console.log(data);
+
+				if(checkImageType(data)){
+					fn(data);
+
+				}	
+			}
+		});
+	}else{
+		alert("이미지 파일로 올려주세요!");				
+	}
+}

@@ -83,6 +83,7 @@ public class ListUtil {
 				vo.setCreateDate(date.format(addList.get(i).getUpdateDate()));
 				vo.setTextType(addList.get(i).getTextType());
 				vo.setWriter(addList.get(i).getCommunity_writer());
+				vo.setThumbnail(addList.get(i).getThumbnail());
 			
 				
 				list.add(vo);
@@ -110,7 +111,7 @@ public class ListUtil {
 				vo.setPortal_idx(addList.get(i).getViral_idx());
 				vo.setUrl(addList.get(i).getUrl());
 				vo.setCreateDate(date.format(addList.get(i).getUpdateDate()));
-			
+				vo.setThumbnail(addList.get(i).getThumbnail());
 				
 				list.add(vo);
 			}
@@ -141,7 +142,7 @@ public class ListUtil {
 				vo.setCreateDate(date.format(addList.get(i).getUpdateDate()));
 				vo.setTextType(addList.get(i).getTextType());
 				vo.setWriter(addList.get(i).getReporter_name());
-			
+				vo.setThumbnail(addList.get(i).getThumbnail());
 				
 				list.add(vo);
 			}
@@ -170,7 +171,7 @@ public class ListUtil {
 				vo.setUrl(addList.get(i).getUrl());
 				vo.setCreateDate(date.format(addList.get(i).getUpdateDate()));
 				vo.setTextType(addList.get(i).getTextType());
-			
+				vo.setThumbnail(addList.get(i).getThumbnail());
 				
 				list.add(vo);
 			}

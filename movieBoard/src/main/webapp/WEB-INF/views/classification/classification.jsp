@@ -239,7 +239,10 @@
                                     <td>${extractVO.company}</td>
                                     <td>${extractVO.keyword}</td>
                                     <td>
-                                      <div class="image btn-list-image"><i class="icofont icofont-ui-image"></i></div>
+                                      <c:if test="${extractVO.thumbnail != null}">
+                                      	<input type = "hidden" value = "${extractVO.thumbnail}">
+                                      	<div class="image btn-list-image" data-toggle="modal" data-target="#frmModal"><i class="icofont icofont-ui-image"></i></div>
+                                      </c:if>
                                       <a href="${extractVO.url}" target="_blank">
                                         <div class="nobr">${extractVO.title}</div>
                                       </a>
@@ -485,8 +488,12 @@
                                   </button>
                               </div>
                               <div class="modal-body">
-                                <div class="imageBox"><img src="assets/images/capture/Koala.jpg"></div>
-                                <input type="file" class="form-control">
+                                <div class="imageBox"><img id="thumbnail" src="../assets/images/capture/Koala.jpg"></div>
+                                    <form id="imageForm" name="frm" enctype="multipart/form-data">
+   		                             <input id = "imageIinput" type="file" name = "file" class="form-control">
+         							  <input type="hidden" name="${_csrf.parameterName}"
+            						  value="${_csrf.token}" />
+         							</form>
                               </div>
                               <div class="modal-footer">
                                   <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">취소</button>
