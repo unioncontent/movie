@@ -445,13 +445,14 @@ public class PortalController {
 			model.addAttribute("blog0", totalCount);
 			model.addAttribute("historyList", viralService.historyPage(cri));
 			
-			model.addAttribute("pageMaker", pageMaker);
-			
 			cri.setStartDate(cri.getStartDate().split(" ")[0]);
 			cri.setEndDate(cri.getEndDate().split(" ")[0]);
 			pageMaker.setCri(cri);
 			pageMaker.setTotalCount(totalCount);
 			
+
+			model.addAttribute("pageMaker", pageMaker);
+
 			String tempEndDate = cri.getEndDate();
 			
 			cri.setEndDate(null);
@@ -470,8 +471,6 @@ public class PortalController {
 			model.addAttribute("pageMaker", pageMaker);
 			
 		}
-		
-		pageMaker.setCri(cri);
 		
 	}
 	
