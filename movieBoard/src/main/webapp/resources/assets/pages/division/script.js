@@ -104,7 +104,8 @@ $(document).ready(function () {
 				});
   });*/
   //이미지 보기 클릭시 모달
-  $(".image").on("click",function(){
+  /*$(".image").on("click",function(event){
+	  console.log(event.target);
     $('#image-Modal').modal('show');
   });
   //이미지업로드 클릭시
@@ -124,5 +125,5 @@ $(document).ready(function () {
     swal("Success!", "이미지삭제가 되었습니다.", "success");
     //이미지처리메시지 - 실패시
     // swal("Delete!", "이미지삭제가 실패했습니다.", "error");
-  });
+  });*/
 });

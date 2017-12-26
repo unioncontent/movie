@@ -3,7 +3,8 @@ package org.union.domain;
 public class ExtractVO {
 
 	
-	private String domain, domainType, company,keyword_main, keyword, title, content, writeDate,writer, createDate, url, textType;
+	private String domain, domainType, company,keyword_main, keyword, title, content, writeDate,writer,
+				createDate, url, textType, thumbnail;
 	private Integer sns_idx, community_idx, media_idx, portal_idx;
 	public String getDomain() {
 		return domain;
@@ -100,6 +101,13 @@ public class ExtractVO {
 	}
 	public void setPortal_idx(Integer portal_idx) {
 		this.portal_idx = portal_idx;
+	}
+	
+	public String getThumbnail() {
+		return thumbnail;
+	}
+	public void setThumbnail(String thumbnail) {
+		this.thumbnail = thumbnail;
 	}
 	@Override
 	public String toString() {
