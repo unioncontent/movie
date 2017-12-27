@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.union.domain.CommunityVO;
+import org.union.domain.MediaVO;
 import org.union.domain.PortalVO;
 import org.union.service.CommunityService;
 import org.union.service.MediaService;
@@ -107,15 +109,81 @@ public class UploadController {
 			return insertFileName;
 			
 		}else if(domain.equals("media")) {
+			logger.info("domain is media");
 			
-			return null;
+			insertFileName = new ResponseEntity<String>(
+					UploadFileUtils.uploadFile(uploadPath, file.getOriginalFilename(), file.getBytes()),
+					HttpStatus.CREATED);
+			
+			MediaVO vo = new MediaVO();
+			
+			vo.setMedia_idx(Integer.parseInt(idx));
+			vo.setThumbnail(insertFileName.getBody());
+			
+			mediaService.modifyThumbnail(vo);
+			
+			return insertFileName;
 			
 		}else if(domain.equals("community")) {
+			logger.info("domain is community");
 			
-			return null;
+			insertFileName = new ResponseEntity<String>(
+					UploadFileUtils.uploadFile(uploadPath, file.getOriginalFilename(), file.getBytes()),
+					HttpStatus.CREATED);
+			
+			CommunityVO vo = new CommunityVO();
+			
+			vo.setCommunity_idx(Integer.parseInt(idx));
+			vo.setThumbnail(insertFileName.getBody());
+			
+			communityService.modifyThumbnail(vo);
+			
+			return insertFileName;
 			
 		}else {
 			return null;
+		}
+		
+		
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/deleteAjax", method = RequestMethod.POST)
+	public void deleteAjax(String domain, String idx) throws Exception {
+		logger.info("domain: " + domain);
+		logger.info("idx: " + idx);
+		
+		
+		if(domain.equals("portal")) {
+			logger.info("domain is portal");
+			PortalVO vo = new PortalVO();
+			
+			vo.setPortal_idx(Integer.parseInt(idx));
+			vo.setThumbnail(null);
+			
+			portalService.modifyThumbnail(vo);
+			
+			
+		}else if(domain.equals("media")) {
+			logger.info("domain is media");
+			
+			MediaVO vo = new MediaVO();
+			
+			vo.setMedia_idx(Integer.parseInt(idx));
+			vo.setThumbnail(null);
+			
+			mediaService.modifyThumbnail(vo);
+			
+		}else if(domain.equals("community")) {
+			logger.info("domain is community");
+			
+			CommunityVO vo = new CommunityVO();
+			
+			vo.setCommunity_idx(Integer.parseInt(idx));
+			vo.setThumbnail(null);
+			
+			communityService.modifyThumbnail(vo);
+			
 		}
 		
 		

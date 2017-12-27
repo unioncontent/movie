@@ -239,7 +239,7 @@
                                         	<input type="radio" id="radio2${index.count}" name="radios${index.count}">
                                         	<label for="radio2${index.count}">나쁜글</label>
                                         	<input type="radio" id="radio3${index.count}" name="radios${index.count}">
-                                        	<label for="radio3${index.count}">관심글</label>
+                                        	<label for="radio3${index.count}">관심글</label><br>
                                         	<input type="radio" id="radio4${index.count}" name="radios${index.count}">
                                         	<label for="radio4${index.count}">기타글</label>
                                         	<input type="radio" id="radio5${index.count}" name="radios${index.count}">
@@ -256,7 +256,7 @@
                                         	<input type="radio" id="radio2${index.count}" name="radios${index.count}" checked>
                                         	<label for="radio2${index.count}">나쁜글</label>
                                         	<input type="radio" id="radio3${index.count}" name="radios${index.count}">
-                                        	<label for="radio3${index.count}">관심글</label>
+                                        	<label for="radio3${index.count}">관심글</label><br>
                                         	<input type="radio" id="radio4${index.count}" name="radios${index.count}">
                                         	<label for="radio4${index.count}">기타글</label>
                                         	<input type="radio" id="radio5${index.count}" name="radios${index.count}">
@@ -273,7 +273,7 @@
                                         	<input type="radio" id="radio2${index.count}" name="radios${index.count}">
                                         	<label for="radio2${index.count}">나쁜글</label>
                                         	<input type="radio" id="radio3${index.count}" name="radios${index.count}" checked>
-                                        	<label for="radio3${index.count}">관심글</label>
+                                        	<label for="radio3${index.count}">관심글</label><br>
                                         	<input type="radio" id="radio4${index.count}" name="radios${index.count}">
                                         	<label for="radio4${index.count}">기타글</label>
                                         	<input type="radio" id="radio5${index.count}" name="radios${index.count}">
@@ -290,7 +290,7 @@
                                         	<input type="radio" id="radio2${index.count}" name="radios${index.count}">
                                         	<label for="radio2${index.count}">나쁜글</label>
                                         	<input type="radio" id="radio3${index.count}" name="radios${index.count}">
-                                        	<label for="radio3${index.count}">관심글</label>
+                                        	<label for="radio3${index.count}">관심글</label><br>
                                         	<input type="radio" id="radio4${index.count}" name="radios${index.count}" checked>
                                         	<label for="radio4${index.count}">기타글</label>
                                         	<input type="radio" id="radio5${index.count}" name="radios${index.count}">
@@ -307,7 +307,7 @@
                                         	<input type="radio" id="radio2${index.count}" name="radios${index.count}">
                                         	<label for="radio2${index.count}">나쁜글</label>
                                         	<input type="radio" id="radio3${index.count}" name="radios${index.count}">
-                                        	<label for="radio3${index.count}">관심글</label>
+                                        	<label for="radio3${index.count}">관심글</label><br>
                                         	<input type="radio" id="radio4${index.count}" name="radios${index.count}">
                                         	<label for="radio4${index.count}">기타글</label>
                                         	<input type="radio" id="radio5${index.count}" name="radios${index.count}" checked>
@@ -325,7 +325,7 @@
                                         	<input type="radio" id="radio2${index.count}" name="radios${index.count}">
                                         	<label for="radio2${index.count}">나쁜글</label>
                                         	<input type="radio" id="radio3${index.count}" name="radios${index.count}">
-                                        	<label for="radio3${index.count}">관심글</label>
+                                        	<label for="radio3${index.count}">관심글</label><br>
                                         	<input type="radio" id="radio4${index.count}" name="radios${index.count}">
                                         	<label for="radio4${index.count}">기타글</label>
                                         	<input type="radio" id="radio5${index.count}" name="radios${index.count}">

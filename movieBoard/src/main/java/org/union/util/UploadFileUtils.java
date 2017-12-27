@@ -70,7 +70,7 @@ public class UploadFileUtils {
 		        File.separator + 
 		        new DecimalFormat("00").format(cal.get(Calendar.DATE));
 		    
-		    makeDir(uploadPath, yearPath,monthPath,datePath);
+		    makeDir(uploadPath, yearPath, monthPath, datePath);
 		    
 		    logger.info(datePath);
 		    
@@ -79,18 +79,18 @@ public class UploadFileUtils {
 		  
 		  
 		  private static void makeDir(String uploadPath, String... paths){
-		    
-		    if(new File(paths[paths.length-1]).exists()){
-		      return;
-		    }
-		    
-		    for (String path : paths) {
-		      
-		      File dirPath = new File(uploadPath + path);
-		      
-		      if(! dirPath.exists() ){
-		        dirPath.mkdir();
-		      } 
-		    }
+			  		    
+			  if(new File(paths[paths.length-1]).exists()){
+			  		      return;
+			  }
+			  		    
+			  for (String path : paths) {
+			  		      
+				  File dirPath = new File(uploadPath + path);
+			  		      
+				  if(! dirPath.exists() ){
+					  dirPath.mkdir();
+				  } 
+			  }
 		  }
 }

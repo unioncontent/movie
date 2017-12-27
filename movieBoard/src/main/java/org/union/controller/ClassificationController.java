@@ -1,9 +1,15 @@
 package org.union.controller;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.annotation.Resource;
+
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.View;
 import org.union.domain.CommunityVO;
 import org.union.domain.ExtractVO;
 import org.union.domain.MediaVO;
@@ -59,9 +66,7 @@ public class ClassificationController {
 	
 	private static Logger logger = LoggerFactory.getLogger(ClassificationController.class);
 	
-	
-	//List<ExtractVO> excelList;
-	
+
 	@GetMapping("/classification")
 	public void classificationGET(@ModelAttribute("cri") SearchCriteria cri, Model model) {
 		logger.info("classificationGET called....");
@@ -405,4 +410,98 @@ public class ClassificationController {
 		return "success";
 	}
 	
+	
+	@Resource(name="imageView")
+    private View imageView;
+
+	@GetMapping("/imageDownload")
+    public ModelAndView sample(SearchCriteria cri) {
+		
+		if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
+			logger.info("keyword is null");
+			cri.setKeyword(null);
+			
+		} 
+		if(cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey()) ) {
+			logger.info("selectKey is null");
+			cri.setSelectKey(null);
+		}
+		
+		if("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate())
+				|| cri.getStartDate() == "" || cri.getEndDate() == ""){
+			cri.setStartDate(null);
+			cri.setEndDate(null);
+		
+		} 
+		if(cri.getStartDate() != null && cri.getEndDate() != null) {
+			logger.info("not null");
+			logger.info(cri.getStartDate());
+			logger.info(cri.getEndDate());
+			if(cri.getStartDate().indexOf("00:00:00") < 0 && cri.getEndDate().indexOf("23:59:59") < 0){ 
+				cri.setStartDate(cri.getStartDate() + " 00:00:00"); 
+				cri.setEndDate(cri.getEndDate() + " 23:59:59"); 
+			}
+		}
+		if(cri.getCompany() != null) {
+			if(cri.getCompany().isEmpty()) {
+				cri.setCompany(null);
+			}
+		}
+		
+		if(cri.getCompany() == null || cri.getCompany().equals("회사")) {
+			logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+			UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
+			
+			if(!vo.getUser_name().equals("union")) {
+			cri.setCompany(vo.getUser_name());
+			
+			}else {
+				cri.setCompany(null);
+			}
+		}
+		if(cri.getTextType() != null) {
+			if(cri.getTextType().equals("undefined") || cri.getTextType().equals("분류") || cri.getTextType().isEmpty()) {
+				cri.setTextType(null);
+			}
+		}
+		
+		logger.info("cri: " + cri);
+		
+		List<ExtractVO> classiList = new ArrayList<ExtractVO>();
+		ListUtil listUtil = new ListUtil();
+		
+		
+		listUtil.listAddCommunityList(classiList, communityService.listAll(cri));
+		listUtil.listAddPortalList(classiList, portalService.listAll(cri));
+		listUtil.listAddMediaList(classiList, mediaService.listAll(cri));
+		
+		ExtractComparator comparator = new ExtractComparator();
+		Collections.sort(classiList, comparator);
+		
+		List<String> fimeNames = new ArrayList<String>();
+		
+		for (ExtractVO vo : classiList) {
+			String thumbnail = vo.getThumbnail();
+			if(thumbnail != null) {
+				fimeNames.add(thumbnail);
+			}
+		}
+		
+        ModelAndView mav = new ModelAndView();
+        mav.setView(this.imageView);
+
+        //File downloadFile = new File("downloadFile");
+        List<File> downloadFiles = new ArrayList<File>();
+        
+        for (String fimeName : fimeNames) {
+        	File downloadFile  = new File("C:\\img" + fimeName);
+        	downloadFiles.add(downloadFile);
+            
+        }
+        
+        mav.addObject("downloadFile", downloadFiles);
+
+        return mav;
+	}
+
 }

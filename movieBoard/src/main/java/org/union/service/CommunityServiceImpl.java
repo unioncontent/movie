@@ -132,8 +132,8 @@ public class CommunityServiceImpl implements CommunityService {
 
 	@Override
 	public void modifyThumbnail(CommunityVO vo) {
-		// TODO Auto-generated method stub
 
+		communityDAO.updateThumbnail(vo);
 	}
 
 	@Override
