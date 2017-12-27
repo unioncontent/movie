@@ -89,7 +89,15 @@ public class ExcelView extends AbstractXlsView {
 				    titleCell.setCellValue(new HSSFRichTextString(vo.getSns_title()));
 
 				    HSSFCell contentCell = dataRow.createCell(5);
-				    contentCell.setCellValue(new HSSFRichTextString(vo.getSns_content()));
+				    if(vo.getSns_content() != null) {
+				    	if(vo.getSns_content().getBytes("UTF-8").length < 20000) {
+					    	contentCell.setCellValue(new HSSFRichTextString(vo.getSns_content()));
+					    	
+					    }else {
+					    	contentCell.setCellValue(new HSSFRichTextString("생략"));
+					    	
+					    }
+				    }
 				    
 				    HSSFCell dateCell = dataRow.createCell(6);
 				    dateCell.setCellValue(new HSSFRichTextString(vo.getUrl()));
@@ -158,7 +166,17 @@ public class ExcelView extends AbstractXlsView {
 				    titleCell.setCellValue(new HSSFRichTextString(vo.getTitle()));
 
 				    HSSFCell contentCell = dataRow.createCell(5);
-				    contentCell.setCellValue(new HSSFRichTextString(vo.getContent()));
+				    
+				    if(vo.getContent() != null) {
+				    	if(vo.getContent().getBytes("UTF-8").length < 20000) {
+					    	contentCell.setCellValue(new HSSFRichTextString(vo.getContent()));
+					    	
+					    }else {
+					    	contentCell.setCellValue(new HSSFRichTextString("생략"));
+					    	
+					    }
+				    }
+				    
 				    
 				    HSSFCell dateCell = dataRow.createCell(6);
 				    dateCell.setCellValue(new HSSFRichTextString(vo.getUrl()));

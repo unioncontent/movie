@@ -71,28 +71,104 @@ $(document).ready(function () {
         },
         function(){
           swal("Success!", "이미지다운 되었습니다.", "success");
+          
+          self.location = "imageDownload?" + "searchType=" + decodeURI(window.location.href.split("&searchType=")[1]).split("&")[0]
+	 	  + "&keyword=" + decodeURI(window.location.href.split("&keyword=")[1]).split("&")[0]
+    	  + "&company=" + $("#selectCompany option:selected").val()
+          + "&selectKey=" + $('#selectKeyword option:selected').val()
+          + "&textType=" + $("#selectTextType option:selected").val()
+  		  + "&startDate=" + makeDateFormat($("#fromDate").val(), 0)
+  		  + "&endDate=" +  makeDateFormat($("#fromDate").val(), 1);
+          
         });
   });
+  
+  var domain = "";
+  var idx = "";
+  
   //이미지 보기 클릭시 모달
-  $(".image").on("click",function(){
-    $('#imageModal').modal('show');
+  $(document).on("click",".image",function(event){
+	  
+	  var tr = event.target.parentElement.parentElement.parentElement.children;
+	  
+	  domain = tr[2].innerHTML;
+	  idx = tr[0].value;
+	  
+	  var thumbName = tr[6].children[0].value;
+	  console.log(thumbName);
+	  
+	  
+	  var path = '../classification/show?name=' + thumbName;
+	  $("#thumbnail").attr("src", path);
+	  $('#imageModal').modal('show');
   });
   //이미지업로드 클릭시
   $(document).on("click",".alert-upload",function(){
-    $("#imageModal").modal("hide");
 
+/*    var formObj = $("#imageForm");
+    
+    formObj.attr("action", "uploadFile");
+	formObj.attr("method", "post");
+    formObj.submit();
+    */
+
+	console.log("domain: " + domain);
+	console.log("idx: " + idx);
+	  
+    console.log($("#imageIinput")[0].files[0]);
+    uploadImage($("#imageIinput")[0].files[0], domain, idx);
+    
     //이미지처리메시지 - 성공시
+    
+    $("#imageModal").modal("hide");
+    
+    
     swal("Success!", "이미지업로드가 되었습니다.", "success");
+    
+    location.reload();
     //이미지처리메시지 - 실패시
     // swal("error!", "이미지업로드가 실패했습니다.", "error");
   });
+  
   //이미지삭제 클릭시
   $(document).on("click",".alert-delete",function(){
-    $("#imageModal").modal("hide");
 
-    //이미지처리메시지 - 성공시
+	  console.log("domain: " + domain);
+	  console.log("idx: " + idx);
+	  
+    $.ajax({
+		url : '/deleteAjax',
+		data : {domain : domain, idx : idx},
+		dataType : 'json',
+		method : 'POST'
+	});
+    
     swal("Success!", "이미지삭제가 되었습니다.", "success");
-    //이미지처리메시지 - 실패시
-    // swal("Delete!", "이미지삭제가 실패했습니다.", "error");
+	
+	$("#imageModal").modal("hide");
+	
+	location.reload();
   });
 });
+
+function uploadImage(file, domain, idx){
+	var formData = new FormData();
+		
+	formData.append("file", file);
+	formData.append("domain", domain);
+	formData.append("idx", idx);
+
+	$.ajax({
+		url : '/uploadAjax',
+		data : formData,
+		dataType : 'text',
+		processData : false,
+		contentType : false,
+		method : 'POST',
+		success : function(data) {
+			console.log(data);
+
+		}
+	});
+	
+}
