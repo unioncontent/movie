@@ -241,7 +241,7 @@
                                     <td>
                                       <c:if test="${extractVO.thumbnail != null}">
                                       	<input type = "hidden" value = "${extractVO.thumbnail}">
-                                      	<div class="image btn-list-image" data-toggle="modal" data-target="#frmModal"><i class="icofont icofont-ui-image"></i></div>
+                                      	<div class="image btn-list-image"><i class="icofont icofont-ui-image"></i></div>
                                       </c:if>
                                       <a href="${extractVO.url}" target="_blank">
                                         <div class="nobr">${extractVO.title}</div>
@@ -476,8 +476,32 @@
                         </div>
                       </div>
                     </div>
+                    </div>
                     <!-- frmModal end -->
                     <!-- modal image show start -->
+                    <!-- modal image show start -->
+                    <div class="modal fade" id="imageModal" tabindex="-1" role="dialog">
+                      <div class="modal-dialog modal-lg" role="document">
+                          <div class="modal-content">
+                              <div class="modal-header">
+                                  <h4 class="modal-title">이미지수정</h4>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                  </button>
+                              </div>
+                              <div class="modal-body">
+                                <div class="imageBox"><img id = "thumbnail" src="../assets/images/capture/Koala.jpg"></div>
+                                <input id = "imageIinput" type="file" name = "file" class="form-control">
+                              </div>
+                              <div class="modal-footer">
+                                  <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">취소</button>
+                                  <button type="button" class="btn btn-danger waves-effect alert-delete">삭제</button>
+                                  <button type="button" class="btn btn-primary waves-effect waves-light alert-upload">업로드</button>
+                              </div>
+                          </div>
+                      </div>
+                    </div>
+                    <%-- <!-- modal image show end -->
                     <div class="modal fade" id="imageModal" tabindex="-1" role="dialog">
                       <div class="modal-dialog modal-lg" role="document">
                           <div class="modal-content">
@@ -503,8 +527,8 @@
                           </div>
                       </div>
                     </div>
-                    <!-- modal image show end -->
-                  </div>
+                    <!-- modal image show end --> --%>
+                  
                 </div>
                 <!-- Page-body end -->
               </div>

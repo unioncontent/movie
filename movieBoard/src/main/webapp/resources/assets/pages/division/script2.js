@@ -71,6 +71,15 @@ $(document).ready(function () {
         },
         function(){
           swal("Success!", "이미지다운 되었습니다.", "success");
+          
+          self.location = "imageDownload?" + "searchType=" + decodeURI(window.location.href.split("&searchType=")[1]).split("&")[0]
+	 	  + "&keyword=" + decodeURI(window.location.href.split("&keyword=")[1]).split("&")[0]
+    	  + "&company=" + $("#selectCompany option:selected").val()
+          + "&selectKey=" + $('#selectKeyword option:selected').val()
+          + "&textType=" + $("#selectTextType option:selected").val()
+  		  + "&startDate=" + makeDateFormat($("#fromDate").val(), 0)
+  		  + "&endDate=" +  makeDateFormat($("#fromDate").val(), 1);
+          
         });
   });
   
@@ -78,7 +87,7 @@ $(document).ready(function () {
   var idx = "";
   
   //이미지 보기 클릭시 모달
-  $(".image").on("click",function(event){
+  $(document).on("click",".image",function(event){
 	  
 	  var tr = event.target.parentElement.parentElement.parentElement.children;
 	  
@@ -103,7 +112,8 @@ $(document).ready(function () {
     formObj.submit();
     */
 
-	  console.log(domain);
+	console.log("domain: " + domain);
+	console.log("idx: " + idx);
 	  
     console.log($("#imageIinput")[0].files[0]);
     uploadImage($("#imageIinput")[0].files[0], domain, idx);
@@ -114,19 +124,30 @@ $(document).ready(function () {
     
     
     swal("Success!", "이미지업로드가 되었습니다.", "success");
+    
+    location.reload();
     //이미지처리메시지 - 실패시
     // swal("error!", "이미지업로드가 실패했습니다.", "error");
   });
+  
   //이미지삭제 클릭시
   $(document).on("click",".alert-delete",function(){
-    $("#imageModal").modal("hide");
 
-    // db textType 삭제...
+	  console.log("domain: " + domain);
+	  console.log("idx: " + idx);
+	  
+    $.ajax({
+		url : '/deleteAjax',
+		data : {domain : domain, idx : idx},
+		dataType : 'json',
+		method : 'POST'
+	});
     
-    //이미지처리메시지 - 성공시
     swal("Success!", "이미지삭제가 되었습니다.", "success");
-    //이미지처리메시지 - 실패시
-    // swal("Delete!", "이미지삭제가 실패했습니다.", "error");
+	
+	$("#imageModal").modal("hide");
+	
+	location.reload();
   });
 });
 
