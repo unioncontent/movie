@@ -6,17 +6,19 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
 import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.servlet.view.AbstractView;
 
 public class ImageView extends AbstractView{
@@ -126,7 +128,7 @@ public class ImageView extends AbstractView{
 	                    zos.write(buf,0,len);
 	                }
 	                
-	                //FileCopyUtils.copy(fis, zos);
+	               //FileCopyUtils.copy(fis, zos);
 	                zos.closeEntry();
 	                bis.close();
 	                fis.close();
@@ -137,6 +139,8 @@ public class ImageView extends AbstractView{
 	                 
 	            }
 	            
+	            //FileCopyUtils.copy(fis, zos);
+	            
 	            zos.flush();
 	            zos.close();
 	            
@@ -145,23 +149,19 @@ public class ImageView extends AbstractView{
 	            response.setContentType("application/zip");
                 response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\";");*/
 
-                /*ZipOutputStream out = new ZipOutputStream(response.getOutputStream());
-		        ZipInputStream in = new FileInputStream(new File("C:\\img\\image.zip"));*/
+                OutputStream out = response.getOutputStream();
+		        FileInputStream in = new FileInputStream(new File("C:\\img\\image.zip"));
 		        
-	            ZipOutputStream out = new ZipOutputStream(response.getOutputStream());
-		        ZipInputStream in = new ZipInputStream(new FileInputStream("C:\\img\\image.zip"));
-	            
+	           
 		        byte[] arBytes = new byte[length];
 		        
 		        in.read(arBytes);
 		        
 		        try {
 		        	
-		        	int i;
-		            while ((i = in.read())!=-1)
-		            	out.write(i);
+		        	System.out.println(arBytes);
 		        	
-		        	//out.write(arBytes);
+		        	out.write(arBytes);
 		            //FileCopyUtils.copy(in, out);
 		            out.flush();
 		           
@@ -194,7 +194,7 @@ public class ImageView extends AbstractView{
 
 	            this.setResponseContentType(request, response);
 	            
-	            this.setDownloadFileName("C:\\img\\image.zip", request, response);
+	            this.setDownloadFileName("image.zip", request, response);
 	            
 	            for (File downloadFile : downloadFiles) {
 	            	length += (int)downloadFile.length();
