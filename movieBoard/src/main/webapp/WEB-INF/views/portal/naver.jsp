@@ -763,6 +763,12 @@
 
    		}else if(type == "month"){
    			var calcDate = month-1;
+   			
+   			if(calcDate == 0){
+	   			calcDate = 12;
+	   			year -= 1;
+	   		}
+   			
    			startDate = year + "-" + calcDate + "-" + day;
 
    		}else if(type == "week"){
