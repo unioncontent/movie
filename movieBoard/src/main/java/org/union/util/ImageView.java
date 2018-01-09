@@ -109,14 +109,16 @@ public class ImageView extends AbstractView{
 	            // Zip 파일생성
 	            zos = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(outZipNm)));
 	            for( int i=0; i < downloadFiles.size(); i++ ){
-	                 
+	                
+	            	
 	                //buffer에 해당파일의 stream을 입력한다. 
 	                fis = new FileInputStream(downloadFiles.get(i).getPath());
 	                bis = new BufferedInputStream(fis,size);
 	                 
 	                //zip에 넣을 다음 entry 를 가져온다.
-	                zos.putNextEntry( new ZipEntry(downloadFiles.get(i).getPath()) );
-	                 
+	                //zos.putNextEntry( new ZipEntry(downloadFiles.get(i).getPath()));
+	                zos.putNextEntry( new ZipEntry(downloadFiles.get(i).getPath().replace("C:\\img\\", "")));
+	                
 	                //압출레벨을 설정한다.
 	                //기본값은 8이라고 한다. 최대는 9이다.
 	                final int COMPRESSION_LEVEL = 8;

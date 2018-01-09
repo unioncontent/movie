@@ -482,7 +482,7 @@ public class ClassificationController {
 		
 		for (ExtractVO vo : classiList) {
 			String thumbnail = vo.getThumbnail();
-			if(thumbnail != null) {
+			if(thumbnail != null && !thumbnail.isEmpty()) {
 				fimeNames.add(thumbnail);
 			}
 		}
