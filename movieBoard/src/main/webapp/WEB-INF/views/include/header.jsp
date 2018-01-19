@@ -12,7 +12,7 @@
         <i class="ti-menu"></i>
       </a>
       <a href="../dashBoard/dashBoard">
-        <img class="img-fluid" src="../assets/images/logo.png" alt="Theme-Logo" />
+        <img class="img-fluid" src="../assets/images/logo.png" alt="Theme-Logo" style='margin-top: 3px;'/>
       </a>
       <a class="mobile-options">
         <i class="ti-more"></i>
