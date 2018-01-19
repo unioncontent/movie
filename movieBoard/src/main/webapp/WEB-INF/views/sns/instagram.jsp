@@ -201,7 +201,7 @@
                             <button id="excel" class="btn btn-warning f-right alert-confirm" ><i class="icofont icofont-download-alt"></i>EXCEL</button>
                           </div>
                           <div class="card-block table-border-style table-responsive">
-                            <table class="table table-bordered table-sm table-fixed">
+                            <table class="table table-bordered table-sm">
                               <thead>
                                 <tr>
                                   <th width="5%">NO</th>
@@ -219,7 +219,7 @@
                                   <tr>
                                     <th scope="row">${totalCount - minusCount - index.count +1}</th>
                                     <td>${snsVO.writeDate}</td>
-                                    <td>${snsVO.keyword}</td>
+                                    <td><div class="keyword-nowrap">${snsVO.keyword}</div></td>
                                     <td><a href="${snsVO.url}" target="_blank">${snsVO.sns_title}</a></td>
                                     <td><div class="writer-nowrap">${snsVO.sns_writer}</div></td>
                                     <td>${snsVO.like_cnt}</td>
