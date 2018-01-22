@@ -1,3 +1,10 @@
+.keyword-nowrap{
+  width: 100px;
+  margin:0 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .btn-list-image{
   margin-right: 0;
   display: inline-block;
