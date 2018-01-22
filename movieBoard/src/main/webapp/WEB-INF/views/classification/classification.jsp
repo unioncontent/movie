@@ -237,7 +237,7 @@
                                     <td>${extractVO.domain}</td>
                                     <td>${extractVO.domainType}</td>
                                     <td>${extractVO.company}</td>
-                                    <td>${extractVO.keyword}</td>
+                                    <td><div class='keyword-nowrap'>${extractVO.keyword}</div></td>
                                     <td>
                                       <c:if test="${extractVO.thumbnail != null}">
                                       	<input type = "hidden" value = "${extractVO.thumbnail}">
@@ -528,7 +528,7 @@
                       </div>
                     </div>
                     <!-- modal image show end --> --%>
-                  
+
                 </div>
                 <!-- Page-body end -->
               </div>
@@ -1086,7 +1086,7 @@
 
 	   	}else if(type == "month"){
 	   		var calcDate = month-1;
-	   		
+
 	   		if(calcDate == 0){
 	   			calcDate = 12;
 	   			year -= 1;
