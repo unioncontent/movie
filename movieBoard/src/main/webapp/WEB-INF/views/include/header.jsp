@@ -25,8 +25,8 @@
             <div class="sidebar_toggle"><a href="javascript:void(0)"><i class="ti-menu"></i></a></div>
           </li>
         </ul>
-      
-              
+
+
         <ul class="nav-right">
           <li class="user-profile header-notification">
             <a href="#!">
@@ -37,15 +37,18 @@
             <ul class="show-notification profile-notification">
               <li>
                 <form id='logoutForm' action="../logoutAction" method="post">
-              	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-              	  <button type = 'submit' id = "logoutBtn">
+                	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+              	  <%-- <button type = 'submit' id = "logoutBtn">
                   <i class="ti-layout-sidebar-left"></i> Logout
-                  </button>
-                   </form>
+                  </button> --%>
+                  <a onclick='$("#logoutForm").submit();'>
+                    <i class="ti-layout-sidebar-left"></i> Logout
+                  </a>
+                </form>
               </li>
-             
+
             </ul>
-            
+
           </li>
         </ul>
       </div>
@@ -53,12 +56,11 @@
   </div>
 </nav>
 
-<script type="text/javascript">
+<%-- <script type="text/javascript">
 	$(document).ready(function(){
 		$("#logoutBtn").on("click", function(){
 			$("#logoutForm").submit();
 		});
 	})
-
-</script>
+</script> --%>
 <!-- top menu end -->
