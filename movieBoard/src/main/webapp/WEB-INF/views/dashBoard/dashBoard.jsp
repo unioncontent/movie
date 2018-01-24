@@ -320,7 +320,7 @@
                         <div class="card">
                           <div class="card-header">
                             <h5><i class="icofont icofont-ui-calendar m-r-5"></i>주요 일정</h5>
-                            <span><p id="date"><fmt:formatDate value="${currTime}" pattern="yyyy 년  MM 월 dd 일" /></p><p id="data">1</p>건의 일정이 있습니다.</span>
+                            <span><p id="date"><fmt:formatDate value="${currTime}" pattern="yyyy년   M월  dd일" /></p><p id="data">0</p>건의 일정이 있습니다.</span>
                             <div class="card-header-right">
                                 <i class="icofont icofont-rounded-down"></i>
                             </div>
@@ -597,10 +597,37 @@ function settingCalendar(){
 	  		script = script.slice(0, -1);
 	  		script += "]";
 
-	  		console.log("script: " + script);
-
-	  		console.log(JSON.parse(script));
-
+	  		//console.log("script: " + script);
+	  		//console.log(JSON.parse(script));
+	  		
+	  		value = JSON.parse(script);
+	  		var length = 0;
+	  		for (var data in value) {
+	  			var todayDate = new Date();
+	  			var dbDate = new Date(value[data].date);
+	  			
+	  			var today = todayDate.getFullYear()+"-"+(todayDate.getMonth()+1)+"-"+todayDate.getDate()
+	  			var dbDay = dbDate.getFullYear()+"-"+(dbDate.getMonth()+1)+"-"+dbDate.getDate()
+	  			
+	  			if(dbDay == today){
+	  				length = length+1
+	  				
+	  				$(".task-content").append("<div class='to-do-label'>\
+	  		                <div class='checkbox-fade fade-in-info'>\
+	  		                  <label class='check-task'>\
+	  		                    <input type='checkbox' checked disabled>\
+	  		                    <span class='cr'><i class='cr-icon icofont icofont-ui-check txt-info'></i></span>\
+	  		                    <span class='task-title-sp'>"+value[data].value+"</span>\
+	  		                    <div class='f-right hidden-phone'>\
+	  		                      <i class='icofont icofont-ui-delete delete_todo'></i>\
+	  		                    </div>\
+	  		                  </label>\
+	  		                </div>\
+	  		              </div>");
+	  			}
+	        }
+	  		$("#data").text(length);
+	  		
 	  	// inline
 	  		  var $ca = $('#mcalendar').calendar({
 	  		      width: '300px',
