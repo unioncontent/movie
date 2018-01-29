@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -320,7 +320,7 @@
                         <div class="card">
                           <div class="card-header">
                             <h5><i class="icofont icofont-ui-calendar m-r-5"></i>주요 일정</h5>
-                            <span><p id="date"><fmt:formatDate value="${currTime}" pattern="yyyy년   M월  dd일" /></p><p id="data">0</p>건의 일정이 있습니다.</span>
+                            <span><p id="date"><fmt:formatDate value="${currTime}" pattern="yyyy 년  MM 월 dd 일" /></p><p id="data">1</p>건의 일정이 있습니다.</span>
                             <div class="card-header-right">
                                 <i class="icofont icofont-rounded-down"></i>
                             </div>
