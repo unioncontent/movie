@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -597,10 +597,40 @@ function settingCalendar(){
 	  		script = script.slice(0, -1);
 	  		script += "]";
 
-	  		console.log("script: " + script);
-
-	  		console.log(JSON.parse(script));
-
+	  		//console.log("script: " + script);
+	  		//console.log(JSON.parse(script));
+	  		
+	  		value = JSON.parse(script);
+	  		var length = 0;
+	  		for (var data in value) {
+	  			var todayDate = new Date();
+	  			var dbDate = new Date(value[data].date);
+	  			
+	  			var today = todayDate.getFullYear()+"-"+(todayDate.getMonth()+1)+"-"+todayDate.getDate()
+	  			var dbDay = dbDate.getFullYear()+"-"+(dbDate.getMonth()+1)+"-"+dbDate.getDate()
+	  			
+	  			if(dbDay == today){
+	  				var vdata = value[data].value.split(",");
+	  				console.log(vdata)
+	  				$.each(vdata, function(key,value){
+	  					length = length+1
+	  		              $(".task-content").append("<div class='to-do-label'>\
+	  		                <div class='checkbox-fade fade-in-info'>\
+	  		                  <label class='check-task'>\
+	  		                    <input type='checkbox' checked disabled>\
+	  		                    <span class='cr'><i class='cr-icon icofont icofont-ui-check txt-info'></i></span>\
+	  		                    <span class='task-title-sp'>"+value+"</span>\
+	  		                    <div class='f-right hidden-phone'>\
+	  		                      <i class='icofont icofont-ui-delete delete_todo'></i>\
+	  		                    </div>\
+	  		                  </label>\
+	  		                </div>\
+	  		              </div>");
+	  		            });
+	  			}
+	        }
+	  		$("#data").text(length);
+	  		
 	  	// inline
 	  		  var $ca = $('#mcalendar').calendar({
 	  		      width: '300px',
