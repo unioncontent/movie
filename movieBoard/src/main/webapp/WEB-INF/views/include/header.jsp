@@ -41,7 +41,7 @@
               	  <%-- <button type = 'submit' id = "logoutBtn">
                   <i class="ti-layout-sidebar-left"></i> Logout
                   </button> --%>
-                  <a onclick='$("#logoutForm").submit();' style='cursor:pointer'>
+                  <a onclick='$("#logoutForm").submit();'>
                     <i class="ti-layout-sidebar-left"></i> Logout
                   </a>
                 </form>
