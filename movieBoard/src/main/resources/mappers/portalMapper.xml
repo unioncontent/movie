@@ -39,7 +39,7 @@
 				and keyword in (select keyword from keyword_data where keyword_main = #{selectKey})
 			</if>
 		<if test="startDate != null">
-			and updateDate <![CDATA[>]]> #{startDate}
+			and updateDate <![CDATA[>=]]> #{startDate}
 			<if test="endDate != null">
 				and updateDate <![CDATA[<]]> #{endDate}
 			</if>
@@ -82,7 +82,7 @@
 				and keyword in (select keyword from keyword_data where keyword_main = #{selectKey})
 			</if>
 		<if test="startDate != null">
-			and writeDate <![CDATA[>]]> #{startDate}
+			and writeDate <![CDATA[>=]]> #{startDate}
 			<if test="endDate != null">
 				and writeDate <![CDATA[<]]> #{endDate}
 			</if>
@@ -517,7 +517,6 @@
 		<include refid="search_writeDate"></include>
 		order 
 			by writeDate desc
-	
 	</select>
 
 	<update id="updateThumbnail">
