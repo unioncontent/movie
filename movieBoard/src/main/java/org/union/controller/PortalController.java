@@ -23,12 +23,14 @@ import org.springframework.web.servlet.ModelAndView;
 import org.union.domain.ExtractVO;
 import org.union.domain.GraphVO;
 import org.union.domain.NaverMovieVO;
+import org.union.domain.MobileEntVO;
 import org.union.domain.PageMaker;
 import org.union.domain.SearchCriteria;
 import org.union.domain.UserVO;
 import org.union.service.EtService;
 import org.union.service.KeywordService;
 import org.union.service.NaverMovieService;
+import org.union.service.MobileEntService;
 import org.union.service.PortalService;
 import org.union.service.UserService;
 import org.union.service.ViralService;
@@ -45,6 +47,9 @@ public class PortalController {
 
 	@Autowired
 	private NaverMovieService naverMovieService;
+	
+	@Autowired
+	private MobileEntService mobileEntService;
 
 	@Autowired
 	private EtService etService;
@@ -59,7 +64,7 @@ public class PortalController {
 	private ViralService viralService;
 
 	private static Logger logger = LoggerFactory.getLogger(PortalController.class);
-
+	
 	@GetMapping("/naver")
 	public void naverGET(@ModelAttribute("cri") SearchCriteria cri, Model model) throws ParseException {
 		logger.info("naverGET called....");
@@ -131,7 +136,7 @@ public class PortalController {
 		model.addAttribute("movieCount", movieCount);
 		model.addAttribute("actorCount", actorCount);
 		
-		// 네이버영화 리스트
+		// 네이버모바일리스트
 		List<NaverMovieVO> movieList = naverMovieService.searchList(cri);
 		Integer totalCount = naverMovieService.getSearchCount(cri);
 		
@@ -185,9 +190,185 @@ public class PortalController {
 
 	}
 	
+	@GetMapping("/naver_mobile")
+	public void naverMobileGET(@ModelAttribute("cri") SearchCriteria cri, Model model) throws ParseException {
+		logger.info("naverGET called....");
+
+		if (cri.getKeyword() == "" || "undefined".equals(cri.getKeyword())) {
+			logger.info("keyword is null");
+			cri.setKeyword(null);
+
+		}
+		if (cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey())) {
+			logger.info("selectKey is null");
+			cri.setSelectKey(null);
+		}
+
+		if ("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate()) || cri.getStartDate() == ""
+				|| cri.getEndDate() == "") {
+			cri.setStartDate(null);
+			cri.setEndDate(null);
+
+		}
+		if (cri.getStartDate() != null && cri.getEndDate() != null) {
+			if (cri.getStartDate().indexOf("00:00:00") < 0 && cri.getEndDate().indexOf("23:59:59") < 0) {
+				cri.setStartDate(cri.getStartDate() + " 00:00:00");
+				cri.setEndDate(cri.getEndDate() + " 23:59:59");
+			}
+		}
+		if (cri.getCompany() != null) {
+			if (cri.getCompany().isEmpty()) {
+				cri.setCompany(null);
+			}
+		}
+		if (cri.getTextType() != null) {
+			if (cri.getTextType().equals("undefined") || cri.getTextType().equals("분류")
+					|| cri.getTextType().isEmpty()) {
+				cri.setTextType(null);
+			}
+		}
+
+		if (cri.getCompany() == null || cri.getCompany().equals("회사")) {
+			logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+			UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
+
+			if (!vo.getUser_name().equals("union")) {
+				cri.setCompany(vo.getUser_name());
+
+			} else {
+				cri.setCompany(null);
+			}
+		}
+
+		// 회사 선택에 따른 키워드 재추출
+		if (cri.getCompany() != null) {
+			if (cri.getCompany().isEmpty() == false) {
+
+				UserVO userVO = userService.viewByName(cri.getCompany());
+				logger.info("userVO: " + userVO);
+				logger.info("keywordList: " + keywordService.listByUser(userVO.getUser_idx()));
+				model.addAttribute("modelKeywordList",
+						keywordService.listByUser(userService.viewByName(cri.getCompany()).getUser_idx()));
+			}
+		}
+
+		logger.info("cri: " + cri);
+		
+		// 영화/배우 
+		Integer movieCount = mobileEntService.getTypeOfMovieCount(cri);
+		Integer actorCount = mobileEntService.getTypeOfActorCount(cri);
+		
+		model.addAttribute("movieCount", movieCount);
+		model.addAttribute("actorCount", actorCount);
+		
+		// 네이버영화 리스트
+		List<MobileEntVO> mobileList = mobileEntService.searchList(cri);
+		Integer totalCount = mobileEntService.getSearchCount(cri);
+				
+		model.addAttribute("mobileList", mobileList);
+		model.addAttribute("totalCount", totalCount);
+		
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setDisplayPageNum(24);
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(totalCount);
+		
+		model.addAttribute("pageMaker", pageMaker);
+		model.addAttribute("minusCount", cri.getPerPageNum() * (cri.getPage()-1));
+	}
+	
+	@GetMapping("/naver_movie")
+	public void naverMovieGET(@ModelAttribute("cri") SearchCriteria cri, Model model) throws ParseException {
+		logger.info("naverGET called....");
+
+		if (cri.getKeyword() == "" || "undefined".equals(cri.getKeyword())) {
+			logger.info("keyword is null");
+			cri.setKeyword(null);
+
+		}
+		if (cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey())) {
+			logger.info("selectKey is null");
+			cri.setSelectKey(null);
+		}
+
+		if ("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate()) || cri.getStartDate() == ""
+				|| cri.getEndDate() == "") {
+			cri.setStartDate(null);
+			cri.setEndDate(null);
+
+		}
+		if (cri.getStartDate() != null && cri.getEndDate() != null) {
+			if (cri.getStartDate().indexOf("00:00:00") < 0 && cri.getEndDate().indexOf("23:59:59") < 0) {
+				cri.setStartDate(cri.getStartDate() + " 00:00:00");
+				cri.setEndDate(cri.getEndDate() + " 23:59:59");
+			}
+		}
+		if (cri.getCompany() != null) {
+			if (cri.getCompany().isEmpty()) {
+				cri.setCompany(null);
+			}
+		}
+		if (cri.getTextType() != null) {
+			if (cri.getTextType().equals("undefined") || cri.getTextType().equals("분류")
+					|| cri.getTextType().isEmpty()) {
+				cri.setTextType(null);
+			}
+		}
+
+		if (cri.getCompany() == null || cri.getCompany().equals("회사")) {
+			logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+			UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
+
+			if (!vo.getUser_name().equals("union")) {
+				cri.setCompany(vo.getUser_name());
+
+			} else {
+				cri.setCompany(null);
+			}
+		}
+
+		// 회사 선택에 따른 키워드 재추출
+		if (cri.getCompany() != null) {
+			if (cri.getCompany().isEmpty() == false) {
+
+				UserVO userVO = userService.viewByName(cri.getCompany());
+				logger.info("userVO: " + userVO);
+				logger.info("keywordList: " + keywordService.listByUser(userVO.getUser_idx()));
+				model.addAttribute("modelKeywordList",
+						keywordService.listByUser(userService.viewByName(cri.getCompany()).getUser_idx()));
+			}
+		}
+
+		logger.info("cri: " + cri);
+		
+		// 영화/배우 
+		Integer movieCount = portalService.getTypeOfMovieCount(cri);
+		Integer actorCount = portalService.getTypeOfActorCount(cri);
+		
+		model.addAttribute("movieCount", movieCount);
+		model.addAttribute("actorCount", actorCount);
+		
+		// 네이버영화리스트
+		List<NaverMovieVO> movieList = naverMovieService.searchList(cri);
+		Integer totalCount = naverMovieService.getSearchCount(cri);
+		
+		PageMaker pageMaker = new PageMaker();
+		
+		model.addAttribute("movieList", movieList);
+		model.addAttribute("totalCount", totalCount);
+		
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(totalCount);
+		
+		model.addAttribute("pageMaker", pageMaker);
+		
+		model.addAttribute("minusCount", cri.getPerPageNum() * (cri.getPage()-1));
+		
+	}
+	
 	@ResponseBody
 	@PostMapping("/graph")
-	public List<GraphVO> graphPOST(String startDate, String endDate, String company, String selectKey) throws ParseException {
+	public List<GraphVO> graphPOST(String startDate, String endDate, String hour, String company, String selectKey) throws ParseException {
 		logger.info("graphPOST called....");
 		
 		if(company.equals("회사") || company.equals("undefined") || company.equals("")) {
@@ -196,11 +377,12 @@ public class PortalController {
 		if(selectKey.equals("키워드") || selectKey.equals("undefined") || selectKey.equals("")) {
 			selectKey = null;
 		}
-		
+		String pstartDate = startDate;
 		startDate = startDate + " 00:00:00";
 		endDate = endDate + " 23:59:59";
 		logger.info("startDate: " + startDate);
 		logger.info("endDate: " + endDate);
+		logger.info("hour: " + hour);
 		
 		SearchCriteria cri = new SearchCriteria();
 		cri.setSelectKey(selectKey);
@@ -211,16 +393,17 @@ public class PortalController {
 		
 		Date transStart = standFormat.parse(startDate);
 		Date transEnd = standFormat.parse(endDate);
-		
-
-		logger.info("gap: " + (transEnd.getTime() - transStart.getTime()) / (24 * 60 * 60 * 1000));
-
+				
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(transStart);
 
 		List<GraphVO> graphList = new ArrayList<GraphVO>();
-
-		while ((transEnd.getTime() - cal.getTimeInMillis()) / (24 * 60 * 60 * 1000) > -1) {
+		
+		long gap = (transEnd.getTime() - transStart.getTime()) / (24 * 60 * 60 * 1000);
+		logger.info("gap: " + gap);
+		
+		if(gap != 0) {
+		    while ((transEnd.getTime() - cal.getTimeInMillis()) / (24 * 60 * 60 * 1000) > -1) {
 
 			cri.setStartDate(standFormat.format(cal.getTime()));
 			cal.add(Calendar.SECOND, (24 * 60 * 60) - 1);
@@ -229,16 +412,16 @@ public class PortalController {
 			GraphVO graphVO = new GraphVO();
 			graphVO.setWriteDate(standFormat.format(cal.getTime()).toString().split(" ")[0]);
 			
-			if(cri.getCompany() == null && cri.getSelectKey() == null) {
-				graphVO.setType2(0);
-			}else {
-				graphVO.setType2(etService.getSearchCountAll(cri));
-			}
-
 			cri.setCompany(null);
 			cri.setSelectKey(null);
-
-			graphVO.setType1(etService.getSearchCountAll(cri));
+			
+			Integer c = mobileEntService.getSearchCount(cri);
+			Integer m = mobileEntService.getTypeOfMovieCount(cri);
+			Integer a = mobileEntService.getTypeOfActorCount(cri);
+			
+			graphVO.setType1(m);
+			graphVO.setType2(a);
+			graphVO.setType3(new Integer( c.intValue() - (m.intValue()+a.intValue()) ));
 
 			cri.setCompany(company);
 			cri.setSelectKey(selectKey);
@@ -246,6 +429,23 @@ public class PortalController {
 			graphList.add(graphVO);
 
 			cal.add(Calendar.SECOND, 1);
+		    }
+		}
+		else {
+		    GraphVO graphVO = new GraphVO();
+		    cri.setHour(hour);
+		    
+		    Integer c = mobileEntService.getSearchCount(cri);
+		    Integer m = mobileEntService.getTypeOfMovieCount(cri);
+		    Integer a = mobileEntService.getTypeOfActorCount(cri);
+		    logger.info("총  "+c.toString());
+		    
+		    graphVO.setWriteDate(pstartDate+' '+hour+":00:00");
+		    graphVO.setType1(m);
+		    graphVO.setType2(a);
+		    graphVO.setType3(new Integer( c.intValue() - (m.intValue()+a.intValue()) ));
+		    
+		    graphList.add(graphVO);
 		}
 		
 		return graphList;
