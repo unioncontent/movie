@@ -18,3 +18,14 @@ table td,table th{
     top: 40px;
     font-size: 35px;
 }
+
+.pCard{
+	margin-bottom: 0px;
+}
+
+.keyword-nowrap{
+  width: 100px;
+  margin:0 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

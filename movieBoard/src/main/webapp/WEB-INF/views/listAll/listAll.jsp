@@ -184,7 +184,7 @@
                             <button id="insertAllBtn" type="button" class="alert-confirm btn btn-primary waves-effect f-right p-r-0 p-l-5 m-l-15 m-b-10  f-right" ><i class="icofont icofont-check-circled"></i>일괄처리</button>
                           	</c:if>
                           </div>
-                          <div class="card-block">
+                          <div class="card-block table-border-style">
                             <div class="table-responsive">
                               <table class="table table-hover">
                                 <thead>
@@ -221,7 +221,7 @@
                                     <td>${extractVO.domain}<span class="text-muted"></span></td>
                                     <td>${extractVO.domainType}</td>
                                     <td>${extractVO.company}<span class="text-muted"></span></td>
-                                    <td>${extractVO.keyword}<span class="text-muted"></span></td>
+                                    <td><div class="keyword-nowrap">${extractVO.keyword}</div><span class="text-muted"></span></td>
                                     <td>
                                       <a href="${extractVO.url}" target="_blank">
                                         <div class="nobr">${extractVO.title}</div>

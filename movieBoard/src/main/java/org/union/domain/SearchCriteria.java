@@ -5,13 +5,23 @@ package org.union.domain;
 public class SearchCriteria extends Criteria {
 
 	
-	private String searchType, keyword, selectKey, company, textType, portal_name, portal_type;
+	private String searchType, keyword, selectKey, company, textType, portal_name, portal_type, hour;
 	private Integer total;
 	private String startDate, endDate;
 
 	
 	public String getPortal_name() {
 		return portal_name;
+	}
+
+
+	public String getHour() {
+	    return hour;
+	}
+
+
+	public void setHour(String hour) {
+	    this.hour = hour;
 	}
 
 
