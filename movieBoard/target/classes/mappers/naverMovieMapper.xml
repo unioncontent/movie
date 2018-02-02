@@ -33,81 +33,45 @@
 					)
 		</if>
 		<if test="selectKey != null">
-				and keyword in (select keyword from keyword_data where keyword_main = #{selectKey})
+				and title_key = #{selectKey}
 			</if>
 		<if test="startDate != null and endDate != null">
 			and writeDate <![CDATA[>]]> #{startDate}
 			and writeDate <![CDATA[<]]> #{endDate}
 		</if>
-		<if test="textType != null">
-			and textType = #{textType}
-		</if>
 	</sql>
- 
- 	<insert id="create">
- 		insert into
- 			NaverMovie_data(NM_title, NM_media_name, NM_reporter_name, writeDate, keyword, keyword_type, url)
- 		values
- 			(#{NM_title}, #{NM_media_name}, #{NM_reporter_name}, #{writeDate}, #{keyword}, #{keyword_type}, #{url})
- 	
- 	</insert>
- 
- 	<select id="read" resultType="NaverMovieVO">
- 		select
- 			*
- 		from
- 			NaverMovie_data
- 		where
- 			NM_idx = #{NM_idx}
- 	
- 	</select>
- 	
- 	<update id="update">
- 		update
- 			NaverMovie_data
- 		set
- 			NM_title = #{NM_title},
- 			NM_media_name = #{NM_media_name},
- 			NM_reporter_name = #{NM_reporter_name},
- 			writeDate = #{writeDate},
- 			keyword = #{keyword},
- 			keyword_type = #{keyword_type},
- 			url = #{url},
- 			updateDate = now()
- 		where
- 			NM_idx = #{NM_idx}
- 	
- 	</update>
- 	
- 	<delete id="delete">
- 		delete from
- 			navermovie_data
- 		where
- 			NM_idx = #{NM_idx}
- 	
- 	</delete>
  	
  	<select id="searchList" resultType="NaverMovieVO">
  		select
  			*
  		from
- 			naverMovie_data
+ 			navermovienews_data
  		where
  			url is not null
- 			
  		<include refid="search"></include>
-		
 		order 
-			by writeDate desc
+			by NM_idx desc
 		limit  
 			#{startPage}, #{perPageNum}
+	</select>
+	
+	<select id="searchAllList" resultType="NaverMovieVO">
+ 		select
+ 			*
+ 		from
+ 			navermovienews_data
+		where 
+			keyword is not null
+ 		<include refid="search"></include>
+		order 
+			by NM_idx desc
 	</select>
 
 	<select id="getSearchCount" resultType="Integer">
 		select
 			count(*)
 		from
-			naverMovie_data
+			navermovienews_data
 		where 
 			url is not null
 		

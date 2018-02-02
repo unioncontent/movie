@@ -67,6 +67,20 @@
 		limit  
 			#{startPage}, #{perPageNum}
 	</select>
+	
+	<select id="searchAllList" resultType="MobileEntVO">
+ 		select
+ 			*
+ 		from
+ 			mobileent_data
+ 		where
+ 			url is not null
+ 			
+ 		<include refid="search"></include>
+ 		
+		order 
+			by ME_idx desc
+	</select>
 
 	<select id="getSearchCount" resultType="Integer">
 		select

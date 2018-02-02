@@ -34,6 +34,8 @@
 <link rel="stylesheet" type="text/css" href="../assets/icon/icofont/css/icofont.css">
 <!-- Menu-Search css -->
 <link rel="stylesheet" type="text/css" href="../assets/pages/menu-search/css/component.css">
+<!-- sweet alert framework -->
+  <link rel="stylesheet" type="text/css" href="../bower_components/sweetalert/dist/sweetalert.css">
 <!-- Horizontal-Timeline css -->
 <link rel="stylesheet" type="text/css" href="../assets/pages/dashboard/horizontal-timeline/css/style.css">
 <!-- font awesome -->
@@ -196,7 +198,7 @@
 																			<div class="nobr content">${movieList.NM_title}</div>
 																	</a></td>
 																	<td>${movieList.keyword}</td>
-																	<td>${movieList.NM_media_name}</td>
+																	<td>${movieList.writer}</td>
 																</tr>
 															</c:forEach>
 														</tbody>
@@ -205,14 +207,14 @@
 																<td colspan="5">
 																	<ul class="pagination float-right">
 																		<c:if test="${pageMaker.prev}">
-																			<li class="page-item"><a class="page-link" href="naver${pageMaker.makeSearch(pageMaker.startPage - 1) }" aria-label="Previous">&laquo; <span aria-hidden="true"></span> <span class="sr-only">Previous</span>
+																			<li class="page-item"><a class="page-link" href="naver_movie${pageMaker.makeSearch(pageMaker.startPage - 1) }" aria-label="Previous">&laquo; <span aria-hidden="true"></span> <span class="sr-only">Previous</span>
 																			</a></li>
 																		</c:if>
 																		<c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
-																			<li class="${pageMaker.cri.page == idx? 'active':''} page-item"><a class="page-link" href="naver${pageMaker.makeSearch(idx)}">${idx}</a></li>
+																			<li class="${pageMaker.cri.page == idx? 'active':''} page-item"><a class="page-link" href="naver_movie${pageMaker.makeSearch(idx)}">${idx}</a></li>
 																		</c:forEach>
 																		<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-																			<li class="page-item"><a class="page-link" href="naver${pageMaker.makeSearch(pageMaker.endPage +1) }" aria-label="Next">&raquo; <span aria-hidden="true"></span> <span class="sr-only">Next</span>
+																			<li class="page-item"><a class="page-link" href="naver_movie${pageMaker.makeSearch(pageMaker.endPage +1) }" aria-label="Next">&raquo; <span aria-hidden="true"></span> <span class="sr-only">Next</span>
 																			</a></li>
 																		</c:if>
 																	</ul>
@@ -300,6 +302,8 @@
 	<!-- c3 chart js -->
 	<script src="../bower_components/d3/d3.min.js"></script>
 	<script src="../bower_components/c3/c3.js"></script>
+	<!-- sweet alert js -->
+  	<script type="text/javascript" src="../bower_components/sweetalert/dist/sweetalert.min.js"></script>
 	<!-- Morris Chart js -->
 	<script src="../bower_components/raphael/raphael.min.js"></script>
 	<script src="../bower_components/morris.js/morris.js"></script>
@@ -479,14 +483,39 @@
 
 		var makeQeury = '${pageMaker.makeQuery(1)}'.slice(0, -2);
 
-		self.location = "naver" + makeQeury
-						+ '10'
+		self.location = "naver_movie" + makeQeury
+						+ '30'
     					+ "&company=" + $("#selectCompany option:selected").val()
 						+ "&selectKey=" + $('#selectKeyword option:selected').val()
     					+ "&startDate=" + makeDateFormat($("#fromDate").val(), 0)
     					+ "&endDate=" +  makeDateFormat($("#fromDate").val(), 1)
 	 	}
+ 	// 엑셀 출력
+	//엑셀출력 확인메시지
+	$(document).on("click",".alert-excel",function(){
+    	swal({
+          title: "엑셀출력 하시겠습니까?",
+          text: "현재 리스트가 엑셀출력 됩니다.",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonClass: "btn-danger",
+          confirmButtonText: "YES",
+          closeOnConfirm: false
+        },
+        function(){//엑셀 출력하겠다고 할 시 진행 함수
 
+        	self.location = "excel?"+
+			  + "&company=" + $("#selectCompany option:selected").val()
+			  + "&selectKey=" + $('#selectKeyword option:selected').val()
+			  + "&startDate=" + makeDateFormat($("#fromDate").val(), 0)
+			  + "&endDate=" + makeDateFormat($("#fromDate").val(), 1)
+			  + "&portal_type=" + "movie";
+
+
+	  		swal("Success!", "엑셀출력 되었습니다.", "success");
+
+        });
+	}); 
 	//날짜 계산 함수
     function getDate(type){
   		console.log("TYPE : " + type);

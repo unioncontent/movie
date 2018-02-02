@@ -15,6 +15,11 @@ public class NaverMovieServiceImpl implements NaverMovieService{
 	@Autowired
 	private NaverMovieDAO naverMovieDAO;
 	
+	@Override
+	public List<NaverMovieVO> searchAllList(SearchCriteria cri) {
+
+		return naverMovieDAO.searchAllList(cri);
+	}
 	
 	@Override
 	public List<NaverMovieVO> searchList(SearchCriteria cri) {

@@ -5,7 +5,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 public class PageMaker {
 
-	
 		private int totalCount;
 		private int startPage;
 		private int endPage;
@@ -104,7 +103,25 @@ public class PageMaker {
 		            .build();	            
 			
 			return uriComponents.toUriString();
-		}	
+		}
+		
+		public String makeSearchMobile(int page){
+			
+			UriComponents uriComponents =
+		            UriComponentsBuilder.newInstance()
+		            .queryParam("page", page)
+		            .queryParam("perPageNum", cri.getPerPageNum())
+		            .queryParam("searchType", ((SearchCriteria)cri).getSearchType())
+		            .queryParam("keyword", ((SearchCriteria)cri).getKeyword())
+		            .queryParam("company", ((SearchCriteria)cri).getCompany())
+		            .queryParam("selectKey", ((SearchCriteria)cri).getSelectKey())
+		            .queryParam("startDate", ((SearchCriteria)cri).getStartDate())
+		            .queryParam("endDate", ((SearchCriteria)cri).getEndDate())
+		            .queryParam("hour", ((SearchCriteria)cri).getHour())
+		            .build();	            
+			
+			return uriComponents.toUriString();
+		}
 		
 		@Override
 		public String toString() {
