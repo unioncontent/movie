@@ -159,12 +159,7 @@
 										<!-- Pc table start -->
 										<div class="card">
 											<div class="card-header">
-												<select id="selectPerPageNum" name="select" class="col-sm-1 form-control form-control-inverse m-r-10 m-b-10 p-r-5 f-left list-select">
-													<option id="30">30</option>
-													<option id="60">60</option>
-													<option id="120">120</option>
-													<option id="150">150</option>
-												</select> <select id="selectSearchType" name="select" class="col-sm-1 form-control form-control-inverse m-r-10 m-b-10 f-left search-select">
+												<select id="selectSearchType" name="select" class="col-sm-1 form-control form-control-inverse m-r-10 m-b-10 f-left search-select">
 													<option id="t" value="t">제목</option>
 													<option id="c" value="c">게시글</option>
 												</select>
@@ -335,10 +330,22 @@
 		  	xhr.setRequestHeader(header, token);
 		  });
 	});
-
+	
 	$(document).ready(function(){
+		var keywordOption = decodeURI(window.location.href.split("selectKey=")[1]).split("&")[0];
+		console.log("keywordOption: " + keywordOption);
+		console.log(decodeURI(window.location.href.split("&")[1]));
 
-
+		var $selectKeyword = $('#selectKeyword');
+		if(keywordOption != 'undefined'){
+			for(var i = 0; i < $selectKeyword[0].length; i++ ){
+				if($selectKeyword[0][i].value == keywordOption){
+					$selectKeyword[0][i].selected = 'selected';
+				}
+			}
+		}
+		$selectKeyword[0][0].disabled = true;
+		
 		var companyOption = decodeURI(window.location.href.split("company=")[1]).split("&")[0];
 		console.log("companyOption: " + companyOption);
 
@@ -352,8 +359,7 @@
 			}
 		}
 		$selectCompany[0][0].disabled = true;
-
-
+		
 		// 회사 선택시
 		$selectCompany.change(function(){
 			console.log("selectCompany clicked....");
@@ -363,25 +369,22 @@
 
 		});
 
-
-		var keywordOption = decodeURI(window.location.href.split("selectKey=")[1]).split("&")[0];
-		console.log("keywordOption: " + keywordOption);
-		console.log(decodeURI(window.location.href.split("&")[1]));
-
-
-
-		var $selectKeyword = $('#selectKeyword');
-
-		if(keywordOption != 'undefined'){
-			for(var i = 0; i < $selectKeyword[0].length; i++ ){
-				if($selectKeyword[0][i].value == keywordOption){
-					$selectKeyword[0][i].selected = 'selected';
-				}
-			}
+		var startDateOption = decodeURI(window.location.href.split("startDate=")[1]).split("&endDate=")[0];
+		var endDateOption = decodeURI(window.location.href.split("endDate=")[1]).split("&")[0];
+		
+		var sDate = new Date(startDateOption);
+		var eDate = new Date(endDateOption);
+		
+		if(startDateOption != 'undefined' && endDateOption != 'undefined' && startDateOption != '' && endDateOption != ''){
+			startDateOption = startDateOption.split(" ")[0];
+			endDateOption = endDateOption.split(" ")[0];
+			$('#fromDate').data('daterangepicker').setStartDate(sDate);
+			$('#fromDate').data('daterangepicker').setEndDate(eDate);
 		}
-		$selectKeyword[0][0].disabled = true;
-
-
+		
+		console.log("startDateOption: " + startDateOption);
+		console.log("endDateOption: " + endDateOption);
+		
 		// 키워드 선택시
 		$selectKeyword.change(function(){
 			console.log("selectKeyword clicked....");
@@ -390,7 +393,10 @@
 			searchList();
 
 		});
-
+		
+		$("#searchBtn").on("click",function(){
+			searchList();
+		});		
 
 		// 당일 클릭시
 		$('#toDay').on("click", function(){
@@ -480,13 +486,12 @@
 	makeDateFormat($("#fromDate").val());
 
     function searchList(event) {
-
 		var makeQeury = '${pageMaker.makeQuery(1)}'.slice(0, -2);
-
-		self.location = "naver_movie" + makeQeury
-						+ '30'
+		self.location = "naver_movie" + makeQeury + "30"
     					+ "&company=" + $("#selectCompany option:selected").val()
 						+ "&selectKey=" + $('#selectKeyword option:selected').val()
+						+ "&searchType=" + $("#selectSearchType option:selected").val()
+					  	+ "&keyword=" + $('#keywordInput').val()
     					+ "&startDate=" + makeDateFormat($("#fromDate").val(), 0)
     					+ "&endDate=" +  makeDateFormat($("#fromDate").val(), 1)
 	 	}
