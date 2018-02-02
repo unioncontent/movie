@@ -259,6 +259,7 @@
 																	<tr>
 																		<th>NO</th>
 																		<th>등록날짜</th>
+																		<th>순위</th>
 																		<th>제목</th>
 																		<th>키워드</th>
 																	</tr>
@@ -268,6 +269,7 @@
 																		<tr>
 																			<th scope="row">${totalCount -index.count +1 -minusCount}</th>
 																			<td>${elist.writeDate}</td>
+																			<td>${elist.ME_rank}</td>
 																			<td>
 																				<div class="nobr content">
 																					<a href="${elist.url}" target="_blank"> ${elist.ME_title} </a>
@@ -298,7 +300,6 @@
 																</tfoot>
 															</table>
 														</div>
-
 													</div>
 												</div>
 												<!-- Pc table end -->
@@ -623,8 +624,9 @@
 				xkey: 'period',
 				ykeys: ['movie', 'actor'],
 				labels: ['영화', '배우'],
-				redraw: true,
 		 	    hideHover: 'auto',
+		 	    pointSize: 0,
+		 	    lineWidth: 0,
 				resize: true,
 				fillOpacity: 0.8,
 				gridLineColor: '#5FBEAA',
