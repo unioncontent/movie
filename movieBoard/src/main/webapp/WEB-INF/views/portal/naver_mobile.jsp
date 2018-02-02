@@ -235,7 +235,7 @@
 													<div class="card-header">
 														<h5>검출량 그래프</h5>
 														<div class="card-header-right">
-															<i class="icofont icofont-rounded-down"></i> <i class="icofont icofont-refresh" data-value="chart2"></i>
+															<i class="icofont icofont-rounded-down"></i></i>
 														</div>
 													</div>
 													<div class="card-block">
