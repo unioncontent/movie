@@ -10,7 +10,7 @@
  		<if test="keyword != null">
 			<if test="searchType != null">
 				<if test="searchType == 't'.toString()">
-					and ME_title like concat('%', #{keyword}, '%')
+					and ME_title like concat('%', #{keyword}, '%') 
 				</if>
 			</if>
 		</if>

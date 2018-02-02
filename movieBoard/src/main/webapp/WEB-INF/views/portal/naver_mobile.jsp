@@ -456,37 +456,40 @@
 			}
 		}
 		$selectKeyword[0][0].disabled = true;
-		$("#fromDate").val("");
-		$("#fromTime").val("");
 		
-	    var startDateOption = decodeURI(window.location.href.split("startDate=")[1]).split("&endDate=")[0]
-		var endDateOption = decodeURI(window.location.href.split("endDate=")[1]).split("&")[0];
-		var hourOption = window.location.href.split("hour")[1];
-		if(hourOption != 'undefined'){
+	    var hourOption = window.location.href.split("hour")[1];
+	    console.log("hourOption: " + hourOption);
+		if(hourOption == "" || hourOption == undefined){
+			hourOption = "00"
+		}
+		else{
 			hourOption = hourOption.replace("=","")
 		}
+		
+		var startDateOption = decodeURI(window.location.href.split("startDate=")[1]).split("&endDate=")[0]
+		var endDateOption = decodeURI(window.location.href.split("endDate=")[1]).split("&")[0];
+		var sDate = new Date(startDateOption);
+		var eDate = new Date(endDateOption);
 		console.log("startDateOption: " + startDateOption);
 		console.log("endDateOption: " + endDateOption);
 
-		if(startDateOption != 'undefined' && endDateOption != 'undefined' && hourOption != 'undefined'
-				&& startDateOption != '' && endDateOption != ''){
+		if(startDateOption != "undefined" && endDateOption != "undefined" && startDateOption != '' && endDateOption != ''){
 			startDateOption = startDateOption.split(" ")[0];
 			endDateOption = endDateOption.split(" ")[0];
-			$("#fromDate").val(startDateOption.replace(/-/g,"/") + " - " + endDateOption.replace(/-/g,"/"));
-			if(hourOption == "" || hourOption == 'undefined'){
-				hourOption = "00"
-			}
-			$("#fromTime").val(hourOption+":00")
+			$('#fromDate').data('daterangepicker').setStartDate(sDate);
+			$('#fromDate').data('daterangepicker').setEndDate(eDate);
+			$("#fromTime").data('DateTimePicker').date(hourOption+":00")
+			console.log("ajaxGraph: " + startDateOption + "/" + endDateOption);
 			ajaxGraph(startDateOption, endDateOption);
+			
+			if(dateCompare()){
+				$("#fromTime").prop('disabled', true);
+			}
 		}
 		else{
-			var now = new Date();
-			var nDate = now.getFullYear() + "-"+ now.getMonth() + "-"+ now.getDate();
-			ajaxGraph(nDate, nDate);
-		}
-		
-		if(dateCompare()){
-			$("#fromTime").prop('disabled', true);
+			var fdate = $('#fromDate').val().split(" - ");
+			console.log("ajaxGraph: " + fdate[0].replace("/","-").replace("/","-") + "/" + fdate[1].replace("/","-").replace("/","-"));
+			ajaxGraph(fdate[0].replace("/","-").replace("/","-"), fdate[1].replace("/","-").replace("/","-"));
 		}
         
 		// 키워드 선택시
@@ -563,10 +566,7 @@
 	function ajaxGraph(startDate, endDate){
 		console.log(startDate + "/" + endDate);
 		var now = new Date();
-		var hour = ""
-		if(startDate == endDate){
-			hour = now.getHours();
-		}
+		
 		$.ajax({
 
 			type : "POST",
@@ -575,7 +575,6 @@
 	 	  	data : {
 	 	  		startDate : startDate, 
 	 	  		endDate : endDate,
-	 	  		hour : hour,
 	 		    company : $("#selectCompany option:selected").val(), 
 	 		    selectKey : $("#selectKeyword option:selected").val()
 			},

@@ -117,7 +117,6 @@ public class PortalController {
 	// 회사 선택에 따른 키워드 재추출
 	if (cri.getCompany() != null) {
 	    if (cri.getCompany().isEmpty() == false) {
-
 		UserVO userVO = userService.viewByName(cri.getCompany());
 		logger.info("userVO: " + userVO);
 		logger.info("keywordList: " + keywordService.listByUser(userVO.getUser_idx()));
@@ -238,7 +237,7 @@ public class PortalController {
 
     @ResponseBody
     @PostMapping("/graph")
-    public List<GraphVO> graphPOST(String startDate, String endDate, String hour, String company, String selectKey) throws ParseException {
+    public List<GraphVO> graphPOST(String startDate, String endDate, String company, String selectKey) throws ParseException {
 	logger.info("graphPOST called....");
 
 	if(company.equals("회사") || company.equals("undefined") || company.equals("")) {
@@ -252,7 +251,6 @@ public class PortalController {
 	endDate = endDate + " 23:59:59";
 	logger.info("startDate: " + startDate);
 	logger.info("endDate: " + endDate);
-	logger.info("hour: " + hour);
 
 	SearchCriteria cri = new SearchCriteria();
 	cri.setSelectKey(selectKey);
@@ -273,16 +271,14 @@ public class PortalController {
 	logger.info("gap: " + gap);
 
 	if(gap != 0) {
-//	    logger.info("======================");
 	    while ((transEnd.getTime() - cal.getTimeInMillis()) / (24 * 60 * 60 * 1000) > -1) {
-		cri.setHour(null);
 		cri.setStartDate(standFormat.format(cal.getTime()));
 		cal.add(Calendar.SECOND, (24 * 60 * 60) - 1);
 		cri.setEndDate(standFormat.format(cal.getTime()));
 		
 		GraphVO graphVO = new GraphVO();
 		graphVO.setWriteDate(standFormat.format(cal.getTime()).toString().split(" ")[0]);
-//		logger.info("cri: " + cri);	
+
 		Integer m = mobileEntService.getTypeOfMovieCount(cri);
 		Integer a = mobileEntService.getTypeOfActorCount(cri);
 
@@ -295,6 +291,9 @@ public class PortalController {
 	    }
 	}
 	else {
+	    cri.setStartDate(startDate);
+	    cri.setEndDate(endDate);
+	    
 	    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	    Date currentTime = new Date();
 	    String oNow = sdf.format(currentTime);
@@ -302,13 +301,11 @@ public class PortalController {
 	    int compare = oNow.compareTo(oDate);
 	    int hourSize = 24;
 	    if(compare==0) {
-		hourSize = Integer.parseInt(hour)+1; 
+		hourSize = currentTime.getHours()+1; 
 	    }
 	    for(int i = 0; i < hourSize; i++) {
 		Date dh = standFormat.parse(oDate+" "+String.valueOf(i)+":00:00");
-
 		cri.setHour(String.valueOf(i));
-
 		Integer m = mobileEntService.getTypeOfMovieCount(cri);
 		Integer a = mobileEntService.getTypeOfActorCount(cri);
 
