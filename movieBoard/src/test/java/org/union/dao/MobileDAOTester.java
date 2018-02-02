@@ -38,24 +38,27 @@ public class MobileDAOTester {
 	cri.setSelectKey(null);
 	cri.setStartDate("2018-02-01 00:00:00");
 	cri.setEndDate("2018-02-01 23:59:59");
-//	 System.out.println(dao.searchAllList(cri).size());
-	List<GraphVO> graphList = new ArrayList<GraphVO>();
-	for(int i = 0; i < 16; i++) {
-		
-		cri.setHour(String.valueOf(i));
-		
-		Integer m = dao.getTypeOfMovieCount(cri);
-		Integer a = dao.getTypeOfActorCount(cri);
-		
-		GraphVO graphVO = new GraphVO();
-		graphVO.setWriteDate(String.valueOf(i));
-		graphVO.setType1(m);
-		graphVO.setType2(a);
-		
-		graphList.add(graphVO);
-	    }
-	for(GraphVO vo:graphList) {
-	    System.out.println(vo.getWriteDate()+":"+vo.getType1()+"/"+vo.getType2());
+	for (MobileEntVO vo : dao.searchList(cri)){
+	    System.out.println(vo);
 	}
+	
+//	List<GraphVO> graphList = new ArrayList<GraphVO>();
+//	for(int i = 0; i < 16; i++) {
+//		
+//		cri.setHour(String.valueOf(i));
+//		
+//		Integer m = dao.getTypeOfMovieCount(cri);
+//		Integer a = dao.getTypeOfActorCount(cri);
+//		
+//		GraphVO graphVO = new GraphVO();
+//		graphVO.setWriteDate(String.valueOf(i));
+//		graphVO.setType1(m);
+//		graphVO.setType2(a);
+//		
+//		graphList.add(graphVO);
+//	    }
+//	for(GraphVO vo:graphList) {
+//	    System.out.println(vo.getWriteDate()+":"+vo.getType1()+"/"+vo.getType2());
+//	}
     }
 }
