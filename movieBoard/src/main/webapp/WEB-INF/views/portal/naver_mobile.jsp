@@ -548,6 +548,7 @@
     		if(dateCompare()){
     			rhour = "";
     		}
+    		
         	self.location = "excel?"+
 			  + "&company=" + $("#selectCompany option:selected").val()
 			  + "&selectKey=" + $('#selectKeyword option:selected').val()
@@ -650,7 +651,7 @@
         var endDateCompare = new Date(endDateArr[0], endDateArr[1], endDateArr[2]);
         var result = false
         
-        if((endDateCompare.getTime() - startDateCompare.getTime())/(24*60*60*1000) > 0) {
+        if((endDateCompare.getTime() - startDateCompare.getTime())/(24*60*60*1000) != 0) {
         	result = true
         }
         

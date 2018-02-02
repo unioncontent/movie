@@ -95,6 +95,12 @@ public class PortalController {
 	    }
 	}
 	
+	if (cri.getHour() != null) {
+	    if (cri.getHour().isEmpty()) {
+		cri.setHour(null);
+	    }
+	}
+	
 	if (cri.getTextType() != null) {
 	    if (cri.getTextType().equals("undefined") || cri.getTextType().equals("분류")
 		    || cri.getTextType().isEmpty()) {
@@ -146,7 +152,7 @@ public class PortalController {
 
 	pageMaker.setCri(cri);
 	pageMaker.setTotalCount(totalCount);
-
+	logger.info("PerPageNum: " + cri.getPerPageNum()+" "+(cri.getPage()-1));
 	model.addAttribute("pageMaker", pageMaker);
 	model.addAttribute("minusCount", cri.getPerPageNum() * (cri.getPage()-1));
     }
@@ -1040,9 +1046,16 @@ public class PortalController {
 		cri.setEndDate(cri.getEndDate() + " 23:59:59"); 
 	    }
 	}
-
+	
+	if (cri.getHour() != null) {
+	    if (cri.getHour().isEmpty()) {
+		cri.setHour(null);
+	    }
+	}
+	
 	logger.info("cri: " + cri);
-
+	logger.info("hour: " + cri.getHour());
+	
 	List<ExtractVO> classiList = new ArrayList<ExtractVO>();
 	ListUtil listUtil = new ListUtil();
 
