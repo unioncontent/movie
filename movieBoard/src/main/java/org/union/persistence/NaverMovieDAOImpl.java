@@ -35,29 +35,12 @@ public class NaverMovieDAOImpl implements NaverMovieDAO {
 		return session.selectOne(namespace + "read", NM_idx);
 	}
 
-	
 	@Override
-	public void update(NaverMovieVO vo) {
-		try {
-			session.update(namespace + "update", vo);
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+	public List<NaverMovieVO> searchAllList(SearchCriteria cri) {
 
+		return session.selectList(namespace + "searchAllList", cri);
+	}
 	
-	@Override
-	public void delete(Integer NM_idx) {
-		try {
-			session.delete(namespace + "delete", NM_idx);
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-
 	@Override
 	public List<NaverMovieVO> searchList(SearchCriteria cri) {
 

@@ -3,15 +3,15 @@ package org.union.util;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.union.domain.CommunityVO;
 import org.union.domain.ExtractVO;
 import org.union.domain.MediaVO;
+import org.union.domain.MobileEntVO;
+import org.union.domain.NaverMovieVO;
 import org.union.domain.PortalVO;
 import org.union.domain.SNSVO;
 import org.union.domain.ViralVO;
-import org.union.service.KeywordService;
 
 @Component
 public class ListUtil {
@@ -122,7 +122,54 @@ public class ListUtil {
 
 		return list;
 	}
+	
+	public List<ExtractVO> listAddMovieList(List<ExtractVO> list, List<NaverMovieVO> addList) {
 
+		try {
+
+			for(int i = 0; i < addList.size(); i++) {
+				ExtractVO vo = new ExtractVO();
+				
+				vo.setDomain("movie");
+				vo.setDomainType("naver");
+				vo.setKeyword_main(addList.get(i).getTitle_key());
+				vo.setKeyword(addList.get(i).getKeyword());
+				vo.setTitle(addList.get(i).getNM_title());
+				vo.setWriter(addList.get(i).getWriter());
+				vo.setUrl(addList.get(i).getUrl());
+				vo.setWriteDate(date.format(addList.get(i).getUpdateDate()));
+				
+				list.add(vo);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return list;
+	}
+	
+	public List<ExtractVO> listAddMobileList(List<ExtractVO> list, List<MobileEntVO> addList) {
+		try {
+			for(int i = 0; i < addList.size(); i++) {
+				ExtractVO vo = new ExtractVO();
+				vo.setDomain("mobile");
+				vo.setDomainType("naver");
+				vo.setKeyword_main(addList.get(i).getTitle_key());
+				vo.setKeyword(addList.get(i).getKeyword());
+				vo.setTitle(addList.get(i).getME_title());
+				vo.setWriteDate(addList.get(i).getWriteDate());
+				vo.setUrl(addList.get(i).getUrl());
+				
+				list.add(vo);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return list;
+	}
 	public List<ExtractVO> listAddMediaList(List<ExtractVO> list, List<MediaVO> addList) {
 
 		try {

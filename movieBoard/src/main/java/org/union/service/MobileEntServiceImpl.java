@@ -1,6 +1,5 @@
 package org.union.service;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +31,14 @@ public class MobileEntServiceImpl implements MobileEntService{
 	public List<MobileEntVO> searchList(SearchCriteria cri) {
 
 		List<MobileEntVO> list = mobileEntDAO.searchList(cri);
+		
+		return list;
+	}
+	
+	@Override
+	public List<MobileEntVO> searchAllList(SearchCriteria cri) {
+
+		List<MobileEntVO> list = mobileEntDAO.searchAllList(cri);
 		
 		return list;
 	}

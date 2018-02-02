@@ -1,6 +1,5 @@
 package org.union.persistence;
 
-import java.util.Date;
 import java.util.List;
 
 import org.union.domain.MobileEntVO;
@@ -15,6 +14,8 @@ public interface MobileEntDAO {
 	public MobileEntVO read(Integer NM_idx);
 	
 	public List<MobileEntVO> searchList(SearchCriteria cri);
+	
+	public List<MobileEntVO> searchAllList(SearchCriteria cri);
 	
 	public Integer getSearchCount(SearchCriteria cri);
 	

@@ -1,6 +1,5 @@
 package org.union.service;
 
-import java.util.Date;
 import java.util.List;
 
 import org.union.domain.MobileEntVO;
@@ -13,6 +12,8 @@ public interface MobileEntService {
 	public Integer getTypeOfActorCount(SearchCriteria cri);
 	
 	public List<MobileEntVO> searchList(SearchCriteria cri);
+	
+	public List<MobileEntVO> searchAllList(SearchCriteria cri);
 	
 	public Integer getSearchCount(SearchCriteria cri);
 }
