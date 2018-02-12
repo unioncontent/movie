@@ -4,7 +4,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <title>OverWare</title>
   <!-- HTML5 Shim and Respond.js IE9 support of HTML5 elements and media queries -->
