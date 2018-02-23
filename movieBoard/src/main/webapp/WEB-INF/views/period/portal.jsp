@@ -262,35 +262,35 @@
                                               </tr>
                                               <tr>
                                                   <th scope="row">카페</th>
-                                                  <c:forEach items="${naver2}" var="count">
-                                                  <td><fmt:formatNumber value="${count.lik}" groupingUsed="true"/></td>
-                                                      <td><fmt:formatNumber value="${count.dis}" groupingUsed="true"/></td>
-                                                      <td><fmt:formatNumber value="${count.cu}" groupingUsed="true"/></td>
-                                                      <td><fmt:formatNumber value="${count.etc}" groupingUsed="true"/></td>
-                                                      <td><fmt:formatNumber value="${count.lik + count.dis + count.cu
-                                                       + count.etc}" groupingUsed="true"/></td>
+                                                  <c:forEach items="${naver2}" var="count2">
+                                                  <td><fmt:formatNumber value="${count2.lik}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${count2.dis}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${count2.cu}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${count2.etc}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${count2.lik + count2.dis + count2.cu
+                                                       + count2.etc}" groupingUsed="true"/></td>
                                                   </c:forEach>
                                               </tr>
                                               <tr>
                                                   <th scope="row">지식인</th>
-                                                  <c:forEach items="${naver3}" var="count">
-                                                  <td><fmt:formatNumber value="${count.lik}" groupingUsed="true"/></td>
-                                                      <td><fmt:formatNumber value="${count.dis}" groupingUsed="true"/></td>
-                                                      <td><fmt:formatNumber value="${count.cu}" groupingUsed="true"/></td>
-                                                      <td><fmt:formatNumber value="${count.etc}" groupingUsed="true"/></td>
-                                                      <td><fmt:formatNumber value="${count.lik + count.dis + count.cu
-                                                       + count.etc}" groupingUsed="true"/></td>
+                                                  <c:forEach items="${naver3}" var="count3">
+                                                  <td><fmt:formatNumber value="${count3.lik}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${count3.dis}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${count3.cu}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${count3.etc}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${count3.lik + count3.dis + count3.cu
+                                                       + count3.etc}" groupingUsed="true"/></td>
                                                   </c:forEach>
                                               </tr>
                                               <tr>
                                                   <th scope="row">웹문서</th>
-                                                  <c:forEach items="${naver4}" var="count">
-                                                  <td><fmt:formatNumber value="${count.lik}" groupingUsed="true"/></td>
-                                                      <td><fmt:formatNumber value="${count.dis}" groupingUsed="true"/></td>
-                                                      <td><fmt:formatNumber value="${count.cu}" groupingUsed="true"/></td>
-                                                      <td><fmt:formatNumber value="${count.etc}" groupingUsed="true"/></td>
-                                                      <td><fmt:formatNumber value="${count.lik + count.dis + count.cu
-                                                       + count.etc}" groupingUsed="true"/></td>
+                                                  <c:forEach items="${naver4}" var="count4">
+                                                  <td><fmt:formatNumber value="${count4.lik}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${count4.dis}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${count4.cu}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${count4.etc}" groupingUsed="true"/></td>
+                                                      <td><fmt:formatNumber value="${count4.lik + count4.dis + count4.cu
+                                                       + count4.etc}" groupingUsed="true"/></td>
                                                   </c:forEach>
                                               </tr>
                                           </tbody>

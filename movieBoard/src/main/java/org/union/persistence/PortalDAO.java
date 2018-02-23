@@ -46,11 +46,17 @@ public interface PortalDAO {
 	
 	public List<PortalVO> listNaver(SearchCriteria cri);
 	public Integer getNaverCount(SearchCriteria cri);
-	public List<TextTypeVO> naverTextTypeCount(String type);
+	public List<TextTypeVO> naverTextTypeCountb(SearchCriteria cri);
+	public List<TextTypeVO> naverTextTypeCountc(SearchCriteria cri);
+	public List<TextTypeVO> naverTextTypeCountk(SearchCriteria cri);
+	public List<TextTypeVO> naverTextTypeCountw(SearchCriteria cri);
 	
 	public List<PortalVO> listDaum(SearchCriteria cri);
 	public Integer getDaumCount(SearchCriteria cri);
-	public List<TextTypeVO> daumTextTypeCount(String type);
+	public List<TextTypeVO> daumTextTypeCountb(SearchCriteria cri);
+	public List<TextTypeVO> daumTextTypeCountc(SearchCriteria cri);
+	public List<TextTypeVO> daumTextTypeCountk(SearchCriteria cri);
+	public List<TextTypeVO> daumTextTypeCountw(SearchCriteria cri);
 	
 	public List<PortalVO> listExtract(SearchCriteria cri);
 	

@@ -43,7 +43,27 @@
 			order by createDate desc 
 			limit 1
 		</if>
-		
+	</select>
 	
+	<select id="portalBMonitor" parameterType="Map" resultType="PortalVO">
+		select * 
+		from portal_data 
+		where portal_type='blog' and portal_name='naver' and createDate >=  date_format(now(), '%x-%m-%d')
+		order by createDate desc 
+		limit 1;
+	</select>
+	<select id="portalCMonitor" parameterType="Map" resultType="PortalVO">
+		select * 
+		from portal_data 
+		where portal_type='cafe' and portal_name='naver' and createDate >=  date_format(now(), '%x-%m-%d')
+		order by createDate desc 
+		limit 1;
+	</select>
+	<select id="portalWMonitor" parameterType="Map" resultType="PortalVO">
+		select * 
+		from portal_data 
+		where portal_type='webdoc' and portal_name='naver' and createDate >=  date_format(now(), '%x-%m-%d')
+		order by createDate desc 
+		limit 1;
 	</select>
 </mapper>

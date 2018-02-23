@@ -1,24 +1,59 @@
 package org.union.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+import org.union.domain.GraphVO;
+import org.union.domain.ReporterVO;
+import org.union.domain.SearchCriteria;
+import org.union.domain.TextTypeVO;
 import org.union.domain.UserVO;
+import org.union.service.CommunityService;
+import org.union.service.KeywordService;
+import org.union.service.MediaService;
 import org.union.service.MonitorService;
+import org.union.service.PortalService;
+import org.union.service.ReporterService;
+import org.union.service.SNSService;
 import org.union.service.UserService;
 
 @Controller
 @RequestMapping("/manage/*")
 public class ManageController {
 
+	private static Logger logger = LoggerFactory.getLogger(ManageController.class);
+	
+	@Autowired
+	private MediaService mediaService;
+	
+	@Autowired
+	private CommunityService communityService;
+
+	@Autowired
+	private PortalService portalService;
+	
+	@Autowired
+	private SNSService snsService;
+
+	@Autowired
+	private KeywordService keywordService;
 	
 	@Autowired
 	private UserService userService;
@@ -26,9 +61,9 @@ public class ManageController {
 	@Autowired
 	private MonitorService monitorService;
 	
-	private static Logger logger = LoggerFactory.getLogger(ManageController.class);
-	
-	
+	@Autowired
+	private ReporterService reporterService;
+
 	@GetMapping("/company")
 	public void companyGET(Model model) {
 		logger.info("companyGET called....");
@@ -78,7 +113,297 @@ public class ManageController {
 	public void monitorGET(Model model) {
 		logger.info("monitorGET called....");
 		
+		
 		model.addAttribute("monitorList", monitorService.pageAll());
+		model.addAttribute("portalBList", monitorService.portalBMonitor());
+		model.addAttribute("portalCList", monitorService.portalCMonitor());
+		model.addAttribute("portalWList", monitorService.portalWMonitor());
+	}
+	
+	@PostMapping("/report")
+	public ModelAndView report(String startDate, String endDate) {
+		
+		ModelAndView mav=new ModelAndView();
+		mav.addObject("date", startDate);
+		mav.addObject("date2", endDate);
+		mav.setViewName("manage/report");
+		return mav;
+	}
+	
+	@GetMapping("/report")
+	public void reportGet(@ModelAttribute("cri") SearchCriteria cri, Model model, String startDate, String endDate, String company, String selectKey) throws Exception{
+		logger.info("reportGET called....");
+		
+		cri.setKeyword(null);
+		cri.setTextType(null);
+		
+		if(cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey()) ) {
+			logger.info("selectKey is null");
+			cri.setSelectKey(null);
+		}
+		if("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate())
+				|| cri.getStartDate() == "" || cri.getEndDate() == ""){
+			cri.setStartDate(null);
+			cri.setEndDate(null);
+		
+		} 
+		if(cri.getStartDate() != null && cri.getEndDate() != null) {
+			logger.info("not null");
+			logger.info(cri.getStartDate());
+			logger.info(cri.getEndDate());
+			if(cri.getStartDate().indexOf("00:00:00") < 0 && cri.getEndDate().indexOf("23:59:59") < 0){ 
+				cri.setStartDate(cri.getStartDate() + " 00:00:00"); 
+				cri.setEndDate(cri.getEndDate() + " 23:59:59"); 
+			}
+		}
+		
+		
+		if(cri.getCompany() != null) {
+			if(cri.getCompany().isEmpty()) {
+				cri.setCompany(null);
+			}
+		}
+		if(cri.getCompany() == null || cri.getCompany().equals("회사")) {
+			logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+			UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
+			
+			if(!vo.getUser_name().equals("union")) {
+			cri.setCompany(vo.getUser_name());
+			
+			}else {
+				cri.setCompany(null);
+			}
+		}
+
+		// 회사 선택에 따른 키워드 재추출
+		if (cri.getCompany() != null) {	
+			if (cri.getCompany().isEmpty() == false) {
+
+				UserVO userVO = userService.viewByName(cri.getCompany());
+				logger.info("userVO: " + userVO);
+				logger.info("keywordList: " + keywordService.listByUser(userVO.getUser_idx()));
+				model.addAttribute("modelKeywordList",
+						keywordService.listByUser(userService.viewByName(cri.getCompany()).getUser_idx()));
+			}
+		}
+		
+		logger.info("cri: " + cri);
+		
+		model.addAttribute("portalCount", portalService.wgetSearchCount(cri));
+		model.addAttribute("communityCount", communityService.wgetSearchCount(cri));
+		model.addAttribute("snsCount", snsService.getSearchCount(cri));
+		model.addAttribute("mediaCount", mediaService.wgetSearchCount(cri));
+		
+		model.addAttribute("portalTextType", portalService.textTypeCount(cri));
+		model.addAttribute("communityTextType", communityService.textTypeCount(cri));
+		
+		model.addAttribute("blogTextType", portalService.blogTextType(cri));
+		model.addAttribute("cafeTextType", portalService.cafeTextType(cri));
+		
+		model.addAttribute("facebookTT", snsService.facebookSum(cri));
+		model.addAttribute("twitterTT", snsService.twitterSum(cri));
+		model.addAttribute("instagramTT", snsService.instagramSum(cri));
+		
+		model.addAttribute("naverMediaCount", mediaService.naverMediaCount(cri));
+		model.addAttribute("daumMediaCount", mediaService.daumMediaCount(cri));
+		
+		model.addAttribute("startDate", startDate);
+		model.addAttribute("endDate", endDate);
+		model.addAttribute("company", company);
+		model.addAttribute("selectKey", selectKey);
+	}
+	
+	@ResponseBody
+	@PostMapping("/getTextType")
+	public List<TextTypeVO> getTextType(String url, String part, String keyword){
+		logger.info("getTextType called....");
+
+		SearchCriteria cri  = new SearchCriteria();
+		
+		if(!url.equals("undefined")) {
+			String company = url.split("company")[1].split("&")[0];
+			String selectKey = url.split("selectKey")[1].split("&")[0];
+			String startDate = url.split("startDate")[1].split("&")[0] + " 00:00:00";
+			String endDate = url.split("endDate")[1].split("&")[0] + " 23:59:50";
+			
+			cri.setCompany(company);
+			cri.setSelectKey(selectKey);
+			cri.setStartDate(startDate);
+			cri.setEndDate(endDate);
+		}
+		
+		cri.setKeyword(keyword);
+		
+		logger.info("cri: " + cri);
+		
+		List<TextTypeVO> list = new ArrayList<TextTypeVO>();
+		
+		if(part.equals("media")) {
+			list.add(mediaService.getMediaPortalCount(cri));
+			list.add(mediaService.getMediaTextTypeTotalCount(cri));
+			list.add(mediaService.getMediaTextTypeSearchCount(cri));
+			
+		}else if(part.equals("press")) {
+			list.add(mediaService.getPressPortalCount(cri));
+			list.add(mediaService.getPressTextTypeTotalCount(cri));
+			list.add(mediaService.getPressTextTypeSearchCount(cri));
+			
+			TextTypeVO textTypeVO = new TextTypeVO();
+			ReporterVO reporterVO = reporterService.readByName(keyword);
+			
+			try {
+				textTypeVO.setName1(reporterVO.getReporter_name());
+				textTypeVO.setName2(reporterVO.getReporter_media_name());
+				if(reporterVO.getReporter_email() != null) {
+					textTypeVO.setEmail(reporterVO.getReporter_email());
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				
+			}finally {
+				list.add(textTypeVO);
+			}
+			
+		}
+		
+		return list;
+	}
+	
+	@PostMapping("/graph")
+	@ResponseBody
+	public List<GraphVO> graphPOST(String startDate, String endDate, String company, String selectKey, String part) throws Exception{
+		logger.info("grpahPOST called....");
+		
+		logger.info("company: " + company);
+		logger.info("selectKey: " + selectKey);
+		
+		if(company == null || company.equals("회사")) {
+			logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+			UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
+			
+			if(!vo.getUser_name().equals("union")) {
+				company = vo.getUser_name();
+			
+			}else {
+				company = null;
+			}
+		}
+		if(selectKey != null) {
+			if(selectKey.isEmpty() || selectKey.equals("키워드")) {
+				selectKey = null;
+			}
+		}
+		
+		startDate = startDate + " 00:00:00";
+		endDate = endDate + " 23:59:59";
+		logger.info("startDate: " + startDate);
+		logger.info("endDate: " + endDate);
+		
+		SearchCriteria cri = new SearchCriteria();
+		cri.setSelectKey(selectKey);
+		cri.setCompany(company);
+		logger.info("cri: " + cri);
+		logger.info("part: " + part);
+		
+		SimpleDateFormat standFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		
+		Date transStart = standFormat.parse(startDate);
+		Date transEnd = standFormat.parse(endDate);
+		
+		Long gap = (transEnd.getTime() - transStart.getTime()) / (24 * 60 * 60 * 1000);
+		logger.info("gap: " + gap);
+		
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(transStart);
+
+		List<GraphVO> graphList = new ArrayList<GraphVO>();
+		
+		if(part.equals("sns")) {
+			for(int i = 0; i < gap +1; i++) {
+				
+				cri.setStartDate(standFormat.format(cal.getTime()));
+				cal.add(Calendar.SECOND, ((24 * 60 * 60) -1));
+				cri.setEndDate(standFormat.format(cal.getTime()));
+				
+				GraphVO graphVO = new GraphVO();
+				graphVO.setWriteDate(standFormat.format(cal.getTime()).toString().split(" ")[0]);
+				graphVO.setFacebookCount(snsService.facebookTotalCount(cri));
+				graphVO.setInstagramCount(snsService.instaTotalCount(cri));
+				graphVO.setTwitterCount(snsService.twitterTotalCount(cri));
+				
+				graphList.add(graphVO);
+				
+				cal.add(Calendar.SECOND, 1);
+			}
+		
+		}else if(part.equals("community")) {
+			for(int i = 0; i < gap +1; i++) {
+				
+				cri.setStartDate(standFormat.format(cal.getTime()));
+				cal.add(Calendar.SECOND, (24 * 60 * 60) -1);
+				cri.setEndDate(standFormat.format(cal.getTime()));
+				
+				GraphVO graphVO = new GraphVO();
+				graphVO.setWriteDate(standFormat.format(cal.getTime()).toString().split(" ")[0]);
+				cri.setTextType("좋은글");
+				graphVO.setType1(communityService.getSearchCount(cri));
+				
+				cri.setTextType("나쁜글");
+				graphVO.setType2(communityService.getSearchCount(cri));
+				
+				cri.setTextType("관심글");
+				graphVO.setType3(communityService.getSearchCount(cri));
+				
+				cri.setTextType("기타글");
+				graphVO.setType4(communityService.getSearchCount(cri));
+				
+				cri.setTextType(null);
+				
+				graphList.add(graphVO);
+				
+				cal.add(Calendar.SECOND, 1);
+			}
+		}else if(part.equals("portal")) {
+			for(int i = 0; i < gap +1; i++) {
+				
+			cri.setStartDate(standFormat.format(cal.getTime()));
+			cal.add(Calendar.SECOND, (24 * 60 * 60) -1);
+			cri.setEndDate(standFormat.format(cal.getTime()));
+				
+			GraphVO graphVO = new GraphVO();
+			graphVO.setWriteDate(standFormat.format(cal.getTime()).toString().split(" ")[0]);
+			graphVO.setType1(portalService.getNaverCount(cri));
+			graphVO.setType2(portalService.getDaumCount(cri));
+				
+			graphList.add(graphVO);
+				
+			cal.add(Calendar.SECOND, 1);
+			}
+			
+			
+		}else if(part.equals("main")) {
+			for(int i = 0; i < gap +1; i++) {
+				
+				cri.setStartDate(standFormat.format(cal.getTime()));
+				cal.add(Calendar.SECOND, (24 * 60 * 60) -1);
+				cri.setEndDate(standFormat.format(cal.getTime()));
+					
+				GraphVO graphVO = new GraphVO();
+				graphVO.setWriteDate(standFormat.format(cal.getTime()).toString().split(" ")[0]);
+				graphVO.setType1(portalService.getSearchCount(cri));
+				graphVO.setType2(communityService.getSearchCount(cri));
+				graphVO.setType3(snsService.getSearchCount(cri));
+				graphVO.setType4(mediaService.getSearchCount(cri));
+					
+				graphList.add(graphVO);
+					
+				cal.add(Calendar.SECOND, 1);
+				}
+		}
+			
+		
+		return graphList;
+		
 	}
 	
 	

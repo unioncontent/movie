@@ -96,28 +96,81 @@
                                 <thead>
                                   <tr>
                                     <th width="5%">NO</th>
-                                    <th width="5%">분류</th>
-                                    <th width="5%">운영여부</th>
-                                    <th width="5%">아이디</th>
-                                    <th width="5%">사이트명</th>
+                                    <th width="5%">대분류</th>
+                                    <th width="5%">중분류</th>
+                                    <th width="5%">소분류</th>
                                     <th width="30%">마지막 수집글 제목</th>
                                     <th width="10%">날짜</th>
                                     <th width="5%">상태</th>
                                   </tr>
                                 </thead>
                                 <tbody>
-                                  <c:forEach items="${monitorList}" var="monitor" varStatus="index">
+                                  <c:forEach items="${portalBList}" var="portal" varStatus="index">
                                   <tr>
-                                    <th scope="row">${index.count}</th>
-                                    <td>${monitor.monitor_domain}</td>
+                                    <th scope="row">1</th>
+                                    <td>Portal</td>
+                                    <td>${portal.portal_name}</td>
+                                    <td>${portal.portal_type}</td>
+                                    <td><a href="${portal.url}" target="_blank">${portal.portal_title}</a></td>
+                                    <td><fmt:formatDate value="${portal.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>
                                     <td>
-                                    <c:if test="${monitor.checkCondition == true}">운영중</c:if>
-                                    <c:if test="${monitor.checkCondition == false}">미운영</c:if>
+                                      <div class="form-radio">
+                                        <!-- radio-success:정상/radio-danger:비정상 -->
+                                        <div class="radio radiofill radio-success  radio-inline">
+                                            <c:if test="${monitor.checkCondition == true}">
+                                            <label>
+                                                <input type="radio" name="radio${index.count}" checked="checked">
+                                                <i class="helper"></i>정상
+                                            </label>
+                                            </c:if>
+                                            <c:if test="${monitor.checkCondition == false}">
+                                            <label>
+                                                <input type="radio" name="radio">
+                                                <i class="helper"></i>비정상
+                                            </label>
+                                            </c:if>
+                                        </div>
+                                      </div>
                                     </td>
-                                    <td>${monitor.monitor_id}</td>
-                                    <td>${monitor.monitor_site}</td>
-                                    <td><a href="${monitor.url}" target="_blank">${monitor.title}</a></td>
-                                    <td>${monitor.createDate}</td>
+                                  </tr>
+                                  </c:forEach>
+                                  <c:forEach items="${portalCList}" var="portalc" varStatus="index">
+                                  <tr>
+                                    <th scope="row">2</th>
+                                    <td>Portal</td>
+                                    <td>${portalc.portal_name}</td>
+                                    <td>${portalc.portal_type}</td>
+                                    <td><a href="${portalc.url}" target="_blank">${portalc.portal_title}</a></td>
+                                    <td><fmt:formatDate value="${portalc.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>
+                                    <td>
+                                      <div class="form-radio">
+                                        <!-- radio-success:정상/radio-danger:비정상 -->
+                                        <div class="radio radiofill radio-success  radio-inline">
+                                            <c:if test="${monitor.checkCondition == true}">
+                                            <label>
+                                                <input type="radio" name="radio${index.count}" checked="checked">
+                                                <i class="helper"></i>정상
+                                            </label>
+                                            </c:if>
+                                            <c:if test="${monitor.checkCondition == false}">
+                                            <label>
+                                                <input type="radio" name="radio">
+                                                <i class="helper"></i>비정상
+                                            </label>
+                                            </c:if>
+                                        </div>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                  </c:forEach>
+                                  <c:forEach items="${portalWList}" var="portalw" varStatus="index">
+                                  <tr>
+                                    <th scope="row">3</th>
+                                    <td>Portal</td>
+                                    <td>${portalw.portal_name}</td>
+                                    <td>${portalw.portal_type}</td>
+                                    <td><a href="${portalw.url}" target="_blank">${portalw.portal_title}</a></td>
+                                    <td><fmt:formatDate value="${portalw.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>
                                     <td>
                                       <div class="form-radio">
                                         <!-- radio-success:정상/radio-danger:비정상 -->

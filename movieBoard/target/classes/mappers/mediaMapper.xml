@@ -103,9 +103,9 @@
 				and keyword in (select keyword from keyword_data where keyword_main = #{selectKey})
 			</if>
 		<if test="startDate != null">
-			and writeDate <![CDATA[>]]> #{startDate}
+			and writeDate <![CDATA[>=]]> #{startDate}
 			<if test="endDate != null">
-				and writeDate <![CDATA[<]]> #{endDate}
+				and writeDate <![CDATA[<=]]> #{endDate}
 			</if>
 		</if>
 		<if test="textType != null">
@@ -209,12 +209,12 @@
  	
  	<select id="naverMediaCount" resultType="TextTypeVO">
  		select 
- 		count(if(textType='좋은글', textType, null)) lik,
-		count(if(textType='나쁜글', textType, null)) dis,
-		count(if(textType='관심글', textType, null)) cu,
-		count(if(textType='기타글', textType, null)) etc,
-		count(if(textType is not null and texttype!='삭제글', textType, null)) al
- 		from media_data where keyword='press' and media_name = 'naver'
+ 		count(if(textType='좋은글', textType, null)) lik, 
+ 		count(if(textType='나쁜글', textType, null)) dis, 
+ 		count(if(textType='관심글', textType, null)) cu, 
+ 		count(if(textType='기타글', textType, null)) etc, 
+ 		count(if(textType is not null and texttype!='삭제글', textType, null)) al
+		from media_data where media_name = 'naver'
  		<include refid="search_writeDate"></include>
  	</select>
  	
@@ -225,7 +225,7 @@
 		count(if(textType='관심글', textType, null)) cu,
 		count(if(textType='기타글', textType, null)) etc,
 		count(if(textType is not null and texttype!='삭제글', textType, null)) al
- 		from media_data where keyword='press' and media_name = 'daum'
+ 		from media_data where media_name = 'daum'
  		<include refid="search_writeDate"></include>
  	</select>
  	
@@ -236,14 +236,12 @@
 		count(if(textType='관심글', textType, null)) cu,
 		count(if(textType='기타글', textType, null)) etc,
 		count(if(textType is not null and texttype!='삭제글', textType, null)) al
- 		from media_data where textType is not null
+ 		from union.media_data where textType is not null
  		<if test="textType != 'press'.toString()">
-  		and 
-  			keyword = 'press'
-  			
+  			and keyword = 'press'
 	  		<if test="startDate != null and endDate != null">
-				and updateDate <![CDATA[>=]]> #{startDate}
-				and updateDate <![CDATA[<=]]> #{endDate}
+				and left(writeDate,10) <![CDATA[>=]]> #{startDate}
+				and left(writeDate,10) <![CDATA[<=]]> #{endDate}
 			</if>
   		</if>
   		<if test="textType != null">

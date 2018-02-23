@@ -134,6 +134,7 @@ public class PeriodController {
 		model.addAttribute("twitterTT", snsService.twitterSum(cri));
 		model.addAttribute("instagramTT", snsService.instagramSum(cri));
 		
+		
 		model.addAttribute("naverMediaCount", mediaService.naverMediaCount(cri));
 		model.addAttribute("daumMediaCount", mediaService.daumMediaCount(cri));
 		
@@ -297,15 +298,15 @@ public class PeriodController {
 		logger.info("pageMaker: " + pageMaker);
 		model.addAttribute("pageMaker", pageMaker);
 		
-		model.addAttribute("naver1", portalService.naverTextTypeCount("blog"));
-		model.addAttribute("naver2", portalService.naverTextTypeCount("cafe"));
-		model.addAttribute("naver3", portalService.naverTextTypeCount("kintip"));
-		model.addAttribute("naver4", portalService.naverTextTypeCount("webdoc"));
+		model.addAttribute("naver1", portalService.naverTextTypeCountb(cri));
+		model.addAttribute("naver2", portalService.naverTextTypeCountc(cri));
+		model.addAttribute("naver3", portalService.naverTextTypeCountk(cri));
+		model.addAttribute("naver4", portalService.naverTextTypeCountw(cri));
 		
-		model.addAttribute("daum1", portalService.daumTextTypeCount("blog"));
-		model.addAttribute("daum2", portalService.daumTextTypeCount("cafe"));
-		model.addAttribute("daum3", portalService.daumTextTypeCount("kintip"));
-		model.addAttribute("daum4", portalService.daumTextTypeCount("webdoc"));
+		model.addAttribute("daum1", portalService.daumTextTypeCountb(cri));
+		model.addAttribute("daum2", portalService.daumTextTypeCountc(cri));
+		model.addAttribute("daum3", portalService.daumTextTypeCountk(cri));
+		model.addAttribute("daum4", portalService.daumTextTypeCountw(cri));
 
 	}
 
