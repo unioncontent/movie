@@ -170,15 +170,45 @@ public class PortalServiceImpl implements PortalService {
 	}
 
 	@Override
-	public List<TextTypeVO> naverTextTypeCount(String type) {
+	public List<TextTypeVO> naverTextTypeCountb(SearchCriteria cri) {
 
-		return portalDAO.naverTextTypeCount(type);
+		return portalDAO.naverTextTypeCountb(cri);
+	}
+	@Override
+	public List<TextTypeVO> naverTextTypeCountc(SearchCriteria cri) {
+		
+		return portalDAO.naverTextTypeCountc(cri);
+	}
+	@Override
+	public List<TextTypeVO> naverTextTypeCountk(SearchCriteria cri) {
+		
+		return portalDAO.naverTextTypeCountk(cri);
+	}
+	@Override
+	public List<TextTypeVO> naverTextTypeCountw(SearchCriteria cri) {
+		
+		return portalDAO.naverTextTypeCountw(cri);
 	}
 
 	@Override
-	public List<TextTypeVO> daumTextTypeCount(String type) {
+	public List<TextTypeVO> daumTextTypeCountb(SearchCriteria cri) {
 
-		return portalDAO.daumTextTypeCount(type);
+		return portalDAO.daumTextTypeCountb(cri);
+	}
+	@Override
+	public List<TextTypeVO> daumTextTypeCountc(SearchCriteria cri) {
+		
+		return portalDAO.daumTextTypeCountc(cri);
+	}
+	@Override
+	public List<TextTypeVO> daumTextTypeCountk(SearchCriteria cri) {
+		
+		return portalDAO.daumTextTypeCountk(cri);
+	}
+	@Override
+	public List<TextTypeVO> daumTextTypeCountw(SearchCriteria cri) {
+		
+		return portalDAO.daumTextTypeCountw(cri);
 	}
 
 	@Override

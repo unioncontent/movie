@@ -159,16 +159,46 @@ public class PortalDAOImpl implements PortalDAO {
 
 
 	@Override
-	public List<TextTypeVO> naverTextTypeCount(String type) {
+	public List<TextTypeVO> naverTextTypeCountb(SearchCriteria cri) {
 
-		return session.selectList(namespace + "naverTextTypeCount", type);
+		return session.selectList(namespace + "naverTextTypeCountb", cri);
+	}
+	@Override
+	public List<TextTypeVO> naverTextTypeCountc(SearchCriteria cri) {
+		
+		return session.selectList(namespace + "naverTextTypeCountc", cri);
+	}
+	@Override
+	public List<TextTypeVO> naverTextTypeCountk(SearchCriteria cri) {
+		
+		return session.selectList(namespace + "naverTextTypeCountk", cri);
+	}
+	@Override
+	public List<TextTypeVO> naverTextTypeCountw(SearchCriteria cri) {
+		
+		return session.selectList(namespace + "naverTextTypeCountw", cri);
 	}
 
 
 	@Override
-	public List<TextTypeVO> daumTextTypeCount(String type) {
+	public List<TextTypeVO> daumTextTypeCountb(SearchCriteria cri) {
 
-		return session.selectList(namespace + "daumTextTypeCount", type);
+		return session.selectList(namespace + "daumTextTypeCountb", cri);
+	}
+	@Override
+	public List<TextTypeVO> daumTextTypeCountc(SearchCriteria cri) {
+		
+		return session.selectList(namespace + "daumTextTypeCountc", cri);
+	}
+	@Override
+	public List<TextTypeVO> daumTextTypeCountk(SearchCriteria cri) {
+		
+		return session.selectList(namespace + "daumTextTypeCountk", cri);
+	}
+	@Override
+	public List<TextTypeVO> daumTextTypeCountw(SearchCriteria cri) {
+		
+		return session.selectList(namespace + "daumTextTypeCountw", cri);
 	}
 
 

@@ -137,6 +137,13 @@
               <span class="pcoded-mcaret"></span>
             </a>
           </li>
+           <li class=" ">
+            <a href="../manage/report" data-i18n="nav.advance-components.grid-stack">
+              <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+              <span class="pcoded-mtext">보고서 관리</span>
+              <span class="pcoded-mcaret"></span>
+            </a>
+          </li>
         </ul>
       </li>
       <c:if test="${user.user_name == 'union'}">
