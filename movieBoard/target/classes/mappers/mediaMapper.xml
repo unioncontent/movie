@@ -296,6 +296,8 @@
 			media_data
 		where 
 			textType is not null
+		and 
+			textType!='삭제글'
 		<include refid="search"></include>
 		order 
 			by updateDate desc
@@ -322,6 +324,24 @@
 			media_data
 		where 
 			textType is not null
+		and 
+			textType!='삭제글'
+		<include refid="search_writeDate"></include>
+		order 
+			by updateDate desc
+		limit  
+			#{startPage}, #{perPageNum}
+ 	
+ 	</select>
+ 	<select id="wlistSearch2" resultType="MediaVO">
+ 		select 
+			*
+		from 
+			media_data
+		where 
+			textType is not null
+		and 
+			textType!='삭제글'
 		<include refid="search_writeDate"></include>
 		order 
 			by updateDate desc
@@ -337,9 +357,24 @@
 			media_data
 		where
 			textType is not null
+		and
+			textType!='삭제글'
 		<include refid="search_writeDate"></include>
 			
 	</select>
+	
+ 	<!-- <select id = "wgetSearchCount2" resultType="Integer">
+		select
+			count(*)
+		from
+			media_data
+		where
+			textType is not null
+		and
+			textType!='삭제글'
+		<include refid="search_writeDate"></include>
+			
+	</select> -->
  	
  	<select id="getTotalCount" resultType="Integer">
  		select
@@ -348,6 +383,8 @@
  			media_data
  		where
  			textType is not null
+ 		and
+			textType!='삭제글'
  		<if test="startDate != null and endDate != null">
 			and writeDate <![CDATA[>]]> #{startDate}
 			and writeDate <![CDATA[<]]> #{endDate}
@@ -361,6 +398,8 @@
  			media_data
  		where 
 	 		textType is not null
+	 	and
+			textType!='삭제글'
  		<include refid="search_writeDate"></include>
  	</select>
  	
@@ -371,6 +410,8 @@
 			media_data
 		where 
 			textType is not null
+		and
+			textType!='삭제글'
 		<include refid="search"></include>
  	
  	</select>
@@ -393,6 +434,8 @@
  			media_data
  		where
  			media_name = #{keyword}
+ 		and
+			textType!='삭제글'
  		<if test="startDate != null and endDate != null">
 			and updateDate <![CDATA[>]]> #{startDate}
 			and updateDate <![CDATA[<]]> #{endDate}

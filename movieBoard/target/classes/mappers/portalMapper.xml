@@ -527,6 +527,8 @@
 			textType is not null
 		and
 			score is null
+		and 
+			textType!='삭제글'	
 		<include refid="search_writeDate"></include>
 		order 
 			by updateDate desc
