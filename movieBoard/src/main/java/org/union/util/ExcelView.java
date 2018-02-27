@@ -139,6 +139,10 @@ public class ExcelView extends AbstractXlsView {
 		}
 		titleList.add("URL");
 		titleList.add("작성날짜");
+		titleList.add("추출날짜");
+		titleList.add("이미지명");
+		
+		
 
 		HSSFRow titleRow = sheet.createRow(rowIdx++);
 		for (int i = 0; i < titleList.size(); i++) {
@@ -209,6 +213,14 @@ public class ExcelView extends AbstractXlsView {
 		    cellIdx += 1;
 		    HSSFCell urlCell = dataRow.createCell(cellIdx);
 		    urlCell.setCellValue(new HSSFRichTextString(vo.getWriteDate()));
+		    
+		    cellIdx += 1;
+		    HSSFCell createCell = dataRow.createCell(cellIdx);
+		    createCell.setCellValue(new HSSFRichTextString(vo.getCreateDate()));
+		    
+		    cellIdx += 1;
+		    HSSFCell imgCell = dataRow.createCell(cellIdx);
+		    imgCell.setCellValue(new HSSFRichTextString(vo.getThumbnail()));
 
 		}
 

@@ -15,6 +15,8 @@ public class SNSVO {
 	private Integer share_cnt;
 	private String writeDate;
 	private String keyword_main;
+	private boolean checkCondition;
+	
 	public String getKeyword_main() {
 		return keyword_main;
 	}
@@ -124,6 +126,13 @@ public class SNSVO {
 	public void setUpdateDate(Date updateDate) {
 		this.updateDate = updateDate;
 	}
+	public boolean isCheckCondition() {
+		return checkCondition;
+	}
+	public void setCheckCondition(boolean checkCondition) {
+		this.checkCondition = checkCondition;
+	}
+	
 	@Override
 	public String toString() {
 		return "SNSVO [sns_idx=" + sns_idx + ", sns_name=" + sns_name + ", sns_title=" + sns_title + ", sns_content="

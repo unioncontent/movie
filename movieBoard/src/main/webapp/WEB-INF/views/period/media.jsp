@@ -379,7 +379,7 @@
                                         <tbody>
                                           <c:forEach items="${searchList}" var = "mediaVO" varStatus="index">
                                           <tr>
-                                            <th scope="row">${totalCountPage - minusCount - index.count + 1}</th>
+                                            <th scope="row">${totalCountPage -index.count +1 -minusCount}</th>
                                             <td>
                                             <fmt:formatDate value="${mediaVO.updateDate}" pattern="yyyy-MM-dd kk:mm:ss"/>
                                             </td>

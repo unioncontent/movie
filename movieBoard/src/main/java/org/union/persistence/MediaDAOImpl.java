@@ -94,6 +94,12 @@ public class MediaDAOImpl implements MediaDAO {
 		
 		return session.selectList(namespace + "wlistSearch", vo);
 	}
+	
+	@Override
+	public List<MediaVO> wlistSearch2(SearchCriteria vo) {
+		
+		return session.selectList(namespace + "wlistSearch2", vo);
+	}
 
 	
 	@Override
