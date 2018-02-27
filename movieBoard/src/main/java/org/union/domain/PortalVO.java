@@ -21,6 +21,9 @@ public class PortalVO {
 	private Date updateDate;
 	private String writer;
 	private Integer score;
+	private boolean checkCondition;
+	
+	
 	public Integer getPortal_idx() {
 		return portal_idx;
 	}
@@ -117,6 +120,13 @@ public class PortalVO {
 	public void setScore(Integer score) {
 		this.score = score;
 	}
+	public boolean isCheckCondition() {
+		return checkCondition;
+	}
+	public void setCheckCondition(boolean checkCondition) {
+		this.checkCondition = checkCondition;
+	}
+	
 	@Override
 	public String toString() {
 		return "PortalVO [portal_idx=" + portal_idx + ", portal_name=" + portal_name + ", portal_type=" + portal_type

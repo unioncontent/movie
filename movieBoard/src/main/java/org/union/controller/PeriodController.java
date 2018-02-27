@@ -394,6 +394,7 @@ public class PeriodController {
 		  String keyword=  cri.getKeyword();
 		  cri.setKeyword(null);
 		  model.addAttribute("searchList", mediaService.wlistSearch(cri));
+		  model.addAttribute("searchList2", mediaService.wlistSearch2(cri));
 		  PageMaker pageMaker = new PageMaker();
 		  
 		  Integer totalCount = mediaService.wgetSearchCount(cri);

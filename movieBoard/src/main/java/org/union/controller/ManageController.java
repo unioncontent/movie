@@ -118,6 +118,44 @@ public class ManageController {
 		model.addAttribute("portalBList", monitorService.portalBMonitor());
 		model.addAttribute("portalCList", monitorService.portalCMonitor());
 		model.addAttribute("portalWList", monitorService.portalWMonitor());
+		model.addAttribute("portalBList2", monitorService.portalBMonitor2());
+		model.addAttribute("portalCList2", monitorService.portalCMonitor2());
+		model.addAttribute("portalWList2", monitorService.portalWMonitor2());
+		
+		model.addAttribute("snsListf", monitorService.snsMonitorf());
+		model.addAttribute("snsListi", monitorService.snsMonitori());
+		model.addAttribute("snsListt", monitorService.snsMonitort());
+		
+		model.addAttribute("mediaListA", monitorService.mediaMonitor("naver"));
+		model.addAttribute("mediaListB", monitorService.mediaMonitor("daum"));
+		
+		model.addAttribute("communityList1", monitorService.communityMonitor("82cook"));
+		model.addAttribute("communityList2", monitorService.communityMonitor("besthgc"));
+		model.addAttribute("communityList3", monitorService.communityMonitor("bestiz"));
+		model.addAttribute("communityList4", monitorService.communityMonitor("bobae"));
+		model.addAttribute("communityList5", monitorService.communityMonitor("bobaedream"));
+		model.addAttribute("communityList6", monitorService.communityMonitor("clien"));
+		model.addAttribute("communityList7", monitorService.communityMonitor("dcinside"));
+		model.addAttribute("communityList8", monitorService.communityMonitor("dogdrip"));
+		model.addAttribute("communityList9", monitorService.communityMonitor("dramameeting"));
+		model.addAttribute("communityList10", monitorService.communityMonitor("dyb"));
+		model.addAttribute("communityList11", monitorService.communityMonitor("egloos"));
+		model.addAttribute("communityList12", monitorService.communityMonitor("extrememovie"));
+		model.addAttribute("communityList13", monitorService.communityMonitor("humoruniv"));
+		model.addAttribute("communityList14", monitorService.communityMonitor("ilbe"));
+		model.addAttribute("communityList15", monitorService.communityMonitor("ilyo"));
+		model.addAttribute("communityList16", monitorService.communityMonitor("instiz"));
+		model.addAttribute("communityList17", monitorService.communityMonitor("inven"));
+		model.addAttribute("communityList18", monitorService.communityMonitor("issuein"));
+		model.addAttribute("communityList19", monitorService.communityMonitor("mlbpark"));
+		model.addAttribute("communityList20", monitorService.communityMonitor("ppomppu"));
+		model.addAttribute("communityList21", monitorService.communityMonitor("ruliweb"));
+		model.addAttribute("communityList22", monitorService.communityMonitor("soccerline"));
+		model.addAttribute("communityList23", monitorService.communityMonitor("square"));
+		model.addAttribute("communityList24", monitorService.communityMonitor("theqoo"));
+		model.addAttribute("communityList25", monitorService.communityMonitor("tistory"));
+		model.addAttribute("communityList26", monitorService.communityMonitor("todayhumor"));
+		model.addAttribute("communityList27", monitorService.communityMonitor("ygosu"));
 	}
 	
 	@PostMapping("/report")

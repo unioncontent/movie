@@ -6,6 +6,7 @@ public class MonitorVO {
 	private String monitor_domain, monitor_site, monitor_id;
 	private boolean checkCondition;
 	private String title, url, createDate;
+	
 	public Integer getMonitor_idx() {
 		return monitor_idx;
 	}

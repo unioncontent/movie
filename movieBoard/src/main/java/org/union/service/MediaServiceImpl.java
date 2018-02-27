@@ -148,6 +148,26 @@ public class MediaServiceImpl implements MediaService {
 	}
 	
 	@Override
+	public List<MediaVO> wlistSearch2(SearchCriteria vo) {
+		
+		List<MediaVO> list = mediaDAO.wlistSearch2(vo);
+		
+		for (MediaVO mediaVO : list) {
+			if(mediaVO.getKeyword() != null && !mediaVO.getKeyword().equals("press")) {
+				
+				try {
+					mediaVO.setKeyword_main(keywordDAO.read(mediaVO.getKeyword()).getKeyword_main());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+			}
+		}
+		
+		return mediaDAO.listSearch(vo);
+	}
+	
+	@Override
 	public Integer wgetSearchCount(SearchCriteria cri) {
 
 		return mediaDAO.wgetSearchCount(cri);

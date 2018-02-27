@@ -117,13 +117,13 @@
                                       <div class="form-radio">
                                         <!-- radio-success:정상/radio-danger:비정상 -->
                                         <div class="radio radiofill radio-success  radio-inline">
-                                            <c:if test="${monitor.checkCondition == true}">
+                                            <c:if test="${portal.checkCondition == true}">
                                             <label>
-                                                <input type="radio" name="radio${index.count}" checked="checked">
+                                                <input type="radio" name="radio1" checked="checked">
                                                 <i class="helper"></i>정상
                                             </label>
                                             </c:if>
-                                            <c:if test="${monitor.checkCondition == false}">
+                                            <c:if test="${portal.checkCondition == false}">
                                             <label>
                                                 <input type="radio" name="radio">
                                                 <i class="helper"></i>비정상
@@ -146,13 +146,13 @@
                                       <div class="form-radio">
                                         <!-- radio-success:정상/radio-danger:비정상 -->
                                         <div class="radio radiofill radio-success  radio-inline">
-                                            <c:if test="${monitor.checkCondition == true}">
+                                            <c:if test="${portalc.checkCondition == true}">
                                             <label>
-                                                <input type="radio" name="radio${index.count}" checked="checked">
+                                                <input type="radio" name="radio2" checked="checked">
                                                 <i class="helper"></i>정상
                                             </label>
                                             </c:if>
-                                            <c:if test="${monitor.checkCondition == false}">
+                                            <c:if test="${portalc.checkCondition == false}">
                                             <label>
                                                 <input type="radio" name="radio">
                                                 <i class="helper"></i>비정상
@@ -175,13 +175,13 @@
                                       <div class="form-radio">
                                         <!-- radio-success:정상/radio-danger:비정상 -->
                                         <div class="radio radiofill radio-success  radio-inline">
-                                            <c:if test="${monitor.checkCondition == true}">
+                                            <c:if test="${portalw.checkCondition == true}">
                                             <label>
-                                                <input type="radio" name="radio${index.count}" checked="checked">
+                                                <input type="radio" name="radio3" checked="checked">
                                                 <i class="helper"></i>정상
                                             </label>
                                             </c:if>
-                                            <c:if test="${monitor.checkCondition == false}">
+                                            <c:if test="${portalw.checkCondition == false}">
                                             <label>
                                                 <input type="radio" name="radio">
                                                 <i class="helper"></i>비정상
@@ -192,6 +192,1021 @@
                                     </td>
                                   </tr>
                                   </c:forEach>
+                                  <c:forEach items="${portalBList2}" var="portal2" varStatus="index">
+                                  <tr>
+                                    <th scope="row">4</th>
+                                    <td>Portal</td>
+                                    <td>${portal2.portal_name}</td>
+                                    <td>${portal2.portal_type}</td>
+                                    <td><a href="${portal2.url}" target="_blank">${portal2.portal_title}</a></td>
+                                    <td><fmt:formatDate value="${portal2.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>
+                                    <td>
+                                      <div class="form-radio">
+                                        <!-- radio-success:정상/radio-danger:비정상 -->
+                                        <div class="radio radiofill radio-success  radio-inline">
+                                            <c:if test="${portal2.checkCondition == true}">
+                                            <label>
+                                                <input type="radio" name="radio4" checked="checked">
+                                                <i class="helper"></i>정상
+                                            </label>
+                                            </c:if>
+                                            <c:if test="${portal.checkCondition == false}">
+                                            <label>
+                                                <input type="radio" name="radio">
+                                                <i class="helper"></i>비정상
+                                            </label>
+                                            </c:if>
+                                        </div>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                  </c:forEach>
+                                  <c:forEach items="${portalCList2}" var="portalc2" varStatus="index">
+                                  <tr>
+                                    <th scope="row">5</th>
+                                    <td>Portal</td>
+                                    <td>${portalc2.portal_name}</td>
+                                    <td>${portalc2.portal_type}</td>
+                                    <td><a href="${portalc2.url}" target="_blank">${portalc2.portal_title}</a></td>
+                                    <td><fmt:formatDate value="${portalc2.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>
+                                    <td>
+                                      <div class="form-radio">
+                                        <!-- radio-success:정상/radio-danger:비정상 -->
+                                        <div class="radio radiofill radio-success  radio-inline">
+                                            <c:if test="${portalc2.checkCondition == true}">
+                                            <label>
+                                                <input type="radio" name="radio5" checked="checked">
+                                                <i class="helper"></i>정상
+                                            </label>
+                                            </c:if>
+                                            <c:if test="${portalc.checkCondition == false}">
+                                            <label>
+                                                <input type="radio" name="radio">
+                                                <i class="helper"></i>비정상
+                                            </label>
+                                            </c:if>
+                                        </div>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                  </c:forEach>
+                                  <c:forEach items="${portalWList2}" var="portalw2" varStatus="index">
+                                  <tr>
+                                    <th scope="row">6</th>
+                                    <td>Portal</td>
+                                    <td>${portalw2.portal_name}</td>
+                                    <td>${portalw2.portal_type}</td>
+                                    <td><a href="${portalw2.url}" target="_blank">${portalw2.portal_title}</a></td>
+                                    <td><fmt:formatDate value="${portalw2.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>
+                                    <td>
+                                      <div class="form-radio">
+                                        <!-- radio-success:정상/radio-danger:비정상 -->
+                                        <div class="radio radiofill radio-success  radio-inline">
+                                            <c:if test="${portalw2.checkCondition == true}">
+                                            <label>
+                                                <input type="radio" name="radio6" checked="checked">
+                                                <i class="helper"></i>정상
+                                            </label>
+                                            </c:if>
+                                            <c:if test="${portalw2.checkCondition == false}">
+                                            <label>
+                                                <input type="radio" name="radio">
+                                                <i class="helper"></i>비정상
+                                            </label>
+                                            </c:if>
+                                        </div>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                  </c:forEach>
+                                  <c:forEach items="${snsListf}" var="snsListf" varStatus="index">
+                                  <tr>
+                                    <th scope="row">7</th>
+                                    <td>SNS</td>
+                                    <td>${snsListf.sns_name}</td>
+                                    <td>페이스북</td>
+                                    <td><a href="${snsListf.url}" target="_blank">${snsListf.sns_title}</a></td>
+                                    <td><fmt:formatDate value="${snsListf.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>
+                                    <td>
+                                      <div class="form-radio">
+                                        <!-- radio-success:정상/radio-danger:비정상 -->
+                                        <div class="radio radiofill radio-success  radio-inline">
+                                            <c:if test="${snsListf.checkCondition == true}">
+                                            <label>
+                                                <input type="radio" name="radio7" checked="checked">
+                                                <i class="helper"></i>정상
+                                            </label>
+                                            </c:if>
+                                            <c:if test="${snsListf.checkCondition == false}">
+                                            <label>
+                                                <input type="radio" name="radio7">
+                                                <i class="helper"></i>비정상
+                                            </label>
+                                            </c:if>
+                                        </div>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                  </c:forEach>
+                                  <c:forEach items="${snsListi}" var="snsListi" varStatus="index">
+                                  <tr>
+                                    <th scope="row">8</th>
+                                    <td>SNS</td>
+                                    <td>${snsListi.sns_name}</td>
+                                    <td>인스타그램</td>
+                                    <td><a href="${snsListi.url}" target="_blank">${snsListi.sns_title}</a></td>
+                                    <td><fmt:formatDate value="${snsListi.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>
+                                    <td>
+                                      <div class="form-radio">
+                                        <!-- radio-success:정상/radio-danger:비정상 -->
+                                        <div class="radio radiofill radio-success  radio-inline">
+                                            <c:if test="${snsListi.checkCondition == true}">
+                                            <label>
+                                                <input type="radio" name="radio8" checked="checked">
+                                                <i class="helper"></i>정상
+                                            </label>
+                                            </c:if>
+                                            <c:if test="${snsListi.checkCondition == false}">
+                                            <label>
+                                                <input type="radio" name="radio">
+                                                <i class="helper"></i>비정상
+                                            </label>
+                                            </c:if>
+                                        </div>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                  </c:forEach>
+                                  <c:forEach items="${snsListt}" var="snsListt" varStatus="index">
+                                  <tr>
+                                    <th scope="row">9</th>
+                                    <td>SNS</td>
+                                    <td>${snsListt.sns_name}</td>
+                                    <td>트위터</td>
+                                    <td><a href="${snsListt.url}" target="_blank">${snsListt.sns_title}</a></td>
+                                    <td><fmt:formatDate value="${snsListt.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>
+                                    <td>
+                                      <div class="form-radio">
+                                        <!-- radio-success:정상/radio-danger:비정상 -->
+                                        <div class="radio radiofill radio-success  radio-inline">
+                                            <c:if test="${snsListt.checkCondition == true}">
+                                            <label>
+                                                <input type="radio" name="radio9" checked="checked">
+                                                <i class="helper"></i>정상
+                                            </label>
+                                            </c:if>
+                                            <c:if test="${snsListt.checkCondition == false}">
+                                            <label>
+                                                <input type="radio" name="radio">
+                                                <i class="helper"></i>비정상
+                                            </label>
+                                            </c:if>
+                                        </div>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                  </c:forEach>
+                                  <c:forEach items="${mediaListA}" var="mediaListA" varStatus="index">
+                                  <tr>
+                                    <th scope="row">10</th>
+                                    <td>Media</td>
+                                    <td>${mediaListA.media_name}</td>
+                                    <td>네이버</td>
+                                    <td><a href="${mediaListA.url}" target="_blank">${mediaListA.media_title}</a></td>
+                                    <td><fmt:formatDate value="${mediaListA.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>
+                                    <td>
+                                      <div class="form-radio">
+                                        <!-- radio-success:정상/radio-danger:비정상 -->
+                                        <div class="radio radiofill radio-success  radio-inline">
+                                            <c:if test="${mediaListA.checkCondition == true}">
+                                            <label>
+                                                <input type="radio" name="radio10" checked="checked">
+                                                <i class="helper"></i>정상
+                                            </label>
+                                            </c:if>
+                                            <c:if test="${mediaListA.checkCondition == false}">
+                                            <label>
+                                                <input type="radio" name="radio">
+                                                <i class="helper"></i>비정상
+                                            </label>
+                                            </c:if>
+                                        </div>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                 </c:forEach>
+                                 <c:forEach items="${mediaListB}" var="mediaListA" varStatus="index">
+                                  <tr>
+                                    <th scope="row">11</th>
+                                    <td>Media</td>
+                                    <td>${mediaListA.media_name}</td>
+                                    <td>다음</td>
+                                    <td><a href="${mediaListA.url}" target="_blank">${mediaListA.media_title}</a></td>
+                                    <td><fmt:formatDate value="${mediaListA.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>
+                                    <td>
+                                      <div class="form-radio">
+                                        <!-- radio-success:정상/radio-danger:비정상 -->
+                                        <div class="radio radiofill radio-success  radio-inline">
+                                            <c:if test="${mediaListA.checkCondition == true}">
+                                            <label>
+                                                <input type="radio" name="radio11" checked="checked">
+                                                <i class="helper"></i>정상
+                                            </label>
+                                            </c:if>
+                                            <c:if test="${mediaListA.checkCondition == false}">
+                                            <label>
+                                                <input type="radio" name="radio">
+                                                <i class="helper"></i>비정상
+                                            </label>
+                                            </c:if>
+                                        </div>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                 </c:forEach>
+                                 <c:forEach items="${communityList1}" var="communityList" varStatus="index">
+                                  <tr>
+                                    <th scope="row">12</th>
+                                    <td>community</td>
+                                    <td>${communityList.community_name}</td>
+                                    <td></td>
+                                    <td><a href="${communityList.url}" target="_blank">${communityList.community_title}</a></td>
+                                    <td><fmt:formatDate value="${communityList.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>
+                                    <td>
+                                      <div class="form-radio">
+                                        <!-- radio-success:정상/radio-danger:비정상 -->
+                                        <div class="radio radiofill radio-success  radio-inline">
+                                            <c:if test="${communityList.checkCondition == true}">
+                                            <label>
+                                                <input type="radio" name="radio12" checked="checked">
+                                                <i class="helper"></i>정상
+                                            </label>
+                                            </c:if>
+                                            <c:if test="${communityList.checkCondition == false}">
+                                            <label>
+                                                <input type="radio" name="radio">
+                                                <i class="helper"></i>비정상
+                                            </label>
+                                            </c:if>
+                                        </div>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                 </c:forEach>
+                                 <c:forEach items="${communityList2}" var="communityList" varStatus="index">
+                                  <tr>
+                                    <th scope="row">13</th>
+                                    <td>community</td>
+                                    <td>${communityList.community_name}</td>
+                                    <td></td>
+                                    <td><a href="${communityList.url}" target="_blank">${communityList.community_title}</a></td>
+                                    <td><fmt:formatDate value="${communityList.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>
+                                    <td>
+                                      <div class="form-radio">
+                                        <!-- radio-success:정상/radio-danger:비정상 -->
+                                        <div class="radio radiofill radio-success  radio-inline">
+                                            <c:if test="${communityList.checkCondition == true}">
+                                            <label>
+                                                <input type="radio" name="radio13" checked="checked">
+                                                <i class="helper"></i>정상
+                                            </label>
+                                            </c:if>
+                                            <c:if test="${communityList.checkCondition == false}">
+                                            <label>
+                                                <input type="radio" name="radio">
+                                                <i class="helper"></i>비정상
+                                            </label>
+                                            </c:if>
+                                        </div>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                 </c:forEach>
+                                 <c:forEach items="${communityList3}" var="communityList" varStatus="index">
+                                  <tr>
+                                    <th scope="row">14</th>
+                                    <td>community</td>
+                                    <td>${communityList.community_name}</td>
+                                    <td></td>
+                                    <td><a href="${communityList.url}" target="_blank">${communityList.community_title}</a></td>
+                                    <td><fmt:formatDate value="${communityList.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>
+                                    <td>
+                                      <div class="form-radio">
+                                        <!-- radio-success:정상/radio-danger:비정상 -->
+                                        <div class="radio radiofill radio-success  radio-inline">
+                                            <c:if test="${communityList.checkCondition == true}">
+                                            <label>
+                                                <input type="radio" name="radio14" checked="checked">
+                                                <i class="helper"></i>정상
+                                            </label>
+                                            </c:if>
+                                            <c:if test="${communityList.checkCondition == false}">
+                                            <label>
+                                                <input type="radio" name="radio">
+                                                <i class="helper"></i>비정상
+                                            </label>
+                                            </c:if>
+                                        </div>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                 </c:forEach>
+                                 <c:forEach items="${communityList4}" var="communityList" varStatus="index">
+                                  <tr>
+                                    <th scope="row">15</th>
+                                    <td>community</td>
+                                    <td>${communityList.community_name}</td>
+                                    <td></td>
+                                    <td><a href="${communityList.url}" target="_blank">${communityList.community_title}</a></td>
+                                    <td><fmt:formatDate value="${communityList.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>
+                                    <td>
+                                      <div class="form-radio">
+                                        <!-- radio-success:정상/radio-danger:비정상 -->
+                                        <div class="radio radiofill radio-success  radio-inline">
+                                            <c:if test="${communityList.checkCondition == true}">
+                                            <label>
+                                                <input type="radio" name="radio15" checked="checked">
+                                                <i class="helper"></i>정상
+                                            </label>
+                                            </c:if>
+                                            <c:if test="${communityList.checkCondition == false}">
+                                            <label>
+                                                <input type="radio" name="radio">
+                                                <i class="helper"></i>비정상
+                                            </label>
+                                            </c:if>
+                                        </div>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                </c:forEach>
+                                <c:forEach items="${communityList5}" var="communityList" varStatus="index">
+                                  <tr>
+                                    <th scope="row">16</th>
+                                    <td>community</td>
+                                    <td>${communityList.community_name}</td>
+                                    <td></td>
+                                    <td><a href="${communityList.url}" target="_blank">${communityList.community_title}</a></td>
+                                    <td><fmt:formatDate value="${communityList.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>
+                                    <td>
+                                      <div class="form-radio">
+                                        <!-- radio-success:정상/radio-danger:비정상 -->
+                                        <div class="radio radiofill radio-success  radio-inline">
+                                            <c:if test="${communityList.checkCondition == true}">
+                                            <label>
+                                                <input type="radio" name="radio16" checked="checked">
+                                                <i class="helper"></i>정상
+                                            </label>
+                                            </c:if>
+                                            <c:if test="${communityList.checkCondition == false}">
+                                            <label>
+                                                <input type="radio" name="radio">
+                                                <i class="helper"></i>비정상
+                                            </label>
+                                            </c:if>
+                                        </div>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                </c:forEach>
+                                <c:forEach items="${communityList6}" var="communityList" varStatus="index">
+                                  <tr>
+                                    <th scope="row">17</th>
+                                    <td>community</td>
+                                    <td>${communityList.community_name}</td>
+                                    <td></td>
+                                    <td><a href="${communityList.url}" target="_blank">${communityList.community_title}</a></td>
+                                    <td><fmt:formatDate value="${communityList.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>
+                                    <td>
+                                      <div class="form-radio">
+                                        <!-- radio-success:정상/radio-danger:비정상 -->
+                                        <div class="radio radiofill radio-success  radio-inline">
+                                            <c:if test="${communityList.checkCondition == true}">
+                                            <label>
+                                                <input type="radio" name="radio17" checked="checked">
+                                                <i class="helper"></i>정상
+                                            </label>
+                                            </c:if>
+                                            <c:if test="${communityList.checkCondition == false}">
+                                            <label>
+                                                <input type="radio" name="radio">
+                                                <i class="helper"></i>비정상
+                                            </label>
+                                            </c:if>
+                                        </div>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                </c:forEach>
+                                <c:forEach items="${communityList7}" var="communityList" varStatus="index">
+                                  <tr>
+                                    <th scope="row">18</th>
+                                    <td>community</td>
+                                    <td>${communityList.community_name}</td>
+                                    <td></td>
+                                    <td><a href="${communityList.url}" target="_blank">${communityList.community_title}</a></td>
+                                    <td><fmt:formatDate value="${communityList.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>
+                                    <td>
+                                      <div class="form-radio">
+                                        <!-- radio-success:정상/radio-danger:비정상 -->
+                                        <div class="radio radiofill radio-success  radio-inline">
+                                            <c:if test="${communityList.checkCondition == true}">
+                                            <label>
+                                                <input type="radio" name="radio18" checked="checked">
+                                                <i class="helper"></i>정상
+                                            </label>
+                                            </c:if>
+                                            <c:if test="${communityList.checkCondition == false}">
+                                            <label>
+                                                <input type="radio" name="radio">
+                                                <i class="helper"></i>비정상
+                                            </label>
+                                            </c:if>
+                                        </div>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                </c:forEach>
+                                <c:forEach items="${communityList8}" var="communityList" varStatus="index">
+                                  <tr>
+                                    <th scope="row">19</th>
+                                    <td>community</td>
+                                    <td>${communityList.community_name}</td>
+                                    <td></td>
+                                    <td><a href="${communityList.url}" target="_blank">${communityList.community_title}</a></td>
+                                    <td><fmt:formatDate value="${communityList.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>
+                                    <td>
+                                      <div class="form-radio">
+                                        <!-- radio-success:정상/radio-danger:비정상 -->
+                                        <div class="radio radiofill radio-success  radio-inline">
+                                            <c:if test="${communityList.checkCondition == true}">
+                                            <label>
+                                                <input type="radio" name="radio19" checked="checked">
+                                                <i class="helper"></i>정상
+                                            </label>
+                                            </c:if>
+                                            <c:if test="${communityList.checkCondition == false}">
+                                            <label>
+                                                <input type="radio" name="radio">
+                                                <i class="helper"></i>비정상
+                                            </label>
+                                            </c:if>
+                                        </div>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                </c:forEach>
+                                <c:forEach items="${communityList9}" var="communityList" varStatus="index">
+                                  <tr>
+                                    <th scope="row">20</th>
+                                    <td>community</td>
+                                    <td>${communityList.community_name}</td>
+                                    <td></td>
+                                    <td><a href="${communityList.url}" target="_blank">${communityList.community_title}</a></td>
+                                    <td><fmt:formatDate value="${communityList.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>
+                                    <td>
+                                      <div class="form-radio">
+                                        <!-- radio-success:정상/radio-danger:비정상 -->
+                                        <div class="radio radiofill radio-success  radio-inline">
+                                            <c:if test="${communityList.checkCondition == true}">
+                                            <label>
+                                                <input type="radio" name="radio20" checked="checked">
+                                                <i class="helper"></i>정상
+                                            </label>
+                                            </c:if>
+                                            <c:if test="${communityList.checkCondition == false}">
+                                            <label>
+                                                <input type="radio" name="radio">
+                                                <i class="helper"></i>비정상
+                                            </label>
+                                            </c:if>
+                                        </div>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                </c:forEach>
+                                <c:forEach items="${communityList10}" var="communityList" varStatus="index">
+                                  <tr>
+                                    <th scope="row">21</th>
+                                    <td>community</td>
+                                    <td>${communityList.community_name}</td>
+                                    <td></td>
+                                    <td><a href="${communityList.url}" target="_blank">${communityList.community_title}</a></td>
+                                    <td><fmt:formatDate value="${communityList.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>
+                                    <td>
+                                      <div class="form-radio">
+                                        <!-- radio-success:정상/radio-danger:비정상 -->
+                                        <div class="radio radiofill radio-success  radio-inline">
+                                            <c:if test="${communityList.checkCondition == true}">
+                                            <label>
+                                                <input type="radio" name="radio21" checked="checked">
+                                                <i class="helper"></i>정상
+                                            </label>
+                                            </c:if>
+                                            <c:if test="${communityList.checkCondition == false}">
+                                            <label>
+                                                <input type="radio" name="radio">
+                                                <i class="helper"></i>비정상
+                                            </label>
+                                            </c:if>
+                                        </div>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                </c:forEach>
+                                <c:forEach items="${communityList11}" var="communityList" varStatus="index">
+                                  <tr>
+                                    <th scope="row">22</th>
+                                    <td>community</td>
+                                    <td>${communityList.community_name}</td>
+                                    <td></td>
+                                    <td><a href="${communityList.url}" target="_blank">${communityList.community_title}</a></td>
+                                    <td><fmt:formatDate value="${communityList.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>
+                                    <td>
+                                      <div class="form-radio">
+                                        <!-- radio-success:정상/radio-danger:비정상 -->
+                                        <div class="radio radiofill radio-success  radio-inline">
+                                            <c:if test="${communityList.checkCondition == true}">
+                                            <label>
+                                                <input type="radio" name="radio22" checked="checked">
+                                                <i class="helper"></i>정상
+                                            </label>
+                                            </c:if>
+                                            <c:if test="${communityList.checkCondition == false}">
+                                            <label>
+                                                <input type="radio" name="radio">
+                                                <i class="helper"></i>비정상
+                                            </label>
+                                            </c:if>
+                                        </div>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                </c:forEach>
+                                <c:forEach items="${communityList12}" var="communityList" varStatus="index">
+                                  <tr>
+                                    <th scope="row">23</th>
+                                    <td>community</td>
+                                    <td>${communityList.community_name}</td>
+                                    <td></td>
+                                    <td><a href="${communityList.url}" target="_blank">${communityList.community_title}</a></td>
+                                    <td><fmt:formatDate value="${communityList.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>
+                                    <td>
+                                      <div class="form-radio">
+                                        <!-- radio-success:정상/radio-danger:비정상 -->
+                                        <div class="radio radiofill radio-success  radio-inline">
+                                            <c:if test="${communityList.checkCondition == true}">
+                                            <label>
+                                                <input type="radio" name="radio23" checked="checked">
+                                                <i class="helper"></i>정상
+                                            </label>
+                                            </c:if>
+                                            <c:if test="${communityList.checkCondition == false}">
+                                            <label>
+                                                <input type="radio" name="radio">
+                                                <i class="helper"></i>비정상
+                                            </label>
+                                            </c:if>
+                                        </div>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                </c:forEach>
+                                <c:forEach items="${communityList13}" var="communityList" varStatus="index">
+                                  <tr>
+                                    <th scope="row">24</th>
+                                    <td>community</td>
+                                    <td>${communityList.community_name}</td>
+                                    <td></td>
+                                    <td><a href="${communityList.url}" target="_blank">${communityList.community_title}</a></td>
+                                    <td><fmt:formatDate value="${communityList.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>
+                                    <td>
+                                      <div class="form-radio">
+                                        <!-- radio-success:정상/radio-danger:비정상 -->
+                                        <div class="radio radiofill radio-success  radio-inline">
+                                            <c:if test="${communityList.checkCondition == true}">
+                                            <label>
+                                                <input type="radio" name="radio24" checked="checked">
+                                                <i class="helper"></i>정상
+                                            </label>
+                                            </c:if>
+                                            <c:if test="${communityList.checkCondition == false}">
+                                            <label>
+                                                <input type="radio" name="radio">
+                                                <i class="helper"></i>비정상
+                                            </label>
+                                            </c:if>
+                                        </div>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                </c:forEach>
+                                <c:forEach items="${communityList14}" var="communityList" varStatus="index">
+                                  <tr>
+                                    <th scope="row">25</th>
+                                    <td>community</td>
+                                    <td>${communityList.community_name}</td>
+                                    <td></td>
+                                    <td><a href="${communityList.url}" target="_blank">${communityList.community_title}</a></td>
+                                    <td><fmt:formatDate value="${communityList.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>
+                                    <td>
+                                      <div class="form-radio">
+                                        <!-- radio-success:정상/radio-danger:비정상 -->
+                                        <div class="radio radiofill radio-success  radio-inline">
+                                            <c:if test="${communityList.checkCondition == true}">
+                                            <label>
+                                                <input type="radio" name="radio25" checked="checked">
+                                                <i class="helper"></i>정상
+                                            </label>
+                                            </c:if>
+                                            <c:if test="${communityList.checkCondition == false}">
+                                            <label>
+                                                <input type="radio" name="radio">
+                                                <i class="helper"></i>비정상
+                                            </label>
+                                            </c:if>
+                                        </div>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                </c:forEach>
+                                <c:forEach items="${communityList15}" var="communityList" varStatus="index">
+                                  <tr>
+                                    <th scope="row">26</th>
+                                    <td>community</td>
+                                    <td>${communityList.community_name}</td>
+                                    <td></td>
+                                    <td><a href="${communityList.url}" target="_blank">${communityList.community_title}</a></td>
+                                    <td><fmt:formatDate value="${communityList.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>
+                                    <td>
+                                      <div class="form-radio">
+                                        <!-- radio-success:정상/radio-danger:비정상 -->
+                                        <div class="radio radiofill radio-success  radio-inline">
+                                            <c:if test="${communityList.checkCondition == true}">
+                                            <label>
+                                                <input type="radio" name="radio26" checked="checked">
+                                                <i class="helper"></i>정상
+                                            </label>
+                                            </c:if>
+                                            <c:if test="${communityList.checkCondition == false}">
+                                            <label>
+                                                <input type="radio" name="radio">
+                                                <i class="helper"></i>비정상
+                                            </label>
+                                            </c:if>
+                                        </div>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                </c:forEach>
+                                <c:forEach items="${communityList16}" var="communityList" varStatus="index">
+                                  <tr>
+                                    <th scope="row">27</th>
+                                    <td>community</td>
+                                    <td>${communityList.community_name}</td>
+                                    <td></td>
+                                    <td><a href="${communityList.url}" target="_blank">${communityList.community_title}</a></td>
+                                    <td><fmt:formatDate value="${communityList.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>
+                                    <td>
+                                      <div class="form-radio">
+                                        <!-- radio-success:정상/radio-danger:비정상 -->
+                                        <div class="radio radiofill radio-success  radio-inline">
+                                            <c:if test="${communityList.checkCondition == true}">
+                                            <label>
+                                                <input type="radio" name="radio27" checked="checked">
+                                                <i class="helper"></i>정상
+                                            </label>
+                                            </c:if>
+                                            <c:if test="${communityList.checkCondition == false}">
+                                            <label>
+                                                <input type="radio" name="radio">
+                                                <i class="helper"></i>비정상
+                                            </label>
+                                            </c:if>
+                                        </div>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                </c:forEach>
+                                <c:forEach items="${communityList17}" var="communityList" varStatus="index">
+                                  <tr>
+                                    <th scope="row">28</th>
+                                    <td>community</td>
+                                    <td>${communityList.community_name}</td>
+                                    <td></td>
+                                    <td><a href="${communityList.url}" target="_blank">${communityList.community_title}</a></td>
+                                    <td><fmt:formatDate value="${communityList.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>
+                                    <td>
+                                      <div class="form-radio">
+                                        <!-- radio-success:정상/radio-danger:비정상 -->
+                                        <div class="radio radiofill radio-success  radio-inline">
+                                            <c:if test="${communityList.checkCondition == true}">
+                                            <label>
+                                                <input type="radio" name="radio28" checked="checked">
+                                                <i class="helper"></i>정상
+                                            </label>
+                                            </c:if>
+                                            <c:if test="${communityList.checkCondition == false}">
+                                            <label>
+                                                <input type="radio" name="radio">
+                                                <i class="helper"></i>비정상
+                                            </label>
+                                            </c:if>
+                                        </div>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                </c:forEach>
+                                <c:forEach items="${communityList18}" var="communityList" varStatus="index">
+                                  <tr>
+                                    <th scope="row">29</th>
+                                    <td>community</td>
+                                    <td>${communityList.community_name}</td>
+                                    <td></td>
+                                    <td><a href="${communityList.url}" target="_blank">${communityList.community_title}</a></td>
+                                    <td><fmt:formatDate value="${communityList.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>
+                                    <td>
+                                      <div class="form-radio">
+                                        <!-- radio-success:정상/radio-danger:비정상 -->
+                                        <div class="radio radiofill radio-success  radio-inline">
+                                            <c:if test="${communityList.checkCondition == true}">
+                                            <label>
+                                                <input type="radio" name="radio29" checked="checked">
+                                                <i class="helper"></i>정상
+                                            </label>
+                                            </c:if>
+                                            <c:if test="${communityList.checkCondition == false}">
+                                            <label>
+                                                <input type="radio" name="radio">
+                                                <i class="helper"></i>비정상
+                                            </label>
+                                            </c:if>
+                                        </div>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                </c:forEach>
+                                <c:forEach items="${communityList19}" var="communityList" varStatus="index">
+                                  <tr>
+                                    <th scope="row">30</th>
+                                    <td>community</td>
+                                    <td>${communityList.community_name}</td>
+                                    <td></td>
+                                    <td><a href="${communityList.url}" target="_blank">${communityList.community_title}</a></td>
+                                    <td><fmt:formatDate value="${communityList.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>
+                                    <td>
+                                      <div class="form-radio">
+                                        <!-- radio-success:정상/radio-danger:비정상 -->
+                                        <div class="radio radiofill radio-success  radio-inline">
+                                            <c:if test="${communityList.checkCondition == true}">
+                                            <label>
+                                                <input type="radio" name="radio30" checked="checked">
+                                                <i class="helper"></i>정상
+                                            </label>
+                                            </c:if>
+                                            <c:if test="${communityList.checkCondition == false}">
+                                            <label>
+                                                <input type="radio" name="radio">
+                                                <i class="helper"></i>비정상
+                                            </label>
+                                            </c:if>
+                                        </div>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                </c:forEach>
+                                <c:forEach items="${communityList20}" var="communityList" varStatus="index">
+                                  <tr>
+                                    <th scope="row">31</th>
+                                    <td>community</td>
+                                    <td>${communityList.community_name}</td>
+                                    <td></td>
+                                    <td><a href="${communityList.url}" target="_blank">${communityList.community_title}</a></td>
+                                    <td><fmt:formatDate value="${communityList.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>
+                                    <td>
+                                      <div class="form-radio">
+                                        <!-- radio-success:정상/radio-danger:비정상 -->
+                                        <div class="radio radiofill radio-success  radio-inline">
+                                            <c:if test="${communityList.checkCondition == true}">
+                                            <label>
+                                                <input type="radio" name="radio31" checked="checked">
+                                                <i class="helper"></i>정상
+                                            </label>
+                                            </c:if>
+                                            <c:if test="${communityList.checkCondition == false}">
+                                            <label>
+                                                <input type="radio" name="radio">
+                                                <i class="helper"></i>비정상
+                                            </label>
+                                            </c:if>
+                                        </div>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                </c:forEach>
+                                <c:forEach items="${communityList21}" var="communityList" varStatus="index">
+                                  <tr>
+                                    <th scope="row">32</th>
+                                    <td>community</td>
+                                    <td>${communityList.community_name}</td>
+                                    <td></td>
+                                    <td><a href="${communityList.url}" target="_blank">${communityList.community_title}</a></td>
+                                    <td><fmt:formatDate value="${communityList.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>
+                                    <td>
+                                      <div class="form-radio">
+                                        <!-- radio-success:정상/radio-danger:비정상 -->
+                                        <div class="radio radiofill radio-success  radio-inline">
+                                            <c:if test="${communityList.checkCondition == true}">
+                                            <label>
+                                                <input type="radio" name="radio32" checked="checked">
+                                                <i class="helper"></i>정상
+                                            </label>
+                                            </c:if>
+                                            <c:if test="${communityList.checkCondition == false}">
+                                            <label>
+                                                <input type="radio" name="radio">
+                                                <i class="helper"></i>비정상
+                                            </label>
+                                            </c:if>
+                                        </div>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                </c:forEach>
+                                <c:forEach items="${communityList22}" var="communityList" varStatus="index">
+                                  <tr>
+                                    <th scope="row">33</th>
+                                    <td>community</td>
+                                    <td>${communityList.community_name}</td>
+                                    <td></td>
+                                    <td><a href="${communityList.url}" target="_blank">${communityList.community_title}</a></td>
+                                    <td><fmt:formatDate value="${communityList.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>
+                                    <td>
+                                      <div class="form-radio">
+                                        <!-- radio-success:정상/radio-danger:비정상 -->
+                                        <div class="radio radiofill radio-success  radio-inline">
+                                            <c:if test="${communityList.checkCondition == true}">
+                                            <label>
+                                                <input type="radio" name="radio33" checked="checked">
+                                                <i class="helper"></i>정상
+                                            </label>
+                                            </c:if>
+                                            <c:if test="${communityList.checkCondition == false}">
+                                            <label>
+                                                <input type="radio" name="radio">
+                                                <i class="helper"></i>비정상
+                                            </label>
+                                            </c:if>
+                                        </div>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                </c:forEach>
+                                <c:forEach items="${communityList23}" var="communityList" varStatus="index">
+                                  <tr>
+                                    <th scope="row">34</th>
+                                    <td>community</td>
+                                    <td>${communityList.community_name}</td>
+                                    <td></td>
+                                    <td><a href="${communityList.url}" target="_blank">${communityList.community_title}</a></td>
+                                    <td><fmt:formatDate value="${communityList.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>
+                                    <td>
+                                      <div class="form-radio">
+                                        <!-- radio-success:정상/radio-danger:비정상 -->
+                                        <div class="radio radiofill radio-success  radio-inline">
+                                            <c:if test="${communityList.checkCondition == true}">
+                                            <label>
+                                                <input type="radio" name="radio34" checked="checked">
+                                                <i class="helper"></i>정상
+                                            </label>
+                                            </c:if>
+                                            <c:if test="${communityList.checkCondition == false}">
+                                            <label>
+                                                <input type="radio" name="radio">
+                                                <i class="helper"></i>비정상
+                                            </label>
+                                            </c:if>
+                                        </div>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                </c:forEach>
+                                <c:forEach items="${communityList24}" var="communityList" varStatus="index">
+                                  <tr>
+                                    <th scope="row">35</th>
+                                    <td>community</td>
+                                    <td>${communityList.community_name}</td>
+                                    <td></td>
+                                    <td><a href="${communityList.url}" target="_blank">${communityList.community_title}</a></td>
+                                    <td><fmt:formatDate value="${communityList.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>
+                                    <td>
+                                      <div class="form-radio">
+                                        <!-- radio-success:정상/radio-danger:비정상 -->
+                                        <div class="radio radiofill radio-success  radio-inline">
+                                            <c:if test="${communityList.checkCondition == true}">
+                                            <label>
+                                                <input type="radio" name="radio35" checked="checked">
+                                                <i class="helper"></i>정상
+                                            </label>
+                                            </c:if>
+                                            <c:if test="${communityList.checkCondition == false}">
+                                            <label>
+                                                <input type="radio" name="radio">
+                                                <i class="helper"></i>비정상
+                                            </label>
+                                            </c:if>
+                                        </div>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                </c:forEach>
+                                <c:forEach items="${communityList25}" var="communityList" varStatus="index">
+                                  <tr>
+                                    <th scope="row">36</th>
+                                    <td>community</td>
+                                    <td>${communityList.community_name}</td>
+                                    <td></td>
+                                    <td><a href="${communityList.url}" target="_blank">${communityList.community_title}</a></td>
+                                    <td><fmt:formatDate value="${communityList.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>
+                                    <td>
+                                      <div class="form-radio">
+                                        <!-- radio-success:정상/radio-danger:비정상 -->
+                                        <div class="radio radiofill radio-success  radio-inline">
+                                            <c:if test="${communityList.checkCondition == true}">
+                                            <label>
+                                                <input type="radio" name="radio36" checked="checked">
+                                                <i class="helper"></i>정상
+                                            </label>
+                                            </c:if>
+                                            <c:if test="${communityList.checkCondition == false}">
+                                            <label>
+                                                <input type="radio" name="radio">
+                                                <i class="helper"></i>비정상
+                                            </label>
+                                            </c:if>
+                                        </div>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                </c:forEach>
+                                <c:forEach items="${communityList26}" var="communityList" varStatus="index">
+                                  <tr>
+                                    <th scope="row">37</th>
+                                    <td>community</td>
+                                    <td>${communityList.community_name}</td>
+                                    <td></td>
+                                    <td><a href="${communityList.url}" target="_blank">${communityList.community_title}</a></td>
+                                    <td><fmt:formatDate value="${communityList.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>
+                                    <td>
+                                      <div class="form-radio">
+                                        <!-- radio-success:정상/radio-danger:비정상 -->
+                                        <div class="radio radiofill radio-success  radio-inline">
+                                            <c:if test="${communityList.checkCondition == true}">
+                                            <label>
+                                                <input type="radio" name="radio37" checked="checked">
+                                                <i class="helper"></i>정상
+                                            </label>
+                                            </c:if>
+                                            <c:if test="${communityList.checkCondition == false}">
+                                            <label>
+                                                <input type="radio" name="radio">
+                                                <i class="helper"></i>비정상
+                                            </label>
+                                            </c:if>
+                                        </div>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                </c:forEach>
+                                <c:forEach items="${communityList27}" var="communityList" varStatus="index">
+                                  <tr>
+                                    <th scope="row">38</th>
+                                    <td>community</td>
+                                    <td>${communityList.community_name}</td>
+                                    <td></td>
+                                    <td><a href="${communityList.url}" target="_blank">${communityList.community_title}</a></td>
+                                    <td><fmt:formatDate value="${communityList.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>
+                                    <td>
+                                      <div class="form-radio">
+                                        <!-- radio-success:정상/radio-danger:비정상 -->
+                                        <div class="radio radiofill radio-success  radio-inline">
+                                            <c:if test="${communityList.checkCondition == true}">
+                                            <label>
+                                                <input type="radio" name="radio38" checked="checked">
+                                                <i class="helper"></i>정상
+                                            </label>
+                                            </c:if>
+                                            <c:if test="${communityList.checkCondition == false}">
+                                            <label>
+                                                <input type="radio" name="radio">
+                                                <i class="helper"></i>비정상
+                                            </label>
+                                            </c:if>
+                                        </div>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                </c:forEach>
                                 </tbody>
                               </table>
                             </div>
