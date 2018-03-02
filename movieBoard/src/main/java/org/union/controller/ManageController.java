@@ -233,6 +233,7 @@ public class ManageController {
 		model.addAttribute("mediaCount", mediaService.wgetSearchCount(cri));
 		
 		model.addAttribute("portalTextType", portalService.textTypeCount(cri));
+		model.addAttribute("portalTextType2", portalService.textTypeCount2(cri));
 		model.addAttribute("communityTextType", communityService.textTypeCount(cri));
 		
 		model.addAttribute("blogTextType", portalService.blogTextType(cri));
@@ -244,6 +245,7 @@ public class ManageController {
 		
 		model.addAttribute("naverMediaCount", mediaService.naverMediaCount(cri));
 		model.addAttribute("daumMediaCount", mediaService.daumMediaCount(cri));
+		model.addAttribute("totalMediaCount", mediaService.totalMediaCount(cri));
 		
 		model.addAttribute("startDate", startDate);
 		model.addAttribute("endDate", endDate);

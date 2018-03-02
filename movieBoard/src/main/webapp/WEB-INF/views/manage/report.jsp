@@ -57,10 +57,10 @@
       google.charts.setOnLoadCallback(drawChart);
       function drawChart() {
     	
-    	  var l = ${blogTextType.lik + cafeTextType.lik};
-    	  var d = ${blogTextType.dis + cafeTextType.dis};
-    	  var c = ${blogTextType.cu + cafeTextType.cu};
-    	  var e = ${blogTextType.etc + cafeTextType.etc};
+    	  var l = ${portalTextType.lik};
+    	  var d = ${portalTextType.dis};
+    	  var c = ${portalTextType.cu};
+    	  var e = ${portalTextType.etc};
     	  
         var data = google.visualization.arrayToDataTable([
           ['Task', 'Hours per Day'],
@@ -111,10 +111,10 @@
       google.charts.setOnLoadCallback(drawChart);
       function drawChart() {
     	
-    	  var l3 = ${communityTextType.lik};
-    	  var d3 = ${communityTextType.dis};
-    	  var c3 = ${communityTextType.cu};
-    	  var e3 = ${communityTextType.etc};
+    	  var l3 = ${totalMediaCount.lik};
+    	  var d3 = ${totalMediaCount.dis};
+    	  var c3 = ${totalMediaCount.cu};
+    	  var e3 = ${totalMediaCount.etc};
     	  
     	  /* var l3 = ${naverMediaCount.lik + daumMediaCount.lik};
     	  var d3 = ${naverMediaCount.dis + daumMediaCount.dis};
@@ -409,15 +409,17 @@
                               					<th>관심글</th>
                               					<th>기타글</th>
                               				</tr>
+                              				<c:forEach items="${portalTextType2}" var="portal">
                               				<tr>
-                              					<td></td>
-                              					<td><fmt:formatNumber value="${portalTextType.lik + portalTextType.dis + portalTextType.cu
-                                                       + portalTextType.etc}" groupingUsed="true"/></td>
-                              					<td><fmt:formatNumber value="${portalTextType.lik}" groupingUsed="true"/></td>
-                              					<td><fmt:formatNumber value="${portalTextType.dis}" groupingUsed="true"/></td>
-                              					<td><fmt:formatNumber value="${portalTextType.cu}" groupingUsed="true"/></td>
-                              					<td><fmt:formatNumber value="${portalTextType.etc}" groupingUsed="true"/></td>
+                              					<td>${portal.writeDate}</td>
+                              					<td><fmt:formatNumber value="${portal.lik + portal.dis + portal.cu
+                                                       + portal.etc}" groupingUsed="true"/></td>
+                              					<td><fmt:formatNumber value="${portal.lik}" groupingUsed="true"/></td>
+                              					<td><fmt:formatNumber value="${portal.dis}" groupingUsed="true"/></td>
+                              					<td><fmt:formatNumber value="${portal.cu}" groupingUsed="true"/></td>
+                              					<td><fmt:formatNumber value="${portal.etc}" groupingUsed="true"/></td>
                               				</tr>
+                              				</c:forEach>
                               			</table>
                               			<div id="getTable"></div>
                               		</div><br>

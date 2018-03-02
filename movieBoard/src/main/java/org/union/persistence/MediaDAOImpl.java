@@ -1,6 +1,8 @@
 package org.union.persistence;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,7 +83,6 @@ public class MediaDAOImpl implements MediaDAO {
 		
 		return session.selectList(namespace + "listSearch", vo);
 	}
-
 	
 	@Override
 	public Integer getSearchCount(SearchCriteria cri) {
@@ -181,6 +182,12 @@ public class MediaDAOImpl implements MediaDAO {
 
 		return session.selectOne(namespace + "daumMediaCount", cri);
 	}
+	
+	@Override
+	public TextTypeVO totalMediaCount(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "totalMediaCount", cri);
+	}
 
 
 	@Override
@@ -278,6 +285,45 @@ public class MediaDAOImpl implements MediaDAO {
 	public List<MediaVO> wPageSearch(SearchCriteria cri) {
 
 		return session.selectList(namespace + "wPageSearch", cri);
+	}
+	
+	@Override
+	public List<MediaVO> textTypelistSearch(SearchCriteria cri) {
+		
+		return session.selectList(namespace + "textTypelistSearch", cri);
+	}
+
+	@Override
+	public List<MediaVO> textTypelistSearch2(SearchCriteria cri) {
+		
+		return session.selectList(namespace + "textTypelistSearch2", cri);
+	}
+
+
+	@Override
+	public List<MediaVO> textTypelistSearch3(SearchCriteria cri) {
+		
+		return session.selectList(namespace + "textTypelistSearch3", cri);
+	}
+
+
+	@Override
+	public List<MediaVO> textTypelistSearch4(SearchCriteria cri) {
+		
+		return session.selectList(namespace + "textTypelistSearch4", cri);
+	}
+
+
+	@Override
+	public List<MediaVO> reporterGetTextTypeCount(SearchCriteria cri, String reporter, String textType) {
+		
+		Map data = new HashMap();
+		data.put("cri", cri);
+		data.put("reporter", reporter);
+		data.put("textType", textType);
+		
+		
+		return session.selectList(namespace + "reporterGetTextTypeCount", data);
 	}
 
 }

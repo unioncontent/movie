@@ -12,6 +12,7 @@ import org.union.domain.ExtractVO;
 import org.union.domain.GraphVO;
 import org.union.domain.PortalVO;
 import org.union.domain.SearchCriteria;
+import org.union.domain.TextTypeDateVO;
 import org.union.domain.TextTypeVO;
 import org.union.persistence.KeywordDAO;
 import org.union.persistence.PortalDAO;
@@ -215,6 +216,12 @@ public class PortalServiceImpl implements PortalService {
 	public TextTypeVO textTypeCount(SearchCriteria cri) {
 
 		return portalDAO.textTypeCount(cri);
+	}
+	
+	@Override
+	public List<TextTypeDateVO> textTypeCount2(SearchCriteria cri) {
+		
+		return portalDAO.textTypeCount2(cri);
 	}
 
 	@Override

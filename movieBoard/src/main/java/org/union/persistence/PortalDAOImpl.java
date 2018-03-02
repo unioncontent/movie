@@ -10,6 +10,7 @@ import org.union.domain.CommunityVO;
 import org.union.domain.GraphVO;
 import org.union.domain.PortalVO;
 import org.union.domain.SearchCriteria;
+import org.union.domain.TextTypeDateVO;
 import org.union.domain.TextTypeVO;
 
 @Repository
@@ -207,7 +208,12 @@ public class PortalDAOImpl implements PortalDAO {
 
 		return session.selectOne(namespace + "textTypeCount", cri);
 	}
-
+	
+	@Override
+	public List<TextTypeDateVO> textTypeCount2(SearchCriteria cri) {
+		
+		return session.selectList(namespace + "textTypeCount2", cri);
+	}
 
 	@Override
 	public TextTypeVO blogTextTypeCount(SearchCriteria cri) {

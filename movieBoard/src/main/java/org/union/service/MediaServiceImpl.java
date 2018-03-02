@@ -325,6 +325,12 @@ public class MediaServiceImpl implements MediaService {
 
 		return mediaDAO.daumMediaCount(cri);
 	}
+	
+	@Override
+	public TextTypeVO totalMediaCount(SearchCriteria cri) {
+
+		return mediaDAO.totalMediaCount(cri);
+	}
 
 	@Override
 	public GraphVO yesterdayCount() {
@@ -416,6 +422,41 @@ public class MediaServiceImpl implements MediaService {
 	public List<MediaVO> wPageSearch(SearchCriteria cri) {
 
 		return mediaDAO.wPageSearch(cri);
+	}
+	
+	@Override
+	public List<MediaVO> textTypelistSearch(SearchCriteria cri) {
+
+		List<MediaVO> list = mediaDAO.textTypelistSearch(cri);
+		return list;
+	}
+
+	@Override
+	public List<MediaVO> textTypelistSearch2(SearchCriteria cri) {
+
+		List<MediaVO> list = mediaDAO.textTypelistSearch2(cri);
+		return list;
+	}
+
+	@Override
+	public List<MediaVO> textTypelistSearch3(SearchCriteria cri) {
+
+		List<MediaVO> list = mediaDAO.textTypelistSearch3(cri);
+		return list;
+	}
+
+	@Override
+	public List<MediaVO> textTypelistSearch4(SearchCriteria cri) {
+
+		List<MediaVO> list = mediaDAO.textTypelistSearch4(cri);
+		return list;
+	}
+
+	@Override
+	public List<MediaVO> reporterGetTextTypeCount(SearchCriteria cri, String reporter, String textType) {
+		
+		List<MediaVO> list = mediaDAO.reporterGetTextTypeCount(cri, reporter, textType);
+		return list;
 	}
 
 }
