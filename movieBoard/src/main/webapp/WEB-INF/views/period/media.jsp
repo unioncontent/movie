@@ -59,7 +59,7 @@
   	float: right;
   }
    .tabc{
-   	font-size : 12px;
+   	font-size : 13px;
    	width: 150px;
 	text-align: center;
 	border-collapse: collapse;
@@ -68,7 +68,6 @@
 	text-align: center;
 	background-color: #EAEAEA;
 	border-bottom: 2px solid #ddd;
-
 }
 .tabc td{
 	text-align: center;
@@ -86,9 +85,6 @@
   min-height: 80%;
 } */
   </style>
-  <script type="text/javascript">
-  	
-  </script>
 </head>
 <body>
   <!-- Pre-loader start -->
@@ -811,12 +807,12 @@
                                       <table class="tabc" align="center">
                                         <thead>
                                             <tr align="center">
-                                              <th width="5">NO</th>
-                                              <th width="20">등록날짜</th>
-                                              <th width="25">언론사</th>
-                                              <th width="50">제목</th>
-                                              <th width="25">키워드</th>
-                                              <th width="25">여론현황</th>
+                                              <th width="5%">NO</th>
+                                              <th width="20%">등록날짜</th>
+                                              <th width="25%">언론사</th>
+                                              <th width="50%">제목</th>
+                                              <th width="25%">키워드</th>
+                                              <th width="25%">여론현황</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -827,7 +823,7 @@
                                             <fmt:formatDate value="${mediaVO.updateDate}" pattern="yyyy-MM-dd"/>
                                             </td>
                                             <td>${mediaVO.media_name}</td>
-                                            <td><a href='${mediaVO.url}' target="_blank">${mediaVO.media_title}</a></td>
+                                            <td><a href='${mediaVO.url}' target="_blank" style="font-size: 12px;"><b>${mediaVO.media_title}</b></a></td>
                                             <td>${mediaVO.keyword}</td>
                                             <td>${mediaVO.textType}</td>
                                           </tr>
@@ -882,7 +878,7 @@
                                             <fmt:formatDate value="${mediaVO.updateDate}" pattern="yyyy-MM-dd"/>
                                             </td>
                                             <td>${mediaVO.media_name}</td>
-                                            <td><a href='${mediaVO.url}' target="_blank">${mediaVO.media_title}</a></td>
+                                            <td><a href='${mediaVO.url}' target="_blank" style="font-size: 12px;"><b>${mediaVO.media_title}</b></a></td>
                                             <td>${mediaVO.keyword}</td>
                                             <td>${mediaVO.textType}</td>
                                           </tr>
@@ -923,7 +919,7 @@
                                               <th width="5">NO</th>
                                               <th width="20">등록날짜</th>
                                               <th width="25">언론사</th>
-                                              <th width="5">제목</th>
+                                              <th width="25">제목</th>
                                               <th width="25">키워드</th>
                                               <th width="25">여론현황</th>
                                             </tr>
@@ -936,7 +932,7 @@
                                             <fmt:formatDate value="${mediaVO.updateDate}" pattern="yyyy-MM-dd"/>
                                             </td>
                                             <td>${mediaVO.media_name}</td>
-                                            <td><a href='${mediaVO.url}' target="_blank">${mediaVO.media_title}</a></td>
+                                            <td><a href='${mediaVO.url}' target="_blank" style="font-size: 12px;"><b>${mediaVO.media_title}</b></a></td>
                                             <td>${mediaVO.keyword}</td>
                                             <td>${mediaVO.textType}</td>
                                           </tr>
@@ -990,7 +986,7 @@
                                             <fmt:formatDate value="${mediaVO.updateDate}" pattern="yyyy-MM-dd"/>
                                             </td>
                                             <td>${mediaVO.media_name}</td>
-                                            <td><a href='${mediaVO.url}' target="_blank">${mediaVO.media_title}</a></td>
+                                            <td><a href='${mediaVO.url}' target="_blank" style="font-size: 12px;"><b>${mediaVO.media_title}</b></a></td>
                                             <td>${mediaVO.keyword}</td>
                                             <td>${mediaVO.textType}</td>
                                           </tr>
