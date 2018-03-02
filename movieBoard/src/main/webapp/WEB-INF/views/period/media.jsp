@@ -4,7 +4,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
-
 <head>
   <title>OverWare</title>
   <!-- HTML5 Shim and Respond.js IE9 support of HTML5 elements and media queries -->
@@ -55,8 +54,42 @@
   <link rel="stylesheet" type="text/css" href="../assets/css/simple-line-icons.css">
   <link rel="stylesheet" type="text/css" href="../assets/css/ionicons.css">
   <link rel="stylesheet" type="text/css" href="../assets/css/jquery.mCustomScrollbar.css">
-</head>
+  <style type="text/css">
+  .padd{
+  	float: right;
+  }
+   .tabc{
+   	font-size : 12px;
+   	width: 150px;
+	text-align: center;
+	border-collapse: collapse;
+}
+.tabc th{
+	text-align: center;
+	background-color: #EAEAEA;
+	border-bottom: 2px solid #ddd;
 
+}
+.tabc td{
+	text-align: center;
+	border-bottom: 2px solid #ddd;
+}
+  /* .modal-dialog{
+  width: 100%;
+  height: 80%;
+  margin: 0;
+  padding: 0;
+}
+ .modal-content{
+  height: auto;
+  min-width: 100%;
+  min-height: 80%;
+} */
+  </style>
+  <script type="text/javascript">
+  	
+  </script>
+</head>
 <body>
   <!-- Pre-loader start -->
   <div class="theme-loader">
@@ -360,7 +393,16 @@
                                 <div class="card">
                                   <div class="card-header">
                                     <h5 class="card-header-text m-b-10"> 검출데이터</h5>
-                                    <button class="btn btn-warning f-right alert-confirm" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'alert-confirm']);"><i class="icofont icofont-download-alt"></i>EXCEL</button>
+                                    <table class="padd"><tr><td>
+                                    <div class="btn-group f-right p-r-0">
+		                                <button type="button" id="allBtn1" class="radiosBtn btn btn-primary btn-outline-primary btn-sm waves-effect waves-light" onclick='showModal("#press-textType", "좋은글")'>좋은글</button>
+		                                <button type="button" id="allBtn2" class="radiosBtn btn btn-primary btn-outline-primary btn-sm waves-effect waves-light" onclick='showModal("#press-textType2", "나쁜글")'>나쁜글</button>
+		                                <button type="button" id="allBtn3" class="radiosBtn btn btn-primary btn-outline-primary btn-sm waves-effect waves-light" onclick='showModal("#press-textType3", "관심글")'>관심글</button>
+		                                <button type="button" id="allBtn4" class="radiosBtn btn btn-primary btn-outline-primary btn-sm waves-effect waves-light" onclick='showModal("#press-textType4", "기타글")'>기타글</button>
+		                            </div></td><td></td><td></td><td>
+	                                <div class="btn-group f-right p-r-0">
+	                                	<button class="btn btn-warning f-right alert-confirm" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'alert-confirm']);"><i class="icofont icofont-download-alt"></i>EXCEL</button>
+	                                </div></td></tr></table>
                                   </div>
                                     <!-- list satart -->
                                     <div class="table-responsive">
@@ -691,6 +733,282 @@
                         </div>
                       </div>
                       <!-- 순위 더보기 Modal end-->
+                      
+                      <!-- reportTextType Modal start-->
+                      <div class="modal fade" id="text-Modal3" tabindex="-1" role="dialog">
+                        <div class="modal-dialog modal-lg" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title"></h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true"><i class="icofont icofont-close-line"></i></span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              <div class="col-lg-12">
+                                <div class="card">
+                                  <div class="card-header">
+                                    <h5 class="card-header-text m-b-10">검출데이터</h5>
+                                     </div>
+                                    <!-- list satart -->
+                                    <div class="table-responsive">
+                                      <table class="table">
+                                        <thead>
+                                            <tr>
+                                              <th width="5%">NO</th>
+                                              <th width="10%">등록날짜</th>
+                                              <th width="10%">언론사</th>
+                                              <th width="3%">제목</th>
+                                              <th width="10%">키워드</th>
+                                              <th width="10%">여론현황</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                          <c:forEach items="${reporterGetTextTypeCount}" var = "mediaVO2" varStatus="index">
+                                          <tr>
+                                            <th scope="row">${index.count}</th>
+                                            <td>
+                                            <fmt:formatDate value="${mediaVO2.writeDate}" pattern="yyyy-MM-dd kk:mm:ss"/>
+                                            </td>
+                                            <td>${mediaVO2.media_name}</td>
+                                            <td width="3%"><a href='' target="_blank">${mediaVO2.media_title}</a></td>
+                                            <td>${mediaVO2.keyword}</td>
+                                            <td>${mediaVO2.textType}</td>
+                                          </tr>
+                                          </c:forEach>
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                  <!-- list end -->
+                                </div>
+                              </div>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">Close</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- reportTextType Modal end-->
+                      
+                      <!-- textType Modal start-->
+                      <div class="modal fade" id="press-textType" tabindex="-1" role="dialog">
+                        <div class="modal-dialog modal-lg" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title">좋은 글</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true"><i class="icofont icofont-close-line"></i></span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              <div class="col-lg-12">
+                                    <!-- list satart -->
+                                      <c:if test="${empty textTypelistSearch}">
+                                         	<h5 align="center">등록된 게시글이 없습니다.</h5>
+                                     </c:if>
+                                     <c:if test="${!empty textTypelistSearch}">
+                                      <table class="tabc" align="center">
+                                        <thead>
+                                            <tr align="center">
+                                              <th width="5">NO</th>
+                                              <th width="20">등록날짜</th>
+                                              <th width="25">언론사</th>
+                                              <th width="50">제목</th>
+                                              <th width="25">키워드</th>
+                                              <th width="25">여론현황</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                          <c:forEach items="${textTypelistSearch}" var = "mediaVO" varStatus="index">
+                                          <tr>
+                                            <th scope="row">${index.count}</th>
+                                            <td>
+                                            <fmt:formatDate value="${mediaVO.updateDate}" pattern="yyyy-MM-dd"/>
+                                            </td>
+                                            <td>${mediaVO.media_name}</td>
+                                            <td><a href='${mediaVO.url}' target="_blank">${mediaVO.media_title}</a></td>
+                                            <td>${mediaVO.keyword}</td>
+                                            <td>${mediaVO.textType}</td>
+                                          </tr>
+                                          </c:forEach>
+                                        </tbody>
+                                      </table>
+                                      </c:if>
+                                  <!-- list end -->
+                              </div>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">Close</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- textType Modal end-->
+                      
+                      <!-- textType Modal start-->
+                      <div class="modal fade" id="press-textType2" tabindex="-1" role="dialog">
+                        <div class="modal-dialog modal-lg" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title">나쁜 글</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true"><i class="icofont icofont-close-line"></i></span>
+                              </button>
+                            </div>
+                                <div class="modal-body">
+                              <div class="col-lg-12">
+                                    <!-- list satart -->
+                                      <c:if test="${empty textTypelistSearch2}">
+                                         	<h5 align="center">등록된 게시글이 없습니다.</h5>
+                                     </c:if>
+                                     <c:if test="${!empty textTypelistSearch2}">
+                                      <table class="tabc" align="center">
+                                        <thead>
+                                            <tr align="center">
+                                              <th width="5">NO</th>
+                                              <th width="20">등록날짜</th>
+                                              <th width="25">언론사</th>
+                                              <th width="50">제목</th>
+                                              <th width="25">키워드</th>
+                                              <th width="25">여론현황</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                          <c:forEach items="${textTypelistSearch2}" var = "mediaVO" varStatus="index">
+                                          <tr>
+                                            <th scope="row">${index.count}</th>
+                                            <td>
+                                            <fmt:formatDate value="${mediaVO.updateDate}" pattern="yyyy-MM-dd"/>
+                                            </td>
+                                            <td>${mediaVO.media_name}</td>
+                                            <td><a href='${mediaVO.url}' target="_blank">${mediaVO.media_title}</a></td>
+                                            <td>${mediaVO.keyword}</td>
+                                            <td>${mediaVO.textType}</td>
+                                          </tr>
+                                          </c:forEach>
+                                        </tbody>
+                                      </table>
+                                      </c:if>
+                                  <!-- list end -->
+                              </div>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">Close</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- textType Modal end-->
+                      <!-- textType Modal start-->
+                      <div class="modal fade" id="press-textType3" tabindex="-1" role="dialog">
+                        <div class="modal-dialog modal-lg" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title">관심 글</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true"><i class="icofont icofont-close-line"></i></span>
+                              </button>
+                            </div>
+                                <div class="modal-body">
+                              <div class="col-lg-12">
+                                    <!-- list satart -->
+                                      <c:if test="${empty textTypelistSearch3}">
+                                         	<h5 align="center">등록된 게시글이 없습니다.</h5>
+                                     </c:if>
+                                     <c:if test="${!empty textTypelistSearch3}">
+                                      <table class="tabc" align="center">
+                                        <thead>
+                                            <tr align="center">
+                                              <th width="5">NO</th>
+                                              <th width="20">등록날짜</th>
+                                              <th width="25">언론사</th>
+                                              <th width="5">제목</th>
+                                              <th width="25">키워드</th>
+                                              <th width="25">여론현황</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                          <c:forEach items="${textTypelistSearch3}" var = "mediaVO" varStatus="index">
+                                          <tr>
+                                            <th scope="row">${index.count}</th>
+                                            <td>
+                                            <fmt:formatDate value="${mediaVO.updateDate}" pattern="yyyy-MM-dd"/>
+                                            </td>
+                                            <td>${mediaVO.media_name}</td>
+                                            <td><a href='${mediaVO.url}' target="_blank">${mediaVO.media_title}</a></td>
+                                            <td>${mediaVO.keyword}</td>
+                                            <td>${mediaVO.textType}</td>
+                                          </tr>
+                                          </c:forEach>
+                                        </tbody>
+                                      </table>
+                                      </c:if>
+                                  <!-- list end -->
+                              </div>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">Close</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- textType Modal end-->
+                      <!-- textType Modal start-->
+                      <div class="modal fade" id="press-textType4" tabindex="-1" role="dialog">
+                        <div class="modal-dialog modal-lg" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title">기타 글</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true"><i class="icofont icofont-close-line"></i></span>
+                              </button>
+                            </div>
+                                <div class="modal-body">
+                              <div class="col-lg-12">
+                                    <!-- list satart -->
+                                      <c:if test="${empty textTypelistSearch4}">
+                                         	<h5 align="center">등록된 게시글이 없습니다.</h5>
+                                     </c:if>
+                                     <c:if test="${!empty textTypelistSearch4}">
+                                      <table class="tabc" align="center">
+                                        <thead>
+                                            <tr align="center">
+                                              <th width="5">NO</th>
+                                              <th width="20">등록날짜</th>
+                                              <th width="25">언론사</th>
+                                              <th width="50">제목</th>
+                                              <th width="25">키워드</th>
+                                              <th width="25">여론현황</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                          <c:forEach items="${textTypelistSearch4}" var = "mediaVO" varStatus="index">
+                                          <tr>
+                                            <th scope="row">${index.count}</th>
+                                            <td>
+                                            <fmt:formatDate value="${mediaVO.updateDate}" pattern="yyyy-MM-dd"/>
+                                            </td>
+                                            <td>${mediaVO.media_name}</td>
+                                            <td><a href='${mediaVO.url}' target="_blank">${mediaVO.media_title}</a></td>
+                                            <td>${mediaVO.keyword}</td>
+                                            <td>${mediaVO.textType}</td>
+                                          </tr>
+                                          </c:forEach>
+                                        </tbody>
+                                      </table>
+                                      </c:if>
+                                  <!-- list end -->
+                              </div>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">Close</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- textType Modal end-->
+                      
                     </div>
                   </div>
                   <!-- page-body end -->
@@ -967,8 +1285,49 @@
 		  };
 		
 	});
-
 	
+	// allBtn 클릭시
+	  $(".radiosBtn").on("click", function(event){
+		  console.log(event);
+
+		  var input = event.target.id;
+
+		  var btnNum = input.substr(6);
+
+		  var $trList = $(".trList");
+
+		  for(var i = 0; i < $trList.length; i++){
+			  $('#radio'+ btnNum + (i+1))[0].checked = true;
+		  }
+
+
+
+		  /* var value;
+
+		  switch(input){
+
+		  case "allBtn1" : value = "좋은글"; break;
+		  case "allBtn2" : value = "나쁜글"; break;
+		  case "allBtn3" : value = "관심글"; break;
+		  case "allBtn4" : value = "기타글"; break;
+		  case "allBtn5" : value = "삭제글"; break;
+
+		  }
+
+		  console.log(value); */
+
+
+
+
+	  });
+	
+	// 분류 선택시
+	$selectTextType.change(function(){
+		console.log("selectTextType clicked....");
+		console.log($('#selectTextType option:selected').val());
+
+		searchList();
+	});
 	
 	// 날짜 계산 함수
 	function getDate(type){

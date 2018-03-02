@@ -8,6 +8,7 @@ import org.union.domain.ExtractVO;
 import org.union.domain.GraphVO;
 import org.union.domain.PortalVO;
 import org.union.domain.SearchCriteria;
+import org.union.domain.TextTypeDateVO;
 import org.union.domain.TextTypeVO;
 
 public interface PortalService {
@@ -41,6 +42,7 @@ public interface PortalService {
 	public GraphVO yesterdayCount();
 	
 	public TextTypeVO textTypeCount(SearchCriteria cri);
+	public List<TextTypeDateVO> textTypeCount2(SearchCriteria cri);
 	
 	public TextTypeVO blogTextType(SearchCriteria cri);
 	public TextTypeVO cafeTextType(SearchCriteria cri);

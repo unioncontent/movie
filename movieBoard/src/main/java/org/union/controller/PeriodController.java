@@ -35,6 +35,7 @@ import org.union.service.ReporterService;
 import org.union.service.SNSService;
 import org.union.service.UserService;
 import org.union.util.ExcelView;
+import org.union.util.ExtractComparator;
 import org.union.util.ListUtil;
 import org.union.util.PeriodComparator;
 
@@ -311,7 +312,7 @@ public class PeriodController {
 	}
 
 	@GetMapping("/media")
-	public void mediaGET(@ModelAttribute("cri") SearchCriteria cri, Model model) {
+	public void mediaGET(@ModelAttribute("cri") SearchCriteria cri, Model model, String pressName, String textType) {
 		  logger.info("mediaGET called....");
 		  
 		  cri.setTextType(null);
@@ -349,6 +350,12 @@ public class PeriodController {
 					cri.setCompany(null);
 				}
 			}
+			if(cri.getTextType() != null) {
+				if(cri.getTextType().equals("undefined") || cri.getTextType().equals("분류") || cri.getTextType().isEmpty()) {
+					cri.setTextType(null);
+				}
+			}
+			
 
 			// 회사 선택에 따른 키워드 재추출
 			if (cri.getCompany() != null) {	
@@ -367,6 +374,8 @@ public class PeriodController {
 		  List<PeriodMediaVO> mediaList = mediaService.periodMedia(cri);
 		  List<PeriodMediaVO> reporterList = mediaService.periodReporter(cri);
 		  
+		  ListUtil listUtil = new ListUtil();
+		  
 		  PeriodComparator comparator = new PeriodComparator();
 		  Collections.sort(mediaList, comparator);
 		  Collections.sort(reporterList, comparator);
@@ -374,6 +383,7 @@ public class PeriodController {
 		  model.addAttribute("mediaCount", mediaList.size());
 		  model.addAttribute("pressCount", reporterList.size());
 		  model.addAttribute("totalCount", mediaService.getTotalCount(cri));
+		  
 		  
 		  if(cri.getSelectKey() == null && cri.getCompany() == null) {
 			  model.addAttribute("matchCount", 0);
@@ -389,12 +399,18 @@ public class PeriodController {
 		  model.addAttribute("pressList", reporterList);
 		  model.addAttribute("mediaList", mediaList);
 		  
-		  
 		  // 리스트
 		  String keyword=  cri.getKeyword();
 		  cri.setKeyword(null);
 		  model.addAttribute("searchList", mediaService.wlistSearch(cri));
 		  model.addAttribute("searchList2", mediaService.wlistSearch2(cri));
+		  model.addAttribute("textTypelistSearch", mediaService.textTypelistSearch(cri));
+		  model.addAttribute("textTypelistSearch2", mediaService.textTypelistSearch2(cri));
+		  model.addAttribute("textTypelistSearch3", mediaService.textTypelistSearch3(cri));
+		  model.addAttribute("textTypelistSearch4", mediaService.textTypelistSearch4(cri));
+		  model.addAttribute("reporterGetTextTypeCount", mediaService.reporterGetTextTypeCount(cri, pressName, textType));
+		  logger.info("reporter: " + pressName);
+		  logger.info("textType: " + textType);
 		  PageMaker pageMaker = new PageMaker();
 		  
 		  Integer totalCount = mediaService.wgetSearchCount(cri);

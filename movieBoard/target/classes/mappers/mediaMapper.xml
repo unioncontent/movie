@@ -112,6 +112,39 @@
 			and textType = #{textType}
 		</if>
 	</sql>
+	
+	<sql id="search_writeDate2">
+		<if test="company != null">
+			where
+			   keyword in (select 
+						keyword 
+					from 
+						keyword_data
+					where
+						user_idx = (select 
+										user_idx 
+									from 
+										user_data 
+									where 
+										user_name = #{company} 
+									and 
+										keyword_property = '포함'
+									)
+					)
+		</if>
+		<if test="selectKey != null">
+				and keyword in (select keyword from keyword_data where keyword_main = #{selectKey})
+			</if>
+		<if test="startDate != null">
+			and writeDate <![CDATA[>=]]> #{startDate}
+			<if test="endDate != null">
+				and writeDate <![CDATA[<=]]> #{endDate}
+			</if>
+		</if>
+		<if test="textType != null">
+			and textType = #{textType}
+		</if>
+	</sql>
  
  	<insert id="create">
  		insert into
@@ -229,6 +262,17 @@
  		<include refid="search_writeDate"></include>
  	</select>
  	
+ 	<select id="totalMediaCount" resultType="TextTypeVO">
+ 		select  
+ 		count(if(textType='좋은글', textType, null)) lik,
+		count(if(textType='나쁜글', textType, null)) dis,
+		count(if(textType='관심글', textType, null)) cu,
+		count(if(textType='기타글', textType, null)) etc,
+		count(if(textType is not null and texttype!='삭제글', textType, null)) al
+ 		from media_data
+ 		<include refid="search_writeDate2"></include>
+ 	</select>
+ 	
  	<select id="periodTextTypeCount" resultType="TextTypeVO">
  		select  
  		count(if(textType='좋은글', textType, null)) lik,
@@ -304,6 +348,59 @@
 		limit  
 			#{startPage}, #{perPageNum}
  	
+ 	</select>
+ 	
+ 	<select id="textTypelistSearch" parameterType="Map" resultType="MediaVO">
+ 		select 
+			*
+		from 
+			media_data
+		where 
+			textType is not null
+		and 
+			textType='좋은글'
+		<include refid="search"></include>
+		order 
+			by updateDate desc
+ 	</select>
+ 	<select id="textTypelistSearch2" parameterType="Map" resultType="MediaVO">
+ 		select 
+			*
+		from 
+			media_data
+		where 
+			textType is not null
+		and 
+			textType='나쁜글'
+		<include refid="search"></include>
+		order 
+			by updateDate desc
+ 	</select>
+ 	<select id="textTypelistSearch3" parameterType="Map" resultType="MediaVO">
+ 		select 
+			*
+		from 
+			media_data
+		where 
+			textType is not null
+		and 
+			textType='관심글'
+		<include refid="search"></include>
+		order 
+			by updateDate desc
+ 	</select>
+ 	<select id="textTypelistSearch4" parameterType="Map" resultType="MediaVO">
+ 		select 
+			*
+		from 
+			media_data
+		where 
+			textType is not null
+		and 
+			textType='기타글'
+		<include refid="search"></include>
+		order 
+			by updateDate desc
  	</select>
  	
  	<select id = "getSearchCount" resultType="Integer">
@@ -455,6 +552,21 @@
 			and updateDate <![CDATA[<]]> #{endDate}
 		</if>
  	
+ 	</select>
+ 	
+ 	<select id="reporterGetTextTypeCount" resultType="Map">
+ 		select 
+ 			writeDate, media_name, media_title, keyword, textType
+ 		from 
+ 			media_data
+ 		where
+ 			reporter_name = #{reporter}
+ 		and
+ 			textType = #{textType}	
+ 		<if test="startDate != null and endDate != null">
+			and updateDate <![CDATA[>]]> #{startDate}
+			and updateDate <![CDATA[<]]> #{endDate}
+		</if>
  	</select>
  	
  	<select id="mediaGetSearchCount" resultType="Integer">

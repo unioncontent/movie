@@ -31,12 +31,17 @@ public interface MediaService {
 	
 	public TextTypeVO naverMediaCount(SearchCriteria cri);
 	public TextTypeVO daumMediaCount(SearchCriteria cri);
+	public TextTypeVO totalMediaCount(SearchCriteria cri);
 	
 	public List<ExtractVO> listExtract(SearchCriteria cri);
 	
 	public Integer getExtractCount(SearchCriteria cri);
 	
 	public List<MediaVO> listSearch(SearchCriteria criteria);
+	public List<MediaVO> textTypelistSearch(SearchCriteria cri);
+	public List<MediaVO> textTypelistSearch2(SearchCriteria cri);
+	public List<MediaVO> textTypelistSearch3(SearchCriteria cri);
+	public List<MediaVO> textTypelistSearch4(SearchCriteria cri);
 	
 	public Integer getSearchCount(SearchCriteria cri);
 
@@ -71,5 +76,5 @@ public interface MediaService {
 	public TextTypeVO getPressTextTypeTotalCount(SearchCriteria cri);
 	public TextTypeVO getPressTextTypeSearchCount(SearchCriteria cri);
 	
-	
+	public List<MediaVO> reporterGetTextTypeCount(SearchCriteria cri, String reporter,String textType);
 }
