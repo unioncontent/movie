@@ -20,7 +20,9 @@ public interface CommunityService {
 	public void remove(Integer community_idx);
 	
 	public List<CommunityVO> allPageList(SearchCriteria cri);
+	public List<CommunityVO> TotalAllPageList(SearchCriteria cri);
 	public Integer allPageCount(SearchCriteria cri);
+	public Integer TotalAllPageCount(SearchCriteria cri);
 	public List<CommunityVO> allPage(SearchCriteria cri);
 	
 	public List<CommunityVO> wPageSearch(SearchCriteria cri);

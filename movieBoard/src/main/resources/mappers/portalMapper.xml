@@ -213,6 +213,20 @@
 			#{startPage}, #{perPageNum}
 	</select>
 	
+ 	<select id="TotalAllPageList" resultType="PortalVO">
+		select
+			*
+		from
+			portal_data_history
+		where
+			url is not null
+		<include refid="search"></include>
+		order 
+			by updateDate desc
+		limit  
+			#{startPage}, #{perPageNum}
+	</select>
+	
 	<select id="allPage" resultType="PortalVO">
 		select
 			*
@@ -230,6 +244,16 @@
 			count(*)
 		from
 			portal_data
+		where
+			url is not null
+		<include refid="search"></include>
+	</select>
+	
+	<select id="TotalAllPageCount" resultType="Integer">
+		select
+			count(*)
+		from
+			portal_data_history
 		where
 			url is not null
 		<include refid="search"></include>

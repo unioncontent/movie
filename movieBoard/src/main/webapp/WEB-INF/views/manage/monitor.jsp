@@ -1149,64 +1149,6 @@
                                     </td>
                                   </tr>
                                 </c:forEach>
-                                <c:forEach items="${communityList26}" var="communityList" varStatus="index">
-                                  <tr>
-                                    <th scope="row">37</th>
-                                    <td>community</td>
-                                    <td>${communityList.community_name}</td>
-                                    <td></td>
-                                    <td><a href="${communityList.url}" target="_blank">${communityList.community_title}</a></td>
-                                    <td><fmt:formatDate value="${communityList.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>
-                                    <td>
-                                      <div class="form-radio">
-                                        <!-- radio-success:정상/radio-danger:비정상 -->
-                                        <div class="radio radiofill radio-success  radio-inline">
-                                            <c:if test="${communityList.checkCondition == true}">
-                                            <label>
-                                                <input type="radio" name="radio37" checked="checked">
-                                                <i class="helper"></i>정상
-                                            </label>
-                                            </c:if>
-                                            <c:if test="${communityList.checkCondition == false}">
-                                            <label>
-                                                <input type="radio" name="radio">
-                                                <i class="helper"></i>비정상
-                                            </label>
-                                            </c:if>
-                                        </div>
-                                      </div>
-                                    </td>
-                                  </tr>
-                                </c:forEach>
-                                <c:forEach items="${communityList27}" var="communityList" varStatus="index">
-                                  <tr>
-                                    <th scope="row">38</th>
-                                    <td>community</td>
-                                    <td>${communityList.community_name}</td>
-                                    <td></td>
-                                    <td><a href="${communityList.url}" target="_blank">${communityList.community_title}</a></td>
-                                    <td><fmt:formatDate value="${communityList.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>
-                                    <td>
-                                      <div class="form-radio">
-                                        <!-- radio-success:정상/radio-danger:비정상 -->
-                                        <div class="radio radiofill radio-success  radio-inline">
-                                            <c:if test="${communityList.checkCondition == true}">
-                                            <label>
-                                                <input type="radio" name="radio38" checked="checked">
-                                                <i class="helper"></i>정상
-                                            </label>
-                                            </c:if>
-                                            <c:if test="${communityList.checkCondition == false}">
-                                            <label>
-                                                <input type="radio" name="radio">
-                                                <i class="helper"></i>비정상
-                                            </label>
-                                            </c:if>
-                                        </div>
-                                      </div>
-                                    </td>
-                                  </tr>
-                                </c:forEach>
                                 </tbody>
                               </table>
                             </div>

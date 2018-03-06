@@ -345,11 +345,25 @@ public class MediaServiceImpl implements MediaService {
 		
 		return list;
 	}
+	
+	@Override
+	public List<MediaVO> TotalAllPageList(SearchCriteria cri) {
+
+		List<MediaVO> list = mediaDAO.TotalAllPageList(cri);
+		
+		return list;
+	}
 
 	@Override
 	public Integer allPageCount(SearchCriteria cri) {
 
 		return mediaDAO.allPageCount(cri);
+	}
+	
+	@Override
+	public Integer TotalAllPageCount(SearchCriteria cri) {
+
+		return mediaDAO.TotalAllPageCount(cri);
 	}
 
 	@Override
@@ -458,5 +472,5 @@ public class MediaServiceImpl implements MediaService {
 		List<MediaVO> list = mediaDAO.reporterGetTextTypeCount(cri, reporter, textType);
 		return list;
 	}
-
+	
 }

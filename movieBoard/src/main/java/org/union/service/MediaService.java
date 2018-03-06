@@ -23,7 +23,9 @@ public interface MediaService {
 	public TextTypeVO periodTextTypeCount(SearchCriteria cri);
 	
 	public List<MediaVO> allPageList(SearchCriteria cri);
+	public List<MediaVO> TotalAllPageList(SearchCriteria cri);
 	public Integer allPageCount(SearchCriteria cri);
+	public Integer TotalAllPageCount(SearchCriteria cri);
 	
 	public List<MediaVO> allPage(SearchCriteria cri);
 	

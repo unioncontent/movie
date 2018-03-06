@@ -165,11 +165,23 @@ public class CommunityServiceImpl implements CommunityService {
 
 		return communityDAO.allPageList(cri);
 	}
+	
+	@Override
+	public List<CommunityVO> TotalAllPageList(SearchCriteria cri) {
+
+		return communityDAO.TotalAllPageList(cri);
+	}
 
 	@Override
 	public Integer allPageCount(SearchCriteria cri) {
 
 		return communityDAO.allPageCount(cri);
+	}
+	
+	@Override
+	public Integer TotalAllPageCount(SearchCriteria cri) {
+
+		return communityDAO.TotalAllPageCount(cri);
 	}
 
 	@Override
@@ -196,6 +208,4 @@ public class CommunityServiceImpl implements CommunityService {
 		return list;
 		
 	}
-
-
 }

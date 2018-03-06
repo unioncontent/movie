@@ -256,14 +256,25 @@ public class PortalDAOImpl implements PortalDAO {
 		return session.selectList(namespace + "allPageList", cri);
 	}
 
-
+	@Override
+	public List<PortalVO> TotalAllPageList(SearchCriteria cri) {
+		
+		return session.selectList(namespace + "TotalAllPageList", cri);
+	}
+	
 	@Override
 	public Integer allPageCount(SearchCriteria cri) {
 
 		return session.selectOne(namespace + "allPageCount", cri);
 	}
+	
+	@Override
+	public Integer TotalAllPageCount(SearchCriteria cri) {
 
+		return session.selectOne(namespace + "TotalAllPageCount", cri);
+	}
 
+	
 	@Override
 	public Integer getTypeOfMovieCount(SearchCriteria cri) {
 

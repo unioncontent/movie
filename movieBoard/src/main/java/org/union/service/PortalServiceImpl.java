@@ -259,11 +259,23 @@ public class PortalServiceImpl implements PortalService {
 
 		return portalDAO.allPageList(cri);
 	}
-
+	
+	@Override
+	public List<PortalVO> TotalAllPageList(SearchCriteria cri) {
+		
+		return portalDAO.TotalAllPageList(cri);
+	}
+	
 	@Override
 	public Integer allPageCount(SearchCriteria cri) {
 
 		return portalDAO.allPageCount(cri);
+	}
+	
+	@Override
+	public Integer TotalAllPageCount(SearchCriteria cri) {
+
+		return portalDAO.TotalAllPageCount(cri);
 	}
 
 	@Override

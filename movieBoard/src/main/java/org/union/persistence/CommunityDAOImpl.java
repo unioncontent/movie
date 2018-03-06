@@ -166,6 +166,12 @@ public class CommunityDAOImpl implements CommunityDAO {
 
 		return session.selectList(namespace + "allPageList", cri);
 	}
+	
+	@Override
+	public List<CommunityVO> TotalAllPageList(SearchCriteria cri) {
+
+		return session.selectList(namespace + "TotalAllPageList", cri);
+	}
 
 
 	@Override
@@ -173,7 +179,12 @@ public class CommunityDAOImpl implements CommunityDAO {
 
 		return session.selectOne(namespace + "allPageCount", cri);
 	}
+	
+	@Override
+	public Integer TotalAllPageCount(SearchCriteria cri) {
 
+		return session.selectOne(namespace + "TotalAllPageCount", cri);
+	}
 
 	@Override
 	public List<CommunityVO> wPageSearch(SearchCriteria cri) {
@@ -187,6 +198,5 @@ public class CommunityDAOImpl implements CommunityDAO {
 
 		return session.selectList(namespace + "allPage", cri);
 	}
-
 
 }
