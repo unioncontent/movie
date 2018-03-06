@@ -409,8 +409,8 @@ public class PeriodController {
 		  model.addAttribute("textTypelistSearch3", mediaService.textTypelistSearch3(cri));
 		  model.addAttribute("textTypelistSearch4", mediaService.textTypelistSearch4(cri));
 		  model.addAttribute("reporterGetTextTypeCount", mediaService.reporterGetTextTypeCount(cri, pressName, textType));
-		  logger.info("reporter: " + pressName);
-		  logger.info("textType: " + textType);
+		  /*logger.info("reporter: " + pressName);
+		  logger.info("textType: " + textType);*/
 		  PageMaker pageMaker = new PageMaker();
 		  
 		  Integer totalCount = mediaService.wgetSearchCount(cri);
