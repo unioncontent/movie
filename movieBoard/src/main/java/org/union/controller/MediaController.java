@@ -19,10 +19,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.union.domain.ExtractVO;
 import org.union.domain.MediaVO;
+import org.union.domain.NewsVO;
 import org.union.domain.PageMaker;
 import org.union.domain.ReporterVO;
 import org.union.domain.SearchCriteria;
 import org.union.domain.UserVO;
+import org.union.persistence.MediaDAO;
 import org.union.service.KeywordService;
 import org.union.service.MediaService;
 import org.union.service.ReporterService;
@@ -132,6 +134,25 @@ public class MediaController {
 		model.addAttribute("totalCount", totalCount);
 		model.addAttribute("minusCount", cri.getPerPageNum() * (cri.getPage()-1));
 		
+		
+	}
+	
+	@GetMapping("/replyAdd")
+	public void replyAdd() {
+		
+	}
+	
+	
+	@GetMapping("/replyAddOk")
+	public String replyAddOk(NewsVO vo) {
+		
+		mediaService.replyAdd(vo);
+		
+		return "redirect:/media/replyAdd";
+	}
+	
+	@GetMapping("/replyList")
+	public void replyList() {
 		
 	}
 	

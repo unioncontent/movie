@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.union.domain.GraphVO;
 import org.union.domain.MediaVO;
+import org.union.domain.NewsVO;
 import org.union.domain.SearchCriteria;
 import org.union.domain.TextTypeVO;
 
@@ -26,6 +27,17 @@ public class MediaDAOImpl implements MediaDAO {
 	public void create(MediaVO vo) {
 		try {
 			session.insert(namespace + "create", vo);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	@Override
+	public void replyAdd(NewsVO vo) {
+		try {
+			session.insert(namespace + "replyAdd", vo);
 			
 		} catch (Exception e) {
 			e.printStackTrace();

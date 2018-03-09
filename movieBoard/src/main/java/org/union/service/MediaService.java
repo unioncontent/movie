@@ -5,6 +5,7 @@ import java.util.List;
 import org.union.domain.ExtractVO;
 import org.union.domain.GraphVO;
 import org.union.domain.MediaVO;
+import org.union.domain.NewsVO;
 import org.union.domain.PeriodMediaVO;
 import org.union.domain.SearchCriteria;
 import org.union.domain.TextTypeVO;
@@ -13,6 +14,7 @@ public interface MediaService {
 
 	
 	public void regist(MediaVO vo);
+	public void replyAdd(NewsVO vo);
 	
 	public MediaVO view(Integer media_idx);
 	
