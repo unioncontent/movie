@@ -55,7 +55,7 @@ public class CommunityServiceImpl implements CommunityService {
 			
 			List<ExtractVO> extractList = new ArrayList<ExtractVO>();
 			
-			SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
+			SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			
 			for(int i = 0; i < communityList.size(); i++) {
 				ExtractVO vo = new ExtractVO();

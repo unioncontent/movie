@@ -293,6 +293,20 @@
 			#{startPage}, #{perPageNum}
 	</select>
 	
+	<select id="TotalAllPageList" resultType="CommunityVO">
+		select
+			*
+		from
+			community_data_history
+		where
+			url is not null
+		<include refid="search"></include>
+		order 
+			by updateDate desc
+		limit  
+			#{startPage}, #{perPageNum}
+	</select>
+	
 	<select id="allPage" resultType="CommunityVO">
 		select
 			*
@@ -315,6 +329,15 @@
 		<include refid="search"></include>
 	</select>
 	
+	<select id="TotalAllPageCount" resultType="Integer">
+		select
+			count(*)
+		from
+			community_data_history
+		where
+			url is not null
+		<include refid="search"></include>
+	</select>
 	
 	<select id="listAll" resultType="CommunityVO">
 		select 

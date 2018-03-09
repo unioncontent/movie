@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.union.domain.ExtractVO;
 import org.union.domain.GraphVO;
 import org.union.domain.MediaVO;
+import org.union.domain.NewsVO;
 import org.union.domain.PeriodMediaVO;
 import org.union.domain.PortalVO;
 import org.union.domain.ReporterVO;
@@ -36,6 +37,16 @@ public class MediaServiceImpl implements MediaService {
 	public void regist(MediaVO vo) {
 
 		mediaDAO.create(vo);
+	}
+	
+	@Override
+	public void replyAdd(NewsVO vo) {
+
+		try {
+			mediaDAO.replyAdd(vo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -66,7 +77,7 @@ public class MediaServiceImpl implements MediaService {
 			
 			List<ExtractVO> extractList = new ArrayList<ExtractVO>();
 			
-			SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
+			SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			
 			for(int i = 0; i < mediaList.size(); i++) {
 				ExtractVO vo = new ExtractVO();
@@ -472,5 +483,5 @@ public class MediaServiceImpl implements MediaService {
 		List<MediaVO> list = mediaDAO.reporterGetTextTypeCount(cri, reporter, textType);
 		return list;
 	}
-	
+
 }

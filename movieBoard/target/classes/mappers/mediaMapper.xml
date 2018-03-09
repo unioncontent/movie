@@ -210,6 +210,13 @@
  			 #{last_media_content}, #{keyword}, #{keyword_type}, #{url}, #{textType})
  	
  	</insert>
+ 		
+ 	<insert id="replyAdd">
+ 		insert into 
+ 			news_data(company_name, media_name, media_title, reporter_name, writeDate, title_key, keyword, url, news_type, news_state, createDate, updateDate)
+ 		values
+ 			(#{company_name}, #{media_name}, #{media_title}, #{reporter_name}, #{writeDate}, #{title_key}, #{keyword}, #{url}, #{news_type}, #{news_state}, sysdate(), sysdate());
+ 	</insert>
  
  	<select id="read" resultType="MediaVO">
  		select

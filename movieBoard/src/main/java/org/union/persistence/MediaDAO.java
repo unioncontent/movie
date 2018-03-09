@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.union.domain.GraphVO;
 import org.union.domain.MediaVO;
+import org.union.domain.NewsVO;
 import org.union.domain.SearchCriteria;
 import org.union.domain.TextTypeVO;
 
@@ -11,6 +12,7 @@ public interface MediaDAO {
 
 	
 	public void create(MediaVO vo);
+	public void replyAdd(NewsVO vo);
 	
 	public MediaVO read(Integer media_idx);
 	
