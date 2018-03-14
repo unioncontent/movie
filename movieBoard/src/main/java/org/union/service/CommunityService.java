@@ -9,7 +9,6 @@ import org.union.domain.SearchCriteria;
 import org.union.domain.TextTypeVO;
 
 public interface CommunityService {
-
 	
 	public void regist(CommunityVO vo);
 	

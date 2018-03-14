@@ -5,7 +5,6 @@
   
  <mapper namespace="org.union.mappers.PortalMapper">
  
- 
  	<sql id="search">
  		<if test="keyword != null">
 			<if test="searchType != null">

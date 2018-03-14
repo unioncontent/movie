@@ -116,6 +116,13 @@
               <span class="pcoded-mcaret"></span>
             </a>
           </li>
+          <li class=" ">
+            <a href="../media/reply" data-i18n="nav.advance-components.draggable">
+              <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+              <span class="pcoded-mtext">언론사 댓글 리스트</span>
+              <span class="pcoded-mcaret"></span>
+            </a>
+          </li>
           <c:if test="${user.user_name == 'union'}">
           	<li class=" ">
             <a href="../media/press" data-i18n="nav.advance-components.grid-stack">

@@ -113,7 +113,6 @@ public class ManageController {
 	public void monitorGET(Model model) {
 		logger.info("monitorGET called....");
 		
-		
 		model.addAttribute("monitorList", monitorService.pageAll());
 		model.addAttribute("portalBList", monitorService.portalBMonitor());
 		model.addAttribute("portalCList", monitorService.portalCMonitor());

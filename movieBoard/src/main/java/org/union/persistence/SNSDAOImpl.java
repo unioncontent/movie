@@ -13,7 +13,6 @@ import org.union.domain.SearchCriteria;
 @Repository
 public class SNSDAOImpl implements SNSDAO {
 
-	
 	@Autowired
 	private SqlSession session;
 	

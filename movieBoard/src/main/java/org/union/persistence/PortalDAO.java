@@ -12,7 +12,6 @@ import org.union.domain.TextTypeVO;
 
 public interface PortalDAO {
 
-	
 	public void create(PortalVO vo);
 	
 	public PortalVO read(Integer portal_idx);

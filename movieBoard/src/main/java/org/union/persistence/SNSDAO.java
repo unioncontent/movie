@@ -9,7 +9,6 @@ import org.union.domain.SearchCriteria;
 
 public interface SNSDAO {
 
-	
 	public void create(SNSVO vo);
 	
 	public SNSVO read(Integer SNS_idx);
