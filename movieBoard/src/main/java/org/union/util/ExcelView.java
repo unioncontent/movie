@@ -136,6 +136,10 @@ public class ExcelView extends AbstractXlsView {
 		}
 		else if (model.get("type").equals("movie")) {
 		    titleList.add("언론사");
+		    
+		}else if (model.get("type").equals("news")) {
+			titleList.add("내용");
+			titleList.add("분류");
 		}
 		titleList.add("URL");
 		titleList.add("작성날짜");
@@ -206,6 +210,20 @@ public class ExcelView extends AbstractXlsView {
 			HSSFCell titleCell = dataRow.createCell(cellIdx);
 			titleCell.setCellValue(new HSSFRichTextString(vo.getWriter()));
 		    }
+		    else if (model.get("type").equals("news")) {
+		    cellIdx += 1;
+			HSSFCell contentCell = dataRow.createCell(cellIdx);
+			if(vo.getContent() != null) {
+				if(vo.getContent().getBytes("UTF-8").length < 20000) {
+					contentCell.setCellValue(new HSSFRichTextString(vo.getContent()));
+				}else{
+					contentCell.setCellValue(new HSSFRichTextString(vo.getContent().substring(0, 255)+"..."));
+				}
+			}
+			cellIdx += 1;
+			HSSFCell classiCell = dataRow.createCell(cellIdx);
+			classiCell.setCellValue(new HSSFRichTextString(vo.getTextType()));
+			} 
 		    cellIdx += 1;
 		    HSSFCell dateCell = dataRow.createCell(cellIdx);
 		    dateCell.setCellValue(new HSSFRichTextString(vo.getUrl()));

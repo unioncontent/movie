@@ -9,7 +9,6 @@ import org.union.domain.TextTypeVO;
 
 public interface CommunityDAO {
 
-	
 	public void create(CommunityVO vo);
 
 	public CommunityVO read(Integer community_idx);

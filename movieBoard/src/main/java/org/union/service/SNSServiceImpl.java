@@ -17,7 +17,6 @@ import org.union.persistence.SNSDAO;
 @Service
 public class SNSServiceImpl implements SNSService {
 
-	
 	@Autowired
 	private SNSDAO snsDAO;
 	

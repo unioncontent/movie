@@ -13,7 +13,6 @@ import org.union.domain.TextTypeVO;
 @Repository
 public class CommunityDAOImpl implements CommunityDAO {
 
-	
 	@Autowired
 	private SqlSession session;
 	

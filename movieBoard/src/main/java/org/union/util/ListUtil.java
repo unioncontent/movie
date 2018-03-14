@@ -10,6 +10,7 @@ import org.union.domain.MediaVO;
 import org.union.domain.MobileEntVO;
 import org.union.domain.NaverMovieVO;
 import org.union.domain.PortalVO;
+import org.union.domain.ReplyVO;
 import org.union.domain.SNSVO;
 import org.union.domain.ViralVO;
 
@@ -200,7 +201,35 @@ public class ListUtil {
 
 		return list;
 	}
+	
+	public List<ExtractVO> listAddReplyList(List<ExtractVO> list, List<ReplyVO> addList) {
 
+		try {
+
+			for(int i = 0; i < addList.size(); i++) {
+				ExtractVO vo = new ExtractVO();
+				
+				vo.setDomain("news");
+				vo.setDomainType("naver");
+				vo.setKeyword_main(addList.get(i).getTitle_key());
+				vo.setKeyword(addList.get(i).getKeyword());
+				vo.setTitle(addList.get(i).getMedia_title());
+				vo.setContent(addList.get(i).getReply_content());
+				vo.setTextType(addList.get(i).getTextType());
+				vo.setWriteDate(addList.get(i).getWriteDate());
+				vo.setUrl(addList.get(i).getUrl());
+				vo.setCreateDate(date.format(addList.get(i).getUpdateDate()));
+				
+				list.add(vo);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return list;
+	}
+	
 	public List<ExtractVO> listAddPortalList(List<ExtractVO> list, List<PortalVO> addList) {
 
 		try {

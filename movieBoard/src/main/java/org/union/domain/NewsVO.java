@@ -9,22 +9,25 @@ public class NewsVO {
 	private String media_name;
 	private String media_title;
 	private String reporter_name;
-	private String writeDate; 
+	private String writeDate;
+	private String textType;
 	private String title_key;
 	private String keyword;
+	private String keyword_type;
 	private String url;
 	private String news_type;
 	private Integer news_state;
 	private Date createDate;
 	private Date updateDate;
+	private Integer replycnt;
 	
 	public NewsVO() {
 		super();
 	}
 
 	public NewsVO(Integer news_idx, String company_name, String media_name, String media_title, String reporter_name,
-			String writeDate, String title_key, String keyword, String url, String news_type, Integer news_state,
-			Date createDate, Date updateDate) {
+			String writeDate, String textType, String title_key, String keyword, String keyword_type, String url,
+			String news_type, Integer news_state, Date createDate, Date updateDate, Integer replycnt) {
 		super();
 		this.news_idx = news_idx;
 		this.company_name = company_name;
@@ -32,13 +35,16 @@ public class NewsVO {
 		this.media_title = media_title;
 		this.reporter_name = reporter_name;
 		this.writeDate = writeDate;
+		this.textType = textType;
 		this.title_key = title_key;
 		this.keyword = keyword;
+		this.keyword_type = keyword_type;
 		this.url = url;
 		this.news_type = news_type;
 		this.news_state = news_state;
 		this.createDate = createDate;
 		this.updateDate = updateDate;
+		this.replycnt = replycnt;
 	}
 
 	public Integer getNews_idx() {
@@ -89,6 +95,14 @@ public class NewsVO {
 		this.writeDate = writeDate;
 	}
 
+	public String getTextType() {
+		return textType;
+	}
+
+	public void setTextType(String textType) {
+		this.textType = textType;
+	}
+
 	public String getTitle_key() {
 		return title_key;
 	}
@@ -103,6 +117,14 @@ public class NewsVO {
 
 	public void setKeyword(String keyword) {
 		this.keyword = keyword;
+	}
+
+	public String getKeyword_type() {
+		return keyword_type;
+	}
+
+	public void setKeyword_type(String keyword_type) {
+		this.keyword_type = keyword_type;
 	}
 
 	public String getUrl() {
@@ -144,4 +166,13 @@ public class NewsVO {
 	public void setUpdateDate(Date updateDate) {
 		this.updateDate = updateDate;
 	}
+
+	public Integer getReplycnt() {
+		return replycnt;
+	}
+
+	public void setReplycnt(Integer replycnt) {
+		this.replycnt = replycnt;
+	}
+
 }

@@ -5,12 +5,12 @@ import java.util.List;
 import org.union.domain.GraphVO;
 import org.union.domain.MediaVO;
 import org.union.domain.NewsVO;
+import org.union.domain.ReplyVO;
 import org.union.domain.SearchCriteria;
 import org.union.domain.TextTypeVO;
 
 public interface MediaDAO {
 
-	
 	public void create(MediaVO vo);
 	public void replyAdd(NewsVO vo);
 	
@@ -20,14 +20,20 @@ public interface MediaDAO {
 	
 	public void delete(Integer media_idx);
 	
+	public void newsDelete(Integer news_idx);
+	public void replyDelete(Integer reply_idx);
+	
 	public TextTypeVO periodTextTypeCount(SearchCriteria cri);
 	
 	public List<MediaVO> allPageList(SearchCriteria cri);
 	public List<MediaVO> TotalAllPageList(SearchCriteria cri);
 	public Integer allPageCount(SearchCriteria cri);
 	public Integer TotalAllPageCount(SearchCriteria cri);
+	public Integer newsAllPageCount(SearchCriteria cri);
+	public Integer replyAllPageCount(SearchCriteria cri);
 	
 	public List<MediaVO> allPage(SearchCriteria cri);
+	public List<ReplyVO> replyAllPage(SearchCriteria cri);
 	
 	public GraphVO yesterdayCount();
 	
@@ -69,6 +75,8 @@ public interface MediaDAO {
 	public Integer reporterGetSearchCount(SearchCriteria cri);
 	
 	public void updateTextType (MediaVO vo);
+	public void newsUpdateTextType (NewsVO vo);
+	public void replyUpdateTextType (ReplyVO vo);
 	
 	public void updateThumbnail (MediaVO vo);
 	
@@ -82,4 +90,9 @@ public interface MediaDAO {
 	
 	
 	public List<MediaVO> reporterGetTextTypeCount(SearchCriteria cri, String reporter,String textType);
+	
+	public List<NewsVO> newsList(SearchCriteria cri);
+	
+	public List<ReplyVO> replyList(SearchCriteria cri); 
+	
 }

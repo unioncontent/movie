@@ -103,9 +103,9 @@
 	                    <div class="card-header">
 		                    <h5 class="card-header-text m-b-10"></h5>
 		                    <form action="/media/replyAddOk">
-		                    <table class="table table-bordered result" border="0">
+		                    <table class="table table-bordered result">
 		                    	<tr>
-		                    		<th>회사명</th>
+		                    		<th>*회사명</th>
 		                    		<td> 
 		                    		<select name="company_name" class="form-control" id="selectCompany">
                                     <c:forEach items="${companyList}" var="company">
@@ -114,19 +114,19 @@
                                   </select></td>
 		                    	</tr>
 		                    	<tr>
-		                    		<th>메인 키워드</th>
+		                    		<th>*메인 키워드</th>
 		                    		<td> <input type="text" class="form-control" name="title_key"></td>
 		                    	</tr>
 		                    	<tr>
-		                    		<th>키워드</th>
+		                    		<th>*키워드</th>
 		                    		<td> <input type="text" class="form-control" name="keyword"></td>
 		                    	</tr>
 		                    	<tr>
-		                    		<th>기사 제목</th>
+		                    		<th>*기사 제목</th>
 		                    		<td> <input type="text" class="form-control" name="media_title"></td>
 		                    	</tr>
 		                    	<tr>
-		                    		<th>URL</th>
+		                    		<th>*URL</th>
 		                    		<td> <input type="text" class="form-control" name="url"></td>
 		                    	</tr>
 		                    	<tr>
@@ -138,11 +138,11 @@
 		                    		<td> <input type="text" class="form-control" name="reporter_name"></td>
 		                    	</tr>
 		                    	<tr>
-		                    		<th>날짜</th>
+		                    		<th>*날짜</th>
 		                    		<td> <input type="text" class="form-control" name="writeDate" onkeyup="AddNum(this)"></td>
 		                    	</tr>
 		                    	<tr>
-		                    		<th>유형</th>
+		                    		<th>*유형</th>
 		                    		<td style="float: left">
 		                    			<div class="col-sm-5">
                                         <div class="form-radio">
@@ -163,7 +163,7 @@
 		                    		</td>
 		                    	</tr>
 		                    	<tr>
-		                    		<th>상태</th>
+		                    		<th>*상태</th>
 		                    		<td style="float: left"> 
 		                    			<div class="col-sm-5">
                                         <div class="form-radio">
@@ -184,8 +184,7 @@
 		                    		</td>
 		                    	</tr>
 		                    	<tr>
-		                    		<td></td>
-		                    		<td style="float: left;">
+		                    		<td style="float: right;" colspan="2">
 		                    			<input type="submit" value="등록" class="submit btn btn-primary m-b-0">
 		                    		</td>
 		                    	</tr>

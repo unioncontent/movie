@@ -5,7 +5,8 @@ public class ExtractVO {
 	
 	private String domain, domainType, company,keyword_main, keyword, title, content, writeDate,writer,
 				createDate, url, textType, thumbnail;
-	private Integer sns_idx, community_idx, media_idx, portal_idx;
+	private Integer sns_idx, community_idx, media_idx, portal_idx, reply_idx;
+	
 	public String getDomain() {
 		return domain;
 	}
@@ -108,6 +109,12 @@ public class ExtractVO {
 	}
 	public void setThumbnail(String thumbnail) {
 		this.thumbnail = thumbnail;
+	}
+	public Integer getReply_idx() {
+		return reply_idx;
+	}
+	public void setReply_idx(Integer reply_idx) {
+		this.reply_idx = reply_idx;
 	}
 	@Override
 	public String toString() {

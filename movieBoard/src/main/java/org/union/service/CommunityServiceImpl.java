@@ -17,7 +17,6 @@ import org.union.persistence.KeywordDAO;
 @Service
 public class CommunityServiceImpl implements CommunityService {
 
-	
 	@Autowired
 	private CommunityDAO communityDAO;
 	

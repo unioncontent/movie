@@ -16,7 +16,6 @@ import org.union.domain.TextTypeVO;
 @Repository
 public class PortalDAOImpl implements PortalDAO {
 
-	
 	@Autowired
 	private SqlSession session;
 	

@@ -47,7 +47,7 @@
   <link rel="stylesheet" type="text/css" href="../bower_components/sweetalert/dist/sweetalert.css">
   <!-- Style.css -->
   <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
-  <link rel="stylesheet" type="text/css" href="../assets/pages/division/css/style.css">
+  <link rel="stylesheet" type="text/css" href="../assets/pages/sns/css/style.css">
   <link rel="stylesheet" type="text/css" href="../assets/css/picker.css">
   <!--color css-->
   <link rel="stylesheet" type="text/css" href="../assets/css/color/color-1.css" id="color" />
@@ -119,7 +119,6 @@
                           </c:if>
                         </select>
 						</c:if>
-						
 						<c:if test="${user.user_name != 'union'}">
                          <select style="display: none;" name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="selectCompany">
                           <option>회사</option>
@@ -180,50 +179,46 @@
                               <div class="col-lg-12">
 		                        <div class="card">
 		                          <div class="card-header">
+		                          	<button class="btn btn-warning alert-excel f-right"><i class="icofont icofont-download-alt"></i>EXCEL</button>
                                     <h5 class="card-header-text m-b-10"></h5>
                                     </div>
                                     <div class="card-block table-border-style">
-                            		<div class="table-responsive">
-                                      <table class="table table-hover">
+                            		<div class="card-block table-border-style table-responsive">
+                                      <table class="table table-bordered table-sm">
                                         <thead>
                                             <tr>
                                               <th width="5%">NO</th>
-                                              <th width="7%">키워드</th>
-                                              <th width="30%">기사명 / URL</th>
-                                              <th width="7%">댓글수</th>
-                                              <th width="7%">날짜</th>
-                                              <th width="5%">타입</th>
-                                              <th width="10%">상태</th>
-                                              <th width="7%">분류변경</th>
-                                              <th width="10%">분류처리</th>
+                                              <th width="5%">키워드</th>
+                                              <th width="15%">기사명 / URL</th>
+                                              <th width="10%">댓글 내용</th>
+                                              <th width="10%">날짜</th>
+                                              <th width="5%">분류변경</th>
+                                              <th width="5%">분류처리</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                          <c:forEach items="${newsList}" var = "NewsVO" varStatus="index">
+                                          <c:forEach items="${replyList}" var = "ReplyVO" varStatus="index">
                                           <tr class = "trList">
-                                          	<c:if test="${NewsVO.news_idx != null}">
-                                      			<input type="hidden" value="${NewsVO.news_idx}">
-                                    		</c:if>
+                                          	<c:if test="${ReplyVO.reply_idx != null}">
+                                          		<input type="hidden" value="${ReplyVO.reply_idx}" name="reply_idx">
+                                          	</c:if>
                                             <th scope="row">
                                             	${totalCount -index.count +1 -minusCount}
                                             </th>
-                                            <td>${NewsVO.keyword}</td>
+                                            <td>${ReplyVO.keyword}</td>
                                             <td>
-                                            	${NewsVO.media_title} /<br/><a href='${NewsVO.url}' target="_blank">${NewsVO.url}</a>
+                                            	<div class="title-nowrap">
+                                            	${ReplyVO.media_title} /<br/><a href='${ReplyVO.url}' target="_blank">${ReplyVO.url}</a>
+                                            	</div>
                                             </td>
                                             <td>
-                                            	${NewsVO.replycnt}건
+                                            	<div class="title-nowrap">
+                                            	${ReplyVO.reply_content}
+                                            	</div>
                                             </td>
                                             <td>
-                                            	${NewsVO.writeDate}
+                                            	${ReplyVO.writeDate}
                                             </td>
-                                            <td>${NewsVO.news_type}</td>
-                                            <c:if test="${NewsVO.news_state eq '1'}" >
-                                           		<td>On</td>
-                                            </c:if>
-                                            <c:if test="${NewsVO.news_state eq '2'}" >
-                                           		<td>Off</td>
-                                            </c:if>
                                             <td>
                                             	<div class="radios${index.count}">
 			                                        <input type="radio" id="radio1${index.count}" name="radios${index.count}">
@@ -249,43 +244,42 @@
                                           </c:forEach>
                                         </tbody>
                                         <tfoot>
-                                          <tr>
-                                            <td colspan="9">
-                                              <ul class="pagination float-right">
-                                                <c:if test="${pageMaker.prev}">
-                                              		<li class="page-item">
-                                                		  <a class="page-link" href="replyList${pageMaker.makeSearch(pageMaker.startPage - 1) }" aria-label="Previous">&laquo;
-                                                  		<span aria-hidden="true"></span>
-                                                  		<span class="sr-only">Previous</span>
-                                                		  </a>
-                                              		</li>
-                                        	      </c:if>
-
-                                          		  <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
-                                              		<li class= "${pageMaker.cri.page == idx? 'active':''} page-item">
-                                                		  <a class="page-link" href="replyList${pageMaker.makeSearch(idx)}">${idx}</a>
-                                              		</li>
-                                          		  </c:forEach>
-
-                                          		  <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-                                              		<li class="page-item">
-                                              		  <a class="page-link" href="replyList${pageMaker.makeSearch(pageMaker.endPage +1) }" aria-label="Next">&raquo;
-                                                		<span aria-hidden="true"></span>
-                                                		<span class="sr-only">Next</span>
-                                              		  </a>
-                                              		</li>
-                                          		  </c:if>
-                                          		</ul>
-                                            </td>
-                                          </tr>
-                                        </tfoot>
+		                                  <tr>
+		                                    <td colspan="7">
+		                                      <ul class="pagination float-right">
+		                                       <c:if test="${pageMaker.prev}">
+		                                         <li class="page-item">
+		                                           <a class="page-link" href="reply${pageMaker.makeSearch(pageMaker.startPage - 1) }" aria-label="Previous">&laquo;
+		                                             <span aria-hidden="true"></span>
+		                                             <span class="sr-only">Previous</span>
+		                                           </a>
+		                                         </li>
+		                                       </c:if>
+		
+		                                       <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
+		                                         <li class= "${pageMaker.cri.page == idx? 'active':''} page-item">
+		                                           <a class="page-link" href="reply${pageMaker.makeSearch(idx)}">${idx}</a>
+		                                         </li>
+		                                       </c:forEach>
+		
+		                                       <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+		                                         <li class="page-item">
+		                                           <a class="page-link" href="reply${pageMaker.makeSearch(pageMaker.endPage +1) }" aria-label="Next">&raquo;
+		                                             <span aria-hidden="true"></span>
+		                                             <span class="sr-only">Next</span>
+		                                           </a>
+		                                         </li>
+		                                       </c:if>
+		                                     </ul>
+		                                    </td>
+		                                  </tr>
+		                                </tfoot>
                                       </table>
                                     </div>
                                     </div>
                                    </div>
                                   </div>
-                                 </div>
-                                </div>
+                                  </div></div></div>
                               <!-- list end -->
                         <!-- tab-content end -->
                       </div>
@@ -637,12 +631,11 @@ $(document).ready(function(){
       },
       function(){//엑셀 출력하겠다고 할 시 진행 함수
 
-      	self.location = "excel?"+  "searchType=" + decodeURI(window.location.href.split("&searchType=")[1]).split("&")[0]
-		 	  + "&keyword=" + decodeURI(window.location.href.split("&keyword=")[1]).split("&")[0]
-      	  	  + "&company=" + $("#selectCompany option:selected").val()
-	          + "&selectKey=" + $('#selectKeyword option:selected').val()
-    		  + "&startDate=" + makeDateFormat($("#fromDate").val(), 0)
-    		  + "&endDate=" +  makeDateFormat($("#fromDate").val(), 1);
+    	  self.location = "excelOk?"+
+		  + "&company=" + $("#selectCompany option:selected").val()
+		  + "&selectKey=" + $('#selectKeyword option:selected').val()
+		  + "&startDate=" + makeDateFormat($("#fromDate").val(), 0)
+	  	  + "&endDate=" +  makeDateFormat($("#fromDate").val(), 1);
 
 
 	  		swal("Success!", "엑셀출력 되었습니다.", "success");
@@ -670,8 +663,8 @@ $(document).ready(function(){
 			console.log(idx);
 		}
 
-		if (tr.children[8].children[0].children != 'undefined') {
-			var arr = tr.children[8].children[0].children;
+		if (tr.children[6].children[0].children != 'undefined') {
+			var arr = tr.children[6].children[0].children;
 			console.log(arr);
 		} else {
 			clacInsertData(event);
@@ -718,7 +711,7 @@ function makeDateFormat(date, index){
 	//list URL 함수
 	  function searchList(event) {
 
-	  	self.location = "replyList?"
+	  	self.location = "reply?"
 	  				  + "&company="
 	  				  + $("#selectCompany option:selected").val()
 	  				  + "&selectKey="

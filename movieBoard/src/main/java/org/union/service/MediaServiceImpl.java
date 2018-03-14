@@ -12,6 +12,7 @@ import org.union.domain.MediaVO;
 import org.union.domain.NewsVO;
 import org.union.domain.PeriodMediaVO;
 import org.union.domain.PortalVO;
+import org.union.domain.ReplyVO;
 import org.union.domain.ReporterVO;
 import org.union.domain.SearchCriteria;
 import org.union.domain.TextTypeVO;
@@ -22,7 +23,6 @@ import org.union.persistence.ReporterDAO;
 @Service
 public class MediaServiceImpl implements MediaService {
 
-	
 	@Autowired
 	MediaDAO mediaDAO;
 	
@@ -68,6 +68,19 @@ public class MediaServiceImpl implements MediaService {
 		
 	}
 
+	@Override
+	public void newsRemove(Integer media_idx) {
+
+		mediaDAO.newsDelete(media_idx);
+		
+	}
+	
+	@Override
+	public void replyRemove(Integer reply_idx) {
+
+		mediaDAO.replyDelete(reply_idx);
+		
+	}
 	
 	@Override
 	public List<ExtractVO> listExtract(SearchCriteria cri) {
@@ -306,6 +319,18 @@ public class MediaServiceImpl implements MediaService {
 
 		mediaDAO.updateTextType(vo);
 	}
+	
+	@Override
+	public void newsUpdateTextType(NewsVO vo) {
+		
+		mediaDAO.newsUpdateTextType(vo);
+	}
+	
+	@Override
+	public void replyUpdateTextType(ReplyVO vo) {
+		
+		mediaDAO.replyUpdateTextType(vo);
+	}
 
 	@Override
 	public void modifyThumbnail(MediaVO vo) {
@@ -364,11 +389,39 @@ public class MediaServiceImpl implements MediaService {
 		
 		return list;
 	}
-
+	
+	@Override
+	public List<NewsVO> newsList(SearchCriteria cri) {
+		
+		List<NewsVO> list = mediaDAO.newsList(cri);
+		
+		return list;
+	}
+	
+	@Override
+	public List<ReplyVO> replyList(SearchCriteria cri) {
+		
+		List<ReplyVO> list = mediaDAO.replyList(cri);
+		
+		return list;
+	}
+	
 	@Override
 	public Integer allPageCount(SearchCriteria cri) {
 
 		return mediaDAO.allPageCount(cri);
+	}
+	
+	@Override
+	public Integer newsAllPageCount(SearchCriteria cri) {
+
+		return mediaDAO.newsAllPageCount(cri);
+	}
+	
+	@Override
+	public Integer replyAllPageCount(SearchCriteria cri) {
+
+		return mediaDAO.replyAllPageCount(cri);
 	}
 	
 	@Override
@@ -386,6 +439,14 @@ public class MediaServiceImpl implements MediaService {
 			mediaVO.setKeyword_main(keywordDAO.read(mediaVO.getKeyword()).getKeyword_main());
 		}
 		
+		return list;
+	}
+	
+	@Override
+	public List<ReplyVO> replyAllPage(SearchCriteria cri) {
+
+		List<ReplyVO> list=  mediaDAO.replyAllPage(cri);
+			
 		return list;
 	}
 

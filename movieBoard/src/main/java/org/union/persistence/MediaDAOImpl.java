@@ -10,13 +10,13 @@ import org.springframework.stereotype.Repository;
 import org.union.domain.GraphVO;
 import org.union.domain.MediaVO;
 import org.union.domain.NewsVO;
+import org.union.domain.ReplyVO;
 import org.union.domain.SearchCriteria;
 import org.union.domain.TextTypeVO;
 
 @Repository
 public class MediaDAOImpl implements MediaDAO {
 
-	
 	@Autowired
 	private SqlSession session;
 	
@@ -44,7 +44,18 @@ public class MediaDAOImpl implements MediaDAO {
 		}
 		
 	}
+	
+	@Override
+	public List<NewsVO> newsList(SearchCriteria cri) {
+		
+		return session.selectList(namespace + "newsList", cri);
+	}
 
+	@Override
+	public List<ReplyVO> replyList(SearchCriteria cri) {
+		
+		return session.selectList(namespace + "replyList", cri);
+	}
 	
 	@Override
 	public MediaVO read(Integer media_idx) {
@@ -68,6 +79,30 @@ public class MediaDAOImpl implements MediaDAO {
 	public void delete(Integer media_idx) {
 		try {
 			session.delete(namespace + "delete", media_idx);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		}
+		
+	}
+	
+	@Override
+	public void newsDelete(Integer media_idx) {
+		try {
+			session.delete(namespace + "newsDelete", media_idx);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		}
+		
+	}
+	
+	@Override
+	public void replyDelete(Integer reply_idx) {
+		try {
+			session.delete(namespace + "replyDelete", reply_idx);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -155,6 +190,26 @@ public class MediaDAOImpl implements MediaDAO {
 			e.printStackTrace();
 		}
 	}
+	
+	@Override
+	public void newsUpdateTextType(NewsVO vo) {
+		try {
+			session.update(namespace + "newsUpdateTextType", vo);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Override
+	public void replyUpdateTextType(ReplyVO vo) {
+		try {
+			session.update(namespace + "replyUpdateTextType", vo);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 
 	@Override
@@ -228,6 +283,18 @@ public class MediaDAOImpl implements MediaDAO {
 	}
 	
 	@Override
+	public Integer newsAllPageCount(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "newsAllPageCount", cri);
+	}
+	
+	@Override
+	public Integer replyAllPageCount(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "replyAllPageCount", cri);
+	}
+	
+	@Override
 	public Integer TotalAllPageCount(SearchCriteria cri) {
 
 		return session.selectOne(namespace + "TotalAllPageCount", cri);
@@ -238,7 +305,12 @@ public class MediaDAOImpl implements MediaDAO {
 
 		return session.selectList(namespace + "allPage", cri);
 	}
+	
+	@Override
+	public List<ReplyVO> replyAllPage(SearchCriteria cri) {
 
+		return session.selectList(namespace + "replyAllPage", cri);
+	}
 
 	@Override
 	public Integer getTotalCount(SearchCriteria cri) {

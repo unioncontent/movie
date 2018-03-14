@@ -10,7 +10,6 @@ import org.union.domain.SearchCriteria;
 
 public interface SNSService {
 
-	
 	public void regist(SNSVO vo);
 	
 	public SNSVO view(Integer SNS_idx);

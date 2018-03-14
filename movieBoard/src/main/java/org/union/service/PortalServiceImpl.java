@@ -20,7 +20,6 @@ import org.union.persistence.PortalDAO;
 @Service
 public class PortalServiceImpl implements PortalService {
 
-	
 	@Autowired
 	private PortalDAO portalDAO;
 	

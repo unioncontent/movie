@@ -13,7 +13,6 @@ import org.union.domain.TextTypeVO;
 
 public interface PortalService {
 
-	
 	public void regist(PortalVO vo);
 	
 	public PortalVO view(Integer portal_idx);
