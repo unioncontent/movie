@@ -139,7 +139,8 @@ public class ExcelView extends AbstractXlsView {
 		    
 		}else if (model.get("type").equals("news")) {
 			titleList.add("내용");
-			titleList.add("분류");
+		    titleList.add("작성자");
+		    titleList.add("분류");
 		}
 		titleList.add("URL");
 		titleList.add("작성날짜");
@@ -220,6 +221,9 @@ public class ExcelView extends AbstractXlsView {
 					contentCell.setCellValue(new HSSFRichTextString(vo.getContent().substring(0, 255)+"..."));
 				}
 			}
+			cellIdx += 1;
+			HSSFCell titleCell = dataRow.createCell(cellIdx);
+			titleCell.setCellValue(new HSSFRichTextString(vo.getWriter()));
 			cellIdx += 1;
 			HSSFCell classiCell = dataRow.createCell(cellIdx);
 			classiCell.setCellValue(new HSSFRichTextString(vo.getTextType()));

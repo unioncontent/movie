@@ -8,6 +8,7 @@ public class ReplyVO {
 	private Integer news_idx;
 	private Integer reply_comm_num;
 	private String reply_content;
+	private String reply_writer;
 	private String writeDate;
 	private String textType;
 	private String title_key;
@@ -21,19 +22,23 @@ public class ReplyVO {
 		super();
 	}
 
-	public ReplyVO(Integer reply_idx, Integer news_idx, Integer reply_comm_num, String reply_content, String writeDate,
-			String textType, String title_key, String keyword, Date createDate, Date updateDate) {
+	public ReplyVO(Integer reply_idx, Integer news_idx, Integer reply_comm_num, String reply_content,
+			String reply_writer, String writeDate, String textType, String title_key, String keyword, Date createDate,
+			Date updateDate, String media_title, String url) {
 		super();
 		this.reply_idx = reply_idx;
 		this.news_idx = news_idx;
 		this.reply_comm_num = reply_comm_num;
 		this.reply_content = reply_content;
+		this.reply_writer = reply_writer;
 		this.writeDate = writeDate;
 		this.textType = textType;
 		this.title_key = title_key;
 		this.keyword = keyword;
 		this.createDate = createDate;
 		this.updateDate = updateDate;
+		this.media_title = media_title;
+		this.url = url;
 	}
 
 	public Integer getReply_idx() {
@@ -66,6 +71,14 @@ public class ReplyVO {
 
 	public void setReply_content(String reply_content) {
 		this.reply_content = reply_content;
+	}
+
+	public String getReply_writer() {
+		return reply_writer;
+	}
+
+	public void setReply_writer(String reply_writer) {
+		this.reply_writer = reply_writer;
 	}
 
 	public String getWriteDate() {
@@ -131,4 +144,5 @@ public class ReplyVO {
 	public void setUrl(String url) {
 		this.url = url;
 	}
+
 }

@@ -76,6 +76,7 @@ public interface MediaDAO {
 	
 	public void updateTextType (MediaVO vo);
 	public void newsUpdateTextType (NewsVO vo);
+	public void newsUpdateState (NewsVO vo);
 	public void replyUpdateTextType (ReplyVO vo);
 	
 	public void updateThumbnail (MediaVO vo);

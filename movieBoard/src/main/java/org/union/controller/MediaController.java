@@ -239,6 +239,7 @@ public class MediaController {
 		
 	}
 	
+	
 	@GetMapping("/reply")
 	public void reply(@ModelAttribute("cri") SearchCriteria cri, Model model) throws Exception{
 		logger.info("reply called....");
@@ -542,6 +543,24 @@ public class MediaController {
 		
 		mediaService.newsRemove(idx);
 		mediaService.replyRemove(idx);
+		
+		return "success";
+	}
+	
+	@ResponseBody
+	@PostMapping("update")
+	public String newsUpdate(Integer idx, Integer state) {
+		logger.info("newsUpdate called....");
+		
+		logger.info("idx: " + idx);
+		logger.info("state: " + state);
+
+		NewsVO vo = new NewsVO();
+		
+		vo.setNews_idx(idx);
+		vo.setNews_state(state);
+		
+		mediaService.newsUpdateState(vo);
 		
 		return "success";
 	}

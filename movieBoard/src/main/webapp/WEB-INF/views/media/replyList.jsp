@@ -202,7 +202,7 @@
                                           <c:forEach items="${newsList}" var = "NewsVO" varStatus="index">
                                           <tr class = "trList">
                                           	<c:if test="${NewsVO.news_idx != null}">
-                                      			<input type="hidden" value="${NewsVO.news_idx}">
+                                      			<input type="hidden" id="news_idx" value="${NewsVO.news_idx}">
                                     		</c:if>
                                             <th scope="row">
                                             	${totalCount -index.count +1 -minusCount}
@@ -219,10 +219,52 @@
                                             </td>
                                             <td>${NewsVO.news_type}</td>
                                             <c:if test="${NewsVO.news_state eq '1'}" >
-                                           		<td>On</td>
+                                           		<td>
+                                           		<div class="col-sm-5" style="float: left;">
+			                                        <div class="form-radio">
+			                                          <div class="radio radio-inline">
+			                                            <label>
+			                                              <input type="radio" name="news_state" value="1" checked="checked">
+			                                              <i class="helper"></i>ON
+			                                            </label>
+			                                          </div>
+			                                          <br>
+			                                          <div class="radio radio-inline">
+			                                            <label>
+			                                              <input type="radio" name="news_state" value="2">
+			                                              <i class="helper"></i>OFF
+			                                            </label>
+			                                          </div>
+			                                        </div>
+			                                      </div>
+			                                      <div style="float: right;">
+			                                      <button class="btn btn-primary btn-sm alert-confirm3" data-toggle="tooltip" data-placement="top" data-original-title="상태변경"><i class="icofont-scroll-bubble-down" style="margin-right:0"></i></button> 
+			                                      </div>
+                                           		</td>
                                             </c:if>
                                             <c:if test="${NewsVO.news_state eq '2'}" >
-                                           		<td>Off</td>
+                                           		<td>
+                                           		<div class="col-sm-5" style="float: left;">
+			                                        <div class="form-radio">
+			                                          <div class="radio radio-inline">
+			                                            <label>
+			                                              <input type="radio" name="news_state" value="1">
+			                                              <i class="helper"></i>ON
+			                                            </label>
+			                                          </div>
+			                                          <br>
+			                                          <div class="radio radio-inline">
+			                                            <label>
+			                                              <input type="radio" name="news_state" value="2" checked="checked">
+			                                              <i class="helper"></i>OFF
+			                                            </label>
+			                                          </div>
+			                                        </div>
+			                                      </div>
+			                                      <div style="float: right;">
+			                                      <button class="btn btn-primary btn-sm alert-confirm3" data-toggle="tooltip" data-placement="top" data-original-title="상태변경"><i class="icofont-scroll-bubble-down" style="margin-right:0"></i></button> 
+			                                      </div>
+                                           		</td>
                                             </c:if>
                                             <td>
                                             	<div class="radios${index.count}">
@@ -536,8 +578,52 @@ $(document).ready(function(){
 						location.reload();
 					});
 	  });
+	  
+	// 상태변경 버튼 클릭시
+	  $(document).on("click",".alert-confirm3",function(event){
+			swal({
+						title: "상태변경 처리 하시겠습니까?",
+						text: "바로 상태변경 됩니다.",
+						type: "warning",
+						showCancelButton: true,
+						confirmButtonClass: "btn-danger",
+						confirmButtonText: "YES",
+						closeOnConfirm: false
+					},
+					function(){
 
+						var parent = event.target.parentNode;
+						if(parent.type == 'submit'){
+							console.log("button click...");
+							parent = parent.parentNode;
+						}
 
+						var idx = $('#news_idx').val();
+						
+						var state = $('input[name=news_state]:checked').val();
+
+						console.log("idx:" + idx, "state:" + state);
+
+						$.ajax({
+							  
+							  type: "POST",
+							  url: "update",
+							  data: {
+								  idx: idx, 
+								  state: state
+							  },
+							  dataType: "json",
+							  success: function(data){
+								  console.log(data);
+							  }
+
+						});
+						
+						swal("Update!", "상태변경 처리가 완료되었습니다.", "success");
+
+						location.reload();
+					});
+	  			});
 		// 당일 클릭시
 		$('#toDay').on("click", function(){
 		  console.log("toDay clicked....");
@@ -652,7 +738,6 @@ $(document).ready(function(){
 
 
 }); // end ready...
-
 
 	function insertType(event) {
 

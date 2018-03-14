@@ -215,6 +215,7 @@ public class ListUtil {
 				vo.setKeyword(addList.get(i).getKeyword());
 				vo.setTitle(addList.get(i).getMedia_title());
 				vo.setContent(addList.get(i).getReply_content());
+				vo.setWriter(addList.get(i).getReply_writer());
 				vo.setTextType(addList.get(i).getTextType());
 				vo.setWriteDate(addList.get(i).getWriteDate());
 				vo.setUrl(addList.get(i).getUrl());
