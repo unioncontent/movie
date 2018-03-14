@@ -789,6 +789,16 @@
 			news_idx = #{news_idx}
 	
 	</update>
+	<update id="newsUpdateState">
+		update
+			news_data
+		set
+			news_state = #{news_state}, 
+			updateDate = now()
+		where
+			news_idx = #{news_idx}
+	
+	</update>
 	
 	<update id="replyUpdateTextType">
 		update

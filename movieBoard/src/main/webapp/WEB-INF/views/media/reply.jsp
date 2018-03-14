@@ -190,6 +190,7 @@
                                               <th width="5%">NO</th>
                                               <th width="5%">키워드</th>
                                               <th width="15%">기사명 / URL</th>
+                                              <th width="5%">댓글 작성자</th>
                                               <th width="10%">댓글 내용</th>
                                               <th width="10%">날짜</th>
                                               <th width="5%">분류변경</th>
@@ -210,6 +211,9 @@
                                             	<div class="title-nowrap">
                                             	${ReplyVO.media_title} /<br/><a href='${ReplyVO.url}' target="_blank">${ReplyVO.url}</a>
                                             	</div>
+                                            </td>
+                                            <td>
+                                            	${ReplyVO.reply_writer}
                                             </td>
                                             <td>
                                             	<div class="title-nowrap">
@@ -245,7 +249,7 @@
                                         </tbody>
                                         <tfoot>
 		                                  <tr>
-		                                    <td colspan="7">
+		                                    <td colspan="8">
 		                                      <ul class="pagination float-right">
 		                                       <c:if test="${pageMaker.prev}">
 		                                         <li class="page-item">
@@ -663,8 +667,8 @@ $(document).ready(function(){
 			console.log(idx);
 		}
 
-		if (tr.children[6].children[0].children != 'undefined') {
-			var arr = tr.children[6].children[0].children;
+		if (tr.children[7].children[0].children != 'undefined') {
+			var arr = tr.children[7].children[0].children;
 			console.log(arr);
 		} else {
 			clacInsertData(event);

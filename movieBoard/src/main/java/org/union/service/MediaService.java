@@ -81,6 +81,7 @@ public interface MediaService {
 	
 	public void modifyType(MediaVO vo);
 	public void newsUpdateTextType (NewsVO vo);
+	public void newsUpdateState (NewsVO vo);
 	public void replyUpdateTextType (ReplyVO vo);
 	
 	public void modifyThumbnail(MediaVO vo);

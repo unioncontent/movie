@@ -327,6 +327,12 @@ public class MediaServiceImpl implements MediaService {
 	}
 	
 	@Override
+	public void newsUpdateState(NewsVO vo) {
+		
+		mediaDAO.newsUpdateState(vo);
+	}
+	
+	@Override
 	public void replyUpdateTextType(ReplyVO vo) {
 		
 		mediaDAO.replyUpdateTextType(vo);

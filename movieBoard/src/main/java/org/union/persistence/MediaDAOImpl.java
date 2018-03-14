@@ -202,6 +202,16 @@ public class MediaDAOImpl implements MediaDAO {
 	}
 	
 	@Override
+	public void newsUpdateState(NewsVO vo) {
+		try {
+			session.update(namespace + "newsUpdateState", vo);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Override
 	public void replyUpdateTextType(ReplyVO vo) {
 		try {
 			session.update(namespace + "replyUpdateTextType", vo);
@@ -420,4 +430,5 @@ public class MediaDAOImpl implements MediaDAO {
 		return session.selectList(namespace + "reporterGetTextTypeCount", data);
 	}
 
+	
 }
