@@ -191,7 +191,7 @@
                                               <th width="7%">키워드</th>
                                               <th width="30%">기사명 / URL</th>
                                               <th width="7%">댓글수</th>
-                                              <th width="7%">날짜</th>
+                                              <th width="7%">추출일/작성일</th>
                                               <th width="5%">타입</th>
                                               <th width="10%">상태</th>
                                               <th width="7%">분류변경</th>
@@ -215,6 +215,8 @@
                                             	${NewsVO.replycnt}건
                                             </td>
                                             <td>
+                                            	<fmt:formatDate value="${NewsVO.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" />
+                                            	/<br>
                                             	${NewsVO.writeDate}
                                             </td>
                                             <td>${NewsVO.news_type}</td>

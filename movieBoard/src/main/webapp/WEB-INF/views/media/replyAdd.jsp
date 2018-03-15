@@ -103,48 +103,62 @@
 	                    <div class="card-header">
 		                    <h5 class="card-header-text m-b-10"></h5>
 		                    <form action="/media/replyAddOk">
-		                    <table class="table table-bordered result">
-		                    	<tr>
-		                    		<th>*회사명</th>
-		                    		<td> 
-		                    		<select name="company_name" class="form-control" id="selectCompany">
+		                    <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">*회사명</label>
+                                <div class="col-sm-10">
+                                  <select name="company_name" class="form-control" id="selectCompany">
                                     <c:forEach items="${companyList}" var="company">
                                     <option value="${company.company_name}">${company.company_name}</option>
                                     </c:forEach>
-                                  </select></td>
-		                    	</tr>
-		                    	<tr>
-		                    		<th>*메인 키워드</th>
-		                    		<td> <input type="text" class="form-control" name="title_key"></td>
-		                    	</tr>
-		                    	<tr>
-		                    		<th>*키워드</th>
-		                    		<td> <input type="text" class="form-control" name="keyword"></td>
-		                    	</tr>
-		                    	<tr>
-		                    		<th>*기사 제목</th>
-		                    		<td> <input type="text" class="form-control" name="media_title"></td>
-		                    	</tr>
-		                    	<tr>
-		                    		<th>*URL</th>
-		                    		<td> <input type="text" class="form-control" name="url"></td>
-		                    	</tr>
-		                    	<tr>
-		                    		<th>언론사</th>
-		                    		<td> <input type="text" class="form-control" name="media_name"></td>
-		                    	</tr>
-		                    	<tr>
-		                    		<th>기자</th>
-		                    		<td> <input type="text" class="form-control" name="reporter_name"></td>
-		                    	</tr>
-		                    	<tr>
-		                    		<th>*날짜</th>
-		                    		<td> <input type="text" class="form-control" name="writeDate" onkeyup="AddNum(this)"></td>
-		                    	</tr>
-		                    	<tr>
-		                    		<th>*유형</th>
-		                    		<td style="float: left">
-		                    			<div class="col-sm-5">
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">*메인 키워드</label>
+                                <div class="col-sm-10">
+                                  <input type="text" class="form-control" name="title_key">
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">*키워드</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" name="keyword">
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">*기사 제목</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" name="media_title">
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">*URL</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" name="url">
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">언론사</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" name="media_name">
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">기자</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" name="reporter_name">
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">*날짜</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" name="writeDate" onkeyup="AddNum(this)">
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">*유형</label>
+                                <div class="col-sm-10">
+                                    <div class="col-sm-5">
                                         <div class="form-radio">
                                           <div class="radio radio-inline">
                                             <label>
@@ -160,12 +174,12 @@
                                           </div>
                                         </div>
                                       </div>
-		                    		</td>
-		                    	</tr>
-		                    	<tr>
-		                    		<th>*상태</th>
-		                    		<td style="float: left"> 
-		                    			<div class="col-sm-5">
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">*상태</label>
+                                <div class="col-sm-10">
+                                    <div class="col-sm-5">
                                         <div class="form-radio">
                                           <div class="radio radio-inline">
                                             <label>
@@ -181,18 +195,13 @@
                                           </div>
                                         </div>
                                       </div>
-		                    		</td>
-		                    	</tr>
-		                    	<tr>
-		                    		<td style="float: right;" colspan="2">
-		                    			<input type="submit" value="등록" class="submit btn btn-primary m-b-0">
-		                    		</td>
-		                    	</tr>
-		                    </table>
-		                    </form>
-	                    </div>
-                    </div>
-                  </div>
+                                      <br>
+                                      <input type="submit" value="등록" class="submit btn btn-primary m-b-0">
+                                	</form>
+	                    		</div>
+                    		</div>
+                  		</div>
+                             
   <!-- Warning Section Starts -->
   <!-- Older IE warning message -->
   <!--[if lt IE 9]>
