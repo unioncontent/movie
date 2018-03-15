@@ -57,6 +57,16 @@
   <link rel="stylesheet" type="text/css" href="../assets/css/simple-line-icons.css">
   <link rel="stylesheet" type="text/css" href="../assets/css/ionicons.css">
   <link rel="stylesheet" type="text/css" href="../assets/css/jquery.mCustomScrollbar.css">
+  <script type="text/javascript">
+  function AddNum(obj) {
+      var n = obj.value;
+      var reg = /(\d{2})(\d{2})/;
+      n += '';
+      while (reg.test(n))
+         n = n.replace(reg, '$1' + ':' + '$2' + ':');
+      obj.value = n;
+   }
+  </script>
 </head>
 
 <body>
@@ -452,13 +462,21 @@
                                   <input type='text' class="form-control" id='datepicker'/>
                                 </div>
                                 <div class="col-sm-5">
-                                  <input type='text' class="form-control" id='datetimepicker'/>
+                                  <input type='text' class="form-control" id='datetime' onkeyup="AddNum(this)"/>
                                 </div>
                               </div>
                               <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">URL</label>
                                 <div class="col-sm-10">
                                     <input id="url" type="text" class="form-control" placeholder="URL">
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">이미지</label>
+                                <div class="col-sm-10">
+                                    <div class="imageBox"><img id = "thumbnail"></div>
+                                	<input id = "imageIinput" type="file" name = "file" class="form-control">
+                                  </button>
                                 </div>
                               </div>
                               <!-- <div class="form-group row">
@@ -825,10 +843,12 @@
 			console.log(writerIP);
 			var date1 = $("#datepicker").val();
 			console.log(date1);
-			var date2 = $("#datetimepicker").val();
+			var date2 = $("#datetime").val();
 			console.log(date2);
 			var url = $("#url").val();
 			console.log(url);
+			var thumbnail = $("#thumbnail").val();
+			console.log(thumbnail);
 
 			date1 = date1.replace("/", "-").replace("/", "-");
 			var date = date1 + " " +date2;
@@ -866,8 +886,8 @@
 						url : "insert",
 					 	dataType : "text",
 					 	data : {keyword:keyword, textType:textType, domain :domain, writeDate :date,
-					 		writer :writer, domainType:domainType, title: title,content: content, url: url,
-					 		board_number : board_number, writerIP : writerIP},
+					 		writer :writer, domainType:domainType, title: title,content: content, url: url, 
+					 		thumbnail: thumbnail, board_number : board_number, writerIP : writerIP},
 					  		success : function(){
 					  			swal("Success!", "등록 되었습니다.", "success");
 						  		   console.log("success");

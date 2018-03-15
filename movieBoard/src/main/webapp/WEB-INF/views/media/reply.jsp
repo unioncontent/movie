@@ -192,7 +192,7 @@
                                               <th width="15%">기사명 / URL</th>
                                               <th width="5%">댓글 작성자</th>
                                               <th width="10%">댓글 내용</th>
-                                              <th width="10%">날짜</th>
+                                              <th width="10%">추출일/작성일</th>
                                               <th width="5%">분류변경</th>
                                               <th width="5%">분류처리</th>
                                             </tr>
@@ -221,6 +221,8 @@
                                             	</div>
                                             </td>
                                             <td>
+                                            	<fmt:formatDate value="${ReplyVO.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" />
+                                            	/<br>
                                             	${ReplyVO.writeDate}
                                             </td>
                                             <td>
