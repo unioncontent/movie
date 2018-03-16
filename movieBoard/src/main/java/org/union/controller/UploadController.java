@@ -19,9 +19,11 @@ import org.springframework.web.multipart.MultipartFile;
 import org.union.domain.CommunityVO;
 import org.union.domain.MediaVO;
 import org.union.domain.PortalVO;
+import org.union.domain.SNSVO;
 import org.union.service.CommunityService;
 import org.union.service.MediaService;
 import org.union.service.PortalService;
+import org.union.service.SNSService;
 import org.union.util.UploadFileUtils;
 
 @Controller
@@ -36,6 +38,9 @@ public class UploadController {
 	
 	@Autowired
 	private CommunityService communityService;
+	
+	@Autowired
+	private SNSService snsService;
 
 	private static final Logger logger = LoggerFactory.getLogger(UploadController.class);
 	
@@ -139,6 +144,123 @@ public class UploadController {
 			communityService.modifyThumbnail(vo);
 			
 			return insertFileName;
+			
+		}else {
+			return null;
+		}
+		
+		
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/uploadAjax2", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
+	public ResponseEntity<String> uploadAjax2(MultipartFile file, String keyword, String textType, String domain,
+			String domainType, String board_number, String title, String content, String writer, String writerIP,
+			String writeDate, String url) throws Exception {
+		logger.info(keyword + textType + domain + domainType + board_number + title + content + writer + writerIP + writeDate
+				+ url);
+		logger.info("originalName: " + file.getOriginalFilename());
+		logger.info("size: " + file.getSize());
+		logger.info("contentType: " + file.getContentType());
+		logger.info(uploadPath);
+		
+//		return new ResponseEntity<String>(file.getOriginalFilename(),HttpStatus.CREATED);
+
+		/*logger.info(UploadFileUtils.uploadFile(uploadPath, file.getOriginalFilename(), file.getBytes()),
+				HttpStatus.CREATED);*/
+		
+		ResponseEntity<String> insertFileName;
+		
+		if(domain.equals("portal")) {
+			logger.info("domain is portal");
+			
+			insertFileName = new ResponseEntity<String>(
+					UploadFileUtils.uploadFile(uploadPath, file.getOriginalFilename(), file.getBytes()),
+					HttpStatus.CREATED);
+			
+			PortalVO vo = new PortalVO();
+			
+			vo.setPortal_name(domainType);
+			vo.setPortal_title(title);
+			vo.setWriteDate(writeDate);
+			vo.setKeyword(keyword);
+			vo.setTextType(textType);
+			vo.setUrl(url);
+			vo.setThumbnail(insertFileName.getBody());
+			vo.setDeviceType(1);
+			vo.setKeyword_type("수동");
+			
+			portalService.regist(vo);
+			
+			return insertFileName;
+			
+		}else if(domain.equals("media")) {
+			logger.info("domain is media");
+			
+			insertFileName = new ResponseEntity<String>(
+					UploadFileUtils.uploadFile(uploadPath, file.getOriginalFilename(), file.getBytes()),
+					HttpStatus.CREATED);
+			
+			MediaVO vo = new MediaVO();
+			
+			vo.setMedia_name(domainType);
+			vo.setMedia_title(title);
+			vo.setMedia_content(content);
+			vo.setWriteDate(writeDate);
+			vo.setReporter_name(writer);
+			vo.setKeyword(keyword);
+			vo.setTextType(textType);
+			vo.setUrl(url);
+			vo.setThumbnail(insertFileName.getBody());
+			
+			mediaService.regist(vo);
+			
+			return insertFileName;
+			
+		}else if(domain.equals("community")) {
+			logger.info("domain is community");
+			
+			insertFileName = new ResponseEntity<String>(
+					UploadFileUtils.uploadFile(uploadPath, file.getOriginalFilename(), file.getBytes()),
+					HttpStatus.CREATED);
+			
+			CommunityVO vo = new CommunityVO();
+			vo.setCommunity_name(domainType);
+			vo.setCommunity_title(title);
+			vo.setCommunity_content(content);
+			vo.setCommunity_writer(writer);
+			vo.setCommunity_writer_IP(writerIP);
+			vo.setWriteDate(writeDate);
+			vo.setKeyword(keyword);
+			vo.setTextType(textType);
+			vo.setUrl(url);
+			vo.setThumbnail(insertFileName.getBody());
+			
+			
+			communityService.regist(vo);
+		
+			return insertFileName;
+		}else if(domain.equals("sns")) {
+				logger.info("domain is sns");
+				
+				insertFileName = new ResponseEntity<String>(
+						UploadFileUtils.uploadFile(uploadPath, file.getOriginalFilename(), file.getBytes()),
+						HttpStatus.CREATED);
+				
+				SNSVO vo = new SNSVO();
+				vo.setSns_name(domainType);
+				vo.setSns_title(title);
+				vo.setSns_content(content);
+				vo.setWriteDate(writeDate);
+				vo.setSns_writer(writer);
+				vo.setKeyword(keyword);
+				vo.setTextType(textType);
+				vo.setUrl(url);
+				vo.setThumbnail(insertFileName.getBody());
+				
+				snsService.regist(vo);
+			
+				return insertFileName;	
 			
 		}else {
 			return null;

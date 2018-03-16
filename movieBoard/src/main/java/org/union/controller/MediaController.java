@@ -153,7 +153,6 @@ public class MediaController {
 	public String replyAddOk(NewsVO vo) {
 		
 		mediaService.replyAdd(vo);
-		
 		return "redirect:/media/replyAdd";
 	}
 	
@@ -554,7 +553,7 @@ public class MediaController {
 		
 		logger.info("idx: " + idx);
 		logger.info("state: " + state);
-
+		
 		NewsVO vo = new NewsVO();
 		
 		vo.setNews_idx(idx);

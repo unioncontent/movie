@@ -195,6 +195,7 @@
                                               <th width="5%">타입</th>
                                               <th width="10%">상태</th>
                                               <th width="7%">분류변경</th>
+                                              <th width="7%">상태변경</th>
                                               <th width="10%">분류처리</th>
                                             </tr>
                                         </thead>
@@ -220,8 +221,34 @@
                                             	${NewsVO.writeDate}
                                             </td>
                                             <td>${NewsVO.news_type}</td>
-                                            <c:if test="${NewsVO.news_state eq '1'}" >
+                                           		<c:if test="${NewsVO.news_state eq '1'}" >
                                            		<td>
+                                           		ON
+                                           		</td>
+                                           		</c:if>
+                                           		<c:if test="${NewsVO.news_state eq '2'}" >
+                                           		<td>
+                                           		OFF
+                                           		</td>
+                                           		</c:if>
+                                            	<td>
+                                            	<div class="radios${index.count}">
+			                                        <input type="radio" id="radio1${index.count}" name="radios${index.count}">
+			                                        <label for="radio1${index.count}">좋은글</label>
+			                                        <input type="radio" id="radio2${index.count}" name="radios${index.count}">
+			                                        <label for="radio2${index.count}">나쁜글</label>
+			                                        <input type="radio" id="radio3${index.count}" name="radios${index.count}">
+			                                        <label for="radio3${index.count}">관심글</label>
+			                                        <br/>
+			                                        <input type="radio" id="radio4${index.count}" name="radios${index.count}">
+			                                        <label for="radio4${index.count}">기타글</label>
+			                                        <input type="radio" id="radio5${index.count}" name="radios${index.count}">
+			                                        <label for="radio5${index.count}">삭제글</label>
+			                                        <input type="radio" id="radio6${index.count}" name="radios${index.count}" checked>
+			                                        <label for="radio6${index.count}">미분류</label>
+			                                      </div>
+                                            </td>
+                                            <td>
                                            		<div class="col-sm-5" style="float: left;">
 			                                        <div class="form-radio">
 			                                          <div class="radio radio-inline">
@@ -239,62 +266,18 @@
 			                                          </div>
 			                                        </div>
 			                                      </div>
-			                                      <div style="float: right;">
-			                                      <button class="btn btn-primary btn-sm alert-confirm3" data-toggle="tooltip" data-placement="top" data-original-title="상태변경"><i class="icofont-scroll-bubble-down" style="margin-right:0"></i></button> 
-			                                      </div>
-                                           		</td>
-                                            </c:if>
-                                            <c:if test="${NewsVO.news_state eq '2'}" >
-                                           		<td>
-                                           		<div class="col-sm-5" style="float: left;">
-			                                        <div class="form-radio">
-			                                          <div class="radio radio-inline">
-			                                            <label>
-			                                              <input type="radio" name="news_state" value="1">
-			                                              <i class="helper"></i>ON
-			                                            </label>
-			                                          </div>
-			                                          <br>
-			                                          <div class="radio radio-inline">
-			                                            <label>
-			                                              <input type="radio" name="news_state" value="2" checked="checked">
-			                                              <i class="helper"></i>OFF
-			                                            </label>
-			                                          </div>
-			                                        </div>
-			                                      </div>
-			                                      <div style="float: right;">
-			                                      <button class="btn btn-primary btn-sm alert-confirm3" data-toggle="tooltip" data-placement="top" data-original-title="상태변경"><i class="icofont-scroll-bubble-down" style="margin-right:0"></i></button> 
-			                                      </div>
-                                           		</td>
-                                            </c:if>
-                                            <td>
-                                            	<div class="radios${index.count}">
-			                                        <input type="radio" id="radio1${index.count}" name="radios${index.count}">
-			                                        <label for="radio1${index.count}">좋은글</label>
-			                                        <input type="radio" id="radio2${index.count}" name="radios${index.count}">
-			                                        <label for="radio2${index.count}">나쁜글</label>
-			                                        <input type="radio" id="radio3${index.count}" name="radios${index.count}">
-			                                        <label for="radio3${index.count}">관심글</label>
-			                                        <br/>
-			                                        <input type="radio" id="radio4${index.count}" name="radios${index.count}">
-			                                        <label for="radio4${index.count}">기타글</label>
-			                                        <input type="radio" id="radio5${index.count}" name="radios${index.count}">
-			                                        <label for="radio5${index.count}">삭제글</label>
-			                                        <input type="radio" id="radio6${index.count}" name="radios${index.count}" checked>
-			                                        <label for="radio6${index.count}">미분류</label>
-			                                      </div>
-                                            </td>
+                                           	</td>
 		                                    <td>
 		                                      <button class="btn btn-danger btn-sm alert-confirm1" data-toggle="tooltip" data-placement="top" data-original-title="삭제"><i class="icofont icofont-ui-delete" style="margin-right:0"></i></button>
 		                                      <button class="btn btn-primary btn-sm alert-confirm2" data-toggle="tooltip" data-placement="top" data-original-title="즉시처리"><i class="icofont icofont-ui-check" style="margin-right:0"></i></button>
+		                                      <button class="btn btn-primary btn-sm alert-confirm3" data-toggle="tooltip" data-placement="top" data-original-title="상태변경"><i class="icofont-scroll-bubble-down" style="margin-right:0"></i></button>
 		                                    </td>
                                           </tr>
                                           </c:forEach>
                                         </tbody>
                                         <tfoot>
                                           <tr>
-                                            <td colspan="9">
+                                            <td colspan="10">
                                               <ul class="pagination float-right">
                                                 <c:if test="${pageMaker.prev}">
                                               		<li class="page-item">
@@ -600,7 +583,11 @@ $(document).ready(function(){
 							parent = parent.parentNode;
 						}
 
-						var idx = $('#news_idx').val();
+						var tr = parent.parentNode;
+						console.log(tr);
+
+						var idx = tr.children[0].value;
+						console.log(tr.children);
 						
 						var state = $('input[name=news_state]:checked').val();
 

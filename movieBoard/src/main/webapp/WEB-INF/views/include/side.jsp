@@ -102,6 +102,7 @@
               <span class="pcoded-mcaret"></span>
             </a>
           </li>
+          <c:if test="${user.user_name == 'union'}">
           <li class=" ">
             <a href="../media/replyAdd" data-i18n="nav.advance-components.draggable">
               <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
@@ -109,6 +110,8 @@
               <span class="pcoded-mcaret"></span>
             </a>
           </li>
+          </c:if>
+          <c:if test="${user.user_name == 'union'}">
           <li class=" ">
             <a href="../media/replyList" data-i18n="nav.advance-components.draggable">
               <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
@@ -116,6 +119,8 @@
               <span class="pcoded-mcaret"></span>
             </a>
           </li>
+          </c:if>
+          <c:if test="${user.user_name == 'union'}">
           <li class=" ">
             <a href="../media/reply" data-i18n="nav.advance-components.draggable">
               <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
@@ -123,6 +128,7 @@
               <span class="pcoded-mcaret"></span>
             </a>
           </li>
+          </c:if>
           <c:if test="${user.user_name == 'union'}">
           	<li class=" ">
             <a href="../media/press" data-i18n="nav.advance-components.grid-stack">
@@ -158,6 +164,7 @@
               <span class="pcoded-mcaret"></span>
             </a>
           </li>
+          <c:if test="${user.user_name == 'union'}">
            <li class=" ">
             <a href="../manage/report" data-i18n="nav.advance-components.grid-stack">
               <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
@@ -165,8 +172,10 @@
               <span class="pcoded-mcaret"></span>
             </a>
           </li>
+          </c:if>
         </ul>
       </li>
+      
       <c:if test="${user.user_name == 'union'}">
       <li class="keyword">
         <a href="../keyword/keyword" data-i18n="nav.advance-components.main">

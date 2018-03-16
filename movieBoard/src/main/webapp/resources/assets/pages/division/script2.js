@@ -3,7 +3,7 @@ $(document).ready(function () {
   //modal date picker
   $('#datetimepicker').datetimepicker({
     locale : 'ko',
-    format: 'hh:mm:ss',
+    format: 'HH:mm:ss',
     defaultDate: new Date(),
     icons: {
       time: "icofont icofont-clock-time",
@@ -151,6 +151,56 @@ $(document).ready(function () {
   });
 });
 
+//수동입력 inserBtn 클릭시...
+$(document).on("click",".insertBtn",function(){
+	
+	var keyword = $("#insertSelectKeyword option:selected")[0].value;
+	console.log(keyword);
+	var textType = $("#insertSelectType option:selected")[0].value;
+	console.log(textType);
+	var domain = $("#contentType option:selected")[0].value;
+	console.log(domain);
+	var domainType = $("#insertInputSite").val();
+	console.log(domainType);
+	var board_number = $("#board_number").val();
+	console.log(board_number);
+	var title = $("#title").val();
+	console.log(title);
+	var content = $("#content").val();
+	console.log(content);
+	var writer = $("#writer").val();
+	console.log(writer);
+	var writerIP = $("#writer_IP").val();
+	console.log(writerIP);
+	var date1 = $("#datepicker").val();
+	console.log(date1);
+	var date2 = $("#datetime").val();
+	console.log(date2);
+	var url = $("#url").val();
+	console.log(url);
+	
+	date1 = date1.replace("/", "-").replace("/", "-");
+	var date = date1 + " " +date2;
+	
+	
+	console.log($("#image")[0].files[0]);
+    uploadImage2($("#image")[0].files[0], keyword, textType, domain, domainType, board_number, title, content, writer, writerIP, date, url);
+    
+    //이미지처리메시지 - 성공시
+    
+    $("#frmModal").modal("hide");
+    
+    
+    swal("Success!", "등록 되었습니다.", "success");
+    
+    location.reload();
+    //이미지처리메시지 - 실패시
+    // swal("error!", "이미지업로드가 실패했습니다.", "error");
+    
+}); // end insertBtn click...
+
+
+
 function uploadImage(file, domain, idx){
 	var formData = new FormData();
 		
@@ -160,6 +210,38 @@ function uploadImage(file, domain, idx){
 
 	$.ajax({
 		url : '/uploadAjax',
+		data : formData,
+		dataType : 'text',
+		processData : false,
+		contentType : false,
+		method : 'POST',
+		success : function(data) {
+			console.log(data);
+
+		}
+	});
+	
+}
+
+function uploadImage2(file, keyword, textType, domain, domainType, board_number, title, content, writer, writerIP, date, url){
+	
+	var formData = new FormData();
+		
+	formData.append("file", file);
+	formData.append("keyword", keyword);
+	formData.append("textType", textType);
+	formData.append("domain", domain);
+	formData.append("domainType", domainType);
+	formData.append("board_number", board_number);
+	formData.append("title", title);
+	formData.append("content", content);
+	formData.append("writer", writer);
+	formData.append("writerIP", writerIP);
+	formData.append("writeDate", date);
+	formData.append("url", url);
+
+	$.ajax({
+		url : '/uploadAjax2',
 		data : formData,
 		dataType : 'text',
 		processData : false,

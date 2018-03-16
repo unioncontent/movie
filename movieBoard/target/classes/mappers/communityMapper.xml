@@ -93,9 +93,9 @@
 
 	<insert id="create">
 		insert into
-			community_data(community_name, community_title, community_content, community_writer, community_writer_IP, writeDate, keyword, keyword_type, url, board_number, textType)
+			community_data(community_name, community_title, community_content, community_writer, community_writer_IP, writeDate, keyword, keyword_type, url, board_number, textType, thumbnail)
 		values
-			(#{community_name}, #{community_title}, #{community_content}, #{community_writer}, #{community_writer_IP}, #{writeDate}, #{keyword}, #{keyword_type}, #{url}, #{board_number}, #{textType})
+			(#{community_name}, #{community_title}, #{community_content}, #{community_writer}, #{community_writer_IP}, #{writeDate}, #{keyword}, #{keyword_type}, #{url}, #{board_number}, #{textType}, #{thumbnail})
 	
 	</insert>
 
