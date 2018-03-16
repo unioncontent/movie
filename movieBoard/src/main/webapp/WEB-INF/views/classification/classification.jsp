@@ -223,7 +223,6 @@
                                     <th width="30%">제목 &<span class="text-muted"></span><span class="text-success"> 컨텐츠</span></th>
                                     <th width="10%">추출일 / 작성일</th>
                                     <th width="10%">분류변경</th>
-                                    <th width="3%">이미지</th>
                                     <th width="5%">분류처리</th>
                                   </tr>
                                 </thead>
@@ -250,6 +249,10 @@
                                     <td>${extractVO.company}</td>
                                     <td><div class='keyword-nowrap'>${extractVO.keyword}</div></td>
                                     <td>
+                                      <c:if test="${extractVO.thumbnail != null}">
+                                      	<input type = "hidden" value = "${extractVO.thumbnail}">
+                                      	<div class="image btn-list-image"><i class="icofont icofont-ui-image"></i></div>
+                                      </c:if>
                                       <a href="${extractVO.url}" target="_blank">
                                         <div class="nobr">${extractVO.title}</div>
                                       </a>
@@ -330,15 +333,6 @@
                                         </c:choose>
                                       </div>
                                     </td>
-                                    <td>
-                                    	<c:if test="${extractVO.thumbnail != null}">
-                                      	<input type = "hidden" value = "${extractVO.thumbnail}">
-                                      	<div class="image btn-list-image"><i class="icofont icofont-ui-image"></i></div>
-                                      	</c:if>
-                                      	<c:if test="${extractVO.thumbnail == null}">
-                                    	<div class="image btn-list-image" style="text-align: center;"><i class="icofont icofont-clip"></i></div>
-                                    	</c:if>
-                                    </td>
                                     <td >
                                       <button class="btn btn-danger btn-sm alert-confirm1" data-toggle="tooltip" data-placement="top" data-original-title="삭제"><i class="icofont icofont-ui-delete" style="margin-right:0"></i></button>
                                       <button class="btn btn-primary btn-sm alert-confirm2" data-toggle="tooltip" data-placement="top" data-original-title="즉시처리"><i class="icofont icofont-ui-check" style="margin-right:0"></i></button>
@@ -348,7 +342,7 @@
                                 </tbody>
                                 <tfoot>
                                   <tr>
-                                    <td colspan="10">
+                                    <td colspan="9">
                                       <ul class="pagination float-right">
                                         <c:if test="${pageMaker.prev}">
                                           <li class="page-item">
