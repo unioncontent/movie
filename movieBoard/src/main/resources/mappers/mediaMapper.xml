@@ -243,10 +243,10 @@
  	<insert id="create">
  		insert into
  			media_data(media_name, media_title, media_content, reporter_name, reporter_ID, writeDate, last_writeDate, last_media_title, 
- 			last_media_content, keyword, keyword_type, url, textType)
+ 			last_media_content, keyword, keyword_type, url, textType, thumbnail)
  		values
  			(#{media_name}, #{media_title}, #{media_content}, #{reporter_name}, #{reporter_ID}, #{writeDate}, #{last_writeDate}, #{last_media_title},
- 			 #{last_media_content}, #{keyword}, #{keyword_type}, #{url}, #{textType})
+ 			 #{last_media_content}, #{keyword}, #{keyword_type}, #{url}, #{textType}, #{thumbnail})
  	
  	</insert>
  		
@@ -902,7 +902,7 @@
 			url is not null
 		<include refid="search_writeDate2"></include>
 		order 
-			by updateDate desc
+			by news_idx desc
 		limit  
 		#{startPage}, #{perPageNum}	
 	</select>
@@ -916,7 +916,7 @@
 			reply_comm_num is not null
 		<include refid="search_writeDate2"></include>
 		order 
-			by updateDate desc
+			by reply_idx desc
 		limit  
 			#{startPage}, #{perPageNum}	
 	</select>

@@ -30,7 +30,7 @@ public class UploadFileUtils {
 		    
 		    String savedPath = calcPath(uploadPath);
 		    
-		    File target = new File(uploadPath +savedPath,savedName);
+		    File target = new File(uploadPath +savedPath,originalName);
 		    
 		    FileCopyUtils.copy(fileData, target);
 		    
@@ -38,7 +38,7 @@ public class UploadFileUtils {
 		    
 		    String uploadedFileName = null;
 		    
-		    uploadedFileName = makeIcon(uploadPath, savedPath, savedName);
+		    uploadedFileName = makeIcon(uploadPath, savedPath, originalName);
 		    
 		    return uploadedFileName;
 		    

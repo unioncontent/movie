@@ -129,10 +129,10 @@
  
  	<insert id="create">
  		insert into
- 			portal_data(portal_type, portal_name, portal_title, deviceType, writeDate, keyword, keyword_type, url, textType)
+ 			portal_data(portal_type, portal_name, portal_title, deviceType, writeDate, keyword, keyword_type, url, textType, thumbnail)
  		values
  			(#{portal_type}, #{portal_name}, #{portal_title}, #{deviceType}, #{writeDate}, #{keyword},
- 			 #{keyword_type}, #{url}, #{textType})
+ 			 #{keyword_type}, #{url}, #{textType}, #{thumbnail})
  	
  	</insert>
  

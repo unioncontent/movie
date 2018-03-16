@@ -50,9 +50,9 @@
  
  	<insert id="create">
  		insert into
- 			sns_data(sns_name, sns_title, sns_content, sns_writer, like_cnt, reply_cnt, share_cnt, writeDate, keyword, keyword_type, url, textType)
+ 			sns_data(sns_name, sns_title, sns_content, sns_writer, like_cnt, reply_cnt, share_cnt, writeDate, keyword, keyword_type, url, textType, thumbnail)
  		values
- 			(#{sns_name}, #{sns_title}, #{sns_content}, #{sns_writer}, #{like_cnt}, #{reply_cnt}, #{share_cnt}, #{writeDate}, #{keyword}, #{keyword_type}, #{url}, #{textType})
+ 			(#{sns_name}, #{sns_title}, #{sns_content}, #{sns_writer}, #{like_cnt}, #{reply_cnt}, #{share_cnt}, #{writeDate}, #{keyword}, #{keyword_type}, #{url}, #{textType}, #{thumbnail})
  	</insert>
  
  	<select id="read" resultType="SNSVO">

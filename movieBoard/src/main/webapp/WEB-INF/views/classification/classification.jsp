@@ -223,6 +223,7 @@
                                     <th width="30%">제목 &<span class="text-muted"></span><span class="text-success"> 컨텐츠</span></th>
                                     <th width="10%">추출일 / 작성일</th>
                                     <th width="10%">분류변경</th>
+                                    <th width="3%">이미지</th>
                                     <th width="5%">분류처리</th>
                                   </tr>
                                 </thead>
@@ -249,10 +250,6 @@
                                     <td>${extractVO.company}</td>
                                     <td><div class='keyword-nowrap'>${extractVO.keyword}</div></td>
                                     <td>
-                                      <c:if test="${extractVO.thumbnail != null}">
-                                      	<input type = "hidden" value = "${extractVO.thumbnail}">
-                                      	<div class="image btn-list-image"><i class="icofont icofont-ui-image"></i></div>
-                                      </c:if>
                                       <a href="${extractVO.url}" target="_blank">
                                         <div class="nobr">${extractVO.title}</div>
                                       </a>
@@ -334,6 +331,15 @@
                                       </div>
                                     </td>
                                     <td>
+                                    	<c:if test="${extractVO.thumbnail != null}">
+                                      	<input type = "hidden" value = "${extractVO.thumbnail}">
+                                      	<div class="image btn-list-image"><i class="icofont icofont-ui-image"></i></div>
+                                      	</c:if>
+                                      	<c:if test="${extractVO.thumbnail == null}">
+                                    	<div class="image btn-list-image" style="text-align: center;"><i class="icofont icofont-clip"></i></div>
+                                    	</c:if>
+                                    </td>
+                                    <td >
                                       <button class="btn btn-danger btn-sm alert-confirm1" data-toggle="tooltip" data-placement="top" data-original-title="삭제"><i class="icofont icofont-ui-delete" style="margin-right:0"></i></button>
                                       <button class="btn btn-primary btn-sm alert-confirm2" data-toggle="tooltip" data-placement="top" data-original-title="즉시처리"><i class="icofont icofont-ui-check" style="margin-right:0"></i></button>
                                     </td>
@@ -342,7 +348,7 @@
                                 </tbody>
                                 <tfoot>
                                   <tr>
-                                    <td colspan="9">
+                                    <td colspan="10">
                                       <ul class="pagination float-right">
                                         <c:if test="${pageMaker.prev}">
                                           <li class="page-item">
@@ -388,7 +394,7 @@
                           </div>
                           <div class="modal-body">
                             <div class="modal-body">
-                            <form id="frm">
+                            <form id="frm" enctype="multipart/form-data">
                               <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">키워드</label>
                                 <div class="col-sm-10">
@@ -429,7 +435,7 @@
                               <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">게시판 번호</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" placeholder="게시판 번호" id="boardNum">
+                                    <input type="text" class="form-control" placeholder="게시판 번호" id="board_number">
                                 </div>
                               </div>
                               <div class="form-group row">
@@ -474,9 +480,7 @@
                               <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">이미지</label>
                                 <div class="col-sm-10">
-                                    <div class="imageBox"><img id = "thumbnail"></div>
-                                	<input id = "imageIinput" type="file" name = "file" class="form-control">
-                                  </button>
+                                <input id = "image" type="file" name = "file" class="form-control">
                                 </div>
                               </div>
                               <!-- <div class="form-group row">
@@ -489,7 +493,7 @@
                           </div>
                           <div class="modal-footer">
                             <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">취소</button>
-                            <button id = "insertBtn" type="button" class="btn btn-primary waves-effect waves-light " id="submit">등록</button>
+                            <button type="button" class="btn btn-primary waves-effect waves-light insertBtn" id="submit">등록</button>
                           </div>
                         </div>
                       </div>
@@ -821,105 +825,7 @@
 
 
 
-		// 수동입력 inserBtn 클릭시...
-		$("#insertBtn").on("click", function(){
-			var keyword = $("#insertSelectKeyword option:selected")[0].value;
-			console.log(keyword);
-			var textType = $("#insertSelectType option:selected")[0].value;
-			console.log(textType);
-			var domain = $("#contentType option:selected")[0].value;
-			console.log(domain);
-			var domainType = $("#insertInputSite").val();
-			console.log(domainType);
-			var board_number = $("#boardNum").val();
-			console.log(board_number);
-			var title = $("#title").val();
-			console.log(title);
-			var content = $("#content").val();
-			console.log(content);
-			var writer = $("#writer").val();
-			console.log(writer);
-			var writerIP = $("#writer_IP").val();
-			console.log(writerIP);
-			var date1 = $("#datepicker").val();
-			console.log(date1);
-			var date2 = $("#datetime").val();
-			console.log(date2);
-			var url = $("#url").val();
-			console.log(url);
-			var thumbnail = $("#thumbnail").val();
-			console.log(thumbnail);
-
-			date1 = date1.replace("/", "-").replace("/", "-");
-			var date = date1 + " " +date2;
-
-			/* var stringData = "{'keyword':'"+ keyword+"', 'textType':'"+ textType + "', 'domain' :'"+ domain
-							+"', 'writeDate' :'"+ date+"', 'writer' :'"+ writer + "'"; */
-
-
-			if(domainType == ''){
-				console.log("domainType is null;");
-				alert("사이트명을 작성해주세요.");
-			}
-			else if(title == ''){
-				console.log("title is null;");
-				alert("title을 작성해주세요.");
-			}
-			else if(content == ''){
-				console.log("content is null;");
-				alert("content를 작성해주세요.");
-			}
-			else if(url == ''){
-				console.log("url is null;");
-				alert("url을 작성해주세요.");
-
-			}else{
-				//stringData  = stringData + ", 'domainType':'"+domainType+"', 'title': '" + title +"',"+
-				//"'content': '"+content + "', 'url': '" + url + "'";
-
-				if(domain == "community"){
-					//stringData = stringData + ", 'writerIP': " + writerIP + ", 'board_number': " + board_number + "}";
-
-					$.ajax({
-
-				 		type : "POST",
-						url : "insert",
-					 	dataType : "text",
-					 	data : {keyword:keyword, textType:textType, domain :domain, writeDate :date,
-					 		writer :writer, domainType:domainType, title: title,content: content, url: url, 
-					 		thumbnail: thumbnail, board_number : board_number, writerIP : writerIP},
-					  		success : function(){
-					  			swal("Success!", "등록 되었습니다.", "success");
-						  		   console.log("success");
-						  		   location.reload();
-					  	  }
-
-
-					});
-
-				}else{
-					//stringData = stringData + "}";
-
-					$.ajax({
-
-				 		type : "POST",
-						url : "insert",
-					 	dataType : "text",
-					 	data : {keyword:keyword, textType:textType, domain :domain, writeDate :date,
-					 		writer :writer, domainType:domainType, title: title,content: content, url: url},
-					  	   success : function(){
-					  	   	   swal("Success!", "등록 되었습니다.", "success");
-					  		   console.log("success");
-					  		   location.reload();
-					  	  }
-
-
-					});
-				}
-			}
-
-
-		}); // end insertBtn click...
+		
 
 
 		// 당일 클릭시
@@ -996,9 +902,6 @@
 				$content[i].textContent = $content[i].innerText.substr(0, size) + '...';
 			}
 		}
-
-
-
 
 		//엑셀출력 확인메시지
 		$(document).on("click",".alert-excel",function(){
