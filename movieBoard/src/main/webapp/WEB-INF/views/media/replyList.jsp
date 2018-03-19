@@ -47,7 +47,7 @@
   <link rel="stylesheet" type="text/css" href="../bower_components/sweetalert/dist/sweetalert.css">
   <!-- Style.css -->
   <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
-  <link rel="stylesheet" type="text/css" href="../assets/pages/division/css/style.css">
+  <link rel="stylesheet" type="text/css" href="../assets/pages/sns/css/style.css">
   <link rel="stylesheet" type="text/css" href="../assets/css/picker.css">
   <!--color css-->
   <link rel="stylesheet" type="text/css" href="../assets/css/color/color-1.css" id="color" />
@@ -184,7 +184,7 @@
                                     </div>
                                     <div class="card-block table-border-style">
                             		<div class="table-responsive">
-                                      <table class="table table-hover">
+                                      <table class="table table-bordered table-sm">
                                         <thead>
                                             <tr>
                                               <th width="5%">NO</th>
@@ -210,7 +210,9 @@
                                             </th>
                                             <td>${NewsVO.keyword}</td>
                                             <td>
+                                            	<div class="title-nowrap">
                                             	${NewsVO.media_title} /<br/><a href='${NewsVO.url}' target="_blank">${NewsVO.url}</a>
+                                            	</div>
                                             </td>
                                             <td>
                                             	${NewsVO.replycnt}건
