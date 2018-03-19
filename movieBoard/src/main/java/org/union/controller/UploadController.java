@@ -184,6 +184,7 @@ public class UploadController {
 			vo.setPortal_title(title);
 			vo.setWriteDate(writeDate);
 			vo.setKeyword(keyword);
+			vo.setWriter(writer);
 			vo.setTextType(textType);
 			vo.setUrl(url);
 			vo.setThumbnail(insertFileName.getBody());

@@ -243,6 +243,7 @@ public class ListUtil {
 				vo.setKeyword_main(addList.get(i).getKeyword_main());
 				vo.setKeyword(addList.get(i).getKeyword());
 				vo.setTitle(addList.get(i).getPortal_title());
+				vo.setWriter(addList.get(i).getWriter());
 				vo.setWriteDate(addList.get(i).getWriteDate());
 				vo.setSns_idx(addList.get(i).getPortal_idx());
 				vo.setUrl(addList.get(i).getUrl());
