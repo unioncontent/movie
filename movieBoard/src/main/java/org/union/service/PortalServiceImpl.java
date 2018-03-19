@@ -240,17 +240,35 @@ public class PortalServiceImpl implements PortalService {
 
 		return portalDAO.toDayCount(type);
 	}
+	
+	@Override
+	public GraphVO showboxToDayCount(String type) {
+
+		return portalDAO.showboxToDayCount(type);
+	}
 
 	@Override
 	public GraphVO yesterdayCount() {
 
 		return portalDAO.yesterdayCount();
 	}
+	
+	@Override
+	public GraphVO showboxYesterdayCount() {
+
+		return portalDAO.showboxYesterdayCount();
+	}
 
 	@Override
 	public Integer countAll(Date date) {
 
 		return portalDAO.countAll(date);
+	}
+	
+	@Override
+	public Integer showboxCountAll(Date date) {
+
+		return portalDAO.showboxCountAll(date);
 	}
 
 	@Override

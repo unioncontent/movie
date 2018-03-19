@@ -261,11 +261,20 @@
  	<select id="countAll" resultType="Integer">
 		select count(*)
 		from portal_data
-		where createDate between date_add(#{date}, interval -1 hour) and #{date}
+		where 
+		createDate between date_add(#{date}, interval -1 hour) and #{date}
 	
 	</select>
 	
- 	
+	<select id="showboxCountAll" resultType="Integer">
+		select count(*)
+		from portal_data
+		where 
+		keyword in (select keyword from keyword_data where user_idx = (select user_idx from user_data where user_name = '쇼박스') )
+		and createDate between date_add(#{date}, interval -1 hour) and #{date}
+	
+	</select>
+	
  	<select id="toDayCount" resultType="GraphVO">
  		select count(if(portal_name = 'naver', portal_name, null)) type1,
  			 count(if(portal_name = 'daum', portal_name, null)) type2, count(*) type3  
@@ -275,11 +284,30 @@
 		and writeDate <![CDATA[<]]> now()
  	</select>
  	
+ 	<select id="showboxToDayCount" resultType="GraphVO">
+ 		select count(if(portal_name = 'naver', portal_name, null)) type1,
+ 			 count(if(portal_name = 'daum', portal_name, null)) type2, count(*) type3  
+ 		from portal_data
+		where portal_type = #{type}
+		and keyword in (select keyword from keyword_data where user_idx = (select user_idx from user_data where user_name = '쇼박스') )
+		and date_add(now(), interval -1 day) <![CDATA[<]]> writeDate
+		and writeDate <![CDATA[<]]> now()
+ 	</select>
+ 	
  	<select id="yesterdayCount" resultType="GraphVO">
  		select count(if(writeDate <![CDATA[<]]> date_add(now(), interval -1 day), writeDate, null)) type1,
 	    count(if(writeDate <![CDATA[>]]> date_add(now(), interval -1 day), writeDate, null)) type2
 		from portal_data 
 		where writeDate between date_add(now(), interval -2 day) and  date_add(now(), interval -0 day)
+ 	</select>
+ 	
+ 	<select id="showboxYesterdayCount" resultType="GraphVO">
+ 		select count(if(writeDate <![CDATA[<]]> date_add(now(), interval -1 day), writeDate, null)) type1,
+	    count(if(writeDate <![CDATA[>]]> date_add(now(), interval -1 day), writeDate, null)) type2
+		from portal_data 
+		where 
+		keyword in (select keyword from keyword_data where user_idx = (select user_idx from user_data where user_name = '쇼박스') )
+		and writeDate between date_add(now(), interval -2 day) and  date_add(now(), interval -0 day)
  	</select>
  	
  	<select id="listNaver" resultType="PortalVO">

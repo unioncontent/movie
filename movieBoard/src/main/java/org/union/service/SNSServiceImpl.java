@@ -225,6 +225,11 @@ public class SNSServiceImpl implements SNSService {
 		return snsDAO.yesterdayCount(name);
 	}
 
+	@Override
+	public GraphVO showboxYesterdayCount(String name) {
+
+		return snsDAO.showboxYesterdayCount(name);
+	}
 
 	@Override
 	public Integer countAll(Date date) {
@@ -232,6 +237,11 @@ public class SNSServiceImpl implements SNSService {
 		return snsDAO.countAll(date);
 	}
 
+	@Override
+	public Integer showboxCountAll(Date date) {
+
+		return snsDAO.showboxCountAll(date);
+	}
 
 	@Override
 	public List<SNSVO> allPageList(SearchCriteria cri) {
@@ -245,6 +255,5 @@ public class SNSServiceImpl implements SNSService {
 
 		return snsDAO.allPageCount(cri);
 	}
-
 
 }

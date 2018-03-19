@@ -43,6 +43,7 @@ public interface MediaService {
 	public List<ReplyVO> replyAllPage(SearchCriteria cri);
 	
 	public GraphVO yesterdayCount();
+	public GraphVO showboxYesterdayCount();
 	
 	public TextTypeVO naverMediaCount(SearchCriteria cri);
 	public TextTypeVO daumMediaCount(SearchCriteria cri);

@@ -253,6 +253,10 @@
                                       	<input type = "hidden" value = "${extractVO.thumbnail}">
                                       	<div class="image btn-list-image"><i class="icofont icofont-ui-image"></i></div>
                                       </c:if>
+                                      <c:if test="${extractVO.thumbnail == null}">
+                                      	<input type = "hidden" value = "${extractVO.thumbnail}">
+                                      	<div class="image btn-list-image"><i class="icofont icofont-clip"></i></div>
+                                      </c:if>
                                       <a href="${extractVO.url}" target="_blank">
                                         <div class="nobr">${extractVO.title}</div>
                                       </a>

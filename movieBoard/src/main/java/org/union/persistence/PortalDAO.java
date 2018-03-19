@@ -36,10 +36,15 @@ public interface PortalDAO {
 	public List<PortalVO> allPage(SearchCriteria cri);
 	
 	public Integer countAll(Date date);
+	public Integer showboxCountAll(Date date);
 	
 	public GraphVO toDayCount(String type);
 	
+	public GraphVO showboxToDayCount(String type);
+	
 	public GraphVO yesterdayCount();
+	
+	public GraphVO showboxYesterdayCount();
 	
 	public TextTypeVO textTypeCount(SearchCriteria cri);
 	public List<TextTypeDateVO> textTypeCount2(SearchCriteria cri);

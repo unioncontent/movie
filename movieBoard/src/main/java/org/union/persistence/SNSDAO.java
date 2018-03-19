@@ -22,7 +22,11 @@ public interface SNSDAO {
 	
 	public Integer countAll(Date date);
 	
+	public Integer showboxCountAll(Date date);
+	
 	public GraphVO yesterdayCount(String name);
+	
+	public GraphVO showboxYesterdayCount(String name);
 	
 	public GraphVO facebookSum(SearchCriteria cri); 
 	public GraphVO twitterSum(SearchCriteria cri); 

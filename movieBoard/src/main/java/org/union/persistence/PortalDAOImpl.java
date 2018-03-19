@@ -233,14 +233,24 @@ public class PortalDAOImpl implements PortalDAO {
 
 		return session.selectOne(namespace + "toDayCount", type);
 	}
-
+	
+	@Override
+	public GraphVO showboxToDayCount(String type) {
+		
+		return session.selectOne(namespace + "showboxToDayCount", type);
+	}
 
 	@Override
 	public GraphVO yesterdayCount() {
 
 		return session.selectOne(namespace + "yesterdayCount");
 	}
+	
+	@Override
+	public GraphVO showboxYesterdayCount() {
 
+		return session.selectOne(namespace + "showboxYesterdayCount");
+	}
 
 	@Override
 	public Integer countAll(Date date) {
@@ -248,6 +258,11 @@ public class PortalDAOImpl implements PortalDAO {
 		return session.selectOne(namespace + "countAll", date);
 	}
 
+	@Override
+	public Integer showboxCountAll(Date date) {
+
+		return session.selectOne(namespace + "showboxCountAll", date);
+	}
 
 	@Override
 	public List<PortalVO> allPageList(SearchCriteria cri) {

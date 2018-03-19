@@ -203,13 +203,23 @@ public class SNSDAOImpl implements SNSDAO {
 		return session.selectOne(namespace + "yesterdayCount", name);
 	}
 
+	@Override
+	public GraphVO showboxYesterdayCount(String name) {
+
+		return session.selectOne(namespace + "showboxYesterdayCount", name);
+	}
 
 	@Override
 	public Integer countAll(Date date) {
 
 		return session.selectOne(namespace + "countAll", date);
 	}
+	
+	@Override
+	public Integer showboxCountAll(Date date) {
 
+		return session.selectOne(namespace + "showboxCountAll", date);
+	}
 
 	@Override
 	public List<SNSVO> allPageList(SearchCriteria cri) {

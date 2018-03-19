@@ -96,6 +96,25 @@ public class KeywordServiceImpl implements KeywordService{
 		
 		return keywordList;
 	}
+	
+	@Override
+	public List<KeywordVO> showboxListAll() {
+
+		List<KeywordVO> keywordList = keywordDAO.showboxListAll();
+
+		try {
+			
+			
+			for (KeywordVO keywordVO : keywordList) {
+				keywordVO.setCompany_name(userDAO.read(keywordVO.getUser_idx()).getUser_name());
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return keywordList;
+	}
 
 	@Override
 	public List<KeywordListVO> listPage() {

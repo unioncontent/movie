@@ -379,6 +379,12 @@ public class MediaServiceImpl implements MediaService {
 
 		return mediaDAO.yesterdayCount();
 	}
+	
+	@Override
+	public GraphVO showboxYesterdayCount() {
+
+		return mediaDAO.showboxYesterdayCount();
+	}
 
 	@Override
 	public List<MediaVO> allPageList(SearchCriteria cri) {
@@ -551,4 +557,5 @@ public class MediaServiceImpl implements MediaService {
 		return list;
 	}
 
+	
 }
