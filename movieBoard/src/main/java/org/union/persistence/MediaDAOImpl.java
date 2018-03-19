@@ -272,7 +272,12 @@ public class MediaDAOImpl implements MediaDAO {
 
 		return session.selectOne(namespace + "yesterdayCount");
 	}
+	
+	@Override
+	public GraphVO showboxYesterdayCount() {
 
+		return session.selectOne(namespace + "showboxYesterdayCount");
+	}
 
 	@Override
 	public List<MediaVO> allPageList(SearchCriteria cri) {

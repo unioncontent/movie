@@ -158,6 +158,12 @@ public class CommunityServiceImpl implements CommunityService {
 
 		return communityDAO.countAll(date);
 	}
+	
+	@Override
+	public Integer showboxCountAll(Date date) {
+
+		return communityDAO.showboxCountAll(date);
+	}
 
 	@Override
 	public List<CommunityVO> allPageList(SearchCriteria cri) {
@@ -207,4 +213,5 @@ public class CommunityServiceImpl implements CommunityService {
 		return list;
 		
 	}
+
 }

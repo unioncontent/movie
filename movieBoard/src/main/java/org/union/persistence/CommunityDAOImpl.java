@@ -159,6 +159,11 @@ public class CommunityDAOImpl implements CommunityDAO {
 		return session.selectOne(namespace  +"countAll", date);
 	}
 
+	@Override
+	public Integer showboxCountAll(Date date) {
+
+		return session.selectOne(namespace  +"showboxCountAll", date);
+	}
 
 	@Override
 	public List<CommunityVO> allPageList(SearchCriteria cri) {

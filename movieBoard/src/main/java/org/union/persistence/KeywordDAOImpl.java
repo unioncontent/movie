@@ -74,6 +74,12 @@ public class KeywordDAOImpl implements KeywordDAO {
 
 		return session.selectList(namespace + "listAll");
 	}
+	
+	@Override
+	public List<KeywordVO> showboxListAll() {
+
+		return session.selectList(namespace + "showboxListAll");
+	}
 
 	@Override
 	public List<KeywordListVO> listPage() {

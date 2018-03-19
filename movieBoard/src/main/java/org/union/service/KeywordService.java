@@ -18,6 +18,7 @@ public interface KeywordService {
 	public List<ExtractVO> viewByKeyword(List<ExtractVO> list);
 	
 	public List<KeywordVO> listAll();
+	public List<KeywordVO> showboxListAll();
 	
 	public List<KeywordListVO> listPage();
 	

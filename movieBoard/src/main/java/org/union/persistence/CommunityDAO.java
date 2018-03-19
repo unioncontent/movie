@@ -24,6 +24,7 @@ public interface CommunityDAO {
 	public List<CommunityVO> allPage(SearchCriteria cri);
 	
 	public Integer countAll(Date date);
+	public Integer showboxCountAll(Date date);
 	
 	public TextTypeVO textTypeCount(SearchCriteria cri);
 	
