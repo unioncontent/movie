@@ -179,7 +179,18 @@
                               <div class="col-lg-12">
 		                        <div class="card">
 		                          <div class="card-header">
-		                          	<button class="btn btn-warning alert-excel f-right"><i class="icofont icofont-download-alt"></i>EXCEL</button>
+			                        <div style="position:relative; left:5px;">
+			                        	<button class="btn btn-warning alert-excel f-right"><i class="icofont icofont-download-alt"></i>EXCEL</button>
+			                        </div>
+		                          	<div class="btn-group f-right p-r-0">
+	                                  <button type="button" id="allBtn1" class="radiosBtn btn btn-primary btn-outline-primary btn-sm waves-effect waves-light">좋은글</button>
+	                                  <button type="button" id="allBtn2" class="radiosBtn btn btn-primary btn-outline-primary btn-sm waves-effect waves-light">나쁜글</button>
+	                                  <button type="button" id="allBtn3" class="radiosBtn btn btn-primary btn-outline-primary btn-sm waves-effect waves-light">관심글</button>
+	                                  <button type="button" id="allBtn4" class="radiosBtn btn btn-primary btn-outline-primary btn-sm waves-effect waves-light">기타글</button>
+	                                  <button type="button" id="allBtn5" class="radiosBtn btn btn-primary btn-outline-primary btn-sm waves-effect waves-light">삭제글</button>
+	                                  <button type="button" id="insertAllBtn" class="alert-confirm btn btn-sm btn-primary waves-effect f-right p-b-10"><i class="icofont icofont-exchange" style="margin: 0px;font-size: 16px;"></i></button>
+	                                </div>
+		                          	
                                     <h5 class="card-header-text m-b-10"></h5>
                                     </div>
                                     <div class="card-block table-border-style">
@@ -192,8 +203,8 @@
                                               <th width="15%">기사명 / URL</th>
                                               <th width="5%">댓글 작성자</th>
                                               <th width="10%">댓글 내용</th>
-                                              <th width="5%">분류글</th>
                                               <th width="10%">추출일/작성일</th>
+                                              <th width="5%">분류글</th>
                                               <th width="5%">분류변경</th>
                                               <th width="5%">분류처리</th>
                                             </tr>
@@ -222,15 +233,15 @@
                                             	</div>
                                             </td>
                                             <td>
+                                            	<fmt:formatDate value="${ReplyVO.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" />
+                                            	/<br>
+                                            	${ReplyVO.writeDate}
+                                            </td>
+                                            <td>
                                             	<c:if test="${empty ReplyVO.textType}">
 			                                         	미분류
 			                                     </c:if>
                                             	${ReplyVO.textType}
-                                            </td>
-                                            <td>
-                                            	<fmt:formatDate value="${ReplyVO.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" />
-                                            	/<br>
-                                            	${ReplyVO.writeDate}
                                             </td>
                                             <td>
                                             	<div class="radios${index.count}">
@@ -475,8 +486,47 @@ $(document).ready(function(){
 
 			//searchList();
 		});
+		
+		// allBtn 클릭시
+		  $(".radiosBtn").on("click", function(event){
+			  console.log(event);
+
+			  var input = event.target.id;
+
+			  var btnNum = input.substr(6);
+
+			  var $trList = $(".trList");
+
+			  for(var i = 0; i < $trList.length; i++){
+				  $('#radio'+ btnNum + (i+1))[0].checked = true;
+			  }
 
 
+
+			  /* var value;
+
+			  switch(input){
+
+			  case "allBtn1" : value = "좋은글"; break;
+			  case "allBtn2" : value = "나쁜글"; break;
+			  case "allBtn3" : value = "관심글"; break;
+			  case "allBtn4" : value = "기타글"; break;
+			  case "allBtn5" : value = "삭제글"; break;
+
+			  }
+
+			  console.log(value); */
+
+
+
+
+		  });
+
+	// 일괄처리버튼 클릭시
+		 $(document).on("click","#insertAllBtn",function(){
+			insertAll();
+		 });
+		
 	  // 삭제버튼 클릭시
 	  $(document).on("click",".alert-confirm1",function(event){
 			swal({
@@ -709,6 +759,60 @@ $(document).ready(function(){
 
 		}
 	}
+	
+	function insertAll(){
+		  swal({
+				title: "일괄처리 하시겠습니까?",
+				text: "선택한 분류들로 일괄처리 됩니다.",
+				type: "warning",
+				showCancelButton: true,
+				confirmButtonClass: "btn-danger",
+				confirmButtonText: "YES",
+				closeOnConfirm: false
+			},
+			function(){
+
+				var tr = $(".trList");
+
+				var arr = [];
+
+				for(var i = 0; i < tr.length; i++){
+					var idx = tr[i].children[0].value;
+					var arr = tr[i].children[8].children[0].children;
+
+
+					for (var l = 0; l < arr.length; l++) {
+						if (arr[l].type == "radio") {
+
+							if (arr[l].checked) {
+								var textType = arr[l + 1].innerText;
+
+								break;
+							}
+						}
+					}
+
+					if(textType != '미분류'){
+						$.ajax({
+							  type: "POST",
+							  url: "insert",
+							  data: {idx : idx, textType : textType},
+							  dataType: "json",
+							  success: function(data){
+								  console.log(data);
+							  }
+
+							});
+					}
+
+				}
+
+
+				swal("Success!", "일괄처리가 완료되었습니다.", "success");
+
+				location.reload();
+			});
+	  }
 
 function makeDateFormat(date, index){
 		var splitDate = date.split(" - ")[index];

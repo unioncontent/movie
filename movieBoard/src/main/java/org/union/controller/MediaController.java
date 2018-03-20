@@ -533,6 +533,23 @@ public class MediaController {
 		return "success";
 	}
 	
+	@ResponseBody
+	@PostMapping("insert")
+	public String insertPOST(Integer idx, String textType) {
+		logger.info("insertPOST called....");
+		
+		logger.info("idx: " + idx);
+		logger.info("textType: " + textType );
+		
+		ReplyVO rvo = new ReplyVO();
+		
+		rvo.setReply_idx(idx);
+		rvo.setTextType(textType);
+		
+		mediaService.replyUpdateTextType(rvo);
+		
+		return "success";
+	}
 	
 	@ResponseBody
 	@PostMapping("/remove")
