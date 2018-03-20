@@ -192,6 +192,7 @@
                                               <th width="15%">기사명 / URL</th>
                                               <th width="5%">댓글 작성자</th>
                                               <th width="10%">댓글 내용</th>
+                                              <th width="5%">분류글</th>
                                               <th width="10%">추출일/작성일</th>
                                               <th width="5%">분류변경</th>
                                               <th width="5%">분류처리</th>
@@ -219,6 +220,12 @@
                                             	<div class="title-nowrap">
                                             	${ReplyVO.reply_content}
                                             	</div>
+                                            </td>
+                                            <td>
+                                            	<c:if test="${empty ReplyVO.textType}">
+			                                         	미분류
+			                                     </c:if>
+                                            	${ReplyVO.textType}
                                             </td>
                                             <td>
                                             	<fmt:formatDate value="${ReplyVO.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" />
@@ -251,7 +258,7 @@
                                         </tbody>
                                         <tfoot>
 		                                  <tr>
-		                                    <td colspan="8">
+		                                    <td colspan="9">
 		                                      <ul class="pagination float-right">
 		                                       <c:if test="${pageMaker.prev}">
 		                                         <li class="page-item">
@@ -669,8 +676,8 @@ $(document).ready(function(){
 			console.log(idx);
 		}
 
-		if (tr.children[7].children[0].children != 'undefined') {
-			var arr = tr.children[7].children[0].children;
+		if (tr.children[8].children[0].children != 'undefined') {
+			var arr = tr.children[8].children[0].children;
 			console.log(arr);
 		} else {
 			clacInsertData(event);
