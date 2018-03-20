@@ -194,6 +194,7 @@
                                               <th width="7%">추출일/작성일</th>
                                               <th width="5%">타입</th>
                                               <th width="10%">상태</th>
+                                              <th width="5%">분류글</th>
                                               <th width="7%">분류변경</th>
                                               <th width="7%">상태변경</th>
                                               <th width="10%">분류처리</th>
@@ -233,6 +234,12 @@
                                            		OFF
                                            		</td>
                                            		</c:if>
+                                           		<td>
+                                            	<c:if test="${empty NewsVO.textType}">
+			                                         	미분류
+			                                    </c:if>
+                                            		${NewsVO.textType}
+                                            	</td>
                                             	<td>
                                             	<div class="radios${index.count}">
 			                                        <input type="radio" id="radio1${index.count}" name="radios${index.count}">
@@ -279,7 +286,7 @@
                                         </tbody>
                                         <tfoot>
                                           <tr>
-                                            <td colspan="10">
+                                            <td colspan="11">
                                               <ul class="pagination float-right">
                                                 <c:if test="${pageMaker.prev}">
                                               		<li class="page-item">
@@ -746,8 +753,8 @@ $(document).ready(function(){
 			console.log(idx);
 		}
 
-		if (tr.children[8].children[0].children != 'undefined') {
-			var arr = tr.children[8].children[0].children;
+		if (tr.children[9].children[0].children != 'undefined') {
+			var arr = tr.children[9].children[0].children;
 			console.log(arr);
 		} else {
 			clacInsertData(event);
