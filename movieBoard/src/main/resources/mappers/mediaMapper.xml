@@ -135,10 +135,10 @@
 		<if test="keyword != null">
 			<if test="searchType != null">
 				<if test="searchType == 't'.toString()">
-					and reply_content like concat('%', #{keyword}, '%')
+					and media_title like concat('%', #{keyword}, '%')
 				</if>
 				<if test="searchType == 'c'.toString()">
-					and media_title like concat('%', #{keyword}, '%')
+					and reply_content like concat('%', #{keyword}, '%')
 				</if>
 			</if>
 		</if>
@@ -171,7 +171,7 @@
 			and textType = #{textType}
 		</if>
 	</sql>
- 
+	
  	<sql id="search_writeDate">
 		<if test="company != null">
 			and
@@ -239,10 +239,20 @@
 			and textType = #{textType}
 		</if>
 	</sql>
-	
 	<sql id="search_writeDate3">
+		<if test="keyword != null">
+			<if test="searchType != null">
+				<if test="searchType == 't'.toString()">
+					and media_title like concat('%', #{keyword}, '%')
+				</if>
+				<if test="searchType == 'c'.toString()">
+					and reply_content like concat('%', #{keyword}, '%')
+				</if>
+			</if>
+		</if>
 		<if test="company != null">
-			  and keyword in (select 
+			and
+			   keyword in (select 
 						keyword 
 					from 
 						keyword_data
@@ -260,15 +270,10 @@
 		</if>
 		<if test="selectKey != null">
 				and keyword in (select keyword from keyword_data where keyword_main = #{selectKey})
-		</if>
-		<if test="startDate != null">
-			and createDate <![CDATA[>=]]> #{startDate}
-			<if test="endDate != null">
-				and createDate <![CDATA[<=]]> #{endDate}
-			</if>
-		</if>
-		<if test="textType != null">
-			and textType = #{textType}
+		</if>	
+		<if test="startDate != null and endDate != null">
+			and a.updateDate <![CDATA[>=]]> #{startDate}
+			and a.updateDate <![CDATA[<=]]> #{endDate}
 		</if>
 	</sql>
  
@@ -343,6 +348,10 @@
  			reply_idx = #{reply_idx}
  	
  	</delete>
+ 	
+ 	<select id="replyTotalList">
+ 		select * from reply_data where news_idx = #{news_idx}
+ 	</select>
  	
  	<select id="allPageList" resultType="MediaVO">
 		select
@@ -421,13 +430,13 @@
 	</select>
 	
 	<select id="replyAllPageCount" resultType="Integer">
-		select
-			count(*)
-		from
-			reply_data
-		where
+		select count(*)
+			from reply_data a
+		join news_data b
+			on a.news_idx = b.news_idx
+		where 
 			reply_comm_num is not null
-		<include refid="search_writeDate2"></include>
+		<include refid="search_writeDate3"></include>
 	</select>
 	
 	<select id="TotalAllPageCount" resultType="Integer">
@@ -949,13 +958,13 @@
 	</select>
 	
 	<select id="replyList" resultType="ReplyVO">
-		select 
-			a.*,(select url from news_data where news_idx = a.news_idx)as url,(select media_title from news_data where news_idx = a.news_idx)as media_title  
-		from 
-			reply_data a
+		select a.*,b.url,b.media_title
+			from reply_data a
+		join news_data b
+			on a.news_idx = b.news_idx
 		where 
 			reply_comm_num is not null
-		<include refid="search_writeDate2"></include>
+		<include refid="search_writeDate3"></include>
 		order 
 			by reply_idx desc
 		limit  

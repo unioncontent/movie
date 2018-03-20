@@ -243,13 +243,16 @@ public class MediaController {
 	public void reply(@ModelAttribute("cri") SearchCriteria cri, Model model) throws Exception{
 		logger.info("reply called....");
 		
-		cri.setKeyword(null);
-		cri.setTextType(null);
-		
+		if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
+			logger.info("keyword is null");
+			cri.setKeyword(null);
+			
+		} 
 		if(cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey()) ) {
 			logger.info("selectKey is null");
 			cri.setSelectKey(null);
 		}
+		
 		if("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate())
 				|| cri.getStartDate() == "" || cri.getEndDate() == ""){
 			cri.setStartDate(null);
@@ -265,13 +268,12 @@ public class MediaController {
 				cri.setEndDate(cri.getEndDate() + " 23:59:59"); 
 			}
 		}
-		
-		
 		if(cri.getCompany() != null) {
 			if(cri.getCompany().isEmpty()) {
 				cri.setCompany(null);
 			}
 		}
+		
 		if(cri.getCompany() == null || cri.getCompany().equals("회사")) {
 			logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
 			UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
@@ -283,18 +285,6 @@ public class MediaController {
 				cri.setCompany(null);
 			}
 		}
-
-		// 회사 선택에 따른 키워드 재추출
-		if (cri.getCompany() != null) {	
-			if (cri.getCompany().isEmpty() == false) {
-
-				UserVO userVO = userService.viewByName(cri.getCompany());
-				logger.info("userVO: " + userVO);
-				logger.info("keywordList: " + keywordService.listByUser(userVO.getUser_idx()));
-				model.addAttribute("modelKeywordList",
-						keywordService.listByUser(userService.viewByName(cri.getCompany()).getUser_idx()));
-			}
-		}
 		
 		logger.info("cri: " + cri);
 		
@@ -303,13 +293,6 @@ public class MediaController {
 		
 		SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		
-		
-		
-		// 4번 리스트기 때문에  perPageNum / 3
-		if(cri.getPerPageNum() != 10) {
-			cri.setPerPageNum(cri.getPerPageNum()/3);
-		}
-				
 		Integer totalCount = mediaService.replyAllPageCount(cri);
 		
 		logger.info("totalCount: " + totalCount);
@@ -319,13 +302,10 @@ public class MediaController {
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(totalCount);
 		
-		cri.setPerPageNum(cri.getPerPageNum()*3);
+		model.addAttribute("pageMaker", pageMaker);
 		
 		model.addAttribute("totalCount", totalCount);
 		model.addAttribute("minusCount", cri.getPerPageNum() * (cri.getPage()-1));
-		
-		model.addAttribute("pageMaker", pageMaker);
-		
 		
 	}
 	

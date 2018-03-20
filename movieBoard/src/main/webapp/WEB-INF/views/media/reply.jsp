@@ -179,6 +179,22 @@
                               <div class="col-lg-12">
 		                        <div class="card">
 		                          <div class="card-header">
+		                          	<select id= "selectPerPageNum" name="select" class="col-sm-1 form-control form-control-inverse m-r-10 m-b-10 p-r-5 f-left list-select">
+                                  <option id= "30" >30</option>
+                                  <option id = "60">60</option>
+                                  <option id = "120">120</option>
+                                  <option id = "150">150</option>
+                                </select>
+                                <select id = "selectSearchType" name="select" class="col-sm-1 form-control form-control-inverse m-r-10 m-b-10 f-left search-select">
+                                  <option id="t" value="t">댓글 제목</option>
+                                  <option id="c" value="c">댓글 내용</option>
+                                </select>
+                                <div class="col-sm-3 input-group input-group-button input-group-inverse p-l-0 p-r-0 m-b-10 f-left btn-select">
+                                   <input onkeyup="if(event.keyCode == 13){$('#searchBtn').trigger('click');};"id="keywordInput" type="text" class="form-control" placeholder="">
+                                  <span class="input-group-addon" id="basic-addon1">
+                                    <button id="searchBtn" class=" btn btn-inverse">검색</button>
+                                  </span>
+                                  </div>
 			                        <div style="position:relative; left:5px;">
 			                        	<button class="btn btn-warning alert-excel f-right"><i class="icofont icofont-download-alt"></i>EXCEL</button>
 			                        </div>
@@ -669,18 +685,6 @@ $(document).ready(function(){
 	});
 
 
-	// 검색버튼 클릭시
-	$('#searchBtn').on("click", function(event){
-	  console.log("searchBtn clicked....");
-	  console.log($('#selectSearchType option:selected').val());
-
-	  if($('#keywordInput').val() == ''){
-		alert("검색어를 입력해주세요.");
-	  }else{
-		searchList();
-	  }
-	});
-	
 	//엑셀출력 확인메시지
 	$(document).on("click",".alert-excel",function(){
   swal({
@@ -704,6 +708,15 @@ $(document).ready(function(){
 	  		swal("Success!", "엑셀출력 되었습니다.", "success");
 
       });
+	});
+	
+	// 검색버튼 클릭시
+	$('#searchBtn').on("click", function(event){
+	  console.log("searchBtn clicked....");
+	  console.log($('#selectSearchType option:selected').val());
+	
+	  searchList();
+	  
 	});
 
 
@@ -827,12 +840,15 @@ function makeDateFormat(date, index){
 
 	//list URL 함수
 	  function searchList(event) {
-
-	  	self.location = "reply?"
-	  				  + "&company="
-	  				  + $("#selectCompany option:selected").val()
-	  				  + "&selectKey="
-	  				  + $('#selectKeyword option:selected').val()
+	
+		var makeQeury = '${pageMaker.makeQuery(1)}'.slice(0, -2);
+		
+	  	self.location = "reply" + makeQeury
+	  				  + $('#selectPerPageNum option:selected').val()
+	  				  + "&company=" + $("#selectCompany option:selected").val()
+	  				  + "&selectKey=" + $('#selectKeyword option:selected').val()
+	  				  + "&searchType=" + $("#selectSearchType option:selected").val()
+					  + "&keyword=" + $('#keywordInput').val()
 	  				  + "&startDate=" + makeDateFormat($("#fromDate").val(), 0)
 	  				  + "&endDate=" +  makeDateFormat($("#fromDate").val(), 1);
 	  }
