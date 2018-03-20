@@ -182,6 +182,7 @@ public class UploadController {
 			
 			vo.setPortal_name(domainType);
 			vo.setPortal_title(title);
+			vo.setPortal_content(content);
 			vo.setWriteDate(writeDate);
 			vo.setKeyword(keyword);
 			vo.setWriter(writer);

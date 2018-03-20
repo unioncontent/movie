@@ -9,6 +9,7 @@ public class PortalVO {
 	private String portal_name;
 	private String portal_type;
 	private String portal_title;
+	private String portal_content;
 	private Integer deviceType; // 1 = PC, 2 = Mobile
 	private String writeDate;
 	private String keyword_main;
@@ -47,6 +48,12 @@ public class PortalVO {
 	}
 	public void setPortal_title(String portal_title) {
 		this.portal_title = portal_title;
+	}
+	public String getPortal_content() {
+		return portal_content;
+	}
+	public void setPortal_content(String portal_content) {
+		this.portal_content = portal_content;
 	}
 	public Integer getDeviceType() {
 		return deviceType;
