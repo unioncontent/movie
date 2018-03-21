@@ -286,6 +286,18 @@ public class MediaController {
 			}
 		}
 		
+		// 회사 선택에 따른 키워드 재추출
+		if (cri.getCompany() != null) {	
+			if (cri.getCompany().isEmpty() == false) {
+
+				UserVO userVO = userService.viewByName(cri.getCompany());
+				logger.info("userVO: " + userVO);
+				logger.info("keywordList: " + keywordService.listByUser(userVO.getUser_idx()));
+				model.addAttribute("modelKeywordList",
+				keywordService.listByUser(userService.viewByName(cri.getCompany()).getUser_idx()));
+			}
+		}
+		
 		logger.info("cri: " + cri);
 		
 		model.addAttribute("replyList", mediaService.replyList(cri));
