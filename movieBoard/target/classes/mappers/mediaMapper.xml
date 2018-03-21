@@ -316,7 +316,7 @@
 					)
 		</if>
 		<if test="selectKey != null">
-				and keyword in (select keyword from keyword_data where keyword_main = #{selectKey})
+				and a.keyword in (select keyword from keyword_data where keyword_main = #{selectKey})
 		</if>	
 		<if test="startDate != null and endDate != null">
 			and a.updateDate <![CDATA[>=]]> #{startDate}
