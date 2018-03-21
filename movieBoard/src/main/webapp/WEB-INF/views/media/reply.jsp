@@ -811,7 +811,7 @@ $(document).ready(function(){
 
 				for(var i = 0; i < tr.length; i++){
 					var idx = tr[i].children[0].value;
-					var arr = tr[i].children[8].children[0].children;
+					var arr = tr[i].children[9].children[0].children;
 
 
 					for (var l = 0; l < arr.length; l++) {
