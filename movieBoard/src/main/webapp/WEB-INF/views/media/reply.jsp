@@ -47,7 +47,7 @@
   <link rel="stylesheet" type="text/css" href="../bower_components/sweetalert/dist/sweetalert.css">
   <!-- Style.css -->
   <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
-  <link rel="stylesheet" type="text/css" href="../assets/pages/sns/css/style.css">
+  <link rel="stylesheet" type="text/css" href="../assets/pages/reply/css/style.css">
   <link rel="stylesheet" type="text/css" href="../assets/css/picker.css">
   <!--color css-->
   <link rel="stylesheet" type="text/css" href="../assets/css/color/color-1.css" id="color" />
@@ -149,8 +149,7 @@
                         	<option value="30">리스트</option>
 	                        <option id= "30">30</option>
 	                        <option id = "60">60</option>
-	                        <option id = "120">120</option>
-	                        <option id = "150">150</option>
+	                        <option id = "90">90</option>
                         </select>
                       </div>
                       <div class="col-md-5">
@@ -216,12 +215,13 @@
                                         <thead>
                                             <tr>
                                               <th width="5%">NO</th>
+                                              <th width="5%">회사</th>
                                               <th width="5%">키워드</th>
-                                              <th width="15%">기사명 / URL</th>
-                                              <th width="5%">댓글 작성자</th>
-                                              <th width="10%">댓글 내용</th>
+                                              <th width="10%">기사명 / URL</th>
+                                              <th width="3%">댓글 작성자</th>
+                                              <th width="5%">댓글 내용</th>
                                               <th width="10%">추출일/작성일</th>
-                                              <th width="5%">분류글</th>
+                                              <th width="3%">분류글</th>
                                               <th width="5%">분류변경</th>
                                               <th width="5%">분류처리</th>
                                             </tr>
@@ -236,10 +236,13 @@
                                             	${totalCount -index.count +1 -minusCount}
                                             </th>
                                             <td>
-                                            ${ReplyVO.keyword}
+                                            ${ReplyVO.company_name}
                                             </td>
                                             <td>
-                                            	<div class="title-nowrap">
+                                            	${ReplyVO.keyword}
+                                            </td>
+                                            <td>
+                                            	<div class="url-nowrap">
                                             	${ReplyVO.media_title} /<br/><a href='${ReplyVO.url}' target="_blank">${ReplyVO.url}</a>
                                             	</div>
                                             </td>
@@ -247,7 +250,7 @@
                                             	${ReplyVO.reply_writer}
                                             </td>
                                             <td>
-                                            	<div class="title-nowrap">
+                                            	<div class="url-nowrap">
                                             	${ReplyVO.reply_content}
                                             	</div>
                                             </td>
@@ -288,7 +291,7 @@
                                         </tbody>
                                         <tfoot>
 		                                  <tr>
-		                                    <td colspan="9">
+		                                    <td colspan="10">
 		                                      <ul class="pagination float-right">
 		                                       <c:if test="${pageMaker.prev}">
 		                                         <li class="page-item">

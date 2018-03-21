@@ -188,7 +188,8 @@
                                         <thead>
                                             <tr>
                                               <th width="5%">NO</th>
-                                              <th width="7%">키워드</th>
+                                              <th width="5%">회사</th>
+                                              <th width="5%">키워드</th>
                                               <th width="30%">기사명 / URL</th>
                                               <th width="7%">댓글수</th>
                                               <th width="7%">추출일/작성일</th>
@@ -209,6 +210,7 @@
                                             <th scope="row">
                                             	${totalCount -index.count +1 -minusCount}
                                             </th>
+                                            <td>${NewsVO.company_name}</td>
                                             <td>${NewsVO.keyword}</td>
                                             <td>
                                             	<div class="title-nowrap">
@@ -286,7 +288,7 @@
                                         </tbody>
                                         <tfoot>
                                           <tr>
-                                            <td colspan="11">
+                                            <td colspan="12">
                                               <ul class="pagination float-right">
                                                 <c:if test="${pageMaker.prev}">
                                               		<li class="page-item">
