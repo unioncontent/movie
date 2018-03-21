@@ -579,10 +579,9 @@
 			score is null
 		<include refid="search"></include>
 		order 
-			by updateDate desc
+			by createdate desc
 		limit  
 			#{startPage}, #{perPageNum}
- 	
  	</select>
  	
  	<select id="wlistSearch" resultType="PortalVO">

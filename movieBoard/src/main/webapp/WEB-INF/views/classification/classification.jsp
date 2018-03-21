@@ -153,14 +153,22 @@
                           </c:forEach>
                           </c:if>
                         </select>
-
-                        <select id = "selectTextType" name="select" class="col-md-1 form-control form-control-inverse m-r-10 m-b-10 p-r-5 f-left select-left">
+                        
+                        <select id = "selectTextType" name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left">
                           <option>분류</option>
                           <option value="좋은글">좋은글</option>
                           <option value="나쁜글">나쁜글</option>
                           <option value="관심글">관심글</option>
                           <option value="기타글">기타</option>
                           <option value="삭제글">삭제</option>
+                        </select>
+                        
+                        <select id= "selectPerPageNum" name="select" class="col-md-1 form-control form-control-inverse m-r-10 m-b-10 p-r-5 f-left select-left">	
+	                        <option value="30">리스트</option>
+	                        <option id= "30" >30</option>
+	                        <option id = "60">60</option>
+	                        <option id = "120">120</option>
+	                        <option id = "150">150</option>
                         </select>
                       </div>
                       <div class="col-md-5">
@@ -187,12 +195,6 @@
                       <div class="col-lg-12">
                         <div class="card">
                           <div class="card-header">
-                            <select id= "selectPerPageNum" name="select" class="col-sm-1 form-control form-control-inverse m-r-10 m-b-10 p-r-5 f-left list-select">
-                                  <option id= "30" >30</option>
-                                  <option id = "60">60</option>
-                                  <option id = "120">120</option>
-                                  <option id = "150">150</option>
-                                </select>
                                 <select id = "selectSearchType" name="select" class="col-sm-1 form-control form-control-inverse m-r-10 m-b-10 f-left search-select">
                                   <option id="t" value="t">제목</option>
                                   <option id="c" value="c">게시글</option>
@@ -242,7 +244,7 @@
                                       <input type="hidden" value="${extractVO.portal_idx}">
                                     </c:if>
                                     <th scope="row">
-                                      ${totalCount -index.count +1 -minusCount}
+                                    	${totalCount -index.count +1 -minusCount}
                                     </th>
                                     <td>${extractVO.domain}</td>
                                     <td>${extractVO.domainType}</td>
@@ -696,7 +698,21 @@
 			searchList();
 
 		});
+		
+		var ListOption = decodeURI(window.location.href.split("PerPageNum=")[1]).split("&")[0];
 
+		var $selectPerPageNum = $('#selectPerPageNum');
+		
+		$selectPerPageNum[0][0].disabled = true;
+		
+		// 글 수 변경 선택시
+		$selectPerPageNum.change(function(){
+			console.log("selectPerPageNum clicked....");
+			console.log($("#selectPerPageNum option:selected").val());
+
+			searchList();
+
+		});
 
 		var keywordOption = decodeURI(window.location.href.split("selectKey=")[1]).split("&")[0];
 		console.log("keywordOption: " + keywordOption);
@@ -979,7 +995,8 @@
 		var makeQeury = '${pageMaker.makeQuery(1)}'.slice(0, -2);
 
 		self.location = "classification"
-					  + makeQeury + $('#selectPerPageNum option:selected').val()
+					  + makeQeury 
+					  + $('#selectPerPageNum option:selected').val()
 					  + "&company=" + $("#selectCompany option:selected").val()
 			          + "&selectKey=" + $('#selectKeyword option:selected').val()
 			          + "&textType=" + $("#selectTextType option:selected").val()

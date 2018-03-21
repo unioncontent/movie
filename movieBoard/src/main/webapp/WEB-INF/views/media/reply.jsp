@@ -145,6 +145,13 @@
                           </c:forEach>
                           </c:if>
                         </select>
+                        <select id= "selectPerPageNum" name="select" class="col-md-1 form-control form-control-inverse m-r-10 m-b-10 p-r-5 f-left select-left">	
+                        	<option value="30">리스트</option>
+	                        <option id= "30">30</option>
+	                        <option id = "60">60</option>
+	                        <option id = "120">120</option>
+	                        <option id = "150">150</option>
+                        </select>
                       </div>
                       <div class="col-md-5">
                         <!-- date picker start -->
@@ -179,14 +186,8 @@
                               <div class="col-lg-12">
 		                        <div class="card">
 		                          <div class="card-header">
-		                          	<select id= "selectPerPageNum" name="select" class="col-sm-1 form-control form-control-inverse m-r-10 m-b-10 p-r-5 f-left list-select">
-                                  <option id= "30" >30</option>
-                                  <option id = "60">60</option>
-                                  <option id = "120">120</option>
-                                  <option id = "150">150</option>
-                                </select>
                                 <select id = "selectSearchType" name="select" class="col-sm-1 form-control form-control-inverse m-r-10 m-b-10 f-left search-select">
-                                  <option id="t" value="t">댓글 제목</option>
+                                  <option id="t" value="t">기사 제목</option>
                                   <option id="c" value="c">댓글 내용</option>
                                 </select>
                                 <div class="col-sm-3 input-group input-group-button input-group-inverse p-l-0 p-r-0 m-b-10 f-left btn-select">
@@ -234,7 +235,9 @@
                                             <th scope="row">
                                             	${totalCount -index.count +1 -minusCount}
                                             </th>
-                                            <td>${ReplyVO.keyword}</td>
+                                            <td>
+                                            ${ReplyVO.keyword}
+                                            </td>
                                             <td>
                                             	<div class="title-nowrap">
                                             	${ReplyVO.media_title} /<br/><a href='${ReplyVO.url}' target="_blank">${ReplyVO.url}</a>
@@ -473,7 +476,21 @@ $(document).ready(function(){
 			searchList();
 
 		});
+		
+		var ListOption = decodeURI(window.location.href.split("PerPageNum=")[1]).split("&")[0];
 
+		var $selectPerPageNum = $('#selectPerPageNum');
+		
+		$selectPerPageNum[0][0].disabled = true;
+		
+		// 글 수 변경 선택시
+		$selectPerPageNum.change(function(){
+			console.log("selectPerPageNum clicked....");
+			console.log($("#selectPerPageNum option:selected").val());
+
+			searchList();
+
+		});
 
 		var keywordOption = decodeURI(window.location.href.split("selectKey=")[1]).split("&")[0];
 		console.log("keywordOption: " + keywordOption);
