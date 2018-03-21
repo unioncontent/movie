@@ -755,8 +755,8 @@ $(document).ready(function(){
 			console.log(idx);
 		}
 
-		if (tr.children[9].children[0].children != 'undefined') {
-			var arr = tr.children[9].children[0].children;
+		if (tr.children[10].children[0].children != 'undefined') {
+			var arr = tr.children[10].children[0].children;
 			console.log(arr);
 		} else {
 			clacInsertData(event);

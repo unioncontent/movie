@@ -119,6 +119,7 @@
                           </c:if>
                         </select>
 						</c:if>
+
 						<c:if test="${user.user_name != 'union'}">
                          <select style="display: none;" name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="selectCompany">
                           <option>회사</option>
@@ -132,6 +133,7 @@
                           </c:if>
                         </select>
 						</c:if>
+
                         <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left" id="selectKeyword">
                           <option>키워드</option>
                           <c:if test="${modelKeywordList == null}" >
@@ -145,11 +147,13 @@
                           </c:forEach>
                           </c:if>
                         </select>
+                        
                         <select id= "selectPerPageNum" name="select" class="col-md-1 form-control form-control-inverse m-r-10 m-b-10 p-r-5 f-left select-left">	
-                        	<option value="30">리스트</option>
-	                        <option id= "30">30</option>
+	                        <option value="30">리스트</option>
+	                        <option id= "30" >30</option>
 	                        <option id = "60">60</option>
-	                        <option id = "90">90</option>
+	                        <option id = "120">120</option>
+	                        <option id = "150">150</option>
                         </select>
                       </div>
                       <div class="col-md-5">
@@ -497,9 +501,6 @@ $(document).ready(function(){
 
 		var keywordOption = decodeURI(window.location.href.split("selectKey=")[1]).split("&")[0];
 		console.log("keywordOption: " + keywordOption);
-		console.log(decodeURI(window.location.href.split("&selectKey=")[1]));
-
-
 
 		var $selectKeyword = $('#selectKeyword');
 
@@ -519,9 +520,33 @@ $(document).ready(function(){
 			console.log($('#selectKeyword option:selected').val());
 
 			searchList();
+		});
+
+
+		var textOption = decodeURI(window.location.href.split("textType=")[1]).split("&")[0];
+		console.log("textOption: " + textOption);
+
+		var $selectTextType = $('#selectTextType');
+
+		if(selectTextType != 'undefined'){
+			for(var i = 0; i < $selectTextType[0].length; i++ ){
+				if($selectTextType[0][i].value == textOption){
+					$selectTextType[0][i].selected = 'selected';
+				}
+			}
+		}
+		$selectTextType[0][0].disabled = true;
+
+		// 키워드 선택시
+		$selectKeyword.change(function(){
+			console.log("selectKeyword clicked....");
+			console.log($('#selectKeyword option:selected').val());
+
+			searchList();
 
 			//searchList();
 		});
+		
 		
 		// allBtn 클릭시
 		  $(".radiosBtn").on("click", function(event){
@@ -557,7 +582,7 @@ $(document).ready(function(){
 
 
 		  });
-
+		
 	// 일괄처리버튼 클릭시
 		 $(document).on("click","#insertAllBtn",function(){
 			insertAll();
@@ -759,8 +784,8 @@ $(document).ready(function(){
 			console.log(idx);
 		}
 
-		if (tr.children[8].children[0].children != 'undefined') {
-			var arr = tr.children[8].children[0].children;
+		if (tr.children[9].children[0].children != 'undefined') {
+			var arr = tr.children[9].children[0].children;
 			console.log(arr);
 		} else {
 			clacInsertData(event);
