@@ -17,6 +17,7 @@ public class ReplyVO {
 	private Date updateDate;
 	private String media_title;
 	private String url;
+	private String company_name; 
 	
 	public ReplyVO() {
 		super();
@@ -143,6 +144,14 @@ public class ReplyVO {
 
 	public void setUrl(String url) {
 		this.url = url;
+	}
+
+	public String getCompany_name() {
+		return company_name;
+	}
+
+	public void setCompany_name(String company_name) {
+		this.company_name = company_name;
 	}
 
 }

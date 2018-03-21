@@ -92,6 +92,7 @@ public class ClassificationController {
 			cri.setEndDate(null);
 		
 		} 
+		
 		if(cri.getStartDate() != null && cri.getEndDate() != null) {
 			logger.info("not null");
 			logger.info(cri.getStartDate());
@@ -118,40 +119,38 @@ public class ClassificationController {
 				cri.setCompany(null);
 			}
 		}
+		
 		if(cri.getTextType() != null) {
 			if(cri.getTextType().equals("undefined") || cri.getTextType().equals("분류") || cri.getTextType().isEmpty()) {
 				cri.setTextType(null);
 			}
 		}
 		
+		// 3번 리스트기 때문에  perPageNum / 3
+		if(cri.getPerPageNum() != 10) {
+			cri.setPerPageNum(cri.getPerPageNum()/3);
+				
+		}
 		
 		logger.info("cri: " + cri);
 		
-		PageMaker pageMaker = new PageMaker();
-		
-		// 4번 리스트기 때문에  perPageNum / 3
-		if(cri.getPerPageNum() != 10) {
-			cri.setPerPageNum(cri.getPerPageNum()/3);
-		
-		}
-
-		Integer totalCount = communityService.getSearchCount(cri)
-							+ portalService.getSearchCount(cri)
-							+ mediaService.getSearchCount(cri);
+		Integer totalCount = + communityService.getSearchCount(cri)
+							 + portalService.getSearchCount(cri)
+							 + mediaService.getSearchCount(cri);
 		
 		logger.info("totalCount: " + totalCount);
-		
 		model.addAttribute("totalCount", totalCount);
 		
 		List<ExtractVO> classiList = new ArrayList<ExtractVO>();
-		
 		ListUtil listUtil = new ListUtil();
 
 		listUtil.listAddCommunityList(classiList, communityService.listSearch(cri));
 		listUtil.listAddPortalList(classiList, portalService.listSearch(cri));
 		listUtil.listAddMediaList(classiList, mediaService.listSearch(cri));
-
+		
 		cri.setPerPageNum(cri.getPerPageNum()*3);
+		
+		PageMaker pageMaker = new PageMaker();
 		
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(totalCount);
@@ -160,8 +159,6 @@ public class ClassificationController {
 		
 		logger.info("pageMaker: " + pageMaker);
 		model.addAttribute("pageMaker", pageMaker);
-		
-		
 		
 		// 회사 선택에 따른 키워드 재추출
 		if(cri.getCompany() != null) {
