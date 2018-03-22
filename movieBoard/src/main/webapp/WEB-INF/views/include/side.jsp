@@ -111,7 +111,6 @@
             </a>
           </li>
           </c:if>
-          <c:if test="${user.user_name == 'union'}">
           <li class=" ">
             <a href="../media/replyList" data-i18n="nav.advance-components.draggable">
               <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
@@ -119,8 +118,6 @@
               <span class="pcoded-mcaret"></span>
             </a>
           </li>
-          </c:if>
-          <c:if test="${user.user_name == 'union'}">
           <li class=" ">
             <a href="../media/reply" data-i18n="nav.advance-components.draggable">
               <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
@@ -128,7 +125,6 @@
               <span class="pcoded-mcaret"></span>
             </a>
           </li>
-          </c:if>
           <c:if test="${user.user_name == 'union'}">
           	<li class=" ">
             <a href="../media/press" data-i18n="nav.advance-components.grid-stack">
@@ -181,6 +177,15 @@
         <a href="../keyword/keyword" data-i18n="nav.advance-components.main">
           <span class="pcoded-micon"><i class="ti-ink-pen"></i></span>
           <span class="pcoded-mtext">키워드관리</span>
+          <span class="pcoded-mcaret"></span>
+        </a>
+      </li>
+      </c:if>
+      <c:if test="${user.user_name == 'union'}">
+      <li class="swearword">
+        <a href="../keyword/swearword" data-i18n="nav.advance-components.main">
+          <span class="pcoded-micon"><i class="icofont icofont-calculations"></i></span>
+          <span class="pcoded-mtext">악성글관리</span>
           <span class="pcoded-mcaret"></span>
         </a>
       </li>
