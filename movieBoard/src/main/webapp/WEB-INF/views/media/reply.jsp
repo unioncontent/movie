@@ -119,6 +119,7 @@
                           </c:if>
                         </select>
 						</c:if>
+						
 						<c:if test="${user.user_name != 'union'}">
                          <select style="display: none;" name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="selectCompany">
                           <option>회사</option>
@@ -132,6 +133,7 @@
                           </c:if>
                         </select>
 						</c:if>
+						
                         <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left" id="selectKeyword">
                           <option>키워드</option>
                           <c:if test="${modelKeywordList == null}" >
