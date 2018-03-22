@@ -387,8 +387,6 @@
                           </div>
                         </div>
                       </div>
-                      </c:if>
-                      <!-- showbox card end -->
                       <!-- Morris chart start -->
                       <div class="col-md-12">
                         <div class="card">
@@ -521,6 +519,8 @@
                           </div>
                         </div>
                       </div>
+                      </c:if>
+                      <!-- showbox card end -->
                       <!-- calendar start -->
                       <div class="col-md-4 ">
                         <div class="card borderless-card z-depth-left-0">
