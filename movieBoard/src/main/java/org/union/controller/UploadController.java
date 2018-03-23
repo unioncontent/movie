@@ -159,12 +159,12 @@ public class UploadController {
 			String writeDate, String url) throws Exception {
 		logger.info(keyword + textType + domain + domainType + board_number + title + content + writer + writerIP + writeDate
 				+ url);
-		logger.info("originalName: " + file.getOriginalFilename());
-		logger.info("size: " + file.getSize());
-		logger.info("contentType: " + file.getContentType());
+		//logger.info("originalName: " + file.getOriginalFilename());
+		//logger.info("size: " + file.getSize());
+		//logger.info("contentType: " + file.getContentType());
 		logger.info(uploadPath);
 		
-//		return new ResponseEntity<String>(file.getOriginalFilename(),HttpStatus.CREATED);
+		//return new ResponseEntity<String>(file.getOriginalFilename(),HttpStatus.CREATED);
 
 		/*logger.info(UploadFileUtils.uploadFile(uploadPath, file.getOriginalFilename(), file.getBytes()),
 				HttpStatus.CREATED);*/
@@ -174,9 +174,12 @@ public class UploadController {
 		if(domain.equals("portal")) {
 			logger.info("domain is portal");
 			
-			insertFileName = new ResponseEntity<String>(
-					UploadFileUtils.uploadFile(uploadPath, file.getOriginalFilename(), file.getBytes()),
-					HttpStatus.CREATED);
+			
+			if(file != null) {
+				insertFileName = new ResponseEntity<String>(
+						UploadFileUtils.uploadFile(uploadPath, file.getOriginalFilename(), file.getBytes()),
+						HttpStatus.CREATED);
+			
 			
 			PortalVO vo = new PortalVO();
 			
@@ -188,81 +191,177 @@ public class UploadController {
 			vo.setWriter(writer);
 			vo.setTextType(textType);
 			vo.setUrl(url);
-			vo.setThumbnail(insertFileName.getBody());
+			if(vo.getThumbnail() == "") {
+				vo.setThumbnail(null);
+			}else {
+				vo.setThumbnail(insertFileName.getBody());
+			}
 			vo.setDeviceType(1);
 			vo.setKeyword_type("수동");
 			
 			portalService.regist(vo);
 			
+			
 			return insertFileName;
+			
+			}else {
+				
+				PortalVO vo = new PortalVO();
+				
+				vo.setPortal_name(domainType);
+				vo.setPortal_title(title);
+				vo.setPortal_content(content);
+				vo.setWriteDate(writeDate);
+				vo.setKeyword(keyword);
+				vo.setWriter(writer);
+				vo.setTextType(textType);
+				vo.setUrl(url);
+				vo.setDeviceType(1);
+				vo.setKeyword_type("수동");
+				
+				portalService.regist(vo);
+				
+				return null;
+				
+			}
 			
 		}else if(domain.equals("media")) {
 			logger.info("domain is media");
 			
-			insertFileName = new ResponseEntity<String>(
-					UploadFileUtils.uploadFile(uploadPath, file.getOriginalFilename(), file.getBytes()),
-					HttpStatus.CREATED);
+			if(file != null) {
+				insertFileName = new ResponseEntity<String>(
+						UploadFileUtils.uploadFile(uploadPath, file.getOriginalFilename(), file.getBytes()),
+						HttpStatus.CREATED);
 			
-			MediaVO vo = new MediaVO();
+				MediaVO vo = new MediaVO();
+				
+				vo.setMedia_name(domainType);
+				vo.setMedia_title(title);
+				vo.setMedia_content(content);
+				vo.setWriteDate(writeDate);
+				vo.setReporter_name(writer);
+				vo.setKeyword(keyword);
+				vo.setTextType(textType);
+				vo.setUrl(url);
+				if(vo.getThumbnail() == "") {
+					vo.setThumbnail(null);
+				}else {
+					vo.setThumbnail(insertFileName.getBody());
+				}
+				
+				mediaService.regist(vo);
+				
+				return insertFileName;
 			
-			vo.setMedia_name(domainType);
-			vo.setMedia_title(title);
-			vo.setMedia_content(content);
-			vo.setWriteDate(writeDate);
-			vo.setReporter_name(writer);
-			vo.setKeyword(keyword);
-			vo.setTextType(textType);
-			vo.setUrl(url);
-			vo.setThumbnail(insertFileName.getBody());
-			
-			mediaService.regist(vo);
-			
-			return insertFileName;
+			}else {
+				
+				MediaVO vo = new MediaVO();
+				
+				vo.setMedia_name(domainType);
+				vo.setMedia_title(title);
+				vo.setMedia_content(content);
+				vo.setWriteDate(writeDate);
+				vo.setReporter_name(writer);
+				vo.setKeyword(keyword);
+				vo.setTextType(textType);
+				vo.setUrl(url);
+				
+				mediaService.regist(vo);
+				
+				return null;
+			}
 			
 		}else if(domain.equals("community")) {
 			logger.info("domain is community");
 			
-			insertFileName = new ResponseEntity<String>(
-					UploadFileUtils.uploadFile(uploadPath, file.getOriginalFilename(), file.getBytes()),
-					HttpStatus.CREATED);
-			
-			CommunityVO vo = new CommunityVO();
-			vo.setCommunity_name(domainType);
-			vo.setCommunity_title(title);
-			vo.setCommunity_content(content);
-			vo.setCommunity_writer(writer);
-			vo.setCommunity_writer_IP(writerIP);
-			vo.setWriteDate(writeDate);
-			vo.setKeyword(keyword);
-			vo.setTextType(textType);
-			vo.setUrl(url);
-			vo.setThumbnail(insertFileName.getBody());
-			
-			
-			communityService.regist(vo);
-		
-			return insertFileName;
-		}else if(domain.equals("sns")) {
-				logger.info("domain is sns");
-				
+			if(file != null) {
 				insertFileName = new ResponseEntity<String>(
 						UploadFileUtils.uploadFile(uploadPath, file.getOriginalFilename(), file.getBytes()),
 						HttpStatus.CREATED);
+			
+				CommunityVO vo = new CommunityVO();
 				
-				SNSVO vo = new SNSVO();
-				vo.setSns_name(domainType);
-				vo.setSns_title(title);
-				vo.setSns_content(content);
+				vo.setCommunity_name(domainType);
+				vo.setCommunity_title(title);
+				vo.setCommunity_content(content);
+				vo.setCommunity_writer(writer);
+				vo.setCommunity_writer_IP(writerIP);
 				vo.setWriteDate(writeDate);
-				vo.setSns_writer(writer);
 				vo.setKeyword(keyword);
 				vo.setTextType(textType);
 				vo.setUrl(url);
-				vo.setThumbnail(insertFileName.getBody());
+				if(vo.getThumbnail() == "") {
+					vo.setThumbnail(null);
+				}else {
+					vo.setThumbnail(insertFileName.getBody());
+				}
 				
-				snsService.regist(vo);
+				
+				communityService.regist(vo);
 			
-				return insertFileName;	
+				return insertFileName;
+			
+			}else {
+				
+				CommunityVO vo = new CommunityVO();
+				
+				vo.setCommunity_name(domainType);
+				vo.setCommunity_title(title);
+				vo.setCommunity_content(content);
+				vo.setCommunity_writer(writer);
+				vo.setCommunity_writer_IP(writerIP);
+				vo.setWriteDate(writeDate);
+				vo.setKeyword(keyword);
+				vo.setTextType(textType);
+				vo.setUrl(url);
+				
+				communityService.regist(vo);
+				
+				return null;
+			}
+			
+		}else if(domain.equals("sns")) {
+				logger.info("domain is sns");
+				
+				if(file != null) {
+					insertFileName = new ResponseEntity<String>(
+							UploadFileUtils.uploadFile(uploadPath, file.getOriginalFilename(), file.getBytes()),
+							HttpStatus.CREATED);
+				
+					SNSVO vo = new SNSVO();
+					vo.setSns_name(domainType);
+					vo.setSns_title(title);
+					vo.setSns_content(content);
+					vo.setWriteDate(writeDate);
+					vo.setSns_writer(writer);
+					vo.setKeyword(keyword);
+					vo.setTextType(textType);
+					vo.setUrl(url);
+					if(vo.getThumbnail() == "") {
+						vo.setThumbnail(null);
+					}else {
+						vo.setThumbnail(insertFileName.getBody());
+					}
+					
+					snsService.regist(vo);
+				
+					return insertFileName;
+				}else {
+					
+					SNSVO vo = new SNSVO();
+					vo.setSns_name(domainType);
+					vo.setSns_title(title);
+					vo.setSns_content(content);
+					vo.setWriteDate(writeDate);
+					vo.setSns_writer(writer);
+					vo.setKeyword(keyword);
+					vo.setTextType(textType);
+					vo.setUrl(url);
+					
+					snsService.regist(vo);
+					
+					return null;
+				}
 			
 		}else {
 			return null;
