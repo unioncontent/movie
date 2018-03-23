@@ -198,7 +198,7 @@
                                 <tbody>
                                   <c:forEach items="${reporterList}" var="reporterList" varStatus="index">
                                   <tr>
-                                    <th scope="row">${index.count}</th>
+                                    <th>${totalCount -index.count +1 -minusCount}</th>
                                     <td>${reporterList.reporter_media_name}</td>
                                     <td>${reporterList.reporter_media_name}</td>
                                     <td>${reporterList.reporter_part_name}</td>
@@ -215,7 +215,7 @@
                                       <ul class="pagination float-right">
                                        <c:if test="${pageMaker.prev}">
                                          <li class="page-item">
-                                           <a class="page-link" href="news${pageMaker.makeSearch(pageMaker.startPage - 1) }" aria-label="Previous">&laquo;
+                                           <a class="page-link" href="press${pageMaker.makeSearch(pageMaker.startPage - 1) }" aria-label="Previous">&laquo;
                                              <span aria-hidden="true"></span>
                                              <span class="sr-only">Previous</span>
                                            </a>
@@ -224,13 +224,13 @@
 
                                        <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
                                          <li class= "${pageMaker.cri.page == idx? 'active':''} page-item">
-                                           <a class="page-link" href="news${pageMaker.makeSearch(idx)}">${idx}</a>
+                                           <a class="page-link" href="press${pageMaker.makeSearch(idx)}">${idx}</a>
                                          </li>
                                        </c:forEach>
 
                                        <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
                                          <li class="page-item">
-                                           <a class="page-link" href="news${pageMaker.makeSearch(pageMaker.endPage +1) }" aria-label="Next">&raquo;
+                                           <a class="page-link" href="press${pageMaker.makeSearch(pageMaker.endPage +1) }" aria-label="Next">&raquo;
                                              <span aria-hidden="true"></span>
                                              <span class="sr-only">Next</span>
                                            </a>

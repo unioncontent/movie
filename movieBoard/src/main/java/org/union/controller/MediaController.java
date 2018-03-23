@@ -481,6 +481,10 @@ public class MediaController {
 		
 		model.addAttribute("reporterList", reporterList);
 		
+		Integer totalCount = reporterService.getSearchCount(cri);
+		
+		logger.info("totalCount: " + totalCount);
+		
 		PageMaker pageMaker = new PageMaker();
 		
 		pageMaker.setCri(cri);
@@ -489,7 +493,8 @@ public class MediaController {
 		logger.info("pageMaker: " + pageMaker);
 		
 		model.addAttribute("pageMaker", pageMaker);
-		
+		model.addAttribute("totalCount", totalCount);
+		model.addAttribute("minusCount", cri.getPerPageNum() * (cri.getPage()-1));
 	}
 	
 	@PostMapping("/pressInsert")
@@ -571,5 +576,24 @@ public class MediaController {
 		mediaService.newsUpdateState(vo);
 		
 		return "success";
+	}
+	
+	@ResponseBody
+	@PostMapping("allUpdate")
+	public String updatePOST(Integer idx, Integer state) {
+		logger.info("updatePOST called....");
+		
+		logger.info("idx: " + idx);
+		logger.info("state: " + state);
+		
+		NewsVO vo = new NewsVO();
+		
+		vo.setNews_idx(idx);
+		vo.setNews_state(state);
+		
+		mediaService.newsUpdateState(vo);
+		
+		return "success";
+		
 	}
 }
