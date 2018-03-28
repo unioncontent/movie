@@ -181,6 +181,11 @@
                               <div class="col-lg-12">
 		                        <div class="card">
 		                          <div class="card-header">
+		                          <div class="btn-group f-right p-r-0">
+	                                  <button type="button" id="allBtn1" class="radiosBtn btn btn-primary btn-outline-primary btn-sm waves-effect waves-light">ON</button>
+	                                  <button type="button" id="allBtn2" class="radiosBtn btn btn-primary btn-outline-primary btn-sm waves-effect waves-light">OFF</button>
+	                                  <button type="button" id="insertAllBtn" class="alert-confirm btn btn-sm btn-primary waves-effect f-right p-b-10"><i class="icofont icofont-exchange" style="margin: 0px;font-size: 16px;"></i></button>
+	                                </div>
                                     <h5 class="card-header-text m-b-10"></h5>
                                     </div>
                                     <div class="card-block table-border-style">
@@ -219,7 +224,7 @@
                                             	</div>
                                             </td>
                                             <td>
-                                            	${NewsVO.replycnt}건
+                                            	<fmt:formatNumber value="${NewsVO.replycnt}" groupingUsed="true"/>건
                                             </td>
                                             <td>
                                             	<fmt:formatDate value="${NewsVO.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" />
@@ -259,26 +264,15 @@
 			                                        <input type="radio" id="radio6${index.count}" name="radios${index.count}" checked>
 			                                        <label for="radio6${index.count}">미분류</label>
 			                                      </div>
-                                            </td>
-                                            <td>
-                                           		<div class="col-sm-5" style="float: left;">
-			                                        <div class="form-radio">
-			                                          <div class="radio radio-inline">
-			                                            <label>
-			                                              <input type="radio" name="news_state" value="1" checked="checked">
-			                                              <i class="helper"></i>ON
-			                                            </label>
-			                                          </div>
-			                                          <br>
-			                                          <div class="radio radio-inline">
-			                                            <label>
-			                                              <input type="radio" name="news_state" value="2">
-			                                              <i class="helper"></i>OFF
-			                                            </label>
-			                                          </div>
-			                                        </div>
-			                                      </div>
-                                           	</td>
+	                                            </td>
+	                                            <td>
+	                                            	<div class="state${index.count}">
+			                                        <input type="radio" id="state1${index.count}" name="state${index.count}" value="1" checked>
+			                                        <label for="state1${index.count}">ON</label>
+			                                        <input type="radio" id="state2${index.count}" name="state${index.count}" value="2">
+			                                        <label for="state2${index.count}">OFF</label>
+			                                      	</div>
+	                                            </td>
 		                                    <td>
 		                                      <button class="btn btn-danger btn-sm alert-confirm1" data-toggle="tooltip" data-placement="top" data-original-title="삭제"><i class="icofont icofont-ui-delete" style="margin-right:0"></i></button>
 		                                      <button class="btn btn-primary btn-sm alert-confirm2" data-toggle="tooltip" data-placement="top" data-original-title="즉시처리"><i class="icofont icofont-ui-check" style="margin-right:0"></i></button>
@@ -507,6 +501,27 @@ $(document).ready(function(){
 
 			//searchList();
 		});
+		
+		// allBtn 클릭시
+		  $(".radiosBtn").on("click", function(event){
+			  console.log(event);
+
+			  var input = event.target.id;
+
+			  var btnNum = input.substr(6);
+
+			  var $trList = $(".trList");
+
+			  for(var i = 0; i < $trList.length; i++){
+				  $('#state'+ btnNum + (i+1))[0].checked = true;
+			  }
+
+		  });
+		
+		// 일괄처리버튼 클릭시
+		 $(document).on("click","#insertAllBtn",function(){
+			insertAll();
+		 });
 
 
 	  // 삭제버튼 클릭시
@@ -576,55 +591,31 @@ $(document).ready(function(){
 					});
 	  });
 	  
+	
+	
 	// 상태변경 버튼 클릭시
 	  $(document).on("click",".alert-confirm3",function(event){
-			swal({
-						title: "상태변경 처리 하시겠습니까?",
-						text: "바로 상태변경 됩니다.",
-						type: "warning",
-						showCancelButton: true,
-						confirmButtonClass: "btn-danger",
-						confirmButtonText: "YES",
-						closeOnConfirm: false
-					},
+		  swal({
+				title: "상태변경 처리 하시겠습니까?",
+				text: "바로 상태변경 됩니다.",
+				type: "warning",
+				showCancelButton: true,
+				confirmButtonClass: "btn-danger",
+				confirmButtonText: "YES",
+				closeOnConfirm: false
+			},
 					function(){
 
-						var parent = event.target.parentNode;
-						if(parent.type == 'submit'){
-							console.log("button click...");
-							parent = parent.parentNode;
-						}
+						insertState(event);
 
-						var tr = parent.parentNode;
-						console.log(tr);
-
-						var idx = tr.children[0].value;
-						console.log(tr.children);
-						
-						var state = $('input[name=news_state]:checked').val();
-
-						console.log("idx:" + idx, "state:" + state);
-
-						$.ajax({
-							  
-							  type: "POST",
-							  url: "update",
-							  data: {
-								  idx: idx, 
-								  state: state
-							  },
-							  dataType: "json",
-							  success: function(data){
-								  console.log(data);
-							  }
-
-						});
-						
 						swal("Update!", "상태변경 처리가 완료되었습니다.", "success");
 
 						location.reload();
 					});
-	  			});
+	  });
+	
+	
+	  
 		// 당일 클릭시
 		$('#toDay').on("click", function(){
 		  console.log("toDay clicked....");
@@ -789,6 +780,108 @@ $(document).ready(function(){
 
 		}
 	}
+	
+	function insertState(event) {
+
+		var parent = event.target.parentNode;
+		if(parent.type == 'submit'){
+			console.log("button click...");
+			parent = parent.parentNode;
+		}
+
+		var tr = parent.parentNode;
+		console.log(tr);
+
+		if (tr.children[0].value != 'undefined') {
+			var idx = tr.children[0].value;
+			console.log(idx);
+		}
+
+		if (tr.children[11].children[0].children != 'undefined') {
+			var arr = tr.children[11].children[0].children;
+			console.log(arr);
+		} else {
+			clacInsertData(event);
+		}
+
+		for (var i = 0; i < arr.length; i++) {
+			console.log(arr[i]);
+			if (arr[i].type == "radio") {
+				if (arr[i].checked) {
+					var state = arr[i].value;
+
+					 $.ajax({
+						type : "POST",
+						url : "update",
+						data : {
+							idx : idx,
+							state : state
+						},
+						dataType : "json",
+						success : function(data) {
+							console.log(data);
+						}
+
+					});
+
+					break;
+				}
+			}
+
+		}
+	}
+	
+	function insertAll(){
+		  swal({
+				title: "일괄처리 하시겠습니까?",
+				text: "선택한 분류들로 일괄처리 됩니다.",
+				type: "warning",
+				showCancelButton: true,
+				confirmButtonClass: "btn-danger",
+				confirmButtonText: "YES",
+				closeOnConfirm: false
+			},
+			function(){
+
+				var tr = $(".trList");
+
+				var arr = [];
+
+				for(var i = 0; i < tr.length; i++){
+					var idx = tr[i].children[0].value;
+					var arr = tr[i].children[11].children[0].children;
+
+
+					for (var l = 0; l < arr.length; l++) {
+						if (arr[l].type == "radio") {
+
+							if (arr[l].checked) {
+								var state = arr[l].value;
+
+								break;
+							}
+						}
+					}
+						$.ajax({
+							  type: "POST",
+							  url: "allUpdate",
+							  data: {idx : idx, state : state},
+							  dataType: "json",
+							  success: function(data){
+								  console.log(data);
+							  }
+
+							});
+					
+
+				}
+
+
+				swal("Success!", "일괄처리가 완료되었습니다.", "success");
+
+				location.reload();
+			});
+	  }
 
 function makeDateFormat(date, index){
 		var splitDate = date.split(" - ")[index];
