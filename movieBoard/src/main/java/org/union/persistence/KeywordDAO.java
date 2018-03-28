@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.union.domain.KeywordListVO;
 import org.union.domain.KeywordVO;
+import org.union.domain.SwearwordVO;
 
 public interface KeywordDAO {
 
@@ -33,5 +34,13 @@ public interface KeywordDAO {
 	
 	public Integer checkMain(String keyword_main);
 	
+	public Integer checkSwearword(String swearword);
+	
 	public void deleteMain(String keyword_main);
+	
+	public List<SwearwordVO> swearwordList();
+	
+	public void swearwordCreate(SwearwordVO vo);
+	
+	public void swearwordDelete(String swearword);
 }

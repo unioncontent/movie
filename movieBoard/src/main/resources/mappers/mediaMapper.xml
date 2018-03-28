@@ -520,7 +520,7 @@
  		count(if(textType='기타글', textType, null)) etc, 
  		count(if(textType is not null and texttype!='삭제글', textType, null)) al
 		from media_data where media_name = 'naver'
- 		<include refid="search_writeDate"></include>
+ 		<include refid="search_writeDate2"></include>
  	</select>
  	
  	<select id="daumMediaCount" resultType="TextTypeVO">
@@ -531,7 +531,7 @@
 		count(if(textType='기타글', textType, null)) etc,
 		count(if(textType is not null and texttype!='삭제글', textType, null)) al
  		from media_data where media_name = 'daum'
- 		<include refid="search_writeDate"></include>
+ 		<include refid="search_writeDate2"></include>
  	</select>
  	
  	<select id="totalMediaCount" resultType="TextTypeVO">
@@ -541,7 +541,7 @@
 		count(if(textType='관심글', textType, null)) cu,
 		count(if(textType='기타글', textType, null)) etc,
 		count(if(textType is not null and texttype!='삭제글', textType, null)) al
- 		from media_data
+ 		from media_data where media_title is not null
  		<include refid="search_writeDate2"></include>
  	</select>
  	

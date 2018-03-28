@@ -45,6 +45,14 @@
 		
 	</delete>
 	
+	<delete id="swearwordDelete">
+		delete from
+			swearword_data
+		where
+			swearword = #{swearword}
+		
+	</delete>
+	
 	<select id="listByUser" resultType="KeywordVO">
 		select distinct
 			keyword_main
@@ -134,5 +142,26 @@
 		select count(*) from keyword_data where keyword_main = #{keyword_main}
 	
 	</select>
-
+	
+	<select id="checkSwearword" resultType="Integer">
+		select count(*) from swearword_data where swearword = #{swearword}
+	
+	</select>
+	
+	<select id="swearwordList" resultType="SwearwordVO">
+		select 
+			*
+		from 
+			swearword_data
+		order by swearword_idx
+	</select>
+	
+	<insert id="swearwordCreate">
+		insert into
+			swearword_data(swearword)
+		values
+			(#{swearword})
+	
+	</insert>
+	
 </mapper>
