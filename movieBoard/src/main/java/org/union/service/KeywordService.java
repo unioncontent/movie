@@ -5,6 +5,7 @@ import java.util.List;
 import org.union.domain.ExtractVO;
 import org.union.domain.KeywordListVO;
 import org.union.domain.KeywordVO;
+import org.union.domain.SwearwordVO;
 
 public interface KeywordService {
 
@@ -30,6 +31,13 @@ public interface KeywordService {
 	
 	public Integer checkMain(String keyword_main);
 	
+	public Integer checkSwearword(String swearword);
+	
 	public void removeMain(String keyword_main);
+	
+	public List<SwearwordVO> swearwordList();
 
+	public void swearwordCreate(SwearwordVO vo);
+	
+	public void swearwordDelete(String swearword);
 }

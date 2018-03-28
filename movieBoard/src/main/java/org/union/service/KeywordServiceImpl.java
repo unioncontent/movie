@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.union.domain.ExtractVO;
 import org.union.domain.KeywordListVO;
 import org.union.domain.KeywordVO;
+import org.union.domain.SwearwordVO;
 import org.union.domain.UserVO;
 import org.union.persistence.KeywordDAO;
 import org.union.persistence.UserDAO;
@@ -163,5 +164,29 @@ public class KeywordServiceImpl implements KeywordService{
 
 		return keywordDAO.read(keyword);
 	}
+
+	@Override
+	public List<SwearwordVO> swearwordList() {
+
+		return keywordDAO.swearwordList();
+	}
+
+	@Override
+	public void swearwordCreate(SwearwordVO vo) {
+
+		keywordDAO.swearwordCreate(vo);
+	}
+
+	@Override
+	public void swearwordDelete(String swearword) {
+		keywordDAO.swearwordDelete(swearword);
+	}
+
+	@Override
+	public Integer checkSwearword(String swearword) {
+
+		return keywordDAO.checkSwearword(swearword);
+	}
+
 
 }

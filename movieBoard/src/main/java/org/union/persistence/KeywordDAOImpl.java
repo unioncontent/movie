@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.union.domain.KeywordListVO;
 import org.union.domain.KeywordVO;
+import org.union.domain.SwearwordVO;
 
 @Repository
 public class KeywordDAOImpl implements KeywordDAO {
@@ -116,6 +117,39 @@ public class KeywordDAOImpl implements KeywordDAO {
 	public void deleteMain(String keyword_main) {
 
 		session.delete(namespace + "deleteMain", keyword_main);
+	}
+
+	@Override
+	public List<SwearwordVO> swearwordList() {
+
+		return session.selectList(namespace + "swearwordList");
+	}
+
+	@Override
+	public void swearwordCreate(SwearwordVO vo) {
+		try {
+			session.insert(namespace + "swearwordCreate", vo);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	@Override
+	public void swearwordDelete(String swearword) {
+		try {
+			session.delete(namespace + "swearwordDelete", swearword);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+	@Override
+	public Integer checkSwearword(String swearword) {
+		return session.selectOne(namespace + "checkSwearword", swearword);
 	}
 
 }

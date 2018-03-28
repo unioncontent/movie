@@ -424,19 +424,24 @@
                               			<div id="getTable"></div>
                               		</div><br>
 	                                <div align="center">
-	                                	<input type="button" class="btn btn-primary m-b-0" data-toggle="modal" data-target="#myModal" value="미리보기">
+	                                	<input type="button" class="btn btn-primary m-b-0" data-toggle="modal" data-target="#press-modal" value="미리보기">
 	                                </div><br>
                               	</div>
                            	  </div><br>
                            	  
-                           	 <!-- 모달창 영역 --> 
-                           	 
-	                           	  <div class="modal fade" id="myModal">
-								  <div class="modal-dialog">
-								    <div class="modal-content">
-								      <div class="modal-header"></div>
-								      <div class="modal-body">
-								        <div class="card">
+                      <!-- Modal start-->
+                      <div class="modal fade" id="press-modal" tabindex="-1" role="dialog">
+                        <div class="modal-dialog modal-lg" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title"></h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true"><i class="icofont icofont-close-line"></i></span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              <div class="col-lg-12">
+                                    <div class="card">
 	                              	<div class="card-header" align="center">
 	                              	<h4 class="card-header-text"><${company} : ${selectKey}> 주간보고서</h4>
 	                              	</div>
@@ -457,6 +462,7 @@
 	                              			<div class="card-header">
 			                              		<h5 class="card-header-text">통계현황</h5>
 			                              	</div>
+			                              	<div>
 			                              	<table class="table table-bordered">
 	                              				<tr>
 	                              					<th>포털</th>
@@ -473,15 +479,20 @@
 	                              					<td><fmt:formatNumber value="${portalCount+communityCount+snsCount+mediaCount}" pattern="#,##0" /></td>
 	                              				</tr>
 	                              			</table>
-			                              		<div id="donutchart4" style="width: 20%; height: 10px; float: left;"></div>
-			                              		<div id="donutchart5" style="width: 20%; height: 10px; float: Left;"></div>
-			                              		<div id="donutchart6" style="width: 20%; height: 10px; float: left;"></div>
+	                              			</div>
+	                              			<div class="card-header" style="float:left;width:100%;margin:none;padding:none;">
+			                              		<div id="donutchart4" ></div>
+			                              		<div id="donutchart5" ></div>
+			                              		<div id="donutchart6" ></div>
+			                              	</div>	
+			                              	<div style=”clear:both;”></div>
 	                              			<div class="card-header">
 			                              		<h5 class="card-header-text">일일 <${selectKey}> 버즈량 변동 현황</h5>
 			                              	</div>
 			                              	<div class="card-header">
 			                              		<h5 class="card-header-text">포털 통계</h5>
 			                              	</div>
+			                              	<div>
 			                              	<table class="table table-bordered">
 	                              				<tr>
 	                              					<th>날짜</th>
@@ -491,27 +502,31 @@
 	                              					<th>관심글</th>
 	                              					<th>기타글</th>
 	                              				</tr>
+	                              				<c:forEach items="${portalTextType2}" var="portal">
 	                              				<tr>
-	                              					<td></td>
-		                              				<td><fmt:formatNumber value="${portalTextType.lik + portalTextType.dis + portalTextType.cu
-		                                                      + portalTextType.etc}" groupingUsed="true"/></td>
-		                              				<td><fmt:formatNumber value="${portalTextType.lik}" groupingUsed="true"/></td>
-		                              				<td><fmt:formatNumber value="${portalTextType.dis}" groupingUsed="true"/></td>
-		                              				<td><fmt:formatNumber value="${portalTextType.cu}" groupingUsed="true"/></td>
-		                              				<td><fmt:formatNumber value="${portalTextType.etc}" groupingUsed="true"/></td>
+	                              					<td>${portal.writeDate}</td>
+	                              					<td><fmt:formatNumber value="${portal.lik + portal.dis + portal.cu
+	                                                       + portal.etc}" groupingUsed="true"/></td>
+	                              					<td><fmt:formatNumber value="${portal.lik}" groupingUsed="true"/></td>
+	                              					<td><fmt:formatNumber value="${portal.dis}" groupingUsed="true"/></td>
+	                              					<td><fmt:formatNumber value="${portal.cu}" groupingUsed="true"/></td>
+	                              					<td><fmt:formatNumber value="${portal.etc}" groupingUsed="true"/></td>
 	                              				</tr>
+	                              				</c:forEach>
 	                              			</table>
+	                              			</div>
 	                              		</div><br>
 	                              	</div>
 	                           	  </div>
 							      </div>
-							      <div class="modal-footer"></div>
-							      	<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button> 
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button> 
 							      	<button type="button" class="btn btn-primary">메일보내기</button>
-							    </div>
-							  </div>
-							</div>
-							
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- Modal end-->
                         <!-- tab-content end -->
                       </div>
                     </div>

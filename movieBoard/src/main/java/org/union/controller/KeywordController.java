@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.union.domain.KeywordListVO;
 import org.union.domain.KeywordVO;
+import org.union.domain.SwearwordVO;
 import org.union.service.KeywordService;
 import org.union.service.UserService;
 
@@ -37,12 +38,33 @@ public class KeywordController {
 		model.addAttribute("mainList", keywordService.listPage());
 	}
 	
+	@GetMapping("/swearword")
+	public void swearwordGET(Model model) {
+		logger.info("swearwordGET called....");
+		
+		model.addAttribute("swearwordList", keywordService.swearwordList());
+	}
+	
 	
 	@GetMapping("/create")
 	public void createGET(Model model) {
 		logger.info("createGET called....");
 		
 		model.addAttribute("companyList", userService.listAll());
+	}
+	
+	@GetMapping("/swearwordCreate")
+	public void swearwordCreate() {
+		
+	}
+	
+	@GetMapping("/swearwordCreateOk")
+	public String swearwordCreateGET(SwearwordVO vo) {
+		logger.info("createGET called....");
+		
+		keywordService.swearwordCreate(vo);
+		
+		return "redirect:/keyword/swearword";
 	}
 	
 	
@@ -54,6 +76,16 @@ public class KeywordController {
 		logger.info("keywordMain: " + keyword_main);
 		
 		return keywordService.checkMain(keyword_main);
+	}
+	
+	@ResponseBody
+	@PostMapping("/checkSwearword")
+	public Integer checkSwearwordPOST(String swearword) {
+		logger.info("checkSwearwordPOST called....");
+		
+		logger.info("swearword: " + swearword);
+		
+		return keywordService.checkSwearword(swearword);
 	}
 
 	
@@ -123,5 +155,16 @@ public class KeywordController {
 		
 		keywordService.remove(keyword);
 		
+	}
+	
+	@ResponseBody
+	@PostMapping("swearwordRemove")
+	public String swearwordRemovePOST(String swearword) {
+		logger.info("swearwordRemovePOST called....");
+		logger.info("swearword: " + swearword);
+		
+		keywordService.swearwordDelete(swearword);
+		
+		return "success";
 	}
 }

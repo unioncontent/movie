@@ -169,11 +169,27 @@
             </a>
           </li>
           </c:if>
+          <c:if test="${user.user_name == 'union'}">
+          <li class="email" style="DISPLAY: none;">
+            <a href="../manage/email" data-i18n="nav.advance-components.draggable">
+              <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+              <span class="pcoded-mtext">이메일</span>
+              <span class="pcoded-mcaret"></span>
+            </a>
+          </li>
+          </c:if>
         </ul>
       </li>
-      
       <c:if test="${user.user_name == 'union'}">
-      <li class="keyword">
+      <li class="pcoded-hasmenu keyword">
+        <a href="javascript:void(0)" data-i18n="nav.advance-components.main">
+          <span class="pcoded-micon"><i class="ti-harddrives"></i></span>
+          <span class="pcoded-mtext">키워드 관리</span>
+          <span class="pcoded-mcaret"></span>
+        </a>
+        <ul class="pcoded-submenu">
+          <c:if test="${user.user_name == 'union'}">
+      	<li class="keyword">
         <a href="../keyword/keyword" data-i18n="nav.advance-components.main">
           <span class="pcoded-micon"><i class="ti-ink-pen"></i></span>
           <span class="pcoded-mtext">키워드관리</span>
@@ -182,12 +198,15 @@
       </li>
       </c:if>
       <c:if test="${user.user_name == 'union'}">
-      <li class="swearword" style="display: none;">
+      <li class="swearword">
         <a href="../keyword/swearword" data-i18n="nav.advance-components.main">
           <span class="pcoded-micon"><i class="icofont icofont-calculations"></i></span>
           <span class="pcoded-mtext">악성글관리</span>
           <span class="pcoded-mcaret"></span>
         </a>
+      </li>
+      </c:if>
+        </ul>
       </li>
       </c:if>
       <li class="extract">
@@ -203,7 +222,7 @@
           <span class="pcoded-mtext">분류글관리</span>
           <span class="pcoded-mcaret"></span>
         </a>
-   
+   		</li>
         <li class="listAll">
           <a href="../listAll/listAll" data-i18n="nav.advance-components.main">
             <span class="pcoded-micon"><i class="ti-menu"></i></span>
