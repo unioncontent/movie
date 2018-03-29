@@ -6249,6 +6249,8 @@ body.menu-sidebar .navbar-wrapper {
     border-radius: 50px; }
   .form-group .form-control-static:focus {
     outline: none; }
+  .form-group .form-control-text {
+    width: 700px; }    
 
 .form-control {
   font-size: 14px;

@@ -6,6 +6,10 @@
 <html lang="en">
 
 <head>
+<meta name="_csrf" content="${_csrf.token}" />
+<!-- default header name is X-CSRF-TOKEN -->
+<meta name="_csrf_header" content="${_csrf.headerName}"/>
+
   <title>OverWare</title>
   <!-- HTML5 Shim and Respond.js IE9 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -34,8 +38,18 @@
   <link rel="stylesheet" type="text/css" href="../assets/pages/menu-search/css/component.css">
   <!-- Horizontal-Timeline css -->
   <link rel="stylesheet" type="text/css" href="../assets/pages/dashboard/horizontal-timeline/css/style.css">
+  <!-- font awesome -->
+  <link rel="stylesheet" type="text/css" href="../assets/icon/font-awesome/css/font-awesome.css">
+  <!-- Date-time picker css -->
+  <link rel="stylesheet" type="text/css" href="../assets/pages/advance-elements/css/bootstrap-datetimepicker.css">
+  <!-- Date-range picker css  -->
+  <link rel="stylesheet" type="text/css" href="../bower_components/bootstrap-daterangepicker/daterangepicker.css">
+  <!-- sweet alert framework -->
+  <link rel="stylesheet" type="text/css" href="../bower_components/sweetalert/dist/sweetalert.css">
   <!-- Style.css -->
   <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
+  <link rel="stylesheet" type="text/css" href="../assets/pages/monitor/css/style.css">
+  <link rel="stylesheet" type="text/css" href="../assets/css/picker.css">
   <!--color css-->
   <link rel="stylesheet" type="text/css" href="../assets/css/color/color-1.css" id="color" />
   <link rel="stylesheet" type="text/css" href="../assets/css/linearicons.css">
@@ -92,14 +106,14 @@
                           </div>
                           <div class="card-block">
                             <div class="table-responsive">
-                              <table class="table table-bordered">
+                              <table class="table table-bordered table-sm">
                                 <thead>
                                   <tr>
                                     <th width="5%">NO</th>
                                     <th width="5%">대분류</th>
                                     <th width="5%">중분류</th>
                                     <th width="5%">소분류</th>
-                                    <th width="30%">마지막 수집글 제목</th>
+                                    <th width="20%">마지막 수집글 제목</th>
                                     <th width="10%">날짜</th>
                                     <th width="5%">상태</th>
                                   </tr>
@@ -140,7 +154,7 @@
                                     <td>Portal</td>
                                     <td>${portalc.portal_name}</td>
                                     <td>${portalc.portal_type}</td>
-                                    <td><a href="${portalc.url}" target="_blank">${portalc.portal_title}</a></td>
+                                    <td><a href="${portalc.url}" target="_blank"><div class="title-nowrap">${portalc.portal_title}</div></a></td>
                                     <td><fmt:formatDate value="${portalc.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>
                                     <td>
                                       <div class="form-radio">
@@ -923,7 +937,9 @@
                                     <td>community</td>
                                     <td>${communityList.community_name}</td>
                                     <td></td>
-                                    <td><a href="${communityList.url}" target="_blank">${communityList.community_title}</a></td>
+                                    <td><a href="${communityList.url}" target="_blank">
+                                    <div class="title-nowrap">${communityList.community_title}</div>
+                                    </a></td>
                                     <td><fmt:formatDate value="${communityList.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>
                                     <td>
                                       <div class="form-radio">
@@ -952,7 +968,9 @@
                                     <td>community</td>
                                     <td>${communityList.community_name}</td>
                                     <td></td>
-                                    <td><a href="${communityList.url}" target="_blank">${communityList.community_title}</a></td>
+                                    <td><a href="${communityList.url}" target="_blank">
+                                    ${communityList.community_title}
+                                    </a></td>
                                     <td><fmt:formatDate value="${communityList.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>
                                     <td>
                                       <div class="form-radio">

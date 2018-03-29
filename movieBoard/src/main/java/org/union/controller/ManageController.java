@@ -1,10 +1,16 @@
 package org.union.controller;
 
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -308,7 +314,7 @@ public class ManageController {
 	
 	@PostMapping("/graph")
 	@ResponseBody
-	public List<GraphVO> graphPOST(String startDate, String endDate, String company, String selectKey, String part) throws Exception{
+	public List<GraphVO> graphPOST(String startDate, String endDate, String company, String selectKey) throws Exception{
 		logger.info("grpahPOST called....");
 		
 		logger.info("company: " + company);
@@ -340,7 +346,6 @@ public class ManageController {
 		cri.setSelectKey(selectKey);
 		cri.setCompany(company);
 		logger.info("cri: " + cri);
-		logger.info("part: " + part);
 		
 		SimpleDateFormat standFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		
@@ -355,93 +360,74 @@ public class ManageController {
 
 		List<GraphVO> graphList = new ArrayList<GraphVO>();
 		
-		if(part.equals("sns")) {
-			for(int i = 0; i < gap +1; i++) {
-				
-				cri.setStartDate(standFormat.format(cal.getTime()));
-				cal.add(Calendar.SECOND, ((24 * 60 * 60) -1));
-				cri.setEndDate(standFormat.format(cal.getTime()));
-				
-				GraphVO graphVO = new GraphVO();
-				graphVO.setWriteDate(standFormat.format(cal.getTime()).toString().split(" ")[0]);
-				graphVO.setFacebookCount(snsService.facebookTotalCount(cri));
-				graphVO.setInstagramCount(snsService.instaTotalCount(cri));
-				graphVO.setTwitterCount(snsService.twitterTotalCount(cri));
-				
-				graphList.add(graphVO);
-				
-				cal.add(Calendar.SECOND, 1);
-			}
-		
-		}else if(part.equals("community")) {
-			for(int i = 0; i < gap +1; i++) {
-				
-				cri.setStartDate(standFormat.format(cal.getTime()));
-				cal.add(Calendar.SECOND, (24 * 60 * 60) -1);
-				cri.setEndDate(standFormat.format(cal.getTime()));
-				
-				GraphVO graphVO = new GraphVO();
-				graphVO.setWriteDate(standFormat.format(cal.getTime()).toString().split(" ")[0]);
-				cri.setTextType("좋은글");
-				graphVO.setType1(communityService.getSearchCount(cri));
-				
-				cri.setTextType("나쁜글");
-				graphVO.setType2(communityService.getSearchCount(cri));
-				
-				cri.setTextType("관심글");
-				graphVO.setType3(communityService.getSearchCount(cri));
-				
-				cri.setTextType("기타글");
-				graphVO.setType4(communityService.getSearchCount(cri));
-				
-				cri.setTextType(null);
-				
-				graphList.add(graphVO);
-				
-				cal.add(Calendar.SECOND, 1);
-			}
-		}else if(part.equals("portal")) {
-			for(int i = 0; i < gap +1; i++) {
-				
+		for(int i = 0; i < gap +1; i++) {
+			
 			cri.setStartDate(standFormat.format(cal.getTime()));
 			cal.add(Calendar.SECOND, (24 * 60 * 60) -1);
 			cri.setEndDate(standFormat.format(cal.getTime()));
 				
 			GraphVO graphVO = new GraphVO();
 			graphVO.setWriteDate(standFormat.format(cal.getTime()).toString().split(" ")[0]);
-			graphVO.setType1(portalService.getNaverCount(cri));
-			graphVO.setType2(portalService.getDaumCount(cri));
+			graphVO.setType1(portalService.getSearchCount(cri));
+			graphVO.setType2(communityService.getSearchCount(cri));
+			graphVO.setType3(snsService.getSearchCount(cri));
+			graphVO.setType4(mediaService.getSearchCount(cri));
 				
 			graphList.add(graphVO);
 				
 			cal.add(Calendar.SECOND, 1);
 			}
 			
-			
-		}else if(part.equals("main")) {
-			for(int i = 0; i < gap +1; i++) {
-				
-				cri.setStartDate(standFormat.format(cal.getTime()));
-				cal.add(Calendar.SECOND, (24 * 60 * 60) -1);
-				cri.setEndDate(standFormat.format(cal.getTime()));
-					
-				GraphVO graphVO = new GraphVO();
-				graphVO.setWriteDate(standFormat.format(cal.getTime()).toString().split(" ")[0]);
-				graphVO.setType1(portalService.getSearchCount(cri));
-				graphVO.setType2(communityService.getSearchCount(cri));
-				graphVO.setType3(snsService.getSearchCount(cri));
-				graphVO.setType4(mediaService.getSearchCount(cri));
-					
-				graphList.add(graphVO);
-					
-				cal.add(Calendar.SECOND, 1);
-				}
-		}
-			
-		
 		return graphList;
 		
 	}
+	
+	@GetMapping("/email")
+	public void email() {
+		
+	}
+	
+	 @RequestMapping(value = "/insertBoard.do", method = RequestMethod.POST)
+	    public String insertBoard(String editor) {
+	        System.err.println("저장할 내용 : " + editor);
+	        return "redirect:/email";
+	}
+	
+	// 다중파일업로드
+    @RequestMapping(value = "/file_uploader_html5", method = RequestMethod.POST)
+    @ResponseBody
+    public String multiplePhotoUpload(HttpServletRequest request) {
+        // 파일정보
+        StringBuffer sb = new StringBuffer();
+        try {
+            // 파일명을 받는다 - 일반 원본파일명
+            String oldName = request.getHeader("file-name");
+            // 파일 기본경로 _ 상세경로
+            String filePath = "C:/Users/Administrator/eclipse-workspace/movieBoard2/src/main/webapp/resources/photoUpload/";
+            String saveName = sb.append(new SimpleDateFormat("yyyyMMddHHmmss")
+                          .format(System.currentTimeMillis()))
+                          .append(UUID.randomUUID().toString())
+                          .append(oldName.substring(oldName.lastIndexOf("."))).toString();
+            InputStream is = request.getInputStream();
+            OutputStream os = new FileOutputStream(filePath + saveName);
+            int numRead;
+            byte b[] = new byte[Integer.parseInt(request.getHeader("file-size"))];
+            while ((numRead = is.read(b, 0, b.length)) != -1) {
+                os.write(b, 0, numRead);
+            }
+            os.flush();
+            os.close();
+            // 정보 출력
+            sb = new StringBuffer();
+            sb.append("&bNewLine=true")
+              .append("&sFileName=").append(oldName)
+              .append("&sFileURL=").append("http://localhost:8080/Spring/resources/photoUpload/")
+        .append(saveName);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return sb.toString();
+    }
 	
 	
 	/*@PostMapping("/monitorInsert")

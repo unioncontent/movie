@@ -390,13 +390,32 @@
                               					<td><fmt:formatNumber value="${portalCount+communityCount+snsCount+mediaCount}" pattern="#,##0" /></td>
                               				</tr>
                               			</table>
-	                              			<div id="donutchart" style="width: 33%; height: 500px; float: left;"></div>
-	                              			<div id="donutchart2" style="width: 33%; height: 500px; float: left;"></div>
-	                              			<div id="donutchart3" style="width: 33%; height: 500px; float: left;"></div>
-	                              	
-                              			<div class="card-header">
-		                              		<h5 class="card-header-text">일일 <${selectKey}> 버즈량 변동 현황</h5>
-		                              	</div>
+                              				<div>
+	                              			<div class="m-b-35" id="donutchart" style="width: 33%; height: 500px; float: left;"></div>
+	                              			<div class="m-b-35" id="donutchart2" style="width: 33%; height: 500px; float: left;"></div>
+	                              			<div class="m-b-35" id="donutchart3" style="width: 33%; height: 500px; float: left;"></div>
+	                              			</div>
+                              			<!-- 버즈량 변동 현황 그래프 start -->
+				                              <div class="col-lg-12">
+				                                <div class="card">
+				                                  <div class="card-header">
+				                                    <h5 class="card-header-text">
+				                                      <i class="icofont icofont-chart-line m-r-5"></i>
+				                                                                                           일일 <${selectKey}> 버즈량 변동 현황
+				                                    </h5>
+				                                    <div class="card-header-right">
+				                                      <i class="icofont icofont-rounded-down"></i>
+				                                      <i class="icofont icofont-refresh"></i>
+				                                    </div>
+				                                  </div>
+				                                  <div class="card-block">
+				                                    <!-- chart start -->
+				                                    <div class="m-b-35" id="line-chart1"></div>
+				                                    <!-- chart end -->
+				                                  </div>
+				                                </div>
+				                              </div>
+				                              <!-- 통계보고서 그래프 end -->
 		                              	<div class="card-header">
 		                              		<h5 class="card-header-text">포털 통계</h5>
 		                              	</div>
@@ -480,15 +499,33 @@
 	                              				</tr>
 	                              			</table>
 	                              			</div>
-	                              			<div class="card-header" style="float:left;width:100%;margin:none;padding:none;">
-			                              		<div id="donutchart4" ></div>
-			                              		<div id="donutchart5" ></div>
-			                              		<div id="donutchart6" ></div>
-			                              	</div>	
-			                              	<div style=”clear:both;”></div>
-	                              			<div class="card-header">
-			                              		<h5 class="card-header-text">일일 <${selectKey}> 버즈량 변동 현황</h5>
+	                              			<div class="card-header" style="float: left;">
+			                              		<div id="donutchart4" style="float:left;width:30%;margin-left:15px;"></div>
+			                              		<div id="donutchart5" style="float:left;width:30%;margin-left:90px;"></div>
+			                              		<div id="donutchart6" style="float:left;width:30%;margin-left:15px;"></div>
 			                              	</div>
+			                              	<div></div>
+			                              	  <!-- 통계보고서 그래프 start -->
+				                              <!-- <div class="col-lg-12">
+				                                <div class="card">
+				                                  <div class="card-header">
+				                                    <h5 class="card-header-text">
+				                                      <i class="icofont icofont-chart-line m-r-5"></i>
+				                                                                                           일일 <${selectKey}> 버즈량 변동 현황
+				                                    </h5>
+				                                    <div class="card-header-right">
+				                                      <i class="icofont icofont-rounded-down"></i>
+				                                      <i class="icofont icofont-refresh"></i>
+				                                    </div>
+				                                  </div>
+				                                  <div class="card-block">
+				                                    chart start
+				                                    <div class="m-b-35" id="line-chart2"></div>
+				                                    chart end
+				                                  </div>
+				                                </div>
+				                              </div> -->
+				                              <!-- 통계보고서 그래프 end -->
 			                              	<div class="card-header">
 			                              		<h5 class="card-header-text">포털 통계</h5>
 			                              	</div>
@@ -642,14 +679,17 @@ $(function() {
   $(document).ready(function(){
 
 
-	  	var startDateOption = decodeURI(window.location.href.split("startDate=")[1]).split("&")[0].split(" ")[0];
-		var endDateOption = decodeURI(window.location.href.split("endDate=")[1]).split("&")[0].split(" ")[0];
-		console.log("startDateOption: " + startDateOption);
-		console.log("endDateOption: " + endDateOption);
-
-		if(startDateOption != 'undefined' && endDateOption != 'undefined'
-				&& startDateOption != '' && endDateOption != ''){
-			$("#fromDate").val(startDateOption + " - " + endDateOption);
+	var $fromDate = $("#fromDate");
+	  
+	  var startDateOption = decodeURI(window.location.href.split("startDate=")[1]).split("&")[0];
+	  var endDateOption = decodeURI(window.location.href.split("endDate=")[1]).split("&")[0];
+	  console.log("startDateOption: " + startDateOption);
+	  console.log("endDateOption: " + endDateOption);
+		
+	  if(startDateOption != 'undefined' && endDateOption != 'undefined'
+			&& startDateOption != '' && endDateOption != ''){
+		  $fromDate.val(startDateOption + " - " + endDateOption);
+	  		
 		}
 
 
@@ -692,8 +732,7 @@ $(function() {
 			}
 		}
 		$selectKeyword[0][0].disabled = true;
-
-
+		
 		// 키워드 선택시
 		$selectKeyword.change(function(){
 			console.log("selectKeyword clicked....");
@@ -702,7 +741,13 @@ $(function() {
 			searchList();
 		});
 
+		var graphStart = $fromDate.val().split(" - ")[0].replace("/", "-").replace("/", "-");
+		var graphEnd = $fromDate.val().split(" - ")[1].replace("/", "-").replace("/", "-");
 
+		console.log("graphStart: " + graphStart);
+	    console.log("graphEnd: " + graphEnd);
+		  
+	    ajaxGraph(graphStart, graphEnd);
 
 
 		// 당일 클릭시
@@ -778,6 +823,64 @@ $(function() {
 
 		   searchList();
 	});
+	
+	// 그래프 함수
+	function ajaxGraph(startDate, endDate){
+	  console.log(startDate + "/" + endDate);
+		$.ajax({
+
+	      type : "POST",
+		  url : "graph",
+	 	  dataType : "json",
+	 	  data : {startDate : startDate, endDate : endDate,
+	 		      company : $("#selectCompany option:selected").val(), selectKey : $("#selectKeyword option:selected").val()},
+	  	  error : function(){
+	      	alert('graphPOST ajax error....');
+	  	  },
+	  	  success : function(data){
+
+	  		var script = "[";
+
+	  		for(var i = 0; i < data.length; i++){
+	  			console.log(data[i]);
+	  			script += '{"manage":' + '"' + data[i].writeDate + '",'
+	  					+ '"l1"'+ ':' + data[i].type1 + ","
+	  					+ '"l2"' + ':' + data[i].type2 + ","
+	  					+ '"l3"' + ':' + data[i].type3 + ","
+	  					+ '"l4"' + ':' + data[i].type4 + "},";
+
+	  			if(i == data.length-1){
+	  				script =  script.substr(0, script.length-1);
+	  				script += "]";
+	  			}
+	  		}
+	  		console.log(script);
+
+	  		// to json
+	  		var jsonScript = JSON.parse(script);
+
+	  		drawChart(jsonScript);
+
+	  	 }
+		});
+	}
+	
+	function drawChart(data){
+     	// 그래프 초기화
+     	$('#line-chart1').children().remove();
+
+     	window.lineChart = Morris.Line({
+     	      element: 'line-chart1',
+     	      data: data,
+     	      xkey: 'manage',
+     	     xLabels : 'day',
+     	      redraw: true,
+     	      ykeys: ['l1', 'l2', 'l3', 'l4'],
+     	      hideHover: 'auto',
+     	      labels: ['포털', '커뮤니티', 'SNS', '언론사'],
+     	      lineColors: ['#2ecc71', '#e74c3c', '#3498DB','#f1c40f']
+     	  });
+     }
 
 
 
