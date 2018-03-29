@@ -1,0 +1,213 @@
+<div class="main-body">
+  <div class="page-wrapper">
+    <div class="page-header">
+      <div class="page-header-title">
+        <h4>메일발송</h4>
+      </div>
+      <div class="page-header-breadcrumb">
+        <ul class="breadcrumb-title">
+          <li class="breadcrumb-item">
+            <a href="/">
+              <i class="fas fa-home"></i>
+            </a>
+          </li>
+          <li class="breadcrumb-item"><a href="#!">메일발송</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="page-body">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-block">
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label">* 수신그룹</label>
+                <div class="col-sm-4">
+                  <input type="hidden" id="groupCheck"/>
+                  <input id="M_group" type="text" class="form-control" placeholder="수신그룹">
+                  <span class='messages'><p class='text-danger error'></p></span>
+                </div>
+                <div class="col-sm-1 btn-check1">
+                  <button id="contentsBtn" type="button" class="btn btn-inverse alert-prompt">검색</button>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label">* 보내는 사람</label>
+                <div class="col-sm-4">
+                  <input type="hidden" id="senderCheck"/>
+                  <input id="M_sender" type="text" class="form-control" placeholder="보내는 사람">
+                  <span class='messages'><p class='text-danger error'></p></span>
+                </div>
+                <div class="col-sm-1 btn-check2">
+                  <button id="contentsBtn" type="button" class="btn btn-inverse alert-prompt">검색</button>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label">* 받는 사람</label>
+                <div class="col-sm-4">
+                  <input type="hidden" id="recipiCheck"/>
+                  <input id="M_recipi" type="text" class="form-control" placeholder="받는 사람">
+                  <span class='messages'><p class='text-danger error'></p></span>
+                </div>
+                <div class="col-sm-1 btn-check3">
+                  <button id="contentsBtn" type="button" class="btn btn-inverse alert-prompt">검색</button>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label">* 키워드</label>
+                <div class="col-sm-5">
+                  <select id="M_keyword" name="select" class="col-sm-3 form-control form-control-inverse f-left m-r-10 m-b-10">
+                    <option value="0">선택</option>
+                  </select>
+                  <select id="M_mail_type" name="select" class="col-sm-3 form-control form-control-inverse f-left m-r-10 m-b-10">
+                    <option value="0">선택</option>
+                  </select>
+                  <span class='messages'><p class='text-danger error'></p></span>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label">* 메일제목</label>
+                <div class="col-sm-4">
+                  <input id="M_subject" type="text" class="form-control" placeholder="메일제목">
+                  <span class='messages'><p class='text-danger error'></p></span>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label">* 메일내용</label>
+                <div class="col-sm-4">
+                  <input id="M_body" type="text" class="form-control" placeholder="메일제목">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label">첨부파일</label>
+                <div class="form-group row">
+                  <div class="col-sm-9">
+                    <input type="file" id="M_file" class="form-control">
+                  </div>
+                  <div class="col-sm-3">
+                    <button id="insertBtn2" type="submit" class="btn btn-inverse m-b-0 p-b-10 p-t-10">등록</button>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label">* 발송형태</label>
+                <div id="type" class="form-radio">
+                  <div class="col-sm-12">
+                    <div class="radio radio-inline">
+                      <label>
+                        <input type="radio" value="0" name="M_type">
+                        <i class="helper"></i>즉시
+                      </label>
+                    </div>
+                    <div class="radio radio-inline">
+                      <label>
+                        <input type="radio" value="1" name="M_type">
+                        <i class="helper"></i>예약
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <label class="col-sm-2"></label>
+                <div class="col-sm-10">
+                    <button id="sendBtn" type="submit" class="btn btn-inverse m-b-0">등록</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sweetalert@2.1.0/dist/sweetalert.min.js"></script>
+<script type="text/javascript">
+  $("#sendBtn").on("click",function(){
+    swal({
+      title: "메일 보내시겠습니까?",
+      icon: "warning",
+      buttons: ["취소", true],
+      dangerMode: true,
+    })
+    .then((value) => {
+      if (value != null) {
+        var check=true;
+        var param = {
+          'CP_name': $('input[name=CP_name]').val(),
+          'CP_title': $("input[name=CP_title]").val(),
+          'CP_title_eng': $("input[name=CP_title_eng]").val(),
+          'OSP_id': $('input[name=OSP_id]').val(),
+          'K_method': $("input:radio[name=K_method]:checked").val(),
+          'K_apply': $("input:radio[name=K_apply]:checked").val(),
+          'delay_time': '0',
+          'CP_hash': '',
+          'CP_price': '0',
+          'keyword': $("input[name=CP_title]").val()
+        };
+        if($("#CP_name").val() == ""){
+          check = requiredMessage("CP_name","CP사명을 입력해주세요.");
+        }
+        if($("#CP_title").val() == ""){
+          check = requiredMessage("CP_title","대표제목를 입력해주세요.");
+        }
+        if($("input:radio[name=K_method]:checked").val() == ""){
+          check = requiredMessage("method","관리방법을 선택해주세요.");
+        }
+        if($("input:radio[name=K_apply]:checked").val() == ""){
+          check = requiredMessage("apply","관리현황을 선택해주세요.");
+        }
+        SendEmails(param);
+      }
+    });
+  });
+  function SendEmails(param){
+    if($("#delay_time").val() != ""){
+      param.delay_time = $("#delay_time").val();
+    }
+    if($("#CP_hash").val() != ""){
+      param.CP_hash = $("#CP_hash").val();
+    }
+    if($("#CP_price").val() != ""){
+      param.CP_price = $("#CP_price").val();
+    }
+    if($("#keyword").val() != ""){
+      param.keyword = $("#keyword").val();
+    }
+    $.ajax({
+      url: './add',
+      type: 'post',
+      data : param,
+      datatype : 'json',
+      error:function(request,status,error){
+        console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
+        swal("ERROR!", "메일발송 실패했습니다. 다시 시도해주세요.", "error");
+        // alert(request.responseText);
+      },
+      success:function(data){
+        swal("SUCCESS!", "메일발송 성공했습니다.", "success");
+        // alert('등록되었습니다.');
+        window.location.reload();
+      }
+    });
+  }
+
+  $("input, select").on("focus",function(){
+    $(this).removeClass("form-control-danger");
+    $(this).siblings().children("p").text("");
+  });
+
+  function requiredMessage(target,msg){
+    $("#"+target).siblings().children().text(msg);
+    $("#"+target).addClass("form-control-danger");
+    return false;
+  }
+
+  $("#insertBtn2").on("click",function(){
+    if($('input[type=file]').val()==""){
+      alert('파일을 선택해주세요.');
+      return false;
+    }
+    $("#uploadFrm").submit();
+  });
+</script>
