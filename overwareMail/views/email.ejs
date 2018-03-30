@@ -139,7 +139,12 @@
     $('#M_body').summernote({
       lang: 'ko-KR',
       tabsize: 2,
-      height: 300
+      height: 300,
+      callbacks: {
+        onImageUpload : function(file, editor, welEditable) {
+          saveImgFile(file[0], editor, welEditable);
+        }
+      }
     });
     $('#M_file').filer({
   		showThumbs: true,
@@ -147,6 +152,23 @@
   		allowDuplicates: false
   	});
   });
+  function saveImgFile(file){
+    console.log('saveImgFile:',file);
+    data = new FormData();
+    data.append("file", file);
+    $.ajax({
+      type: "POST",
+      url: "/email/send/img",
+      data: data,
+      cache: false,
+      contentType : false,
+      processData : false,
+      success: function(data) {
+        console.log('success:',data);
+        $('#M_body').summernote('insertImage', '/uploads/'+data);
+      }
+    });
+  }
   $("#sendBtn").on("click",function(){
     swal({
       title: "메일 보내시겠습니까?",
@@ -192,6 +214,7 @@
         if(param["M_type"] == ""){
           check = requiredMessage("M_type","발송타입을 선택해주세요.");
         }
+        console.log(param);
         SendEmails(param);
       }
     });
@@ -213,7 +236,7 @@
       },
       success:function(data){
         swal("SUCCESS!", "메일발송 성공했습니다.", "success");
-        window.location.reload();
+        // window.location.reload();
       }
     });
   }
