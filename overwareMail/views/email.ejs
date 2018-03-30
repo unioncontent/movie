@@ -67,21 +67,21 @@
               </div>
               <div class="form-group row">
                 <label class="col-sm-2 col-form-label">* 메일제목</label>
-                <div class="col-sm-4">
+                <div class="col-sm-7">
                   <input id="M_subject" type="text" class="form-control" placeholder="메일제목">
                   <span class='messages'><p class='text-danger error'></p></span>
                 </div>
               </div>
               <div class="form-group row">
                 <label class="col-sm-2 col-form-label">* 메일내용</label>
-                <div class="col-sm-4">
-                  <input id="M_body" type="text" class="form-control" placeholder="메일제목">
+                <div class="col-sm-7">
+                  <div id="M_body"></div>
                 </div>
               </div>
               <div class="form-group row">
                 <label class="col-sm-2 col-form-label">첨부파일</label>
                 <div class="col-sm-4">
-                  <input type="file" id="M_file" class="form-control">
+                  <input type="file" id="M_file" name="files[]" multiple="multiple" class="form-control">
                 </div>
                 <div class="col-sm-1">
                   <button id="insertBtn2" type="submit" class="btn btn-inverse m-b-0 p-b-10 p-t-10">등록</button>
@@ -119,8 +119,34 @@
     </div>
   </div>
 </div>
+<!-- filer -->
+<link rel="stylesheet" type="text/css" href="/css/jquery.filer.css">
+<script type="text/javascript" src="/js/jquery.filer.min.js"></script>
+<!-- editor -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-lite.css" rel="stylesheet">
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-lite.js"></script>
+<script type="text/javascript" src="/js/summernote-ko-KR.js"></script>
+<!-- alert -->
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sweetalert@2.1.0/dist/sweetalert.min.js"></script>
+<style>
+  .dropdown-toggle::after{
+    display: none;
+  }
+</style>
 <script type="text/javascript">
+  $(document).ready(function() {
+    $('#M_body').summernote({
+      lang: 'ko-KR',
+      tabsize: 2,
+      height: 300
+    });
+    $('#M_file').filer({
+  		showThumbs: true,
+  		addMore: true,
+  		allowDuplicates: false
+  	});
+  });
   $("#sendBtn").on("click",function(){
     swal({
       title: "메일 보내시겠습니까?",
@@ -132,59 +158,61 @@
       if (value != null) {
         var check=true;
         var param = {
-          'CP_name': $('input[name=CP_name]').val(),
-          'CP_title': $("input[name=CP_title]").val(),
-          'CP_title_eng': $("input[name=CP_title_eng]").val(),
-          'OSP_id': $('input[name=OSP_id]').val(),
-          'K_method': $("input:radio[name=K_method]:checked").val(),
-          'K_apply': $("input:radio[name=K_apply]:checked").val(),
-          'delay_time': '0',
-          'CP_hash': '',
-          'CP_price': '0',
-          'keyword': $("input[name=CP_title]").val()
+          'M_group': $('#M_group').val(),
+          'M_sender': $("#M_sender").val(),
+          'M_recipi': $("#M_recipi").val(),
+          'M_keyword': $("#M_keyword option:selected").val(),
+          'M_mail_type': $("#M_mail_type option:selected").val(),
+          'M_subject': $("#M_subject").val(),
+          'M_body': $("#M_body").summernote('code'),
+          'M_file': $("#M_file").val(),
+          'M_type': $("input:radio[name=M_type]:checked").val(),
         };
-        if($("#CP_name").val() == ""){
-          check = requiredMessage("CP_name","CP사명을 입력해주세요.");
+        if(param["M_group"] == ""){
+          check = requiredMessage("M_group","수신그룹을 입력해주세요.");
         }
-        if($("#CP_title").val() == ""){
-          check = requiredMessage("CP_title","대표제목를 입력해주세요.");
+        if(param["M_sender"] == ""){
+          check = requiredMessage("M_sender","보내는 사람를 입력해주세요.");
         }
-        if($("input:radio[name=K_method]:checked").val() == ""){
-          check = requiredMessage("method","관리방법을 선택해주세요.");
+        if(param["M_recipi"] == ""){
+          check = requiredMessage("M_recipi","받는사람을 입력해주세요.");
         }
-        if($("input:radio[name=K_apply]:checked").val() == ""){
-          check = requiredMessage("apply","관리현황을 선택해주세요.");
+        if(param["M_keyword"] == ""){
+          check = requiredMessage("M_keyword","키워드를 선택해주세요.");
+        }
+        if(param["M_mail_type"] == ""){
+          check = requiredMessage("M_mail_type","메일타입을 선택해주세요.");
+        }
+        if(param["M_subject"] == ""){
+          check = requiredMessage("M_subject","메일제목을 입력해주세요.");
+        }
+        if(param["M_body"] == ""){
+          check = requiredMessage("M_body","메일내용 입력해주세요.");
+        }
+        if(param["M_type"] == ""){
+          check = requiredMessage("M_type","발송타입을 선택해주세요.");
         }
         SendEmails(param);
       }
     });
   });
+  function requiredMessage(target,msg){
+    $("#"+target).siblings().children().text(msg);
+    $("#"+target).addClass("form-control-danger");
+    return false;
+  }
   function SendEmails(param){
-    if($("#delay_time").val() != ""){
-      param.delay_time = $("#delay_time").val();
-    }
-    if($("#CP_hash").val() != ""){
-      param.CP_hash = $("#CP_hash").val();
-    }
-    if($("#CP_price").val() != ""){
-      param.CP_price = $("#CP_price").val();
-    }
-    if($("#keyword").val() != ""){
-      param.keyword = $("#keyword").val();
-    }
     $.ajax({
-      url: './add',
+      url: '/email/send',
       type: 'post',
       data : param,
       datatype : 'json',
       error:function(request,status,error){
         console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
         swal("ERROR!", "메일발송 실패했습니다. 다시 시도해주세요.", "error");
-        // alert(request.responseText);
       },
       success:function(data){
         swal("SUCCESS!", "메일발송 성공했습니다.", "success");
-        // alert('등록되었습니다.');
         window.location.reload();
       }
     });
@@ -195,11 +223,6 @@
     $(this).siblings().children("p").text("");
   });
 
-  function requiredMessage(target,msg){
-    $("#"+target).siblings().children().text(msg);
-    $("#"+target).addClass("form-control-danger");
-    return false;
-  }
 
   $("#insertBtn2").on("click",function(){
     if($('input[type=file]').val()==""){

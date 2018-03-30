@@ -1,39 +1,87 @@
 var express = require('express');
+var request = require('request');
+var urlencode = require('urlencode');
+var Iconv = require('iconv').Iconv;
 var router = express.Router();
 
-/* GET home page. */
 router.get('/', function(req, res, next) {
-  var iconv = require('iconv-lite');
-  iconv.extendNodeEncodings();
-  var request = require('request');
+  res.render('email');
+});
+
+/* 메일나라 'https://directsend.co.kr/index.php/api/v2/mail'
+ * 필수 파라미터
+ * subject  : 받을 mail 제목. "utf-8" => "euc-kr"
+ * body  : 받을 mail 본문. "utf-8" => "euc-kr"
+ * sender : 발송자 메일주소
+ * sender_name : 발송자 이름
+ * username : directsend 발급 ID
+ * recipients : 발송 할 고객 이메일 , 로 구분함. ex) aaa@naver.com,bbb@nate.com (공백제거해서 입력)
+ * key : directsend 발급 api key
+ *
+ * 메일 발송결과를 받고 싶은 URL
+ * return_url : 실제 발송결과를 return 받을 URL
+ * unique_id :지정한 고유한 값으로 결과를 받고 싶은 경우 사용
+ *
+ * 발송결과 측정 항목을 사용할 경우
+ * open : 발송측정결과 open값
+ * click : 발송측정결과 click값
+ * check_period : 트래킹 기간을 지정하며 3 / 7 / 15 / 30 일을 기준으로 지정하여 발송
+ * option_return_url : 위의 측정 결과를 받고 싶은 URL 을 넣어줍니다. ex) http://domain?type=[click | open | reject]&mail_id=[MailID]&email=[Email]
+ *
+ * 예약 관련 파라미터 사용할 경우
+ * mail_type : 즉시발송 / 예약 발송을 구분합니다. NORMAL - 즉시발송 / ONETIME - 1회예약 / WEEKLY - 매주정기예약 / MONTHLY - 매월정기예약 / YEARLY - 매년정기예약
+ * start_reserve_time : 예약시작시간('Y-m-d H:i:s')을 넣어줍니다.
+ * end_reserve_time : 예약종료시간('Y-m-d H:i:s')을 넣어줍니다. 1회 예약일경우 start_reserve_time=end_reserve_time
+ * remained_count : 예약 기간동안 발송 횟수를 넣어줍니다
+ WEEKLY | MONTHLY | YEARLY 일 경우에 시작 시간부터 끝나는 시간까지 발송되는 횟수 Ex) type = WEEKLY, start_reserve_time = '2017-05-17 13:00:00', end_reserve_time = '2017-05-24 13:00:00' 이면 remained_count = 2
+ *
+ * 필수 안내문구를 추가할 경우
+ * agreement_text : 수신동의 문구를 넣어줍니다.
+ * deny_text : 수신거부 문구를 넣어줍니다.
+ * sender_info_text : 발신자 정보 문구를 넣어줍니다.
+ * logo_state : Logo 를 사용할 때 1 / 사용하지 않을 때 0
+ * logo_path : 로고 이미지 경로 ( Logo_state 는 1 일 때 path 가 없으면 DirectSend 에
+  등록된 이미지 사용)
+ *
+ * 첨부파일이 있는 경우
+ * file_url : 파일을 download 받아 발송처리를 진행합니다. 파일은 개당5MB 이하로 발송을 해야 하며, 파일의 구분자는 '|(shift+\)'로 사용하며 5개까지만 첨부가 가능 ex) 'http://domain/test.png|http://domain/test1.png'
+ * file_path : 첨부파일을 보내고 싶을 때 파일의 경로 (접근이 가능 해야합니다.)
+ * 순차적(http://domain/test.png - image.png, http://domain/test1.png - image2.png) 와 같이 적용
+ *
+ * 메일 내용 텍스트로 보내실 경우
+ * bodytag = 1
+ */
+
+router.post('/send', function(req, res, next) {
+  console.log('mail send : ',req.body);
+
+  var euckr2utf8 = new Iconv('EUC-KR', 'UTF-8');
+  var utf82euckr = new Iconv('UTF-8', 'EUC-KR');
+  var encoded = new Buffer(utf82euckr.convert('메일테스트중')).toString('base64');
+
   var param = {
-    'subject': iconv.encode('메일테스트중', 'euc-kr'),
-    'body':iconv.encode('메일테스트중', 'euc-kr'),
-    'sender':'smb1457@naver.com',
-    'recipients':'smb1457@naver.com,smb1457@daum.net', //공백제거필수
-    'username':'unionc',
-    'key':'w4EzdnbOY3oypxO'
+    'subject': urlencode(encoded),
+    'body': urlencode(encoded),
+    'sender': urlencode('smb1457@naver.com'),
+    'username': urlencode('unionc'),
+    'recipients': urlencode('smb1457@naver.com,smb1457@daum.net'),
+    'key': urlencode('w4EzdnbOY3oypxO')
   };
-  // var url = 'https://directsend.co.kr/index.php/api/v2/mail?subject=메일테스트중&body=메일테스트중&sender=smb1457@naver.com&recipients=smb1457@naver.com,smb1457@daum.net&username=unionc&key=w4EzdnbOY3oypxO';
+  // var url = 'https://directsend.co.kr/index.php/api/v2/mail?
+  var paramStr = 'subject='+param['subject']+'&body='+param['body']+'&sender='+param['sender']+'&recipients='+param['recipients']+'&username='+param['username']+'&key='+param['key'];
 
   // 요청 세부 내용
   var options = {
     url: 'https://directsend.co.kr/index.php/api/v2/mail',
     method:'POST',
     headers: {'Content-Type': 'application/x-www-form-urlencoded;'},
-    from: param,
-    encoding: null
+    body: paramStr
   }
-  request(options,
-    function (error, response, body) {
-      console.log(response)
-      // console.log(error, response, body);
-      var strContents = new Buffer(body);
-      console.log(iconv.decode(strContents, 'EUC-KR').toString());
-    }
-  );
-  iconv.undoExtendNodeEncodings();
-  res.render('email');
+  // request(options,
+  //   function (error, response, body) {
+  //     console.log(body);
+  //   }
+  // );
+  res.send(true);
 });
-
 module.exports = router;
