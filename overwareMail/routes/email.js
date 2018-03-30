@@ -4,7 +4,7 @@ var urlencode = require('urlencode');
 var Iconv = require('iconv').Iconv;
 var router = express.Router();
 
-router.get('/', function(req, res, next) {
+router.get('/', function(req, res) {
   res.render('email');
 });
 
@@ -52,16 +52,14 @@ router.get('/', function(req, res, next) {
  * bodytag = 1
  */
 
-router.post('/send', function(req, res, next) {
+router.post('/send', function(req, res) {
   console.log('mail send : ',req.body);
-
   var euckr2utf8 = new Iconv('EUC-KR', 'UTF-8');
   var utf82euckr = new Iconv('UTF-8', 'EUC-KR');
-  var encoded = new Buffer(utf82euckr.convert('메일테스트중')).toString('base64');
 
   var param = {
-    'subject': urlencode(encoded),
-    'body': urlencode(encoded),
+    'subject': urlencode(new Buffer(utf82euckr.convert(req.body.M_subject)).toString('base64')),
+    'body': urlencode(new Buffer(utf82euckr.convert(req.body.M_body)).toString('base64')),
     'sender': urlencode('smb1457@naver.com'),
     'username': urlencode('unionc'),
     'recipients': urlencode('smb1457@naver.com,smb1457@daum.net'),
@@ -69,7 +67,7 @@ router.post('/send', function(req, res, next) {
   };
   // var url = 'https://directsend.co.kr/index.php/api/v2/mail?
   var paramStr = 'subject='+param['subject']+'&body='+param['body']+'&sender='+param['sender']+'&recipients='+param['recipients']+'&username='+param['username']+'&key='+param['key'];
-
+  console.log(paramStr);
   // 요청 세부 내용
   var options = {
     url: 'https://directsend.co.kr/index.php/api/v2/mail',
@@ -77,11 +75,31 @@ router.post('/send', function(req, res, next) {
     headers: {'Content-Type': 'application/x-www-form-urlencoded;'},
     body: paramStr
   }
-  // request(options,
-  //   function (error, response, body) {
-  //     console.log(body);
-  //   }
-  // );
-  res.send(true);
+  request(options,
+    function (error, response, body) {
+      console.log(body);
+      res.send(true);
+    }
+  );
 });
+var multer = require('multer');
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'public/uploads/') // cb 콜백함수를 통해 전송된 파일 저장 디렉토리 설정
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname) // cb 콜백함수를 통해 전송된 파일 이름 설정
+  }
+});
+var upload = multer({ storage: storage });
+router.post('/send/img',upload.single('file'),function(req, res) {
+  console.log('/send/img');
+  console.log(req.file);
+  if (!req.file) {
+    console.log("No file passed");
+    return res.status(500).send("No file passed");
+  }
+  res.send(req.file.filename);
+});
+
 module.exports = router;
