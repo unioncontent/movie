@@ -71,6 +71,7 @@ public class PortalServiceImpl implements PortalService {
 				vo.setDomain("portal");
 				vo.setDomainType(data.getPortal_name());
 				vo.setTitle(data.getPortal_title());
+				vo.setContent(data.getPortal_content());
 				vo.setKeyword(data.getKeyword());
 				vo.setUrl(data.getUrl());
 				vo.setCreateDate(date.format(data.getCreateDate()));
@@ -317,6 +318,12 @@ public class PortalServiceImpl implements PortalService {
 	public List<PortalVO> getScoreList(SearchCriteria cri) {
 
 		return portalDAO.getScoreList(cri);
+	}
+	
+	@Override
+	public List<PortalVO> getScoreExcelList(SearchCriteria cri) {
+
+		return portalDAO.getScoreExcelList(cri);
 	}
 
 	@Override

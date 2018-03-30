@@ -23,6 +23,7 @@ public interface PortalService {
 	
 	public Integer getScoreCount(SearchCriteria cri);
 	public List<PortalVO> getScoreList(SearchCriteria cri);
+	public List<PortalVO> getScoreExcelList(SearchCriteria cri);
 	public TextTypeVO getScoreTextType(SearchCriteria cri);
 	public Integer getOnlyScore(SearchCriteria cri);
 	public List<PortalVO> wPageSearch(SearchCriteria cri);

@@ -957,6 +957,8 @@ public class PortalController {
 	PageMaker pageMaker = new PageMaker();
 
 	Integer totalCount = portalService.getScoreCount(cri);
+	
+	logger.info("totalCount: " + totalCount);
 
 	pageMaker.setCri(cri);
 	pageMaker.setTotalCount(totalCount);
@@ -1074,4 +1076,66 @@ public class PortalController {
 
 	return model;
     }
+    
+    @ResponseBody
+	@GetMapping("/excelOk")
+	public ModelAndView scoreExcelGET(ModelAndView model, ExcelView excelView, SearchCriteria cri) {
+		
+    	logger.info("excelGET called....");
+
+    	if(cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey()) ) {
+			logger.info("selectKey is null");
+			cri.setSelectKey(null);
+		}
+		
+		if("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate())
+				|| cri.getStartDate() == "" || cri.getEndDate() == ""){
+			cri.setStartDate(null);
+			cri.setEndDate(null);
+		
+		} 
+		if(cri.getStartDate() != null && cri.getEndDate() != null) {
+			logger.info("not null");
+			logger.info(cri.getStartDate());
+			logger.info(cri.getEndDate());
+			if(cri.getStartDate().indexOf("00:00:00") < 0 && cri.getEndDate().indexOf("23:59:59") < 0){ 
+				cri.setStartDate(cri.getStartDate() + " 00:00:00"); 
+				cri.setEndDate(cri.getEndDate() + " 23:59:59"); 
+			}
+		}
+		if(cri.getCompany() != null) {
+			if(cri.getCompany().isEmpty()) {
+				cri.setCompany(null);
+			}
+		}
+		
+		if(cri.getCompany() == null || cri.getCompany().equals("회사")) {
+			logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+			UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
+			
+			if(!vo.getUser_name().equals("union")) {
+			cri.setCompany(vo.getUser_name());
+			
+			}else {
+				cri.setCompany(null);
+			}
+		}
+		if(cri.getTextType() != null) {
+			if(cri.getTextType().equals("undefined") || cri.getTextType().equals("분류") || cri.getTextType().isEmpty()) {
+				cri.setTextType(null);
+			}
+		}
+		
+		logger.info("cri: " + cri);
+		logger.info("perPageNum: " + cri.getPerPageNum());
+		logger.info("getStartPage: " + cri.getStartPage());
+		ListUtil util = new ListUtil();
+		List<ExtractVO> extractList = new ArrayList<ExtractVO>();
+		
+		model.addObject("list", util.listAddPortalList(extractList, portalService.getScoreExcelList(cri)));
+		//model.addObject("type", "news");
+		model.setView(excelView);
+		
+		return model;
+	}
 }

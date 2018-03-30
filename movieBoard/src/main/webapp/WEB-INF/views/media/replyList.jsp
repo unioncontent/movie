@@ -227,7 +227,7 @@
                                             	<fmt:formatNumber value="${NewsVO.replycnt}" groupingUsed="true"/>건
                                             </td>
                                             <td>
-                                            	<fmt:formatDate value="${NewsVO.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" />
+                                            	<fmt:formatDate value="${NewsVO.createDate}" type="DATE" pattern="yyyy-MM-dd HH:mm:ss" />
                                             	/<br>
                                             	${NewsVO.writeDate}
                                             </td>

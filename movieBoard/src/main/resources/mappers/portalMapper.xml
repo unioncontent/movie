@@ -617,6 +617,18 @@
 			#{startPage}, #{perPageNum}
  	
  	</select>
+ 	
+ 	<select id="getScoreExcelList" resultType="PortalVO">
+ 		select 
+			*
+		from 
+			portal_data
+		where 
+			portal_type = 'score'
+		<include refid="search_writeDate"></include>
+		order 
+			by updateDate desc
+ 	</select>
 
 	<select id="getScoreCount" resultType="Integer">
  		select 

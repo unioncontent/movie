@@ -413,3 +413,9 @@ Main Components
         transform: translateX(0%);
     }
 }
+.title-nowrap{
+  width: 100px;
+  margin:0 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

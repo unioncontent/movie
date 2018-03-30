@@ -404,7 +404,6 @@
 				                                                                                           일일 <${selectKey}> 버즈량 변동 현황
 				                                    </h5>
 				                                    <div class="card-header-right">
-				                                      <i class="icofont icofont-rounded-down"></i>
 				                                      <i class="icofont icofont-refresh"></i>
 				                                    </div>
 				                                  </div>

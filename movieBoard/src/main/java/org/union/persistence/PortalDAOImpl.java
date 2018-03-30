@@ -315,6 +315,12 @@ public class PortalDAOImpl implements PortalDAO {
 
 		return session.selectList(namespace + "getScoreList", cri);
 	}
+	
+	@Override
+	public List<PortalVO> getScoreExcelList(SearchCriteria cri) {
+
+		return session.selectList(namespace + "getScoreExcelList", cri);
+	}
 
 
 	@Override
@@ -322,7 +328,6 @@ public class PortalDAOImpl implements PortalDAO {
 
 		return session.selectOne(namespace + "getScoreTextType", cri);
 	}
-
 
 	@Override
 	public List<Integer> getOnlyScore(SearchCriteria cri) {
@@ -343,5 +348,8 @@ public class PortalDAOImpl implements PortalDAO {
 
 		return session.selectList(namespace + "allPage", cri);
 	}
+
+
+	
 
 }

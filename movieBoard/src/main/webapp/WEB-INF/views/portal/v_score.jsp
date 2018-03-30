@@ -357,6 +357,9 @@
                                 <div class="card">
                                   <div class="card-header">
                                     <h5>평점 관리 리스트</h5>
+                                    <div style="position:relative; left:5px;">
+			                        	<button class="btn btn-warning alert-excel f-right"><i class="icofont icofont-download-alt"></i>EXCEL</button>
+			                        </div>
                                   </div>
                                   <div class="card-block table-border-style">
                                     <div class="table-responsive">
@@ -654,6 +657,31 @@
 
 			   searchList();
 
+		});
+		
+		//엑셀출력 확인메시지
+		$(document).on("click",".alert-excel",function(){
+	  	swal({
+	        title: "엑셀출력 하시겠습니까?",
+	        text: "현재 리스트가 엑셀출력 됩니다.",
+	        type: "warning",
+	        showCancelButton: true,
+	        confirmButtonClass: "btn-danger",
+	        confirmButtonText: "YES",
+	        closeOnConfirm: false
+	      },
+	      function(){//엑셀 출력하겠다고 할 시 진행 함수
+
+	    	  self.location = "excelOk?"+
+			  + "&company=" + $("#selectCompany option:selected").val()
+			  + "&selectKey=" + $('#selectKeyword option:selected').val()
+			  + "&startDate=" + makeDateFormat($("#fromDate").val(), 0)
+		  	  + "&endDate=" +  makeDateFormat($("#fromDate").val(), 1);
+
+
+		  		swal("Success!", "엑셀출력 되었습니다.", "success");
+
+	      });
 		});
 
 	}); // end ready...

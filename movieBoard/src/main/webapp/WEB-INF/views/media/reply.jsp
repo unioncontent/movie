@@ -257,7 +257,7 @@
                                             	</div>
                                             </td>
                                             <td>
-                                            	<fmt:formatDate value="${ReplyVO.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" />
+                                            	<fmt:formatDate value="${ReplyVO.createDate}" type="DATE" pattern="yyyy-MM-dd HH:mm:ss" />
                                             	/<br>
                                             	${ReplyVO.writeDate}
                                             </td>
@@ -709,7 +709,7 @@ $(document).ready(function(){
 
 	//엑셀출력 확인메시지
 	$(document).on("click",".alert-excel",function(){
-  swal({
+  	swal({
         title: "엑셀출력 하시겠습니까?",
         text: "현재 리스트가 엑셀출력 됩니다.",
         type: "warning",

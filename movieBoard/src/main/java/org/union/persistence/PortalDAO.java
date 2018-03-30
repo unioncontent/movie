@@ -22,6 +22,7 @@ public interface PortalDAO {
 	
 	public Integer getScoreCount(SearchCriteria cri);
 	public List<PortalVO> getScoreList(SearchCriteria cri);
+	public List<PortalVO> getScoreExcelList(SearchCriteria cri);
 	public TextTypeVO getScoreTextType(SearchCriteria cri);
 	public List<Integer> getOnlyScore(SearchCriteria cri);
 	
