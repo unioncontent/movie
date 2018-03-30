@@ -165,7 +165,7 @@
       processData : false,
       success: function(data) {
         console.log('success:',data);
-        $('#M_body').summernote('insertImage', '/uploads/'+data);
+        $('#M_body').summernote('insertImage', 'http://localhost:3000//uploads/'+data);
       }
     });
   }
