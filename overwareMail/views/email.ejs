@@ -80,11 +80,8 @@
               </div>
               <div class="form-group row">
                 <label class="col-sm-2 col-form-label">첨부파일</label>
-                <div class="col-sm-4">
+                <div class="col-sm-5">
                   <input type="file" id="M_file" name="files[]" multiple="multiple" class="form-control">
-                </div>
-                <div class="col-sm-1">
-                  <button id="insertBtn2" type="submit" class="btn btn-inverse m-b-0 p-b-10 p-t-10">등록</button>
                 </div>
               </div>
               <div class="form-group row">
@@ -93,7 +90,7 @@
                   <div class="col-sm-12">
                     <div class="radio radio-inline">
                       <label>
-                        <input type="radio" value="0" name="M_type">
+                        <input type="radio" value="0" name="M_type" checked>
                         <i class="helper"></i>즉시
                       </label>
                     </div>
@@ -133,6 +130,18 @@
   .dropdown-toggle::after{
     display: none;
   }
+  .note-editor .note-editing-area .note-editable table td,
+  .note-editor .note-editing-area .note-editable table th{
+    border: 1px solid #252525;
+  }
+  .jFiler-theme-default .jFiler-input {
+    width: 100%;
+    height: 41px;
+  }
+  .jFiler-theme-default .jFiler-input-caption,
+  .jFiler-theme-default .jFiler-input-button{
+    padding-top: 10px;
+  }
 </style>
 <script type="text/javascript">
   $(document).ready(function() {
@@ -140,17 +149,82 @@
       lang: 'ko-KR',
       tabsize: 2,
       height: 300,
+      toolbar: [
+        ['style', ['style']],
+        ['style', ['bold', 'italic', 'underline', 'clear']],
+        ['font', ['fontname']],
+        ['fontsize', ['fontsize']],
+        ['height', ['height']],
+        ['color', ['color']],
+        ['para', ['ul', 'ol', 'paragraph']],
+        ['table', ['table']],
+        ['insert', ['picture','link']],
+        ['Misc',['fullscreen','codeview','help']]
+      ],
       callbacks: {
         onImageUpload : function(file, editor, welEditable) {
           saveImgFile(file[0], editor, welEditable);
         }
       }
     });
+    // $('#M_file').filer({
+  	// 	showThumbs: true,
+  	// 	addMore: true,
+  	// 	allowDuplicates: false
+  	// });
     $('#M_file').filer({
-  		showThumbs: true,
-  		addMore: true,
-  		allowDuplicates: false
-  	});
+      limit: '5',
+      maxSize: '10',
+      changeInput: true,
+      showThumbs: true,
+      uploadFile: {
+        url: "/email/send/files",
+        data: {},
+        type: 'POST',
+        enctype: 'multipart/form-data',
+        beforeSend: function(){},
+        success: function(data, el){
+          var parent = el.find(".jFiler-jProgressBar").parent();
+          el.find(".jFiler-jProgressBar").fadeOut("slow", function(){
+            $("<div class=\"jFiler-item-others text-success\"><i class=\"icon-jfi-check-circle\"></i> Success</div>").hide().appendTo(parent).fadeIn("slow");
+          });
+        },
+        error: function(el){
+          var parent = el.find(".jFiler-jProgressBar").parent();
+          el.find(".jFiler-jProgressBar").fadeOut("slow", function(){
+            $("<div class=\"jFiler-item-others text-error\"><i class=\"icon-jfi-minus-circle\"></i> Error</div>").hide().appendTo(parent).fadeIn("slow");
+          });
+        },
+        statusCode: {},
+        onProgress: function(){},
+      },
+      dragDrop: {
+        dragEnter: null,
+        dragLeave: null,
+        drop: null,
+      },
+      addMore: true,
+      clipBoardPaste: true,
+      excludeName: null,
+      beforeShow: function(){return true},
+      onSelect: function(){},
+      afterShow: function(){},
+      onRemove: function(){},
+      onEmpty: function(){},
+      captions: {
+        button: "등록",
+        feedback: "첨부할 파일을 선택해주세요.",
+        feedback2: "파일이 선택되었습니다.",
+        // drop: "Drop file here to Upload",
+        removeConfirmation: "이 파일을 제거 하시겠습니까??",
+        errors: {
+          filesLimit: "{{fi-limit}} 개의 파일만 업로드 할 수 있습니다.",
+          // filesType: "Only Images are allowed to be uploaded.",
+          filesSize: "{{fi-name}} 이 너무 큽니다! 파일은 최대 {{fi-maxSize}} MB까지 첨부 가능합니다.",
+          filesSizeAll: "선택하신 파일이 너무 큽니다! 첨부파일의 전체 합 {{fi-maxSize}} MB까지 첨부 가능합니다."
+        }
+      }
+    });
   });
   function saveImgFile(file){
     console.log('saveImgFile:',file);
@@ -169,6 +243,9 @@
       }
     });
   }
+  $(document).on("click",".jFiler-item-trash-action",function(){
+    console.log($(this));
+  });
   $("#sendBtn").on("click",function(){
     swal({
       title: "메일 보내시겠습니까?",
@@ -240,13 +317,10 @@
       }
     });
   }
-
   $("input, select").on("focus",function(){
     $(this).removeClass("form-control-danger");
     $(this).siblings().children("p").text("");
   });
-
-
   $("#insertBtn2").on("click",function(){
     if($('input[type=file]').val()==""){
       alert('파일을 선택해주세요.');
