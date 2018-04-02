@@ -48,6 +48,69 @@
                     </tr>
                   </thead>
                   <tbody>
+                    <tr>
+                      <th>2018-04-01</th>
+                      <td>곤지암</td>
+                      <td><곤지암> 체험공포란 이런 것!</td>
+                      <td>25</td>
+                      <td>25</td>
+                      <td>0</td>
+                      <td>즉시</td>
+                    </tr>
+                    <tr>
+                      <th>2018-03-31</th>
+                      <td>곤지암</td>
+                      <td><곤지암> 체험공포란 이런 것!</td>
+                      <td>25</td>
+                      <td>25</td>
+                      <td>0</td>
+                      <td>즉시</td>
+                    </tr>
+                    <tr>
+                      <th>2018-03-30</th>
+                      <td>곤지암</td>
+                      <td><곤지암> 체험공포란 이런 것!</td>
+                      <td>25</td>
+                      <td>25</td>
+                      <td>0</td>
+                      <td>즉시</td>
+                    </tr>
+                    <tr>
+                      <th>2018-03-29</th>
+                      <td>곤지암</td>
+                      <td><곤지암> 체험공포란 이런 것!</td>
+                      <td>25</td>
+                      <td>25</td>
+                      <td>0</td>
+                      <td>즉시</td>
+                    </tr>
+                    <tr>
+                      <th>2018-03-28</th>
+                      <td>곤지암</td>
+                      <td><곤지암> 체험공포란 이런 것!</td>
+                      <td>25</td>
+                      <td>25</td>
+                      <td>0</td>
+                      <td>즉시</td>
+                    </tr>
+                    <tr>
+                      <th>2018-03-27</th>
+                      <td>곤지암</td>
+                      <td><곤지암> 체험공포란 이런 것!</td>
+                      <td>25</td>
+                      <td>25</td>
+                      <td>0</td>
+                      <td>즉시</td>
+                    </tr>
+                    <tr>
+                      <th>2018-03-26</th>
+                      <td>곤지암</td>
+                      <td><곤지암> 체험공포란 이런 것!</td>
+                      <td>25</td>
+                      <td>25</td>
+                      <td>0</td>
+                      <td>즉시</td>
+                    </tr>
                   </tbody>
                 </table>
               </div>
@@ -69,48 +132,74 @@
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
 
 <script type="text/javascript">
-// $(window).resize(function(){
-//   window.areaChart.redraw();
-// });
-//
-// $(document).ready(function(){
-//   areaChart();
-// });
-//
-// function areaChart(){
-//   $.ajax({
-//     url: '../get7DayDataList',
-//     type: 'post',
-//     datatype : 'json',
-//     error:function(request,status,error){
-//       console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
-//     },
-//     success:function(data){
-//       var arr = [];
-//       if(data){
-//         data.forEach(function(item,idx){
-//           arr.push({'date':item.date,'t':item.tTotal,'d':item.dTotal,'p':item.pTotal});
-//         });
-//       }
-//       else{
-//         arr.push({'date':0,'t':0,'d':0,'p':0});
-//       }
-//
-//       window.areaChart = Morris.Area({
-//         element: '7DayGraph',
-//         data: arr,
-//         lineColors: ['#1abc9c', '#e74c3c', '#4099FF'],
-//         xkey: 'date',
-//         ykeys: ['t', 'd', 'p'],
-//         labels: ['제휴', '삭제', '보류'],
-//         pointSize: 0,
-//         lineWidth: 0,
-//         resize: true,
-//         fillOpacity: 0.8,
-//         behaveLikeLine: true,
-//         hideHover: 'auto'
-//       });
-//     }
-//   });
-// }
+$(window).resize(function(){
+  window.areaChart.redraw();
+});
+
+$(document).ready(function(){
+  // areaChart();
+  window.areaChart = Morris.Area({
+    element: '7DayGraph',
+    data: [
+      {"date":"2018-03-26","l1":50,"l2":100,"l3":0},
+      {"date":"2018-03-27","l1":30,"l2":50,"l3":0},
+      {"date":"2018-03-28","l1":7,"l2":10,"l3":0},
+      {"date":"2018-03-29","l1":5,"l2":10,"l3":0},
+      {"date":"2018-03-30","l1":15,"l2":20,"l3":0},
+      {"date":"2018-03-31","l1":50,"l2":15,"l3":0},
+      {"date":"2018-04-01","l1":11,"l2":10,"l3":0},
+      {"date":"2018-04-02","l1":20,"l2":5,"l3":10},
+      {"date":"2018-04-03","l1":0,"l2":0,"l3":0}
+    ],
+    lineColors: ['#1abc9c', '#4099FF', '#e74c3c'],
+    xkey: 'date',
+    xLabels: 'day',
+    ykeys: ['l1', 'l2', 'l3'],
+    labels: ['즉시', '예약', '예약(미발송)'],
+    pointSize: 0,
+    lineWidth: 0,
+    resize: true,
+    fillOpacity: 0.8,
+    behaveLikeLine: true,
+    hideHover: 'auto'
+  });
+});
+
+function areaChart(){
+  $.ajax({
+    url: '../get7DayDataList',
+    type: 'post',
+    datatype : 'json',
+    error:function(request,status,error){
+      console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
+    },
+    success:function(data){
+      var arr = [];
+      if(data){
+        data.forEach(function(item,idx){
+          arr.push({'date':item.date,'t':item.tTotal,'d':item.dTotal,'p':item.pTotal});
+        });
+      }
+      else{
+        arr.push({'date':0,'t':0,'d':0,'p':0});
+      }
+
+      window.areaChart = Morris.Area({
+        element: '7DayGraph',
+        data: arr,
+        lineColors: ['#1abc9c', '#e74c3c', '#4099FF'],
+        xkey: 'date',
+        ykeys: ['t', 'd', 'p'],
+        labels: ['제휴', '삭제', '보류'],
+        pointSize: 0,
+        lineWidth: 0,
+        resize: true,
+        fillOpacity: 0.8,
+        behaveLikeLine: true,
+        hideHover: 'auto'
+      });
+    }
+  });
+}
+
 </script>

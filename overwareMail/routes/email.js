@@ -2,10 +2,26 @@ var express = require('express');
 var request = require('request');
 var urlencode = require('urlencode');
 var Iconv = require('iconv').Iconv;
+var mailListA = require('../models/mailListA.js');
+var mailListC = require('../models/mailListC.js');
 var router = express.Router();
 
 router.get('/', function(req, res) {
   res.render('email');
+});
+
+router.post('/searchGroup', function(req, res) {
+  console.log('Group Select');
+  mailListC.selectAll(req.body.search,function(err,result){
+    res.send(result);
+  });
+});
+
+router.post('/searchAll', function(req, res) {
+  console.log('All select');
+  mailListA.selectAll(req.body.search,function(err,result){
+    res.send(result);
+  });
 });
 
 /* 메일나라 'https://directsend.co.kr/index.php/api/v2/mail'

@@ -23,12 +23,12 @@
               <div class="form-group row">
                 <label class="col-sm-2 col-form-label">* 수신그룹</label>
                 <div class="col-sm-4">
-                  <input type="hidden" id="groupCheck"/>
+                  <input type="hidden" id="M_ID"/>
                   <input id="M_group" type="text" class="form-control" placeholder="수신그룹">
                   <span class='messages'><p class='text-danger error'></p></span>
                 </div>
                 <div class="col-sm-1 btn-check1">
-                  <button id="contentsBtn" type="button" class="btn btn-inverse alert-prompt">검색</button>
+                  <button id="groupsBtn" type="button" class="btn btn-inverse">검색</button>
                 </div>
               </div>
               <div class="form-group row">
@@ -39,7 +39,7 @@
                   <span class='messages'><p class='text-danger error'></p></span>
                 </div>
                 <div class="col-sm-1 btn-check2">
-                  <button id="contentsBtn" type="button" class="btn btn-inverse alert-prompt">검색</button>
+                  <button id="sendersBtn" type="button" class="btn btn-inverse">검색</button>
                 </div>
               </div>
               <div class="form-group row">
@@ -50,7 +50,7 @@
                   <span class='messages'><p class='text-danger error'></p></span>
                 </div>
                 <div class="col-sm-1 btn-check3">
-                  <button id="contentsBtn" type="button" class="btn btn-inverse alert-prompt">검색</button>
+                  <button id="recipisBtn" type="button" class="btn btn-inverse">검색</button>
                 </div>
               </div>
               <div class="form-group row">
@@ -113,6 +113,44 @@
           </div>
         </div>
       </div>
+      <!-- Modal start-->
+      <div class='modal fade' id='group-Modal' role='dialog'>
+        <div class='modal-dialog' role='document'>
+          <div class='modal-content'>
+            <div class='modal-header'>
+              <h5 class="modal-title">수신그룹 검색</h5>
+            </div>
+            <div class='modal-body'>
+              <div class='card'>
+                <div class="card-block table-border-style">
+                  <div class="table-responsive">
+                    <table class="table table-columned table-striped">
+                      <thead>
+                        <tr>
+                          <th>
+                            <input type="text" class="form-control" id="search_group_name" placeholder="수신그룹명">
+                          </th>
+                          <th width="1px">
+                            <button type="button" id="btn-searchGoup" class="btn btn-inverse">검색</button>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      </tbody>
+                      <tfoot>
+                      </tfoot>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-secondary mobtn" data-dismiss='modal' aria-label='Close' type="button">취소</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Modal end-->
     </div>
   </div>
 </div>
@@ -141,6 +179,10 @@
   .jFiler-theme-default .jFiler-input-caption,
   .jFiler-theme-default .jFiler-input-button{
     padding-top: 10px;
+  }
+  #group-Modal .modal-body{
+    overflow: auto;
+    max-height: 546px;
   }
 </style>
 <script type="text/javascript">
@@ -243,6 +285,70 @@
       }
     });
   }
+
+  // 수진자그룹 검색 처리
+  // input Enter
+  $('#M_group').on('keyup',function(event){
+    if(event.keyCode == 13){
+      $('#groupsBtn').trigger('click');
+    };
+  });
+  // serch btn click
+  $("#groupsBtn").on("click",function(){
+    $("#search_group_name").val($("#M_group").val());
+    $("#group-Modal").modal('show');
+    searchGroup($("#search_group_name").val());
+  });
+  // modal input Enter
+  $('#search_group_name').on('keyup',function(event){
+    if(event.keyCode == 13){
+      $('#btn-searchGoup').trigger('click');
+    };
+  });
+  // modal serch btn click
+  $("#btn-searchGoup").on("click",function(){
+    searchGroup($("#search_group_name").val());
+  });
+  function searchGroup(name){
+    if($('#search_group_name').val() == ""){
+      alert("검색어를 넣어주세요.");
+      return false;
+    }
+    $.ajax({
+      url: '../email/searchGroup',
+      type: 'post',
+      data : {
+        'search': $('#search_group_name').val().replace(/ /gi, "")
+      },
+      datatype : 'json',
+      error:function(request,status,error){
+        // alert('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
+        alert(request.responseText);
+      },
+      success:function(data){
+        console.log(data);
+        $("#group-Modal tbody").empty();
+        data.forEach(function(item){
+          var html = '<tr><td style="vertical-align: middle;"><div class="groupName">'+item.M_group_title+' : '+item.groupCount+'명</div>\
+          <input type="hidden" class="M_ID" value=\"'+item.M_ID+'\"></td>\
+          <td><button type="submit" class="btn-group btn btn-primary m-b-0">선택</button></td></tr>';
+          $("#group-Modal tbody").append(html);
+        });
+      }
+    });
+  }
+  // group selected
+  $(document).on("click",".btn-group",function(){
+    var title = $(this).parents("tr").find(".groupName").text().split(" : ")[1];
+    var mID = $(this).parents("tr").find(".M_ID").val();
+    $("#group-Modal tbody").empty();
+    $("#group-Modal").modal('hide');
+    $("#group-Modal tbody").empty();
+    $("#search_group_name").val("");
+    $("#M_ID").val(mID);
+    $("#M_group").val(title);
+  });
+
   $(document).on("click",".jFiler-item-trash-action",function(){
     console.log($(this));
   });
