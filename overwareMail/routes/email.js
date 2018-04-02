@@ -56,18 +56,16 @@ router.post('/send', function(req, res) {
   console.log('mail send : ',req.body);
   var euckr2utf8 = new Iconv('EUC-KR', 'UTF-8');
   var utf82euckr = new Iconv('UTF-8', 'EUC-KR');
-
   var param = {
     'subject': urlencode(new Buffer(utf82euckr.convert(req.body.M_subject)).toString('base64')),
     'body': urlencode(new Buffer(utf82euckr.convert(req.body.M_body)).toString('base64')),
-    'sender': urlencode('smb1457@naver.com'),
+    'sender': urlencode(req.body.sender),
+    'recipients': urlencode(req.body.recipients),
     'username': urlencode('unionc'),
-    'recipients': urlencode('smb1457@naver.com,smb1457@daum.net'),
     'key': urlencode('w4EzdnbOY3oypxO')
   };
-  // var url = 'https://directsend.co.kr/index.php/api/v2/mail?
-  var paramStr = 'subject='+param['subject']+'&body='+param['body']+'&sender='+param['sender']+'&recipients='+param['recipients']+'&username='+param['username']+'&key='+param['key'];
-  console.log(paramStr);
+  var paramStr = 'subject='+param['subject']+'&body='+param['body']+'&sender='+param['sender']+'&username='+param['username']+'&recipients='+param['recipients']+'&key='+param['key'];
+
   // 요청 세부 내용
   var options = {
     url: 'https://directsend.co.kr/index.php/api/v2/mail',
@@ -75,25 +73,41 @@ router.post('/send', function(req, res) {
     headers: {'Content-Type': 'application/x-www-form-urlencoded;'},
     body: paramStr
   }
-  request(options,
-    function (error, response, body) {
-      console.log(body);
-      res.send(true);
-    }
-  );
+  request(options,function (error, response, body) {
+    console.log(body);
+    res.send(true);
+  });
 });
 var multer = require('multer');
-var storage = multer.diskStorage({
+var storageImage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'public/uploads/') // cb 콜백함수를 통해 전송된 파일 저장 디렉토리 설정
+    cb(null, 'public/uploads/image') // cb 콜백함수를 통해 전송된 파일 저장 디렉토리 설정
   },
   filename: function (req, file, cb) {
     cb(null, file.originalname) // cb 콜백함수를 통해 전송된 파일 이름 설정
   }
 });
-var upload = multer({ storage: storage });
-router.post('/send/img',upload.single('file'),function(req, res) {
+var uploadImage = multer({ storage: storageImage });
+router.post('/send/img',uploadImage.single('file'),function(req, res) {
   console.log('/send/img');
+  console.log(req.file);
+  if (!req.file) {
+    console.log("No file passed");
+    return res.status(500).send("No file passed");
+  }
+  res.send(req.file.filename);
+});
+var storageFiles = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'public/uploads/files')
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname)
+  }
+});
+var uploadFiles = multer({ storage: storageFiles });
+router.post('/send/files',uploadFiles.single('files[]'),function(req, res) {
+  console.log('/send/files');
   console.log(req.file);
   if (!req.file) {
     console.log("No file passed");
