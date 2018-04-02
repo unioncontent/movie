@@ -29,6 +29,9 @@ class Database {
       });
     });
   }
+  getState() {
+    return this.connection.state;
+  }
 }
 
 module.exports = Database;
