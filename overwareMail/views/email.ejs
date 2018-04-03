@@ -21,7 +21,7 @@
           <div class="card">
             <div class="card-block">
               <div class="form-group row">
-                <label class="col-sm-2 col-form-label">* 수신그룹</label>
+                <label class="col-sm-2 col-form-label">수신그룹(숨은참조)</label>
                 <div class="col-sm-4">
                   <input type="hidden" id="M_ID"/>
                   <input id="M_group" type="text" class="form-control" placeholder="수신그룹">
@@ -34,8 +34,13 @@
               <div class="form-group row">
                 <label class="col-sm-2 col-form-label">* 보내는 사람</label>
                 <div class="col-sm-4">
-                  <input type="hidden" id="senderCheck"/>
-                  <input id="M_sender" type="text" class="form-control" placeholder="보내는 사람">
+                  <!-- <input id="M_sender" type="text" class="form-control" placeholder="보내는 사람"> -->
+                  <select class="sender-select col-sm-12 form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true">
+                    <option>보내는 사람 선택</option>
+                    <% for(var i=0; i < mailList.length; i++) { %>
+                      <option><%= mailList[i].M_name %>(<%=mailList[i].M_email%>)</option>
+                    <% }; %>
+                  </select>
                   <span class='messages'><p class='text-danger error'></p></span>
                 </div>
                 <div class="col-sm-1 btn-check2">
@@ -45,8 +50,11 @@
               <div class="form-group row">
                 <label class="col-sm-2 col-form-label">* 받는 사람</label>
                 <div class="col-sm-4">
-                  <input type="hidden" id="recipiCheck"/>
-                  <input id="M_recipi" type="text" class="form-control" placeholder="받는 사람">
+                  <select class="recipi-select col-sm-12 form-control select2-hidden-accessible" multiple="" tabindex="-1" aria-hidden="true">
+                    <% for(var i=0; i < mailList.length; i++) { %>
+                      <option><%= mailList[i].M_name %>(<%=mailList[i].M_email%>)</option>
+                    <% }; %>
+                  </select>
                   <span class='messages'><p class='text-danger error'></p></span>
                 </div>
                 <div class="col-sm-1 btn-check3">
@@ -106,7 +114,7 @@
               <div class="row">
                 <label class="col-sm-2"></label>
                 <div class="col-sm-10">
-                    <button id="sendBtn" type="submit" class="btn btn-inverse m-b-0">등록</button>
+                    <button id="sendBtn" type="submit" class="btn btn-inverse m-b-0">보내기</button>
                 </div>
               </div>
             </div>
@@ -114,38 +122,153 @@
         </div>
       </div>
       <!-- Modal start-->
-      <div class='modal fade' id='group-Modal' role='dialog'>
-        <div class='modal-dialog' role='document'>
+      <div class='modal fade' id='mailList-Modal' role='dialog'>
+        <div class='modal-dialog modal-lg' role='document'>
           <div class='modal-content'>
             <div class='modal-header'>
-              <h5 class="modal-title">수신그룹 검색</h5>
+              <h5 class="modal-title">메일 주소록</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
             </div>
-            <div class='modal-body'>
-              <div class='card'>
+            <div class='modal-body p-b-0'>
+              <div class='card m-b-0'>
                 <div class="card-block table-border-style">
                   <div class="table-responsive">
-                    <table class="table table-columned table-striped">
-                      <thead>
-                        <tr>
-                          <th>
-                            <input type="text" class="form-control" id="search_group_name" placeholder="수신그룹명">
-                          </th>
-                          <th width="1px">
-                            <button type="button" id="btn-searchGoup" class="btn btn-inverse">검색</button>
-                          </th>
-                        </tr>
-                      </thead>
+                    <table class="table table-columned">
                       <tbody>
+                        <tr>
+                          <td rowspan='4'>
+                            <div class="right-icon-control m-b-5">
+                              <input type="text" class="form-control  search-text" placeholder="메일주소찾기" id="search_group_name">
+                              <div class="form-icon">
+                                <i class="fas fa-search"></i>
+                              </div>
+                            </div>
+                            <div class="listBox">
+                              <ul>
+                                <li class="hasmenu">
+                                  <h3 class="menubar">
+                                    전체선택
+                                    <i class="fas fa-sort-down float-right m-r-5"></i>
+                                    <i class="fas fa-sort-up float-right m-r-5" style="display:none;"></i>
+                                  </h3>
+                                  <ul class="submenu">
+                                    <li class="submenu">
+                                      <input id="chk_1" class="allCheck" type="checkbox" value="All"/>
+                                      <label for="chk_1" title="그룹/이메일 전체선택">그룹/이메일 전체선택</label>
+                                    </li>
+                                    <li>
+                                      <input id="chk_2" class="allCheck" type="checkbox" value="emailAll"/>
+                                      <label for="chk_2" title="이메일 전체선택">이메일 전체선택</label>
+                                    </li>
+                                    <li>
+                                      <input id="chk_3" class="allCheck" type="checkbox" value="groupAll"/>
+                                      <label for="chk_3" title="그룹 전체선택">그룹 전체선택</label>
+                                    </li>
+                                  </ul>
+                                </li>
+                              </ul>
+                            </div>
+                            <div class="listBox">
+                              <ul>
+                                <li class="hasmenu">
+                                  <h3 class="menubar">
+                                    그룹
+                                  </h3>
+                                </li>
+                                <ul class="submenu groupLi">
+                                  <% for(var i=0; i < groupList.length; i++) { %>
+                                    <li>
+                                      <input type="checkbox" id="chkGroup<%=i+1%>" value="<%=groupList[i].M_id%>,<%= groupList[i].M_group_title %>"/>
+                                      <label for="chkGroup<%=i+1%>" title="<%= groupList[i].M_group_title %>&lt;<%=groupList[i].groupCount%>명&gt;"><%= groupList[i].M_group_title%>&lt;<%=groupList[i].groupCount%>명&gt;</label>
+                                    </li>
+                                    <% }; %>
+                                </ul>
+                              </ul>
+                            </div>
+                            <div class="paging">
+                              <input type="text" value="1"/> / 1
+                              <div class="bottomBtn">
+                                <button class="btn btn-default btn-sm" data-value="group"><i class="fas fa-angle-double-left"></i></button>
+                                <button class="btn btn-default btn-sm" data-value="group"><i class="fas fa-chevron-left"></i></button>
+                                <button class="btn btn-default btn-sm" data-value="group"><i class="fas fa-chevron-right"></i></button>
+                                <button class="btn btn-default btn-sm" data-value="group"><i class="fas fa-angle-double-right"></i></button>
+                              </div>
+                            </div>
+                            <div class="listBox">
+                              <ul>
+                                <li class="hasmenu">
+                                  <h3>이메일</h3>
+                                  <ul class="submenu emailLi">
+                                    <% for(var i=0; i < mailList.length; i++) { %>
+                                      <li>
+                                        <input type="checkbox" id="chk<%=i+1%>" value="<%=mailList[i].n_idx%>"/>
+                                        <label for="chk<%=i+1%>" title="<%= mailList[i].M_name %>&lt;<%=mailList[i].M_email%>&gt;"><%= mailList[i].M_name%>&lt;<%=mailList[i].M_email%>&gt;</label>
+                                      </li>
+                                      <% }; %>
+                                  </ul>
+                                </li>
+                              </ul>
+                            </div>
+                            <div class="paging">
+                              <input type="text" value="1"/> / 10
+                              <div class="bottomBtn">
+                                <button class="btn btn-default btn-sm" data-value="group"><i class="fas fa-angle-double-left"></i></button>
+                                <button class="btn btn-default btn-sm" data-value="group"><i class="fas fa-chevron-left"></i></button>
+                                <button class="btn btn-default btn-sm" data-value="group"><i class="fas fa-chevron-right"></i></button>
+                                <button class="btn btn-default btn-sm" data-value="group"><i class="fas fa-angle-double-right"></i></button>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <div class="rightLeftBtn">
+                              <button class="btn btn-inverse btn-sm m-b-5" data-value="group" data-type="right"><i class="fas fa-chevron-right"></i></button>
+                              <button class="btn btn-inverse btn-sm m-b-5" data-value="group" data-type="left"><i class="fas fa-chevron-left"></i></button>
+                              <button class="btn btn-inverse btn-sm m-b-5" data-value="group" data-type="allLeft"><i class="fas fa-angle-double-left"></i></button>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="selectedBox">
+                              <h3>수신그룹(숨은참조) <span class="text-info">0</span></h3>
+                              <div class="box">
+                                <ul id="groupUl">
+
+                                </ul>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <div class="rightLeftBtn">
+                              <button class="btn btn-inverse btn-sm m-b-5" data-value="recipi" data-type="right"><i class="fas fa-chevron-right"></i></button>
+                              <button class="btn btn-inverse btn-sm m-b-5" data-value="recipi" data-type="left"><i class="fas fa-chevron-left"></i></button>
+                              <button class="btn btn-inverse btn-sm m-b-5" data-value="recipi" data-type="allLeft"><i class="fas fa-angle-double-left"></i></button>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="selectedBox">
+                              <h3>받는 사람 <span class="text-info" >0</span></h3>
+                              <div class="box">
+                                <ul id="recipiUl">
+
+                                </ul>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
                       </tbody>
-                      <tfoot>
-                      </tfoot>
                     </table>
                   </div>
                 </div>
               </div>
             </div>
             <div class="modal-footer">
-              <button class="btn btn-secondary mobtn" data-dismiss='modal' aria-label='Close' type="button">취소</button>
+              <button type="button" class="btn btn-inverse">적용</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
             </div>
           </div>
         </div>
@@ -154,17 +277,134 @@
     </div>
   </div>
 </div>
+<!-- select2 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/i18n/ko.js"></script>
 <!-- filer -->
 <link rel="stylesheet" type="text/css" href="/css/jquery.filer.css">
-<script type="text/javascript" src="/js/jquery.filer.min.js"></script>
+<script src="/js/jquery.filer.min.js"></script>
 <!-- editor -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-lite.css" rel="stylesheet">
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-lite.js"></script>
-<script type="text/javascript" src="/js/summernote-ko-KR.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-lite.js"></script>
+<script src="/js/summernote-ko-KR.js"></script>
 <!-- alert -->
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sweetalert@2.1.0/dist/sweetalert.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert@2.1.0/dist/sweetalert.min.js"></script>
 <style>
+  /* modal select */
+  button.close{
+    margin-top: 0;
+    font-size: 26px;
+  }
+  .paging{
+    margin-bottom: 10px;
+    padding: 5px 7px 5px 0px;
+  }
+  .paging > input{
+    width: 26px;
+    line-height: 16px;
+    padding: 0 2px 0 0;
+    text-align: right;
+    vertical-align: 0;
+    color: #000;
+    font-size: 12px;
+  }
+  .rightLeftBtn{
+    text-align: center;
+    padding-top: 27%;
+  }
+  .bottomBtn{
+    display: inline;
+    float: right;
+  }
+  .rightLeftBtn .btn,
+  .bottomBtn .btn{
+    display: inherit;
+    margin: 0px auto;
+    margin-bottom: 5px;
+    padding: 5px 7px 5px 10px;
+  }
+  .rightLeftBtn .btn[data-type="allLeft"] {
+    padding-right: 5px;
+  }
+  .bottomBtn .btn{
+    display: inline;
+    padding-right: 4px;
+  }
+  .listBox{
+    height: 100%;
+  }
+  .listBox li label,
+  #groupUl li label,
+  #recipiUl li label{
+    max-width: 225px;
+    display: inline-block;
+    margin-bottom: 0px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 12px;
+    line-height: 12px;
+  }
+  #groupUl li label,
+  #recipiUl li label{
+    max-width: 187px;
+  }
+  .selectedBox > h3,
+  .listBox li > h3{
+    font-size: 12px;
+    font-weight: bold;
+  }
+  .listBox li > h3{
+    margin-bottom: 0px;
+    padding-bottom: .5rem;
+  }
+  .emailLi,.groupLi{
+    max-height: 200px;
+    overflow: auto;
+  }
+  .selectedBox > .box{
+    height: 291px;
+    padding: 7px;
+    border: 1px solid #ddd;
+    background-color: white;
+    overflow: auto;
+  }
+  #mailList-Modal .modal-body{
+    max-height: 700px;
+  }
+  /* 라이브러리 css 수정 */
+  .select2-container--default .select2-selection--single .select2-selection__arrow{
+    height: 37px;
+  }
+  .select2-container .select2-selection--single{
+    height: 37px;
+  }
+  .select2-container--default .select2-selection--single .select2-selection__rendered{
+    line-height: 27px;
+  }
+  .select2-container--default .select2-selection--multiple,
+  .select2-container--default .select2-selection--single {
+    background-color: white;
+    border: 2px solid rgba(0,0,0,.15);
+    font-size: 14px;
+    border-radius: 2px;
+    cursor: text;
+  }
+  .select2-container--default .select2-selection--multiple{
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-left: 8px;
+  }
+  .select2-container--default.select2-container--focus .select2-selection--multiple,
+  .select2-container--default.select2-container--focus .select2-selection--single {
+    color: #464a4c;
+    border-width: 2px;
+    background-color: #fff;
+    border-color: #3498DB!important;
+    outline: 0;
+  }
   .dropdown-toggle::after{
     display: none;
   }
@@ -180,13 +420,48 @@
   .jFiler-theme-default .jFiler-input-button{
     padding-top: 10px;
   }
-  #group-Modal .modal-body{
-    overflow: auto;
-    max-height: 546px;
-  }
 </style>
 <script type="text/javascript">
   $(document).ready(function() {
+    // select2
+    $(".sender-select").select2({
+      language: 'ko'
+    })
+    $(".recipi-select").select2({
+      placeholder: "받는 사람",
+      language: 'ko'
+    });
+    // $(".sender-select").select2({
+    //   ajax: {
+    //     url: "/email/searchAll",
+    //     dataType: 'json',
+    //     delay: 250,
+    //     data: function (params) {
+    //       return {
+    //         search: params.term, // search term
+    //         page: params.page
+    //       };
+    //     },
+    //     processResults: function (data, params) {
+    //       params.page = params.page || 1;
+    //       return {
+    //         results: data.items,
+    //         pagination: {
+    //           more: (params.page * 20) < data.total_count
+    //         }
+    //       };
+    //     },
+    //     cache: true
+    //   },
+    //   placeholder: '보내는 사람',
+    //   language: 'ko',
+    //   escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+    //   minimumInputLength: 2,
+    //   templateResult: formatRepo,
+    //   templateSelection: formatRepoSelection
+    // });
+
+    // 메일 editor
     $('#M_body').summernote({
       lang: 'ko-KR',
       tabsize: 2,
@@ -209,11 +484,8 @@
         }
       }
     });
-    // $('#M_file').filer({
-  	// 	showThumbs: true,
-  	// 	addMore: true,
-  	// 	allowDuplicates: false
-  	// });
+
+    // 첨부파일
     $('#M_file').filer({
       limit: '5',
       maxSize: '10',
@@ -267,7 +539,105 @@
         }
       }
     });
+
+
   });
+  var lastChecked = null;
+  $(document).on('click','#groupUl input, #recipiUl input',function(e) {
+    console.log(this);
+    console.log(e.shiftKey);
+    if (!lastChecked) {
+      lastChecked = this;
+      return;
+    }
+    if (e.shiftKey) {
+      var start = $('#'+$(this).parents('ul').prop('id')+' input').index(this);
+      var end = $('#'+$(this).parents('ul').prop('id')+' input').index(lastChecked);
+      $('#'+$(this).parents('ul').prop('id')+' input').slice(Math.min(start, end), Math.max(start, end) + 1).prop('checked', lastChecked.checked);
+    }
+    lastChecked = this;
+  });
+  function formatRepo (repo) {
+    if (repo.loading) {
+      return repo.text;
+    }
+    var markup = repo.M_name+" ("+repo.M_email+")";
+    return markup;
+  }
+
+  function formatRepoSelection (repo) {
+    return repo.full_name || repo.text;
+  }
+  // 전체선택,그룹 리스트 닫고 열기
+  $(document).on("click",".menubar",function(){
+    $(this).next('.submenu').toggle();
+  });
+  $(".allCheck").on('change',function(){
+    var checkBool = null;
+    if($(this).is(":checked")){
+      checkBool = true;
+    }else{
+      checkBool = false;
+    }
+    if($(this).val() == "All"){
+      $(".submenu").eq(2).find('input[type=checkbox]').prop('checked', checkBool);
+      $(".submenu").eq(3).find('input[type=checkbox]').prop('checked', checkBool);
+    }
+    else if($(this).val() == "emailAll"){
+      $(".submenu").eq(3).find('input[type=checkbox]').prop('checked', checkBool);
+    }
+    else{
+      $(".submenu").eq(2).find('input[type=checkbox]').prop('checked', checkBool);
+    }
+  });
+  // 요소 옮기기
+  $(document).on("click",".rightLeftBtn button",function(){
+    var boxType = $(this).data('value');
+    var boxAction = $(this).data('type');
+    console.log(boxType);
+    console.log(boxAction);
+    if(boxAction == "right"){
+      $(".listBox input[type='checkbox']:checked").each(function() {
+        if($(this).val().indexOf('All') != -1){
+          return;
+        }
+        var html = '<li>'+$(this).parents('li').html()+'</li>';
+        html = html.replace(/chk/g,'selected_chk');
+        if(boxType == "group"){
+          $("#groupUl").append(html);
+        }
+        else{
+          $("#recipiUl").append(html);
+        }
+        $(this).prop('checked', false);
+      });
+    }
+    else if(boxAction == "left"){
+      if(boxType == "group"){
+        $("#groupUl input[type='checkbox']:checked").each(function() {
+          $(this).parents('li').remove();
+        });
+      }
+      else{
+        $("#recipiUl input[type='checkbox']:checked").each(function() {
+          $(this).parents('li').remove();
+        });
+      }
+    }
+    else{
+      if(boxType == "group"){
+        $("#groupUl input[type='checkbox']").each(function() {
+          $(this).parents('li').remove();
+        });
+      }
+      else{
+        $("#recipiUl input[type='checkbox']").each(function() {
+          $(this).parents('li').remove();
+        });
+      }
+    }
+  })
+  // 메일 editor 이미지 포함시
   function saveImgFile(file){
     console.log('saveImgFile:',file);
     data = new FormData();
@@ -286,7 +656,7 @@
     });
   }
 
-  // 수진자그룹 검색 처리
+  // 수신자그룹 검색 처리
   // input Enter
   $('#M_group').on('keyup',function(event){
     if(event.keyCode == 13){
@@ -296,8 +666,8 @@
   // serch btn click
   $("#groupsBtn").on("click",function(){
     $("#search_group_name").val($("#M_group").val());
-    $("#group-Modal").modal('show');
-    searchGroup($("#search_group_name").val());
+    $("#mailList-Modal").modal('show');
+    // searchGroup($("#search_group_name").val());
   });
   // modal input Enter
   $('#search_group_name').on('keyup',function(event){
@@ -309,6 +679,18 @@
   $("#btn-searchGoup").on("click",function(){
     searchGroup($("#search_group_name").val());
   });
+  // group selected
+  $(document).on("click",".btn-group",function(){
+    var title = $(this).parents("tr").find(".groupName").text().split(" : ")[0];
+    var mID = $(this).parents("tr").find(".M_ID").val();
+    $("#mailList-Modal tbody").empty();
+    $("#mailList-Modal").modal('hide');
+    $("#mailList-Modal tbody").empty();
+    $("#search_group_name").val("");
+    $("#M_ID").val(mID);
+    $("#M_group").val(title);
+  });
+  // 검색 ajax
   function searchGroup(name){
     if($('#search_group_name').val() == ""){
       alert("검색어를 넣어주세요.");
@@ -327,31 +709,23 @@
       },
       success:function(data){
         console.log(data);
-        $("#group-Modal tbody").empty();
+        $("#mailList-Modal tbody").empty();
         data.forEach(function(item){
           var html = '<tr><td style="vertical-align: middle;"><div class="groupName">'+item.M_group_title+' : '+item.groupCount+'명</div>\
           <input type="hidden" class="M_ID" value=\"'+item.M_ID+'\"></td>\
           <td><button type="submit" class="btn-group btn btn-primary m-b-0">선택</button></td></tr>';
-          $("#group-Modal tbody").append(html);
+          $("#mailList-Modal tbody").append(html);
         });
       }
     });
   }
-  // group selected
-  $(document).on("click",".btn-group",function(){
-    var title = $(this).parents("tr").find(".groupName").text().split(" : ")[1];
-    var mID = $(this).parents("tr").find(".M_ID").val();
-    $("#group-Modal tbody").empty();
-    $("#group-Modal").modal('hide');
-    $("#group-Modal tbody").empty();
-    $("#search_group_name").val("");
-    $("#M_ID").val(mID);
-    $("#M_group").val(title);
-  });
 
+  // 첨부파일 중 파일 삭제시
   $(document).on("click",".jFiler-item-trash-action",function(){
     console.log($(this));
   });
+
+  // 메일 보내기 버튼 클릭시
   $("#sendBtn").on("click",function(){
     swal({
       title: "메일 보내시겠습니까?",
@@ -373,9 +747,6 @@
           'M_file': $("#M_file").val(),
           'M_type': $("input:radio[name=M_type]:checked").val(),
         };
-        if(param["M_group"] == ""){
-          check = requiredMessage("M_group","수신그룹을 입력해주세요.");
-        }
         if(param["M_sender"] == ""){
           check = requiredMessage("M_sender","보내는 사람를 입력해주세요.");
         }
@@ -402,11 +773,13 @@
       }
     });
   });
+  // input box 경고문
   function requiredMessage(target,msg){
     $("#"+target).siblings().children().text(msg);
     $("#"+target).addClass("form-control-danger");
     return false;
   }
+  // 메일 보내기 ajax
   function SendEmails(param){
     $.ajax({
       url: '/email/send',
