@@ -5,9 +5,38 @@ var Iconv = require('iconv').Iconv;
 var mailListA = require('../models/mailListA.js');
 var mailListC = require('../models/mailListC.js');
 var router = express.Router();
+const DBpromise = require('../db/db_info.js');
 
-router.get('/', function(req, res) {
-  res.render('email');
+router.get('/', async function(req, res) {
+  var db = new DBpromise();
+  try{
+    var sql = 'select * from mail_list_all_view';
+    var result1 = await db.query(sql);
+    sql = 'select count(*) as total from mail_list_all_view';
+    var resultCount1 = await db.query(sql);
+
+    sql = 'SELECT M_ID,M_group_title,count(*) as groupCount FROM mail_list_group_view group by M_group_title';
+    var result2 = await db.query(sql);
+    sql = 'SELECT count(*) as total FROM mail_list_group_view group by M_group_title';
+    var resultCount2 = await db.query(sql);
+
+    res.render('email',{
+      mailList : result1,
+      mailListCount : resultCount1[0].total,
+      groupList : result2,
+      groupListCount : resultCount2[0].total
+    });
+  } catch(exception) {
+    console.log('email 에러발생:',exception);
+    res.render('email',{
+      mailList : [],
+      mailListCount : '0',
+      groupList : [],
+      groupListCount : '0'
+    });
+  } finally{
+    db.close();
+  }
 });
 
 router.post('/searchGroup', function(req, res) {
@@ -17,11 +46,36 @@ router.post('/searchGroup', function(req, res) {
   });
 });
 
-router.post('/searchAll', function(req, res) {
-  console.log('All select');
-  mailListA.selectAll(req.body.search,function(err,result){
-    res.send(result);
-  });
+router.get('/searchAll', async function(req, res) {
+  // console.log('All select');
+  var db = new DBpromise();
+  try{
+    var param = [0,20];
+    if('page' in req.query){
+      param[0] = (req.query.page - 1) * param[1];
+    }
+    var sql = 'select * from mail_list_all_view where search like \'%'+req.query.search+'%\' order by search limit ?,?';
+    var resultList = await db.query(sql,param);
+
+    sql = 'select count(*) as total from mail_list_all_view where search like \'%'+req.query.search+'%\' order by search';
+    var resultCount = await db.query(sql);
+
+    res.send({
+      items : resultList,
+      total_count : resultCount[0].total
+    });
+  } catch(exception) {
+    console.log('에러발생:',exception);
+    res.send({
+      items : null,
+      total_count : 0
+    });
+  } finally{
+    db.close();
+  }
+  // mailListA.selectAll(req.body,function(err,result){
+  //   res.send(result);
+  // });
 });
 
 /* 메일나라 'https://directsend.co.kr/index.php/api/v2/mail'

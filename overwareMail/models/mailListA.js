@@ -6,7 +6,24 @@ const DBpromise = require('../db/db_info.js');
 */
 
 var mailListAll = {
-  selectAll: function(search,callback){
+  selectAll: function(){
+    var sql = 'select * from mail_list_all_view';
+    var db = new DBpromise();
+    db.query(sql)
+    .then(rows => {
+      return callback(null,rows);
+    })
+    .then(rows => {
+      console.log('db.close');
+      db.close();
+    })
+    .catch(function (err) {
+      console.log('Error : ',err);
+      db.close();
+      return callback(err,null);
+    });
+  },
+  selectSearchAll: function(search,callback){
     var sql = 'select * from mail_list_all_view where search like \'%'+search+'%\'';
     var db = new DBpromise();
     db.query(sql)
