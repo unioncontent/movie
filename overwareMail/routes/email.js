@@ -9,56 +9,137 @@ const DBpromise = require('../db/db_info.js');
 
 router.get('/', async function(req, res) {
   var db = new DBpromise();
+  var data = {
+    keywordList : [],
+    typeList : [],
+    mailList : [],
+    mailListCount : [{total: 0}],
+    mailListPageNum : 1,
+    groupList : [],
+    groupListCount : [{total: 0}],
+    groupListPageNum : 1
+  };
   try{
-    var sql = 'select * from mail_list_all_view';
-    var result1 = await db.query(sql);
-    sql = 'select count(*) as total from mail_list_all_view';
-    var resultCount1 = await db.query(sql);
+    var sql = 'SELECT * FROM keyword_data where user_idx!=9 and keyword_property=\'포함\' group by keyword_main';
+    data['keywordList'] = await db.query(sql);
+    sql = 'SELECT * FROM m_mail_type where M_id=?';
+    data['typeList'] = await db.query(sql,('1'));
+    sql = 'select * from mail_list_all_view where M_ID=? limit 0,10';
+    data['mailList'] = await db.query(sql,('1'));
+    sql = 'select count(*) as total from mail_list_all_view where M_ID=?';
+    data['mailListCount'] = await db.query(sql,('1'));
 
-    sql = 'SELECT M_ID,M_group_title,count(*) as groupCount FROM mail_list_group_view group by M_group_title';
-    var result2 = await db.query(sql);
-    sql = 'SELECT count(*) as total FROM mail_list_group_view group by M_group_title';
-    var resultCount2 = await db.query(sql);
-
-    res.render('email',{
-      mailList : result1,
-      mailListCount : resultCount1[0].total,
-      groupList : result2,
-      groupListCount : resultCount2[0].total
-    });
+    sql = 'SELECT M_ID,M_group_title,count(*) as groupCount FROM mail_list_group_view where M_ID=? group by M_group_title limit 0,10';
+    data['groupList'] = await db.query(sql,('1'));
+    sql = 'select count(*) as total from (SELECT * FROM mail_list_group_view where M_ID=? group by M_group_title) a';
+    data['groupListCount'] = await db.query(sql,('1'));
+    console.log(data);
+    res.render('email',data);
   } catch(exception) {
     console.log('email 에러발생:',exception);
-    res.render('email',{
-      mailList : [],
-      mailListCount : '0',
-      groupList : [],
-      groupListCount : '0'
-    });
+    res.render('email',data);
   } finally{
     db.close();
   }
 });
 
-router.post('/searchGroup', function(req, res) {
-  console.log('Group Select');
-  mailListC.selectAll(req.body.search,function(err,result){
-    res.send(result);
-  });
+router.post('/getModalListPage', async function(req, res) {
+  console.log('getModalListPage');
+  console.log(req.body);
+  var db = new DBpromise();
+  var data = {
+    group : [],
+    groupTotal : [],
+    groupPage : 1,
+    email : [],
+    emialTotal : [],
+    emailPage : 1
+  }
+  try{
+    // cpID = 현재 로그인된 사람 아이디, start, end
+    var emailParam = ['1',0,10];
+    var groupParam = ['1',0,10];
+
+    if (typeof req.body.page !== 'undefined') {
+      if (typeof req.body.type !== 'undefined') {
+        if(req.body.type == 'group'){
+          groupParam[1] = parseInt(req.body.page);
+          data.groupPage = Math.ceil(parseInt(req.body.page) / 10)+1;
+        }
+        else if(req.body.type == 'mail'){
+          emailParam[1] = parseInt(req.body.page);
+          data.emailPage = Math.ceil(parseInt(req.body.page) / 10)+1;
+        }
+      }
+    }
+    var sql = 'select user_name,search,M_ID,M_group_title,count(*) as groupCount FROM mail_list_group_view where';
+    if (typeof req.body.search !== 'undefined') {
+      sql += ' search like \'%'+req.body.search+'%\'and ';
+    }
+    sql += ' M_ID = ?';
+    sql += ' group by search order by search limit ?,?';
+    console.log(sql,groupParam);
+    data['group'] = await db.query(sql,groupParam);
+
+    sql = 'select count(*) as total from (SELECT * FROM mail_list_group_view where';
+    if (typeof req.body.search !== 'undefined') {
+      sql += ' search like \'%'+req.body.search+'%\'and ';
+    }
+    sql += ' M_ID = ?';
+    sql += ' group by M_group_title) a';
+    console.log(sql,groupParam);
+    data['groupTotal'] = await db.query(sql,groupParam);
+
+    sql = 'select n_idx as id, search, user_name, M_id, M_email, M_name, M_ptitle, M_tel, M_regdate from mail_list_all_view where';
+    if (typeof req.body.search !== 'undefined') {
+      sql += ' search like \'%'+req.body.search+'%\' and';
+    }
+    sql += ' M_ID = ?';
+    sql += ' order by search limit ?,?';
+    console.log(sql,emailParam);
+    data['email'] = await db.query(sql,emailParam);
+
+    sql = 'select count(*) as total from mail_list_all_view where ';
+    if (typeof req.body.search !== 'undefined') {
+      sql += ' search like \'%'+req.body.search+'%\' and ';
+    }
+    sql += ' M_ID = ?';
+    sql += ' order by search';
+    console.log(sql,emailParam);
+    data['emailTotal'] = await db.query(sql,emailParam);
+
+    res.send(data);
+  } catch(exception) {
+    console.log('에러발생:',exception);
+    res.send(data);
+  } finally{
+    db.close();
+  }
 });
 
-router.get('/searchAll', async function(req, res) {
-  // console.log('All select');
+router.get('/searchGroup', async function(req, res) {
   var db = new DBpromise();
   try{
-    var param = [0,20];
-    if('page' in req.query){
-      param[0] = (req.query.page - 1) * param[1];
+    // cpID = 현재 로그인된 사람 아이디, start, end
+    var param = [1,0,10];
+    if (typeof req.query.page !== 'undefined') {
+      param[1] = (req.query.page - 1) * param[2];
     }
-    var sql = 'select * from mail_list_all_view where search like \'%'+req.query.search+'%\' order by search limit ?,?';
+    var sql = 'select user_name,search,M_ID as id,M_group_title,count(*) as groupCount FROM mail_list_group_view where ';
+    if (typeof req.query.search !== 'undefined') {
+      sql += 'search like \'%'+req.query.search+'%\'and ';
+    }
+    sql += ' M_ID = ?';
+    sql += ' group by search order by search limit ?,?';
     var resultList = await db.query(sql,param);
 
-    sql = 'select count(*) as total from mail_list_all_view where search like \'%'+req.query.search+'%\' order by search';
-    var resultCount = await db.query(sql);
+    sql = 'select count(*) as total from (SELECT * FROM mail_list_group_view where ';
+    if (typeof req.query.search !== 'undefined') {
+      sql += 'search like \'%'+req.query.search+'%\' and ';
+    }
+    sql += ' M_ID = ?';
+    sql += ' group by M_group_title) a';
+    var resultCount = await db.query(sql,param);
 
     res.send({
       items : resultList,
@@ -73,9 +154,46 @@ router.get('/searchAll', async function(req, res) {
   } finally{
     db.close();
   }
-  // mailListA.selectAll(req.body,function(err,result){
-  //   res.send(result);
-  // });
+});
+
+router.get('/searchAll', async function(req, res) {
+  // console.log('All select');
+  var db = new DBpromise();
+  try{
+    // cpID = 현재 로그인된 사람 아이디, start, end
+    var param = ['1',0,10];
+    if (typeof req.query.page !== 'undefined') {
+      param[1] = (req.query.page - 1) * param[2];
+    }
+    var sql = 'select n_idx as id, search, user_name, M_id, M_email, M_name, M_ptitle, M_tel, M_regdate from mail_list_all_view where ';
+    if (typeof req.query.search !== 'undefined') {
+      sql += ' search like \'%'+req.query.search+'%\'and ';
+    }
+    sql += ' M_ID = ?';
+    sql += ' order by search limit ?,?';
+    var resultList = await db.query(sql,param);
+
+    sql = 'select count(*) as total from mail_list_all_view where ';
+    if (typeof req.query.search !== 'undefined') {
+      sql += 'search like \'%'+req.query.search+'%\'and ';
+    }
+    sql += ' M_ID = ?';
+    sql += ' order by search';
+    var resultCount = await db.query(sql,param);
+
+    res.send({
+      items : resultList,
+      total_count : resultCount[0].total
+    });
+  } catch(exception) {
+    console.log('에러발생:',exception);
+    res.send({
+      items : null,
+      total_count : 0
+    });
+  } finally{
+    db.close();
+  }
 });
 
 /* 메일나라 'https://directsend.co.kr/index.php/api/v2/mail'
@@ -144,10 +262,15 @@ router.post('/send', function(req, res) {
     body: paramStr
   }
   request(options,function (error, response, body) {
-    console.log(body);
-    res.send(true);
+    if(body.status == '0'){
+      res.send(true);
+    }
+    else{
+      res.send(false);
+    }
   });
 });
+
 var multer = require('multer');
 var storageImage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -167,6 +290,7 @@ router.post('/send/img',uploadImage.single('file'),function(req, res) {
   }
   res.send(req.file.filename);
 });
+
 var storageFiles = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, 'public/uploads/files')
