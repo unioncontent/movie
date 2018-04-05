@@ -6,23 +6,46 @@ const DBpromise = require('../db/db_info.js');
 */
 
 var mailListC = {
-  selectAll: function(search,callback){
-    var sql = 'SELECT M_ID,M_group_title,count(*) as groupCount FROM mail_list_group_view where search like \'%'+search+'%\' group by M_group_title';
-    var db = new DBpromise();
-    db.query(sql)
-    .then(rows => {
-      return callback(null,rows);
-    })
-    .then(rows => {
-      console.log('db.close');
-      db.close();
-    })
-    .catch(function (err) {
-      console.log('Error : ',err);
-      db.close();
-      return callback(err,null);
-    });
+  selectView: async function(body,param,callback){
+    var sql = 'select user_name,search,M_group_title,count(*) as groupCount,M_ID';
+    if (typeof body.as !== 'undefined') {
+      sql += body.as+' ,CONCAT(M_group_title, \'&lt;\', count(*), \'명&gt;\') as text ';
+    }
+    sql += ' FROM mail_list_group_view where ';
+    if (typeof body.search !== 'undefined') {
+      sql += ' search like \'%'+body.search+'%\'and ';
+    }
+    sql += ' M_ID = ?';
+    sql += ' group by search order by search limit ?,?';
+    return await getResult(sql,param);
+  },
+  selectViewCount: async function(body,param){
+    var sql = 'select count(*) as total from (SELECT * FROM mail_list_group_view where';
+    if (typeof body.search !== 'undefined') {
+      sql += ' search like \'%'+body.search+'%\'and ';
+    }
+    sql += ' M_ID = ?';
+    sql += ' group by M_group_title) a';
+    var count = await getResult(sql,param);
+    if(count.length == 0){
+      return 0;
+    }
+    else{
+      return count[0]['total'];
+    }
   }
 }
 
+async function getResult(sql,param) {
+  console.log(sql,param);
+  var db = new DBpromise();
+  try{
+    return await db.query(sql,param);
+  } catch(e){
+    console.log(e);
+    return [];
+  } finally{
+    db.close();
+  }
+}
 module.exports = mailListC;
