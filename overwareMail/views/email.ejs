@@ -454,7 +454,7 @@
   $(document).ready(function() {
     var dt = new Date();
     var options = {
-      now: dt.getHours()+":"+"00",
+      now: dt.getHours()+":"+String(Math.ceil(dt.getMinutes() / 10) * 10),
       twentyFour: true, //Display 24 hour format, defaults to false
       upArrow: 'wickedpicker__controls__control-up', //The up arrow class selector to use, for custom CSS
       downArrow: 'wickedpicker__controls__control-down', //The down arrow class selector to use, for custom CSS
@@ -1058,11 +1058,20 @@
             check = requiredMessage("date","예약시간은 10분단위로 설정해주세요.");
           }
           else{
-            param['end_reserve_time'] = date+" "+time.replace(' : ',':')+":00";
+            var endDate = date+" "+time.replace(' : ',':')+":00";
+            var startDateCompare = new Date();
+            var endDateCompare = new Date(endDate);
+            if(startDateCompare.getTime() >= endDateCompare.getTime()){
+              check = requiredMessage("date","현재시간보다 작습니다.");
+            }
+            else{
+              param['end_reserve_time'] = date+" "+time.replace(' : ',':')+":00";
+            }
           }
         }
-        console.log(param);
+
         if(check){
+          $('span.messages').find('.error').text('');
           SendEmails(param);
         }
       }
