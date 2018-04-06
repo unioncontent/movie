@@ -138,6 +138,7 @@ async function asyncForEach(array, callback) {
     }
   }
 }
+
 router.post('/send', async function(req, res) {
   console.log('mail send : ',req.body);
   // 이메일 발송
@@ -146,8 +147,12 @@ router.post('/send', async function(req, res) {
 
   var sender = await mailListA.getOneEmail(req.body.M_sender);
   var recipi = await mailListA.getOneEmail(req.body['M_recipi[]']);
-  var groups = await mailListC.getEmail(req.body['M_group[]']);
-  var groups2allIdx = await mailListC.getIdx(req.body['M_group[]']);
+  var groups = [];
+  var groups2allIdx = [];
+  if(req.body['M_group[]'].length != 0){
+    groups = await mailListC.getEmail(req.body['M_group[]']);
+    groups2allIdx = await mailListC.getIdx(req.body['M_group[]']);
+  }
 
   var recipients = recipi.concat(groups);
 
@@ -178,18 +183,26 @@ router.post('/send', async function(req, res) {
   }
 
   // 이메일발송 결과 DB 저장
-  var mailAllParam = req.body;
+  var mailAllParam = {
+    M_sender: req.body['M_sender'],
+    M_keyword: req.body['M_keyword'],
+    M_mail_type: req.body['M_mail_type'],
+    M_body: req.body['M_body'],
+    M_subject: req.body['M_subject'],
+    M_id: '1'
+  };
   if(typeof req.body['M_recipi[]'] == 'object'){
     mailAllParam['M_recipi'] = req.body['M_recipi[]'].join(',');
   }
   else if(typeof req.body['M_recipi[]'] == 'string'){
     mailAllParam['M_recipi'] = req.body['M_recipi[]'];
   }
-  mailAllParam['M_group'] = groups2allIdx[0];
-  delete mailAllParam['M_group[]']; // 수신그룹 key 이름 변경
-  delete mailAllParam['M_recipi[]']; // 받는사람 key 이름 변경
-  delete mailAllParam['M_type']; // 예약 key  삭제
-  mailAllParam['M_id'] = '1';
+  if(req.body['M_file'].length != 0){
+    mailAllParam['M_file'] = req.body['M_file'];
+  }
+  if(groups2allIdx.length != 0){
+    mailAllParam['M_group'] = groups2allIdx[0];
+  }
   var m_idx_a = null;
   // 메일발송 리스트 insert
   try{
