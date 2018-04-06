@@ -6,6 +6,27 @@ const DBpromise = require('../db/db_info.js');
 */
 
 var mailListAll = {
+  getOneEmail : async function(param){
+    var sql = 'select M_email from m_mail_list_all ';
+    if(typeof param == 'object'){
+      sql += 'where n_idx ='+param[0]+' or';
+      for(var i = 1; i < param.length; i++){
+        sql += ' n_idx ='+param[i];
+        if(i != (param.length-1)){
+          sql += ' or';
+        }
+      }
+    }
+    else if(typeof param == 'string'){
+      sql += 'where n_idx ='+param;
+    }
+    var result = await getResult(sql,[]);
+    return [].map.call(result, function(obj) { return obj.M_email; });
+  },
+  getOneInfo : async function(n_idx){
+    var sql = 'select * from m_mail_list_all where n_idx=?';
+    return await getResult(sql,[n_idx]);
+  },
   selectView: async function(body,param){
     var sql = 'select search, user_name, M_id, M_email, M_name, M_ptitle, M_tel, M_regdate,n_idx';
     if (typeof body.as !== 'undefined') {

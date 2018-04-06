@@ -1,7 +1,10 @@
 var express = require('express');
 var request = require('request');
+var datetime = require('node-datetime');
 var urlencode = require('urlencode');
 var Iconv = require('iconv').Iconv;
+var mailAllA = require('../models/mailAllA.js');
+var mailDetailB = require('../models/mailDetailB.js');
 var mailListA = require('../models/mailListA.js');
 var mailListC = require('../models/mailListC.js');
 var keyword = require('../models/keyword.js');
@@ -127,37 +130,169 @@ router.get('/searchAll', async function(req, res) {
  * 메일 내용 텍스트로 보내실 경우
  * bodytag = 1
  */
-
-router.post('/send', function(req, res) {
+ async function asyncForEach(array, callback) {
+   for (var index = 0; index < array.length; index++) {
+     var done = await callback(array[index], index, array);
+     if(done == false){
+       break;
+     }
+   }
+ }
+router.post('/send', async function(req, res) {
   console.log('mail send : ',req.body);
+  /*
+  M_subject:"테스트중" //제목
+  M_body  :  "<p>테스트중<br></p>" // 본문
+  M_recipi:["3"] //받는 사람
+  M_sender:"13" //보내는 사람
+  M_keyword  :  "572" //키워드(DB)
+  M_mail_type  :  "1" //메일타입(DB)
+
+  M_group  :  ["1"] //숨은 참조(생략가능)
+  M_file  :  "" //첨부 파일(생략가능)
+  M_type:"1" // 예약(생략가능)
+  end_reserve_time : "2018-04-11 11 : 00" //시간(생략가능)
+  */
   var euckr2utf8 = new Iconv('EUC-KR', 'UTF-8');
   var utf82euckr = new Iconv('UTF-8', 'EUC-KR');
+  var sender = await mailListA.getOneEmail(req.body.M_sender);
+  var recipients = await mailListA.getOneEmail(req.body['M_recipi[]']);
+  // console.log(urlencode(new Buffer(utf82euckr.convert(req.body.M_subject)).toString('base64')));
+  // console.log(urlencode(new Buffer(utf82euckr.convert(req.body.M_body)).toString('base64')));
+  // console.log(urlencode(sender.join(',')));
+  // console.log(urlencode(recipients.join(',')));
+  // console.log(urlencode('unionc'));
+  // console.log(urlencode('w4EzdnbOY3oypxO'));
+  // console.log((req.body.M_type == '1') ? urlencode('ONETIME'):urlencode('NORMAL'));
+  // console.log((typeof req.body.end_reserve_time =='undefined') ? '' : urlencode(req.body.end_reserve_time));
   var param = {
     'subject': urlencode(new Buffer(utf82euckr.convert(req.body.M_subject)).toString('base64')),
     'body': urlencode(new Buffer(utf82euckr.convert(req.body.M_body)).toString('base64')),
-    'sender': urlencode(req.body.sender),
-    'recipients': urlencode(req.body.recipients),
+    'sender': urlencode(sender.join(',')),
+    'recipients': urlencode(recipients.join(',')),
     'username': urlencode('unionc'),
-    'key': urlencode('w4EzdnbOY3oypxO')
+    'key': urlencode('w4EzdnbOY3oypxO'),
+    'mail_type': (req.body.M_type == '1') ? urlencode('ONETIME'):urlencode('NORMAL'),
+    'time' : (typeof req.body.end_reserve_time =='undefined') ? '' : urlencode(req.body.end_reserve_time)
   };
   var paramStr = 'subject='+param['subject']+'&body='+param['body']+'&sender='+param['sender']+'&username='+param['username']+'&recipients='+param['recipients']+'&key='+param['key'];
+  if(param['mail_type'] == urlencode('ONETIME')){
+    paramStr +='&mail_type='+param['mail_type']+'&start_reserve_time='+param['time']+'&end_reserve_time='+param['time'];
+  }
+  var resultEmail = await emailSendFun(paramStr);
+  var dt = datetime.create();
+  var now = dt.format('Y/m/d H:M:S');
+  console.log('이메일 발송 결과 : ',resultEmail);
+  if(resultEmail[0]){
+    res.send('메일발송 성공했습니다.');
+  }
+  else{
+    res.status(500).send(resultEmail[2]);
+  }
+  var mailAllParam = req.body;
+  if(typeof req.body['M_recipi[]'] == 'object'){
+    mailAllParam['M_recipi'] = req.body['M_recipi[]'].join(',');
+  }
+  else if(typeof req.body['M_recipi[]'] == 'string'){
+    mailAllParam['M_recipi'] = req.body['M_recipi[]'];
+  }
+  delete mailAllParam['M_recipi[]']; // 받는사람 key 이름 변경
+  delete mailAllParam['M_type']; // 예약 key  삭제
+  mailAllParam['M_id'] = '1';
+  var m_idx_a = null;
+  try{
+    var resultInsert = await mailAllA.insert(mailAllParam);
+    m_idx_a = resultInsert.insertId;
+    console.log('inseret idx:',m_idx_a);
+  }
+  catch(e){
+    console.log('insert 오류:',e);
+  }
+  if(m_idx_a){
+    try{
+      await asyncForEach(JSON.parse('['+mailAllParam.M_recipi+']'), async (item, index, array) => {
+        var recipiInfo = await mailListA.getOneInfo(item);
+        console.log(index,':',recipiInfo);
+        if(recipiInfo.length != 0){
+          var mailDetailParam = {
+            M_idx_A : m_idx_a,
+            E_mail : recipiInfo[0].M_email,
+            P_title : recipiInfo[0].M_ptitle,
+            P_name : recipiInfo[0].M_name,
+            M_send :  (typeof req.body.end_reserve_time =='undefined') ? now : req.body.end_reserve_time,
+            M_result : resultEmail[1]
+          }
+          console.log('mailDetailParam:',mailDetailParam);
+          var resultInsert = await mailDetailB.insert(mailDetailParam);
+          console.log('resultInsert:',resultInsert);
+        } else {
+          await mailAllA.delete(m_idx_a);
+        }
+      });
+    }
+    catch(e){
+      console.log('insert 오류:',e);
+      await mailAllA.delete(m_idx_a);
+    }
+  }
+});
 
-  // 요청 세부 내용
+function emailSendFun(pStr){
   var options = {
     url: 'https://directsend.co.kr/index.php/api/v2/mail',
     method:'POST',
     headers: {'Content-Type': 'application/x-www-form-urlencoded;'},
-    body: paramStr
+    body: pStr
   }
-  request(options,function (error, response, body) {
-    if(body.status == '0'){
-      res.send(true);
-    }
-    else{
-      res.send(false);
-    }
+  /*
+  m_mail_detail_B table에 저장될 M_result 값 종류
+  0 : 정상발송 => 0 : 메일발송에 성공하였습니다.
+  103 : 보내는 사람 이메일이 유효하지 않음 => 3 : 보내는 사람 이메일이 유효하지 않습니다.
+  104 : 받는 사람 이메일이 유효하지 않음 => 4 : 받는 사람 이메일이 유효하지 않습니다.
+  105 : 본문에 포함되면 안되는 확장자가 있음(.exe or 문자열) => 5 : 본문에 포함되면 안되는 확장자가 있습니다.
+  113 : 첨부파일이 다운로드 되지 않을 경우(파일 경로가 없음) => 13 : 첨부파일의 경로나 파일이 없습니다.
+  ----------------------------
+  이외 에외들의 값은 9
+  에러 메시지 : 메일발송에 문제가 생겼습니다. 다시 시도해주세요.
+  100 : Post Validation 실패(파라미터 없음)
+  101 : 회원정보가 일치하지 않음
+  102 : 제목 내용 없음
+  106 : body Validation 실패(euc-kr 에서 utf8로 변환하는 과정에서 에러)
+  107 : 받는 사람이 없음
+  109 : return_url이 없음
+  110 : 첨부파일이 없음(정상적인 url이 아닌경우)
+  111 : 첨부파일 개수가 5개를 초과
+  112 : 첨부파일 Size가 5MB를 초과
+  205 : 잔액 부족
+  */
+  return new Promise((resolve, reject) => {
+    request(options, (error, response, body) => {
+      var resultArr = null;
+      console.log(error, response, body);
+      var requestResult = JSON.parse(body).status;
+      console.log(requestResult);
+      if(requestResult == '0'){
+        resultArr = [true,requestResult];
+      }
+      else if(requestResult == '103'){
+        resultArr = [false,3,'보내는 사람 이메일이 유효하지 않습니다.'];
+      }
+      else if(requestResult == '104'){
+        resultArr = [false,4,'받는 사람 이메일이 유효하지 않습니다.'];
+      }
+      else if(requestResult == '105'){
+        resultArr = [false,5,'본문에 포함되면 안되는 확장자가 있습니다.'];
+      }
+      else if(requestResult == '113'){
+        resultArr = [false,13,'첨부파일의 경로나 파일이 없습니다.'];
+      }
+      else{
+        resultArr = [false,9,'메일발송에 문제가 생겼습니다. 다시 시도해주세요.'];
+      }
+      return resolve(resultArr);
+    });
   });
-});
+}
 
 var multer = require('multer');
 var storageImage = multer.diskStorage({
