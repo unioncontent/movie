@@ -596,4 +596,14 @@ public class MediaController {
 		return "success";
 		
 	}
+	
+	@ResponseBody
+	@PostMapping("/checkUrl")
+	public Integer checkUrlPOST(String url) {
+		logger.info("checkUrlPOST called....");
+		
+		logger.info("url: " + url);
+		
+		return mediaService.checkUrl(url);
+	}
 }

@@ -6,7 +6,9 @@ import org.union.domain.GraphVO;
 import org.union.domain.MediaVO;
 import org.union.domain.NewsVO;
 import org.union.domain.ReplyVO;
+import org.union.domain.SNSVO;
 import org.union.domain.SearchCriteria;
+import org.union.domain.TextTypeDateVO;
 import org.union.domain.TextTypeVO;
 
 public interface MediaDAO {
@@ -22,6 +24,8 @@ public interface MediaDAO {
 	
 	public void newsDelete(Integer news_idx);
 	public void replyDelete(Integer reply_idx);
+	
+	public List<ReplyVO> replyTotalList(Integer news_idx);
 	
 	public TextTypeVO periodTextTypeCount(SearchCriteria cri);
 	
@@ -95,6 +99,9 @@ public interface MediaDAO {
 	
 	public List<NewsVO> newsList(SearchCriteria cri);
 	
-	public List<ReplyVO> replyList(SearchCriteria cri); 
+	public List<ReplyVO> replyList(SearchCriteria cri);
 	
+	public List<MediaVO> mediaCnt(SearchCriteria cri);
+	public List<TextTypeDateVO> textTypeCount2(SearchCriteria cri);
+	public Integer checkUrl(String url);
 }

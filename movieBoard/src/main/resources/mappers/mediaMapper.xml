@@ -1016,4 +1016,33 @@
 		limit  
 			#{startPage}, #{perPageNum}	
 	</select>
+	
+	<select id="mediaCnt" resultType="TextTypeVO">
+ 		select  
+ 		count(if(textType='좋은글', textType, null)) lik,
+		count(if(textType='나쁜글', textType, null)) dis,
+		count(if(textType='관심글', textType, null)) cu,
+		count(if(textType='기타글', textType, null)) etc,
+		count(if(textType is not null and texttype!='삭제글', textType, null)) al
+ 		from media_data where media_title is not null
+ 		<include refid="search_writeDate"></include>
+ 	</select>
+ 	<select id="textTypeCount2" resultType="TextTypeDateVO">
+ 		select 
+		DATE_FORMAT(writeDate,'%Y-%m-%d') writeDate,
+		count(if(textType='좋은글', textType, null)) lik,
+		count(if(textType='나쁜글', textType, null)) dis,
+		count(if(textType='관심글', textType, null)) cu,
+		count(if(textType='기타글', textType, null)) etc,
+		count(if(textType is not null and texttype!='삭제글', textType, null)) al
+		from media_data
+		where textType is not null
+		<include refid="search_writeDate"></include>
+		group by DATE_FORMAT(writeDate,'%Y-%m-%d')
+		ORDER BY writeDate ASC;
+ 	</select>
+ 	<select id="checkUrl" resultType="Integer">
+		select count(*) from news_data where url = #{url}
+	
+	</select>
  </mapper>

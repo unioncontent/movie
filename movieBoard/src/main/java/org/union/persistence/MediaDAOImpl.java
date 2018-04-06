@@ -5,13 +5,17 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.union.controller.MediaController;
 import org.union.domain.GraphVO;
 import org.union.domain.MediaVO;
 import org.union.domain.NewsVO;
 import org.union.domain.ReplyVO;
 import org.union.domain.SearchCriteria;
+import org.union.domain.TextTypeDateVO;
 import org.union.domain.TextTypeVO;
 
 @Repository
@@ -21,7 +25,7 @@ public class MediaDAOImpl implements MediaDAO {
 	private SqlSession session;
 	
 	private static final String namespace = "org.union.mappers.MediaMapper.";
-	
+	private static Logger logger = LoggerFactory.getLogger(MediaController.class);
 	
 	@Override
 	public void create(MediaVO vo) {
@@ -53,7 +57,7 @@ public class MediaDAOImpl implements MediaDAO {
 
 	@Override
 	public List<ReplyVO> replyList(SearchCriteria cri) {
-		
+		logger.info("replyList: " + cri);
 		return session.selectList(namespace + "replyList", cri);
 	}
 	
@@ -310,6 +314,12 @@ public class MediaDAOImpl implements MediaDAO {
 	}
 	
 	@Override
+	public List<ReplyVO> replyTotalList(Integer news_idx) {
+
+		return session.selectList(namespace + "replyTotalList", news_idx);
+	}
+	
+	@Override
 	public Integer TotalAllPageCount(SearchCriteria cri) {
 
 		return session.selectOne(namespace + "TotalAllPageCount", cri);
@@ -433,6 +443,22 @@ public class MediaDAOImpl implements MediaDAO {
 		
 		
 		return session.selectList(namespace + "reporterGetTextTypeCount", data);
+	}
+
+	@Override
+	public List<MediaVO> mediaCnt(SearchCriteria cri) {
+		return session.selectList(namespace + "mediaCnt", cri);
+	}
+
+	@Override
+	public List<TextTypeDateVO> textTypeCount2(SearchCriteria cri) {
+
+		return session.selectList(namespace + "textTypeCount2", cri);
+	}
+
+	@Override
+	public Integer checkUrl(String url) {
+		return session.selectOne(namespace + "checkUrl", url);
 	}
 
 	

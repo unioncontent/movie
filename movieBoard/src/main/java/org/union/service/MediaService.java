@@ -9,6 +9,7 @@ import org.union.domain.NewsVO;
 import org.union.domain.PeriodMediaVO;
 import org.union.domain.ReplyVO;
 import org.union.domain.SearchCriteria;
+import org.union.domain.TextTypeDateVO;
 import org.union.domain.TextTypeVO;
 
 public interface MediaService {
@@ -29,6 +30,7 @@ public interface MediaService {
 	public void replyRemove(Integer reply_idx);
 	
 	public List<ReplyVO> replyList(SearchCriteria cri); 
+	public List<ReplyVO> replyTotalList(Integer news_idx);
 	
 	public TextTypeVO periodTextTypeCount(SearchCriteria cri);
 	
@@ -96,4 +98,8 @@ public interface MediaService {
 	public TextTypeVO getPressTextTypeSearchCount(SearchCriteria cri);
 	
 	public List<MediaVO> reporterGetTextTypeCount(SearchCriteria cri, String reporter,String textType);
+	
+	public List<MediaVO> mediaCnt(SearchCriteria cri);
+	public List<TextTypeDateVO> textTypeCount2(SearchCriteria cri);
+	public Integer checkUrl(String url);
 }

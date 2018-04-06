@@ -15,6 +15,7 @@ import org.union.domain.PortalVO;
 import org.union.domain.ReplyVO;
 import org.union.domain.ReporterVO;
 import org.union.domain.SearchCriteria;
+import org.union.domain.TextTypeDateVO;
 import org.union.domain.TextTypeVO;
 import org.union.persistence.KeywordDAO;
 import org.union.persistence.MediaDAO;
@@ -419,6 +420,14 @@ public class MediaServiceImpl implements MediaService {
 	}
 	
 	@Override
+	public List<ReplyVO> replyTotalList(Integer news_idx) {
+
+		List<ReplyVO> list = mediaDAO.replyTotalList(news_idx);
+		
+		return list;
+	}
+	
+	@Override
 	public Integer allPageCount(SearchCriteria cri) {
 
 		return mediaDAO.allPageCount(cri);
@@ -557,5 +566,22 @@ public class MediaServiceImpl implements MediaService {
 		return list;
 	}
 
-	
+	@Override
+	public List<MediaVO> mediaCnt(SearchCriteria cri) {
+		
+		return mediaDAO.mediaCnt(cri);
+	}
+
+	@Override
+	public List<TextTypeDateVO> textTypeCount2(SearchCriteria cri) {
+
+		return mediaDAO.textTypeCount2(cri);
+	}
+
+	@Override
+	public Integer checkUrl(String url) {
+
+		return mediaDAO.checkUrl(url);
+	}
+
 }

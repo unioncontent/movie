@@ -134,9 +134,15 @@
                               <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">*URL</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" name="url">
+                                    <input type="text" class="form-control" name="url" id="url">
+                                    <div style="height: 10px;"></div>
+                                    <button id="checkMainBtn" type="button"
+										class="btn btn-sm btn-inverse alert-prompt"
+										onclick="_gaq.push(['_trackEvent', 'example', 'try', 'alert-prompt']);">
+										<i class="icofont icofont icofont-ui-check"></i> 중복체크
+									</button>
                                 </div>
-                              </div>
+                              </div>							
                               <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">언론사</label>
                                 <div class="col-sm-10">
@@ -299,74 +305,45 @@
 		
 		document.querySelector('.alert-prompt').onclick = function(){
 		    swal({
-		      title: "✓ 대표 키워드 중복체크",
-		      text: "키워드를 입력해주세요.",
+		      title: "✓ URL 중복체크",
+		      text: "URL를 입력해주세요.",
 		      type: "input",
 		      showCancelButton: true,
 		      closeOnConfirm: false,
-		      inputValue:$("#keywordName").val(),
-		      inputPlaceholder: "대표 키워드 입력"
+		      inputValue:$("#url").val(),
+		      inputPlaceholder: "url 입력"
 		    }, function (inputValue) {
 		    	
 		    	$.ajax({
 
 					type : "POST",
-				  	url : "checkMain",
+				  	url : "checkUrl",
 			 	  	dataType : "text",
-			 	  	data : {keyword_main : inputValue},
+			 	  	data : {url : inputValue},
 			  	  	success : function(data){
 			  	  	if (inputValue === false){
-				        swal.showInputError("키워드를 다시 입력해 주세요.");
+				        swal.showInputError("url를 다시 입력해 주세요.");
 				        return false;
 				      }
 				      if (inputValue == ""){
-				        swal.showInputError("키워드를 다시 입력해 주세요.");
+				        swal.showInputError("url를 다시 입력해 주세요.");
 				        return false;
 				      }
 				      if (data != 0) {
-				        swal.showInputError("키워드가 중복됩니다. 다시 입력해 주세요.");
+				        swal.showInputError("url이 중복됩니다. 다시 입력해 주세요.");
 				        return false
 				      }
 				      
-				      $("#keywordName").val(inputValue);
+				      $("#url").val(inputValue);
 				      $("#keywordCheck").val("true");
-				      $("#keywordName").removeClass("form-control-danger");
-				      $("#keywordName").siblings().children("p").text("");
-				      swal("중복확인!", inputValue+"는 사용가능한 키워드입니다.", "success");
+				      $("#url").removeClass("form-control-danger");
+				      $("#url").siblings().children("p").text("");
+				      swal("중복확인!", inputValue+"는 사용가능한 url입니다.", "success");
 			  	  	}
 				});
 		      
 		    });
 		  };
-		
-		  $("#insertBtn").on("click", function(){
-
-			  	var check=true;
-			    if($("#company option:selected").text() == "선택"){
-			      check = requiredMessage("company","회사명을 선택해주세요.");
-			    }
-			    if($("#keywordName").val() == ""){
-			      check = requiredMessage("keywordName","키워드를 입력해주세요.");
-			    }
-			    //키워드가 입력되어 있는데 중복체크 안했을 경우
-			    if($("#keywordName").val() != "" && $("#keywordCheck").val() == ""){
-			      check = requiredMessage("keywordName","키워드 중복확인 해주세요.");
-			    }
-			    
-			  $.ajax({
-
-					type : "POST",
-				  	url : "insertMain",
-			 	  	dataType : "text",
-			 	  	data : {keyword_main : $("#keywordName").val(), 
-			 	  			company : $("#selectCompany option:selected").val()
-			 	  		},
-			  		success : function(msg){
-			  			console.log(msg);
-			  			self.location = msg;
-			  		}
-			  });
-		  });
 		
 	}); // end ready...
 
