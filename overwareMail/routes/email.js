@@ -130,41 +130,27 @@ router.get('/searchAll', async function(req, res) {
  * 메일 내용 텍스트로 보내실 경우
  * bodytag = 1
  */
- async function asyncForEach(array, callback) {
-   for (var index = 0; index < array.length; index++) {
-     var done = await callback(array[index], index, array);
-     if(done == false){
-       break;
-     }
-   }
- }
+async function asyncForEach(array, callback) {
+  for (var index = 0; index < array.length; index++) {
+   var done = await callback(array[index], index, array);
+    if(done == false){
+     break;
+    }
+  }
+}
 router.post('/send', async function(req, res) {
   console.log('mail send : ',req.body);
-  /*
-  M_subject:"테스트중" //제목
-  M_body  :  "<p>테스트중<br></p>" // 본문
-  M_recipi:["3"] //받는 사람
-  M_sender:"13" //보내는 사람
-  M_keyword  :  "572" //키워드(DB)
-  M_mail_type  :  "1" //메일타입(DB)
-
-  M_group  :  ["1"] //숨은 참조(생략가능)
-  M_file  :  "" //첨부 파일(생략가능)
-  M_type:"1" // 예약(생략가능)
-  end_reserve_time : "2018-04-11 11 : 00" //시간(생략가능)
-  */
+  // 이메일 발송
   var euckr2utf8 = new Iconv('EUC-KR', 'UTF-8');
   var utf82euckr = new Iconv('UTF-8', 'EUC-KR');
+
   var sender = await mailListA.getOneEmail(req.body.M_sender);
-  var recipients = await mailListA.getOneEmail(req.body['M_recipi[]']);
-  // console.log(urlencode(new Buffer(utf82euckr.convert(req.body.M_subject)).toString('base64')));
-  // console.log(urlencode(new Buffer(utf82euckr.convert(req.body.M_body)).toString('base64')));
-  // console.log(urlencode(sender.join(',')));
-  // console.log(urlencode(recipients.join(',')));
-  // console.log(urlencode('unionc'));
-  // console.log(urlencode('w4EzdnbOY3oypxO'));
-  // console.log((req.body.M_type == '1') ? urlencode('ONETIME'):urlencode('NORMAL'));
-  // console.log((typeof req.body.end_reserve_time =='undefined') ? '' : urlencode(req.body.end_reserve_time));
+  var recipi = await mailListA.getOneEmail(req.body['M_recipi[]']);
+  var groups = await mailListC.getEmail(req.body['M_group[]']);
+  var groups2allIdx = await mailListC.getIdx(req.body['M_group[]']);
+
+  var recipients = recipi.concat(groups);
+
   var param = {
     'subject': urlencode(new Buffer(utf82euckr.convert(req.body.M_subject)).toString('base64')),
     'body': urlencode(new Buffer(utf82euckr.convert(req.body.M_body)).toString('base64')),
@@ -179,16 +165,19 @@ router.post('/send', async function(req, res) {
   if(param['mail_type'] == urlencode('ONETIME')){
     paramStr +='&mail_type='+param['mail_type']+'&start_reserve_time='+param['time']+'&end_reserve_time='+param['time'];
   }
-  var resultEmail = await emailSendFun(paramStr);
   var dt = datetime.create();
-  var now = dt.format('Y/m/d H:M:S');
+  var now = dt.format('Y-m-d H:M:S');
+  var resultEmail = await emailSendFun(paramStr);
   console.log('이메일 발송 결과 : ',resultEmail);
+
   if(resultEmail[0]){
     res.send('메일발송 성공했습니다.');
   }
   else{
     res.status(500).send(resultEmail[2]);
   }
+
+  // 이메일발송 결과 DB 저장
   var mailAllParam = req.body;
   if(typeof req.body['M_recipi[]'] == 'object'){
     mailAllParam['M_recipi'] = req.body['M_recipi[]'].join(',');
@@ -196,11 +185,15 @@ router.post('/send', async function(req, res) {
   else if(typeof req.body['M_recipi[]'] == 'string'){
     mailAllParam['M_recipi'] = req.body['M_recipi[]'];
   }
+  mailAllParam['M_group'] = groups2allIdx[0];
+  delete mailAllParam['M_group[]']; // 수신그룹 key 이름 변경
   delete mailAllParam['M_recipi[]']; // 받는사람 key 이름 변경
   delete mailAllParam['M_type']; // 예약 key  삭제
   mailAllParam['M_id'] = '1';
   var m_idx_a = null;
+  // 메일발송 리스트 insert
   try{
+    console.log(mailAllParam);
     var resultInsert = await mailAllA.insert(mailAllParam);
     m_idx_a = resultInsert.insertId;
     console.log('inseret idx:',m_idx_a);
@@ -208,9 +201,13 @@ router.post('/send', async function(req, res) {
   catch(e){
     console.log('insert 오류:',e);
   }
+  // 메일발송 상세정보 insert
   if(m_idx_a){
     try{
-      await asyncForEach(JSON.parse('['+mailAllParam.M_recipi+']'), async (item, index, array) => {
+      var recipiArr = JSON.parse('['+mailAllParam.M_recipi+']');
+      var recipiNgroup = recipiArr.concat(groups2allIdx);
+      console.log(recipiArr,recipiNgroup);
+      await asyncForEach(recipiNgroup, async (item, index, array) => {
         var recipiInfo = await mailListA.getOneInfo(item);
         console.log(index,':',recipiInfo);
         if(recipiInfo.length != 0){
@@ -220,7 +217,7 @@ router.post('/send', async function(req, res) {
             P_title : recipiInfo[0].M_ptitle,
             P_name : recipiInfo[0].M_name,
             M_send :  (typeof req.body.end_reserve_time =='undefined') ? now : req.body.end_reserve_time,
-            M_result : resultEmail[1]
+            M_result : 0//resultEmail[1]
           }
           console.log('mailDetailParam:',mailDetailParam);
           var resultInsert = await mailDetailB.insert(mailDetailParam);
@@ -229,6 +226,7 @@ router.post('/send', async function(req, res) {
           await mailAllA.delete(m_idx_a);
         }
       });
+
     }
     catch(e){
       console.log('insert 오류:',e);
@@ -268,9 +266,7 @@ function emailSendFun(pStr){
   return new Promise((resolve, reject) => {
     request(options, (error, response, body) => {
       var resultArr = null;
-      console.log(error, response, body);
       var requestResult = JSON.parse(body).status;
-      console.log(requestResult);
       if(requestResult == '0'){
         resultArr = [true,requestResult];
       }
