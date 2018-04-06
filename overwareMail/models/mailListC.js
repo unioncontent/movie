@@ -6,8 +6,48 @@ const DBpromise = require('../db/db_info.js');
 */
 
 var mailListC = {
+  getEmail : async function(param){
+    // 로그인 -> M_ID!!!
+    var sql = 'select M_email from m_mail_list_c where M_ID=\'1\' ';
+    if(typeof param == 'object'){
+      sql += 'and M_group_title =\''+param[0]+'\' or';
+      for(var i = 1; i < param.length; i++){
+        sql += ' M_group_title =\''+param[i]+'\'';
+        if(i != (param.length-1)){
+          sql += ' or';
+        }
+      }
+    }
+    else if(typeof param == 'string'){
+      sql += 'and M_group_title =\''+param+'\'';
+    }
+    var result = await getResult(sql,[]);
+    return [].map.call(result, function(obj) { return obj.M_email; });
+  },
+  getIdx : async function(param){
+    // 로그인 -> M_ID!!!
+    var sql = 'select M_idx_a from m_mail_list_c where M_ID=\'1\' ';
+    if(typeof param == 'object'){
+      sql += 'and M_group_title =\''+param[0]+'\' or';
+      for(var i = 1; i < param.length; i++){
+        sql += ' M_group_title =\''+param[i]+'\'';
+        if(i != (param.length-1)){
+          sql += ' or';
+        }
+      }
+    }
+    else if(typeof param == 'string'){
+      sql += 'and M_group_title =\''+param+'\'';
+    }
+    var result = await getResult(sql,[]);
+    return [].map.call(result, function(obj) { return obj.M_idx_a; });
+  },
+  getOneInfo : async function(m_idx){
+    var sql = 'select * from m_mail_list_c where M_idx_a=?';
+    return await getResult(sql,[m_idx]);
+  },
   selectView: async function(body,param,callback){
-    var sql = 'select user_name,search,M_group_title,count(*) as groupCount,M_ID';
+    var sql = 'select M_ID,user_name,search,count(*) as groupCount,M_group_title,M_group_title';
     if (typeof body.as !== 'undefined') {
       sql += body.as+' ,CONCAT(M_group_title, \'&lt;\', count(*), \'명&gt;\') as text ';
     }
