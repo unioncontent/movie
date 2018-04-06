@@ -62,7 +62,7 @@
                   <select id="M_mail_type" name="select" class="col-sm-6 form-control form-control-defalut f-left m-b-10">
                     <option value="0">선택</option>
                     <% for(var i=0; i < typeList.length; i++) { %>
-                      <option value="<%=typeList[i].n_idx%>"><%=typeList[i].M_mail_type%></option>
+                      <option value="<%=typeList[i].M_mail_type%>"><%=typeList[i].M_mail_type%></option>
                     <% } %>
                   </select>
                   <span class='messages'><p class='text-danger error'></p></span>
@@ -79,6 +79,7 @@
                 <label class="col-sm-2 col-form-label">* 메일내용</label>
                 <div class="col-sm-7">
                   <div id="M_body"></div>
+                  <span class='messages'><p class='text-danger error'></p></span>
                 </div>
               </div>
               <div class="form-group row">
@@ -106,21 +107,22 @@
                   </div>
                 </div>
               </div>
-              <div class="form-group row" style="display:none;">
+              <div class="form-group row reserveTime" style="display:none;">
                 <label class="col-sm-2 col-form-label">* 예약시간</label>
                 <div class="col-sm-5 row">
-                  <div class='col-sm-6 input-group date p-r-0'>
+                  <div class='col-sm-6 input-group p-r-0'>
                     <span class="input-group-addon bg-inverse">
                       <span class="far fa-calendar-alt"></span>
                     </span>
                     <input type="text" id="datepicker" class="form-control" />
                   </div>
-                  <div class='col-sm-6 input-group date p-r-0 p-l-0'>
+                  <div class='col-sm-6 input-group p-r-0' id="date">
                     <span class="input-group-addon bg-inverse">
                       <span class="far fa-clock"></span>
                     </span>
                     <input type="text" id="timepicker" class="form-control" />
                   </div>
+                  <span class='messages p-l-15'><p class='text-danger error'></p></span>
                 </div>
               </div>
               <div class="row">
@@ -308,8 +310,9 @@
 <!-- alert -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert@2.1.0/dist/sweetalert.min.js"></script>
 <!-- time  -->
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
-<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/wickedpicker@0.4.3/stylesheets/wickedpicker.css">
+<script src="https://cdn.jsdelivr.net/npm/wickedpicker@0.4.3/dist/wickedpicker.min.js"></script>
+
 <style>
   /* modal select */
   button.close{
@@ -449,18 +452,22 @@
 </style>
 <script type="text/javascript">
   $(document).ready(function() {
-    $('#timepicker').timepicker({
-      timeFormat: 'HH:mm',
-      interval: 60,
-      minTime: '00',
-      maxTime: '23:00',
-      defaultTime: '00',
-      startTime: '00:00',
-      dynamic: false,
-      dropdown: true,
-      scrollbar: true,
-      interval: 10
-    });
+    var dt = new Date();
+    var options = {
+      now: dt.getHours()+":"+"00",
+      twentyFour: true, //Display 24 hour format, defaults to false
+      upArrow: 'wickedpicker__controls__control-up', //The up arrow class selector to use, for custom CSS
+      downArrow: 'wickedpicker__controls__control-down', //The down arrow class selector to use, for custom CSS
+      close: 'wickedpicker__close', //The close class selector to use, for custom CSS
+      hoverState: 'hover-state', //The hover state class to use, for custom CSS
+      title: '10분단위로 설정해주세요.', //The Wickedpicker's title,
+      showSeconds: false, //Whether or not to show seconds, secondsInterval: 1, //Change interval for seconds, defaults to 1  ,
+      minutesInterval: 10, //Change interval for minutes, defaults to 1
+      beforeShow: null, //A function to be called before the Wickedpicker is shown
+      show: null, //A function to be called when the Wickedpicker is shown
+      clearable: false, //Make the picker's input clearable (has clickable "x")
+    };
+    $('#timepicker').wickedpicker(options);
     $('#datepicker').datepicker({
       dateFormat: 'yy-mm-dd',
       prevText: '이전 달',
@@ -683,7 +690,10 @@
       }
     });
   });
-
+  // 예약기능 클릭시
+  $('input[name=M_type]').on('change',function(){
+    $('.reserveTime').toggle();
+  });
   // 주소록 js
   var lastChecked = null;
   // 모달 적용버튼 클릭시
@@ -995,7 +1005,7 @@
 
   // 첨부파일 중 파일 삭제시
   $(document).on("click",".jFiler-item-trash-action",function(){
-    // console.log($(this));
+    console.log($(this));
   });
 
   // 메일 보내기 버튼 클릭시
@@ -1018,59 +1028,69 @@
           'M_body': $("#M_body").summernote('code'),
           'M_subject': $("#M_subject").val(),
           'M_file': $("#M_file").val(),
-          'M_type': $("input:radio[name=M_type]:checked").val(),
+          'M_type': $("input:radio[name=M_type]:checked").val()
         };
-        if(param["M_sender"] == ""){
+        if(param["M_sender"] == null){
           check = requiredMessage("M_sender","보내는 사람를 선택해주세요.");
         }
         if(param["M_recipi"] == ""){
           check = requiredMessage("M_recipi","받는사람을 선택해주세요.");
         }
-        if(param["M_keyword"] == ""){
+        if(param["M_keyword"] == 0){
           check = requiredMessage("M_keyword","키워드를 선택해주세요.");
         }
-        if(param["M_mail_type"] == ""){
+        if(param["M_mail_type"] == 0){
           check = requiredMessage("M_mail_type","메일타입을 선택해주세요.");
         }
         if(param["M_subject"] == ""){
           check = requiredMessage("M_subject","메일제목을 입력해주세요.");
         }
-        if(param["M_body"] == ""){
+        if(param["M_body"] == "" || param["M_body"] == "<p><br></p>"){
           check = requiredMessage("M_body","메일내용 입력해주세요.");
         }
-        if(param["M_type"] == ""){
-          check = requiredMessage("M_type","발송타입을 선택해주세요.");
+        if(param["M_type"] == "1"){
+          var time = $('#timepicker').val();
+          var date = $('#datepicker').val();
+          if(time == "" || date == ""){
+            check = requiredMessage("date","예약시간을 설정해주세요.");
+          }
+          else if(time.split(' : ')[1] % 10 != 0){
+            check = requiredMessage("date","예약시간은 10분단위로 설정해주세요.");
+          }
+          else{
+            param['end_reserve_time'] = date+" "+time.replace(' : ',':')+":00";
+          }
         }
-        // console.log(param);
-        SendEmails(param);
+        console.log(param);
+        if(check){
+          SendEmails(param);
+        }
       }
     });
   });
   // 메일 보내기 ajax
   function SendEmails(param){
+    console.log('SendEmails');
+    console.log(param);
     $.ajax({
       url: '/email/send',
       type: 'post',
       data : param,
       datatype : 'json',
       error:function(request,status,error){
-        // console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
-        swal("ERROR!", "메일발송 실패했습니다. 다시 시도해주세요.", "error");
+        console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
+        swal("ERROR!", request.responseText, "error");
       },
       success:function(data){
-        swal("SUCCESS!", "메일발송 성공했습니다.", "success");
+        swal("SUCCESS!", data, "success");
         // window.location.reload();
       }
     });
   }
-  $("input, select").on("focus",function(){
-    $(this).removeClass("form-control-danger");
-    $(this).siblings().children("p").text("");
-  });
   // input box 경고문
   function requiredMessage(target,msg){
-    $("#"+target).siblings().children().text(msg);
-    $("#"+target).addClass("form-control-danger");
+    $("#"+target).siblings('.messages').children('.error').text(msg);
+    // $("#"+target).addClass("form-control-danger");
     return false;
   }
 
