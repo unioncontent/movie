@@ -6,6 +6,11 @@ const DBpromise = require('../db/db_info.js');
 */
 
 var mailListAll = {
+  insert: async function(param){
+    var pValue = Object.values(param);
+    var sql = insertSqlSetting(Object.keys(param));
+    return await getResult(sql,pValue);
+  },
   getOneEmail : async function(param){
     var sql = 'select M_email from m_mail_list_all ';
     if(typeof param == 'object'){
@@ -55,6 +60,15 @@ var mailListAll = {
       return count[0]['total'];
     }
   }
+}
+
+function insertSqlSetting(keys){
+  var arr = [].map.call(keys, function(obj) { return '?'; });
+  columns = keys.join(', ');
+  placeholders = arr.join(', ');
+  var sql = "INSERT INTO m_mail_list_all ( "+columns+" ) VALUES ( "+placeholders+" );";
+
+  return sql;
 }
 
 async function getResult(sql,param) {
