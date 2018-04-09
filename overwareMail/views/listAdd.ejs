@@ -24,11 +24,11 @@
               <div class="form-group row">
                 <label class="col-sm-2 col-form-label">* 회사명</label>
                 <div class="col-sm-5">
-                  <input id="userName" name="userName" type="text" class="form-control" placeholder="회사명">
+                  <input id="mediaName" type="text" class="form-control" placeholder="회사명">
                   <span class='messages'><p class='text-danger error'></p></span>
                 </div>
                 <div class="col-sm-1 btn-check">
-                  <button id="idCheck" type="button" class="btn btn-inverse alert-prompt">
+                  <button id="mediaCheckBtn" type="button" class="btn btn-inverse alert-prompt">
                     검색
                   </button>
                 </div>
@@ -36,19 +36,19 @@
               <div class="form-group row">
                 <label class="col-sm-2 col-form-label">* 이름</label>
                 <div class="col-sm-5">
-                  <input id="userName" name="userName" type="text" class="form-control" placeholder="이름">
+                  <input id="name" type="text" class="form-control" placeholder="이름">
                   <span class='messages'><p class='text-danger error'></p></span>
                 </div>
               </div>
               <div class="form-group row">
                 <label class="col-sm-2 col-form-label">* 이메일</label>
                 <div class="col-sm-5">
-                  <input id="id" name="id" type="text" class="form-control" id="" placeholder="중복체크를 해주세요." readonly>
-                  <input type="hidden" id="idCheck"/>
+                  <input id="email" type="text" class="form-control" placeholder="이메일 중복체크를 해주세요." readonly>
+                  <input type="hidden" id="emailCheck"/>
                   <span class='messages'><p class='text-danger error'></p></span>
                 </div>
                 <div class="col-sm-1 btn-check">
-                  <button id="idCheck" type="button" class="btn btn-inverse alert-prompt">
+                  <button id="emailCheckBtn" type="button" class="btn btn-inverse alert-prompt">
                     중복체크
                   </button>
                 </div>
@@ -56,7 +56,7 @@
               <div class="form-group row">
                 <label class="col-sm-2 col-form-label">* 연락처</label>
                 <div class="col-sm-5">
-                  <input id="pw" name="pw" type="password" class="form-control" id="" placeholder="연락처">
+                  <input id="tel" type="text" class="form-control" placeholder="연락처">
                   <span class='messages'><p class='text-danger error'></p></span>
                 </div>
               </div>
@@ -70,7 +70,7 @@
           </div>
         </div>
       </div>
-      <div class="modal fade show" id="group-Modal">
+      <div class="modal fade show" id="search-Modal">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
@@ -125,3 +125,13 @@
     </div>
   </div>
 </div>
+<!-- alert -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert@2.1.0/dist/sweetalert.min.js"></script>
+<script type="text/javascript">
+  $('#mediaCheckBtn').on('click',function(){
+
+  });
+  $('#emailCheckBtn').on('click',function(){
+
+  });
+</script>
