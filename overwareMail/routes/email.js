@@ -3,14 +3,15 @@ var request = require('request');
 var datetime = require('node-datetime');
 var urlencode = require('urlencode');
 var Iconv = require('iconv').Iconv;
+// DB module
 var mailAllA = require('../models/mailAllA.js');
 var mailDetailB = require('../models/mailDetailB.js');
 var mailListA = require('../models/mailListA.js');
 var mailListC = require('../models/mailListC.js');
 var keyword = require('../models/keyword.js');
 var mailType = require('../models/mailType.js');
+
 var router = express.Router();
-const DBpromise = require('../db/db_info.js');
 
 router.get('/', async function(req, res) {
   var data = {
@@ -139,6 +140,11 @@ async function asyncForEach(array, callback) {
   }
 }
 
+router.get('/send/result', async function(req, res) {
+  console.log('/send/result값');
+  console.log(req.query);
+});
+
 router.post('/send', async function(req, res) {
   console.log('mail send : ',req.body);
   // 이메일 발송
@@ -149,13 +155,14 @@ router.post('/send', async function(req, res) {
   var recipi = await mailListA.getOneEmail(req.body['M_recipi[]']);
   var groups = [];
   var groups2allIdx = [];
-  if(req.body['M_group[]'].length != 0){
-    groups = await mailListC.getEmail(req.body['M_group[]']);
-    groups2allIdx = await mailListC.getIdx(req.body['M_group[]']);
+  if(typeof req.body['M_group[]'] != 'undefined'){
+    if(req.body['M_group[]'].length != 0){
+      groups = await mailListC.getEmail(req.body['M_group[]']);
+      groups2allIdx = await mailListC.getIdx(req.body['M_group[]']);
+    }
   }
 
   var recipients = recipi.concat(groups);
-
   var param = {
     'subject': urlencode(new Buffer(utf82euckr.convert(req.body.M_subject)).toString('base64')),
     'body': urlencode(new Buffer(utf82euckr.convert(req.body.M_body)).toString('base64')),
@@ -164,12 +171,19 @@ router.post('/send', async function(req, res) {
     'username': urlencode('unionc'),
     'key': urlencode('w4EzdnbOY3oypxO'),
     'mail_type': (req.body.M_type == '1') ? urlencode('ONETIME'):urlencode('NORMAL'),
-    'time' : (typeof req.body.end_reserve_time =='undefined') ? '' : urlencode(req.body.end_reserve_time)
+    'time' : (typeof req.body.end_reserve_time =='undefined') ? '' : urlencode(req.body.end_reserve_time),
+    'file_url': urlencode(req.body.M_file),
+    'file_name': urlencode(req.body.M_fileName)
   };
-  var paramStr = 'subject='+param['subject']+'&body='+param['body']+'&sender='+param['sender']+'&username='+param['username']+'&recipients='+param['recipients']+'&key='+param['key'];
+  var paramStr = 'subject='+param['subject']+'&body='+param['body']+'&sender='+param['sender']+'&username='+param['username']+'&recipients='+param['recipients']+'&key='+param['key']+'&return_url=http://localhost:3000/email/send/result';
   if(param['mail_type'] == urlencode('ONETIME')){
     paramStr +='&mail_type='+param['mail_type']+'&start_reserve_time='+param['time']+'&end_reserve_time='+param['time'];
   }
+  if(param['file_url'] != "" && param['file_name'] != ""){
+    paramStr += '&file_url='+param['file_url']+'&file_name='+param['file_name'];
+  }
+  console.log(param);
+  console.log(paramStr);
   var dt = datetime.create();
   var now = dt.format('Y-m-d H:M:S');
   var resultEmail = await emailSendFun(paramStr);
@@ -197,16 +211,18 @@ router.post('/send', async function(req, res) {
   else if(typeof req.body['M_recipi[]'] == 'string'){
     mailAllParam['M_recipi'] = req.body['M_recipi[]'];
   }
-  if(req.body['M_file'].length != 0){
-    mailAllParam['M_file'] = req.body['M_file'];
+  if(req.body['M_file_d'] != ""){
+    mailAllParam['M_file'] = req.body['M_file_d'];
   }
-  if(groups2allIdx.length != 0){
-    mailAllParam['M_group'] = groups2allIdx[0];
+  if(groups2allIdx == []){
+    if(groups2allIdx.length != 0){
+      mailAllParam['M_group'] = groups2allIdx[0];
+    }
   }
   var m_idx_a = null;
   // 메일발송 리스트 insert
   try{
-    console.log(mailAllParam);
+    console.log('메일발송 리스트 insert:',mailAllParam);
     var resultInsert = await mailAllA.insert(mailAllParam);
     m_idx_a = resultInsert.insertId;
     console.log('inseret idx:',m_idx_a);
@@ -303,29 +319,43 @@ function emailSendFun(pStr){
   });
 }
 
+const fs = require('fs-extra');
 var multer = require('multer');
+var date = datetime.create();
+var today = date.format('Ymd');
+async function mkdirsFun (directory) {
+  try {
+    await fs.ensureDir(directory)
+    return directory;
+    console.log('success!')
+  } catch (err) {
+    console.error(err)
+  }
+}
 var storageImage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'public/uploads/image') // cb 콜백함수를 통해 전송된 파일 저장 디렉토리 설정
+  destination: async function (req, file, cb) {
+    var path = await mkdirsFun('public/uploads/image/'+today);
+    await cb(null, path); // cb 콜백함수를 통해 전송된 파일 저장 디렉토리 설정
   },
   filename: function (req, file, cb) {
-    cb(null, file.originalname) // cb 콜백함수를 통해 전송된 파일 이름 설정
+    cb(null, file.originalname); // cb 콜백함수를 통해 전송된 파일 이름 설정
   }
 });
 var uploadImage = multer({ storage: storageImage });
 router.post('/send/img',uploadImage.single('file'),function(req, res) {
   console.log('/send/img');
-  console.log(req.file);
+  console.log(req.file.path);
   if (!req.file) {
     console.log("No file passed");
     return res.status(500).send("No file passed");
   }
-  res.send(req.file.filename);
+  res.send(req.file.destination.replace('public/','')+'/'+req.file.originalname);
 });
 
 var storageFiles = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'public/uploads/files')
+  destination: async function (req, file, cb) {
+    var path = await mkdirsFun('public/uploads/files/'+today);
+    await cb(null, path);
   },
   filename: function (req, file, cb) {
     cb(null, file.originalname)
@@ -339,7 +369,12 @@ router.post('/send/files',uploadFiles.single('files[]'),function(req, res) {
     console.log("No file passed");
     return res.status(500).send("No file passed");
   }
-  res.send(req.file.filename);
+  if(req.file.filename.indexOf('.exe') != -1){
+    console.log(req.file.path);
+    fs.removeSync(req.file.path);
+    return res.status(500).send("exe는 업로드 불가합니다.");
+  }
+  res.send([req.file.filename,req.file.destination.replace('public/uploads/files/','')+'/'+req.file.originalname]);
 });
 
 module.exports = router;

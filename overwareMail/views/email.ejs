@@ -40,7 +40,7 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-sm-2 col-form-label">수신그룹(숨은참조)</label>
+                <label class="col-sm-2 col-form-label">수신그룹<br/>(숨은참조)</label>
                 <div class="col-sm-5">
                   <select id="M_group" class="group-select col-sm-12 form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true">
                   </select>
@@ -84,7 +84,19 @@
               </div>
               <div class="form-group row">
                 <label class="col-sm-2 col-form-label">첨부파일</label>
-                <div class="col-sm-5">
+                <div class="col-sm-7">
+                  <ul class="text-muted f-12  m-b-5">
+                    <li>
+                      <i class="fas fa-caret-right"></i> 파일 첨부는 최대 5개, 첨부파일의 전체 합 10MB까지 첨부 가능합니다.
+                    </li>
+                    <li>
+                      <i class="fas fa-caret-right"></i> 첨부된 파일은 약 2주간 다운로드 가능하며 메일 하단의 링크형태로 제공됩니다.
+                    </li>
+                    <li>
+                      <i class="fas fa-caret-right"></i> 첨부파일 유형은 실행파일 및 악성코드파일 등은 첨부하실 수 없습니다. (exe 등)
+                    </li>
+                  </ul>
+                  <input type="hidden" id="fileList">
                   <input type="file" id="M_file" name="files[]" multiple="multiple" class="form-control">
                 </div>
               </div>
@@ -648,12 +660,22 @@
         enctype: 'multipart/form-data',
         beforeSend: function(){},
         success: function(data, el){
+          var fileListVal = $('#fileList').val();
+          if(fileListVal != "" && fileListVal != ","){
+            fileListVal +=',';
+          }
+          if (fileListVal.indexOf(data[1]) == -1) {
+            $('#fileList').val(fileListVal+data[1]);
+          }
           var parent = el.find(".jFiler-jProgressBar").parent();
           el.find(".jFiler-jProgressBar").fadeOut("slow", function(){
             $("<div class=\"jFiler-item-others text-success\"><i class=\"icon-jfi-check-circle\"></i> Success</div>").hide().appendTo(parent).fadeIn("slow");
           });
+          console.log($('#fileList').val());
         },
         error: function(el){
+          console.log(el);
+          alert('파일 타입과 파일의 경로를 다시 확인해주세요.');
           var parent = el.find(".jFiler-jProgressBar").parent();
           el.find(".jFiler-jProgressBar").fadeOut("slow", function(){
             $("<div class=\"jFiler-item-others text-error\"><i class=\"icon-jfi-minus-circle\"></i> Error</div>").hide().appendTo(parent).fadeIn("slow");
@@ -673,7 +695,18 @@
       beforeShow: function(){return true},
       onSelect: function(){},
       afterShow: function(){},
-      onRemove: function(){},
+      onRemove: function(e){
+        var now = $.datepicker.formatDate('yymmdd', new Date());
+        var removeEle = $(e).find('.jFiler-item-title').prop('title');
+        var fileListVal = $('#fileList').val();
+        var fileListArr = fileListVal.split(',');
+        var removeIdx = $.inArray(now+'/'+removeEle, fileListArr);
+        if (removeIdx != -1) {
+          delete fileListArr[removeIdx];
+          $('#fileList').val(fileListArr.join());
+        }
+        console.log($('#fileList').val());
+      },
       onEmpty: function(){},
       captions: {
         button: "등록",
@@ -998,15 +1031,10 @@
       processData : false,
       success: function(data) {
         // console.log('success:',data);
-        $('#M_body').summernote('insertImage', 'http://localhost:3000//uploads/'+data);
+        $('#M_body').summernote('insertImage', 'http://localhost:3000/'+data);
       }
     });
   }
-
-  // 첨부파일 중 파일 삭제시
-  $(document).on("click",".jFiler-item-trash-action",function(){
-    console.log($(this));
-  });
 
   // 메일 보내기 버튼 클릭시
   $("#sendBtn").on("click",function(){
@@ -1019,15 +1047,38 @@
     .then((value) => {
       if (value != null) {
         var check=true;
+        var now = $.datepicker.formatDate('yymmdd', new Date());
+        var fileListArr = $("#fileList").val().split(',');
+        var fileListStr = "";
+        var fileNameStr = "";
+        var fileDBListStr = "";
+        $.each(fileListArr, function(index, value) {
+          if(value != ""){
+            fileDBListStr += value;
+            fileListStr += 'http://localhost:3000/uploads/files/'+value;
+            fileNameStr += value.replace(now+'/','');
+            console.log(fileListArr.lengt);
+            console.log(index);
+            console.log(fileListArr.length-1);
+            if(fileListArr.length-1 != index){
+              fileListStr += '|';
+              fileDBListStr += '|';
+              fileNameStr += '|';
+            }
+          }
+        });
+
         var param = {
           'M_sender': $(".sender-select").select2("val"),
           'M_recipi': $(".recipi-select").select2("val"),
-          'M_group': $('.group-select').val(),
+          'M_group': $('.group-select').val() || [],
           'M_keyword': $("#M_keyword option:selected").val(),
           'M_mail_type': $("#M_mail_type option:selected").val(),
           'M_body': $("#M_body").summernote('code'),
           'M_subject': $("#M_subject").val(),
-          'M_file': $("#M_file").val(),
+          'M_file':fileListStr,
+          'M_fileName':fileNameStr,
+          'M_file_d':fileDBListStr,
           'M_type': $("input:radio[name=M_type]:checked").val()
         };
         if(param["M_sender"] == null){
