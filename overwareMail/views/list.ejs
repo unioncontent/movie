@@ -85,17 +85,18 @@
                       for(var i=0; i < mailList.length; i++) {
                     %>
                     <tr>
+                      <input type="hidden" id="idx" value="<%=mailList[i].n_idx%>" />
                       <td>
                         <div class="border-checkbox-section" style="max-width: 30px;">
                           <div class="border-checkbox-group border-checkbox-group-default">
-                            <input class="border-checkbox" type="checkbox" id="checkbox0">
-                            <label class="border-checkbox-label" for="checkbox0"></label>
+                            <input class="border-checkbox" type="checkbox" id="checkbox<%=i%>">
+                            <label class="border-checkbox-label" for="checkbox<%=i%>"></label>
                           </div>
                         </div>
                       </td>
                       <th><%= mailListCount - i - offset %></th>
                       <td><%=mailList[i].user_name%></td>
-                      <td style="font-weight:  bold;"><%=mailList[i].M_email%></td>
+                      <td class="f-w-900 edit"><%=mailList[i].M_email%></td>
                       <td><%=mailList[i].M_ptitle%></td>
                       <td><%=mailList[i].M_name%></td>
                       <td><%=(mailList[i].M_tel == null)?'':phoneFomatter(mailList[i].M_tel)%></td>
@@ -175,49 +176,68 @@
         </div>
       </div>
       <!-- Modal start-->
-      <div class='modal fade' id='period-Modal' role='dialog'>
+      <div class='modal fade' id='edit-Modal' role='dialog'>
         <div class='modal-dialog modal-lg' role='document'>
           <div class='modal-content'>
             <div class='modal-header'>
-              <h5 class="modal-title">[2018-03-26 통계보고서]</h5>
+              <h5 class="modal-title">수정</h5>
             </div>
             <div class='modal-body'>
               <div class='card'>
-                <div class="card-block">
-                  <div class="table-border-style">
-                    <div class="table-responsive">
-                      <table class="table table-sm" id='modal-cnt'>
-                        <tbody>
-                          <tr>
-                            <th class="b-r-1 text-left" width="30%">회사</th>
-                            <td>쇼박스</td>
-                          </tr>
-                          <tr>
-                            <th class="b-r-1 text-left">이메일</th>
-                            <td>abc@def.com</td>
-                          </tr>
-                          <tr>
-                            <th class="b-r-1 text-left">언론사</th>
-                            <td>조선일보</td>
-                          </tr>
-                          <tr>
-                            <th class="b-r-1 text-left">이름</th>
-                            <td>김기명</td>
-                          </tr>
-                          <tr>
-                            <th class="b-r-1 text-left">연락처</th>
-                            <td>010-123-1234</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
+                <div class="card-block table-border-style">
+                  <div class="table-responsive">
+                    <table class="table table-sm" id='modal-cnt'>
+                      <tbody>
+                        <tr>
+                          <input type="hidden" id="n_idx"/>
+                          <th class="b-r-1 text-left" width="30%">회사</th>
+                          <td class="edit-td" id="user"></td>
+                        </tr>
+                        <tr>
+                          <th class="b-r-1 text-left">이메일</th>
+                          <td class="edit-td">
+                            <div class="col-sm-12 row">
+                              <input class="form-control col-sm-6 input-sm" id="email" type='text'/>
+                              <input type="hidden" id="emailCheck"/>
+                              <input id="o_email" type='hidden'/>
+                              <div class="col-sm-5">
+                                <button id="emailCheckBtn" type="button" class="btn btn-inverse">
+                                  중복체크
+                                </button>
+                              </div>
+                            </div>
+                            <span class='messages'><p class=' text-danger error m-b-5'></p></span>
+                          </td>
+                        </tr>
+                        <tr>
+                          <th class="b-r-1 text-left">언론사</th>
+                          <td class="edit-td" id="media"></td>
+                        </tr>
+                        <tr>
+                          <th class="b-r-1 text-left">이름</th>
+                          <td class="edit-td">
+                            <input class="form-control col-sm-6 input-sm" id="name" type='text'/>
+                            <input id="o_name" type='hidden'/>
+                            <span class='messages'><p class=' text-danger error m-b-5'></p></span>
+                          </td>
+                        </tr>
+                        <tr>
+                          <th class="b-r-1 text-left">연락처</th>
+                          <td class="edit-td">
+                            <input class="form-control col-sm-6 input-sm" id="tel" type='tel'/>
+                            <input id="o_tel" type='hidden'/>
+                            <span class='messages'><p class=' text-danger error m-b-5'></p></span>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
                   </div>
                 </div>
               </div>
             </div>
             <div class="modal-footer">
-              <button class="btn btn-primary mobtn" data-dismiss='modal' aria-label='Close' type="button">수정</button>
-              <button class="btn btn-danger mobtn" data-dismiss='modal' aria-label='Close' type="button">삭제</button>
+              <button class="btn btn-primary mobtn btn-update" data-dismiss='modal' type="button">수정</button>
+              <button class="btn btn-danger mobtn btn-delete" data-dismiss='modal' type="button">삭제</button>
               <button class="btn btn-secondary mobtn" data-dismiss='modal' aria-label='Close' type="button">취소</button>
             </div>
           </div>
@@ -227,6 +247,13 @@
     </div>
   </div>
 </div>
+<style>
+  .messages{
+    display: none;
+  }
+</style>
+<!-- alert -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert@2.1.0/dist/sweetalert.min.js"></script>
 <script type="text/javascript">
   $(document).ready(function(){
     var url_string = window.location.href
@@ -237,6 +264,169 @@
       $("#selectSearchType").val(searchTypeParams).prop("selected", true);
       $("#keywordInput").val(searchParams);
     }
+  });
+  $('.modal input').on('focus',function(){
+    console.log($(this));
+    $(this).parents('.edit-td').find('.messages').hide();
+  });
+  // 모달 수정버튼 클릭시
+  $('.btn-update').on('click',function(){
+    swal({
+      title: "수정 하시겠습니까?",
+      icon: "warning",
+      buttons: ["취소", true],
+      dangerMode: true,
+    })
+    .then((value) => {
+      if (value != null) {
+        var check=true;
+        if($("#name").val() != $("#o_name").val() && $("#name").val() == ""){
+          check = requiredMessage("name","이름을 입력해주세요.");
+        }
+        if($("#tel").val() != $("#o_tel").val() && $("#tel").val() == ""){
+          check = requiredMessage("tel","전화번호를 입력해주세요.");
+        }
+        if($("#email").val() != $("#o_email").val() && $("#email").val() == ""){
+          check = requiredMessage("email","이메일를 입력해주세요.");
+        }
+        if($("#email").val() != $("#o_email").val() && $("#email").val() != "" && $("#emailCheck").val() == ""){
+          check = requiredMessage("email","이메일를 중복확인 해주세요.");
+        }
+        if(check){
+          if($("#name").val() != $("#o_name").val() && $("#tel").val() != $("#o_tel").val() && $("#email").val() != $("#o_email").val()){
+            swal("ERROR!", "변경사항이 없습니다.", "error");
+            return false;
+          }
+          var param = {
+            'M_name': $('#name').val(),
+            'M_email': $('#email').val(),
+            'M_tel':$('#tel').val()
+          };
+          updateMail(param);
+        }
+        else{
+          $('#edit-Modal').modal('show');
+        }
+      }
+      else{
+        $('#edit-Modal').modal('show');
+      }
+    });
+  });
+  function updateMail(){
+    $.ajax({
+      url: '/list/update',
+      type: 'post',
+      data : param,
+      datatype : 'json',
+      error:function(request,status,error){
+        // alert('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
+        swal("ERROR!", request.responseText, "error");
+      },
+      success:function(data){
+        swal("SUCCESS!", data, "success")
+        .then((value) => {
+
+          window.location.reload();
+        });
+      }
+    });
+  }
+  // input box 경고문
+  function requiredMessage(target,msg){
+    $("#"+target).parents('.edit-td').find('.messages').show();
+    $("#"+target).parents('.edit-td').find('.error').text(msg);
+    // $("#"+target).addClass("form-control-danger");
+    return false;
+  }
+  // 모달 삭제버튼 클릭시
+  $('.btn-delete').on('click',function(){
+    swal({
+      title: "삭제 하시겠습니까?",
+      icon: "warning",
+      buttons: ["취소", true],
+      dangerMode: true,
+    })
+    .then((value) => {
+      if (value != null) {
+        $.ajax({
+          url: '/list/delete',
+          type: 'post',
+          data : param,
+          datatype : 'json',
+          error:function(request,status,error){
+            // alert('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
+            swal("ERROR!", request.responseText, "error");
+          },
+          success:function(data){
+            swal("SUCCESS!", data, "success");
+          }
+        });
+      }
+    });
+  });
+  // 중복 체크
+  $("#emailCheckBtn").on("click",function(){
+    swal({
+      title: "✓ 이메일 중복 체크",
+      content: {
+        element: "input",
+        attributes: {
+          value: $('#email').val(),
+          type: "text",
+        },
+      },
+      buttons: ["취소", "확인"],
+      closeOnClickOutside: false,
+      closeOnEsc: false
+    })
+    .then((value) => {
+      console.log(value);
+      var regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+      if (value != null) {
+        if (value.match(regExp) == null) {
+          swal("ERROR!", "이메일을 다시 입력해주세요.", "error");
+          return false;
+        }
+        $.ajax({
+          type: "POST",
+          url: "/list/add/emailCheck",
+          dataType: "text",
+          data: {email : value},
+          error: function(req,status,error){
+            swal("ERROR!", req.status+"\n"+error, "error");
+          },
+          success: function(data){
+            console.log(data);
+            if(data == 'fail'){
+              swal("ERROR!", "이메일 중복됩니다. 다시 입력해 주세요.", "error");
+            }else if(data == 'success'){
+              swal("중복확인!", value+"는 사용가능한 이메일입니다.", "success");
+
+              $('#email').val(value);
+              $("#emailCheck").val("true");
+              $('#email').removeClass("form-control-danger");
+              $('#email').siblings().children("p").text("");
+            }
+          }
+        });
+      }
+    });
+  });
+  // 이메일 클릭시
+  $(document).on('click','.edit',function(){
+    var trEle = $(this).parents('tr');
+    var tdEles = trEle.find('td');
+    $('#user').text(tdEles.eq(1).text());
+    $('#media').text(tdEles.eq(3).text());
+    $('#email').val(tdEles.eq(2).text());
+    $('#name').val(tdEles.eq(4).text());
+    $('#tel').val(tdEles.eq(5).text());
+    $('#n_idx').val(trEle.find('input').eq(0).val());
+    $('#o_email').val(tdEles.eq(2).text());
+    $('#o_name').val(tdEles.eq(4).text());
+    $('#o_tel').val(tdEles.eq(5).text());
+    $('#edit-Modal').modal('show');
   });
   // 검색시
   $('#keywordInput').on('keyup',function(event){
@@ -341,6 +531,7 @@
           data.mailList.forEach(function(item,idx){
             var numIdx = Math.ceil(data.mailListCount-(data.offset+idx)).toString();
             var html = '<tr>\
+              <input type="hidden" id="idx" value="'+item.n_idx+'" />\
               <td>\
                 <div class="border-checkbox-section" style="max-width: 30px;">\
                   <div class="border-checkbox-group border-checkbox-group-default">\
@@ -351,7 +542,7 @@
               </td>\
               <th>'+numIdx+'</th>\
               <td>'+item.user_name+'</td>\
-              <td style="font-weight:  bold;">'+item.M_email+'</td>\
+              <td class="f-w-900 edit">'+item.M_email+'</td>\
               <td>'+item.M_ptitle+'</td>\
               <td>'+item.M_name+'</td>\
               <td>'+((item.M_tel == null)?'':phoneFomatter(item.M_tel))+'</td>\
