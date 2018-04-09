@@ -1142,8 +1142,10 @@
         swal("ERROR!", request.responseText, "error");
       },
       success:function(data){
-        swal("SUCCESS!", data, "success");
-        window.location.reload();
+        swal("SUCCESS!", data, "success")
+        .then((value) => {
+          window.location.reload();
+        });
       }
     });
   }

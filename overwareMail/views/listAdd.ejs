@@ -28,7 +28,7 @@
                   <span class='messages'><p class='text-danger error'></p></span>
                 </div>
                 <div class="col-sm-1 btn-check">
-                  <button id="mediaCheckBtn" type="button" class="btn btn-inverse alert-prompt">
+                  <button id="mediaCheckBtn" type="button" class="btn btn-inverse">
                     검색
                   </button>
                 </div>
@@ -48,13 +48,13 @@
                   <span class='messages'><p class='text-danger error'></p></span>
                 </div>
                 <div class="col-sm-1 btn-check">
-                  <button id="emailCheckBtn" type="button" class="btn btn-inverse alert-prompt">
+                  <button id="emailCheckBtn" type="button" class="btn btn-inverse">
                     중복체크
                   </button>
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-sm-2 col-form-label">* 연락처</label>
+                <label class="col-sm-2 col-form-label">연락처</label>
                 <div class="col-sm-5">
                   <input id="tel" type="text" class="form-control" placeholder="연락처">
                   <span class='messages'><p class='text-danger error'></p></span>
@@ -63,7 +63,7 @@
               <div class="row">
                 <label class="col-sm-2"></label>
                 <div class="col-sm-10">
-                  <button type="submit" class="btn btn-inverse m-b-0">등록</button>
+                  <button type="submit" class="btn-submit btn btn-inverse m-b-0">등록</button>
                 </div>
               </div>
             </div>
@@ -84,33 +84,15 @@
                       <thead>
                         <tr>
                           <th>
-                            <input type="text" class="form-control" id="search_group_name" placeholder="회사명" value="김무명">
+                            <input type="text" class="form-control" id="search" placeholder="회사명">
                           </th>
                           <th width="1px">
-                            <button type="button" id="btn-searchGoup" class="btn btn-inverse">검색</button>
+                            <button type="button" id="btn-search" class="btn btn-inverse">검색</button>
                           </th>
                         </tr>
                       </thead>
                       <tbody>
-                        <tbody>
-                          <tr>
-                            <td style="vertical-align: middle;">
-                              <div class="groupName">조선일보/김무명 : 3명</div>
-                              <input type="hidden" class="M_ID" value="undefined">
-                            </td>
-                            <td><button type="submit" class="btn-group btn btn-primary m-b-0">선택</button></td>
-                          </tr>
-                          <tr>
-                            <td style="vertical-align: middle;">
-                              <div class="groupName">한국일보/김무명 : 3명</div>
-                              <input type="hidden" class="M_ID" value="undefined">
-                            </td>
-                            <td><button type="submit" class="btn-group btn btn-primary m-b-0">선택</button></td>
-                          </tr>
-                        </tbody>
                       </tbody>
-                      <tfoot>
-                      </tfoot>
                     </table>
                   </div>
                 </div>
@@ -128,10 +110,203 @@
 <!-- alert -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert@2.1.0/dist/sweetalert.min.js"></script>
 <script type="text/javascript">
+  // 중복 체크
+  $("#emailCheckBtn").on("click",function(){
+    swal({
+      title: "✓ 이메일 중복 체크",
+      content: "input",
+      buttons: ["취소", "확인"],
+      closeOnClickOutside: false,
+      closeOnEsc: false
+    })
+    .then((value) => {
+      console.log(value);
+      var regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+      if (value != null) {
+        if (value.match(regExp) == null) {
+          swal("ERROR!", "이메일을 다시 입력해주세요.", "error");
+          return false;
+        }
+        $.ajax({
+          type: "POST",
+          url: "/list/add/emailCheck",
+          dataType: "text",
+          data: {email : value},
+          error: function(req,status,error){
+            swal("ERROR!", req.status+"\n"+error, "error");
+          },
+          success: function(data){
+            console.log(data);
+            if(data == 'fail'){
+              swal("ERROR!", "이메일 중복됩니다. 다시 입력해 주세요.", "error");
+            }else if(data == 'success'){
+              swal("중복확인!", value+"는 사용가능한 이메일입니다.", "success");
+
+              $('#email').val(value);
+              $("#emailCheck").val("true");
+              $('#email').removeClass("form-control-danger");
+              $('#email').siblings().children("p").text("");
+            }
+          }
+        });
+      }
+    });
+  });
+  // 모달 더보기 버튼 클릭시
+  $(document).on('click','#more',function(){
+    var param = {
+      'start': $(this).data('num')
+    };
+    if($('#search').val() != ""){
+      param['search'] = $('#search').val().replace(/ /gi, "");
+    }
+    searchMedia(param);
+  });
+  // 회사 선택시
+  $(document).on('click','.btn-selected',function(){
+    var name = $(this).parents('tr').find('td').eq(0).find('.name').text();
+    $('#mediaName').val(name);
+    $('#search-Modal').modal('hide');
+  });
+  // 회사 검색 enter시
+  $('#mediaName').on('keyup',function(event){
+    if(event.keyCode == 13){
+      $('#mediaCheckBtn').trigger('click');
+    };
+  });
+  $('#search').on('keyup',function(event){
+    if(event.keyCode == 13){
+      $('#btn-search').trigger('click');
+    };
+  });
+  // 모달 취소시
+  $("#search-Modal").on("hidden.bs.modal", function () {
+    $('#search').val('');
+  });
+  // 검색 버튼 클릭시
   $('#mediaCheckBtn').on('click',function(){
-
+    var param = {
+      'start': 0
+    };
+    if($('#mediaName').val() != ""){
+      param['search'] = $('#mediaName').val().replace(/ /gi, "");
+      $('#search').val($('#mediaName').val());
+    }
+    searchMedia(param);
+    $('#search-Modal').modal('show');
   });
+  $('#btn-search').on('click',function(){
+    if($('#search').val() == ""){
+      alert('검색어를 넣어주세요.');
+      return false;
+    }
+    var param = {
+      'start': 0
+    };
+    param['search'] = $('#search').val().replace(/ /gi, "");
+    searchMedia(param);
+  });
+  $('#email').on('click',function(){
+    $('#emailCheckBtn').trigger('click');
+  });
+  // 회사리스트 ajax
+  function searchMedia(param){
+    $.ajax({
+      url: '/list/add/search',
+      type: 'post',
+      data : param,
+      datatype : 'json',
+      error:function(request,status,error){
+        // alert('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
+        alert(request.responseText);
+      },
+      success:function(data){
+        $("#search-Modal tbody").empty();
+        $("#search-Modal #more").remove();
+        console.log(data);
+        if(data.count!=0){
+          data.list.forEach(function(item){
+            var html = '<tr>\
+            <td style="vertical-align: middle;">\
+            <div class="name">'+item.reporter_media_name+'</div>\
+            </td>\
+            <td><button type="submit" class="btn-selected btn btn-primary m-b-0">선택</button></td>\
+            </tr>';
+            $("#search-Modal tbody").append(html);
+          });
+          var page = param['start'] / 10;
+          if(page < Math.floor(data.count.total / 10)){
+            var moreHtml = '<div class="col-sm-12 p-t-5 p-b-5 bg-inverse text-center" id="more" data-num="'+((page+1)*10)+'">더보기 <i class="fas fa-chevron-down"></i></div>';
+            $("#search-Modal .table-responsive").append(moreHtml);
+          }
+        }
+      }
+    });
+  }
   $('#emailCheckBtn').on('click',function(){
-
   });
+  // 메일등록
+  $('.btn-submit').on('click',function(){
+    swal({
+      title: "메일등록 하시겠습니까?",
+      icon: "warning",
+      buttons: ["취소", true],
+      dangerMode: true,
+    })
+    .then((value) => {
+      if (value != null) {
+        var check=true;
+        if($('#mediaName').val() == ""){
+          check = requiredMessage("mediaName","회사명을 입력해주세요.");
+        }
+        if($("#name").val() == ""){
+          check = requiredMessage("name","이름을 입력해주세요.");
+        }
+        if($("#email").val() == ""){
+          check = requiredMessage("email","이메일을 입력해주세요.");
+        }
+        if($("#email").val() != "" && $("#emailCheck").val() == ""){
+          check = requiredMessage("email","이메일를 중복확인 해주세요.");
+        }
+        if(check){
+          var param = {
+            'M_email': $('#email').val(),
+            'M_name': $('#name').val(),
+            'M_ptitle':$('#mediaName').val()
+          };
+          if($('#tel').val() != ""){
+            param['M_tel']=$('#tel').val().replace(/[^0-9]/gi,"");
+          }
+          insertMail(param);
+        }
+      }
+    });
+  });
+  // input box 경고문
+  function requiredMessage(target,msg){
+    $("#"+target).siblings('.messages').children('.error').text(msg);
+    // $("#"+target).addClass("form-control-danger");
+    return false;
+  }
+  // 메일 등록 ajax
+  function insertMail(param){
+    $.ajax({
+      url: '/list/add',
+      type: 'post',
+      data : param,
+      datatype : 'json',
+      error:function(request,status,error){
+        // alert('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
+        swal("ERROR!", request.responseText, "error");
+      },
+      success:function(data){
+        swal("SUCCESS!", data, "success")
+        .then((value) => {
+
+          window.location.reload();
+        });
+      }
+    });
+
+  }
 </script>

@@ -7,15 +7,25 @@ const DBpromise = require('../db/db_info.js');
 
 var user = {
   selectReporter: async function(param){
-    var sql = 'select distinct(reporter_media_name) from reporter_data'
+    var sql = 'select distinct(reporter_media_name) from reporter_data ';
     if(param.length == 3){
-      sql += ' where reporter_media_name like \'%?%\''
+      param[0] = '%'+param[0]+'%';
+      sql += ' where reporter_media_name like ? ';
     }
-    sql += 'order by reporter_media_name limit ?,?;';
+    sql += ' order by reporter_media_name limit ?,?;';
+    return await getResult(sql,param);
+  },
+  selectReporterCount: async function(param){
+    var sql = 'select count(*) as total from (select distinct(reporter_media_name) from reporter_data ';
+    if(param.length == 3){
+      param[0] = '%'+param[0]+'%';
+      sql += ' where reporter_media_name like ? ';
+    }
+    sql += ' ) a;';
     return await getResult(sql,param);
   },
   emailCheck: async function(param){
-    var sql = 'select * from reporter_data where email=?;';
+    var sql = 'select * from reporter_data where reporter_email=?;';
     return await getResult(sql,param);
   }
 }
@@ -25,7 +35,6 @@ async function getResult(sql,param) {
   try{
     return await db.query(sql,param);
   } catch(e){
-    console.log(e);
     return [];
   } finally{
     db.close();
