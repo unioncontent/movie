@@ -33,24 +33,42 @@ var mailListAll = {
     return await getResult(sql,[n_idx]);
   },
   selectView: async function(body,param){
-    var sql = 'select search, user_name, M_id, M_email, M_name, M_ptitle, M_tel, M_regdate,n_idx';
+    var sql = 'select search, user_name, M_id, M_email, M_name, M_ptitle, M_tel, date_format(M_regdate, \'%Y-%m-%d %H:%i:%s\') as M_regdate,n_idx';
     if (typeof body.as !== 'undefined') {
       sql += body.as+' ,CONCAT(M_name, \'&lt;\', M_email, \'&gt;\') as text ';
     }
-    sql += ' from mail_list_all_view where ';
-    if (typeof body.search !== 'undefined') {
-      sql += ' search like \'%'+body.search+'%\' and';
+    sql += ' from mail_list_all_view where search is not null ';
+    if('searchType' in body){
+      switch (body.searchType) {
+        case 'c': sql+=' and M_ptitle =\''+body.search+'\''; break;
+        case 'e': sql+=' and M_email like \'%'+body.search+'%\''; break;
+        case 'n': sql+=' and M_name like \'%'+body.search+'%\''; break;
+      }
     }
-    sql += ' M_ID = ?';
+    else{
+      if (typeof body.search !== 'undefined') {
+        sql += ' search like \'%'+body.search+'%\'';
+      }
+    }
+    sql += ' and M_ID = ?';
     sql += ' order by search limit ?,?';
     return await getResult(sql,param);
   },
   selectViewCount: async function(body,param){
-    var sql = 'select count(*) as total from mail_list_all_view where ';
-    if (typeof body.search !== 'undefined') {
-      sql += ' search like \'%'+body.search+'%\' and ';
+    var sql = 'select count(*) as total from mail_list_all_view where search is not null ';
+    if('searchType' in body){
+      switch (body.searchType) {
+        case 'c': sql+=' and M_ptitle =\''+body.search+'\''; break;
+        case 'e': sql+=' and M_email like \'%'+body.search+'%\''; break;
+        case 'n': sql+=' and M_name like \'%'+body.search+'%\''; break;
+      }
     }
-    sql += ' M_ID = ?';
+    else{
+      if (typeof body.search !== 'undefined') {
+        sql += ' search like \'%'+body.search+'%\'';
+      }
+    }
+    sql += ' and M_ID = ?';
     sql += ' order by search';
     var count = await getResult(sql,param);
     if(count.length == 0){
