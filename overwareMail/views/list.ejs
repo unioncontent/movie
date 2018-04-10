@@ -540,7 +540,7 @@
       return false;
     }
     location.href = '/list?page=1&searchType='+$("#selectSearchType option:selected").val()+'&search='+$("#keywordInput").val();
-  })
+  });
   //페이지 이동
   $(document).on('click','.page-link',function(){
     var href = new URL(window.location.href);
