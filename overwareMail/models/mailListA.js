@@ -109,7 +109,6 @@ function insertSqlSetting(keys){
 }
 
 async function getResult(sql,param) {
-  console.log(sql,param);
   var db = new DBpromise();
   try{
     return await db.query(sql,param);
