@@ -75,7 +75,15 @@ router.post('/addGroup',async function(req, res) {
         M_idx_a:item.idx,
         M_email:item.email
       };
-      await mailListC.insert(param);
+      try{
+        var result = await mailListC.titleEmailCheck([param.M_group_title,param.M_id,param.M_email]);
+        if(result.length == 0){
+          await mailListC.insert(param);
+        }
+      }
+      catch(err){
+        console.log(err);
+      }
     });
     res.send('그룹등록 되었습니다.');
   }
