@@ -2,6 +2,7 @@ var express = require('express');
 // DB module
 var user = require('../models/user.js');
 var mailListA = require('../models/mailListA.js');
+var mailListC = require('../models/mailListC.js');
 
 var router = express.Router();
 
@@ -30,6 +31,46 @@ router.post('/delete',async function(req, res) {
   }
 });
 
+router.post('/addGroup',async function(req, res) {
+  try{
+    var list = JSON.parse(req.body.list);
+    await asyncForEach(list, async (item, index, array) => {
+      console.log(item);
+      var param = {
+        M_id:'1',
+        M_group_title:item.title,
+        M_idx_a:item.idx,
+        M_email:item.email
+      };
+      await mailListC.insert(param);
+    });
+    res.send('그룹등록 되었습니다.');
+  }
+  catch(e){
+    res.send('다시 시도해주세요.');
+  }
+});
+
+async function asyncForEach(array, callback) {
+  for (var index = 0; index < array.length; index++) {
+   var done = await callback(array[index], index, array);
+    if(done == false){
+     break;
+    }
+  }
+}
+
+router.post('/groupTitleCheck',async function(req,res){
+  try{
+    var titleCheck = await mailListC.titleCheck([req.body.title.replace( /(\s*)/g, ""),'1']);
+    res.send((titleCheck.length == 0)?'success':'fail');
+  }
+  catch(e){
+    console.log('err:',e);
+    res.send('fail');
+  }
+});
+
 router.post('/getNextPage',async function(req, res, next) {
   // if (!req.user) {
   //   return res.redirect('/login');
@@ -47,7 +88,7 @@ async function getListPageData(param){
   var searchParam = ['1',0,limit];
   var currentPage = 1;
   var searchBody = {
-    'order': 'date'
+    'order': 'n_idx'
   };
   if (typeof param.page !== 'undefined') {
     currentPage = param.page;
