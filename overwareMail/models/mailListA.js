@@ -11,6 +11,16 @@ var mailListAll = {
     var sql = insertSqlSetting(Object.keys(param));
     return await getResult(sql,pValue);
   },
+  update: async function(param){
+    var pValue = Object.values(param);
+    var sql = 'update m_mail_list_all set M_name=?,M_email=?,M_tel=? where n_idx=?;';
+    return await getResult(sql,pValue);
+  },
+  deleteFun: async function(param){
+    var pValue = Object.values(param);
+    var sql = 'delete from m_mail_list_all where n_idx=?;';
+    return await getResult(sql,pValue);
+  },
   getOneEmail : async function(param){
     var sql = 'select M_email from m_mail_list_all ';
     if(typeof param == 'object'){
@@ -51,7 +61,12 @@ var mailListAll = {
       }
     }
     sql += ' and M_ID = ?';
-    sql += ' order by search limit ?,?';
+    if (typeof body.order !== 'undefined') {
+      sql += ' order by n_idx desc limit ?,?';
+    }
+    else{
+      sql += ' order by search limit ?,?';
+    }
     return await getResult(sql,param);
   },
   selectViewCount: async function(body,param){
@@ -69,7 +84,6 @@ var mailListAll = {
       }
     }
     sql += ' and M_ID = ?';
-    sql += ' order by search';
     var count = await getResult(sql,param);
     if(count.length == 0){
       return 0;
@@ -77,6 +91,11 @@ var mailListAll = {
     else{
       return count[0]['total'];
     }
+  },
+  emailCheck: async function(param){
+    var sql = 'select * from m_mail_list_all where M_email=?;';
+    console.log(sql,param);
+    return await getResult(sql,param);
   }
 }
 
