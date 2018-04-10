@@ -46,6 +46,26 @@ public class KeywordDAOImpl implements KeywordDAO {
 			e.printStackTrace();
 		}
 	}
+	
+	@Override
+	public void stateUpdateOn(String keyword_main) {
+		try {
+			session.update(namespace + "stateUpdateOn", keyword_main);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void stateUpdateOff(String keyword_main) {
+		try {
+			session.update(namespace + "stateUpdateOff", keyword_main);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 	@Override
 	public void delete(String keyword) {
@@ -62,6 +82,12 @@ public class KeywordDAOImpl implements KeywordDAO {
 	public List<KeywordVO> listByUser(Integer user_idx) {
 
 		return session.selectList(namespace + "listByUser", user_idx);
+	}
+	
+	@Override
+	public List<KeywordVO> getKeyword(String keyword_main) {
+
+		return session.selectList(namespace + "getKeyword", keyword_main);
 	}
 
 	@Override

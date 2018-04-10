@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.union.domain.CommunityVO;
 import org.union.domain.ExtractVO;
 import org.union.domain.SearchCriteria;
+import org.union.domain.TextTypeDateVO;
 import org.union.domain.TextTypeVO;
 import org.union.persistence.CommunityDAO;
 import org.union.persistence.KeywordDAO;
@@ -96,6 +97,12 @@ public class CommunityServiceImpl implements CommunityService {
 	public Integer getSearchCount(SearchCriteria cri) {
 
 		return communityDAO.getSearchCount(cri);
+	}
+	
+	@Override
+	public Integer getSearchCount2(SearchCriteria cri) {
+
+		return communityDAO.getSearchCount2(cri);
 	}
 
 	@Override
@@ -214,4 +221,11 @@ public class CommunityServiceImpl implements CommunityService {
 		
 	}
 
+	@Override
+	public List<TextTypeDateVO> textTypeCount2(SearchCriteria cri) {
+
+		return communityDAO.textTypeCount2(cri);
+	}
+
+	
 }

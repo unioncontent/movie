@@ -8,6 +8,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.union.domain.ExtractVO;
+import org.union.domain.FvVO;
 import org.union.domain.GraphVO;
 import org.union.domain.SNSVO;
 import org.union.domain.SearchCriteria;
@@ -254,6 +255,41 @@ public class SNSServiceImpl implements SNSService {
 	public Integer allPageCount(SearchCriteria cri) {
 
 		return snsDAO.allPageCount(cri);
+	}
+
+
+	@Override
+	public List<SNSVO> facebookCnt(SearchCriteria cri) {
+
+		return snsDAO.facebookCnt(cri);
+	}
+
+
+	@Override
+	public List<SNSVO> instaCnt(SearchCriteria cri) {
+
+		return snsDAO.instaCnt(cri);
+	}
+
+
+	@Override
+	public List<SNSVO> twiCnt(SearchCriteria cri) {
+
+		return snsDAO.twiCnt(cri);
+	}
+
+
+	@Override
+	public List<SNSVO> snsTotalCnt(SearchCriteria cri) {
+
+		return snsDAO.snsTotalCnt(cri);
+	}
+
+
+	@Override
+	public List<FvVO> facebookCGV(SearchCriteria cri) {
+
+		return snsDAO.facebookCGV(cri);
 	}
 
 }

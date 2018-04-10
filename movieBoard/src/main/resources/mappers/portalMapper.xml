@@ -329,6 +329,7 @@
  		where 
  			textType is not null
  		and score is null 
+ 		and texttype!='삭제글'
  		and
  			portal_name = 'naver'
  		<include refid="search_writeDate"></include>
@@ -535,6 +536,7 @@
  		where 
  			textType is not null
  		and score is null 
+ 		and texttype!='삭제글'
  		and
  			portal_name = 'daum'
  		<include refid="search_writeDate"></include>

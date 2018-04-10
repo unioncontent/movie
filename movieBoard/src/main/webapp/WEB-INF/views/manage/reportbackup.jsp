@@ -57,10 +57,10 @@
       google.charts.setOnLoadCallback(drawChart);
       function drawChart() {
     	
-    	  var l = ${blogTextType.lik + cafeTextType.lik};
-    	  var d = ${blogTextType.dis + cafeTextType.dis};
-    	  var c = ${blogTextType.cu + cafeTextType.cu};
-    	  var e = ${blogTextType.etc + cafeTextType.etc};
+    	  var l = ${portalTextType.lik};
+    	  var d = ${portalTextType.dis};
+    	  var c = ${portalTextType.cu};
+    	  var e = ${portalTextType.etc};
     	  
         var data = google.visualization.arrayToDataTable([
           ['Task', 'Hours per Day'],
@@ -106,15 +106,20 @@
         chart.draw(data, options);
       }
    </script>
-   <!-- <script type="text/javascript">
+   <script type="text/javascript">
       google.charts.load("current", {packages:["corechart"]});
       google.charts.setOnLoadCallback(drawChart);
       function drawChart() {
     	
-    	  var l3 = ${naverMediaCount.lik + daumMediaCount.lik};
+    	  var l3 = ${totalMediaCount.lik};
+    	  var d3 = ${totalMediaCount.dis};
+    	  var c3 = ${totalMediaCount.cu};
+    	  var e3 = ${totalMediaCount.etc};
+    	  
+    	  /* var l3 = ${naverMediaCount.lik + daumMediaCount.lik};
     	  var d3 = ${naverMediaCount.dis + daumMediaCount.dis};
     	  var c3 = ${naverMediaCount.cu + daumMediaCount.cu};
-    	  var e3 = ${naverMediaCount.etc + daumMediaCount.etc};
+    	  var e3 = ${naverMediaCount.etc + daumMediaCount.etc}; */
     	  
         var data = google.visualization.arrayToDataTable([
           ['Task', 'Hours per Day'],
@@ -132,7 +137,7 @@
         var chart = new google.visualization.PieChart(document.getElementById('donutchart3'));
         chart.draw(data, options);
       }
-   </script> -->
+   </script>
    
    <script type="text/javascript">
       google.charts.load("current", {packages:["corechart"]});
@@ -188,15 +193,20 @@
         chart.draw(data, options);
       }
    </script>
-  <!--  <script type="text/javascript">
+  <script type="text/javascript">
       google.charts.load("current", {packages:["corechart"]});
       google.charts.setOnLoadCallback(drawChart);
       function drawChart() {
     	
-    	  var l3 = ${naverMediaCount.lik + daumMediaCount.lik};
+    	  var l3 = ${communityTextType.lik};
+    	  var d3 = ${communityTextType.dis};
+    	  var c3 = ${communityTextType.cu};
+    	  var e3 = ${communityTextType.etc};
+    	  
+    	  /* var l3 = ${naverMediaCount.lik + daumMediaCount.lik};
     	  var d3 = ${naverMediaCount.dis + daumMediaCount.dis};
     	  var c3 = ${naverMediaCount.cu + daumMediaCount.cu};
-    	  var e3 = ${naverMediaCount.etc + daumMediaCount.etc};
+    	  var e3 = ${naverMediaCount.etc + daumMediaCount.etc}; */
     	  
         var data = google.visualization.arrayToDataTable([
           ['Task', 'Hours per Day'],
@@ -214,7 +224,7 @@
         var chart = new google.visualization.PieChart(document.getElementById('donutchart6'));
         chart.draw(data, options);
       }
-   </script> -->
+   </script>
   <style type="text/css">
   	.card{
   		margin: 0px auto;
@@ -342,52 +352,6 @@
                           <!-- tab1 main start -->
                           <div class="tab-pane fade show active" id="main" role="tabpanel">
                             <div class="row">
-                             <%--  <!-- top cards start -->
-                              <div class="col-md-6 col-xl-2 main-card">
-                                <div class="card social-widget-card">
-                                  <div class="card-block-big bg-inverse">
-                                    <h3><fmt:formatNumber value="${portalCount+communityCount+snsCount+mediaCount}" groupingUsed="true"/></h3>
-                                    <span class="m-t-10">전체검색</span>
-                                    <i class="icofont icofont-search"></i>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="col-md-6 col-xl-2 main-card">
-                                <div class="card social-widget-card">
-                                  <div class="card-block-big bg-primary">
-                                    <h3><fmt:formatNumber value="${portalCount}" groupingUsed="true"/></h3>
-                                    <span class="m-t-10">포털검색</span>
-                                    <i class="icofont icofont-web"></i>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="col-md-6 col-xl-2 main-card">
-                                <div class="card social-widget-card">
-                                  <div class="card-block-big bg-success">
-                                    <h3><fmt:formatNumber value="${communityCount}" groupingUsed="true"/></h3>
-                                    <span class="m-t-10">커뮤니티검색</span>
-                                    <i class="icofont icofont-users"></i>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="col-md-6 col-xl-2 main-card">
-                                <div class="card social-widget-card">
-                                  <div class="card-block-big bg-twitter">
-                                    <h3><fmt:formatNumber value="${snsCount}" groupingUsed="true"/></h3>
-                                    <span class="m-t-10">SNS검색</span>
-                                    <i class="icofont icofont-social-twitter"></i>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="col-md-6 col-xl-2 main-card">
-                                  <div class="card social-widget-card">
-                                    <div class="card-block-big bg-news">
-                                      <h3><fmt:formatNumber value="${mediaCount}" groupingUsed="true"/></h3>
-                                      <span class="m-t-10">언론사검색</span>
-                                      <i class="icofont icofont-building-alt"></i>
-                                    </div>
-                                  </div>
-                                </div> --%>
                               <!-- top cards end -->
                               <div class="card">
                               	<div class="card-header" align="center">
@@ -426,13 +390,50 @@
                               					<td><fmt:formatNumber value="${portalCount+communityCount+snsCount+mediaCount}" pattern="#,##0" /></td>
                               				</tr>
                               			</table>
-	                              			<div id="donutchart" style="width: 49%;  height: 500px; float: left;"></div>
-	                              			<div id="donutchart2" style="width: 49%; height: 500px; float: left;"></div>
-	                              			<!-- <div id="donutchart3" style="width: 33%; height: 500px; float: left;"></div> -->
-	                              	
-                              			<div class="card-header">
-		                              		<h5 class="card-header-text">일일 <${selectKey}> 버즈량 변동 현황</h5>
-		                              	</div>
+                              			<br>
+                              				<!-- 도넛 그래프 start -->
+				                                <div class="card">
+				                                  <div class="card-header">
+				                                    <h5 class="card-header-text">
+				                                    <i class="icofont icofont-chart-pie-alt"></i>
+				                                                                                           통계그래프
+				                                    </h5>
+				                                    <div class="card-header-right">
+				                                      <i class="icofont icofont-refresh"></i>
+				                                    </div>
+				                                  </div>
+				                                  <div class="card-block">
+				                                    <!-- chart start -->
+				                                    <div class="m-b-35" id="donutchart" style="width: 33%; height: 500px; float: left;"></div>
+	                              					<div class="m-b-35" id="donutchart2" style="width: 33%; height: 500px; float: left;"></div>
+	                              					<div class="m-b-35" id="donutchart3" style="width: 33%; height: 500px; float: left;"></div>
+				                                    <!-- chart end -->
+				                                  </div>
+				                                </div>
+				                            <!-- 도넛 그래프 end -->
+                              				<!-- <div>
+	                              			<div class="m-b-35" id="donutchart" style="width: 33%; height: 500px; float: left;"></div>
+	                              			<div class="m-b-35" id="donutchart2" style="width: 33%; height: 500px; float: left;"></div>
+	                              			<div class="m-b-35" id="donutchart3" style="width: 33%; height: 500px; float: left;"></div>
+	                              			</div> -->
+                              				<!-- 버즈량 변동 현황 그래프 start -->
+				                                <div class="card">
+				                                  <div class="card-header">
+				                                    <h5 class="card-header-text">
+				                                      <i class="icofont icofont-chart-line m-r-5"></i>
+				                                                                                           일일 <${selectKey}> 버즈량 변동 현황
+				                                    </h5>
+				                                    <div class="card-header-right">
+				                                      <i class="icofont icofont-refresh"></i>
+				                                    </div>
+				                                  </div>
+				                                  <div class="card-block">
+				                                    <!-- chart start -->
+				                                    <div class="m-b-35" id="line-chart1"></div>
+				                                    <!-- chart end -->
+				                                  </div>
+				                                </div>
+				                              <!-- 버즈량 변동 현황 그래프 end -->
 		                              	<div class="card-header">
 		                              		<h5 class="card-header-text">포털 통계</h5>
 		                              	</div>
@@ -445,31 +446,39 @@
                               					<th>관심글</th>
                               					<th>기타글</th>
                               				</tr>
+                              				<c:forEach items="${portalTextType2}" var="portal">
                               				<tr>
-                              					<td></td>
-                              					<td><fmt:formatNumber value="${portalTextType.lik + portalTextType.dis + portalTextType.cu
-                                                       + portalTextType.etc}" groupingUsed="true"/></td>
-                              					<td><fmt:formatNumber value="${portalTextType.lik}" groupingUsed="true"/></td>
-                              					<td><fmt:formatNumber value="${portalTextType.dis}" groupingUsed="true"/></td>
-                              					<td><fmt:formatNumber value="${portalTextType.cu}" groupingUsed="true"/></td>
-                              					<td><fmt:formatNumber value="${portalTextType.etc}" groupingUsed="true"/></td>
+                              					<td>${portal.writeDate}</td>
+                              					<td><fmt:formatNumber value="${portal.lik + portal.dis + portal.cu
+                                                       + portal.etc}" groupingUsed="true"/></td>
+                              					<td><fmt:formatNumber value="${portal.lik}" groupingUsed="true"/></td>
+                              					<td><fmt:formatNumber value="${portal.dis}" groupingUsed="true"/></td>
+                              					<td><fmt:formatNumber value="${portal.cu}" groupingUsed="true"/></td>
+                              					<td><fmt:formatNumber value="${portal.etc}" groupingUsed="true"/></td>
                               				</tr>
+                              				</c:forEach>
                               			</table>
+                              			<div id="getTable"></div>
                               		</div><br>
 	                                <div align="center">
-	                                	<input type="button" class="btn btn-primary m-b-0" data-toggle="modal" data-target="#myModal" value="미리보기">
+	                                	<input type="button" class="btn btn-primary m-b-0" data-toggle="modal" data-target="#press-modal" value="미리보기">
 	                                </div><br>
                               	</div>
                            	  </div><br>
                            	  
-                           	 <!-- 모달창 영역 --> 
-                           	 
-	                           	  <div class="modal fade" id="myModal">
-								  <div class="modal-dialog">
-								    <div class="modal-content">
-								      <div class="modal-header"></div>
-								      <div class="modal-body">
-								        <div class="card">
+                      <!-- Modal start-->
+                      <div class="modal fade" id="press-modal" tabindex="-1" role="dialog">
+                        <div class="modal-dialog modal-lg" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title"></h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true"><i class="icofont icofont-close-line"></i></span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              <div class="col-lg-12">
+                                    <div class="card">
 	                              	<div class="card-header" align="center">
 	                              	<h4 class="card-header-text"><${company} : ${selectKey}> 주간보고서</h4>
 	                              	</div>
@@ -490,6 +499,7 @@
 	                              			<div class="card-header">
 			                              		<h5 class="card-header-text">통계현황</h5>
 			                              	</div>
+			                              	<div>
 			                              	<table class="table table-bordered">
 	                              				<tr>
 	                              					<th>포털</th>
@@ -506,15 +516,48 @@
 	                              					<td><fmt:formatNumber value="${portalCount+communityCount+snsCount+mediaCount}" pattern="#,##0" /></td>
 	                              				</tr>
 	                              			</table>
-			                              		<div id="donutchart4" style="width: 5px; float: left;"></div>
-			                              		<div id="donutchart5" style="width: 5px; float: right;"></div>
-			                              		<!-- <div id="donutchart6" style="width: 33%; height: 33%; float: left;"></div> -->
-	                              			<div class="card-header">
-			                              		<h5 class="card-header-text">일일 <${selectKey}> 버즈량 변동 현황</h5>
-			                              	</div>
+	                              			</div>
+	                              			<br>
+	                              			<!-- 도넛 그래프 start -->
+				                                <div class="card">
+				                                  <div class="card-header">
+				                                    <h5 class="card-header-text">
+				                                    <i class="icofont icofont-chart-pie-alt"></i>
+				                                                                                           통계그래프
+				                                    </h5>
+				                                    <div class="card-header-right">
+				                                      <i class="icofont icofont-refresh"></i>
+				                                    </div>
+				                                  </div>
+				                                  <div class="card-block">
+				                                    <!-- chart start -->
+				                                    <div id="donutchart4" style="float:left;width:30%;margin-left:15px;"></div>
+			                              			<div id="donutchart5" style="float:left;width:30%;margin-left:90px;"></div>
+			                              			<div id="donutchart6" style="float:left;width:30%;margin-left:15px;"></div>
+				                                    <!-- chart end -->
+				                                  </div>
+				                                </div>
+				                                <div class="card">
+				                                  <div class="card-header">
+				                                    <h5 class="card-header-text">
+				                                      <i class="icofont icofont-chart-line m-r-5"></i>
+				                                                                                           일일 <${selectKey}> 버즈량 변동 현황
+				                                    </h5>
+				                                    <div class="card-header-right">
+				                                      <i class="icofont icofont-refresh"></i>
+				                                    </div>
+				                                  </div>
+				                                  <div class="card-block">
+				                                    <!-- chart start -->
+				                                    <div class="m-b-35" id="line-chart2"></div>
+				                                    <!-- chart end -->
+				                                  </div>
+				                                </div>
+				                              <!-- 버즈량 변동 현황 그래프 end -->
 			                              	<div class="card-header">
 			                              		<h5 class="card-header-text">포털 통계</h5>
 			                              	</div>
+			                              	<div>
 			                              	<table class="table table-bordered">
 	                              				<tr>
 	                              					<th>날짜</th>
@@ -524,25 +567,31 @@
 	                              					<th>관심글</th>
 	                              					<th>기타글</th>
 	                              				</tr>
+	                              				<c:forEach items="${portalTextType2}" var="portal">
 	                              				<tr>
-	                              					<td></td>
-	                              					<td><fmt:formatNumber value="${portalTextType.lik + portalTextType.dis + portalTextType.cu
-	                                                       + portalTextType.etc}" groupingUsed="true"/></td>
-	                              					<td><fmt:formatNumber value="${portalTextType.lik}" groupingUsed="true"/></td>
-	                              					<td><fmt:formatNumber value="${portalTextType.dis}" groupingUsed="true"/></td>
-	                              					<td><fmt:formatNumber value="${portalTextType.cu}" groupingUsed="true"/></td>
-	                              					<td><fmt:formatNumber value="${portalTextType.etc}" groupingUsed="true"/></td>
+	                              					<td>${portal.writeDate}</td>
+	                              					<td><fmt:formatNumber value="${portal.lik + portal.dis + portal.cu
+	                                                       + portal.etc}" groupingUsed="true"/></td>
+	                              					<td><fmt:formatNumber value="${portal.lik}" groupingUsed="true"/></td>
+	                              					<td><fmt:formatNumber value="${portal.dis}" groupingUsed="true"/></td>
+	                              					<td><fmt:formatNumber value="${portal.cu}" groupingUsed="true"/></td>
+	                              					<td><fmt:formatNumber value="${portal.etc}" groupingUsed="true"/></td>
 	                              				</tr>
+	                              				</c:forEach>
 	                              			</table>
+	                              			</div>
 	                              		</div><br>
 	                              	</div>
 	                           	  </div>
 							      </div>
-							      <div class="modal-footer"></div>
-							    </div>
-							  </div>
-							</div>
-							
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button> 
+							      	<button type="button" class="btn btn-primary">메일보내기</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- Modal end-->
                         <!-- tab-content end -->
                       </div>
                     </div>
@@ -658,14 +707,17 @@ $(function() {
   $(document).ready(function(){
 
 
-	  	var startDateOption = decodeURI(window.location.href.split("startDate=")[1]).split("&")[0].split(" ")[0];
-		var endDateOption = decodeURI(window.location.href.split("endDate=")[1]).split("&")[0].split(" ")[0];
-		console.log("startDateOption: " + startDateOption);
-		console.log("endDateOption: " + endDateOption);
-
-		if(startDateOption != 'undefined' && endDateOption != 'undefined'
-				&& startDateOption != '' && endDateOption != ''){
-			$("#fromDate").val(startDateOption + " - " + endDateOption);
+	var $fromDate = $("#fromDate");
+	  
+	  var startDateOption = decodeURI(window.location.href.split("startDate=")[1]).split("&")[0];
+	  var endDateOption = decodeURI(window.location.href.split("endDate=")[1]).split("&")[0];
+	  console.log("startDateOption: " + startDateOption);
+	  console.log("endDateOption: " + endDateOption);
+		
+	  if(startDateOption != 'undefined' && endDateOption != 'undefined'
+			&& startDateOption != '' && endDateOption != ''){
+		  $fromDate.val(startDateOption + " - " + endDateOption);
+	  		
 		}
 
 
@@ -708,8 +760,7 @@ $(function() {
 			}
 		}
 		$selectKeyword[0][0].disabled = true;
-
-
+		
 		// 키워드 선택시
 		$selectKeyword.change(function(){
 			console.log("selectKeyword clicked....");
@@ -717,9 +768,24 @@ $(function() {
 
 			searchList();
 		});
+		
+		//ajaxGraph
+		var graphStart = $fromDate.val().split(" - ")[0].replace("/", "-").replace("/", "-");
+		var graphEnd = $fromDate.val().split(" - ")[1].replace("/", "-").replace("/", "-");
 
+		console.log("graphStart: " + graphStart);
+	    console.log("graphEnd: " + graphEnd);
+		  
+	    ajaxGraph(graphStart, graphEnd);
+	    
+	    //ajaxGraph2
+	    var graphStart = $fromDate.val().split(" - ")[0].replace("/", "-").replace("/", "-");
+		var graphEnd = $fromDate.val().split(" - ")[1].replace("/", "-").replace("/", "-");
 
-
+		console.log("graphStart: " + graphStart);
+	    console.log("graphEnd: " + graphEnd);
+		  
+	    ajaxGraph2(graphStart, graphEnd);
 
 		// 당일 클릭시
 		$('#toDay').on("click", function(){
@@ -794,6 +860,121 @@ $(function() {
 
 		   searchList();
 	});
+	
+	// 그래프 함수
+	function ajaxGraph(startDate, endDate){
+	  console.log(startDate + "/" + endDate);
+		$.ajax({
+
+	      type : "POST",
+		  url : "graph",
+	 	  dataType : "json",
+	 	  data : {startDate : startDate, endDate : endDate,
+	 		      company : $("#selectCompany option:selected").val(), selectKey : $("#selectKeyword option:selected").val()},
+	  	  error : function(){
+	      	alert('graphPOST ajax error....');
+	  	  },
+	  	  success : function(data){
+
+	  		var script = "[";
+
+	  		for(var i = 0; i < data.length; i++){
+	  			console.log(data[i]);
+	  			script += '{"manage":' + '"' + data[i].writeDate + '",'
+	  					+ '"l1"'+ ':' + data[i].type1 + ","
+	  					+ '"l2"' + ':' + data[i].type2 + ","
+	  					+ '"l3"' + ':' + data[i].type3 + ","
+	  					+ '"l4"' + ':' + data[i].type4 + "},";
+
+	  			if(i == data.length-1){
+	  				script =  script.substr(0, script.length-1);
+	  				script += "]";
+	  			}
+	  		}
+	  		console.log(script);
+
+	  		// to json
+	  		var jsonScript = JSON.parse(script);
+
+	  		drawChart(jsonScript);
+
+	  	 }
+		});
+	}
+	
+	function drawChart(data){
+     	// 그래프 초기화
+     	$('#line-chart1').children().remove();
+
+     	window.lineChart = Morris.Line({
+     	      element: 'line-chart1',
+     	      data: data,
+     	      xkey: 'manage',
+     	      xLabels : 'day',
+     	      redraw: true,
+     	      ykeys: ['l1', 'l2', 'l3', 'l4'],
+     	      hideHover: 'auto',
+     	      labels: ['포털', '커뮤니티', 'SNS', '언론사'],
+     	      lineColors: ['#2ecc71', '#e74c3c', '#3498DB','#f1c40f']
+     	  });
+     }
+	
+	// 그래프 함수
+	function ajaxGraph2(startDate, endDate){
+	  console.log(startDate + "/" + endDate);
+		$.ajax({
+
+	      type : "POST",
+		  url : "graph",
+	 	  dataType : "json",
+	 	  data : {startDate : startDate, endDate : endDate,
+	 		      company : $("#selectCompany option:selected").val(), selectKey : $("#selectKeyword option:selected").val()},
+	  	  error : function(){
+	      	alert('graphPOST ajax error....');
+	  	  },
+	  	  success : function(data){
+
+	  		var script = "[";
+
+	  		for(var i = 0; i < data.length; i++){
+	  			console.log(data[i]);
+	  			script += '{"manage":' + '"' + data[i].writeDate + '",'
+	  					+ '"l1"'+ ':' + data[i].type1 + ","
+	  					+ '"l2"' + ':' + data[i].type2 + ","
+	  					+ '"l3"' + ':' + data[i].type3 + ","
+	  					+ '"l4"' + ':' + data[i].type4 + "},";
+
+	  			if(i == data.length-1){
+	  				script =  script.substr(0, script.length-1);
+	  				script += "]";
+	  			}
+	  		}
+	  		console.log(script);
+
+	  		// to json
+	  		var jsonScript = JSON.parse(script);
+
+	  		drawChart2(jsonScript);
+
+	  	 }
+		});
+	}
+	function drawChart2(data){
+     	// 그래프 초기화
+     	$('#line-chart2').children().remove();
+
+     	window.lineChart = Morris.Line({
+     	      element: 'line-chart2',
+     	      data: data,
+     	      xkey: 'manage',
+     	     xLabels : 'day',
+     	      redraw: true,
+     	      ykeys: ['l1', 'l2', 'l3', 'l4'],
+     	      hideHover: 'auto',
+     	      labels: ['포털', '커뮤니티', 'SNS', '언론사'],
+     	      lineColors: ['#2ecc71', '#e74c3c', '#3498DB','#f1c40f']
+     	  });
+     }
 
 
 
@@ -872,15 +1053,5 @@ $(function() {
   var sel = document.getElementById("select");
   var val = sel.options[sel.selectedIndex].value;
   
-$('#myModal').modal("toggle");
-//반대로 모달상태를 전환함
-
-$('#myModal').modal("hide");
-//모달창 열기
-
-$('#myModal').modal("show");
-//모달창 닫음
 </script>
-
-
 </html>

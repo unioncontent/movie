@@ -15,9 +15,13 @@ public interface KeywordDAO {
 	
 	public void update(KeywordVO vo);
 	
+	public void stateUpdateOn(String keyword_main);
+	public void stateUpdateOff(String keyword_main);
+	
 	public void delete(String keyword);
 	
 	public List<KeywordVO> listByUser(Integer user_idx);
+	public List<KeywordVO> getKeyword(String keyword_main);
 	
 	public List<KeywordVO> listAll();
 	public List<KeywordVO> showboxListAll();

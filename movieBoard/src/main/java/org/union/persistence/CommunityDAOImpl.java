@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.union.domain.CommunityVO;
 import org.union.domain.SearchCriteria;
+import org.union.domain.TextTypeDateVO;
 import org.union.domain.TextTypeVO;
 
 @Repository
@@ -90,6 +91,12 @@ public class CommunityDAOImpl implements CommunityDAO {
 	public Integer getSearchCount(SearchCriteria cri) {
 
 		return session.selectOne(namespace + "getSearchCount", cri);
+	}
+	
+	@Override
+	public Integer getSearchCount2(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "getSearchCount2", cri);
 	}
 	
 	@Override
@@ -202,5 +209,13 @@ public class CommunityDAOImpl implements CommunityDAO {
 
 		return session.selectList(namespace + "allPage", cri);
 	}
+
+
+	@Override
+	public List<TextTypeDateVO> textTypeCount2(SearchCriteria cri) {
+
+		return session.selectList(namespace + "textTypeCount2", cri);
+	}
+
 
 }

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.union.domain.KeywordListVO;
 import org.union.domain.KeywordVO;
+import org.union.domain.NewsVO;
 import org.union.domain.SwearwordVO;
 import org.union.service.KeywordService;
 import org.union.service.UserService;
@@ -164,6 +165,32 @@ public class KeywordController {
 		logger.info("swearword: " + swearword);
 		
 		keywordService.swearwordDelete(swearword);
+		
+		return "success";
+	}
+	
+	@ResponseBody
+	@PostMapping("updateOn")
+	public String keywordStateUpdateOn(String keyword_main) {
+		logger.info("keywordStateUpdate called....");
+		
+		logger.info("keyword_main: " + keyword_main);
+		
+		
+		keywordService.stateUpdateOn(keyword_main);
+		
+		return "success";
+	}
+	
+	@ResponseBody
+	@PostMapping("updateOff")
+	public String keywordStateUpdateOff(String keyword_main) {
+		logger.info("keywordStateUpdate called....");
+		
+		logger.info("keyword_main: " + keyword_main);
+		
+		
+		keywordService.stateUpdateOff(keyword_main);
 		
 		return "success";
 	}

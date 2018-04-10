@@ -46,6 +46,94 @@
 			and textType = #{textType}
 		</if>
 	</sql>
+	<sql id="search_writeDate">
+ 		<if test="keyword != null">
+			<if test="searchType != null">
+				<if test="searchType == 't'.toString()">
+					and portal_title like concat('%', #{keyword}, '%')
+				</if>
+				<if test="searchType == 'c'.toString()">
+					and portal_title like concat('%', #{keyword}, '%')
+				</if>
+			</if>
+		</if>
+		<if test="company != null">
+			and
+			   keyword in (select 
+						keyword 
+					from 
+						keyword_data
+					where
+						user_idx = (select 
+										user_idx 
+									from 
+										user_data 
+									where 
+										user_name = #{company} 
+									and 
+										keyword_property = '포함'
+									)
+					)
+		</if>
+		<if test="selectKey != null">
+				and keyword in (select keyword from keyword_data where keyword_main = #{selectKey})
+			</if>	
+		<if test="startDate == null">
+			and writeDate <![CDATA[>=]]> CURDATE()
+		</if>	
+		<if test="startDate != null">
+			and writeDate <![CDATA[>=]]> #{startDate}
+			<if test="endDate != null">
+				and writeDate <![CDATA[<]]> #{endDate}
+			</if>
+		</if>
+		<if test="textType != null">
+			and textType = #{textType}
+		</if>
+	</sql>
+	<sql id="search_writeDate2">
+ 		<if test="keyword != null">
+			<if test="searchType != null">
+				<if test="searchType == 't'.toString()">
+					and portal_title like concat('%', #{keyword}, '%')
+				</if>
+				<if test="searchType == 'c'.toString()">
+					and portal_title like concat('%', #{keyword}, '%')
+				</if>
+			</if>
+		</if>
+		<if test="company != null">
+			and
+			   keyword in (select 
+						keyword 
+					from 
+						keyword_data
+					where
+						user_idx = (select 
+										user_idx 
+									from 
+										user_data 
+									where 
+										user_name = #{company} 
+									and 
+										keyword_property = '포함'
+									)
+					)
+		</if>
+		<if test="selectKey != null">
+				and keyword in (select keyword from keyword_data where keyword_main = #{selectKey})
+			</if>	
+		<if test="startDate == null">
+			and createDate <![CDATA[>=]]> CURDATE()
+		</if>	
+		<if test="startDate != null">
+			and createDate <![CDATA[>=]]> #{startDate}
+			<if test="endDate != null">
+				and createDate <![CDATA[<]]> #{endDate}
+			</if>
+		</if>
+	</sql>
+	
  
  
  	<insert id="create">
@@ -377,6 +465,61 @@
 	
 	</update>
 	
+	<select id="facebookCnt" resultType="SNSVO">
+		select
+		sum(like_cnt) like_cnt,
+		sum(reply_cnt) reply_cnt,
+		sum(share_cnt) share_cnt
+		from sns_data
+        where
+        sns_name = 'facebook'
+        and sns_title is not null
+        <include refid="search_writeDate"></include>
+	</select>
 	
- 	
+	<select id="instaCnt" resultType="SNSVO">
+		select
+		sum(like_cnt) like_cnt,
+		sum(reply_cnt) reply_cnt,
+		sum(share_cnt) share_cnt
+		from sns_data
+        where
+        sns_name = 'instagram'
+        and sns_title is not null
+        <include refid="search_writeDate"></include>
+	</select>
+	
+	<select id="twiCnt" resultType="SNSVO">
+		select
+		sum(like_cnt) like_cnt,
+		sum(reply_cnt) reply_cnt,
+		sum(share_cnt) share_cnt
+		from sns_data
+        where
+        sns_name = 'twitter'
+        and sns_title is not null
+        <include refid="search_writeDate"></include>
+	</select>
+	
+	<select id="snsTotalCnt" resultType="SNSVO">
+		select
+		sum(like_cnt) like_cnt,
+		sum(reply_cnt) reply_cnt,
+		sum(share_cnt) share_cnt
+		from sns_data
+        where
+        sns_title is not null
+        <include refid="search_writeDate"></include>
+	</select>
+	
+	<select id="facebookCGV" resultType="FvVO">
+ 		select 
+		DATE_FORMAT(createDate,'%Y-%m-%d') createDate, view_cnt, like_cnt,share_cnt, reply_cnt
+		from facebook_videos
+		where url is not null
+		<include refid="search_writeDate2"></include>
+		group by DATE_FORMAT(createDate,'%Y-%m-%d')
+		ORDER BY createDate ASC;
+ 	</select>
+
  </mapper>

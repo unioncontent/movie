@@ -157,12 +157,11 @@ public class ManageController {
 		model.addAttribute("communityList21", monitorService.communityMonitor("ruliweb"));
 		model.addAttribute("communityList22", monitorService.communityMonitor("soccerline"));
 		model.addAttribute("communityList23", monitorService.communityMonitor("square"));
-		model.addAttribute("communityList24", monitorService.communityMonitor("theqoo"));
 		model.addAttribute("communityList25", monitorService.communityMonitor("tistory"));
 	}
 	
-	@PostMapping("/report")
-	public ModelAndView report(String startDate, String endDate) {
+	@PostMapping("/reportbackup")
+	public ModelAndView reportbackup(String startDate, String endDate) {
 		
 		ModelAndView mav=new ModelAndView();
 		mav.addObject("date", startDate);
@@ -171,7 +170,7 @@ public class ManageController {
 		return mav;
 	}
 	
-	@GetMapping("/report")
+	@GetMapping("/reportbackup")
 	public void reportGet(@ModelAttribute("cri") SearchCriteria cri, Model model, String startDate, String endDate, String company, String selectKey) throws Exception{
 		logger.info("reportGET called....");
 		
@@ -387,48 +386,138 @@ public class ManageController {
 		
 	}
 	
-	 @RequestMapping(value = "/insertBoard.do", method = RequestMethod.POST)
-	    public String insertBoard(String editor) {
-	        System.err.println("저장할 내용 : " + editor);
-	        return "redirect:/email";
+	@GetMapping("/report")
+	public void report(@ModelAttribute("cri") SearchCriteria cri, Model model, String startDate, String endDate, String company, String selectKey) throws Exception{
+	logger.info("reportGET called....");
+		
+		cri.setKeyword(null);
+		cri.setTextType(null);
+		
+		if(cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey()) ) {
+			logger.info("selectKey is null");
+			cri.setSelectKey(null);
+		}
+		if("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate())
+				|| cri.getStartDate() == "" || cri.getEndDate() == ""){
+			cri.setStartDate(null);
+			cri.setEndDate(null);
+		
+		} 
+		if(cri.getStartDate() != null && cri.getEndDate() != null) {
+			logger.info("not null");
+			logger.info(cri.getStartDate());
+			logger.info(cri.getEndDate());
+			if(cri.getStartDate().indexOf("00:00:00") < 0 && cri.getEndDate().indexOf("23:59:59") < 0){ 
+				cri.setStartDate(cri.getStartDate() + " 00:00:00"); 
+				cri.setEndDate(cri.getEndDate() + " 23:59:59"); 
+			}
+		}
+		
+		
+		if(cri.getCompany() != null) {
+			if(cri.getCompany().isEmpty()) {
+				cri.setCompany(null);
+			}
+		}
+		if(cri.getCompany() == null || cri.getCompany().equals("회사")) {
+			logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+			UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
+			
+			if(!vo.getUser_name().equals("union")) {
+			cri.setCompany(vo.getUser_name());
+			
+			}else {
+				cri.setCompany(null);
+			}
+		}
+
+		// 회사 선택에 따른 키워드 재추출
+		if (cri.getCompany() != null) {	
+			if (cri.getCompany().isEmpty() == false) {
+
+				UserVO userVO = userService.viewByName(cri.getCompany());
+				logger.info("userVO: " + userVO);
+				logger.info("keywordList: " + keywordService.listByUser(userVO.getUser_idx()));
+				model.addAttribute("modelKeywordList",
+						keywordService.listByUser(userService.viewByName(cri.getCompany()).getUser_idx()));
+			}
+		}
+		
+		logger.info("cri: " + cri);
+		
+		model.addAttribute("getKeyword", keywordService.getKeyword(selectKey));
+		
+		model.addAttribute("portalCount", portalService.wgetSearchCount(cri));
+		model.addAttribute("communityCount", communityService.wgetSearchCount(cri));
+		model.addAttribute("snsCount", snsService.getSearchCount(cri));
+		model.addAttribute("mediaCount", mediaService.wgetSearchCount(cri));
+		
+		model.addAttribute("portalTextType", portalService.textTypeCount(cri));
+		model.addAttribute("communityTextType", communityService.textTypeCount(cri));
+		
+		model.addAttribute("blogTextType", portalService.blogTextType(cri));
+		model.addAttribute("cafeTextType", portalService.cafeTextType(cri));
+		
+		model.addAttribute("facebookTT", snsService.facebookSum(cri));
+		model.addAttribute("twitterTT", snsService.twitterSum(cri));
+		model.addAttribute("instagramTT", snsService.instagramSum(cri));
+		
+		model.addAttribute("naverMediaCount", mediaService.naverMediaCount(cri));
+		model.addAttribute("daumMediaCount", mediaService.daumMediaCount(cri));
+		model.addAttribute("totalMediaCount", mediaService.totalMediaCount(cri));
+		
+		model.addAttribute("startDate", startDate);
+		model.addAttribute("endDate", endDate);
+		model.addAttribute("company", company);
+		model.addAttribute("selectKey", selectKey);
+		
+		model.addAttribute("naverCount", portalService.getNaverCount(cri));
+		model.addAttribute("naver1", portalService.naverTextTypeCountb(cri));
+		model.addAttribute("naver2", portalService.naverTextTypeCountc(cri));
+		model.addAttribute("naver3", portalService.naverTextTypeCountk(cri));
+		model.addAttribute("naver4", portalService.naverTextTypeCountw(cri));
+		
+		model.addAttribute("daumCount", portalService.getDaumCount(cri));
+		model.addAttribute("daum1", portalService.daumTextTypeCountb(cri));
+		model.addAttribute("daum2", portalService.daumTextTypeCountc(cri));
+		model.addAttribute("daum3", portalService.daumTextTypeCountk(cri));
+		model.addAttribute("daum4", portalService.daumTextTypeCountw(cri));
+		
+		model.addAttribute("facebookCnt", snsService.facebookCnt(cri));
+		model.addAttribute("instaCnt", snsService.instaCnt(cri));
+		model.addAttribute("twiCnt", snsService.twiCnt(cri));
+		model.addAttribute("snsTotalCnt", snsService.snsTotalCnt(cri));
+		
+		model.addAttribute("mediaCnt", mediaService.mediaCnt(cri));
+		
+		model.addAttribute("textType", portalService.getScoreTextType(cri));
+		
+		
+		
+		model.addAttribute("list1", portalService.textTypeCount2(cri));
+		model.addAttribute("list2", communityService.textTypeCount2(cri));
+		model.addAttribute("list3", mediaService.textTypeCount2(cri));
+		
+		model.addAttribute("fV", snsService.facebookCGV(cri));
+		
+		cri.setTextType("좋은글");
+		model.addAttribute("type1", communityService.getSearchCount2(cri));
+		cri.setTextType("나쁜글");
+		model.addAttribute("type2", communityService.getSearchCount2(cri));
+		cri.setTextType("관심글");
+		model.addAttribute("type3", communityService.getSearchCount2(cri));
+		cri.setTextType("기타글");
+		model.addAttribute("type4", communityService.getSearchCount2(cri));
+		
+		
+		
+		
+		java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("yyyy-MM-dd");
+		String today = formatter.format(new java.util.Date());
+		
+		model.addAttribute("today", today);
+
 	}
-	
-	// 다중파일업로드
-    @RequestMapping(value = "/file_uploader_html5", method = RequestMethod.POST)
-    @ResponseBody
-    public String multiplePhotoUpload(HttpServletRequest request) {
-        // 파일정보
-        StringBuffer sb = new StringBuffer();
-        try {
-            // 파일명을 받는다 - 일반 원본파일명
-            String oldName = request.getHeader("file-name");
-            // 파일 기본경로 _ 상세경로
-            String filePath = "C:/Users/Administrator/eclipse-workspace/movieBoard2/src/main/webapp/resources/photoUpload/";
-            String saveName = sb.append(new SimpleDateFormat("yyyyMMddHHmmss")
-                          .format(System.currentTimeMillis()))
-                          .append(UUID.randomUUID().toString())
-                          .append(oldName.substring(oldName.lastIndexOf("."))).toString();
-            InputStream is = request.getInputStream();
-            OutputStream os = new FileOutputStream(filePath + saveName);
-            int numRead;
-            byte b[] = new byte[Integer.parseInt(request.getHeader("file-size"))];
-            while ((numRead = is.read(b, 0, b.length)) != -1) {
-                os.write(b, 0, numRead);
-            }
-            os.flush();
-            os.close();
-            // 정보 출력
-            sb = new StringBuffer();
-            sb.append("&bNewLine=true")
-              .append("&sFileName=").append(oldName)
-              .append("&sFileURL=").append("http://localhost:8080/Spring/resources/photoUpload/")
-        .append(saveName);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return sb.toString();
-    }
-	
 	
 	/*@PostMapping("/monitorInsert")
 	public String monitorInsertPOST(MonitorVO vo) {

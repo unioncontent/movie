@@ -3,9 +3,11 @@ package org.union.persistence;
 import java.util.Date;
 import java.util.List;
 
+import org.union.domain.FvVO;
 import org.union.domain.GraphVO;
 import org.union.domain.SNSVO;
 import org.union.domain.SearchCriteria;
+import org.union.domain.TextTypeDateVO;
 
 public interface SNSDAO {
 
@@ -63,5 +65,12 @@ public interface SNSDAO {
 	public void updateTextType(SNSVO vo);
 	
 	public void updateThumbnail(SNSVO vo);
+	
+	public List<SNSVO> facebookCnt(SearchCriteria cri);
+	public List<SNSVO> instaCnt(SearchCriteria cri);
+	public List<SNSVO> twiCnt(SearchCriteria cri);
+	public List<SNSVO> snsTotalCnt(SearchCriteria cri);
+	
+	public List<FvVO> facebookCGV(SearchCriteria cri);
 	
 }

@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.union.domain.ExtractVO;
+import org.union.domain.FvVO;
 import org.union.domain.GraphVO;
 import org.union.domain.SNSVO;
 import org.union.domain.SearchCriteria;
@@ -62,5 +63,12 @@ public interface SNSService {
 	public void modifyTextType(SNSVO vo);
 	
 	public void modifyThumbnail(SNSVO vo);
+	
+	public List<SNSVO> facebookCnt(SearchCriteria cri);
+	public List<SNSVO> instaCnt(SearchCriteria cri);
+	public List<SNSVO> twiCnt(SearchCriteria cri);
+	public List<SNSVO> snsTotalCnt(SearchCriteria cri);
+	
+	public List<FvVO> facebookCGV(SearchCriteria cri);
 	
 }

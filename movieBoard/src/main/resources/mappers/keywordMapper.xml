@@ -36,6 +36,22 @@
 			keyword_idx = #{keyword_idx}
 	
 	</update>
+	
+	<update id="stateUpdateOn">
+		update keyword_data 
+			set keyword_property='포함'
+		where
+			keyword_main = #{keyword_main} and keyword_property='포함0';
+	
+	</update>
+	
+	<update id="stateUpdateOff">
+		update keyword_data 
+			set keyword_property='포함0'
+		where
+			keyword_main = #{keyword_main} and keyword_property='포함';
+	
+	</update>
 
 	<delete id="delete">
 		delete from
@@ -62,6 +78,18 @@
 			user_idx = #{user_idx}
 		and
 			keyword_property = '포함'
+	
+	</select>
+	
+	<select id="getKeyword" resultType="KeywordVO">
+		select 
+			distinct keyword 
+		from 
+			keyword_data 
+		where 
+			keyword_main = #{keyword_main} 
+		and 
+			keyword_property='포함';
 	
 	</select>
 	

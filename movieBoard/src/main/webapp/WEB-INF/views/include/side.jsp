@@ -170,6 +170,15 @@
           </li>
           </c:if>
           <c:if test="${user.user_name == 'union'}">
+           <li class="reportbackup" style="DISPLAY: none;">
+            <a href="../manage/reportbackup" data-i18n="nav.advance-components.grid-stack">
+              <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+              <span class="pcoded-mtext">보고서 html</span>
+              <span class="pcoded-mcaret"></span>
+            </a>
+          </li>
+          </c:if>
+          <c:if test="${user.user_name == 'union'}">
           <li class="email" style="DISPLAY: none;">
             <a href="../manage/email" data-i18n="nav.advance-components.draggable">
               <span class="pcoded-micon"><i class="ti-angle-right"></i></span>

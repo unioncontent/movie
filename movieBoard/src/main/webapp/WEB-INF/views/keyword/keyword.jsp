@@ -106,11 +106,12 @@
                             <thead>
                               <tr>
                                 <th width="1%">NO</th>
-                                <th width="5%">등록일</th>
-                                <th width="10%">회사명</th>
-                                <th width="10%">키워드</th>
-                                <th width="5%">검색어</th>
-                                <th width="5%">제외검색어</th>
+                                <th width="3%">등록일</th>
+                                <th width="3%">회사명</th>
+                                <th width="3%">키워드</th>
+                                <th width="1%">검색어</th>
+                                <th width="1%">제외검색어</th>
+                                <th width="2%">상태변경</th>
                                 <th width="4%"></th>
                               </tr>
                             </thead>
@@ -123,6 +124,26 @@
                                 <td>${keyword.keyword_main}</td>
                                 <td>${keyword.first}</td>
                                 <td>${keyword.second }</td>
+                                <td>
+	                            <div class="state${index.count}">
+	                            	<c:if test="${keyword.first == 0}">
+	                                <button class="tabledit-button btn btn-default waves-effect waves-light alert-confirm2" data-toggle="tooltip" data-placement="top" data-original-title="상태변경">
+    								On
+    								</button>
+    								<button class="tabledit-button btn btn-info waves-effect waves-light alert-confirm3" data-toggle="tooltip" data-placement="top" data-original-title="상태변경">
+    								Off
+    								</button>
+	                                </c:if>
+	                                <c:if test="${keyword.first != 0}">
+	                                <button class="tabledit-button btn btn-info waves-effect waves-light alert-confirm2" data-toggle="tooltip" data-placement="top" data-original-title="상태변경">
+    								On
+    								</button>
+    								<button class="tabledit-button btn btn-default waves-effect waves-light alert-confirm3" data-toggle="tooltip" data-placement="top" data-original-title="상태변경">
+    								Off
+    								</button>
+	                                </c:if>
+			                    </div>
+	                            </td>
                                 <td class="text-center">
   								  <div class="btn-group btn-group-md text-center" style="padding-right: 0;">
     							    <button type="button" class="tabledit-edit-button btn btn-primary waves-effect waves-light" style="margin-right: 5px;" data-toggle="tooltip" data-placement="top" data-original-title="키워드 추가">
@@ -211,8 +232,20 @@
   <script type="text/javascript" src="../bower_components/modernizr/feature-detects/css-scrollbars.js"></script>
   <!-- classie js -->
   <script type="text/javascript" src="../bower_components/classie/classie.js"></script>
+  <!-- Bootstrap date-time-picker js -->
+  <script type="text/javascript" src="../assets/pages/advance-elements/moment-with-locales.min.js"></script>
+  <!-- Date-range picker js -->
+  <script type="text/javascript" src="../bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+  <!-- Bootstrap date-time-picker js -->
+  <script type="text/javascript" src="../assets/pages/advance-elements/moment-with-locales.min.js"></script>
+  <script type="text/javascript" src="../bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+  <script type="text/javascript" src="../assets/pages/advance-elements/bootstrap-datetimepicker.min.js"></script>
+  <!-- Morris Chart js -->
+  <script src="../bower_components/raphael/raphael.min.js"></script>
+  <script src="../bower_components/morris.js/morris.js"></script>
   <!-- sweet alert js -->
   <script type="text/javascript" src="../bower_components/sweetalert/dist/sweetalert.min.js"></script>
+  <script type="text/javascript" src="../assets/pages/division/script.js"></script>
   <!-- i18next.min.js -->
   <script type="text/javascript" src="../bower_components/i18next/i18next.min.js"></script>
   <script type="text/javascript" src="../bower_components/i18next-xhr-backend/i18nextXHRBackend.min.js"></script>
@@ -220,11 +253,12 @@
   <script type="text/javascript" src="../bower_components/jquery-i18next/jquery-i18next.min.js"></script>
   <!-- Custom js -->
   <script type="text/javascript" src="../assets/js/script.js"></script>
-  <script type="text/javascript" src="../assets/pages/keyword/script3.js"></script>
+  <script type="text/javascript" src="../assets/pages/division/script2.js"></script>
+  <script type="text/javascript" src="../assets/pages/picker.js"></script>
   <script src="../assets/js/pcoded.min.js"></script>
   <script src="../assets/js/demo-12.js"></script>
   <script src="../assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
-  <script src="../assets/js/jquery.mousewheel.min.js"></script>
+  <script src="../assets/js/jquery.mousewheel.min.js"></script>      
 </body>
 
 
@@ -263,6 +297,98 @@
 			self.location = "modify?keyword_main=" + keyword_main.data;
 
 		});
+		
+		// 상태변경 버튼 클릭시On
+		  $(document).on("click",".alert-confirm2",function(event){
+			  var div = event.target.parentNode;
+
+				if(div.type == 'button'){
+					console.log("button click...");
+					div = div.parentNode;
+				}
+
+				var tr = div.parentNode.parentNode;
+				console.log(tr);
+
+				var td = tr.children[3];
+				console.log(td);
+
+				var keyword_main = td.childNodes[0];
+				console.log("keyword_main:"+keyword_main.data);
+			  
+			  swal({
+					title: "상태On 처리 하시겠습니까?",
+					text: "바로 상태변경 됩니다.",
+					type: "warning",
+					showCancelButton: true,
+					confirmButtonClass: "btn-state",
+					confirmButtonText: "YES",
+					closeOnConfirm: false
+				},
+					function(){
+					
+						$.ajax({
+							type : "POST",
+							url : "updateOn",
+							data: {keyword_main: keyword_main.data},
+							dataType: "json",
+							success: function(data){
+							console.log(data);
+							}
+
+						});
+						
+						swal("Update!", "상태변경 처리가 완료되었습니다.", "success");
+
+						location.reload();
+					});
+	  			});
+		
+		// 상태변경 버튼 클릭시Off
+		  $(document).on("click",".alert-confirm3",function(event){
+			  var div = event.target.parentNode;
+
+				if(div.type == 'button'){
+					console.log("button click...");
+					div = div.parentNode;
+				}
+
+				var tr = div.parentNode.parentNode;
+				console.log(tr);
+
+				var td = tr.children[3];
+				console.log(td);
+
+				var keyword_main = td.childNodes[0];
+				console.log("keyword_main:"+keyword_main.data);
+			  
+			  swal({
+					title: "상태Off 처리 하시겠습니까?",
+					text: "바로 상태변경 됩니다.",
+					type: "warning",
+					showCancelButton: true,
+					confirmButtonClass: "btn-state",
+					confirmButtonText: "YES",
+					closeOnConfirm: false
+				},
+					function(){
+					
+						$.ajax({
+							type : "POST",
+							url : "updateOff",
+							data: {keyword_main: keyword_main.data},
+							dataType: "json",
+							success: function(data){
+							console.log(data);
+							}
+
+						});
+						
+						swal("Update!", "상태변경 처리가 완료되었습니다.", "success");
+
+						location.reload();
+					});
+	  			});
 
 		// 삭제 버튼 클릭
 		$(".tabledit-delete-button").on("click", function(event){
@@ -314,8 +440,7 @@
 
 		});
 
-	});
-
+	}); // end ready...
 </script>
 
 </html>

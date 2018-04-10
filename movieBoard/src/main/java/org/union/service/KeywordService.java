@@ -15,6 +15,7 @@ public interface KeywordService {
 	public void remove(String keyword);
 	
 	public List<KeywordVO> listByUser(Integer user_idx);
+	public List<KeywordVO> getKeyword(String keyword_main);
 	 
 	public List<ExtractVO> viewByKeyword(List<ExtractVO> list);
 	
@@ -40,4 +41,7 @@ public interface KeywordService {
 	public void swearwordCreate(SwearwordVO vo);
 	
 	public void swearwordDelete(String swearword);
+	
+	public void stateUpdateOn(String keyword_main);
+	public void stateUpdateOff(String keyword_main);
 }

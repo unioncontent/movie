@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.union.domain.CommunityVO;
 import org.union.domain.SearchCriteria;
+import org.union.domain.TextTypeDateVO;
 import org.union.domain.TextTypeVO;
 
 public interface CommunityDAO {
@@ -35,6 +36,7 @@ public interface CommunityDAO {
 	public List<CommunityVO> listSearch(SearchCriteria cri);
 	
 	public Integer getSearchCount(SearchCriteria cri);
+	public Integer getSearchCount2(SearchCriteria cri);
 
 	public List<CommunityVO> wlistSearch(SearchCriteria cri);
 	public List<CommunityVO> wPageSearch(SearchCriteria cri);
@@ -51,4 +53,6 @@ public interface CommunityDAO {
 	public void updateTextType (CommunityVO vo);
 	
 	public void updateThumbnail (CommunityVO vo);
+	
+	public List<TextTypeDateVO> textTypeCount2(SearchCriteria cri);
 }

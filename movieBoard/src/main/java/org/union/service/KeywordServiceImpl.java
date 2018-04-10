@@ -27,6 +27,12 @@ public class KeywordServiceImpl implements KeywordService{
 
 		return keywordDAO.listByUser(user_idx);
 	}
+	
+	@Override
+	public List<KeywordVO> getKeyword(String keyword_main) {
+
+		return keywordDAO.getKeyword(keyword_main);
+	}
 
 	@Override
 	public List<ExtractVO> viewByKeyword(List<ExtractVO> list) {
@@ -187,6 +193,20 @@ public class KeywordServiceImpl implements KeywordService{
 
 		return keywordDAO.checkSwearword(swearword);
 	}
+
+	@Override
+	public void stateUpdateOn(String keyword_main) {
+		keywordDAO.stateUpdateOn(keyword_main);
+		
+	}
+
+	@Override
+	public void stateUpdateOff(String keyword_main) {
+		keywordDAO.stateUpdateOff(keyword_main);
+		
+	}
+
+	
 
 
 }
