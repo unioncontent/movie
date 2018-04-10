@@ -9,6 +9,27 @@ router.get('/',async function(req, res) {
   var data = await getListPageData(req.query);
   res.render('list',data);
 });
+
+router.post('/update',async function(req, res) {
+  try{
+    var updateMail = await mailListA.update(req.body);
+    res.send('메일 업데이트 되었습니다.');
+  }
+  catch(e){
+    res.send('다시 시도해주세요.');
+  }
+});
+
+router.post('/delete',async function(req, res) {
+  try{
+    var deleteMail = await mailListA.deleteFun(req.body);
+    res.send('메일 삭제 되었습니다.');
+  }
+  catch(e){
+    res.send('다시 시도해주세요.');
+  }
+});
+
 router.post('/getNextPage',async function(req, res, next) {
   // if (!req.user) {
   //   return res.redirect('/login');
@@ -16,6 +37,7 @@ router.post('/getNextPage',async function(req, res, next) {
   var data = await getListPageData(req.body);
   res.send(data);
 });
+
 async function getListPageData(param){
   var data = {
     mailList:[],
@@ -24,7 +46,9 @@ async function getListPageData(param){
   var limit = 20;
   var searchParam = ['1',0,limit];
   var currentPage = 1;
-  var searchBody = {};
+  var searchBody = {
+    'order': 'date'
+  };
   if (typeof param.page !== 'undefined') {
     currentPage = param.page;
   }
@@ -88,7 +112,7 @@ router.post('/add/search',async function(req,res){
 router.post('/add/emailCheck',async function(req,res){
   var emailParam = [req.body.email];
   try{
-    var emailCheck = await user.emailCheck(emailParam);
+    var emailCheck = await mailListA.emailCheck(emailParam);
     res.send((emailCheck.length == 0)?'success':'fail');
   }
   catch(e){

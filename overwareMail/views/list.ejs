@@ -96,7 +96,7 @@
                       </td>
                       <th><%= mailListCount - i - offset %></th>
                       <td><%=mailList[i].user_name%></td>
-                      <td class="f-w-900 edit"><%=mailList[i].M_email%></td>
+                      <td class="edit"><%=mailList[i].M_email%></td>
                       <td><%=mailList[i].M_ptitle%></td>
                       <td><%=mailList[i].M_name%></td>
                       <td><%=(mailList[i].M_tel == null)?'':phoneFomatter(mailList[i].M_tel)%></td>
@@ -251,6 +251,9 @@
   .messages{
     display: none;
   }
+  .edit:hover{
+    font-weight: bold;
+  }
 </style>
 <!-- alert -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert@2.1.0/dist/sweetalert.min.js"></script>
@@ -265,9 +268,32 @@
       $("#keywordInput").val(searchParams);
     }
   });
-  $('.modal input').on('focus',function(){
-    console.log($(this));
-    $(this).parents('.edit-td').find('.messages').hide();
+  $('#email').on('change',function(){
+    $('#emailCheck').val('');
+  });
+  // 이메일 클릭시
+  $(document).on('click','.edit',function(){
+    var trEle = $(this).parents('tr');
+    var tdEles = trEle.find('td');
+
+    var user = tdEles.eq(1).text();
+    var email = tdEles.eq(2).text();
+    var media = tdEles.eq(3).text();
+    var name = tdEles.eq(4).text();
+    var tel = tdEles.eq(5).text().replace(/[-]/g,'');
+
+    $('#user').text(user);
+    $('#email').val(email);
+    $('#media').text(media);
+    $('#name').val(name);
+    $('#tel').val(tel);
+    $('#n_idx').val(trEle.find('input').eq(0).val());
+
+    $('#o_email').val(email);
+    $('#o_name').val(name);
+    $('#o_tel').val(tel);
+
+    $('#edit-Modal').modal('show');
   });
   // 모달 수정버튼 클릭시
   $('.btn-update').on('click',function(){
@@ -283,9 +309,6 @@
         if($("#name").val() != $("#o_name").val() && $("#name").val() == ""){
           check = requiredMessage("name","이름을 입력해주세요.");
         }
-        if($("#tel").val() != $("#o_tel").val() && $("#tel").val() == ""){
-          check = requiredMessage("tel","전화번호를 입력해주세요.");
-        }
         if($("#email").val() != $("#o_email").val() && $("#email").val() == ""){
           check = requiredMessage("email","이메일를 입력해주세요.");
         }
@@ -293,14 +316,18 @@
           check = requiredMessage("email","이메일를 중복확인 해주세요.");
         }
         if(check){
-          if($("#name").val() != $("#o_name").val() && $("#tel").val() != $("#o_tel").val() && $("#email").val() != $("#o_email").val()){
-            swal("ERROR!", "변경사항이 없습니다.", "error");
+          if($("#name").val() == $("#o_name").val() && $("#tel").val() == $("#o_tel").val() && $("#email").val() == $("#o_email").val()){
+            swal("ERROR!", "변경사항이 없습니다.", "error")
+            .then((value)=>{
+              $('#edit-Modal').modal('show');
+            });
             return false;
           }
           var param = {
             'M_name': $('#name').val(),
             'M_email': $('#email').val(),
-            'M_tel':$('#tel').val()
+            'M_tel':$('#tel').val().replace(/[-]/g,''),
+            'n_idx':$('#n_idx').val()
           };
           updateMail(param);
         }
@@ -313,7 +340,8 @@
       }
     });
   });
-  function updateMail(){
+  // update ajax
+  function updateMail(param){
     $.ajax({
       url: '/list/update',
       type: 'post',
@@ -321,23 +349,20 @@
       datatype : 'json',
       error:function(request,status,error){
         // alert('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
-        swal("ERROR!", request.responseText, "error");
+        swal("ERROR!", request.responseText, "error")
+        .then((value)=>{
+          $('#email').val($('#o_email').val());
+          $('#name').val($('#o_name').val());
+          $('#tel').val($('#o_tel').val());
+        });
       },
       success:function(data){
         swal("SUCCESS!", data, "success")
         .then((value) => {
-
-          window.location.reload();
+          reloadPage();
         });
       }
     });
-  }
-  // input box 경고문
-  function requiredMessage(target,msg){
-    $("#"+target).parents('.edit-td').find('.messages').show();
-    $("#"+target).parents('.edit-td').find('.error').text(msg);
-    // $("#"+target).addClass("form-control-danger");
-    return false;
   }
   // 모달 삭제버튼 클릭시
   $('.btn-delete').on('click',function(){
@@ -352,19 +377,40 @@
         $.ajax({
           url: '/list/delete',
           type: 'post',
-          data : param,
+          data : {
+            idx:$('#n_idx').val()
+          },
           datatype : 'json',
           error:function(request,status,error){
             // alert('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
-            swal("ERROR!", request.responseText, "error");
+            swal("ERROR!", request.responseText, "error")
+            .then((value)=>{
+              $('#email').val($('#o_email').val());
+              $('#name').val($('#o_name').val());
+              $('#tel').val($('#o_tel').val());
+            });
           },
           success:function(data){
-            swal("SUCCESS!", data, "success");
+            swal("SUCCESS!", data, "success")
+            .then((value)=>{
+              reloadPage();
+            });
           }
         });
       }
     });
   });
+  // input 선택시 경고문 없앰
+  $('.modal input').on('focus',function(){
+    $(this).parents('.edit-td').find('.messages').hide();
+  });
+  // input box 경고문
+  function requiredMessage(target,msg){
+    $("#"+target).parents('.edit-td').find('.messages').show();
+    $("#"+target).parents('.edit-td').find('.error').text(msg);
+    // $("#"+target).addClass("form-control-danger");
+    return false;
+  }
   // 중복 체크
   $("#emailCheckBtn").on("click",function(){
     swal({
@@ -381,7 +427,7 @@
       closeOnEsc: false
     })
     .then((value) => {
-      console.log(value);
+      value = $('.swal-content__input').val();
       var regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
       if (value != null) {
         if (value.match(regExp) == null) {
@@ -399,7 +445,10 @@
           success: function(data){
             console.log(data);
             if(data == 'fail'){
-              swal("ERROR!", "이메일 중복됩니다. 다시 입력해 주세요.", "error");
+              swal("ERROR!", "이메일 중복됩니다. 다시 입력해 주세요.", "error")
+              .then((value)=>{
+                $('#email').val($('#o_email').val());
+              });
             }else if(data == 'success'){
               swal("중복확인!", value+"는 사용가능한 이메일입니다.", "success");
 
@@ -412,21 +461,6 @@
         });
       }
     });
-  });
-  // 이메일 클릭시
-  $(document).on('click','.edit',function(){
-    var trEle = $(this).parents('tr');
-    var tdEles = trEle.find('td');
-    $('#user').text(tdEles.eq(1).text());
-    $('#media').text(tdEles.eq(3).text());
-    $('#email').val(tdEles.eq(2).text());
-    $('#name').val(tdEles.eq(4).text());
-    $('#tel').val(tdEles.eq(5).text());
-    $('#n_idx').val(trEle.find('input').eq(0).val());
-    $('#o_email').val(tdEles.eq(2).text());
-    $('#o_name').val(tdEles.eq(4).text());
-    $('#o_tel').val(tdEles.eq(5).text());
-    $('#edit-Modal').modal('show');
   });
   // 검색시
   $('#keywordInput').on('keyup',function(event){
@@ -466,7 +500,6 @@
         alert('새로고침해주세요~');
       },
       success: function(data){
-        console.log(data);
         if(typeof(history.pushState) == 'function'){
           //현재 주소를 가져온다.
           var renewURL = location.href;
@@ -542,7 +575,7 @@
               </td>\
               <th>'+numIdx+'</th>\
               <td>'+item.user_name+'</td>\
-              <td class="f-w-900 edit">'+item.M_email+'</td>\
+              <td class="edit">'+item.M_email+'</td>\
               <td>'+item.M_ptitle+'</td>\
               <td>'+item.M_name+'</td>\
               <td>'+((item.M_tel == null)?'':phoneFomatter(item.M_tel))+'</td>\
@@ -553,6 +586,19 @@
         }
       }
     });
+  }
+  function reloadPage(){
+    var href = new URL(window.location.href);
+    var param = {
+      page : href.searchParams.get("page")
+    };
+    if(href.searchParams.get("searchType") != '' && href.searchParams.get("searchType") != null){
+      param.searchType = href.searchParams.get("searchType");
+    }
+    if(href.searchParams.get("search") != '' && href.searchParams.get("search") != null){
+      param.search = href.searchParams.get("search");
+    }
+    ajaxGetPageList(param);
   }
   function phoneFomatter(num,type){
     var formatNum = '';

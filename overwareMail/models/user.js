@@ -23,10 +23,6 @@ var user = {
     }
     sql += ' ) a;';
     return await getResult(sql,param);
-  },
-  emailCheck: async function(param){
-    var sql = 'select * from reporter_data where reporter_email=?;';
-    return await getResult(sql,param);
   }
 }
 
