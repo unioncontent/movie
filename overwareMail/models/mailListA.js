@@ -53,6 +53,7 @@ var mailListAll = {
         case 'c': sql+=' and M_ptitle =\''+body.search+'\''; break;
         case 'e': sql+=' and M_email like \'%'+body.search+'%\''; break;
         case 'n': sql+=' and M_name like \'%'+body.search+'%\''; break;
+        case 't': sql+=' and M_tel =\''+body.search.replace( /(\s*)/g, "")+'\''; break;
       }
     }
     else{
@@ -76,6 +77,7 @@ var mailListAll = {
         case 'c': sql+=' and M_ptitle =\''+body.search+'\''; break;
         case 'e': sql+=' and M_email like \'%'+body.search+'%\''; break;
         case 'n': sql+=' and M_name like \'%'+body.search+'%\''; break;
+        case 't': sql+=' and M_tel =\''+body.search.replace( /(\s*)/g, "")+'\''; break;
       }
     }
     else{
@@ -93,7 +95,8 @@ var mailListAll = {
     }
   },
   emailCheck: async function(param){
-    var sql = 'select * from m_mail_list_all where M_email=?;';
+    // 로그인 계정 연결하기!!!
+    var sql = 'select * from m_mail_list_all where M_email=? and M_ID= 1;';
     console.log(sql,param);
     return await getResult(sql,param);
   }

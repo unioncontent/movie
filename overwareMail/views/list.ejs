@@ -577,9 +577,32 @@
           //페이지 갱신 실행!
           history.pushState(null, null,renewURL);
         }
-        $('#listTable tfoot').empty();
+        $('#listTable tbody').empty();
+        data.mailList.forEach(function(item,idx){
+          var numIdx = Math.ceil(data.mailListCount-(data.offset+idx)).toString();
+          var html = '<tr>\
+            <input type="hidden" id="idx" value="'+item.n_idx+'" />\
+            <td>\
+              <div class="border-checkbox-section" style="max-width: 30px;">\
+                <div class="border-checkbox-group border-checkbox-group-default">\
+                  <input class="border-checkbox" type="checkbox" id="checkbox'+idx+'">\
+                  <label class="border-checkbox-label" for="checkbox'+idx+'"></label>\
+                </div>\
+              </div>\
+            </td>\
+            <th>'+numIdx+'</th>\
+            <td>'+item.user_name+'</td>\
+            <td class="edit">'+item.M_email+'</td>\
+            <td>'+item.M_ptitle+'</td>\
+            <td>'+item.M_name+'</td>\
+            <td>'+((item.M_tel == null)?'':phoneFomatter(item.M_tel))+'</td>\
+            <td>'+item.M_regdate+'</td>\
+          </tr>'
+          $('#listTable tbody').append(html);
+        });
         var limit = 20;
         var pageCount = Math.ceil(data.mailListCount/limit);
+        $('#listTable tfoot').empty();
         if(pageCount > 1) {
           var html = '<tr><td colspan="8"><ul class="pagination float-right">';
           var pageSize = 5;
@@ -625,30 +648,6 @@
           }
           html += '</ul></td></tr>';
           $('#listTable tfoot').append(html);
-
-          $('#listTable tbody').empty();
-          data.mailList.forEach(function(item,idx){
-            var numIdx = Math.ceil(data.mailListCount-(data.offset+idx)).toString();
-            var html = '<tr>\
-              <input type="hidden" id="idx" value="'+item.n_idx+'" />\
-              <td>\
-                <div class="border-checkbox-section" style="max-width: 30px;">\
-                  <div class="border-checkbox-group border-checkbox-group-default">\
-                    <input class="border-checkbox" type="checkbox" id="checkbox'+idx+'">\
-                    <label class="border-checkbox-label" for="checkbox'+idx+'"></label>\
-                  </div>\
-                </div>\
-              </td>\
-              <th>'+numIdx+'</th>\
-              <td>'+item.user_name+'</td>\
-              <td class="edit">'+item.M_email+'</td>\
-              <td>'+item.M_ptitle+'</td>\
-              <td>'+item.M_name+'</td>\
-              <td>'+((item.M_tel == null)?'':phoneFomatter(item.M_tel))+'</td>\
-              <td>'+item.M_regdate+'</td>\
-            </tr>'
-            $('#listTable tbody').append(html);
-          });
         }
       }
     });

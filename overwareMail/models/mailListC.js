@@ -57,6 +57,11 @@ var mailListC = {
     console.log(sql,param);
     return await getResult(sql,param);
   },
+  titleEmailCheck: async function(param){
+    var sql = 'select * from m_mail_list_c where M_group_title=? and M_id=? and M_email=?;';
+    console.log(sql,param);
+    return await getResult(sql,param);
+  },
   getOneInfo : async function(m_idx){
     var sql = 'select * from m_mail_list_c where M_idx_a=?';
     return await getResult(sql,[m_idx]);
