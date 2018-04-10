@@ -6,6 +6,11 @@ const DBpromise = require('../db/db_info.js');
 */
 
 var mailListC = {
+  insert: async function(param){
+    var pValue = Object.values(param);
+    var sql = insertSqlSetting(Object.keys(param));
+    return await getResult(sql,pValue);
+  },
   getEmail : async function(param){
     // 로그인 -> M_ID!!!
     var sql = 'select M_email from m_mail_list_c where M_ID=\'1\' ';
@@ -42,6 +47,11 @@ var mailListC = {
     var result = await getResult(sql,[]);
     return [].map.call(result, function(obj) { return obj.M_idx_a; });
   },
+  titleCheck: async function(param){
+    var sql = 'select * from m_mail_list_c where M_group_title=? and M_id=?;';
+    console.log(sql,param);
+    return await getResult(sql,param);
+  },
   getOneInfo : async function(m_idx){
     var sql = 'select * from m_mail_list_c where M_idx_a=?';
     return await getResult(sql,[m_idx]);
@@ -74,6 +84,14 @@ var mailListC = {
       return count[0]['total'];
     }
   }
+}
+function insertSqlSetting(keys){
+  var arr = [].map.call(keys, function(obj) { return '?'; });
+  columns = keys.join(', ');
+  placeholders = arr.join(', ');
+  var sql = "INSERT INTO m_mail_list_c ( "+columns+" ) VALUES ( "+placeholders+" );";
+
+  return sql;
 }
 
 async function getResult(sql,param) {

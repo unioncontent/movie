@@ -172,7 +172,7 @@
               </div>
             </div>
           </div>
-          <button class="btn btn-inverse" style="float: right;"><i class="fas fa-plus"></i>그룹등록</button>
+          <button class="btn btn-inverse btn-cGroup" style="float: right;"><i class="fas fa-plus"></i>그룹등록</button>
         </div>
       </div>
       <!-- Modal start-->
@@ -268,6 +268,72 @@
       $("#keywordInput").val(searchParams);
     }
   });
+  // 그룹등록 클릭시
+  $('.btn-cGroup').on('click',function(){
+    if($('input[type=checkbox]:checked').length < 1){
+      swal("ERROR!", '체크박스를 선택해주세요.', "error");
+      return false;
+    }
+    swal({
+      title: "그룹 등록",
+      text:'선택된 이메일을 그룹으로 등록합니다.',
+      content: {
+        element: "input",
+        attributes: {
+          placeholder: "그룹이름을 적어주세요.",
+          type: "text",
+        },
+      },
+      buttons: ["취소", "등록"],
+      closeOnClickOutside: false
+    }).then((value) => {
+      console.log(value);
+      if(value == ""){
+        swal("ERROR!", '그룹이름을 적어주세요.', "error");
+        return false;
+      }
+      else{
+        $.ajax({
+          type: "POST",
+          url: "/list/groupTitleCheck",
+          dataType: "text",
+          data: {title : value},
+          error: function(req,status,error){
+            swal("ERROR!", req.status+"\n"+error, "error");
+          },
+          success: function(data){
+            console.log(data);
+            if(data == 'fail'){
+              swal("ERROR!", "그룹이름이 중복됩니다. 다시 입력해 주세요.", "error");
+            }else if(data == 'success'){
+              var list = [];
+              $('input[type=checkbox]:checked').each(function(idx,ele){
+                var trEle = $(ele).parents('tr');
+                list.push({title:value,idx:trEle.find('#idx').val(),email:trEle.find('.edit').text()});
+              });
+              addGroup(list);
+            }
+          }
+        });
+      }
+    });
+  });
+  function addGroup(arr){
+    $('input[type=checkbox]:checked').prop('checked',false);
+    $.ajax({
+      type: "POST",
+      url: "/list/addGroup",
+      data: {'list' : JSON.stringify(arr)},
+      error:function(request,status,error){
+        // alert('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
+        swal("ERROR!", request.responseText, "error");
+      },
+      success:function(data){
+        swal("SUCCESS!", data, "success");
+      }
+    });
+  }
+  // 이메일 변경시 중복체크하도록
   $('#email').on('change',function(){
     $('#emailCheck').val('');
   });
@@ -568,8 +634,8 @@
               <td>\
                 <div class="border-checkbox-section" style="max-width: 30px;">\
                   <div class="border-checkbox-group border-checkbox-group-default">\
-                    <input class="border-checkbox" type="checkbox" id="checkbox0">\
-                    <label class="border-checkbox-label" for="checkbox0"></label>\
+                    <input class="border-checkbox" type="checkbox" id="checkbox'+idx+'">\
+                    <label class="border-checkbox-label" for="checkbox'+idx+'"></label>\
                   </div>\
                 </div>\
               </td>\
