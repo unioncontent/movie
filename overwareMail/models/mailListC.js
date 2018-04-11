@@ -13,7 +13,14 @@ var mailListC = {
   },
   deleteFun: async function(param){
     var pValue = Object.values(param);
-    var sql = 'delete from m_mail_list_c where n_idx=?;';
+    var sql = 'delete from m_mail_list_c where';
+    if('title' in param){
+      sql += ' M_group_title=?'
+    }
+    else if('idx' in param){
+      sql += ' n_idx=?'
+    }
+    sql += 'and M_id=?;' 
     return await getResult(sql,pValue);
   },
   getEmail : async function(param){

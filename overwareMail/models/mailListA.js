@@ -95,8 +95,11 @@ var mailListAll = {
     }
   },
   emailCheck: async function(param){
-    // 로그인 계정 연결하기!!!
-    var sql = 'select * from m_mail_list_all where M_email=? and M_ID= 1;';
+    var sql = 'select * from m_mail_list_all where M_email=? ';
+    if(param.length == 3){
+      sql += ' and M_name=? ';
+    }
+    sql += ' and M_ID= ?;';
     console.log(sql,param);
     return await getResult(sql,param);
   }

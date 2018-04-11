@@ -127,6 +127,8 @@ router.get('/group',async function(req, res) {
 
 router.post('/group/delete',async function(req, res) {
   try{
+    // 로그인계정
+    req.body['M_id'] = '1';
     var deleteMail = await mailListC.deleteFun(req.body);
     res.send('그룹에서 삭제되었습니다.');
   }
@@ -230,14 +232,23 @@ router.post('/add/search',async function(req,res){
 });
 
 router.post('/add/emailCheck',async function(req,res){
-  var emailParam = [req.body.email];
+  // 로그인 계정 연결하기!!!
+  var emailParam = [req.body.email,'1'];
+  if('name' in req.body){
+    emailParam = [req.body.email,req.body.name,'1'];
+  }
+
   try{
     var emailCheck = await mailListA.emailCheck(emailParam);
-    res.send((emailCheck.length == 0)?'success':'fail');
+    var result = (emailCheck.length == 0) ? 'success':'fail';
+    if(emailParam.length == 3){
+      result = (emailCheck.length == 0) ? {msg:'fail'} : {msg:'success',idx:emailCheck[0].n_idx};
+    }
+    res.send(result);
   }
   catch(e){
     console.log('err:',e);
-    res.send('fail');
+    res.send({msg:'fail'});
   }
 });
 
