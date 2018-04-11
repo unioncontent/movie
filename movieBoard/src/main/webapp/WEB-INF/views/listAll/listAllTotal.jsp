@@ -180,9 +180,9 @@
                                </span>
                             </div>
                             <button class="btn btn-warning alert-excel f-right p-r-5 p-l-5 m-l-15 m-b-10"><i class="icofont icofont-download-alt"></i>EXCEL</button>
+                            <button class="btn btn-info f-right p-r-5 p-l-5 m-l-15 m-b-10" style="background-color: #FF6666; border-color: #FF6666 " type="button" onclick="show()"><i class="icofont icofont-ui-note"></i>최근목록</button> 
                             <c:if test="${user.user_name == 'union'}">
                             <button id="insertAllBtn" type="button" class="alert-confirm btn btn-primary waves-effect f-right p-r-0 p-l-5 m-l-15 m-b-10  f-right" ><i class="icofont icofont-check-circled"></i>일괄처리</button>
-                            <button class="btn btn-info f-right p-r-5 p-l-5 m-l-15 m-b-10" style="background-color: #FF6666; border-color: #FF6666 " type="button" onclick="show()"><i class="icofont icofont-ui-note"></i>최근목록</button>                       
                           	</c:if>
                           </div>
                           <div class="card-block table-border-style">
