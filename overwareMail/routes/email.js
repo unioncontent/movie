@@ -27,6 +27,12 @@ router.get('/', async function(req, res) {
   res.render('email',data);
 });
 
+// router.get('/download/:date/:file', async function(req, res) {
+//   console.log('filepath:',filepath);
+//   var filepath = __dirname+"/uploads/files/"+req.params.date+'/'+req.params.file;
+//   res.download(filepath);
+// });
+
 router.post('/getModalListPage', async function(req, res) {
   console.log('getModalListPage');
   var data = {
@@ -184,9 +190,11 @@ router.post('/send', async function(req, res) {
     'key': urlencode('w4EzdnbOY3oypxO'),
     'mail_type': (req.body.M_type == '1') ? urlencode('ONETIME'):urlencode('NORMAL'),
     'time' : (typeof req.body.end_reserve_time =='undefined') ? '' : urlencode(req.body.end_reserve_time),
-    'file_url': urlencode(req.body.M_file),
-    'file_name': urlencode(req.body.M_fileName),
+    'file_url': urlencode(new Buffer(utf82euckr.convert(req.body.M_file)).toString('base64')),
+    'file_name': urlencode(new Buffer(utf82euckr.convert(req.body.M_fileName)).toString('base64'))
   };
+  // 'file_url': urlencode('http://192.168.0.22:3000/email/download/20180411/20180410_134906_099.jpg'),
+  // 'file_name': urlencode(new Buffer(utf82euckr.convert('20180410_134906_099')).toString('base64'))
 
   var dt = datetime.create();
   var now = dt.format('Y-m-d H:M:S');
@@ -268,7 +276,9 @@ router.post('/send', async function(req, res) {
     return false;
   }
 
-  var paramStr = 'subject='+param['subject']+'&body='+param['body']+'&sender='+param['sender']+'&username='+param['username']+'&recipients='+param['recipients']+'&key='+param['key']+'&return_url=http://192.168.0.22:3000/email/send/result&unique_id='+param['unique_id'];
+  var paramStr = 'subject='+param['subject']+'&body='+param['body']+'&sender='+param['sender']+'&username='+param['username']+'&recipients='+param['recipients']+'&key='+param['key'];
+  // +'&return_url=http://192.168.0.22:3000/email/send/result&unique_id='+param['unique_id']
+  // +'&open=1&click=1&check_period=3&option_return_url=http://192.168.0.22:3000/email/send/result';
   if(param['mail_type'] == urlencode('ONETIME')){
     paramStr +='&mail_type='+param['mail_type']+'&start_reserve_time='+param['time']+'&end_reserve_time='+param['time'];
   }
@@ -276,6 +286,7 @@ router.post('/send', async function(req, res) {
     paramStr += '&file_url='+param['file_url']+'&file_name='+param['file_name'];
   }
 
+  console.log('이메일 paramStr : ',paramStr);
   var resultEmail = await emailSendFun(paramStr);
   console.log('이메일 발송 결과 : ',resultEmail);
 
@@ -285,6 +296,18 @@ router.post('/send', async function(req, res) {
   else{
     res.status(500).send(resultEmail[2]);
   }
+
+  // 메일 발송후 결과
+  var param = {
+    M_result:resultEmail[0],
+    M_idx_A:param['unique_id']
+  };
+  try{
+    await mailDetailB.updateResult(param);
+  }
+  catch(err){
+    console.log(err);
+  }
 });
 
 function emailSendFun(pStr){
@@ -293,7 +316,7 @@ function emailSendFun(pStr){
     method:'POST',
     headers: {'Content-Type': 'application/x-www-form-urlencoded;'},
     body: pStr
-  }
+  };
   /*
   m_mail_detail_B table에 저장될 M_result 값 종류
   0 : 정상발송 => 0 : 메일발송에 성공하였습니다.
@@ -318,6 +341,7 @@ function emailSendFun(pStr){
   return new Promise((resolve, reject) => {
     request(options, (error, response, body) => {
       var resultArr = null;
+      console.log(JSON.parse(body));
       var requestResult = JSON.parse(body).status;
       if(requestResult == '0'){
         resultArr = [true,requestResult];
@@ -392,7 +416,7 @@ router.post('/send/files',uploadFiles.single('files[]'),function(req, res) {
     console.log("No file passed");
     return res.status(500).send("No file passed");
   }
-  if(req.file.filename.indexOf('.exe') != 9){
+  if(req.file.filename.indexOf('.exe') != -1){
     console.log(req.file.path);
     fs.removeSync(req.file.path);
     return res.status(500).send("exe는 업로드 불가합니다.");
