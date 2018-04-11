@@ -9,6 +9,11 @@ var mailDetailB = {
     var pValue = Object.values(param);
     var sql = insertSqlSetting(Object.keys(param));
     return await getResult(sql,pValue);
+  },
+  updateResult:async function(param){
+    var pValue = Object.values(param);
+    var sql = 'update m_mail_detail_b set M_result=? where M_idx_A=?';
+    return await getResult(sql,pValue);
   }
 }
 function insertSqlSetting(keys){

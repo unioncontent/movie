@@ -223,14 +223,10 @@ $(document).ready(function(){
   else{
     $('#reportrange span').html(moment(new Date(sDateParams)).format('YYYY.MM.DD') + ' - ' + moment(new Date(eDateParams+' 23:59:59')).format('YYYY.MM.DD'));
   }
-  if(searchTypeParams != null && searchParams != null){
-    $("#selectSearchType").val(searchTypeParams).prop("selected", true);
-    $("#keywordInput").val(searchParams);
-  }
 });
 
 // 통계보고서 보기버튼 클릭시
-$(".btn-period").on("click",function(){
+$(document).on("click",".btn-period",function(){
   $("#period-Modal").modal('show');
 });
 

@@ -142,7 +142,19 @@ async function asyncForEach(array, callback) {
 
 router.get('/send/result', async function(req, res) {
   console.log('/send/result값');
+  console.log('http://domain?type=[click | open | reject]&mail_id=[MailID]&email=[Email]')
   console.log(req.query);
+  var param = {
+    M_result:(req.query.type!='reject')? 0 : 9,
+    M_idx_A:req.query.mail_id
+  };
+  try{
+    await mailDetailB.updateResult(param);
+    res.send('true');
+  }
+  catch(err){
+    console.log(err);
+  }
 });
 
 router.post('/send', async function(req, res) {
@@ -173,33 +185,17 @@ router.post('/send', async function(req, res) {
     'mail_type': (req.body.M_type == '1') ? urlencode('ONETIME'):urlencode('NORMAL'),
     'time' : (typeof req.body.end_reserve_time =='undefined') ? '' : urlencode(req.body.end_reserve_time),
     'file_url': urlencode(req.body.M_file),
-    'file_name': urlencode(req.body.M_fileName)
+    'file_name': urlencode(req.body.M_fileName),
   };
-  var paramStr = 'subject='+param['subject']+'&body='+param['body']+'&sender='+param['sender']+'&username='+param['username']+'&recipients='+param['recipients']+'&key='+param['key']+'&return_url=http://localhost:3000/email/send/result';
-  if(param['mail_type'] == urlencode('ONETIME')){
-    paramStr +='&mail_type='+param['mail_type']+'&start_reserve_time='+param['time']+'&end_reserve_time='+param['time'];
-  }
-  if(param['file_url'] != "" && param['file_name'] != ""){
-    paramStr += '&file_url='+param['file_url']+'&file_name='+param['file_name'];
-  }
-  console.log(param);
-  console.log(paramStr);
+
   var dt = datetime.create();
   var now = dt.format('Y-m-d H:M:S');
-  var resultEmail = await emailSendFun(paramStr);
-  console.log('이메일 발송 결과 : ',resultEmail);
-
-  if(resultEmail[0]){
-    res.send('메일발송 성공했습니다.');
-  }
-  else{
-    res.status(500).send(resultEmail[2]);
-  }
 
   // 이메일발송 결과 DB 저장
   var mailAllParam = {
     M_sender: req.body['M_sender'],
     M_keyword: req.body['M_keyword'],
+    M_type: req.body['M_type'],
     M_mail_type: req.body['M_mail_type'],
     M_body: req.body['M_body'],
     M_subject: req.body['M_subject'],
@@ -225,20 +221,21 @@ router.post('/send', async function(req, res) {
     console.log('메일발송 리스트 insert:',mailAllParam);
     var resultInsert = await mailAllA.insert(mailAllParam);
     m_idx_a = resultInsert.insertId;
+    param['unique_id'] = m_idx_a;
     console.log('inseret idx:',m_idx_a);
   }
   catch(e){
     console.log('insert 오류:',e);
   }
+
   // 메일발송 상세정보 insert
+  var insertCheck = false;
   if(m_idx_a){
-    try{
-      var recipiArr = JSON.parse('['+mailAllParam.M_recipi+']');
-      var recipiNgroup = recipiArr.concat(groups2allIdx);
-      console.log(recipiArr,recipiNgroup);
-      await asyncForEach(recipiNgroup, async (item, index, array) => {
+    var recipiArr = JSON.parse('['+mailAllParam.M_recipi+']');
+    var recipiNgroup = recipiArr.concat(groups2allIdx);
+    await asyncForEach(recipiNgroup, async (item, index, array) => {
+      if(insertCheck == false){
         var recipiInfo = await mailListA.getOneInfo(item);
-        console.log(index,':',recipiInfo);
         if(recipiInfo.length != 0){
           var mailDetailParam = {
             M_idx_A : m_idx_a,
@@ -246,21 +243,47 @@ router.post('/send', async function(req, res) {
             P_title : recipiInfo[0].M_ptitle,
             P_name : recipiInfo[0].M_name,
             M_send :  (typeof req.body.end_reserve_time =='undefined') ? now : req.body.end_reserve_time,
-            M_result : 0//resultEmail[1]
+            M_result : '9'
           }
           console.log('mailDetailParam:',mailDetailParam);
-          var resultInsert = await mailDetailB.insert(mailDetailParam);
+          try{
+            var resultInsert = await mailDetailB.insert(mailDetailParam);
+          }
+          catch(e){
+            console.log('insert 오류:',e);
+            await mailAllA.delete(m_idx_a);
+            insertCheck = true;
+          }
           console.log('resultInsert:',resultInsert);
         } else {
           await mailAllA.delete(m_idx_a);
         }
-      });
+      }
+    });
+  }
 
-    }
-    catch(e){
-      console.log('insert 오류:',e);
-      await mailAllA.delete(m_idx_a);
-    }
+  // 메일 발송
+  if(insertCheck){
+    res.status(500).send('발송에 실패했습니다. 다시 시도해주세요.');
+    return false;
+  }
+
+  var paramStr = 'subject='+param['subject']+'&body='+param['body']+'&sender='+param['sender']+'&username='+param['username']+'&recipients='+param['recipients']+'&key='+param['key']+'&return_url=http://192.168.0.22:3000/email/send/result&unique_id='+param['unique_id'];
+  if(param['mail_type'] == urlencode('ONETIME')){
+    paramStr +='&mail_type='+param['mail_type']+'&start_reserve_time='+param['time']+'&end_reserve_time='+param['time'];
+  }
+  if(param['file_url'] != "" && param['file_name'] != ""){
+    paramStr += '&file_url='+param['file_url']+'&file_name='+param['file_name'];
+  }
+
+  var resultEmail = await emailSendFun(paramStr);
+  console.log('이메일 발송 결과 : ',resultEmail);
+
+  if(resultEmail[0]){
+    res.send('메일발송 성공했습니다.');
+  }
+  else{
+    res.status(500).send(resultEmail[2]);
   }
 });
 
@@ -369,7 +392,7 @@ router.post('/send/files',uploadFiles.single('files[]'),function(req, res) {
     console.log("No file passed");
     return res.status(500).send("No file passed");
   }
-  if(req.file.filename.indexOf('.exe') != -1){
+  if(req.file.filename.indexOf('.exe') != 9){
     console.log(req.file.path);
     fs.removeSync(req.file.path);
     return res.status(500).send("exe는 업로드 불가합니다.");

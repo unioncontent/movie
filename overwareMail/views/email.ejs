@@ -1031,7 +1031,7 @@
       processData : false,
       success: function(data) {
         // console.log('success:',data);
-        $('#M_body').summernote('insertImage', 'http://localhost:3000/'+data);
+        $('#M_body').summernote('insertImage', 'http://192.168.0.22:3000/'+data);
       }
     });
   }
@@ -1055,7 +1055,7 @@
         $.each(fileListArr, function(index, value) {
           if(value != ""){
             fileDBListStr += value;
-            fileListStr += 'http://localhost:3000/uploads/files/'+value;
+            fileListStr += 'http://192.168.0.22:3000/uploads/files/'+value;
             fileNameStr += value.replace(now+'/','');
             console.log(fileListArr.lengt);
             console.log(index);
