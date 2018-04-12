@@ -253,7 +253,12 @@
 									                        <tr>
 									                        <td align="center"style="font-family: font-family :'나눔고딕', 'Malgun Gothic', sans-serif; font-size: 20px; font-weight: 900;">
 									                        	<h4>
+									                        	<c:if test="${user.user_type == 1}">
 									                        	<b>< ${company} : ${selectKey} > <font style="color: rgb(34, 66, 145)">일일 보고서</font></b>
+									                        	</c:if>
+									                        	<c:if test="${user.user_type == 2}">
+									                        	<b>< 쇼박스 : ${selectKey} > <font style="color: rgb(34, 66, 145)">일일 보고서</font></b>
+									                        	</c:if>
 									                        	</h4>
 									                        </td>
 									                        </tr>

@@ -169,6 +169,15 @@
             </a>
           </li>
           </c:if>
+          <c:if test="${user.user_name == '쇼박스'}">
+           <li class=" ">
+            <a href="../manage/report" data-i18n="nav.advance-components.grid-stack">
+              <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+              <span class="pcoded-mtext">보고서 관리</span>
+              <span class="pcoded-mcaret"></span>
+            </a>
+          </li>
+          </c:if>
           <c:if test="${user.user_name == 'union'}">
            <li class="reportbackup" style="DISPLAY: none;">
             <a href="../manage/reportbackup" data-i18n="nav.advance-components.grid-stack">
