@@ -2,6 +2,8 @@ const DBpromise = require('../db/db_info.js');
 
 /*
  통계 뷰 - period_view
+ 통계 댓글수 뷰 - period_news_view
+ 통계 기사수 뷰 - period_reply_view
 */
 
 var period = {
@@ -27,6 +29,28 @@ var period = {
     else{
       return count[0]['total'];
     }
+  },
+  getNewsCount: async function(param){
+    var pValue = Object.values(param);
+    var sql = 'SELECT count(*) as c FROM period_news_view';
+    sql += ' where substring_index(reporter_email,\'.\',2) in (SELECT substring_index(E_mail,\'.\',2) from m_mail_detail_b where M_idx_A=?)';
+    sql += ' and keyword = ? and writeDate BETWEEN ? AND date_add(?, INTERVAL 48 HOUR);';
+    var result = await getResult(sql,pValue);
+    if(result.length == 0){
+      return 0;
+    }
+    return result[0].c || 0;
+  },
+  getReplyCount: async function(param){
+    var pValue = Object.values(param);
+    var sql = 'SELECT sum(reply_count) as c FROM period_reply_view';
+    sql += ' where substring_index(reporter_email,\'.\',2) in (SELECT substring_index(E_mail,\'.\',2) from m_mail_detail_b where M_idx_A=?)';
+    sql += ' and title_key = ? and createDate BETWEEN ? AND date_add(?, INTERVAL 48 HOUR);';
+    var result = await getResult(sql,pValue);
+    if(result.length == 0){
+      return 0;
+    }
+    return result[0].c || 0;
   }
 }
 

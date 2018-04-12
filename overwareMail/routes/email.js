@@ -285,11 +285,11 @@ router.post('/send', async function(req, res) {
   if(param['file_url'] != "" && param['file_name'] != ""){
     paramStr += '&file_url='+param['file_url']+'&file_name='+param['file_name'];
   }
-
-  console.log('이메일 paramStr : ',paramStr);
-  var resultEmail = await emailSendFun(paramStr);
-  console.log('이메일 발송 결과 : ',resultEmail);
-
+  // 테스트중
+  // console.log('이메일 paramStr : ',paramStr);
+  // var resultEmail = await emailSendFun(paramStr);
+  // console.log('이메일 발송 결과 : ',resultEmail);
+  var resultEmail = [true,0];
   if(resultEmail[0]){
     res.send('메일발송 성공했습니다.');
   }
@@ -311,12 +311,6 @@ router.post('/send', async function(req, res) {
 });
 
 function emailSendFun(pStr){
-  var options = {
-    url: 'https://directsend.co.kr/index.php/api/v2/mail',
-    method:'POST',
-    headers: {'Content-Type': 'application/x-www-form-urlencoded;'},
-    body: pStr
-  };
   /*
   m_mail_detail_B table에 저장될 M_result 값 종류
   0 : 정상발송 => 0 : 메일발송에 성공하였습니다.
@@ -338,6 +332,12 @@ function emailSendFun(pStr){
   112 : 첨부파일 Size가 5MB를 초과
   205 : 잔액 부족
   */
+  var options = {
+    url: 'https://directsend.co.kr/index.php/api/v2/mail',
+    method:'POST',
+    headers: {'Content-Type': 'application/x-www-form-urlencoded;'},
+    body: pStr
+  };
   return new Promise((resolve, reject) => {
     request(options, (error, response, body) => {
       var resultArr = null;

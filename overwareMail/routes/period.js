@@ -4,13 +4,22 @@ var request = require('request');
 var router = express.Router();
 // DB module
 var period = require('../models/period.js');
+var mailDetailB = require('../models/mailDetailB.js');
 
 router.get('/',async function(req, res) {
   var data = await getListPageData(req.query);
   console.log(data);
   res.render('period',data);
 });
-
+router.post('/getPeriod',async function(req, res, next) {
+  var data = {
+    media:await mailDetailB.getMediaNReporterCount('P_title',req.body.M_idx_A),
+    reporter:await mailDetailB.getMediaNReporterCount('P_name',req.body.M_idx_A),
+    newsCount:await period.getNewsCount(req.body),
+    replyCount:await period.getReplyCount(req.body)
+  };
+  res.send(data);
+});
 router.post('/getNextPage',async function(req, res, next) {
   var data = await getListPageData(req.body);
   res.send(data);

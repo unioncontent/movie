@@ -39,7 +39,7 @@
                       <th width="10%">날짜</th>
                       <th width="5%">키워드</th>
                       <th width="20%">제목</th>
-                      <th width="5%">발송건</th>
+                      <th width="5%">발송건수</th>
                       <th width="5%">성공</th>
                       <th width="5%">실패</th>
                       <th width="5%">발송타입</th>
@@ -57,13 +57,18 @@
                     <tr>
                       <th><%= listCount - i - offset %></th>
                       <td><%= list[i].M_regdate %></td>
-                      <td><%= list[i].M_keyword %></td>
-                      <td><%= list[i].M_subject %></td>
+                      <td><div class="kwd_nobr"><%= list[i].M_keyword %></div></td>
+                      <td><div class="title_nobr"><%= list[i].M_subject %></div></td>
                       <td><%= parseInt(list[i].success) + parseInt(list[i].fail) %></td>
                       <td><%= list[i].success %></td>
                       <td><%= list[i].fail %></td>
-                      <td><%= list[i].M_type %></td>
-                      <td><button class="btn btn-inverse btn-period"><i class="fas fa-chart-bar"></i></button></td>
+                      <td>
+                        <%=(list[i].M_type == '0') ? '즉시' : '예약'%>
+                        <% if((new Date().getTime() < new Date(list[i].M_send).getTime())){ %>
+                        <label class="badge badge-danger">대기</label>
+                        <%}%>
+                      </td>
+                      <td><button class="btn btn-inverse btn-period" data-idx="<%= list[i].n_idx %>"><i class="fas fa-chart-bar"></i></button></td>
                     </tr>
                     <% }; %>
                   </tbody>
@@ -139,44 +144,40 @@
       </div>
       <!-- Modal start-->
       <div class='modal fade' id='period-Modal' role='dialog'>
-        <div class='modal-dialog modal-lg' role='document'>
+        <div class='modal-dialog' role='document'>
           <div class='modal-content'>
             <div class='modal-header'>
-              <h5 class="modal-title"><p id="date">2018-03-26</p> 통계보고서</h5>
+              <h5 class="modal-title"><span id="date"></span> 통계보고서</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
             </div>
             <div class='modal-body'>
               <div class="card">
+                <div class="card-header">
+                  <h5>메일 발송 : <span id="total"></span>건 (성공: <span id="success"></span>건 / 실패: <span id="fail"></span>건)</h5>
+                </div>
                 <div class="card-block table-border-style">
-                  <div class="table-responsive">
-                    <table class="table table-sm" id="modal-cnt">
-                      <tbody>
-                        <tr>
-                          <th class="b-r-1 text-left" width="30%">메일발송</th>
-                          <td id="total">232</td>
-                          <th class="b-r-1 text-left" width="30%">성공</th>
-                          <td id="success">0</td>
-                          <th class="b-r-1 text-left" width="30%">실패</th>
-                          <td id="fail">0</td>
-                        </tr>
-                        <tr>
-                          <th class="b-r-1 text-left" width="30%">언론사</th>
-                          <td colspan="5" id="media"></td>
-                        </tr>
-                        <tr>
-                          <th class="b-r-1 text-left">기자</th>
-                          <td colspan="5" id="reporter"></td>
-                        </tr>
-                        <tr>
-                          <th class="b-r-1 text-left">기사글</th>
-                          <td colspan="5" id="total"></td>
-                        </tr>
-                        <tr>
-                          <th class="b-r-1 text-left">댓글</th>
-                          <td colspan="5"></td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
+                  <table class="table matrics-table">
+                    <tbody>
+                      <tr class="text-center">
+                        <td width="50%"><strong>언론사</strong></td>
+                        <td id="media"></td>
+                      </tr>
+                      <tr class="text-center">
+                        <td><strong>기자</strong></td>
+                        <td id="reporter"></td>
+                      </tr>
+                      <tr class="text-center">
+                        <td><strong>기사글</strong></td>
+                        <td id="newsCount"></td>
+                      </tr>
+                      <tr class="text-center">
+                        <td><strong>댓글</strong></td>
+                        <td id="replyCount"></td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </div>
@@ -191,6 +192,9 @@
   </div>
 </div>
 <style type="text/css">
+  .card .card-header span:not(.input-group-addon){
+    display: inline;
+  }
   .btn i {
     margin-right: 0px;
   }
@@ -198,7 +202,7 @@
     font-size: 15px;
     padding-left: 3px;
     text-overflow: ellipsis;
-    width: 200px;
+    width: 500px;
     overflow: hidden;
   }
   .kwd_nobr{
@@ -229,8 +233,42 @@
 
   // 통계보고서 보기버튼 클릭시
   $(document).on("click",".btn-period",function(){
+    var tdEles = $(this).parents('tr').find('td');
+    $('#media').text(0);
+    $('#reporter').text(0);
+    $('#newsCount').text(0);
+    $('#replyCount').text(0);
+    var param = {
+      M_idx_A:$(this).data('idx'),
+      keyword:tdEles.eq(1).text(),
+      sDate:tdEles.eq(0).text(),
+      eDate:tdEles.eq(0).text()
+    };
+    ajaxGetPeriod(param);
+    $('#total').text(tdEles.eq(3).text());
+    $('#success').text(tdEles.eq(4).text());
+    $('#fail').text(tdEles.eq(5).text());
     $("#period-Modal").modal('show');
   });
+
+  function ajaxGetPeriod(param){
+    $.ajax({
+      url: '/period/getPeriod',
+      type: 'post',
+      data: param,
+      error: function(request,status,error){
+        console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
+        alert('다시 시도해주세요.');
+      },
+      success: function(data){
+        console.log(data);
+        $('#media').text(data.media);
+        $('#reporter').text(data.reporter);
+        $('#newsCount').text(data.newsCount);
+        $('#replyCount').text(data.replyCount);
+      }
+    });
+  }
 
   //페이지 이동
   $(document).on('click','.page-link',function(){
@@ -274,13 +312,17 @@
           var html = '<tr>\
             <th>'+numIdx+'</th>\
             <td>'+item.M_regdate+'</td>\
-            <td>'+item.M_keyword+'</td>\
-            <td>'+item.M_subject+'</td>\
+            <td><div class="kwd_nobr">'+item.M_keyword+'</div></td>\
+            <td><div class="title_nobr">'+item.M_subject+'</div></td>\
             <td>'+(parseInt(item.success) + parseInt(item.fail))+'</td>\
             <td>'+item.success+'</td>\
-            <td>'+item.fail+'</td>\
-            <td>'+item.M_type+'</td>\
-            <td><button class="btn btn-inverse btn-period"><i class="fas fa-chart-bar"></i></button></td>\
+            <td>'+item.fail+'</td>';
+          html += '<td>'+ ((item.M_type == '0') ? '즉시' : '예약');
+          if((new Date().getTime() < new Date(item.M_send).getTime())){
+            html += '<label class="badge badge-danger">대기</label>'
+          }
+          html += '</td>';
+          html += '<td><button class="btn btn-inverse btn-period"  data-idx="'+item.n_idx+'"><i class="fas fa-chart-bar"></i></button></td>\
           </tr>'
           $('#listTable tbody').append(html);
         });
