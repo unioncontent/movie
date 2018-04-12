@@ -51,6 +51,17 @@ var period = {
       return 0;
     }
     return result[0].c || 0;
+  },
+  get7DayGraph: async function(){
+    var sql = 'SELECT date_format(M_regdate,\'%Y-%m-%d\') as date,sum(success) as success,sum(fail) as fail\
+    FROM period_view\
+    where M_regdate BETWEEN date_sub(now(), INTERVAL 7 day) and now()\
+    group by date(M_regdate)';
+    return await getResult(sql,[]);
+  },
+  getYesterday: async function(){
+    var sql = 'SELECT * FROM period_view where M_regdate BETWEEN date_sub(now(), INTERVAL 1 day) and now()';
+    return await getResult(sql,[]);
   }
 }
 
