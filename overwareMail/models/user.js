@@ -6,6 +6,10 @@ const DBpromise = require('../db/db_info.js');
 */
 
 var user = {
+  checkId: async function(param,callback) {
+    var sql = 'select * from user_data where user_ID=?';
+    return await getResult(sql,param);
+  },
   getNextReporterID: async function(){
     var sql = 'select replace(reporter_ID,\'P\',\'\') as reporter_ID from reporter_data where reporter_ID is not null ORDER BY reporter_idx DESC LIMIT 1;';
     var result = await getResult(sql,[]);

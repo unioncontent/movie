@@ -8,6 +8,7 @@ var bodyParser = require('body-parser');
 var expressLayouts = require('express-ejs-layouts');
 var session = require('express-session');
 var passport = require('passport');
+var  flash = require('connect-flash');
 
 var app = express();
 
@@ -26,8 +27,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 // login/logout setup
-app.use(passport.initialize());
-app.use(passport.session());
 app.use(session({
   secret: '1@%24^%$3^*&98&^%$', // 쿠키에 저장할 connect.sid값을 암호화할 키값 입력
   resave: false, //세션 아이디를 접속할때마다 새롭게 발급하지 않음
@@ -36,7 +35,29 @@ app.use(session({
     maxAge: 1000 * 60 * (60*3) // 쿠키 유효기간 3시간
   }
 }));
+app.use(flash()); // flash message
+app.use(passport.initialize());
+app.use(passport.session());
 // routes setup
+app.use(function(req, res, next) {
+  // login 후
+  res.locals.user = res.user;
+  console.log(res.user);
+  console.log('res.locals.user:',res.locals.user);
+  // if(req.user){
+  //   res.locals.userNAME = req.user.U_name;
+  //   res.locals.userCLASS = req.user.U_class;
+  //   res.locals.userID = req.user.U_id;
+  //   global.osp = res.locals.userID.replace('_admin','');
+  // }
+  // else {
+  //   res.locals.userNAME = undefined;
+  //   res.locals.userID = undefined;
+  //   res.locals.userCLASS = undefined;
+  // }
+  next();
+});
+
 var index = require('./routes/index');
 app.use('/', index);
 app.use('/login', index);
