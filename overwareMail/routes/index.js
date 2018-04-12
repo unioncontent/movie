@@ -80,7 +80,6 @@ passport.deserializeUser(function (user, done) {
 });
 
 router.get('/logout', function (req, res){
-  delete global.name;
   req.logout();
   res.redirect('/');
 });
