@@ -40,21 +40,19 @@ app.use(passport.initialize());
 app.use(passport.session());
 // routes setup
 app.use(function(req, res, next) {
-  // login 후
-  res.locals.user = res.user;
-  console.log(res.user);
-  console.log('res.locals.user:',res.locals.user);
-  // if(req.user){
-  //   res.locals.userNAME = req.user.U_name;
-  //   res.locals.userCLASS = req.user.U_class;
-  //   res.locals.userID = req.user.U_id;
-  //   global.osp = res.locals.userID.replace('_admin','');
-  // }
-  // else {
-  //   res.locals.userNAME = undefined;
-  //   res.locals.userID = undefined;
-  //   res.locals.userCLASS = undefined;
-  // }
+  res.locals.user = req.user;
+  if(req.user){
+    res.locals.userIdx = req.user.user_idx;
+    res.locals.userName = req.user.user_name;
+    res.locals.userCompany = req.user.company_name;
+    res.locals.userID = req.user.user_ID;
+  }
+  else {
+    res.locals.userCompany = '';
+    res.locals.userIdx = '';
+    res.locals.userName = '';
+    res.locals.userID = '';
+  }
   next();
 });
 
