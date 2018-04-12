@@ -34,6 +34,26 @@
                 </div>
               </div>
               <div class="form-group row">
+                <label class="col-sm-2 col-form-label">* 분류</label>
+                <div class="col-sm-5">
+                  <div id="M_reporter" class="form-radio">
+                    <div class="radio radio-inline">
+                      <label>
+                        <input type="radio" value="0" name="M_reporter">
+                        <i class="helper"></i>직원
+                      </label>
+                    </div>
+                    <div class="radio radio-inline">
+                      <label>
+                        <input type="radio" value="1" name="M_reporter">
+                        <i class="helper"></i>기자
+                      </label>
+                    </div>
+                  </div>
+                  <span class='messages'><p class='text-danger error'></p></span>
+                </div>
+              </div>
+              <div class="form-group row">
                 <label class="col-sm-2 col-form-label">* 이름</label>
                 <div class="col-sm-5">
                   <input id="name" type="text" class="form-control" placeholder="이름">
@@ -206,7 +226,7 @@
     param['search'] = $('#search').val().replace(/ /gi, "");
     searchMedia(param);
   });
-  $('#email').on('click',function(){
+  $('#email').on('focus',function(){
     $('#emailCheckBtn').trigger('click');
   });
   // 회사리스트 ajax
@@ -245,6 +265,25 @@
   }
   // 메일등록
   $('.btn-submit').on('click',function(){
+    var check=true;
+    if($('#mediaName').val() == ""){
+      check = requiredMessage("mediaName","회사명을 입력해주세요.");
+    }
+    if($("input:radio[name=M_reporter]:checked").val() == undefined){
+      check = requiredMessage("M_reporter","분류를 선택해주세요.");
+    }
+    if($("#name").val() == ""){
+      check = requiredMessage("name","이름을 입력해주세요.");
+    }
+    if($("#email").val() == ""){
+      check = requiredMessage("email","이메일을 입력해주세요.");
+    }
+    if($("#email").val() != "" && $("#emailCheck").val() == ""){
+      check = requiredMessage("email","이메일를 중복확인 해주세요.");
+    }
+    if(check == false){
+      return false;
+    }
     swal({
       title: "메일등록 하시겠습니까?",
       icon: "warning",
@@ -253,37 +292,23 @@
     })
     .then((value) => {
       if (value != null) {
-        var check=true;
-        if($('#mediaName').val() == ""){
-          check = requiredMessage("mediaName","회사명을 입력해주세요.");
+        var param = {
+          'M_email': $('#email').val(),
+          'M_name': $('#name').val(),
+          'M_ptitle':$('#mediaName').val(),
+          'M_reporter':$("input:radio[name=M_reporter]:checked").val()
+        };
+        if($('#tel').val() != ""){
+          param['M_tel']=$('#tel').val().replace(/[^0-9]/gi,"");
         }
-        if($("#name").val() == ""){
-          check = requiredMessage("name","이름을 입력해주세요.");
-        }
-        if($("#email").val() == ""){
-          check = requiredMessage("email","이메일을 입력해주세요.");
-        }
-        if($("#email").val() != "" && $("#emailCheck").val() == ""){
-          check = requiredMessage("email","이메일를 중복확인 해주세요.");
-        }
-        if(check){
-          var param = {
-            'M_email': $('#email').val(),
-            'M_name': $('#name').val(),
-            'M_ptitle':$('#mediaName').val()
-          };
-          if($('#tel').val() != ""){
-            param['M_tel']=$('#tel').val().replace(/[^0-9]/gi,"");
-          }
-          insertMail(param);
-        }
+        insertMail(param);
       }
     });
   });
   // input box 경고문
   function requiredMessage(target,msg){
     $("#"+target).siblings('.messages').children('.error').text(msg);
-    // $("#"+target).addClass("form-control-danger");
+    $("#"+target).addClass("form-control-danger");
     return false;
   }
   // 메일 등록 ajax
@@ -300,7 +325,6 @@
       success:function(data){
         swal("SUCCESS!", data, "success")
         .then((value) => {
-
           window.location.reload();
         });
       }

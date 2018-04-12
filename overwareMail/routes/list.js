@@ -204,12 +204,44 @@ router.get('/add', function(req, res) {
 router.post('/add',async function(req, res) {
   try{
     req.body.M_id = '1';
-    var insertMail = await mailListA.insert(req.body);
+    var insertMail = await mailListA.insert("m_mail_list_all",req.body);
+    // console.log('insertMail:',insertMail);
+    var mail = await mailListA.getViewOneInfo(insertMail.insertId);
+    // console.log('mail:',mail);
+    if(mail.length == 0){
+      res.status(500).send('다시 시도해주세요.');
+      return false;
+    }
+    var reporterCheck = await user.reporterCheck([mail.M_email,mail.M_name,mail.M_ptitle]);
+    if(reporterCheck.length == 0){
+      var dateFormat = require('dateformat');
+      var now = dateFormat(new Date(), "yyyy-mm-dd h:MM:ss");
+      var reporterParam = {
+        reporter_media_name:mail[0].M_ptitle,
+        reporter_name:mail[0].M_name,
+        reporter_email:mail[0].M_email,
+        reporter_phoneNum:mail[0].M_tel,
+        createDate:now,
+        updateDate:now
+      };
+      // console.log('reporterParam:',reporterParam);
+      if(mail[0].M_reporter == '0'){
+        reporterParam['reporter_memo']=mail[0].user_id;
+      }
+      else if(mail[0].M_reporter == '1'){
+        var reporterID = await user.getNextReporterID();
+        reporterParam['reporter_ID']='P'+reporterID;
+      }
+
+      await mailListA.insert("reporter_data",reporterParam);
+    }
     res.send('메일등록 되었습니다.');
   }
   catch(e){
-    res.send('다시 시도해주세요.');
+    console.log(e);
+    res.status(500).send('다시 시도해주세요.');
   }
+
 });
 
 router.post('/add/search',async function(req,res){

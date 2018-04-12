@@ -6,6 +6,15 @@ const DBpromise = require('../db/db_info.js');
 */
 
 var user = {
+  getNextReporterID: async function(){
+    var sql = 'select replace(reporter_ID,\'P\',\'\') as reporter_ID from reporter_data where reporter_ID is not null ORDER BY reporter_idx DESC LIMIT 1;';
+    var result = await getResult(sql,[]);
+    return parseInt(result[0].reporter_ID)+1;
+  },
+  reporterCheck: async function(param){
+    var sql = 'select * from reporter_data where reporter_email=? and reporter_name=? and reporter_media_name=?';
+    return await getResult(sql,param);
+  },
   selectReporter: async function(param){
     var sql = 'select distinct(reporter_media_name) from reporter_data ';
     if(param.length == 3){
