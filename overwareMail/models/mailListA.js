@@ -6,9 +6,10 @@ const DBpromise = require('../db/db_info.js');
 */
 
 var mailListAll = {
-  insert: async function(param){
+  insert: async function(table,param){
     var pValue = Object.values(param);
-    var sql = insertSqlSetting(Object.keys(param));
+    var sql = insertSqlSetting(table,Object.keys(param));
+    // console.log(sql,pValue);
     return await getResult(sql,pValue);
   },
   update: async function(param){
@@ -40,6 +41,10 @@ var mailListAll = {
   },
   getOneInfo : async function(n_idx){
     var sql = 'select * from m_mail_list_all where n_idx=?';
+    return await getResult(sql,[n_idx]);
+  },
+  getViewOneInfo : async function(n_idx){
+    var sql = 'select * from mail_list_all_view where n_idx=?';
     return await getResult(sql,[n_idx]);
   },
   selectView: async function(body,param){
@@ -105,11 +110,11 @@ var mailListAll = {
   }
 }
 
-function insertSqlSetting(keys){
+function insertSqlSetting(table,keys){
   var arr = [].map.call(keys, function(obj) { return '?'; });
   columns = keys.join(', ');
   placeholders = arr.join(', ');
-  var sql = "INSERT INTO m_mail_list_all ( "+columns+" ) VALUES ( "+placeholders+" );";
+  var sql = "INSERT INTO "+table+" ( "+columns+" ) VALUES ( "+placeholders+" );";
 
   return sql;
 }
