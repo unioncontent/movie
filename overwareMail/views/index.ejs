@@ -20,8 +20,7 @@
         <div class="col-lg-12">
           <div class="card">
             <div class="card-header">
-              <h5>최근 발송 현황</h5>
-              <span>최근 일주일 발송 현황 그래프</span>
+              <h5>최근 발송 현황 그래프</h5>
               <div class="card-header-right">
                 <i class="fas fa-chevron-down"></i>
               </div>
@@ -48,69 +47,22 @@
                     </tr>
                   </thead>
                   <tbody>
+                    <%for(var i=0; i < list.length; i++) {%>
                     <tr>
-                      <th>2018-04-01</th>
-                      <td>곤지암</td>
-                      <td><곤지암> 체험공포란 이런 것!</td>
-                      <td>25</td>
-                      <td>25</td>
-                      <td>0</td>
-                      <td>즉시</td>
+                      <th><%= list[i].M_regdate %></th>
+                      <td><div class="kwd_nobr"><%= list[i].M_keyword %></div></td>
+                      <td><div class="title_nobr"><%= list[i].M_subject %></div></td>
+                      <td><%= parseInt(list[i].success) + parseInt(list[i].fail) %></td>
+                      <td><%= list[i].success %></td>
+                      <td><%= list[i].fail %></td>
+                      <td>
+                        <%=(list[i].M_type == '0') ? '즉시' : '예약'%>
+                        <% if((new Date().getTime() < new Date(list[i].M_send).getTime())){ %>
+                        <label class="badge badge-danger">대기</label>
+                        <%}%>
+                      </td>
                     </tr>
-                    <tr>
-                      <th>2018-03-31</th>
-                      <td>곤지암</td>
-                      <td><곤지암> 체험공포란 이런 것!</td>
-                      <td>25</td>
-                      <td>25</td>
-                      <td>0</td>
-                      <td>즉시</td>
-                    </tr>
-                    <tr>
-                      <th>2018-03-30</th>
-                      <td>곤지암</td>
-                      <td><곤지암> 체험공포란 이런 것!</td>
-                      <td>25</td>
-                      <td>25</td>
-                      <td>0</td>
-                      <td>즉시</td>
-                    </tr>
-                    <tr>
-                      <th>2018-03-29</th>
-                      <td>곤지암</td>
-                      <td><곤지암> 체험공포란 이런 것!</td>
-                      <td>25</td>
-                      <td>25</td>
-                      <td>0</td>
-                      <td>즉시</td>
-                    </tr>
-                    <tr>
-                      <th>2018-03-28</th>
-                      <td>곤지암</td>
-                      <td><곤지암> 체험공포란 이런 것!</td>
-                      <td>25</td>
-                      <td>25</td>
-                      <td>0</td>
-                      <td>즉시</td>
-                    </tr>
-                    <tr>
-                      <th>2018-03-27</th>
-                      <td>곤지암</td>
-                      <td><곤지암> 체험공포란 이런 것!</td>
-                      <td>25</td>
-                      <td>25</td>
-                      <td>0</td>
-                      <td>즉시</td>
-                    </tr>
-                    <tr>
-                      <th>2018-03-26</th>
-                      <td>곤지암</td>
-                      <td><곤지암> 체험공포란 이런 것!</td>
-                      <td>25</td>
-                      <td>25</td>
-                      <td>0</td>
-                      <td>즉시</td>
-                    </tr>
+                    <% } %>
                   </tbody>
                 </table>
               </div>
@@ -127,6 +79,16 @@
 .table-cp td,.table-cp th{
   text-align: center;
 }
+.title_nobr,.kwd_nobr{
+  font-size: 15px;
+  padding-left: 3px;
+  text-overflow: ellipsis;
+  width: 500px;
+  overflow: hidden;
+}
+.kwd_nobr{
+  width: 146px;
+}
 </style>
 <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
@@ -137,37 +99,12 @@ $(window).resize(function(){
 });
 
 $(document).ready(function(){
-  // areaChart();
-  window.areaChart = Morris.Area({
-    element: '7DayGraph',
-    data: [
-      {"date":"2018-03-26","l1":50,"l2":100,"l3":0},
-      {"date":"2018-03-27","l1":30,"l2":50,"l3":0},
-      {"date":"2018-03-28","l1":7,"l2":10,"l3":0},
-      {"date":"2018-03-29","l1":5,"l2":10,"l3":0},
-      {"date":"2018-03-30","l1":15,"l2":20,"l3":0},
-      {"date":"2018-03-31","l1":50,"l2":15,"l3":0},
-      {"date":"2018-04-01","l1":11,"l2":10,"l3":0},
-      {"date":"2018-04-02","l1":20,"l2":5,"l3":10},
-      {"date":"2018-04-03","l1":0,"l2":0,"l3":0}
-    ],
-    lineColors: ['#1abc9c', '#4099FF', '#e74c3c'],
-    xkey: 'date',
-    xLabels: 'day',
-    ykeys: ['l1', 'l2', 'l3'],
-    labels: ['즉시', '예약', '예약(미발송)'],
-    pointSize: 0,
-    lineWidth: 0,
-    resize: true,
-    fillOpacity: 0.8,
-    behaveLikeLine: true,
-    hideHover: 'auto'
-  });
+  areaChart();
 });
 
 function areaChart(){
   $.ajax({
-    url: '../get7DayDataList',
+    url: '/7DayGraph',
     type: 'post',
     datatype : 'json',
     error:function(request,status,error){
@@ -177,25 +114,21 @@ function areaChart(){
       var arr = [];
       if(data){
         data.forEach(function(item,idx){
-          arr.push({'date':item.date,'t':item.tTotal,'d':item.dTotal,'p':item.pTotal});
+          arr.push({'date':item.date,'success':item.success,'fail':item.fail});
         });
       }
       else{
-        arr.push({'date':0,'t':0,'d':0,'p':0});
+        arr.push({'date':0,'success':0,'l3':0});
       }
-
-      window.areaChart = Morris.Area({
+      window.areaChart = Morris.Line({
         element: '7DayGraph',
         data: arr,
-        lineColors: ['#1abc9c', '#e74c3c', '#4099FF'],
+        lineColors: ['#1abc9c', '#df6161'],
         xkey: 'date',
-        ykeys: ['t', 'd', 'p'],
-        labels: ['제휴', '삭제', '보류'],
-        pointSize: 0,
-        lineWidth: 0,
+        ykeys: ['success', 'fail'],
+        labels: ['성공', '실패'],
         resize: true,
-        fillOpacity: 0.8,
-        behaveLikeLine: true,
+        xLabels:'day',
         hideHover: 'auto'
       });
     }

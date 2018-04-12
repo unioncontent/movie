@@ -46,8 +46,6 @@ var email = require('./routes/email');
 app.use('/email', email);
 var list = require('./routes/list');
 app.use('/list', list);
-app.use('/list/group', list);
-app.use('/list/add', list);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
