@@ -63,7 +63,7 @@ var mailListAll = {
     }
     else{
       if (typeof body.search !== 'undefined') {
-        sql += ' search like \'%'+body.search+'%\'';
+        sql += ' and search like \'%'+body.search+'%\'';
       }
     }
     sql += ' and M_ID = ?';
@@ -87,7 +87,7 @@ var mailListAll = {
     }
     else{
       if (typeof body.search !== 'undefined') {
-        sql += ' search like \'%'+body.search+'%\'';
+        sql += ' and search like \'%'+body.search+'%\'';
       }
     }
     sql += ' and M_ID = ?';

@@ -14,6 +14,14 @@ var mailDetailB = {
     var pValue = Object.values(param);
     var sql = 'update m_mail_detail_b set M_result=? where M_idx_A=?';
     return await getResult(sql,pValue);
+  },
+  getMediaNReporterCount:async function(column,param){
+    var sql = 'select count(DISTINCT '+column+') as c from m_mail_detail_b where M_idx_A=?';
+    var result = await getResult(sql,param);
+    if(result.length == 0){
+      return 0;
+    }
+    return result[0].c || 0;
   }
 }
 function insertSqlSetting(keys){
