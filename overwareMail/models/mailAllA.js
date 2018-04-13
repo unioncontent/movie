@@ -8,8 +8,6 @@ var mailAllA = {
   insert: async function(param){
     var pValue = Object.values(param);
     var sql = insertSqlSetting(Object.keys(param));
-    // console.log(param);
-    // console.log(sql,pValue);
     return await getResult(sql,pValue);
   },
   delete: async function(n_idx){
@@ -29,10 +27,11 @@ function insertSqlSetting(keys){
 
 async function getResult(sql,param) {
   var db = new DBpromise();
+  console.log(sql,param);
   try{
     return await db.query(sql,param);
   } catch(e){
-    console.log(e);
+    console.log('DB Error:',e);
     return [];
   } finally{
     db.close();

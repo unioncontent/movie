@@ -41,9 +41,11 @@ var user = {
 
 async function getResult(sql,param) {
   var db = new DBpromise();
+  console.log(sql,param);
   try{
     return await db.query(sql,param);
   } catch(e){
+    console.log('DB Error:',e);
     return [];
   } finally{
     db.close();

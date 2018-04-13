@@ -14,7 +14,6 @@ var isAuthenticated = function (req, res, next) {
 
 router.get('/',isAuthenticated,async function(req, res) {
   var data = await getListPageData(req.query);
-  console.log(data);
   res.render('period',data);
 });
 router.post('/getPeriod',isAuthenticated,async function(req, res, next) {
@@ -38,7 +37,7 @@ async function getListPageData(param){
     listCount:{total:0}
   };
   var limit = 20;
-  var searchParam = ['1',0,limit];
+  var searchParam = [req.user.user_id,0,limit];
   var currentPage = 1;
   var searchBody = {};
   if (typeof param.page !== 'undefined') {

@@ -23,7 +23,7 @@ async function getListPageData(param){
     mailListCount:{total:0}
   };
   var limit = 20;
-  var searchParam = ['1',0,limit];
+  var searchParam = [req.user.user_id,0,limit];
   var currentPage = 1;
   var searchBody = {
     'order': 'n_idx'
@@ -76,7 +76,7 @@ router.post('/addGroup',isAuthenticated,async function(req, res) {
     await asyncForEach(list, async (item, index, array) => {
       console.log(item);
       var param = {
-        M_id:'1',
+        M_id:req.user.user_id,
         M_group_title:item.title,
         M_idx_a:item.idx,
         M_email:item.email
@@ -100,7 +100,7 @@ router.post('/addGroup',isAuthenticated,async function(req, res) {
 
 router.post('/groupTitleCheck',isAuthenticated,async function(req,res){
   try{
-    var titleCheck = await mailListC.titleCheck([req.body.title.replace( /(\s*)/g, ""),'1']);
+    var titleCheck = await mailListC.titleCheck([req.body.title.replace( /(\s*)/g, ""),req.user.user_id]);
     res.send((titleCheck.length == 0)?'success':'fail');
   }
   catch(e){
@@ -134,7 +134,7 @@ router.get('/group',isAuthenticated,async function(req, res) {
 router.post('/group/delete',isAuthenticated,async function(req, res) {
   try{
     // 로그인계정
-    req.body['M_id'] = '1';
+    req.body['M_id'] = req.user.user_id;
     var deleteMail = await mailListC.deleteFun(req.body);
     res.send('그룹에서 삭제되었습니다.');
   }
@@ -168,7 +168,7 @@ async function getGroupListPageData(param,type){
   if(type == 'group'){
     limit = 6;
   }
-  var searchParam = ['1',0,limit];
+  var searchParam = [req.user.user_id,0,limit];
   var currentPage = 1;
   var searchBody = {
     'order': 'M_regdate'
@@ -209,7 +209,7 @@ router.get('/add',isAuthenticated,function(req, res) {
 
 router.post('/add',isAuthenticated,async function(req, res) {
   try{
-    req.body.M_id = '1';
+    req.body.M_id = req.user.user_id;
     var insertMail = await mailListA.insert("m_mail_list_all",req.body);
     // console.log('insertMail:',insertMail);
     var mail = await mailListA.getViewOneInfo(insertMail.insertId);
@@ -270,10 +270,9 @@ router.post('/add/search',isAuthenticated,async function(req,res){
 });
 
 router.post('/add/emailCheck',isAuthenticated,async function(req,res){
-  // 로그인 계정 연결하기!!!
-  var emailParam = [req.body.email,'1'];
+  var emailParam = [req.body.email,req.user.user_id];
   if('name' in req.body){
-    emailParam = [req.body.email,req.body.name,'1'];
+    emailParam = [req.body.email,req.body.name,req.user.user_id];
   }
 
   try{
