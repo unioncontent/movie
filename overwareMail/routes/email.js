@@ -22,12 +22,12 @@ var isAuthenticated = function (req, res, next) {
 router.get('/',isAuthenticated, async function(req, res) {
   var data = {
     keywordList : await keyword.selectMovieKwd(),
-    typeList : await mailType.selectTable([req.user.user_id]),
-    mailList : await mailListA.selectView({},[req.user.user_id,0,10]),
-    mailListCount : await mailListA.selectViewCount({},[req.user.user_id,0,10]),
+    typeList : await mailType.selectTable([req.user.user_idx]),
+    mailList : await mailListA.selectView({},[req.user.user_idx,0,10]),
+    mailListCount : await mailListA.selectViewCount({},[req.user.user_idx,0,10]),
     mailListPageNum : 1,
-    groupList : await mailListC.selectView({},[req.user.user_id,0,10]),
-    groupListCount : await mailListC.selectViewCount({},[req.user.user_id,0,10]),
+    groupList : await mailListC.selectView({},[req.user.user_idx,0,10]),
+    groupListCount : await mailListC.selectViewCount({},[req.user.user_idx,0,10]),
     groupListPageNum : 1
   };
   res.render('email',data);
@@ -50,8 +50,8 @@ router.post('/getModalListPage',isAuthenticated, async function(req, res) {
     emailPage : 1
   };
   // cpID = 현재 로그인된 사람 아이디, start, end
-  var emailParam = [req.user.user_id,0,10];
-  var groupParam = [req.user.user_id,0,10];
+  var emailParam = [req.user.user_idx,0,10];
+  var groupParam = [req.user.user_idx,0,10];
 
   if (typeof req.body.page !== 'undefined') {
     if (typeof req.body.type !== 'undefined') {
@@ -73,7 +73,7 @@ router.post('/getModalListPage',isAuthenticated, async function(req, res) {
 });
 
 router.get('/searchGroup',isAuthenticated, async function(req, res) {
-  var param = [req.user.user_id,0,10];
+  var param = [req.user.user_idx,0,10];
   if (typeof req.query.page !== 'undefined') {
     param[1] = (req.query.page - 1) * param[2];
   }
@@ -86,7 +86,7 @@ router.get('/searchGroup',isAuthenticated, async function(req, res) {
 });
 
 router.get('/searchAll',isAuthenticated, async function(req, res) {
-  var param = [req.user.user_id,0,10];
+  var param = [req.user.user_idx,0,10];
   if (typeof req.query.page !== 'undefined') {
     param[1] = (req.query.page - 1) * param[2];
   }
@@ -179,8 +179,8 @@ router.post('/send',isAuthenticated, async function(req, res) {
   var groups2allIdx = [];
   if(typeof req.body['M_group[]'] != 'undefined'){
     if(req.body['M_group[]'].length != 0){
-      groups = await mailListC.getEmail(req.body['M_group[]'],req.user.user_id);
-      groups2allIdx = await mailListC.getIdx(req.body['M_group[]'],req.user.user_id);
+      groups = await mailListC.getEmail(req.body['M_group[]'],req.user.user_idx);
+      groups2allIdx = await mailListC.getIdx(req.body['M_group[]'],req.user.user_idx);
     }
   }
 
@@ -211,7 +211,7 @@ router.post('/send',isAuthenticated, async function(req, res) {
     M_mail_type: req.body['M_mail_type'],
     M_body: req.body['M_body'],
     M_subject: req.body['M_subject'],
-    M_id: req.user.user_id
+    M_id: req.user.user_idx
   };
   if(typeof req.body['M_recipi[]'] == 'object'){
     mailAllParam['M_recipi'] = req.body['M_recipi[]'].join(',');

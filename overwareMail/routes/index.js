@@ -17,7 +17,7 @@ var isAuthenticated = function (req, res, next) {
 router.get('/', isAuthenticated, async function(req, res, next) {
   var data = [];
   try{
-    data = await period.getYesterday([req.user.user_id]);
+    data = await period.getYesterday([req.user.user_idx]);
   }
   catch(err){
     console.log(err);
@@ -29,7 +29,8 @@ router.get('/', isAuthenticated, async function(req, res, next) {
 
 router.post('/7DayGraph',isAuthenticated, async function(req, res, next) {
   try{
-    var data = await period.get7DayGraph([req.user.user_id]);
+    console.log(req.user);
+    var data = await period.get7DayGraph([req.user.user_idx]);
     res.send(data);
   }
   catch(err){

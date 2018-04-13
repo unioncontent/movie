@@ -13,17 +13,17 @@ var isAuthenticated = function (req, res, next) {
 };
 
 router.get('/',isAuthenticated,async function(req, res) {
-  var data = await getListPageData(req.query);
+  var data = await getListPageData(req.user.user_idx,req.query);
   res.render('list',data);
 });
 
-async function getListPageData(param){
+async function getListPageData(idx,param){
   var data = {
     mailList:[],
     mailListCount:{total:0}
   };
   var limit = 20;
-  var searchParam = [req.user.user_id,0,limit];
+  var searchParam = [idx,0,limit];
   var currentPage = 1;
   var searchBody = {
     'order': 'n_idx'
@@ -76,7 +76,7 @@ router.post('/addGroup',isAuthenticated,async function(req, res) {
     await asyncForEach(list, async (item, index, array) => {
       console.log(item);
       var param = {
-        M_id:req.user.user_id,
+        M_id:req.user.user_idx,
         M_group_title:item.title,
         M_idx_a:item.idx,
         M_email:item.email
@@ -100,7 +100,7 @@ router.post('/addGroup',isAuthenticated,async function(req, res) {
 
 router.post('/groupTitleCheck',isAuthenticated,async function(req,res){
   try{
-    var titleCheck = await mailListC.titleCheck([req.body.title.replace( /(\s*)/g, ""),req.user.user_id]);
+    var titleCheck = await mailListC.titleCheck([req.body.title.replace( /(\s*)/g, ""),req.user.user_idx]);
     res.send((titleCheck.length == 0)?'success':'fail');
   }
   catch(e){
@@ -113,7 +113,7 @@ router.post('/getNextPage',isAuthenticated,async function(req, res, next) {
   // if (!req.user) {
   //   return res.redirect('/login');
   // }
-  var data = await getListPageData(req.body);
+  var data = await getListPageData(req.user.user_idx,req.body);
   res.send(data);
 });
 
@@ -127,14 +127,13 @@ async function asyncForEach(array, callback) {
 }
 
 router.get('/group',isAuthenticated,async function(req, res) {
-  var data = await getGroupListPageData(req.query,'list');
+  var data = await getGroupListPageData(req.user.user_idx,req.query,'list');
   res.render('listGroup',data);
 });
 
 router.post('/group/delete',isAuthenticated,async function(req, res) {
   try{
-    // 로그인계정
-    req.body['M_id'] = req.user.user_id;
+    req.body['M_id'] = req.user.user_idx;
     var deleteMail = await mailListC.deleteFun(req.body);
     res.send('그룹에서 삭제되었습니다.');
   }
@@ -144,22 +143,16 @@ router.post('/group/delete',isAuthenticated,async function(req, res) {
 });
 
 router.post('/getNextGroupModalPage',isAuthenticated,async function(req, res, next) {
-  // if (!req.user) {
-  //   return res.redirect('/login');
-  // }
-  var data = await getGroupListPageData(req.body,'group');
+  var data = await getGroupListPageData(req.user.user_idx,req.body,'group');
   res.send(data);
 });
 
 router.post('/getNextGroupPage',isAuthenticated,async function(req, res, next) {
-  // if (!req.user) {
-  //   return res.redirect('/login');
-  // }
-  var data = await getGroupListPageData(req.body,'list');
+  var data = await getGroupListPageData(req.user.user_idx,req.body,'list');
   res.send(data);
 });
 
-async function getGroupListPageData(param,type){
+async function getGroupListPageData(idx,param,type){
   var data = {
     groupList:[],
     groupListCount:{total:0}
@@ -168,7 +161,7 @@ async function getGroupListPageData(param,type){
   if(type == 'group'){
     limit = 6;
   }
-  var searchParam = [req.user.user_id,0,limit];
+  var searchParam = [idx,0,limit];
   var currentPage = 1;
   var searchBody = {
     'order': 'M_regdate'
@@ -209,7 +202,7 @@ router.get('/add',isAuthenticated,function(req, res) {
 
 router.post('/add',isAuthenticated,async function(req, res) {
   try{
-    req.body.M_id = req.user.user_id;
+    req.body.M_id = req.user.user_idx;
     var insertMail = await mailListA.insert("m_mail_list_all",req.body);
     // console.log('insertMail:',insertMail);
     var mail = await mailListA.getViewOneInfo(insertMail.insertId);
@@ -270,9 +263,9 @@ router.post('/add/search',isAuthenticated,async function(req,res){
 });
 
 router.post('/add/emailCheck',isAuthenticated,async function(req,res){
-  var emailParam = [req.body.email,req.user.user_id];
+  var emailParam = [req.body.email,req.user.user_idx];
   if('name' in req.body){
-    emailParam = [req.body.email,req.body.name,req.user.user_id];
+    emailParam = [req.body.email,req.body.name,req.user.user_idx];
   }
 
   try{
