@@ -3,6 +3,7 @@ var request = require('request');
 var datetime = require('node-datetime');
 var urlencode = require('urlencode');
 var Iconv = require('iconv').Iconv;
+var router = express.Router();
 // DB module
 var mailAllA = require('../models/mailAllA.js');
 var mailDetailB = require('../models/mailDetailB.js');
@@ -11,9 +12,14 @@ var mailListC = require('../models/mailListC.js');
 var keyword = require('../models/keyword.js');
 var mailType = require('../models/mailType.js');
 
-var router = express.Router();
 
-router.get('/', async function(req, res) {
+var isAuthenticated = function (req, res, next) {
+  if (req.isAuthenticated())
+    return next();
+  res.redirect('/login');
+};
+
+router.get('/',isAuthenticated, async function(req, res) {
   var data = {
     keywordList : await keyword.selectMovieKwd(),
     typeList : await mailType.selectTable(),
@@ -33,7 +39,7 @@ router.get('/', async function(req, res) {
 //   res.download(filepath);
 // });
 
-router.post('/getModalListPage', async function(req, res) {
+router.post('/getModalListPage',isAuthenticated, async function(req, res) {
   console.log('getModalListPage');
   var data = {
     group : [],
@@ -66,7 +72,7 @@ router.post('/getModalListPage', async function(req, res) {
   res.send(data);
 });
 
-router.get('/searchGroup', async function(req, res) {
+router.get('/searchGroup',isAuthenticated, async function(req, res) {
   // cpID = 현재 로그인된 사람 아이디, start, end
   var param = ['1',0,10];
   if (typeof req.query.page !== 'undefined') {
@@ -80,7 +86,7 @@ router.get('/searchGroup', async function(req, res) {
   res.send(data);
 });
 
-router.get('/searchAll', async function(req, res) {
+router.get('/searchAll',isAuthenticated, async function(req, res) {
   // cpID = 현재 로그인된 사람 아이디, start, end
   var param = ['1',0,10];
   if (typeof req.query.page !== 'undefined') {
@@ -146,7 +152,7 @@ async function asyncForEach(array, callback) {
   }
 }
 
-router.get('/send/result', async function(req, res) {
+router.get('/send/result',isAuthenticated, async function(req, res) {
   console.log('/send/result값');
   console.log('http://domain?type=[click | open | reject]&mail_id=[MailID]&email=[Email]')
   console.log(req.query);
@@ -163,7 +169,7 @@ router.get('/send/result', async function(req, res) {
   }
 });
 
-router.post('/send', async function(req, res) {
+router.post('/send',isAuthenticated, async function(req, res) {
   console.log('mail send : ',req.body);
   // 이메일 발송
   var euckr2utf8 = new Iconv('EUC-KR', 'UTF-8');

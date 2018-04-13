@@ -1,12 +1,18 @@
 var express = require('express');
+var router = express.Router();
 // DB module
 var user = require('../models/user.js');
 var mailListA = require('../models/mailListA.js');
 var mailListC = require('../models/mailListC.js');
 
-var router = express.Router();
 
-router.get('/',async function(req, res) {
+var isAuthenticated = function (req, res, next) {
+  if (req.isAuthenticated())
+    return next();
+  res.redirect('/login');
+};
+
+router.get('/',isAuthenticated,async function(req, res) {
   var data = await getListPageData(req.query);
   res.render('list',data);
 });
@@ -44,7 +50,7 @@ async function getListPageData(param){
   return data;
 }
 
-router.post('/update',async function(req, res) {
+router.post('/update',isAuthenticated,async function(req, res) {
   try{
     var updateMail = await mailListA.update(req.body);
     res.send('메일 업데이트 되었습니다.');
@@ -54,7 +60,7 @@ router.post('/update',async function(req, res) {
   }
 });
 
-router.post('/delete',async function(req, res) {
+router.post('/delete',isAuthenticated,async function(req, res) {
   try{
     var deleteMail = await mailListA.deleteFun(req.body);
     res.send('메일 삭제 되었습니다.');
@@ -64,7 +70,7 @@ router.post('/delete',async function(req, res) {
   }
 });
 
-router.post('/addGroup',async function(req, res) {
+router.post('/addGroup',isAuthenticated,async function(req, res) {
   try{
     var list = JSON.parse(req.body.list);
     await asyncForEach(list, async (item, index, array) => {
@@ -92,7 +98,7 @@ router.post('/addGroup',async function(req, res) {
   }
 });
 
-router.post('/groupTitleCheck',async function(req,res){
+router.post('/groupTitleCheck',isAuthenticated,async function(req,res){
   try{
     var titleCheck = await mailListC.titleCheck([req.body.title.replace( /(\s*)/g, ""),'1']);
     res.send((titleCheck.length == 0)?'success':'fail');
@@ -103,7 +109,7 @@ router.post('/groupTitleCheck',async function(req,res){
   }
 });
 
-router.post('/getNextPage',async function(req, res, next) {
+router.post('/getNextPage',isAuthenticated,async function(req, res, next) {
   // if (!req.user) {
   //   return res.redirect('/login');
   // }
@@ -120,12 +126,12 @@ async function asyncForEach(array, callback) {
   }
 }
 
-router.get('/group',async function(req, res) {
+router.get('/group',isAuthenticated,async function(req, res) {
   var data = await getGroupListPageData(req.query,'list');
   res.render('listGroup',data);
 });
 
-router.post('/group/delete',async function(req, res) {
+router.post('/group/delete',isAuthenticated,async function(req, res) {
   try{
     // 로그인계정
     req.body['M_id'] = '1';
@@ -137,7 +143,7 @@ router.post('/group/delete',async function(req, res) {
   }
 });
 
-router.post('/getNextGroupModalPage',async function(req, res, next) {
+router.post('/getNextGroupModalPage',isAuthenticated,async function(req, res, next) {
   // if (!req.user) {
   //   return res.redirect('/login');
   // }
@@ -145,7 +151,7 @@ router.post('/getNextGroupModalPage',async function(req, res, next) {
   res.send(data);
 });
 
-router.post('/getNextGroupPage',async function(req, res, next) {
+router.post('/getNextGroupPage',isAuthenticated,async function(req, res, next) {
   // if (!req.user) {
   //   return res.redirect('/login');
   // }
@@ -197,11 +203,11 @@ async function getGroupListPageData(param,type){
   return data;
 }
 
-router.get('/add', function(req, res) {
+router.get('/add',isAuthenticated,function(req, res) {
   res.render('listAdd');
 });
 
-router.post('/add',async function(req, res) {
+router.post('/add',isAuthenticated,async function(req, res) {
   try{
     req.body.M_id = '1';
     var insertMail = await mailListA.insert("m_mail_list_all",req.body);
@@ -244,7 +250,7 @@ router.post('/add',async function(req, res) {
 
 });
 
-router.post('/add/search',async function(req,res){
+router.post('/add/search',isAuthenticated,async function(req,res){
   var userParam = [0,10];
   if (typeof req.body.start !== 'undefined') {
     userParam[0] = parseInt(req.body.start);
@@ -263,7 +269,7 @@ router.post('/add/search',async function(req,res){
   }
 });
 
-router.post('/add/emailCheck',async function(req,res){
+router.post('/add/emailCheck',isAuthenticated,async function(req,res){
   // 로그인 계정 연결하기!!!
   var emailParam = [req.body.email,'1'];
   if('name' in req.body){

@@ -6,12 +6,18 @@ var router = express.Router();
 var period = require('../models/period.js');
 var mailDetailB = require('../models/mailDetailB.js');
 
-router.get('/',async function(req, res) {
+var isAuthenticated = function (req, res, next) {
+  if (req.isAuthenticated())
+    return next();
+  res.redirect('/login');
+};
+
+router.get('/',isAuthenticated,async function(req, res) {
   var data = await getListPageData(req.query);
   console.log(data);
   res.render('period',data);
 });
-router.post('/getPeriod',async function(req, res, next) {
+router.post('/getPeriod',isAuthenticated,async function(req, res, next) {
   var data = {
     media:await mailDetailB.getMediaNReporterCount('P_title',req.body.M_idx_A),
     reporter:await mailDetailB.getMediaNReporterCount('P_name',req.body.M_idx_A),
@@ -20,7 +26,7 @@ router.post('/getPeriod',async function(req, res, next) {
   };
   res.send(data);
 });
-router.post('/getNextPage',async function(req, res, next) {
+router.post('/getNextPage',isAuthenticated,async function(req, res, next) {
   var data = await getListPageData(req.body);
   res.send(data);
 });
