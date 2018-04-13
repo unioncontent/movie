@@ -20,12 +20,11 @@ var mailListC = {
     else if('idx' in param){
       sql += ' n_idx=?'
     }
-    sql += 'and M_id=?;' 
+    sql += 'and M_id=?;'
     return await getResult(sql,pValue);
   },
-  getEmail : async function(param){
-    // 로그인 -> M_ID!!!
-    var sql = 'select M_email from m_mail_list_c where M_ID=\'1\' ';
+  getEmail : async function(param,idx){
+    var sql = 'select M_email from m_mail_list_c where M_ID=? ';
     if(typeof param == 'object'){
       sql += 'and M_group_title =\''+param[0]+'\' or';
       for(var i = 1; i < param.length; i++){
@@ -38,12 +37,11 @@ var mailListC = {
     else if(typeof param == 'string'){
       sql += 'and M_group_title =\''+param+'\'';
     }
-    var result = await getResult(sql,[]);
+    var result = await getResult(sql,[idx]);
     return [].map.call(result, function(obj) { return obj.M_email; });
   },
-  getIdx : async function(param){
-    // 로그인 -> M_ID!!!
-    var sql = 'select M_idx_a from m_mail_list_c where M_ID=\'1\' ';
+  getIdx : async function(param,idx){
+    var sql = 'select M_idx_a from m_mail_list_c where M_ID=? ';
     if(typeof param == 'object'){
       sql += 'and M_group_title =\''+param[0]+'\' or';
       for(var i = 1; i < param.length; i++){
@@ -56,7 +54,7 @@ var mailListC = {
     else if(typeof param == 'string'){
       sql += 'and M_group_title =\''+param+'\'';
     }
-    var result = await getResult(sql,[]);
+    var result = await getResult(sql,[idx]);
     return [].map.call(result, function(obj) { return obj.M_idx_a; });
   },
   titleCheck: async function(param){

@@ -5,18 +5,19 @@ const DBpromise = require('../db/db_info.js');
 */
 
 var mailType = {
-  selectTable: async function(){
+  selectTable: async function(param){
     var sql = 'SELECT * FROM m_mail_type where M_id=?';
-    return await getResult(sql,['1']);
+    return await getResult(sql,param);
   }
 }
 
 async function getResult(sql,param) {
   var db = new DBpromise();
+  console.log(sql,param);
   try{
     return await db.query(sql,param);
   } catch(e){
-    console.log(e);
+    console.log('DB Error:',e);
     return [];
   } finally{
     db.close();

@@ -9,7 +9,6 @@ var mailListAll = {
   insert: async function(table,param){
     var pValue = Object.values(param);
     var sql = insertSqlSetting(table,Object.keys(param));
-    // console.log(sql,pValue);
     return await getResult(sql,pValue);
   },
   update: async function(param){
@@ -105,7 +104,6 @@ var mailListAll = {
       sql += ' and M_name=? ';
     }
     sql += ' and M_ID= ?;';
-    console.log(sql,param);
     return await getResult(sql,param);
   }
 }
@@ -121,10 +119,11 @@ function insertSqlSetting(table,keys){
 
 async function getResult(sql,param) {
   var db = new DBpromise();
+  console.log(sql,param);
   try{
     return await db.query(sql,param);
   } catch(e){
-    console.log(e);
+    console.log('DB Error:',e);
     return [];
   } finally{
     db.close();
