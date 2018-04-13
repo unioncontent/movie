@@ -13,7 +13,7 @@ var isAuthenticated = function (req, res, next) {
 };
 
 router.get('/',isAuthenticated,async function(req, res) {
-  var data = await getListPageData(req.query);
+  var data = await getListPageData(req.user.user_idx,req.query);
   res.render('period',data);
 });
 router.post('/getPeriod',isAuthenticated,async function(req, res, next) {
@@ -26,18 +26,18 @@ router.post('/getPeriod',isAuthenticated,async function(req, res, next) {
   res.send(data);
 });
 router.post('/getNextPage',isAuthenticated,async function(req, res, next) {
-  var data = await getListPageData(req.body);
+  var data = await getListPageData(req.user.user_idx,req.body);
   res.send(data);
 });
 
-async function getListPageData(param){
+async function getListPageData(idx,param){
   console.log(param);
   var data = {
     list:[],
     listCount:{total:0}
   };
   var limit = 20;
-  var searchParam = [req.user.user_id,0,limit];
+  var searchParam = [idx,0,limit];
   var currentPage = 1;
   var searchBody = {};
   if (typeof param.page !== 'undefined') {
