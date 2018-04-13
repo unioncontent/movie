@@ -98,7 +98,28 @@ $(window).resize(function(){
 $(document).ready(function(){
   areaChart();
 });
+//date 포멧
+function dateToYYYYMMDD(date){
+  function pad(num) {
+    num = num + '';
+    return num.length < 2 ? '0' + num : num;
+  }
+  return date.getFullYear() + '-' + pad(date.getMonth()+1) + '-' + pad(date.getDate());
+}
+// -1 date
+function date_sub(sDate, nDays) {
+    var yy = parseInt(sDate.substr(0, 4), 10);
+    var mm = parseInt(sDate.substr(5, 2), 10);
+    var dd = parseInt(sDate.substr(8), 10);
 
+    d = new Date(yy, mm - 1, dd - nDays);
+    yy = d.getFullYear();
+
+    mm = d.getMonth() + 1; mm = (mm < 10) ? '0' + mm : mm;
+
+    dd = d.getDate(); dd = (dd < 10) ? '0' + dd : dd;
+    return '' + yy + '-' +  mm  + '-' + dd;
+}
 function areaChart(){
   $.ajax({
     url: '/7DayGraph',
@@ -110,13 +131,23 @@ function areaChart(){
     success:function(data){
       console.log(data);
       var arr = [];
-      if(data){
-        data.forEach(function(item,idx){
-          arr.push({'date':item.date,'success':item.success,'fail':item.fail});
-        });
+      var date = new Date();
+      date.setDate(date.getDate()+2);
+      for(var i=0; i<8 ; i++){
+        arr.push({'date':date_sub(dateToYYYYMMDD(date), 1),'success':'0','fail':'0'});
+        date.setDate(date.getDate()-1);
       }
-      else{
-        arr.push({'date':0,'success':0,'l3':0});
+      console.log(arr);
+
+      if(data){
+          data.forEach(function(item,idx){
+            for(var i=0; i<8 ; i++){
+              if(arr[i]['date'] == item.date){
+                arr[i]['success'] = item.success;
+                arr[i]['fail'] = item.fail;
+              }
+            }
+          });
       }
       window.areaChart = Morris.Line({
         element: '7DayGraph',
