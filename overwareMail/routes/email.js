@@ -174,7 +174,7 @@ router.get('/send/result',isAuthenticated, async function(req, res) {
 });
 
 router.post('/send',isAuthenticated, async function(req, res) {
-  console.log('mail send : ',req.body);
+  console.log('mail send req.body: ',req.body);
   // 이메일 발송
   var euckr2utf8 = new Iconv('EUC-KR', 'UTF-8');
   var utf82euckr = new Iconv('UTF-8', 'EUC-KR');
@@ -191,6 +191,10 @@ router.post('/send',isAuthenticated, async function(req, res) {
   }
 
   var recipients = recipi.concat(groups);
+  console.log('M_subject:',utf82euckr.convert(req.body.M_subject));
+  console.log('M_body:',utf82euckr.convert(req.body.M_body));
+  console.log('M_file:',utf82euckr.convert(req.body.M_file));
+  console.log('M_fileName:',utf82euckr.convert(req.body.M_fileName));
   var param = {
     'subject': urlencode(new Buffer(utf82euckr.convert(req.body.M_subject)).toString('base64')),
     'body': urlencode(new Buffer(utf82euckr.convert(req.body.M_body)).toString('base64')),
@@ -203,6 +207,7 @@ router.post('/send',isAuthenticated, async function(req, res) {
     'file_url': urlencode(new Buffer(utf82euckr.convert(req.body.M_file)).toString('base64')),
     'file_name': urlencode(new Buffer(utf82euckr.convert(req.body.M_fileName)).toString('base64'))
   };
+  console.log('mail send param: ',param);
   // 'file_url': urlencode('http://192.168.0.22:3000/email/download/20180411/20180410_134906_099.jpg'),
   // 'file_name': urlencode(new Buffer(utf82euckr.convert('20180410_134906_099')).toString('base64'))
 
@@ -296,16 +301,16 @@ router.post('/send',isAuthenticated, async function(req, res) {
     paramStr += '&file_url='+param['file_url']+'&file_name='+param['file_name'];
   }
   // 테스트중
-  // console.log('이메일 paramStr : ',paramStr);
-  // var resultEmail = await emailSendFun(paramStr);
-  // console.log('이메일 발송 결과 : ',resultEmail);
-  var resultEmail = [true,0];
-  if(resultEmail[0]){
-    res.send('메일발송 성공했습니다.');
-  }
-  else{
-    res.status(500).send(resultEmail[2]);
-  }
+  console.log('이메일 paramStr : ',paramStr);
+  var resultEmail = await emailSendFun(paramStr);
+  console.log('이메일 발송 결과 : ',resultEmail);
+  // var resultEmail = [true,0];
+  // if(resultEmail[0]){
+  //   res.send('메일발송 성공했습니다.');
+  // }
+  // else{
+  //   res.status(500).send(resultEmail[2]);
+  // }
 
   // 메일 발송후 결과
   var param = {

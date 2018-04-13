@@ -550,7 +550,7 @@
       ajax: {
         url: "/email/searchAll",
         dataType: 'json',
-        delay: 250,
+        delay: 100,
         data: function (params) {
           return {
             search: params.term, // search term
@@ -1059,6 +1059,56 @@
 
   // 메일 보내기 버튼 클릭시
   $("#sendBtn").on("click",function(){
+    var param = {
+      'M_sender': $(".sender-select").select2("val"),
+      'M_recipi': $(".recipi-select").select2("val"),
+      'M_group': $('.group-select').val() || [],
+      'M_keyword': $("#M_keyword option:selected").val(),
+      'M_mail_type': $("#M_mail_type option:selected").val(),
+      'M_body': $("#M_body").summernote('code'),
+      'M_subject': $("#M_subject").val(),
+      'M_type': $("input:radio[name=M_type]:checked").val()
+    };
+    if(param["M_sender"] == null){
+      check = requiredMessage("M_sender","보내는 사람를 선택해주세요.");
+    }
+    if(param["M_recipi"] == ""){
+      check = requiredMessage("M_recipi","받는사람을 선택해주세요.");
+    }
+    if(param["M_keyword"] == 0){
+      check = requiredMessage("M_keyword","키워드를 선택해주세요.");
+    }
+    if(param["M_mail_type"] == 0){
+      check = requiredMessage("M_mail_type","메일타입을 선택해주세요.");
+    }
+    if(param["M_subject"] == ""){
+      check = requiredMessage("M_subject","메일제목을 입력해주세요.");
+    }
+    if(param["M_body"] == "" || param["M_body"] == "<p><br></p>"){
+      check = requiredMessage("M_body","메일내용 입력해주세요.");
+    }
+    if(param["M_type"] == "1"){
+      var time = $('#timepicker').val();
+      var date = $('#datepicker').val();
+      if(time == "" || date == ""){
+        check = requiredMessage("date","예약시간을 설정해주세요.");
+      }
+      else if(time.split(' : ')[1] % 10 != 0){
+        check = requiredMessage("date","예약시간은 10분단위로 설정해주세요.");
+      }
+      else{
+        var endDate = date+" "+time.replace(' : ',':')+":00";
+        var startDateCompare = new Date();
+        var endDateCompare = new Date(endDate);
+        if(startDateCompare.getTime() >= endDateCompare.getTime()){
+          check = requiredMessage("date","현재시간보다 작습니다.");
+        }
+        else{
+          param['end_reserve_time'] = date+" "+time.replace(' : ',':')+":00";
+        }
+      }
+    }
+
     swal({
       title: "메일 보내시겠습니까?",
       icon: "warning",
@@ -1078,9 +1128,6 @@
             fileDBListStr += value;
             fileListStr += 'http://192.168.0.22:3000/uploads/files/'+value;
             fileNameStr += value.replace(now+'/','');
-            console.log(fileListArr.lengt);
-            console.log(index);
-            console.log(fileListArr.length-1);
             if(fileListArr.length-1 != index){
               fileListStr += '|';
               fileDBListStr += '|';
@@ -1089,58 +1136,10 @@
           }
         });
 
-        var param = {
-          'M_sender': $(".sender-select").select2("val"),
-          'M_recipi': $(".recipi-select").select2("val"),
-          'M_group': $('.group-select').val() || [],
-          'M_keyword': $("#M_keyword option:selected").val(),
-          'M_mail_type': $("#M_mail_type option:selected").val(),
-          'M_body': $("#M_body").summernote('code'),
-          'M_subject': $("#M_subject").val(),
-          'M_file':fileListStr,
-          'M_fileName':fileNameStr,
-          'M_file_d':fileDBListStr,
-          'M_type': $("input:radio[name=M_type]:checked").val()
-        };
-        if(param["M_sender"] == null){
-          check = requiredMessage("M_sender","보내는 사람를 선택해주세요.");
-        }
-        if(param["M_recipi"] == ""){
-          check = requiredMessage("M_recipi","받는사람을 선택해주세요.");
-        }
-        if(param["M_keyword"] == 0){
-          check = requiredMessage("M_keyword","키워드를 선택해주세요.");
-        }
-        if(param["M_mail_type"] == 0){
-          check = requiredMessage("M_mail_type","메일타입을 선택해주세요.");
-        }
-        if(param["M_subject"] == ""){
-          check = requiredMessage("M_subject","메일제목을 입력해주세요.");
-        }
-        if(param["M_body"] == "" || param["M_body"] == "<p><br></p>"){
-          check = requiredMessage("M_body","메일내용 입력해주세요.");
-        }
-        if(param["M_type"] == "1"){
-          var time = $('#timepicker').val();
-          var date = $('#datepicker').val();
-          if(time == "" || date == ""){
-            check = requiredMessage("date","예약시간을 설정해주세요.");
-          }
-          else if(time.split(' : ')[1] % 10 != 0){
-            check = requiredMessage("date","예약시간은 10분단위로 설정해주세요.");
-          }
-          else{
-            var endDate = date+" "+time.replace(' : ',':')+":00";
-            var startDateCompare = new Date();
-            var endDateCompare = new Date(endDate);
-            if(startDateCompare.getTime() >= endDateCompare.getTime()){
-              check = requiredMessage("date","현재시간보다 작습니다.");
-            }
-            else{
-              param['end_reserve_time'] = date+" "+time.replace(' : ',':')+":00";
-            }
-          }
-        }
+        param['M_file'] = fileListStr;
+        param['M_fileName'] = fileNameStr;
+        param['M_file_d'] = fileDBListStr;
+
 
         if(check){
           $('span.messages').find('.error').text('');
