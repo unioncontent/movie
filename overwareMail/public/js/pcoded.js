@@ -1036,19 +1036,21 @@ $.fn.pcodedmenu = function(settings) {
   };
   PcodedMenu.PcodedMenuInit();
 };
-// menu [ vertical ]
-$(window).scroll(function() {
-  if ($(this).scrollTop() > 50) {
-    $('.pcoded[theme-layout="vertical"] .pcoded-navbar[pcoded-navbar-position="fixed"][pcoded-header-position="relative"]').css('top', 0);
-  } else {
-    $('.pcoded[theme-layout="vertical"] .pcoded-navbar[pcoded-navbar-position="fixed"][pcoded-header-position="relative"]').css('top', 'auto');
-  }
-});
-// menu [ horizontal ]
-$(window).scroll(function() {
-  if ($(this).scrollTop() > 50) {
-    $('.pcoded[theme-layout="horizontal"] .pcoded-navbar[pcoded-navbar-position="fixed"][pcoded-header-position="relative"]').css('top', 0);
-  } else {
-    $('.pcoded[theme-layout="horizontal"] .pcoded-navbar[pcoded-navbar-position="fixed"][pcoded-header-position="relative"]').css('top', 'auto');
-  }
-});
+// // menu [ vertical ]
+// $(window).scroll(function() {
+//   if ($(this).scrollTop() > 50) {
+//     if ($('#pcoded').attr('pcoded-device-type') != "phone") {
+//       $('.pcoded[theme-layout="vertical"] .pcoded-navbar[pcoded-navbar-position="fixed"][pcoded-header-position="relative"]').css('top', 0);
+//     }
+//   } else {
+//     $('.pcoded[theme-layout="vertical"] .pcoded-navbar[pcoded-navbar-position="fixed"][pcoded-header-position="relative"]').css('top', 'auto');
+//   }
+// });
+// // menu [ horizontal ]
+// $(window).scroll(function() {
+//   if ($(this).scrollTop() > 50) {
+//     $('.pcoded[theme-layout="horizontal"] .pcoded-navbar[pcoded-navbar-position="fixed"][pcoded-header-position="relative"]').css('top', 0);
+//   } else {
+//     $('.pcoded[theme-layout="horizontal"] .pcoded-navbar[pcoded-navbar-position="fixed"][pcoded-header-position="relative"]').css('top', 'auto');
+//   }
+// });

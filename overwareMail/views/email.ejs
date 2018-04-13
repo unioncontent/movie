@@ -40,7 +40,7 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-sm-2 col-form-label">수신그룹<br/>(숨은참조)</label>
+                <label class="col-sm-2 col-form-label">수신그룹</label>
                 <div class="col-sm-5">
                   <select id="M_group" class="group-select col-sm-12 form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true">
                   </select>
@@ -326,6 +326,12 @@
 <script src="https://cdn.jsdelivr.net/npm/wickedpicker@0.4.3/dist/wickedpicker.min.js"></script>
 
 <style>
+  /* jFiler */
+  .jFiler-item-title{
+    text-overflow: ellipsis;
+    max-width: 189px;
+    overflow: hidden;
+  }
   /* modal select */
   button.close{
     margin-top: 0;
@@ -379,7 +385,8 @@
   .listBox li label,
   #groupUl li label,
   #recipiUl li label{
-    max-width: 225px;
+    max-width: 200px;
+    min-width: 150px;
     display: inline-block;
     margin-bottom: 0px;
     white-space: nowrap;
@@ -947,6 +954,20 @@
       type: $(this).data('type'),
       page: $(this).data('num')
     };
+    console.log(param.type);
+
+    if(param.type == 'mail'){
+      $(".allCheck").eq(0).prop('checked', false);
+      $(".allCheck").eq(1).prop('checked', false);
+    }
+    else if(param.type == 'group'){
+      $(".allCheck").eq(0).prop('checked', false);
+      $(".allCheck").eq(2).prop('checked', false);
+    }
+    else{
+      $(".allCheck").prop('checked', false);
+    }
+
     var search = $('#searchMail').val().replace(/ /gi, "");
     if(search != ''){
       param.search = search;
@@ -981,7 +1002,7 @@
           $(".groupLi").empty();
           data.group.forEach(function(ele,idx){
             var html = '<li>\
-            <input type="checkbox" id=\"chk'+(idx+1)+'_g\" value=\"'+ele.M_id+','+ele.M_group_title+'\"/>\
+            <input type="checkbox" id=\"chk'+(idx+1)+'_g\" value=\"'+ele.M_id+'\" title=\"'+ele.M_group_title+'&lt;'+ele.groupCount+'명&gt;\"/>\
             <label for=\"chk'+(idx+1)+'_g\" title=\"'+ele.M_group_title+'&lt;'+ele.groupCount+'명&gt;\">'+ele.M_group_title+'&lt;'+ele.groupCount+'명&gt;</label>\
             </li>'
             $(".groupLi").append(html);
@@ -1152,7 +1173,6 @@
   // input box 경고문
   function requiredMessage(target,msg){
     $("#"+target).siblings('.messages').children('.error').text(msg);
-    // $("#"+target).addClass("form-control-danger");
     return false;
   }
 

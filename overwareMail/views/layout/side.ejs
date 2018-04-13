@@ -1,5 +1,5 @@
 <!-- left menu start -->
-<nav class="pcoded-navbar" pcoded-header-position="relative">
+<nav class="pcoded-navbar" pcoded-header-position="relative" style="top: 56px;">
   <div class="pcoded-inner-navbar main-menu">
     <div class="">
       <div class="main-menu-header">
@@ -23,6 +23,7 @@
           <span class="pcoded-mcaret"></span>
         </a>
       </li>
+      <% if(userType == 2){ %>
       <li class="period">
         <a href="/period">
           <span class="pcoded-micon"><i class="ti-dashboard"></i></span>
@@ -60,6 +61,7 @@
           </li>
         </ul>
       </li>
+      <% } %>
     </ul>
   </div>
 </nav>
