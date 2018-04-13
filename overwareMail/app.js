@@ -42,12 +42,14 @@ app.use(passport.session());
 app.use(function(req, res, next) {
   res.locals.user = req.user;
   if(req.user){
+    res.locals.userType = req.user.user_type;
     res.locals.userIdx = req.user.user_idx;
     res.locals.userName = req.user.user_name;
     res.locals.userCompany = req.user.company_name;
     res.locals.userID = req.user.user_ID;
   }
   else {
+    res.locals.userType = '';
     res.locals.userCompany = '';
     res.locals.userIdx = '';
     res.locals.userName = '';

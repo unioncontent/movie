@@ -53,22 +53,28 @@ router.post('/getModalListPage',isAuthenticated, async function(req, res) {
   var emailParam = [req.user.user_idx,0,10];
   var groupParam = [req.user.user_idx,0,10];
 
-  if (typeof req.body.page !== 'undefined') {
-    if (typeof req.body.type !== 'undefined') {
-      if(req.body.type == 'group'){
-        groupParam[1] = parseInt(req.body.page);
-        data.groupPage = Math.ceil(parseInt(req.body.page) / 10)+1;
-      }
-      else if(req.body.type == 'mail'){
-        emailParam[1] = parseInt(req.body.page);
-        data.emailPage = Math.ceil(parseInt(req.body.page) / 10)+1;
-      }
-    }
+  if (typeof req.body.page === 'undefined' && typeof req.body.type === 'undefined') {
+    req.body.type = '';
   }
-  data['group'] = await mailListC.selectView(req.body,groupParam);
-  data['groupTotal'] = await mailListC.selectViewCount(req.body,groupParam);
-  data['email'] = await mailListA.selectView(req.body,emailParam);
-  data['emailTotal'] = await mailListA.selectViewCount(req.body,emailParam);
+  console.log(req.body);
+  if(req.body.type == 'group'){
+    groupParam[1] = parseInt(req.body.page);
+    data.groupPage = Math.ceil(parseInt(req.body.page) / 10)+1;
+    data['group'] = await mailListC.selectView(req.body,groupParam);
+    data['groupTotal'] = await mailListC.selectViewCount(req.body,groupParam);
+  }
+  else if(req.body.type == 'mail'){
+    emailParam[1] = parseInt(req.body.page);
+    data.emailPage = Math.ceil(parseInt(req.body.page) / 10)+1;
+    data['email'] = await mailListA.selectView(req.body,emailParam);
+    data['emailTotal'] = await mailListA.selectViewCount(req.body,emailParam);
+  }
+  else{
+    data['group'] = await mailListC.selectView(req.body,groupParam);
+    data['groupTotal'] = await mailListC.selectViewCount(req.body,groupParam);
+    data['email'] = await mailListA.selectView(req.body,emailParam);
+    data['emailTotal'] = await mailListA.selectViewCount(req.body,emailParam);
+  }
   res.send(data);
 });
 
