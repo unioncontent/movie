@@ -22,7 +22,7 @@
           <div class="card">
             <div class="card-block">
               <div class="form-group row">
-                <label class="col-sm-2 col-form-label">* 회사명</label>
+                <label class="col-sm-2 col-form-label">* 회사</label>
                 <div class="col-sm-5">
                   <input id="mediaName" type="text" class="form-control" placeholder="회사명">
                   <span class='messages'><p class='text-danger error'></p></span>
@@ -94,7 +94,7 @@
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title">회사명 검색</h5>
+              <h5 class="modal-title">회사 검색</h5>
             </div>
             <div class="modal-body">
               <div class="card">
@@ -150,22 +150,25 @@
         $.ajax({
           type: "POST",
           url: "/list/add/emailCheck",
-          dataType: "text",
+          dataType: "json",
           data: {email : value},
           error: function(req,status,error){
-            swal("ERROR!", req.status+"\n"+error, "error");
+            console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
+            swal("ERROR!", '새로고침 후 다시 시도해주세요.', "error");
           },
           success: function(data){
             console.log(data);
-            if(data == 'fail'){
+            if(data.msg == 'fail'){
               swal("ERROR!", "이메일 중복됩니다. 다시 입력해 주세요.", "error");
-            }else if(data == 'success'){
+            }else if(data.msg == 'success'){
               swal("중복확인!", value+"는 사용가능한 이메일입니다.", "success");
 
               $('#email').val(value);
               $("#emailCheck").val("true");
               $('#email').removeClass("form-control-danger");
               $('#email').siblings().children("p").text("");
+            }else{
+              swal("ERROR!", '새로고침 후 다시 시도해주세요.', "error");
             }
           }
         });
@@ -217,7 +220,7 @@
   });
   $('#btn-search').on('click',function(){
     if($('#search').val() == ""){
-      alert('검색어를 넣어주세요.');
+      console.log('검색어를 넣어주세요.');
       return false;
     }
     var param = {
@@ -229,7 +232,7 @@
   $('#email').on('focus',function(){
     $('#emailCheckBtn').trigger('click');
   });
-  // 회사리스트 ajax
+  // 회사리스트
   function searchMedia(param){
     $.ajax({
       url: '/list/add/search',
@@ -237,13 +240,16 @@
       data : param,
       datatype : 'json',
       error:function(request,status,error){
-        // alert('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
-        alert(request.responseText);
+        console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
+        swal("ERROR!", '새로고침 후 다시 시도해주세요.', "error");
       },
       success:function(data){
+        if(data.status != true){
+          swal("ERROR!", '새로고침 후 다시 시도해주세요.', "error");
+          return false;
+        }
         $("#search-Modal tbody").empty();
         $("#search-Modal #more").remove();
-        console.log(data);
         if(data.count!=0){
           data.list.forEach(function(item){
             var html = '<tr>\
@@ -319,14 +325,18 @@
       data : param,
       datatype : 'json',
       error:function(request,status,error){
-        // alert('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
-        swal("ERROR!", request.responseText, "error");
+        console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
+        swal("ERROR!", '새로고침 후 다시 시도해주세요.', "error");
       },
       success:function(data){
-        swal("SUCCESS!", data, "success")
-        .then((value) => {
-          window.location.reload();
-        });
+        if(data.status){
+          swal("SUCCESS!", '메일등록 되었습니다.', "success")
+          .then((value) => {
+            window.location.reload();
+          });
+        }else{
+          swal("ERROR!", '새로고침 후 다시 시도해주세요.', "error");
+        }
       }
     });
 

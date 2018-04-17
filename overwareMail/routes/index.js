@@ -29,7 +29,7 @@ router.get('/', isAuthenticated, async function(req, res, next) {
 
 router.post('/7DayGraph',isAuthenticated, async function(req, res, next) {
   try{
-    console.log(req.user);
+    // console.log(req.user);
     var data = await period.get7DayGraph([req.user.user_idx]);
     res.send(data);
   }
