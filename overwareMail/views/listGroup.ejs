@@ -18,23 +18,9 @@
     </div>
     <div class="page-body">
       <div class="row" id="listTable">
-        <!-- <div class="col-md-12">
-          <div class="col-sm-3 input-group input-group-button input-group-inverse p-l-0 p-r-0 m-b-10 f-right">
-            <input id="keywordInput" type="text" class="form-control" placeholder="그룹명 검색">
-            <span class="input-group-addon" id="searchBtn">
-              <button class=" btn btn-inverse"><i class="fas fa-search" style="margin-right:0"></i></button>
-            </span>
-          </div>
-        </div> -->
         <div class="col-md-12">
           <div class="card">
             <div class="card-header">
-              <!-- <div class="col-sm-3 input-group input-group-button input-group-inverse p-l-0 p-r-0 f-right">
-                <input id="keywordInput" type="text" class="form-control" placeholder="그룹명 검색">
-                <span class="input-group-addon" id="searchBtn">
-                  <button class=" btn btn-inverse"><i class="fas fa-search" style="margin-right:0"></i></button>
-                </span>
-              </div> -->
               <div class="f-right col-sm-3 p-l-0 p-r-0 right-icon-control">
                 <input type="text" class="form-control form-control-inverse search-text" id="keywordInput" placeholder="그룹명 검색">
                 <div class="form-icon" id="searchBtn">
@@ -151,7 +137,7 @@
         </div>
       </div>
       <!-- Modal start-->
-      <div class="modal fade" id="group-Modal" role="dialog">
+      <div class="modal fade" id="group-Modal" data-backdrop="static" data-keyboard="false" role="dialog">
         <div class="modal-dialog modal-lg" role="document">
           <div class="modal-content">
             <div class="modal-header">
@@ -170,11 +156,11 @@
                           <input id="cntIdx_m" type="hidden" class="form-control" value="7029">
                           <tr>
                             <th class="b-r-1 text-left" width="30%">회사</th>
-                            <td id="company" class="text-left">쇼박스</td>
+                            <td id="company" class="text-left"></td>
                           </tr>
                           <tr>
                             <th class="b-r-1 text-left" width="30%">그룹명</th>
-                            <td id="group" class="text-left">곤지암 보도기자</td>
+                            <td id="group" class="text-left"></td>
                           </tr>
                         </tbody>
                       </table>
@@ -241,7 +227,7 @@
       </div>
       <!-- Modal end-->
       <!-- Modal start-->
-      <div class='modal fade' id='mail-Modal' role='dialog'>
+      <div class='modal fade' id='mail-Modal' data-backdrop="static" data-keyboard="false" role='dialog'>
         <div class='modal-dialog  modal-lg' role='document'>
           <div class='modal-content'>
             <div class='modal-header'>
@@ -278,7 +264,7 @@
                 </div>
                 <div class="card-block table-border-style">
                   <div class="table-responsive">
-                    <table class="table table-bordered">
+                    <table class="table">
                       <thead>
                         <tr>
                           <th width="1%">
@@ -315,11 +301,14 @@
   </div>
 </div>
 <style type="text/css">
-  #mail-Modal .table thead th{
-    vertical-align: top;
-  }
   #mail-Modal .border-checkbox-section .border-checkbox-group .border-checkbox-label{
     margin: 0;
+  }
+  .table td, .table th{
+    vertical-align: middle;
+  }
+  #mail-Modal .table thead th{
+    vertical-align: top;
   }
 </style>
 <!-- sweetalert -->
@@ -353,14 +342,18 @@
           },
           datatype : 'json',
           error:function(request,status,error){
-            alert('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
-            swal("ERROR!", request.responseText, "error");
+            console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
+            swal("ERROR!", '새로고침 후 다시 시도해주세요.', "error");
           },
           success:function(data){
-            swal("SUCCESS!", "["+tdEles.eq(1).text()+"]을 삭제되었습니다.", "success")
-            .then((value)=>{
-              reloadPage();
-            });
+            if(data.status){
+              swal("SUCCESS!", "["+tdEles.eq(1).text()+"]을 삭제되었습니다.", "success")
+              .then((value)=>{
+                reloadPage();
+              });
+            }else{
+              swal("ERROR!", '새로고침 후 다시 시도해주세요.', "error");
+            }
           }
         });
       }
@@ -393,16 +386,17 @@
             url: "/list/add/emailCheck",
             data: {email : $('#email').val(), name: $('#name').val()},
             error:function(request,status,error){
-              alert('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
-              swal("ERROR!", '다시 시도해주세요.', "error");
+              console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
+              swal("ERROR!", '새로고침 후 다시 시도해주세요.', "error");
             },
             success:function(data){
               if(data.msg == 'success'){
                 var list=[{title:$('#group').text(),idx:data.idx,email:$('#email').val()}];
                 addGroup(list);
-              }
-              else{
+              }else if(data.msg == 'fail'){
                 swal("ERROR!", '이메일이 없습니다.\n메일등록 후 진행해주세요.', "error");
+              }else{
+                swal("ERROR!", '새로고침 후 다시 시도해주세요.', "error");
               }
             }
           });
@@ -456,14 +450,16 @@
       data: param,
       error: function(request,status,error){
         console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
-        alert('새로고침해주세요~');
+        alert('새로 고침해주세요.');
       },
       success: function(data){
-        console.log(data);
-        // body
+        if(data.status != true){
+          alert('새로 고침해주세요.');
+          return false;
+        }
         $('#modal-cntList tbody').empty();
-        data.groupList.forEach(function(item,idx){
-          var numIdx = Math.ceil(data.groupListCount-(data.offset+idx)).toString();
+        data.list.groupList.forEach(function(item,idx){
+          var numIdx = Math.ceil(data.list.groupListCount-(data.list.offset+idx)).toString();
           var html = '<tr>\
             <th scope="row" class="centerTh">'+numIdx+'</th>\
             <td>\
@@ -479,16 +475,16 @@
         });
         // paging
         var limit = 6;
-        var pageCount = Math.ceil(data.groupListCount/limit);
+        var pageCount = Math.ceil(data.list.groupListCount/limit);
         $('#modal-cntList tfoot').empty();
         if(pageCount > 1) {
           var html = '<tr><td colspan="6"><ul class="pagination float-right">';
           var pageSize = 5;
-          var pRCnt = parseInt(data.currentPage / pageSize);
-          if(data.currentPage % pageSize == 0){
-            pRCnt = parseInt(data.currentPage / pageSize) - 1;
+          var pRCnt = parseInt(data.list.currentPage / pageSize);
+          if(data.list.currentPage % pageSize == 0){
+            pRCnt = parseInt(data.list.currentPage / pageSize) - 1;
           }
-          if(data.currentPage > 5) {
+          if(data.list.currentPage > 5) {
             html += '<li class="page-item"><a class="page-link" data-value="1" aria-label="Previous">\
                 <i class="ti-angle-double-left f-12"></i>\
                 <span aria-hidden="true"></span>\
@@ -502,7 +498,7 @@
           }
 
           for(var index=pRCnt * pageSize + 1;index<(pRCnt + 1)*pageSize + 1;index++){
-            var active = (data.currentPage == index) ? "active" : "";
+            var active = (data.list.currentPage == index) ? "active" : "";
             html += '<li class=\"'+active+' page-item">\
               <a class="page-link" data-value=\"'+index+'"\ >'+index+'</a></li>'
 
@@ -535,12 +531,9 @@
     var param = {
       page : 1,
     };
-    if(mailInput != ''){
-      param.search = $('#mailInput').val();
-      param.searchType = $("#selectSearchType option:selected").val();
-    }
     $('#group-Modal').modal('hide');
     ajaxGetMailPageList(param);
+    $('#mail-Modal input').val('');
     $('#mail-Modal').modal('show');
   });
   // 메일 검색 모달 전체선택시
@@ -558,7 +551,22 @@
       var trEle = $(ele).parents('tr');
       list.push({title:$('#group').text(),idx:trEle.find('#idx').val(),email:trEle.find('.edit').text()});
     });
-    addGroup(list);
+    if(list.length == 0){
+      swal("ERROR!", '추가할 이메일을 선택해주세요.', "error");
+      return false;
+    }
+    swal({
+      title: "그룹에 추가하시겠습니까?",
+      text: "선택된 이메일이 해당 그룹에 추가됩니다.",
+      icon: "warning",
+      buttons: ["취소", true],
+      dangerMode: true,
+    })
+    .then((value) => {
+      if (value != null) {
+        addGroup(list);
+      }
+    });
   });
   function addGroup(arr){
     $('input[type=checkbox]:checked').prop('checked',false);
@@ -567,19 +575,23 @@
       url: "/list/addGroup",
       data: {'list' : JSON.stringify(arr)},
       error:function(request,status,error){
-        // alert('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
-        swal("ERROR!", request.responseText, "error");
+        console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
+        swal("ERROR!", '새로고침 후 다시 시도해주세요.', "error");
       },
       success:function(data){
-        swal("SUCCESS!", data, "success")
-        .then((value)=>{
-          var param = {
-            page : 1,
-            group : $('#group').text()
-          };
-          ajaxGetPageGroupList(param);
-          reloadPage();
-        });
+        if(data.status){
+          swal("SUCCESS!", '그룹에 추가했습니다.', "success")
+          .then((value)=>{
+            var param = {
+              page : 1,
+              group : $('#group').text()
+            };
+            ajaxGetPageGroupList(param);
+            reloadPage();
+          });
+        }else{
+          swal("ERROR!", '새로고침 후 다시 시도해주세요.', "error");
+        }
       }
     });
   }
@@ -620,15 +632,19 @@
       data: param,
       error: function(request,status,error){
         console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
-        alert('새로고침해주세요~');
+        alert('새로 고침해주세요.');
       },
       success: function(data){
-        console.log(data);
+        if(data.status != true){
+          alert('새로 고침해주세요.');
+          return false;
+        }
         var limit = 20;
-        var pageCount = Math.ceil(data.mailListCount/limit);
+        var pageCount = Math.ceil(data.list.mailListCount/limit);
         $('#mail-Modal tbody').empty();
-        data.mailList.forEach(function(item,idx){
-          var numIdx = Math.ceil(data.mailListCount-(data.offset+idx)).toString();
+        $('#all').prop("checked",false);
+        data.list.mailList.forEach(function(item,idx){
+          var numIdx = Math.ceil(data.list.mailListCount-(data.list.offset+idx)).toString();
           var html = '<tr>\
             <input type="hidden" id="idx" value="'+item.n_idx+'" />\
             <td>\
@@ -651,11 +667,11 @@
         if(pageCount > 1) {
           var html = '<tr><td colspan="8"><ul class="pagination float-right">';
           var pageSize = 5;
-          var pRCnt = parseInt(data.currentPage / pageSize);
-          if(data.currentPage % pageSize == 0){
-            pRCnt = parseInt(data.currentPage / pageSize) - 1;
+          var pRCnt = parseInt(data.list.currentPage / pageSize);
+          if(data.list.currentPage % pageSize == 0){
+            pRCnt = parseInt(data.list.currentPage / pageSize) - 1;
           }
-          if(data.currentPage > 5) {
+          if(data.list.currentPage > 5) {
             html += '<li class="page-item"><a class="page-link" data-value="1" aria-label="Previous">\
                 <i class="ti-angle-double-left f-12"></i>\
                 <span aria-hidden="true"></span>\
@@ -669,7 +685,7 @@
           }
 
           for(var index=pRCnt * pageSize + 1;index<(pRCnt + 1)*pageSize + 1;index++){
-            var active = (data.currentPage == index) ? "active" : "";
+            var active = (data.list.currentPage == index) ? "active" : "";
             html += '<li class=\"'+active+' page-item">\
               <a class="page-link" data-value=\"'+index+'"\ >'+index+'</a></li>'
 
@@ -722,19 +738,24 @@
           },
           datatype : 'json',
           error:function(request,status,error){
-            // alert('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
-            swal("ERROR!", request.responseText, "error");
+            console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
+            swal("ERROR!", '새로고침 후 다시 시도해주세요.', "error");
           },
           success:function(data){
-            swal("SUCCESS!", data, "success")
-            .then((value)=>{
-              var param = {
-                page : 1,
-                group : $('#group').text()
-              };
-              ajaxGetPageGroupList(param);
-              reloadPage();
-            });
+            console.log(data);
+            if(data.status){
+              swal("SUCCESS!", '그룹에서 삭제 완료되었습니다.', "success")
+              .then((value)=>{
+                var param = {
+                  page : 1,
+                  group : $('#group').text()
+                };
+                ajaxGetPageGroupList(param);
+                reloadPage();
+              });
+            }else{
+              swal("ERROR!", '새로고침 후 다시 시도해주세요.', "error");
+            }
           }
         });
       }
@@ -750,6 +771,9 @@
   });
   function phoneFomatter(num,type){
     var formatNum = '';
+    if(num == null){
+      return '';
+    }
     if(num.length==11){
       if(type==0){
         formatNum = num.replace(/(\d{3})(\d{4})(\d{4})/, '$1-****-$3');
@@ -800,23 +824,26 @@
         alert('새로고침해주세요~');
       },
       success: function(data){
-        console.log(data);
+        if(data.status != true){
+          alert('새로 고침해주세요.');
+          return false;
+        }
         if(data.currentPage != ''){
           if(typeof(history.pushState) == 'function'){
             //현재 주소를 가져온다.
             var renewURL = location.href;
             //현재 주소 중 page 부분이 있다면 새로 부여될 페이지 번호를 할당한다.
-            renewURL = renewURL.replace(/\?page=([0-9]+)/ig,'?page='+data.currentPage);
+            renewURL = renewURL.replace(/\?page=([0-9]+)/ig,'?page='+data.list.currentPage);
             if(renewURL.indexOf("?page=") == -1){
-              renewURL += '?page='+data.currentPage;
+              renewURL += '?page='+data.list.currentPage;
             }
             //페이지 갱신 실행!
             history.pushState(null, null,renewURL);
           }
         }
         $('#listTable tbody').empty();
-        data.groupList.forEach(function(item,idx){
-          var numIdx = Math.ceil(data.groupListCount-(data.offset+idx)).toString();
+        data.list.groupList.forEach(function(item,idx){
+          var numIdx = Math.ceil(data.list.groupListCount-(data.list.offset+idx)).toString();
           var html = '<tr>\
             <th>'+numIdx+'</th>\
             <td>'+item.user_name+'</td>\
@@ -836,15 +863,15 @@
         });
         $('#listTable tfoot').empty();
         var limit = 20;
-        var pageCount = Math.ceil(data.groupListCount/limit);
+        var pageCount = Math.ceil(data.list.groupListCount/limit);
         if(pageCount > 1) {
           var html = '<tr><td colspan="6"><ul class="pagination float-right">';
           var pageSize = 5;
-          var pRCnt = parseInt(data.currentPage / pageSize);
-          if(data.currentPage % pageSize == 0){
-            pRCnt = parseInt(data.currentPage / pageSize) - 1;
+          var pRCnt = parseInt(data.list.currentPage / pageSize);
+          if(data.list.currentPage % pageSize == 0){
+            pRCnt = parseInt(data.list.currentPage / pageSize) - 1;
           }
-          if(data.currentPage > 5) {
+          if(data.list.currentPage > 5) {
             html += '<li class="page-item"><a class="page-link" data-value="1" aria-label="Previous">\
                 <i class="ti-angle-double-left f-12"></i>\
                 <span aria-hidden="true"></span>\

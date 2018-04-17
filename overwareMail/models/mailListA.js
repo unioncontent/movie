@@ -17,9 +17,8 @@ var mailListAll = {
     return await getResult(sql,pValue);
   },
   deleteFun: async function(param){
-    var pValue = Object.values(param);
     var sql = 'delete from m_mail_list_all where n_idx=?;';
-    return await getResult(sql,pValue);
+    return await getResult(sql,param);
   },
   getOneEmail : async function(param){
     var sql = 'select M_email from m_mail_list_all ';
@@ -98,9 +97,9 @@ var mailListAll = {
       return count[0]['total'];
     }
   },
-  emailCheck: async function(param){
-    var sql = 'select * from m_mail_list_all where M_email=? ';
-    if(param.length == 3){
+  emailCheck: async function(email,param){
+    var sql = 'select * from m_mail_list_all where M_email like \'%'+email+'%\' ';
+    if(param.length == 2){
       sql += ' and M_name=? ';
     }
     sql += ' and M_ID= ?;';
@@ -113,7 +112,6 @@ function insertSqlSetting(table,keys){
   columns = keys.join(', ');
   placeholders = arr.join(', ');
   var sql = "INSERT INTO "+table+" ( "+columns+" ) VALUES ( "+placeholders+" );";
-
   return sql;
 }
 

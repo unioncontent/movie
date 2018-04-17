@@ -6,8 +6,12 @@ const DBpromise = require('../db/db_info.js');
 */
 
 var user = {
-  checkId: async function(param,callback) {
+  checkId: async function(param) {
     var sql = 'select * from user_data where user_ID=?';
+    return await getResult(sql,param);
+  },
+  deleteReporter: async function(email,param){
+    var sql = 'delete from reporter_data where reporter_email like \'%'+email+'%\' and reporter_name=?';
     return await getResult(sql,param);
   },
   getNextReporterID: async function(){
@@ -19,20 +23,18 @@ var user = {
     var sql = 'select * from reporter_data where reporter_email=? and reporter_name=? and reporter_media_name=?';
     return await getResult(sql,param);
   },
-  selectReporter: async function(param){
+  selectReporter: async function(search,param){
     var sql = 'select distinct(reporter_media_name) from reporter_data ';
-    if(param.length == 3){
-      param[0] = '%'+param[0]+'%';
-      sql += ' where reporter_media_name like ? ';
+    if(search != ''){
+      sql += ' where reporter_media_name like \'%'+search+'%\' ';
     }
     sql += ' order by reporter_media_name limit ?,?;';
     return await getResult(sql,param);
   },
-  selectReporterCount: async function(param){
+  selectReporterCount: async function(search,param){
     var sql = 'select count(*) as total from (select distinct(reporter_media_name) from reporter_data ';
-    if(param.length == 3){
-      param[0] = '%'+param[0]+'%';
-      sql += ' where reporter_media_name like ? ';
+    if(search != ''){
+      sql += ' where reporter_media_name like \'%'+search+'%\' ';
     }
     sql += ' ) a;';
     return await getResult(sql,param);
@@ -41,8 +43,8 @@ var user = {
 
 async function getResult(sql,param) {
   var db = new DBpromise();
-  console.log(sql,param);
   try{
+    console.log(sql,param);
     return await db.query(sql,param);
   } catch(e){
     console.log('DB Error:',e);

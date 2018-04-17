@@ -41,7 +41,7 @@
                 </div>
               </div>
               <select id="selectSearchType" name="select" class="col-12 col-md-1  form-control form-control-inverse f-right search-select">
-                <option value="c">회사</option>
+                <option value="c">언론사</option>
                 <option value="e">이메일</option>
                 <option value="n">이름</option>
               </select>
@@ -69,8 +69,8 @@
                       <th width="5%">NO</th>
                       <th width="10%">회사</th>
                       <th width="25%">이메일</th>
-                      <th width="10%">언론사(회사명)</th>
-                      <th width="5%">이름(기자명)</th>
+                      <th width="10%">언론사(회사)</th>
+                      <th width="5%">이름(기자)</th>
                       <th width="10%">연락처</th>
                       <th width="15%">등록일</th>
                     </tr>
@@ -203,7 +203,6 @@
         <div class="col-md-12">
           <button class="btn btn-inverse btn-cGroup m-b-50" style="float: right;"><i class="fas fa-plus"></i>그룹등록</button>
         </div>
-        <!-- <button class="btn btn-inverse btn-cGroup" style="float: right;"><i class="fas fa-plus"></i>그룹등록</button> -->
       </div>
       <!-- Modal start-->
       <div class='modal fade' id='edit-Modal' role='dialog'>
@@ -266,8 +265,8 @@
               </div>
             </div>
             <div class="modal-footer">
-              <button class="btn btn-primary mobtn btn-update" data-dismiss='modal' type="button">수정</button>
-              <button class="btn btn-danger mobtn btn-delete" data-dismiss='modal' type="button">삭제</button>
+              <button class="btn btn-primary mobtn btn-update" type="button">수정</button>
+              <button class="btn btn-danger mobtn btn-delete" type="button">삭제</button>
               <button class="btn btn-secondary mobtn" data-dismiss='modal' aria-label='Close' type="button">취소</button>
             </div>
           </div>
@@ -283,6 +282,9 @@
   }
   .edit:hover{
     font-weight: bold;
+  }
+  .border-checkbox-section .border-checkbox-group .border-checkbox-label{
+    margin: 0px;
   }
 </style>
 <!-- alert -->
@@ -318,18 +320,18 @@
       closeOnClickOutside: false
     }).then((value) => {
       console.log(value);
-      if(value == ""){
+      if(value === ""){
         swal("ERROR!", '그룹이름을 적어주세요.', "error");
         return false;
       }
-      else{
+      else if(value != null){
         $.ajax({
           type: "POST",
           url: "/list/groupTitleCheck",
           dataType: "text",
           data: {title : value},
           error: function(req,status,error){
-            swal("ERROR!", req.status+"\n"+error, "error");
+            swal("ERROR!", '새로고침 후 다시 시도해주세요.', "error");
           },
           success: function(data){
             console.log(data);
@@ -343,6 +345,9 @@
               });
               addGroup(list);
             }
+            else{
+              swal("ERROR!", '새로고침 후 다시 시도해주세요.', "error");
+            }
           }
         });
       }
@@ -355,11 +360,15 @@
       url: "/list/addGroup",
       data: {'list' : JSON.stringify(arr)},
       error:function(request,status,error){
-        // alert('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
-        swal("ERROR!", request.responseText, "error");
+        console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
+        swal("ERROR!", '새로고침 후 다시 시도해주세요.', "error");
       },
       success:function(data){
-        swal("SUCCESS!", data, "success");
+        if(data.status){
+          swal("SUCCESS!", '그룹등록 완료했습니다.', "success");
+        }else{
+          swal("ERROR!", '새로고침 후 다시 시도해주세요.', "error");
+        }
       }
     });
   }
@@ -378,6 +387,11 @@
     var name = tdEles.eq(4).text();
     var tel = tdEles.eq(5).text().replace(/[-]/g,'');
 
+    // 초기화
+    $('span.messages p').text('');
+    $('span.messages').removeClass("form-control-danger");
+    $('span.messages').hide();
+
     $('#user').text(user);
     $('#email').val(email);
     $('#media').text(media);
@@ -393,48 +407,39 @@
   });
   // 모달 수정버튼 클릭시
   $('.btn-update').on('click',function(){
-    swal({
-      title: "수정 하시겠습니까?",
-      icon: "warning",
-      buttons: ["취소", true],
-      dangerMode: true,
-    })
-    .then((value) => {
-      if (value != null) {
-        var check=true;
-        if($("#name").val() != $("#o_name").val() && $("#name").val() == ""){
-          check = requiredMessage("name","이름을 입력해주세요.");
-        }
-        if($("#email").val() != $("#o_email").val() && $("#email").val() == ""){
-          check = requiredMessage("email","이메일를 입력해주세요.");
-        }
-        if($("#email").val() != $("#o_email").val() && $("#email").val() != "" && $("#emailCheck").val() == ""){
-          check = requiredMessage("email","이메일를 중복확인 해주세요.");
-        }
-        if(check){
-          if($("#name").val() == $("#o_name").val() && $("#tel").val() == $("#o_tel").val() && $("#email").val() == $("#o_email").val()){
-            swal("ERROR!", "변경사항이 없습니다.", "error")
-            .then((value)=>{
-              $('#edit-Modal').modal('show');
-            });
-            return false;
-          }
+    var check=true;
+    if($("#name").val() != $("#o_name").val() && $("#name").val() == ""){
+      check = requiredMessage("name","이름을 입력해주세요.");
+    }
+    if($("#email").val() != $("#o_email").val() && $("#email").val() == ""){
+      check = requiredMessage("email","이메일를 입력해주세요.");
+    }
+    if($("#email").val() != $("#o_email").val() && $("#email").val() != "" && $("#emailCheck").val() == ""){
+      check = requiredMessage("email","이메일를 중복확인 해주세요.");
+    }
+    if($("#name").val() == $("#o_name").val() && $("#tel").val() == $("#o_tel").val() && $("#email").val() == $("#o_email").val()){
+      swal("ERROR!", "변경사항이 없습니다.", "error");
+      return false;
+    }
+    if(check){
+      swal({
+        title: "수정 하시겠습니까?",
+        icon: "warning",
+        buttons: ["취소", true],
+        dangerMode: true,
+      })
+      .then((value) => {
+        if (value != null) {
           var param = {
             'M_name': $('#name').val(),
             'M_email': $('#email').val(),
-            'M_tel':$('#tel').val().replace(/[-]/g,''),
+            'M_tel':$('#tel').val().replace(/[-]/g,'').replace(/[^0-9]/gi,""),
             'n_idx':$('#n_idx').val()
           };
           updateMail(param);
         }
-        else{
-          $('#edit-Modal').modal('show');
-        }
-      }
-      else{
-        $('#edit-Modal').modal('show');
-      }
-    });
+      });
+    }
   });
   // update ajax
   function updateMail(param){
@@ -444,8 +449,8 @@
       data : param,
       datatype : 'json',
       error:function(request,status,error){
-        // alert('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
-        swal("ERROR!", request.responseText, "error")
+        console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
+        swal("ERROR!", '새로고침 후 다시 시도해주세요.', "error")
         .then((value)=>{
           $('#email').val($('#o_email').val());
           $('#name').val($('#o_name').val());
@@ -453,10 +458,14 @@
         });
       },
       success:function(data){
-        swal("SUCCESS!", data, "success")
-        .then((value) => {
-          reloadPage();
-        });
+        if(data.status){
+          swal("SUCCESS!", '메일 업데이트 되었습니다.', "success")
+          .then((value) => {
+            reloadPage();
+          });
+        }else{
+          swal("ERROR!", '새로고침 후 다시 시도해주세요.', "error");
+        }
       }
     });
   }
@@ -474,12 +483,14 @@
           url: '/list/delete',
           type: 'post',
           data : {
-            idx:$('#n_idx').val()
+            idx: $('#n_idx').val(),
+            email: $('#o_email').val(),
+            name: $('#o_name').val()
           },
           datatype : 'json',
           error:function(request,status,error){
-            // alert('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
-            swal("ERROR!", request.responseText, "error")
+            console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
+            swal("ERROR!", '새로고침 후 다시 시도해주세요.', "error")
             .then((value)=>{
               $('#email').val($('#o_email').val());
               $('#name').val($('#o_name').val());
@@ -487,10 +498,15 @@
             });
           },
           success:function(data){
-            swal("SUCCESS!", data, "success")
-            .then((value)=>{
-              reloadPage();
-            });
+            if(data.status){
+              swal("SUCCESS!", '메일 삭제 되었습니다.', "success")
+              .then((value)=>{
+                reloadPage();
+                $('#edit-Modal').modal('hide');
+              });
+            }else{
+              swal("ERROR!", '새로고침 후 다시 시도해주세요.', "error");
+            }
           }
         });
       }
@@ -498,13 +514,15 @@
   });
   // input 선택시 경고문 없앰
   $('.modal input').on('focus',function(){
+    $(this).parents('.edit-td').find('.error').text('');
     $(this).parents('.edit-td').find('.messages').hide();
+    $(this).removeClass("form-control-danger");
   });
   // input box 경고문
   function requiredMessage(target,msg){
     $("#"+target).parents('.edit-td').find('.messages').show();
     $("#"+target).parents('.edit-td').find('.error').text(msg);
-    // $("#"+target).addClass("form-control-danger");
+    $("#"+target).addClass("form-control-danger");
     return false;
   }
   // 중복 체크
@@ -523,9 +541,10 @@
       closeOnEsc: false
     })
     .then((value) => {
-      value = $('.swal-content__input').val();
-      var regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+      console.log('이메일 중복 체크:',value);
       if (value != null) {
+        var regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+        value = $('.swal-content__input').val();
         if (value.match(regExp) == null) {
           swal("ERROR!", "이메일을 다시 입력해주세요.", "error");
           return false;
@@ -536,7 +555,8 @@
           dataType: "text",
           data: {email : value},
           error: function(req,status,error){
-            swal("ERROR!", req.status+"\n"+error, "error");
+            console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
+            swal("ERROR!", '새로고침 후 다시 시도해주세요.', "error");
           },
           success: function(data){
             console.log(data);
@@ -552,6 +572,8 @@
               $("#emailCheck").val("true");
               $('#email').removeClass("form-control-danger");
               $('#email').siblings().children("p").text("");
+            }else{
+              swal("ERROR!", '새로고침 후 다시 시도해주세요.', "error");
             }
           }
         });
@@ -593,23 +615,27 @@
       data: param,
       error: function(request,status,error){
         console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
-        alert('새로고침해주세요~');
+        alert('새로 고침해주세요.');
       },
       success: function(data){
-        if(typeof(history.pushState) == 'function'){
+        if(data.status != true){
+          alert('새로 고침해주세요.');
+          return false;
+        }
+        if(typeof history.pushState == 'function'){
           //현재 주소를 가져온다.
           var renewURL = location.href;
           //현재 주소 중 page 부분이 있다면 새로 부여될 페이지 번호를 할당한다.
-          renewURL = renewURL.replace(/\?page=([0-9]+)/ig,'?page='+data.currentPage);
+          renewURL = renewURL.replace(/\?page=([0-9]+)/ig,'?page='+data.list.currentPage);
           if(renewURL.indexOf("?page=") == -1){
-            renewURL += '?page='+data.currentPage;
+            renewURL += '?page='+data.list.currentPage;
           }
           //페이지 갱신 실행!
           history.pushState(null, null,renewURL);
         }
         $('#listTable tbody').empty();
-        data.mailList.forEach(function(item,idx){
-          var numIdx = Math.ceil(data.mailListCount-(data.offset+idx)).toString();
+        data.list.mailList.forEach(function(item,idx){
+          var numIdx = Math.ceil(data.list.mailListCount-(data.list.offset+idx)).toString();
           var html = '<tr>\
             <input type="hidden" id="idx" value="'+item.n_idx+'" />\
             <td>\
@@ -631,16 +657,16 @@
           $('#listTable tbody').append(html);
         });
         var limit = 20;
-        var pageCount = Math.ceil(data.mailListCount/limit);
+        var pageCount = Math.ceil(data.list.mailListCount/limit);
         $('#listTable tfoot').empty();
         if(pageCount > 1) {
           var html = '<tr><td colspan="8"><ul class="pagination float-right">';
           var pageSize = 5;
-          var pRCnt = parseInt(data.currentPage / pageSize);
-          if(data.currentPage % pageSize == 0){
-            pRCnt = parseInt(data.currentPage / pageSize) - 1;
+          var pRCnt = parseInt(data.list.currentPage / pageSize);
+          if(data.list.currentPage % pageSize == 0){
+            pRCnt = parseInt(data.list.currentPage / pageSize) - 1;
           }
-          if(data.currentPage > 5) {
+          if(data.list.currentPage > 5) {
             html += '<li class="page-item"><a class="page-link" data-value="1" aria-label="Previous">\
                 <i class="ti-angle-double-left f-12"></i>\
                 <span aria-hidden="true"></span>\
@@ -654,7 +680,7 @@
           }
 
           for(var index=pRCnt * pageSize + 1;index<(pRCnt + 1)*pageSize + 1;index++){
-            var active = (data.currentPage == index) ? "active" : "";
+            var active = (data.list.currentPage == index) ? "active" : "";
             html += '<li class=\"'+active+' page-item">\
               <a class="page-link" data-value=\"'+index+'"\ >'+index+'</a></li>'
 
@@ -685,7 +711,7 @@
   function reloadPage(){
     var href = new URL(window.location.href);
     var param = {
-      page : href.searchParams.get("page")
+      page : href.searchParams.get("page") || 1
     };
     if(href.searchParams.get("searchType") != '' && href.searchParams.get("searchType") != null){
       param.searchType = href.searchParams.get("searchType");
@@ -697,6 +723,9 @@
   }
   function phoneFomatter(num,type){
     var formatNum = '';
+    if(num == null){
+      return '';
+    }
     if(num.length==11){
       if(type==0){
         formatNum = num.replace(/(\d{3})(\d{4})(\d{4})/, '$1-****-$3');

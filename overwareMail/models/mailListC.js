@@ -15,10 +15,13 @@ var mailListC = {
     var pValue = Object.values(param);
     var sql = 'delete from m_mail_list_c where';
     if('title' in param){
-      sql += ' M_group_title=?'
+      sql += ' M_group_title=?';
     }
     else if('idx' in param){
-      sql += ' n_idx=?'
+      sql += ' n_idx=?';
+    }
+    else if('M_idx_a' in param){
+      sql += ' M_idx_a=?';
     }
     sql += 'and M_id=?;'
     return await getResult(sql,pValue);
@@ -59,12 +62,10 @@ var mailListC = {
   },
   titleCheck: async function(param){
     var sql = 'select * from m_mail_list_c where M_group_title=? and M_id=?;';
-    console.log(sql,param);
     return await getResult(sql,param);
   },
-  titleEmailCheck: async function(param){
-    var sql = 'select * from m_mail_list_c where M_group_title=? and M_id=? and M_email=?;';
-    console.log(sql,param);
+  titleEmailCheck: async function(email,param){
+    var sql = 'select * from m_mail_list_c where M_group_title=? and M_id=? and M_email like \'%'+email+'%\';';
     return await getResult(sql,param);
   },
   getOneInfo : async function(m_idx){

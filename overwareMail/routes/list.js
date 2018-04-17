@@ -53,20 +53,22 @@ async function getListPageData(idx,param){
 router.post('/update',isAuthenticated,async function(req, res) {
   try{
     var updateMail = await mailListA.update(req.body);
-    res.send('메일 업데이트 되었습니다.');
+    res.send({status:true});
   }
   catch(e){
-    res.send('다시 시도해주세요.');
+    res.status(500).send(e);
   }
 });
 
 router.post('/delete',isAuthenticated,async function(req, res) {
   try{
-    var deleteMail = await mailListA.deleteFun(req.body);
-    res.send('메일 삭제 되었습니다.');
+    await mailListA.deleteFun(req.body.idx);
+    await mailListC.deleteFun({M_idx_a:req.body.idx,M_id:req.user.user_idx});
+    await user.deleteReporter(req.body.email,req.body.name);
+    res.send({status:true});
   }
   catch(e){
-    res.send('다시 시도해주세요.');
+    res.status(500).send(e);
   }
 });
 
@@ -74,7 +76,6 @@ router.post('/addGroup',isAuthenticated,async function(req, res) {
   try{
     var list = JSON.parse(req.body.list);
     await asyncForEach(list, async (item, index, array) => {
-      console.log(item);
       var param = {
         M_id:req.user.user_idx,
         M_group_title:item.title,
@@ -82,7 +83,7 @@ router.post('/addGroup',isAuthenticated,async function(req, res) {
         M_email:item.email
       };
       try{
-        var result = await mailListC.titleEmailCheck([param.M_group_title,param.M_id,param.M_email]);
+        var result = await mailListC.titleEmailCheck(param.M_email,[param.M_group_title,param.M_id]);
         if(result.length == 0){
           await mailListC.insert(param);
         }
@@ -91,10 +92,10 @@ router.post('/addGroup',isAuthenticated,async function(req, res) {
         console.log(err);
       }
     });
-    res.send('그룹등록 되었습니다.');
+    res.send({status:true});
   }
   catch(e){
-    res.send('다시 시도해주세요.');
+    res.status(500).send(e);
   }
 });
 
@@ -104,17 +105,18 @@ router.post('/groupTitleCheck',isAuthenticated,async function(req,res){
     res.send((titleCheck.length == 0)?'success':'fail');
   }
   catch(e){
-    console.log('err:',e);
-    res.send('fail');
+    res.status(500).send(e);
   }
 });
 
-router.post('/getNextPage',isAuthenticated,async function(req, res, next) {
-  // if (!req.user) {
-  //   return res.redirect('/login');
-  // }
-  var data = await getListPageData(req.user.user_idx,req.body);
-  res.send(data);
+router.post('/getNextPage',isAuthenticated,async function(req, res) {
+  try{
+    var data = await getListPageData(req.user.user_idx,req.body);
+    res.send({status:true,list:data});
+  }
+  catch(e){
+    res.status(500).send(e);
+  }
 });
 
 async function asyncForEach(array, callback) {
@@ -135,21 +137,31 @@ router.post('/group/delete',isAuthenticated,async function(req, res) {
   try{
     req.body['M_id'] = req.user.user_idx;
     var deleteMail = await mailListC.deleteFun(req.body);
-    res.send('그룹에서 삭제되었습니다.');
+    res.send({status:true});
   }
   catch(e){
-    res.send('다시 시도해주세요.');
+    res.status(500).send(e);
   }
 });
 
-router.post('/getNextGroupModalPage',isAuthenticated,async function(req, res, next) {
-  var data = await getGroupListPageData(req.user.user_idx,req.body,'group');
-  res.send(data);
+router.post('/getNextGroupModalPage',isAuthenticated,async function(req, res) {
+  try{
+    var data = await getGroupListPageData(req.user.user_idx,req.body,'group');
+    res.send({status:true,list:data});
+  }
+  catch(e){
+    res.status(500).send(e);
+  }
 });
 
-router.post('/getNextGroupPage',isAuthenticated,async function(req, res, next) {
-  var data = await getGroupListPageData(req.user.user_idx,req.body,'list');
-  res.send(data);
+router.post('/getNextGroupPage',isAuthenticated,async function(req, res) {
+  try{
+    var data = await getGroupListPageData(req.user.user_idx,req.body,'list');
+    res.send({status:true,list:data});
+  }
+  catch(e){
+    res.status(500).send(e);
+  }
 });
 
 async function getGroupListPageData(idx,param,type){
@@ -196,7 +208,7 @@ async function getGroupListPageData(idx,param,type){
   return data;
 }
 
-router.get('/add',isAuthenticated,function(req, res) {
+router.get('/add',isAuthenticated,function(req, res, next) {
   res.render('listAdd');
 });
 
@@ -234,51 +246,50 @@ router.post('/add',isAuthenticated,async function(req, res) {
 
       await mailListA.insert("reporter_data",reporterParam);
     }
-    res.send('메일등록 되었습니다.');
+    res.send({status:true});
   }
   catch(e){
-    console.log(e);
-    res.status(500).send('다시 시도해주세요.');
+    res.status(500).send(e);
   }
 
 });
 
-router.post('/add/search',isAuthenticated,async function(req,res){
+router.post('/add/search',isAuthenticated,async function(req, res){
   var userParam = [0,10];
+  var search = '';
   if (typeof req.body.start !== 'undefined') {
     userParam[0] = parseInt(req.body.start);
   }
   if (typeof req.body.search !== 'undefined') {
-    userParam.unshift(req.body.search);
+    search = req.body.search;
   }
   try{
-    var userList = await user.selectReporter(userParam);
-    var userListCount = await user.selectReporterCount(userParam);
-    res.send({list:userList,count:userListCount[0]});
+    var userList = await user.selectReporter(search,userParam);
+    var userListCount = await user.selectReporterCount(search,userParam);
+    res.send({list:userList,count:userListCount[0],status: true});
   }
   catch(e){
-    console.log(e);
-    res.send({list:[],count:{total:0}});
+    res.status(500).send(e);
   }
 });
 
-router.post('/add/emailCheck',isAuthenticated,async function(req,res){
-  var emailParam = [req.body.email,req.user.user_idx];
+router.post('/add/emailCheck',isAuthenticated,async function(req, res){
+  var emailParam = [req.user.user_idx];
   if('name' in req.body){
-    emailParam = [req.body.email,req.body.name,req.user.user_idx];
+    emailParam = [req.body.name,req.user.user_idx];
   }
 
   try{
-    var emailCheck = await mailListA.emailCheck(emailParam);
-    var result = (emailCheck.length == 0) ? 'success':'fail';
-    if(emailParam.length == 3){
+    var emailCheck = await mailListA.emailCheck(req.body.email,emailParam);
+    var result = {msg: (emailCheck.length == 0) ? 'success':'fail'};
+
+    if(emailParam.length == 2){
       result = (emailCheck.length == 0) ? {msg:'fail'} : {msg:'success',idx:emailCheck[0].n_idx};
     }
     res.send(result);
   }
   catch(e){
-    console.log('err:',e);
-    res.send({msg:'fail'});
+    res.status(500).send(e);
   }
 });
 
