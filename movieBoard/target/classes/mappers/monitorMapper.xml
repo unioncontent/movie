@@ -255,10 +255,10 @@
 			order by createDate desc 
 			limit 1;
 		</if>
-		<if test="_parameter == 'bobaedream'.toString()">
+		<if test="_parameter == 'bobae_freeb'.toString()">
 			select *
 			from community_data
-			where community_name='bobaedream' and createDate >=  date_format(now(), '%x-%m-%d')
+			where community_name='bobae_freeb' and createDate >=  date_format(now(), '%x-%m-%d')
 			order by createDate desc 
 			limit 1;
 		</if>
@@ -395,10 +395,10 @@
 			order by createDate desc 
 			limit 1;
 		</if>
-		<if test="_parameter == 'ppomppu'.toString()">
+		<if test="_parameter == 'slrclub'.toString()">
 			select *
 			from community_data
-			where community_name='ppomppu' and createDate >=  date_format(now(), '%x-%m-%d')
+			where community_name='slrclub' and createDate >=  date_format(now(), '%x-%m-%d')
 			order by createDate desc 
 			limit 1;
 		</if>

@@ -138,7 +138,7 @@ public class ManageController {
 		model.addAttribute("communityList2", monitorService.communityMonitor("todayhumor"));
 		model.addAttribute("communityList3", monitorService.communityMonitor("bestiz"));
 		model.addAttribute("communityList4", monitorService.communityMonitor("bobae"));
-		model.addAttribute("communityList5", monitorService.communityMonitor("bobaedream"));
+		model.addAttribute("communityList5", monitorService.communityMonitor("bobae_freeb"));
 		model.addAttribute("communityList6", monitorService.communityMonitor("clien"));
 		model.addAttribute("communityList7", monitorService.communityMonitor("dcinside"));
 		model.addAttribute("communityList8", monitorService.communityMonitor("dogdrip"));
@@ -153,7 +153,7 @@ public class ManageController {
 		model.addAttribute("communityList17", monitorService.communityMonitor("inven"));
 		model.addAttribute("communityList18", monitorService.communityMonitor("issuein"));
 		model.addAttribute("communityList19", monitorService.communityMonitor("mlbpark"));
-		model.addAttribute("communityList20", monitorService.communityMonitor("ppomppu"));
+		model.addAttribute("communityList20", monitorService.communityMonitor("slrclub"));
 		model.addAttribute("communityList21", monitorService.communityMonitor("ruliweb"));
 		model.addAttribute("communityList22", monitorService.communityMonitor("soccerline"));
 		model.addAttribute("communityList23", monitorService.communityMonitor("square"));
