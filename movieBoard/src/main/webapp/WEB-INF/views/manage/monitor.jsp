@@ -1036,7 +1036,7 @@
                                         <div class="radio radiofill radio-success  radio-inline">
                                             <c:if test="${communityList.checkCondition == true}">
                                             <label>
-                                                <input type="radio" name="radio30" checked="checked">
+                                                <input type="radio" name="radio31" checked="checked">
                                                 <i class="helper"></i>정상
                                             </label>
                                             </c:if>
