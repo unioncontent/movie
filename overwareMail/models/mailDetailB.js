@@ -11,9 +11,8 @@ var mailDetailB = {
     return await getResult(sql,pValue);
   },
   updateResult:async function(param){
-    var pValue = Object.values(param);
     var sql = 'update m_mail_detail_b set M_result=? where M_idx_A=?';
-    return await getResult(sql,pValue);
+    return await getResult(sql,param);
   },
   getMediaNReporterCount:async function(column,param){
     var sql = 'select count(DISTINCT '+column+') as c from m_mail_detail_b where M_idx_A=?';

@@ -14,12 +14,24 @@ var mailType = require('../models/mailType.js');
 
 
 var isAuthenticated = function (req, res, next) {
-  if (req.isAuthenticated())
+  var url = req.originalUrl;
+  if (req.isAuthenticated()){
     return next();
+  }
+  else if(req.method == "GET" && ( url.indexOf('searchAll') != -1 || url.indexOf('searchGroup') != -1)){
+    req.query.session=false;
+    return next();
+  }
+  else if(req.method == "POST"){
+    return res.send({status:'sessionTimeOut'});
+  }
   res.redirect('/login');
 };
 
 router.get('/',isAuthenticated, async function(req, res) {
+  var euckr2utf8 = new Iconv('EUC-KR', 'UTF-8');
+  var utf82euckr = new Iconv('UTF-8', 'EUC-KR');
+  
   var data = {
     keywordList : await keyword.selectMovieKwd(),
     typeList : await mailType.selectTable([req.user.user_idx]),
@@ -75,10 +87,13 @@ router.post('/getModalListPage',isAuthenticated, async function(req, res) {
     data['email'] = await mailListA.selectView(req.body,emailParam);
     data['emailTotal'] = await mailListA.selectViewCount(req.body,emailParam);
   }
-  res.send(data);
+  res.send({status:true,result:data});
 });
 
 router.get('/searchGroup',isAuthenticated, async function(req, res) {
+  if(req.query.session == false){
+    return res.send({status:false});
+  }
   var param = [req.user.user_idx,0,10];
   if (typeof req.query.page !== 'undefined') {
     param[1] = (req.query.page - 1) * param[2];
@@ -88,10 +103,13 @@ router.get('/searchGroup',isAuthenticated, async function(req, res) {
     items : await mailListC.selectView(req.query,param),
     total_count :  await mailListC.selectViewCount(req.query,param)
   };
-  res.send(data);
+  res.send({status:true,result:data});
 });
 
 router.get('/searchAll',isAuthenticated, async function(req, res) {
+  if(req.query.session == false){
+    return res.send({status:false});
+  }
   var param = [req.user.user_idx,0,10];
   if (typeof req.query.page !== 'undefined') {
     param[1] = (req.query.page - 1) * param[2];
@@ -101,7 +119,7 @@ router.get('/searchAll',isAuthenticated, async function(req, res) {
     items : await mailListA.selectView(req.query,param),
     total_count :  await mailListA.selectViewCount(req.query,param)
   };
-  res.send(data);
+  res.send({status:true,result:data});
 });
 
 /* 메일나라 'https://directsend.co.kr/index.php/api/v2/mail'
@@ -160,16 +178,9 @@ router.get('/send/result',isAuthenticated, async function(req, res) {
   console.log('/send/result값');
   console.log('http://domain?type=[click | open | reject]&mail_id=[MailID]&email=[Email]')
   console.log(req.query);
-  var param = {
-    M_result:(req.query.type!='reject')? 0 : 9,
-    M_idx_A:req.query.mail_id
-  };
-  try{
-    await mailDetailB.updateResult(param);
+  if(req.query.type!='reject'){
+    await mailDetailB.updateResult([0,req.query.mail_id]);
     res.send('true');
-  }
-  catch(err){
-    console.log(err);
   }
 });
 
@@ -208,7 +219,7 @@ router.post('/send',isAuthenticated, async function(req, res) {
     'file_name': urlencode(new Buffer(utf82euckr.convert(req.body.M_fileName)).toString('base64'))
   };
   console.log('mail send param: ',param);
-  // 'file_url': urlencode('http://192.168.0.22:3000/email/download/20180411/20180410_134906_099.jpg'),
+  // 'file_url': urlencode('http://mail.overware.co.kr//email/download/20180411/20180410_134906_099.jpg'),
   // 'file_name': urlencode(new Buffer(utf82euckr.convert('20180410_134906_099')).toString('base64'))
 
   var dt = datetime.create();
@@ -240,17 +251,11 @@ router.post('/send',isAuthenticated, async function(req, res) {
   }
   var m_idx_a = null;
   // 메일발송 리스트 insert
-  try{
-    console.log('메일발송 리스트 insert:',mailAllParam);
-    var resultInsert = await mailAllA.insert(mailAllParam);
-    m_idx_a = resultInsert.insertId;
-    param['unique_id'] = m_idx_a;
-    console.log('inseret idx:',m_idx_a);
-  }
-  catch(e){
-    console.log('insert 오류:',e);
-  }
-
+  console.log('메일발송 리스트 insert:',mailAllParam);
+  var resultInsert = await mailAllA.insert(mailAllParam);
+  m_idx_a = resultInsert.insertId;
+  param['unique_id'] = m_idx_a;
+  console.log('inseret idx:',m_idx_a);
   // 메일발송 상세정보 insert
   var insertCheck = false;
   if(m_idx_a){
@@ -292,8 +297,8 @@ router.post('/send',isAuthenticated, async function(req, res) {
   }
 
   var paramStr = 'subject='+param['subject']+'&body='+param['body']+'&sender='+param['sender']+'&username='+param['username']+'&recipients='+param['recipients']+'&key='+param['key'];
-  // +'&return_url=http://192.168.0.22:3000/email/send/result&unique_id='+param['unique_id']
-  // +'&open=1&click=1&check_period=3&option_return_url=http://192.168.0.22:3000/email/send/result';
+  // +'&return_url=http://mail.overware.co.kr//email/send/result&unique_id='+param['unique_id']
+  // +'&open=1&click=1&check_period=3&option_return_url=http://mail.overware.co.kr//email/send/result';
   if(param['mail_type'] == urlencode('ONETIME')){
     paramStr +='&mail_type='+param['mail_type']+'&start_reserve_time='+param['time']+'&end_reserve_time='+param['time'];
   }
@@ -301,34 +306,24 @@ router.post('/send',isAuthenticated, async function(req, res) {
     paramStr += '&file_url='+param['file_url']+'&file_name='+param['file_name'];
   }
   // 테스트중
-  console.log('이메일 paramStr : ',paramStr);
   var resultEmail = await emailSendFun(paramStr);
+  console.log('이메일 paramStr : ',paramStr);
   console.log('이메일 발송 결과 : ',resultEmail);
-  // var resultEmail = [true,0];
-  // if(resultEmail[0]){
-  //   res.send('메일발송 성공했습니다.');
-  // }
-  // else{
-  //   res.status(500).send(resultEmail[2]);
-  // }
-
+  if(resultEmail[0]){
+    res.send({status:true});
+  }
+  else{
+    res.status(500).send(resultEmail[2]);
+  }
   // 메일 발송후 결과
-  var param = {
-    M_result:resultEmail[0],
-    M_idx_A:param['unique_id']
-  };
-  try{
-    await mailDetailB.updateResult(param);
-  }
-  catch(err){
-    console.log(err);
-  }
+  var updateResult = await mailDetailB.updateResult([resultEmail[1],param['unique_id']]);
+  console.log('updateResult:',updateResult);
 });
-
 function emailSendFun(pStr){
   /*
   m_mail_detail_B table에 저장될 M_result 값 종류
   0 : 정상발송 => 0 : 메일발송에 성공하였습니다.
+  9 : 미발송
   103 : 보내는 사람 이메일이 유효하지 않음 => 3 : 보내는 사람 이메일이 유효하지 않습니다.
   104 : 받는 사람 이메일이 유효하지 않음 => 4 : 받는 사람 이메일이 유효하지 않습니다.
   105 : 본문에 포함되면 안되는 확장자가 있음(.exe or 문자열) => 5 : 본문에 포함되면 안되는 확장자가 있습니다.
@@ -359,7 +354,7 @@ function emailSendFun(pStr){
       console.log(JSON.parse(body));
       var requestResult = JSON.parse(body).status;
       if(requestResult == '0'){
-        resultArr = [true,requestResult];
+        resultArr = [true,0,requestResult];
       }
       else if(requestResult == '103'){
         resultArr = [false,3,'보내는 사람 이메일이 유효하지 않습니다.'];
@@ -385,6 +380,8 @@ const fs = require('fs-extra');
 var multer = require('multer');
 var date = datetime.create();
 var today = date.format('Ymd');
+var absolutePath = '/home/hosting_users/unioncmail/apps/unioncmail_unioncmail/';
+
 async function mkdirsFun (directory) {
   try {
     await fs.ensureDir(directory)
@@ -396,7 +393,7 @@ async function mkdirsFun (directory) {
 }
 var storageImage = multer.diskStorage({
   destination: async function (req, file, cb) {
-    var path = await mkdirsFun('public/uploads/image/'+today);
+    var path = await mkdirsFun(absolutePath+'public/uploads/image/'+today);
     await cb(null, path); // cb 콜백함수를 통해 전송된 파일 저장 디렉토리 설정
   },
   filename: function (req, file, cb) {
@@ -404,19 +401,21 @@ var storageImage = multer.diskStorage({
   }
 });
 var uploadImage = multer({ storage: storageImage });
-router.post('/send/img',uploadImage.single('file'),function(req, res) {
-  console.log('/send/img');
-  console.log(req.file.path);
+router.post('/send/img',isAuthenticated,uploadImage.single('file'),function(req, res) {
+  console.log('/send/img:',req.file.path);
   if (!req.file) {
     console.log("No file passed");
     return res.status(500).send("No file passed");
   }
-  res.send(req.file.destination.replace('public/','')+'/'+req.file.originalname);
+  res.send({
+    status : true,
+    result : req.file.destination.replace(absolutePath+'public/','')+'/'+req.file.originalname
+  });
 });
 
 var storageFiles = multer.diskStorage({
   destination: async function (req, file, cb) {
-    var path = await mkdirsFun('public/uploads/files/'+today);
+    var path = await mkdirsFun(absolutePath+'public/uploads/files/'+today);
     await cb(null, path);
   },
   filename: function (req, file, cb) {
@@ -424,7 +423,7 @@ var storageFiles = multer.diskStorage({
   }
 });
 var uploadFiles = multer({ storage: storageFiles });
-router.post('/send/files',uploadFiles.single('files[]'),function(req, res) {
+router.post('/send/files',isAuthenticated,uploadFiles.single('files[]'),function(req, res) {
   console.log('/send/files');
   console.log(req.file);
   if (!req.file) {
@@ -436,7 +435,8 @@ router.post('/send/files',uploadFiles.single('files[]'),function(req, res) {
     fs.removeSync(req.file.path);
     return res.status(500).send("exe는 업로드 불가합니다.");
   }
-  res.send([req.file.filename,req.file.destination.replace('public/uploads/files/','')+'/'+req.file.originalname]);
+  var data = [req.file.filename,req.file.destination.replace(absolutePath+'public/uploads/files/','')+'/'+req.file.originalname];
+  res.send({status:true, result:data});
 });
 
 module.exports = router;

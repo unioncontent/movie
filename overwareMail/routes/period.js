@@ -16,18 +16,28 @@ router.get('/',isAuthenticated,async function(req, res) {
   var data = await getListPageData(req.user.user_idx,req.query);
   res.render('period',data);
 });
+
 router.post('/getPeriod',isAuthenticated,async function(req, res, next) {
-  var data = {
-    media:await mailDetailB.getMediaNReporterCount('P_title',req.body.M_idx_A),
-    reporter:await mailDetailB.getMediaNReporterCount('P_name',req.body.M_idx_A),
-    newsCount:await period.getNewsCount(req.body),
-    replyCount:await period.getReplyCount(req.body)
-  };
-  res.send(data);
+  try{
+    var data = {
+      media:await mailDetailB.getMediaNReporterCount('P_title',req.body.M_idx_A),
+      reporter:await mailDetailB.getMediaNReporterCount('P_name',req.body.M_idx_A),
+      newsCount:await period.getNewsCount(req.body),
+      replyCount:await period.getReplyCount(req.body)
+    };
+    res.send({status:true,result:data});
+  } catch(e){
+    res.status(500).send(e);
+  }
 });
+
 router.post('/getNextPage',isAuthenticated,async function(req, res, next) {
-  var data = await getListPageData(req.user.user_idx,req.body);
-  res.send(data);
+  try{
+    var data = await getListPageData(req.user.user_idx,req.body);
+    res.send({status:true,result:data});
+  } catch(e){
+    res.status(500).send(e);
+  }
 });
 
 async function getListPageData(idx,param){

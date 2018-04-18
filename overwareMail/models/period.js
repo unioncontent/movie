@@ -63,6 +63,43 @@ var period = {
   getYesterday: async function(param){
     var sql = 'SELECT * FROM period_view where M_id=? and M_regdate BETWEEN date_sub(now(), INTERVAL 1 day) and now()';
     return await getResult(sql,param);
+  },
+  getTodayPeriod: async function(param){
+    var result = {
+      todaySendCount:0,
+      keywordCount:0,
+      successNfailCount:0,
+      todayCount:0,
+      reservationCount:0,
+      successP:0,
+      failP:0
+    };
+    try {
+      var sql ='SELECT FORMAT(count(n_idx), 0) as total FROM period_view where M_regdate > CURRENT_DATE() and M_id=?;';
+      result['todaySendCount'] = await getResult(sql,param);
+      result['todaySendCount'] = parseInt(result['todaySendCount'][0]['total']);
+      sql = 'SELECT FORMAT(count(*), 0) as total from (SELECT * FROM keyword_data where user_idx!=9 and keyword_property=\'포함\' group by keyword_main) e;';
+      result['keywordCount'] = await getResult(sql,[]);
+      result['keywordCount'] = result['keywordCount'][0]['total'];
+      sql = 'SELECT FORMAT(COUNT(IF((success != 0), 1, NULL)), 0) as success,FORMAT(COUNT(IF((fail != 0), 1, NULL)), 0) as fail FROM period_view where M_send > CURRENT_DATE() and M_id=?;';
+      result['successNfailCount'] = await getResult(sql,param);
+      result['successNfailCount'] = result['successNfailCount'][0];
+      sql = 'SELECT FORMAT(count(*), 0) as total FROM period_view where M_send > CURRENT_DATE() and M_id=?;';
+      result['todayCount'] = await getResult(sql,param);
+      result['todayCount'] = result['todayCount'][0]['total'];
+      sql = 'SELECT FORMAT(count(*), 0) as total FROM period_view where M_send > CURRENT_DATE() and M_type = 1 and M_id=?;';
+      result['reservationCount'] = await getResult(sql,param);
+      result['reservationCount'] = result['reservationCount'][0]['total'];
+      if(result.todaySendCount > 0){
+        if(parseInt(result.successNfailCount.success) > 0 )
+          result['successP'] = Math.round((parseInt(result.successNfailCount.success) / result.todaySendCount) * 100);
+        if(parseInt(result.successNfailCount.fail) > 0 )
+          result['failP'] = Math.round((parseInt(result.successNfailCount.fail) / result.todaySendCount) * 100);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+    return result;
   }
 }
 

@@ -17,17 +17,6 @@
     </div>
     <div class="page-body">
       <div class="row" id="listTable">
-        <!-- <div class="col-md-12">
-          <div class="row m-b-10">
-            <div class="col-md-4 offset-md-8">
-              <div id="reportrange" class="form-control form-control-inverse">
-                <i class="glyphicon glyphicon-calendar far fa-calendar-alt"></i>
-                <span></span>
-                <i class="f-right fa fa-angle-down" style="font-size: 17px;"></i>
-              </div>
-            </div>
-          </div>
-        </div> -->
         <div class="col-md-12">
           <div class="card">
             <div class="card-header">
@@ -204,6 +193,9 @@
   .card .card-header span:not(.input-group-addon){
     display: inline;
   }
+  .table td, .table th{
+    vertical-align: middle;
+  }
   .btn i {
     margin-right: 0px;
   }
@@ -242,11 +234,11 @@
 
   // 통계보고서 보기버튼 클릭시
   $(document).on("click",".btn-period",function(){
-    var tdEles = $(this).parents('tr').find('td');
     $('#media').text(0);
     $('#reporter').text(0);
     $('#newsCount').text(0);
     $('#replyCount').text(0);
+    var tdEles = $(this).parents('tr').find('td');
     var param = {
       M_idx_A:$(this).data('idx'),
       keyword:tdEles.eq(1).text(),
@@ -254,10 +246,6 @@
       eDate:tdEles.eq(0).text()
     };
     ajaxGetPeriod(param);
-    $('#total').text(tdEles.eq(3).text());
-    $('#success').text(tdEles.eq(4).text());
-    $('#fail').text(tdEles.eq(5).text());
-    $("#period-Modal").modal('show');
   });
 
   function ajaxGetPeriod(param){
@@ -267,14 +255,24 @@
       data: param,
       error: function(request,status,error){
         console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
-        alert('다시 시도해주세요.');
+        alert('새로고침 후 다시 시도해주세요.');
       },
       success: function(data){
         console.log(data);
-        $('#media').text(data.media);
-        $('#reporter').text(data.reporter);
-        $('#newsCount').text(data.newsCount);
-        $('#replyCount').text(data.replyCount);
+        if(data.status){
+          $('#media').text(data.result.media);
+          $('#reporter').text(data.result.reporter);
+          $('#newsCount').text(data.result.newsCount);
+          $('#replyCount').text(data.result.replyCount);
+
+          var tdEles = $(this).parents('tr').find('td');
+          $('#total').text(tdEles.eq(3).text());
+          $('#success').text(tdEles.eq(4).text());
+          $('#fail').text(tdEles.eq(5).text());
+          $("#period-Modal").modal('show');
+        } else{
+          alert('새로고침 후 다시 시도해주세요.');
+        }
       }
     });
   }
@@ -300,24 +298,28 @@
       data: param,
       error: function(request,status,error){
         console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
-        alert('새로고침해주세요~');
+        alert('새로고침 후 다시 시도해주세요.');
       },
       success: function(data){
         console.log(data);
+        if(data.status != true){
+          alert('새로고침 후 다시 시도해주세요.');
+          return false;
+        }
         if(typeof(history.pushState) == 'function'){
           //현재 주소를 가져온다.
           var renewURL = location.href;
           //현재 주소 중 page 부분이 있다면 새로 부여될 페이지 번호를 할당한다.
-          renewURL = renewURL.replace(/\?page=([0-9]+)/ig,'?page='+data.currentPage);
+          renewURL = renewURL.replace(/\?page=([0-9]+)/ig,'?page='+data.result.currentPage);
           if(renewURL.indexOf("?page=") == -1){
-            renewURL += '?page='+data.currentPage;
+            renewURL += '?page='+data.result.currentPage;
           }
           //페이지 갱신 실행!
           history.pushState(null, null,renewURL);
         }
         $('#listTable tbody').empty();
-        data.list.forEach(function(item,idx){
-          var numIdx = Math.ceil(data.listCount-(data.offset+idx)).toString();
+        data.result.list.forEach(function(item,idx){
+          var numIdx = Math.ceil(data.result.listCount-(data.result.offset+idx)).toString();
           var html = '<tr>\
             <th>'+numIdx+'</th>\
             <td>'+item.M_regdate+'</td>\
@@ -336,16 +338,16 @@
           $('#listTable tbody').append(html);
         });
         var limit = 20;
-        var pageCount = Math.ceil(data.listCount/limit);
+        var pageCount = Math.ceil(data.result.listCount/limit);
         $('#listTable tfoot').empty();
         if(pageCount > 1) {
           var html = '<tr><td colspan="9"><ul class="pagination float-right">';
           var pageSize = 5;
-          var pRCnt = parseInt(data.currentPage / pageSize);
-          if(data.currentPage % pageSize == 0){
-            pRCnt = parseInt(data.currentPage / pageSize) - 1;
+          var pRCnt = parseInt(data.result.currentPage / pageSize);
+          if(data.result.currentPage % pageSize == 0){
+            pRCnt = parseInt(data.result.currentPage / pageSize) - 1;
           }
-          if(data.currentPage > 5) {
+          if(data.result.currentPage > 5) {
             html += '<li class="page-item"><a class="page-link" data-value="1" aria-label="Previous">\
                 <i class="ti-angle-double-left f-12"></i>\
                 <span aria-hidden="true"></span>\
@@ -359,7 +361,7 @@
           }
 
           for(var index=pRCnt * pageSize + 1;index<(pRCnt + 1)*pageSize + 1;index++){
-            var active = (data.currentPage == index) ? "active" : "";
+            var active = (data.result.currentPage == index) ? "active" : "";
             html += '<li class=\"'+active+' page-item">\
               <a class="page-link" data-value=\"'+index+'"\ >'+index+'</a></li>'
 
@@ -442,7 +444,7 @@
     showDropdowns: true,
     showRangeInputsOnCustomRangeOnly: false,
     ranges: ranges,
-    opens: 'right',
+    opens: 'left',
     buttonClasses: ['btn'],
     applyClass: 'btn-small btn-primary',
     cancelClass: 'btn-small',
