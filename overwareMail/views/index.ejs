@@ -17,7 +17,54 @@
     </div>
     <div class="page-body">
       <div class="row">
-        <div class="col-lg-12">
+        <div class="col-lg-3">
+          <div class="card">
+            <div class="card-block">
+              <div class="card social-widget-card m-b-5">
+                <div class="card-block bg-info text-center">
+                  <h1 class="text-left"><%=period.todaySendCount%></h1>
+                  <h6 class="text-left m-t-10">당일발송</h6>
+              	  <i class="far fa-paper-plane"></i>
+                </div>
+              </div>
+              <table class="table matrics-table m-b-0">
+                <tbody>
+                  <tr>
+                    <td>
+                      <strong>콘텐츠(영화)대상</strong>
+                    </td>
+                    <td class="txt-primary">4</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <strong>발송성공</strong>
+                    </td>
+                    <td class="txt-danger"><%=period.successNfailCount.success%>(<%=period.successP%>%)</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <strong>발송실패</strong>
+                    </td>
+                    <td class="txt-primary"><%=period.successNfailCount.fail%>(<%=period.failP%>%)</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <strong>금일발송</strong>
+                    </td>
+                    <td class="txt-primary"><%=period.todayCount%></td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <strong>예약발송대기</strong>
+                    </td>
+                    <td class="txt-success"><%=period.reservationCount%></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-9">
           <div class="card">
             <div class="card-header">
               <h5>최근 발송 현황 그래프</h5>

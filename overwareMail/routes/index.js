@@ -15,40 +15,46 @@ var isAuthenticated = function (req, res, next) {
 };
 
 router.get('/', isAuthenticated, async function(req, res, next) {
-  var data = [];
-  try{
-    data = await period.getYesterday([req.user.user_idx]);
-  }
-  catch(err){
-    console.log(err);
-  }
-  res.render('index',{
-    list:data
-  });
+  var data = {
+    list:await period.getYesterday([req.user.user_idx]),
+    period:await period.getTodayPeriod([req.user.user_idx])
+  };
+  res.render('index',data);
 });
 
 router.post('/7DayGraph',isAuthenticated, async function(req, res, next) {
-  try{
-    // console.log(req.user);
-    var data = await period.get7DayGraph([req.user.user_idx]);
-    res.send(data);
-  }
-  catch(err){
+  var data = await period.get7DayGraph([req.user.user_idx]);
+  if(data.length == 0){
     res.status(500).send('다시 시도해주세요.');
   }
+  res.send(data);
 });
-
 
 // 로그인 & 로그아웃 구현
 router.get('/login', function(req, res, next) {
-  res.render('login', {layout: false, message : req.flash('loginMessage')});
+  res.render('login', {layout: false, message : req.flash('loginMessage')[0]});
 });
 
-router.post('/login', passport.authenticate('local', {
-  successRedirect: '/',
-  failureRedirect: '/login',
-  failureFlash: true
-}));
+router.post('/login', function (req, res, next) {
+  //  패스포트 모듈로 인증 시도
+  passport.authenticate('local', function (err, user, info) {
+    if (err) { return next(err); }
+    if (!user) {
+      if(req.get('referer').indexOf('/email') != -1){
+        return res.send(false);
+      }
+      return res.redirect('/login');
+    }
+    req.logIn(user, function(err) {
+      if (err) { return next(err); }
+      if(req.get('referer').indexOf('/email') != -1){
+        return res.send(true);
+      }
+      return res.redirect('/');
+    });
+  })(req, res, next);
+
+});
 
 passport.use(new LocalStrategy({
   usernameField: 'username',
@@ -71,12 +77,11 @@ passport.use(new LocalStrategy({
 }));
 
 passport.serializeUser(function (user, done) {
-  // console.log('serializeUser:',user);
   done(null, user);
 });
 
 passport.deserializeUser(function (user, done) {
-  // console.log('deserializeUser:',user);
+  // 페이지 이동 시마다 세션 로그인 값 호출
   done(null, user);
 });
 

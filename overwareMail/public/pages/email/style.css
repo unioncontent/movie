@@ -1,0 +1,150 @@
+/* jFiler */
+.jFiler-item-title{
+  text-overflow: ellipsis;
+  max-width: 189px;
+  overflow: hidden;
+}
+.jFiler-theme-default .jFiler-input {
+  width: 100%;
+  height: 41px;
+}
+.jFiler-theme-default .jFiler-input-caption,
+.jFiler-theme-default .jFiler-input-button{
+  padding-top: 10px;
+}
+/* modal */
+button.close{
+  margin-top: 0;
+  font-size: 26px;
+}
+.paging{
+  margin-bottom: 10px;
+  padding: 5px 7px 5px 0px;
+}
+.paging > input{
+  width: 26px;
+  line-height: 16px;
+  padding: 0 2px 0 0;
+  text-align: right;
+  vertical-align: 0;
+  color: #000;
+  font-size: 12px;
+}
+.rightLeftBtn{
+  text-align: center;
+  padding-top: 27%;
+}
+.bottomBtn{
+  display: inline;
+  float: right;
+}
+.rightLeftBtn .btn,
+.bottomBtn .btn{
+  display: inherit;
+  margin: 0px auto;
+  margin-bottom: 5px;
+  padding: 5px 7px 5px 10px;
+}
+.rightLeftBtn .btn[data-type="allLeft"] {
+  padding-right: 5px;
+}
+.bottomBtn .btn{
+  display: inline;
+  padding-right: 4px;
+}
+.count{
+  display: inline;
+}
+.rightTd{
+  table-layout: fixed;
+  width: 237px;
+}
+.listBox{
+  height: 100%;
+}
+.listBox li label,
+#groupUl li label,
+#recipiUl li label{
+  max-width: 200px;
+  min-width: 150px;
+  display: inline-block;
+  margin-bottom: 0px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 12px;
+  line-height: 12px;
+}
+#groupUl li label,
+#recipiUl li label{
+  max-width: 178px;
+}
+.selectedBox > h3,
+.listBox li > h3{
+  font-size: 12px;
+  font-weight: bold;
+}
+.listBox li > h3{
+  margin-bottom: 0px;
+  padding-bottom: .5rem;
+}
+.emailLi,.groupLi{
+  min-height: 200px;
+  overflow: auto;
+}
+.selectedBox > .box{
+  height: 291px;
+  padding: 7px;
+  border: 1px solid #ddd;
+  backgceil-color: white;
+  overflow: auto;
+}
+#mailList-Modal .modal-body{
+  max-height: 700px;
+}
+/* select2 */
+.select2-container--default .select2-selection--multiple .select2-selection__rendered li{
+  text-overflow: ellipsis;
+  width: 189px;
+  overflow: hidden;
+}
+.select2-container--default .select2-selection--multiple{
+  padding-right: 5px;
+}
+.select2-container--default .select2-selection--single .select2-selection__arrow{
+  height: 37px;
+}
+.select2-container .select2-selection--single{
+  height: 37px;
+}
+.select2-container--default .select2-selection--single .select2-selection__rendered{
+  line-height: 27px;
+}
+.select2-container--default .select2-selection--multiple,
+.select2-container--default .select2-selection--single {
+  backgceil-color: white;
+  border: 2px solid rgba(0,0,0,.15);
+  font-size: 14px;
+  border-radius: 2px;
+  cursor: text;
+}
+.select2-container--default .select2-selection--multiple{
+  padding-top: 1px;
+  padding-bottom: 1px;
+  padding-left: 8px;
+}
+.select2-container--default.select2-container--focus .select2-selection--multiple,
+.select2-container--default.select2-container--focus .select2-selection--single {
+  color: #464a4c;
+  border-width: 2px;
+  backgceil-color: #fff;
+  border-color: #3498DB!important;
+  outline: 0;
+}
+.dropdown-toggle::after{
+  display: none;
+}
+.note-editor .note-editing-area .note-editable table td,
+.note-editor .note-editing-area .note-editable table th{
+  border: 1px solid #252525;
+}
