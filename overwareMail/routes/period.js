@@ -25,6 +25,7 @@ router.post('/getPeriod',isAuthenticated,async function(req, res, next) {
       newsCount:await period.getNewsCount(req.body),
       replyCount:await period.getReplyCount(req.body)
     };
+    console.log(data);
     res.send({status:true,result:data});
   } catch(e){
     res.status(500).send(e);

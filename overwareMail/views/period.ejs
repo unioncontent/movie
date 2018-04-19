@@ -245,10 +245,10 @@
       sDate:tdEles.eq(0).text(),
       eDate:tdEles.eq(0).text()
     };
-    ajaxGetPeriod(param);
+    ajaxGetPeriod(param,tdEles);
   });
 
-  function ajaxGetPeriod(param){
+  function ajaxGetPeriod(param,tag){
     $.ajax({
       url: '/period/getPeriod',
       type: 'post',
@@ -265,10 +265,9 @@
           $('#newsCount').text(data.result.newsCount);
           $('#replyCount').text(data.result.replyCount);
 
-          var tdEles = $(this).parents('tr').find('td');
-          $('#total').text(tdEles.eq(3).text());
-          $('#success').text(tdEles.eq(4).text());
-          $('#fail').text(tdEles.eq(5).text());
+          $('#total').text(tag.eq(3).text());
+          $('#success').text(tag.eq(4).text());
+          $('#fail').text(tag.eq(5).text());
           $("#period-Modal").modal('show');
         } else{
           alert('새로고침 후 다시 시도해주세요.');
