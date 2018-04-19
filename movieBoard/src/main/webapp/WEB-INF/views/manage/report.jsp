@@ -220,7 +220,7 @@
 									    <td></td>
 									    <td align="right" valign="bottom" style="color: rgb(153, 153, 153); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 11px;">
 									    <a style="color: rgb(153, 153, 153); letter-spacing: -1px; font-family: gulim,verdana; font-size: 13px; text-decoration: none;" href="http://overware.co.kr" target="_blank" rel="noopener noreferrer">Admin</a>│
-									    <a style="color: rgb(153, 153, 153); letter-spacing: -1px; font-family: gulim,verdana; font-size: 13px; text-decoration: none;" href="mail.overware.co.kr" target="_blank" rel="noopener noreferrer">Email</a>
+									    <a style="color: rgb(153, 153, 153); letter-spacing: -1px; font-family: gulim,verdana; font-size: 13px; text-decoration: none;" href="http://mail.overware.co.kr" target="_blank" rel="noopener noreferrer">Email</a>
 									    </td>
 									    </tr>
 									    </tbody>
@@ -937,13 +937,13 @@
   														</tr>
   													</tbody>
   												</table>
+  												<!-- 복사 끝 -->
   											</div>
   										</div>
   									</div>
   								</div>
   							</div>
   						</div>
-  						<!-- 복사 끝 -->
                         <!-- tab-content end -->
                       </div>
                     </div>
