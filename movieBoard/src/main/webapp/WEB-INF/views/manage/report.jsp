@@ -219,8 +219,8 @@
 									    </td>
 									    <td></td>
 									    <td align="right" valign="bottom" style="color: rgb(153, 153, 153); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 11px;">
-									    <a style="color: rgb(153, 153, 153); letter-spacing: -1px; font-family: gulim,verdana; font-size: 13px; text-decoration: none;" href="http://overware.iptime.org:8080" target="_blank" rel="noopener noreferrer">Admin</a>│
-									    <a style="color: rgb(153, 153, 153); letter-spacing: -1px; font-family: gulim,verdana; font-size: 13px; text-decoration: none;" href="#" target="_blank" rel="noopener noreferrer">Email</a>
+									    <a style="color: rgb(153, 153, 153); letter-spacing: -1px; font-family: gulim,verdana; font-size: 13px; text-decoration: none;" href="http://overware.co.kr" target="_blank" rel="noopener noreferrer">Admin</a>│
+									    <a style="color: rgb(153, 153, 153); letter-spacing: -1px; font-family: gulim,verdana; font-size: 13px; text-decoration: none;" href="mail.overware.co.kr" target="_blank" rel="noopener noreferrer">Email</a>
 									    </td>
 									    </tr>
 									    </tbody>
@@ -908,93 +908,6 @@
 									                                    </tr>
 									                                    <td height="25"> </td>
 									                                    <!-- 언론사 현황 end-->
-									                                    <!-- 포톨 통계 start -->
-									                                    <%-- <tr>
-									                                    <td align="left"><b>최근 7일 포털 통계</b></td>
-									                                    <td align="right" style="color: rgb(102, 102, 102); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 11px;"></td>
-									                                    </tr>
-									                                    </tbody>
-									                                    </table>
-									                                    </td>
-									                                    </tr>
-									                                    <tr>
-									                                    <td height="10"></td>
-									                                    </tr>
-									                                    <tr>
-									                                    <td style="border: 1px solid rgb(195, 187, 211); border-image: none;">
-									                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
-									                                    <tbody>
-										                                    <tr>
-										                                    <td align="center" width="131" height="30" style="color: rgb(102, 102, 102); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 12px; font-weight: bold; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid;" bgcolor="#f7f7f7">날짜</td>
-										                                    <td align="center" width="131" style="color: rgb(102, 102, 102); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 12px; font-weight: bold; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid;" bgcolor="#f7f7f7">검출량</td>
-										                                    <td align="center" width="131" style="color: rgb(102, 102, 102); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 12px; font-weight: bold; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid;" bgcolor="#f7f7f7">긍정글</td>
-										                                    <td align="center" width="131" style="color: rgb(102, 102, 102); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 12px; font-weight: bold; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid;" bgcolor="#f7f7f7">부정글</td>
-										                                    <td align="center" width="131" style="color: rgb(102, 102, 102); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 12px; font-weight: bold; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid;" bgcolor="#f7f7f7">관심글</td>
-										                                    <td align="center" width="131" style="color: rgb(102, 102, 102); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 12px; font-weight: bold;" bgcolor="#f7f7f7">기타글</td>
-										                                    </tr>
-									                                    <c:forEach items="${list1}" var="list1" varStatus="status">
-									                                    <tr>
-									                                    </tr>
-										                                    <tr>
-										                                    <td align="center" height="28" style="color: rgb(102, 102, 102); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 12px; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid; border-top-color: rgb(228, 228, 228); border-top-width: 1px; border-top-style: solid;">${list1.writeDate}</td>
-										                                    <td align="center" style="color: rgb(102, 102, 102); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 12px; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid; border-top-color: rgb(228, 228, 228); border-top-width: 1px; border-top-style: solid;"><fmt:formatNumber value="${list1.lik + list1.dis + list1.cu + list1.etc + list2[status.index].lik + list2[status.index].dis + list2[status.index].cu + list2[status.index].etc + list3[status.index].lik + list3[status.index].dis + list3[status.index].cu + list3[status.index].etc}" groupingUsed="true"/></td>
-										                                    <td align="center" style="color: rgb(102, 102, 102); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 12px; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid; border-top-color: rgb(228, 228, 228); border-top-width: 1px; border-top-style: solid;"><fmt:formatNumber value="${list1.lik+list2[status.index].lik+list3[status.index].lik}" groupingUsed="true"/></td>
-										                                    <td align="center" style="color: rgb(102, 102, 102); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 12px; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid; border-top-color: rgb(228, 228, 228); border-top-width: 1px; border-top-style: solid;"><fmt:formatNumber value="${list1.dis+list2[status.index].dis+list3[status.index].dis}" groupingUsed="true"/></td>
-										                                    <td align="center" style="color: rgb(102, 102, 102); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 12px; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid; border-top-color: rgb(228, 228, 228); border-top-width: 1px; border-top-style: solid;"><fmt:formatNumber value="${list1.cu+list2[status.index].cu+list3[status.index].cu}" groupingUsed="true"/></td>
-										                                    <td align="center" style="color: rgb(102, 102, 102); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 12px; border-top-color: rgb(228, 228, 228); border-top-width: 1px; border-top-style: solid;"><fmt:formatNumber value="${list1.etc+list2[status.index].etc+list3[status.index].etc}" groupingUsed="true"/></td>
-										                                    </tr>
-									                                    </c:forEach>
-									                                    </tbody>
-									                                    </table>
-									                                    </td>
-									                                    </tr> --%>
-									                                    <!-- 포톨 통계 end -->
-									                                    <!-- 영화 채널 관리 start -->
-									                                    <%-- <tr>
-									                                    <td height="25"> </td>
-									                                    </tr>
-									                                    <tr>
-									                                    <td align="left"><b>영화 채널 관리</b></td>
-									                                    <td align="right" style="color: rgb(102, 102, 102); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 11px;"></td>
-									                                    </tr>
-									                                    </tbody>
-									                                    </table>
-									                                    </td>
-									                                    </tr>
-									                                    <tr>
-									                                    <td height="10"></td>
-									                                    </tr>
-									                                    <tr>
-									                                    <td style="border: 1px solid rgb(195, 187, 211); border-image: none;">
-									                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
-									                                    <tbody>
-										                                    <tr>
-										                                    <td align="center" width="131" height="30" style="color: rgb(102, 102, 102); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 12px; font-weight: bold; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid;" bgcolor="#f7f7f7">날짜</td>
-										                                    <td align="center" width="131" style="color: rgb(102, 102, 102); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 12px; font-weight: bold; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid;" bgcolor="#f7f7f7">사이트</td>
-										                                    <td align="center" width="131" style="color: rgb(102, 102, 102); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 12px; font-weight: bold; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid;" bgcolor="#f7f7f7">view</td>
-										                                    <td align="center" width="131" style="color: rgb(102, 102, 102); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 12px; font-weight: bold; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid;" bgcolor="#f7f7f7">좋아요</td>
-										                                    <td align="center" width="131" style="color: rgb(102, 102, 102); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 12px; font-weight: bold; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid;" bgcolor="#f7f7f7">공유</td>
-										                                    <td align="center" width="131" style="color: rgb(102, 102, 102); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 12px; font-weight: bold; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid;" bgcolor="#f7f7f7">댓글</td>
-										                                    <td align="center" width="131" style="color: rgb(102, 102, 102); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 12px; font-weight: bold;" bgcolor="#f7f7f7">전일대비</td>
-										                                    </tr>
-									                                    <c:forEach items="${fV}" var="fV">
-									                                    <tr>
-									                                    </tr>
-										                                    <tr>
-										                                    <td align="center" height="28" style="color: rgb(102, 102, 102); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 12px; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid; border-top-color: rgb(228, 228, 228); border-top-width: 1px; border-top-style: solid;"><fmt:formatDate value="${fV.createDate}" type="DATE" pattern="yyyy-MM-dd" /></td>
-										                                    <td align="center" style="color: rgb(102, 102, 102); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 12px; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid; border-top-color: rgb(228, 228, 228); border-top-width: 1px; border-top-style: solid;">facebookCGV</td>
-										                                    <td align="center" style="color: rgb(102, 102, 102); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 12px; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid; border-top-color: rgb(228, 228, 228); border-top-width: 1px; border-top-style: solid;"><fmt:formatNumber value="${fV.view_cnt}" groupingUsed="true"/></td>
-										                                    <td align="center" style="color: rgb(102, 102, 102); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 12px; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid; border-top-color: rgb(228, 228, 228); border-top-width: 1px; border-top-style: solid;"><fmt:formatNumber value="${fV.like_cnt}" groupingUsed="true"/></td>
-										                                    <td align="center" style="color: rgb(102, 102, 102); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 12px; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid; border-top-color: rgb(228, 228, 228); border-top-width: 1px; border-top-style: solid;"><fmt:formatNumber value="${fV.share_cnt}" groupingUsed="true"/></td>
-										                                    <td align="center" style="color: rgb(102, 102, 102); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 12px; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid; border-top-color: rgb(228, 228, 228); border-top-width: 1px; border-top-style: solid;"><fmt:formatNumber value="${fV.reply_cnt}" groupingUsed="true"/></td>
-										                                    <td align="center" style="color: rgb(102, 102, 102); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 12px; border-top-color: rgb(228, 228, 228); border-top-width: 1px; border-top-style: solid;"><fmt:formatNumber value="" groupingUsed="true"/></td>
-										                                    </tr>
-									                                    </c:forEach>
-									                                    </tbody>
-									                                    </table>
-									                                    </td>
-									                                    </tr> --%>
-									                                    <!-- 영화 채널 관리 end -->
 									                                    </tbody>
 									                                    </table>
 									                                    </td>
@@ -1030,6 +943,7 @@
   								</div>
   							</div>
   						</div>
+  						<!-- 복사 끝 -->
                         <!-- tab-content end -->
                       </div>
                     </div>
