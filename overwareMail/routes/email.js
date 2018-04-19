@@ -1,4 +1,5 @@
 var express = require('express');
+var fs = require('fs-extra');
 var request = require('request');
 var datetime = require('node-datetime');
 var urlencode = require('urlencode');
@@ -29,9 +30,6 @@ var isAuthenticated = function (req, res, next) {
 };
 
 router.get('/',isAuthenticated, async function(req, res) {
-  var euckr2utf8 = new Iconv('EUC-KR', 'UTF-8');
-  var utf82euckr = new Iconv('UTF-8', 'EUC-KR');
-  
   var data = {
     keywordList : await keyword.selectMovieKwd(),
     typeList : await mailType.selectTable([req.user.user_idx]),
@@ -44,12 +42,6 @@ router.get('/',isAuthenticated, async function(req, res) {
   };
   res.render('email',data);
 });
-
-// router.get('/download/:date/:file', async function(req, res) {
-//   console.log('filepath:',filepath);
-//   var filepath = __dirname+"/uploads/files/"+req.params.date+'/'+req.params.file;
-//   res.download(filepath);
-// });
 
 router.post('/getModalListPage',isAuthenticated, async function(req, res) {
   console.log('getModalListPage');
@@ -176,12 +168,11 @@ async function asyncForEach(array, callback) {
 
 router.get('/send/result',isAuthenticated, async function(req, res) {
   console.log('/send/result값');
-  console.log('http://domain?type=[click | open | reject]&mail_id=[MailID]&email=[Email]')
   console.log(req.query);
-  if(req.query.type!='reject'){
-    await mailDetailB.updateResult([0,req.query.mail_id]);
-    res.send('true');
-  }
+  // if(req.query.type!='reject'){
+  //   await mailDetailB.updateResult([0,req.query.mail_id]);
+  //   res.send('true');
+  // }
 });
 
 router.post('/send',isAuthenticated, async function(req, res) {
@@ -202,10 +193,8 @@ router.post('/send',isAuthenticated, async function(req, res) {
   }
 
   var recipients = recipi.concat(groups);
-  console.log('M_subject:',utf82euckr.convert(req.body.M_subject));
-  console.log('M_body:',utf82euckr.convert(req.body.M_body));
-  console.log('M_file:',utf82euckr.convert(req.body.M_file));
-  console.log('M_fileName:',utf82euckr.convert(req.body.M_fileName));
+  // req.body.M_file = 'http://mail.overware.co.kr/email/download/20180419/메일 시스템 구성도-2018-04-02.pptx';
+  // req.body.M_fileName = '메일 시스템 구성도-2018-04-02.pptx';
   var param = {
     'subject': urlencode(new Buffer(utf82euckr.convert(req.body.M_subject)).toString('base64')),
     'body': urlencode(new Buffer(utf82euckr.convert(req.body.M_body)).toString('base64')),
@@ -215,11 +204,14 @@ router.post('/send',isAuthenticated, async function(req, res) {
     'key': urlencode('w4EzdnbOY3oypxO'),
     'mail_type': (req.body.M_type == '1') ? urlencode('ONETIME'):urlencode('NORMAL'),
     'time' : (typeof req.body.end_reserve_time =='undefined') ? '' : urlencode(req.body.end_reserve_time),
-    'file_url': urlencode(new Buffer(utf82euckr.convert(req.body.M_file)).toString('base64')),
-    'file_name': urlencode(new Buffer(utf82euckr.convert(req.body.M_fileName)).toString('base64'))
+    'file_url': urlencode(req.body.M_file),
+    'file_name': urlencode(req.body.M_fileName)
+    // 'file_url': urlencode(new Buffer(utf82euckr.convert(req.body.M_file)).toString('base64')),
+    // 'file_name': urlencode(new Buffer(utf82euckr.convert(req.body.M_fileName)).toString('base64'))
   };
   console.log('mail send param: ',param);
-  // 'file_url': urlencode('http://mail.overware.co.kr//email/download/20180411/20180410_134906_099.jpg'),
+  // 첨부파일 테스트 후 만약 메일나라에서 첨부파일 url이 필요 없으면 바로 삭제하기
+  // 'file_url': urlencode(new Buffer(utf82euckr.convert('http://mail.overware.co.kr/email/download/20180411/20180410_134906_099.jpg')).toString('base64')),
   // 'file_name': urlencode(new Buffer(utf82euckr.convert('20180410_134906_099')).toString('base64'))
 
   var dt = datetime.create();
@@ -255,12 +247,13 @@ router.post('/send',isAuthenticated, async function(req, res) {
   var resultInsert = await mailAllA.insert(mailAllParam);
   m_idx_a = resultInsert.insertId;
   param['unique_id'] = m_idx_a;
-  console.log('inseret idx:',m_idx_a);
   // 메일발송 상세정보 insert
+  console.log('inseret idx:',m_idx_a);
   var insertCheck = false;
   if(m_idx_a){
     var recipiArr = JSON.parse('['+mailAllParam.M_recipi+']');
     var recipiNgroup = recipiArr.concat(groups2allIdx);
+    console.log('메일발송 상세정보 insert:',recipiNgroup);
     await asyncForEach(recipiNgroup, async (item, index, array) => {
       if(insertCheck == false){
         var recipiInfo = await mailListA.getOneInfo(item);
@@ -276,13 +269,13 @@ router.post('/send',isAuthenticated, async function(req, res) {
           console.log('mailDetailParam:',mailDetailParam);
           try{
             var resultInsert = await mailDetailB.insert(mailDetailParam);
+            console.log('resultInsert:',resultInsert);
           }
           catch(e){
             console.log('insert 오류:',e);
             await mailAllA.delete(m_idx_a);
             insertCheck = true;
           }
-          console.log('resultInsert:',resultInsert);
         } else {
           await mailAllA.delete(m_idx_a);
         }
@@ -290,14 +283,17 @@ router.post('/send',isAuthenticated, async function(req, res) {
     });
   }
 
-  // 메일 발송
+  // 메일 발송(insert Error시)
   if(insertCheck){
     res.status(500).send('발송에 실패했습니다. 다시 시도해주세요.');
     return false;
   }
 
   var paramStr = 'subject='+param['subject']+'&body='+param['body']+'&sender='+param['sender']+'&username='+param['username']+'&recipients='+param['recipients']+'&key='+param['key'];
-  // +'&return_url=http://mail.overware.co.kr//email/send/result&unique_id='+param['unique_id']
+  // returnURL이 있는 경우
+  paramStr += '&return_url=http://mail.overware.co.kr/email/send/result';
+  paramStr += '&unique_id='+param['unique_id'];
+  // 발송 결과 측정 항목을 사용할 경우
   // +'&open=1&click=1&check_period=3&option_return_url=http://mail.overware.co.kr//email/send/result';
   if(param['mail_type'] == urlencode('ONETIME')){
     paramStr +='&mail_type='+param['mail_type']+'&start_reserve_time='+param['time']+'&end_reserve_time='+param['time'];
@@ -305,9 +301,8 @@ router.post('/send',isAuthenticated, async function(req, res) {
   if(param['file_url'] != "" && param['file_name'] != ""){
     paramStr += '&file_url='+param['file_url']+'&file_name='+param['file_name'];
   }
-  // 테스트중
+  // 이메일 발송 - 테스트중
   var resultEmail = await emailSendFun(paramStr);
-  console.log('이메일 paramStr : ',paramStr);
   console.log('이메일 발송 결과 : ',resultEmail);
   if(resultEmail[0]){
     res.send({status:true});
@@ -315,11 +310,27 @@ router.post('/send',isAuthenticated, async function(req, res) {
   else{
     res.status(500).send(resultEmail[2]);
   }
-  // 메일 발송후 결과
-  var updateResult = await mailDetailB.updateResult([resultEmail[1],param['unique_id']]);
-  console.log('updateResult:',updateResult);
+  // 메일 발송후 결과 update
+  if(req.body.M_type != '1'){
+    var updateResult = await mailDetailB.updateResult([resultEmail[1],param['unique_id']]);
+    console.log('updateResult:',updateResult);
+  }
+  // 메일나라에 전송후 첨부파일 삭제
+  if(req.body['M_file_d'] != ""){
+    var removeFileArray = mailAllParam['M_file'].split("|");
+    await asyncForEach(removeFileArray, async (item, index, array) => {
+      var removePath = "/home/hosting_users/unioncmail/apps/unioncmail_unioncmail/public/uploads/files/"+item;
+      fs.removeSync(removePath.replace(/ /gi, ""));
+    });
+  }
 });
 function emailSendFun(pStr){
+  var options = {
+    url: 'https://directsend.co.kr/index.php/api/v2/mail',
+    method:'POST',
+    headers: {'Content-Type': 'application/x-www-form-urlencoded;'},
+    body: pStr
+  };
   /*
   m_mail_detail_B table에 저장될 M_result 값 종류
   0 : 정상발송 => 0 : 메일발송에 성공하였습니다.
@@ -342,12 +353,6 @@ function emailSendFun(pStr){
   112 : 첨부파일 Size가 5MB를 초과
   205 : 잔액 부족
   */
-  var options = {
-    url: 'https://directsend.co.kr/index.php/api/v2/mail',
-    method:'POST',
-    headers: {'Content-Type': 'application/x-www-form-urlencoded;'},
-    body: pStr
-  };
   return new Promise((resolve, reject) => {
     request(options, (error, response, body) => {
       var resultArr = null;
@@ -376,7 +381,13 @@ function emailSendFun(pStr){
   });
 }
 
-const fs = require('fs-extra');
+// 만약 첨부파일 접근이 안될시
+// router.get('/download/:date/:file', async function(req, res) {
+//   console.log('download:',req.params);
+//   var filepath = absolutePath+"/public/uploads/files/"+req.params.date+'/'+req.params.file;
+//   console.log('filepath:',filepath);
+//   res.download(filepath);
+// });
 var multer = require('multer');
 var date = datetime.create();
 var today = date.format('Ymd');
@@ -391,6 +402,18 @@ async function mkdirsFun (directory) {
     console.error(err)
   }
 }
+// 메일 첨부파일 삭제시
+router.post('/remove/file',function (req, res) {
+  try {
+    var file = "/home/hosting_users/unioncmail/apps/unioncmail_unioncmail/public/uploads/files/"+today+"/"+req.body.file;
+    var result = fs.removeSync(file.replace(/ /gi, ""));
+    return res.send({status:true});
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
+// 메일작성시 이미지 upload 및 path get
 var storageImage = multer.diskStorage({
   destination: async function (req, file, cb) {
     var path = await mkdirsFun(absolutePath+'public/uploads/image/'+today);
@@ -401,42 +424,42 @@ var storageImage = multer.diskStorage({
   }
 });
 var uploadImage = multer({ storage: storageImage });
-router.post('/send/img',isAuthenticated,uploadImage.single('file'),function(req, res) {
+router.post('/send/img',uploadImage.single('file'),function(req, res) {
   console.log('/send/img:',req.file.path);
   if (!req.file) {
     console.log("No file passed");
     return res.status(500).send("No file passed");
   }
   res.send({
-    status : true,
     result : req.file.destination.replace(absolutePath+'public/','')+'/'+req.file.originalname
   });
 });
 
+// 첨부파일 upload 및 path get
 var storageFiles = multer.diskStorage({
   destination: async function (req, file, cb) {
     var path = await mkdirsFun(absolutePath+'public/uploads/files/'+today);
     await cb(null, path);
   },
   filename: function (req, file, cb) {
-    cb(null, file.originalname)
+    var fileNameArr = file.originalname.split('.');
+    cb(null, new Buffer(fileNameArr[0],'ascii').toString('hex')+"."+fileNameArr[fileNameArr.length-1])
   }
 });
 var uploadFiles = multer({ storage: storageFiles });
-router.post('/send/files',isAuthenticated,uploadFiles.single('files[]'),function(req, res) {
-  console.log('/send/files');
-  console.log(req.file);
+router.post('/send/files',uploadFiles.single('files[]'),function(req, res) {
+  console.log('/send/files:',req.file);
   if (!req.file) {
     console.log("No file passed");
     return res.status(500).send("No file passed");
   }
-  if(req.file.filename.indexOf('.exe') != -1){
-    console.log(req.file.path);
+  if(req.file.originalname.indexOf('.exe') != -1){
+    console.log('exe Error:',req.file.path);
     fs.removeSync(req.file.path);
     return res.status(500).send("exe는 업로드 불가합니다.");
   }
   var data = [req.file.filename,req.file.destination.replace(absolutePath+'public/uploads/files/','')+'/'+req.file.originalname];
-  res.send({status:true, result:data});
+  res.send({result:data});
 });
 
 module.exports = router;

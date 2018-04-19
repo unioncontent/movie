@@ -61,7 +61,7 @@ var period = {
     return await getResult(sql,param);
   },
   getYesterday: async function(param){
-    var sql = 'SELECT * FROM period_view where M_id=? and M_regdate BETWEEN date_sub(now(), INTERVAL 1 day) and now()';
+    var sql = 'SELECT * FROM period_view where M_id=? and M_regdate BETWEEN date_sub(now(), INTERVAL 1 day) and now() order by n_idx desc';
     return await getResult(sql,param);
   },
   getTodayPeriod: async function(param){
