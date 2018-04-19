@@ -438,24 +438,20 @@
         enctype: 'multipart/form-data',
         beforeSend: function(){},
         success: function(data, el){
-          if(data.status == 'sessionTimeOut'){
-            alert('세션이 만료되었습니다. 로그인 후 다시 시도해주세요.');
-            $('#login-Modal').modal('show');
-            return false;
+          console.log(data);
+          var fileListVal = $('#fileList').val();
+          if(fileListVal != "" && fileListVal != ","){
+            fileListVal +=',';
           }
-          if(data.status){
-            var fileListVal = $('#fileList').val();
-            if(fileListVal != "" && fileListVal != ","){
-              fileListVal +=',';
-            }
-            if (fileListVal.indexOf(data[1]) == -1) {
-              $('#fileList').val(fileListVal+data[1]);
-            }
-            var parent = el.find(".jFiler-jProgressBar").parent();
-            el.find(".jFiler-jProgressBar").fadeOut("slow", function(){
-              $("<div class=\"jFiler-item-others text-success\"><i class=\"icon-jfi-check-circle\"></i> Success</div>").hide().appendTo(parent).fadeIn("slow");
-            });
+          if (fileListVal.indexOf(data.result[1]) == -1) {
+            $('#fileList').val(fileListVal+data.result[0]);
           }
+
+          el.find('.jFiler-item-title').attr('data-value', data.result[0]);
+          var parent = el.find(".jFiler-jProgressBar").parent();
+          el.find(".jFiler-jProgressBar").fadeOut("slow", function(){
+            $("<div class=\"jFiler-item-others text-success\"><i class=\"icon-jfi-check-circle\"></i> Success</div>").hide().appendTo(parent).fadeIn("slow");
+          });
         },
         error: function(data, el){
           alert('파일 타입과 파일의 경로를 다시 확인해주세요.');
@@ -479,15 +475,30 @@
       onSelect: function(){},
       afterShow: function(){},
       onRemove: function(e){
-        var now = $.datepicker.formatDate('yymmdd', new Date());
-        var removeEle = $(e).find('.jFiler-item-title').prop('title');
-        var fileListVal = $('#fileList').val();
-        var fileListArr = fileListVal.split(',');
-        var removeIdx = $.inArray(now+'/'+removeEle, fileListArr);
-        if (removeIdx != -1) {
-          delete fileListArr[removeIdx];
-          $('#fileList').val(fileListArr.join());
-        }
+        var removeEle = $(e).find('.jFiler-item-title').data('value');
+        $.ajax({
+          type: "POST",
+          url: "/email/remove/file",
+          data: {
+            file:removeEle,
+          },
+          dataType:'json',
+          error:function(request,status,error){
+            console.log('파일 삭제 에러 code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
+            return false;
+          },
+          success: function(data) {
+            console.log('remove result: ',data);
+            var fileListVal = $('#fileList').val();
+            var fileListArr = fileListVal.split(',');
+            var removeIdx = $.inArray(removeEle, fileListArr);
+            if (removeIdx != -1) {
+              delete fileListArr[removeIdx];
+              $('#fileList').val(fileListArr.join());
+            }
+            return true;
+          }
+        });
       },
       onEmpty: function(){},
       captions: {
@@ -506,6 +517,11 @@
     });
   });
   // 세션만료 - 로그인
+  $("input[type=password]").on('keyup',function(event){
+    if(event.keyCode == 13){
+      $('#loginBtn').trigger('click');
+    }
+  });
   $("#loginBtn").on('click',function(){
     if($("input[name=username]").val() == ""){
       alert("아이디를 입력해주세요.");
@@ -520,6 +536,10 @@
       };
       sendLogin(data);
     }
+  });
+  // 세션모달 열리기 전에
+  $("#login-Modal").on("show.bs.modal",function(){
+    $('.select2-container').removeClass('select2-container--open');
   });
   function sendLogin(param){
     $.ajax({
@@ -555,13 +575,7 @@
       contentType : false,
       processData : false,
       success: function(data) {
-        if(data.status == 'sessionTimeOut'){
-          alert('세션이 만료되었습니다. 로그인 후 다시 시도해주세요.');
-          $('#login-Modal').modal('show');
-          return false;
-        }
-        if(data.status)
-          $('#M_body').summernote('insertImage', 'http://192.168.0.22:3000/'+data);
+        $('#M_body').summernote('insertImage', 'http://mail.overware.co.kr/'+data.result);
       }
     });
   }
@@ -577,6 +591,7 @@
       'M_subject': $("#M_subject").val(),
       'M_type': $("input:radio[name=M_type]:checked").val()
     };
+    var check=true;
     if(param["M_sender"] == null){
       check = requiredMessage("M_sender","보내는 사람를 선택해주세요.");
     }
@@ -627,17 +642,17 @@
     })
     .then((value) => {
       if (value != null) {
-        var check=true;
         var now = $.datepicker.formatDate('yymmdd', new Date());
         var fileListArr = $("#fileList").val().split(',');
         var fileListStr = "";
         var fileNameStr = "";
         var fileDBListStr = "";
         $.each(fileListArr, function(index, value) {
-          if(value != ""){
+          if(value != "" && value != 'undefined'){
             fileDBListStr += value;
-            fileListStr += 'http://192.168.0.22:3000/uploads/files/'+value;
-            fileNameStr += value.replace(now+'/','');
+            var now = $.datepicker.formatDate('yymmdd', new Date());
+            fileListStr += 'http://mail.overware.co.kr/uploads/files/'+now+'/'+value;
+            fileNameStr += $.trim($('.jFiler-items-list').find('[data-value=\"'+value+'\"]').attr('title'));
             if(fileListArr.length-1 != index){
               fileListStr += '|';
               fileDBListStr += '|';
@@ -650,11 +665,8 @@
         param['M_fileName'] = fileNameStr;
         param['M_file_d'] = fileDBListStr;
 
-
-        if(check){
-          $('span.messages').find('.error').text('');
-          SendEmails(param);
-        }
+        $('span.messages').find('.error').text('');
+        SendEmails(param);
       }
     });
   });
