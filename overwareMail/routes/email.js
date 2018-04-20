@@ -179,25 +179,14 @@ async function asyncForEach(array, callback) {
   }
 }
 
-router.get('/send/result',async function(req, res) {
-  console.log('/send/result값');
-  console.log(req);
-  res.send('true');
-  // if(req.query.type!='reject'){
-  //   await mailDetailB.updateResult([0,req.query.mail_id]);
-  //   res.send('true');
-  // }
-});
-
 router.post('/send/result',async function(req, res) {
-  console.log('/send/result값');
-  console.log(req.body);
-  console.log(res);
+  console.log('POST /send/result값');
+  console.log('req.body:',req.body);
+  await mailListA.updateResult([req.body.Success,req.body.Failed,req.body.ID]);
+  if(req.body.Result == 'success'){
+    await mailListB.updateResult([0,req.body.ID]);
+  }
   res.send('true');
-  // if(req.query.type!='reject'){
-  //   await mailDetailB.updateResult([0,req.query.mail_id]);
-  //   res.send('true');
-  // }
 });
 
 router.post('/send',isAuthenticated, async function(req, res) {
