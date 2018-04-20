@@ -182,9 +182,9 @@ async function asyncForEach(array, callback) {
 router.post('/send/result',async function(req, res) {
   console.log('POST /send/result값');
   console.log('req.body:',req.body);
-  await mailListA.updateResult([req.body.Success,req.body.Failed,req.body.ID]);
+  await mailAllA.updateResult([req.body.Success,req.body.Failed,req.body.ID]);
   if(req.body.Result == 'success'){
-    await mailListB.updateResult([0,req.body.ID]);
+    await mailDetailB.updateResult([0,req.body.ID]);
   }
   res.send('true');
 });
@@ -328,8 +328,10 @@ router.post('/send',isAuthenticated, async function(req, res) {
     if(typeof mailApiRsult == 'object'){
       await mailAllA.updateId([mailApiRsult.id,param['unique_id']]);
     }
-    var updateResult = await mailDetailB.updateResult([resultEmail[1],param['unique_id']]);
-    console.log('mailDetailB update Result:',updateResult);
+    await mailDetailB.updateResult([resultEmail[1],param['unique_id']]);
+    // console.log('mailDetailB update Result:',updateResult);
+  }else if(resultEmail[1] != 0){
+    await mailDetailB.updateResult([resultEmail[1],param['unique_id']]);
   }
   // 메일나라에 전송후 첨부파일 삭제
   if(req.body['M_file_d'] != ""){
