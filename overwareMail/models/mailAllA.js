@@ -15,7 +15,11 @@ var mailAllA = {
     return await getResult(sql,[n_idx]);
   },
   updateId: async function(param){
-    var sql = 'update m_mail_all_a set M_a_id=? where M_idx_A=?';
+    var sql = 'update m_mail_all_a set M_a_id=? where n_idx=?';
+    return await getResult(sql,param);
+  },
+  updateResult:async function(param){
+    var sql = 'update m_mail_all_a set M_success=? ,M_failed=? where n_idx=?';
     return await getResult(sql,param);
   }
 }
