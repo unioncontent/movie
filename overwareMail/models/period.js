@@ -78,18 +78,15 @@ var period = {
       var sql ='SELECT FORMAT(count(n_idx), 0) as total FROM period_view where M_regdate > CURRENT_DATE() and M_id=?;';
       result['todaySendCount'] = await getResult(sql,param);
       result['todaySendCount'] = parseInt(result['todaySendCount'][0]['total']);
-      sql = 'SELECT FORMAT(count(*), 0) as total from (SELECT * FROM keyword_data where user_idx!=9 and keyword_property=\'포함\' group by keyword_main) e;';
-      result['keywordCount'] = await getResult(sql,[]);
-      result['keywordCount'] = result['keywordCount'][0]['total'];
       sql = 'SELECT FORMAT(COUNT(IF((success != 0), 1, NULL)), 0) as success,FORMAT(COUNT(IF((fail != 0), 1, NULL)), 0) as fail FROM period_view where M_send > CURRENT_DATE() and M_id=?;';
       result['successNfailCount'] = await getResult(sql,param);
       result['successNfailCount'] = result['successNfailCount'][0];
-      sql = 'SELECT FORMAT(count(*), 0) as total FROM period_view where M_send > CURRENT_DATE() and M_id=?;';
-      result['todayCount'] = await getResult(sql,param);
-      result['todayCount'] = result['todayCount'][0]['total'];
-      sql = 'SELECT FORMAT(count(*), 0) as total FROM period_view where M_send > CURRENT_DATE() and M_type = 1 and M_id=?;';
-      result['reservationCount'] = await getResult(sql,param);
-      result['reservationCount'] = result['reservationCount'][0]['total'];
+      sql = 'SELECT FORMAT(COUNT(IF((M_type=0), 1, NULL)), 0) as today,FORMAT(COUNT(IF((M_type=1), 1, NULL)), 0) as reservation FROM period_view where Date(M_send) = CURRENT_DATE() and M_id=1;';
+      result['mTypeCount'] = await getResult(sql,param);
+      result['mTypeCount'] = result['mTypeCount'][0];
+      sql = 'SELECT FORMAT(COUNT(IF((M_type=1 and success = 0 and fail = 0), 1, NULL)), 0) as total FROM period_view where M_send > now() and M_id=1;';
+      result['waitingCount'] = await getResult(sql,param);
+      result['waitingCount'] = result['waitingCount'][0]['total'];
       if(result.todaySendCount > 0){
         if(parseInt(result.successNfailCount.success) > 0 )
           result['successP'] = Math.round((parseInt(result.successNfailCount.success) / result.todaySendCount) * 100);

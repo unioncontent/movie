@@ -34,7 +34,7 @@
                   <thead>
                     <tr>
                       <th width="1%">NO</th>
-                      <th width="10%">날짜</th>
+                      <th width="10%">발송일</th>
                       <th width="5%">키워드</th>
                       <th width="20%">제목</th>
                       <th width="5%">발송건수</th>
@@ -56,7 +56,10 @@
                       <th><%= listCount - i - offset %></th>
                       <td><%= list[i].M_regdate %></td>
                       <td><div class="kwd_nobr"><%= list[i].M_keyword %></div></td>
-                      <td><div class="title_nobr"><%= list[i].M_subject %></div></td>
+                      <td>
+                        <div class="title_nobr"><%= list[i].M_subject %></div>
+                        <div class="mailHtml"><%= list[i].M_body %></div>
+                      </td>
                       <td><%= parseInt(list[i].success) + parseInt(list[i].fail) %></td>
                       <td><%= list[i].success %></td>
                       <td><%= list[i].fail %></td>
@@ -141,6 +144,26 @@
         </div>
       </div>
       <!-- Modal start-->
+      <div class='modal fade' id='previewMail-Modal' role='dialog'>
+        <div class='modal-dialog modal-lg' role='document'>
+          <div class='modal-content'>
+            <div class='modal-header'>
+              <h5 class="modal-title"><span id="date"></span>미리보기</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div class='modal-body'>
+              <div class='col-sm-12' id="mailBody"></div>
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-secondary mobtn" data-dismiss='modal' aria-label='Close' type="button">취소</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Modal end-->
+      <!-- Modal start-->
       <div class='modal fade' id='period-Modal' role='dialog'>
         <div class='modal-dialog' role='document'>
           <div class='modal-content'>
@@ -199,12 +222,21 @@
   .btn i {
     margin-right: 0px;
   }
+  .mailHtml{
+    display: none;
+  }
+  #mailBody{
+    overflow: auto;
+  }
   .title_nobr,.kwd_nobr{
     font-size: 15px;
     padding-left: 3px;
     text-overflow: ellipsis;
     width: 500px;
     overflow: hidden;
+  }
+  .title_nobr:hover{
+    font-weight: bold;
   }
   .kwd_nobr{
     width: 146px;
@@ -232,6 +264,12 @@
     }
   });
 
+  // 제목 클릭시
+  $(document).on('click','.title_nobr',function(){
+    $('#mailBody').empty();
+    $('#mailBody').html($(this).next('div').text());
+    $('#previewMail-Modal').modal('show');
+  });
   // 통계보고서 보기버튼 클릭시
   $(document).on("click",".btn-period",function(){
     $('#media').text(0);
@@ -323,7 +361,7 @@
             <th>'+numIdx+'</th>\
             <td>'+item.M_regdate+'</td>\
             <td><div class="kwd_nobr">'+item.M_keyword+'</div></td>\
-            <td><div class="title_nobr">'+item.M_subject+'</div></td>\
+            <td><div class="title_nobr">'+item.M_subject+'</div><div class="mailHtml">'+item.M_body+'</div></td>\
             <td>'+(parseInt(item.success) + parseInt(item.fail))+'</td>\
             <td>'+item.success+'</td>\
             <td>'+item.fail+'</td>';
