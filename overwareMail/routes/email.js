@@ -13,7 +13,6 @@ var mailListC = require('../models/mailListC.js');
 var keyword = require('../models/keyword.js');
 var mailType = require('../models/mailType.js');
 
-
 var isAuthenticated = function (req, res, next) {
   var url = req.originalUrl;
   if (req.isAuthenticated()){
@@ -41,6 +40,20 @@ router.get('/',isAuthenticated, async function(req, res) {
     groupListPageNum : 1
   };
   res.render('email',data);
+});
+
+router.get('/test',isAuthenticated, async function(req, res) {
+  var data = {
+    keywordList : await keyword.selectMovieKwd(),
+    typeList : await mailType.selectTable([req.user.user_idx]),
+    mailList : await mailListA.selectView({},[req.user.user_idx,0,10]),
+    mailListCount : await mailListA.selectViewCount({},[req.user.user_idx,0,10]),
+    mailListPageNum : 1,
+    groupList : await mailListC.selectView({},[req.user.user_idx,0,10]),
+    groupListCount : await mailListC.selectViewCount({},[req.user.user_idx,0,10]),
+    groupListPageNum : 1
+  };
+  res.render('email_test',data);
 });
 
 router.post('/getModalListPage',isAuthenticated, async function(req, res) {
@@ -166,9 +179,21 @@ async function asyncForEach(array, callback) {
   }
 }
 
-router.get('/send/result',isAuthenticated, async function(req, res) {
+router.get('/send/result',async function(req, res) {
   console.log('/send/result값');
-  console.log(req.query);
+  console.log(req);
+  res.send('true');
+  // if(req.query.type!='reject'){
+  //   await mailDetailB.updateResult([0,req.query.mail_id]);
+  //   res.send('true');
+  // }
+});
+
+router.post('/send/result',async function(req, res) {
+  console.log('/send/result값');
+  console.log(req.body);
+  console.log(res);
+  res.send('true');
   // if(req.query.type!='reject'){
   //   await mailDetailB.updateResult([0,req.query.mail_id]);
   //   res.send('true');
@@ -193,8 +218,6 @@ router.post('/send',isAuthenticated, async function(req, res) {
   }
 
   var recipients = recipi.concat(groups);
-  // req.body.M_file = 'http://mail.overware.co.kr/email/download/20180419/메일 시스템 구성도-2018-04-02.pptx';
-  // req.body.M_fileName = '메일 시스템 구성도-2018-04-02.pptx';
   var param = {
     'subject': urlencode(new Buffer(utf82euckr.convert(req.body.M_subject)).toString('base64')),
     'body': urlencode(new Buffer(utf82euckr.convert(req.body.M_body)).toString('base64')),
@@ -206,10 +229,8 @@ router.post('/send',isAuthenticated, async function(req, res) {
     'time' : (typeof req.body.end_reserve_time =='undefined') ? '' : urlencode(req.body.end_reserve_time),
     'file_url': urlencode(req.body.M_file),
     'file_name': urlencode(req.body.M_fileName)
-    // 'file_url': urlencode(new Buffer(utf82euckr.convert(req.body.M_file)).toString('base64')),
-    // 'file_name': urlencode(new Buffer(utf82euckr.convert(req.body.M_fileName)).toString('base64'))
   };
-  console.log('mail send param: ',param);
+  // console.log('mail send param: ',param);
   // 첨부파일 테스트 후 만약 메일나라에서 첨부파일 url이 필요 없으면 바로 삭제하기
   // 'file_url': urlencode(new Buffer(utf82euckr.convert('http://mail.overware.co.kr/email/download/20180411/20180410_134906_099.jpg')).toString('base64')),
   // 'file_name': urlencode(new Buffer(utf82euckr.convert('20180410_134906_099')).toString('base64'))
@@ -235,6 +256,7 @@ router.post('/send',isAuthenticated, async function(req, res) {
   }
   if(req.body['M_file_d'] != ""){
     mailAllParam['M_file'] = req.body['M_file_d'];
+    mailAllParam['M_file_name'] = req.body['M_fileName'];
   }
   if(groups2allIdx == []){
     if(groups2allIdx.length != 0){
@@ -243,7 +265,7 @@ router.post('/send',isAuthenticated, async function(req, res) {
   }
   var m_idx_a = null;
   // 메일발송 리스트 insert
-  console.log('메일발송 리스트 insert:',mailAllParam);
+  // console.log('메일발송 리스트 insert:',mailAllParam);
   var resultInsert = await mailAllA.insert(mailAllParam);
   m_idx_a = resultInsert.insertId;
   param['unique_id'] = m_idx_a;
@@ -253,7 +275,7 @@ router.post('/send',isAuthenticated, async function(req, res) {
   if(m_idx_a){
     var recipiArr = JSON.parse('['+mailAllParam.M_recipi+']');
     var recipiNgroup = recipiArr.concat(groups2allIdx);
-    console.log('메일발송 상세정보 insert:',recipiNgroup);
+    // console.log('메일발송 상세정보 insert:',recipiNgroup);
     await asyncForEach(recipiNgroup, async (item, index, array) => {
       if(insertCheck == false){
         var recipiInfo = await mailListA.getOneInfo(item);
@@ -266,13 +288,13 @@ router.post('/send',isAuthenticated, async function(req, res) {
             M_send :  (typeof req.body.end_reserve_time =='undefined') ? now : req.body.end_reserve_time,
             M_result : '9'
           }
-          console.log('mailDetailParam:',mailDetailParam);
+          // console.log('mailDetailParam:',mailDetailParam);
           try{
             var resultInsert = await mailDetailB.insert(mailDetailParam);
-            console.log('resultInsert:',resultInsert);
+            // console.log('resultInsert:',resultInsert);
           }
           catch(e){
-            console.log('insert 오류:',e);
+            // console.log('insert 오류:',e);
             await mailAllA.delete(m_idx_a);
             insertCheck = true;
           }
@@ -291,8 +313,8 @@ router.post('/send',isAuthenticated, async function(req, res) {
 
   var paramStr = 'subject='+param['subject']+'&body='+param['body']+'&sender='+param['sender']+'&username='+param['username']+'&recipients='+param['recipients']+'&key='+param['key'];
   // returnURL이 있는 경우
-  paramStr += '&return_url=http://mail.overware.co.kr/email/send/result';
-  paramStr += '&unique_id='+param['unique_id'];
+  paramStr += '&return_url='+urlencode('http://mail.overware.co.kr/email/send/result');
+  paramStr += '&unique_id='+urlencode(parseInt(param['unique_id']));
   // 발송 결과 측정 항목을 사용할 경우
   // +'&open=1&click=1&check_period=3&option_return_url=http://mail.overware.co.kr//email/send/result';
   if(param['mail_type'] == urlencode('ONETIME')){
@@ -303,6 +325,7 @@ router.post('/send',isAuthenticated, async function(req, res) {
   }
   // 이메일 발송 - 테스트중
   var resultEmail = await emailSendFun(paramStr);
+  console.log('이메일 발송 파라미터 : ',paramStr);
   console.log('이메일 발송 결과 : ',resultEmail);
   if(resultEmail[0]){
     res.send({status:true});
@@ -312,8 +335,12 @@ router.post('/send',isAuthenticated, async function(req, res) {
   }
   // 메일 발송후 결과 update
   if(req.body.M_type != '1'){
+    var mailApiRsult = resultEmail[resultEmail.length-1];
+    if(typeof mailApiRsult == 'object'){
+      await mailAllA.updateId([mailApiRsult.id,param['unique_id']]);
+    }
     var updateResult = await mailDetailB.updateResult([resultEmail[1],param['unique_id']]);
-    console.log('updateResult:',updateResult);
+    console.log('mailDetailB update Result:',updateResult);
   }
   // 메일나라에 전송후 첨부파일 삭제
   if(req.body['M_file_d'] != ""){
@@ -326,7 +353,7 @@ router.post('/send',isAuthenticated, async function(req, res) {
 });
 function emailSendFun(pStr){
   var options = {
-    url: 'https://directsend.co.kr/index.php/api/v2/mail',
+    url: 'https://directsend.co.kr/index.php/api/result_v2/mail',
     method:'POST',
     headers: {'Content-Type': 'application/x-www-form-urlencoded;'},
     body: pStr
@@ -357,7 +384,8 @@ function emailSendFun(pStr){
     request(options, (error, response, body) => {
       var resultArr = null;
       console.log(JSON.parse(body));
-      var requestResult = JSON.parse(body).status;
+      var returnBody = JSON.parse(body);
+      var requestResult = returnBody.status;
       if(requestResult == '0'){
         resultArr = [true,0,requestResult];
       }
@@ -376,6 +404,7 @@ function emailSendFun(pStr){
       else{
         resultArr = [false,9,'메일발송에 문제가 생겼습니다. 다시 시도해주세요.'];
       }
+      resultArr.push(returnBody);
       return resolve(resultArr);
     });
   });

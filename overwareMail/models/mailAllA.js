@@ -13,6 +13,10 @@ var mailAllA = {
   delete: async function(n_idx){
     var sql = 'delete from m_mail_all_a where n_idx=?';
     return await getResult(sql,[n_idx]);
+  },
+  updateId: async function(param){
+    var sql = 'update m_mail_all_a set M_a_id=? where M_idx_A=?';
+    return await getResult(sql,param);
   }
 }
 
