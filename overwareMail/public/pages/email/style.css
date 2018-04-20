@@ -148,3 +148,7 @@ button.close{
 .note-editor .note-editing-area .note-editable table th{
   border: 1px solid #252525;
 }
+/* editor */
+.note-editor .note-editing-area .note-editable table{
+  width: auto;
+}
