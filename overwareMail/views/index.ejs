@@ -31,12 +31,6 @@
                 <tbody>
                   <tr>
                     <td>
-                      <strong>콘텐츠(영화)대상</strong>
-                    </td>
-                    <td class="txt-primary">4</td>
-                  </tr>
-                  <tr>
-                    <td>
                       <strong>발송성공</strong>
                     </td>
                     <td class="txt-danger"><%=period.successNfailCount.success%>(<%=period.successP%>%)</td>
@@ -49,15 +43,21 @@
                   </tr>
                   <tr>
                     <td>
-                      <strong>금일발송</strong>
+                      <strong>즉시발송</strong>
                     </td>
-                    <td class="txt-primary"><%=period.todayCount%></td>
+                    <td class="txt-primary"><%=period.mTypeCount['today']%></td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <strong>예약발송</strong>
+                    </td>
+                    <td class="txt-primary"><%=period.mTypeCount['reservation']%></td>
                   </tr>
                   <tr>
                     <td>
                       <strong>예약발송대기</strong>
                     </td>
-                    <td class="txt-success"><%=period.reservationCount%></td>
+                    <td class="txt-success"><%=period.waitingCount%></td>
                   </tr>
                 </tbody>
               </table>
@@ -81,7 +81,7 @@
                 <table class="table table-cp">
                   <thead>
                     <tr>
-                      <th width="10%">날짜</th>
+                      <th width="10%">발송일</th>
                       <th>키워드</th>
                       <th>제목</th>
                       <th>발송건</th>
