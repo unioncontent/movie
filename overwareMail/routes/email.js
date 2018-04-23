@@ -66,7 +66,6 @@ router.post('/getModalListPage',isAuthenticated, async function(req, res) {
     emialTotal : [],
     emailPage : 1
   };
-  // cpID = 현재 로그인된 사람 아이디, start, end
   var emailParam = [req.user.user_idx,0,10];
   var groupParam = [req.user.user_idx,0,10];
 
@@ -127,7 +126,7 @@ router.get('/searchAll',isAuthenticated, async function(req, res) {
   res.send({status:true,result:data});
 });
 
-/* 메일나라 'https://directsend.co.kr/index.php/api/v2/mail'
+/* 메일나라 'https://directsend.co.kr/index.php/api/v2/mail' / 'https://directsend.co.kr/index.php/api/result_v2/mail'
  * 필수 파라미터
  * subject  : 받을 mail 제목. "utf-8" => "euc-kr"
  * body  : 받을 mail 본문. "utf-8" => "euc-kr"
@@ -170,6 +169,7 @@ router.get('/searchAll',isAuthenticated, async function(req, res) {
  * 메일 내용 텍스트로 보내실 경우
  * bodytag = 1
  */
+
 async function asyncForEach(array, callback) {
   for (var index = 0; index < array.length; index++) {
    var done = await callback(array[index], index, array);
@@ -183,9 +183,16 @@ router.post('/send/result',async function(req, res) {
   console.log('POST /send/result값');
   console.log('req.body:',req.body);
   await mailAllA.updateResult([req.body.Success,req.body.Failed,req.body.ID]);
-  if(req.body.Result == 'success'){
-    await mailDetailB.updateResult([0,req.body.ID]);
-  }
+
+  await asyncForEach(req.body.Recipients, async (item, index, array) => {
+    if(item.SmtpCode == '250'){
+      await mailDetailB.updateResult2(0,item.Email);
+    }
+    else{
+      await mailDetailB.updateResult2(item.SmtpCode,item.Email);
+    }
+  });
+
   res.send('true');
 });
 
@@ -219,10 +226,6 @@ router.post('/send',isAuthenticated, async function(req, res) {
     'file_url': urlencode(req.body.M_file),
     'file_name': urlencode(req.body.M_fileName)
   };
-  // console.log('mail send param: ',param);
-  // 첨부파일 테스트 후 만약 메일나라에서 첨부파일 url이 필요 없으면 바로 삭제하기
-  // 'file_url': urlencode(new Buffer(utf82euckr.convert('http://mail.overware.co.kr/email/download/20180411/20180410_134906_099.jpg')).toString('base64')),
-  // 'file_name': urlencode(new Buffer(utf82euckr.convert('20180410_134906_099')).toString('base64'))
 
   var dt = datetime.create();
   var now = dt.format('Y-m-d H:M:S');
@@ -247,14 +250,13 @@ router.post('/send',isAuthenticated, async function(req, res) {
     mailAllParam['M_file'] = req.body['M_file_d'];
     mailAllParam['M_file_name'] = req.body['M_fileName'];
   }
-  if(groups2allIdx == []){
+  if(groups2allIdx != []){
     if(groups2allIdx.length != 0){
       mailAllParam['M_group'] = groups2allIdx[0];
     }
   }
   var m_idx_a = null;
   // 메일발송 리스트 insert
-  // console.log('메일발송 리스트 insert:',mailAllParam);
   var resultInsert = await mailAllA.insert(mailAllParam);
   m_idx_a = resultInsert.insertId;
   param['unique_id'] = m_idx_a;
@@ -264,7 +266,6 @@ router.post('/send',isAuthenticated, async function(req, res) {
   if(m_idx_a){
     var recipiArr = JSON.parse('['+mailAllParam.M_recipi+']');
     var recipiNgroup = recipiArr.concat(groups2allIdx);
-    // console.log('메일발송 상세정보 insert:',recipiNgroup);
     await asyncForEach(recipiNgroup, async (item, index, array) => {
       if(insertCheck == false){
         var recipiInfo = await mailListA.getOneInfo(item);
@@ -277,13 +278,10 @@ router.post('/send',isAuthenticated, async function(req, res) {
             M_send :  (typeof req.body.end_reserve_time =='undefined') ? now : req.body.end_reserve_time,
             M_result : '9'
           }
-          // console.log('mailDetailParam:',mailDetailParam);
           try{
             var resultInsert = await mailDetailB.insert(mailDetailParam);
-            // console.log('resultInsert:',resultInsert);
           }
           catch(e){
-            // console.log('insert 오류:',e);
             await mailAllA.delete(m_idx_a);
             insertCheck = true;
           }
@@ -300,12 +298,19 @@ router.post('/send',isAuthenticated, async function(req, res) {
     return false;
   }
 
+  // 예약발송은 파이썬으로
+  if(req.body.M_type == '1'){
+    res.send({status:true});
+    console.log('file list');
+    console.log(getFiles('/home/hosting_users/unioncmail/apps/unioncmail_unioncmail/public/uploads/files/20180423'));
+    console.log('--------------------');
+    return false;
+  }
+
   var paramStr = 'subject='+param['subject']+'&body='+param['body']+'&sender='+param['sender']+'&username='+param['username']+'&recipients='+param['recipients']+'&key='+param['key'];
   // returnURL이 있는 경우
   paramStr += '&return_url='+urlencode('http://mail.overware.co.kr/email/send/result');
   paramStr += '&unique_id='+urlencode(parseInt(param['unique_id']));
-  // 발송 결과 측정 항목을 사용할 경우
-  // +'&open=1&click=1&check_period=3&option_return_url=http://mail.overware.co.kr//email/send/result';
   if(param['mail_type'] == urlencode('ONETIME')){
     paramStr +='&mail_type='+param['mail_type']+'&start_reserve_time='+param['time']+'&end_reserve_time='+param['time'];
   }
@@ -323,25 +328,61 @@ router.post('/send',isAuthenticated, async function(req, res) {
     res.status(500).send(resultEmail[2]);
   }
   // 메일 발송후 결과 update
-  if(req.body.M_type != '1'){
-    var mailApiRsult = resultEmail[resultEmail.length-1];
-    if(typeof mailApiRsult == 'object'){
-      await mailAllA.updateId([mailApiRsult.id,param['unique_id']]);
-    }
-    await mailDetailB.updateResult([resultEmail[1],param['unique_id']]);
-    // console.log('mailDetailB update Result:',updateResult);
-  }else if(resultEmail[1] != 0){
-    await mailDetailB.updateResult([resultEmail[1],param['unique_id']]);
+  var mailApiRsult = resultEmail[resultEmail.length-1];
+  if(typeof mailApiRsult == 'object'){
+    await mailAllA.updateId([mailApiRsult.id,param['unique_id']]);
   }
+  await mailDetailB.updateResult([resultEmail[1],param['unique_id']]);
   // 메일나라에 전송후 첨부파일 삭제
+  console.log('메일나라에 전송후 첨부파일 삭제')
   if(req.body['M_file_d'] != ""){
     var removeFileArray = mailAllParam['M_file'].split("|");
     await asyncForEach(removeFileArray, async (item, index, array) => {
       var removePath = "/home/hosting_users/unioncmail/apps/unioncmail_unioncmail/public/uploads/files/"+item;
+      console.log('remove file:',removePath.replace(/ /gi, ""));
       fs.removeSync(removePath.replace(/ /gi, ""));
     });
   }
 });
+
+function getFiles (dir, files_){
+  var fs = require('fs');
+  files_ = files_ || [];
+  var files = fs.readdirSync(dir);
+  for (var i in files){
+      var name = dir + '/' + files[i];
+      if (fs.statSync(name).isDirectory()){
+          getFiles(name, files_);
+      } else {
+          files_.push(name);
+      }
+  }
+  return files_;
+}
+
+/*
+m_mail_detail_B table에 저장될 M_result 값 종류
+0 : 정상발송 => 0 : 메일발송에 성공하였습니다.
+9 : 미발송
+103 : 보내는 사람 이메일이 유효하지 않음 => 3 : 보내는 사람 이메일이 유효하지 않습니다.
+104 : 받는 사람 이메일이 유효하지 않음 => 4 : 받는 사람 이메일이 유효하지 않습니다.
+105 : 본문에 포함되면 안되는 확장자가 있음(.exe or 문자열) => 5 : 본문에 포함되면 안되는 확장자가 있습니다.
+113 : 첨부파일이 다운로드 되지 않을 경우(파일 경로가 없음) => 13 : 첨부파일의 경로나 파일이 없습니다.
+----------------------------
+이외 에외들의 값은 9
+에러 메시지 : 메일발송에 문제가 생겼습니다. 다시 시도해주세요.
+100 : Post Validation 실패(파라미터 없음)
+101 : 회원정보가 일치하지 않음
+102 : 제목 내용 없음
+106 : body Validation 실패(euc-kr 에서 utf8로 변환하는 과정에서 에러)
+107 : 받는 사람이 없음
+109 : return_url이 없음
+110 : 첨부파일이 없음(정상적인 url이 아닌경우)
+111 : 첨부파일 개수가 5개를 초과
+112 : 첨부파일 Size가 5MB를 초과
+205 : 잔액 부족
+*/
+
 function emailSendFun(pStr){
   var options = {
     url: 'https://directsend.co.kr/index.php/api/result_v2/mail',
@@ -349,28 +390,6 @@ function emailSendFun(pStr){
     headers: {'Content-Type': 'application/x-www-form-urlencoded;'},
     body: pStr
   };
-  /*
-  m_mail_detail_B table에 저장될 M_result 값 종류
-  0 : 정상발송 => 0 : 메일발송에 성공하였습니다.
-  9 : 미발송
-  103 : 보내는 사람 이메일이 유효하지 않음 => 3 : 보내는 사람 이메일이 유효하지 않습니다.
-  104 : 받는 사람 이메일이 유효하지 않음 => 4 : 받는 사람 이메일이 유효하지 않습니다.
-  105 : 본문에 포함되면 안되는 확장자가 있음(.exe or 문자열) => 5 : 본문에 포함되면 안되는 확장자가 있습니다.
-  113 : 첨부파일이 다운로드 되지 않을 경우(파일 경로가 없음) => 13 : 첨부파일의 경로나 파일이 없습니다.
-  ----------------------------
-  이외 에외들의 값은 9
-  에러 메시지 : 메일발송에 문제가 생겼습니다. 다시 시도해주세요.
-  100 : Post Validation 실패(파라미터 없음)
-  101 : 회원정보가 일치하지 않음
-  102 : 제목 내용 없음
-  106 : body Validation 실패(euc-kr 에서 utf8로 변환하는 과정에서 에러)
-  107 : 받는 사람이 없음
-  109 : return_url이 없음
-  110 : 첨부파일이 없음(정상적인 url이 아닌경우)
-  111 : 첨부파일 개수가 5개를 초과
-  112 : 첨부파일 Size가 5MB를 초과
-  205 : 잔액 부족
-  */
   return new Promise((resolve, reject) => {
     request(options, (error, response, body) => {
       var resultArr = null;
@@ -400,14 +419,6 @@ function emailSendFun(pStr){
     });
   });
 }
-
-// 만약 첨부파일 접근이 안될시
-// router.get('/download/:date/:file', async function(req, res) {
-//   console.log('download:',req.params);
-//   var filepath = absolutePath+"/public/uploads/files/"+req.params.date+'/'+req.params.file;
-//   console.log('filepath:',filepath);
-//   res.download(filepath);
-// });
 var multer = require('multer');
 var date = datetime.create();
 var today = date.format('Ymd');
