@@ -61,7 +61,7 @@ var period = {
     return await getResult(sql,param);
   },
   getYesterday: async function(param){
-    var sql = 'SELECT * FROM period_view where M_id=? and M_regdate BETWEEN date_sub(now(), INTERVAL 1 day) and now() order by n_idx desc';
+    var sql = 'SELECT * FROM period_view where M_id=? and M_regdate BETWEEN date_sub(now(), INTERVAL 1 day) and now() or Date(M_send) = CURRENT_DATE() order by n_idx desc';
     return await getResult(sql,param);
   },
   getTodayPeriod: async function(param){
@@ -75,10 +75,10 @@ var period = {
       failP:0
     };
     try {
-      var sql ='SELECT FORMAT(count(n_idx), 0) as total FROM period_view where M_regdate > CURRENT_DATE() and M_id=?;';
+      var sql ='SELECT FORMAT(sum(success+fail), 0) as total FROM period_view where (M_regdate > CURRENT_DATE() or Date(M_send) = CURRENT_DATE()) and M_id=?;';
       result['todaySendCount'] = await getResult(sql,param);
       result['todaySendCount'] = parseInt(result['todaySendCount'][0]['total']);
-      sql = 'SELECT FORMAT(COUNT(IF((success != 0), 1, NULL)), 0) as success,FORMAT(COUNT(IF((fail != 0), 1, NULL)), 0) as fail FROM period_view where M_send > CURRENT_DATE() and M_id=?;';
+      sql = 'SELECT FORMAT(sum(IF((success != 0 and fail = 0), 1, NULL)), 0) as success,FORMAT(sum(IF((fail != 0), 1, NULL)), 0) as fail FROM period_view where (M_send > CURRENT_DATE() or Date(M_send) = CURRENT_DATE()) and M_id=?;';
       result['successNfailCount'] = await getResult(sql,param);
       result['successNfailCount'] = result['successNfailCount'][0];
       sql = 'SELECT FORMAT(COUNT(IF((M_type=0), 1, NULL)), 0) as today,FORMAT(COUNT(IF((M_type=1), 1, NULL)), 0) as reservation FROM period_view where Date(M_send) = CURRENT_DATE() and M_id=1;';
