@@ -148,7 +148,6 @@ public class ManageController {
 		model.addAttribute("communityList12", monitorService.communityMonitor("extrememovie"));
 		model.addAttribute("communityList13", monitorService.communityMonitor("humoruniv"));
 		model.addAttribute("communityList14", monitorService.communityMonitor("ilbe"));
-		model.addAttribute("communityList15", monitorService.communityMonitor("ilyo"));
 		model.addAttribute("communityList16", monitorService.communityMonitor("instiz"));
 		model.addAttribute("communityList17", monitorService.communityMonitor("inven"));
 		model.addAttribute("communityList18", monitorService.communityMonitor("issuein"));
@@ -157,7 +156,7 @@ public class ManageController {
 		model.addAttribute("communityList21", monitorService.communityMonitor("ruliweb"));
 		model.addAttribute("communityList22", monitorService.communityMonitor("soccerline"));
 		model.addAttribute("communityList23", monitorService.communityMonitor("square"));
-		model.addAttribute("communityList25", monitorService.communityMonitor("tistory"));
+		model.addAttribute("communityList24", monitorService.communityMonitor("extrememovie_best"));
 	}
 	
 	@PostMapping("/reportbackup")
