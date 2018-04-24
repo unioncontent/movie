@@ -21,6 +21,14 @@ var mailAllA = {
   updateResult:async function(param){
     var sql = 'update m_mail_all_a set M_success=? ,M_failed=? where n_idx=?';
     return await getResult(sql,param);
+  },
+  updateResult2: async function(param){
+    var sql = 'update m_mail_all_a set M_success=0,M_failed=? where n_idx=?';
+    return await getResult(sql,param);
+  },
+  selectfile: async function(param){
+    var sql = 'SELECT M_file,DATE_FORMAT(M_regdate, \'%Y%m%d\') as dateFile FROM m_mail_all_a where n_idx=?';
+    return await getResult(sql,param);
   }
 }
 

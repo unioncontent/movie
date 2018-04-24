@@ -14,9 +14,9 @@ var mailDetailB = {
     var sql = 'update m_mail_detail_b set M_result=? where M_idx_A=?';
     return await getResult(sql,param);
   },
-  updateResult2:async function(result,email){
-    var sql = 'update m_mail_detail_b set M_result=? where E_mail like \'%'+email+'%\'';
-    return await getResult(sql,[result]);
+  updateResult2:async function(param,email){
+    var sql = 'update m_mail_detail_b set M_result=? where E_mail like \'%'+email+'%\' and M_idx_A=?';
+    return await getResult(sql,param);
   },
   getMediaNReporterCount:async function(column,param){
     var sql = 'select count(DISTINCT '+column+') as c from m_mail_detail_b where M_idx_A=?';

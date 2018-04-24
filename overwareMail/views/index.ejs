@@ -33,25 +33,25 @@
                     <td>
                       <strong>발송성공</strong>
                     </td>
-                    <td class="txt-danger"><%=period.successNfailCount.success%>(<%=period.successP%>%)</td>
+                    <td class="txt-danger"><%=period.successNfailCount.success || 0%>(<%=period.successP%>%)</td>
                   </tr>
                   <tr>
                     <td>
                       <strong>발송실패</strong>
                     </td>
-                    <td class="txt-primary"><%=period.successNfailCount.fail%>(<%=period.failP%>%)</td>
+                    <td class="txt-primary"><%=period.successNfailCount.fail || 0%>(<%=period.failP%>%)</td>
                   </tr>
                   <tr>
                     <td>
                       <strong>즉시발송</strong>
                     </td>
-                    <td class="txt-primary"><%=period.mTypeCount['today']%></td>
+                    <td class="txt-primary"><%=period.todayCount%></td>
                   </tr>
                   <tr>
                     <td>
                       <strong>예약발송</strong>
                     </td>
-                    <td class="txt-primary"><%=period.mTypeCount['reservation']%></td>
+                    <td class="txt-primary"><%=period.reservationCount%></td>
                   </tr>
                   <tr>
                     <td>
