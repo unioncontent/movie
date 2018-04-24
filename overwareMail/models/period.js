@@ -30,6 +30,16 @@ var period = {
       return count[0]['total'];
     }
   },
+  selectSendCount: async function(param){
+    var sql = 'SELECT sendCount FROM period_view where n_idx=?';
+    var result = await getResult(sql,param);
+    if(result.length == 0){
+      return 0;
+    }
+    else{
+      return result[0]['sendCount'];
+    }
+  },
   getNewsCount: async function(param){
     var pValue = Object.values(param);
     var sql = 'SELECT count(*) as c FROM period_news_view';
@@ -67,7 +77,6 @@ var period = {
   getTodayPeriod: async function(param){
     var result = {
       todaySendCount:0,
-      keywordCount:0,
       successNfailCount:0,
       todayCount:0,
       reservationCount:0,
@@ -78,13 +87,19 @@ var period = {
       var sql ='SELECT FORMAT(sum(success+fail), 0) as total FROM period_view where (M_regdate > CURRENT_DATE() or Date(M_send) = CURRENT_DATE()) and M_id=?;';
       result['todaySendCount'] = await getResult(sql,param);
       result['todaySendCount'] = parseInt(result['todaySendCount'][0]['total']);
-      sql = 'SELECT FORMAT(sum(IF((success != 0 and fail = 0), 1, NULL)), 0) as success,FORMAT(sum(IF((fail != 0), 1, NULL)), 0) as fail FROM period_view where (M_send > CURRENT_DATE() or Date(M_send) = CURRENT_DATE()) and M_id=?;';
+      sql = 'SELECT FORMAT(sum(if(success is null,0,success)), 0) as success,\
+      FORMAT(sum(if(fail is null,0,fail)), 0) as fail \
+      FROM period_view where (M_send > CURRENT_DATE() or Date(M_send) = CURRENT_DATE()) and M_id=?';
       result['successNfailCount'] = await getResult(sql,param);
       result['successNfailCount'] = result['successNfailCount'][0];
-      sql = 'SELECT FORMAT(COUNT(IF((M_type=0), 1, NULL)), 0) as today,FORMAT(COUNT(IF((M_type=1), 1, NULL)), 0) as reservation FROM period_view where Date(M_send) = CURRENT_DATE() and M_id=1;';
-      result['mTypeCount'] = await getResult(sql,param);
-      result['mTypeCount'] = result['mTypeCount'][0];
-      sql = 'SELECT FORMAT(COUNT(IF((M_type=1 and success = 0 and fail = 0), 1, NULL)), 0) as total FROM period_view where M_send > now() and M_id=1;';
+      sql = 'SELECT FORMAT(if(sum(sendCount) is null,0,sum(sendCount)), 0) as total FROM period_view where Date(M_send) = CURRENT_DATE() and M_id=1 and M_type=0';
+      result['todayCount'] = await getResult(sql,param);
+      result['todayCount'] = result['todayCount'][0]['total'];
+      sql = 'SELECT FORMAT(if(sum(sendCount) is null,0,sum(sendCount)), 0) as total FROM period_view where Date(M_send) = CURRENT_DATE() and M_id=1 and M_type=1';
+      result['reservationCount'] = await getResult(sql,param);
+      result['reservationCount'] = result['reservationCount'][0]['total'];
+      sql = 'SELECT FORMAT(if(sum(sendCount) is null,0,sum(sendCount)), 0) as total\
+      FROM period_view where M_send > now() and M_id=1 and M_type=1;';
       result['waitingCount'] = await getResult(sql,param);
       result['waitingCount'] = result['waitingCount'][0]['total'];
       if(result.todaySendCount > 0){

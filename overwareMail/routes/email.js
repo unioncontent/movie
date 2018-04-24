@@ -178,18 +178,40 @@ async function asyncForEach(array, callback) {
     }
   }
 }
+async function asyncFileRemove(dateF,fileArr){
+  console.log('asyncFileRemove');
+  await asyncForEach(fileArr, async (item, index, array) => {
+    var removePath = "/home/hosting_users/unioncmail/apps/unioncmail_unioncmail/public/uploads/files/"+dateF+"/"+item;
+    fs.removeSync(removePath.replace(/ /gi, ""));
+    console.log('remove file:',removePath.replace(/ /gi, ""));
+    console.log(getFiles(removePath));
+    console.log('--------------------');
+  });
+}
 
 router.post('/send/result',async function(req, res) {
-  console.log('POST /send/result값');
-  console.log('req.body:',req.body);
+  console.log('POST /send/result값 : ',req.body);
   await mailAllA.updateResult([req.body.Success,req.body.Failed,req.body.ID]);
+
+  // 파일 삭제
+  // var result = await mailAllA.selectfile([req.body.ID]);
+  // console.log(result)
+  // if(result.length > 0){
+  //   if(result[0].M_file != null){
+  //     var removeFileArr = result[0].M_file.split("|");
+  //     console.log('before file list');
+  //     console.log(getFiles('/home/hosting_users/unioncmail/apps/unioncmail_unioncmail/public/uploads/files/'+result[0].dateFile));
+  //     console.log('--------------------');
+  //     asyncFileRemove(result[0].dateFile,removeFileArr);
+  //   }
+  // }
 
   await asyncForEach(req.body.Recipients, async (item, index, array) => {
     if(item.SmtpCode == '250'){
-      await mailDetailB.updateResult2(0,item.Email);
+      await mailDetailB.updateResult2([0,req.body.ID],item.Email);
     }
     else{
-      await mailDetailB.updateResult2(item.SmtpCode,item.Email);
+      await mailDetailB.updateResult2([item.SmtpCode,req.body.ID],item.Email);
     }
   });
 
@@ -229,7 +251,6 @@ router.post('/send',isAuthenticated, async function(req, res) {
 
   var dt = datetime.create();
   var now = dt.format('Y-m-d H:M:S');
-
   // 이메일발송 결과 DB 저장
   var mailAllParam = {
     M_sender: req.body['M_sender'],
@@ -301,9 +322,6 @@ router.post('/send',isAuthenticated, async function(req, res) {
   // 예약발송은 파이썬으로
   if(req.body.M_type == '1'){
     res.send({status:true});
-    console.log('file list');
-    console.log(getFiles('/home/hosting_users/unioncmail/apps/unioncmail_unioncmail/public/uploads/files/20180423'));
-    console.log('--------------------');
     return false;
   }
 
@@ -332,17 +350,24 @@ router.post('/send',isAuthenticated, async function(req, res) {
   if(typeof mailApiRsult == 'object'){
     await mailAllA.updateId([mailApiRsult.id,param['unique_id']]);
   }
-  await mailDetailB.updateResult([resultEmail[1],param['unique_id']]);
-  // 메일나라에 전송후 첨부파일 삭제
-  console.log('메일나라에 전송후 첨부파일 삭제')
-  if(req.body['M_file_d'] != ""){
-    var removeFileArray = mailAllParam['M_file'].split("|");
-    await asyncForEach(removeFileArray, async (item, index, array) => {
-      var removePath = "/home/hosting_users/unioncmail/apps/unioncmail_unioncmail/public/uploads/files/"+item;
-      console.log('remove file:',removePath.replace(/ /gi, ""));
-      fs.removeSync(removePath.replace(/ /gi, ""));
-    });
+  if(resultEmail[1] != 0){
+    var sendCount = await period.selectSendCount(param['unique_id'])
+    await mailAllA.updateResult2([sendCount,param['unique_id']]);
   }
+  await mailDetailB.updateResult([resultEmail[1],param['unique_id']]);
+  // 메일나라에 전송후 첨부파일 삭제(보류)
+  // console.log('메일나라에 전송후 첨부파일 삭제')
+  // if(req.body['M_file_d'] != ""){
+  //   var dateFile = dt.format('Ymd');
+  //   var removeFileArray = mailAllParam['M_file'].split("|");
+
+    // asyncFileRemove(dateFile,removeFileArray);
+    // await asyncForEach(removeFileArray, async (item, index, array) => {
+    //   var removePath = "/home/hosting_users/unioncmail/apps/unioncmail_unioncmail/public/uploads/files/"+item;
+    //   console.log('remove file:',removePath.replace(/ /gi, ""));
+    //   fs.removeSync(removePath.replace(/ /gi, ""));
+    // });
+  // }
 });
 
 function getFiles (dir, files_){
@@ -352,9 +377,9 @@ function getFiles (dir, files_){
   for (var i in files){
       var name = dir + '/' + files[i];
       if (fs.statSync(name).isDirectory()){
-          getFiles(name, files_);
+        getFiles(name, files_);
       } else {
-          files_.push(name);
+        files_.push(name);
       }
   }
   return files_;
