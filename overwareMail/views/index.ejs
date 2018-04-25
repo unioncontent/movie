@@ -95,15 +95,41 @@
                     <tr>
                       <th><%= list[i].M_regdate %></th>
                       <td><div class="kwd_nobr"><%= list[i].M_keyword %></div></td>
-                      <td><div class="title_nobr"><%= list[i].M_subject %></div></td>
+                      <td>
+                        <div class="title_nobr"><%= list[i].M_subject %></div>
+                        <div class="mailHtml">
+                          <%= list[i].M_body %>
+                          <% if(list[i].M_file){ %>
+                            <br/><br/>첨부파일 :<br/>
+                          <%
+                            var fileArr = list[i].M_file.split('|');
+                            var fileNameArr = fileArr;
+                            if(list[i].M_file_name){
+                              fileNameArr = list[i].M_file_name.split('|');
+                            }
+                            fileArr.forEach(function(value, index) {
+                              var file = value.split('/').pop();
+                              var fileName = fileNameArr[index];
+                          %>
+                          <a href="https://directsend.co.kr/index.php/mail_report_api/filedownload/<%=file%>" target="_blank" style="font-size:15px;"><%=fileName%></a>
+                          <br/>
+                          <% }); } %>
+                        </div>
+                      </td>
                       <td><%= parseInt(list[i].success) + parseInt(list[i].fail) %></td>
                       <td><%= list[i].success %></td>
-                      <td><%= list[i].fail %></td>
+                      <td><span class="fail" data-idx="<%= list[i].n_idx %>"><%= list[i].fail %></span></td>
                       <td>
                         <%=(list[i].M_type == '0') ? '즉시' : '예약'%>
                         <% if((new Date().getTime() < new Date(list[i].M_send).getTime())){ %>
                         <label class="badge badge-danger">대기</label>
-                        <%}%>
+                        <%}
+                        //var send = new Date(list[i].M_send);
+                        //send.setMinutes(send.getMinutes() + 30);
+                        //if((list[i].fail > 0) && (new Date().getTime() < send.getTime())){
+                        %>
+                        <!-- <label class="label label-warning">2차발송대기</label> -->
+                        <%//}%>
                       </td>
                     </tr>
                     <% } %>
@@ -114,16 +140,304 @@
           </div>
         </div>
       </div>
+      <!-- Modal start-->
+      <div class='modal fade' id='previewMail-Modal' role='dialog'>
+        <div class='modal-dialog modal-lg' role='document'>
+          <div class='modal-content'>
+            <div class='modal-header'>
+              <h5 class="modal-title"><span id="date"></span>미리보기</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div class='modal-body'>
+              <div class='col-sm-12' id="mailBody"></div>
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-secondary mobtn" data-dismiss='modal' aria-label='Close' type="button">취소</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Modal end-->
+      <!-- Modal start-->
+      <div class='modal fade' id='error-Modal' role='dialog'>
+        <div class='modal-dialog' role='document'>
+          <div class='modal-content'>
+            <div class='modal-header'>
+              <h5 class="modal-title">실패 상세보기</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div class='modal-body'>
+              <div class="table-responsive">
+                <table class="table table-sm">
+                  <thead>
+                    <tr class="text-capitalize">
+                      <th></th>
+                      <th>코드</th>
+                      <th>오류 <span class="text-muted smtpMsg"><i class="fas fa-question-circle"></i></span></th>
+                      <th>이메일</th>
+                    </tr>
+                  </thead>
+                  <tbody id="error-list" class="text-danger">
+                  </tbody>
+                </table>
+              </div>
+              <!-- <ul>
+                <li><i class="fas fa-exclamation-triangle"></i></li>
+              </ul> -->
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-secondary mobtn" data-dismiss='modal' aria-label='Close' type="button">취소</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Modal end-->
+      <!-- Modal start-->
+      <div class='modal fade' id='smtp-Modal' role='dialog'>
+        <div class='modal-dialog' role='document'>
+          <div class='modal-content'>
+            <div class='modal-header'>
+              <h5 class="modal-title text-center">오류 코드 도움말</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div class='modal-body'>
+              <ul class="nav nav-tabs  tabs" role="tablist">
+                <li class="nav-item">
+                  <a class="nav-link active" data-toggle="tab" href="#err400" role="tab">400 에러</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" data-toggle="tab" href="#err500" role="tab">500 에러</a>
+                </li>
+              </ul>
+              <div class="tab-content tabs card-block">
+                <div class="tab-pane active" id="err400" role="tabpanel">
+                  <p class="m-0">
+                    1. 421 Server too busy<br />
+                    - 수신 측 서버의 일시 장애로 연결이 안되는 현상으로 이는 수신 측 서버의 SMTP 세션이 Full 이거나 수신 측 서버의 트래픽으로 인해 새로운 SMTP 연결을 만들지 못하는 경우 발생할 수 있습니다. 잠시 후 다시 시도해 보거나 오류가 계속 될 경우 수신 측 관리자에게 문의 하시기 바랍니다.<br /><br />
+
+                    2. 421-Microsoft ESMTP MAIL Service, Version: 5.0.2195.5600 ready at Service not available, closing transmission channel<br />
+                    - 수신 측 서버인 Microsoft ESMTP 서비스가 정상적으로 동작하지 않아 메일을 송신하지 못하는 오류입니다. 시 후 다시 시도해 보거나 오류가 계속 될 경우 수신 측 관리자에게 문의 하시기 바랍니다.<br /><br />
+
+                    3. 421 4.3.1 ILLEGAL FROM &lt;xxx@xxx.com&gt; Sorry. Your IP has problems. This Connection will be closed. Please mail to mailsysop@hanmir.com (by using another e-mail server). Thank you.<br />
+                    - 송신 측의 아이피 주소 또는 메일주소가 잘못 되어 송신이 제한된 오류입니다. 안내되어진 메일주소로 문의 메일을 보내시기 바랍니다.<br /><br />
+
+                    4. 421 4.3.2 Your IP(xxx.xxx.xxx.xxx) is filtered and this connection will be closed. You must register your IP to spammaster@hanafos.com By SpaceLee, the Lord of mail server<br />
+                    - 송신 측의 아이피 주소가 하나포스닷컴에 스팸 메일러로 등록이 되어 송신이 제한된 오류입니다. 안내되어진 메일주소로 문의 메일을 보내시기 바랍니다.<br /><br />
+
+                    5. 421 4.3.2 Your IP(xxx.xxx.xxx.xxx) is filtered and this connection will be closed. You must register your IP to http://realip.naver.com.<br />
+                    - 송신 측의 아이피 주소가 네이버닷컴에 스팸 메일러로 등돌이 되어 송신이 제한된 오류입니다. 네이트닷컴의 스팸 정책을 참고하시기 바랍니다.<br /><br />
+
+                    6. 441 4.4.1 No answer from host<br />
+                    - 수신 측의 메일서버로부터 응답을 받지 못해 연결이 실패된 오류입니다. 잠시 후 다시 시도해 보거나 오류가 계속 될 경우 수신 측 관리자에게 문의 하시기 바랍니다.<br /><br />
+
+                    7. 441 4.4.1 temporay dns failed &lt;Hanmail.net&gt;<br />
+                    - 한메일닷넷의 메일서버로 연결하던 도중 한메일의 스팸정책에 위배되어 발생한 오류입니다. 다음의 연락처로 연락해 보시기 바랍니다. 1544-0580 내선번호 2<br /><br />
+
+                    8. 450 &lt;xxx@xxx.xxx&gt; : Recipient address rejected: Greylisted for 300 seconds (see http://isg.ee.ethz.ch/tools/postgrey/help)<br />
+                    - 송신 측의 메일주소가 수신측에서 참조하고 있는 Graylisting 시스템에 등록되어 메일발송이 지연되고 있는 오류입니다.<br /><br />
+
+                    9. 451 4.4.0 DNS resolving error<br />
+                    - 수신 측 서버의 도메인을 찾지 못해 발생한 오류입니다. 현재 메일서버가 참조하고 있는 DNS 서버가 정상적으로 동작하는지 확인해 보시기 바랍니다. 또한 다른 ISP 업체들의 DNS를 참조하여 메일을 송신해 보시기 바랍니다.<br /><br />
+
+                    10. 451 4.3.0 Other or undefined mail system status<br />
+                    - 수신 측 메일 시스템의 프로토콜이 틀리거나 연결된 서버가 SMTP 서버가 아닐경우 발생하는 오류입니다.<br /><br />
+
+                    11. 451 4.3.0 Temporary system failure. Please try again later<br />
+                    - 수신 측 서버의 일시적인 장애로 인하여 메일을 수신하지 못하는 오류입니다.<br /><br />
+
+                    12. 451 4.4.2 Bad connection (io timeout)<br />
+                    - 수신 측 서버의 응답시간 초과로 인하여 연결이 끊어져 발생한 오류입니다. 잠시 후 다시 시도해 보거나 오류가 계속 될 경우 수신 측 관리자에게 문의 하시기 바랍니다.<br /><br />
+
+                    13. 451 Relay Server Not Ready<br />
+                    - 수신 측 서버의 릴레이 기능이 정상적으로 동작하지 않아 발생한 오류입니다. 잠시 후 다시 시도해 보거나 오류가 계속 될 경우 수신 측 관리자에게 문의 하시기 바랍니다.<br /><br />
+
+                    14. 452 sorry, your recipient address is not in my local list<br />
+                    - 수신자의 메일주소가 수신 측의 메일서버에 존재하는 계정이 아니어서 발생한 오류입니다. 수신자의 메일주소를 올바르게 표기하였는지 확인해 보시기 바랍니다. 또한, 해당 주소가 실제 수신 측에 존재하는 계정인지 확인해 보시기 바랍니다.<br /><br />
+
+                    15. 452 4.4.5 Requested mail action aborted: exceeded storage allocation<br />
+                    - 수신 측 메일서버의 저장공간 부족으로 인하여 발생한 오류입니다. 수신 측 관리자에게 문의 하시기 바랍니다.<br /><br />
+
+                    16. 452 4.4.5 Disk write / Insufficient disk space error occurred<br />
+                    - 수신 측 메일서버의 저장공간 부족으로 인하여 발생한 오류입니다. 수신 측 관리자에게 문의 하시기 바랍니다.<br /><br />
+
+                    17. 452 4.4.5 Insufficient disk space; try again later<br />
+                    - 수신 측 메일서버의 저장공간 부족으로 인하여 발생한 오류입니다. 수신 측 관리자에게 문의 하시기 바랍니다.<br /><br />
+
+                    18. 452 4.4.5 MailBox or MessageQuota exceed for &lt;E-mail Address&gt;<br />
+                    - 수신자 메일 사서함의 공간부족으로 인하여 발생한 오류입니다. 수신 측 관리자에게 문의 하시기 바랍니다.<br /><br />
+                  </p>
+                </div>
+                <div class="tab-pane" id="err500" role="tabpanel">
+                  <p class="m-0">
+                    1. 5XX you must be spam<br />
+                    - 송신 측의 메일서버의 도메인 또는 IP 주소 또는 송신자의 메일주소가 수신 측의 메일서버에 스패머로 등록되어 발생한 오류입니다. 수신 측 관리자에게 문의 하여 스팸 리스트에서 삭제하시기 바랍니다.<br /><br />
+
+                    2. 5XX Your envelope sender is enlisted as spammer<br />
+                    - 송신자의 메일주소가 수신 측의 메일서버에 스패머로 등록되어 발생한 오류입니다. 수신 측 관리자에게 문의 하여 스팸 리스트에서 삭제하시기 바랍니다.<br /><br />
+
+                    3. 500 Syntax error, command unrecognized<br />
+                    - SMTP 명령어 중 일부 누락 또는 일부 잘못된 명령어로 인하여 발생한 오류입니다.<br /><br />
+
+                    4. 500 File Sending Error<br />
+                    - 메일 메시지 전송도중 네트웍 장애등의 이유로 전송에 실패하여 발생한 오류입니다.<br /><br />
+
+                    5. 501 Denied domain name<br />
+                    - 송신 측의 도메인이 수신 측의 서버에서 거부되어 발생한 오류입니다.<br /><br />
+
+                    6. 501 Bad sender address expression<br />
+                    - 송신자 또는 수신자의 메일주소가 정상적이지 않아 발생한 오류입니다. 송신자의 메일주소가 정확한지 확인해 보시기 바랍니다.<br /><br />
+
+                    7. 501 Argument missing<br />
+                    - SMTP 명령어 중 일부 누락 또는 일부 잘못된 명령어로 인하여 발생한 오류입니다.<br /><br />
+
+                    8. 501 5.1.8 Sender domain must exist &lt;xxx.com&gt;<br />
+                    - 수신 측 xxx.com 도메인이 존재하지 않아 발생한 오류입니다. 수신자 메일수조 중 도메인 부분이 정확하게 적혀있는 지 확인하시기 바랍니다. 주소가 정확한 경우 수신 측 관리자에게 문의하여 실제 도메인이 해당 메일서버에 등록되어 있는지 확인하시기 바랍니다.<br /><br />
+
+                    9. 503 Bad sequence of commands<br />
+                    - SMTP 명령어 중 일부 누락 또는 일부 잘못된 명령어로 인하여 발생한 오류입니다.<br /><br />
+
+                    10. 504 You are registered as spammer<br />
+                    - 송신 측의 메일서버의 도메인 또는 IP 주소 또는 송신자의 메일주소가 수신 측의 메일서버에 스패머로 등록되어 발생한 오류입니다. 수신 측 관리자에게 문의 하여 스팸 리스트에서 삭제하시기 바랍니다.<br /><br />
+
+                    11. 504 We do not accept mail from spammers. if you have questions,please Email<br />
+                    - 송신 측의 메일서버의 도메인 또는 IP 주소 또는 송신자의 메일주소가 수신 측의 메일서버에 스패머로 등록되어 발생한 오류입니다. 수신 측 관리자에게 문의 하여 스팸 리스트에서 삭제하시기 바랍니다.<br /><br />
+
+                    12. 511 sorry, no mailbox here by that name (#5.1.1 - chkuser)<br />
+                    - 수신자의 메일주소가 수신 측의 메일서버에 존재하지 않는 계정인 경우 발생하는 오류입니다. 수신자의 메일 주소가 정확한지 확인해 보시기 바랍니다. 또한 수신자의 계정이 실제 존재하는지 사용가능한 상태인지 수신 측 관리자에게 문의하시기 바랍니다.<br /><br />
+
+                    13. 550 No inbox for &lt;E-mail Address&gt;<br />
+                    - 수신자의 메일주소가 실제 존재하지 않는 계정이거나 사용 중지된 계정상태로 인하여 발생한 오류입니다. 수신자의 메일 주소가 정확한지 확인해 보시기 바랍니다. 또한 수신자의 계정이 실제 존재하는지 사용가능한 상태인지 수신 측 관리자에게 문의하시기 바랍니다.<br /><br />
+
+                    14. 550 User unknown<br />
+                    - 수신자의 메일주소가 실제 존재하지 않는 계정이거나 사용 중지된 계정상태로 인하여 발생한 오류입니다. 수신자의 메일 주소가 정확한지 확인해 보시기 바랍니다. 또한 수신자의 계정이 실제 존재하는지 사용가능한 상태인지 수신 측 관리자에게 문의하시기 바랍니다.<br /><br />
+
+                    15. 550 Requested action not taken: mailbox unavailable<br />
+                    - 수신자의 메일주소가 실제 존재하지 않는 계정이거나 사용 중지된 계정상태로 인하여 발생한 오류입니다. 수신자의 메일 주소가 정확한지 확인해 보시기 바랍니다. 또한 수신자의 계정이 실제 존재하는지 사용가능한 상태인지 수신 측 관리자에게 문의하시기 바랍니다.<br /><br />
+
+                    16. 550 5.1.1 Suspended mailbox<br />
+                    - 수신자의 메일주소가 실제 존재하지 않는 계정이거나 사용 중지된 계정상태로 인하여 발생한 오류입니다. 수신자의 메일 주소가 정확한지 확인해 보시기 바랍니다. 또한 수신자의 계정이 실제 존재하는지 사용가능한 상태인지 수신 측 관리자에게 문의하시기 바랍니다.<br /><br />
+
+                    17. 550 5.1.1 No such user &lt;E-mail Address&gt;<br />
+                    - 수신자의 메일주소가 실제 존재하지 않는 계정이거나 사용 중지된 계정상태로 인하여 발생한 오류입니다. 수신자의 메일 주소가 정확한지 확인해 보시기 바랍니다. 또한 수신자의 계정이 실제 존재하는지 사용가능한 상태인지 수신 측 관리자에게 문의하시기 바랍니다.<br /><br />
+
+                    18. 550 Invalid recipient<br />
+                    - 수신자의 메일주소가 실제 존재하지 않는 계정이거나 사용 중지된 계정상태로 인하여 발생한 오류입니다. 수신자의 메일 주소가 정확한지 확인해 보시기 바랍니다. 또한 수신자의 계정이 실제 존재하는지 사용가능한 상태인지 수신 측 관리자에게 문의하시기 바랍니다.<br /><br />
+
+                    19. 550 5.0.0 Access denied<br />
+                    - 수신 측 메일서버로의 접속이 거부되어 발생한 오류입니다. 수신 측 메일서버에 송신 측의 메일서버가 거부되어 있는지 확인해 보시기 바랍니다.<br /><br />
+
+                    20. 553 sorry, that domain isn't in my list of allowed rcpt hosts<br />
+                    - 수신 측의 도메인주소가 수신 측 메일서버에 존재하지 않아 발생한 오류입니다. 수신자의 메일 주소가 정확한지 확인해 보시기 바랍니다. 또한 수신 측의 도메인 주소가 수신 측 메일서버에 존재하는지 확인해 보시기 바랍니다.<br /><br />
+
+                    21. 550 Relay rejected for &lt;E-Mail Address&gt;<br />
+                      - 수신 측의 메일서버에서 해당 E-Mail Address 로 릴레이를 거부하여 발생한 오류입니다. 수신 측 관리자에게 문의하시기 바랍니다.<br /><br />
+
+                    22. 550 relaying to &lt;E-Mail Address&gt; prohibited by administrator<br />
+                    - 수신 측의 메일서버에서 해당 E-Mail Address 로 릴레이를 거부하여 발생한 오류입니다. 수신 측 관리자에게 문의하시기 바랍니다.<br /><br />
+
+                    23. 553 Too many recipients<br />
+                    - 수신 측 메일서버에서 허용한 동시 수신 메일 수를 초과하여 발생한 오류입니다. 수신 측 메일서버에서 허용한 수 이하로 메일을 송신해 보시기 바랍니다.<br /><br />
+
+                    24. 553 sorry, your envelope sender is in my badmailfrom list.<br />
+                    - 송신 측의 메일서버의 도메인 또는 IP 주소 또는 송신자의 메일주소가 수신 측의 메일서버에 스패머로 등록되어 발생한 오류입니다. 수신 측 관리자에게 문의 하여 스팸 리스트에서 삭제하시기 바랍니다.<br /><br />
+
+                    25. 553 sorry, your envelope sender is enlisted as spammer<br />
+                    - 송신 측의 메일서버의 도메인 또는 IP 주소 또는 송신자의 메일주소가 수신 측의 메일서버에 스패머로 등록되어 발생한 오류입니다. 수신 측 관리자에게 문의 하여 스팸 리스트에서 삭제하시기 바랍니다.<br /><br />
+
+                    26. 550 5.0.0 Your message may contain the Klez.worm! See http://securityresponse.symantec.com/avcenter/venc/data/w32.klez.removal.tool.html<br />
+                    - 송신한 메일 메시지 않에 Klez worm 바이러스가 포함되어 수신 측 메일서버에서 거부된 오류입니다. 클라이언트 및 서버의 상태를 점검해 보시기 바랍니다. 또한 첨부 파일이 있을 경우 첨부 파일에 바이러스가 포함되지 않았는지 확인해 보신 후 재 전송하시기 바랍니다.<br /><br />
+
+                    27. 553 5.0.0 Your message may contain the Win32.Klez worm!!- If you have questions,please email<br />
+                    - 송신한 메일 메시지 안에 Win32.Klez worm 바이러스가 포함되어 수신 측 메일서버에서 거부된 오류입니다. 클라이언트 및 서버의 상태를 점검해 보시기 바랍니다. 또한 첨부 파일이 있을 경우 첨부 파일에 바이러스가 포함되지 않았는지 확인해 보신 후 재 전송하시기 바랍니다.<br /><br />
+
+                    28. 553 5.5.4 Host name (xxx.com) is not match with your ip(xxx.xxx.xxx.xxx), maybe it's bogus. Visit http://antispam.hanmail.net<br />
+                    - 수신 측의 메일서버에서 송신 도메인 xxx.com 에 대하여 DNS Lookup 한 결과 송신된 IP 주소인 xxx.xxx.xxx.xxx 와 일치 하지 않아 송신이 거부된 오류 입니다. 송신 측 도메인에 대한 호스트(A) 레코드 생성 후 이를 송신 측 메일서버의 아이피 주소와 일치시켜 주시기 바랍니다.<br /><br />
+
+                    29. 553 5.5.4 <xxx> ... Domain name required for sender address <xxx><br />
+                    - 송신 측의 메일주소가 ID@Domain_Name 형식이 아닌 잘못된 형식으로 송신을 시도하여 발생한 오류 입니다. 송신자의 메일주소가 올바른지 확인해 보시기 바랍니다.<br /><br />
+
+                    30. 554 5.3.4 Too big mail sent. Max allowed mail size is xxxxxxxxx bytes<br />
+                    - 수신 측 메일서버에서 허용한 메일 사이즈보다 큰 메일을 송신하여 발생한 오류입니다. 송신 메일의 사이즈를 점검하여 허용 사이즈 이하로 재 전송해 보시기 바랍니다.<br /><br />
+
+                    31. 554 5.3.0 Mail have traversed Too many hops. Reject it<br />
+                    - 수신 측 메일서버에서 허용한 동시 수신 메일 수를 초과하여 발생한 오류입니다. 수신 측 메일서버에서 허용한 수 이하로 메일을 송신해 보시기 바랍니다.<br /><br />
+
+                    32. 554 delivery error: dd Sorry, your message to &lt;E-Mail Address&gt; cannot be delivered. This account is over quota<br />
+                    - 수신자의 메일사서함 용량이 초과되어 메일을 수신하지 못하는 오류 입니다. 수신 측 관리자에게 문의 하시기 바랍니다.<br /><br />
+
+                    33. 554 5.1.0 Sender Denied<br />
+                    - 송신 측의 메일주소가 거부되어 발생한 오류입니다. 수신 측 관리자에게 문의 하시기 바랍니다.<br /><br />
+
+                    34. 554 5.5.0 Your message was rejected. Please refer to http://antispam.nate.com/554-550.html [Reject Option]<br />
+                    - 네이트 닷컴의 스팸 정책에 위배되어 메일을 송신하지 못한 오류입니다. 네이트 닷컴의 스팸 정책을 확인해 보시기 바랍니다.<br /><br />
+
+                    35. 554 delivery error: dd This user doesn't have a yahoo.com account (E-Mail Address) [-5] - mta114.mail.sc5.yahoo.com<br />
+                    - 수신자의 메일주소가 야후닷컴에 실재 존재하지 않은 계정인 경우 발생하는 오류입니다. 수신자의 메일주소를 정확하게 입력하였는지 확인해 보시기 바랍니다.<br /><br />
+
+                    36. 550 5.7.1 &lt;E-Mail Address&gt;. Relaying denied. IP name lookup failed &lt;IP Address&gt;<br />
+                    - 송신자의 메일주소가 DNS IP Name Lookup 에 실패하여 릴레이가 거부된 오류입니다. 송신 측 DNS 서버의 정방향 조회 영역에 송신 측 메일서버 IP Address 와 일치하는 메일교환기(MX) 레코드 값이 정확하게 설정되어 있는지 확인해보시기 바랍니다. 또한, 송신 측 DNS 서버의 역방향 조회 영역에 송신 측 메일서버 IP Address에 대하여 포인터가 올바르게 구성되어 있는지 확인해 보시기 바랍니다.<br /><br />
+
+                    37. 550 5.5.0 VIRUS detected from your mail. Cure & Try again. Found by virus scan engine.<br />
+                    - 송신한 메일 메시지 안에 바이러스가 포함되어 수신 측에서 거부된 오류입니다. 클라이언트 및 서버의 상태를 점검해 보시기 바랍니다. 또한 첨부 파일이 있을 경우 첨부 파일에 바이러스가 포함되지 않았는지 확인해 보신 후 재 전송하시기 바랍니다.<br /><br />
+
+                    38. 550 Denied by policy: Sender is listed on DNS-based RBL<br />
+                    - 송신 측의 메일서버의 도메인 또는 IP 주소 또는 송신자의 메일주소가 RBL (Real time Black List) 에 포함되어 수신 측의 메일서버에서 거부되어 발생한 오류입니다. 송신 측의 도메인 또는 아이피 주소가 등록되어 있는 RBL을 확인하여 리스트에서 제거하시기 바랍니다. 리스트에서 제거하는 방법은 RBL 사이트 마다 다르며 해당 사이트의 지시를 따르시기 바랍니다.<br /><br />
+
+                    39. 550 Mail sender unuses allowed IP. SMTP Proxy Server close ...<br />
+                    - 송신 측의 IP Address 가 수신 측의 메일서버에서 거부되어 발생한 오류입니다. 수신 측 관리자에게 문의하여 송신 측의 IP가 거부되어 있는지 확인하신 후 삭제하시기 바랍니다.<br /><br />
+
+                    40. 553 5.5.3 &lt;E-Mail Address&gt;... Invalid<br />
+                    - 송신자 또는 수신자의 메일주소가 잘못되어 발생한 오류입니다. 송신자 또는 수신자의 메일주소가 올바른지 확인해 보시기 바랍니다.<br /><br />
+
+                    41. 557 you must be virus<br />
+                    - 송신자의 메일이 바이러스로 인식되어 수신 측에서 거부된 오류입니다. 클라이언트 및 서버의 상태를 점검해 보시기 바랍니다. 또한 첨부 파일이 있을 경우 첨부 파일에 바이러스가 포함되지 않았는지 확인해 보신 후 재 전송하시기 바랍니다.<br /><br />
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <span class="text-center text-muted">출처: <a class="text-muted" href="http://sangchul.kr/583 ">http://sangchul.kr/583 [변군이글루]</a></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Modal end-->
     </div>
   </div>
 </div>
 <!-- morris -->
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
 <style type="text/css">
+.table.table-sm td, .table.table-sm th {
+  padding: .6rem .5rem;
+}
+#error-Modal .modal-body{
+  padding: 0;
+}
+.tab-content{
+  overflow: auto;
+  max-height: 457px;
+}
 .table-cp td,.table-cp th{
   text-align: center;
 }
-.title_nobr,.kwd_nobr{
+.mailHtml{
+  display: none;
+}
+#mailBody{
+  overflow: auto;
+}
+#mailBody a:hover {
+  color: #3399cc;
+  text-decoration: none;
+}
+.title_nobr,.kwd_nobr,.error_nobr{
   font-size: 15px;
   padding-left: 3px;
   margin: 0px auto;
@@ -131,8 +445,18 @@
   width: 500px;
   overflow: hidden;
 }
+.title_nobr:hover,.fail:hover{
+  font-weight: bold;
+}
 .kwd_nobr{
   width: 146px;
+}
+.error_nobr{
+  width: 200px;
+  margin: 0px;
+}
+.error_nobr_more{
+  white-space: pre-line;
 }
 </style>
 <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
@@ -146,6 +470,52 @@ $(window).resize(function(){
 $(document).ready(function(){
   areaChart();
 });
+
+// 실패 클릭시
+$(document).on('click','.smtpMsg',function(){
+  $('#smtp-Modal').modal('show');
+});
+$(document).on('click','.error_nobr',function(){
+  $(this).toggleClass('error_nobr_more');
+});
+$(document).on('click','.fail',function(){
+  if($(this).text() == '0'){
+    return false;
+  }
+  $.ajax({
+    url: '/period/error',
+    type: 'post',
+    data: {idx : $(this).data('idx')},
+    datatype : 'json',
+    error:function(request,status,error){
+      console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
+    },
+    success:function(data){
+      $('#error-list').empty();
+      data.result.forEach(function(ele,idx){
+        if(ele.M_result_msg != '' && ele.M_result_msg != null ){
+          var o_msg = ele.M_result_msg.replace('send mail Error: ','');
+          var html = '<tr><td><i class="fas fa-exclamation-triangle"></i></td>'+
+            '<td>'+ele.M_result+'</td>'+
+            '<td><div class="error_nobr">'+o_msg+'</div></td>'+
+            '<td>'+ele.E_mail+'</td>'+
+          '</tr>';
+          $('#error-list').append(html);
+        }
+      });
+      $('#error-Modal').modal('show');
+    }
+  });
+});
+
+// 제목 클릭시
+$(document).on('click','.title_nobr',function(){
+  var htmlStr = $(this).next('div').html().replace(/&lt;/g,"<").replace(/&gt;/g,">");
+  $('#mailBody').empty();
+  $('#mailBody').html(htmlStr);
+  $('#previewMail-Modal').modal('show');
+});
+
 //date 포멧
 function dateToYYYYMMDD(date){
   function pad(num) {

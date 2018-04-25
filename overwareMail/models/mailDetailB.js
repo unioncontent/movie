@@ -10,12 +10,16 @@ var mailDetailB = {
     var sql = insertSqlSetting(Object.keys(param));
     return await getResult(sql,pValue);
   },
+  selectTable:async function(param){
+    var sql = 'SELECT * FROM m_mail_detail_b where M_idx_A=? group by E_mail';
+    return await getResult(sql,param);
+  },
   updateResult:async function(param){
-    var sql = 'update m_mail_detail_b set M_result=? where M_idx_A=?';
+    var sql = 'update m_mail_detail_b set M_result=?,M_result_msg=? where M_idx_A=?';
     return await getResult(sql,param);
   },
   updateResult2:async function(param,email){
-    var sql = 'update m_mail_detail_b set M_result=? where E_mail like \'%'+email+'%\' and M_idx_A=?';
+    var sql = 'update m_mail_detail_b set M_result=?,M_result_msg=? where E_mail like \'%'+email+'%\' and M_idx_A=?';
     return await getResult(sql,param);
   },
   getMediaNReporterCount:async function(column,param){
