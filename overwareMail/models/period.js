@@ -84,7 +84,7 @@ var period = {
       failP:0
     };
     try {
-      var sql ='SELECT FORMAT(sum(success+fail), 0) as total FROM period_view where (M_regdate > CURRENT_DATE() or Date(M_send) = CURRENT_DATE()) and M_id=?;';
+      var sql ='SELECT FORMAT(if(sum(success+fail) is null,0,sum(success+fail)), 0) as total FROM period_view where (M_regdate > CURRENT_DATE() or Date(M_send) = CURRENT_DATE()) and M_id=?;';
       result['todaySendCount'] = await getResult(sql,param);
       result['todaySendCount'] = parseInt(result['todaySendCount'][0]['total']);
       sql = 'SELECT FORMAT(sum(if(success is null,0,success)), 0) as success,\

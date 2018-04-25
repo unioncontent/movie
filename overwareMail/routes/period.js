@@ -17,6 +17,11 @@ router.get('/',isAuthenticated,async function(req, res) {
   res.render('period',data);
 });
 
+router.post('/error',isAuthenticated,async function(req, res, next) {
+  var data = await mailDetailB.selectTable(req.body.idx);
+  res.send({status:true,result:data});
+});
+
 router.post('/getPeriod',isAuthenticated,async function(req, res, next) {
   try{
     var data = {

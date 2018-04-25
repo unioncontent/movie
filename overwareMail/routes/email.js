@@ -207,12 +207,7 @@ router.post('/send/result',async function(req, res) {
   // }
 
   await asyncForEach(req.body.Recipients, async (item, index, array) => {
-    if(item.SmtpCode == '250'){
-      await mailDetailB.updateResult2([0,req.body.ID],item.Email);
-    }
-    else{
-      await mailDetailB.updateResult2([item.SmtpCode,req.body.ID],item.Email);
-    }
+    await mailDetailB.updateResult2([item.SmtpCode,item.SmtpMsg,req.body.ID],item.Email);
   });
 
   res.send('true');
@@ -350,11 +345,14 @@ router.post('/send',isAuthenticated, async function(req, res) {
   if(typeof mailApiRsult == 'object'){
     await mailAllA.updateId([mailApiRsult.id,param['unique_id']]);
   }
-  if(resultEmail[1] != 0){
+  var errorMsg = '';
+  if(resultEmail[1] != 250){
     var sendCount = await period.selectSendCount(param['unique_id'])
     await mailAllA.updateResult2([sendCount,param['unique_id']]);
+    errorMsg = resultEmail[2];
   }
-  await mailDetailB.updateResult([resultEmail[1],param['unique_id']]);
+  await mailDetailB.updateResult([resultEmail[1],errorMsg,param['unique_id']]);
+
   // 메일나라에 전송후 첨부파일 삭제(보류)
   // console.log('메일나라에 전송후 첨부파일 삭제')
   // if(req.body['M_file_d'] != ""){
@@ -422,7 +420,7 @@ function emailSendFun(pStr){
       var returnBody = JSON.parse(body);
       var requestResult = returnBody.status;
       if(requestResult == '0'){
-        resultArr = [true,0,requestResult];
+        resultArr = [true,250,requestResult];
       }
       else if(requestResult == '103'){
         resultArr = [false,3,'보내는 사람 이메일이 유효하지 않습니다.'];
@@ -437,7 +435,7 @@ function emailSendFun(pStr){
         resultArr = [false,13,'첨부파일의 경로나 파일이 없습니다.'];
       }
       else{
-        resultArr = [false,9,'메일발송에 문제가 생겼습니다. 다시 시도해주세요.'];
+        resultArr = [false,1,'메일발송에 문제가 생겼습니다. 다시 시도해주세요.'];
       }
       resultArr.push(returnBody);
       return resolve(resultArr);

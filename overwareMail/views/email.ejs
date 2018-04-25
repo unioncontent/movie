@@ -136,7 +136,7 @@
               <div class="form-group row">
                 <label class="col-sm-2 col-form-label">* 메일내용</label>
                 <div class="col-sm-10">
-                  <div id="M_body"></div>
+                  <textarea id="M_body"></textarea>
                   <span class='messages'><p class='text-danger error'></p></span>
                 </div>
               </div>
@@ -356,10 +356,8 @@
 <link rel="stylesheet" type="text/css" href="/css/jquery.filer.css">
 <script src="/js/jquery.filer.min.js"></script>
 <!-- editor -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-lite.css" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-lite.js"></script>
-<script src="/js/summernote-ko-KR.js"></script>
+<script src='/plugin/tinymce/js/tinymce/tinymce.min.js'></script>
+<script src="/pages/email/js/editor.js"></script>
 <!-- alert -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert@2.1.0/dist/sweetalert.min.js"></script>
 <!-- time  -->
@@ -401,31 +399,6 @@
       showMonthAfterYear: true,
       minDate: 0,
       maxDate: "+7D"
-    });
-    // 메일 editor
-    $('#M_body').summernote({
-      lang: 'ko-KR',
-      tabsize: 2,
-      height: 500,
-      toolbar: [
-        ['parastyle', ['style']],
-        ['style', ['bold', 'italic', 'underline', 'clear']],
-        ['fontstyle', ['fontname', 'fontsize']],
-        ['height', ['height']],
-        ['color', ['color']],
-        ['para', ['ul', 'ol', 'paragraph']],
-        ['insert', ['picture', 'link', 'video', 'table', 'hr']],
-        ['history', ['undo', 'redo']],
-        ['misc', ['codeview', 'fullscreen']],
-        ['help', ['help']]
-      ],
-      fontNames: [ '맑은 고딕', '굴림', '돋움', '바탕', '궁서', 'Helvetica', 'Serif', 'Sans'],
-      fontNamesIgnoreCheck: [ 'Malgun Gothic', 'Gulim', 'Dotum', 'Batang', 'Gungsuh', 'Helvetica', 'Serif', 'Sans'],
-      callbacks: {
-        onImageUpload : function(file, editor, welEditable) {
-          saveImgFile(file[0], editor, welEditable);
-        }
-      }
     });
     // 첨부파일
     $('#M_file').filer({
