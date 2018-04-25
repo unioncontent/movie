@@ -484,9 +484,11 @@ router.post('/send/img',uploadImage.single('file'),function(req, res) {
     console.log("No file passed");
     return res.status(500).send("No file passed");
   }
-  res.send({
-    result : req.file.destination.replace(absolutePath+'public/','')+'/'+req.file.originalname
-  });
+  console.log('filelist:',getFiles(req.file.destination));
+  console.log(req.file);
+
+  var result = req.file.destination.replace(absolutePath+'public/','')+'/'+req.file.originalname;
+  res.send({location:result});
 });
 
 // 첨부파일 upload 및 path get
