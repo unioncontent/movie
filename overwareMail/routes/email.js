@@ -488,7 +488,7 @@ router.post('/send/img',uploadImage.single('file'),function(req, res) {
   console.log(req.file);
 
   var result = req.file.destination.replace(absolutePath+'public/','')+'/'+req.file.originalname;
-  res.send({location:result});
+  res.send({location:'http://mail.overware.co.kr/'+result});
 });
 
 // 첨부파일 upload 및 path get
@@ -503,6 +503,20 @@ var storageFiles = multer.diskStorage({
   }
 });
 var uploadFiles = multer({ storage: storageFiles });
+router.post('/send/file',uploadFiles.single('file'),function(req, res) {
+  console.log('/send/file:',req.file);
+  if (!req.file) {
+    console.log("No file passed");
+    return res.status(500).send("No file passed");
+  }
+  if(req.file.originalname.indexOf('.exe') != -1){
+    console.log('exe Error:',req.file.path);
+    fs.removeSync(req.file.path);
+    return res.status(500).send("exe는 업로드 불가합니다.");
+  }
+  var result = req.file.destination.replace(absolutePath+'public/','')+'/'+req.file.originalname;
+  res.send({location:'http://mail.overware.co.kr/'+result});
+});
 router.post('/send/files',uploadFiles.single('files[]'),function(req, res) {
   console.log('/send/files:',req.file);
   if (!req.file) {

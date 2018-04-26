@@ -539,21 +539,21 @@
     $('.reserveTime').toggle();
   });
   // 메일 editor js
-  function saveImgFile(file){
-    data = new FormData();
-    data.append("file", file);
-    $.ajax({
-      type: "POST",
-      url: "/email/send/img",
-      data: data,
-      cache: false,
-      contentType : false,
-      processData : false,
-      success: function(data) {
-        $('#M_body').summernote('insertImage', 'http://mail.overware.co.kr/'+data.result);
-      }
-    });
-  }
+  // function saveImgFile(file){
+  //   data = new FormData();
+  //   data.append("file", file);
+  //   $.ajax({
+  //     type: "POST",
+  //     url: "/email/send/img",
+  //     data: data,
+  //     cache: false,
+  //     contentType : false,
+  //     processData : false,
+  //     success: function(data) {
+  //       $('#M_body').summernote('insertImage', 'http://mail.overware.co.kr/'+data.result);
+  //     }
+  //   });
+  // }
   // 메일 보내기 버튼 클릭시
   $("#sendBtn").on("click",function(){
     var param = {
@@ -562,7 +562,7 @@
       'M_group': $('.group-select').val() || [],
       'M_keyword': $("#M_keyword option:selected").val(),
       'M_mail_type': $("#M_mail_type option:selected").val(),
-      'M_body': $("#M_body").summernote('code'),
+      'M_body': get_tinymce_html_content(),
       'M_subject': $("#M_subject").val(),
       'M_type': $("input:radio[name=M_type]:checked").val()
     };
