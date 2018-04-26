@@ -23,19 +23,17 @@ var mailListAll = {
   getOneEmail : async function(param){
     var sql = 'select M_email from m_mail_list_all ';
     if(typeof param == 'object'){
-      sql += 'where n_idx ='+param[0]+' or';
+      sql += 'where n_idx ='+param[0];
       for(var i = 1; i < param.length; i++){
+        sql += ' or';
         sql += ' n_idx ='+param[i];
-        if(i != (param.length-1)){
-          sql += ' or';
-        }
       }
     }
     else if(typeof param == 'string'){
       sql += 'where n_idx ='+param;
     }
     var result = await getResult(sql,[]);
-    return [].map.call(result, function(obj) { return obj.M_email; });
+    return [].map.call(result, function(obj) { return obj.M_email.replace('\r',''); });
   },
   getOneInfo : async function(n_idx){
     var sql = 'select * from m_mail_list_all where n_idx=?';

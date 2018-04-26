@@ -16,12 +16,12 @@ tinymce.init({
   images_upload_url: '/email/send/img',
   images_upload_credentials: true,
   file_picker_types: 'file media',
-  media_live_embeds: false,
+  media_live_embeds: true,
   media_poster: false,
   media_alt_source: false,
-  media_filter_html: false,
+  extended_valid_elements : "iframe[src|title|width|height|allowfullscreen|frameborder|class|id],embed[type|width|height|src|*],video[controls|preload|width|height|data-setup],source[src|type]",
   video_template_callback: function(data) {
-   return '<video width="' + data.width + '" height="' + data.height + '"' + (data.poster ? ' poster="' + data.poster + '"' : '') + ' controls="controls">\n' + '<source src="' + data.source1 + '"' + (data.source1mime ? ' type="' + data.source1mime + '"' : '') + ' />\n' + (data.source2 ? '<source src="' + data.source2 + '"' + (data.source2mime ? ' type="' + data.source2mime + '"' : '') + ' />\n' : '') + '</video>';
+   return '<embed src="'+data.src+'" width="' + data.width + '" height="' + data.height + '"' + (data.poster ? ' poster="' + data.poster + '"' : '') + ' type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true">\n' + '<p style="text-align: center;">영상이 안 보이는 경우 <a target="_blank" href="'+data.src+'">여기</a>를 눌러 주세요</p>' + '</embed>';
   },
   file_picker_callback: function(cb, value, meta) {
     var input = document.createElement('input');
@@ -59,8 +59,8 @@ tinymce.init({
           }
           console.log(meta.filetype);
           if (meta.filetype == 'file') {
-            console.log({ title: file.name });
-            cb(json.location, { title: file.name });
+            console.log({ title: file.name});
+            cb(json.location, { title: file.name.split('.')[0] });
           }
           else if (meta.filetype == 'media') {
             cb(json.location);
