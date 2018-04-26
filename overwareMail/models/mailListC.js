@@ -29,12 +29,10 @@ var mailListC = {
   getEmail : async function(param,idx){
     var sql = 'select M_email from m_mail_list_c where M_ID=? ';
     if(typeof param == 'object'){
-      sql += 'and M_group_title =\''+param[0]+'\' or';
+      sql += 'and M_group_title =\''+param[0]+'\'';
       for(var i = 1; i < param.length; i++){
+        sql += ' or';
         sql += ' M_group_title =\''+param[i]+'\'';
-        if(i != (param.length-1)){
-          sql += ' or';
-        }
       }
     }
     else if(typeof param == 'string'){
@@ -46,12 +44,10 @@ var mailListC = {
   getIdx : async function(param,idx){
     var sql = 'select M_idx_a from m_mail_list_c where M_ID=? ';
     if(typeof param == 'object'){
-      sql += 'and M_group_title =\''+param[0]+'\' or';
+      sql += 'and M_group_title =\''+param[0]+'\'';
       for(var i = 1; i < param.length; i++){
+        sql += ' or';
         sql += ' M_group_title =\''+param[i]+'\'';
-        if(i != (param.length-1)){
-          sql += ' or';
-        }
       }
     }
     else if(typeof param == 'string'){

@@ -12,6 +12,7 @@ var mailListA = require('../models/mailListA.js');
 var mailListC = require('../models/mailListC.js');
 var keyword = require('../models/keyword.js');
 var mailType = require('../models/mailType.js');
+var period = require('../models/period.js');
 
 var isAuthenticated = function (req, res, next) {
   var url = req.originalUrl;
@@ -216,24 +217,40 @@ router.post('/send/result',async function(req, res) {
 router.post('/send',isAuthenticated, async function(req, res) {
   console.log('mail send req.body: ',req.body);
   // 이메일 발송
-  var euckr2utf8 = new Iconv('EUC-KR', 'UTF-8');
-  var utf82euckr = new Iconv('UTF-8', 'EUC-KR');
-
+  var recipiList = req.body['M_recipi'];
+  if('M_recipi[]' in req.body){
+    recipiList = req.body['M_recipi'];
+  }
+  var groupList = req.body['M_group'];
+  if('M_group[]' in req.body){
+    groupList = req.body['M_group[]'];
+  }
   var sender = await mailListA.getOneEmail(req.body.M_sender);
-  var recipi = await mailListA.getOneEmail(req.body['M_recipi[]']);
+  var recipi = await mailListA.getOneEmail(recipiList);
   var groups = [];
   var groups2allIdx = [];
-  if(typeof req.body['M_group[]'] != 'undefined'){
-    if(req.body['M_group[]'].length != 0){
-      groups = await mailListC.getEmail(req.body['M_group[]'],req.user.user_idx);
-      groups2allIdx = await mailListC.getIdx(req.body['M_group[]'],req.user.user_idx);
+  if(typeof groupList != 'undefined'){
+    if(groupList.length != 0){
+      groups = await mailListC.getEmail(groupList,req.user.user_idx);
+      groups2allIdx = await mailListC.getIdx(groupList,req.user.user_idx);
     }
   }
 
+  var euckr2utf8 = new Iconv('EUC-KR', 'UTF-8//translit//ignore');
+  var utf82euckr1 = new Iconv('UTF-8', 'EUC-KR//translit//ignore');
+  var utf82euckr2 = new Iconv('UTF-8', 'EUC-KR//translit//ignore');
+
+  var bodyBuf = new Buffer(req.body.M_body);
+  var subjectBuf = new Buffer(req.body.M_subject);
+
+  var subjectConvert = utf82euckr1.convert(subjectBuf.toString('utf-8'));
+  var bodyConvert = utf82euckr2.convert(bodyBuf.toString('utf-8'));
+
   var recipients = recipi.concat(groups);
+
   var param = {
-    'subject': urlencode(new Buffer(utf82euckr.convert(req.body.M_subject)).toString('base64')),
-    'body': urlencode(new Buffer(utf82euckr.convert(req.body.M_body)).toString('base64')),
+    'subject': urlencode(new Buffer(subjectConvert).toString('base64')),//.toString('base64')
+    'body': urlencode(new Buffer(bodyConvert).toString('base64')),
     'sender': urlencode(sender.join(',')),
     'recipients': urlencode(recipients.join(',')),
     'username': urlencode('unionc'),
@@ -256,11 +273,16 @@ router.post('/send',isAuthenticated, async function(req, res) {
     M_subject: req.body['M_subject'],
     M_id: req.user.user_idx
   };
-  if(typeof req.body['M_recipi[]'] == 'object'){
-    mailAllParam['M_recipi'] = req.body['M_recipi[]'].join(',');
+  if('M_recipi' in req.body){
+    mailAllParam['M_recipi'] = req.body['M_recipi'];
   }
-  else if(typeof req.body['M_recipi[]'] == 'string'){
-    mailAllParam['M_recipi'] = req.body['M_recipi[]'];
+  else{
+    if(typeof req.body['M_recipi[]'] == 'object'){
+      mailAllParam['M_recipi'] = req.body['M_recipi[]'].join(',');
+    }
+    else if(typeof req.body['M_recipi[]'] == 'string'){
+      mailAllParam['M_recipi'] = req.body['M_recipi[]'];
+    }
   }
   if(req.body['M_file_d'] != ""){
     mailAllParam['M_file'] = req.body['M_file_d'];
@@ -311,6 +333,7 @@ router.post('/send',isAuthenticated, async function(req, res) {
   // 메일 발송(insert Error시)
   if(insertCheck){
     res.status(500).send('발송에 실패했습니다. 다시 시도해주세요.');
+    console.log('M_recipi:',M_recipi);
     return false;
   }
 
@@ -492,6 +515,30 @@ router.post('/send/img',uploadImage.single('file'),function(req, res) {
 });
 
 // 첨부파일 upload 및 path get
+var storageFile = multer.diskStorage({
+  destination: async function (req, file, cb) {
+    var path = await mkdirsFun(absolutePath+'public/uploads/files/'+today);
+    await cb(null, path);
+  },
+  filename: function (req, file, cb) {
+    cb(null, new Buffer(file.originalname,'ascii').toString('hex'))
+  }
+});
+var uploadFile = multer({ storage: storageFile });
+router.post('/send/file',uploadFile.single('file'),function(req, res) {
+  console.log('/send/file:',req.file);
+  if (!req.file) {
+    console.log("No file passed");
+    return res.status(500).send("No file passed");
+  }
+  if(req.file.originalname.indexOf('.exe') != -1){
+    console.log('exe Error:',req.file.path);
+    fs.removeSync(req.file.path);
+    return res.status(500).send("exe는 업로드 불가합니다.");
+  }
+  var result = req.file.destination.replace(absolutePath+'public/','')+'/'+req.file.filename;
+  res.send({location:'http://mail.overware.co.kr/'+result});
+});
 var storageFiles = multer.diskStorage({
   destination: async function (req, file, cb) {
     var path = await mkdirsFun(absolutePath+'public/uploads/files/'+today);
@@ -503,20 +550,6 @@ var storageFiles = multer.diskStorage({
   }
 });
 var uploadFiles = multer({ storage: storageFiles });
-router.post('/send/file',uploadFiles.single('file'),function(req, res) {
-  console.log('/send/file:',req.file);
-  if (!req.file) {
-    console.log("No file passed");
-    return res.status(500).send("No file passed");
-  }
-  if(req.file.originalname.indexOf('.exe') != -1){
-    console.log('exe Error:',req.file.path);
-    fs.removeSync(req.file.path);
-    return res.status(500).send("exe는 업로드 불가합니다.");
-  }
-  var result = req.file.destination.replace(absolutePath+'public/','')+'/'+req.file.originalname;
-  res.send({location:'http://mail.overware.co.kr/'+result});
-});
 router.post('/send/files',uploadFiles.single('files[]'),function(req, res) {
   console.log('/send/files:',req.file);
   if (!req.file) {
