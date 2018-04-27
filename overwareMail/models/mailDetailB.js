@@ -11,7 +11,20 @@ var mailDetailB = {
     return await getResult(sql,pValue);
   },
   selectTable:async function(param){
-    var sql = 'SELECT * FROM m_mail_detail_b where M_idx_A=? group by E_mail';
+    var sql = 'SELECT * FROM m_mail_detail_b where M_idx_A=? ';
+    if('M_result' in param){
+      sql+='and M_result';
+      if(param.M_result == 'success'){
+        sql += '=?'
+      }else{
+        sql += '!=?'
+      }
+    }
+    sql+=' group by E_mail';
+    return await getResult(sql,param.arr);
+  },
+  selectCounResult: async function(param){
+    var sql = 'SELECT count(if(M_result=250,1,null)) as s,count(if(M_result!=250,1,null)) as f  from (SELECT * FROM m_mail_detail_b where M_idx_A=? group by E_mail) a';
     return await getResult(sql,param);
   },
   updateResult:async function(param){
@@ -20,6 +33,9 @@ var mailDetailB = {
   },
   updateResult2:async function(param,email){
     var sql = 'update m_mail_detail_b set M_result=?,M_result_msg=? where E_mail like \'%'+email+'%\' and M_idx_A=?';
+    // var sql = 'insert into m_mail_detail_b (M_idx_A,M_result,P_title,P_name,M_result_msg,E_mail) values(?,?,?,?,?,?) on duplicate key update M_idx_A=?,M_result=?,M_result_msg=?';
+    // var value = [param[2],param[0],'','',param[1],email,param[2],param[0],param[1]];
+    // return await getResult(sql,value);
     return await getResult(sql,param);
   },
   getMediaNReporterCount:async function(column,param){

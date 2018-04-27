@@ -117,19 +117,13 @@
                         </div>
                       </td>
                       <td><%= parseInt(list[i].success) + parseInt(list[i].fail) %></td>
-                      <td><%= list[i].success %></td>
+                      <td><span class="success" data-idx="<%= list[i].n_idx %>"><%= list[i].success %></span></td>
                       <td><span class="fail" data-idx="<%= list[i].n_idx %>"><%= list[i].fail %></span></td>
                       <td>
                         <%=(list[i].M_type == '0') ? '즉시' : '예약'%>
                         <% if((new Date().getTime() < new Date(list[i].M_send).getTime())){ %>
                         <label class="badge badge-danger">대기</label>
-                        <%}
-                        //var send = new Date(list[i].M_send);
-                        //send.setMinutes(send.getMinutes() + 30);
-                        //if((list[i].fail > 0) && (new Date().getTime() < send.getTime())){
-                        %>
-                        <!-- <label class="label label-warning">2차발송대기</label> -->
-                        <%//}%>
+                        <%}%>
                       </td>
                     </tr>
                     <% } %>
@@ -161,8 +155,44 @@
       </div>
       <!-- Modal end-->
       <!-- Modal start-->
-      <div class='modal fade' id='error-Modal' role='dialog'>
+      <div class='modal fade' id='success-Modal' role='dialog'>
         <div class='modal-dialog' role='document'>
+          <div class='modal-content'>
+            <div class='modal-header'>
+              <h5 class="modal-title">성공 상세보기</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div class='modal-body'>
+              <div class="table-responsive">
+                <table class="table table-sm">
+                  <thead>
+                    <tr class="text-capitalize">
+                      <th></th>
+                      <th>이메일</th>
+                      <th>회사</th>
+                      <th>이름</th>
+                    </tr>
+                  </thead>
+                  <tbody id="success-list" class="text-success">
+                  </tbody>
+                </table>
+              </div>
+              <!-- <ul>
+                <li><i class="fas fa-exclamation-triangle"></i></li>
+              </ul> -->
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-secondary mobtn" data-dismiss='modal' aria-label='Close' type="button">취소</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Modal end-->
+      <!-- Modal start-->
+      <div class='modal fade' id='error-Modal' role='dialog'>
+        <div class='modal-dialog modal-lg' role='document'>
           <div class='modal-content'>
             <div class='modal-header'>
               <h5 class="modal-title">실패 상세보기</h5>
@@ -174,11 +204,18 @@
               <div class="table-responsive">
                 <table class="table table-sm">
                   <thead>
+                    <tr>
+                      <th colspan="6" class="f-w-100 text-muted">
+                        ※ 재발송 대기는 발송실패건 중 일시적인 에러로 발송 안된 건에 대해 30분 후 자동으로 재 발송되는 과정입니다.
+                      </th>
+                    </tr>
                     <tr class="text-capitalize">
                       <th></th>
                       <th>코드</th>
-                      <th>오류 <span class="text-muted smtpMsg"><i class="fas fa-question-circle"></i></span></th>
                       <th>이메일</th>
+                      <th>회사</th>
+                      <th>이름</th>
+                      <th>오류 <span class="text-muted smtpMsg"><i class="fas fa-question-circle"></i></span></th>
                     </tr>
                   </thead>
                   <tbody id="error-list" class="text-danger">
@@ -417,7 +454,8 @@
 .table.table-sm td, .table.table-sm th {
   padding: .6rem .5rem;
 }
-#error-Modal .modal-body{
+#error-Modal .modal-body,
+#success-Modal .modal-body{
   padding: 0;
 }
 .tab-content{
@@ -433,9 +471,17 @@
 #mailBody{
   overflow: auto;
 }
+#mailBody{
+  overflow: auto;
+  padding: 0;
+  max-height: 700px;
+}
 #mailBody a:hover {
   color: #3399cc;
   text-decoration: none;
+}
+#mailBody td,th{
+  white-space: inherit;
 }
 .title_nobr,.kwd_nobr,.error_nobr{
   font-size: 15px;
@@ -445,7 +491,8 @@
   width: 500px;
   overflow: hidden;
 }
-.title_nobr:hover,.fail:hover{
+.title_nobr:hover,.fail:hover,
+.success:hover{
   font-weight: bold;
 }
 .kwd_nobr{
@@ -470,7 +517,36 @@ $(window).resize(function(){
 $(document).ready(function(){
   areaChart();
 });
-
+// 성공 클릭시
+$(document).on('click','.success',function(){
+  if($(this).text() == '0'){
+    return false;
+  }
+  $.ajax({
+    url: '/period/result',
+    type: 'post',
+    data: {
+      M_result: 'success',
+      arr : [$(this).data('idx'),250]
+    },
+    datatype : 'json',
+    error:function(request,status,error){
+      console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
+    },
+    success:function(data){
+      $('#success-list').empty();
+      data.result.forEach(function(ele,idx){
+        var html = '<tr><td><i class="fas fa-check"></i></td>'+
+          '<td>'+ele.E_mail+'</td>'+
+          '<td>'+ele.P_title+'</td>'+
+          '<td>'+ele.P_name+'</td>'+
+        '</tr>';
+        $('#success-list').append(html);
+      });
+      $('#success-Modal').modal('show');
+    }
+  });
+});
 // 실패 클릭시
 $(document).on('click','.smtpMsg',function(){
   $('#smtp-Modal').modal('show');
@@ -483,9 +559,12 @@ $(document).on('click','.fail',function(){
     return false;
   }
   $.ajax({
-    url: '/period/error',
+    url: '/period/result',
     type: 'post',
-    data: {idx : $(this).data('idx')},
+    data: {
+      M_result: 'fail',
+      arr : [$(this).data('idx'),250]
+    },
     datatype : 'json',
     error:function(request,status,error){
       console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
@@ -493,15 +572,20 @@ $(document).on('click','.fail',function(){
     success:function(data){
       $('#error-list').empty();
       data.result.forEach(function(ele,idx){
-        if(ele.M_result_msg != '' && ele.M_result_msg != null ){
-          var o_msg = ele.M_result_msg.replace('send mail Error: ','');
-          var html = '<tr><td><i class="fas fa-exclamation-triangle"></i></td>'+
-            '<td>'+ele.M_result+'</td>'+
-            '<td><div class="error_nobr">'+o_msg+'</div></td>'+
-            '<td>'+ele.E_mail+'</td>'+
-          '</tr>';
-          $('#error-list').append(html);
+        var o_msg = ele.M_result_msg.replace('send mail Error: ','');
+        var html = '<tr><td><i class="fas fa-exclamation-triangle"></i></td>'+
+          '<td>'+ele.M_result+'</td>'+'<td>'+ele.E_mail;
+        var send = new Date(ele.M_send);
+        var code = parseInt(ele.M_result);
+        send.setMinutes(send.getMinutes() + 30);
+        if(code == 421 && (new Date().getTime() < send.getTime())){
+          html+='<label class="label label-warning">재발송대기</label>'
         }
+        html+='</td>'+'<td>'+ele.P_title+'</td>'+
+          '<td>'+ele.P_name+'</td>'+
+          '<td><div class="error_nobr">'+o_msg+'</div></td>'+
+        '</tr>';
+        $('#error-list').append(html);
       });
       $('#error-Modal').modal('show');
     }
