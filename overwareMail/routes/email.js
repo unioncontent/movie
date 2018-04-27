@@ -208,9 +208,16 @@ router.post('/send/result',async function(req, res) {
   // }
 
   await asyncForEach(req.body.Recipients, async (item, index, array) => {
-    await mailDetailB.updateResult2([item.SmtpCode,item.SmtpMsg,req.body.ID],item.Email);
+    var result = await mailDetailB.updateResult2([item.SmtpCode,item.SmtpMsg,req.body.ID],item.Email);
+    console.log('updateResult2:',result);
   });
-
+  var result = await mailDetailB.selectCounResult(req.body.ID);
+  console.log('selectCounResult:',result);
+  if(result.length > 0){
+    if(parseInt(result[0].s) != parseInt(req.body.Success) || parseInt(result[0].f) != parseInt(req.body.Failed)){
+      await mailAllA.updateResult([result[0].s,result[0].f,req.body.ID]);
+    }
+  }
   res.send('true');
 });
 
@@ -318,6 +325,7 @@ router.post('/send',isAuthenticated, async function(req, res) {
           }
           try{
             var resultInsert = await mailDetailB.insert(mailDetailParam);
+            console.log(resultInsert);
           }
           catch(e){
             await mailAllA.delete(m_idx_a);
