@@ -130,8 +130,7 @@
 	<sql id="search_writeDate3">
  		<if test="keyword != null">
 			<if test="searchType != null">
-				and REPLACE(portal_title, ' ', '') LIKE concat('%', #{keyword}, '%')
-				or portal_title like concat('%', #{keyword}, '%')
+				and portal_title like concat('%', #{keyword}, '%')
 			</if>
 		</if>
 		<!-- <if test="startDate == null">
@@ -140,7 +139,7 @@
 		<if test="startDate != null">
 			and writeDate <![CDATA[>=]]> #{startDate}
 			<if test="endDate != null">
-				and writeDate <![CDATA[<]]> #{endDate}
+				and writeDate <![CDATA[<=]]> #{endDate}
 			</if>
 		</if>
 	</sql>
