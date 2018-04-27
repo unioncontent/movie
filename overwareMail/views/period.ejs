@@ -53,6 +53,8 @@
                       for(var i=0; i < list.length; i++) {
                     %>
                     <tr>
+                      <input type='hidden' class="M_regdate" value='<%= list[i].M_regdate %>'/>
+                      <input type='hidden' class="M_send" value='<%= list[i].M_send %>'/>
                       <th><%= listCount - i - offset %></th>
                       <td><%= list[i].M_regdate %></td>
                       <td><div class="kwd_nobr"><%= list[i].M_keyword %></div></td>
@@ -191,7 +193,7 @@
               </button>
             </div>
             <div class='modal-body'>
-              <div class="card">
+              <!-- <div class="card">
                 <div class="card-header">
                   <h5>메일 발송 : <span id="total">0</span>건 (성공: <span id="success">0</span>건 / 실패: <span id="fail">0</span>건)</h5>
                 </div>
@@ -213,6 +215,58 @@
                       <tr class="text-center">
                         <td><strong>댓글</strong></td>
                         <td id="replyCount"></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div> -->
+              <div class="blog-single">
+                <p class="qutoe-text" style="margin-top:  0px;">발송현황</p>
+              </div>
+              <table class="table table-sm matrics-table">
+                <tbody>
+                  <tr style="border-top: 2px solid  #a5a5a5;">
+                    <td width="40%"><strong>총 발송건</strong></td>
+                    <td><span id="total">0</span>건</td>
+                  </tr>
+                  <tr>
+                    <td><strong>발송 성공건</strong></td>
+                    <td><span id="success">0</span>건</td>
+                  </tr>
+                  <tr>
+                    <td><strong>발송 실패건</strong></td>
+                    <td><span id="fail">0</span>건</td>
+                  </tr>
+                  <tr>
+                    <td><strong>발송 날짜</strong></td>
+                    <td><span id="date1"></span></td>
+                  </tr>
+                  <tr style="border-bottom: 2px solid  #a5a5a5;">
+                    <td><strong>예약발송 날짜</strong></td>
+                    <td><span id="date2"></span></td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="blog-single">
+              	<p class="qutoe-text">통계</p>
+              </div>
+              <div class="table-border-style">
+                <div class="table-responsive">
+                  <table class="table table-sm table-styling table-period">
+                    <thead>
+                      <tr class="table-primary">
+                        <th width="25%">언론사</th>
+                        <th width="25%">기자</th>
+                        <th width="25%">기사글</th>
+                        <th width="25%">댓글</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                      	<td><span id="media">0</span>건</td>
+                      	<td><span id="reporter">0</span>건</td>
+                      	<td><span id="newsCount">0</span>건</td>
+                      	<td><span id="reply">0</span>건</td>
                       </tr>
                     </tbody>
                   </table>
@@ -555,6 +609,9 @@
   #mailBody td,th{
     white-space: inherit;
   }
+  .table-period td,.table-period th{
+    text-align: center;
+  }
   .title_nobr,.kwd_nobr,.error_nobr{
     font-size: 15px;
     padding-left: 3px;
@@ -683,20 +740,26 @@
   });
   // 통계보고서 보기버튼 클릭시
   $(document).on("click",".btn-period",function(){
+    //  표 초기화
     $('#media').text(0);
     $('#reporter').text(0);
     $('#newsCount').text(0);
     $('#replyCount').text(0);
-    var tdEles = $(this).parents('tr').find('td');
+    $('#date1').text('');
+    $('#date2').text('');
+    var trEle = $(this).parents('tr');
+    var tdEles = trEle.find('td');
+    var inputEle = trEle.find('input[type=hidden]');
+    console.log(inputEle);
     var param = {
       M_idx_A:$(this).data('idx'),
       keyword:tdEles.eq(1).text(),
       sDate:tdEles.eq(0).text(),
       eDate:tdEles.eq(0).text()
     };
-    ajaxGetPeriod(param,tdEles);
+    ajaxGetPeriod(param,tdEles,inputEle);
   });
-  function ajaxGetPeriod(param,tag){
+  function ajaxGetPeriod(param,tag,input){
     $.ajax({
       url: '/period/getPeriod',
       type: 'post',
@@ -716,6 +779,10 @@
           $('#total').text(tag.eq(3).text());
           $('#success').text(tag.eq(4).text());
           $('#fail').text(tag.eq(5).text());
+          $('#date1').text(input.eq(0).val());
+          if(tag.eq(5) == "예약"){
+            $('#date2').text(input.eq(1).val().slice(0,16););
+          }
           $("#period-Modal").modal('show');
         } else{
           alert('새로고침 후 다시 시도해주세요.');
@@ -884,7 +951,6 @@
     ajaxGetPageList(param);
   }
   $(document).on('click','.applyBtn',searchDate);
-
   //날짜 설정
   var cb = function(start, end, label) {
     console.log('FUNC: cb',start.toISOString(), end.toISOString(), label);
