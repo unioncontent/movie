@@ -33,6 +33,7 @@ import org.union.service.KeywordService;
 import org.union.service.NaverMovieService;
 import org.union.service.MobileEntService;
 import org.union.service.PortalService;
+import org.union.service.SNSService;
 import org.union.service.UserService;
 import org.union.service.ViralService;
 import org.union.util.ExcelView;
@@ -53,6 +54,9 @@ public class PortalController {
 
     @Autowired
     private EtService etService;
+    
+    @Autowired
+	private SNSService snsService;
 
     @Autowired
     private UserService userService;

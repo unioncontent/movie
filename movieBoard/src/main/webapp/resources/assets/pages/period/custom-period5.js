@@ -354,6 +354,31 @@ function showModal(element, event){
 	
 }
 
+//modal
+function fvModal(element, event){
+	
+	console.log(event);
+	
+	$.ajax({
+		type : "POST",
+	  	url : "fvsearchList",
+ 	  	dataType : "json",
+ 	  	data : {url : url,sns_content : event},
+  	  	success : function(list){
+  	  		
+  	  		console.log(list);
+  	  		
+  	  		
+	  		$("#writeDate").innerText = list.writeDate;
+	  		$("#sns_content").innerText = list.sns_content;
+	  		$("#view_cnt").innerText = list.view_cnt;
+	  		
+  	  		$(element).modal('show');
+  	  	}
+	});
+	
+}
+
 function makeModalContent(list){
 	
 }

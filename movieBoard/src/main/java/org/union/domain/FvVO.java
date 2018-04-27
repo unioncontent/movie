@@ -22,6 +22,7 @@ public class FvVO {
 	private String thumbnail;
 	private Date createDate;
 	private Date updateDate;
+	private Integer total;
 	
 	public Integer getSns_idx() {
 		return sns_idx;
@@ -131,14 +132,22 @@ public class FvVO {
 	public void setUpdateDate(Date updateDate) {
 		this.updateDate = updateDate;
 	}
+	
+	public Integer getTotal() {
+		return total;
+	}
+	public void setTotal(Integer total) {
+		this.total = total;
+	}
+	
 	@Override
 	public String toString() {
 		return "FvVO [sns_idx=" + sns_idx + ", sns_name=" + sns_name + ", sns_content=" + sns_content + ", sns_writer="
 				+ sns_writer + ", url=" + url + ", view_cnt=" + view_cnt + ", like_cnt=" + like_cnt + ", reply_cnt="
 				+ reply_cnt + ", share_cnt=" + share_cnt + ", writeDate=" + writeDate + ", uid=" + uid + ", title_key="
 				+ title_key + ", keyword=" + keyword + ", keyword_type=" + keyword_type + ", textType=" + textType
-				+ ", thumbnail=" + thumbnail + ", createDate=" + createDate + ", updateDate=" + updateDate + "]";
+				+ ", thumbnail=" + thumbnail + ", createDate=" + createDate + ", updateDate=" + updateDate + ", total="
+				+ total + "]";
 	}
-	
 	
 }

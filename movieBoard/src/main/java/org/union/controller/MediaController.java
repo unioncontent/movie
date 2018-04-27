@@ -235,6 +235,8 @@ public class MediaController {
 		model.addAttribute("totalCount", totalCount);
 		model.addAttribute("minusCount", cri.getPerPageNum() * (cri.getPage()-1));
 		
+		logger.info("cri.getPerPageNum(): " + cri.getPerPageNum());
+		logger.info("(cri.getPage()-1): " + (cri.getPage()-1));
 		
 	}
 	

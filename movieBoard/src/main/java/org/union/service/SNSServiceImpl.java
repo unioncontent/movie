@@ -12,6 +12,7 @@ import org.union.domain.FvVO;
 import org.union.domain.GraphVO;
 import org.union.domain.SNSVO;
 import org.union.domain.SearchCriteria;
+import org.union.domain.SearchFv;
 import org.union.persistence.KeywordDAO;
 import org.union.persistence.SNSDAO;
 
@@ -290,6 +291,41 @@ public class SNSServiceImpl implements SNSService {
 	public List<FvVO> facebookCGV(SearchCriteria cri) {
 
 		return snsDAO.facebookCGV(cri);
+	}
+
+
+	@Override
+	public List<FvVO> facebookCGVList(SearchCriteria cri) {
+
+		return snsDAO.facebookCGVList(cri);
+	}
+
+
+	@Override
+	public Integer facebookCGVListTotalCnt(SearchCriteria cri) {
+
+		return snsDAO.facebookCGVListTotalCnt(cri);
+	}
+
+
+	@Override
+	public List<FvVO> fvlistSearch(SearchCriteria cri) {
+
+		return snsDAO.fvlistSearch(cri);
+	}
+
+
+	@Override
+	public Integer fvlistSearchTotalCnt(SearchCriteria cri) {
+
+		return snsDAO.fvlistSearchTotalCnt(cri);
+	}
+
+
+	@Override
+	public Integer fvlistViewCnt(SearchFv fv) {
+
+		return snsDAO.fvlistViewCnt(fv);
 	}
 
 }

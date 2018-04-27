@@ -339,13 +339,6 @@
 			order by createDate desc 
 			limit 1;
 		</if>
-		<if test="_parameter == 'ilyo'.toString()">
-			select *
-			from community_data
-			where community_name='ilyo' and createDate >=  date_format(now(), '%x-%m-%d')
-			order by createDate desc 
-			limit 1;
-		</if>
 		<if test="_parameter == 'instagram'.toString()">
 			select *
 			from community_data
@@ -434,13 +427,6 @@
 			select *
 			from community_data
 			where community_name='theqoo' and createDate >=  date_format(now(), '%x-%m-%d')
-			order by createDate desc 
-			limit 1;
-		</if>
-		<if test="_parameter == 'tistory'.toString()">
-			select *
-			from community_data
-			where community_name='tistory' and createDate >=  date_format(now(), '%x-%m-%d')
 			order by createDate desc 
 			limit 1;
 		</if>

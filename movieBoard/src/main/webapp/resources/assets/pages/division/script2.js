@@ -18,7 +18,7 @@ $(document).ready(function () {
     singleDatePicker: true,
     showDropdowns: true,
     locale: {
-      format: 'YYYY/MM/DD',
+      format: 'YYYY-MM-DD',
       "customRangeLabel": "Custom",
       "daysOfWeek": [
           "일", "월", "화", "수", "목", "금", "토"
@@ -28,6 +28,20 @@ $(document).ready(function () {
       ],
     }
   });
+  $('#datepicker2').daterangepicker({
+	    singleDatePicker: true,
+	    showDropdowns: true,
+	    locale: {
+	      format: 'YYYY-MM-DD',
+	      "customRangeLabel": "Custom",
+	      "daysOfWeek": [
+	          "일", "월", "화", "수", "목", "금", "토"
+	      ],
+	      "monthNames": [
+	        "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"
+	      ],
+	    }
+	  });
   $("#submit").on("click",function(){
     if($("#select1 option:checked").text() == "소속사명"){
       swal("error!", "소속사명을 선택해주세요.", "error");
@@ -222,6 +236,7 @@ function uploadImage(file, domain, idx){
 	});
 	
 }
+
 
 function uploadImage2(file, keyword, textType, domain, domainType, board_number, title, content, writer, writerIP, date, url){
 	

@@ -28,6 +28,29 @@
           <span class="pcoded-mcaret"></span>
         </a>
       </li>
+      <li class="pcoded-hasmenu marketing">
+        <a href="javascript:void(0)" data-i18n="nav.advance-components.main">
+          <span class="pcoded-micon"><i class="icofont icofont-ui-play"></i></span>
+          <span class="pcoded-mtext">마케팅 채널관리</span>
+          <span class="pcoded-mcaret"></span>
+        </a>
+        <ul class="pcoded-submenu">
+          <li class="">
+            <a href="../marketing/f_channel" data-i18n="nav.advance-components.draggable">
+              <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+              <span class="pcoded-mtext">FACEBOOK CGV</span>
+              <span class="pcoded-mcaret"></span>
+            </a>
+          </li>
+          <li class="">
+            <a href="../marketing/n_channel" data-i18n="nav.advance-components.draggable">
+              <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+              <span class="pcoded-mtext">NAVER MOVIE</span>
+              <span class="pcoded-mcaret"></span>
+            </a>
+          </li>
+        </ul>
+      </li>
       <li class="pcoded-hasmenu portal">
         <a href="javascript:void(0)" data-i18n="nav.advance-components.main">
           <span class="pcoded-micon"><i class="ti-world"></i></span>

@@ -7,6 +7,7 @@ import org.union.domain.FvVO;
 import org.union.domain.GraphVO;
 import org.union.domain.SNSVO;
 import org.union.domain.SearchCriteria;
+import org.union.domain.SearchFv;
 import org.union.domain.TextTypeDateVO;
 
 public interface SNSDAO {
@@ -72,5 +73,10 @@ public interface SNSDAO {
 	public List<SNSVO> snsTotalCnt(SearchCriteria cri);
 	
 	public List<FvVO> facebookCGV(SearchCriteria cri);
+	public List<FvVO> facebookCGVList(SearchCriteria cri);
+	public Integer facebookCGVListTotalCnt(SearchCriteria cri);
+	public List<FvVO> fvlistSearch(SearchCriteria cri);
+	public Integer fvlistSearchTotalCnt(SearchCriteria cri);
+	public Integer fvlistViewCnt(SearchFv fv);
 	
 }

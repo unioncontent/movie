@@ -10,8 +10,10 @@ import org.springframework.stereotype.Service;
 import org.union.domain.CommunityVO;
 import org.union.domain.ExtractVO;
 import org.union.domain.GraphVO;
+import org.union.domain.NvVO;
 import org.union.domain.PortalVO;
 import org.union.domain.SearchCriteria;
+import org.union.domain.SearchFv;
 import org.union.domain.TextTypeDateVO;
 import org.union.domain.TextTypeVO;
 import org.union.persistence.KeywordDAO;
@@ -373,6 +375,36 @@ public class PortalServiceImpl implements PortalService {
 		}
 		
 		return list;
+	}
+
+	@Override
+	public List<NvVO> naverVideosList(SearchCriteria cri) {
+
+		return portalDAO.naverVideosList(cri);
+	}
+
+	@Override
+	public Integer naverVideosListTotalCnt(SearchCriteria cri) {
+
+		return portalDAO.naverVideosListTotalCnt(cri);
+	}
+
+	@Override
+	public List<NvVO> nvlistSearch(SearchCriteria cri) {
+
+		return portalDAO.nvlistSearch(cri);
+	}
+
+	@Override
+	public Integer nvlistSearchTotalCnt(SearchCriteria cri) {
+
+		return portalDAO.nvlistSearchTotalCnt(cri);
+	}
+
+	@Override
+	public Integer nvlistViewCnt(SearchFv fv) {
+
+		return portalDAO.nvlistViewCnt(fv);
 	}
 
 }

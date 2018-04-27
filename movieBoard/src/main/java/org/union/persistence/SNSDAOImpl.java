@@ -1,15 +1,19 @@
 package org.union.persistence;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.union.domain.FvVO;
 import org.union.domain.GraphVO;
+import org.union.domain.ReplyVO;
 import org.union.domain.SNSVO;
 import org.union.domain.SearchCriteria;
+import org.union.domain.SearchFv;
 
 @Repository
 public class SNSDAOImpl implements SNSDAO {
@@ -264,6 +268,41 @@ public class SNSDAOImpl implements SNSDAO {
 	public List<FvVO> facebookCGV(SearchCriteria cri) {
 
 		return session.selectList(namespace + "facebookCGV", cri);
+	}
+
+
+	@Override
+	public List<FvVO> facebookCGVList(SearchCriteria cri) {
+
+		return session.selectList(namespace + "facebookCGVList", cri);
+	}
+
+
+	@Override
+	public Integer facebookCGVListTotalCnt(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "facebookCGVListTotalCnt", cri);
+	}
+
+
+	@Override
+	public List<FvVO> fvlistSearch(SearchCriteria cri) {
+
+		return session.selectList(namespace + "fvlistSearch", cri);
+	}
+
+
+	@Override
+	public Integer fvlistSearchTotalCnt(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "fvlistSearchTotalCnt", cri);
+	}
+
+
+	@Override
+	public Integer fvlistViewCnt(SearchFv fv) {
+		
+		return session.selectOne(namespace + "fvlistViewCnt", fv);
 	}
 
 

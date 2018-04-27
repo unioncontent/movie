@@ -233,8 +233,8 @@
               							            <label class="badge badge-inverse f-left">
               							              <c:if test="${textType.al != 0}">
                 							              <fmt:parseNumber var="pages" integerOnly="true" value="${(textType.lik/textType.al) * 100}"></fmt:parseNumber>
-                                            ${pages}%
-                                          </c:if>
+			                                            ${pages}%
+			                                          </c:if>
               							            </label>
               							          </div>
               							        </div>

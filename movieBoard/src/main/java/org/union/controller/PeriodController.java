@@ -432,6 +432,8 @@ public class PeriodController {
 		  //cri.setTextType(null);
 		  
 	}
+	
+	
 
 	@ResponseBody
 	@PostMapping("/getTextType")

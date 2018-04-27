@@ -126,6 +126,24 @@
 			and textType = #{textType}
 		</if>
 	</sql>
+	
+	<sql id="search_writeDate3">
+ 		<if test="keyword != null">
+			<if test="searchType != null">
+				and REPLACE(portal_title, ' ', '') LIKE concat('%', #{keyword}, '%')
+				or portal_title like concat('%', #{keyword}, '%')
+			</if>
+		</if>
+		<!-- <if test="startDate == null">
+			and createDate <![CDATA[>=]]> CURDATE()
+		</if> -->	
+		<if test="startDate != null">
+			and writeDate <![CDATA[>=]]> #{startDate}
+			<if test="endDate != null">
+				and writeDate <![CDATA[<]]> #{endDate}
+			</if>
+		</if>
+	</sql>
  
  	<insert id="create">
  		insert into
@@ -735,5 +753,66 @@
 			portal_idx = #{portal_idx}
 	
 	</update>
- 
+	
+	<select id="naverVideosList" resultType="NvVO">
+ 		select 
+		DATE_FORMAT(writeDate,'%Y-%m-%d') writeDate, portal_title, url
+		from naver_videos
+        where url is not null
+        <include refid="search_writeDate3"></include>
+        group by portal_title
+        order by writeDate desc
+        limit  
+			#{startPage}, #{perPageNum}
+ 	</select>
+ 	
+ 	<select id="naverVideosListTotalCnt" resultType="Integer">
+		select 
+		count(*) as total
+        from(
+        select DATE_FORMAT(writeDate,'%Y-%m-%d') writeDate, portal_title
+		from naver_videos
+        where url is not null
+        <include refid="search_writeDate3"></include>
+        group by portal_title) as total;
+	</select>
+	
+	<select id="nvlistSearch" resultType="NvVO">
+ 		select 
+ 			* 
+ 		from 
+ 			naver_videos 
+ 		where 
+ 			url = #{url}
+		order 
+			by createDate desc
+		limit  
+			#{startPage}, #{perPageNum}
+ 	</select>
+ 	
+ 	<select id="nvlistSearchTotalCnt" resultType="Integer">
+ 		select 
+ 			count(*) 
+ 		from 
+ 			naver_videos 
+ 		where 
+ 			url = #{url}
+ 		order 
+			by createDate desc
+ 	</select>
+ 	
+ 	<select id="nvlistViewCnt" resultType="Integer">
+ 		select 
+ 			view_cnt
+ 		from 
+ 			naver_videos
+ 		where 
+ 			createDate between date_add(#{date}, interval -1 hour) and #{date}
+ 		and
+ 			url = #{url}
+ 		order by 
+ 			createDate desc 
+ 		limit 1;
+ 	</select>
+	
  </mapper>

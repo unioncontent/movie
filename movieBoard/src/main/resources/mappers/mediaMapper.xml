@@ -484,7 +484,7 @@
 		where 
 			reply_comm_num is not null
 		<include refid="search_writeDate3"></include>
-	</select>
+	</select>     
 	
 	<select id="TotalAllPageCount" resultType="Integer">
 		select

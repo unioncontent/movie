@@ -5,7 +5,7 @@ package org.union.domain;
 public class SearchCriteria extends Criteria {
 
 	
-	private String searchType, keyword, selectKey, company, textType, portal_name, portal_type, hour;
+	private String searchType, keyword, selectKey, company, textType, portal_name, portal_type, hour, url;
 	private Integer total;
 	private String startDate, endDate;
 
@@ -127,13 +127,23 @@ public class SearchCriteria extends Criteria {
 		this.textType = textType;
 	}
 
+	
+	public String getUrl() {
+		return url;
+	}
+
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
 
 	@Override
 	public String toString() {
 		return "SearchCriteria [searchType=" + searchType + ", keyword=" + keyword + ", selectKey=" + selectKey
 				+ ", company=" + company + ", textType=" + textType + ", portal_name=" + portal_name + ", portal_type="
-				+ portal_type + ", total=" + total + ", startDate=" + startDate + ", endDate=" + endDate + "]";
+				+ portal_type + ", hour=" + hour + ", url=" + url + ", total=" + total + ", startDate=" + startDate
+				+ ", endDate=" + endDate + "]";
 	}
-	
 
 }

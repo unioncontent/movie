@@ -7,9 +7,12 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.union.domain.CommunityVO;
+import org.union.domain.FvVO;
 import org.union.domain.GraphVO;
+import org.union.domain.NvVO;
 import org.union.domain.PortalVO;
 import org.union.domain.SearchCriteria;
+import org.union.domain.SearchFv;
 import org.union.domain.TextTypeDateVO;
 import org.union.domain.TextTypeVO;
 
@@ -347,6 +350,41 @@ public class PortalDAOImpl implements PortalDAO {
 	public List<PortalVO> allPage(SearchCriteria cri) {
 
 		return session.selectList(namespace + "allPage", cri);
+	}
+
+
+	@Override
+	public List<NvVO> naverVideosList(SearchCriteria cri) {
+
+		return session.selectList(namespace + "naverVideosList", cri);
+	}
+
+
+	@Override
+	public Integer naverVideosListTotalCnt(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "naverVideosListTotalCnt", cri);
+	}
+
+
+	@Override
+	public List<NvVO> nvlistSearch(SearchCriteria cri) {
+
+		return session.selectList(namespace + "nvlistSearch", cri);
+	}
+
+
+	@Override
+	public Integer nvlistSearchTotalCnt(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "nvlistSearchTotalCnt", cri);
+	}
+
+
+	@Override
+	public Integer nvlistViewCnt(SearchFv fv) {
+
+		return session.selectOne(namespace + "nvlistViewCnt", fv);
 	}
 
 

@@ -4,9 +4,12 @@ import java.util.Date;
 import java.util.List;
 
 import org.union.domain.CommunityVO;
+import org.union.domain.FvVO;
 import org.union.domain.GraphVO;
+import org.union.domain.NvVO;
 import org.union.domain.PortalVO;
 import org.union.domain.SearchCriteria;
+import org.union.domain.SearchFv;
 import org.union.domain.TextTypeDateVO;
 import org.union.domain.TextTypeVO;
 
@@ -82,5 +85,12 @@ public interface PortalDAO {
 	public void updateTextType(PortalVO vo);
 	
 	public void updateThumbnail(PortalVO vo);
+	
+	public List<NvVO> naverVideosList(SearchCriteria cri);
+	public Integer naverVideosListTotalCnt(SearchCriteria cri);
+	public List<NvVO> nvlistSearch(SearchCriteria cri);
+	public Integer nvlistSearchTotalCnt(SearchCriteria cri);
+	public Integer nvlistViewCnt(SearchFv fv);
+	
 	
 }
