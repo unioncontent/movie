@@ -112,6 +112,11 @@ tinymce.init({
   //   { title: 'Test template 1', content: 'Test 1' },
   //   { title: 'Test template 2', content: 'Test 2' }
   // ],
+  setup: function(editor) {
+    console.log(editor);
+    // z-index: 1000000;
+    // $(ElementsArr[0]).css('z-index');
+  },
   content_css: [
     '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
     '//www.tinymce.com/css/codepen.min.css'

@@ -280,17 +280,15 @@ router.post('/send',isAuthenticated, async function(req, res) {
     M_subject: req.body['M_subject'],
     M_id: req.user.user_idx
   };
-  if('M_recipi' in req.body){
-    mailAllParam['M_recipi'] = req.body['M_recipi'];
+
+  // 메일 받는 사람
+  if(typeof recipiList == 'object'){
+    mailAllParam['M_recipi'] = recipiList.join(',');
   }
-  else{
-    if(typeof req.body['M_recipi[]'] == 'object'){
-      mailAllParam['M_recipi'] = req.body['M_recipi[]'].join(',');
-    }
-    else if(typeof req.body['M_recipi[]'] == 'string'){
-      mailAllParam['M_recipi'] = req.body['M_recipi[]'];
-    }
+  else if(typeof recipiList == 'string'){
+    mailAllParam['M_recipi'] = recipiList;
   }
+
   if(req.body['M_file_d'] != ""){
     mailAllParam['M_file'] = req.body['M_file_d'];
     mailAllParam['M_file_name'] = req.body['M_fileName'];
@@ -305,9 +303,10 @@ router.post('/send',isAuthenticated, async function(req, res) {
   var resultInsert = await mailAllA.insert(mailAllParam);
   m_idx_a = resultInsert.insertId;
   param['unique_id'] = m_idx_a;
-  // 메일발송 상세정보 insert
   console.log('inseret idx:',m_idx_a);
+  // 메일발송 리스트 table에 inser되었는지 체크문
   var insertCheck = false;
+  // 메일발송 상세정보 insert
   if(m_idx_a){
     var recipiArr = JSON.parse('['+mailAllParam.M_recipi+']');
     var recipiNgroup = recipiArr.concat(groups2allIdx);
@@ -336,6 +335,9 @@ router.post('/send',isAuthenticated, async function(req, res) {
         }
       }
     });
+  }
+  else{
+    insertCheck = true;
   }
 
   // 메일 발송(insert Error시)
