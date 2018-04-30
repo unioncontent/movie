@@ -224,7 +224,7 @@
                                                 <i class="helper"></i>정상
                                             </label>
                                             </c:if>
-                                            <c:if test="${portal.checkCondition == false}">
+                                            <c:if test="${portal2.checkCondition == false}">
                                             <label>
                                                 <input type="radio" name="radio">
                                                 <i class="helper"></i>비정상
@@ -253,7 +253,7 @@
                                                 <i class="helper"></i>정상
                                             </label>
                                             </c:if>
-                                            <c:if test="${portalc.checkCondition == false}">
+                                            <c:if test="${portalc2.checkCondition == false}">
                                             <label>
                                                 <input type="radio" name="radio">
                                                 <i class="helper"></i>비정상

@@ -127,7 +127,7 @@
                                 <div class="card">
                                   <div class="card-header">
                                     <!-- <h5>Naver Movie</h5> -->
-                                    <button class="btn btn-info f-right alert-confirm" onclick = "location.href='http://localhost:8080/marketing/n_channel'"><i class="icofont icofont-ui-note"></i>목록으로</button>
+                                    <button class="btn btn-info f-right alert-confirm" onclick = "location.href='http://overware.iptime.org:8080/marketing/n_channel'"><i class="icofont icofont-ui-note"></i>목록으로</button>
                                   </div>
                                   <div class="card-block table-border-style">
                                     <div class="table-responsive">
@@ -351,8 +351,9 @@ $(document).ready(function(){
 				    labels: ['조회수'],
 				    barColors: ['#01C0C8'],
 				    stacked: true,
+				    /* xLabelMargin : 10, */
 				    hideHover: 'auto',
-				    resize: false,
+				    resize: true,
 				    gridTextColor: '#888'
 				    });
 				}
