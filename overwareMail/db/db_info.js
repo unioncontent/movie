@@ -3,13 +3,21 @@ const mysql = require('mysql');
 class Database {
   constructor() {
     this.db = {
-      host     : '192.168.0.16',
+      host     : 'overware.iptime.org',
       user     : 'soas',
       password : 'qwer1234',
-      port     : '3306',
       database : 'union'
     };
     this.connection = mysql.createConnection(this.db);
+  }
+  test_open(){
+    this.connection.connect(function (err) {
+      if (err) {
+        console.error('mysql connection error :' + err);
+      } else {
+        console.info('mysql is connected successfully.');
+      }
+    });
   }
   query(sql, args) {
     return new Promise((resolve, reject) => {

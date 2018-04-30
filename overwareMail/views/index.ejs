@@ -107,11 +107,12 @@
                             if(list[i].M_file_name){
                               fileNameArr = list[i].M_file_name.split('|');
                             }
+                            var dateStr = list[i].M_regdate.slice(0,10).replace(/-/g,"");
                             fileArr.forEach(function(value, index) {
                               var file = value.split('/').pop();
                               var fileName = fileNameArr[index];
                           %>
-                          <a href="https://directsend.co.kr/index.php/mail_report_api/filedownload/<%=file%>" target="_blank" style="font-size:15px;"><%=fileName%></a>
+                          <a href="http://mail.overware.co.kr/period/download/<%=dateStr%>/<%=file%>" target="_blank" style="font-size:15px;"><%=fileName%></a>
                           <br/>
                           <% }); } %>
                         </div>
