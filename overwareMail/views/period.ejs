@@ -70,16 +70,17 @@
                             if(list[i].M_file_name){
                               fileNameArr = list[i].M_file_name.split('|');
                             }
+                            var dateStr = list[i].M_regdate.slice(0,10).replace(/-/g,"");
                             fileArr.forEach(function(value, index) {
                               var file = value.split('/').pop();
                               var fileName = fileNameArr[index];
                           %>
-                          <a href="https://directsend.co.kr/index.php/mail_report_api/filedownload/<%=file%>" target="_blank" style="font-size:15px;"><%=fileName%></a>
+                          <a href="http://mail.overware.co.kr/period/download/<%=dateStr%>/<%=file%>" target="_blank" style="font-size:15px;"><%=fileName%></a>
                           <br/>
                           <% }); } %>
                         </div>
                       </td>
-                      <td><%= parseInt(list[i].success) + parseInt(list[i].fail) %></td>
+                      <td><span class="total"><%= parseInt(list[i].success) + parseInt(list[i].fail) %></span></td>
                       <td><span class="success" data-idx="<%= list[i].n_idx %>"><%= list[i].success %></span></td>
                       <td><span class="fail" data-idx="<%= list[i].n_idx %>"><%= list[i].fail %></span></td>
                       <td>
@@ -837,6 +838,7 @@
           var mailHtmlStr = '';
           if(item.M_file){
             mailHtmlStr += '<br/><br/>첨부파일 :<br/>';
+            var dateStr = item.M_regdate.slice(0,10).replace(/-/g,"");
             var fileArr = item.M_file.split('|');
             var fileNameArr = fileArr;
             if(item.M_file_name){
@@ -845,7 +847,7 @@
             fileArr.forEach(function(value, index) {
               var file = value.split('/').pop();
               var fileName = fileNameArr[index];
-              mailHtmlStr += '<a href="https://directsend.co.kr/index.php/mail_report_api/filedownload/'+file+'" target="_blank" style="font-size:15px;">'+fileName+'</a><br/>';
+              mailHtmlStr += '<a href="http://mail.overware.co.kr/period/download/'+dateStr+'/'+file+'" target="_blank" style="font-size:15px;">'+fileName+'</a><br/>';
             });
           }
           console.log(item.M_body+mailHtmlStr);
@@ -854,7 +856,7 @@
             <td>'+item.M_regdate+'</td>\
             <td><div class="kwd_nobr">'+item.M_keyword+'</div></td>\
             <td><div class="title_nobr">'+item.M_subject+'</div><div class="mailHtml">'+item.M_body+mailHtmlStr+'</div></td>\
-            <td>'+(parseInt(item.success) + parseInt(item.fail))+'</td>\
+            <td><span class="total">'+(parseInt(item.success) + parseInt(item.fail))+'</span></td>\
             <td><span class="success" data-idx=\"'+item.n_idx+'\">'+item.success+'</span></td>\
             <td><span class="fail" data-idx=\"'+item.n_idx+'\">'+item.fail+'</span></td>';
           html += '<td>'+ ((item.M_type == '0') ? '즉시' : '예약');

@@ -39,7 +39,7 @@ var mailDetailB = {
     return await getResult(sql,param);
   },
   getMediaNReporterCount:async function(column,param){
-    var sql = 'select count(DISTINCT '+column+') as c from m_mail_detail_b where M_idx_A=?';
+    var sql = 'select FORMAT(count(DISTINCT '+column+'),0) as c from m_mail_detail_b where M_idx_A=?';
     var result = await getResult(sql,param);
     if(result.length == 0){
       return 0;

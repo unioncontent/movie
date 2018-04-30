@@ -17,6 +17,15 @@ router.get('/',isAuthenticated,async function(req, res) {
   res.render('period',data);
 });
 
+router.get('/download/:date/:fileName',isAuthenticated,async function(req, res) {
+  console.log('/download/:date/:fileName = ',req.params);
+  var filePath = '/home/hosting_users/unioncmail/apps/unioncmail_unioncmail/public/uploads/files/'+req.params.date+'/'+req.params.fileName;
+  // var fs = require('fs');
+  // var file = fs.readFileSync(filePath);
+
+  res.download(filePath); // Set disposition and send it.
+});
+
 router.post('/result',isAuthenticated,async function(req, res, next) {
   var data = await mailDetailB.selectTable(req.body);
   res.send({status:true,result:data});
