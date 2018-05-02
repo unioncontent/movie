@@ -5,6 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 // 추가
+var compression = require('compression');
 var expressLayouts = require('express-ejs-layouts');
 var session = require('express-session');
 var passport = require('passport');
@@ -20,11 +21,12 @@ app.set('layout', 'layout/layout');
 app.set('layout extractScripts', true);
 app.set('layout extractStyles', true);
 // middlewares setup
+app.use(compression());
 app.use(expressLayouts);
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.json({limit: '100mb'}));
-app.use(bodyParser.urlencoded({limit: '100mb', extended: true}));
+app.use(bodyParser.json({limit: '150mb'}));
+app.use(bodyParser.urlencoded({limit: '150mb', extended: true}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 // login/logout setup

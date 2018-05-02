@@ -10,7 +10,9 @@ tinymce.init({
     toolbar: [ 'undo', 'bold', 'italic', 'styleselect', 'image' ]
   },
   plugins: 'print preview fullpage searchreplace autolink directionality visualblocks visualchars fullscreen image link media template code table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists textcolor wordcount imagetools contextmenu colorpicker textpattern',
-  toolbar1: 'undo redo |  formatselect | bold italic forecolor backcolor | alignleft aligncenter alignright alignjustify | numlist bullist outdent indent | removeformat | code | help',
+  toolbar: 'undo redo | fileStyle | formatselect | fontselect fontsizeselect | bold italic forecolor backcolor | alignleft aligncenter alignright alignjustify | numlist bullist outdent indent | removeformat | code | help',
+  font_formats : '굴림=Gulim;돋움=Dotum;바탕=Batang;궁서=Gungsuh;나눔고딕=nanumgothic;나눔바른고딕=nanumbarungothic;',
+  fontsize_formats: "8px 10px 12px 14px 18px 24px 36px",
   image_advtab: true,
   image_title: true,
   images_upload_url: '/email/send/img',
@@ -33,16 +35,19 @@ tinymce.init({
 
     input.onchange = function() {
       var file = this.files[0];
+      console.log(file);
       var reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = function () {
         var xhr, formData;
         xhr = new XMLHttpRequest();
+        console.log('XMLHttpRequest');
+        console.log(reader);
         xhr.withCredentials = false;
         xhr.open('POST', '/email/send/file');
-        console.log(reader.result);
-        console.log(file);
-
+        // console.log(reader.result);
+        // console.log(file);
+        //
         xhr.onload = function() {
           var json;
 
@@ -59,7 +64,7 @@ tinymce.init({
           }
           console.log(meta.filetype);
           if (meta.filetype == 'file') {
-            console.log({ title: file.name});
+            // console.log({ title: file.name});
             cb(json.location, { title: file.name.split('.')[0] });
           }
           else if (meta.filetype == 'media') {
@@ -108,28 +113,48 @@ tinymce.init({
     };
     input.click();
   },
-  // templates: [
-  //   { title: 'Test template 1', content: 'Test 1' },
-  //   { title: 'Test template 2', content: 'Test 2' }
-  // ],
   setup: function(editor) {
-    console.log(editor);
-    // z-index: 1000000;
-    // $(ElementsArr[0]).css('z-index');
+    editor.addButton('fileStyle', {
+      type: 'menubutton',
+      text: 'fileStyle',
+      icon: false,
+      menu: [{
+        text: '본문자료',
+        onclick: function() {
+          console.log(editor);
+          var activeTag = $(tinymce.activeEditor.selection.getNode());
+          var tagClone = activeTag.clone();
+          console.lolg(tagClone.html());
+          activeTag.before('<p><span style="width: 100px; background:#4E4E4E; margin-top:20px; padding: 5px 30px; text-align: center;">'+tagClone.html()+'</span>&nbsp; &nbsp; &nbsp;</p><p>﻿﻿<br></p>');
+          style="color: #ffffff; font-weight: bold; font-size: 12px; text-decoration: none; "
+          activeTag.prev('a').css({
+            'color': '#ffffff',
+            'font-weight': 'bold',
+            'font-size': '12px',
+            'text-decoration': 'none'
+          });
+          tagClone.remove();
+        }
+      },{
+        text: '관련데이터',
+        onclick: function() {
+        }
+      },{
+          text: '바로가기',
+          onclick: function() {
+          }
+      }]
+    });
   },
   content_css: [
-    '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
     '//www.tinymce.com/css/codepen.min.css'
   ],
   content_style: [
-    'body{padding:30px; margin:auto;font-size:16px;font-family:Lato,"Helvetica Neue",Helvetica,Arial,sans-serif; line-height:1.3; letter-spacing: -0.03em;color:#222} h1,h2,h3,h4,h5,h6 {font-weight:400;margin-top:1.2em} h1 {} h2{} table {width:100%; border-collapse: collapse;} table td, th {border: 1px solid; padding:10px; text-align:left;font-size:16px;font-family:Lato,"Helvetica Neue",Helvetica,Arial,sans-serif; line-height:1.6;} table th {background-color:#E2E4E7}'
+    'body{padding:30px; margin:auto;font-size:14px;font-family:Gulim,"Helvetica Neue",Helvetica,Arial,sans-serif;color:#222} h1,h2,h3,h4,h5,h6 {font-weight:400;margin-top:1.2em} h1 {} h2{} table {width:100%; border-collapse: collapse;} table td, th {border: 1px solid; padding:10px; text-align:left;font-size:14px;font-family:Gulim,"Helvetica Neue",Helvetica,Arial,sans-serif;} table th {background-color:#E2E4E7}'
   ],
-  // init_instance_callback: function(editor){
-  //   editor.on('SetContent',function(e){
-  //     e.content
-  // '<p><br></p><div style="text-align: center; margin-top: 100px; padding: 10px; background-color: #eeeeee"></div><br><div style="padding: 40px 20px;"><p style="font-size: 13px; font-weight:bold; color: #000; padding: 0 0 5px 3px"> 영화 관련 데이타 다운로드</p><hr><br></div><p><br></p>'
-  //   });
-  // }
+  init_instance_callback: function(editor){
+    editor.setContent('<p><br></p><div style="text-align: center; margin-top: 100px; padding: 10px; background-color: #eeeeee"></div><br><div style="padding: 40px 20px;"><p style="font-size: 13px; font-weight:bold; color: #000; padding: 0 0 5px 3px"> 영화 관련 데이타 다운로드</p><hr><br></div><p><br></p>');
+  }
 });
 
 function setContent(){

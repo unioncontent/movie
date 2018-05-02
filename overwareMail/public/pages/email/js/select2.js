@@ -1,3 +1,122 @@
+// 보내는사람
+var page = 1;
+var totalMax = 0;
+
+$(".searchSelect").scroll( function() {
+  if ( $(this).prop('scrollHeight') - $(this).prop('scrollTop') == $(this).innerHeight()) {
+    console.log(page);
+    console.log(totalMax);
+    page += 1;
+    if((page * 10) < totalMax){
+      var searchStr = $('#M_sender_test').val();
+      if(searchStr != ''){
+        searchEmail({search:searchStr,page: page});
+      }else{
+        searchEmail({page: page});
+      }
+    }
+    else{
+      page -= 1;
+    }
+  }
+});
+$('#M_sender_test').on('click',function(){
+  var searchStr = $('#M_sender_test').val();
+  if(page == 1){
+    $('.searchSelect ul').empty();
+    if(searchStr != ''){
+      $(this).select();
+      searchStr = searchStr.replace(/</g,'').replace(/>/g,'');
+      searchEmail({search:searchStr,page: page});
+    }else{
+      searchEmail({page: page});
+    }
+  }
+});
+$('#M_sender_test').on('keyup keypress keydown',function(e){
+  // a-Z && 0-9
+  console.log(e.keyCode);
+  if(e.keyCode != 8 && !(e.keyCode >= 48 && e.keyCode <= 90) &&
+    !(e.keyCode >= 96 && e.keyCode <= 105)){
+      return false;
+  }
+  var searchStr = $('#M_sender_test').val();
+  $('.searchSelect ul').empty();
+  if(is_hangul_char(searchStr)){
+    var strLen = getTextLength(searchStr);
+    if(strLen >= 2){
+      page = 1;
+      searchEmail({search:searchStr,page: 1});
+    }
+  }
+  else{
+    if(searchStr.length > 0){
+      $('.searchSelect ul').empty();
+      page = 1;
+      searchEmail({search:searchStr,page: 1});
+    }
+    else{
+      searchEmail({page: 1});
+    }
+  }
+});
+$(document).on('click','.searchSelect li',function(){
+  $('#M_sender_test').data("value",$(this).data("value"));
+  $('#M_sender_test').val($(this).text());
+});
+$(document).on('click',function(e){
+  if(e.target.id != "M_sender_test"){
+    page = 1;
+    totalMax = 0;
+    $('.searchSelect').hide();
+  }
+});
+function is_hangul_char(ch) {
+  c = ch.charCodeAt(0);
+  if( 0x1100<=c && c<=0x11FF ) return true;
+  if( 0x3130<=c && c<=0x318F ) return true;
+  if( 0xAC00<=c && c<=0xD7A3 ) return true;
+  return false;
+}
+function getTextLength(str) {
+    var len = 0;
+    for (var i = 0; i < str.length; i++) {
+        if (escape(str.charAt(i)).length == 6) {
+            len++;
+        }
+        len++;
+    }
+    return len;
+}
+function searchEmail(params){
+  console.log('searchEmail:',params);
+  $.ajax({
+    type: "POST",
+    url: "/email/searchAll",
+    data: params,
+    dataType:'json',
+    error:function(request,status,error){
+      console.log('mail search error code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
+    },
+    success: function(data) {
+      if(data.result.items.length > 0){
+        if((params.page * 10) < data.result.total_count){
+          totalMax = data.result.total_count;
+        }
+        $.each(data.result.items,function(idx, ele){
+          var html = '<li data-value="'+ele.id+'">'+ele.M_name+'&lt;'+ele.M_email+'&gt;</li>'
+          $('.searchSelect ul').append(html);
+        });
+      }
+      else{
+        $('.searchSelect ul').empty();
+        var html = '<li>검색 결과 없습니다.</li>'
+        $('.searchSelect ul').append(html);
+      }
+      $('.searchSelect').show();
+    }
+  });
+}
 /* select2 js */
 // 보내는사람
 $(".sender-select").select2({
