@@ -1,3 +1,25 @@
+/* select test css */
+.searchSelect{
+  display: none;
+  overflow: auto;
+  max-height: 132px;
+  padding: 0px;
+  border-top: 0px;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+}
+.searchSelect::placeholder,
+.searchSelect:-ms-input-placeholder,
+.searchSelect::-ms-input-placeholder{
+  color: #999;
+}
+.searchSelect li{
+  padding:6px;
+}
+.searchSelect li:hover{
+  background-color: #5897fb;
+  color: white;
+}
 /* jFiler */
 .jFiler-item-title{
   text-overflow: ellipsis;

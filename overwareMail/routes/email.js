@@ -111,6 +111,19 @@ router.get('/searchGroup',isAuthenticated, async function(req, res) {
   res.send({status:true,result:data});
 });
 
+router.post('/searchAll',isAuthenticated, async function(req, res) {
+  var param = [req.user.user_idx,0,10];
+  if (typeof req.body.page !== 'undefined') {
+    param[1] = (req.body.page - 1) * param[2];
+  }
+  req.body.as = ' as id ';
+  var data = {
+    items : await mailListA.selectView(req.body,param),
+    total_count :  await mailListA.selectViewCount(req.body,param)
+  };
+  res.send({status:true,result:data});
+});
+
 router.get('/searchAll',isAuthenticated, async function(req, res) {
   if(req.query.session == false){
     return res.send({status:false});
