@@ -755,7 +755,7 @@
 	
 	<select id="naverVideosList" resultType="NvVO">
  		select 
-		DATE_FORMAT(writeDate,'%Y-%m-%d') writeDate, portal_title, url
+		DATE_FORMAT(writeDate,'%Y-%m-%d') writeDate, portal_title, url, max(view_cnt)as view_cnt
 		from naver_videos
         where url is not null
         <include refid="search_writeDate3"></include>

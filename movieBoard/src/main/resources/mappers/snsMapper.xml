@@ -539,7 +539,7 @@
  	
  	<select id="facebookCGVList" resultType="FvVO">
  		select 
-		DATE_FORMAT(writeDate,'%Y-%m-%d') writeDate, sns_content, url
+		DATE_FORMAT(writeDate,'%Y-%m-%d') writeDate, sns_content, url, max(view_cnt)as view_cnt
 		from facebook_videos
         where
 			sns_writer = 'CGV'

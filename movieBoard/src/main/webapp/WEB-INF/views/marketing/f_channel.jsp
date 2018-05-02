@@ -118,6 +118,7 @@
                                           <tr>
                                           	<th width="3%">NO</th>
                                             <th width="10%">날짜</th>
+                                            <th width="3%">조회수</th>
                                             <th width="30%">제목</th>
                                             <th width="5%"></th>
                                           </tr>
@@ -129,6 +130,9 @@
                                             <td>
                                             ${fV.writeDate}
                                             <input type="hidden" value="${fV.url}" name="url">
+                                            </td>
+                                            <td>
+                                            <fmt:formatNumber value="${fV.view_cnt}" pattern="#,##0" />회
                                             </td>
                                             <td>
                                             <a href='${fV.url}' target="_blank">${fV.sns_content}</a>
@@ -144,7 +148,7 @@
                                         </tbody>
                                         <tfoot>
                                           <tr>
-                                            <td colspan="4">
+                                            <td colspan="5">
                                                <ul class="pagination float-right">
 	        					                   <c:if test="${pageMaker.prev}">
 		        					                   <li class="page-item">
@@ -318,7 +322,7 @@
 			var td1 = tr.children[1];
 			console.log(td1);
 			
-			var td2 = tr.children[2];
+			var td2 = tr.children[3];
 			console.log(td2);
 			
 			
