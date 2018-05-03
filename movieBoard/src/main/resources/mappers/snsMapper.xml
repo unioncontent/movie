@@ -600,5 +600,20 @@
  			createDate desc 
  		limit 1;
  	</select>
+ 	
+ 	<select id="fvlistMinus" resultType="FvVO">
+ 		select 
+ 			view_cnt
+		from 
+			facebook_videos 
+		where 
+			view_cnt != (select view_cnt from facebook_videos where url =#{url} order by createDate desc limit 1) 
+		and 
+			url = #{url}
+		order 
+			by createDate desc
+		limit  
+			#{startPage}, #{perPageNum}
+ 	</select>
 	
  </mapper>

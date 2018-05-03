@@ -407,4 +407,10 @@ public class PortalServiceImpl implements PortalService {
 		return portalDAO.nvlistViewCnt(fv);
 	}
 
+	@Override
+	public List<NvVO> nvlistMinus(SearchCriteria cri) {
+
+		return portalDAO.nvlistMinus(cri);
+	}
+
 }

@@ -814,5 +814,19 @@
  			createDate desc 
  		limit 1;
  	</select>
+ 	<select id="nvlistMinus" resultType="NvVO">
+ 		select 
+ 			view_cnt 
+		from 
+			naver_videos 
+		where 
+			view_cnt != (select view_cnt from naver_videos where url=#{url} order by createDate desc limit 1) 
+		and 
+			url = #{url}
+		order 
+			by createDate desc
+		limit  
+			#{startPage}, #{perPageNum}
+ 	</select>
 	
  </mapper>

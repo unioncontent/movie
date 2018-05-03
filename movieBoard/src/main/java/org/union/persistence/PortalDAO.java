@@ -91,6 +91,6 @@ public interface PortalDAO {
 	public List<NvVO> nvlistSearch(SearchCriteria cri);
 	public Integer nvlistSearchTotalCnt(SearchCriteria cri);
 	public Integer nvlistViewCnt(SearchFv fv);
-	
-	
+	public List<NvVO> nvlistMinus(SearchCriteria cri);
+		
 }

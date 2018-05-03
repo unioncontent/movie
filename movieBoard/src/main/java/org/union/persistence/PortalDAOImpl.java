@@ -388,6 +388,9 @@ public class PortalDAOImpl implements PortalDAO {
 	}
 
 
-	
+	@Override
+	public List<NvVO> nvlistMinus(SearchCriteria cri) {
 
+		return session.selectList(namespace + "nvlistMinus", cri);
+	}
 }

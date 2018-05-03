@@ -137,25 +137,31 @@
                                               <th width="3%">NO</th>
                                               <th width="10%">날짜</th>
                                               <th width="5%">조회수</th>
+                                              <th width="3%">증가폭</th>
                                               <th width="30%">제목</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                        <c:forEach items="${nVListsearch}" var="nV" varStatus="index">
+                                        <c:forEach var="list1" items="${list1}" varStatus="status">
                                           <tr>
-                                            <th>${totalCount - minusCount - index.count + 1}</th>
-                                            <td><fmt:formatDate value="${nV.createDate}" type="DATE" pattern="yyyy-MM-dd HH:mm:ss" /></td>
+                                            <th>${totalCount - minusCount - status.count + 1}</th>
+                                            <td><fmt:formatDate value="${list1.createDate}" type="DATE" pattern="yyyy-MM-dd HH:mm:ss" /></td>
                                             <td>
-                                            <fmt:formatNumber value="${nV.view_cnt}" pattern="#,##0" />회
-                                            <input type="hidden" value="${nV.url}" name="url" id="url">
+                                            <fmt:formatNumber value="${list1.view_cnt}" pattern="#,##0" />회
+                                            <input type="hidden" value="${list1.url}" name="url" id="url">
                                             </td>
-                                            <td>${nV.portal_title}</td>
+                                            <td>
+                                            <i class="icofont icofont-arrow-up" style="color: green"></i>
+                                            <fmt:formatNumber value="${(list1.view_cnt - list2[status.index].view_cnt)}" pattern="#,##0" />회
+                                            <%-- ${list2[status.index].view_cnt} --%>
+                                            </td>
+                                            <td>${list1.portal_title}</td>
                                           </tr>
                                         </c:forEach>
                                         </tbody>
                                         <tfoot>
                                           <tr>
-                                            <td colspan="4">
+                                            <td colspan="5">
                                               <ul class="pagination float-right">
                                                 <c:if test="${pageMaker.prev}">
                                               		<li class="page-item">

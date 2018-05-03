@@ -227,7 +227,8 @@ public class MarketingController {
 		cri.setPortal_name(content);
 		logger.info("crifvList: " + cri);
 		
-		model.addAttribute("fVListsearch", snsService.fvlistSearch(cri));
+		model.addAttribute("list1", snsService.fvlistSearch(cri));
+		model.addAttribute("list2", snsService.fvlistMinus(cri));
 		
 		
 		logger.info("url: " + url);
@@ -380,7 +381,8 @@ public class MarketingController {
 		cri.setPortal_name(content);
 		logger.info("crifvList: " + cri);
 		
-		model.addAttribute("nVListsearch", portalService.nvlistSearch(cri));
+		model.addAttribute("list1", portalService.nvlistSearch(cri));
+		model.addAttribute("list2", portalService.nvlistMinus(cri));
 		
 		
 		logger.info("url: " + url);
@@ -461,7 +463,7 @@ public class MarketingController {
 		
 		logger.info("cal.getTime: " + cal.getTime());
 		logger.info("graphUrl: " + url);
-
+		
 		for(int i = 0; i < 48; i++) {
 			GraphVO graphVO = new GraphVO();
 			

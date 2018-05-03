@@ -162,7 +162,7 @@
       </li>
       <li class="pcoded-hasmenu manage">
         <a href="javascript:void(0)" data-i18n="nav.advance-components.main">
-          <span class="pcoded-micon"><i class="ti-harddrives"></i></span>
+          <span class="pcoded-micon"><i class="icofont icofont-monitor"></i></span>
           <span class="pcoded-mtext">운영관리</span>
           <span class="pcoded-mcaret"></span>
         </a>

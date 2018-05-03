@@ -76,5 +76,6 @@ public interface SNSService {
 	public List<FvVO> fvlistSearch(SearchCriteria cri);
 	public Integer fvlistSearchTotalCnt(SearchCriteria cri);
 	public Integer fvlistViewCnt(SearchFv fv);
+	public List<FvVO> fvlistMinus(SearchCriteria cri);
 	
 }

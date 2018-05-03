@@ -328,4 +328,11 @@ public class SNSServiceImpl implements SNSService {
 		return snsDAO.fvlistViewCnt(fv);
 	}
 
+
+	@Override
+	public List<FvVO> fvlistMinus(SearchCriteria cri) {
+
+		return snsDAO.fvlistMinus(cri);
+	}
+
 }

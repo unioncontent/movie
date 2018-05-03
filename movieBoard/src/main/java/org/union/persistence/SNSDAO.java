@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.union.domain.FvVO;
 import org.union.domain.GraphVO;
+import org.union.domain.NvVO;
 import org.union.domain.SNSVO;
 import org.union.domain.SearchCriteria;
 import org.union.domain.SearchFv;
@@ -78,5 +79,6 @@ public interface SNSDAO {
 	public List<FvVO> fvlistSearch(SearchCriteria cri);
 	public Integer fvlistSearchTotalCnt(SearchCriteria cri);
 	public Integer fvlistViewCnt(SearchFv fv);
+	public List<FvVO> fvlistMinus(SearchCriteria cri);
 	
 }

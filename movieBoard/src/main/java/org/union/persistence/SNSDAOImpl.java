@@ -306,4 +306,11 @@ public class SNSDAOImpl implements SNSDAO {
 	}
 
 
+	@Override
+	public List<FvVO> fvlistMinus(SearchCriteria cri) {
+
+		return session.selectList(namespace + "fvlistMinus", cri);
+	}
+
+
 }
