@@ -525,7 +525,7 @@
         $.ajax({
           type: "POST",
           url: "/list/add/emailCheck",
-          dataType: "text",
+          dataType: "json",
           data: {email : value},
           error: function(req,status,error){
             console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
@@ -533,12 +533,12 @@
           },
           success: function(data){
             console.log(data);
-            if(data == 'fail'){
+            if(data.msg == 'fail'){
               swal("ERROR!", "이메일 중복됩니다. 다시 입력해 주세요.", "error")
               .then((value)=>{
                 $('#email').val($('#o_email').val());
               });
-            }else if(data == 'success'){
+            }else if(data.msg == 'success'){
               swal("중복확인!", value+"는 사용가능한 이메일입니다.", "success");
 
               $('#email').val(value);
