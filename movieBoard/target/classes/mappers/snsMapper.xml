@@ -231,7 +231,7 @@
 	<select id="showboxCountAll" resultType="Integer">
 		select count(*)
 		from sns_data
-		where keyword in (select keyword from keyword_data where user_idx = (select user_idx from user_data where user_name = '쇼박스') )
+		where keyword in (select keyword from keyword_data where user_idx = any(select user_idx from user_data where user_name = '쇼박스') )
 		and createDate between date_add(#{date}, interval -1 hour) and #{date}
 	
 	</select>
@@ -249,7 +249,7 @@
 	    count(if(writeDate <![CDATA[>]]> date_add(now(), interval -1 day), writeDate, null)) type2
 		from sns_data 
 		where
-		keyword in (select keyword from keyword_data where user_idx = (select user_idx from user_data where user_name = '쇼박스') )
+		keyword in (select keyword from keyword_data where user_idx = any(select user_idx from user_data where user_name = '쇼박스') )
 		and writeDate between date_add(now(), interval -2 day) and  date_add(now(), interval -0 day)
 		and  sns_name = #{name}
  	</select>

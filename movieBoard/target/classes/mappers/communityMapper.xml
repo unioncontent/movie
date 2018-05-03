@@ -229,7 +229,7 @@
 		select count(*)
 		from community_data
 		where 
-		keyword in (select keyword from keyword_data where user_idx = (select user_idx from user_data where user_name = '쇼박스') )
+		keyword in (select keyword from keyword_data where user_idx = any(select user_idx from user_data where user_name = '쇼박스') )
 		and createDate between date_add(#{date}, interval -1 hour) and #{date}
 	
 	</select>
