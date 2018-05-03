@@ -10,13 +10,13 @@ tinymce.init({
     toolbar: [ 'undo', 'bold', 'italic', 'styleselect', 'image' ]
   },
   plugins: 'print preview fullpage searchreplace autolink directionality visualblocks visualchars fullscreen image link media template code table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists textcolor wordcount imagetools contextmenu colorpicker textpattern',
-  toolbar: 'undo redo | fileStyle | formatselect | fontselect fontsizeselect | bold italic forecolor backcolor | alignleft aligncenter alignright alignjustify | numlist bullist outdent indent | removeformat | code | help',
+  toolbar: 'undo redo | fileStyle | formatselect | fontselect fontsizeselect | bold italic forecolor backcolor | alignleft aligncenter alignright alignjustify | numlist bullist outdent indent | removeformat | help',
   font_formats : '굴림=Gulim;돋움=Dotum;바탕=Batang;궁서=Gungsuh;나눔고딕=nanumgothic;나눔바른고딕=nanumbarungothic;',
   fontsize_formats: "8px 10px 12px 14px 18px 24px 36px",
   image_advtab: true,
   image_title: true,
   images_upload_url: '/email/send/img',
-  images_upload_credentials: true,
+  // images_upload_base_path: 'http://mail.overware.co.kr/',
   file_picker_types: 'file media',
   media_live_embeds: true,
   media_poster: false,
@@ -121,12 +121,11 @@ tinymce.init({
       menu: [{
         text: '본문자료',
         onclick: function() {
-          console.log(editor);
           var activeTag = $(tinymce.activeEditor.selection.getNode());
           var tagClone = activeTag.clone();
+          console.lolg(tagClone);
           console.lolg(tagClone.html());
           activeTag.before('<p><span style="width: 100px; background:#4E4E4E; margin-top:20px; padding: 5px 30px; text-align: center;">'+tagClone.html()+'</span>&nbsp; &nbsp; &nbsp;</p><p>﻿﻿<br></p>');
-          style="color: #ffffff; font-weight: bold; font-size: 12px; text-decoration: none; "
           activeTag.prev('a').css({
             'color': '#ffffff',
             'font-weight': 'bold',
@@ -138,10 +137,29 @@ tinymce.init({
       },{
         text: '관련데이터',
         onclick: function() {
+          var activeTag = $(tinymce.activeEditor.selection.getNode());
+          var tagClone = activeTag.clone();
+          activeTag.before('<p><span style="background:#f9f9f9; border: 1px solid #000000; width: 130px; margin-top:5px; padding: 5px 15px; font-weight: bold; ; font-size: 12px;"">'+tagClone.html()+'</span>&nbsp; &nbsp; &nbsp;</p><p>﻿﻿<br></p>');
+          activeTag.prev('a').css({
+            'color': '#000000',
+            'font-size': '12px',
+            'text-decoration': 'none'
+          });
+          tagClone.remove();
         }
       },{
           text: '바로가기',
           onclick: function() {
+            var activeTag = $(tinymce.activeEditor.selection.getNode());
+            var tagClone = activeTag.clone();
+            activeTag.before('<p><span style="width: 100px; background:#3d94f6; margin-top:10px; padding: 5px 30px; text-align: center;">'+tagClone.html()+'</span>&nbsp; &nbsp; &nbsp;</p><p>﻿﻿<br></p>');
+            activeTag.prev('a').css({
+              'color': '#ffffff',
+              'font-weight': 'bold',
+              'font-size': '12px',
+              'text-decoration': 'none'
+            });
+            tagClone.remove();
           }
       }]
     });
