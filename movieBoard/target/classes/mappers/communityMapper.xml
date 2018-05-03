@@ -234,6 +234,7 @@
 	
 	</select>
 	
+	
 	<select id="textTypeCount" resultType="TextTypeVO">
  		select 
 		count(if(textType='좋은글', textType, null)) lik,

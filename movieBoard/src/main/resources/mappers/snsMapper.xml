@@ -236,6 +236,7 @@
 	
 	</select>
 	
+	
  	<select id="yesterdayCount" resultType="GraphVO">
  		select count(if(writeDate <![CDATA[<]]> date_add(now(), interval -1 day), writeDate, null)) type1,
 	    count(if(writeDate <![CDATA[>]]> date_add(now(), interval -1 day), writeDate, null)) type2

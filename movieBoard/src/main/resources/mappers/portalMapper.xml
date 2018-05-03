@@ -327,6 +327,7 @@
 		and writeDate between date_add(now(), interval -2 day) and  date_add(now(), interval -0 day)
  	</select>
  	
+ 	
  	<select id="listNaver" resultType="PortalVO">
  		select * from portal_data 
  		where 

@@ -123,7 +123,6 @@
 			keyword_property = '포함'
 		and keyword in (select keyword from keyword_data where user_idx = any(select user_idx from user_data where user_name = '쇼박스') )	
 		order by user_idx
-	
 	</select>
 	
 	<select id="listPage" resultType="KeywordListVO">
