@@ -56,6 +56,22 @@ var mailListC = {
     var result = await getResult(sql,[idx]);
     return [].map.call(result, function(obj) { return obj.M_idx_a; });
   },
+  getIdx2 : async function(param,idx){
+    var sql = 'select distinct n_idx from m_mail_list_c where M_ID=? ';
+    if(typeof param == 'object'){
+      sql += 'and M_group_title =\''+param[0]+'\'';
+      for(var i = 1; i < param.length; i++){
+        sql += ' or';
+        sql += ' M_group_title =\''+param[i]+'\'';
+      }
+    }
+    else if(typeof param == 'string'){
+      sql += 'and M_group_title =\''+param+'\'';
+    }
+    sql += '  group by M_group_title';
+    var result = await getResult(sql,[idx]);
+    return [].map.call(result, function(obj) { return obj.n_idx; });
+  },
   titleCheck: async function(param){
     var sql = 'select * from m_mail_list_c where M_group_title=? and M_id=?;';
     return await getResult(sql,param);

@@ -2,12 +2,12 @@ const DBpromise = require('../db/db_info.js');
 
 /*
   리포터 테이블 - reporter_data
-  user 테이블 - user_data
+  user 테이블 - m_mail_user
 */
 
 var user = {
   checkId: async function(param) {
-    var sql = 'select * from user_data where user_ID=?';
+    var sql = 'select * from m_mail_user where user_id=?';
     return await getResult(sql,param);
   },
   deleteReporter: async function(email,param){
