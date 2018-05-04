@@ -16,14 +16,26 @@ var isAuthenticated = function (req, res, next) {
 
 router.get('/', isAuthenticated, async function(req, res, next) {
   var data = {
-    list:await period.getYesterday([req.user.user_idx]),
-    period:await period.getTodayPeriod([req.user.user_idx])
+    list:await period.getYesterday(req.user),
+    period:{
+      'todaySendCount' : await period.getTodaySendCount(req.user),
+      'successNfailCount' : await period.getSuccessNfailCount(req.user),
+      'todayCount' : await period.getTodayNReservationCount(req.user,'0'),
+      'reservationCount' : await period.getTodayNReservationCount(req.user,'1'),
+      'waitingCount' : await period.getWaitingCount(req.user),
+    }
   };
+  if(data.period.todaySendCount > 0){
+    if(parseInt(data.period.successNfailCount.success) > 0 )
+      data.period.successP = Math.round((parseInt(data.period.successNfailCount.success) / data.period.todaySendCount) * 100);
+    if(parseInt(data.period.successNfailCount.fail) > 0 )
+      data.period.failP = Math.round((parseInt(data.period.successNfailCount.fail) / data.period.todaySendCount) * 100);
+  }
   res.render('index',data);
 });
 
 router.post('/7DayGraph',isAuthenticated, async function(req, res, next) {
-  var data = await period.get7DayGraph([req.user.user_idx]);
+  var data = await period.get7DayGraph(req.user);
   if(data.length == 0){
     res.status(500).send('다시 시도해주세요.');
   }
@@ -60,13 +72,14 @@ passport.use(new LocalStrategy({
   usernameField: 'username',
   passwordField: 'password',
   passReqToCallback: true
-},async function(req, username, password, done) {
+},
+async function(req, username, password, done) {
   try{
     var result = await user.checkId([username]);
     if (result.length == 0) {
       return done(null, false, req.flash('loginMessage', '아이디가 존재하지 않습니다.'));
     }
-    if (result[0].user_PW !== password) {
+    if (result[0].user_pw !== password) {
       return done(null, false, req.flash('loginMessage', '비밀번호가 맞지 않습니다.'));
     }
     return done(null, result[0]);

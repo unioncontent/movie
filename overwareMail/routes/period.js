@@ -13,7 +13,7 @@ var isAuthenticated = function (req, res, next) {
 };
 
 router.get('/',isAuthenticated,async function(req, res) {
-  var data = await getListPageData(req.user.user_idx,req.query);
+  var data = await getListPageData(req.user.n_idx,req.query);
   res.render('period',data);
 });
 
@@ -48,7 +48,7 @@ router.post('/getPeriod',isAuthenticated,async function(req, res, next) {
 
 router.post('/getNextPage',isAuthenticated,async function(req, res, next) {
   try{
-    var data = await getListPageData(req.user.user_idx,req.body);
+    var data = await getListPageData(req.user.n_idx,req.body);
     res.send({status:true,result:data});
   } catch(e){
     res.status(500).send(e);
@@ -62,15 +62,15 @@ async function getListPageData(idx,param){
     listCount:{total:0}
   };
   var limit = 20;
-  var searchParam = [idx,0,limit];
+  var searchParam = [idx,idx,0,limit];
   var currentPage = 1;
   var searchBody = {};
   if (typeof param.page !== 'undefined') {
     currentPage = param.page;
   }
   if (parseInt(currentPage) > 0) {
-    searchParam[1] = (currentPage - 1) * limit
-    data['offset'] = searchParam[1];
+    searchParam[2] = (currentPage - 1) * limit
+    data['offset'] = searchParam[2];
   }
   if (typeof param.sDate !== 'undefined' && typeof param.eDate !== 'undefined') {
     searchBody['sDate'] = param.sDate;

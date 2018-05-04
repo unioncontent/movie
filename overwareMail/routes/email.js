@@ -31,13 +31,13 @@ var isAuthenticated = function (req, res, next) {
 
 router.get('/',isAuthenticated, async function(req, res) {
   var data = {
-    keywordList : await keyword.selectMovieKwd(),
-    typeList : await mailType.selectTable([req.user.user_idx]),
-    mailList : await mailListA.selectView({},[req.user.user_idx,0,10]),
-    mailListCount : await mailListA.selectViewCount({},[req.user.user_idx,0,10]),
+    keywordList : await keyword.selectMovieKwd(req.user.user_admin,[req.user.n_idx]),
+    typeList : await mailType.selectTable(req.user.user_admin,[req.user.n_idx]),
+    mailList : await mailListA.selectView({},[req.user.n_idx,0,10]),
+    mailListCount : await mailListA.selectViewCount({},[req.user.n_idx,0,10]),
     mailListPageNum : 1,
-    groupList : await mailListC.selectView({},[req.user.user_idx,0,10]),
-    groupListCount : await mailListC.selectViewCount({},[req.user.user_idx,0,10]),
+    groupList : await mailListC.selectView({},[req.user.n_idx,0,10]),
+    groupListCount : await mailListC.selectViewCount({},[req.user.n_idx,0,10]),
     groupListPageNum : 1
   };
   res.render('email',data);
@@ -45,13 +45,13 @@ router.get('/',isAuthenticated, async function(req, res) {
 
 router.get('/test',isAuthenticated, async function(req, res) {
   var data = {
-    keywordList : await keyword.selectMovieKwd(),
-    typeList : await mailType.selectTable([req.user.user_idx]),
-    mailList : await mailListA.selectView({},[req.user.user_idx,0,10]),
-    mailListCount : await mailListA.selectViewCount({},[req.user.user_idx,0,10]),
+    keywordList : await keyword.selectMovieKwd(req.user.user_admin,[req.user.n_idx]),
+    typeList : await mailType.selectTable(req.user.user_admin,[req.user.n_idx]),
+    mailList : await mailListA.selectView({},[req.user.n_idx,0,10]),
+    mailListCount : await mailListA.selectViewCount({},[req.user.n_idx,0,10]),
     mailListPageNum : 1,
-    groupList : await mailListC.selectView({},[req.user.user_idx,0,10]),
-    groupListCount : await mailListC.selectViewCount({},[req.user.user_idx,0,10]),
+    groupList : await mailListC.selectView({},[req.user.n_idx,0,10]),
+    groupListCount : await mailListC.selectViewCount({},[req.user.n_idx,0,10]),
     groupListPageNum : 1
   };
   res.render('email_test',data);
@@ -67,8 +67,8 @@ router.post('/getModalListPage',isAuthenticated, async function(req, res) {
     emialTotal : [],
     emailPage : 1
   };
-  var emailParam = [req.user.user_idx,0,10];
-  var groupParam = [req.user.user_idx,0,10];
+  var emailParam = [req.user.n_idx,0,10];
+  var groupParam = [req.user.n_idx,0,10];
 
   if (typeof req.body.page === 'undefined' && typeof req.body.type === 'undefined') {
     req.body.type = '';
@@ -99,7 +99,7 @@ router.get('/searchGroup',isAuthenticated, async function(req, res) {
   if(req.query.session == false){
     return res.send({status:false});
   }
-  var param = [req.user.user_idx,0,10];
+  var param = [req.user.n_idx,0,10];
   if (typeof req.query.page !== 'undefined') {
     param[1] = (req.query.page - 1) * param[2];
   }
@@ -112,7 +112,7 @@ router.get('/searchGroup',isAuthenticated, async function(req, res) {
 });
 
 router.post('/searchAll',isAuthenticated, async function(req, res) {
-  var param = [req.user.user_idx,0,10];
+  var param = [req.user.n_idx,0,10];
   if (typeof req.body.page !== 'undefined') {
     param[1] = (req.body.page - 1) * param[2];
   }
@@ -128,7 +128,7 @@ router.get('/searchAll',isAuthenticated, async function(req, res) {
   if(req.query.session == false){
     return res.send({status:false});
   }
-  var param = [req.user.user_idx,0,10];
+  var param = [req.user.n_idx,0,10];
   if (typeof req.query.page !== 'undefined') {
     param[1] = (req.query.page - 1) * param[2];
   }
@@ -248,11 +248,13 @@ router.post('/send',isAuthenticated, async function(req, res) {
   var sender = await mailListA.getOneEmail(req.body.M_sender);
   var recipi = await mailListA.getOneEmail(recipiList);
   var groups = [];
+  var groupsIdx = [];
   var groups2allIdx = [];
   if(typeof groupList != 'undefined'){
     if(groupList.length != 0){
-      groups = await mailListC.getEmail(groupList,req.user.user_idx);
-      groups2allIdx = await mailListC.getIdx(groupList,req.user.user_idx);
+      groups = await mailListC.getEmail(groupList,req.user.n_idx);
+      groups2allIdx = await mailListC.getIdx(groupList,req.user.n_idx);
+      groupsIdx = await mailListC.getIdx2(groupList,req.user.n_idx);
     }
   }
 
@@ -291,7 +293,7 @@ router.post('/send',isAuthenticated, async function(req, res) {
     M_mail_type: req.body['M_mail_type'],
     M_body: req.body['M_body'],
     M_subject: req.body['M_subject'],
-    M_id: req.user.user_idx
+    M_id: req.user.n_idx
   };
 
   // 메일 받는 사람
@@ -301,15 +303,16 @@ router.post('/send',isAuthenticated, async function(req, res) {
   else if(typeof recipiList == 'string'){
     mailAllParam['M_recipi'] = recipiList;
   }
+  if(groups2allIdx != []){
+    if(groupsIdx.length != 0){
+      mailAllParam['M_group'] = groupsIdx.join(',');
+    }
+  }
+  console.log('groupsIdx:',groupsIdx.join(','));
 
   if(req.body['M_file_d'] != ""){
     mailAllParam['M_file'] = req.body['M_file_d'];
     mailAllParam['M_file_name'] = req.body['M_fileName'];
-  }
-  if(groups2allIdx != []){
-    if(groups2allIdx.length != 0){
-      mailAllParam['M_group'] = groups2allIdx[0];
-    }
   }
   var m_idx_a = null;
   // 메일발송 리스트 insert

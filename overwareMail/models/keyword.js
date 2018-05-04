@@ -5,9 +5,12 @@ const DBpromise = require('../db/db_info.js');
 */
 
 var keyword = {
-  selectMovieKwd: async function(){
-    var sql = 'SELECT * FROM keyword_data where user_idx!=9 and keyword_property=\'포함\' group by keyword_main';
-    return await getResult(sql,[]);
+  selectMovieKwd: async function(admin,param){
+    if(admin != null){
+      param = admin;
+    }
+    var sql = 'SELECT * FROM keyword_data where user_idx=? and keyword_property=\'포함\' group by keyword_main';
+    return await getResult(sql,param);
   }
 }
 
