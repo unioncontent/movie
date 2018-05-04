@@ -8,6 +8,8 @@ import org.union.domain.NewsVO;
 import org.union.domain.ReplyVO;
 import org.union.domain.SNSVO;
 import org.union.domain.SearchCriteria;
+import org.union.domain.SearchFv;
+import org.union.domain.SearchMedia;
 import org.union.domain.TextTypeDateVO;
 import org.union.domain.TextTypeVO;
 
@@ -104,4 +106,5 @@ public interface MediaDAO {
 	public List<MediaVO> mediaCnt(SearchCriteria cri);
 	public List<TextTypeDateVO> textTypeCount2(SearchCriteria cri);
 	public Integer checkUrl(String url);
+	public Integer mTotalCnt(SearchMedia Sm);
 }

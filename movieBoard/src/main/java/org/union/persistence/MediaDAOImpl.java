@@ -15,6 +15,8 @@ import org.union.domain.MediaVO;
 import org.union.domain.NewsVO;
 import org.union.domain.ReplyVO;
 import org.union.domain.SearchCriteria;
+import org.union.domain.SearchFv;
+import org.union.domain.SearchMedia;
 import org.union.domain.TextTypeDateVO;
 import org.union.domain.TextTypeVO;
 
@@ -459,6 +461,12 @@ public class MediaDAOImpl implements MediaDAO {
 	@Override
 	public Integer checkUrl(String url) {
 		return session.selectOne(namespace + "checkUrl", url);
+	}
+
+	@Override
+	public Integer mTotalCnt(SearchMedia Sm) {
+
+		return session.selectOne(namespace + "mTotalCnt", Sm);
 	}
 
 	

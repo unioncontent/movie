@@ -131,12 +131,12 @@
                     </div>
                   </div>
                   <!-- page-header end -->
-                  <!-- page-body start -->
+                  <!-- Page-body start -->
                   <div class="page-body">
                     <div class="row">
                       <!-- data setting start -->
                       <div class="col-md-7">
-                       <c:if test="${user.user_name == 'union'}">
+                        <c:if test="${user.user_name == 'union'}">
                          <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="selectCompany">
                           <option>회사</option>
                           <c:if test="${user.user_type == 1 }">
@@ -163,7 +163,7 @@
                           </c:if>
                         </select>
 						</c:if>
-
+						
                         <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left" id="selectKeyword">
                           <option>키워드</option>
                           <c:if test="${modelKeywordList == null}" >
@@ -179,7 +179,7 @@
                         </select>
                       </div>
                       <div class="col-md-5">
-                         <!-- date picker start -->
+                        <!-- date picker start -->
                         <div class="row">
                           <div class="btn-group float-right m-b-10 p-l-15 p-r-10" role="group">
                             <button id="toDay" type="button" class="btn btn-inverse btn-sm waves-effect waves-light">당일</button>
@@ -193,6 +193,7 @@
                               <span class="icofont icofont-ui-calendar"></span>
                             </span>
                           </div>
+
                         </div>
                         <!-- date picker end -->
                       </div>
@@ -207,10 +208,10 @@
                           <div class="tab-pane fade show active" id="main" role="tabpanel">
                             <div class="row">
                               <!-- top cards start -->
-                              <div class="col-md-6 col-xl-3 main-card">
+                              <%-- <div class="col-md-6 col-xl-3 main-card">
                                 <div class="card social-widget-card">
                                   <div class="card-block-big bg-inverse">
-                                    <h3><fmt:formatNumber value="${totalCount}" groupingUsed="true"/></h3>
+                                    <h3><fmt:formatNumber value="${totalCountPage}" groupingUsed="true"/></h3>
                                     <span class="m-t-10">전체검색</span>
                                     <i class="icofont icofont-search"></i>
                                   </div>
@@ -228,7 +229,7 @@
                               <div class="col-md-6 col-xl-3 main-card">
                                 <div class="card social-widget-card">
                                   <div class="card-block-big bg-news">
-                                    <h3><fmt:formatNumber value="${mediaCount}" groupingUsed="true"/></h3>
+                                    <h3><fmt:formatNumber value="" groupingUsed="true"/></h3>
                                     <span class="m-t-10">언론사</span>
                                     <i class="icofont icofont-building-alt"></i>
                                   </div>
@@ -237,122 +238,32 @@
                               <div class="col-md-6 col-xl-3 main-card">
                                 <div class="card social-widget-card">
                                   <div class="card-block-big bg-success">
-                                    <h3><fmt:formatNumber value="${pressCount}" groupingUsed="true"/></h3>
+                                    <h3><fmt:formatNumber value="" groupingUsed="true"/></h3>
                                     <span class="m-t-10">기자</span>
                                     <i class="icofont icofont-fountain-pen"></i>
                                   </div>
                                 </div>
-                              </div>
+                              </div> --%>
                               <!-- top cards end -->
-                              <!-- 언론사,기자 통계 start -->
-                              <div class="col-md-6">
-                                <div class="card">
-                                  <div class="card-header">
-                                    <h5>언론사 통계</h5>
-                                    <div class="card-header-right">
-                                      <i class="icofont icofont-rounded-down"></i>
-                                    </div>
-                                  </div>
-                                  <div class="card-block table-border-style">
-                                    <!-- sns table start -->
-                                    <div class="table-border-style" id="newsMore">
-                                        <div class="table-responsive">
-                                          <table class="table table-styling">
-                                            <thead>
-                                                <tr class="table-inverse">
-                                                    <th>순위</th>
-                                                    <th>언론사</th>
-                                                    <th>
-                                                      전체기사건수
-                                                      <span class="sort">
-                                                        <i class="icofont icofont-long-arrow-up"></i>
-                                                        <i class="icofont icofont-long-arrow-down"></i>
-                                                      </span>
-                                                    </th>
-                                                    <th>
-                                                      매칭기사
-                                                      <span class="sort">
-                                                        <i class="icofont icofont-long-arrow-up"></i>
-                                                        <i class="icofont icofont-long-arrow-down"></i>
-                                                      </span>
-                                                    </th>
-                                                    <th>매칭비율</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="news-ranking">
-                                              <c:forEach items="${mediaList}" var="mediaList" varStatus="index">
-                                              <tr>
-                                                <th scope="row">${index.count}</th>
-                                                <td class='news' onclick='showModal("#news-Modal", "${mediaList.media}")'>${mediaList.media}</td>
-                                                <td><fmt:formatNumber value="${mediaList.allCount}" groupingUsed="true"/></td>
-                                                <td><fmt:formatNumber value="${mediaList.searchCount}" groupingUsed="true"/></td>
-                                                <td><fmt:parseNumber value="${mediaList.matchPercent}" integerOnly="true"></fmt:parseNumber>%</td>
-                                              </tr>
-                                              </c:forEach>
-                                            </tbody>
-                                          </table>
-                                        </div>
-                                      </div>
-                                    <!-- sns table end -->
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="col-md-6">
-                                <div class="card">
-                                  <div class="card-header">
-                                    <h5>기자 통계</h5>
-                                    <div class="card-header-right">
-                                      <i class="icofont icofont-rounded-down"></i>
-                                    </div>
-                                  </div>
-                                  <div class="card-block table-border-style">
-                                    <!-- news table start -->
-                                    <div class="table-border-style" id="pressMore">
-                                      <div class="table-responsive">
-                                        <table class="table table-styling">
-                                          <thead>
-                                            <tr class="table-inverse">
-                                              <th>순위</th>
-                                              <th>기자</th>
-                                              <th>언론사</th>
-                                              <th>
-                                                전체기사건수
-                                                <span class="sort">
-                                                  <i class="icofont icofont-long-arrow-up"></i>
-                                                  <i class="icofont icofont-long-arrow-down"></i>
-                                                </span>
-                                              </th>
-                                              <th>
-                                                매칭기사
-                                                <span class="sort">
-                                                  <i class="icofont icofont-long-arrow-up"></i>
-                                                  <i class="icofont icofont-long-arrow-down"></i>
-                                                </span>
-                                              </th>
-                                              <th>매칭비율</th>
-                                            </tr>
-                                          </thead>
-                                          <tbody id="press-ranking">
-                                            <c:forEach items="${pressList}" var="pressList" varStatus="index">
-                                              <tr>
-                                                <th scope="row">${index.count}</th>
-                                                <td class='press' onclick='showModal("#press-Modal", "${pressList.reporter}")'>${pressList.reporter}</td>
-                                                <td>${pressList.media}</td>
-                                                <td><fmt:formatNumber value="${pressList.allCount}" groupingUsed="true"/></td>
-                                                <td><fmt:formatNumber value="${pressList.searchCount}" groupingUsed="true"/></td>
-                                                <td><fmt:parseNumber value="${pressList.matchPercent}" integerOnly="true"></fmt:parseNumber>%</td>
-                                              </tr>
-                                            </c:forEach>
-                                          </tbody>
-                                        </table>
-                                      </div>
-                                    </div>
-                                    <!-- news table end -->
-                                  </div>
-                                </div>
-                              </div>
-                              <!-- 언론사,기자 end -->
-                             
+                              <!-- Morris chart start -->
+		                      <div class="col-md-12">
+		                        <div class="card">
+		                          <div class="card-header">
+		                            <h5>
+		                            	<i class="icofont icofont-chart-line m-r-5"></i>
+		                            	검출량그래프
+		                            </h5>
+		                            <span>최근 24시간 기사 수 데이터 그래프</span>
+		                            <div class="card-header-right">
+		                              <i class="icofont icofont-rounded-down"></i>
+		                            </div>
+		                          </div>
+		                          <div class="card-block">
+		                            <div id="morris-bar" style="height:300px;"></div>
+		                          </div>
+		                        </div>
+		                      </div>
+		                      <!-- Morris chart end -->
                               <!-- 테이블리스트 start -->
                               <div class="col-lg-12">
                                 <div class="card">
@@ -360,10 +271,10 @@
                                     <h5 class="card-header-text m-b-10"> 검출데이터</h5>
                                     <table class="padd"><tr><td>
                                     <div class="btn-group f-right p-r-0">
-		                                <button type="button" id="allBtn1" class="radiosBtn btn btn-primary btn-outline-primary btn-sm waves-effect waves-light" onclick='showModal("#press-textType", "좋은글")'>좋은글</button>
-		                                <button type="button" id="allBtn2" class="radiosBtn btn btn-primary btn-outline-primary btn-sm waves-effect waves-light" onclick='showModal("#press-textType2", "나쁜글")'>나쁜글</button>
-		                                <button type="button" id="allBtn3" class="radiosBtn btn btn-primary btn-outline-primary btn-sm waves-effect waves-light" onclick='showModal("#press-textType3", "관심글")'>관심글</button>
-		                                <button type="button" id="allBtn4" class="radiosBtn btn btn-primary btn-outline-primary btn-sm waves-effect waves-light" onclick='showModal("#press-textType4", "기타글")'>기타글</button>
+                                   	 	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#textType1">좋은글</button>
+                                   	 	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#textType2" style="margin-left: 2px">나쁜글</button>
+                                   	 	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#textType3" style="margin-left: 2px">관심글</button>
+                                   	 	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#textType4" style="margin-left: 2px">기타글</button>
 		                            </div></td><td></td><td></td><td>
 	                                <div class="btn-group f-right p-r-0">
 	                                	<button class="btn btn-warning f-right alert-confirm" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'alert-confirm']);"><i class="icofont icofont-download-alt"></i>EXCEL</button>
@@ -442,322 +353,8 @@
                         </div>
                         <!-- tab-content end -->
                       </div>
-                      <!-- news Modal start-->
-                      <div class="modal fade" id="news-Modal" tabindex="-1" role="dialog">
-                        <div class="modal-dialog modal-lg" role="document">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title">언론사 상세정보</h5>
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true"><i class="icofont icofont-close-line"></i></span>
-                              </button>
-                            </div>
-                            <div class="modal-body">
-                              <div class="card">
-                                <div class="card-header">
-                                  <h5 class="card-header-text">언론사정보</h5>
-                                </div>
-                                <div class="card-block table-border-style">
-                                  <!-- list satart -->
-                                  <div class="table-border-style">
-                                    <div class="table-responsive">
-                                      <table class="table table-sm">
-                                        <tbody>
-                                          <tr>
-                                            <th class="b-r-1" width="30%">언론사명</th>
-                                            <td id = 'mediaName'>톱스타뉴스</td>
-                                          </tr>
-                                        </tbody>
-                                      </table>
-                                    </div>
-                                  </div>
-                                  <!-- list end -->
-                                </div>
-                              </div>
-                              <div class="card">
-                                <div class="card-header">
-                                  <h5 class="card-header-text">기사노출도</h5>
-                                </div>
-                                <div class="card-block table-border-style">
-                                  <!-- list satart -->
-                                  <div class="table-border-style">
-                                    <div class="table-responsive">
-                                      <table class="table">
-                                        <thead>
-                                          <tr>
-                                            <th class="b-b-1">전체기사</th>
-                                            <th class="b-b-1">NAVER</th>
-                                            <th class="b-b-1">DAUM</th>
-                                          </tr>
-                                        </thead>
-                                        <tbody>
-                                          <tr>
-                                            <td id='media1_1'>0</td>
-                                            <td id='media1_2'>0</td>
-                                            <td id='media1_3'>0</td>
-                                          </tr>
-                                        </tbody>
-                                      </table>
-                                    </div>
-                                  </div>
-                                  <!-- list end -->
-                                </div>
-                              </div>
-                              <div class="card">
-                                <div class="card-header">
-                                  <h5 class="card-header-text">성향분석</h5>
-                                </div>
-                                <div class="card-block table-border-style">
-                                  <!-- list satart -->
-                                  <div class="table-border-style">
-                                    <div class="table-responsive">
-                                      <table class="table">
-                                        <thead>
-                                          <tr>
-                                            <th colspan="4" class="b-b-1 b-r-1">전체기사</th>
-                                            <th colspan="4" class="b-b-1">매칭기사</th>
-                                          </tr>
-                                          <tr>
-                                            <th class="b-b-1" >전체기사수</th>
-                                            <th class="b-b-1" >호흥</th>
-                                            <th class="b-b-1" >비호흥(악성)</th>
-                                            <th class="b-b-1 b-r-1" >관심</th>
-                                            <th class="b-b-1" >전체기사수</th>
-                                            <th class="b-b-1" >호흥</th>
-                                            <th class="b-b-1" >비호흥(악성)</th>
-                                            <th class="b-b-1" >관심</th>
-                                          </tr>
-                                        </thead>
-                                        <tbody>
-                                          <tr>
-                                            <td id='media2_1'>0</td>
-                                            <td id='media2_2'>0</td>
-                                            <td id='media2_3'>0</td>
-                                            <td id='media2_4'>0</td>
-                                            <td id='media3_1'>0</td>
-                                            <td id='media3_2'>0</td>
-                                            <td id='media3_3'>0</td>
-                                            <td id='media3_4'>0</td>
-                                          </tr>
-                                        </tbody>
-                                      </table>
-                                    </div>
-                                  </div>
-                                  <!-- list end -->
-                                </div>
-                              </div>
-                            </div>
-                            <div class="modal-footer">
-                              <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">Close</button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <!-- news Modal end-->
-                      <!-- press Modal start-->
-                      <div class="modal fade" id="press-Modal" tabindex="-1" role="dialog">
-                        <div class="modal-dialog modal-lg" role="document">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title">기자 상세정보</h5>
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true"><i class="icofont icofont-close-line"></i></span>
-                              </button>
-                            </div>
-                            <div class="modal-body">
-                              <div class="card">
-                                <div class="card-header">
-                                  <h5 class="card-header-text">기자정보</h5>
-                                </div>
-                                <div class="card-block table-border-style">
-                                  <!-- list satart -->
-                                  <div class="table-border-style">
-                                    <div class="table-responsive">
-                                      <table class="table table-sm">
-                                        <tbody>
-                                          <tr>
-                                            <th class="b-r-1" width="30%">이름</th>
-                                            <td id='pressName'>김한준</td>
-                                          </tr>
-                                          <tr>
-                                            <th class="b-r-1">언론사명</th>
-                                            <td id = 'pressMediaName'></td>
-                                          </tr>
-                                          <tr>
-                                            <th class="b-r-1" >이메일</th>
-                                            <td id = 'pressEmail'></td>
-                                          </tr>
-                                          <tr>
-                                            <th class="b-r-1">연락처</th>
-                                            <td id = 'pressPhoneNumber'></td>
-                                          </tr>
-                                        </tbody>
-                                      </table>
-                                    </div>
-                                  </div>
-                                  <!-- list end -->
-                                </div>
-                              </div>
-                              <div class="card">
-                                <div class="card-header">
-                                  <h5 class="card-header-text">기사노출도</h5>
-                                </div>
-                                <div class="card-block table-border-style">
-                                  <!-- list satart -->
-                                  <div class="table-border-style">
-                                    <div class="table-responsive">
-                                      <table class="table">
-                                        <thead>
-                                          <tr>
-                                            <th class="b-b-1">전체기사</th>
-                                            <th class="b-b-1">NAVER</th>
-                                            <th class="b-b-1">DAUM</th>
-                                          </tr>
-                                        </thead>
-                                        <tbody>
-                                          <tr>
-                                            <td id = 'press1_1'>0</td>
-                                            <td id = 'press1_2'>0</td>
-                                            <td id = 'press1_3'>0</td>
-                                          </tr>
-                                        </tbody>
-                                      </table>
-                                    </div>
-                                  </div>
-                                  <!-- list end -->
-                                </div>
-                              </div>
-                              <div class="card">
-                                <div class="card-header">
-                                  <h5 class="card-header-text">성향분석</h5>
-                                </div>
-                                <div class="card-block table-border-style">
-                                  <!-- list satart -->
-                                  <div class="table-border-style">
-                                    <div class="table-responsive">
-                                      <table class="table">
-                                        <thead>
-                                          <tr>
-                                            <th colspan="4" class="b-b-1 b-r-1">전체기사</th>
-                                            <th colspan="4" class="b-b-1">매칭기사</th>
-                                          </tr>
-                                          <tr>
-                                            <th class="b-b-1">전체기사수</th>
-                                            <th class="b-b-1">호흥</th>
-                                            <th class="b-b-1">비호흥(악성)</th>
-                                            <th class="b-b-1 b-r-1">관심</th>
-                                            <th class="b-b-1">전체기사수</th>
-                                            <th class="b-b-1">호흥</th>
-                                            <th class="b-b-1">비호흥(악성)</th>
-                                            <th class="b-b-1">관심</th>
-                                          </tr>
-                                        </thead>
-                                        <tbody>
-                                          <tr>
-                                            <td id = 'press2_1'>0</td>
-                                            <td id = 'press2_2'>0</td>
-                                            <td id = 'press2_3'>0</td>
-                                            <td id = 'press2_4'>0</td>
-                                            <td id = 'press3_1'>0</td>
-                                            <td id = 'press3_2'>0</td>
-                                            <td id = 'press3_3'>0</td>
-                                            <td id = 'press3_4'>0</td>
-                                          </tr>
-                                        </tbody>
-                                      </table>
-                                    </div>
-                                  </div>
-                                  <!-- list end -->
-                                </div>
-                              </div>
-                            </div>
-                            <div class="modal-footer">
-                              <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">Close</button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <!-- press Modal end-->
-                      <!-- 순위 더보기 Modal start-->
-                      <div class="modal fade" id="more-Modal" tabindex="-1" role="dialog">
-                        <div class="modal-dialog modal-lg" role="document">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h4 class="modal-title"><span id="moreName">언론사</span> 통계 순위 더보기</h4>
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                              </button>
-                            </div>
-                            <div class="modal-body">
-
-                            </div>
-                            <div class="modal-footer">
-                              <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">Close</button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <!-- 순위 더보기 Modal end-->
-                      
-                      <!-- reportTextType Modal start-->
-                      <div class="modal fade" id="text-Modal3" tabindex="-1" role="dialog">
-                        <div class="modal-dialog modal-lg" role="document">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title"></h5>
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true"><i class="icofont icofont-close-line"></i></span>
-                              </button>
-                            </div>
-                            <div class="modal-body">
-                              <div class="col-lg-12">
-                                <div class="card">
-                                  <div class="card-header">
-                                    <h5 class="card-header-text m-b-10">검출데이터</h5>
-                                     </div>
-                                    <!-- list satart -->
-                                    <div class="table-responsive">
-                                      <table class="table">
-                                        <thead>
-                                            <tr>
-                                              <th width="5%">NO</th>
-                                              <th width="10%">등록날짜</th>
-                                              <th width="10%">언론사</th>
-                                              <th width="3%">제목</th>
-                                              <th width="10%">키워드</th>
-                                              <th width="10%">여론현황</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                          <c:forEach items="${reporterGetTextTypeCount}" var = "mediaVO2" varStatus="index">
-                                          <tr>
-                                            <th scope="row">${index.count}</th>
-                                            <td>
-                                            <fmt:formatDate value="${mediaVO2.writeDate}" pattern="yyyy-MM-dd kk:mm:ss"/>
-                                            </td>
-                                            <td>${mediaVO2.media_name}</td>
-                                            <td width="3%"><a href='' target="_blank">${mediaVO2.media_title}</a></td>
-                                            <td>${mediaVO2.keyword}</td>
-                                            <td>${mediaVO2.textType}</td>
-                                          </tr>
-                                          </c:forEach>
-                                        </tbody>
-                                      </table>
-                                    </div>
-                                  <!-- list end -->
-                                </div>
-                              </div>
-                            </div>
-                            <div class="modal-footer">
-                              <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">Close</button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <!-- reportTextType Modal end-->
-                      
                       <!-- textType Modal start-->
-                      <div class="modal fade" id="press-textType" tabindex="-1" role="dialog">
+                      <div class="modal fade" id="textType1" tabindex="-1" role="dialog">
                         <div class="modal-dialog modal-lg" role="document">
                           <div class="modal-content">
                             <div class="modal-header">
@@ -812,7 +409,7 @@
                       <!-- textType Modal end-->
                       
                       <!-- textType Modal start-->
-                      <div class="modal fade" id="press-textType2" tabindex="-1" role="dialog">
+                      <div class="modal fade" id="textType2" tabindex="-1" role="dialog">
                         <div class="modal-dialog modal-lg" role="document">
                           <div class="modal-content">
                             <div class="modal-header">
@@ -866,7 +463,7 @@
                       </div>
                       <!-- textType Modal end-->
                       <!-- textType Modal start-->
-                      <div class="modal fade" id="press-textType3" tabindex="-1" role="dialog">
+                      <div class="modal fade" id="textType3" tabindex="-1" role="dialog">
                         <div class="modal-dialog modal-lg" role="document">
                           <div class="modal-content">
                             <div class="modal-header">
@@ -920,7 +517,7 @@
                       </div>
                       <!-- textType Modal end-->
                       <!-- textType Modal start-->
-                      <div class="modal fade" id="press-textType4" tabindex="-1" role="dialog">
+                      <div class="modal fade" id="textType4" tabindex="-1" role="dialog">
                         <div class="modal-dialog modal-lg" role="document">
                           <div class="modal-content">
                             <div class="modal-header">
@@ -1044,19 +641,19 @@
   <script type="text/javascript" src="../bower_components/jquery-slimscroll/jquery.slimscroll.js"></script>
   <!-- Bootstrap date-time-picker js -->
   <script type="text/javascript" src="../assets/pages/advance-elements/moment-with-locales.min.js"></script>
-  <!-- modernizr js -->
+  <script type="text/javascript" src="../bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+  <script type="text/javascript" src="../assets/pages/advance-elements/bootstrap-datetimepicker.min.js"></script>
+  <!-- modernizr js사 -->
   <script type="text/javascript" src="../bower_components/modernizr/modernizr.js"></script>
   <script type="text/javascript" src="../bower_components/modernizr/feature-detects/css-scrollbars.js"></script>
   <!-- classie js -->
   <script type="text/javascript" src="../bower_components/classie/classie.js"></script>
+  <!-- calendar -->
+  <script type="text/javascript" src="../assets/pages/dashboard/pgcalendar/calendar.js"></script>
   <!-- Date-range picker js -->
   <script type="text/javascript" src="../bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
-  <!-- echart js -->
-  <script src="../assets/pages/chart/echarts/js/echarts-all.js" type="text/javascript"></script>
-  <!-- NVD3 chart -->
-  <script src="../bower_components/d3/d3.js"></script>
-  <script src="../bower_components/nvd3/build/nv.d3.js"></script>
-  <script src="../assets/pages/chart/nv-chart/js/stream_layers.js"></script>
+  <!-- Bootstrap date-time-picker js -->
+  <script type="text/javascript" src="../assets/pages/advance-elements/moment-with-locales.min.js"></script>
   <!-- i18next.min.js -->
   <script type="text/javascript" src="../bower_components/i18next/i18next.min.js"></script>
   <script type="text/javascript" src="../bower_components/i18next-xhr-backend/i18nextXHRBackend.min.js"></script>
@@ -1064,8 +661,14 @@
   <script type="text/javascript" src="../bower_components/jquery-i18next/jquery-i18next.min.js"></script>
   <!-- sweet alert js -->
   <script type="text/javascript" src="../bower_components/sweetalert/dist/sweetalert.min.js"></script>
+  <!-- Morris Chart js -->
+  <script src="../bower_components/raphael/raphael.min.js"></script>
+  <script src="../bower_components/morris.js/morris.js"></script>
   <!-- Custom js -->
+  <script type="text/javascript" src="../assets/pages/dashboard/custom-dashboard.js"></script>
   <script type="text/javascript" src="../assets/js/script.js"></script>
+  <script type="text/javascript" src="../assets/pages/division/script2.js"></script>
+  <script type="text/javascript" src="../assets/pages/picker.js"></script>
   <script src="../assets/js/pcoded.min.js"></script>
   <script src="../assets/js/demo-12.js"></script>
   <script src="../assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
@@ -1076,18 +679,17 @@
 
 <script type="text/javascript">
 
-	$(document).ready(function(){
-		
-		
-		//ajax 보안
-		var token = $("meta[name='_csrf']").attr("content");
-		var header = $("meta[name='_csrf_header']").attr("content");
+//ajax 보안
+var token = $("meta[name='_csrf']").attr("content");
+var header = $("meta[name='_csrf_header']").attr("content");
 
-		$(function() {
-			$(document).ajaxSend(function(e, xhr, options) {
-		  		xhr.setRequestHeader(header, token);
-		  	});
-		});
+$(function() {
+	$(document).ajaxSend(function(e, xhr, options) {
+  		xhr.setRequestHeader(header, token);
+  	});
+});
+
+$(document).ready(function(){
 		
 		var $fromDate = $("#fromDate");
 		  
@@ -1151,14 +753,6 @@
 
 		});
 		
-		
-		var graphStart = $fromDate.val().split(" - ")[0].replace("/", "-").replace("/", "-");
-		var graphEnd = $fromDate.val().split(" - ")[1].replace("/", "-").replace("/", "-");
-
-		console.log("graphStart: " + graphStart);
-	    console.log("graphEnd: " + graphEnd);
-		  
-		
 		// 당일 클릭시
 		$('#toDay').on("click", function(){
 		  console.log("toDay clicked....");
@@ -1221,9 +815,56 @@
 
 		});
 		
+		/* var selectKey = decodeURI(window.location.href.split("selectKey=")[1]).split("&")[0];
+		console.log("aaaselectKey:" + selectKey);
+		var company = decodeURI(window.location.href.split("company=")[1]).split("&")[0];
+		console.log("aaacompany:" + company); */
 		
-		pieGraph1();
-		pieGraph2();
+		/* var selectKey = $('#selectKeyword option:selected').val();
+		console.log("aaaselectKey:" + selectKey);
+		var company = $("#selectCompany option:selected").val();
+		console.log("aaacompany:" + company); */
+		
+		var target = document.getElementById("selectKeyword");
+		var selectKey = target.options[target.selectedIndex].value;
+		console.log("aaaselectKey:" + selectKey);
+		var target2 = document.getElementById("selectCompany");
+		var company = target2.options[target2.selectedIndex].value;
+		console.log("aaacompany:" + company);
+		
+		// 그래프
+		$.ajax({
+			
+	      type : "POST",
+		  url : "mediagraph",
+	 	  dataType : "json",
+	 	  data : {success : 'success', company : company, selectKey : selectKey},
+	  	  success : function(data){
+
+	  		  console.log(data);
+	  		var script = "[";
+
+
+			for(var i = 0; i < data.length; i++){
+
+				script += '{"period":' + '"' + data[i].writeDate + '",'
+						+ '"기사 건수"'+ ':' + data[i].type1 + "},";
+
+				if(i == data.length-1){
+					script =  script.substr(0, script.length-1);
+					script += "]";
+				}
+			}
+			console.log(script);
+
+			// to json
+			var jsonScript = JSON.parse(script);
+
+			areaChart(jsonScript);
+
+	  	 }
+	});
+		
 		
 		// 엑셀 출력
 		document.querySelector('.alert-confirm').onclick = function(){
@@ -1264,35 +905,7 @@
 		  for(var i = 0; i < $trList.length; i++){
 			  $('#radio'+ btnNum + (i+1))[0].checked = true;
 		  }
-
-
-
-		  /* var value;
-
-		  switch(input){
-
-		  case "allBtn1" : value = "좋은글"; break;
-		  case "allBtn2" : value = "나쁜글"; break;
-		  case "allBtn3" : value = "관심글"; break;
-		  case "allBtn4" : value = "기타글"; break;
-		  case "allBtn5" : value = "삭제글"; break;
-
-		  }
-
-		  console.log(value); */
-
-
-
-
 	  });
-	
-	// 분류 선택시
-	$selectTextType.change(function(){
-		console.log("selectTextType clicked....");
-		console.log($('#selectTextType option:selected').val());
-
-		searchList();
-	});
 	
 	// 날짜 계산 함수
 	function getDate(type){
@@ -1346,8 +959,9 @@
 		
 		
 	}
-
+	
 	//list URL 함수
+	
 	function searchList(event) {
 
 		var makeQeury = '${pageMaker.makeQuery(1)}'.slice(0,-2);
@@ -1363,58 +977,22 @@
 					  + "&endDate=" +  makeDateFormat($("#fromDate").val(), 1);
 	}
 	
-	
-
-	//data
-	function pieData1() {
-		console.log("media count");
-		console.log('${mediaTypeCount.lik}');
-		console.log('${mediaTypeCount.dis}');
-		console.log('${mediaTypeCount.cu}');
-		console.log('${mediaTypeCount.etc}');
-	    
-		return [{
-		      "label": "좋은기사",
-		      "value": '${pressTypeCount.lik}',
-		      "color": "#2ecc71"
-		  },{
-		      "label": "나쁜기사",
-		      "value": '${pressTypeCount.dis}',
-		      "color": "#e74c3c"
-		  },{
-		      "label": "관심기사",
-		      "value": '${pressTypeCount.cu}',
-		      "color": "#FF9F55"
-		  },   {
-		      "label": "기타기사",
-		      "value": '${pressTypeCount.etc}',
-		      "color": "#f1c40f"
-		  }];
-	}
-	function pieData2() {
-		console.log("press count");
-		console.log('${pressTypeCount.lik}');
-		console.log('${pressTypeCount.dis}');
-		console.log('${pressTypeCount.cu}');
-		console.log('${pressTypeCount.etc}');
-		return [{
-	        "label": "좋은기사",
-	        "value": '${mediaTypeCount.lik}',
-	        "color": "#2ecc71"
-	    },{
-	        "label": "나쁜기사",
-	        "value": '${mediaTypeCount.dis}',
-	        "color": "#e74c3c"
-	    },{
-	        "label": "관심기사",
-	        "value": '${mediaTypeCount.cu}',
-	        "color": "#FF9F55"
-	    },   {
-	        "label": "기타기사",
-	        "value": '${mediaTypeCount.etc}',
-	        "color": "#f1c40f"
-	    }];
-	}
+	function areaChart(jsonScript) {
+		$("#morris-bar").empty();
+		window.areaChart = Morris.Bar({
+			element: 'morris-bar',
+		    data: jsonScript,
+		    xkey: 'period',
+		    ykeys: ['기사 건수'],
+		    labels: ['기사 건수'],
+		    barColors: ['#01C0C8'],
+		    stacked: true,
+		    /* xLabelMargin : 10, */
+		    hideHover: 'auto',
+		    resize: true,
+		    gridTextColor: '#888'
+		    });
+		}
 </script>
 
 </html>

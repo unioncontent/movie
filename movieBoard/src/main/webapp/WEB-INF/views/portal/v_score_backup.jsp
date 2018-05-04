@@ -1,4 +1,4 @@
-﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -89,7 +89,8 @@
                             <i class="icofont icofont-home"></i>
                           </a>
                         </li>
-                        <li class="breadcrumb-item"><a href="#!">네이버평점관리</a></li>
+                        <li class="breadcrumb-item"><a href="mngViral.html">바이럴관리</a></li>
+                        <li class="breadcrumb-item"><a href="#!">평점관리</a></li>
                       </ul>
                     </div>
                   </div>
@@ -160,6 +161,47 @@
                       </div>
                       <!-- data setting end -->
                       <div class="col-lg-12">
+                        <!-- tab header start -->
+                        <div class="tab-header">
+                          <ul class="nav nav-tabs nav-vtabs md-tabs tab-timeline" role="tablist" id="mytab">
+                            <a class="nav-item" href="viral">
+                              <li class="nav-link ">
+                                <p>바이럴관리</p>
+                                <div class="slide"></div>
+                              </li>
+                            </a>
+                            <a class="nav-item" href="v_blog">
+                              <li class="nav-link">
+                                <p>블로그관리</p>
+                                <div class="slide"></div>
+                              </li>
+                            </a>
+                            <a class="nav-item" href="v_cafe">
+                              <li class="nav-link">
+                                  <p>카페관리</p>
+                                  <div class="slide"></div>
+                              </li>
+                            </a>
+                            <a class="nav-item" href="v_kin">
+                              <li class="nav-link">
+                                <p>지식인/Tip관리</p>
+                                <div class="slide"></div>
+                              </li>
+                            </a>
+                            <a class="nav-item" href="v_web">
+                              <li class="nav-link">
+                                <p>웹문서관리</p>
+                                <div class="slide"></div>
+                              </li>
+                            </a>
+                            <a class="nav-item" href="v_score">
+                              <li class="nav-link active">
+                                <p>평점관리</p>
+                                <div class="slide"></div>
+                              </li>
+                            </a>
+                          </ul>
+                        </div>
                         <div class="tab-content">
                           <div class="tab-pane fade show active" id="main" role="tabpanel">
                             <div class="row">

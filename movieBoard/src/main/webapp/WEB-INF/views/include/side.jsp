@@ -73,9 +73,9 @@
             </a>
           </li>
           <li class=" ">
-            <a href="../portal/viral" data-i18n="nav.advance-components.grid-stack">
+            <a href="../portal/v_score" data-i18n="nav.advance-components.grid-stack">
               <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-              <span class="pcoded-mtext">바이럴관리</span>
+              <span class="pcoded-mtext">네이버평점관리</span>
               <span class="pcoded-mcaret"></span>
             </a>
           </li>

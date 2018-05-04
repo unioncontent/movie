@@ -25,6 +25,8 @@ import org.union.domain.PageMaker;
 import org.union.domain.PeriodMediaVO;
 import org.union.domain.ReporterVO;
 import org.union.domain.SearchCriteria;
+import org.union.domain.SearchFv;
+import org.union.domain.SearchMedia;
 import org.union.domain.TextTypeVO;
 import org.union.domain.UserVO;
 import org.union.service.CommunityService;
@@ -371,33 +373,32 @@ public class PeriodController {
 			
 			logger.info("cri: " + cri);
 		
-		  List<PeriodMediaVO> mediaList = mediaService.periodMedia(cri);
-		  List<PeriodMediaVO> reporterList = mediaService.periodReporter(cri);
-		  
-		  ListUtil listUtil = new ListUtil();
-		  
-		  PeriodComparator comparator = new PeriodComparator();
-		  Collections.sort(mediaList, comparator);
-		  Collections.sort(reporterList, comparator);
-		  
-		  model.addAttribute("mediaCount", mediaList.size());
-		  model.addAttribute("pressCount", reporterList.size());
-		  model.addAttribute("totalCount", mediaService.getTotalCount(cri));
-		  
-		  
-		  if(cri.getSelectKey() == null && cri.getCompany() == null) {
-			  model.addAttribute("matchCount", 0);
-		  
-		  }else {
-			  model.addAttribute("matchCount", mediaService.getMatchCount(cri));
-		  }
-		  
-		  
-		  mediaList = mediaList.subList(0, 20);
-		  reporterList = reporterList.subList(0, 20);
-		  
-		  model.addAttribute("pressList", reporterList);
-		  model.addAttribute("mediaList", mediaList);
+//		  List<PeriodMediaVO> mediaList = mediaService.periodMedia(cri);
+//		  List<PeriodMediaVO> reporterList = mediaService.periodReporter(cri);
+//		  
+//		  ListUtil listUtil = new ListUtil();
+//		  
+//		  PeriodComparator comparator = new PeriodComparator();
+//		  Collections.sort(mediaList, comparator);
+//		  Collections.sort(reporterList, comparator);
+//		  
+//		  model.addAttribute("mediaCount", mediaList.size());
+//		  model.addAttribute("pressCount", reporterList.size());
+//		  
+//		  
+//		  if(cri.getSelectKey() == null && cri.getCompany() == null) {
+//			  model.addAttribute("matchCount", 0);
+//		  
+//		  }else {
+//			  model.addAttribute("matchCount", mediaService.getMatchCount(cri));
+//		  }
+//		  
+//		  
+//		  mediaList = mediaList.subList(0, 20);
+//		  reporterList = reporterList.subList(0, 20);
+//		  
+//		  model.addAttribute("pressList", reporterList);
+//		  model.addAttribute("mediaList", mediaList);
 		  
 		  // 리스트
 		  String keyword=  cri.getKeyword();
@@ -433,7 +434,117 @@ public class PeriodController {
 		  
 	}
 	
-	
+	@GetMapping("/media_backup")
+	public void media_backup(@ModelAttribute("cri") SearchCriteria cri, Model model, String pressName, String textType) {
+		logger.info("media_backup called....");
+		  
+		  cri.setTextType(null);
+		  cri.setKeyword(null);
+		  
+		  if(cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey()) ) {
+				logger.info("selectKey is null");
+				cri.setSelectKey(null);
+			}
+			if("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate())
+					|| cri.getStartDate() == "" || cri.getEndDate() == ""){
+				cri.setStartDate(null);
+				cri.setEndDate(null);
+			
+			} 
+			if(cri.getStartDate() != null && cri.getEndDate() != null) {
+				if(cri.getStartDate().indexOf("00:00:00") < 0 && cri.getEndDate().indexOf("23:59:59") < 0){ 
+					cri.setStartDate(cri.getStartDate() + " 00:00:00"); 
+					cri.setEndDate(cri.getEndDate() + " 23:59:59"); 
+				}
+			}
+			if(cri.getCompany() != null) {
+				if(cri.getCompany().isEmpty()) {
+					cri.setCompany(null);
+				}
+			}
+			if(cri.getCompany() == null || cri.getCompany().equals("회사")) {
+				logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+				UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
+				
+				if(!vo.getUser_name().equals("union")) {
+				cri.setCompany(vo.getUser_name());
+				
+				}else {
+					cri.setCompany(null);
+				}
+			}
+			if(cri.getTextType() != null) {
+				if(cri.getTextType().equals("undefined") || cri.getTextType().equals("분류") || cri.getTextType().isEmpty()) {
+					cri.setTextType(null);
+				}
+			}
+			
+
+			// 회사 선택에 따른 키워드 재추출
+			if (cri.getCompany() != null) {	
+				if (cri.getCompany().isEmpty() == false) {
+
+					UserVO userVO = userService.viewByName(cri.getCompany());
+					logger.info("userVO: " + userVO);
+					logger.info("keywordList: " + keywordService.listByUser(userVO.getUser_idx()));
+					model.addAttribute("modelKeywordList",
+							keywordService.listByUser(userService.viewByName(cri.getCompany()).getUser_idx()));
+				}
+			}
+			
+			logger.info("cri: " + cri);
+			
+			  List<PeriodMediaVO> mediaList = mediaService.periodMedia(cri);
+			  List<PeriodMediaVO> reporterList = mediaService.periodReporter(cri);
+			  
+			  ListUtil listUtil = new ListUtil();
+			  
+			  PeriodComparator comparator = new PeriodComparator();
+			  Collections.sort(mediaList, comparator);
+			  Collections.sort(reporterList, comparator);
+			  
+			  model.addAttribute("mediaCount", mediaList.size());
+			  model.addAttribute("pressCount", reporterList.size());
+			  model.addAttribute("totalCount", mediaService.getTotalCount(cri));
+			  
+			  
+			  if(cri.getSelectKey() == null && cri.getCompany() == null) {
+				  model.addAttribute("matchCount", 0);
+			  
+			  }else {
+				  model.addAttribute("matchCount", mediaService.getMatchCount(cri));
+			  }
+			  
+			  
+			  mediaList = mediaList.subList(0, 20);
+			  reporterList = reporterList.subList(0, 20);
+			  
+			  model.addAttribute("pressList", reporterList);
+			  model.addAttribute("mediaList", mediaList);
+			  
+			  // 리스트
+		  model.addAttribute("searchList", mediaService.wlistSearch(cri));
+		  model.addAttribute("searchList2", mediaService.wlistSearch2(cri));
+		  model.addAttribute("textTypelistSearch", mediaService.textTypelistSearch(cri));
+		  model.addAttribute("textTypelistSearch2", mediaService.textTypelistSearch2(cri));
+		  model.addAttribute("textTypelistSearch3", mediaService.textTypelistSearch3(cri));
+		  model.addAttribute("textTypelistSearch4", mediaService.textTypelistSearch4(cri));
+		  model.addAttribute("reporterGetTextTypeCount", mediaService.reporterGetTextTypeCount(cri, pressName, textType));
+		  
+		  PageMaker pageMaker = new PageMaker();
+		  
+		  Integer totalCount = mediaService.wgetSearchCount(cri);
+		  
+		  pageMaker.setCri(cri);
+		  pageMaker.setTotalCount(totalCount);
+		  
+		  model.addAttribute("pageMaker", pageMaker);
+		  model.addAttribute("totalCountPage", totalCount);
+		  model.addAttribute("minusCount", cri.getPerPageNum() * (cri.getPage()-1));
+
+		  model.addAttribute("mediaTypeCount", mediaService.periodTextTypeCount(cri));
+		  logger.info(mediaService.periodTextTypeCount(cri) + "");
+	}
 
 	@ResponseBody
 	@PostMapping("/getTextType")
@@ -776,6 +887,64 @@ public class PeriodController {
 		model.setView(excelView);
 		
 		return model;
+	}
+	
+	@ResponseBody
+	@PostMapping("/mediagraph")
+	public List<GraphVO> MgraphPOST(Model model, String success, SearchMedia Sm, String company, String selectKey) {
+		logger.info("MgraphPOST called....");
+		logger.info("graph.company: " + company);
+		logger.info("graph.selectKey: " + selectKey);
+		
+		if(company == null || company.equals("회사")) {
+			logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+			UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
+			
+			if(!vo.getUser_name().equals("union")) {
+				company = vo.getUser_name();
+			
+			}else {
+				company = null;
+			}
+		}
+		if(selectKey != null) {
+			if(selectKey.isEmpty() || selectKey.equals("키워드")) {
+				selectKey = null;
+			}
+		}
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH");
+		
+		String current = sdf.format(new Date());
+		logger.info("current: " + current);
+		
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(new Date());
+		
+		List<GraphVO> graphList = new ArrayList<GraphVO>();
+		
+		logger.info("cal.getTime: " + cal.getTime());
+		
+		
+		for(int i = 0; i < 24; i++) {
+			GraphVO graphVO = new GraphVO();
+			
+			Sm.setDate(cal.getTime());
+			Sm.setSelectKey(selectKey);
+			Sm.setCompany(company);
+			
+			graphVO.setWriteDate(sdf.format(cal.getTime()) + ":00:00");
+			graphVO.setType1(mediaService.mTotalCnt(Sm));
+			
+			graphList.add(graphVO);
+			
+			cal.add(Calendar.HOUR, -1);
+			
+		}
+		
+
+		logger.info("graphList: " + graphList);
+		return graphList;
 	}
 
 	

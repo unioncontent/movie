@@ -15,6 +15,8 @@ import org.union.domain.PortalVO;
 import org.union.domain.ReplyVO;
 import org.union.domain.ReporterVO;
 import org.union.domain.SearchCriteria;
+import org.union.domain.SearchFv;
+import org.union.domain.SearchMedia;
 import org.union.domain.TextTypeDateVO;
 import org.union.domain.TextTypeVO;
 import org.union.persistence.KeywordDAO;
@@ -582,6 +584,12 @@ public class MediaServiceImpl implements MediaService {
 	public Integer checkUrl(String url) {
 
 		return mediaDAO.checkUrl(url);
+	}
+
+	@Override
+	public Integer mTotalCnt(SearchMedia Sm) {
+
+		return mediaDAO.mTotalCnt(Sm);
 	}
 
 }
