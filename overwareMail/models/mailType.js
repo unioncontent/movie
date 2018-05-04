@@ -5,7 +5,10 @@ const DBpromise = require('../db/db_info.js');
 */
 
 var mailType = {
-  selectTable: async function(param){
+  selectTable: async function(admin,param){
+    if(admin != null){
+      param = admin;
+    }
     var sql = 'SELECT * FROM m_mail_type where M_id=?';
     return await getResult(sql,param);
   }

@@ -25,8 +25,8 @@ app.use(compression());
 app.use(expressLayouts);
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.json({limit: '150mb'}));
-app.use(bodyParser.urlencoded({limit: '150mb', extended: true}));
+app.use(bodyParser.json({limit: '500mb'}));
+app.use(bodyParser.urlencoded({limit: '500mb', extended: true}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 // login/logout setup
@@ -43,21 +43,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 // routes setup
 app.use(function(req, res, next) {
+  console.log(req.user);
   res.locals.user = req.user;
-  if(req.user){
-    res.locals.userType = req.user.user_type;
-    res.locals.userIdx = req.user.user_idx;
-    res.locals.userName = req.user.user_name;
-    res.locals.userCompany = req.user.company_name;
-    res.locals.userID = req.user.user_ID;
-  }
-  else {
-    res.locals.userType = '';
-    res.locals.userCompany = '';
-    res.locals.userIdx = '';
-    res.locals.userName = '';
-    res.locals.userID = '';
-  }
   next();
 });
 
