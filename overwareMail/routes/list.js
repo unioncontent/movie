@@ -13,7 +13,7 @@ var isAuthenticated = function (req, res, next) {
 };
 
 router.get('/',isAuthenticated,async function(req, res) {
-  var data = await getListPageData(req.user.user_idx,req.query);
+  var data = await getListPageData(req.user.n_idx,req.query);
   res.render('list',data);
 });
 
@@ -63,7 +63,7 @@ router.post('/update',isAuthenticated,async function(req, res) {
 router.post('/delete',isAuthenticated,async function(req, res) {
   try{
     await mailListA.deleteFun(req.body.idx);
-    await mailListC.deleteFun({M_idx_a:req.body.idx,M_id:req.user.user_idx});
+    await mailListC.deleteFun({M_idx_a:req.body.idx,M_id:req.user.n_idx});
     await user.deleteReporter(req.body.email,req.body.name);
     res.send({status:true});
   }
@@ -77,7 +77,7 @@ router.post('/addGroup',isAuthenticated,async function(req, res) {
     var list = JSON.parse(req.body.list);
     await asyncForEach(list, async (item, index, array) => {
       var param = {
-        M_id:req.user.user_idx,
+        M_id:req.user.n_idx,
         M_group_title:item.title,
         M_idx_a:item.idx,
         M_email:item.email
@@ -101,7 +101,7 @@ router.post('/addGroup',isAuthenticated,async function(req, res) {
 
 router.post('/groupTitleCheck',isAuthenticated,async function(req,res){
   try{
-    var titleCheck = await mailListC.titleCheck([req.body.title.replace( /(\s*)/g, ""),req.user.user_idx]);
+    var titleCheck = await mailListC.titleCheck([req.body.title.replace( /(\s*)/g, ""),req.user.n_idx]);
     res.send((titleCheck.length == 0)?'success':'fail');
   }
   catch(e){
@@ -111,7 +111,7 @@ router.post('/groupTitleCheck',isAuthenticated,async function(req,res){
 
 router.post('/getNextPage',isAuthenticated,async function(req, res) {
   try{
-    var data = await getListPageData(req.user.user_idx,req.body);
+    var data = await getListPageData(req.user.n_idx,req.body);
     res.send({status:true,list:data});
   }
   catch(e){
@@ -129,13 +129,13 @@ async function asyncForEach(array, callback) {
 }
 
 router.get('/group',isAuthenticated,async function(req, res) {
-  var data = await getGroupListPageData(req.user.user_idx,req.query,'list');
+  var data = await getGroupListPageData(req.user.n_idx,req.query,'list');
   res.render('listGroup',data);
 });
 
 router.post('/group/delete',isAuthenticated,async function(req, res) {
   try{
-    req.body['M_id'] = req.user.user_idx;
+    req.body['M_id'] = req.user.n_idx;
     var deleteMail = await mailListC.deleteFun(req.body);
     res.send({status:true});
   }
@@ -146,7 +146,7 @@ router.post('/group/delete',isAuthenticated,async function(req, res) {
 
 router.post('/getNextGroupModalPage',isAuthenticated,async function(req, res) {
   try{
-    var data = await getGroupListPageData(req.user.user_idx,req.body,'group');
+    var data = await getGroupListPageData(req.user.n_idx,req.body,'group');
     res.send({status:true,list:data});
   }
   catch(e){
@@ -156,7 +156,7 @@ router.post('/getNextGroupModalPage',isAuthenticated,async function(req, res) {
 
 router.post('/getNextGroupPage',isAuthenticated,async function(req, res) {
   try{
-    var data = await getGroupListPageData(req.user.user_idx,req.body,'list');
+    var data = await getGroupListPageData(req.user.n_idx,req.body,'list');
     res.send({status:true,list:data});
   }
   catch(e){
@@ -214,7 +214,7 @@ router.get('/add',isAuthenticated,function(req, res, next) {
 
 router.post('/add',isAuthenticated,async function(req, res) {
   try{
-    req.body.M_id = req.user.user_idx;
+    req.body.M_id = req.user.n_idx;
     var insertMail = await mailListA.insert("m_mail_list_all",req.body);
     // console.log('insertMail:',insertMail);
     var mail = await mailListA.getViewOneInfo(insertMail.insertId);
@@ -274,9 +274,9 @@ router.post('/add/search',isAuthenticated,async function(req, res){
 });
 
 router.post('/add/emailCheck',isAuthenticated,async function(req, res){
-  var emailParam = [req.user.user_idx];
+  var emailParam = [req.user.n_idx];
   if('name' in req.body){
-    emailParam = [req.body.name,req.user.user_idx];
+    emailParam = [req.body.name,req.user.n_idx];
   }
 
   try{

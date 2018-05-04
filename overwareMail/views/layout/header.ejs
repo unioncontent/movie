@@ -21,9 +21,14 @@
         </ul>
         <ul class="nav-right">
           <li class="user-profile header-notification">
-            <a href="#!">
+            <form id='logoutForm'method="post">
+              <a href="/logout">
+                <i class="ti-layout-sidebar-left"></i> Logout
+              </a>
+            </form>
+            <!-- <a href="#!">
                 <img src="/images/user.png" alt="User-Profile-Image">
-                <span><%=userID%></span>
+                <span><%=user.user_id%></span>
                 <i class="ti-angle-down"></i>
             </a>
             <ul class="show-notification profile-notification">
@@ -34,7 +39,7 @@
                   </a>
                 </form>
               </li>
-            </ul>
+            </ul> -->
           </li>
         </ul>
       </div>
