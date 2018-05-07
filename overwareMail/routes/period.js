@@ -7,8 +7,11 @@ var period = require('../models/period.js');
 var mailDetailB = require('../models/mailDetailB.js');
 
 var isAuthenticated = function (req, res, next) {
-  if (req.isAuthenticated())
-    return next();
+  if (req.isAuthenticated()){
+    if(req.user.user_admin == null){
+      return next();
+    }
+  }
   res.redirect('/login');
 };
 
