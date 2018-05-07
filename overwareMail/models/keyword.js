@@ -11,6 +11,23 @@ var keyword = {
     }
     var sql = 'SELECT * FROM keyword_data where user_idx=? and keyword_property=\'포함\' group by keyword_main';
     return await getResult(sql,param);
+  },
+  selectMovieKwdAll: async function(admin,param){
+    if(admin != null){
+      param = admin;
+    }
+    var value = [param,param];
+    var sql = '(SELECT keyword_main as M_keyword,keyword_idx as M_keyword_idx FROM keyword_data where user_idx=? and keyword_property=\'포함\' group by keyword_main) union\
+              (SELECT M_keyword,M_keyword_idx FROM period_view where ';
+    if(admin == null){
+      sql += ' M_id=? or M_id in (select n_idx from m_mail_user where user_admin=?) ';
+      value.push(param);
+    }
+    else{
+      sql += ' M_id=? ';
+    }
+    sql += 'group by M_keyword)';
+    return await getResult(sql,value);
   }
 }
 

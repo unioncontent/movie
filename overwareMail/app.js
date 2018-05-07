@@ -57,6 +57,8 @@ var email = require('./routes/email');
 app.use('/email', email);
 var list = require('./routes/list');
 app.use('/list', list);
+var preview = require('./routes/preview');
+app.use('/preview',preview);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
