@@ -43,7 +43,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 // routes setup
 app.use(function(req, res, next) {
-  console.log(req.user);
+  // console.log(req.user);
   res.locals.user = req.user;
   next();
 });

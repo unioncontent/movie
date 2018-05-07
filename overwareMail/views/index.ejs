@@ -33,13 +33,21 @@
                     <td>
                       <strong>발송성공</strong>
                     </td>
-                    <td class="txt-danger"><%=period.successNfailCount.success || 0%>(<%=period.successP%>%)</td>
+                    <td class="txt-danger"><%=period.successNfailCount.success %>
+                      <% if(period.successNfailCount.success != 0){%>
+                      (<%=period.successP%>%)
+                      <%}%>
+                    </td>
                   </tr>
                   <tr>
                     <td>
                       <strong>발송실패</strong>
                     </td>
-                    <td class="txt-primary"><%=period.successNfailCount.fail || 0%>(<%=period.failP%>%)</td>
+                    <td class="txt-primary"><%=period.successNfailCount.fail %>
+                      <% if(period.successNfailCount.fail != 0){%>
+                      (<%=period.failP%>%)
+                      <%}%>
+                    </td>
                   </tr>
                   <tr>
                     <td>

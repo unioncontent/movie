@@ -20,9 +20,9 @@ router.get('/', isAuthenticated, async function(req, res, next) {
     period:{
       'todaySendCount' : await period.getTodaySendCount(req.user),
       'successNfailCount' : await period.getSuccessNfailCount(req.user),
-      'todayCount' : await period.getTodayNReservationCount(req.user,'0'),
-      'reservationCount' : await period.getTodayNReservationCount(req.user,'1'),
-      'waitingCount' : await period.getWaitingCount(req.user),
+      'todayCount' : await period.getTodayNReservationCount(req.user,'0') || 0,
+      'reservationCount' : await period.getTodayNReservationCount(req.user,'1') || 0,
+      'waitingCount' : await period.getWaitingCount(req.user) || 0,
     }
   };
   if(data.period.todaySendCount > 0){
