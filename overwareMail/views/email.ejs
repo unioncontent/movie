@@ -618,27 +618,27 @@
     .then((value) => {
       if (value != null) {
         var now = $.datepicker.formatDate('yymmdd', new Date());
-        var fileListArr = $("#fileList").val().split(',');
-        var fileListStr = "";
-        var fileNameStr = "";
-        var fileDBListStr = "";
-        $.each(fileListArr, function(index, value) {
-          if(value != "" && value != 'undefined'){
-            fileDBListStr += value;
-            var now = $.datepicker.formatDate('yymmdd', new Date());
-            fileListStr += 'http://mail.overware.co.kr/uploads/files/'+now+'/'+value;
-            fileNameStr += $.trim($('.jFiler-items-list').find('[data-value=\"'+value+'\"]').attr('title'));
-            if(fileListArr.length-1 != index){
-              fileListStr += '|';
-              fileDBListStr += '|';
-              fileNameStr += '|';
-            }
-          }
-        });
+        // var fileListArr = $("#fileList").val().split(',');
+        // var fileListStr = "";
+        // var fileNameStr = "";
+        // var fileDBListStr = "";
+        // $.each(fileListArr, function(index, value) {
+        //   if(value != "" && value != 'undefined'){
+        //     fileDBListStr += value;
+        //     var now = $.datepicker.formatDate('yymmdd', new Date());
+        //     fileListStr += 'http://mail.overware.co.kr/uploads/files/'+now+'/'+value;
+        //     fileNameStr += $.trim($('.jFiler-items-list').find('[data-value=\"'+value+'\"]').attr('title'));
+        //     if(fileListArr.length-1 != index){
+        //       fileListStr += '|';
+        //       fileDBListStr += '|';
+        //       fileNameStr += '|';
+        //     }
+        //   }
+        // });
 
-        param['M_file'] = fileListStr;
-        param['M_fileName'] = fileNameStr;
-        param['M_file_d'] = fileDBListStr;
+        // param['M_file'] = fileListStr;
+        // param['M_fileName'] = fileNameStr;
+        // param['M_file_d'] = fileDBListStr;
 
         $('span.messages').find('.error').text('');
         SendEmails(param);

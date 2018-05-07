@@ -30,14 +30,18 @@ var isAuthenticated = function (req, res, next) {
 };
 
 router.get('/',isAuthenticated, async function(req, res) {
+  var searchParam = [req.user.n_idx,0,10];
+  if(req.user.user_admin != null){
+    searchParam[0] = req.user.user_admin;
+  }
   var data = {
-    keywordList : await keyword.selectMovieKwd(req.user.user_admin,[req.user.n_idx]),
-    typeList : await mailType.selectTable(req.user.user_admin,[req.user.n_idx]),
-    mailList : await mailListA.selectView({},[req.user.n_idx,0,10]),
-    mailListCount : await mailListA.selectViewCount({},[req.user.n_idx,0,10]),
+    keywordList : await keyword.selectMovieKwd(req.user.user_admin,searchParam[0]),
+    typeList : await mailType.selectTable(req.user.user_admin,searchParam[0]),
+    mailList : await mailListA.selectView({},searchParam),
+    mailListCount : await mailListA.selectViewCount({},searchParam),
     mailListPageNum : 1,
-    groupList : await mailListC.selectView({},[req.user.n_idx,0,10]),
-    groupListCount : await mailListC.selectViewCount({},[req.user.n_idx,0,10]),
+    groupList : await mailListC.selectView({},searchParam),
+    groupListCount : await mailListC.selectViewCount({},searchParam),
     groupListPageNum : 1
   };
   res.render('email',data);
@@ -69,7 +73,10 @@ router.post('/getModalListPage',isAuthenticated, async function(req, res) {
   };
   var emailParam = [req.user.n_idx,0,10];
   var groupParam = [req.user.n_idx,0,10];
-
+  if(req.user.user_admin != null){
+    emailParam[0] = req.user.user_admin;
+    groupParam[0] = req.user.user_admin;
+  }
   if (typeof req.body.page === 'undefined' && typeof req.body.type === 'undefined') {
     req.body.type = '';
   }
@@ -100,6 +107,9 @@ router.get('/searchGroup',isAuthenticated, async function(req, res) {
     return res.send({status:false});
   }
   var param = [req.user.n_idx,0,10];
+  if(req.user.user_admin != null){
+    param[0] = req.user.user_admin;
+  }
   if (typeof req.query.page !== 'undefined') {
     param[1] = (req.query.page - 1) * param[2];
   }
@@ -113,6 +123,9 @@ router.get('/searchGroup',isAuthenticated, async function(req, res) {
 
 router.post('/searchAll',isAuthenticated, async function(req, res) {
   var param = [req.user.n_idx,0,10];
+  if(req.user.user_admin != null){
+    param[0] = req.user.user_admin;
+  }
   if (typeof req.body.page !== 'undefined') {
     param[1] = (req.body.page - 1) * param[2];
   }
@@ -129,6 +142,9 @@ router.get('/searchAll',isAuthenticated, async function(req, res) {
     return res.send({status:false});
   }
   var param = [req.user.n_idx,0,10];
+  if(req.user.user_admin != null){
+    param[0] = req.user.user_admin;
+  }
   if (typeof req.query.page !== 'undefined') {
     param[1] = (req.query.page - 1) * param[2];
   }
@@ -250,11 +266,15 @@ router.post('/send',isAuthenticated, async function(req, res) {
   var groups = [];
   var groupsIdx = [];
   var groups2allIdx = [];
+  var mid = req.user.n_idx;
+  if(req.user.user_admin != null){
+    mid = req.user.user_admin;
+  }
   if(typeof groupList != 'undefined'){
     if(groupList.length != 0){
-      groups = await mailListC.getEmail(groupList,req.user.n_idx);
-      groups2allIdx = await mailListC.getIdx(groupList,req.user.n_idx);
-      groupsIdx = await mailListC.getIdx2(groupList,req.user.n_idx);
+      groups = await mailListC.getEmail(groupList,mid);
+      groups2allIdx = await mailListC.getIdx(groupList,mid);
+      groupsIdx = await mailListC.getIdx2(groupList,mid);
     }
   }
 
@@ -279,8 +299,8 @@ router.post('/send',isAuthenticated, async function(req, res) {
     'key': urlencode('w4EzdnbOY3oypxO'),
     'mail_type': (req.body.M_type == '1') ? urlencode('ONETIME'):urlencode('NORMAL'),
     'time' : (typeof req.body.end_reserve_time =='undefined') ? '' : urlencode(req.body.end_reserve_time),
-    'file_url': urlencode(req.body.M_file),
-    'file_name': urlencode(req.body.M_fileName)
+    // 'file_url': urlencode(req.body.M_file),
+    // 'file_name': urlencode(req.body.M_fileName)
   };
 
   var dt = datetime.create();
@@ -309,10 +329,11 @@ router.post('/send',isAuthenticated, async function(req, res) {
     }
   }
   console.log('groupsIdx:',groupsIdx.join(','));
-
-  if(req.body['M_file_d'] != ""){
-    mailAllParam['M_file'] = req.body['M_file_d'];
-    mailAllParam['M_file_name'] = req.body['M_fileName'];
+  if( 'M_file_d' in req.body ){
+    if(req.body['M_file_d'] != ""){
+      mailAllParam['M_file'] = req.body['M_file_d'];
+      mailAllParam['M_file_name'] = req.body['M_fileName'];
+    }
   }
   var m_idx_a = null;
   // 메일발송 리스트 insert
@@ -376,8 +397,10 @@ router.post('/send',isAuthenticated, async function(req, res) {
   if(param['mail_type'] == urlencode('ONETIME')){
     paramStr +='&mail_type='+param['mail_type']+'&start_reserve_time='+param['time']+'&end_reserve_time='+param['time'];
   }
-  if(param['file_url'] != "" && param['file_name'] != ""){
-    paramStr += '&file_url='+param['file_url']+'&file_name='+param['file_name'];
+  if('file_url' in param && 'file_name' in param){
+    if(param['file_url'] != "" && param['file_name'] != ""){
+      paramStr += '&file_url='+param['file_url']+'&file_name='+param['file_name'];
+    }
   }
   // 이메일 발송 - 테스트중
   var resultEmail = await emailSendFun(paramStr);
@@ -491,11 +514,10 @@ function emailSendFun(pStr){
     });
   });
 }
+
 var multer = require('multer');
 var date = datetime.create();
 var today = date.format('Ymd');
-var absolutePath = '/home/hosting_users/unioncmail/apps/unioncmail_unioncmail/';
-
 async function mkdirsFun (directory) {
   try {
     await fs.ensureDir(directory)
@@ -519,7 +541,7 @@ router.post('/remove/file',function (req, res) {
 // 메일작성시 이미지 upload 및 path get
 var storageImage = multer.diskStorage({
   destination: async function (req, file, cb) {
-    var path = await mkdirsFun(absolutePath+'public/uploads/image/'+today);
+    var path = await mkdirsFun('public/uploads/image/'+today);
     await cb(null, path); // cb 콜백함수를 통해 전송된 파일 저장 디렉토리 설정
   },
   filename: function (req, file, cb) {
@@ -536,14 +558,14 @@ router.post('/send/img',uploadImage.single('file'),function(req, res) {
   console.log('filelist:',getFiles(req.file.destination));
   console.log(req.file);
 
-  var result = req.file.destination.replace(absolutePath+'public/','')+'/'+req.file.originalname;
+  var result = req.file.destination.replace('public/','')+'/'+req.file.originalname;
   res.send({location:'http://mail.overware.co.kr/'+result});
 });
 
 // 첨부파일 upload 및 path get
 var storageFile = multer.diskStorage({
   destination: async function (req, file, cb) {
-    var path = await mkdirsFun(absolutePath+'public/uploads/files/'+today);
+    var path = await mkdirsFun('public/uploads/files/'+today);
     await cb(null, path);
   },
   filename: function (req, file, cb) {
@@ -562,12 +584,13 @@ router.post('/send/file',uploadFile.single('file'),function(req, res) {
     fs.removeSync(req.file.path);
     return res.status(500).send("exe는 업로드 불가합니다.");
   }
-  var result = req.file.destination.replace(absolutePath+'public/','')+'/'+req.file.filename;
+  var result = req.file.destination.replace('public/','')+'/'+req.file.filename;
   res.send({location:'http://mail.overware.co.kr/'+result});
 });
+
 var storageFiles = multer.diskStorage({
   destination: async function (req, file, cb) {
-    var path = await mkdirsFun(absolutePath+'public/uploads/files/'+today);
+    var path = await mkdirsFun('public/uploads/files/'+today);
     await cb(null, path);
   },
   filename: function (req, file, cb) {
@@ -587,7 +610,7 @@ router.post('/send/files',uploadFiles.single('files[]'),function(req, res) {
     fs.removeSync(req.file.path);
     return res.status(500).send("exe는 업로드 불가합니다.");
   }
-  var data = [req.file.filename,req.file.destination.replace(absolutePath+'public/uploads/files/','')+'/'+req.file.originalname];
+  var data = [req.file.filename,req.file.destination.replace('public/uploads/files/','')+'/'+req.file.originalname];
   res.send({result:data});
 });
 
