@@ -20,7 +20,13 @@
         <div class="col-md-12">
           <div class="card">
             <div class="card-header">
-              <div class="col-md-3 p-r-0 p-l-0 offset-md-9">
+              <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="selectKeyword">
+                <option>키워드</option>
+                <%for(var i=0; i < klist.length; i++) {%>
+                  <option value='<%=klist[i].M_keyword_idx%>'><%=klist[i].M_keyword%></option>
+                <%}%>
+              </select>
+              <div class="col-md-3 p-r-0 p-l-0 f-right">
                 <div id="reportrange" class="form-control form-control-inverse">
                   <i class="glyphicon glyphicon-calendar far fa-calendar-alt"></i>
                   <span></span>
@@ -632,7 +638,7 @@
     font-weight: bold;
   }
   .kwd_nobr{
-    width: 146px;
+    width: 112px;
   }
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/2.1.27/daterangepicker.css" />
@@ -645,8 +651,10 @@
   var url = new URL(url_string);
   var sDateParams = url.searchParams.get("sDate");
   var eDateParams = url.searchParams.get("eDate");
+  var keywordParams = url.searchParams.get("keyword");
 
   $(document).ready(function(){
+    $("#selectKeyword option[value='"+keywordParams+"']").attr('selected','selected');
     $('#reportrange').daterangepicker(optionSet1,cb);
 
     if(sDateParams == null && eDateParams == null){
@@ -656,7 +664,46 @@
       $('#reportrange span').html(moment(new Date(sDateParams)).format('YYYY.MM.DD') + ' - ' + moment(new Date(eDateParams+' 23:59:59')).format('YYYY.MM.DD'));
     }
   });
-
+  // 키워드 선택스
+  $('#selectKeyword').on('change',function(){
+    var param = {
+      page : 1
+    };
+    var optionVal = $("#selectKeyword option:selected").val();
+    if(optionVal != '키워드'){
+      param.keyword=optionVal;
+    }
+    var url = new URL(window.location.href);
+    var sDateParams = url.searchParams.get("sDate");
+    var eDateParams = url.searchParams.get("eDate");
+    if(sDateParams != null && eDateParams != null){
+      param.sDate = sDateParams;
+      param.eDate = eDateParams;
+    }
+    if(typeof(history.pushState) == 'function'){
+      var renewURL = location.href;
+      if(renewURL.indexOf("?page=") == -1){
+        renewURL += '?page=1';
+      }
+      else{
+        renewURL = renewURL.replace(/\?page=([0-9]+)/ig,'?page=1');
+      }
+      if(renewURL.indexOf("&keyword=") == -1){
+        renewURL += '&keyword='+param.keyword;
+      }
+      else{
+        if(param.keyword != undefined){
+          renewURL = renewURL.replace(/\&keyword=([0-9]+)/ig,'&keyword='+param.keyword);
+        }
+        else{
+          renewURL = renewURL.replace(/\&keyword=([0-9]+)/ig,'');
+        }
+      }
+      //페이지 갱신 실행!
+      history.pushState(null, null,renewURL);
+    }
+    ajaxGetPageList(param,0);
+  });
   // 성공 클릭시
   $(document).on('click','.success',function(){
     if($(this).text() == '0'){
@@ -806,6 +853,10 @@
       param.sDate = moment(href.searchParams.get("sDate")).format('YYYY-MM-DD');
       param.eDate = moment(href.searchParams.get("eDate")).format('YYYY-MM-DD');
     }
+    var keywordParams = href.searchParams.get("keyword");
+    if(keywordParams != null){
+      param.keyword = keywordParams;
+    }
     ajaxGetPageList(param,num);
   });
   function ajaxGetPageList(param){
@@ -819,7 +870,6 @@
         alert('새로고침 후 다시 시도해주세요.');
       },
       success: function(data){
-        console.log(data);
         if(data.status != true){
           alert('새로고침 후 다시 시도해주세요.');
           return false;
@@ -853,7 +903,7 @@
               mailHtmlStr += '<a href="http://mail.overware.co.kr/period/download/'+dateStr+'/'+file+'" target="_blank" style="font-size:15px;">'+fileName+'</a><br/>';
             });
           }
-          console.log(item.M_body+mailHtmlStr);
+          // console.log(item.M_body+mailHtmlStr);
           var html = '<tr>\
             <th>'+numIdx+'</th>\
             <td>'+item.M_regdate+'</td>\
@@ -926,7 +976,6 @@
 
   //날짜 선택 시
   function searchDate(){
-    var href = new URL(window.location.href);
     var dateArr = $("#reportrange span").text().split(' - ');
     var start = moment(new Date(dateArr[0]));
     var end = moment(new Date(dateArr[1]+' 23:59:59'));
@@ -936,16 +985,23 @@
       eDate : end.format('YYYY-MM-DD')
     };
 
+    var url = new URL(window.location.href);
+    var keywordParams = url.searchParams.get("keyword");
+    if(keywordParams != null){
+      param.keyword = keywordParams;
+    }
     if(typeof(history.pushState) == 'function'){
       var renewURL = location.href;
       if(renewURL.indexOf("?page=") == -1){
-        renewURL += '?page=1&sDate='+param.sDate+'&eDate='+param.eDate;
-      }
-      else if(renewURL.indexOf("&sDate=") == -1 && renewURL.indexOf("&eDate=") == -1){
-        renewURL += '&sDate='+param.sDate+'&eDate='+param.eDate;
+        renewURL += '?page=1';
       }
       else{
         renewURL = renewURL.replace(/\?page=([0-9]+)/ig,'?page=1');
+      }
+      if(renewURL.indexOf("&sDate=") == -1 && renewURL.indexOf("&eDate=") == -1){
+        renewURL += '&sDate='+param.sDate+'&eDate='+param.eDate;
+      }
+      else{
         renewURL = renewURL.replace(/\&sDate=(\d{4}-\d{2}-\d{2})/ig,'&sDate='+param.sDate);
         renewURL = renewURL.replace(/\&eDate=(\d{4}-\d{2}-\d{2})/ig,'&eDate='+param.eDate);
       }
