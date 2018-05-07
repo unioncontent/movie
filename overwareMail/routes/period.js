@@ -4,6 +4,7 @@ var request = require('request');
 var router = express.Router();
 // DB module
 var period = require('../models/period.js');
+var keyword = require('../models/keyword.js');
 var mailDetailB = require('../models/mailDetailB.js');
 
 var isAuthenticated = function (req, res, next) {
@@ -17,6 +18,7 @@ var isAuthenticated = function (req, res, next) {
 
 router.get('/',isAuthenticated,async function(req, res) {
   var data = await getListPageData(req.user.n_idx,req.query);
+  data.klist = await keyword.selectMovieKwdAll(req.user.user_admin,req.user.n_idx) || [];
   res.render('period',data);
 });
 
@@ -78,6 +80,9 @@ async function getListPageData(idx,param){
   if (typeof param.sDate !== 'undefined' && typeof param.eDate !== 'undefined') {
     searchBody['sDate'] = param.sDate;
     searchBody['eDate'] = param.eDate;
+  }
+  if (typeof param.keyword !== 'undefined') {
+    searchBody['keyword'] = param.keyword;
   }
   try{
     data['list'] = await period.selectView(searchBody,searchParam);

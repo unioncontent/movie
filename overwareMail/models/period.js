@@ -12,6 +12,9 @@ var period = {
     if(('sDate' in body) && ('eDate' in body)){
       sql+=' and M_regdate between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
     }
+    if('keyword' in body){
+      sql +=' and M_keyword_idx = '+body.keyword;
+    }
     sql += ' and (  M_id = ? or M_id in (select n_idx from m_mail_user where user_admin=?)) ';
     sql += ' order by n_idx desc limit ?,?';
     return await getResult(sql,param);
@@ -20,6 +23,9 @@ var period = {
     var sql = 'SELECT count(*) as total FROM period_view where n_idx is not null ';
     if(('sDate' in body) && ('eDate' in body)){
       sql+=' and M_regdate between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
+    }
+    if('keyword' in body){
+      sql +=' and M_keyword_idx = '+body.keyword;
     }
     sql += ' and (  M_id = ? or M_id in (select n_idx from m_mail_user where user_admin=?))';
     var count = await getResult(sql,param);
