@@ -43,8 +43,26 @@ router.get('/',isAuthenticated, async function(req, res) {
     mailListPageNum : 1,
     groupList : await mailListC.selectView({},searchParam),
     groupListCount : await mailListC.selectViewCount({},searchParam),
-    groupListPageNum : 1
+    groupListPageNum : 1,
+    type: '',
+    mailData: [],
+    mailSender:[],
+    // mailRecipi:[],
+    // mailGroup:[]
   };
+  if('type' in req.query){
+    data.type = req.query.type;
+    var result = await mailAllA.getEmailData(req.query.idx);
+    if(result.length > 0){
+      data.mailData = result[0];
+      data.mailSender = await mailListA.getOneInfo(data.mailData.M_sender);
+      data.mailSender = (data.mailSender.length > 0) ? data.mailSender[0]: [];
+      // data.mailRecipi = await mailListA.getOneInfo(data.mailData.M_recipi);
+      // data.mailRecipi = (data.mailRecipi.length > 0) ? data.mailRecipi[0]: [];
+      // data.mailGroup = await mailListC.getOneData(data.mailData.M_group);
+      // data.mailGroup = (data.mailGroup.length > 0) ? data.mailGroup[0]: [];
+    }
+  }
   res.render('email',data);
 });
 
@@ -53,6 +71,37 @@ router.get('/manage',isAuthenticated, async function(req, res) {
   data.klist = await keyword.selectMovieKwdAll(req.user.user_admin,req.user.n_idx) || [];
   data.keyword = '';
   res.render('manage',data);
+});
+
+router.post('/manage/updateMtype',isAuthenticated, async function(req, res) {
+  console.log('/manage/updateMtype',req.body);
+  var result = await mailAllA.updateMtype([req.body.type,req.body.idx]);
+  if(!('protocol41' in result)){
+    res.status(500).send('mailAllA delete query 실패');
+    return false;
+  }
+  if(req.body.type == '0'){
+    result = await mailDetailB.resetMSend([req.body.idx]);
+    if(!('protocol41' in result)){
+      res.status(500).send('mailDetailB delete query 실패');
+      return false;
+    }
+  }
+  res.send({status:true});
+});
+
+router.post('/manage/delete',isAuthenticated, async function(req, res) {
+  var result = await mailAllA.delete(req.body.idx);
+  if(!('protocol41' in result)){
+    res.status(500).send('mailAllA delete query 실패');
+    return false;
+  }
+  result = await mailDetailB.delete(req.body.idx);
+  if(!('protocol41' in result)){
+    res.status(500).send('mailDetailB delete query 실패');
+    return false;
+  }
+  res.send({status:true});
 });
 
 router.post('/menage/getNextPage',isAuthenticated,async function(req, res, next) {
@@ -69,6 +118,7 @@ async function getListPageData(idx,param){
   var data = {
     list:[],
     listCount:{total:0},
+    page: 1
   };
   var limit = 20;
   var searchParam = [idx,idx,0,limit];
@@ -76,6 +126,7 @@ async function getListPageData(idx,param){
   var searchBody = {};
   if (typeof param.page !== 'undefined') {
     currentPage = param.page;
+    data['page'] = currentPage;
   }
   if (parseInt(currentPage) > 0) {
     searchParam[2] = (currentPage - 1) * limit
@@ -344,6 +395,16 @@ router.post('/save',isAuthenticated, async function(req, res) {
     }
   }
   var m_idx_a = null;
+  if('type' in req.body){
+    console.log('req.body.type:',req.body.type);
+    if(req.body.type == 'edit'){
+      mailAllParam['n_idx'] = req.body['idx'];
+      mailAllParam['M_id'] = req.body['Mid'];
+
+      await mailAllA.delete(mailAllParam['n_idx']);
+      await mailDetailB.delete(mailAllParam['n_idx']);
+    }
+  }
   // 메일발송 리스트 insert
   var resultInsert = await mailAllA.insert(mailAllParam);
   m_idx_a = resultInsert.insertId;
@@ -362,10 +423,12 @@ router.post('/save',isAuthenticated, async function(req, res) {
             E_mail : recipiInfo[0].M_email,
             P_title : recipiInfo[0].M_ptitle,
             P_name : recipiInfo[0].M_name,
-            M_send :  (typeof req.body.end_reserve_time =='undefined') ? now : req.body.end_reserve_time,
             M_result : '9'
           }
           try{
+            if(typeof req.body.end_reserve_time !='undefined'){
+              mailDetailParam['M_send'] = req.body.end_reserve_time;
+            }
             var resultInsert = await mailDetailB.insert(mailDetailParam);
             console.log(resultInsert);
           }
@@ -442,6 +505,7 @@ router.post('/send',isAuthenticated, async function(req, res) {
     'key': urlencode('w4EzdnbOY3oypxO'),
     'mail_type': (req.body.M_type == '1') ? urlencode('ONETIME'):urlencode('NORMAL'),
     'time' : (typeof req.body.end_reserve_time =='undefined') ? '' : urlencode(req.body.end_reserve_time),
+    'unique_id':req.body.idx
   };
 
   // 메일 발송(insert Error시)
@@ -470,6 +534,7 @@ router.post('/send',isAuthenticated, async function(req, res) {
     }
   }
   var resultEmail = await emailSendFun(paramStr);
+  await mailDetailB.updateSendDateResult();
   console.log('이메일 발송 파라미터 : ',paramStr);
   console.log('이메일 발송 결과 : ',resultEmail);
   if(resultEmail[0]){

@@ -10,6 +10,10 @@ var mailDetailB = {
     var sql = insertSqlSetting(Object.keys(param));
     return await getResult(sql,pValue);
   },
+  delete: async function(n_idx){
+    var sql = 'delete from m_mail_detail_b where M_idx_A=?';
+    return await getResult(sql,[n_idx]);
+  },
   selectTable:async function(param){
     var sql = 'SELECT * FROM m_mail_detail_b where M_idx_A=? ';
     if('M_result' in param){
@@ -25,6 +29,14 @@ var mailDetailB = {
   },
   selectCounResult: async function(param){
     var sql = 'SELECT count(if(M_result=250,1,null)) as s,count(if(M_result!=250,1,null)) as f  from (SELECT * FROM m_mail_detail_b where M_idx_A=? group by E_mail) a';
+    return await getResult(sql,param);
+  },
+  resetMSend:async function(param){
+    var sql = 'update m_mail_detail_b set M_send=null where M_idx_A=?';
+    return await getResult(sql,param);
+  },
+  updateSendDateResult:async function(param){
+    var sql = 'update m_mail_detail_b set M_send=now() where M_idx_A=?';
     return await getResult(sql,param);
   },
   updateResult:async function(param){
@@ -47,6 +59,7 @@ var mailDetailB = {
     return result[0].c || 0;
   }
 }
+
 function insertSqlSetting(keys){
   var arr = [].map.call(keys, function(obj) { return '?'; });
   columns = keys.join(', ');
