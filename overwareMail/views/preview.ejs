@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <title></title>
+  <title><%=pastView[0].keyword%></title>
   <style type="text/css">
     * {
       font-family: "맑은 고딕", malgungothic, "돋움", Dotum;
@@ -12,30 +12,53 @@
 </head>
 
 <body>
-  <!-- DB html 넣기 -->
+  <div id="mail">
+  <!-- DB html -->
   <%-veiw%>
+  <!-- 지난기사 -->
   <table width="750" align="center" cellpadding="0" cellspacing="0" border="0" style="margin-top: 30px;">
     <tbody>
       <tr>
         <td>
-          <%=lastCount%>
           [지난 기사보기]
           <hr>
-          <%=lastView%>
-
           <table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-top: 10px;">
             <colgroup>
               <col width="78%">
               <col width="22%">
             </colgroup>
             <tbody>
+              <%
+                for(var i=0; i < pastView.length; i++) {
+                  var url = 'http://localhost:3000/preview?keyword='+pastView[i].keyword_idx+'&idx='+pastView[i].n_idx;
+                  if(currentPage != '1'){
+                    url += '&page='+currentPage
+                  }
+                  var limit = 5;
+                  var numIdx = Math.ceil(pastCount-(((currentPage - 1) * limit)+i)).toString();
+                %>
+                <tr>
+                  <td style="font-size: small;padding:5px 0 5px;border-bottom:1px dotted #d9d9d9;color:#444;">
+                    <%=numIdx%>.
+                    <a style="text-decoration:none; color:black;" href="<%=url%>" target="_blank"><%=pastView[i].M_subject%></a>
+                  </td>
+                  <td style="font-size: small;padding:5px 0 5px;border-bottom:1px dotted #d9d9d9;color:#444;"><%=pastView[i].M_regdate%></td>
+                </tr>
+              <% } %>
               <tr>
-                <td style="font-size: small;padding:5px 0 5px;border-bottom:1px dotted #d9d9d9;color:#444;">[No.36차] <a style="text-decoration:none; color:black;" href="http://mailling.thelab.kr/?inc=content_preview&amp;from=1&amp;idx=1643&amp;page=" target="_blank">&lt;곤지암&gt; 바로 오늘 IPTV/ VOD 서비스 오픈! 한국 호러 사상 역대급 흥행열기 안방에서도 잇는다!</a></td>
-                <td style="font-size: small;padding:5px 0 5px;border-bottom:1px dotted #d9d9d9;color:#444;">2018-04-30 08:00:36</td>
-              </tr>
-              <tr>
-                <td colspan="2" style="text-align: center; font-size: small;padding:10px 0 5px;"><strong><span class="current">1</span></strong>
-                  <a href="http://mailling.thelab.kr/?inc=content_view&amp;from=1&amp;idx=1639&amp;page=2">2</a>
+                <td colspan="2" style="text-align: center; font-size: small;padding:10px 0 5px;">
+                  <%
+                    var pages = Math.ceil(pastCount / limit);
+                    var index=1;
+                    for(index;index<=pages;index++){
+                      //http://showbox.email
+                      if(currentPage == index){
+                  %>
+                      <strong><span class="current"><%=index%></span></strong>
+                    <%} else{%>
+                    <a href="http://localhost:3000/preview?keyword=<%=pastView[0].keyword_idx%>&idx=<%=pastView[0].n_idx%>&page=<%=index%>"><%=index%></a>
+                    <%}%>
+                  <%}%>
                 </td>
               </tr>
             </tbody>
@@ -47,10 +70,23 @@
   <table cellpadding="0" cellspacing="0" border="0" width="750" align="center" style="margin-top: 30px;">
     <tbody>
       <tr>
-        <td align="center">Copyright ⓒ Nextmine All rights reserved.</td>
+        <td align="center">Copyright ⓒ unioncontents All rights reserved.</td>
       </tr>
     </tbody>
   </table>
   <p>&nbsp;</p>
+  </div>
+  <input type="hidden" id="msg" value="<%=msg%>"/>
+  <script
+  src="http://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+  <script>
+    $( document ).ready(function() {
+      if($('#msg').val()!= ''){
+        alert($('#msg').val());
+      }
+    });
+  </script>
 </body>
 </html>

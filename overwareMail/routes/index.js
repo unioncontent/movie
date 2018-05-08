@@ -36,18 +36,30 @@ router.get('/', isAuthenticated, async function(req, res, next) {
 });
 
 router.get('/preview',async function(req, res, next) {
-  var viewCode = await content.selectView(req.query);
-  delete req.query.idx;
-  var lastNews = await content.selectView(req.query);
-  var lastNewsCount = await content.selectViewCount(req.query);
-  
-  res.render('preview',{
+  console.log('req.query:',req.query);
+  if(!('page' in req.query)){
+    req.query.page = 1;
+  }
+  var viewCode = await content.selectView({keyword:req.query.keyword,idx:req.query.idx});
+  var pastParam = {keyword:req.query.keyword,page:req.query.page};
+  var pastNews = await content.selectView(pastParam);
+  var pastNewsCount = await content.selectViewCount(pastParam);
+  var data = {
     layout: false,
-    veiw:viewCode[0].m_body,
-    lastView:lastNews,
-    lastCount:lastNewsCount[0].total
-  });
-  // res.render('preview',{layout: false});
+    veiw:(viewCode.length == 0) ? '' : viewCode[0].m_body,
+    pastView:pastNews,
+    pastCount: (pastNewsCount.length == 0) ? '':pastNewsCount[0].total,
+    msg: '',
+    currentPage: 1
+  };
+  if(viewCode.length == 0){
+    data.msg = '해당 메일이 없습니다.';
+  }
+  if('page' in req.query){
+    data.currentPage = req.query.page;
+  }
+  console.log(data);
+  res.render('preview',data);
 });
 
 router.post('/7DayGraph',isAuthenticated, async function(req, res, next) {
