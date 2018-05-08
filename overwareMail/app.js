@@ -56,6 +56,7 @@ var period = require('./routes/period');
 app.use('/period', period);
 var email = require('./routes/email');
 app.use('/email', email);
+app.use('/email/manage', email);
 var list = require('./routes/list');
 app.use('/list', list);
 

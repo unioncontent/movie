@@ -16,12 +16,28 @@
           <span class="pcoded-mcaret"></span>
         </a>
       </li>
-      <li class="email">
-        <a href="/email">
+      <li class="pcoded-hasmenu email">
+        <a href="javascript:void(0)" data-i18n="nav.advance-components.main">
           <span class="pcoded-micon"><i class="ti-email"></i></span>
-          <span class="pcoded-mtext" data-i18n="nav.dash.main">메일발송</span>
+          <span class="pcoded-mtext">메일발송</span>
           <span class="pcoded-mcaret"></span>
         </a>
+        <ul class="pcoded-submenu">
+          <li>
+            <a href="/email" data-i18n="nav.advance-components.draggable">
+              <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+              <span class="pcoded-mtext">작성</span>
+              <span class="pcoded-mcaret"></span>
+            </a>
+          </li>
+          <li>
+            <a href="/email/manage" data-i18n="nav.advance-components.draggable">
+              <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+              <span class="pcoded-mtext">관리</span>
+              <span class="pcoded-mcaret"></span>
+            </a>
+          </li>
+        </ul>
       </li>
       <% if(user.user_type == 1){ %>
       <li class="period">

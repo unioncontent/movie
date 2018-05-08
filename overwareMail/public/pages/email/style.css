@@ -1,3 +1,16 @@
+/* card */
+.card .card-bottom{
+  background-color: transparent;
+  padding: 15px 20px;
+}
+.card-bottom:first-child {
+    border-radius: calc(.25rem - 1px) calc(.25rem - 1px) 0 0;
+}
+.card-bottom {
+  margin-bottom: 0;
+  border-top: 1px solid rgba(0,0,0,.125);
+  border-bottom: 0px; 
+}
 /* select test css */
 .searchSelect{
   display: none;
