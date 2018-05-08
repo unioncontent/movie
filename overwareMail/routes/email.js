@@ -6,6 +6,7 @@ var urlencode = require('urlencode');
 var Iconv = require('iconv').Iconv;
 var router = express.Router();
 // DB module
+var content = require('../models/content.js');
 var mailAllA = require('../models/mailAllA.js');
 var mailDetailB = require('../models/mailDetailB.js');
 var mailListA = require('../models/mailListA.js');
@@ -282,7 +283,7 @@ router.post('/send',isAuthenticated, async function(req, res) {
   var utf82euckr1 = new Iconv('UTF-8', 'EUC-KR//translit//ignore');
   var utf82euckr2 = new Iconv('UTF-8', 'EUC-KR//translit//ignore');
 
-  var bodyBuf = new Buffer(req.body.M_body);
+  var bodyBuf = new Buffer(await settingMailBody(req.body.M_body,req.body.M_keyword));
   var subjectBuf = new Buffer(req.body.M_subject);
 
   var subjectConvert = utf82euckr1.convert(subjectBuf.toString('utf-8'));
@@ -440,6 +441,34 @@ router.post('/send',isAuthenticated, async function(req, res) {
   // }
 });
 
+async function settingMailBody(bodyHtml,keyword){
+  var pastParam = {'keyword':keyword,'page':1};
+  var pastView = await content.selectView(pastParam);
+  var pastCount = await content.selectViewCount(pastParam);
+  pastCount = (pastCount.length == 0) ? '':pastCount[0].total;
+  var html = '<table width="750" align="center" cellpadding="0" cellspacing="0" border="0" style="margin-top: 30px;"><tbody><tr><td>[지난 기사보기]<hr><table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-top: 10px;"><colgroup><col width="78%"><col width="22%"></colgroup><tbody>';
+
+  for(var i=0; i < pastView.length; i++) {
+    var url = 'http://localhost:3000/preview?keyword='+pastView[i].keyword_idx+'&idx='+pastView[i].n_idx;
+    var numIdx = Math.ceil(pastCount-i).toString();
+    html +='<tr><td style="font-size: small;padding:5px 0 5px;border-bottom:1px dotted #d9d9d9;color:#444;">'+numIdx+'.<a style="text-decoration:none; color:black;" href="'+url+'" target="_blank">'+pastView[i].M_subject+'</a>';
+    html +='</td><td style="font-size: small;padding:5px 0 5px;border-bottom:1px dotted #d9d9d9;color:#444;">'+pastView[i].M_regdate+'</td></tr>'
+  }
+  html +='<tr><td colspan="2" style="text-align: center; font-size: small;padding:10px 0 5px;">';
+  var limit = 5;
+  var pages = Math.ceil(pastCount / limit);
+  var index=1;
+  for(index;index<=pages;index++){
+    //http://showbox.email
+    if(1 == index){
+      html +='<strong><span class="current">'+index+'</span></strong>';
+    } else{
+      html +='<a href="http://localhost:3000/preview?keyword='+pastView[0].keyword_idx+'&idx='+pastView[0].n_idx+'&page='+index+'>'+index+'</a>';
+    }
+  }
+  html += '</td></tr></tbody></table></td></tr></tbody></table><table cellpadding="0" cellspacing="0" border="0" width="750" align="center" style="margin-top: 30px;"><tbody><tr><td align="center">Copyright ⓒ unioncontents All rights reserved.</td></tr></tbody></table><p>&nbsp;</p>'
+  return bodyHtml+html;
+}
 function getFiles (dir, files_){
   var fs = require('fs');
   files_ = files_ || [];
