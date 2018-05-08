@@ -39,7 +39,7 @@
                 %>
                 <tr>
                   <td style="font-size: small;padding:5px 0 5px;border-bottom:1px dotted #d9d9d9;color:#444;">
-                    <%=numIdx%>.
+                    [No.<%=numIdx%>차]
                     <a style="text-decoration:none; color:black;" href="<%=url%>" target="_blank"><%=pastView[i].M_subject%></a>
                   </td>
                   <td style="font-size: small;padding:5px 0 5px;border-bottom:1px dotted #d9d9d9;color:#444;"><%=pastView[i].M_regdate%></td>
@@ -56,7 +56,7 @@
                   %>
                       <strong><span class="current"><%=index%></span></strong>
                     <%} else{%>
-                    <a href="http://localhost:3000/preview?keyword=<%=pastView[0].keyword_idx%>&idx=<%=pastView[0].n_idx%>&page=<%=index%>"><%=index%></a>
+                    <a href="http://localhost:3000/preview?keyword=<%=keyword%>&idx=<%=idx%>&page=<%=index%>"><%=index%></a>
                     <%}%>
                   <%}%>
                 </td>

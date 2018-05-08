@@ -396,7 +396,6 @@ router.post('/save',isAuthenticated, async function(req, res) {
   }
   var m_idx_a = null;
   if('type' in req.body){
-    console.log('req.body.type:',req.body.type);
     if(req.body.type == 'edit'){
       mailAllParam['n_idx'] = req.body['idx'];
       mailAllParam['M_id'] = req.body['Mid'];
@@ -458,68 +457,53 @@ router.post('/save',isAuthenticated, async function(req, res) {
 
 router.post('/send',isAuthenticated, async function(req, res) {
   console.log('mail send req.body: ',req.body);
-  // 이메일 발송
-  var recipiList = req.body['M_recipi'];
-  if('M_recipi[]' in req.body){
-    recipiList = req.body['M_recipi'];
+  // 보낼 메일 data 가져오기
+  var result = await mailAllA.getEmailData(req.body.idx);
+  if(result.length == 0){
+    res.status(500).send('메일 정보 없음');
   }
-  var groupList = req.body['M_group'];
-  if('M_group[]' in req.body){
-    groupList = req.body['M_group[]'];
-  }
-  var sender = await mailListA.getOneEmail(req.body.M_sender);
-  var recipi = await mailListA.getOneEmail(recipiList);
-  var groups = [];
-  var groupsIdx = [];
-  var groups2allIdx = [];
-  var mid = req.user.n_idx;
-  if(req.user.user_admin != null){
-    mid = req.user.user_admin;
-  }
-  if(typeof groupList != 'undefined'){
-    if(groupList.length != 0){
-      groups = await mailListC.getEmail(groupList,mid);
-      groups2allIdx = await mailListC.getIdx(groupList,mid);
-      groupsIdx = await mailListC.getIdx2(groupList,mid);
-    }
-  }
+  var mailData = result[0];
 
   var euckr2utf8 = new Iconv('EUC-KR', 'UTF-8//translit//ignore');
   var utf82euckr1 = new Iconv('UTF-8', 'EUC-KR//translit//ignore');
   var utf82euckr2 = new Iconv('UTF-8', 'EUC-KR//translit//ignore');
 
-  var bodyBuf = new Buffer(await settingMailBody(req.body.M_body,req.body.M_keyword));
-  var subjectBuf = new Buffer(req.body.M_subject);
+  var bodyBuf = new Buffer(await settingMailBody(mailData.M_body,mailData.M_keyword,mailData.n_idx));
+  var subjectBuf = new Buffer(mailData.M_subject);
 
   var subjectConvert = utf82euckr1.convert(subjectBuf.toString('utf-8'));
   var bodyConvert = utf82euckr2.convert(bodyBuf.toString('utf-8'));
+
+  // 메일 보내는 사람 가져오기
+  var mailSender = await mailListA.getOneEmail(mailData.M_sender);
+  var sender = (mailSender.length > 0) ? mailSender[0]: [];
+  // 메일 받는 사람 가져오기
+  console.log('mailData.M_recipi:',mailData.M_recipi);
+  console.log('mailData.M_group:',mailData.M_group);
+  var recipiArr = mailData.M_recipi.split(',');
+  var mailRecipi = await mailListA.getOneEmail(recipiArr);
+  var recipi = (mailRecipi.length > 0) ? mailRecipi: [];
+  // 메일 받는 그룹 가져오기
+  var groups = [];
+  if(mailData.M_group != null){
+    var groupArr = mailData.M_group.split(',');
+    var mailGroup = await mailListC.getOneEmail(groupArr);
+    groups = mailGroup;
+  }
 
   var recipients = recipi.concat(groups);
 
   var param = {
     'subject': urlencode(new Buffer(subjectConvert).toString('base64')),//.toString('base64')
     'body': urlencode(new Buffer(bodyConvert).toString('base64')),
-    'sender': urlencode(sender.join(',')),
+    'sender': urlencode(sender),
     'recipients': urlencode(recipients.join(',')),
     'username': urlencode('unionc'),
     'key': urlencode('w4EzdnbOY3oypxO'),
-    'mail_type': (req.body.M_type == '1') ? urlencode('ONETIME'):urlencode('NORMAL'),
-    'time' : (typeof req.body.end_reserve_time =='undefined') ? '' : urlencode(req.body.end_reserve_time),
-    'unique_id':req.body.idx
+    'mail_type': (mailData.M_type == '1') ? urlencode('ONETIME'):urlencode('NORMAL'),
+    'time' : (mailData.M_send == null || mailData.M_send == '') ? '' : urlencode(mailData.M_send),
+    'unique_id':mailData.n_idx
   };
-
-  // 메일 발송(insert Error시)
-  if(insertCheck){
-    res.status(500).send('발송에 실패했습니다. 다시 시도해주세요.');
-    console.log('M_recipi:',M_recipi);
-    return false;
-  }
-
-  // 예약발송은 파이썬으로
-  if(req.body.M_type == '1'){
-    res.send({status:true});
-    return false;
-  }
 
   var paramStr = 'subject='+param['subject']+'&body='+param['body']+'&sender='+param['sender']+'&username='+param['username']+'&recipients='+param['recipients']+'&key='+param['key'];
   // returnURL이 있는 경우
@@ -528,15 +512,16 @@ router.post('/send',isAuthenticated, async function(req, res) {
   if(param['mail_type'] == urlencode('ONETIME')){
     paramStr +='&mail_type='+param['mail_type']+'&start_reserve_time='+param['time']+'&end_reserve_time='+param['time'];
   }
-  if('file_url' in param && 'file_name' in param){
-    if(param['file_url'] != "" && param['file_name'] != ""){
-      paramStr += '&file_url='+param['file_url']+'&file_name='+param['file_name'];
-    }
-  }
+  // if('file_url' in param && 'file_name' in param){
+  //   if(param['file_url'] != "" && param['file_name'] != ""){
+  //     paramStr += '&file_url='+param['file_url']+'&file_name='+param['file_name'];
+  //   }
+  // }
   var resultEmail = await emailSendFun(paramStr);
-  await mailDetailB.updateSendDateResult();
   console.log('이메일 발송 파라미터 : ',paramStr);
+  console.log('이메일 발송 dic : ',param);
   console.log('이메일 발송 결과 : ',resultEmail);
+  await mailDetailB.updateSendDateResult(param['unique_id']);
   if(resultEmail[0]){
     res.send({status:true});
   }
@@ -563,14 +548,14 @@ async function settingMailBody(bodyHtml,keyword,idx){
   var pastView = await content.selectView(pastParam);
   var pastCount = await content.selectViewCount(pastParam);
   pastCount = (pastCount.length == 0) ? '':pastCount[0].total;
-  var htmlMsg = '<table width="750" align="center" cellpadding="0" cellspacing="0" style="padding: 20px;"><tbody><tr><td align="center" style="font-size: 15px; font-weight: bold;" class="fix">[ 메일 본문이 깨져 보이면 <a href="http://localhost:3000/preview?keyword='+keyword+'&idx='+idx+'" target="_blank" style="font-family: 맑은고딕,malgungothic,돋움,dotum; font-size:12px color:#ff6300>여기</a>를 눌러 주세요 ]</td></tr></tbody></table>';
+  var htmlMsg = '<table width="750" align="center" cellpadding="0" cellspacing="0" style="padding: 20px;"><tbody><tr><td align="center" style="font-size: 15px; font-weight: bold;" class="fix">[ 메일 본문이 깨져 보이면 <a href=\"http://localhost:3000/preview?keyword='+keyword+'&idx='+idx+'\" target=\"_blank\" style=\"font-family: 맑은고딕,malgungothic,돋움,dotum; font-size:12px;color:#ff6300\">여기</a>를 눌러 주세요 ]</td></tr></tbody></table>';
   var html = '<table width="750" align="center" cellpadding="0" cellspacing="0" border="0" style="margin-top: 30px;"><tbody><tr><td>[지난 기사보기]<hr><table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-top: 10px;"><colgroup><col width="78%"><col width="22%"></colgroup><tbody>';
 
   for(var i=0; i < pastView.length; i++) {
     var url = 'http://localhost:3000/preview?keyword='+pastView[i].keyword_idx+'&idx='+pastView[i].n_idx;
     var numIdx = Math.ceil(pastCount-i).toString();
-    html +='<tr><td style="font-size: small;padding:5px 0 5px;border-bottom:1px dotted #d9d9d9;color:#444;">'+numIdx+'.<a style="text-decoration:none; color:black;" href="'+url+'" target="_blank">'+pastView[i].M_subject+'</a>';
-    html +='</td><td style="font-size: small;padding:5px 0 5px;border-bottom:1px dotted #d9d9d9;color:#444;">'+pastView[i].M_regdate+'</td></tr>'
+    html +='<tr><td style=\"font-size: small;padding:5px 0 5px;border-bottom:1px dotted #d9d9d9;color:#444;\">[No.'+numIdx+'차]<a style=\"text-decoration:none; color:black;\" href=\"'+url+'\" target=\"_blank\">'+pastView[i].M_subject+'</a>';
+    html +='</td><td style=\"font-size: small;padding:5px 0 5px;border-bottom:1px dotted #d9d9d9;color:#444;\">'+pastView[i].M_regdate+'</td></tr>'
   }
   html +='<tr><td colspan="2" style="text-align: center; font-size: small;padding:10px 0 5px;">';
   var limit = 5;
@@ -581,7 +566,7 @@ async function settingMailBody(bodyHtml,keyword,idx){
     if(1 == index){
       html +='<strong><span class="current">'+index+'</span></strong>';
     } else{
-      html +='<a href="http://localhost:3000/preview?keyword='+pastView[0].keyword_idx+'&idx='+pastView[0].n_idx+'&page='+index+'>'+index+'</a>';
+      html +='<a href=\"http://localhost:3000/preview?keyword='+keyword+'&idx='+idx+'&page='+index+'\">'+index+'</a>';
     }
   }
   html += '</td></tr></tbody></table></td></tr></tbody></table><table cellpadding="0" cellspacing="0" border="0" width="750" align="center" style="margin-top: 30px;"><tbody><tr><td align="center">Copyright ⓒ unioncontents All rights reserved.</td></tr></tbody></table><p>&nbsp;</p>'
