@@ -1,0 +1,364 @@
+<div class="main-body">
+  <div class="page-wrapper">
+    <div class="page-header">
+      <div class="page-header-title">
+        <h4>관리</h4>
+      </div>
+      <div class="page-header-breadcrumb">
+        <ul class="breadcrumb-title">
+          <li class="breadcrumb-item">
+            <a href="/">
+              <i class="fas fa-home"></i>
+            </a>
+          </li>
+          <li class="breadcrumb-item"><a href="#!">메일발송</a></li>
+          <li class="breadcrumb-item"><a href="#!">관리</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="page-body">
+      <div class="row" id="listTable">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header">
+              <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="selectKeyword">
+                <option>키워드</option>
+                <%for(var i=0; i < klist.length; i++) {%>
+                  <option value='<%=klist[i].M_keyword_idx%>'><%=klist[i].M_keyword%></option>
+                <%}%>
+              </select>
+            </div>
+            <div class="card-block table-border-style">
+              <div class="table-responsive">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th width="1%">NO</th>
+                      <th width="5%">키워드</th>
+                      <th width="15%">제목</th>
+                      <th width="5%">발송자</th>
+                      <th width="5%">수신자</th>
+                      <th width="20%">수신그룹</th>
+                      <th width="5%">작성일</th>
+                      <th width="5%">예약일</th>
+                      <th width="5%">발송일</th>
+                      <th width="25%">관리</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <%
+                      var limit = 20;
+                      if(currentPage > 0){
+                        (currentPage - 1) * limit;
+                      }
+                      for(var i=0; i < list.length; i++) {
+                    %>
+                    <tr>
+                      <th><%= listCount - i - offset %></th>
+                      <td><div class="kwd_nobr"><%= list[i].keyword %></div></td>
+                      <td>
+                        <div class="title_nobr"><%= list[i].M_subject %></div>
+                        <div class="mailHtml">
+                          <%= list[i].M_body %>
+                        </div>
+                      </td>
+                      <td><%= list[i].M_sender %></td>
+                      <td><%= list[i].M_recipi %></td>
+                      <td><div class="group-nobr" title="<%= ((list[i].M_group == null) ? ' ': list[i].M_group) %>"><%= ((list[i].M_group == null) ? ' ': list[i].M_group) %></div></td>
+                      <td><div class="date-nobr"><%= list[i].M_regdate %></div></td>
+                      <td><div class="date-nobr"><%= (list[i].M_type != 1) ?'-': list[i].M_send %></div></td>
+                      <td><div class="date-nobr"><%= (list[i].M_send == null && list[i].M_success == 0 && list[i].M_failed == 0) ?'-': list[i].M_send %></div></td>
+                      <td>
+                        <button class="btn btn-sm btn-inverse btn-send" data-idx="<%= list[i].n_idx %>"><%= ((list[i].M_send == null && list[i].M_success == 0 && list[i].M_failed == 0) ? '보내기': '다시보내기')%></button>
+                        <button class="btn btn-sm btn-inverse btn-delete" data-idx="<%= list[i].n_idx %>">삭제</button>
+                        <button class="btn btn-sm btn-inverse btn-edit" data-idx="<%= list[i].n_idx %>">수정</button>
+                        <button class="btn btn-sm btn-inverse btn-load">재작성</button>
+                      </td>
+                    </tr>
+                    <% } %>
+                  </tbody>
+                  <tfoot>
+                    <%
+                    var pageCount = Math.ceil(listCount/limit);
+                    if(pageCount > 1) {
+                    %>
+                    <tr>
+                      <td colspan="10">
+                        <ul class="pagination float-right">
+                          <%
+                            var pageSize = 5;
+                            var pRCnt = parseInt(currentPage / pageSize);
+                            if(currentPage % pageSize == 0){
+                              pRCnt = parseInt(currentPage / pageSize) - 1;
+                            }
+                            if(currentPage > 5) {
+                          %>
+                            <li class="page-item">
+                              <a class="page-link" data-value="1" aria-label="Previous">
+                                <i class="ti-angle-double-left f-12"></i>
+                                <span aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                              </a>
+                            </li>
+                            <li class="page-item">
+                              <a class="page-link" data-value=="<%=(pRCnt * pageSize)%>" aria-label="Previous">
+                                <i class="ti-angle-left f-12"></i>
+                                <span aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                              </a>
+                            </li>
+                          <% } %>
+                          <% for(var index=pRCnt * pageSize + 1;index<(pRCnt + 1)*pageSize + 1;index++){%>
+                            <li class= "<%=(currentPage == index) ? 'active' : ''%> page-item">
+                              <a class="page-link" data-value="<%=index%>" >
+                                <%= index %>
+                              </a>
+                            </li>
+                          <%
+                              if(index == pageCount) {
+                                break;
+                              }
+                            }
+                          %>
+                          <% if((pRCnt + 1) * pageSize < pageCount) { %>
+                            <li class="page-item">
+                              <a class="page-link" data-value="<%=(pRCnt + 1)*pageSize+1%>" aria-label="Next">
+                                <i class="ti-angle-right f-12"></i>
+                                <span aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                              </a>
+                            </li>
+                            <li class="page-item">
+                              <a class="page-link" data-value="<%=pageCount%>" aria-label="Next">
+                                <i class="ti-angle-double-right f-12"></i>
+                                <span aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                              </a>
+                            </li>
+                          <% } %>
+                        </ul>
+                      </td>
+                    </tr>
+                    <% } %>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <input type="hidden" id="keyword" value="<%=keyword%>"/>
+      <!-- Modal start-->
+      <div class='modal fade' id='previewMail-Modal' role='dialog'>
+        <div class='modal-dialog modal-lg' role='document'>
+          <div class='modal-content'>
+            <div class='modal-header'>
+              <h5 class="modal-title"><span id="date"></span>미리보기</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div class='modal-body'>
+              <div class='col-sm-12' id="mailBody"></div>
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-secondary mobtn" data-dismiss='modal' aria-label='Close' type="button">취소</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Modal end-->
+    </div>
+  </div>
+</div>
+<style type="text/css">
+  .table.table-sm td, .table.table-sm th {
+    padding: .6rem .5rem;
+  }
+  .card .card-header span:not(.input-group-addon){
+    display: inline;
+  }
+  .table td, .table th{
+    vertical-align: middle;
+  }
+  .mailHtml{
+    display: none;
+  }
+  #mailBody{
+    overflow: auto;
+    padding: 0;
+    max-height: 700px;
+  }
+  #mailBody a:hover {
+    color: #3399cc;
+    text-decoration: none;
+  }
+  #mailBody td,th{
+    white-space: inherit;
+  }
+  .title_nobr,.kwd_nobr,.group-nobr{
+    font-size: 15px;
+    padding-left: 3px;
+    text-overflow: ellipsis;
+    width: 400px;
+    overflow: hidden;
+  }
+  .date-nobr{
+    width: 90px;
+    word-wrap: break-word;
+    white-space: initial;
+  }
+  .title_nobr:hover{
+    font-weight: bold;
+  }
+  .group-nobr{
+    width: 100px;
+  }
+  .kwd_nobr{
+    width: 112px;
+  }
+</style>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/2.1.27/moment.js"></script>
+<!-- sweetalert -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sweetalert@2.1.0/dist/sweetalert.min.js"></script>
+<script type="text/javascript">
+  // data input hidden values
+  var keywordValue = $('#keyword').val();
+  $(document).ready(function(){
+    if(keywordValue != ''){
+      $("#selectKeyword option[value='"+keywordValue+"']").attr('selected','selected');
+    }
+  });
+
+  // 제목 클릭시
+  $(document).on('click','.title_nobr',function(){
+    // var htmlStr = $(this).next('div').html();
+    var htmlStr = $(this).next('div').text().replace(/&lt;/g,"<").replace(/&gt;/g,">").replace(/&nbsp;/g, '');
+    console.log(htmlStr);
+    $('#mailBody').empty();
+    $('#mailBody').html(htmlStr);
+    $('#previewMail-Modal').modal('show');
+  });
+
+  // 키워드 선택시
+  $('#selectKeyword').on('change',function(){
+    var param = {
+      page : 1
+    };
+    var optionVal = $("#selectKeyword option:selected").val();
+    if(optionVal != '키워드'){
+      param.keyword=optionVal;
+      $('#keyword').val(optionVal);
+    }
+    else{
+      $('#keyword').val('');
+    }
+    // data input hidden values
+    ajaxGetPageList(param,0);
+  });
+  //페이지 이동
+  $(document).on('click','.page-link',function(){
+    var num = Number($(this).text()) || Number($(this).data().num);
+    var param = {
+      page : Number($(this).data().value)
+    };
+    // data input hidden values
+    var keywordValue = $('#keyword').val();
+    if(keywordValue != ''){
+      param.keyword = keywordValue;
+    }
+
+    ajaxGetPageList(param,num);
+  });
+  function ajaxGetPageList(param){
+    console.log('ajaxGetPageList:',param);
+    $.ajax({
+      url: '/email/menage/getNextPage',
+      type: 'post',
+      data: param,
+      error: function(request,status,error){
+        console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
+        alert('새로고침 후 다시 시도해주세요.');
+      },
+      success: function(data){
+        console.log(data);
+        if(data.status != true){
+          alert('새로고침 후 다시 시도해주세요.');
+          return false;
+        }
+
+        $('#listTable tbody').eq(0).empty();
+        data.result.list.forEach(function(item,idx){
+          var numIdx = Math.ceil(data.result.listCount-(data.result.offset+idx)).toString();
+          var mailHtmlStr = '';
+          var html = '<tr>\
+            <th>'+numIdx+'</th>\
+            <td><div class="kwd_nobr">'+item.keyword+'</div></td>\
+            <td><div class="title_nobr">'+item.M_subject+'</div><div class="mailHtml">'+item.M_body+mailHtmlStr+'</div></td>\
+            <td>'+item.M_sender+'</td>\
+            <td>'+item.M_recipi+'</td>\
+            <td><div class="group-nobr" title="'+((item.M_group == null) ? ' ': item.M_group)+'">'+((item.M_group == null) ? ' ': item.M_group)+'</div></td>\
+            <td><div class="date-nobr">'+item.M_regdate+'</div></td>\
+            <td><div class="date-nobr">'+((item.M_type != 1) ?'-': item.M_send)+'</div></td>\
+            <td><div class="date-nobr">'+((item.M_send == null && item.M_success == 0 && item.M_failed == 0) ? '-': item.M_send)+'</div></td>\
+            <td>\
+              <button class="btn btn-sm btn-inverse btn-send" data-idx="'+item.n_idx+'">'+((item.M_send == null && item.M_success == 0 && item.M_failed == 0) ? '보내기': '다시보내기')+'</button>\
+              <button class="btn btn-sm btn-inverse btn-delete" data-idx="'+item.n_idx+'">삭제</button>\
+              <button class="btn btn-sm btn-inverse btn-edit" data-idx="'+item.n_idx+'">수정</button>\
+              <button class="btn btn-sm btn-inverse btn-load">재작성</button>\
+            </td></tr>';
+          $('#listTable tbody').eq(0).append(html);
+        });
+        var limit = 20;
+        var pageCount = Math.ceil(data.result.listCount/limit);
+        $('#listTable tfoot').eq(0).empty();
+        if(pageCount > 1) {
+          var html = '<tr><td colspan="10"><ul class="pagination float-right">';
+          var pageSize = 5;
+          var pRCnt = parseInt(data.result.currentPage / pageSize);
+          if(data.result.currentPage % pageSize == 0){
+            pRCnt = parseInt(data.result.currentPage / pageSize) - 1;
+          }
+          if(data.result.currentPage > 5) {
+            html += '<li class="page-item"><a class="page-link" data-value="1" aria-label="Previous">\
+                <i class="ti-angle-double-left f-12"></i>\
+                <span aria-hidden="true"></span>\
+                <span class="sr-only">Previous</span>\
+              </a></li>\
+              <li class="page-item"><a class="page-link" data-value=\"'+(pRCnt * pageSize)+'"\ aria-label="Previous">\
+                <i class="ti-angle-left f-12"></i>\
+                <span aria-hidden="true"></span>\
+                <span class="sr-only">Previous</span>\
+              </a></li>';
+          }
+
+          for(var index=pRCnt * pageSize + 1;index<(pRCnt + 1)*pageSize + 1;index++){
+            var active = (data.result.currentPage == index) ? "active" : "";
+            html += '<li class=\"'+active+' page-item">\
+              <a class="page-link" data-value=\"'+index+'"\ >'+index+'</a></li>'
+
+            if(index == pageCount) {
+              break;
+            }
+          }
+          if((pRCnt + 1) * pageSize < pageCount) {
+            html += '<li class="page-item">\
+                  <a class="page-link" data-value=\"'+((pRCnt + 1)*pageSize+1)+'"\ aria-label="Next">\
+                    <i class="ti-angle-right f-12"></i>\
+                    <span aria-hidden="true"></span>\
+                    <span class="sr-only">Next</span>\
+                  </a></li>\
+                  <li class="page-item">\
+                  <a class="page-link" data-value=\"'+pageCount+'"\ aria-label="Next">\
+                    <i class="ti-angle-double-right f-12"></i>\
+                    <span aria-hidden="true"></span>\
+                    <span class="sr-only">Next</span>\
+                  </a></li>';
+          }
+          html += '</ul></td></tr>';
+          $('#listTable tfoot').eq(0).append(html);
+        }
+      }
+    });
+  }
+</script>
