@@ -20,7 +20,7 @@ var content = {
     return await getResult(sql,values);
   },
   selectViewCount: async function(param){
-    var sql = 'SELECT count(*) FROM content_view where keyword_idx = ? ';
+    var sql = 'SELECT count(*) as total FROM content_view where keyword_idx = ? ';
     var values = [param.keyword];
     if('idx' in param){
       sql += 'and n_idx=? ';

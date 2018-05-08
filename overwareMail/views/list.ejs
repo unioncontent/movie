@@ -177,6 +177,10 @@
           <button class="btn btn-inverse btn-cGroup m-b-50" style="float: right;"><i class="fas fa-plus"></i>그룹등록</button>
         </div>
       </div>
+      <input type="hidden" id="searchType" value="<%=searchType%>"/>
+      <input type="hidden" id="search" value="<%=search%>"/>
+      <input type="hidden" id="page" value="<%=page%>"/>
+
       <!-- Modal start-->
       <div class='modal fade' id='edit-Modal' role='dialog'>
         <div class='modal-dialog modal-lg' role='document'>
@@ -264,13 +268,19 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert@2.1.0/dist/sweetalert.min.js"></script>
 <script type="text/javascript">
   $(document).ready(function(){
-    var url_string = window.location.href
-    var url = new URL(url_string);
-    var searchTypeParams = url.searchParams.get("searchType");
-    var searchParams = url.searchParams.get("search");
-    if(searchTypeParams != null && searchParams != null){
-      $("#selectSearchType").val(searchTypeParams).prop("selected", true);
-      $("#keywordInput").val(searchParams);
+    // var url_string = window.location.href
+    // var url = new URL(url_string);
+    // var searchTypeParams = url.searchParams.get("searchType");
+    // var searchParams = url.searchParams.get("search");
+    // if(searchTypeParams != null && searchParams != null){
+    //   $("#selectSearchType").val(searchTypeParams).prop("selected", true);
+    //   $("#keywordInput").val(searchParams);
+    // }
+    var searchTypeValue = $("#searchType").val();
+    var searchValue = $("#search").val();
+    if(searchTypeValue != '' && searchValue != ''){
+      $("#selectSearchType").val(searchTypeValue).prop("selected", true);
+      $("#keywordInput").val(searchValue);
     }
   });
   // 그룹등록 클릭시
@@ -568,15 +578,23 @@
   });
   //페이지 이동
   $(document).on('click','.page-link',function(){
-    var href = new URL(window.location.href);
     var param = {
       page : Number($(this).data().value)
     };
-    if(href.searchParams.get("searchType") != '' && href.searchParams.get("searchType") != null){
-      param.searchType = href.searchParams.get("searchType");
+    // var href = new URL(window.location.href);
+    // if(href.searchParams.get("searchType") != '' && href.searchParams.get("searchType") != null){
+    //   param.searchType = href.searchParams.get("searchType");
+    // }
+    // if(href.searchParams.get("search") != '' && href.searchParams.get("search") != null){
+    //   param.search = href.searchParams.get("search");
+    // }
+    var searchTypeValue = $("#searchType").val();
+    var searchValue = $("#search").val();
+    if(searchTypeValue != ''){
+      param.searchType = $("#searchType").val();
     }
-    if(href.searchParams.get("search") != '' && href.searchParams.get("search") != null){
-      param.search = href.searchParams.get("search");
+    if(searchValue != ''){
+      param.search = $("#search").val();
     }
     ajaxGetPageList(param);
   });
@@ -595,17 +613,19 @@
           alert('새로 고침해주세요.');
           return false;
         }
-        if(typeof history.pushState == 'function'){
-          //현재 주소를 가져온다.
-          var renewURL = location.href;
-          //현재 주소 중 page 부분이 있다면 새로 부여될 페이지 번호를 할당한다.
-          renewURL = renewURL.replace(/\?page=([0-9]+)/ig,'?page='+data.list.currentPage);
-          if(renewURL.indexOf("?page=") == -1){
-            renewURL += '?page='+data.list.currentPage;
-          }
-          //페이지 갱신 실행!
-          history.pushState(null, null,renewURL);
-        }
+        $("#page").val(data.list.currentPage);
+
+        // if(typeof history.pushState == 'function'){
+        //   //현재 주소를 가져온다.
+        //   var renewURL = location.href;
+        //   //현재 주소 중 page 부분이 있다면 새로 부여될 페이지 번호를 할당한다.
+        //   renewURL = renewURL.replace(/\?page=([0-9]+)/ig,'?page='+data.list.currentPage);
+        //   if(renewURL.indexOf("?page=") == -1){
+        //     renewURL += '?page='+data.list.currentPage;
+        //   }
+        //   //페이지 갱신 실행!
+        //   history.pushState(null, null,renewURL);
+        // }
         $('#listTable tbody').empty();
         data.list.mailList.forEach(function(item,idx){
           var numIdx = Math.ceil(data.list.mailListCount-(data.list.offset+idx)).toString();
@@ -682,16 +702,26 @@
     });
   }
   function reloadPage(){
-    var href = new URL(window.location.href);
+    // var href = new URL(window.location.href);
+    var searchTypeValue = $("#searchType").val();
+    var searchValue = $("#search").val();
+    var pageValue = ($("#page").val() == '') ? 1 : parseInt($("#page").val());
     var param = {
-      page : href.searchParams.get("page") || 1
+      page : pageValue
+      // page : href.searchParams.get("page") || 1
     };
-    if(href.searchParams.get("searchType") != '' && href.searchParams.get("searchType") != null){
-      param.searchType = href.searchParams.get("searchType");
+    if(searchTypeValue != ''){
+      param.searchType = $("#searchType").val();
     }
-    if(href.searchParams.get("search") != '' && href.searchParams.get("search") != null){
-      param.search = href.searchParams.get("search");
+    if(searchValue != ''){
+      param.search = $("#search").val();
     }
+    // if(href.searchParams.get("searchType") != '' && href.searchParams.get("searchType") != null){
+    //   param.searchType = href.searchParams.get("searchType");
+    // }
+    // if(href.searchParams.get("search") != '' && href.searchParams.get("search") != null){
+    //   param.search = href.searchParams.get("search");
+    // }
     ajaxGetPageList(param);
   }
   function phoneFomatter(num,type){

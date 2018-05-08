@@ -136,6 +136,8 @@
           </div>
         </div>
       </div>
+      <input type="hidden" id="search" value="<%=search%>"/>
+      <input type="hidden" id="page" value="<%=page%>"/>
       <!-- Modal start-->
       <div class="modal fade" id="group-Modal" data-backdrop="static" data-keyboard="false" role="dialog">
         <div class="modal-dialog modal-lg" role="document">
@@ -315,11 +317,15 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sweetalert@2.1.0/dist/sweetalert.min.js"></script>
 <script type="text/javascript">
   $(document).ready(function(){
-    var url_string = window.location.href
-    var url = new URL(url_string);
-    var searchParams = url.searchParams.get("search");
-    if(searchParams != null){
-      $("#keywordInput").val(searchParams);
+    // var url_string = window.location.href
+    // var url = new URL(url_string);
+    // var searchParams = url.searchParams.get("search");
+    // if(searchParams != null){
+    //   $("#keywordInput").val(searchParams);
+    // }
+    var searchValue = $("#search").val();
+    if(searchValue != ''){
+      $("#keywordInput").val(searchValue);
     }
   });
   // 그룹 삭제
@@ -801,15 +807,16 @@
   }
   // 페이지 이동
   $(document).on('click','#listTable .page-link',function(){
-    var href = new URL(window.location.href);
     var param = {
       page : Number($(this).data().value)
     };
-    if(href.searchParams.get("searchType") != '' && href.searchParams.get("searchType") != null){
-      param.searchType = href.searchParams.get("searchType");
-    }
-    if(href.searchParams.get("search") != '' && href.searchParams.get("search") != null){
-      param.search = href.searchParams.get("search");
+    // var href = new URL(window.location.href);
+    // if(href.searchParams.get("search") != '' && href.searchParams.get("search") != null){
+    //   param.search = href.searchParams.get("search");
+    // }
+    var searchValue = $("#search").val();
+    if(searchValue != ''){
+      param.search = $("#search").val();
     }
     ajaxGetPageList(param);
   });
@@ -914,16 +921,21 @@
     });
   }
   function reloadPage(){
-    var href = new URL(window.location.href);
+    var searchValue = $("#search").val();
+    var pageValue = ($("#page").val() == '') ? 1 : parseInt($("#page").val());
     var param = {
-      page : href.searchParams.get("page") || 1
+      page : pageValue
     };
-    if(href.searchParams.get("searchType") != '' && href.searchParams.get("searchType") != null){
-      param.searchType = href.searchParams.get("searchType");
+    if(searchValue != ''){
+      param.search = $("#search").val();
     }
-    if(href.searchParams.get("search") != '' && href.searchParams.get("search") != null){
-      param.search = href.searchParams.get("search");
-    }
+    // var href = new URL(window.location.href);
+    // var param = {
+    //   page : href.searchParams.get("page") || 1
+    // };
+    // if(href.searchParams.get("search") != '' && href.searchParams.get("search") != null){
+    //   param.search = href.searchParams.get("search");
+    // }
     ajaxGetPageList(param);
   }
 </script>
