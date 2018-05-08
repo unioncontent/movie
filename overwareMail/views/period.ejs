@@ -276,7 +276,7 @@
                       	<td><span id="media">0</span>건</td>
                       	<td><span id="reporter">0</span>건</td>
                       	<td><span id="newsCount">0</span>건</td>
-                      	<td><span id="reply">0</span>건</td>
+                      	<td><span id="replyCount">0</span>건</td>
                       </tr>
                     </tbody>
                   </table>
@@ -773,6 +773,7 @@
     console.log(inputEle);
     var param = {
       M_idx_A:$(this).data('idx'),
+      M_idx_A2:$(this).data('idx'),
       keyword:tdEles.eq(1).text(),
       sDate:tdEles.eq(0).text(),
       eDate:tdEles.eq(0).text()
