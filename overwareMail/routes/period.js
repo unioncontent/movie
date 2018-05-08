@@ -19,6 +19,10 @@ var isAuthenticated = function (req, res, next) {
 router.get('/',isAuthenticated,async function(req, res) {
   var data = await getListPageData(req.user.n_idx,req.query);
   data.klist = await keyword.selectMovieKwdAll(req.user.user_admin,req.user.n_idx) || [];
+
+  data.sDate = '';
+  data.eDate = '';
+  data.keyword = '';
   res.render('period',data);
 });
 
@@ -64,7 +68,9 @@ async function getListPageData(idx,param){
   console.log(param);
   var data = {
     list:[],
-    listCount:{total:0}
+    listCount:{total:0},
+    sDate: '',
+    eDate: ''
   };
   var limit = 20;
   var searchParam = [idx,idx,0,limit];
@@ -80,9 +86,12 @@ async function getListPageData(idx,param){
   if (typeof param.sDate !== 'undefined' && typeof param.eDate !== 'undefined') {
     searchBody['sDate'] = param.sDate;
     searchBody['eDate'] = param.eDate;
+    data['sDate'] = param.sDate;
+    data['eDate'] = param.eDate;
   }
   if (typeof param.keyword !== 'undefined') {
     searchBody['keyword'] = param.keyword;
+    data['keyword'] = param.keyword;
   }
   try{
     data['list'] = await period.selectView(searchBody,searchParam);

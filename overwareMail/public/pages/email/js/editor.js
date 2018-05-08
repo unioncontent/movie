@@ -10,7 +10,7 @@ tinymce.init({
     toolbar: [ 'undo', 'bold', 'italic', 'styleselect', 'image' ]
   },
   plugins: 'print preview fullpage searchreplace autolink directionality visualblocks visualchars fullscreen image link media template code table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists textcolor wordcount imagetools contextmenu colorpicker textpattern',
-  toolbar: 'undo redo | fileStyle | formatselect | fontselect fontsizeselect | bold italic forecolor backcolor | alignleft aligncenter alignright alignjustify | numlist bullist outdent indent | removeformat | help',
+  toolbar: 'undo redo | fileStyle | fontselect fontsizeselect | bold italic forecolor backcolor | alignleft aligncenter alignright alignjustify | numlist bullist outdent indent | removeformat | help',
   font_formats : '굴림=Gulim;돋움=Dotum;바탕=Batang;궁서=Gungsuh;나눔고딕=nanumgothic;나눔바른고딕=nanumbarungothic;',
   fontsize_formats: "8px 10px 12px 14px 18px 24px 36px",
   image_advtab: true,

@@ -5,6 +5,7 @@ var LocalStrategy = require('passport-local').Strategy;
 var router = express.Router();
 
 // DB module
+var content = require('../models/content.js');
 var period = require('../models/period.js');
 var user = require('../models/user.js');
 
@@ -32,6 +33,21 @@ router.get('/', isAuthenticated, async function(req, res, next) {
       data.period.failP = Math.round((parseInt(data.period.successNfailCount.fail) / data.period.todaySendCount) * 100);
   }
   res.render('index',data);
+});
+
+router.get('/preview',async function(req, res, next) {
+  var viewCode = await content.selectView(req.query);
+  delete req.query.idx;
+  var lastNews = await content.selectView(req.query);
+  var lastNewsCount = await content.selectViewCount(req.query);
+  
+  res.render('preview',{
+    layout: false,
+    veiw:viewCode[0].m_body,
+    lastView:lastNews,
+    lastCount:lastNewsCount[0].total
+  });
+  // res.render('preview',{layout: false});
 });
 
 router.post('/7DayGraph',isAuthenticated, async function(req, res, next) {

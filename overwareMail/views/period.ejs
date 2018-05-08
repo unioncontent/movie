@@ -169,6 +169,9 @@
           </div>
         </div>
       </div>
+      <input type="hidden" id="sDate" value="<%=sDate%>"/>
+      <input type="hidden" id="eDate" value="<%=eDate%>"/>
+      <input type="hidden" id="keyword" value="<%=keyword%>"/>
       <!-- Modal start-->
       <div class='modal fade' id='previewMail-Modal' role='dialog'>
         <div class='modal-dialog modal-lg' role='document'>
@@ -647,62 +650,29 @@
 <!-- sweetalert -->
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sweetalert@2.1.0/dist/sweetalert.min.js"></script>
 <script type="text/javascript">
-  var url_string = window.location.href
-  var url = new URL(url_string);
-  var sDateParams = url.searchParams.get("sDate");
-  var eDateParams = url.searchParams.get("eDate");
-  var keywordParams = url.searchParams.get("keyword");
+  // 도메일 연결되서 url변경 불가
+  // var url_string = window.location.href;
+  // var url = new URL(url_string);
+  // var sDateParams = url.searchParams.get("sDate");
+  // var eDateParams = url.searchParams.get("eDate");
+  // var keywordParams = url.searchParams.get("keyword");
 
+  // data input hidden values
+  var sDateValue = $('#sDate').val();
+  var eDateValue = $('#eDate').val();
+  var keywordValue = $('#keyword').val();
   $(document).ready(function(){
-    $("#selectKeyword option[value='"+keywordParams+"']").attr('selected','selected');
+    if(keywordValue != ''){
+      $("#selectKeyword option[value='"+keywordValue+"']").attr('selected','selected');
+    }
     $('#reportrange').daterangepicker(optionSet1,cb);
 
-    if(sDateParams == null && eDateParams == null){
+    if(sDateValue == '' && eDateValue == ''){
       $('#reportrange span').html(moment().format('YYYY.MM.DD') + ' - ' + moment().format('YYYY.MM.DD'));
     }
     else{
-      $('#reportrange span').html(moment(new Date(sDateParams)).format('YYYY.MM.DD') + ' - ' + moment(new Date(eDateParams+' 23:59:59')).format('YYYY.MM.DD'));
+      $('#reportrange span').html(moment(new Date(sDateValue)).format('YYYY.MM.DD') + ' - ' + moment(new Date(eDateValue+' 23:59:59')).format('YYYY.MM.DD'));
     }
-  });
-  // 키워드 선택스
-  $('#selectKeyword').on('change',function(){
-    var param = {
-      page : 1
-    };
-    var optionVal = $("#selectKeyword option:selected").val();
-    if(optionVal != '키워드'){
-      param.keyword=optionVal;
-    }
-    var url = new URL(window.location.href);
-    var sDateParams = url.searchParams.get("sDate");
-    var eDateParams = url.searchParams.get("eDate");
-    if(sDateParams != null && eDateParams != null){
-      param.sDate = sDateParams;
-      param.eDate = eDateParams;
-    }
-    if(typeof(history.pushState) == 'function'){
-      var renewURL = location.href;
-      if(renewURL.indexOf("?page=") == -1){
-        renewURL += '?page=1';
-      }
-      else{
-        renewURL = renewURL.replace(/\?page=([0-9]+)/ig,'?page=1');
-      }
-      if(renewURL.indexOf("&keyword=") == -1){
-        renewURL += '&keyword='+param.keyword;
-      }
-      else{
-        if(param.keyword != undefined){
-          renewURL = renewURL.replace(/\&keyword=([0-9]+)/ig,'&keyword='+param.keyword);
-        }
-        else{
-          renewURL = renewURL.replace(/\&keyword=([0-9]+)/ig,'');
-        }
-      }
-      //페이지 갱신 실행!
-      history.pushState(null, null,renewURL);
-    }
-    ajaxGetPageList(param,0);
   });
   // 성공 클릭시
   $(document).on('click','.success',function(){
@@ -779,7 +749,6 @@
       }
     });
   });
-
   // 제목 클릭시
   $(document).on('click','.title_nobr',function(){
     // var htmlStr = $(this).next('div').html().replace(/&lt;/g,"<").replace(/&gt;/g,">");
@@ -842,21 +811,84 @@
     });
   }
 
+  // 키워드 선택시
+  $('#selectKeyword').on('change',function(){
+    var param = {
+      page : 1
+    };
+    var optionVal = $("#selectKeyword option:selected").val();
+    if(optionVal != '키워드'){
+      param.keyword=optionVal;
+      $('#keyword').val(optionVal);
+    }
+    else{
+      $('#keyword').val('');
+    }
+    // data input hidden values
+    var sDateValue = $('#sDate').val();
+    var eDateValue = $('#eDate').val();
+
+    if(sDateValue != '' && eDateValue != ''){
+      param.sDate = sDateValue;
+      param.eDate = eDateValue;
+    }
+    // var url = new URL(window.location.href);
+    // var sDateParams = url.searchParams.get("sDate");
+    // var eDateParams = url.searchParams.get("eDate");
+    // if(sDateParams != null && eDateParams != null){
+    //   param.sDate = sDateParams;
+    //   param.eDate = eDateParams;
+    // }
+    // if(typeof(history.pushState) == 'function'){
+    //   var renewURL = location.href;
+    //   if(renewURL.indexOf("?page=") == -1){
+    //     renewURL += '?page=1';
+    //   }
+    //   else{
+    //     renewURL = renewURL.replace(/\?page=([0-9]+)/ig,'?page=1');
+    //   }
+    //   if(renewURL.indexOf("&keyword=") == -1){
+    //     renewURL += '&keyword='+param.keyword;
+    //   }
+    //   else{
+    //     if(param.keyword != undefined){
+    //       renewURL = renewURL.replace(/\&keyword=([0-9]+)/ig,'&keyword='+param.keyword);
+    //     }
+    //     else{
+    //       renewURL = renewURL.replace(/\&keyword=([0-9]+)/ig,'');
+    //     }
+    //   }
+    //   //페이지 갱신 실행!
+    //   history.pushState(null, null,renewURL);
+    // }
+    ajaxGetPageList(param,0);
+  });
   //페이지 이동
   $(document).on('click','.page-link',function(){
-    var href = new URL(window.location.href);
     var num = Number($(this).text()) || Number($(this).data().num);
     var param = {
       page : Number($(this).data().value)
     };
-    if(href.searchParams.get("sDate") != null && href.searchParams.get("eDate") != null ){
-      param.sDate = moment(href.searchParams.get("sDate")).format('YYYY-MM-DD');
-      param.eDate = moment(href.searchParams.get("eDate")).format('YYYY-MM-DD');
+    // data input hidden values
+    var sDateValue = $('#sDate').val();
+    var eDateValue = $('#eDate').val();
+    var keywordValue = $('#keyword').val();
+    if(sDateValue != '' && eDateValue != '' ){
+      param.sDate = moment(sDateValue).format('YYYY-MM-DD');
+      param.eDate = moment(eDateValue).format('YYYY-MM-DD');
     }
-    var keywordParams = href.searchParams.get("keyword");
-    if(keywordParams != null){
-      param.keyword = keywordParams;
+    if(keywordValue != ''){
+      param.keyword = keywordValue;
     }
+    // var href = new URL(window.location.href);
+    // if(href.searchParams.get("sDate") != null && href.searchParams.get("eDate") != null ){
+    //   param.sDate = moment(href.searchParams.get("sDate")).format('YYYY-MM-DD');
+    //   param.eDate = moment(href.searchParams.get("eDate")).format('YYYY-MM-DD');
+    // }
+    // var keywordParams = href.searchParams.get("keyword");
+    // if(keywordParams != null){
+    //   param.keyword = keywordParams;
+    // }
     ajaxGetPageList(param,num);
   });
   function ajaxGetPageList(param){
@@ -874,17 +906,17 @@
           alert('새로고침 후 다시 시도해주세요.');
           return false;
         }
-        if(typeof(history.pushState) == 'function'){
-          //현재 주소를 가져온다.
-          var renewURL = location.href;
-          //현재 주소 중 page 부분이 있다면 새로 부여될 페이지 번호를 할당한다.
-          renewURL = renewURL.replace(/\?page=([0-9]+)/ig,'?page='+data.result.currentPage);
-          if(renewURL.indexOf("?page=") == -1){
-            renewURL += '?page='+data.result.currentPage;
-          }
-          //페이지 갱신 실행!
-          history.pushState(null, null,renewURL);
-        }
+        // if(typeof(history.pushState) == 'function'){
+        //   //현재 주소를 가져온다.
+        //   var renewURL = location.href;
+        //   //현재 주소 중 page 부분이 있다면 새로 부여될 페이지 번호를 할당한다.
+        //   renewURL = renewURL.replace(/\?page=([0-9]+)/ig,'?page='+data.result.currentPage);
+        //   if(renewURL.indexOf("?page=") == -1){
+        //     renewURL += '?page='+data.result.currentPage;
+        //   }
+        //   //페이지 갱신 실행!
+        //   history.pushState(null, null,renewURL);
+        // }
         $('#listTable tbody').eq(0).empty();
         data.result.list.forEach(function(item,idx){
           var numIdx = Math.ceil(data.result.listCount-(data.result.offset+idx)).toString();
@@ -984,29 +1016,36 @@
       sDate : start.format('YYYY-MM-DD'),
       eDate : end.format('YYYY-MM-DD')
     };
+    $('#sDate').val(param.sDate);
+    $('#eDate').val(param.eDate);
+    // var url = new URL(window.location.href);
+    // var keywordParams = url.searchParams.get("keyword");
+    // if(keywordParams != null){
+    //   param.keyword = keywordParams;
+    // }
+    // if(typeof(history.pushState) == 'function'){
+    //   var renewURL = location.href;
+    //   if(renewURL.indexOf("?page=") == -1){
+    //     renewURL += '?page=1';
+    //   }
+    //   else{
+    //     renewURL = renewURL.replace(/\?page=([0-9]+)/ig,'?page=1');
+    //   }
+    //   if(renewURL.indexOf("&sDate=") == -1 && renewURL.indexOf("&eDate=") == -1){
+    //     renewURL += '&sDate='+param.sDate+'&eDate='+param.eDate;
+    //   }
+    //   else{
+    //     renewURL = renewURL.replace(/\&sDate=(\d{4}-\d{2}-\d{2})/ig,'&sDate='+param.sDate);
+    //     renewURL = renewURL.replace(/\&eDate=(\d{4}-\d{2}-\d{2})/ig,'&eDate='+param.eDate);
+    //   }
+    //   //페이지 갱신 실행!
+    //   history.pushState(null, null,renewURL);
+    // }
 
-    var url = new URL(window.location.href);
-    var keywordParams = url.searchParams.get("keyword");
-    if(keywordParams != null){
-      param.keyword = keywordParams;
-    }
-    if(typeof(history.pushState) == 'function'){
-      var renewURL = location.href;
-      if(renewURL.indexOf("?page=") == -1){
-        renewURL += '?page=1';
-      }
-      else{
-        renewURL = renewURL.replace(/\?page=([0-9]+)/ig,'?page=1');
-      }
-      if(renewURL.indexOf("&sDate=") == -1 && renewURL.indexOf("&eDate=") == -1){
-        renewURL += '&sDate='+param.sDate+'&eDate='+param.eDate;
-      }
-      else{
-        renewURL = renewURL.replace(/\&sDate=(\d{4}-\d{2}-\d{2})/ig,'&sDate='+param.sDate);
-        renewURL = renewURL.replace(/\&eDate=(\d{4}-\d{2}-\d{2})/ig,'&eDate='+param.eDate);
-      }
-      //페이지 갱신 실행!
-      history.pushState(null, null,renewURL);
+    // data input hidden values
+    var keywordValue = $('#keyword').val();
+    if(keywordValue != ''){
+      param.keyword = keywordValue;
     }
 
     ajaxGetPageList(param);
@@ -1025,8 +1064,8 @@
     '최근 30일': [moment().subtract(29, 'days'), moment()]
   };
   var optionSet1 = {
-    startDate: (sDateParams != null) ? moment(new Date(sDateParams)) : moment(),
-    endDate:  (eDateParams != null) ? moment(new Date(eDateParams+' 23:59:59')) : moment(),
+    startDate: (sDateValue != '') ? moment(new Date(sDateValue)) : moment(),
+    endDate:  (eDateValue != '') ? moment(new Date(eDateValue+' 23:59:59')) : moment(),
     dateLimit: {
       days: 60
     },

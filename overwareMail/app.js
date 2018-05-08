@@ -51,14 +51,13 @@ app.use(function(req, res, next) {
 var index = require('./routes/index');
 app.use('/', index);
 app.use('/login', index);
+app.use('/preview',index);
 var period = require('./routes/period');
 app.use('/period', period);
 var email = require('./routes/email');
 app.use('/email', email);
 var list = require('./routes/list');
 app.use('/list', list);
-var preview = require('./routes/preview');
-app.use('/preview',preview);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

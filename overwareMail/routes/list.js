@@ -23,7 +23,10 @@ router.get('/',isAuthenticated,async function(req, res) {
 async function getListPageData(idx,param){
   var data = {
     mailList:[],
-    mailListCount:{total:0}
+    mailListCount:{total:0},
+    searchType:'',
+    search:'',
+    page:1
   };
   var limit = 20;
   var searchParam = [idx,0,limit];
@@ -33,6 +36,7 @@ async function getListPageData(idx,param){
   };
   if (typeof param.page !== 'undefined') {
     currentPage = param.page;
+    data['page'] = currentPage;
   }
   if (parseInt(currentPage) > 0) {
     searchParam[1] = (currentPage - 1) * limit
@@ -41,6 +45,8 @@ async function getListPageData(idx,param){
   if (typeof param.searchType !== 'undefined' && typeof param.search !== 'undefined') {
     searchBody['searchType'] = param.searchType;
     searchBody['search'] = param.search;
+    data['searchType'] = param.searchType;
+    data['search'] = param.search;
   }
   try{
     data['mailList'] = await mailListA.selectView(searchBody,searchParam);
@@ -170,7 +176,9 @@ router.post('/getNextGroupPage',isAuthenticated,async function(req, res) {
 async function getGroupListPageData(idx,param,type){
   var data = {
     groupList:[],
-    groupListCount:{total:0}
+    groupListCount:{total:0},
+    page: 1,
+    search: ''
   };
   var limit = 20;
   if(type == 'group'){
@@ -183,6 +191,7 @@ async function getGroupListPageData(idx,param,type){
   };
   if (typeof param.page !== 'undefined') {
     currentPage = param.page;
+    data['page'] = currentPage;
   }
   if (parseInt(currentPage) > 0) {
     searchParam[1] = (currentPage - 1) * limit
@@ -190,6 +199,7 @@ async function getGroupListPageData(idx,param,type){
   }
   if (typeof param.search !== 'undefined') {
     searchBody['search'] = param.search;
+    data['search'] = param.search;
   }
   try{
     if(type == 'list'){
