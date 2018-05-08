@@ -26,6 +26,17 @@
                   <option value='<%=klist[i].M_keyword_idx%>'><%=klist[i].M_keyword%></option>
                 <%}%>
               </select>
+              <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="selectType">
+                <option>메일타입</option>
+                <%for(var i=0; i < tlist.length; i++) {%>
+                  <option value='<%=tlist[i].M_mail_type%>'><%=tlist[i].M_mail_type%></option>
+                <%}%>
+              </select>
+              <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="selectMType">
+                <option>발송타입</option>
+                <option value='0'>즉시</option>
+                <option value='1'>예약</option>
+              </select>
               <div class="col-md-3 p-r-0 p-l-0 f-right">
                 <div id="reportrange" class="form-control form-control-inverse">
                   <i class="glyphicon glyphicon-calendar far fa-calendar-alt"></i>
@@ -43,6 +54,7 @@
                       <th width="10%">발송일</th>
                       <th width="5%">키워드</th>
                       <th width="20%">제목</th>
+                      <th width="5%">메일타입</th>
                       <th width="5%">발송건수</th>
                       <th width="5%">성공</th>
                       <th width="5%">실패</th>
@@ -86,6 +98,7 @@
                           <% }); } %>
                         </div>
                       </td>
+                      <td><%= list[i].M_mail_type %></td>
                       <td><span class="total"><%= parseInt(list[i].success) + parseInt(list[i].fail) %></span></td>
                       <td><span class="success" data-idx="<%= list[i].n_idx %>"><%= list[i].success %></span></td>
                       <td><span class="fail" data-idx="<%= list[i].n_idx %>"><%= list[i].fail %></span></td>
@@ -172,6 +185,8 @@
       <input type="hidden" id="sDate" value="<%=sDate%>"/>
       <input type="hidden" id="eDate" value="<%=eDate%>"/>
       <input type="hidden" id="keyword" value="<%=keyword%>"/>
+      <input type="hidden" id="type" value="<%=type%>"/>
+      <input type="hidden" id="mType" value="<%=mType%>"/>
       <!-- Modal start-->
       <div class='modal fade' id='previewMail-Modal' role='dialog'>
         <div class='modal-dialog modal-lg' role='document'>
@@ -661,9 +676,17 @@
   var sDateValue = $('#sDate').val();
   var eDateValue = $('#eDate').val();
   var keywordValue = $('#keyword').val();
+  var typeValue = $('#type').val();
+  var mTypeValue = $('#mType').val();
   $(document).ready(function(){
     if(keywordValue != ''){
       $("#selectKeyword option[value='"+keywordValue+"']").attr('selected','selected');
+    }
+    if(typeValue != ''){
+      $("#selectType option[value='"+typeValue+"']").attr('selected','selected');
+    }
+    if(mTypeValue != ''){
+      $("#selectMType option[value='"+mTypeValue+"']").attr('selected','selected');
     }
     $('#reportrange').daterangepicker(optionSet1,cb);
 
@@ -812,6 +835,66 @@
     });
   }
 
+  // 메일타입 선택시
+  $('#selectType').on('change',function(){
+    var param = {
+      page : 1
+    };
+    var optionVal = $("#selectType option:selected").val();
+    if(optionVal != '메일타입'){
+      param.type=optionVal;
+      $('#type').val(optionVal);
+    }
+    else{
+      $('#type').val('');
+    }
+    // data input hidden values
+    var sDateValue = $('#sDate').val();
+    var eDateValue = $('#eDate').val();
+    var keywordValue = $('#keyword').val();
+    var mTypeValue = $('#mType').val();
+    if(keywordValue != ''){
+      param.keyword = keywordValue;
+    }
+    if(mTypeValue != ''){
+      param.mType = mTypeValue;
+    }
+    if(sDateValue != '' && eDateValue != ''){
+      param.sDate = sDateValue;
+      param.eDate = eDateValue;
+    }
+    ajaxGetPageList(param,0);
+  });
+  // 발송타입 선택시
+  $('#selectMType').on('change',function(){
+    var param = {
+      page : 1
+    };
+    var optionVal = $("#selectMType option:selected").val();
+    if(optionVal != '발송타입'){
+      param.mType=optionVal;
+      $('#mType').val(optionVal);
+    }
+    else{
+      $('#mType').val('');
+    }
+    // data input hidden values
+    var sDateValue = $('#sDate').val();
+    var eDateValue = $('#eDate').val();
+    var keywordValue = $('#keyword').val();
+    var typeValue = $('#type').val();
+    if(keywordValue != ''){
+      param.keyword = keywordValue;
+    }
+    if(typeValue != ''){
+      param.type = typeValue;
+    }
+    if(sDateValue != '' && eDateValue != ''){
+      param.sDate = sDateValue;
+      param.eDate = eDateValue;
+    }
+    ajaxGetPageList(param,0);
+  });
   // 키워드 선택시
   $('#selectKeyword').on('change',function(){
     var param = {
@@ -828,7 +911,14 @@
     // data input hidden values
     var sDateValue = $('#sDate').val();
     var eDateValue = $('#eDate').val();
-
+    var typeValue = $('#type').val();
+    var mTypeValue = $('#mType').val();
+    if(typeValue != ''){
+      param.type = typeValue;
+    }
+    if(mTypeValue != ''){
+      param.mType = mTypeValue;
+    }
     if(sDateValue != '' && eDateValue != ''){
       param.sDate = sDateValue;
       param.eDate = eDateValue;
@@ -874,12 +964,20 @@
     var sDateValue = $('#sDate').val();
     var eDateValue = $('#eDate').val();
     var keywordValue = $('#keyword').val();
+    var typeValue = $('#type').val();
+    var mTypeValue = $('#mType').val();
     if(sDateValue != '' && eDateValue != '' ){
       param.sDate = moment(sDateValue).format('YYYY-MM-DD');
       param.eDate = moment(eDateValue).format('YYYY-MM-DD');
     }
     if(keywordValue != ''){
       param.keyword = keywordValue;
+    }
+    if(typeValue != ''){
+      param.type = typeValue;
+    }
+    if(mTypeValue != ''){
+      param.mType = mTypeValue;
     }
     // var href = new URL(window.location.href);
     // if(href.searchParams.get("sDate") != null && href.searchParams.get("eDate") != null ){
@@ -942,6 +1040,7 @@
             <td>'+item.M_regdate+'</td>\
             <td><div class="kwd_nobr">'+item.M_keyword+'</div></td>\
             <td><div class="title_nobr">'+item.M_subject+'</div><div class="mailHtml">'+item.M_body+mailHtmlStr+'</div></td>\
+            <td>'+item.M_mail_type+'</td>\
             <td><span class="total">'+(parseInt(item.success) + parseInt(item.fail))+'</span></td>\
             <td><span class="success" data-idx=\"'+item.n_idx+'\">'+item.success+'</span></td>\
             <td><span class="fail" data-idx=\"'+item.n_idx+'\">'+item.fail+'</span></td>';
@@ -1048,7 +1147,14 @@
     if(keywordValue != ''){
       param.keyword = keywordValue;
     }
-
+    var typeValue = $('#type').val();
+    if(typeValue != ''){
+      param.type = typeValue;
+    }
+    var mTypeValue = $('#mType').val();
+    if(mTypeValue != ''){
+      param.mType = mTypeValue;
+    }
     ajaxGetPageList(param);
   }
   $(document).on('click','.applyBtn',searchDate);

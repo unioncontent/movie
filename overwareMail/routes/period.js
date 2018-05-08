@@ -5,6 +5,7 @@ var router = express.Router();
 // DB module
 var period = require('../models/period.js');
 var keyword = require('../models/keyword.js');
+var mailType = require('../models/mailType.js');
 var mailDetailB = require('../models/mailDetailB.js');
 
 var isAuthenticated = function (req, res, next) {
@@ -19,10 +20,13 @@ var isAuthenticated = function (req, res, next) {
 router.get('/',isAuthenticated,async function(req, res) {
   var data = await getListPageData(req.user.n_idx,req.query);
   data.klist = await keyword.selectMovieKwdAll(req.user.user_admin,req.user.n_idx) || [];
+  data.tlist = await mailType.selectTable(req.user.user_admin,req.user.n_idx) || [];
 
   data.sDate = '';
   data.eDate = '';
   data.keyword = '';
+  data.type = '';
+  data.mType = '';
   res.render('period',data);
 });
 
@@ -65,7 +69,7 @@ router.post('/getNextPage',isAuthenticated,async function(req, res, next) {
 });
 
 async function getListPageData(idx,param){
-  console.log(param);
+  console.log('getListPageData:',param);
   var data = {
     list:[],
     listCount:{total:0},
@@ -92,6 +96,14 @@ async function getListPageData(idx,param){
   if (typeof param.keyword !== 'undefined') {
     searchBody['keyword'] = param.keyword;
     data['keyword'] = param.keyword;
+  }
+  if (typeof param.type !== 'undefined') {
+    searchBody['type'] = param.type;
+    data['type'] = param.type;
+  }
+  if (typeof param.mType !== 'undefined') {
+    searchBody['mType'] = param.mType;
+    data['mType'] = param.mType;
   }
   try{
     data['list'] = await period.selectView(searchBody,searchParam);

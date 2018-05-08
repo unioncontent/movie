@@ -15,6 +15,12 @@ var period = {
     if('keyword' in body){
       sql +=' and M_keyword_idx = '+body.keyword;
     }
+    if('type' in body){
+      sql +=' and M_mail_type = \''+body.type+'\'';
+    }
+    if('mType' in body){
+      sql +=' and M_type = '+body.mType;
+    }
     sql += ' and (  M_id = ? or M_id in (select n_idx from m_mail_user where user_admin=?)) ';
     sql += ' order by n_idx desc limit ?,?';
     return await getResult(sql,param);
@@ -26,6 +32,12 @@ var period = {
     }
     if('keyword' in body){
       sql +=' and M_keyword_idx = '+body.keyword;
+    }
+    if('type' in body){
+      sql +=' and M_mail_type = \''+body.type+'\'';
+    }
+    if('mType' in body){
+      sql +=' and M_type = '+body.mType;
     }
     sql += ' and (  M_id = ? or M_id in (select n_idx from m_mail_user where user_admin=?))';
     var count = await getResult(sql,param);
