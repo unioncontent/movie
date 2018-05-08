@@ -38,6 +38,10 @@ var mailAllA = {
     var sql = 'delete from m_mail_all_a where n_idx=?';
     return await getResult(sql,[n_idx]);
   },
+  updateMtype:async function(param){
+    var sql = 'update m_mail_all_a set M_type=? where n_idx=?';
+    return await getResult(sql,param);
+  },
   updateId: async function(param){
     var sql = 'update m_mail_all_a set M_a_id=? where n_idx=?';
     return await getResult(sql,param);
@@ -52,6 +56,10 @@ var mailAllA = {
   },
   selectfile: async function(param){
     var sql = 'SELECT M_file,DATE_FORMAT(M_regdate, \'%Y%m%d\') as dateFile FROM m_mail_all_a where n_idx=?';
+    return await getResult(sql,param);
+  },
+  getEmailData: async function(param){
+    var sql = 'SELECT * FROM m_mail_all_a where n_idx=?';
     return await getResult(sql,param);
   }
 }

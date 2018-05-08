@@ -67,12 +67,12 @@
                       <td><div class="group-nobr" title="<%= ((list[i].M_group == null) ? ' ': list[i].M_group) %>"><%= ((list[i].M_group == null) ? ' ': list[i].M_group) %></div></td>
                       <td><div class="date-nobr"><%= list[i].M_regdate %></div></td>
                       <td><div class="date-nobr"><%= (list[i].M_type != 1) ?'-': list[i].M_send %></div></td>
-                      <td><div class="date-nobr"><%= (list[i].M_send == null && list[i].M_success == 0 && list[i].M_failed == 0) ?'-': list[i].M_send %></div></td>
+                      <td><div class="date-nobr"><%= (list[i].M_send == null || (list[i].M_success == 0 && list[i].M_failed == 0)) ?'-': list[i].M_send %></div></td>
                       <td>
                         <button class="btn btn-sm btn-inverse btn-send" data-idx="<%= list[i].n_idx %>"><%= ((list[i].M_send == null && list[i].M_success == 0 && list[i].M_failed == 0) ? '보내기': '다시보내기')%></button>
                         <button class="btn btn-sm btn-inverse btn-delete" data-idx="<%= list[i].n_idx %>">삭제</button>
                         <button class="btn btn-sm btn-inverse btn-edit" data-idx="<%= list[i].n_idx %>">수정</button>
-                        <button class="btn btn-sm btn-inverse btn-load">재작성</button>
+                        <button class="btn btn-sm btn-inverse btn-rewrite" data-idx="<%= list[i].n_idx %>">재작성</button>
                       </td>
                     </tr>
                     <% } %>
@@ -147,6 +147,7 @@
           </div>
         </div>
       </div>
+      <input type="hidden" id="page" value="<%=page%>"/>
       <input type="hidden" id="keyword" value="<%=keyword%>"/>
       <!-- Modal start-->
       <div class='modal fade' id='previewMail-Modal' role='dialog'>
@@ -229,6 +230,172 @@
       $("#selectKeyword option[value='"+keywordValue+"']").attr('selected','selected');
     }
   });
+  // 삭제버튼 클릭시
+  $(document).on('click','.btn-delete',function(){
+    swal({
+      title: "삭제하시겠습니까?",
+      icon: "warning",
+      buttons: ["취소", true],
+      dangerMode: true,
+    })
+    .then((value) => {
+      if (value == null) {
+        return false;
+      }
+      $.ajax({
+        url: '/email/manage/delete',
+        type: 'post',
+        data : {idx:$(this).data('idx')},
+        datatype : 'json',
+        error:function(request,status,error){
+          console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
+          swal("ERROR!","삭제 실패했습니다. 다시 시도해주세요.", "error");
+        },
+        success:function(data){
+          if(data.status){
+            swal("SUCCESS!", '삭제 되었습니다.', "success")
+            .then((value)=>{
+              reloadPage();
+            });
+          }else{
+            swal("ERROR!", '새로고침 후 다시 시도해주세요.', "error");
+          }
+        }
+      });
+    });
+  });
+  // 수정버튼 클릭시
+  $(document).on('click','.btn-edit',function(){
+    var tdEles = $(this).parents('tr').find('td');
+    if(tdEles.eq(7).text() != '-'){
+      swal("ERROR!", '발송된 메일은 수정하실 수 없습니다.', "error");
+      return false;
+    }
+    var idxVal = $(this).data('idx');
+    swal({
+      title: '수정하시겠습니까?',
+      text: '예약발송이 설정된 경우 예약 발송은 취소됩니다.',
+      icon: "warning",
+      buttons: ["취소", true],
+      dangerMode: true,
+    })
+    .then((value) => {
+      if (value == null) {
+        return false;
+      }
+      if(tdEles.eq(6).text() == '-'){
+        location.href='../email?type=edit&idx='+$(this).data('idx');
+      }
+      else{
+        $.ajax({
+          url: '/email/manage/updateMtype',
+          type: 'post',
+          data : {
+            type:'0',
+            idx:idxVal
+          },
+          datatype : 'json',
+          error:function(request,status,error){
+            console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
+            swal("ERROR!","새로고침 후 다시 시도해주세요.", "error");
+          },
+          success:function(data){
+            if(data.status){
+              location.href='../email?type=edit&idx='+idxVal;
+            }else{
+              swal("ERROR!", '새로고침 후 다시 시도해주세요.', "error");
+            }
+          }
+        });
+      }
+    });
+  });
+  // 메일전송버튼 클릭시
+  $(document).on('click','.btn-send',function(){
+    swal({
+      title: '메일을 보내시겠습니까?',
+      text: '예약발송이 설정된 경우 예약 발송은 취소됩니다.',
+      icon: "warning",
+      buttons: ["취소", true],
+      dangerMode: true,
+    })
+    .then((value) => {
+      if (value == null) {
+        return false;
+      }
+      var idxVal = $(this).data('idx');
+      if(tdEles.eq(6).text() == '-'){
+        sendMail(idxVal);
+      }
+      else{
+        $.ajax({
+          url: '/email/manage/updateMtype',
+          type: 'post',
+          data : {type:'0',idx:idxVal},
+          datatype : 'json',
+          error:function(request,status,error){
+            console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
+            swal("ERROR!","다시 시도해주세요.", "error");
+          },
+          success:function(data){
+            if(data.status){
+              sendMail(idxVal);
+            }else{
+              swal("ERROR!", '다시 시도해주세요.', "error");
+            }
+          }
+        });
+      }
+    });
+  });
+  function sendMail(idx){
+    $.ajax({
+      url: '/email/manage/updateMtype',
+      type: 'post',
+      data : {'idx':idx},
+      datatype : 'json',
+      error:function(request,status,error){
+        console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
+        swal("ERROR!","메일발송을 실패 하였습니다.\n 다시 시도해주세요.", "error");
+      },
+      success:function(data){
+        if(data.status){
+          swal("SUCCESS!", '메일이 발송 되었습니다.', "success")
+          .then((value)=>{
+            reloadPage();
+          });
+        }else{
+          swal("ERROR!", '메일발송을 실패 하였습니다.', "error");
+        }
+      }
+    });
+  }
+  // 메일 재전송버튼 클릭시
+  $(document).on('click','.btn-rewrite',function(){
+    swal({
+      title: '이번 회차를 바탕으로 재작성 하시겠습니까?',
+      icon: "warning",
+      buttons: ["취소", true],
+      dangerMode: true,
+    })
+    .then((value) => {
+      if (value == null) {
+        return false;
+      }
+      location.href='../email?type=rewrite&idx='+$(this).data('idx');
+    });
+  });
+  function reloadPage(){
+    var pageValue = ($("#page").val() == '') ? 1 : parseInt($("#page").val());
+    var param = {
+      page : pageValue
+    };
+    var keywordValue = $("#keyword").val();
+    if(keywordValue != ''){
+      param.keyword = keywordValue;
+    }
+    ajaxGetPageList(param);
+  }
 
   // 제목 클릭시
   $(document).on('click','.title_nobr',function(){
@@ -300,12 +467,12 @@
             <td><div class="group-nobr" title="'+((item.M_group == null) ? ' ': item.M_group)+'">'+((item.M_group == null) ? ' ': item.M_group)+'</div></td>\
             <td><div class="date-nobr">'+item.M_regdate+'</div></td>\
             <td><div class="date-nobr">'+((item.M_type != 1) ?'-': item.M_send)+'</div></td>\
-            <td><div class="date-nobr">'+((item.M_send == null && item.M_success == 0 && item.M_failed == 0) ? '-': item.M_send)+'</div></td>\
+            <td><div class="date-nobr">'+((item.M_send == null || (item.M_success == 0 && item.M_failed == 0)) ? '-': item.M_send)+'</div></td>\
             <td>\
               <button class="btn btn-sm btn-inverse btn-send" data-idx="'+item.n_idx+'">'+((item.M_send == null && item.M_success == 0 && item.M_failed == 0) ? '보내기': '다시보내기')+'</button>\
               <button class="btn btn-sm btn-inverse btn-delete" data-idx="'+item.n_idx+'">삭제</button>\
               <button class="btn btn-sm btn-inverse btn-edit" data-idx="'+item.n_idx+'">수정</button>\
-              <button class="btn btn-sm btn-inverse btn-load">재작성</button>\
+              <button class="btn btn-sm btn-inverse btn-load" data-idx="'+item.n_idx+'">재작성</button>\
             </td></tr>';
           $('#listTable tbody').eq(0).append(html);
         });

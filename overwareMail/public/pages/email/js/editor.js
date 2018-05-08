@@ -172,11 +172,10 @@ tinymce.init({
   ],
   init_instance_callback: function(editor){
     var defaultHtml= '<table width="750" align="center" cellpadding="0" cellspacing="0" style="border: solid 1px #cacaca; padding: 20px;"><tbody><tr><td><table width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td width="642"><img src="http://overmail.iptime.org:8080/templates/images/logo/show_logo.png" width="135" height="36" alt="로고"></td><td width="92">NEWS No.</td></tr></tbody></table><table width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td><p><br></p><div style="text-align: center; margin-top: 100px; padding: 10px; background-color: #eeeeee"></div><br><div style="padding: 40px 20px;"><p style="font-size: 13px; font-weight:bold; color: #000; padding: 0 0 5px 3px"> 영화 관련 데이타 다운로드</p><hr><br></div><p><br></p></td></tr></tbody></table></td></tr></tbody></table>';
-
-    // defaultHtml+= '<table cellpadding="0" cellspacing="0" border="0" width="750" align="center" style="margin-top: 30px;"><tbody><tr><td align="center">Copyright ⓒ OverWareMail All rights reserved.</td></tr></tbody></table><p>&nbsp;</p>';
-    /*
-    <table width="750" align="center" cellpadding="0" cellspacing="0" border="0" style="margin-top: 30px;"><tbody><tr><td>[지난 기사보기]<hr><table cellpadding="0" cellspacing="0"border="0" width="100%" style="margin-top: 10px;" "=""><colgroup><col width="78%"><col width="22%"></colgroup><tbody><tr><td colspan="2" style="text-align: center; font-size: small;padding:10px 0 5px;"></td></tr></tbody></table></td></tr></tbody></table>
-    */
+    if($('#mailType').val()!=''){
+      var mailData = JSON.parse($("#mailData").val());
+      defaultHtml = mailData.M_body;
+    }
     editor.setContent(defaultHtml);
   }
 });

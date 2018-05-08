@@ -84,6 +84,10 @@ var mailListC = {
     var sql = 'select * from m_mail_list_c where M_idx_a=?';
     return await getResult(sql,[m_idx]);
   },
+  getOneData : async function(idx){
+    var sql = 'select * from m_mail_list_c where n_idx=?';
+    return await getResult(sql,[idx]);
+  },
   selectView: async function(body,param){
     var sql = 'select M_ID,date_format(M_regdate, \'%Y-%m-%d %H:%i:%s\') as M_regdate,user_name,search,count(*) as groupCount,M_group_title,M_group_title';
     if (typeof body.as !== 'undefined') {

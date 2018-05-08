@@ -24,6 +24,9 @@
             </div>
             <div class="card-block">
               <div class="form-group row">
+                <input type="hidden" id="mailType" value="<%=type%>" />
+                <input type="hidden" id="mailData" value="<%=JSON.stringify(mailData)%>" />
+                <input type="hidden" id="mailSender" value="<%=mailSender.n_idx+'|'+mailSender.M_name+'&lt;'+mailSender.M_email+'&gt;'%>" />
                 <label class="col-sm-2 col-form-label">* 발송형태</label>
                 <div id="type" class="form-radio">
                   <div class="col-sm-12">
@@ -372,6 +375,18 @@
 <script src="/pages/email/js/select2.js"></script>
 <script type="text/javascript">
   $(document).ready(function() {
+    if($('#mailType').val()!=''){
+      var senderArr = $('#mailSender').val().split('|');
+      var param = {
+        id:senderArr[0],
+        text:senderArr[1]
+      };
+      pushEle($('.sender-select'),param);
+      var mailData = JSON.parse($("#mailData").val());
+      $("#M_keyword option[value='"+mailData.M_keyword+"']").attr('selected','selected');
+      $("#M_mail_type option[value='"+mailData.M_mail_type+"']").attr('selected','selected');
+      $("#M_subject").val(mailData.M_subject);
+    }
     // 예약시간
     var dt = new Date();
     var options = {
@@ -404,95 +419,95 @@
       maxDate: "+7D"
     });
     // 첨부파일
-    $('#M_file').filer({
-      limit: '5',
-      maxSize: '10',
-      changeInput: true,
-      showThumbs: true,
-      uploadFile: {
-        url: "/email/send/files",
-        data: {},
-        type: 'POST',
-        enctype: 'multipart/form-data',
-        beforeSend: function(){},
-        success: function(data, el){
-          console.log(data);
-          var fileListVal = $('#fileList').val();
-          if(fileListVal != "" && fileListVal != ","){
-            fileListVal +=',';
-          }
-          if (fileListVal.indexOf(data.result[1]) == -1) {
-            $('#fileList').val(fileListVal+data.result[0]);
-          }
-
-          el.find('.jFiler-item-title').attr('data-value', data.result[0]);
-          var parent = el.find(".jFiler-jProgressBar").parent();
-          el.find(".jFiler-jProgressBar").fadeOut("slow", function(){
-            $("<div class=\"jFiler-item-others text-success\"><i class=\"icon-jfi-check-circle\"></i> Success</div>").hide().appendTo(parent).fadeIn("slow");
-          });
-        },
-        error: function(data, el){
-          alert('파일 타입과 파일의 경로를 다시 확인해주세요.');
-          var parent = el.find(".jFiler-jProgressBar").parent();
-          el.find(".jFiler-jProgressBar").fadeOut("slow", function(){
-            $("<div class=\"jFiler-item-others text-error\"><i class=\"icon-jfi-minus-circle\"></i> Error</div>").hide().appendTo(parent).fadeIn("slow");
-          });
-        },
-        statusCode: {},
-        onProgress: function(){},
-      },
-      dragDrop: {
-        dragEnter: null,
-        dragLeave: null,
-        drop: null,
-      },
-      addMore: true,
-      clipBoardPaste: true,
-      excludeName: null,
-      beforeShow: function(){return true},
-      onSelect: function(){},
-      afterShow: function(){},
-      onRemove: function(e){
-        var removeEle = $(e).find('.jFiler-item-title').data('value');
-        $.ajax({
-          type: "POST",
-          url: "/email/remove/file",
-          data: {
-            file:removeEle,
-          },
-          dataType:'json',
-          error:function(request,status,error){
-            console.log('파일 삭제 에러 code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
-            return false;
-          },
-          success: function(data) {
-            console.log('remove result: ',data);
-            var fileListVal = $('#fileList').val();
-            var fileListArr = fileListVal.split(',');
-            var removeIdx = $.inArray(removeEle, fileListArr);
-            if (removeIdx != -1) {
-              delete fileListArr[removeIdx];
-              $('#fileList').val(fileListArr.join());
-            }
-            return true;
-          }
-        });
-      },
-      onEmpty: function(){},
-      captions: {
-        button: "등록",
-        feedback: "첨부할 파일을 선택해주세요.",
-        feedback2: "파일이 선택되었습니다.",
-        // drop: "Drop file here to Upload",
-        removeConfirmation: "이 파일을 제거 하시겠습니까??",
-        errors: {
-          filesLimit: "{{fi-limit}} 개의 파일만 업로드 할 수 있습니다.",
-          // filesType: "Only Images are allowed to be uploaded.",
-          filesSize: "{{fi-name}} 이 너무 큽니다! 파일은 최대 {{fi-maxSize}} MB까지 첨부 가능합니다.",
-          filesSizeAll: "선택하신 파일이 너무 큽니다! 첨부파일의 전체 합 {{fi-maxSize}} MB까지 첨부 가능합니다."
-        }
-      }
-    });
+    // $('#M_file').filer({
+    //   limit: '5',
+    //   maxSize: '10',
+    //   changeInput: true,
+    //   showThumbs: true,
+    //   uploadFile: {
+    //     url: "/email/send/files",
+    //     data: {},
+    //     type: 'POST',
+    //     enctype: 'multipart/form-data',
+    //     beforeSend: function(){},
+    //     success: function(data, el){
+    //       console.log(data);
+    //       var fileListVal = $('#fileList').val();
+    //       if(fileListVal != "" && fileListVal != ","){
+    //         fileListVal +=',';
+    //       }
+    //       if (fileListVal.indexOf(data.result[1]) == -1) {
+    //         $('#fileList').val(fileListVal+data.result[0]);
+    //       }
+    //
+    //       el.find('.jFiler-item-title').attr('data-value', data.result[0]);
+    //       var parent = el.find(".jFiler-jProgressBar").parent();
+    //       el.find(".jFiler-jProgressBar").fadeOut("slow", function(){
+    //         $("<div class=\"jFiler-item-others text-success\"><i class=\"icon-jfi-check-circle\"></i> Success</div>").hide().appendTo(parent).fadeIn("slow");
+    //       });
+    //     },
+    //     error: function(data, el){
+    //       alert('파일 타입과 파일의 경로를 다시 확인해주세요.');
+    //       var parent = el.find(".jFiler-jProgressBar").parent();
+    //       el.find(".jFiler-jProgressBar").fadeOut("slow", function(){
+    //         $("<div class=\"jFiler-item-others text-error\"><i class=\"icon-jfi-minus-circle\"></i> Error</div>").hide().appendTo(parent).fadeIn("slow");
+    //       });
+    //     },
+    //     statusCode: {},
+    //     onProgress: function(){},
+    //   },
+    //   dragDrop: {
+    //     dragEnter: null,
+    //     dragLeave: null,
+    //     drop: null,
+    //   },
+    //   addMore: true,
+    //   clipBoardPaste: true,
+    //   excludeName: null,
+    //   beforeShow: function(){return true},
+    //   onSelect: function(){},
+    //   afterShow: function(){},
+    //   onRemove: function(e){
+    //     var removeEle = $(e).find('.jFiler-item-title').data('value');
+    //     $.ajax({
+    //       type: "POST",
+    //       url: "/email/remove/file",
+    //       data: {
+    //         file:removeEle,
+    //       },
+    //       dataType:'json',
+    //       error:function(request,status,error){
+    //         console.log('파일 삭제 에러 code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
+    //         return false;
+    //       },
+    //       success: function(data) {
+    //         console.log('remove result: ',data);
+    //         var fileListVal = $('#fileList').val();
+    //         var fileListArr = fileListVal.split(',');
+    //         var removeIdx = $.inArray(removeEle, fileListArr);
+    //         if (removeIdx != -1) {
+    //           delete fileListArr[removeIdx];
+    //           $('#fileList').val(fileListArr.join());
+    //         }
+    //         return true;
+    //       }
+    //     });
+    //   },
+    //   onEmpty: function(){},
+    //   captions: {
+    //     button: "등록",
+    //     feedback: "첨부할 파일을 선택해주세요.",
+    //     feedback2: "파일이 선택되었습니다.",
+    //     // drop: "Drop file here to Upload",
+    //     removeConfirmation: "이 파일을 제거 하시겠습니까??",
+    //     errors: {
+    //       filesLimit: "{{fi-limit}} 개의 파일만 업로드 할 수 있습니다.",
+    //       // filesType: "Only Images are allowed to be uploaded.",
+    //       filesSize: "{{fi-name}} 이 너무 큽니다! 파일은 최대 {{fi-maxSize}} MB까지 첨부 가능합니다.",
+    //       filesSizeAll: "선택하신 파일이 너무 큽니다! 첨부파일의 전체 합 {{fi-maxSize}} MB까지 첨부 가능합니다."
+    //     }
+    //   }
+    // });
   });
   // 세션만료 - 로그인
   $("input[type=password]").on('keyup',function(event){
@@ -644,14 +659,20 @@
         // param['M_file_d'] = fileDBListStr;
 
         $('span.messages').find('.error').text('');
+        if($('#mailType').val()!=''){
+          param.type = $('#mailType').val();
+          var mailData = JSON.parse($("#mailData").val());
+          param.idx = mailData.n_idx;
+          param.Mid = mailData.M_id;
+        }
         SendEmails(param);
       }
     });
   });
-  // 메일 보내기 ajax
+  // 메일 insert ajax
   function SendEmails(param){
     $.ajax({
-      url: '/email/send',
+      url: '/email/save',
       type: 'post',
       data : param,
       datatype : 'json',
