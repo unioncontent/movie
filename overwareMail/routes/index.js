@@ -50,7 +50,9 @@ router.get('/preview',async function(req, res, next) {
     pastView:pastNews,
     pastCount: (pastNewsCount.length == 0) ? '':pastNewsCount[0].total,
     msg: '',
-    currentPage: 1
+    currentPage: 1,
+    keyword:req.query.keyword,
+    idx:req.query.idx
   };
   if(viewCode.length == 0){
     data.msg = '해당 메일이 없습니다.';
