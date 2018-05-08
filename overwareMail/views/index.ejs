@@ -157,11 +157,13 @@
               <div class='col-sm-12' id="mailBody"></div>
             </div>
             <div class="modal-footer">
+              <button type="button" class="btn btn-warning  waves-effect waves-light copy-btn">복사</button>
               <button class="btn btn-secondary mobtn" data-dismiss='modal' aria-label='Close' type="button">취소</button>
             </div>
           </div>
         </div>
       </div>
+      <input id="clip_target" type="text" value="" style="position:absolute;top:-9999em;"/>
       <!-- Modal end-->
       <!-- Modal start-->
       <div class='modal fade' id='success-Modal' role='dialog'>
@@ -526,6 +528,23 @@ $(window).resize(function(){
 
 $(document).ready(function(){
   areaChart();
+});
+// 모달 복사 버튼 클릭시
+$('.copy-btn').on('click',function(){
+  var text = $("#mailBody").html();
+  $('#clip_target').val(text);
+  $("#clip_target").select();
+
+  // Use try & catch for unsupported browser
+  try {
+    // The important part (copy selected text)
+    var successful = document.execCommand('copy');
+    if(successful) alert('Copied!');
+    else alert('Unable to copy!');
+  } catch (err) {
+    alert('이 브라우저는 지원하지 않습니다.');
+  }
+
 });
 // 성공 클릭시
 $(document).on('click','.success',function(){
