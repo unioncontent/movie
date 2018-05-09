@@ -507,7 +507,7 @@ router.post('/send',isAuthenticated, async function(req, res) {
 
   var paramStr = 'subject='+param['subject']+'&body='+param['body']+'&sender='+param['sender']+'&username='+param['username']+'&recipients='+param['recipients']+'&key='+param['key'];
   // returnURL이 있는 경우
-  paramStr += '&return_url='+urlencode('http://mail.overware.co.kr/email/send/result');
+  paramStr += '&return_url='+urlencode('http://overmail.iptime.org:8080/email/send/result');
   paramStr += '&unique_id='+urlencode(parseInt(param['unique_id']));
   if(param['mail_type'] == urlencode('ONETIME')){
     paramStr +='&mail_type='+param['mail_type']+'&start_reserve_time='+param['time']+'&end_reserve_time='+param['time'];
@@ -691,7 +691,7 @@ router.post('/send/img',uploadImage.single('file'),function(req, res) {
   console.log(req.file);
 
   var result = req.file.destination.replace('public/','')+'/'+req.file.originalname;
-  res.send({location:'http://mail.overware.co.kr/'+result});
+  res.send({location:'http://overmail.iptime.org:8080/'+result});
 });
 
 // 첨부파일 upload 및 path get
@@ -717,7 +717,7 @@ router.post('/send/file',uploadFile.single('file'),function(req, res) {
     return res.status(500).send("exe는 업로드 불가합니다.");
   }
   var result = req.file.destination.replace('public/','')+'/'+req.file.filename;
-  res.send({location:'http://mail.overware.co.kr/'+result});
+  res.send({location:'http://overmail.iptime.org:8080/'+result});
 });
 
 var storageFiles = multer.diskStorage({
