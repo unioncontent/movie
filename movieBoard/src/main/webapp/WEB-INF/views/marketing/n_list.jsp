@@ -130,7 +130,8 @@
                                 <div class="card">
                                   <div class="card-header">
 			                        <button class="btn btn-warning alert-excel f-right" style="margin-left: 8px"><i class="icofont icofont-download-alt"></i>EXCEL</button>
-                                    <button class="btn btn-info f-right alert-confirm" onclick = "location.href='http://overware.iptime.org:8080/marketing/n_channel'"><i class="icofont icofont-ui-note"></i>목록으로</button>
+                                    <!-- <button class="btn btn-info f-right alert-confirm" onclick = "location.href='http://overware.iptime.org:8080/marketing/n_channel'"><i class="icofont icofont-ui-note"></i>목록으로</button> -->
+                                    <button class="btn btn-info f-right alert-confirm" onclick = "history.back(-1);"><i class="icofont icofont-ui-note"></i>목록으로</button>
                                     <div class="col-sm-3 input-group input-group-button input-group-inverse p-l-0 p-r-0 m-b-10 f-left btn-select">
                                     <input type='text' class='datepicker-here form-control m-r-10 m-b-10 f-left' data-language='en' id='startdate' style="width: 50px" placeholder="Date"/>
 	                              	&nbsp;<font size="3"><b>~</b></font>
