@@ -9,7 +9,7 @@ tinymce.init({
     plugins: [ 'autosave', 'lists', 'autolink'],
     toolbar: [ 'undo', 'bold', 'italic', 'styleselect', 'image' ]
   },
-  plugins: 'print preview fullpage searchreplace autolink directionality visualblocks visualchars fullscreen image link media code table charmap hr toc insertdatetime advlist lists textcolor wordcount imagetools contextmenu colorpicker',
+  plugins: 'print preview fullpage searchreplace autolink directionality visualblocks visualchars fullscreen image link media code table charmap hr insertdatetime advlist lists textcolor wordcount imagetools contextmenu colorpicker',
   toolbar: 'undo redo | fontselect fontsizeselect | bold italic forecolor backcolor | alignleft aligncenter alignright alignjustify |  numlist bullist outdent indent | removeformat |  image fileUpload | help',
   font_formats : '굴림=Gulim;돋움=Dotum;바탕=Batang;궁서=Gungsuh;나눔고딕=nanumgothic;나눔바른고딕=nanumbarungothic;',
   fontsize_formats: "8px 10px 12px 14px 18px 24px 36px",
@@ -20,9 +20,16 @@ tinymce.init({
   media_live_embeds: true,
   media_poster: false,
   media_alt_source: false,
-  extended_valid_elements : "iframe[src|title|width|height|allowfullscreen|frameborder|class|id],embed[type|width|height|src|*],video[controls|preload|width|height|data-setup],source[src|type]",
-  video_template_callback: function(data) {
-   return '<embed src="'+data.src+'" width="' + data.width + '" height="' + data.height + '"' + (data.poster ? ' poster="' + data.poster + '"' : '') + ' type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true">\n' + '<p style="text-align: center;">영상이 안 보이는 경우 <a target="_blank" href="'+data.src+'">여기</a>를 눌러 주세요</p>' + '</embed>';
+  // extended_valid_elements : 'embed[id|style|width|height|type|src|*]',
+  media_url_resolver: function (data, resolve) {
+    var embedHtml = '<p><br></p><div style="position: relative; ">\
+    <iframe  src="'+ data.url +'" width="640" height="360" allowfullscreen="allowfullscreen" data-mce-fragment="1"></iframe>\
+    <p style="text-align: center;">영상이 안 보이는 경우 <a target="_blank" href="'+ data.url +'">여기</a>를 눌러 주세요</p><p></p><p></p></div><p>﻿﻿<br></p>';
+    resolve({html: embedHtml});
+    // if (data.url.indexOf('YOUR_SPECIAL_VIDEO_URL') !== -1) {
+    // } else {
+    //   resolve({html: ''});s
+    // }
   },
   // file_picker_types: 'file media',
   // file_picker_callback: function(cb, value, meta) {
