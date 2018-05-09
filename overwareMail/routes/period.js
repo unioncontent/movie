@@ -30,14 +30,49 @@ router.get('/',isAuthenticated,async function(req, res) {
   res.render('period',data);
 });
 
+router.get('/removeDir/:date',isAuthenticated,async function(req, res) {
+  var fs = require('fs-extra');
+  var filePath = '/home/hosting_users/unioncmail/apps/unioncmail_unioncmail/public/uploads/files/'+req.params.date;
+  try {
+    fs.removeSync(filePath);
+    res.send('success!');
+  } catch (err) {
+    console.error(err)
+  }
+
+});
 router.get('/download/:date/:fileName',isAuthenticated,async function(req, res) {
   console.log('/download/:date/:fileName = ',req.params);
-  var filePath = '/public/uploads/files/'+req.params.date+'/'+req.params.fileName;
-  // var fs = require('fs');
+  var filePath = __dirname +'/public/uploads/files/'+req.params.date;
+  if(req.params.fileName.indexOf('.') == -1){
+    var walk    = require('walk');
+    var files   = [];
+
+    // Walker options
+    var walker  = walk.walk(filePath, { followLinks: false });
+
+    walker.on('file', function(root, stat, next) {
+        // Add this file to the list of files
+        var sFileArr = stat.name.split('.');
+        if(req.params.fileName == sFileArr[0]){
+          filePath +='/'+stat.name;
+        }
+        next();
+    });
+
+    walker.on('end', function() {
+        console.log(files);
+        res.download(filePath); // Set disposition and send it.
+    });
+  }
+  else{
+    filePath +='/'+req.params.fileName;
+    res.download(filePath); // Set disposition and send it.
+  }
   // var file = fs.readFileSync(filePath);
 
-  res.download(filePath); // Set disposition and send it.
 });
+
 
 router.post('/result',isAuthenticated,async function(req, res, next) {
   var data = await mailDetailB.selectTable(req.body);
