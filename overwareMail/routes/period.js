@@ -32,7 +32,7 @@ router.get('/',isAuthenticated,async function(req, res) {
 
 router.get('/removeDir/:date',isAuthenticated,async function(req, res) {
   var fs = require('fs-extra');
-  var filePath = '/home/hosting_users/unioncmail/apps/unioncmail_unioncmail/public/uploads/files/'+req.params.date;
+  var filePath = __dirname +'/public/uploads/files/'+req.params.date;
   try {
     fs.removeSync(filePath);
     res.send('success!');
@@ -43,7 +43,7 @@ router.get('/removeDir/:date',isAuthenticated,async function(req, res) {
 });
 router.get('/download/:date/:fileName',isAuthenticated,async function(req, res) {
   console.log('/download/:date/:fileName = ',req.params);
-  var filePath = __dirname +'/public/uploads/files/'+req.params.date;
+  var filePath = __dirname.replace('\\routes','') +'/public/uploads/files/'+req.params.date;
   if(req.params.fileName.indexOf('.') == -1){
     var walk    = require('walk');
     var files   = [];
