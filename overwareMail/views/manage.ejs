@@ -52,6 +52,25 @@
                         (currentPage - 1) * limit;
                       }
                       for(var i=0; i < list.length; i++) {
+                        var recipiArr = list[i].M_recipi_idx.split(',');
+                        var recipiStr = '';
+                        if(recipiArr.length > 1){
+                          recipiStr = list[i].M_recipi+' 외 '+(recipiArr.length-1);
+                        }
+                        else{
+                          recipiStr = list[i].M_recipi;
+                        }
+
+                        var groupStr = '';
+                        if(list[i].M_group_idx != null){
+                          var groupArr = list[i].M_group_idx.split(',');
+                          if(groupArr.length > 1){
+                            groupStr = list[i].M_group+' 외 '+(groupArr.length-1);
+                          }
+                          else{
+                            groupStr = list[i].M_group;
+                          }
+                        }
                     %>
                     <tr>
                       <th><%= listCount - i - offset %></th>
@@ -62,8 +81,8 @@
                         </a>
                       </td>
                       <td><%= list[i].M_sender %></td>
-                      <td><%= list[i].M_recipi %></td>
-                      <td><div class="group-nobr" title="<%= ((list[i].M_group == null) ? ' ': list[i].M_group) %>"><%= ((list[i].M_group == null) ? ' ': list[i].M_group) %></div></td>
+                      <td><%= recipiStr %></td>
+                      <td><div class="group-nobr" title="<%= groupStr %>"><%= groupStr %></div></td>
                       <td><div class="date-nobr"><%= list[i].M_regdate %></div></td>
                       <td><div class="date-nobr"><%= (list[i].M_type != 1) ?'-': list[i].M_send %></div></td>
                       <td><div class="date-nobr"><%= (list[i].M_send == null || (list[i].M_success == 0 && list[i].M_failed == 0)) ?'-': list[i].M_send %></div></td>
@@ -448,6 +467,25 @@
         data.result.list.forEach(function(item,idx){
           var numIdx = Math.ceil(data.result.listCount-(data.result.offset+idx)).toString();
           var mailHtmlStr = '';
+          var recipiArr = item.M_recipi_idx.split(',');
+          var recipiStr = '';
+          if(recipiArr.length > 1){
+            recipiStr = item.M_recipi+' 외 '+(recipiArr.length-1);
+          }
+          else{
+            recipiStr = item.M_recipi;
+          }
+
+          var groupStr = '';
+          if(item.M_group_idx != null){
+            var groupArr = item.M_group_idx.split(',');
+            if(groupArr.length > 1){
+              groupStr = item.M_group+' 외 '+(groupArr.length-1);
+            }
+            else{
+              groupStr = item.M_group;
+            }
+          }
           var html = '<tr>\
             <th>'+numIdx+'</th>\
             <td><div class="kwd_nobr">'+item.keyword+'</div></td>\
@@ -455,8 +493,8 @@
               <div class="title_nobr">'+item.M_subject+'</div>\
             </a></td>\
             <td>'+item.M_sender+'</td>\
-            <td>'+item.M_recipi+'</td>\
-            <td><div class="group-nobr" title="'+((item.M_group == null) ? ' ': item.M_group)+'">'+((item.M_group == null) ? ' ': item.M_group)+'</div></td>\
+            <td>'+recipiStr+'</td>\
+            <td><div class="group-nobr" title="'+groupStr+'">'+groupStr+'</div></td>\
             <td><div class="date-nobr">'+item.M_regdate+'</div></td>\
             <td><div class="date-nobr">'+((item.M_type != 1) ?'-': item.M_send)+'</div></td>\
             <td><div class="date-nobr">'+((item.M_send == null || (item.M_success == 0 && item.M_failed == 0)) ? '-': item.M_send)+'</div></td>\
