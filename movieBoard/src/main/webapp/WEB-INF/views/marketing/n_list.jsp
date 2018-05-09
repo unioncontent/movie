@@ -160,14 +160,14 @@
                                             <th>${totalCount - minusCount - status.count + 1}</th>
                                             <td><fmt:formatDate value="${list1.createDate}" type="DATE" pattern="yyyy-MM-dd HH:mm:ss" /></td>
                                             <td>
-                                            <c:if test="${!empty list1.view_cnt}">
+                                            <c:if test="${list1.view_cnt != 0}">
                                             <fmt:formatNumber value="${list1.view_cnt}" pattern="#,##0" />회
-                                            </c:if>
-                                            <c:if test="${empty list1.view_cnt}">
-                                            0회
-                                            </c:if>
                                             &nbsp;(<i class="icofont icofont-arrow-up" style="color: green"></i>
                                             <fmt:formatNumber value="${(list1.view_cnt - list2[status.index].view_cnt)}" pattern="#,##0" />회)
+                                            </c:if>
+                                            <c:if test="${list1.view_cnt == 0}">
+                                            0회
+                                            </c:if>
                                             <input type="hidden" value="${list1.url}" name="url" id="url">
                                             </td>
                                             <td>
