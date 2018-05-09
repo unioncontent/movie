@@ -32,7 +32,7 @@ router.get('/',isAuthenticated,async function(req, res) {
 
 router.get('/download/:date/:fileName',isAuthenticated,async function(req, res) {
   console.log('/download/:date/:fileName = ',req.params);
-  var filePath = '/home/hosting_users/unioncmail/apps/unioncmail_unioncmail/public/uploads/files/'+req.params.date+'/'+req.params.fileName;
+  var filePath = '/public/uploads/files/'+req.params.date+'/'+req.params.fileName;
   // var fs = require('fs');
   // var file = fs.readFileSync(filePath);
 

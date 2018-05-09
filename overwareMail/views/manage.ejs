@@ -87,7 +87,7 @@
                       <td><div class="date-nobr"><%= (list[i].M_type != 1) ?'-': list[i].M_send %></div></td>
                       <td><div class="date-nobr"><%= (list[i].M_send == null || (list[i].M_success == 0 && list[i].M_failed == 0)) ?'-': list[i].M_send %></div></td>
                       <td>
-                        <button class="btn btn-sm btn-inverse btn-send" data-idx="<%= list[i].n_idx %>"><%= ((list[i].M_send == null && list[i].M_success == 0 && list[i].M_failed == 0) ? '보내기': '다시보내기')%></button>
+                        <button class="btn btn-sm btn-inverse btn-send" data-idx="<%= list[i].n_idx %>"><%= ((list[i].M_send == null || (list[i].M_success == 0 && list[i].M_failed == 0)) ? '보내기': '다시보내기')%></button>
                         <button class="btn btn-sm btn-inverse btn-delete" data-idx="<%= list[i].n_idx %>">삭제</button>
                         <button class="btn btn-sm btn-inverse btn-edit" data-idx="<%= list[i].n_idx %>">수정</button>
                         <button class="btn btn-sm btn-inverse btn-rewrite" data-idx="<%= list[i].n_idx %>">재작성</button>
@@ -499,7 +499,7 @@
             <td><div class="date-nobr">'+((item.M_type != 1) ?'-': item.M_send)+'</div></td>\
             <td><div class="date-nobr">'+((item.M_send == null || (item.M_success == 0 && item.M_failed == 0)) ? '-': item.M_send)+'</div></td>\
             <td>\
-              <button class="btn btn-sm btn-inverse btn-send" data-idx="'+item.n_idx+'">'+((item.M_send == null && item.M_success == 0 && item.M_failed == 0) ? '보내기': '다시보내기')+'</button>\
+              <button class="btn btn-sm btn-inverse btn-send" data-idx="'+item.n_idx+'">'+((item.M_send == null || (item.M_success == 0 && item.M_failed == 0)) ? '보내기': '다시보내기')+'</button>\
               <button class="btn btn-sm btn-inverse btn-delete" data-idx="'+item.n_idx+'">삭제</button>\
               <button class="btn btn-sm btn-inverse btn-edit" data-idx="'+item.n_idx+'">수정</button>\
               <button class="btn btn-sm btn-inverse btn-rewrite" data-idx="'+item.n_idx+'">재작성</button>\
