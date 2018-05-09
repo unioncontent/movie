@@ -6,6 +6,42 @@ const DBpromise = require('../db/db_info.js');
 */
 
 var user = {
+  insert: async function(table,param){
+    var pValue = Object.values(param);
+    var sql = insertSqlSetting(table,Object.keys(param));
+    return await getResult(sql,pValue);
+  },
+  update: async function(param){
+    var pValue = Object.values(param);
+    var sql = 'update m_mail_user set user_name=?,user_pw=?,company_name=? where n_idx=?';
+    return await getResult(sql,pValue);
+  },
+  delete: async function(param){
+    var sql = 'delete from m_mail_user where n_idx=?;';
+    return await getResult(sql,param);
+  },
+  addIdCheck: async function(param) {
+    var sql = 'select * from m_mail_user where user_id=? and (n_idx = ? or user_admin=?)';
+    return await getResult(sql,param);
+  },
+  selectTable: async function(body,param){
+    var sql = 'select n_idx, user_type, user_admin, user_id, user_pw, user_name, company_name, date_format(createDate, \'%Y-%m-%d %H:%i:%s\') as createDate ';
+    sql += ' from m_mail_user';
+    sql += ' where n_idx = ? or user_admin= ?';
+    sql += ' order by n_idx desc limit ?,?';
+    return await getResult(sql,param);
+  },
+  selectTableCount: async function(body,param){
+    var sql = 'select count(*) as total from m_mail_user';
+    sql += ' where n_idx = ? or user_admin= ?';
+    var count = await getResult(sql,param);
+    if(count.length == 0){
+      return 0;
+    }
+    else{
+      return count[0]['total'];
+    }
+  },
   checkId: async function(param) {
     var sql = 'select * from m_mail_user where user_id=?';
     return await getResult(sql,param);
@@ -52,6 +88,14 @@ async function getResult(sql,param) {
   } finally{
     db.close();
   }
+}
+
+function insertSqlSetting(table,keys){
+  var arr = [].map.call(keys, function(obj) { return '?'; });
+  columns = keys.join(', ');
+  placeholders = arr.join(', ');
+  var sql = "INSERT INTO "+table+" ( "+columns+" ) VALUES ( "+placeholders+" );";
+  return sql;
 }
 
 module.exports = user;
