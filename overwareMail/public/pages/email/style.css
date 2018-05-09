@@ -9,7 +9,7 @@
 .card-bottom {
   margin-bottom: 0;
   border-top: 1px solid rgba(0,0,0,.125);
-  border-bottom: 0px; 
+  border-bottom: 0px;
 }
 /* select test css */
 .searchSelect{
@@ -48,6 +48,21 @@
   padding-top: 10px;
 }
 /* modal */
+.file-upload-loader{
+  display: none;
+  position:  absolute;
+  padding-top: 20%;
+  width:  100%;
+  height:  100%;
+  z-index: 65601;
+  background: #ffffff26;
+}
+.modal{
+  z-index: 65621;
+}
+.modal-backdrop{
+  z-index: 65576;
+}
 button.close{
   margin-top: 0;
   font-size: 26px;
@@ -179,11 +194,19 @@ button.close{
 .dropdown-toggle::after{
   display: none;
 }
+/* editor */
+.mce-ico.mce-i-fa {
+    display: inline-block;
+    font-family: Font Awesome\ 5 Free;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
 .note-editor .note-editing-area .note-editable table td,
 .note-editor .note-editing-area .note-editable table th{
   border: 1px solid #252525;
 }
-/* editor */
 .note-editor .note-editing-area .note-editable table{
   width: auto;
 }
