@@ -30,7 +30,7 @@
             <tbody>
               <%
                 for(var i=0; i < pastView.length; i++) {
-                  var url = 'http://localhost:3000/preview?keyword='+pastView[i].keyword_idx+'&idx='+pastView[i].n_idx;
+                  var url = 'http://showbox.email/preview?keyword='+pastView[i].keyword_idx+'&idx='+pastView[i].n_idx;
                   if(currentPage != '1'){
                     url += '&page='+currentPage
                   }
@@ -56,7 +56,7 @@
                   %>
                       <strong><span class="current"><%=index%></span></strong>
                     <%} else{%>
-                    <a href="http://localhost:3000/preview?keyword=<%=keyword%>&idx=<%=idx%>&page=<%=index%>"><%=index%></a>
+                    <a href="http://showbox.email/preview?keyword=<%=keyword%>&idx=<%=idx%>&page=<%=index%>"><%=index%></a>
                     <%}%>
                   <%}%>
                 </td>
