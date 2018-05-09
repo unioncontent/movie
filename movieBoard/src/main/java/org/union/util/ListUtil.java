@@ -6,9 +6,11 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 import org.union.domain.CommunityVO;
 import org.union.domain.ExtractVO;
+import org.union.domain.FvVO;
 import org.union.domain.MediaVO;
 import org.union.domain.MobileEntVO;
 import org.union.domain.NaverMovieVO;
+import org.union.domain.NvVO;
 import org.union.domain.PortalVO;
 import org.union.domain.ReplyVO;
 import org.union.domain.SNSVO;
@@ -219,6 +221,62 @@ public class ListUtil {
 				vo.setTextType(addList.get(i).getTextType());
 				vo.setWriteDate(addList.get(i).getWriteDate());
 				vo.setUrl(addList.get(i).getUrl());
+				vo.setCreateDate(date.format(addList.get(i).getUpdateDate()));
+				
+				list.add(vo);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return list;
+	}
+	
+	public List<ExtractVO> listAddNvList(List<ExtractVO> list, List<NvVO> addList) {
+
+		try {
+
+			for(int i = 0; i < addList.size(); i++) {
+				ExtractVO vo = new ExtractVO();
+				
+				vo.setDomain("videos");
+				vo.setDomainType("naver");
+				vo.setTitle(addList.get(i).getPortal_title());
+				vo.setWriter(addList.get(i).getPortal_writer());
+				vo.setUrl(addList.get(i).getUrl());
+				vo.setView_cnt(Integer.toString(addList.get(i).getView_cnt()));
+				vo.setReply_cnt(Integer.toString(addList.get(i).getReply_cnt()));
+				vo.setLike_cnt(Integer.toString(addList.get(i).getLike_cnt()));
+				vo.setWriteDate(addList.get(i).getWriteDate());
+				vo.setCreateDate(date.format(addList.get(i).getUpdateDate()));
+				
+				list.add(vo);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return list;
+	}
+	
+	public List<ExtractVO> listAddFvList(List<ExtractVO> list, List<FvVO> addList) {
+
+		try {
+
+			for(int i = 0; i < addList.size(); i++) {
+				ExtractVO vo = new ExtractVO();
+				
+				vo.setDomain("videos");
+				vo.setDomainType("naver");
+				vo.setTitle(addList.get(i).getSns_content());
+				vo.setWriter(addList.get(i).getSns_writer());
+				vo.setUrl(addList.get(i).getUrl());
+				vo.setView_cnt(Integer.toString(addList.get(i).getView_cnt()));
+				vo.setReply_cnt(Integer.toString(addList.get(i).getReply_cnt()));
+				vo.setLike_cnt(Integer.toString(addList.get(i).getLike_cnt()));
+				vo.setWriteDate(addList.get(i).getWriteDate());
 				vo.setCreateDate(date.format(addList.get(i).getUpdateDate()));
 				
 				list.add(vo);

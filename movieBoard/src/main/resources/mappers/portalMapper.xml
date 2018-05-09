@@ -143,6 +143,18 @@
 			</if>
 		</if>
 	</sql>
+	
+	<sql id="search_writeDate4">
+		<!-- <if test="startDate == null">
+			and createDate <![CDATA[>=]]> CURDATE()
+		</if> -->	
+		<if test="startDate != null">
+			and createDate <![CDATA[>=]]> #{startDate}
+			<if test="endDate != null">
+				and createDate <![CDATA[<=]]> #{endDate}
+			</if>
+		</if>
+	</sql>
  
  	<insert id="create">
  		insert into
@@ -756,7 +768,7 @@
 	
 	<select id="naverVideosList" resultType="NvVO">
  		select 
-		DATE_FORMAT(writeDate,'%Y-%m-%d') writeDate, portal_title, url, max(view_cnt)as view_cnt
+		DATE_FORMAT(writeDate,'%Y-%m-%d') writeDate, portal_title, url, max(view_cnt)as view_cnt, max(like_cnt)as like_cnt, max(reply_cnt)as reply_cnt
 		from naver_videos
         where url is not null
         <include refid="search_writeDate3"></include>
@@ -784,10 +796,23 @@
  			naver_videos 
  		where 
  			url = #{url}
+ 		<include refid="search_writeDate4"></include>
 		order 
 			by createDate desc
 		limit  
 			#{startPage}, #{perPageNum}
+ 	</select>
+ 	
+ 	<select id="nvlistSearchEx" resultType="NvVO">
+ 		select 
+ 			* 
+ 		from 
+ 			naver_videos 
+ 		where 
+ 			url = #{url}
+ 		<include refid="search_writeDate4"></include>
+		order 
+			by createDate desc
  	</select>
  	
  	<select id="nvlistSearchTotalCnt" resultType="Integer">
@@ -797,6 +822,7 @@
  			naver_videos 
  		where 
  			url = #{url}
+ 		<include refid="search_writeDate4"></include>	
  		order 
 			by createDate desc
  	</select>
@@ -804,6 +830,32 @@
  	<select id="nvlistViewCnt" resultType="Integer">
  		select 
  			view_cnt
+ 		from 
+ 			naver_videos
+ 		where 
+ 			createDate between date_add(#{date}, interval -1 hour) and #{date}
+ 		and
+ 			url = #{url}
+ 		order by 
+ 			createDate desc 
+ 		limit 1;
+ 	</select>
+ 	<select id="nvlistReply_cnt" resultType="Integer">
+ 		select 
+ 			reply_cnt
+ 		from 
+ 			naver_videos
+ 		where 
+ 			createDate between date_add(#{date}, interval -1 hour) and #{date}
+ 		and
+ 			url = #{url}
+ 		order by 
+ 			createDate desc 
+ 		limit 1;
+ 	</select>
+ 	<select id="nvlistlike_cnt" resultType="Integer">
+ 		select 
+ 			like_cnt
  		from 
  			naver_videos
  		where 
@@ -823,6 +875,7 @@
 			view_cnt != (select view_cnt from naver_videos where url=#{url} order by createDate desc limit 1) 
 		and 
 			url = #{url}
+		<include refid="search_writeDate4"></include>
 		order 
 			by createDate desc
 		limit  

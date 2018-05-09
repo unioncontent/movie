@@ -76,21 +76,21 @@ public class PortalController {
     public void naverMobileGET(@ModelAttribute("cri") SearchCriteria cri, Model model) throws ParseException {
 	logger.info("naverGET called....");
 		
-	if (cri.getKeyword() == "" || "undefined".equals(cri.getKeyword())) {
-	    logger.info("keyword is null");
-	    cri.setKeyword(null);
-
+	if(cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey()) ) {
+		logger.info("selectKey is null");
+		cri.setSelectKey(null);
 	}
-	if (cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey())) {
-	    logger.info("selectKey is null");
-	    cri.setSelectKey(null);
-	}
-		
-	if (cri.getStartDate() != null && cri.getEndDate() != null) {
-	    if (cri.getStartDate().indexOf("00:00:00") < 0 && cri.getEndDate().indexOf("23:59:59") < 0) {
-		cri.setStartDate(cri.getStartDate() + " 00:00:00");
-		cri.setEndDate(cri.getEndDate() + " 23:59:59");
-	    }
+	if("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate())
+			|| cri.getStartDate() == "" || cri.getEndDate() == ""){
+		cri.setStartDate(null);
+		cri.setEndDate(null);
+	
+	} 
+	if(cri.getStartDate() != null && cri.getEndDate() != null) {
+		if(cri.getStartDate().indexOf("00:00:00") < 0 && cri.getEndDate().indexOf("23:59:59") < 0){ 
+			cri.setStartDate(cri.getStartDate() + " 00:00:00"); 
+			cri.setEndDate(cri.getEndDate() + " 23:59:59"); 
+		}
 	}
 	
 	if (cri.getCompany() != null) {
@@ -98,66 +98,137 @@ public class PortalController {
 		cri.setCompany(null);
 	    }
 	}
-	
+	if(cri.getCompany() == null || cri.getCompany().equals("회사")) {
+		logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+		UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
+		
+		if(!vo.getUser_name().equals("union")) {
+		cri.setCompany(vo.getUser_name());
+		
+		}else {
+			cri.setCompany(null);
+		}
+	}
 	if (cri.getHour() != null) {
 	    if (cri.getHour().isEmpty()) {
 		cri.setHour(null);
 	    }
 	}
-	
-	if (cri.getTextType() != null) {
-	    if (cri.getTextType().equals("undefined") || cri.getTextType().equals("분류")
-		    || cri.getTextType().isEmpty()) {
-		cri.setTextType(null);
-	    }
-	}
-
-	if (cri.getCompany() == null || cri.getCompany().equals("회사")) {
-	    logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
-	    UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
-
-	    if (!vo.getUser_name().equals("union")) {
-		cri.setCompany(vo.getUser_name());
-
-	    } else {
-		cri.setCompany(null);
-	    }
-	}
 
 	// 회사 선택에 따른 키워드 재추출
-	if (cri.getCompany() != null) {
-	    if (cri.getCompany().isEmpty() == false) {
+	if (cri.getCompany() != null) {	
+		if (cri.getCompany().isEmpty() == false) {
+
 		UserVO userVO = userService.viewByName(cri.getCompany());
 		logger.info("userVO: " + userVO);
 		logger.info("keywordList: " + keywordService.listByUser(userVO.getUser_idx()));
 		model.addAttribute("modelKeywordList",
-			keywordService.listByUser(userService.viewByName(cri.getCompany()).getUser_idx()));
-	    }
+		keywordService.listByUser(userService.viewByName(cri.getCompany()).getUser_idx()));
+		}
 	}
 
 	logger.info("main cri: " + cri);
 
 	// 영화/배우 
-	Integer movieCount = mobileEntService.getTypeOfMovieCount(cri);
-	Integer actorCount = mobileEntService.getTypeOfActorCount(cri);
-
-	model.addAttribute("movieCount", movieCount);
-	model.addAttribute("actorCount", actorCount);
-
-	PageMaker pageMaker = new PageMaker();
-	cri.setPerPageNum(24);
+	model.addAttribute("movieCount", mobileEntService.getTypeOfMovieCount(cri));
+	model.addAttribute("actorCount", mobileEntService.getTypeOfActorCount(cri));
 
 	// 네이버모바일리스트
-	List<MobileEntVO> mobileList = mobileEntService.searchList(cri);
+	
+	model.addAttribute("mobileList", mobileEntService.searchList(cri));
+	
 	Integer totalCount = mobileEntService.getSearchCount(cri);
-
-	model.addAttribute("mobileList", mobileList);
-	model.addAttribute("totalCount", totalCount);
-
+	
+	logger.info("mobiletotalCount: " + totalCount);
+	
+	PageMaker pageMaker = new PageMaker();
+	//cri.setPerPageNum(24);
 	pageMaker.setCri(cri);
 	pageMaker.setTotalCount(totalCount);
-	logger.info("PerPageNum: " + cri.getPerPageNum()+" "+(cri.getPage()-1));
+	
+
 	model.addAttribute("pageMaker", pageMaker);
+	model.addAttribute("totalCount", totalCount);
+	model.addAttribute("minusCount", cri.getPerPageNum() * (cri.getPage()-1));
+    }
+    
+    @GetMapping("/n_mobilemovie")
+    public void n_mobilemovieGET(@ModelAttribute("cri") SearchCriteria cri, Model model) throws ParseException {
+	logger.info("n_mobilemovieGET called....");
+	
+	if(cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey()) ) {
+		logger.info("selectKey is null");
+		cri.setSelectKey(null);
+	}
+	if("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate())
+			|| cri.getStartDate() == "" || cri.getEndDate() == ""){
+		cri.setStartDate(null);
+		cri.setEndDate(null);
+	
+	} 
+	if(cri.getStartDate() != null && cri.getEndDate() != null) {
+		if(cri.getStartDate().indexOf("00:00:00") < 0 && cri.getEndDate().indexOf("23:59:59") < 0){ 
+			cri.setStartDate(cri.getStartDate() + " 00:00:00"); 
+			cri.setEndDate(cri.getEndDate() + " 23:59:59"); 
+		}
+	}
+	
+	if (cri.getCompany() != null) {
+	    if (cri.getCompany().isEmpty()) {
+		cri.setCompany(null);
+	    }
+	}
+	if(cri.getCompany() == null || cri.getCompany().equals("회사")) {
+		logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+		UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
+		
+		if(!vo.getUser_name().equals("union")) {
+		cri.setCompany(vo.getUser_name());
+		
+		}else {
+			cri.setCompany(null);
+		}
+	}
+	if (cri.getHour() != null) {
+	    if (cri.getHour().isEmpty()) {
+		cri.setHour(null);
+	    }
+	}
+
+	// 회사 선택에 따른 키워드 재추출
+	if (cri.getCompany() != null) {	
+		if (cri.getCompany().isEmpty() == false) {
+
+		UserVO userVO = userService.viewByName(cri.getCompany());
+		logger.info("userVO: " + userVO);
+		logger.info("keywordList: " + keywordService.listByUser(userVO.getUser_idx()));
+		model.addAttribute("modelKeywordList",
+		keywordService.listByUser(userService.viewByName(cri.getCompany()).getUser_idx()));
+		}
+	}
+
+	logger.info("main cri: " + cri);
+
+	// 영화/배우 
+	model.addAttribute("movieCount", mobileEntService.MgetTypeOfMovieCount(cri));
+	model.addAttribute("actorCount", mobileEntService.MgetTypeOfActorCount(cri));
+
+	// 네이버모바일리스트
+	
+	model.addAttribute("mobileList", mobileEntService.MsearchList(cri));
+	
+	Integer totalCount = mobileEntService.MgetSearchCount(cri);
+	
+	logger.info("mobiletotalCount: " + totalCount);
+	
+	PageMaker pageMaker = new PageMaker();
+	//cri.setPerPageNum(24);
+	pageMaker.setCri(cri);
+	pageMaker.setTotalCount(totalCount);
+	
+
+	model.addAttribute("pageMaker", pageMaker);
+	model.addAttribute("totalCount", totalCount);
 	model.addAttribute("minusCount", cri.getPerPageNum() * (cri.getPage()-1));
     }
 
@@ -291,9 +362,13 @@ public class PortalController {
 
 		Integer m = mobileEntService.getTypeOfMovieCount(cri);
 		Integer a = mobileEntService.getTypeOfActorCount(cri);
+		Integer mv = mobileEntService.MgetTypeOfMovieCount(cri);
+		Integer ac = mobileEntService.MgetTypeOfActorCount(cri);
 
 		graphVO.setType1(m);
 		graphVO.setType2(a);
+		graphVO.setType3(mv);
+		graphVO.setType4(ac);
 
 		graphList.add(graphVO);
 
@@ -999,21 +1074,21 @@ public class PortalController {
 	    }
 	}
 
-	if (cri.getCompany() == null || cri.getCompany().equals("회사")) {
-	    logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
-	    UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
-
-	    if (!vo.getUser_name().equals("union")) {
+	if(cri.getCompany() == null || cri.getCompany().equals("회사")) {
+		logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+		UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
+		
+		if(!vo.getUser_name().equals("union")) {
 		cri.setCompany(vo.getUser_name());
-
-	    } else {
-		cri.setCompany(null);
-	    }
+		
+		}else {
+			cri.setCompany(null);
+		}
 	}
 
-	if (cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey())) {
-	    logger.info("selectKey is null");
-	    cri.setSelectKey(null);
+	if(cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey()) ) {
+		logger.info("selectKey is null");
+		cri.setSelectKey(null);
 	}
 
 	// 사이트 미설정시
@@ -1030,29 +1105,18 @@ public class PortalController {
 	}
 
 	// startDate format
-	if ("undefined".equals(cri.getStartDate())  || cri.getStartDate() == "") {
-	    cri.setStartDate(null);
-	}
-	if(cri.getEndDate() == "" || "undefined".equals(cri.getEndDate())) {
-	    cri.setEndDate(null);
-	}
-
 	if("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate())
-		|| cri.getStartDate() == "" || cri.getEndDate() == ""){
-	    cri.setStartDate(null);
-	    cri.setEndDate(null);
-
+			|| cri.getStartDate() == "" || cri.getEndDate() == ""){
+		cri.setStartDate(null);
+		cri.setEndDate(null);
+	
 	} 
 	if(cri.getStartDate() != null && cri.getEndDate() != null) {
-	    logger.info("not null");
-	    logger.info(cri.getStartDate());
-	    logger.info(cri.getEndDate());
-	    if(cri.getStartDate().indexOf("00:00:00") < 0 && cri.getEndDate().indexOf("23:59:59") < 0){ 
-		cri.setStartDate(cri.getStartDate() + " 00:00:00"); 
-		cri.setEndDate(cri.getEndDate() + " 23:59:59"); 
-	    }
+		if(cri.getStartDate().indexOf("00:00:00") < 0 && cri.getEndDate().indexOf("23:59:59") < 0){ 
+			cri.setStartDate(cri.getStartDate() + " 00:00:00"); 
+			cri.setEndDate(cri.getEndDate() + " 23:59:59"); 
+		}
 	}
-	
 	if (cri.getHour() != null) {
 	    if (cri.getHour().isEmpty()) {
 		cri.setHour(null);
@@ -1060,7 +1124,6 @@ public class PortalController {
 	}
 	
 	logger.info("cri: " + cri);
-	logger.info("hour: " + cri.getHour());
 	
 	List<ExtractVO> classiList = new ArrayList<ExtractVO>();
 	ListUtil listUtil = new ListUtil();
@@ -1070,6 +1133,9 @@ public class PortalController {
 	}
 	else if (cri.getPortal_type().equals("mobile")) {
 	    model.addObject("list", listUtil.listAddMobileList(classiList, mobileEntService.searchAllList(cri)));
+	}
+	else if (cri.getPortal_type().equals("mobileM")) {
+	    model.addObject("list", listUtil.listAddMobileList(classiList, mobileEntService.MsearchAllList(cri)));
 	}
 	else {
 	    model.addObject("list", listUtil.listAddViralList(classiList, viralService.searchAllList(cri)));

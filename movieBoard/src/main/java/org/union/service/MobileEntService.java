@@ -16,4 +16,15 @@ public interface MobileEntService {
 	public List<MobileEntVO> searchAllList(SearchCriteria cri);
 	
 	public Integer getSearchCount(SearchCriteria cri);
+	
+	
+	public Integer MgetTypeOfMovieCount(SearchCriteria cri);
+	
+	public Integer MgetTypeOfActorCount(SearchCriteria cri);
+	
+	public List<MobileEntVO> MsearchList(SearchCriteria cri);
+	
+	public List<MobileEntVO> MsearchAllList(SearchCriteria cri);
+	
+	public Integer MgetSearchCount(SearchCriteria cri);
 }

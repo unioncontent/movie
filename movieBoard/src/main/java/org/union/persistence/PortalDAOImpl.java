@@ -393,4 +393,25 @@ public class PortalDAOImpl implements PortalDAO {
 
 		return session.selectList(namespace + "nvlistMinus", cri);
 	}
+
+
+	@Override
+	public Integer nvlistReply_cnt(SearchFv fv) {
+
+		return session.selectOne(namespace + "nvlistReply_cnt", fv);
+	}
+
+
+	@Override
+	public Integer nvlistlike_cnt(SearchFv fv) {
+
+		return session.selectOne(namespace + "nvlistlike_cnt", fv);
+	}
+
+
+	@Override
+	public List<NvVO> nvlistSearchEx(SearchCriteria cri) {
+
+		return session.selectList(namespace + "nvlistSearchEx", cri);
+	}
 }

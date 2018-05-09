@@ -61,14 +61,21 @@
           <li class="">
             <a href="../portal/naver_mobile" data-i18n="nav.advance-components.draggable">
               <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-              <span class="pcoded-mtext">네이버모바일관리</span>
+              <span class="pcoded-mtext">네이버모바일 연예관리</span>
+              <span class="pcoded-mcaret"></span>
+            </a>
+          </li>
+          <li class="">
+            <a href="../portal/n_mobilemovie" data-i18n="nav.advance-components.draggable">
+              <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+              <span class="pcoded-mtext">네이버모바일 영화관리</span>
               <span class="pcoded-mcaret"></span>
             </a>
           </li>
           <li class="">
             <a href="../portal/naver_movie" data-i18n="nav.advance-components.draggable">
               <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-              <span class="pcoded-mtext">네이버영화관리</span>
+              <span class="pcoded-mtext">네이버TV연예 영화관리</span>
               <span class="pcoded-mcaret"></span>
             </a>
           </li>

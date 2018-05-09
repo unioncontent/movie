@@ -89,8 +89,11 @@ public interface PortalDAO {
 	public List<NvVO> naverVideosList(SearchCriteria cri);
 	public Integer naverVideosListTotalCnt(SearchCriteria cri);
 	public List<NvVO> nvlistSearch(SearchCriteria cri);
+	public List<NvVO> nvlistSearchEx(SearchCriteria cri);
 	public Integer nvlistSearchTotalCnt(SearchCriteria cri);
 	public Integer nvlistViewCnt(SearchFv fv);
+	public Integer nvlistReply_cnt(SearchFv fv);
+	public Integer nvlistlike_cnt(SearchFv fv);
 	public List<NvVO> nvlistMinus(SearchCriteria cri);
 		
 }

@@ -30,23 +30,50 @@ public class MobileEntServiceImpl implements MobileEntService{
 	@Override
 	public List<MobileEntVO> searchList(SearchCriteria cri) {
 
-		List<MobileEntVO> list = mobileEntDAO.searchList(cri);
-		
-		return list;
+		return mobileEntDAO.searchList(cri);
 	}
+	
 	
 	@Override
 	public List<MobileEntVO> searchAllList(SearchCriteria cri) {
 
-		List<MobileEntVO> list = mobileEntDAO.searchAllList(cri);
-		
-		return list;
+		return mobileEntDAO.searchAllList(cri);
 	}
 
 	@Override
 	public Integer getSearchCount(SearchCriteria cri) {
 
 		return mobileEntDAO.getSearchCount(cri);
+	}
+
+	@Override
+	public Integer MgetTypeOfMovieCount(SearchCriteria cri) {
+
+		return mobileEntDAO.MgetTypeOfMovieCount(cri);
+	}
+
+	@Override
+	public Integer MgetTypeOfActorCount(SearchCriteria cri) {
+
+		return mobileEntDAO.MgetTypeOfActorCount(cri);
+	}
+
+	@Override
+	public List<MobileEntVO> MsearchList(SearchCriteria cri) {
+
+		return mobileEntDAO.MsearchList(cri);
+	}
+
+	@Override
+	public List<MobileEntVO> MsearchAllList(SearchCriteria cri) {
+
+		return mobileEntDAO.MsearchAllList(cri);
+	}
+
+	@Override
+	public Integer MgetSearchCount(SearchCriteria cri) {
+
+		return mobileEntDAO.MgetSearchCount(cri);
 	}
 
 }

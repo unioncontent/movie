@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+import org.union.domain.ExtractVO;
 import org.union.domain.FvVO;
 import org.union.domain.GraphVO;
 import org.union.domain.PageMaker;
@@ -39,6 +41,8 @@ import org.union.service.RelationService;
 import org.union.service.SNSService;
 import org.union.service.UserService;
 import org.union.service.ViralService;
+import org.union.util.ExcelView;
+import org.union.util.ListUtil;
 
 @Controller
 @RequestMapping("/marketing/*")
@@ -176,9 +180,11 @@ public class MarketingController {
 	@GetMapping("/f_list")
     public void f_listGET(@ModelAttribute("cri") SearchCriteria cri, Model model, String url, String content) throws ParseException {
     	logger.info("f_list called....");
-    	cri.setKeyword(null);
-		cri.setTextType(null);
-		
+    	if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
+			logger.info("keyword is null");
+			cri.setKeyword(null);
+			
+		} 
 		if(cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey()) ) {
 			logger.info("selectKey is null");
 			cri.setSelectKey(null);
@@ -189,12 +195,12 @@ public class MarketingController {
 			cri.setEndDate(null);
 		
 		} 
-		/*if(cri.getStartDate() != null && cri.getEndDate() != null) {
+		if(cri.getStartDate() != null && cri.getEndDate() != null) {
 			if(cri.getStartDate().indexOf("00:00:00") < 0 && cri.getEndDate().indexOf("23:59:59") < 0){ 
 				cri.setStartDate(cri.getStartDate() + " 00:00:00"); 
 				cri.setEndDate(cri.getEndDate() + " 23:59:59"); 
 			}
-		}*/
+		}
 		if(cri.getCompany() != null) {
 			if(cri.getCompany().isEmpty()) {
 				cri.setCompany(null);
@@ -213,7 +219,7 @@ public class MarketingController {
 		}
 
 		// 회사 선택에 따른 키워드 재추출
-		/*if (cri.getCompany() != null) {	
+		if (cri.getCompany() != null) {	
 			if (cri.getCompany().isEmpty() == false) {
 
 				UserVO userVO = userService.viewByName(cri.getCompany());
@@ -222,14 +228,14 @@ public class MarketingController {
 				model.addAttribute("modelKeywordList",
 						keywordService.listByUser(userService.viewByName(cri.getCompany()).getUser_idx()));
 			}
-		}*/
+		}
+		
 		cri.setUrl(url);
 		cri.setPortal_name(content);
 		logger.info("crifvList: " + cri);
 		
 		model.addAttribute("list1", snsService.fvlistSearch(cri));
 		model.addAttribute("list2", snsService.fvlistMinus(cri));
-		
 		
 		logger.info("url: " + url);
 		model.addAttribute("content", content);
@@ -328,11 +334,13 @@ public class MarketingController {
     }
 	
 	@GetMapping("/n_list")
-    public void n_listGET(@ModelAttribute("cri") SearchCriteria cri, Model model, String url, String content) throws ParseException {
+    public void n_listGET(@ModelAttribute("cri") SearchCriteria cri, Model model, String url, String content, String startDate, String endDate) throws ParseException {
     	logger.info("f_list called....");
-    	cri.setKeyword(null);
-		cri.setTextType(null);
-		
+    	if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
+			logger.info("keyword is null");
+			cri.setKeyword(null);
+			
+		} 
 		if(cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey()) ) {
 			logger.info("selectKey is null");
 			cri.setSelectKey(null);
@@ -343,12 +351,12 @@ public class MarketingController {
 			cri.setEndDate(null);
 		
 		} 
-		/*if(cri.getStartDate() != null && cri.getEndDate() != null) {
+		if(cri.getStartDate() != null && cri.getEndDate() != null) {
 			if(cri.getStartDate().indexOf("00:00:00") < 0 && cri.getEndDate().indexOf("23:59:59") < 0){ 
 				cri.setStartDate(cri.getStartDate() + " 00:00:00"); 
 				cri.setEndDate(cri.getEndDate() + " 23:59:59"); 
 			}
-		}*/
+		}
 		if(cri.getCompany() != null) {
 			if(cri.getCompany().isEmpty()) {
 				cri.setCompany(null);
@@ -367,7 +375,7 @@ public class MarketingController {
 		}
 
 		// 회사 선택에 따른 키워드 재추출
-		/*if (cri.getCompany() != null) {	
+		if (cri.getCompany() != null) {	
 			if (cri.getCompany().isEmpty() == false) {
 
 				UserVO userVO = userService.viewByName(cri.getCompany());
@@ -376,9 +384,9 @@ public class MarketingController {
 				model.addAttribute("modelKeywordList",
 						keywordService.listByUser(userService.viewByName(cri.getCompany()).getUser_idx()));
 			}
-		}*/
+		}
+		
 		cri.setUrl(url);
-		cri.setPortal_name(content);
 		logger.info("crifvList: " + cri);
 		
 		model.addAttribute("list1", portalService.nvlistSearch(cri));
@@ -394,6 +402,7 @@ public class MarketingController {
 		
 		PageMakerFv pageMakerFv = new PageMakerFv();
 		
+		cri.setPortal_name(content);
 		pageMakerFv.setCri(cri);
 		pageMakerFv.setTotalCount(portalService.nvlistSearchTotalCnt(cri));
 		
@@ -433,6 +442,8 @@ public class MarketingController {
 			
 			graphVO.setWriteDate(sdf.format(cal.getTime()) + ":00:00");
 			graphVO.setType1(snsService.fvlistViewCnt(fv));
+			graphVO.setType2(snsService.fvlistReply_cnt(fv));
+			graphVO.setType3(snsService.fvlistlike_cnt(fv));
 			
 			graphList.add(graphVO);
 			
@@ -472,6 +483,8 @@ public class MarketingController {
 			
 			graphVO.setWriteDate(sdf.format(cal.getTime()) + ":00:00");
 			graphVO.setType1(portalService.nvlistViewCnt(fv));
+			graphVO.setType2(portalService.nvlistReply_cnt(fv));
+			graphVO.setType3(portalService.nvlistlike_cnt(fv));
 			
 			graphList.add(graphVO);
 			
@@ -482,5 +495,138 @@ public class MarketingController {
 
 		logger.info("graphList: " + graphList);
 		return graphList;
+	}
+	
+	@ResponseBody
+	@GetMapping("/excel")
+	public ModelAndView nListlGET(ModelAndView model, ExcelView excelView, SearchCriteria cri,String url) {
+		
+		if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
+			logger.info("keyword is null");
+			cri.setKeyword(null);
+			
+		} 
+		if(cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey()) ) {
+			logger.info("selectKey is null");
+			cri.setSelectKey(null);
+		}
+		
+		if("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate())
+				|| cri.getStartDate() == "" || cri.getEndDate() == ""){
+			cri.setStartDate(null);
+			cri.setEndDate(null);
+		
+		} 
+		if(cri.getStartDate() != null && cri.getEndDate() != null) {
+			logger.info("not null");
+			logger.info(cri.getStartDate());
+			logger.info(cri.getEndDate());
+			if(cri.getStartDate().indexOf("00:00:00") < 0 && cri.getEndDate().indexOf("23:59:59") < 0){ 
+				cri.setStartDate(cri.getStartDate() + " 00:00:00"); 
+				cri.setEndDate(cri.getEndDate() + " 23:59:59"); 
+			}
+		}
+		if(cri.getCompany() != null) {
+			if(cri.getCompany().isEmpty()) {
+				cri.setCompany(null);
+			}
+		}
+		
+		if(cri.getCompany() == null || cri.getCompany().equals("회사")) {
+			logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+			UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
+			
+			if(!vo.getUser_name().equals("union")) {
+			cri.setCompany(vo.getUser_name());
+			
+			}else {
+				cri.setCompany(null);
+			}
+		}
+		if(cri.getTextType() != null) {
+			if(cri.getTextType().equals("undefined") || cri.getTextType().equals("분류") || cri.getTextType().isEmpty()) {
+				cri.setTextType(null);
+			}
+		}
+		
+		cri.setUrl(url);
+		
+		logger.info("cri: " + cri);
+		logger.info("perPageNum: " + cri.getPerPageNum());
+		logger.info("getStartPage: " + cri.getStartPage());
+		ListUtil util = new ListUtil();
+		List<ExtractVO> extractList = new ArrayList<ExtractVO>();
+		
+		model.addObject("list", util.listAddNvList(extractList, portalService.nvlistSearchEx(cri)));
+		model.addObject("type", "videos");
+		model.setView(excelView);
+		
+		return model;
+	}
+	@ResponseBody
+	@GetMapping("/excelOk")
+	public ModelAndView fListlGET(ModelAndView model, ExcelView excelView, SearchCriteria cri,String url) {
+		
+		if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
+			logger.info("keyword is null");
+			cri.setKeyword(null);
+			
+		} 
+		if(cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey()) ) {
+			logger.info("selectKey is null");
+			cri.setSelectKey(null);
+		}
+		
+		if("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate())
+				|| cri.getStartDate() == "" || cri.getEndDate() == ""){
+			cri.setStartDate(null);
+			cri.setEndDate(null);
+		
+		} 
+		if(cri.getStartDate() != null && cri.getEndDate() != null) {
+			logger.info("not null");
+			logger.info(cri.getStartDate());
+			logger.info(cri.getEndDate());
+			if(cri.getStartDate().indexOf("00:00:00") < 0 && cri.getEndDate().indexOf("23:59:59") < 0){ 
+				cri.setStartDate(cri.getStartDate() + " 00:00:00"); 
+				cri.setEndDate(cri.getEndDate() + " 23:59:59"); 
+			}
+		}
+		if(cri.getCompany() != null) {
+			if(cri.getCompany().isEmpty()) {
+				cri.setCompany(null);
+			}
+		}
+		
+		if(cri.getCompany() == null || cri.getCompany().equals("회사")) {
+			logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+			UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
+			
+			if(!vo.getUser_name().equals("union")) {
+			cri.setCompany(vo.getUser_name());
+			
+			}else {
+				cri.setCompany(null);
+			}
+		}
+		if(cri.getTextType() != null) {
+			if(cri.getTextType().equals("undefined") || cri.getTextType().equals("분류") || cri.getTextType().isEmpty()) {
+				cri.setTextType(null);
+			}
+		}
+		
+		cri.setUrl(url);
+		
+		logger.info("cri: " + cri);
+		logger.info("perPageNum: " + cri.getPerPageNum());
+		logger.info("getStartPage: " + cri.getStartPage());
+		ListUtil util = new ListUtil();
+		List<ExtractVO> extractList = new ArrayList<ExtractVO>();
+		
+		model.addObject("list", util.listAddFvList(extractList, snsService.fvlistSearchEx(cri)));
+		model.addObject("type", "videos");
+		model.setView(excelView);
+		
+		return model;
 	}
 }

@@ -39,6 +39,8 @@
   <link rel="stylesheet" type="text/css" href="../assets/pages/menu-search/css/component.css">
   <!-- calendar -->
   <link rel="stylesheet" type="text/css" href="../assets/pages/dashboard/pgcalendar/calendar.css">
+  <!-- sweet alert framework -->
+  <link rel="stylesheet" type="text/css" href="../bower_components/sweetalert/dist/sweetalert.css">
   <!-- Style.css -->
   <link rel="stylesheet" type="text/css" href="../assets/pages/clndr-calendar/css/clndr.css">
   <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
@@ -49,6 +51,7 @@
   <link rel="stylesheet" type="text/css" href="../assets/css/simple-line-icons.css">
   <link rel="stylesheet" type="text/css" href="../assets/css/ionicons.css">
   <link rel="stylesheet" type="text/css" href="../assets/css/jquery.mCustomScrollbar.css">
+  <link href="../assets/dist/css/datepicker.min.css" rel="stylesheet" type="text/css">
 </head>
 
 <body>
@@ -110,13 +113,13 @@
                             	<i class="icofont icofont-chart-line m-r-5"></i>
                             	검출량그래프
                             </h5>
-                            <span><b>'${content}'</b> 최근 48시간 조회 수 데이터 그래프</span>
+                            <span><b>'${content}'</b> 최근 48시간 데이터 그래프</span>
                             <div class="card-header-right">
                               <i class="icofont icofont-rounded-down"></i>
                             </div>
                           </div>
                           <div class="card-block">
-                            <div id="morris-bar" style="height:300px;"></div>
+                            <div id="morris-extra-area" style="height:300px;"></div>
                           </div>
                         </div>
                       </div>
@@ -126,7 +129,16 @@
                                 <div class="card">
                                   <div class="card-header">
                                     <!-- <h5>facebook CGV</h5> -->
+                                    <button class="btn btn-warning alert-excel f-right" style="margin-left: 8px"><i class="icofont icofont-download-alt"></i>EXCEL</button>
                                     <button class="btn btn-info f-right alert-confirm" onclick = "location.href='http://overware.iptime.org:8080/marketing/f_channel'"><i class="icofont icofont-ui-note"></i>목록으로</button>
+                                  <div class="col-sm-3 input-group input-group-button input-group-inverse p-l-0 p-r-0 m-b-10 f-left btn-select">
+                                    <input type='text' class='datepicker-here form-control m-r-10 m-b-10 f-left' data-language='en' id='startdate' style="width: 50px" placeholder="Date"/>
+	                              	&nbsp;<font size="3"><b>~</b></font>
+	                              	<input type='text' class='datepicker-here form-control f-right p-r-5 p-l-5 m-l-15 m-b-10' data-language='en' id='enddate' style="width: 50px" placeholder="Date"/>
+	                              	<span class="input-group-addon" id="basic-addon1">
+	                              		<button id="searchBtn" class="btn btn-inverse"><i class="icofont icofont-search-alt-2"></i></button>
+	                              	</span>
+	                              </div>
                                   </div>
                                   <div class="card-block table-border-style">
                                     <div class="table-responsive">
@@ -134,9 +146,10 @@
                                         <thead>
                                             <tr align="center">
                                               <th width="3%">NO</th>
-                                              <th width="10%">날짜</th>
-                                              <th width="5%">조회수</th>
-                                              <th width="3%">증가폭</th>
+                                              <th width="5%">날짜</th>
+                                              <th width="3%">조회수</th>
+                                              <th width="3%">댓글수</th>
+                                              <th width="3%">좋아요수</th>
                                               <th width="30%">제목</th>
                                             </tr>
                                         </thead>
@@ -146,21 +159,31 @@
                                             <th>${totalCount - minusCount - status.count + 1}</th>
                                             <td><fmt:formatDate value="${list1.createDate}" type="DATE" pattern="yyyy-MM-dd HH:mm:ss" /></td>
                                             <td>
+                                            <c:if test="${!empty list1.view_cnt}">
                                             <fmt:formatNumber value="${list1.view_cnt}" pattern="#,##0" />회
+                                            &nbsp;(<i class="icofont icofont-arrow-up" style="color: green"></i>
+                                            <fmt:formatNumber value="${(list1.view_cnt - list2[status.index].view_cnt)}" pattern="#,##0" />회)
+                                            </c:if>
+                                            <c:if test="${empty list1.view_cnt}">
+                                            0회
+                                            </c:if>
                                             <input type="hidden" value="${list1.url}" name="url" id="url">
                                             </td>
                                             <td>
-                                            <i class="icofont icofont-arrow-up" style="color: green"></i>
-                                            <fmt:formatNumber value="${(list1.view_cnt - list2[status.index].view_cnt)}" pattern="#,##0" />회
-                                            <%-- ${list2[status.index].view_cnt} --%>
+                                            <fmt:formatNumber value="${list1.reply_cnt}" pattern="#,##0" />회
                                             </td>
-                                            <td>${list1.sns_content}</td>
+                                            <td>
+                                            <fmt:formatNumber value="${list1.like_cnt}" pattern="#,##0" />회
+                                            </td>
+                                            <td>
+                                            <a href='${list1.url}' target="_blank">${list1.sns_content}</a>
+                                            </td>
                                           </tr>
                                         </c:forEach>
                                         </tbody>
                                         <tfoot>
                                           <tr>
-                                            <td colspan="5">
+                                            <td colspan="6">
                                               <ul class="pagination float-right">
                                                 <c:if test="${pageMaker.prev}">
                                               		<li class="page-item">
@@ -274,6 +297,9 @@
   <!-- Morris Chart js -->
   <script src="../bower_components/raphael/raphael.min.js"></script>
   <script src="../bower_components/morris.js/morris.js"></script>
+  <!-- sweet alert js -->
+  <script type="text/javascript" src="../bower_components/sweetalert/dist/sweetalert.min.js"></script>
+  <script type="text/javascript" src="../assets/pages/division/script.js"></script>
   <!-- i18next.min.js -->
   <script type="text/javascript" src="../bower_components/i18next/i18next.min.js"></script>
   <script type="text/javascript" src="../bower_components/i18next-xhr-backend/i18nextXHRBackend.min.js"></script>
@@ -288,6 +314,8 @@
   <script src="../assets/js/demo-12.js"></script>
   <script src="../assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
   <script src="../assets/js/jquery.mousewheel.min.js"></script>
+  <script src="../assets/dist/js/datepicker.min.js"></script>
+  <script src="../assets/dist/js/i18n/datepicker.en.js"></script>
 </body>
 
 <script type="text/javascript">
@@ -303,6 +331,19 @@ $(function() {
 });
 
 $(document).ready(function(){
+	
+	var $fromDate = $("#fromDate");
+
+	var startDateOption = decodeURI(window.location.href.split("startDate=")[1]).split("&")[0].split(" ")[0];
+	var endDateOption = decodeURI(window.location.href.split("endDate=")[1]).split("&")[0].split(" ")[0];
+	console.log("startDateOption: " + startDateOption);
+	console.log("endDateOption: " + endDateOption);
+
+	if(startDateOption != 'undefined' && endDateOption != 'undefined'
+			&& startDateOption != '' && endDateOption != ''){
+
+		$fromDate.val(startDateOption + " - " + endDateOption);
+	}
 	
 	var url = $('input[name=url]').val();
 	console.log("url:" + url);
@@ -322,7 +363,9 @@ $(document).ready(function(){
 			for(var i = 0; i < data.length; i++){
 
 				script += '{"period":' + '"' + data[i].writeDate + '",'
-						+ '"조회수"'+ ':' + data[i].type1 + "},";
+						+ '"조회수"'+ ':' + data[i].type1 + ","
+						+ '"댓글수"' + ':' + data[i].type2 + ","
+						+ '"좋아요수"' + ':' + data[i].type3 + "},";
 
 				if(i == data.length-1){
 					script =  script.substr(0, script.length-1);
@@ -339,13 +382,43 @@ $(document).ready(function(){
 	  	 }
 	});
 	
+	var url = $('input[name=url]').val();
+	//엑셀출력 확인메시지
+	$(document).on("click",".alert-excel",function(){
+  	swal({
+        title: "엑셀출력 하시겠습니까?",
+        text: "현재 리스트가 엑셀출력 됩니다.",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonClass: "btn-danger",
+        confirmButtonText: "YES",
+        closeOnConfirm: false
+      },
+      function(){//엑셀 출력하겠다고 할 시 진행 함수
 
+    	  self.location = "excelOk?"
+			    		+ "url="
+						+ url
+						+ "&startDate=" + decodeURI(window.location.href.split("startDate=")[1]).split("&")[0].split(" ")[0]
+			 			+ "&endDate=" +  decodeURI(window.location.href.split("endDate=")[1]).split("&")[0].split(" ")[0];
+
+
+	  		swal("Success!", "엑셀출력 되었습니다.", "success");
+
+      });
+	});
 	
+	// 검색버튼 클릭시
+	$('#searchBtn').on("click", function(event){
+	  console.log("searchBtn clicked....");
+	
+	  searchList();
 	  
-
+	});
+	
 }); // end ready...
 
-	function areaChart(jsonScript) {
+	/* function areaChart(jsonScript) {
 		$("#morris-bar").empty();
 		window.areaChart = Morris.Bar({
 			element: 'morris-bar',
@@ -359,19 +432,19 @@ $(document).ready(function(){
 		    resize: true,
 		    gridTextColor: '#888'
 		    });
-		}
+		} */
 
 	  		
 	  	
-	  		/* function areaChart(jsonScript) {
+	  		function areaChart(jsonScript) {
 	  			$("#morris-extra-area").empty();
 	  			window.areaChart = Morris.Area({
 	  				element: 'morris-extra-area',
 	  			    data: jsonScript,
-	  			  	lineColors: ['#01C0C8'],
+	  			  	lineColors: ['#01C0C8', '#7E81CB', '#fb9678'],
 	  			    xkey: 'period',
-	  			    ykeys: ['조회수'],
-	  			    labels: ['조회수'],
+	  			 	ykeys: ['조회수', '댓글수', '좋아요수'],
+	  			    labels: ['조회수', '댓글수', '좋아요수'],
 	  			    pointSize: 0,
 	  		        lineWidth: 0,
 	  		        resize: true,
@@ -380,22 +453,30 @@ $(document).ready(function(){
 	  		        gridLineColor: '#5FBEAA',
 	  		        hideHover: 'auto'
 	  			    });
-	  			} */
+	  			}
 	  	//list URL 함수
 	  	var url = $('input[name=url]').val();
+	  	var content = $('input[name=content]').val();
 	  		
 	  	  function searchList(event) {
 
 	  	  	self.location = "f_list?"
 	  	  				  + "url="
 	  	  				  + url
-	  	  				  + "&company="
-	  	  				  + $("#selectCompany option:selected").val()
-	  	  				  + "&selectKey="
-	  	  				  + $('#selectKeyword option:selected').val()
-	  	  				  + "&startDate=" + makeDateFormat($("#fromDate").val(), 0)
-	  	  				  + "&endDate=" +  makeDateFormat($("#fromDate").val(), 1);
+	  	  				  + "&content="
+	  				  	  + content
+	    				  + "&startDate=" + makeDateFormat($("#startdate").val(), 0)
+	  	 			      + "&endDate=" +  makeDateFormat($("#enddate").val(), 0);
 	  	  }
+	  	function makeDateFormat(date, index){
+			var splitDate = date.split(" - ")[index];
+				if(splitDate != undefined){
+					var returnDate = splitDate.replace("/", "-").replace("/", "-")
+					return returnDate;
+				}
+
+
+		}
 	  	
 </script>
 

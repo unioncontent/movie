@@ -7,13 +7,6 @@
  <mapper namespace="org.union.mappers.MobileEntMapper">
  
  	<sql id="search">
- 		<if test="keyword != null">
-			<if test="searchType != null">
-				<if test="searchType == 't'.toString()">
-					and ME_title like concat('%', #{keyword}, '%') 
-				</if>
-			</if>
-		</if>
 		<if test="company != null">
 			and
 			   keyword in (select 
@@ -33,11 +26,13 @@
 					)
 		</if>
 		<if test="selectKey != null">
-				and title_key = #{selectKey}
+				and keyword in (select keyword from keyword_data where keyword_main = #{selectKey})
 			</if>
-		<if test="startDate != null and endDate != null">
+		<if test="startDate != null">
 			and writeDate <![CDATA[>=]]> #{startDate}
-			and writeDate <![CDATA[<]]> #{endDate}
+			<if test="endDate != null">
+				and writeDate <![CDATA[<=]]> #{endDate}
+			</if>
 		</if>
 		<if test="hour != null">
 			and hour(writeDate) = #{hour}
@@ -51,7 +46,8 @@
  			mobileent_data
  		where
  			ME_idx = #{ME_idx}
- 	
+ 		and
+ 			ME_type='ent'
  	</select>
  	
  	<select id="searchList" resultType="MobileEntVO">
@@ -61,8 +57,9 @@
  			mobileent_data
  		where
  			url is not null
+ 		and
+ 			ME_type='ent'	
  		<include refid="search"></include>
-		
 		order by writeDate desc, ME_rank asc
 		limit  
 			#{startPage}, #{perPageNum}
@@ -75,7 +72,8 @@
  			mobileent_data
  		where
  			url is not null
- 			
+ 		and
+ 			ME_type='ent'	
  		<include refid="search"></include>
  		order by writeDate desc, ME_rank asc
 	</select>
@@ -87,9 +85,9 @@
 			mobileent_data
 		where
 			url is not null
-		
-		<include refid="search"></include>	
-	
+		and
+ 			ME_type='ent'
+		<include refid="search"></include>
 	</select>
  	
  	<select id="getTypeOfMovieCount" resultType="Integer">
@@ -99,7 +97,8 @@
  			mobileent_data
  		where
  			keyword_type = '영화'
- 		
+ 		and
+ 			ME_type='ent'
  		<include refid="search"></include>
  	
  	</select>
@@ -111,7 +110,74 @@
  			mobileent_data
  		where
  			keyword_type = '배우'
+ 		and
+ 			ME_type='ent'
+ 		<include refid="search"></include>
  	
+ 	</select>
+ 	
+ 	<select id="MsearchList" resultType="MobileEntVO">
+ 		select
+ 			*
+ 		from
+ 			mobileent_data
+ 		where
+ 			url is not null
+ 		and
+ 			ME_type='movie'	
+ 		<include refid="search"></include>
+		order by writeDate desc, ME_rank asc
+		limit  
+			#{startPage}, #{perPageNum}
+	</select>
+	
+	<select id="MsearchAllList" resultType="MobileEntVO">
+ 		select
+ 			*
+ 		from
+ 			mobileent_data
+ 		where
+ 			url is not null
+ 		and
+ 			ME_type='movie'	
+ 		<include refid="search"></include>
+ 		order by writeDate desc, ME_rank asc
+	</select>
+
+	<select id="MgetSearchCount" resultType="Integer">
+		select
+			count(*)
+		from
+			mobileent_data
+		where
+			url is not null
+		and
+ 			ME_type='movie'
+		<include refid="search"></include>
+	</select>
+ 	
+ 	<select id="MgetTypeOfMovieCount" resultType="Integer">
+ 		select
+ 			count(*)
+ 		from
+ 			mobileent_data
+ 		where
+ 			keyword_type = '영화'
+ 		and
+ 			ME_type='movie'
+ 		<include refid="search"></include>
+ 	
+ 	</select>
+ 	
+ 	<select id="MgetTypeOfActorCount" resultType="Integer">
+ 		select
+ 			count(*)
+ 		from
+ 			mobileent_data
+ 		where
+ 			keyword_type = '배우'
+ 		and
+ 			ME_type='movie'
  		<include refid="search"></include>
  	
  	</select>

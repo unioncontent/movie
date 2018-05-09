@@ -53,4 +53,39 @@ public class MobileEntDAOImpl implements MobileEntDAO {
 		return session.selectOne(namespace + "getSearchCount", cri);
 	}
 
+
+	@Override
+	public Integer MgetTypeOfMovieCount(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "MgetTypeOfMovieCount", cri);
+	}
+
+
+	@Override
+	public Integer MgetTypeOfActorCount(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "MgetTypeOfActorCount", cri);
+	}
+
+
+	@Override
+	public List<MobileEntVO> MsearchList(SearchCriteria cri) {
+
+		return session.selectList(namespace + "MsearchList", cri);
+	}
+
+
+	@Override
+	public List<MobileEntVO> MsearchAllList(SearchCriteria cri) {
+
+		return session.selectList(namespace + "MsearchAllList", cri);
+	}
+
+
+	@Override
+	public Integer MgetSearchCount(SearchCriteria cri) {
+		 
+		return session.selectOne(namespace + "MgetSearchCount", cri);
+	}
+
 }

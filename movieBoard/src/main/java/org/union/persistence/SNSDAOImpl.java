@@ -313,4 +313,25 @@ public class SNSDAOImpl implements SNSDAO {
 	}
 
 
+	@Override
+	public Integer fvlistReply_cnt(SearchFv fv) {
+		
+		return session.selectOne(namespace + "fvlistReply_cnt", fv);
+	}
+
+
+	@Override
+	public Integer fvlistlike_cnt(SearchFv fv) {
+		
+		return session.selectOne(namespace + "fvlistlike_cnt", fv);
+	}
+
+
+	@Override
+	public List<FvVO> fvlistSearchEx(SearchCriteria cri) {
+
+		return session.selectList(namespace + "fvlistSearchEx", cri);
+	}
+
+
 }

@@ -77,8 +77,11 @@ public interface SNSDAO {
 	public List<FvVO> facebookCGVList(SearchCriteria cri);
 	public Integer facebookCGVListTotalCnt(SearchCriteria cri);
 	public List<FvVO> fvlistSearch(SearchCriteria cri);
+	public List<FvVO> fvlistSearchEx(SearchCriteria cri);
 	public Integer fvlistSearchTotalCnt(SearchCriteria cri);
 	public Integer fvlistViewCnt(SearchFv fv);
+	public Integer fvlistReply_cnt(SearchFv fv);
+	public Integer fvlistlike_cnt(SearchFv fv);
 	public List<FvVO> fvlistMinus(SearchCriteria cri);
 	
 }

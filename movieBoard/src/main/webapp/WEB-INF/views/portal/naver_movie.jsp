@@ -81,7 +81,7 @@
 									<!-- 네이버 관리 start -->
 									<div class="page-header">
 										<div class="page-header-title">
-											<h4>네이버 영화 관리</h4>
+											<h4>네이버TV연예 영화관리</h4>
 										</div>
 										<div class="page-header-breadcrumb">
 											<ul class="breadcrumb-title">

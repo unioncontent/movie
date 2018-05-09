@@ -83,14 +83,14 @@
 									<!-- 네이버 관리 start -->
 									<div class="page-header">
 										<div class="page-header-title">
-											<h4>네이버 모바일 연예관리</h4>
+											<h4>네이버 모바일 영화관리</h4>
 										</div>
 										<div class="page-header-breadcrumb">
 											<ul class="breadcrumb-title">
 												<li class="breadcrumb-item"><a href="../dashBoard/dashBoard"> <i class="icofont icofont-home"></i>
 												</a></li>
 												<li class="breadcrumb-item"><a href="#!">포털관리</a></li>
-												<li class="breadcrumb-item"><a href="#!">네이버 모바일 연예관리</a></li>
+												<li class="breadcrumb-item"><a href="#!">네이버 모바일 영화관리</a></li>
 											</ul>
 										</div>
 									</div>
@@ -259,7 +259,7 @@
 																	<tr>
 																		<th>NO</th>
 																		<th>등록날짜</th>
-																		<th>순위</th>
+																		<!-- <th>순위</th> -->
 																		<th>제목</th>
 																		<th>키워드</th>
 																	</tr>
@@ -269,7 +269,7 @@
 																		<tr>
 																			<th scope="row">${totalCount -index.count +1 -minusCount}</th>
 																			<td>${elist.writeDate}</td>
-																			<td>${elist.ME_rank}</td>
+																			<%-- <td>${elist.ME_rank}</td> --%>
 																			<td>
 																				<div class="nobr content">
 																					<a href="${elist.url}" target="_blank"> ${elist.ME_title} </a>
@@ -281,11 +281,11 @@
 																</tbody>
 																<tfoot>
 																	<tr>
-																		<td colspan="5">
+																		<td colspan="4">
 																			<ul class="pagination float-right">
 							                                                <c:if test="${pageMaker.prev}">
 							                                              		<li class="page-item">
-							                                                		  <a class="page-link" href="naver_mobile${pageMaker.makeSearchMobile(pageMaker.startPage - 1) }" aria-label="Previous">&laquo;
+							                                                		  <a class="page-link" href="n_mobilemovie${pageMaker.makeSearchMobile(pageMaker.startPage - 1) }" aria-label="Previous">&laquo;
 							                                                  		<span aria-hidden="true"></span>
 							                                                  		<span class="sr-only">Previous</span>
 							                                                		  </a>
@@ -293,12 +293,12 @@
 							                                        	      </c:if>
 							                                          		  <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
 							                                              		<li class= "${pageMaker.cri.page == idx? 'active':''} page-item">
-							                                                		  <a class="page-link" href="naver_mobile${pageMaker.makeSearchMobile(idx)}">${idx}</a>
+							                                                		  <a class="page-link" href="n_mobilemovie${pageMaker.makeSearchMobile(idx)}">${idx}</a>
 							                                              		</li>
 							                                          		  </c:forEach>
 							                                          		  <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
 							                                              		<li class="page-item">
-							                                              		  <a class="page-link" href="naver_mobile${pageMaker.makeSearchMobile(pageMaker.endPage +1) }" aria-label="Next">&raquo;
+							                                              		  <a class="page-link" href="n_mobilemovie${pageMaker.makeSearchMobile(pageMaker.endPage +1) }" aria-label="Next">&raquo;
 							                                                		<span aria-hidden="true"></span>
 							                                                		<span class="sr-only">Next</span>
 							                                              		  </a>
@@ -566,7 +566,7 @@
 			  + "&startDate=" + decodeURI(window.location.href.split("startDate=")[1]).split("&")[0].split(" ")[0]
 			  + "&endDate=" +  decodeURI(window.location.href.split("endDate=")[1]).split("&")[0].split(" ")[0]
 			  + "&hour" + decodeURI(window.location.href.split("hour=")[1]).split("&")[0].split(" ")[0]
-			  + "&portal_type=" + "mobile";
+			  + "&portal_type=" + "mobileM";
 
 
 	  		swal("Success!", "엑셀출력 되었습니다.", "success");
@@ -599,8 +599,8 @@
 
 	  			for(var i = 0; i < data.length; i++){
 	  				script += '{"period":' + '"' + data[i].writeDate + '",'
-	  						+ '"movie"'+ ':' + data[i].type1 + ","
-	  						+ '"actor"'+ ':' + data[i].type2 + "},";
+	  						+ '"movie"'+ ':' + data[i].type3 + ","
+	  						+ '"actor"'+ ':' + data[i].type4 + "},";
 
 	  				if(i == data.length-1){
 	  					script =  script.substr(0, script.length-1);
@@ -676,7 +676,7 @@
 			rhour = "";
 		}
 		
-		self.location = "naver_mobile" + makeQeury
+		self.location = "n_mobilemovie" + makeQeury
 						+ '10'
     					+ "&company=" + $("#selectCompany option:selected").val()
 						+ "&selectKey=" + $('#selectKeyword option:selected').val()

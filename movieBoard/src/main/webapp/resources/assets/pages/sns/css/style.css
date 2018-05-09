@@ -23,4 +23,10 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.content-nowrap{
+  width: 500px;
+  margin:0 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
  

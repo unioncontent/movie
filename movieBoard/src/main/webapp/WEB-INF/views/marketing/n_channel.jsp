@@ -113,12 +113,14 @@
                                   </div>
                                   <div class="card-block table-border-style">
                                     <div class="table-responsive">
-                                      <table class="table table-styling table-checkbox">
+                                      <table class="table table-bordered table-sm">
                                         <thead>
                                           <tr>
                                           	<th width="3%">NO</th>
-                                            <th width="10%">날짜</th>
+                                            <th width="5%">날짜</th>
                                             <th width="3%">조회수</th>
+                                            <th width="3%">댓글수</th>
+                                            <th width="3%">좋아요수</th>
                                             <th width="30%">제목</th>
                                             <th width="5%"></th>
                                           </tr>
@@ -132,7 +134,18 @@
                                             <input type="hidden" value="${nV.url}" name="url">
                                             </td>
                                             <td>
+                                            <c:if test="${!empty nV.view_cnt}">
                                             <fmt:formatNumber value="${nV.view_cnt}" pattern="#,##0" />회
+                                            </c:if>
+                                            <c:if test="${empty nV.view_cnt}">
+                                            0회
+                                            </c:if>
+                                            </td>
+                                            <td>
+                                            <fmt:formatNumber value="${nV.reply_cnt}" pattern="#,##0" />회
+                                            </td>
+                                            <td>
+                                            <fmt:formatNumber value="${nV.like_cnt}" pattern="#,##0" />회
                                             </td>
                                             <td>
                                             <a href='${nV.url}' target="_blank">${nV.portal_title}</a>
@@ -148,7 +161,7 @@
                                         </tbody>
                                         <tfoot>
                                           <tr>
-                                            <td colspan="5">
+                                            <td colspan="7">
                                                <ul class="pagination float-right">
 	        					                   <c:if test="${pageMaker.prev}">
 		        					                   <li class="page-item">
@@ -322,7 +335,7 @@
 			var td1 = tr.children[1];
 			console.log(td1);
 			
-			var td2 = tr.children[3];
+			var td2 = tr.children[5];
 			console.log(td2);
 			
 			
