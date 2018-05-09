@@ -548,11 +548,11 @@ async function settingMailBody(bodyHtml,keyword,idx){
   var pastView = await content.selectView(pastParam);
   var pastCount = await content.selectViewCount(pastParam);
   pastCount = (pastCount.length == 0) ? '':pastCount[0].total;
-  var htmlMsg = '<table width="750" align="center" cellpadding="0" cellspacing="0" style="padding: 20px;"><tbody><tr><td align="center" style="font-size: 15px; font-weight: bold;" class="fix">[ 메일 본문이 깨져 보이면 <a href=\"http://showbox.email/preview?keyword='+keyword+'&idx='+idx+'\" target=\"_blank\" style=\"font-family: 맑은고딕,malgungothic,돋움,dotum; font-size:12px;color:#ff6300\">여기</a>를 눌러 주세요 ]</td></tr></tbody></table>';
+  var htmlMsg = '<table width="750" align="center" cellpadding="0" cellspacing="0" style="padding: 20px;"><tbody><tr><td align="center" style="font-size: 15px; font-weight: bold;" class="fix">[ 메일 본문이 깨져 보이면 <a href=\"http://overmail.iptime.org:8080/preview?keyword='+keyword+'&idx='+idx+'\" target=\"_blank\" style=\"font-family: 맑은고딕,malgungothic,돋움,dotum; font-size:12px;color:#ff6300\">여기</a>를 눌러 주세요 ]</td></tr></tbody></table>';
   var html = '<table width="750" align="center" cellpadding="0" cellspacing="0" border="0" style="margin-top: 30px;"><tbody><tr><td>[지난 기사보기]<hr><table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-top: 10px;"><colgroup><col width="78%"><col width="22%"></colgroup><tbody>';
 
   for(var i=0; i < pastView.length; i++) {
-    var url = 'http://showbox.email/preview?keyword='+pastView[i].keyword_idx+'&idx='+pastView[i].n_idx;
+    var url = 'http://overmail.iptime.org:8080/preview?keyword='+pastView[i].keyword_idx+'&idx='+pastView[i].n_idx;
     var numIdx = Math.ceil(pastCount-i).toString();
     html +='<tr><td style=\"font-size: small;padding:5px 0 5px;border-bottom:1px dotted #d9d9d9;color:#444;\">[No.'+numIdx+'차]<a style=\"text-decoration:none; color:black;\" href=\"'+url+'\" target=\"_blank\">'+pastView[i].M_subject+'</a>';
     html +='</td><td style=\"font-size: small;padding:5px 0 5px;border-bottom:1px dotted #d9d9d9;color:#444;\">'+pastView[i].M_regdate+'</td></tr>'
