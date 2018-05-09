@@ -701,7 +701,9 @@ var storageFile = multer.diskStorage({
     await cb(null, path);
   },
   filename: function (req, file, cb) {
-    cb(null, new Buffer(file.originalname,'ascii').toString('hex'))
+    // cb(null, new Buffer(file.originalname,'ascii').toString('hex'))
+    var fileNameArr = file.originalname.split('.');
+    cb(null, new Buffer(fileNameArr[0],'ascii').toString('hex')+"."+fileNameArr[fileNameArr.length-1])
   }
 });
 var uploadFile = multer({ storage: storageFile });
@@ -716,8 +718,8 @@ router.post('/send/file',uploadFile.single('file'),function(req, res) {
     fs.removeSync(req.file.path);
     return res.status(500).send("exe는 업로드 불가합니다.");
   }
-  var result = req.file.destination.replace('public/','')+'/'+req.file.filename;
-  res.send({location:'http://overmail.iptime.org:8080/'+result});
+  var result = req.file.destination.replace('public/uploads/files/','')+'/'+req.file.filename.split('.')[0];
+  res.send({location:'http://overmail.iptime.org:8080/period/download/'+result});
 });
 
 var storageFiles = multer.diskStorage({
