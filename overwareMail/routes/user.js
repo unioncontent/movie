@@ -106,7 +106,7 @@ router.post('/getNextPage',isAuthenticated,async function(req, res) {
 
 router.post('/add/idCheck',isAuthenticated,async function(req, res){
   try{
-    var idCheck = await user.addIdCheck([req.body.id,req.user.n_idx,req.user.n_idx]);
+    var idCheck = await user.addIdCheck([req.body.id]);
     var result = {msg: (idCheck.length == 0) ? 'success':'fail'};
     res.send(result);
   }
