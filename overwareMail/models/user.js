@@ -21,7 +21,7 @@ var user = {
     return await getResult(sql,param);
   },
   addIdCheck: async function(param) {
-    var sql = 'select * from m_mail_user where user_id=? and (n_idx = ? or user_admin=?)';
+    var sql = 'select * from m_mail_user where user_id=?';
     return await getResult(sql,param);
   },
   selectTable: async function(body,param){
