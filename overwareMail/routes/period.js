@@ -42,8 +42,15 @@ router.get('/removeDir/:date',isAuthenticated,async function(req, res) {
 
 });
 router.get('/download/:date/:fileName',async function(req, res) {
-  console.log('/download/:date/:fileName = ',req.params);
+  // console.log('/download/:date/:fileName = ',req.params);
   var filePath = __dirname.replace('\\routes','') +'/public/uploads/files/'+req.params.date;
+  var fs = require('fs');
+  var fileListLength = fs.readdirSync(filePath).length;
+  var count = 1;
+  if(fileListLength == 0){
+    res.send('해당 날짜의 파일이 없습니다.');
+    return false;
+  }
   if(req.params.fileName.indexOf('.') == -1){
     var walk    = require('walk');
     var files   = [];
@@ -56,13 +63,15 @@ router.get('/download/:date/:fileName',async function(req, res) {
         var sFileArr = stat.name.split('.');
         if(req.params.fileName == sFileArr[0]){
           filePath +='/'+stat.name;
+          res.download(filePath); // Set disposition and send it.
+          return false;
         }
+        if(fileListLength == count){
+          res.send('해당 파일이 삭제되었습니다.');
+          return false;
+        }
+        count += 1;
         next();
-    });
-
-    walker.on('end', function() {
-        console.log(files);
-        res.download(filePath); // Set disposition and send it.
     });
   }
   else{
