@@ -41,7 +41,7 @@ router.get('/removeDir/:date',isAuthenticated,async function(req, res) {
   }
 
 });
-router.get('/download/:date/:fileName',isAuthenticated,async function(req, res) {
+router.get('/download/:date/:fileName',async function(req, res) {
   console.log('/download/:date/:fileName = ',req.params);
   var filePath = __dirname.replace('\\routes','') +'/public/uploads/files/'+req.params.date;
   if(req.params.fileName.indexOf('.') == -1){
