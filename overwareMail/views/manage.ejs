@@ -502,7 +502,7 @@
             <td><div class="date-nobr">'+((item.M_send == null || (item.M_success == 0 && item.M_failed == 0)) ? '-': item.M_send)+'</div></td>\
             <td>';
             if(item.M_send == null || (item.M_success == 0 && item.M_failed == 0)){
-              html += '<button class="btn btn-sm btn-inverse btn-send" data-idx="'+item.n_idx+'">보내기</button>';
+              html += '<button class="btn btn-sm btn-inverse btn-send" data-idx="'+item.n_idx+'">보내기</button> ';
             }
             html += '<button class="btn btn-sm btn-inverse btn-delete" data-idx="'+item.n_idx+'">삭제</button>\
               <button class="btn btn-sm btn-inverse btn-edit" data-idx="'+item.n_idx+'">수정</button>\
