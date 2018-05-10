@@ -822,7 +822,7 @@
           $('#success').text(tag.eq(4).text());
           $('#fail').text(tag.eq(5).text());
           $('#date1').text(input.eq(0).val());
-          if(tag.eq(6).text().trim() == "예약"){
+          if(tag.eq(7).text().trim().indexOf("예약") != -1){
             $('#date2').text(input.eq(1).val().slice(0,16));
           }
           $("#period-Modal").modal('show');
