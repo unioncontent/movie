@@ -137,20 +137,20 @@
   // 계정 등록
   $('.btn-submit').on('click',function(){
     var check=true;
-    if($('#name').val() == ""){
-      check = requiredMessage("name","회사명을 입력해주세요.");
-    }
-    if($('#name').val() == ""){
-      check = requiredMessage("name","이름을 입력해주세요.");
-    }
     if($("#id").val() == ""){
-      check = requiredMessage("id","이메일를 입력해주세요.");
+      check = requiredMessage("id","아이디를 입력해주세요.");
     }
     else if($("#id").val() != "" && $("#idCheck").val() == ""){
-      check = requiredMessage("email","이메일를 중복확인 해주세요.");
+      check = requiredMessage("id","아이디를 중복확인 해주세요.");
     }
     if($("#pw").val() == ""){
       check = requiredMessage("pw","비밀번호를 입력해주세요.");
+    }
+    if($('#company').val() == ""){
+      check = requiredMessage("company","회사명을 입력해주세요.");
+    }
+    if($('#name').val() == ""){
+      check = requiredMessage("name","이름을 입력해주세요.");
     }
     if(check == false){
       return false;
@@ -173,7 +173,7 @@
       }
     });
   });
-  // 메일 등록 ajax
+  // 계정 등록 ajax
   function insertAccount(param){
     $.ajax({
       url: '/user/add',
