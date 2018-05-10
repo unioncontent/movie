@@ -55,11 +55,11 @@
                       <th width="5%">키워드</th>
                       <th width="20%">제목</th>
                       <th width="5%" style="min-width:81px">메일타입</th>
-                      <th width="10%" style="min-width:81px">발송건수</th>
+                      <th width="5%" style="min-width:81px">발송건수</th>
                       <th width="5%" style="min-width:58px">성공</th>
                       <th width="5%" style="min-width:58px">실패</th>
-                      <th width="15%" style="min-width:81px">발송타입</th>
-                      <th width="15%" style="min-width:96px">통계보고서</th>
+                      <th width="5%" style="min-width:81px">발송타입</th>
+                      <th width="5%" style="min-width:96px">통계보고서</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -173,10 +173,10 @@
       <input type="hidden" id="mType" value="<%=mType%>"/>
       <!-- Modal start-->
       <div class='modal fade' id='previewMail-Modal' role='dialog'>
-        <div class='modal-dialog modal-lg' role='document'>
+        <div class='modal-dialog modal-lg modal-lg-1' role='document'>
           <div class='modal-content'>
             <div class='modal-header'>
-              <h5 class="modal-title"><span id="date"></span>미리보기</h5>
+              <h5 class="modal-title"><span id="date"></span>메일내용</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">×</span>
               </button>
@@ -582,11 +582,11 @@
   </div>
 </div>
 <style type="text/css">
-  #smtp-Modal dl{
+  .row #smtp-Modal dl{
     font-size: 14px;
   }
   .table.table-sm td, .table.table-sm th {
-    padding: .6rem .5rem;
+    padding: .3rem;
   }
   #error-Modal .modal-body{
     padding: 0;
@@ -607,6 +607,10 @@
   .mailHtml{
     display: none;
   }
+  /* mail preview css start */
+  #mailBody{
+    overflow: auto;
+  }
   #mailBody{
     overflow: auto;
     padding: 0;
@@ -616,9 +620,16 @@
     color: #3399cc;
     text-decoration: none;
   }
+  #mailBody table{
+    border-collapse: separate;
+  }
   #mailBody td,th{
     white-space: inherit;
   }
+  .modal-lg-1 {
+      max-width: 1016px;
+  }
+  /* mail preview css end */
   .table-period td,.table-period th{
     text-align: center;
   }
@@ -630,7 +641,7 @@
     overflow: hidden;
   }
   .error_nobr{
-    width: 200px;
+    width: 250px;
     margin: 0px;
   }
   .error_nobr_more{
@@ -644,6 +655,7 @@
   }
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/2.1.27/daterangepicker.css" />
+<script type="text/javascript" src="/js/error.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/2.1.27/moment.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/2.1.27/daterangepicker.js"></script>
 <!-- sweetalert -->
@@ -737,6 +749,7 @@
         $('#error-list').empty();
         data.result.forEach(function(ele,idx){
           var o_msg = ele.M_result_msg.replace('send mail Error: ','');
+          var k_msg = settingErrorMsg(o_msg);
           var html = '<tr><td><i class="fas fa-exclamation-triangle"></i></td>'+
             '<td>'+ele.M_result+'</td>'+'<td>'+ele.E_mail;
           var send = new Date(ele.M_send);
@@ -747,7 +760,7 @@
           }
           html+='</td>'+'<td>'+ele.P_title+'</td>'+
             '<td>'+ele.P_name+'</td>'+
-            '<td><div class="error_nobr">'+o_msg+'</div></td>'+
+            '<td><div class="error_nobr">'+k_msg+'</div></td>'+
           '</tr>';
           $('#error-list').append(html);
         });

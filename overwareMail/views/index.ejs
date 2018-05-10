@@ -145,10 +145,10 @@
       </div>
       <!-- Modal start-->
       <div class='modal fade' id='previewMail-Modal' role='dialog'>
-        <div class='modal-dialog modal-lg' role='document'>
+        <div class='modal-dialog modal-lg modal-lg-1' role='document'>
           <div class='modal-content'>
             <div class='modal-header'>
-              <h5 class="modal-title"><span id="date"></span>미리보기</h5>
+              <h5 class="modal-title"><span id="date"></span>메일내용</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">×</span>
               </button>
@@ -157,7 +157,7 @@
               <div class='col-sm-12' id="mailBody"></div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-warning  waves-effect waves-light copy-btn">복사</button>
+              <!-- <button type="button" class="btn btn-warning  waves-effect waves-light copy-btn">복사</button> -->
               <button class="btn btn-secondary mobtn" data-dismiss='modal' aria-label='Close' type="button">취소</button>
             </div>
           </div>
@@ -306,7 +306,9 @@
                       <dd>수신 측 메일서버의 저장공간 부족으로 인하여 발생한 오류입니다. 수신 측 관리자에게 문의 하시기 바랍니다.</dd>
                       <dt>18. 452 4.4.5 MailBox or MessageQuota exceed for &lt;E-mail Address&gt;</dt>
                       <dd>수신자 메일 사서함의 공간부족으로 인하여 발생한 오류입니다. 수신 측 관리자에게 문의 하시기 바랍니다.</dd>
-
+                      <dd>
+                        <span class="text-center text-muted">출처: <a class="text-muted" href="http://sangchul.kr/583 ">http://sangchul.kr/583 [변군이글루]</a></span>
+                      </dd>
                     </dl>
                   </p>
                 </div>
@@ -395,6 +397,9 @@
                       <dd>송신자 또는 수신자의 메일주소가 잘못되어 발생한 오류입니다. 송신자 또는 수신자의 메일주소가 올바른지 확인해 보시기 바랍니다.</dd>
                       <dt>41. 557 you must be virus</dt>
                       <dd>송신자의 메일이 바이러스로 인식되어 수신 측에서 거부된 오류입니다. 클라이언트 및 서버의 상태를 점검해 보시기 바랍니다. 또한 첨부 파일이 있을 경우 첨부 파일에 바이러스가 포함되지 않았는지 확인해 보신 후 재 전송하시기 바랍니다.</dd>
+                      <dd>
+                        <span class="text-center text-muted">출처: <a class="text-muted" href="http://sangchul.kr/583 ">http://sangchul.kr/583 [변군이글루]</a></span>
+                      </dd>
                     </dl>
                   </p>
                 </div>
@@ -447,9 +452,6 @@
                 </div>
               </div>
             </div>
-            <div class="modal-footer">
-              <span class="text-center text-muted">출처: <a class="text-muted" href="http://sangchul.kr/583 ">http://sangchul.kr/583 [변군이글루]</a></span>
-            </div>
           </div>
         </div>
       </div>
@@ -457,14 +459,12 @@
     </div>
   </div>
 </div>
+<script type="text/javascript" src="/js/error.js"></script>
 <!-- morris -->
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
 <style type="text/css">
-dl{
+.row dl{
   font-size: 14px;
-}
-.table.table-sm td, .table.table-sm th {
-  padding: .6rem .5rem;
 }
 #error-Modal .modal-body,
 #success-Modal .modal-body{
@@ -480,6 +480,10 @@ dl{
 .mailHtml{
   display: none;
 }
+.table.table-sm td, .table.table-sm th {
+  padding: .3rem;
+}
+/* mail preview css start */
 #mailBody{
   overflow: auto;
 }
@@ -492,9 +496,16 @@ dl{
   color: #3399cc;
   text-decoration: none;
 }
+#mailBody table{
+  border-collapse: separate;
+}
 #mailBody td,th{
   white-space: inherit;
 }
+.modal-lg-1 {
+    max-width: 1016px;
+}
+/* mail preview css end */
 .title_nobr,.kwd_nobr,.error_nobr{
   font-size: 15px;
   padding-left: 3px;
@@ -511,7 +522,7 @@ dl{
   width: 146px;
 }
 .error_nobr{
-  width: 200px;
+  width: 250px;
   margin: 0px;
 }
 .error_nobr_more{
@@ -600,6 +611,7 @@ $(document).on('click','.fail',function(){
       $('#error-list').empty();
       data.result.forEach(function(ele,idx){
         var o_msg = ele.M_result_msg.replace('send mail Error: ','');
+        var k_msg = settingErrorMsg(o_msg);
         var html = '<tr><td><i class="fas fa-exclamation-triangle"></i></td>'+
           '<td>'+ele.M_result+'</td>'+'<td>'+ele.E_mail;
         var send = new Date(ele.M_send);
@@ -610,7 +622,7 @@ $(document).on('click','.fail',function(){
         }
         html+='</td>'+'<td>'+ele.P_title+'</td>'+
           '<td>'+ele.P_name+'</td>'+
-          '<td><div class="error_nobr">'+o_msg+'</div></td>'+
+          '<td><div class="error_nobr">'+k_msg+'</div></td>'+
         '</tr>';
         $('#error-list').append(html);
       });
