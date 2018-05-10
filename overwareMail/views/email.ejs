@@ -21,7 +21,7 @@
         <div class="col-md-12">
           <div class="card">
             <div class="card-header">
-              <button id="sendBtn" type="submit" class="btn btn-inverse f-right m-b-0">완료</button>
+              <button type="submit" class="btn btn-inverse f-right m-b-0 sendBtn">완료</button>
             </div>
             <div class="card-block">
               <div class="form-group row">
@@ -152,7 +152,7 @@
               </div> -->
             </div>
             <div class="card-bottom">
-              <button id="sendBtn" type="submit" class="btn btn-inverse f-right m-b-0">완료</button>
+              <button type="submit" class="btn btn-inverse f-right m-b-0 sendBtn">완료</button>
             </div>
           </div>
         </div>
@@ -635,7 +635,7 @@
   //   });
   // }
   // 메일 보내기 버튼 클릭시
-  $("#sendBtn").on("click",function(){
+  $(".sendBtn").on("click",function(){
     var param = {
       'M_sender': $(".sender-select").select2("val"),
       'M_recipi': $(".recipi-select").select2("val"),
