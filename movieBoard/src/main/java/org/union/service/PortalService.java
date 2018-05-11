@@ -92,9 +92,13 @@ public interface PortalService {
 	public List<NvVO> nvlistSearch(SearchCriteria cri);
 	public List<NvVO> nvlistSearchEx(SearchCriteria cri);
 	public Integer nvlistSearchTotalCnt(SearchCriteria cri);
+	public List<NvVO> nvlistSearchList(SearchCriteria cri);
+	public Integer nvlistSearchListTotalCnt(SearchCriteria cri);
 	public Integer nvlistViewCnt(SearchFv fv);
 	public Integer nvlistReply_cnt(SearchFv fv);
 	public Integer nvlistlike_cnt(SearchFv fv);
 	public List<NvVO> nvlistMinus(SearchCriteria cri);
+	public List<NvVO> nvlistSearchTime(SearchCriteria cri);
+	public List<NvVO> nvSearchlistSearchTime(SearchCriteria cri);
 	
 }

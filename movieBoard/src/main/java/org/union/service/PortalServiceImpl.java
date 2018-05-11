@@ -431,4 +431,28 @@ public class PortalServiceImpl implements PortalService {
 		return portalDAO.nvlistSearchEx(cri);
 	}
 
+	@Override
+	public List<NvVO> nvlistSearchTime(SearchCriteria cri) {
+
+		return portalDAO.nvlistSearchTime(cri);
+	}
+
+	@Override
+	public List<NvVO> nvlistSearchList(SearchCriteria cri) {
+
+		return portalDAO.nvlistSearchList(cri);
+	}
+
+	@Override
+	public Integer nvlistSearchListTotalCnt(SearchCriteria cri) {
+
+		return portalDAO.nvlistSearchListTotalCnt(cri);
+	}
+
+	@Override
+	public List<NvVO> nvSearchlistSearchTime(SearchCriteria cri) {
+
+		return portalDAO.nvSearchlistSearchTime(cri);
+	}
+
 }

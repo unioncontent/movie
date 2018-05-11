@@ -1065,7 +1065,7 @@ public class PortalController {
 
     @ResponseBody
     @GetMapping("/excel")
-    public ModelAndView excelGET(@ModelAttribute("cri") ModelAndView model, ExcelView excelView, SearchCriteria cri) {
+    public ModelAndView excelGET(@ModelAttribute("cri") ModelAndView model, ExcelView excelView, SearchCriteria cri, String hour) {
 	logger.info("excelGET called....");
 
 	if (cri.getCompany() != null) {

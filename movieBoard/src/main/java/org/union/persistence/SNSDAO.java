@@ -79,9 +79,12 @@ public interface SNSDAO {
 	public List<FvVO> fvlistSearch(SearchCriteria cri);
 	public List<FvVO> fvlistSearchEx(SearchCriteria cri);
 	public Integer fvlistSearchTotalCnt(SearchCriteria cri);
+	public List<FvVO> fvlistSearchList(SearchCriteria cri);
+	public Integer fvlistSearchListTotalCnt(SearchCriteria cri);
 	public Integer fvlistViewCnt(SearchFv fv);
 	public Integer fvlistReply_cnt(SearchFv fv);
 	public Integer fvlistlike_cnt(SearchFv fv);
 	public List<FvVO> fvlistMinus(SearchCriteria cri);
-	
+	public List<FvVO> fvlistSearchTime(SearchCriteria cri);
+	public List<FvVO> fvSearchlistSearchTime(SearchCriteria cri);
 }

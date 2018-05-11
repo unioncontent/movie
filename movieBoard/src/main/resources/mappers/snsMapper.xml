@@ -552,7 +552,7 @@
  	
  	<select id="facebookCGVList" resultType="FvVO">
  		select 
-		DATE_FORMAT(writeDate,'%Y-%m-%d') writeDate, sns_content, url, max(view_cnt)as view_cnt, max(like_cnt)as like_cnt, max(reply_cnt)as reply_cnt
+		DATE_FORMAT(writeDate,'%Y-%m-%d') writeDate, sns_content, url, max(view_cnt)as view_cnt, max(like_cnt)as like_cnt, max(reply_cnt)as reply_cnt,count(*) as total
 		from facebook_videos
         where
 			sns_writer = 'CGV'
@@ -575,28 +575,62 @@
         group by writeDate) as total
 	</select>
 	
-	<select id="fvlistSearch" resultType="FvVO">
+ 	<select id="fvlistSearch" resultType="FvVO">
+ 		select 
+ 			DATE_FORMAT(createDate,'%Y-%m-%d') createDate, sns_content, url, max(view_cnt)as view_cnt, max(like_cnt)as like_cnt, max(reply_cnt)as reply_cnt,count(*) as total 
+ 		from 
+ 			facebook_videos 
+ 		where 
+ 			url = #{url}
+ 		<include refid="search_writeDate4"></include>	
+		group 
+			by DATE_FORMAT(createDate,'%Y-%m-%d')
+		order 
+			by createDate desc
+ 	</select>
+ 	
+ 	<select id="fvlistSearchTotalCnt" resultType="Integer">
+ 		select 
+			count(*) as total
+        from(
+ 		select 
+ 			DATE_FORMAT(createDate,'%Y-%m-%d') createDate, sns_content, url, max(view_cnt)as view_cnt, max(like_cnt)as like_cnt, max(reply_cnt)as reply_cnt,count(*) as total 
+ 		from 
+ 			facebook_videos 
+ 		where 
+ 			url = #{url}
+ 		<include refid="search_writeDate4"></include>
+ 		group by DATE_FORMAT(createDate,'%Y-%m-%d')
+		order 
+			by createDate desc) as total;
+ 	</select>
+ 	
+ 	<select id="fvlistSearchList" resultType="FvVO">
  		select 
  			* 
  		from 
  			facebook_videos 
  		where 
  			url = #{url}
- 		<include refid="search_writeDate4"></include>	
+ 		and 
+ 			createDate <![CDATA[>=]]> #{createstartDate}
+		and 
+			createDate <![CDATA[<=]]> #{createendDate}	
 		order 
 			by createDate desc
-		limit  
-			#{startPage}, #{perPageNum}
  	</select>
  	
- 	<select id="fvlistSearchTotalCnt" resultType="Integer">
+ 	<select id="fvlistSearchListTotalCnt" resultType="Integer">
  		select 
  			count(*) 
  		from 
  			facebook_videos 
  		where 
  			url = #{url}
- 		<include refid="search_writeDate4"></include>
+ 		and 
+ 			createDate <![CDATA[>=]]> #{createstartDate}
+		and 
+			createDate <![CDATA[<=]]> #{createendDate}
  		order 
 			by createDate desc
  	</select>
@@ -664,11 +698,35 @@
 			view_cnt != (select view_cnt from facebook_videos where url =#{url} order by createDate desc limit 1) 
 		and 
 			url = #{url}
-		<include refid="search_writeDate4"></include>
+		and 
+ 			createDate <![CDATA[>=]]> #{createstartDate}
+		and 
+			createDate <![CDATA[<=]]> #{createendDate}
 		order 
 			by createDate desc
-		limit  
-			#{startPage}, #{perPageNum}
  	</select>
-	
+	<select id="fvlistSearchTime" resultType="FvVO">
+ 		select 
+ 			*
+ 		from 
+ 			facebook_videos
+ 		where
+ 			url = #{url}
+ 		order by createDate asc 
+ 		limit 1
+ 	</select>
+ 	<select id="fvSearchlistSearchTime" resultType="FvVO">
+ 		select 
+ 			*
+ 		from 
+ 			facebook_videos
+ 		where
+ 			url = #{url}
+ 		and 
+ 			createDate <![CDATA[>=]]> #{createstartDate}
+		and 
+			createDate <![CDATA[<=]]> #{createendDate}
+ 		order by createDate asc 
+ 		limit 1
+ 	</select>
  </mapper>

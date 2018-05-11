@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.union.domain.ExtractVO;
 import org.union.domain.FvVO;
 import org.union.domain.GraphVO;
+import org.union.domain.NvVO;
 import org.union.domain.SNSVO;
 import org.union.domain.SearchCriteria;
 import org.union.domain.SearchFv;
@@ -354,6 +355,34 @@ public class SNSServiceImpl implements SNSService {
 	public List<FvVO> fvlistSearchEx(SearchCriteria cri) {
 
 		return snsDAO.fvlistSearchEx(cri);
+	}
+
+
+	@Override
+	public List<FvVO> fvlistSearchTime(SearchCriteria cri) {
+
+		return snsDAO.fvlistSearchTime(cri);
+	}
+
+
+	@Override
+	public List<FvVO> fvlistSearchList(SearchCriteria cri) {
+
+		return snsDAO.fvlistSearchList(cri);
+	}
+
+
+	@Override
+	public Integer fvlistSearchListTotalCnt(SearchCriteria cri) {
+
+		return snsDAO.fvlistSearchListTotalCnt(cri);
+	}
+
+
+	@Override
+	public List<FvVO> fvSearchlistSearchTime(SearchCriteria cri) {
+
+		return snsDAO.fvSearchlistSearchTime(cri);
 	}
 
 }

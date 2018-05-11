@@ -45,6 +45,7 @@
   <link rel="stylesheet" href="../assets/pages/chart/radial/css/radial.css" type="text/css" media="all">
   <!-- Style.css -->
   <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
+  <link rel="stylesheet" type="text/css" href="../assets/pages/marketing/css/style.css">
   <link rel="stylesheet" type="text/css" href="../assets/pages/viral/css/style.css">
   <link rel="stylesheet" type="text/css" href="../assets/css/picker.css">
   <!--color css-->
@@ -117,11 +118,12 @@
                                         <thead>
                                           <tr>
                                           	<th width="3%">NO</th>
-                                            <th width="5%">날짜</th>
+                                            <th width="5%">등록일</th>
+                                            <th width="3%">총 검출수</th>
                                             <th width="3%">조회수</th>
                                             <th width="3%">댓글수</th>
                                             <th width="3%">좋아요수</th>
-                                            <th width="30%">제목</th>
+                                            <th width="15%">제목</th>
                                             <th width="5%"></th>
                                           </tr>
                                         </thead>
@@ -132,6 +134,9 @@
                                             <td>
                                             ${fV.writeDate}
                                             <input type="hidden" value="${fV.url}" name="url">
+                                            </td>
+                                            <td>
+                                            <fmt:formatNumber value="${fV.total}" pattern="#,##0" />건
                                             </td>
                                             <td>
                                             <c:if test="${!empty fV.view_cnt}">
@@ -146,10 +151,12 @@
                                             </td>
                                             <td>
                                             <fmt:formatNumber value="${fV.like_cnt}" pattern="#,##0" />회
+                                            <input type="hidden" value="${fV.sns_content}" name="sns_content">
                                             </td>
                                             <td>
+                                            <div class="content-nowrap">
                                             <a href='${fV.url}' target="_blank">${fV.sns_content}</a>
-                                            <input type="hidden" value="${fV.sns_content}" name="sns_content">
+                                            </div>
                                             </td>
                                             <td>
                                             <button type="button" class="list-button btn btn-primary waves-effect waves-light" style="margin-right: 5px;" data-toggle="tooltip" data-placement="top" data-original-title="리스트">
@@ -161,7 +168,7 @@
                                         </tbody>
                                         <tfoot>
                                           <tr>
-                                            <td colspan="7">
+                                            <td colspan="8">
                                                <ul class="pagination float-right">
 	        					                   <c:if test="${pageMaker.prev}">
 		        					                   <li class="page-item">
@@ -340,7 +347,7 @@
 			
 			
 			var url = td1.children[0].value;
-			var content = td2.children[1].value;
+			var content = td2.children[0].value;
 			
 			console.log("url:" + url, "content:" + content);
 			

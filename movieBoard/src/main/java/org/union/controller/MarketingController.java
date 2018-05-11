@@ -22,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.union.domain.ExtractVO;
 import org.union.domain.FvVO;
 import org.union.domain.GraphVO;
+import org.union.domain.NvVO;
 import org.union.domain.PageMaker;
 import org.union.domain.PageMakerFv;
 import org.union.domain.ReporterVO;
@@ -234,8 +235,8 @@ public class MarketingController {
 		cri.setPortal_name(content);
 		logger.info("crifvList: " + cri);
 		
-		model.addAttribute("list1", snsService.fvlistSearch(cri));
-		model.addAttribute("list2", snsService.fvlistMinus(cri));
+		model.addAttribute("list", snsService.fvlistSearch(cri));
+		model.addAttribute("creatDate", snsService.fvlistSearchTime(cri));
 		
 		logger.info("url: " + url);
 		model.addAttribute("content", content);
@@ -248,6 +249,90 @@ public class MarketingController {
 		
 		pageMakerFv.setCri(cri);
 		pageMakerFv.setTotalCount(snsService.fvlistSearchTotalCnt(cri));
+		
+		logger.info("pageMaker: " + pageMakerFv);
+		
+		model.addAttribute("pageMaker", pageMakerFv);
+		model.addAttribute("totalCount", totalCount);
+		model.addAttribute("minusCount", cri.getPerPageNum() * (cri.getPage()-1));
+		
+		
+    }
+	
+	@GetMapping("/f_listall")
+    public void f_listallGET(@ModelAttribute("cri") SearchCriteria cri, Model model, String url, String content, String createstartDate, String createendDate) throws ParseException {
+    	logger.info("f_listall called....");
+    	if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
+			logger.info("keyword is null");
+			cri.setKeyword(null);
+			
+		} 
+		if(cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey()) ) {
+			logger.info("selectKey is null");
+			cri.setSelectKey(null);
+		}
+		if("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate())
+				|| cri.getStartDate() == "" || cri.getEndDate() == ""){
+			cri.setStartDate(null);
+			cri.setEndDate(null);
+		
+		} 
+		if(cri.getStartDate() != null && cri.getEndDate() != null) {
+			if(cri.getStartDate().indexOf("00:00:00") < 0 && cri.getEndDate().indexOf("23:59:59") < 0){ 
+				cri.setStartDate(cri.getStartDate() + " 00:00:00"); 
+				cri.setEndDate(cri.getEndDate() + " 23:59:59"); 
+			}
+		}
+		if(cri.getCompany() != null) {
+			if(cri.getCompany().isEmpty()) {
+				cri.setCompany(null);
+			}
+		}
+		if(cri.getCompany() == null || cri.getCompany().equals("회사")) {
+			logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+			UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
+			
+			if(!vo.getUser_name().equals("union")) {
+			cri.setCompany(vo.getUser_name());
+			
+			}else {
+				cri.setCompany(null);
+			}
+		}
+
+		// 회사 선택에 따른 키워드 재추출
+		if (cri.getCompany() != null) {	
+			if (cri.getCompany().isEmpty() == false) {
+
+				UserVO userVO = userService.viewByName(cri.getCompany());
+				logger.info("userVO: " + userVO);
+				logger.info("keywordList: " + keywordService.listByUser(userVO.getUser_idx()));
+				model.addAttribute("modelKeywordList",
+						keywordService.listByUser(userService.viewByName(cri.getCompany()).getUser_idx()));
+			}
+		}
+		cri.setUrl(url);
+		cri.setCreatestartDate(createstartDate + " 00:00:00");
+		cri.setCreateendDate(createendDate + " 23:59:59");
+		logger.info("crifvList: " + cri);
+		
+		model.addAttribute("list1", snsService.fvlistSearchList(cri));
+		model.addAttribute("list2", snsService.fvlistMinus(cri));
+		model.addAttribute("creatDate", snsService.fvSearchlistSearchTime(cri));
+		
+		logger.info("createstartDate: " + createstartDate);
+		logger.info("createendDate: " + createendDate);
+		logger.info("url: " + url);
+		model.addAttribute("content", content);
+		
+		Integer totalCount = snsService.fvlistSearchListTotalCnt(cri);
+		
+		logger.info("totalCount: " + totalCount);
+		
+		PageMakerFv pageMakerFv = new PageMakerFv();
+		
+		pageMakerFv.setCri(cri);
+		pageMakerFv.setTotalCount(snsService.fvlistSearchListTotalCnt(cri));
 		
 		logger.info("pageMaker: " + pageMakerFv);
 		
@@ -389,9 +474,10 @@ public class MarketingController {
 		cri.setUrl(url);
 		logger.info("crifvList: " + cri);
 		
-		model.addAttribute("list1", portalService.nvlistSearch(cri));
+		model.addAttribute("list", portalService.nvlistSearch(cri));
+		model.addAttribute("list1", portalService.nvlistSearchList(cri));
 		model.addAttribute("list2", portalService.nvlistMinus(cri));
-		
+		model.addAttribute("creatDate", portalService.nvlistSearchTime(cri));
 		
 		logger.info("url: " + url);
 		model.addAttribute("content", content);
@@ -415,24 +501,112 @@ public class MarketingController {
 		
     }
 	
+	@GetMapping("/n_listall")
+    public void n_listallGET(@ModelAttribute("cri") SearchCriteria cri, Model model, String url, String content, String createstartDate, String createendDate) throws ParseException {
+    	logger.info("n_listall called....");
+    	if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
+			logger.info("keyword is null");
+			cri.setKeyword(null);
+			
+		} 
+		if(cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey()) ) {
+			logger.info("selectKey is null");
+			cri.setSelectKey(null);
+		}
+		if("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate())
+				|| cri.getStartDate() == "" || cri.getEndDate() == ""){
+			cri.setStartDate(null);
+			cri.setEndDate(null);
+		
+		} 
+		if(cri.getStartDate() != null && cri.getEndDate() != null) {
+			if(cri.getStartDate().indexOf("00:00:00") < 0 && cri.getEndDate().indexOf("23:59:59") < 0){ 
+				cri.setStartDate(cri.getStartDate() + " 00:00:00"); 
+				cri.setEndDate(cri.getEndDate() + " 23:59:59"); 
+			}
+		}
+		if(cri.getCompany() != null) {
+			if(cri.getCompany().isEmpty()) {
+				cri.setCompany(null);
+			}
+		}
+		if(cri.getCompany() == null || cri.getCompany().equals("회사")) {
+			logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+			UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
+			
+			if(!vo.getUser_name().equals("union")) {
+			cri.setCompany(vo.getUser_name());
+			
+			}else {
+				cri.setCompany(null);
+			}
+		}
+
+		// 회사 선택에 따른 키워드 재추출
+		if (cri.getCompany() != null) {	
+			if (cri.getCompany().isEmpty() == false) {
+
+				UserVO userVO = userService.viewByName(cri.getCompany());
+				logger.info("userVO: " + userVO);
+				logger.info("keywordList: " + keywordService.listByUser(userVO.getUser_idx()));
+				model.addAttribute("modelKeywordList",
+						keywordService.listByUser(userService.viewByName(cri.getCompany()).getUser_idx()));
+			}
+		}
+		cri.setUrl(url);
+		cri.setCreatestartDate(createstartDate + " 00:00:00");
+		cri.setCreateendDate(createendDate + " 23:59:59");
+		logger.info("crinvList: " + cri);
+		
+		model.addAttribute("list1", portalService.nvlistSearchList(cri));
+		model.addAttribute("list2", portalService.nvlistMinus(cri));
+		model.addAttribute("creatDate", portalService.nvSearchlistSearchTime(cri));
+		
+		logger.info("url: " + url);
+		model.addAttribute("content", content);
+		
+		Integer totalCount = portalService.nvlistSearchListTotalCnt(cri);
+		
+		logger.info("totalCount: " + totalCount);
+		
+		PageMakerFv pageMakerFv = new PageMakerFv();
+		
+		cri.setPortal_name(content);
+		pageMakerFv.setCri(cri);
+		pageMakerFv.setTotalCount(portalService.nvlistSearchListTotalCnt(cri));
+		
+		logger.info("pageMaker: " + pageMakerFv);
+		
+		model.addAttribute("pageMaker", pageMakerFv);
+		model.addAttribute("totalCount", totalCount);
+		model.addAttribute("minusCount", cri.getPerPageNum() * (cri.getPage()-1));
+		
+		
+    }
+	
 	@ResponseBody
 	@PostMapping("/graph")
-	public List<GraphVO> graphPOST(Model model, String success, String url, SearchFv fv) {
+	public List<GraphVO> graphPOST(Model model, String success, String url, SearchFv fv, String Mcreate) throws ParseException {
 		logger.info("graphPOST called....");
+		
+		String current2 = Mcreate;
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH");
 		
 		String current = sdf.format(new Date());
 		logger.info("current: " + current);
 		
+		Date Mcreatedate = sdf.parse(current2); 
+		
 		Calendar cal = Calendar.getInstance();
-		cal.setTime(new Date());
+		cal.setTime(Mcreatedate);
 		
 		List<GraphVO> graphList = new ArrayList<GraphVO>();
 		
 		
 		logger.info("cal.getTime: " + cal.getTime());
 		logger.info("graphUrl: " + url);
+		logger.info("graphCreate: " + Mcreate);
 
 		for(int i = 0; i < 48; i++) {
 			GraphVO graphVO = new GraphVO();
@@ -447,7 +621,53 @@ public class MarketingController {
 			
 			graphList.add(graphVO);
 			
-			cal.add(Calendar.HOUR, -1);
+			cal.add(Calendar.HOUR, +1);
+			
+		}
+		
+
+		logger.info("graphList: " + graphList);
+		return graphList;
+	}
+	
+	@ResponseBody
+	@PostMapping("/allgraph")
+	public List<GraphVO> allgraphPOST(Model model, String success, String url, SearchFv fv, String Mcreate) throws ParseException {
+		logger.info("allgraphPOST called....");
+		
+		String current2 = Mcreate;
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH");
+		
+		String current = sdf.format(new Date());
+		logger.info("current: " + current);
+		
+		Date Mcreatedate = sdf.parse(current2); 
+		
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(Mcreatedate);
+		
+		List<GraphVO> graphList = new ArrayList<GraphVO>();
+		
+		
+		logger.info("cal.getTime: " + cal.getTime());
+		logger.info("graphUrl: " + url);
+		logger.info("graphCreate: " + Mcreate);
+
+		for(int i = 0; i < 24; i++) {
+			GraphVO graphVO = new GraphVO();
+			
+			fv.setDate(cal.getTime());
+			fv.setUrl(url);
+			
+			graphVO.setWriteDate(sdf.format(cal.getTime()) + ":00:00");
+			graphVO.setType1(snsService.fvlistViewCnt(fv));
+			graphVO.setType2(snsService.fvlistReply_cnt(fv));
+			graphVO.setType3(snsService.fvlistlike_cnt(fv));
+			
+			graphList.add(graphVO);
+			
+			cal.add(Calendar.HOUR, +1);
 			
 		}
 		
@@ -458,22 +678,26 @@ public class MarketingController {
 	
 	@ResponseBody
 	@PostMapping("/ngraph")
-	public List<GraphVO> NgraphPOST(Model model, String success, String url, SearchFv fv) {
+	public List<GraphVO> NgraphPOST(Model model, String success, String url, SearchFv fv, String Mcreate) throws ParseException {
 		logger.info("graphPOST called....");
+		
+		String current2 = Mcreate;
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH");
 		
 		String current = sdf.format(new Date());
 		logger.info("current: " + current);
 		
+		Date Mcreatedate = sdf.parse(current2); 
+		
 		Calendar cal = Calendar.getInstance();
-		cal.setTime(new Date());
+		cal.setTime(Mcreatedate);
 		
 		List<GraphVO> graphList = new ArrayList<GraphVO>();
 		
-		
 		logger.info("cal.getTime: " + cal.getTime());
 		logger.info("graphUrl: " + url);
+		logger.info("graphCreate: " + Mcreate);
 		
 		for(int i = 0; i < 48; i++) {
 			GraphVO graphVO = new GraphVO();
@@ -488,11 +712,54 @@ public class MarketingController {
 			
 			graphList.add(graphVO);
 			
-			cal.add(Calendar.HOUR, -1);
+			cal.add(Calendar.HOUR, +1);
 			
 		}
 		
-
+		logger.info("graphList: " + graphList);
+		return graphList;
+	}
+	
+	@ResponseBody
+	@PostMapping("/nallgraph")
+	public List<GraphVO> NallgraphPOST(Model model, String success, String url, SearchFv fv, String Mcreate) throws ParseException {
+		logger.info("nallgraphPOST called....");
+		
+		String current2 = Mcreate;
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH");
+		
+		String current = sdf.format(new Date());
+		logger.info("current: " + current);
+		
+		Date Mcreatedate = sdf.parse(current2); 
+		
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(Mcreatedate);
+		
+		List<GraphVO> graphList = new ArrayList<GraphVO>();
+		
+		logger.info("cal.getTime: " + cal.getTime());
+		logger.info("graphUrl: " + url);
+		logger.info("graphCreate: " + Mcreate);
+		
+		for(int i = 0; i < 24; i++) {
+			GraphVO graphVO = new GraphVO();
+			
+			fv.setDate(cal.getTime());
+			fv.setUrl(url);
+			
+			graphVO.setWriteDate(sdf.format(cal.getTime()) + ":00:00");
+			graphVO.setType1(portalService.nvlistViewCnt(fv));
+			graphVO.setType2(portalService.nvlistReply_cnt(fv));
+			graphVO.setType3(portalService.nvlistlike_cnt(fv));
+			
+			graphList.add(graphVO);
+			
+			cal.add(Calendar.HOUR, +1);
+			
+		}
+		
 		logger.info("graphList: " + graphList);
 		return graphList;
 	}

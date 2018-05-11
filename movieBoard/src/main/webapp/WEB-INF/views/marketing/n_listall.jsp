@@ -44,7 +44,6 @@
   <!-- Style.css -->
   <link rel="stylesheet" type="text/css" href="../assets/pages/clndr-calendar/css/clndr.css">
   <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
-  <link rel="stylesheet" type="text/css" href="../assets/pages/marketing/css/style.css">
   <link rel="stylesheet" type="text/css" href="../assets/pages/dashboard/css/style.css">
   <!--color css-->
   <link rel="stylesheet" type="text/css" href="../assets/css/color/color-1.css" id="color" />
@@ -114,7 +113,7 @@
                             	<i class="icofont icofont-chart-line m-r-5"></i>
                             	조회수 데이터
                             </h5>
-                            <span><b>'${content}'</b> 최근 48시간 그래프</span>
+                            <span><b>'${content}'</b> 최근 24시간 그래프</span>
                             <div class="card-header-right">
                               <i class="icofont icofont-rounded-down"></i>
                             </div>
@@ -134,7 +133,7 @@
                             	<i class="icofont icofont-chart-line m-r-5"></i>
                             	댓글수 데이터
                             </h5>
-                            <span><b>'${content}'</b> 최근 48시간 그래프</span>
+                            <span><b>'${content}'</b> 최근 24시간 그래프</span>
                             <div class="card-header-right">
                               <i class="icofont icofont-rounded-down"></i>
                             </div>
@@ -154,7 +153,7 @@
                             	<i class="icofont icofont-chart-line m-r-5"></i>
                             	좋아요수 데이터
                             </h5>
-                            <span><b>'${content}'</b> 최근 48시간 그래프</span>
+                            <span><b>'${content}'</b> 최근 24시간 그래프</span>
                             <div class="card-header-right">
                               <i class="icofont icofont-rounded-down"></i>
                             </div>
@@ -170,17 +169,8 @@
                               <div class="col-md-12">
                                 <div class="card">
                                   <div class="card-header">
-			                        <button class="btn btn-warning alert-excel f-right" style="margin-left: 8px"><i class="icofont icofont-download-alt"></i>EXCEL</button>
                                     <!-- <button class="btn btn-info f-right alert-confirm" onclick = "location.href='http://overware.iptime.org:8080/marketing/n_channel'"><i class="icofont icofont-ui-note"></i>목록으로</button> -->
                                     <button class="btn btn-info f-right alert-confirm" onclick = "history.back(-1);"><i class="icofont icofont-ui-note"></i>목록으로</button>
-                                    <div class="col-sm-3 input-group input-group-button input-group-inverse p-l-0 p-r-0 m-b-10 f-left btn-select">
-                                    <input type='text' class='datepicker-here form-control m-r-10 m-b-10 f-left' data-language='en' id='startdate' style="width: 50px" placeholder="Date"/>
-	                              	&nbsp;<font size="3"><b>~</b></font>
-	                              	<input type='text' class='datepicker-here form-control f-right p-r-5 p-l-5 m-l-15 m-b-10' data-language='en' id='enddate' style="width: 50px" placeholder="Date"/>
-	                              	<span class="input-group-addon" id="basic-addon1">
-	                              		<button id="searchBtn" class="btn btn-inverse"><i class="icofont icofont-search-alt-2"></i></button>
-	                              	</span>
-	                              </div>
                                   </div>
                                   <div class="card-block table-border-style">
                                     <div class="table-responsive">
@@ -189,67 +179,54 @@
                                             <tr align="center">
                                               <th width="3%">NO</th>
                                               <th width="5%">검출일</th>
-                                              <th width="3%">총 검출수</th>
                                               <th width="3%">조회수</th>
                                               <th width="3%">댓글수</th>
                                               <th width="3%">좋아요수</th>
                                               <th width="30%">제목</th>
-                                              <th width="5%"></th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                        <c:forEach var="list" items="${list}" varStatus="index">
+                                        <c:forEach var="list1" items="${list1}" varStatus="status">
                                           <tr class = "trList">
-                                            <th scope="row">${totalCount - index.count + 1}</th>
+                                            <th scope="row">${totalCount - status.count + 1}</th>
                                             <td>
-                                            	<fmt:formatDate value="${list.createDate}" type="DATE" pattern="yyyy-MM-dd" />
-                                            	<input type="hidden" value="<fmt:formatDate value="${list.createDate}" type="DATE" pattern="yyyy-MM-dd" />" name="createDate2" id=createDate2>
+                                            	<fmt:formatDate value="${list1.createDate}" type="DATE" pattern="yyyy-MM-dd HH:mm:ss" />
                                             </td>
                                             <td>
-                                            	<fmt:formatNumber value="${list.total}" pattern="#,##0" />건
-                                            	<input type="hidden" value="${list.portal_title}" name="content" id="content">
-                                            </td>
-                                            <td>
-                                            <c:if test="${list.view_cnt != 0}">
-                                            <fmt:formatNumber value="${list.view_cnt}" pattern="#,##0" />회
-                                            <%-- &nbsp;(<i class="icofont icofont-arrow-up" style="color: green"></i>
-                                            <fmt:formatNumber value="${(list.view_cnt - list2[status.index].view_cnt)}" pattern="#,##0" />회) --%>
+                                            <c:if test="${list1.view_cnt != 0}">
+                                            <fmt:formatNumber value="${list1.view_cnt}" pattern="#,##0" />회
+                                            &nbsp;(<i class="icofont icofont-arrow-up" style="color: green"></i>
+                                            <fmt:formatNumber value="${(list1.view_cnt - list2[status.index].view_cnt)}" pattern="#,##0" />회)
                                             </c:if>
-                                            <c:if test="${list.view_cnt == 0}">
+                                            <c:if test="${list1.view_cnt == 0}">
                                             0회
                                             </c:if>
+                                            <input type="hidden" value="${list1.url}" name="url" id="url">
                                             </td>
                                             <td>
-                                            <fmt:formatNumber value="${list.reply_cnt}" pattern="#,##0" />회
-                                            <input type="hidden" value="${list.url}" name="url" id="url">
+                                            <fmt:formatNumber value="${list1.reply_cnt}" pattern="#,##0" />회
                                             </td>
                                             <td>
-                                            <fmt:formatNumber value="${list.like_cnt}" pattern="#,##0" />회
+                                            <fmt:formatNumber value="${list1.like_cnt}" pattern="#,##0" />회
                                             <c:forEach var="creatDate" items="${creatDate}" varStatus="status">
                                             <%-- <fmt:formatDate value="${creatDate.createDate}" type="DATE" pattern="yyyy-MM-dd HH:mm:ss" /> --%>
                                             <input type="hidden" value="<fmt:formatDate value="${creatDate.createDate}" type="DATE" pattern="yyyy-MM-dd HH" />" name="createDate" id=createDate>
                                             </c:forEach>
                                             </td>
                                             <td>
-                                            <div class="content-nowrap">
-                                            <a href='${list.url}' target="_blank">${list.portal_title}</a>
-                                            </div>
+                                            <a href='${list1.url}' target="_blank">${list1.portal_title}</a>
+                                            <input type="hidden" value="${list1.portal_title}" name="content" id="content">
                                             </td>
-                                            <td>
-                                            <button type="button" class="list-button btn btn-primary waves-effect waves-light" style="margin-right: 5px;" data-toggle="tooltip" data-placement="top" data-original-title="리스트">
-                                            <i class="icofont icofont-ui-note"></i>리스트
-                                            </button>
-		    								</td>
                                           </tr>
                                         </c:forEach>
                                         </tbody>
                                         <tfoot>
                                           <tr>
-                                            <td colspan="7">
+                                            <td colspan="6">
                                               <%-- <ul class="pagination float-right">
                                                 <c:if test="${pageMaker.prev}">
                                               		<li class="page-item">
-                                                		  <a class="page-link" href="n_list${pageMaker.makeSearch(pageMaker.startPage - 1) }" aria-label="Previous">&laquo;
+                                                		  <a class="page-link" href="n_listall${pageMaker.makeSearch(pageMaker.startPage - 1) }" aria-label="Previous">&laquo;
                                                   		<span aria-hidden="true"></span>
                                                   		<span class="sr-only">Previous</span>
                                                 		  </a>
@@ -258,12 +235,12 @@
 
                                           		  <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
                                               		<li class= "${pageMaker.cri.page == idx? 'active':''} page-item">
-                                                		  <a class="page-link" href="n_list${pageMaker.makeSearch(idx)}">${idx}</a>
+                                                		  <a class="page-link" href="n_listall${pageMaker.makeSearch(idx)}">${idx}</a>
                                               		</li>
                                           		  </c:forEach>
                                           		  <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
                                               		<li class="page-item">
-                                              		  <a class="page-link" href="n_list${pageMaker.makeSearch(pageMaker.endPage +1) }" aria-label="Next">&raquo;
+                                              		  <a class="page-link" href="n_listall${pageMaker.makeSearch(pageMaker.endPage +1) }" aria-label="Next">&raquo;
                                                 		<span aria-hidden="true"></span>
                                                 		<span class="sr-only">Next</span>
                                               		  </a>
@@ -416,7 +393,7 @@ $(document).ready(function(){
 	$.ajax({
 			
 	      type : "POST",
-		  url : "ngraph",
+		  url : "nallgraph",
 	 	  dataType : "json",
 	 	  data : {success : 'success', url: url, Mcreate: Mcreate},
 	  	  success : function(data){
@@ -449,7 +426,7 @@ $(document).ready(function(){
 	$.ajax({
 		
 	      type : "POST",
-		  url : "ngraph",
+		  url : "nallgraph",
 	 	  dataType : "json",
 	 	  data : {success : 'success', url: url, Mcreate: Mcreate},
 	  	  success : function(data){
@@ -482,7 +459,7 @@ $(document).ready(function(){
 	$.ajax({
 		
 	      type : "POST",
-		  url : "ngraph",
+		  url : "nallgraph",
 	 	  dataType : "json",
 	 	  data : {success : 'success', url: url, Mcreate: Mcreate},
 	  	  success : function(data){
@@ -558,25 +535,28 @@ $(document).ready(function(){
 		var tr = parent.parentNode;
 		console.log(tr); 
 		
-		var td1 = tr.children[4];
+		var td1 = tr.children[1];
 		console.log(td1);
 		
-		var td2 = tr.children[2];
+		var td2 = tr.children[5];
 		console.log(td2);
-		
-		var td3 = tr.children[1];
-		console.log(td3);
 		
 		
 		var url = td1.children[0].value;
 		var content = td2.children[0].value;
-		var createstartDate = td3.children[0].value;
-		var createendDate = td3.children[0].value;
 		
-		console.log("url:" + url, "content:" + content, "createstartDate:" + createstartDate, "createendDate:" + createendDate);
+		console.log("url:" + url, "content:" + content);
 		
-		self.location = "n_listall?url=" + url + "&content=" + content + "&createstartDate=" + createstartDate + "&createendDate=" + createendDate;
+		self.location = "n_listall?url=" + url + "&content=" + content;
 
+	});
+	
+	// 검색버튼 클릭시
+	$('#searchBtn').on("click", function(event){
+	  console.log("searchBtn clicked....");
+	
+	  searchList();
+	  
 	});
 	
 }); // end ready...
@@ -663,7 +643,7 @@ $(document).ready(function(){
 	  		
 	  	  function searchList(event) {
 
-	  		self.location = "n_list?"
+	  		self.location = "n_listall?"
   				  + "url="
   				  + url
   				  + "&content="

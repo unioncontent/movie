@@ -44,6 +44,7 @@
   <!-- Style.css -->
   <link rel="stylesheet" type="text/css" href="../assets/pages/clndr-calendar/css/clndr.css">
   <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
+  <link rel="stylesheet" type="text/css" href="../assets/pages/marketing/css/style.css">
   <link rel="stylesheet" type="text/css" href="../assets/pages/dashboard/css/style.css">
   <!--color css-->
   <link rel="stylesheet" type="text/css" href="../assets/css/color/color-1.css" id="color" />
@@ -111,15 +112,56 @@
                           <div class="card-header">
                             <h5>
                             	<i class="icofont icofont-chart-line m-r-5"></i>
-                            	검출량그래프
+                            	조회수 데이터
                             </h5>
-                            <span><b>'${content}'</b> 최근 48시간 데이터 그래프</span>
+                            <span><b>'${content}'</b> 최근 48시간 그래프</span>
                             <div class="card-header-right">
                               <i class="icofont icofont-rounded-down"></i>
                             </div>
                           </div>
                           <div class="card-block">
-                            <div id="morris-extra-area" style="height:300px;"></div>
+                            <!-- <div id="morris-extra-area" style="height:300px;"></div> -->
+                            <div id="morris-extra-line" style="height:150px;"></div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- Morris chart end -->
+                      <!-- Morris chart start -->
+                      <div class="col-md-12">
+                        <div class="card">
+                          <div class="card-header">
+                            <h5>
+                            	<i class="icofont icofont-chart-line m-r-5"></i>
+                            	댓글수 데이터
+                            </h5>
+                            <span><b>'${content}'</b> 최근 48시간 그래프</span>
+                            <div class="card-header-right">
+                              <i class="icofont icofont-rounded-down"></i>
+                            </div>
+                          </div>
+                          <div class="card-block">
+                            <!-- <div id="morris-extra-area" style="height:300px;"></div> -->
+                            <div id="morris-extra-line2" style="height:150px;"></div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- Morris chart end -->
+                      <!-- Morris chart start -->
+                      <div class="col-md-12">
+                        <div class="card">
+                          <div class="card-header">
+                            <h5>
+                            	<i class="icofont icofont-chart-line m-r-5"></i>
+                            	좋아요수 데이터
+                            </h5>
+                            <span><b>'${content}'</b> 최근 48시간 그래프</span>
+                            <div class="card-header-right">
+                              <i class="icofont icofont-rounded-down"></i>
+                            </div>
+                          </div>
+                          <div class="card-block">
+                            <!-- <div id="morris-extra-area" style="height:300px;"></div> -->
+                            <div id="morris-extra-line3" style="height:150px;"></div>
                           </div>
                         </div>
                       </div>
@@ -147,45 +189,65 @@
                                         <thead>
                                             <tr align="center">
                                               <th width="3%">NO</th>
-                                              <th width="5%">날짜</th>
+                                              <th width="5%">검출일</th>
+                                              <th width="3%">총 검출수</th>
                                               <th width="3%">조회수</th>
                                               <th width="3%">댓글수</th>
                                               <th width="3%">좋아요수</th>
                                               <th width="30%">제목</th>
+                                              <th width="5%"></th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                        <c:forEach items="${list1}" var="list1" varStatus="status">
-                                          <tr>
-                                            <th>${totalCount - minusCount - status.count + 1}</th>
-                                            <td><fmt:formatDate value="${list1.createDate}" type="DATE" pattern="yyyy-MM-dd HH:mm:ss" /></td>
+                                        <c:forEach items="${list}" var="list" varStatus="index">
+                                          <tr class = "trList">
+                                            <th>${totalCount - minusCount - index.count + 1}</th>
                                             <td>
-                                            <c:if test="${list1.view_cnt != 0}">
-                                            <fmt:formatNumber value="${list1.view_cnt}" pattern="#,##0" />회
-                                            &nbsp;(<i class="icofont icofont-arrow-up" style="color: green"></i>
-                                            <fmt:formatNumber value="${(list1.view_cnt - list2[status.index].view_cnt)}" pattern="#,##0" />회)
+                                            	<fmt:formatDate value="${list.createDate}" type="DATE" pattern="yyyy-MM-dd" />
+                                            	<input type="hidden" value="<fmt:formatDate value="${list.createDate}" type="DATE" pattern="yyyy-MM-dd" />" name="createDate2" id=createDate2>
+                                            </td>
+                                            <td>
+                                            	<fmt:formatNumber value="${list.total}" pattern="#,##0" />건
+                                            	<input type="hidden" value="${list.sns_content}" name="content" id="content">
+                                            </td>
+                                            <td>
+                                            <c:if test="${list.view_cnt != 0}">
+                                            <fmt:formatNumber value="${list.view_cnt}" pattern="#,##0" />회
+                                            <%-- &nbsp;(<i class="icofont icofont-arrow-up" style="color: green"></i>
+                                            <fmt:formatNumber value="${(list.view_cnt - list2[status.index].view_cnt)}" pattern="#,##0" />회) --%>
                                             </c:if>
-                                            <c:if test="${list1.view_cnt == 0}">
+                                            <c:if test="${list.view_cnt == 0}">
                                             0회
                                             </c:if>
-                                            <input type="hidden" value="${list1.url}" name="url" id="url">
                                             </td>
                                             <td>
-                                            <fmt:formatNumber value="${list1.reply_cnt}" pattern="#,##0" />회
+                                            <fmt:formatNumber value="${list.reply_cnt}" pattern="#,##0" />회
+                                            <input type="hidden" value="${list.url}" name="url" id="url">
                                             </td>
                                             <td>
-                                            <fmt:formatNumber value="${list1.like_cnt}" pattern="#,##0" />회
+                                            <fmt:formatNumber value="${list.like_cnt}" pattern="#,##0" />회
+                                            <c:forEach var="creatDate" items="${creatDate}" varStatus="status">
+                                            <%-- <fmt:formatDate value="${creatDate.createDate}" type="DATE" pattern="yyyy-MM-dd HH:mm:ss" /> --%>
+                                            <input type="hidden" value="<fmt:formatDate value="${creatDate.createDate}" type="DATE" pattern="yyyy-MM-dd HH" />" name="createDate" id=createDate>
+                                            </c:forEach>
                                             </td>
                                             <td>
-                                            <a href='${list1.url}' target="_blank">${list1.sns_content}</a>
+                                            <div class="content-nowrap">
+                                            <a href='${list.url}' target="_blank">${list.sns_content}</a>
+                                            </div>
                                             </td>
+                                            <td>
+                                            <button type="button" class="list-button btn btn-primary waves-effect waves-light" style="margin-right: 5px;" data-toggle="tooltip" data-placement="top" data-original-title="리스트">
+                                            <i class="icofont icofont-ui-note"></i>리스트
+                                            </button>
+		    								</td>
                                           </tr>
                                         </c:forEach>
                                         </tbody>
                                         <tfoot>
                                           <tr>
-                                            <td colspan="6">
-                                              <ul class="pagination float-right">
+                                            <td colspan="7">
+                                              <%-- <ul class="pagination float-right">
                                                 <c:if test="${pageMaker.prev}">
                                               		<li class="page-item">
                                                 		  <a class="page-link" href="f_list${pageMaker.makeSearch(pageMaker.startPage - 1) }" aria-label="Previous">&laquo;
@@ -207,7 +269,7 @@
                                               		  </a>
                                               		</li>
                                           		  </c:if>
-                                          		</ul>
+                                          		</ul> --%>
                                             </td>
                                           </tr>
                                         </tfoot>
@@ -348,13 +410,15 @@ $(document).ready(function(){
 	
 	var url = $('input[name=url]').val();
 	console.log("url:" + url);
+	var Mcreate = $('input[name=createDate]').val();
+	console.log("Mcreate:" + Mcreate);
 	
 	$.ajax({
-			
+		
 	      type : "POST",
 		  url : "graph",
 	 	  dataType : "json",
-	 	  data : {success : 'success', url: url},
+	 	  data : {success : 'success', url: url, Mcreate: Mcreate},
 	  	  success : function(data){
 
 	  		  console.log(data);
@@ -364,9 +428,8 @@ $(document).ready(function(){
 			for(var i = 0; i < data.length; i++){
 
 				script += '{"period":' + '"' + data[i].writeDate + '",'
-						+ '"조회수"'+ ':' + data[i].type1 + ","
-						+ '"댓글수"' + ':' + data[i].type2 + ","
-						+ '"좋아요수"' + ':' + data[i].type3 + "},";
+						+ '"조회수"' + ':' + data[i].type1 + "},";
+						
 
 				if(i == data.length-1){
 					script =  script.substr(0, script.length-1);
@@ -379,6 +442,72 @@ $(document).ready(function(){
 			var jsonScript = JSON.parse(script);
 
 			areaChart(jsonScript);
+
+	  	 }
+	});
+	
+	$.ajax({
+		
+	      type : "POST",
+		  url : "graph",
+	 	  dataType : "json",
+	 	  data : {success : 'success', url: url, Mcreate: Mcreate},
+	  	  success : function(data){
+
+	  		  console.log(data);
+	  		var script = "[";
+
+
+			for(var i = 0; i < data.length; i++){
+
+				script += '{"period":' + '"' + data[i].writeDate + '",'
+						+ '"댓글수"' + ':' + data[i].type2 + "},";
+						
+
+				if(i == data.length-1){
+					script =  script.substr(0, script.length-1);
+					script += "]";
+				}
+			}
+			console.log(script);
+
+			// to json
+			var jsonScript = JSON.parse(script);
+
+			areaChart2(jsonScript);
+
+	  	 }
+	});
+	
+	$.ajax({
+		
+	      type : "POST",
+		  url : "graph",
+	 	  dataType : "json",
+	 	  data : {success : 'success', url: url, Mcreate: Mcreate},
+	  	  success : function(data){
+
+	  		  console.log(data);
+	  		var script = "[";
+
+
+			for(var i = 0; i < data.length; i++){
+
+				script += '{"period":' + '"' + data[i].writeDate + '",'
+						+ '"좋아요수"' + ':' + data[i].type3 + "},";
+						
+
+				if(i == data.length-1){
+					script =  script.substr(0, script.length-1);
+					script += "]";
+				}
+			}
+			console.log(script);
+
+			// to json
+			var jsonScript = JSON.parse(script);
+
+			areaChart3(jsonScript);
 
 	  	 }
 	});
@@ -417,6 +546,39 @@ $(document).ready(function(){
 	  
 	});
 	
+	// 리스트 버튼 클릭
+	$(".list-button").on("click", function(event){
+		var parent = event.target.parentNode;
+
+		if(parent.type == 'button'){
+			console.log("button click...");
+			parent = parent.parentNode;
+		}
+
+		var tr = parent.parentNode;
+		console.log(tr); 
+		
+		var td1 = tr.children[4];
+		console.log(td1);
+		
+		var td2 = tr.children[2];
+		console.log(td2);
+		
+		var td3 = tr.children[1];
+		console.log(td3);
+		
+		
+		var url = td1.children[0].value;
+		var content = td2.children[0].value;
+		var createstartDate = td3.children[0].value;
+		var createendDate = td3.children[0].value;
+		
+		console.log("url:" + url, "content:" + content, "createstartDate:" + createstartDate, "createendDate:" + createendDate);
+		
+		self.location = "f_listall?url=" + url + "&createstartDate=" + createstartDate + "&createendDate=" + createendDate + "&content=" + content;
+
+	});
+	
 }); // end ready...
 
 	/* function areaChart(jsonScript) {
@@ -437,7 +599,7 @@ $(document).ready(function(){
 
 	  		
 	  	
-	  		function areaChart(jsonScript) {
+	  		/* function areaChart(jsonScript) {
 	  			$("#morris-extra-area").empty();
 	  			window.areaChart = Morris.Area({
 	  				element: 'morris-extra-area',
@@ -454,7 +616,45 @@ $(document).ready(function(){
 	  		        gridLineColor: '#5FBEAA',
 	  		        hideHover: 'auto'
 	  			    });
-	  			}
+	  			} */
+	  			
+	  			function areaChart(jsonScript) {
+		  			$("#morris-extra-line").empty();
+		  			window.areaChart = Morris.Line({
+		  				element: 'morris-extra-line',
+		  			    data: jsonScript,
+		  			    xkey: 'period',
+		  			    ykeys: ['조회수'],
+		  			    labels: ['조회수'],
+		  			    lineColors: ['#01C0C8'],
+		  			    lineWidth : 3
+		  			    });
+		  			}
+	  			function areaChart2(jsonScript) {
+		  			$("#morris-extra-line2").empty();
+		  			window.areaChart2 = Morris.Line({
+		  				element: 'morris-extra-line2',
+		  			    data: jsonScript,
+		  			    xkey: 'period',
+		  			    ykeys: ['댓글수'],
+		  			    labels: ['댓글수'],
+		  			    lineColors: ['#7E81CB'],
+		  			    lineWidth : 3
+		  			    });
+		  			}
+	  			function areaChart3(jsonScript) {
+		  			$("#morris-extra-line3").empty();
+		  			window.areaChart3 = Morris.Line({
+		  				element: 'morris-extra-line3',
+		  			    data: jsonScript,
+		  			    xkey: 'period',
+		  			    ykeys: ['좋아요수'],
+		  			    labels: ['좋아요수'],
+		  			    lineColors: ['#fb9678'],
+		  			    lineWidth : 3
+		  			    });
+		  			}
+	  			
 	  	//list URL 함수
 	  	var url = $('input[name=url]').val();
 	  	var content = $('input[name=content]').val();
@@ -464,10 +664,10 @@ $(document).ready(function(){
 	  	  	self.location = "f_list?"
 	  	  				  + "url="
 	  	  				  + url
-	  	  				  + "&content="
-	  				  	  + content
 	    				  + "&startDate=" + makeDateFormat($("#startdate").val(), 0)
-	  	 			      + "&endDate=" +  makeDateFormat($("#enddate").val(), 0);
+	  	 			      + "&endDate=" +  makeDateFormat($("#enddate").val(), 0)
+					  	  + "&content="
+						  + content;
 	  	  }
 	  	function makeDateFormat(date, index){
 			var splitDate = date.split(" - ")[index];

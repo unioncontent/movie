@@ -414,4 +414,32 @@ public class PortalDAOImpl implements PortalDAO {
 
 		return session.selectList(namespace + "nvlistSearchEx", cri);
 	}
+
+
+	@Override
+	public List<NvVO> nvlistSearchTime(SearchCriteria cri) {
+
+		return session.selectList(namespace + "nvlistSearchTime", cri);
+	}
+
+
+	@Override
+	public List<NvVO> nvlistSearchList(SearchCriteria cri) {
+
+		return session.selectList(namespace + "nvlistSearchList", cri);
+	}
+
+
+	@Override
+	public Integer nvlistSearchListTotalCnt(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "nvlistSearchListTotalCnt", cri);
+	}
+
+
+	@Override
+	public List<NvVO> nvSearchlistSearchTime(SearchCriteria cri) {
+
+		return session.selectList(namespace + "nvSearchlistSearchTime", cri);
+	}
 }

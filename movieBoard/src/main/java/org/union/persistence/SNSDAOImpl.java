@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.union.domain.FvVO;
 import org.union.domain.GraphVO;
+import org.union.domain.NvVO;
 import org.union.domain.ReplyVO;
 import org.union.domain.SNSVO;
 import org.union.domain.SearchCriteria;
@@ -331,6 +332,34 @@ public class SNSDAOImpl implements SNSDAO {
 	public List<FvVO> fvlistSearchEx(SearchCriteria cri) {
 
 		return session.selectList(namespace + "fvlistSearchEx", cri);
+	}
+
+
+	@Override
+	public List<FvVO> fvlistSearchTime(SearchCriteria cri) {
+
+		return session.selectList(namespace + "fvlistSearchTime", cri);
+	}
+
+
+	@Override
+	public List<FvVO> fvlistSearchList(SearchCriteria cri) {
+
+		return session.selectList(namespace + "fvlistSearchList", cri);
+	}
+
+
+	@Override
+	public Integer fvlistSearchListTotalCnt(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "fvlistSearchListTotalCnt", cri);
+	}
+
+
+	@Override
+	public List<FvVO> fvSearchlistSearchTime(SearchCriteria cri) {
+
+		return session.selectList(namespace + "fvSearchlistSearchTime", cri);
 	}
 
 
