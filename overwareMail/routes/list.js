@@ -61,7 +61,37 @@ async function getListPageData(idx,param){
 
 router.post('/update',isAuthenticated,async function(req, res) {
   try{
+    console.log('params:',req.body);
+    var changeCheck = req.body.rChange;
+    delete req.body.rChange;
     var updateMail = await mailListA.update(req.body);
+    var reporterCheck = await user.reporterCheck([req.body.o_email,req.body.o_name,req.body.M_ptitle]);
+    if(req.body.M_reporter != 1){
+      await user.deleteReporter(req.body.o_email,req.body.M_name);
+    }
+    else{
+      var dateFormat = require('dateformat');
+      var now = dateFormat(new Date(), "yyyy-mm-dd h:MM:ss");
+      var reporterParam = {
+        reporter_media_name:req.body.M_ptitle,
+        reporter_name:req.body.M_name,
+        reporter_email:req.body.M_email,
+        reporter_phoneNum:req.body.M_tel,
+        createDate:now,
+        updateDate:now
+      };
+      if(reporterCheck.length == 0 && changeCheck){
+        var reporterID = await user.getNextReporterID();
+        reporterParam['reporter_ID']='P'+reporterID;
+        reporterParam['reporter_memo']=req.user.user_id;
+        await mailListA.insert("reporter_data",reporterParam);
+      }
+      else if(reporterCheck.length == 1){
+        delete reporterParam['createDate'];
+        reporterParam['reporter_idx'] = reporterCheck[0].reporter_idx;
+        await mailListA.updateReporter(reporterParam);
+      }
+    }
     res.send({status:true});
   }
   catch(e){
@@ -236,28 +266,33 @@ router.post('/add',isAuthenticated,async function(req, res) {
       res.status(500).send('다시 시도해주세요.');
       return false;
     }
-    var reporterCheck = await user.reporterCheck([mail.M_email,mail.M_name,mail.M_ptitle]);
-    if(reporterCheck.length == 0){
-      var dateFormat = require('dateformat');
-      var now = dateFormat(new Date(), "yyyy-mm-dd h:MM:ss");
-      var reporterParam = {
-        reporter_media_name:mail[0].M_ptitle,
-        reporter_name:mail[0].M_name,
-        reporter_email:mail[0].M_email,
-        reporter_phoneNum:mail[0].M_tel,
-        createDate:now,
-        updateDate:now
-      };
-      // console.log('reporterParam:',reporterParam);
-      if(mail[0].M_reporter == '0'){
-        reporterParam['reporter_memo']=mail[0].user_id;
-      }
-      else if(mail[0].M_reporter == '1'){
+    if(mail[0].M_reporter == 1){
+      var reporterCheck = await user.reporterCheck([mail[0].M_email,mail[0].M_name,mail[0].M_ptitle]);
+      if(reporterCheck.length == 0){
+        var dateFormat = require('dateformat');
+        var now = dateFormat(new Date(), "yyyy-mm-dd h:MM:ss");
+        var reporterParam = {
+          reporter_media_name:mail[0].M_ptitle,
+          reporter_name:mail[0].M_name,
+          reporter_email:mail[0].M_email,
+          reporter_phoneNum:mail[0].M_tel,
+          createDate:now,
+          updateDate:now
+        };
+        // console.log('reporterParam:',reporterParam);
         var reporterID = await user.getNextReporterID();
         reporterParam['reporter_ID']='P'+reporterID;
-      }
+        reporterParam['reporter_memo']=mail[0].user_id;
+        // if(mail[0].M_reporter == '0'){
+        // reporterParam['reporter_memo']=mail[0].user_id;
+        // }
+        // else if(mail[0].M_reporter == '1'){
+          // reporterParam['reporter_ID']='P'+reporterID;
+          // reporterParam['reporter_memo']=mail[0].user_id;
+        // }
 
-      await mailListA.insert("reporter_data",reporterParam);
+        await mailListA.insert("reporter_data",reporterParam);
+      }
     }
     res.send({status:true});
   }
