@@ -61,9 +61,7 @@ var period = {
   getNewsCount: async function(param){
     var pValue = Object.values(param);
     var sql = 'SELECT FORMAT(count(*),0) as c FROM period_news_view';
-    // sql += ' where substring_index(reporter_email,\'.\',2) in (SELECT substring_index(E_mail,\'.\',2) from m_mail_detail_b where M_idx_A=?)';
-    sql += ' where reporter_name in (SELECT P_name from m_mail_detail_b where M_idx_A=?) ';
-    sql += 'and media_name in (SELECT P_title from m_mail_detail_b where M_idx_A=?) ';
+    sql += ' where concat(media_name,\' \',reporter_name) in (SELECT distinct concat(P_title,\' \',P_name) from m_mail_detail_b where M_idx_A=? and M_result=250) ';
     sql += ' and keyword = ? and writeDate BETWEEN ? AND date_add(?, INTERVAL 48 HOUR);';
     var result = await getResult(sql,pValue);
     if(result.length == 0){
@@ -74,15 +72,37 @@ var period = {
   getReplyCount: async function(param){
     var pValue = Object.values(param);
     var sql = 'SELECT FORMAT(sum(reply_count),0) as c FROM period_reply_view';
-    // sql += ' where substring_index(reporter_email,\'.\',2) in (SELECT substring_index(E_mail,\'.\',2) from m_mail_detail_b where M_idx_A=?)';
-    sql += ' where reporter_name in (SELECT P_name from m_mail_detail_b where M_idx_A=?) ';
-    sql += 'and media_name in (SELECT P_title from m_mail_detail_b where M_idx_A=?) ';
+    sql += ' where concat(media_name,\' \',reporter_name) in (SELECT distinct concat(P_title,\' \',P_name) from m_mail_detail_b where M_idx_A=? and M_result=250) ';
     sql += ' and title_key = ? and createDate BETWEEN ? AND date_add(?, INTERVAL 48 HOUR);';
     var result = await getResult(sql,pValue);
     if(result.length == 0){
       return 0;
     }
     return result[0].c || 0;
+  },
+  getPeriodMediaNReporterCount: async function(param){
+    var pValue = Object.values(param);
+    console.log(pValue);
+    var pValue2 = Object.values(param);
+    console.log(pValue2);
+    var value = pValue.concat(pValue2);
+    console.log(value);
+    var checkReporterQuery ='where concat(media_name,\' \',reporter_name) in (SELECT distinct concat(P_title,\' \',P_name) from m_mail_detail_b where M_idx_A=? and M_result=250)'
+    var sql ='select FORMAT(count(distinct media_name),0) as media_c,FORMAT(count(distinct concat(media_name,\' \',reporter_name)),0) as reporter_c  from';
+    sql +='((select media_name,reporter_name from period_news_view ';
+    sql += checkReporterQuery;
+    sql +='and keyword = ?';
+    sql +='and writeDate BETWEEN ? AND date_add(?, INTERVAL 48 HOUR))'
+    sql +='union all  (select media_name,reporter_name from period_reply_view ';
+    sql +=checkReporterQuery;
+    sql +='and title_key = ?';
+    sql +='and createDate BETWEEN ? AND date_add(?, INTERVAL 48 HOUR))) a';
+    console.log(sql);
+    var result = await getResult(sql,value);
+    if(result.length == 0){
+      return {media_c:0,reporter_c:0};
+    }
+    return result[0];
   },
   get7DayGraph: async function(user){
     var sql = 'SELECT date_format(M_regdate,\'%Y-%m-%d\') as date,sum(success) as success,sum(fail) as fail\
