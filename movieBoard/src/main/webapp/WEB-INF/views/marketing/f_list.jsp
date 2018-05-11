@@ -627,7 +627,8 @@ $(document).ready(function(){
 		  			    ykeys: ['조회수'],
 		  			    labels: ['조회수'],
 		  			    lineColors: ['#01C0C8'],
-		  			    lineWidth : 3
+		  			    lineWidth : 3,
+		  			  	hideHover : 'auto'
 		  			    });
 		  			}
 	  			function areaChart2(jsonScript) {
@@ -639,7 +640,8 @@ $(document).ready(function(){
 		  			    ykeys: ['댓글수'],
 		  			    labels: ['댓글수'],
 		  			    lineColors: ['#7E81CB'],
-		  			    lineWidth : 3
+		  			    lineWidth : 3,
+		  			  	hideHover : 'auto'
 		  			    });
 		  			}
 	  			function areaChart3(jsonScript) {
@@ -651,7 +653,8 @@ $(document).ready(function(){
 		  			    ykeys: ['좋아요수'],
 		  			    labels: ['좋아요수'],
 		  			    lineColors: ['#fb9678'],
-		  			    lineWidth : 3
+		  			    lineWidth : 3,
+		  			  	hideHover : 'auto'
 		  			    });
 		  			}
 	  			

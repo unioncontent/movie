@@ -918,7 +918,10 @@
 		from 
 			naver_videos 
 		where 
-			view_cnt != (select view_cnt from naver_videos where url=#{url} order by createDate desc limit 1) 
+			view_cnt != (select view_cnt from naver_videos where url=#{url} and 
+ 			createDate <![CDATA[>=]]> #{createstartDate}
+		and 
+			createDate <![CDATA[<=]]> #{createendDate} order by createDate desc limit 1) 
 		and 
 			url = #{url}
 		and 
