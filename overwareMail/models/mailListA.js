@@ -13,7 +13,14 @@ var mailListAll = {
   },
   update: async function(param){
     var pValue = Object.values(param);
-    var sql = 'update m_mail_list_all set M_name=?,M_email=?,M_tel=? where n_idx=?;';
+    var sql = 'update m_mail_list_all set M_ptitle=?,M_reporter=?,M_name=?,M_email=?,M_tel=? where n_idx=?;';
+    return await getResult(sql,pValue);
+  },
+  updateReporter: async function(param){
+    var pValue = Object.values(param);
+    var sql = 'update reporter_data set\
+    reporter_media_name=?, reporter_name=?, reporter_email=?, reporter_phoneNum=?, updateDate=?\
+    where reporter_idx=?;';
     return await getResult(sql,pValue);
   },
   deleteFun: async function(param){
@@ -44,7 +51,7 @@ var mailListAll = {
     return await getResult(sql,[n_idx]);
   },
   selectView: async function(body,param){
-    var sql = 'select search, user_name, M_id, M_email, M_name, M_ptitle, M_tel, date_format(M_regdate, \'%Y-%m-%d %H:%i:%s\') as M_regdate,n_idx';
+    var sql = 'select search, user_name,M_reporter, M_id, M_email, M_name, M_ptitle, M_tel, date_format(M_regdate, \'%Y-%m-%d %H:%i:%s\') as M_regdate,n_idx';
     if (typeof body.as !== 'undefined') {
       sql += body.as+' ,CONCAT(M_name, \'&lt;\', M_email, \'&gt;\') as text ';
     }
