@@ -113,7 +113,7 @@
                             	<i class="icofont icofont-chart-line m-r-5"></i>
                             	조회수 데이터
                             </h5>
-                            <span><b>'${content}'</b> 최근 48시간 그래프</span>
+                            <span><b>'${content}'</b> 최근 24시간 그래프</span>
                             <div class="card-header-right">
                               <i class="icofont icofont-rounded-down"></i>
                             </div>
@@ -133,7 +133,7 @@
                             	<i class="icofont icofont-chart-line m-r-5"></i>
                             	댓글수 데이터
                             </h5>
-                            <span><b>'${content}'</b> 최근 48시간 그래프</span>
+                            <span><b>'${content}'</b> 최근 24시간 그래프</span>
                             <div class="card-header-right">
                               <i class="icofont icofont-rounded-down"></i>
                             </div>
@@ -153,7 +153,7 @@
                             	<i class="icofont icofont-chart-line m-r-5"></i>
                             	좋아요수 데이터
                             </h5>
-                            <span><b>'${content}'</b> 최근 48시간 그래프</span>
+                            <span><b>'${content}'</b> 최근 24시간 그래프</span>
                             <div class="card-header-right">
                               <i class="icofont icofont-rounded-down"></i>
                             </div>
