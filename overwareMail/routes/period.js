@@ -90,9 +90,11 @@ router.post('/result',isAuthenticated,async function(req, res, next) {
 
 router.post('/getPeriod',isAuthenticated,async function(req, res, next) {
   try{
+    console.log('getPeriod:',req.body);
+    var mediaNReporterCount = await period.getPeriodMediaNReporterCount(req.body);
     var data = {
-      media:await mailDetailB.getMediaNReporterCount('P_title',req.body.M_idx_A),
-      reporter:await mailDetailB.getMediaNReporterCount('P_name',req.body.M_idx_A),
+      media:mediaNReporterCount.media_c,
+      reporter:mediaNReporterCount.reporter_c,
       newsCount:await period.getNewsCount(req.body),
       replyCount:await period.getReplyCount(req.body)
     };
