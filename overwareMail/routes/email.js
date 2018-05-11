@@ -648,8 +648,6 @@ function emailSendFun(pStr){
 }
 
 var multer = require('multer');
-var date = datetime.create();
-var today = date.format('Ymd');
 async function mkdirsFun (directory) {
   try {
     await fs.ensureDir(directory)
@@ -662,7 +660,9 @@ async function mkdirsFun (directory) {
 // 메일 첨부파일 삭제시
 router.post('/remove/file',function (req, res) {
   try {
-    var file = "/home/hosting_users/unioncmail/apps/unioncmail_unioncmail/public/uploads/files/"+today+"/"+req.body.file;
+    var date = datetime.create();
+    var today = date.format('Ymd');
+    var file = ___dirname.replace('\\routes','') +"/public/uploads/files/"+today+"/"+req.body.file;
     var result = fs.removeSync(file.replace(/ /gi, ""));
     return res.send({status:true});
   } catch (err) {
@@ -673,6 +673,8 @@ router.post('/remove/file',function (req, res) {
 // 메일작성시 이미지 upload 및 path get
 var storageImage = multer.diskStorage({
   destination: async function (req, file, cb) {
+    var date = datetime.create();
+    var today = date.format('Ymd');
     var path = await mkdirsFun('public/uploads/image/'+today);
     await cb(null, path); // cb 콜백함수를 통해 전송된 파일 저장 디렉토리 설정
   },
@@ -697,6 +699,8 @@ router.post('/send/img',uploadImage.single('file'),function(req, res) {
 // 첨부파일 upload 및 path get
 var storageFile = multer.diskStorage({
   destination: async function (req, file, cb) {
+    var date = datetime.create();
+    var today = date.format('Ymd');
     var path = await mkdirsFun('public/uploads/files/'+today);
     await cb(null, path);
   },
@@ -724,6 +728,8 @@ router.post('/send/file',uploadFile.single('file'),function(req, res) {
 
 var storageFiles = multer.diskStorage({
   destination: async function (req, file, cb) {
+    var date = datetime.create();
+    var today = date.format('Ymd');
     var path = await mkdirsFun('public/uploads/files/'+today);
     await cb(null, path);
   },
