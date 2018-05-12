@@ -873,7 +873,7 @@
 			by createDate desc
  	</select>
  	
- 	<select id="nvlistViewCnt" resultType="Integer">
+ 	<!-- <select id="nvlistViewCnt" resultType="Integer">
  		select 
  			view_cnt
  		from 
@@ -885,8 +885,12 @@
  		order by 
  			createDate desc 
  		limit 1;
- 	</select>
- 	<select id="nvlistReply_cnt" resultType="Integer">
+ 	</select> 
+ 	set @num:=0;
+ 		set @num1:=0;
+ 	-->
+ 		
+ 	<!-- <select id="nvlistReply_cnt" resultType="Integer">
  		select 
  			reply_cnt
  		from 
@@ -911,7 +915,44 @@
  		order by 
  			createDate desc 
  		limit 1;
+ 	</select> -->
+ 	
+ 	<select id="nvlistViewCnt" resultType="Integer">
+ 	select
+		f.view_cnt as view_cnt
+	from
+	(select 
+			(b.view_cnt-a.view_cnt) as view_cnt
+	from
+		(select @RNUM:=@RNUM+1 AS ROWNUM, view_cnt from (SELECT @RNUM:=0) R,(select * from naver_videos where url = #{url} and createDate between date_add(#{date}, interval -1 hour) and #{date} order by createDate desc limit 1)c) a,
+        (select @RNUM1:=@RNUM1+1 AS ROWNUM, view_cnt from (SELECT @RNUM1:=0) R,(select * from naver_videos where url = #{url} and createDate >= #{date} order by createDate asc limit 1)d) b
+	where a.rownum = b.rownum) f;
  	</select>
+ 	
+ 	<select id="nvlistReply_cnt" resultType="Integer">
+ 		select
+		f.reply_cnt as reply_cnt
+	from
+	(select 
+			(b.reply_cnt-a.reply_cnt) as reply_cnt
+	from
+		(select @RNUM:=@RNUM+1 AS ROWNUM, reply_cnt from (SELECT @RNUM:=0) R,(select * from naver_videos where url = #{url} and createDate between date_add(#{date}, interval -1 hour) and #{date} order by createDate desc limit 1)c) a,
+        (select @RNUM1:=@RNUM1+1 AS ROWNUM, reply_cnt from (SELECT @RNUM1:=0) R,(select * from naver_videos where url = #{url} and createDate >= #{date} order by createDate asc limit 1)d) b
+	where a.rownum = b.rownum) f;
+ 	</select>
+ 	
+ 	<select id="nvlistlike_cnt" resultType="Integer">
+ 		select
+		f.like_cnt as like_cnt
+	from
+	(select 
+			(b.like_cnt-a.like_cnt) as like_cnt
+	from
+		(select @RNUM:=@RNUM+1 AS ROWNUM, like_cnt from (SELECT @RNUM:=0) R,(select * from naver_videos where url = #{url} and createDate between date_add(#{date}, interval -1 hour) and #{date} order by createDate desc limit 1)c) a,
+        (select @RNUM1:=@RNUM1+1 AS ROWNUM, like_cnt from (SELECT @RNUM1:=0) R,(select * from naver_videos where url = #{url} and createDate >= #{date} order by createDate asc limit 1)d) b
+	where a.rownum = b.rownum) f;
+ 	</select>
+ 	
  	<select id="nvlistMinus" resultType="NvVO">
  		select 
  			view_cnt 
