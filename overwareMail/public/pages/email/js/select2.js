@@ -149,7 +149,7 @@ $(".sender-select").select2({
     cache: true
   },
   multiple: false,
-  placeholder: '보내는 사람',
+  placeholder: '보내는 사람(이름/이메일/회사)',
   language: 'ko',
   allowClear: true,
   escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
