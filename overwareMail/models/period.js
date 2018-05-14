@@ -61,7 +61,7 @@ var period = {
   getNewsCount: async function(param){
     var pValue = Object.values(param);
     var sql = 'SELECT FORMAT(count(*),0) as c FROM period_news_view';
-    sql += ' where concat(media_name,\' \',reporter_name) in (SELECT distinct concat(P_title,\' \',P_name) from m_mail_detail_b where M_idx_A=? and M_result=250) ';
+    sql += ' where concat(media_name,\' \',reporter_name) in (SELECT distinct concat(P_title,\' \',SUBSTRING_INDEX(P_name, ' ', 1)) from m_mail_detail_b where M_idx_A=? and M_result=250) ';
     sql += ' and keyword = ? and writeDate BETWEEN ? AND date_add(?, INTERVAL 48 HOUR);';
     var result = await getResult(sql,pValue);
     if(result.length == 0){
@@ -72,7 +72,7 @@ var period = {
   getReplyCount: async function(param){
     var pValue = Object.values(param);
     var sql = 'SELECT FORMAT(sum(reply_count),0) as c FROM period_reply_view';
-    sql += ' where concat(media_name,\' \',reporter_name) in (SELECT distinct concat(P_title,\' \',P_name) from m_mail_detail_b where M_idx_A=? and M_result=250) ';
+    sql += ' where concat(media_name,\' \',reporter_name) in (SELECT distinct concat(P_title,\' \',SUBSTRING_INDEX(P_name, ' ', 1)) from m_mail_detail_b where M_idx_A=? and M_result=250) ';
     sql += ' and title_key = ? and createDate BETWEEN ? AND date_add(?, INTERVAL 48 HOUR);';
     var result = await getResult(sql,pValue);
     if(result.length == 0){
@@ -82,12 +82,12 @@ var period = {
   },
   getPeriodMediaNReporterCount: async function(param){
     var pValue = Object.values(param);
-    console.log(pValue);
     var pValue2 = Object.values(param);
-    console.log(pValue2);
     var value = pValue.concat(pValue2);
-    console.log(value);
-    var checkReporterQuery ='where concat(media_name,\' \',reporter_name) in (SELECT distinct concat(P_title,\' \',P_name) from m_mail_detail_b where M_idx_A=? and M_result=250)'
+    // console.log(pValue);
+    // console.log(pValue2);
+    // console.log(value);
+    var checkReporterQuery ='where concat(media_name,\' \',reporter_name) in (SELECT distinct concat(P_title,\' \',SUBSTRING_INDEX(P_name, ' ', 1)) from m_mail_detail_b where M_idx_A=? and M_result=250)'
     var sql ='select FORMAT(count(distinct media_name),0) as media_c,FORMAT(count(distinct concat(media_name,\' \',reporter_name)),0) as reporter_c  from';
     sql +='((select media_name,reporter_name from period_news_view ';
     sql += checkReporterQuery;

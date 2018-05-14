@@ -51,7 +51,7 @@ var mailListAll = {
     return await getResult(sql,[n_idx]);
   },
   selectView: async function(body,param){
-    var sql = 'select search, user_name,M_reporter, M_id, M_email, M_name, M_ptitle, M_tel, date_format(M_regdate, \'%Y-%m-%d %H:%i:%s\') as M_regdate,n_idx';
+    var sql = 'select search, user_name,M_reporter, M_id, M_email, M_name, M_ptitle, M_tel, M_regdate,n_idx';
     if (typeof body.as !== 'undefined') {
       sql += body.as+' ,CONCAT(M_name, \'&lt;\', M_email, \'&gt;\') as text ';
     }

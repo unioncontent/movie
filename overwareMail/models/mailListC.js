@@ -139,7 +139,7 @@ var mailListC = {
     }
   },
   selectView2: async function(body,param){
-    var sql = 'select n_idx, search, M_id, M_group_title, M_idx_a, user_name, M_email, M_name, M_ptitle, M_tel,date_format(M_regdate, \'%Y-%m-%d %H:%i:%s\') as M_regdate FROM mail_list_group_view where M_id = ?';
+    var sql = 'select * FROM mail_list_group_view where M_id = ?';
     if (typeof body.group !== 'undefined') {
       sql += ' and M_group_title=?';
     }
