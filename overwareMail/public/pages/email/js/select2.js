@@ -126,7 +126,7 @@ $(".sender-select").select2({
     delay: 250,
     data: function (params) {
       return {
-        search: params.term, // search term
+        search: params.term.replace(/ /gi, ""), // search term
         page: params.page
       };
     },
