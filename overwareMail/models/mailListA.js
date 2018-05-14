@@ -56,6 +56,13 @@ var mailListAll = {
       sql += body.as+' ,CONCAT(M_name, \'&lt;\', M_email, \'&gt;\') as text ';
     }
     sql += ' from mail_list_all_view where search is not null ';
+    if('userType' in body){
+      switch (body.userType) {
+        case '0': sql+=' and M_reporter =\'0\''; break;
+        case '1': sql+=' and M_reporter =\'1\''; break;
+        case '2': sql+=' and M_reporter =\'2\''; break;
+      }
+    }
     if('searchType' in body){
       switch (body.searchType) {
         case 'c': sql+=' and M_ptitle =\''+body.search+'\''; break;
@@ -80,6 +87,13 @@ var mailListAll = {
   },
   selectViewCount: async function(body,param){
     var sql = 'select count(*) as total from mail_list_all_view where search is not null ';
+    if('userType' in body){
+      switch (body.userType) {
+        case '0': sql+=' and M_reporter =\'0\''; break;
+        case '1': sql+=' and M_reporter =\'1\''; break;
+        case '2': sql+=' and M_reporter =\'2\''; break;
+      }
+    }
     if('searchType' in body){
       switch (body.searchType) {
         case 'c': sql+=' and M_ptitle =\''+body.search+'\''; break;

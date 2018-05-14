@@ -21,6 +21,12 @@
         <div class="col-md-12">
           <div class="card m-b-10">
             <div class="card-header">
+              <select id="selectType" name="select" class="col-12 col-md-1  form-control form-control-inverse f-left">
+                <option>분류</option>
+                <option value="0">직원</option>
+                <option value="1">기자</option>
+                <option value="2">관계사</option>
+              </select>
               <div class="col-12 col-md-3 f-right col-sm-9 m-l-10 p-l-0 p-r-0 right-icon-control">
                 <input type="text" class="form-control form-control-inverse search-text" id="keywordInput">
                 <div class="form-icon" id="searchBtn">
@@ -176,6 +182,7 @@
           <button class="btn btn-inverse btn-cGroup m-b-50" style="float: right;"><i class="fas fa-plus"></i>그룹등록</button>
         </div>
       </div>
+      <input type="hidden" id="userType" value="<%=userType%>"/>
       <input type="hidden" id="searchType" value="<%=searchType%>"/>
       <input type="hidden" id="search" value="<%=search%>"/>
       <input type="hidden" id="page" value="<%=page%>"/>
@@ -291,11 +298,15 @@
     //   $("#selectSearchType").val(searchTypeParams).prop("selected", true);
     //   $("#keywordInput").val(searchParams);
     // }
+    var userTypeValue = $("#userType").val();
     var searchTypeValue = $("#searchType").val();
     var searchValue = $("#search").val();
     if(searchTypeValue != '' && searchValue != ''){
       $("#selectSearchType").val(searchTypeValue).prop("selected", true);
       $("#keywordInput").val(searchValue);
+    }
+    if(userTypeValue != ''){
+      $("#selectType").val(userTypeValue).prop("selected", true);
     }
   });
   // 그룹등록 클릭시
@@ -614,6 +625,29 @@
       }
     });
   });
+  // 분류 선택시
+  $('#selectType').on('change',function(){
+    var param = {
+      page : 1
+    };
+    var optionVal = $("#selectType option:selected").val();
+    if(optionVal != '분류'){
+      param.userType=optionVal;
+      $('#userType').val(optionVal);
+    }
+    else{
+      $('#userType').val('');
+    }
+    var searchTypeValue = $("#searchType").val();
+    var searchValue = $("#search").val();
+    if(searchTypeValue != ''){
+      param.searchType = $("#searchType").val();
+    }
+    if(searchValue != ''){
+      param.search = $("#search").val();
+    }
+    ajaxGetPageList(param);
+  });
   // 검색시
   $('#keywordInput').on('keyup',function(event){
     if(event.keyCode == 13){
@@ -621,11 +655,17 @@
     };
   });
   $('#searchBtn').on('click',function(){
-    if($("#keywordInput").val() == ''){
-      alert('검색어를 넣어주세요.');
-      return false;
+    var url = '/list?page=1';
+    var searchType = $("#selectSearchType option:selected").val();
+    var keyword = $("#keywordInput").val();
+    var userTypeValue = $("#userType").val();
+    if(searchType != '' && keyword != ''){
+      url += '&searchType='+searchType+'&search='+keyword;
     }
-    location.href = '/list?page=1&searchType='+$("#selectSearchType option:selected").val()+'&search='+$("#keywordInput").val();
+    if(userTypeValue != ''){
+      url +='&userType='+userTypeValue;
+    }
+    location.href = url;
   });
   //페이지 이동
   $(document).on('click','.page-link',function(){
@@ -639,8 +679,12 @@
     // if(href.searchParams.get("search") != '' && href.searchParams.get("search") != null){
     //   param.search = href.searchParams.get("search");
     // }
+    var userTypeValue = $("#userType").val();
     var searchTypeValue = $("#searchType").val();
     var searchValue = $("#search").val();
+    if(userTypeValue != ''){
+      param.userType = $("#userType").val();
+    }
     if(searchTypeValue != ''){
       param.searchType = $("#searchType").val();
     }
@@ -754,6 +798,7 @@
   }
   function reloadPage(){
     // var href = new URL(window.location.href);
+    var userTypeValue = $("#userType").val();
     var searchTypeValue = $("#searchType").val();
     var searchValue = $("#search").val();
     var pageValue = ($("#page").val() == '') ? 1 : parseInt($("#page").val());
@@ -761,6 +806,9 @@
       page : pageValue
       // page : href.searchParams.get("page") || 1
     };
+    if(userTypeValue != ''){
+      param.userType = $("#userType").val();
+    }
     if(searchTypeValue != ''){
       param.searchType = $("#searchType").val();
     }

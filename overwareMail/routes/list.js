@@ -24,6 +24,7 @@ async function getListPageData(idx,param){
   var data = {
     mailList:[],
     mailListCount:{total:0},
+    userType:'',
     searchType:'',
     search:'',
     page:1
@@ -37,6 +38,10 @@ async function getListPageData(idx,param){
   if (typeof param.page !== 'undefined') {
     currentPage = param.page;
     data['page'] = currentPage;
+  }
+  if (typeof param.userType !== 'undefined') {
+    searchBody['userType'] = param.userType;
+    data['userType'] = param.userType;
   }
   if (parseInt(currentPage) > 0) {
     searchParam[1] = (currentPage - 1) * limit

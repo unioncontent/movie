@@ -105,7 +105,7 @@ var mailListC = {
     return await getResult(sql,[idx]);
   },
   selectView: async function(body,param){
-    var sql = 'select M_ID,date_format(M_regdate, \'%Y-%m-%d %H:%i:%s\') as M_regdate,user_name,search,count(*) as groupCount,M_group_title,M_group_title';
+    var sql = 'select M_ID,date_format(M_regdate, \'%Y-%m-%d %H:%i:%s\') as M_regdate,user_name,search,FORMAT(count(*),0) as groupCount,M_group_title,M_group_title';
     if (typeof body.as !== 'undefined') {
       sql += body.as+' ,CONCAT(M_group_title, \'&lt;\', count(*), \'명&gt;\') as text ';
     }
@@ -144,7 +144,7 @@ var mailListC = {
       sql += ' and M_group_title=?';
     }
     if (typeof body.order !== 'undefined') {
-      sql += ' order by M_regdate desc limit ?,?';
+      sql += ' order by n_idx desc limit ?,?';
     }
     return await getResult(sql,param);
   },
