@@ -44,7 +44,14 @@
                 <table class="table">
                   <thead>
                     <tr>
-                      <th width="1%">선택</th>
+                      <th width="1%">
+                        <div class="border-checkbox-section" style="max-width: 30px;">
+                          <div class="border-checkbox-group border-checkbox-group-default">
+                            <input class="border-checkbox" type="checkbox" id="checkboxAll">
+                            <label class="border-checkbox-label" for="checkboxAll"></label>
+                          </div>
+                        </div>
+                      </th>
                       <th width="5%">NO</th>
                       <th width="25%">이메일</th>
                       <th width="5%">이름(기자)</th>
@@ -94,7 +101,7 @@
                       <td>
                         <div class="border-checkbox-section" style="max-width: 30px;">
                           <div class="border-checkbox-group border-checkbox-group-default">
-                            <input class="border-checkbox" type="checkbox" id="checkbox<%=i%>">
+                            <input class="border-checkbox mail-checkbox" type="checkbox" id="checkbox<%=i%>">
                             <label class="border-checkbox-label" for="checkbox<%=i%>"></label>
                           </div>
                         </div>
@@ -285,6 +292,9 @@
   .border-checkbox-section .border-checkbox-group .border-checkbox-label{
     margin: 0px;
   }
+  #listTable .table thead th{
+    vertical-align: middle;
+  }
 </style>
 <!-- alert -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert@2.1.0/dist/sweetalert.min.js"></script>
@@ -308,6 +318,19 @@
     if(userTypeValue != ''){
       $("#selectType").val(userTypeValue).prop("selected", true);
     }
+  });
+  // 메일 전체 선택시
+  $('#checkboxAll').on('click',function(){
+    var checkBool = null;
+    if($(this).is(":checked")){
+      checkBool = true;
+    }else{
+      checkBool = false;
+    }
+    $('.mail-checkbox').prop('checked', checkBool);
+  });
+  $('.mail-checkbox').on('click',function(){
+    $('#checkboxAll').prop('checked', false);
   });
   // 그룹등록 클릭시
   $('.btn-cGroup').on('click',function(){
@@ -348,10 +371,11 @@
               swal("ERROR!", "그룹이름이 중복됩니다. 다시 입력해 주세요.", "error");
             }else if(data == 'success'){
               var list = [];
-              $('input[type=checkbox]:checked').each(function(idx,ele){
+              $('input.mail-checkbox[type=checkbox]:checked').each(function(idx,ele){
                 var trEle = $(ele).parents('tr');
                 list.push({title:value,idx:trEle.find('#idx').val(),email:trEle.find('.edit').text()});
               });
+              $('#checkboxAll').prop('checked', false);
               addGroup(list);
             }
             else{
