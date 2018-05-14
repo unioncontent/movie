@@ -329,7 +329,7 @@
     }
     $('.mail-checkbox').prop('checked', checkBool);
   });
-  $('.mail-checkbox').on('click',function(){
+  $(document).on('click','.mail-checkbox',function(){
     $('#checkboxAll').prop('checked', false);
   });
   // 그룹등록 클릭시
@@ -745,6 +745,7 @@
         //   //페이지 갱신 실행!
         //   history.pushState(null, null,renewURL);
         // }
+        $('#checkboxAll').prop('checked', false);
         $('#listTable tbody').empty();
         data.list.mailList.forEach(function(item,idx){
           var numIdx = Math.ceil(data.list.mailListCount-(data.list.offset+idx)).toString();
@@ -753,7 +754,7 @@
             <td>\
               <div class="border-checkbox-section" style="max-width: 30px;">\
                 <div class="border-checkbox-group border-checkbox-group-default">\
-                  <input class="border-checkbox" type="checkbox" id="checkbox'+idx+'">\
+                  <input class="border-checkbox mail-checkbox" type="checkbox" id="checkbox'+idx+'">\
                   <label class="border-checkbox-label" for="checkbox'+idx+'"></label>\
                 </div>\
               </div>\
