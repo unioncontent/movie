@@ -446,6 +446,8 @@
     ajaxGetPageGroupList(param);
     $('#email').val('');
     $('#name').val('');
+    $('#email,#name').siblings('.messages').children('.error').text('');
+    $('#email,#name').removeClass("form-control-danger");
     $('#group-Modal').modal('show');
   });
   function ajaxGetPageGroupList(param){
