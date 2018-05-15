@@ -179,6 +179,9 @@ $(".recipi-select").select2({
     dataType: 'json',
     delay: 250,
     data: function (params) {
+      if(params.term != undefined){
+        params.term = params.term.replace(/ /gi, "")
+      }
       return {
         search: params.term, // search term
         page: params.page
@@ -236,6 +239,9 @@ $(".group-select").select2({
     dataType: 'json',
     delay: 250,
     data: function (params) {
+      if(params.term != undefined){
+        params.term = params.term.replace(/ /gi, "")
+      }
       return {
         search: params.term, // search term
         page: params.page
