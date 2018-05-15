@@ -754,7 +754,8 @@ var storageFile = multer.diskStorage({
   filename: function (req, file, cb) {
     // cb(null, new Buffer(file.originalname,'ascii').toString('hex'))
     var fileNameArr = file.originalname.split('.');
-    cb(null, new Buffer(fileNameArr[0],'ascii').toString('hex')+"."+fileNameArr[fileNameArr.length-1])
+    // cb(null, new Buffer(fileNameArr[0],'ascii').toString('hex')+"."+fileNameArr[fileNameArr.length-1])
+    cb(null, file.originalname)
   }
 });
 var uploadFile = multer({ storage: storageFile });
