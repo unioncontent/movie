@@ -294,6 +294,7 @@ async function asyncForEach(array, callback) {
     }
   }
 }
+
 async function asyncFileRemove(dateF,fileArr){
   console.log('asyncFileRemove');
   await asyncForEach(fileArr, async (item, index, array) => {
@@ -588,8 +589,7 @@ function getFiles (dir, files_){
   return files_;
 }
 
-/*
-m_mail_detail_B table에 저장될 M_result 값 종류
+/*m_mail_detail_B table에 저장될 M_result 값 종류
 0 : 정상발송 => 0 : 메일발송에 성공하였습니다.
 9 : 미발송
 103 : 보내는 사람 이메일이 유효하지 않음 => 3 : 보내는 사람 이메일이 유효하지 않습니다.
