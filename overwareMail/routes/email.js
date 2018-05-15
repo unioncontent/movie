@@ -66,6 +66,47 @@ router.get('/',isAuthenticated, async function(req, res) {
   res.render('email',data);
 });
 
+router.get('/test', async function(req, res) {
+  res.locals.user ={
+    user_id: 'test'
+  };
+  var n_idx = 25;
+  var user_admin = null;
+  var searchParam = [n_idx,0,10];
+  if(user_admin != null){
+    searchParam[0] = user_admin;
+  }
+  var data = {
+    keywordList : await keyword.selectMovieKwd(user_admin,searchParam[0]),
+    typeList : await mailType.selectTable(user_admin,searchParam[0]),
+    mailList : await mailListA.selectView({},searchParam),
+    mailListCount : await mailListA.selectViewCount({},searchParam),
+    mailListPageNum : 1,
+    groupList : await mailListC.selectView({},searchParam),
+    groupListCount : await mailListC.selectViewCount({},searchParam),
+    groupListPageNum : 1,
+    type: '',
+    mailData: [],
+    mailSender:[],
+    // mailRecipi:[],
+    // mailGroup:[]
+  };
+  if('type' in req.query){
+    data.type = req.query.type;
+    var result = await mailAllA.getEmailData(req.query.idx);
+    if(result.length > 0){
+      data.mailData = result[0];
+      data.mailSender = await mailListA.getOneInfo(data.mailData.M_sender);
+      data.mailSender = (data.mailSender.length > 0) ? data.mailSender[0]: [];
+      // data.mailRecipi = await mailListA.getOneInfo(data.mailData.M_recipi);
+      // data.mailRecipi = (data.mailRecipi.length > 0) ? data.mailRecipi[0]: [];
+      // data.mailGroup = await mailListC.getOneData(data.mailData.M_group);
+      // data.mailGroup = (data.mailGroup.length > 0) ? data.mailGroup[0]: [];
+    }
+  }
+  res.render('email_input',data);
+});
+
 router.get('/manage',isAuthenticated, async function(req, res) {
   var data = await getListPageData(req.user.n_idx,req.query);
   data.klist = await keyword.selectMovieKwdAll(req.user.user_admin,req.user.n_idx) || [];
@@ -208,6 +249,10 @@ router.get('/searchGroup',isAuthenticated, async function(req, res) {
 });
 
 router.post('/searchAll',isAuthenticated, async function(req, res) {
+  // req.user = {
+  //   n_idx: 1,
+  //   user_admin: null
+  // };
   var param = [req.user.n_idx,0,10];
   if(req.user.user_admin != null){
     param[0] = req.user.user_admin;
