@@ -167,7 +167,7 @@ var period = {
     sql = 'SELECT FORMAT(if(sum(sendCount) is null,0,sum(sendCount)), 0) as total FROM period_view where Date(M_send) = CURRENT_DATE() and M_type=?';
     var param = [M_type,user.n_idx];
     if(user.user_admin == null){
-      sql += '(and M_id=? or M_id in (select n_idx from m_mail_user where user_admin=?))';
+      sql += 'and (M_id=? or M_id in (select n_idx from m_mail_user where user_admin=?))';
       param.push(user.n_idx);
     }
     else{
@@ -178,10 +178,10 @@ var period = {
   },
   getWaitingCount: async function(user){
     var sql = 'SELECT FORMAT(if(sum(sendCount) is null,0,sum(sendCount)), 0) as total\
-    FROM period_view where M_send > now() and M_type=1';
+    FROM period_view where M_send > now() and M_type=1 ';
     var param = [user.n_idx];
     if(user.user_admin == null){
-      sql += '(and M_id=? or M_id in (select n_idx from m_mail_user where user_admin=?))';
+      sql += 'and (M_id=? or M_id in (select n_idx from m_mail_user where user_admin=?))';
       param.push(user.n_idx);
     }
     else{
