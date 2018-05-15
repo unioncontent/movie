@@ -421,8 +421,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/i18n/ko.js"></script>
 <!-- filer -->
-<link rel="stylesheet" type="text/css" href="/css/jquery.filer.css">
-<script src="/js/jquery.filer.min.js"></script>
+<!-- <link rel="stylesheet" type="text/css" href="/css/jquery.filer.css">
+<script src="/js/jquery.filer.min.js"></script> -->
 <!-- editor -->
 <script src='/plugin/tinymce/js/tinymce/tinymce.min.js'></script>
 <script src="/pages/email/js/editor.js"></script>
@@ -693,7 +693,7 @@
       title: "본문의 내용이 확실합니까?",
       icon: "warning",
       buttons: ["취소", true],
-      dangerMode: true,
+      dangerMode: true
     })
     .then((value) => {
       if (value != null) {
