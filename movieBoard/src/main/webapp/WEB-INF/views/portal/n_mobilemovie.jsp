@@ -219,7 +219,7 @@
 															<h3>
 																<fmt:formatNumber value="${matchCount}" groupingUsed="true" />
 															</h3>
-															<p class='pCard'>매칭</p>
+															<p class='pCard'>기사매칭</p>
 															<div class="progress ">
 																<div class="progress-bar progress-bar-striped progress-xs progress-bar-pink" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
 															</div>
@@ -656,7 +656,7 @@
 			lineColors: ['#4C5667', '#1ABC9C', '#8c2db5'],
 			xkey: 'period',
 			ykeys: ['movie', 'actor', 'match'],
-			labels: ['영화', '배우', '매칭'],
+			labels: ['영화', '배우', '기사매칭'],
 	 	    hideHover: 'auto',
 	 	    pointSize: 0,
 	 	    lineWidth: 0,

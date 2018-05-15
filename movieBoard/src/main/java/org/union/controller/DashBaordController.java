@@ -127,8 +127,59 @@ public class DashBaordController {
 		model.addAttribute("facebookCount", snsService.yesterdayCount("facebook"));
 		model.addAttribute("twitterCount", snsService.yesterdayCount("twitter"));
 		model.addAttribute("instagramCount", snsService.yesterdayCount("instagram"));
+	}
+	
+	@GetMapping("/showDashBoard")
+	public void showDashBoardGET(@ModelAttribute("cri") SearchCriteria cri, Model model) {
+		logger.info("showDashBoardGET called....");
 		
+		if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
+			logger.info("keyword is null");
+			cri.setKeyword(null);
+			
+		} 
+		if(cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey()) ) {
+			logger.info("selectKey is null");
+			cri.setSelectKey(null);
+		}
 		
+		if("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate())
+				|| cri.getStartDate() == "" || cri.getEndDate() == ""){
+			cri.setStartDate(null);
+			cri.setEndDate(null);
+		
+		} 
+		if(cri.getStartDate() != null && cri.getEndDate() != null) {
+			logger.info("not null");
+			logger.info(cri.getStartDate());
+			logger.info(cri.getEndDate());
+			if(cri.getStartDate().indexOf("00:00:00") < 0 && cri.getEndDate().indexOf("23:59:59") < 0){ 
+				cri.setStartDate(cri.getStartDate() + " 00:00:00"); 
+				cri.setEndDate(cri.getEndDate() + " 23:59:59"); 
+			}
+		}
+		if(cri.getCompany() != null) {
+			if(cri.getCompany().isEmpty()) {
+				cri.setCompany(null);
+			}
+		}
+		
+		if(cri.getCompany() == null || cri.getCompany().equals("회사")) {
+			logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+			UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
+			
+			if(!vo.getUser_name().equals("union")) {
+			cri.setCompany(vo.getUser_name());
+			
+			}else {
+				cri.setCompany(null);
+			}
+		}
+		if(cri.getTextType() != null) {
+			if(cri.getTextType().equals("undefined") || cri.getTextType().equals("분류") || cri.getTextType().isEmpty()) {
+				cri.setTextType(null);
+			}
+		}
 		model.addAttribute("showboxblogCount", portalService.showboxToDayCount("blog"));
 		model.addAttribute("showboxcafeCount", portalService.showboxToDayCount("cafe"));
 		model.addAttribute("showboxkintipCount", portalService.showboxToDayCount("kintip"));
@@ -187,7 +238,7 @@ public class DashBaordController {
 	@ResponseBody
 	@PostMapping("/showGraph")
 	public List<GraphVO> showGraphPOST(Model model, String success) {
-		logger.info("graphPOST called....");
+		logger.info("showgraphPOST called....");
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH");
 		

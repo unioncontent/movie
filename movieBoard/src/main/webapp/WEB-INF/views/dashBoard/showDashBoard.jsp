@@ -1,4 +1,4 @@
-﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -109,7 +109,7 @@
                                 <i class="icofont icofont-document-search" style="line-height: 58px;"></i>
                               </li>
                               <li class="text-right">
-                                <fmt:formatNumber value="${keywordCount}" groupingUsed="true"/>
+                                <fmt:formatNumber value="${showboxkeywordCount}" groupingUsed="true"/>
                               </li>
                             </ul>
                           </div>
@@ -124,7 +124,7 @@
                                 <i class="icofont icofont-ui-text-chat" style="line-height: 58px;"></i>
                               </li>
                               <li class="text-right">
-                                <fmt:formatNumber value="${blogCount.type3}" groupingUsed="true"/>
+                                <fmt:formatNumber value="${showboxblogCount.type3}" groupingUsed="true"/>
                               </li>
                             </ul>
                           </div>
@@ -139,7 +139,7 @@
                                 <i class="icofont icofont-ui-social-link" style="line-height: 58px;"></i>
                               </li>
                               <li class="text-right">
-                                <fmt:formatNumber value="${cafeCount.type3}" groupingUsed="true"/>
+                                <fmt:formatNumber value="${showboxcafeCount.type3}" groupingUsed="true"/>
                               </li>
                             </ul>
                           </div>
@@ -154,7 +154,7 @@
                                 <i class="icofont icofont-page" style="line-height: 58px;"></i>
                               </li>
                               <li class="text-right">
-                                <fmt:formatNumber value="${relationCount.type1 + relationCount.type2}" groupingUsed="true"/>
+                                <fmt:formatNumber value="${showboxrelationCount.type1 + showboxrelationCount.type2}" groupingUsed="true"/>
                               </li>
                             </ul>
                           </div>
@@ -169,13 +169,12 @@
                                 <i class="icofont icofont-hat-alt" style="line-height: 58px;"></i>
                               </li>
                               <li class="text-right">
-                                <fmt:formatNumber value="${kintipCount.type3}" groupingUsed="true"/>
+                                <fmt:formatNumber value="${showboxkintipCount.type3}" groupingUsed="true"/>
                               </li>
                             </ul>
                           </div>
                         </div>
                       </div>
-                      <!-- card end -->
                       <!-- Morris chart start -->
                       <div class="col-md-12">
                         <div class="card">
@@ -187,7 +186,7 @@
                             </div>
                           </div>
                           <div class="card-block">
-                            <div id="morris-extra-area" style="height:300px;"></div>
+                            <div id="morris-extra-area2" style="height:300px;"></div>
                           </div>
                         </div>
                       </div>
@@ -214,35 +213,35 @@
                                 <tbody>
                                   <tr>
                                     <th scope="row">포털</th>
-                                    <td><fmt:formatNumber value="${portalCount.type1}" groupingUsed="true"/></td>
-                                    <td><fmt:formatNumber value="${portalCount.type2}" groupingUsed="true"/></td>
+                                    <td><fmt:formatNumber value="${showboxportalCount.type1}" groupingUsed="true"/></td>
+                                    <td><fmt:formatNumber value="${showboxportalCount.type2}" groupingUsed="true"/></td>
                                   </tr>
                                   <tr>
                                     <th scope="row">언론기사</th>
-                                    <td><fmt:formatNumber value="${mediaCount.type1}" groupingUsed="true"/></td>
-                                    <td><fmt:formatNumber value="${mediaCount.type2}" groupingUsed="true"/></td>
+                                    <td><fmt:formatNumber value="${showboxmediaCount.type1}" groupingUsed="true"/></td>
+                                    <td><fmt:formatNumber value="${showboxmediaCount.type2}" groupingUsed="true"/></td>
                                   </tr>
                                   <tr>
                                     <th scope="row">페이스북</th>
-                                    <td><fmt:formatNumber value="${facebookCount.type1}" groupingUsed="true"/></td>
-                                    <td><fmt:formatNumber value="${facebookCount.type2}" groupingUsed="true"/></td>
+                                    <td><fmt:formatNumber value="${showboxfacebookCount.type1}" groupingUsed="true"/></td>
+                                    <td><fmt:formatNumber value="${showboxfacebookCount.type2}" groupingUsed="true"/></td>
                                   </tr>
                                   <tr>
                                     <th scope="row">인스타그램</th>
-                                    <td><fmt:formatNumber value="${instagramCount.type1}" groupingUsed="true"/></td>
-                                    <td><fmt:formatNumber value="${instagramCount.type2}" groupingUsed="true"/></td>
+                                    <td><fmt:formatNumber value="${showboxinstagramCount.type1}" groupingUsed="true"/></td>
+                                    <td><fmt:formatNumber value="${showboxinstagramCount.type2}" groupingUsed="true"/></td>
                                   </tr>
                                   <tr>
                                     <th scope="row">트위터</th>
-                                    <td><fmt:formatNumber value="${twitterCount.type1}" groupingUsed="true"/></td>
-                                    <td><fmt:formatNumber value="${twitterCount.type2}" groupingUsed="true"/></td>
+                                    <td><fmt:formatNumber value="${showboxtwitterCount.type1}" groupingUsed="true"/></td>
+                                    <td><fmt:formatNumber value="${showboxtwitterCount.type2}" groupingUsed="true"/></td>
                                   </tr>
                                   <tr class="bg-inverse">
                                     <th scope="row">합계</th>
-                                    <td><fmt:formatNumber value="${portalCount.type1 + mediaCount.type1 + facebookCount.type1
-                                    	+ instagramCount.type1 + twitterCount.type1}" groupingUsed="true"/></td>
-                                    <td><fmt:formatNumber value="${portalCount.type2 + mediaCount.type2 + facebookCount.type2
-                                    	+ instagramCount.type2 + twitterCount.type2}" groupingUsed="true"/></td>
+                                    <td><fmt:formatNumber value="${showboxportalCount.type1 + showboxmediaCount.type1 + showboxfacebookCount.type1
+                                    	+ showboxinstagramCount.type1 + showboxtwitterCount.type1}" groupingUsed="true"/></td>
+                                    <td><fmt:formatNumber value="${showboxportalCount.type2 + showboxmediaCount.type2 + showboxfacebookCount.type2
+                                    	+ showboxinstagramCount.type2 + showboxtwitterCount.type2}" groupingUsed="true"/></td>
                                   </tr>
                                 </tbody>
                               </table>
@@ -272,35 +271,35 @@
                                   <tbody>
                                     <tr>
                                       <th scope="row">블로그</th>
-                                      <td><fmt:formatNumber value="${blogCount.type1}" groupingUsed="true"/></td>
-                                      <td><fmt:formatNumber value="${blogCount.type2}" groupingUsed="true"/></td>
+                                      <td><fmt:formatNumber value="${showboxblogCount.type1}" groupingUsed="true"/></td>
+                                      <td><fmt:formatNumber value="${showboxblogCount.type2}" groupingUsed="true"/></td>
                                     </tr>
                                     <tr>
                                       <th scope="row">카페</th>
-                                      <td><fmt:formatNumber value="${cafeCount.type1}" groupingUsed="true"/></td>
-                                      <td><fmt:formatNumber value="${cafeCount.type2}" groupingUsed="true"/></td>
+                                      <td><fmt:formatNumber value="${showboxcafeCount.type1}" groupingUsed="true"/></td>
+                                      <td><fmt:formatNumber value="${showboxcafeCount.type2}" groupingUsed="true"/></td>
                                     </tr>
                                     <tr>
                                       <th scope="row">지식인/Tip</th>
-                                      <td><fmt:formatNumber value="${kintipCount.type1}" groupingUsed="true"/></td>
-                                      <td><fmt:formatNumber value="${kintipCount.type2}" groupingUsed="true"/></td>
+                                      <td><fmt:formatNumber value="${showboxkintipCount.type1}" groupingUsed="true"/></td>
+                                      <td><fmt:formatNumber value="${showboxkintipCount.type2}" groupingUsed="true"/></td>
                                     </tr>
                                     <tr>
                                       <th scope="row">웹문서</th>
-                                      <td><fmt:formatNumber value="${webdocCount.type1}" groupingUsed="true"/></td>
-                                      <td><fmt:formatNumber value="${webdocCount.type2}" groupingUsed="true"/></td>
+                                      <td><fmt:formatNumber value="${showboxwebdocCount.type1}" groupingUsed="true"/></td>
+                                      <td><fmt:formatNumber value="${showboxwebdocCount.type2}" groupingUsed="true"/></td>
                                     </tr>
                                     <tr>
                                       <th scope="row">언론</th>
-                                      <td><fmt:formatNumber value="${mediaCount.type1}" groupingUsed="true"/></td>
-                                      <td><fmt:formatNumber value="${mediaCount.type2}" groupingUsed="true"/></td>
+                                      <td><fmt:formatNumber value="${showboxmediaCount.type1}" groupingUsed="true"/></td>
+                                      <td><fmt:formatNumber value="${showboxmediaCount.type2}" groupingUsed="true"/></td>
                                     </tr>
                                     <tr class="bg-inverse">
                                       <th scope="row">합계</th>
-                                      <td><fmt:formatNumber value="${blogCount.type1 + cafeCount.type1 + 
-                                       kintipCount.type1 + webdocCount.type1 + mediaCount.type1}" groupingUsed="true"/></td>
+                                      <td><fmt:formatNumber value="${showboxblogCount.type1 + showboxcafeCount.type1 + 
+                                       showboxkintipCount.type1 + showboxwebdocCount.type1 + showboxmediaCount.type1}" groupingUsed="true"/></td>
                                       <td><fmt:formatNumber value="${blogCount.type2 + cafeCount.type2 + 
-                                       kintipCount.type2 + webdocCount.type2 + mediaCount.type2}" groupingUsed="true"/></td>
+                                       showboxkintipCount.type2 + showboxwebdocCount.type2 + showboxmediaCount.type2}" groupingUsed="true"/></td>
                                     </tr>
                                   </tbody>
                               </table>
@@ -308,6 +307,7 @@
                           </div>
                         </div>
                       </div>
+                      <!-- showbox card end -->
                       <!-- calendar start -->
                       <div class="col-md-4 ">
                         <div class="card borderless-card z-depth-left-0">
@@ -471,39 +471,39 @@ $(document).ready(function(){
 
 	settingCalendar();
 
-	$.ajax({
+		$.ajax({
 
-	      type : "POST",
-		  url : "graph",
-	 	  dataType : "json",
-	 	  data : {success : 'success'},
-	  	  success : function(data){
+		      type : "POST",
+			  url : "showGraph",
+		 	  dataType : "json",
+		 	  data : {success : 'success'},
+		  	  success : function(data){
 
-	  		  console.log(data);
-	  		var script = "[";
+		  		  console.log(data);
+		  		var script = "[";
 
 
-			for(var i = 0; i < data.length; i++){
+				for(var i = 0; i < data.length; i++){
 
-				script += '{"period":' + '"' + data[i].writeDate + '",'
-						+ '"portal"'+ ':' + data[i].type1 + ","
-						+ '"cumminty"' + ':' + data[i].type2 + ","
-						+ '"sns"' + ':' + data[i].type3 + "},";
+					script += '{"period":' + '"' + data[i].writeDate + '",'
+							+ '"portal"'+ ':' + data[i].type1 + ","
+							+ '"cumminty"' + ':' + data[i].type2 + ","
+							+ '"sns"' + ':' + data[i].type3 + "},";
 
-				if(i == data.length-1){
-					script =  script.substr(0, script.length-1);
-					script += "]";
+					if(i == data.length-1){
+						script =  script.substr(0, script.length-1);
+						script += "]";
+					}
 				}
-			}
-			console.log(script);
+				console.log(script);
 
-			// to json
-			var jsonScript = JSON.parse(script);
+				// to json
+				var jsonScript = JSON.parse(script);
 
-			areaChart(jsonScript);
+				showAreaChart(jsonScript);
 
-	  	 }
-	});
+		 	}
+		});
 
 	$(document).on("click",".delete_todo",function() {
 	    $(this).parent().parent().parent().parent().fadeOut();
@@ -678,10 +678,11 @@ function settingCalendar(){
 	  		}
 		})
 	}
-function areaChart(jsonScript) {
-	$("#morris-extra-area").empty();
-	window.areaChart = Morris.Area({
-		element: 'morris-extra-area',
+
+function showAreaChart(jsonScript) {
+	$("#morris-extra-area2").empty();
+	window.showAreaChart = Morris.Area({
+		element: 'morris-extra-area2',
 	    data: jsonScript,
 	    lineColors: ['#fb9678', '#7E81CB', '#01C0C8'],
 	    xkey: 'period',
@@ -696,6 +697,7 @@ function areaChart(jsonScript) {
         hideHover: 'auto'
 	    });
 	}
+
 
 </script>
 
