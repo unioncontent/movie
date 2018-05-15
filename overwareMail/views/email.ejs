@@ -436,6 +436,9 @@
 <script src="/pages/email/js/modal.js"></script>
 <script src="/pages/email/js/select2.js"></script>
 <script type="text/javascript">
+  $(document).on('mousedown','.select2-results__option',function(e){
+    console.log(e);
+  });
   $(document).ready(function() {
     if($('#mailType').val()!=''){
       var senderArr = $('#mailSender').val().split('|');
