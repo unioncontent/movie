@@ -225,10 +225,10 @@ $(".recipi-select").select2({
     return result.replace('\n','');
   }
 });
-$('.recipi-select').on('select2:opening select2:closing', function( event ) {
-  var $searchfield = $(this).parent().find('.select2-search__field');
-  $searchfield.prop('disabled', true);
-});
+// $('.recipi-select').on('select2:opening select2:closing', function( event ) {
+//   var $searchfield = $(this).parent().find('.select2-search__field');
+//   $searchfield.prop('disabled', true);
+// });
 // 수신자 그룹
 $(".group-select").select2({
   ajax: {
@@ -281,7 +281,7 @@ $(".group-select").select2({
     return repo['M_group_title']+" &lt; "+repo['groupCount']+"명 &gt;";
   }
 });
-$('.group-select').on('select2:opening select2:closing', function( event ) {
-  var $searchfield = $(this).parent().find('.select2-search__field');
-  $searchfield.prop('disabled', true);
-});
+// $('.group-select').on('select2:opening select2:closing', function( event ) {
+//   var $searchfield = $(this).parent().find('.select2-search__field');
+//   $searchfield.prop('disabled', true);
+// });
