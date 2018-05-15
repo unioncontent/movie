@@ -5,7 +5,6 @@ var user = require('../models/user.js');
 var mailListA = require('../models/mailListA.js');
 var mailListC = require('../models/mailListC.js');
 
-
 var isAuthenticated = function (req, res, next) {
   if (req.isAuthenticated()){
     if(req.user.user_admin == null){
@@ -15,6 +14,7 @@ var isAuthenticated = function (req, res, next) {
   res.redirect('/login');
 };
 
+// 메일 리스트 전체 페이지
 router.get('/',isAuthenticated,async function(req, res) {
   var data = await getListPageData(req.user.n_idx,req.query);
   res.render('list',data);
@@ -172,6 +172,7 @@ async function asyncForEach(array, callback) {
   }
 }
 
+// 메일 그룹 리스트 페이지
 router.get('/group',isAuthenticated,async function(req, res) {
   var data = await getGroupListPageData(req.user.n_idx,req.query,'list');
   res.render('listGroup',data);
@@ -256,6 +257,7 @@ async function getGroupListPageData(idx,param,type){
   return data;
 }
 
+// 메일 등록 페이지
 router.get('/add',isAuthenticated,function(req, res, next) {
   res.render('listAdd');
 });

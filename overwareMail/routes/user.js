@@ -5,7 +5,6 @@ var user = require('../models/user.js');
 var mailListA = require('../models/mailListA.js');
 var mailListC = require('../models/mailListC.js');
 
-
 var isAuthenticated = function (req, res, next) {
   if (req.isAuthenticated()){
     if(req.user.user_admin == null){
@@ -22,6 +21,16 @@ router.get('/',isAuthenticated,async function(req, res) {
 
 router.get('/add',isAuthenticated,function(req, res, next) {
   res.render('userAdd');
+});
+
+router.post('/getNextPage',isAuthenticated,async function(req, res) {
+  try{
+    var data = await getListPageData(req.user.n_idx,req.body);
+    res.send({status:true,list:data});
+  }
+  catch(e){
+    res.status(500).send(e);
+  }
 });
 
 async function getListPageData(idx,param){
@@ -76,6 +85,17 @@ router.post('/delete',isAuthenticated,async function(req, res) {
   }
 });
 
+router.post('/add/idCheck',isAuthenticated,async function(req, res){
+  try{
+    var idCheck = await user.addIdCheck([req.body.id]);
+    var result = {msg: (idCheck.length == 0) ? 'success':'fail'};
+    res.send(result);
+  }
+  catch(e){
+    res.status(500).send(e);
+  }
+});
+
 router.post('/add',isAuthenticated,async function(req, res) {
   try{
     var param = {
@@ -88,27 +108,6 @@ router.post('/add',isAuthenticated,async function(req, res) {
     };
     await user.insert('m_mail_user',param);
     res.send({status:true});
-  }
-  catch(e){
-    res.status(500).send(e);
-  }
-});
-
-router.post('/getNextPage',isAuthenticated,async function(req, res) {
-  try{
-    var data = await getListPageData(req.user.n_idx,req.body);
-    res.send({status:true,list:data});
-  }
-  catch(e){
-    res.status(500).send(e);
-  }
-});
-
-router.post('/add/idCheck',isAuthenticated,async function(req, res){
-  try{
-    var idCheck = await user.addIdCheck([req.body.id]);
-    var result = {msg: (idCheck.length == 0) ? 'success':'fail'};
-    res.send(result);
   }
   catch(e){
     res.status(500).send(e);
