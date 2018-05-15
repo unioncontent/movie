@@ -12,6 +12,8 @@ public class MobileEntVO {
 	private String keyword_type;
 	private String uid;
 	private String url;
+	private String reporter_name;
+	private String reporter_media_name;
 	private Date createDate;
 	private Date updateDate;
 		
@@ -102,12 +104,28 @@ public class MobileEntVO {
 	public void setUpdateDate(Date updateDate) {
 	    this.updateDate = updateDate;
 	}
+	
+	public String getReporter_name() {
+		return reporter_name;
+	}
+
+	public void setReporter_name(String reporter_name) {
+		this.reporter_name = reporter_name;
+	}
+
+	public String getReporter_media_name() {
+		return reporter_media_name;
+	}
+
+	public void setReporter_media_name(String reporter_media_name) {
+		this.reporter_media_name = reporter_media_name;
+	}
 
 	@Override
 	public String toString() {
-	    return "NaverMovieVO [ME_idx=" + ME_idx + ", ME_rank=" + ME_rank + ", ME_title=" + ME_title + ", writeDate=" + writeDate +
-		    ", title_key=" + title_key +", keyword=" + keyword + ", keyword_type=" + keyword_type + ", uid=" + uid + ", url=" +url+ 
-		    ", createDate=" +createDate + ", updateDate=" +updateDate + "]";
+		return "MobileEntVO [ME_idx=" + ME_idx + ", ME_rank=" + ME_rank + ", ME_title=" + ME_title + ", writeDate="
+				+ writeDate + ", title_key=" + title_key + ", keyword=" + keyword + ", keyword_type=" + keyword_type
+				+ ", uid=" + uid + ", url=" + url + ", reporter_name=" + reporter_name + ", reporter_media_name="
+				+ reporter_media_name + ", createDate=" + createDate + ", updateDate=" + updateDate + "]";
 	}
-	
 }

@@ -11,6 +11,8 @@ public interface MobileEntDAO {
     	
 	public Integer getTypeOfActorCount(SearchCriteria cri);
 	
+	public Integer getMatchCount(SearchCriteria cri);
+	
 	public MobileEntVO read(Integer NM_idx);
 	
 	public List<MobileEntVO> searchList(SearchCriteria cri);
@@ -30,4 +32,17 @@ public interface MobileEntDAO {
 	
 	public Integer MgetSearchCount(SearchCriteria cri);
 	
+	public Integer MgetMatchCount(SearchCriteria cri);
+	
+	public Integer getTypeOfMovieCountGraph(SearchCriteria cri);
+	
+	public Integer getTypeOfActorCountGraph(SearchCriteria cri);
+	
+	public Integer getMatchCountGraph(SearchCriteria cri);
+	
+	public Integer MgetTypeOfMovieCountGraph(SearchCriteria cri);
+	
+	public Integer MgetTypeOfActorCountGraph(SearchCriteria cri);
+	
+	public Integer MgetMatchCountGraph(SearchCriteria cri);
 }

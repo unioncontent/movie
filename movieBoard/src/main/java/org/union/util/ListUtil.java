@@ -161,6 +161,8 @@ public class ListUtil {
 				vo.setKeyword_main(addList.get(i).getTitle_key());
 				vo.setKeyword(addList.get(i).getKeyword());
 				vo.setTitle(addList.get(i).getME_title());
+				vo.setReporter_name(addList.get(i).getReporter_name());
+				vo.setReporter_media_name(addList.get(i).getReporter_media_name());
 				vo.setWriteDate(addList.get(i).getWriteDate());
 				vo.setUrl(addList.get(i).getUrl());
 				

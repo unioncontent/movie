@@ -217,6 +217,24 @@
 													<div class="card-block-big">
 														<div>
 															<h3>
+																<fmt:formatNumber value="${matchCount}" groupingUsed="true" />
+															</h3>
+															<p class='pCard'>매칭</p>
+															<div class="progress ">
+																<div class="progress-bar progress-bar-striped progress-xs progress-bar-pink" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+															</div>
+														</div>
+														<i class="icofont icofont-file-text text-inverse"></i>
+													</div>
+												</div>
+											</div>
+											<!-- counter-card-4 end -->
+											<!-- counter-card-5 start -->
+											<%-- <div class="col-md-3">
+												<div class="card counter-card-1">
+													<div class="card-block-big">
+														<div>
+															<h3>
 																<fmt:formatNumber value="${totalCount-(movieCount+actorCount)}" groupingUsed="true" />
 															</h3>
 															<p class='pCard'>미분류</p>
@@ -227,8 +245,8 @@
 														<i class="icofont icofont-file-text text-inverse"></i>
 													</div>
 												</div>
-											</div>
-											<!-- counter-card-4 end -->
+											</div> --%>
+											<!-- counter-card-5 end -->
 											<!-- Morris chart start -->
 											<div class="col-md-12">
 												<div class="card">
@@ -254,7 +272,7 @@
 													</div>
 													<div class="card-block table-border-style">
 														<div class="table-responsive">
-															<table class="table">
+															<table class="table table-bordered table-sm">
 																<thead>
 																	<tr>
 																		<th>NO</th>
@@ -262,6 +280,8 @@
 																		<!-- <th>순위</th> -->
 																		<th>제목</th>
 																		<th>키워드</th>
+																		<th>기자</th>
+																		<th>언론사</th>
 																	</tr>
 																</thead>
 																<tbody>
@@ -276,12 +296,14 @@
 																				</div>
 																			</td>
 																			<td><div class="keyword-nowrap">${elist.keyword}</div></td>
+																			<td><div class="keyword-nowrap">${elist.reporter_name}</div></td>
+																			<td><div class="keyword-nowrap">${elist.reporter_media_name}</div></td>
 																		</tr>
 																	</c:forEach>
 																</tbody>
 																<tfoot>
 																	<tr>
-																		<td colspan="4">
+																		<td colspan="6">
 																			<ul class="pagination float-right">
 							                                                <c:if test="${pageMaker.prev}">
 							                                              		<li class="page-item">
@@ -582,7 +604,7 @@
 		$.ajax({
 
 			type : "POST",
-		  	url : "graph",
+		  	url : "Mgraph",
 	 	  	dataType : "json",
 	 	  	data : {
 	 	  		startDate : startDate, 
@@ -599,8 +621,9 @@
 
 	  			for(var i = 0; i < data.length; i++){
 	  				script += '{"period":' + '"' + data[i].writeDate + '",'
-	  						+ '"movie"'+ ':' + data[i].type3 + ","
-	  						+ '"actor"'+ ':' + data[i].type4 + "},";
+	  						+ '"movie"'+ ':' + data[i].type1 + ","
+	  						+ '"actor"'+ ':' + data[i].type2 + ","
+	  						+ '"match"'+ ':' + data[i].type3 + "},";
 
 	  				if(i == data.length-1){
 	  					script =  script.substr(0, script.length-1);
@@ -621,29 +644,29 @@
 
 	
 	function drawChart(data){
-			var xType = "hour"
-			if(dateCompare()){
-				xType = "day"
-			}
-			$("#morris-extra-area").empty();
-			window.areaChart = Morris.Area({
-	   			element: 'morris-extra-area',
-				data: data,
-				xLabels: xType,
-				lineColors: ['#4C5667', '#1ABC9C'],
-				xkey: 'period',
-				ykeys: ['movie', 'actor'],
-				labels: ['영화', '배우'],
-		 	    hideHover: 'auto',
-		 	    pointSize: 0,
-		 	    lineWidth: 0,
-				resize: true,
-				fillOpacity: 0.8,
-				gridLineColor: '#5FBEAA',
-				hideHover: 'auto'
-			});
-			
-	}
+		var xType = "hour"
+		if(dateCompare()){
+			xType = "day"
+		}
+		$("#morris-extra-area").empty();
+		window.areaChart = Morris.Area({
+   			element: 'morris-extra-area',
+			data: data,
+			xLabels: xType,
+			lineColors: ['#4C5667', '#1ABC9C', '#8c2db5'],
+			xkey: 'period',
+			ykeys: ['movie', 'actor', 'match'],
+			labels: ['영화', '배우', '매칭'],
+	 	    hideHover: 'auto',
+	 	    pointSize: 0,
+	 	    lineWidth: 0,
+			resize: true,
+			fillOpacity: 0.8,
+			gridLineColor: '#5FBEAA',
+			hideHover: 'auto'
+		});
+		
+}
 
 	function makeDateFormat(date, index){
 		var splitDate = date.split(" - ")[index];

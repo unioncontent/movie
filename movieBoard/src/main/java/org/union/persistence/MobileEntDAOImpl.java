@@ -88,4 +88,61 @@ public class MobileEntDAOImpl implements MobileEntDAO {
 		return session.selectOne(namespace + "MgetSearchCount", cri);
 	}
 
+
+	@Override
+	public Integer getMatchCount(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "getMatchCount", cri);
+	}
+
+
+	@Override
+	public Integer MgetMatchCount(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "MgetMatchCount", cri);
+	}
+
+
+	@Override
+	public Integer getTypeOfMovieCountGraph(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "getTypeOfMovieCountGraph", cri);
+	}
+
+
+	@Override
+	public Integer getTypeOfActorCountGraph(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "getTypeOfActorCountGraph", cri);
+	}
+
+
+	@Override
+	public Integer getMatchCountGraph(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "getMatchCountGraph", cri);
+	}
+
+
+	@Override
+	public Integer MgetTypeOfMovieCountGraph(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "MgetTypeOfMovieCountGraph", cri);
+	}
+
+
+	@Override
+	public Integer MgetTypeOfActorCountGraph(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "MgetTypeOfActorCountGraph", cri);
+	}
+
+
+	@Override
+	public Integer MgetMatchCountGraph(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "MgetMatchCountGraph", cri);
+	}
+
+
 }

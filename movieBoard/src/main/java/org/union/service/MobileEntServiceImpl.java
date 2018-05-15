@@ -76,4 +76,52 @@ public class MobileEntServiceImpl implements MobileEntService{
 		return mobileEntDAO.MgetSearchCount(cri);
 	}
 
+	@Override
+	public Integer getMatchCount(SearchCriteria cri) {
+
+		return mobileEntDAO.getMatchCount(cri);
+	}
+
+	@Override
+	public Integer MgetMatchCount(SearchCriteria cri) {
+
+		return mobileEntDAO.MgetMatchCount(cri);
+	}
+
+	@Override
+	public Integer getTypeOfMovieCountGraph(SearchCriteria cri) {
+
+		return mobileEntDAO.getTypeOfMovieCountGraph(cri);
+	}
+
+	@Override
+	public Integer getTypeOfActorCountGraph(SearchCriteria cri) {
+
+		return mobileEntDAO.getTypeOfActorCountGraph(cri);
+	}
+
+	@Override
+	public Integer getMatchCountGraph(SearchCriteria cri) {
+
+		return mobileEntDAO.getMatchCountGraph(cri);
+	}
+
+	@Override
+	public Integer MgetTypeOfMovieCountGraph(SearchCriteria cri) {
+
+		return mobileEntDAO.MgetTypeOfMovieCountGraph(cri);
+	}
+
+	@Override
+	public Integer MgetTypeOfActorCountGraph(SearchCriteria cri) {
+
+		return mobileEntDAO.MgetTypeOfActorCountGraph(cri);
+	}
+
+	@Override
+	public Integer MgetMatchCountGraph(SearchCriteria cri) {
+
+		return mobileEntDAO.MgetMatchCountGraph(cri);
+	}
+
 }

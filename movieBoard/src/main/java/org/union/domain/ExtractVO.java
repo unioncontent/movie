@@ -4,7 +4,7 @@ public class ExtractVO {
 
 	
 	private String domain, domainType, company,keyword_main, keyword, title, content, writeDate,writer,
-				createDate, url, textType, thumbnail, view_cnt, reply_cnt, like_cnt;
+				createDate, url, textType, thumbnail, view_cnt, reply_cnt, like_cnt, reporter_name, reporter_media_name;
 	private Integer sns_idx, community_idx, media_idx, portal_idx, reply_idx;
 	
 	public String getDomain() {
@@ -135,14 +135,26 @@ public class ExtractVO {
 	public void setLike_cnt(String like_cnt) {
 		this.like_cnt = like_cnt;
 	}
+	public String getReporter_name() {
+		return reporter_name;
+	}
+	public void setReporter_name(String reporter_name) {
+		this.reporter_name = reporter_name;
+	}
+	public String getReporter_media_name() {
+		return reporter_media_name;
+	}
+	public void setReporter_media_name(String reporter_media_name) {
+		this.reporter_media_name = reporter_media_name;
+	}
 	@Override
 	public String toString() {
 		return "ExtractVO [domain=" + domain + ", domainType=" + domainType + ", company=" + company + ", keyword_main="
 				+ keyword_main + ", keyword=" + keyword + ", title=" + title + ", content=" + content + ", writeDate="
 				+ writeDate + ", writer=" + writer + ", createDate=" + createDate + ", url=" + url + ", textType="
 				+ textType + ", thumbnail=" + thumbnail + ", view_cnt=" + view_cnt + ", reply_cnt=" + reply_cnt
-				+ ", like_cnt=" + like_cnt + ", sns_idx=" + sns_idx + ", community_idx=" + community_idx
-				+ ", media_idx=" + media_idx + ", portal_idx=" + portal_idx + ", reply_idx=" + reply_idx + "]";
+				+ ", like_cnt=" + like_cnt + ", reporter_name=" + reporter_name + ", reporter_media_name="
+				+ reporter_media_name + ", sns_idx=" + sns_idx + ", community_idx=" + community_idx + ", media_idx="
+				+ media_idx + ", portal_idx=" + portal_idx + ", reply_idx=" + reply_idx + "]";
 	}
-	
 }

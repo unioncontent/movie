@@ -99,7 +99,8 @@
  			keyword_type = '영화'
  		and
  			ME_type='ent'
- 		<include refid="search"></include>
+ 		and
+			writeDate >= curdate()
  	
  	</select>
  	
@@ -112,9 +113,23 @@
  			keyword_type = '배우'
  		and
  			ME_type='ent'
- 		<include refid="search"></include>
+ 		and
+			writeDate >= curdate()
  	
  	</select>
+ 	
+ 	<select id="getMatchCount" resultType="Integer">
+		select
+			count(*)
+		from
+			mobileent_data
+		where
+ 			ME_type='ent'
+        and    
+			reporter_name is not null
+		and
+			writeDate >= curdate()
+	</select>
  	
  	<select id="MsearchList" resultType="MobileEntVO">
  		select
@@ -143,7 +158,7 @@
  		<include refid="search"></include>
  		order by writeDate desc, ME_rank asc
 	</select>
-
+	
 	<select id="MgetSearchCount" resultType="Integer">
 		select
 			count(*)
@@ -165,7 +180,8 @@
  			keyword_type = '영화'
  		and
  			ME_type='movie'
- 		<include refid="search"></include>
+ 		and
+			writeDate >= curdate()
  	
  	</select>
  	
@@ -178,7 +194,97 @@
  			keyword_type = '배우'
  		and
  			ME_type='movie'
+ 		and
+			writeDate >= curdate()
+ 	
+ 	</select>
+ 	
+ 	<select id="MgetMatchCount" resultType="Integer">
+		select
+			count(*)
+		from
+			mobileent_data
+		where
+ 			ME_type='movie'
+        and    
+			reporter_name is not null
+		and
+			writeDate >= curdate()
+	</select>
+	
+	<select id="getTypeOfMovieCountGraph" resultType="Integer">
+ 		select
+ 			count(*)
+ 		from
+ 			mobileent_data
+ 		where
+ 			keyword_type = '영화'
+ 		and
+ 			ME_type='ent'
  		<include refid="search"></include>
  	
  	</select>
+ 	
+ 	<select id="getTypeOfActorCountGraph" resultType="Integer">
+ 		select
+ 			count(*)
+ 		from
+ 			mobileent_data
+ 		where
+ 			keyword_type = '배우'
+ 		and
+ 			ME_type='ent'
+ 		<include refid="search"></include>
+ 	
+ 	</select>
+ 	
+ 	<select id="getMatchCountGraph" resultType="Integer">
+		select
+			count(*)
+		from
+			mobileent_data
+		where
+ 			ME_type='ent'
+        and    
+			reporter_name is not null
+		<include refid="search"></include>
+	</select>
+	
+	<select id="MgetTypeOfMovieCountGraph" resultType="Integer">
+ 		select
+ 			count(*)
+ 		from
+ 			mobileent_data
+ 		where
+ 			keyword_type = '영화'
+ 		and
+ 			ME_type='movie'
+ 		<include refid="search"></include>
+ 	
+ 	</select>
+ 	
+ 	<select id="MgetTypeOfActorCountGraph" resultType="Integer">
+ 		select
+ 			count(*)
+ 		from
+ 			mobileent_data
+ 		where
+ 			keyword_type = '배우'
+ 		and
+ 			ME_type='movie'
+ 		<include refid="search"></include>
+ 	
+ 	</select>
+ 	
+ 	<select id="MgetMatchCountGraph" resultType="Integer">
+		select
+			count(*)
+		from
+			mobileent_data
+		where
+ 			ME_type='movie'
+        and    
+			reporter_name is not null
+		<include refid="search"></include>
+	</select>
  </mapper>

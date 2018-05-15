@@ -129,9 +129,10 @@ public class PortalController {
 
 	logger.info("main cri: " + cri);
 
-	// 영화/배우 
+	// 영화/배우 /매칭
 	model.addAttribute("movieCount", mobileEntService.getTypeOfMovieCount(cri));
 	model.addAttribute("actorCount", mobileEntService.getTypeOfActorCount(cri));
+	model.addAttribute("matchCount", mobileEntService.getMatchCount(cri));
 
 	// 네이버모바일리스트
 	
@@ -209,9 +210,10 @@ public class PortalController {
 
 	logger.info("main cri: " + cri);
 
-	// 영화/배우 
+	// 영화/배우/ 매칭
 	model.addAttribute("movieCount", mobileEntService.MgetTypeOfMovieCount(cri));
 	model.addAttribute("actorCount", mobileEntService.MgetTypeOfActorCount(cri));
+	model.addAttribute("matchCount", mobileEntService.MgetMatchCount(cri));
 
 	// 네이버모바일리스트
 	
@@ -316,7 +318,7 @@ public class PortalController {
 
     }
 
-    @ResponseBody
+	@ResponseBody
     @PostMapping("/graph")
     public List<GraphVO> graphPOST(String startDate, String endDate, String company, String selectKey) throws ParseException {
 	logger.info("graphPOST called....");
@@ -360,15 +362,13 @@ public class PortalController {
 		GraphVO graphVO = new GraphVO();
 		graphVO.setWriteDate(standFormat.format(cal.getTime()).toString().split(" ")[0]);
 
-		Integer m = mobileEntService.getTypeOfMovieCount(cri);
-		Integer a = mobileEntService.getTypeOfActorCount(cri);
-		Integer mv = mobileEntService.MgetTypeOfMovieCount(cri);
-		Integer ac = mobileEntService.MgetTypeOfActorCount(cri);
+		Integer m = mobileEntService.getTypeOfMovieCountGraph(cri);
+		Integer a = mobileEntService.getTypeOfActorCountGraph(cri);
+		Integer n = mobileEntService.getMatchCountGraph(cri);
 
 		graphVO.setType1(m);
 		graphVO.setType2(a);
-		graphVO.setType3(mv);
-		graphVO.setType4(ac);
+		graphVO.setType3(n);
 
 		graphList.add(graphVO);
 
@@ -391,13 +391,106 @@ public class PortalController {
 	    for(int i = 0; i < hourSize; i++) {
 		Date dh = standFormat.parse(oDate+" "+String.valueOf(i)+":00:00");
 		cri.setHour(String.valueOf(i));
-		Integer m = mobileEntService.getTypeOfMovieCount(cri);
-		Integer a = mobileEntService.getTypeOfActorCount(cri);
+		
+		Integer m = mobileEntService.getTypeOfMovieCountGraph(cri);
+		Integer a = mobileEntService.getTypeOfActorCountGraph(cri);
+		Integer n = mobileEntService.getMatchCountGraph(cri);
 
 		GraphVO graphVO = new GraphVO();
 		graphVO.setWriteDate(standFormat.format(dh));
 		graphVO.setType1(m);
 		graphVO.setType2(a);
+		graphVO.setType3(n);
+
+		graphList.add(graphVO);
+	    }
+	}
+
+	return graphList;
+    }
+	
+	@ResponseBody
+    @PostMapping("/Mgraph")
+    public List<GraphVO> MgraphPOST(String startDate, String endDate, String company, String selectKey) throws ParseException {
+	logger.info("MgraphPOST called....");
+
+	if(company.equals("회사") || company.equals("undefined") || company.equals("")) {
+	    company = null;
+	}
+	if(selectKey.equals("키워드") || selectKey.equals("undefined") || selectKey.equals("")) {
+	    selectKey = null;
+	}
+	String oDate = startDate;
+	startDate = startDate + " 00:00:00";
+	endDate = endDate + " 23:59:59";
+	logger.info("startDate: " + startDate);
+	logger.info("endDate: " + endDate);
+
+	SearchCriteria cri = new SearchCriteria();
+	cri.setSelectKey(selectKey);
+	cri.setCompany(company);
+	logger.info("cri: " + cri);
+
+	SimpleDateFormat standFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+	Date transStart = standFormat.parse(startDate);
+	Date transEnd = standFormat.parse(endDate);
+
+	Calendar cal = Calendar.getInstance();
+	cal.setTime(transStart);
+
+	List<GraphVO> graphList = new ArrayList<GraphVO>();
+
+	long gap = (transEnd.getTime() - transStart.getTime()) / (24 * 60 * 60 * 1000);
+	logger.info("gap: " + gap);
+
+	if(gap != 0) {
+	    while ((transEnd.getTime() - cal.getTimeInMillis()) / (24 * 60 * 60 * 1000) > -1) {
+		cri.setStartDate(standFormat.format(cal.getTime()));
+		cal.add(Calendar.SECOND, (24 * 60 * 60) - 1);
+		cri.setEndDate(standFormat.format(cal.getTime()));
+		
+		GraphVO graphVO = new GraphVO();
+		graphVO.setWriteDate(standFormat.format(cal.getTime()).toString().split(" ")[0]);
+		
+		Integer m = mobileEntService.MgetTypeOfMovieCountGraph(cri);
+		Integer a = mobileEntService.MgetTypeOfActorCountGraph(cri);
+		Integer n = mobileEntService.MgetMatchCountGraph(cri);
+
+		graphVO.setType1(m);
+		graphVO.setType2(a);
+		graphVO.setType3(n);
+
+		graphList.add(graphVO);
+
+		cal.add(Calendar.SECOND, 1);
+	    }
+	}
+	else {
+	    cri.setStartDate(startDate);
+	    cri.setEndDate(endDate);
+	    
+	    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	    Date currentTime = new Date();
+	    String oNow = sdf.format(currentTime);
+
+	    int compare = oNow.compareTo(oDate);
+	    int hourSize = 24;
+	    if(compare==0) {
+		hourSize = currentTime.getHours()+1; 
+	    }
+	    for(int i = 0; i < hourSize; i++) {
+		Date dh = standFormat.parse(oDate+" "+String.valueOf(i)+":00:00");
+		cri.setHour(String.valueOf(i));
+		Integer m = mobileEntService.MgetTypeOfMovieCountGraph(cri);
+		Integer a = mobileEntService.MgetTypeOfActorCountGraph(cri);
+		Integer n = mobileEntService.MgetMatchCountGraph(cri);
+
+		GraphVO graphVO = new GraphVO();
+		graphVO.setWriteDate(standFormat.format(dh));
+		graphVO.setType1(m);
+		graphVO.setType2(a);
+		graphVO.setType3(n);
 
 		graphList.add(graphVO);
 	    }
