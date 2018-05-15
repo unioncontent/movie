@@ -825,9 +825,9 @@
           $('#newsCount').text(data.result.newsCount);
           $('#replyCount').text(data.result.replyCount);
 
-          $('#total').text(tag.eq(3).text());
-          $('#success').text(tag.eq(4).text());
-          $('#fail').text(tag.eq(5).text());
+          $('#total').text(tag.eq(4).text());
+          $('#success').text(tag.eq(5).text());
+          $('#fail').text(tag.eq(6).text());
           $('#date1').text(input.eq(0).val());
           if(tag.eq(7).text().trim().indexOf("예약") != -1){
             $('#date2').text(input.eq(1).val().slice(0,16));
