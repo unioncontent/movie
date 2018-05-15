@@ -3,7 +3,6 @@ var passport = require('passport');
 var bcrypt = require('bcrypt-nodejs');
 var LocalStrategy = require('passport-local').Strategy;
 var router = express.Router();
-
 // DB module
 var content = require('../models/content.js');
 var period = require('../models/period.js');
@@ -15,6 +14,7 @@ var isAuthenticated = function (req, res, next) {
   res.redirect('/login');
 };
 
+// 대시보드
 router.get('/', isAuthenticated, async function(req, res, next) {
   var data = {
     list:await period.getYesterday(req.user),
@@ -35,6 +35,7 @@ router.get('/', isAuthenticated, async function(req, res, next) {
   res.render('index',data);
 });
 
+// 메일 발송 후 메일 내용 확인 페이지
 router.get('/preview',async function(req, res, next) {
   console.log('req.query:',req.query);
   if(!('page' in req.query)){
@@ -64,6 +65,7 @@ router.get('/preview',async function(req, res, next) {
   res.render('preview',data);
 });
 
+// 대시보드 최근 발송 현황 그래프
 router.post('/7DayGraph',isAuthenticated, async function(req, res, next) {
   var data = await period.get7DayGraph(req.user);
   if(data.length == 0){
@@ -98,6 +100,11 @@ router.post('/login', function (req, res, next) {
 
 });
 
+router.get('/logout', function (req, res){
+  req.logout();
+  res.redirect('/');
+});
+
 passport.use(new LocalStrategy({
   usernameField: 'username',
   passwordField: 'password',
@@ -126,11 +133,6 @@ passport.serializeUser(function (user, done) {
 passport.deserializeUser(function (user, done) {
   // 페이지 이동 시마다 세션 로그인 값 호출
   done(null, user);
-});
-
-router.get('/logout', function (req, res){
-  req.logout();
-  res.redirect('/');
 });
 
 module.exports = router;

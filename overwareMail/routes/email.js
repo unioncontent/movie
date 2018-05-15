@@ -260,7 +260,7 @@ router.get('/searchAll',isAuthenticated, async function(req, res) {
  * open : 발송측정결과 open값
  * click : 발송측정결과 click값
  * check_period : 트래킹 기간을 지정하며 3 / 7 / 15 / 30 일을 기준으로 지정하여 발송
- * option_return_url : 위의 측정 결과를 받고 싶은 URL 을 넣어줍니다. ex) http://domain?type=[click | open | reject]&mail_id=[MailID]&email=[Email]
+ * option_return_url : 위의 측정 결과를 받고 싶은 URL을 넣어줍니다. ex) http://domain?type=[click | open | reject]&mail_id=[MailID]&email=[Email]
  *
  * 예약 관련 파라미터 사용할 경우
  * mail_type : 즉시발송 / 예약 발송을 구분합니다. NORMAL - 즉시발송 / ONETIME - 1회예약 / WEEKLY - 매주정기예약 / MONTHLY - 매월정기예약 / YEARLY - 매년정기예약
@@ -572,6 +572,7 @@ async function settingMailBody(bodyHtml,keyword,idx){
   html += '</td></tr></tbody></table></td></tr></tbody></table><table cellpadding="0" cellspacing="0" border="0" width="750" align="center" style="margin-top: 30px;"><tbody><tr><td align="center">Copyright ⓒ unioncontents All rights reserved.</td></tr></tbody></table><p>&nbsp;</p>'
   return htmlMsg+bodyHtml+htmlMsg+html;
 }
+
 function getFiles (dir, files_){
   var fs = require('fs');
   files_ = files_ || [];
@@ -648,6 +649,7 @@ function emailSendFun(pStr){
 }
 
 var multer = require('multer');
+
 async function mkdirsFun (directory) {
   try {
     await fs.ensureDir(directory)
@@ -725,33 +727,33 @@ router.post('/send/file',uploadFile.single('file'),function(req, res) {
   var result = req.file.destination.replace('public/uploads/files/','')+'/'+req.file.filename.split('.')[0];
   res.send({location:'http://overmail.iptime.org:8080/period/download/'+result});
 });
-
-var storageFiles = multer.diskStorage({
-  destination: async function (req, file, cb) {
-    var date = datetime.create();
-    var today = date.format('Ymd');
-    var path = await mkdirsFun('public/uploads/files/'+today);
-    await cb(null, path);
-  },
-  filename: function (req, file, cb) {
-    var fileNameArr = file.originalname.split('.');
-    cb(null, new Buffer(fileNameArr[0],'ascii').toString('hex')+"."+fileNameArr[fileNameArr.length-1])
-  }
-});
-var uploadFiles = multer({ storage: storageFiles });
-router.post('/send/files',uploadFiles.single('files[]'),function(req, res) {
-  console.log('/send/files:',req.file);
-  if (!req.file) {
-    console.log("No file passed");
-    return res.status(500).send("No file passed");
-  }
-  if(req.file.originalname.indexOf('.exe') != -1){
-    console.log('exe Error:',req.file.path);
-    fs.removeSync(req.file.path);
-    return res.status(500).send("exe는 업로드 불가합니다.");
-  }
-  var data = [req.file.filename,req.file.destination.replace('public/uploads/files/','')+'/'+req.file.originalname];
-  res.send({result:data});
-});
+// 첨부파일 upload 및 path get(사용안하고 있음)
+// var storageFiles = multer.diskStorage({
+//   destination: async function (req, file, cb) {
+//     var date = datetime.create();
+//     var today = date.format('Ymd');
+//     var path = await mkdirsFun('public/uploads/files/'+today);
+//     await cb(null, path);
+//   },
+//   filename: function (req, file, cb) {
+//     var fileNameArr = file.originalname.split('.');
+//     cb(null, new Buffer(fileNameArr[0],'ascii').toString('hex')+"."+fileNameArr[fileNameArr.length-1])
+//   }
+// });
+// var uploadFiles = multer({ storage: storageFiles });
+// router.post('/send/files',uploadFiles.single('files[]'),function(req, res) {
+//   console.log('/send/files:',req.file);
+//   if (!req.file) {
+//     console.log("No file passed");
+//     return res.status(500).send("No file passed");
+//   }
+//   if(req.file.originalname.indexOf('.exe') != -1){
+//     console.log('exe Error:',req.file.path);
+//     fs.removeSync(req.file.path);
+//     return res.status(500).send("exe는 업로드 불가합니다.");
+//   }
+//   var data = [req.file.filename,req.file.destination.replace('public/uploads/files/','')+'/'+req.file.originalname];
+//   res.send({result:data});
+// });
 
 module.exports = router;
