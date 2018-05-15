@@ -44,7 +44,9 @@ app.use(passport.session());
 // routes setup
 app.use(function(req, res, next) {
   // console.log(req.user);
-  res.locals.user = req.user;
+  if('user' in req){
+    res.locals.user = req.user;
+  }
   next();
 });
 
