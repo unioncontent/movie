@@ -68,9 +68,6 @@ router.get('/preview',async function(req, res, next) {
 // 대시보드 최근 발송 현황 그래프
 router.post('/7DayGraph',isAuthenticated, async function(req, res, next) {
   var data = await period.get7DayGraph(req.user);
-  if(data.length == 0){
-    res.status(500).send('다시 시도해주세요.');
-  }
   res.send(data);
 });
 
