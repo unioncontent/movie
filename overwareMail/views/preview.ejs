@@ -36,6 +36,7 @@
                   }
                   var limit = 5;
                   var numIdx = Math.ceil(pastCount-(((currentPage - 1) * limit)+i)).toString();
+                  if(numIdx != '0'){
                 %>
                 <tr>
                   <td style="font-size: small;padding:5px 0 5px;border-bottom:1px dotted #d9d9d9;color:#444;">
@@ -44,7 +45,7 @@
                   </td>
                   <td style="font-size: small;padding:5px 0 5px;border-bottom:1px dotted #d9d9d9;color:#444;"><%=pastView[i].M_regdate%></td>
                 </tr>
-              <% } %>
+              <% } } %>
               <tr>
                 <td colspan="2" style="text-align: center; font-size: small;padding:10px 0 5px;">
                   <%

@@ -38,9 +38,15 @@ router.get('/', isAuthenticated, async function(req, res, next) {
 // 메일 발송 후 메일 내용 확인 페이지
 router.get('/preview',async function(req, res, next) {
   console.log('req.query:',req.query);
+  console.log(!('keyword' in req.query) && !('idx' in req.query));
+  if(!('keyword' in req.query) && !('idx' in req.query)){
+    res.render('preview',{layout: false,veiw: '',pastView: [{keyword:''}],pastCount: 0,msg: '주소에 조건이 없습니다.\n주소를 다시 작성해주세요.',currentPage: 1,keyword: '',idx: ''});
+    return false;
+  }
   if(!('page' in req.query)){
     req.query.page = 1;
   }
+
   var viewCode = await content.selectView({keyword:req.query.keyword,idx:req.query.idx});
   var pastParam = {keyword:req.query.keyword,page:req.query.page};
   var pastNews = await content.selectView(pastParam);
