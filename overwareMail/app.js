@@ -44,8 +44,20 @@ app.use(passport.session());
 // routes setup
 app.use(function(req, res, next) {
   // console.log(req.user);
+  res.locals.user = {
+    n_idx: '',
+    user_type: '',
+    user_admin: '',
+    user_id: '',
+    user_pw: '',
+    user_name: '',
+    company_name: '',
+    createDate: '',
+    updateDate: ''
+  };
   if('user' in req){
     res.locals.user = req.user;
+    // console.log(res.locals.user);
   }
   next();
 });
