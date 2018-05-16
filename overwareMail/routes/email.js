@@ -612,7 +612,7 @@ async function settingMailBody(bodyHtml,keyword,idx){
     if(1 == index){
       html +='<strong><span class="current">'+index+'</span></strong>';
     } else{
-      html +='<a href=\"http://localhost:3000/preview?keyword='+keyword+'&idx='+idx+'&page='+index+'\">'+index+'</a>';
+      html +='<a href=\"http://overmail.iptime.org:8080/preview?keyword='+keyword+'&idx='+idx+'&page='+index+'\">'+index+'</a>';
     }
   }
   html += '</td></tr></tbody></table></td></tr></tbody></table><table cellpadding="0" cellspacing="0" border="0" width="750" align="center" style="margin-top: 30px;"><tbody><tr><td align="center">Copyright ⓒ unioncontents All rights reserved.</td></tr></tbody></table><p>&nbsp;</p>'
