@@ -29,7 +29,7 @@ function settingErrorMsg(msg){
     returnMsg = '접속 후 오랜 시간 응답하지 않아 접속을 종료합니다.';
   }
   else if(lowerStr.indexOf('421 4.4.1 chic ip adress: network is busy.') != -1){
-    returnMsg = '메일 수신 서버가 응답을 못하는 상황입니다.\n잠시 후 다시 접속을 시도해 주시기 바랍니다.\n지속적으로 문제가 발생할 경우 고객센터로 문의 주시기 바랍니다.';
+    returnMsg = '메일 수신 서버가 응답을 못하는 상황입니다.\n잠시 후 다시 접속을 시도해 주시기 바랍니다.';
   }
   else if(lowerStr.indexOf('421 4.4.5 ccrt ip address: connection refused. server is busy(rt)') != -1){
     returnMsg = 'Daum 스팸센터에서 해당IP를 스팸IP로 판단하여 일시적으로 접속을 차단하였습니다.\n자세한 사항은 스팸센터로 문의 하시기 바랍니다.';
@@ -38,25 +38,25 @@ function settingErrorMsg(msg){
     returnMsg = 'Daum 메일 수신서버에 동시접속 가능한 수를 초과하였습니다. (white IP기준 100개)\n접속 수를 줄여 재발송을 시도해 주시기 바랍니다.';
   }
   else if(lowerStr.indexOf('421 4.5.0 xtout ip address: closing connection by timeout451') != -1){
-    returnMsg = '타임아웃이 발생해 커넥션을 종료합니다.\n잠시 후 다시 접속을 시도해 주시기 바랍니다.\n지속적으로 문제가 발생할 경우 고객센터로 문의 주시기 바랍니다.';
+    returnMsg = '타임아웃이 발생해 커넥션을 종료합니다.\n잠시 후 다시 접속을 시도해 주시기 바랍니다.';
   }
   else if(lowerStr.indexOf('4.4.1 xerr ip address: network is busy(error)') != -1){
-    returnMsg = 'Client와 통신하는 과정에서 I/O 이외의 에러가 발생했습니다.\n자세한 사항은 고객센터로 문의 주시기 바랍니다.';
+    returnMsg = 'Client와 통신하는 과정에서 I/O 이외의 에러가 발생했습니다.';
   }
   else if(lowerStr.indexOf('451 4.4.1 xnioe ip address: network is busy(i/o)') != -1){
-    returnMsg = 'Client와 통신하는 과정에서 I/O 에러가 발생했습니다.\n잠시 후 다시 접속을 시도해 주시기 바랍니다.\n지속적으로 문제가 발생할 경우 고객센터로 문의 주시기 바랍니다.';
+    returnMsg = 'Client와 통신하는 과정에서 I/O 에러가 발생했습니다.\n잠시 후 다시 접속을 시도해 주시기 바랍니다.';
   }
   else if(lowerStr.indexOf('451 4.4.1 dxns1 ip address: network is busy(xdns)') != -1){
-    returnMsg = '발송자의 이메일 주소 도메인 확인에 실패해 메일을 수신할 수 없습니다.\n도메인 설정이 정확한지 네트워크 담당자에게 문의해주세요.'
+    returnMsg = '발송자의 이메일 주소 도메인 확인에 실패해 메일을 수신할 수 없습니다.'
   }
   else if(lowerStr.indexOf('451 4.4.1 dxns2 ip address: dns lookup failed(xdns)') != -1){
-    returnMsg = '메일발송 IP 정보와 Hostname 정보가 일치하지 않아 메일 수신이 차단되었습니다.\n발송 서버에 ‘MX레코드’와 ‘리버스 도메인’이 등록되어 있는지 확인해주시기 바랍니다.\n2개 모두 정확히 등록되어 있어야 합니다.\n도메인 설정이 정확한지 네트워크 담당자에게 문의해주세요.';
+    returnMsg = '메일발송 IP 정보와 Hostname 정보가 일치하지 않아 메일 수신이 차단되었습니다.';
   }
   else if(lowerStr.indexOf('501 5.5.4 marg2 ip address: invalid mail command argument: argument') != -1){
     returnMsg = '메일 명령어에 필요한 인자값이 없습니다. SMTP 규약에 맞게 수정 후 다시 입력해 주시기 바랍니다.';
   }
   else if(lowerStr.indexOf('503 5.5.1 mdup ip address: sender already specified') != -1){
-    returnMsg = '보낸이의 메일 주소가 이미 정의되어 있습니다.\nSMTP 규약에 따라 보낸이의 메일주소는 중복해서 정의될 수 없습니다.\n명령어를 확인하신 후 다시 발송시도 해주시기 바랍니다.';
+    returnMsg = '보낸이의 메일 주소가 이미 정의되어 있습니다.\nSMTP 규약에 따라 보낸이의 메일주소는 중복해서 정의될 수 없습니다.';
   }
   else if(lowerStr.indexOf('503 5.5.1 rmcmd ip address: mail command required') != -1){
     returnMsg = '받는이의 메일주소를 정의하기 전에 반드시 보낸이의 메일주소를 정의하여야 합니다.\nSMTP 규약에 맞게 명령어를 다시 입력해주시기 바랍니다.';
@@ -69,6 +69,9 @@ function settingErrorMsg(msg){
   }
   else if(lowerStr.indexOf('554 5.7.1 dzcnt ip address: message refused. your host name(host name) dosen\'t match with your ip address') != -1){
     returnMsg = '해당 도메인에서 너무 많은 메일이 발송되어 Daum 메일 수신이 원활하지 않습니다.\n잠시 후 다시 발송해 주시기 바랍니다.';
+  }
+  else if(lowerStr.indexOf('553 access denied. please visit http://www.spamhaus.org for details') != -1){
+    returnMsg = '수신 메일 서버에 문제가 발생했습니다.\n사이트 담당자에게 문의해 주시기 바랍니다.';
   }
   else{
     returnMsg = msg;
