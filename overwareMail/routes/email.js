@@ -412,6 +412,7 @@ router.post('/save',isAuthenticated, async function(req, res) {
   var now = dt.format('Y-m-d H:M:S');
   // 이메일발송 결과 DB 저장
   var mailAllParam = {
+    M_seq_number:req.body['M_seq_number'],
     M_sender: req.body['M_sender'],
     M_keyword: req.body['M_keyword'],
     M_type: req.body['M_type'],
@@ -493,8 +494,7 @@ router.post('/save',isAuthenticated, async function(req, res) {
 
   // 메일 발송(insert Error시)
   if(insertCheck){
-    res.status(500).send('발송에 실패했습니다. 다시 시도해주세요.');
-    console.log('M_recipi:',M_recipi);
+    res.status(500).send('메일 저장에 했습니다. 다시 시도해주세요.');
     return false;
   }
 
@@ -514,7 +514,7 @@ router.post('/send',isAuthenticated, async function(req, res) {
   var utf82euckr1 = new Iconv('UTF-8', 'EUC-KR//translit//ignore');
   var utf82euckr2 = new Iconv('UTF-8', 'EUC-KR//translit//ignore');
 
-  var bodyBuf = new Buffer(await settingMailBody(mailData.M_body,mailData.M_keyword,mailData.n_idx));
+  var bodyBuf = new Buffer(await settingMailBody(mailData.M_body,mailData.M_keyword,mailData.n_idx,mailData.M_seq_number));
   var subjectBuf = new Buffer(mailData.M_subject);
 
   var subjectConvert = utf82euckr1.convert(subjectBuf.toString('utf-8'));
@@ -553,7 +553,7 @@ router.post('/send',isAuthenticated, async function(req, res) {
 
   var paramStr = 'subject='+param['subject']+'&body='+param['body']+'&sender='+param['sender']+'&username='+param['username']+'&recipients='+param['recipients']+'&key='+param['key'];
   // returnURL이 있는 경우
-  paramStr += '&return_url='+urlencode('http://overmail.iptime.org:8080/email/send/result');
+  paramStr += '&return_url='+urlencode('http://showbox.email/email/send/result');
   paramStr += '&unique_id='+urlencode(parseInt(param['unique_id']));
   if(param['mail_type'] == urlencode('ONETIME')){
     paramStr +='&mail_type='+param['mail_type']+'&start_reserve_time='+param['time']+'&end_reserve_time='+param['time'];
@@ -588,17 +588,20 @@ router.post('/send',isAuthenticated, async function(req, res) {
   await mailDetailB.updateResult([resultEmail[1],errorMsg,param['unique_id']]);
 });
 
-async function settingMailBody(bodyHtml,keyword,idx){
+async function settingMailBody(bodyHtml,keyword,idx,num){
   // 메일이 안보이면 텍스트 추가
+  var sideHtmlStart = '<table width="750" align="center" cellpadding="0" cellspacing="0" style="border: solid 1px #cacaca; padding: 20px;"><tbody><tr><td><table width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td width="642"><img src="http://showbox.email/templates/images/logo/show_logo.png" width="135" height="36" alt="로고"></td><td width="92">NEWS No.';
+  sideHtmlStart+= num+'</td></tr></tbody></table><table width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td>';
+  var sideHtmlEnd = '</td></tr></tbody></table></td></tr></tbody></table>';
   var pastParam = {'keyword':keyword,'page':1};
   var pastView = await content.selectView(pastParam);
   var pastCount = await content.selectViewCount(pastParam);
   pastCount = (pastCount.length == 0) ? '':pastCount[0].total;
-  var htmlMsg = '<table width="750" align="center" cellpadding="0" cellspacing="0" style="padding: 20px;"><tbody><tr><td align="center" style="font-size: 15px; font-weight: bold;" class="fix">[ 메일 본문이 깨져 보이면 <a href=\"http://overmail.iptime.org:8080/preview?keyword='+keyword+'&idx='+idx+'\" target=\"_blank\" style=\"font-family: 맑은고딕,malgungothic,돋움,dotum; font-size:12px;color:#ff6300\">여기</a>를 눌러 주세요 ]</td></tr></tbody></table>';
+  var htmlMsg = '<table width="750" align="center" cellpadding="0" cellspacing="0" style="padding: 20px;"><tbody><tr><td align="center" style="font-size: 15px; font-weight: bold;" class="fix">[ 메일 본문이 깨져 보이면 <a href=\"http://showbox.email/preview?keyword='+keyword+'&idx='+idx+'\" target=\"_blank\" style=\"font-family: 맑은고딕,malgungothic,돋움,dotum; font-size:12px;color:#ff6300\">여기</a>를 눌러 주세요 ]</td></tr></tbody></table>';
   var html = '<table width="750" align="center" cellpadding="0" cellspacing="0" border="0" style="margin-top: 30px;"><tbody><tr><td>[지난 기사보기]<hr><table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-top: 10px;"><colgroup><col width="78%"><col width="22%"></colgroup><tbody>';
 
   for(var i=0; i < pastView.length; i++) {
-    var url = 'http://overmail.iptime.org:8080/preview?keyword='+pastView[i].keyword_idx+'&idx='+pastView[i].n_idx;
+    var url = 'http://showbox.email/preview?keyword='+pastView[i].keyword_idx+'&idx='+pastView[i].n_idx;
     var numIdx = Math.ceil(pastCount-i).toString();
     html +='<tr><td style=\"font-size: small;padding:5px 0 5px;border-bottom:1px dotted #d9d9d9;color:#444;\">[No.'+numIdx+'차]<a style=\"text-decoration:none; color:black;\" href=\"'+url+'\" target=\"_blank\">'+pastView[i].M_subject+'</a>';
     html +='</td><td style=\"font-size: small;padding:5px 0 5px;border-bottom:1px dotted #d9d9d9;color:#444;\">'+pastView[i].M_regdate+'</td></tr>'
@@ -612,11 +615,11 @@ async function settingMailBody(bodyHtml,keyword,idx){
     if(1 == index){
       html +='<strong><span class="current">'+index+'</span></strong>';
     } else{
-      html +='<a href=\"http://overmail.iptime.org:8080/preview?keyword='+keyword+'&idx='+idx+'&page='+index+'\">'+index+'</a>';
+      html +='<a href=\"http://showbox.email/preview?keyword='+keyword+'&idx='+idx+'&page='+index+'\">'+index+'</a>';
     }
   }
   html += '</td></tr></tbody></table></td></tr></tbody></table><table cellpadding="0" cellspacing="0" border="0" width="750" align="center" style="margin-top: 30px;"><tbody><tr><td align="center">Copyright ⓒ unioncontents All rights reserved.</td></tr></tbody></table><p>&nbsp;</p>'
-  return htmlMsg+bodyHtml+htmlMsg+html;
+  return htmlMsg+sideHtmlStart+bodyHtml+sideHtmlEnd+htmlMsg+html;
 }
 
 function getFiles (dir, files_){
@@ -740,7 +743,7 @@ router.post('/send/img',uploadImage.single('file'),function(req, res) {
   console.log(req.file);
 
   var result = req.file.destination.replace('public/','')+'/'+req.file.originalname;
-  res.send({location:'http://overmail.iptime.org:8080/'+result});
+  res.send({location:'http://showbox.email/'+result});
 });
 
 // 첨부파일 upload 및 path get
@@ -771,7 +774,7 @@ router.post('/send/file',uploadFile.single('file'),function(req, res) {
     return res.status(500).send("exe는 업로드 불가합니다.");
   }
   var result = req.file.destination.replace('public/uploads/files/','')+'/'+req.file.filename.split('.')[0];
-  res.send({location:'http://overmail.iptime.org:8080/period/download/'+result});
+  res.send({location:'http://showbox.email/period/download/'+result});
 });
 // 첨부파일 upload 및 path get(사용안하고 있음)
 // var storageFiles = multer.diskStorage({
