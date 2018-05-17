@@ -195,13 +195,16 @@ button.close{
   display: none;
 }
 /* editor */
+.mce-content-body p {
+  margin: 0px;
+}
 .mce-ico.mce-i-fa {
-    display: inline-block;
-    font-family: Font Awesome\ 5 Free;
-    font-size: inherit;
-    text-rendering: auto;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+  display: inline-block;
+  font-family: 'Font Awesome 5 Free';
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 .note-editor .note-editing-area .note-editable table td,
 .note-editor .note-editing-area .note-editable table th{
