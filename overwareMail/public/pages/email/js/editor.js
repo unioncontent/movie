@@ -10,7 +10,7 @@ tinymce.init({
     toolbar: [ 'undo', 'bold', 'italic', 'styleselect', 'image' ]
   },
   plugins: 'print preview fullpage searchreplace autolink directionality visualblocks visualchars fullscreen image link media code table charmap hr insertdatetime advlist lists textcolor wordcount imagetools contextmenu colorpicker',
-  toolbar: 'undo redo | fontselect fontsizeselect | bold italic forecolor backcolor | alignleft aligncenter alignright alignjustify |  numlist bullist outdent indent | removeformat |  image fileUpload | help',
+  toolbar: 'undo redo | fontselect fontsizeselect spaceline | bold italic forecolor backcolor |  image media fileUpload | alignleft aligncenter alignright alignjustify |  numlist bullist outdent indent | removeformat | help',
   font_formats : '굴림=Gulim;돋움=Dotum;바탕=Batang;궁서=Gungsuh;나눔고딕=nanumgothic;나눔바른고딕=nanumbarungothic;',
   fontsize_formats: "8px 10px 12px 14px 18px 24px 36px",
   image_advtab: true,
@@ -27,7 +27,7 @@ tinymce.init({
   media_url_resolver: function (data, resolve) {
     var embedHtml = '<p><br></p><div style="position: relative; ">\
     <iframe  src="'+ data.url +'" width="640" height="360" allowfullscreen="allowfullscreen" data-mce-fragment="1"></iframe>\
-    <p style="text-align: center;">영상이 안 보이는 경우 <a target="_blank" href="'+ data.url +'">여기</a>를 눌러 주세요</p><p></p><p></p></div><p>﻿﻿<br></p>';
+    <p style="text-align: center;">영상이 안 보이는 경우 <a target="_blank" href="'+ data.url +'">여기</a>를 눌러 주세요</p></div><p>﻿﻿<br></p>';
     resolve({html: embedHtml});
     // if (data.url.indexOf('YOUR_SPECIAL_VIDEO_URL') !== -1) {
     // } else {
@@ -124,11 +124,13 @@ tinymce.init({
   //   input.click();
   // },
   content_css: [
+    '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
     '//www.tinymce.com/css/codepen.min.css',
-    'https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'
+    '//use.fontawesome.com/releases/v5.0.13/css/all.css'
   ],
   content_style: [
-    'body{padding:30px; margin:auto;font-size:14px;font-family:Gulim,"Helvetica Neue",Helvetica,Arial,sans-serif;color:#222} h1,h2,h3,h4,h5,h6 {font-weight:400;margin-top:1.2em} h1 {} h2{} table {width:100%; border-collapse: collapse;} table td, th {border: 1px solid; padding:10px; text-align:left;font-size:14px;font-family:Gulim,"Helvetica Neue",Helvetica,Arial,sans-serif;} table th {background-color:#E2E4E7}'
+    // 'body{padding:30px; margin:auto;font-size:14px;font-family:Gulim,"Helvetica Neue",Helvetica,Arial,sans-serif;color:#222} h1,h2,h3,h4,h5,h6 {font-weight:400;margin-top:1.2em} h1 {} h2{} table {width:100%; border-collapse: collapse;} table td, th {border: 1px solid; padding:10px; text-align:left;font-size:14px;font-family:Gulim,"Helvetica Neue",Helvetica,Arial,sans-serif;} table th {background-color:#E2E4E7}'
+    'body{padding:30px; margin:auto;font-size:14px;font-family:Gulim,"Helvetica Neue",Helvetica,Arial,sans-serif;color:#222} .mce-content-body p{margin:0px;line-height:14px;}'
   ],
   setup: function(editor) {
     editor.addButton('fileUpload', {
@@ -137,50 +139,102 @@ tinymce.init({
       onclick:function(){
         $("#fileUpload-Modal").modal('show');
       }
-      // menu: [{
-      //   text: '본문자료',
-      //   onclick: function() {
-      //     var activeTag = $(tinymce.activeEditor.selection.getNode());
-      //     var tagClone = activeTag.clone();
-      //     console.lolg(tagClone);
-      //     console.lolg(tagClone.html());
-      //     activeTag.before('<p><span style="width: 100px; background:#4E4E4E; margin-top:20px; padding: 5px 30px; text-align: center;">'+tagClone.html()+'</span>&nbsp; &nbsp; &nbsp;</p><p>﻿﻿<br></p>');
-      //     activeTag.prev('a').css({
-      //       'color': '#ffffff',
-      //       'font-weight': 'bold',
-      //       'font-size': '12px',
-      //       'text-decoration': 'none'
-      //     });
-      //     tagClone.remove();
-      //   }
-      // },{
-      //   text: '관련데이터',
-      //   onclick: function() {
-      //     var activeTag = $(tinymce.activeEditor.selection.getNode());
-      //     var tagClone = activeTag.clone();
-      //     activeTag.before('<p><span style="background:#f9f9f9; border: 1px solid #000000; width: 130px; margin-top:5px; padding: 5px 15px; font-weight: bold; ; font-size: 12px;"">'+tagClone.html()+'</span>&nbsp; &nbsp; &nbsp;</p><p>﻿﻿<br></p>');
-      //     activeTag.prev('a').css({
-      //       'color': '#000000',
-      //       'font-size': '12px',
-      //       'text-decoration': 'none'
-      //     });
-      //     tagClone.remove();
-      //   }
-      // },{
-      //   text: '바로가기',
-      //   onclick: function() {
-      //     var activeTag = $(tinymce.activeEditor.selection.getNode());
-      //     var tagClone = activeTag.clone();
-      //     activeTag.before('<p><span style="width: 100px; background:#3d94f6; margin-top:10px; padding: 5px 30px; text-align: center;">'+tagClone.html()+'</span>&nbsp; &nbsp; &nbsp;</p><p>﻿﻿<br></p>');
-      //     activeTag.prev('a').css({
-      //       'color': '#ffffff',
-      //       'font-weight': 'bold',
-      //       'font-size': '12px',
-      //       'text-decoration': 'none'
-      //     });
-      //     tagClone.remove();
-      //   }
-      // }]
+    });
+
+    editor.addButton('spaceline', {
+      // type: 'listbox',
+      type: 'menubutton',
+      icon: false,//'fa fa-arrows-v'
+      text: '줄간격',
+      menu: [{
+        text:'50%',
+        onclick: function() {
+          var blocks = tinymce.activeEditor.selection.getSelectedBlocks();
+          tinymce.each( blocks ,function(block){
+            if( block.nodeName === 'P'){
+              $(block).css('line-height', '50%');
+            }
+          });
+        }
+      },{
+        text:'80%',
+        onclick: function() {
+          var blocks = tinymce.activeEditor.selection.getSelectedBlocks();
+          tinymce.each( blocks ,function(block){
+            if( block.nodeName === 'P'){
+              $(block).css('line-height', '80%');
+            }
+          });
+        }
+      },{
+        text:'100%',
+        onclick: function() {
+          var blocks = tinymce.activeEditor.selection.getSelectedBlocks();
+          tinymce.each( blocks ,function(block){
+            if( block.nodeName === 'P'){
+              $(block).css('line-height', '100%');
+            }
+          });
+        }
+      },{
+        text:'120%',
+        onclick: function() {
+          var blocks = tinymce.activeEditor.selection.getSelectedBlocks();
+          tinymce.each( blocks ,function(block){
+            if( block.nodeName === 'P'){
+              $(block).css('line-height', '120%');
+            }
+          });
+        }
+      },{
+        text:'150%',
+        onclick: function() {
+          var blocks = tinymce.activeEditor.selection.getSelectedBlocks();
+          tinymce.each( blocks ,function(block){
+            if( block.nodeName === 'P'){
+              $(block).css('line-height', '150%');
+            }
+          });
+        }
+      },{
+        text:'180%',
+        onclick: function() {
+          var blocks = tinymce.activeEditor.selection.getSelectedBlocks();
+          tinymce.each( blocks ,function(block){
+            if( block.nodeName === 'P'){
+              $(block).css('line-height', '180%');
+            }
+          });
+        }
+      },{
+        text:'200%',
+        onclick: function() {
+          var blocks = tinymce.activeEditor.selection.getSelectedBlocks();
+          tinymce.each( blocks ,function(block){
+            if( block.nodeName === 'P'){
+              $(block).css('line-height', '200%');
+            }
+          });
+        }
+      }]
+      // onselect: function (e) {
+      //   var lineValue = this.value();
+      //   var blocks = tinymce.activeEditor.selection.getSelectedBlocks();
+      //   tinymce.each( blocks ,function(block){
+      //     if( block.nodeName === 'P'){
+      //       $(block).css('line-height', lineValue);
+      //     }
+      //   });
+      // },
+      // values: [
+      //   { text: '50%', value: '50%' },
+      //   { text: '80%', value: '80%' },
+      //   { text: '100%', value: '100%' },
+      //   { text: '120%', value: '120%' },
+      //   { text: '150%', value: '150%' },
+      //   { text: '180%', value: '180%' },
+      //   { text: '200%', value: '200%' }
+      // ]
     });
   },
   init_instance_callback: function(editor){
