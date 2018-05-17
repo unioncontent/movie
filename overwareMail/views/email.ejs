@@ -22,6 +22,7 @@
           <div class="card">
             <div class="card-header">
               <button type="submit" class="btn btn-inverse f-right m-b-0 sendBtn">완료</button>
+              <button type="submit" class="btn btn-inverse f-right m-b-0 m-r-5 perivewBtn">미리보기</button>
             </div>
             <div class="card-block">
               <div class="form-group row">
@@ -95,6 +96,13 @@
                 </div>
               </div>
               <div class="form-group row">
+                <label class="col-sm-2 col-form-label">* 발송차수</label>
+                <div class="col-sm-5">
+                  <input type="text" id="M_seq_number"  class="form-control">
+                  <span class='messages'><p class='text-danger error'></p></span>
+                </div>
+              </div>
+              <div class="form-group row">
                 <label class="col-sm-2 col-form-label">* 키워드</label>
                 <div class="col-sm-5">
                   <select id="M_keyword" name="select" class="col-sm-6 form-control form-control-defalut f-left m-b-10">
@@ -153,6 +161,7 @@
             </div>
             <div class="card-bottom">
               <button type="submit" class="btn btn-inverse f-right m-b-0 sendBtn">완료</button>
+              <button type="submit" class="btn btn-inverse f-right m-b-0  m-r-5 perivewBtn">미리보기</button>
             </div>
           </div>
         </div>
@@ -634,9 +643,37 @@
   //     }
   //   });
   // }
+  // 메일 미리보기 버튼 클릭시
+  $(".perivewBtn").on("click",function(){
+    var param = {
+      'M_keyword': $("#M_keyword option:selected").val() || '',
+      'num': $("#M_seq_number").val() || '',
+      'M_body': get_tinymce_html_content(),
+    };
+    previewAjax(param);
+  });
+  function previewAjax(param) {
+    var win = window.open('about:blank', '_blank');
+    $.ajax({
+      url: '/preview_mail',
+      type: 'post',
+      data : param,
+      datatype : 'json',
+      error:function(request,status,error){
+        console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
+        swal("ERROR!", request.responseText, "error");
+      },
+      success:function(data){
+        if(data){
+          win.location.href = 'http://localhost:3000/preview_mail';
+        }
+      }
+    });
+  }
   // 메일 보내기 버튼 클릭시
   $(".sendBtn").on("click",function(){
     var param = {
+      'M_seq_number': $("#M_seq_number").val(),
       'M_sender': $(".sender-select").select2("val"),
       'M_recipi': $(".recipi-select").select2("val"),
       'M_group': $('.group-select').val() || [],
@@ -652,6 +689,9 @@
     }
     if(param["M_recipi"] == ""){
       check = requiredMessage("M_recipi","받는사람을 선택해주세요.");
+    }
+    if(param["M_seq_number"] == ""){
+      check = requiredMessage("M_seq_number","발송차수를 입력해주세요.");
     }
     if(param["M_keyword"] == 0){
       check = requiredMessage("M_keyword","키워드를 선택해주세요.");

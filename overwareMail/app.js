@@ -66,6 +66,7 @@ var index = require('./routes/index');
 app.use('/', index);
 app.use('/login', index);
 app.use('/preview',index);
+app.use('/preview_mail',index);
 var period = require('./routes/period');
 app.use('/period', period);
 var email = require('./routes/email');

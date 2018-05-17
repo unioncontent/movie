@@ -46,14 +46,16 @@ router.get('/preview',async function(req, res, next) {
   if(!('page' in req.query)){
     req.query.page = 1;
   }
-
   var viewCode = await content.selectView({keyword:req.query.keyword,idx:req.query.idx});
+  var sideHtmlStart = '<table width="750" align="center" cellpadding="0" cellspacing="0" style="border: solid 1px #cacaca; padding: 20px;"><tbody><tr><td><table width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td width="642"><img src="http://showbox.email/templates/images/logo/show_logo.png" width="135" height="36" alt="로고"></td><td width="92">NEWS No.';
+  sideHtmlStart+= ((viewCode.length == 0) ? '' : viewCode[0].M_seq_number)+'</td></tr></tbody></table><table width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td>';
+  var sideHtmlEnd = '</td></tr></tbody></table></td></tr></tbody></table>';
   var pastParam = {keyword:req.query.keyword,page:req.query.page};
   var pastNews = await content.selectView(pastParam);
   var pastNewsCount = await content.selectViewCount(pastParam);
   var data = {
     layout: false,
-    veiw:(viewCode.length == 0) ? '' : viewCode[0].m_body,
+    veiw:(viewCode.length == 0) ? '' : sideHtmlStart+viewCode[0].m_body+sideHtmlEnd,
     pastView:pastNews,
     pastCount: (pastNewsCount.length == 0) ? '':pastNewsCount[0].total,
     msg: '',
@@ -67,8 +69,36 @@ router.get('/preview',async function(req, res, next) {
   if('page' in req.query){
     data.currentPage = req.query.page;
   }
-  console.log(data);
   res.render('preview',data);
+});
+
+// 메일 발송 후 메일 내용 확인 페이지
+var preview_data = {};
+router.post('/preview_mail',async function(req, res, next) {
+  console.log('/preview_mail:',req.body);
+  var sideHtmlStart = '<table width="750" align="center" cellpadding="0" cellspacing="0" style="border: solid 1px #cacaca; padding: 20px;"><tbody><tr><td><table width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td width="642"><img src="http://showbox.email/templates/images/logo/show_logo.png" width="135" height="36" alt="로고"></td><td width="92">NEWS No.';
+  sideHtmlStart+= req.body.num+'</td></tr></tbody></table><table width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td>';
+  var sideHtmlEnd = '</td></tr></tbody></table></td></tr></tbody></table>';
+  var pastNews = [];
+  var pastNewsCount = [];
+  if(req.body.M_keyword != ''){
+    var pastParam = {keyword:req.body.M_keyword,page:1};
+    pastNews = await content.selectView(pastParam);
+    pastNewsCount = await content.selectViewCount(pastParam);
+  }
+  preview_data = {
+    layout: false,
+    veiw:sideHtmlStart+req.body.M_body+sideHtmlEnd,
+    pastView:pastNews,
+    pastCount: (pastNewsCount.length == 0) ? '':pastNewsCount[0].total,
+    msg: '',
+    currentPage: 1,
+    keyword:req.body.M_keyword
+  };
+  res.send(true);
+});
+router.get('/preview_mail',async function(req, res, next) {
+  res.render('preview_mail',preview_data);
 });
 
 // 대시보드 최근 발송 현황 그래프
