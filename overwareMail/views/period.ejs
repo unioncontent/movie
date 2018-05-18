@@ -51,7 +51,7 @@
                   <thead>
                     <tr>
                       <th width="1%">NO</th>
-                      <th width="10%">발송일</th>
+                      <th width="10%">작성일</th>
                       <th width="5%">키워드</th>
                       <th width="5%">발송차수</th>
                       <th width="20%">제목</th>
@@ -103,7 +103,7 @@
                     if(pageCount > 1) {
                     %>
                     <tr>
-                      <td colspan="10">
+                      <td colspan="11">
                         <ul class="pagination float-right">
                           <%
                             var pageSize = 5;
@@ -821,8 +821,9 @@
           $('#total').text(tag.eq(4).text());
           $('#success').text(tag.eq(5).text());
           $('#fail').text(tag.eq(6).text());
-          $('#date1').text(input.eq(0).val());
-          if(tag.eq(7).text().trim().indexOf("예약") != -1){
+          $('#date1').text(input.eq(1).val());
+          if(tag.eq(8).text().trim().indexOf("예약") != -1){
+            $('#date1').text(input.eq(1).val().slice(0,16));
             $('#date2').text(input.eq(1).val().slice(0,16));
           }
           $("#period-Modal").modal('show');
@@ -1041,7 +1042,7 @@
         var pageCount = Math.ceil(data.result.listCount/limit);
         $('#listTable tfoot').eq(0).empty();
         if(pageCount > 1) {
-          var html = '<tr><td colspan="10"><ul class="pagination float-right">';
+          var html = '<tr><td colspan="11"><ul class="pagination float-right">';
           var pageSize = 5;
           var pRCnt = parseInt(data.result.currentPage / pageSize);
           if(data.result.currentPage % pageSize == 0){

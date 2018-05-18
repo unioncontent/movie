@@ -115,7 +115,7 @@
                     if(pageCount > 1) {
                     %>
                     <tr>
-                      <td colspan="10">
+                      <td colspan="11">
                         <ul class="pagination float-right">
                           <%
                             var pageSize = 5;
@@ -259,9 +259,8 @@
 <!-- sweetalert -->
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sweetalert@2.1.0/dist/sweetalert.min.js"></script>
 <script type="text/javascript">
-  // data input hidden values
-  var keywordValue = $('#keyword').val();
   $(document).ready(function(){
+    var keywordValue = $('#keyword').val();
     if(keywordValue != ''){
       $("#selectKeyword option[value='"+keywordValue+"']").attr('selected','selected');
     }
@@ -271,6 +270,10 @@
     if(searchTypeParams != null && searchParams != null){
       $("#selectSearchType").val(searchTypeParams).prop("selected", true);
       $("#keywordInput").val(searchParams);
+    }
+    var keywordParams = url.searchParams.get("keyword");
+    if(keywordParams != null){
+      $("#selectKeyword option[value='"+keywordParams+"']").attr('selected','selected');
     }
   });
   // 삭제버튼 클릭시
@@ -438,20 +441,23 @@
     var param = {
       page : pageValue
     };
-    var keywordValue = $("#keyword").val();
-    if(keywordValue != ''){
-      param.keyword = keywordValue;
-    }
+    // var keywordValue = $("#keyword").val();
+    // if(keywordValue != ''){
+    //   param.keyword = keywordValue;
+    // }
     var url = new URL(window.location.href);
     var searchTypeParams = url.searchParams.get("searchType");
     var searchParams = url.searchParams.get("search");
+    var keywordParams = url.searchParams.get("keyword");
+    if(keywordParams != '' && keywordParams != null){
+      param.keyword = keywordParams;
+    }
     if(searchTypeParams != null && searchParams != null){
       page.searchType=searchTypeParams;
       page.search=searchParams;
     }
     ajaxGetPageList(param);
   }
-
   // 키워드 선택시
   $('#selectKeyword').on('change',function(){
     var param = {
@@ -465,6 +471,7 @@
     else{
       $('#keyword').val('');
     }
+
     var href = new URL(window.location.href);
     if(href.searchParams.get("searchType") != '' && href.searchParams.get("searchType") != null){
       param.searchType = href.searchParams.get("searchType");
@@ -485,12 +492,16 @@
     var url = '/email/manage?page=1';
     var searchType = $("#selectSearchType option:selected").val();
     var search = $("#keywordInput").val();
-    var keywordValue = $('#keyword').val();
+    if(searchType == 'n'){
+      search = search.replace(/[^0-9]/g,'');
+    }
+    var href = new URL(window.location.href);
+    var keywordParams = href.searchParams.get("keyword");
     if(searchType != '' && search != ''){
       url += '&searchType='+searchType+'&search='+search;
     }
-    if(keywordValue != ''){
-      url += '&keyword='+keywordValue;
+    if(keywordParams != null && keywordParams != ''){
+      url += '&keyword='+keywordParams;
     }
     location.href = url;
   });
@@ -500,12 +511,14 @@
     var param = {
       page : Number($(this).data().value)
     };
-    // data input hidden values
-    var keywordValue = $('#keyword').val();
-    if(keywordValue != ''){
-      param.keyword = keywordValue;
-    }
+    // var keywordValue = $('#keyword').val();
+    // if(keywordValue != ''){
+    //   param.keyword = keywordValue;
+    // }
     var href = new URL(window.location.href);
+    if(href.searchParams.get("keyword") != '' && href.searchParams.get("keyword") != null){
+      param.keyword = href.searchParams.get("keyword");
+    }
     if(href.searchParams.get("searchType") != '' && href.searchParams.get("searchType") != null){
       param.searchType = href.searchParams.get("searchType");
     }
@@ -537,6 +550,13 @@
           renewURL = renewURL.replace(/\?page=([0-9]+)/ig,'?page='+data.result.currentPage);
           if(renewURL.indexOf("?page=") == -1){
             renewURL += '?page='+data.result.currentPage;
+          }
+          if('keyword' in param){
+            console.log(renewURL);
+            renewURL = renewURL.replace(/&keyword=([0-9]+)/ig,'&keyword='+param.keyword);
+            if(renewURL.indexOf("&keyword=") == -1){
+              renewURL += '&keyword='+param.keyword;
+            }
           }
           //페이지 갱신 실행!
           history.pushState(null, null,renewURL);
@@ -591,7 +611,7 @@
         var pageCount = Math.ceil(data.result.listCount/limit);
         $('#listTable tfoot').eq(0).empty();
         if(pageCount > 1) {
-          var html = '<tr><td colspan="10"><ul class="pagination float-right">';
+          var html = '<tr><td colspan="11"><ul class="pagination float-right">';
           var pageSize = 5;
           var pRCnt = parseInt(data.result.currentPage / pageSize);
           if(data.result.currentPage % pageSize == 0){
