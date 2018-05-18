@@ -7,6 +7,7 @@ var router = express.Router();
 var content = require('../models/content.js');
 var period = require('../models/period.js');
 var user = require('../models/user.js');
+var mailAllA = require('../models/mailAllA.js');
 
 var isAuthenticated = function (req, res, next) {
   if (req.isAuthenticated())
@@ -46,7 +47,7 @@ router.get('/preview',async function(req, res, next) {
   if(!('page' in req.query)){
     req.query.page = 1;
   }
-  var viewCode = await content.selectView({keyword:req.query.keyword,idx:req.query.idx});
+  var viewCode = await mailAllA.selectEmailOneView(req.query.idx);
   var sideHtmlStart = '<table width="750" align="center" cellpadding="0" cellspacing="0" style="border: solid 1px #cacaca; padding: 20px;"><tbody><tr><td><table width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td width="642"><img src="http://showbox.email/templates/images/logo/show_logo.png" width="135" height="36" alt="로고"></td><td width="92">NEWS No.';
   sideHtmlStart+= ((viewCode.length == 0) ? '' : viewCode[0].M_seq_number)+'</td></tr></tbody></table><table width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td>';
   var sideHtmlEnd = '</td></tr></tbody></table></td></tr></tbody></table>';
@@ -55,7 +56,7 @@ router.get('/preview',async function(req, res, next) {
   var pastNewsCount = await content.selectViewCount(pastParam);
   var data = {
     layout: false,
-    veiw:(viewCode.length == 0) ? '' : sideHtmlStart+viewCode[0].m_body+sideHtmlEnd,
+    veiw:(viewCode.length == 0) ? '' : sideHtmlStart+viewCode[0].M_body+sideHtmlEnd,
     pastView:pastNews,
     pastCount: (pastNewsCount.length == 0) ? '':pastNewsCount[0].total,
     msg: '',
