@@ -465,15 +465,34 @@
     else{
       $('#keyword').val('');
     }
-    var url = new URL(window.location.href);
-    var searchTypeParams = url.searchParams.get("searchType");
-    var searchParams = url.searchParams.get("search");
-    if(searchTypeParams != null && searchParams != null){
-      page.searchType=searchTypeParams;
-      page.search=searchParams;
+    var href = new URL(window.location.href);
+    if(href.searchParams.get("searchType") != '' && href.searchParams.get("searchType") != null){
+      param.searchType = href.searchParams.get("searchType");
+    }
+    if(href.searchParams.get("search") != '' && href.searchParams.get("search") != null){
+      param.search = href.searchParams.get("search");
     }
     // data input hidden values
     ajaxGetPageList(param,0);
+  });
+  // 검색시
+  $('#keywordInput').on('keyup',function(event){
+    if(event.keyCode == 13){
+      $('#searchBtn').trigger('click');
+    };
+  });
+  $('#searchBtn').on('click',function(){
+    var url = '/email/manage?page=1';
+    var searchType = $("#selectSearchType option:selected").val();
+    var search = $("#keywordInput").val();
+    var keywordValue = $('#keyword').val();
+    if(searchType != '' && search != ''){
+      url += '&searchType='+searchType+'&search='+search;
+    }
+    if(keywordValue != ''){
+      url += '&keyword='+keywordValue;
+    }
+    location.href = url;
   });
   //페이지 이동
   $(document).on('click','.page-link',function(){
@@ -486,12 +505,12 @@
     if(keywordValue != ''){
       param.keyword = keywordValue;
     }
-    var url = new URL(window.location.href);
-    var searchTypeParams = url.searchParams.get("searchType");
-    var searchParams = url.searchParams.get("search");
-    if(searchTypeParams != null && searchParams != null){
-      page.searchType=searchTypeParams;
-      page.search=searchParams;
+    var href = new URL(window.location.href);
+    if(href.searchParams.get("searchType") != '' && href.searchParams.get("searchType") != null){
+      param.searchType = href.searchParams.get("searchType");
+    }
+    if(href.searchParams.get("search") != '' && href.searchParams.get("search") != null){
+      param.search = href.searchParams.get("search");
     }
     ajaxGetPageList(param,num);
   });
@@ -511,7 +530,17 @@
           alert('새로고침 후 다시 시도해주세요.');
           return false;
         }
-
+        if(typeof history.pushState == 'function'){
+          //현재 주소를 가져온다.
+          var renewURL = location.href;
+          //현재 주소 중 page 부분이 있다면 새로 부여될 페이지 번호를 할당한다.
+          renewURL = renewURL.replace(/\?page=([0-9]+)/ig,'?page='+data.currentPage);
+          if(renewURL.indexOf("?page=") == -1){
+            renewURL += '?page='+data.currentPage;
+          }
+          //페이지 갱신 실행!
+          history.pushState(null, null,renewURL);
+        }
         $('#listTable tbody').eq(0).empty();
         data.result.list.forEach(function(item,idx){
           var numIdx = Math.ceil(data.result.listCount-(data.result.offset+idx)).toString();
