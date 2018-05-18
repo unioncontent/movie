@@ -139,7 +139,6 @@
                             </div>
                           </div>
                           <div class="card-block">
-                            <!-- <div id="morris-extra-area" style="height:300px;"></div> -->
                             <div id="morris-extra-line2" style="height:150px;"></div>
                           </div>
                         </div>
@@ -190,7 +189,7 @@
                                           <tr class = "trList">
                                             <th scope="row">${totalCount - status.count + 1}</th>
                                             <td>
-                                            	<fmt:formatDate value="${list1.createDate}" type="DATE" pattern="yyyy-MM-dd HH:mm:ss" />
+                                            	<fmt:formatDate value="${list1.createDate}" type="DATE" pattern="yyyy-MM-dd HH:00" />
                                             </td>
                                             <td>
                                             <c:if test="${list1.view_cnt != 0}">

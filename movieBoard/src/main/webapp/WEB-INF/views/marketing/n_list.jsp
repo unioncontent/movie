@@ -226,7 +226,6 @@
                                             <td>
                                             <fmt:formatNumber value="${list.like_cnt}" pattern="#,##0" />회
                                             <c:forEach var="creatDate" items="${creatDate}" varStatus="status">
-                                            <%-- <fmt:formatDate value="${creatDate.createDate}" type="DATE" pattern="yyyy-MM-dd HH:mm:ss" /> --%>
                                             <input type="hidden" value="<fmt:formatDate value="${creatDate.createDate}" type="DATE" pattern="yyyy-MM-dd HH" />" name="createDate" id=createDate>
                                             </c:forEach>
                                             </td>
