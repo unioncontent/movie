@@ -457,6 +457,7 @@
       $("#M_keyword option[value='"+mailData.M_keyword+"']").attr('selected','selected');
       $("#M_mail_type option[value='"+mailData.M_mail_type+"']").attr('selected','selected');
       $("#M_subject").val(mailData.M_subject);
+      $("#M_seq_number").val(mailData.M_seq_number);
     }
     // 예약시간
     var dt = new Date();
@@ -665,7 +666,7 @@
       },
       success:function(data){
         if(data){
-          win.location.href = 'http://localhost:3000/preview_mail';
+          win.location.href = 'http://showbox.email/preview_mail';
         }
       }
     });

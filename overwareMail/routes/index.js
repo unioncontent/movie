@@ -74,8 +74,7 @@ router.get('/preview',async function(req, res, next) {
 
 // 메일 발송 후 메일 내용 확인 페이지
 var preview_data = {};
-router.post('/preview_mail',async function(req, res, next) {
-  console.log('/preview_mail:',req.body);
+router.post('/preview_mail', isAuthenticated,async function(req, res, next) {
   var sideHtmlStart = '<table width="750" align="center" cellpadding="0" cellspacing="0" style="border: solid 1px #cacaca; padding: 20px;"><tbody><tr><td><table width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td width="642"><img src="http://showbox.email/templates/images/logo/show_logo.png" width="135" height="36" alt="로고"></td><td width="92">NEWS No.';
   sideHtmlStart+= req.body.num+'</td></tr></tbody></table><table width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td>';
   var sideHtmlEnd = '</td></tr></tbody></table></td></tr></tbody></table>';
@@ -86,6 +85,7 @@ router.post('/preview_mail',async function(req, res, next) {
     pastNews = await content.selectView(pastParam);
     pastNewsCount = await content.selectViewCount(pastParam);
   }
+  console.log('/preview_mail:',sideHtmlStart);
   preview_data = {
     layout: false,
     veiw:sideHtmlStart+req.body.M_body+sideHtmlEnd,
@@ -97,7 +97,7 @@ router.post('/preview_mail',async function(req, res, next) {
   };
   res.send(true);
 });
-router.get('/preview_mail',async function(req, res, next) {
+router.get('/preview_mail', isAuthenticated,async function(req, res, next) {
   res.render('preview_mail',preview_data);
 });
 

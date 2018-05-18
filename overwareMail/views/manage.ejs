@@ -27,6 +27,16 @@
                   <option value='<%=klist[i].M_keyword_idx%>'><%=klist[i].M_keyword%></option>
                 <%}%>
               </select>
+              <div class="col-12 col-md-3 f-right col-sm-9 m-l-10 p-l-0 p-r-0 right-icon-control">
+                <input type="text" class="form-control form-control-inverse search-text" id="keywordInput">
+                <div class="form-icon" id="searchBtn">
+                  <i class="fas fa-search"></i>
+                </div>
+              </div>
+              <select id="selectSearchType" name="select" class="col-12 col-md-1  form-control form-control-inverse f-right search-select">
+                <option value="t">제목</option>
+                <option value="n">발송차수</option>
+              </select>
             </div>
             <div class="card-block table-border-style">
               <div class="table-responsive">
@@ -37,6 +47,7 @@
                       <th width="5%">키워드</th>
                       <th width="15%">제목</th>
                       <th width="5%">발송자</th>
+                      <th width="5%">발송차수</th>
                       <th width="5%">수신자</th>
                       <th width="20%">수신그룹</th>
                       <th width="5%">작성일</th>
@@ -81,6 +92,7 @@
                         </a>
                       </td>
                       <td><%= list[i].M_sender %></td>
+                      <td><div class="num_nobr"><%= list[i].M_seq_number %>차</div></td>
                       <td><%= recipiStr %></td>
                       <td><div class="group-nobr" title="<%= groupStr %>"><%= groupStr %></div></td>
                       <td><div class="date-nobr"><%= list[i].M_regdate %></div></td>
@@ -217,11 +229,11 @@
   #mailBody td,th{
     white-space: inherit;
   }
-  .title_nobr,.kwd_nobr,.group-nobr{
+  .title_nobr,.kwd_nobr,.group-nobr,.num_nobr{
     font-size: 15px;
     padding-left: 3px;
     text-overflow: ellipsis;
-    width: 382px;
+    width: 300px;
     overflow: hidden;
   }
   .date-nobr{
@@ -232,6 +244,9 @@
   .title_nobr:hover{
     cursor:default;
     font-weight: bold;
+  }
+  .num_nobr{
+    width: 60px;
   }
   .group-nobr{
     width: 100px;
@@ -249,6 +264,13 @@
   $(document).ready(function(){
     if(keywordValue != ''){
       $("#selectKeyword option[value='"+keywordValue+"']").attr('selected','selected');
+    }
+    var url = new URL(window.location.href);
+    var searchTypeParams = url.searchParams.get("searchType");
+    var searchParams = url.searchParams.get("search");
+    if(searchTypeParams != null && searchParams != null){
+      $("#selectSearchType").val(searchTypeParams).prop("selected", true);
+      $("#keywordInput").val(searchParams);
     }
   });
   // 삭제버튼 클릭시
@@ -411,6 +433,7 @@
     });
   });
   function reloadPage(){
+    console.log('reloadPage');
     var pageValue = ($("#page").val() == '') ? 1 : parseInt($("#page").val());
     var param = {
       page : pageValue
@@ -418,6 +441,13 @@
     var keywordValue = $("#keyword").val();
     if(keywordValue != ''){
       param.keyword = keywordValue;
+    }
+    var url = new URL(window.location.href);
+    var searchTypeParams = url.searchParams.get("searchType");
+    var searchParams = url.searchParams.get("search");
+    if(searchTypeParams != null && searchParams != null){
+      page.searchType=searchTypeParams;
+      page.search=searchParams;
     }
     ajaxGetPageList(param);
   }
@@ -435,6 +465,13 @@
     else{
       $('#keyword').val('');
     }
+    var url = new URL(window.location.href);
+    var searchTypeParams = url.searchParams.get("searchType");
+    var searchParams = url.searchParams.get("search");
+    if(searchTypeParams != null && searchParams != null){
+      page.searchType=searchTypeParams;
+      page.search=searchParams;
+    }
     // data input hidden values
     ajaxGetPageList(param,0);
   });
@@ -449,7 +486,13 @@
     if(keywordValue != ''){
       param.keyword = keywordValue;
     }
-
+    var url = new URL(window.location.href);
+    var searchTypeParams = url.searchParams.get("searchType");
+    var searchParams = url.searchParams.get("search");
+    if(searchTypeParams != null && searchParams != null){
+      page.searchType=searchTypeParams;
+      page.search=searchParams;
+    }
     ajaxGetPageList(param,num);
   });
   function ajaxGetPageList(param){
@@ -499,6 +542,7 @@
               <div class="title_nobr">'+item.M_subject+'</div>\
             </a></td>\
             <td>'+item.M_sender+'</td>\
+            <td><div class="num_nobr">'+item.M_seq_number+'차</div></td>\
             <td>'+recipiStr+'</td>\
             <td><div class="group-nobr" title="'+groupStr+'">'+groupStr+'</div></td>\
             <td><div class="date-nobr">'+item.M_regdate+'</div></td>\
