@@ -66,47 +66,6 @@ router.get('/',isAuthenticated, async function(req, res) {
   res.render('email',data);
 });
 
-router.get('/test', async function(req, res) {
-  res.locals.user ={
-    user_id: 'test'
-  };
-  var n_idx = 25;
-  var user_admin = null;
-  var searchParam = [n_idx,0,10];
-  if(user_admin != null){
-    searchParam[0] = user_admin;
-  }
-  var data = {
-    keywordList : await keyword.selectMovieKwd(user_admin,searchParam[0]),
-    typeList : await mailType.selectTable(user_admin,searchParam[0]),
-    mailList : await mailListA.selectView({},searchParam),
-    mailListCount : await mailListA.selectViewCount({},searchParam),
-    mailListPageNum : 1,
-    groupList : await mailListC.selectView({},searchParam),
-    groupListCount : await mailListC.selectViewCount({},searchParam),
-    groupListPageNum : 1,
-    type: '',
-    mailData: [],
-    mailSender:[],
-    // mailRecipi:[],
-    // mailGroup:[]
-  };
-  if('type' in req.query){
-    data.type = req.query.type;
-    var result = await mailAllA.getEmailData(req.query.idx);
-    if(result.length > 0){
-      data.mailData = result[0];
-      data.mailSender = await mailListA.getOneInfo(data.mailData.M_sender);
-      data.mailSender = (data.mailSender.length > 0) ? data.mailSender[0]: [];
-      // data.mailRecipi = await mailListA.getOneInfo(data.mailData.M_recipi);
-      // data.mailRecipi = (data.mailRecipi.length > 0) ? data.mailRecipi[0]: [];
-      // data.mailGroup = await mailListC.getOneData(data.mailData.M_group);
-      // data.mailGroup = (data.mailGroup.length > 0) ? data.mailGroup[0]: [];
-    }
-  }
-  res.render('email_input',data);
-});
-
 router.get('/manage',isAuthenticated, async function(req, res) {
   var data = await getListPageData(req.user.n_idx,req.query);
   data.klist = await keyword.selectMovieKwdAll(req.user.user_admin,req.user.n_idx) || [];
@@ -176,6 +135,10 @@ async function getListPageData(idx,param){
   if (typeof param.keyword !== 'undefined') {
     searchBody['keyword'] = param.keyword;
     data['keyword'] = param.keyword;
+  }
+  if (typeof param.searchType !== 'undefined' && typeof param.search !== 'undefined') {
+    searchBody['searchType'] = param.searchType;
+    searchBody['search'] = param.search;
   }
   try{
     data['list'] = await mailAllA.selectEmailView(searchBody,searchParam);
@@ -343,7 +306,7 @@ async function asyncForEach(array, callback) {
 async function asyncFileRemove(dateF,fileArr){
   console.log('asyncFileRemove');
   await asyncForEach(fileArr, async (item, index, array) => {
-    var removePath = "/home/hosting_users/unioncmail/apps/unioncmail_unioncmail/public/uploads/files/"+dateF+"/"+item;
+    var removePath = ___dirname.replace('\\routes','') +"/public/uploads/files/"+dateF+"/"+item;
     fs.removeSync(removePath.replace(/ /gi, ""));
     console.log('remove file:',removePath.replace(/ /gi, ""));
     console.log(getFiles(removePath));
@@ -602,8 +565,7 @@ async function settingMailBody(bodyHtml,keyword,idx,num){
 
   for(var i=0; i < pastView.length; i++) {
     var url = 'http://showbox.email/preview?keyword='+pastView[i].keyword_idx+'&idx='+pastView[i].n_idx;
-    var numIdx = Math.ceil(pastCount-i).toString();
-    html +='<tr><td style=\"font-size: small;padding:5px 0 5px;border-bottom:1px dotted #d9d9d9;color:#444;\">[No.'+numIdx+'차]<a style=\"text-decoration:none; color:black;\" href=\"'+url+'\" target=\"_blank\">'+pastView[i].M_subject+'</a>';
+    html +='<tr><td style=\"font-size: small;padding:5px 0 5px;border-bottom:1px dotted #d9d9d9;color:#444;\">[No.'+pastView[i].M_seq_number+'차]<a style=\"text-decoration:none; color:black;\" href=\"'+url+'\" target=\"_blank\">'+pastView[i].M_subject+'</a>';
     html +='</td><td style=\"font-size: small;padding:5px 0 5px;border-bottom:1px dotted #d9d9d9;color:#444;\">'+pastView[i].M_regdate+'</td></tr>'
   }
   html +='<tr><td colspan="2" style="text-align: center; font-size: small;padding:10px 0 5px;">';
@@ -804,5 +766,45 @@ router.post('/send/file',uploadFile.single('file'),function(req, res) {
 //   var data = [req.file.filename,req.file.destination.replace('public/uploads/files/','')+'/'+req.file.originalname];
 //   res.send({result:data});
 // });
-
+//
+// router.get('/test', async function(req, res) {
+//   res.locals.user ={
+//     user_id: 'test'
+//   };
+//   var n_idx = 25;
+//   var user_admin = null;
+//   var searchParam = [n_idx,0,10];
+//   if(user_admin != null){
+//     searchParam[0] = user_admin;
+//   }
+//   var data = {
+//     keywordList : await keyword.selectMovieKwd(user_admin,searchParam[0]),
+//     typeList : await mailType.selectTable(user_admin,searchParam[0]),
+//     mailList : await mailListA.selectView({},searchParam),
+//     mailListCount : await mailListA.selectViewCount({},searchParam),
+//     mailListPageNum : 1,
+//     groupList : await mailListC.selectView({},searchParam),
+//     groupListCount : await mailListC.selectViewCount({},searchParam),
+//     groupListPageNum : 1,
+//     type: '',
+//     mailData: [],
+//     mailSender:[],
+//     // mailRecipi:[],
+//     // mailGroup:[]
+//   };
+//   if('type' in req.query){
+//     data.type = req.query.type;
+//     var result = await mailAllA.getEmailData(req.query.idx);
+//     if(result.length > 0){f
+//       data.mailData = result[0];
+//       data.mailSender = await mailListA.getOneInfo(data.mailData.M_sender);
+//       data.mailSender = (data.mailSender.length > 0) ? data.mailSender[0]: [];
+//       // data.mailRecipi = await mailListA.getOneInfo(data.mailData.M_recipi);
+//       // data.mailRecipi = (data.mailRecipi.length > 0) ? data.mailRecipi[0]: [];
+//       // data.mailGroup = await mailListC.getOneData(data.mailData.M_group);
+//       // data.mailGroup = (data.mailGroup.length > 0) ? data.mailGroup[0]: [];
+//     }
+//   }
+//   res.render('email_input',data);
+// });
 module.exports = router;

@@ -49,7 +49,7 @@
                 %>
                 <tr>
                   <td style="font-size: small;padding:5px 0 5px;border-bottom:1px dotted #d9d9d9;color:#444;">
-                    [No.<%=numIdx%>차]
+                    [No.<%=pastView[i].M_seq_number%>차]
                     <a style="text-decoration:none; color:black;" href="<%=url%>" target="_blank"><%=pastView[i].M_subject%></a>
                   </td>
                   <td style="font-size: small;padding:5px 0 5px;border-bottom:1px dotted #d9d9d9;color:#444;"><%=pastView[i].M_regdate%></td>
@@ -61,7 +61,6 @@
                     var pages = Math.ceil(pastCount / limit);
                     var index=1;
                     for(index;index<=pages;index++){
-                      //http://showbox.email
                       if(currentPage == index){
                   %>
                       <strong><span class="current"><%=index%></span></strong>
@@ -97,6 +96,22 @@
         alert($('#msg').val());
       }
     });
+    // 새로고침 방지
+    $(document).keydown(function(e) {
+      key = (e) ? e.keyCode : event.keyCode;
+
+      var t = document.activeElement;
+
+      if (key == 8 || key == 116 || key == 17 || key == 82) {
+        if (e) {
+            e.preventDefault();
+        } else {
+            event.keyCode = 0;
+            event.returnValue = false;
+        }
+      }
+    });
+
   </script>
 </body>
 </html>

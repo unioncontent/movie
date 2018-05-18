@@ -91,6 +91,7 @@
                     <tr>
                       <th width="10%">발송일</th>
                       <th>키워드</th>
+                      <th>발송차수</th>
                       <th>제목</th>
                       <th>발송건</th>
                       <th>성공</th>
@@ -103,27 +104,11 @@
                     <tr>
                       <th><%= list[i].M_regdate %></th>
                       <td><div class="kwd_nobr"><%= list[i].M_keyword %></div></td>
+                      <td><div class="num_nobr"><%= list[i].M_seq_number %>차</div></td>
                       <td>
-                        <div class="title_nobr"><%= list[i].M_subject %></div>
-                        <div class="mailHtml">
-                          <%= list[i].M_body %>
-                          <% if(list[i].M_file){ %>
-                            <br/><br/>첨부파일 :<br/>
-                          <%
-                            var fileArr = list[i].M_file.split('|');
-                            var fileNameArr = fileArr;
-                            if(list[i].M_file_name){
-                              fileNameArr = list[i].M_file_name.split('|');
-                            }
-                            var dateStr = list[i].M_regdate.slice(0,10).replace(/-/g,"");
-                            fileArr.forEach(function(value, index) {
-                              var file = value.split('/').pop();
-                              var fileName = fileNameArr[index];
-                          %>
-                          <a href="http://mail.overware.co.kr/period/download/<%=dateStr%>/<%=file%>" target="_blank" style="font-size:15px;"><%=fileName%></a>
-                          <br/>
-                          <% }); } %>
-                        </div>
+                        <a href="http://showbox.email/preview?keyword=<%= list[i].M_keyword_idx %>&idx=<%= list[i].n_idx %>" target="_blank">
+                          <div class="title_nobr"><%= list[i].M_subject %></div>
+                        </a>
                       </td>
                       <td><%= parseInt(list[i].success) + parseInt(list[i].fail) %></td>
                       <td><span class="success" data-idx="<%= list[i].n_idx %>"><%= list[i].success %></span></td>
@@ -477,9 +462,6 @@
 .table-cp td,.table-cp th{
   text-align: center;
 }
-.mailHtml{
-  display: none;
-}
 .table.table-sm td, .table.table-sm th {
   padding: .3rem;
 }
@@ -506,7 +488,7 @@
     max-width: 1016px;
 }
 /* mail preview css end */
-.title_nobr,.kwd_nobr,.error_nobr{
+.title_nobr,.kwd_nobr,.error_nobr,.num_nobr{
   font-size: 15px;
   padding-left: 3px;
   margin: 0px auto;
@@ -520,8 +502,11 @@
   cursor:default;
   font-weight: bold;
 }
+.num_nobr{
+  width: 50px;
+}
 .kwd_nobr{
-  width: 146px;
+  width: 100px;
 }
 .error_nobr{
   width: 250px;
@@ -631,14 +616,6 @@ $(document).on('click','.fail',function(){
       $('#error-Modal').modal('show');
     }
   });
-});
-
-// 제목 클릭시
-$(document).on('click','.title_nobr',function(){
-  var htmlStr = $(this).next('div').text().replace(/&lt;/g,"<").replace(/&gt;/g,">").replace(/&nbsp;/g, '');
-  $('#mailBody').empty();
-  $('#mailBody').html(htmlStr);
-  $('#previewMail-Modal').modal('show');
 });
 
 //date 포멧

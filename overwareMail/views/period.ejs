@@ -53,6 +53,7 @@
                       <th width="1%">NO</th>
                       <th width="10%">발송일</th>
                       <th width="5%">키워드</th>
+                      <th width="5%">발송차수</th>
                       <th width="20%">제목</th>
                       <th width="5%" style="min-width:81px">메일타입</th>
                       <th width="5%" style="min-width:81px">발송건수</th>
@@ -76,11 +77,11 @@
                       <th><%= listCount - i - offset %></th>
                       <td><%= list[i].M_regdate %></td>
                       <td><div class="kwd_nobr"><%= list[i].M_keyword %></div></td>
+                      <td><div class="num_nobr"><%= list[i].M_seq_number %>차</div></td>
                       <td>
-                        <div class="title_nobr"><%= list[i].M_subject %></div>
-                        <div class="mailHtml">
-                          <%= list[i].M_body %>
-                        </div>
+                        <a href="http://showbox.email/preview?keyword=<%= list[i].M_keyword_idx %>&idx=<%= list[i].n_idx %>" target="_blank">
+                          <div class="title_nobr"><%= list[i].M_subject %></div>
+                        </a>
                       </td>
                       <td><%= list[i].M_mail_type %></td>
                       <td><span class="total"><%= parseInt(list[i].success) + parseInt(list[i].fail) %></span></td>
@@ -607,9 +608,7 @@
   .btn i {
     margin-right: 0px;
   }
-  .mailHtml{
-    display: none;
-  }
+
   /* mail preview css start */
   #mailBody{
     overflow: auto;
@@ -636,12 +635,15 @@
   .table-period td,.table-period th{
     text-align: center;
   }
-  .title_nobr,.kwd_nobr,.error_nobr{
+  .title_nobr,.kwd_nobr,.error_nobr,.num_nobr{
     font-size: 15px;
     padding-left: 3px;
     text-overflow: ellipsis;
-    width: 500px;
+    width: 400px;
     overflow: hidden;
+  }
+  .num_nobr{
+    width: 50px;
   }
   .error_nobr{
     width: 250px;
@@ -772,15 +774,6 @@
         $('#error-Modal').modal('show');
       }
     });
-  });
-  // 제목 클릭시
-  $(document).on('click','.title_nobr',function(){
-    // var htmlStr = $(this).next('div').html().replace(/&lt;/g,"<").replace(/&gt;/g,">");
-    var htmlStr = $(this).next('div').text().replace(/&lt;/g,"<").replace(/&gt;/g,">").replace(/&nbsp;/g, '');
-
-    $('#mailBody').empty();
-    $('#mailBody').html(htmlStr);
-    $('#previewMail-Modal').modal('show');
   });
   // 통계보고서 보기버튼 클릭시
   $(document).on("click",".btn-period",function(){
@@ -1022,29 +1015,15 @@
         //   history.pushState(null, null,renewURL);
         // }
         $('#listTable tbody').eq(0).empty();
+
         data.result.list.forEach(function(item,idx){
           var numIdx = Math.ceil(data.result.listCount-(data.result.offset+idx)).toString();
-          var mailHtmlStr = '';
-          // if(item.M_file){
-          //   mailHtmlStr += '<br/><br/>첨부파일 :<br/>';
-          //   var dateStr = item.M_regdate.slice(0,10).replace(/-/g,"");
-          //   var fileArr = item.M_file.split('|');
-          //   var fileNameArr = fileArr;
-          //   if(item.M_file_name){
-          //     fileNameArr = item.M_file_name.split('|');
-          //   }
-          //   fileArr.forEach(function(value, index) {
-          //     var file = value.split('/').pop();
-          //     var fileName = fileNameArr[index];
-          //     mailHtmlStr += '<a href="http://mail.overware.co.kr/period/download/'+dateStr+'/'+file+'" target="_blank" style="font-size:15px;">'+fileName+'</a><br/>';
-          //   });
-          // }
-          // console.log(item.M_body+mailHtmlStr);
           var html = '<tr>\
             <th>'+numIdx+'</th>\
             <td>'+item.M_regdate+'</td>\
             <td><div class="kwd_nobr">'+item.M_keyword+'</div></td>\
-            <td><div class="title_nobr">'+item.M_subject+'</div><div class="mailHtml">'+item.M_body+mailHtmlStr+'</div></td>\
+            <td><div class="num_nobr">'+item.M_seq_number+'차</div></td>\
+            <td><a href="http://showbox.email/preview?keyword='+item.M_keyword_idx+'&idx='+item.n_idx+'" target="_blank"><div class="title_nobr">'+item.M_subject+'</div></a></td>\
             <td>'+item.M_mail_type+'</td>\
             <td><span class="total">'+(parseInt(item.success) + parseInt(item.fail))+'</span></td>\
             <td><span class="success" data-idx=\"'+item.n_idx+'\">'+item.success+'</span></td>\
