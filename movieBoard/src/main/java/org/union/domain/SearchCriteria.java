@@ -7,7 +7,7 @@ public class SearchCriteria extends Criteria {
 	
 	private String searchType, keyword, selectKey, company, textType, portal_name, portal_type, hour, url;
 	private Integer total;
-	private String startDate, endDate, createstartDate, createendDate;
+	private String startDate, endDate, createstartDate, createendDate, createminusDate;
 
 	
 	public String getPortal_name() {
@@ -156,7 +156,15 @@ public class SearchCriteria extends Criteria {
 	public void setCreateendDate(String createendDate) {
 		this.createendDate = createendDate;
 	}
+	
+	public String getCreateminusDate() {
+		return createminusDate;
+	}
 
+
+	public void setCreateminusDate(String createminusDate) {
+		this.createminusDate = createminusDate;
+	}
 
 	@Override
 	public String toString() {
@@ -164,6 +172,7 @@ public class SearchCriteria extends Criteria {
 				+ ", company=" + company + ", textType=" + textType + ", portal_name=" + portal_name + ", portal_type="
 				+ portal_type + ", hour=" + hour + ", url=" + url + ", total=" + total + ", startDate=" + startDate
 				+ ", endDate=" + endDate + ", createstartDate=" + createstartDate + ", createendDate=" + createendDate
-				+ "]";
+				+ ", createminusDate=" + createminusDate + "]";
 	}
+
 }
