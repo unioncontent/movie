@@ -37,10 +37,13 @@
 		<if test="selectKey != null">
 				and keyword in (select keyword from keyword_data where keyword_main = #{selectKey})
 			</if>
+		<if test="startDate == null">
+			and writeDate <![CDATA[>=]]> CURDATE()
+		</if>
 		<if test="startDate != null">
-			and updateDate <![CDATA[>=]]> #{startDate}
+			and writeDate <![CDATA[>=]]> #{startDate}
 			<if test="endDate != null">
-				and updateDate <![CDATA[<]]> #{endDate}
+				and writeDate <![CDATA[<=]]> #{endDate}
 			</if>
 		</if>
 		<if test="textType != null">
@@ -960,13 +963,13 @@
 			naver_videos 
 		where 
 			view_cnt != (select view_cnt from naver_videos where url=#{url} and 
- 			createDate <![CDATA[>=]]> #{createstartDate}
+ 			createDate <![CDATA[>=]]> date_add(#{createminusDate}, interval -1 day)
 		and 
 			createDate <![CDATA[<=]]> #{createendDate} order by createDate desc limit 1) 
 		and 
 			url = #{url}
 		and 
- 			createDate <![CDATA[>=]]> #{createstartDate}
+ 			createDate <![CDATA[>=]]> date_add(#{createminusDate}, interval -1 day)
 		and 
 			createDate <![CDATA[<=]]> #{createendDate}
 		order 

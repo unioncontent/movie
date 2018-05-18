@@ -37,10 +37,13 @@
 		<if test="selectKey != null">
 				and keyword in (select keyword from keyword_data where keyword_main = #{selectKey})
 			</if>
+		<if test="startDate == null">
+			and writeDate <![CDATA[>=]]> CURDATE()
+		</if>
 		<if test="startDate != null">
-			and updateDate <![CDATA[>]]> #{startDate}
+			and writeDate <![CDATA[>=]]> #{startDate}
 			<if test="endDate != null">
-				and updateDate <![CDATA[<]]> #{endDate}
+				and writeDate <![CDATA[<=]]> #{endDate}
 			</if>
 		</if>
 		<if test="textType != null">

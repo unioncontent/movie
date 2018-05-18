@@ -114,12 +114,6 @@ public class ExcelView extends AbstractXlsView {
 
 		    HSSFCell replyCell = dataRow.createCell(10);
 		    replyCell.setCellValue(new HSSFRichTextString(vo.getReply_cnt().toString()));
-		    
-		    HSSFCell reporterCell = dataRow.createCell(11);
-		    reporterCell.setCellValue(new HSSFRichTextString(vo.getReply_cnt().toString()));
-		    
-		    HSSFCell mediaCell = dataRow.createCell(12);
-		    mediaCell.setCellValue(new HSSFRichTextString(vo.getReply_cnt().toString()));
 
 
 		}
@@ -147,19 +141,8 @@ public class ExcelView extends AbstractXlsView {
 			titleList.add("내용");
 		    titleList.add("작성자");
 		    titleList.add("분류");
-		}else if (model.get("type").equals("videos")) {
-			titleList.add("조회수");
-		    titleList.add("댓글수");
-		    titleList.add("좋아요수");
 		}
 		titleList.add("URL");
-		if (model.get("type").equals("mobile")) {
-		    titleList.add("기자");
-		    titleList.add("언론사");
-		}else if (model.get("type").equals("mobileM")) {
-		    titleList.add("기자");
-		    titleList.add("언론사");
-		}
 		titleList.add("작성날짜");
 		titleList.add("추출날짜");
 		titleList.add("이미지명");
@@ -244,40 +227,15 @@ public class ExcelView extends AbstractXlsView {
 			cellIdx += 1;
 			HSSFCell classiCell = dataRow.createCell(cellIdx);
 			classiCell.setCellValue(new HSSFRichTextString(vo.getTextType()));
-			}
-		    else if (model.get("type").equals("videos")) {
-				cellIdx += 1;
-				HSSFCell viewCell = dataRow.createCell(cellIdx);
-				viewCell.setCellValue(new HSSFRichTextString(vo.getView_cnt()));
-				cellIdx += 1;
-				HSSFCell replyCell = dataRow.createCell(cellIdx);
-				replyCell.setCellValue(new HSSFRichTextString(vo.getReply_cnt()));
-				cellIdx += 1;
-				HSSFCell likeCell = dataRow.createCell(cellIdx);
-				likeCell.setCellValue(new HSSFRichTextString(vo.getLike_cnt()));
-		    }
+			} 
 		    cellIdx += 1;
 		    HSSFCell dateCell = dataRow.createCell(cellIdx);
 		    dateCell.setCellValue(new HSSFRichTextString(vo.getUrl()));
-		    if (model.get("type").equals("mobile")) {
-				cellIdx += 1;
-				HSSFCell reporterCell = dataRow.createCell(cellIdx);
-				reporterCell.setCellValue(new HSSFRichTextString(vo.getReporter_name()));
-				cellIdx += 1;
-				HSSFCell mediaCell = dataRow.createCell(cellIdx);
-				mediaCell.setCellValue(new HSSFRichTextString(vo.getReporter_media_name()));
-		    }else if (model.get("type").equals("mobileM")) {
-				cellIdx += 1;
-				HSSFCell reporterCell = dataRow.createCell(cellIdx);
-				reporterCell.setCellValue(new HSSFRichTextString(vo.getReporter_name()));
-				cellIdx += 1;
-				HSSFCell mediaCell = dataRow.createCell(cellIdx);
-				mediaCell.setCellValue(new HSSFRichTextString(vo.getReporter_media_name()));
-		    }
+		    
 		    cellIdx += 1;
 		    HSSFCell urlCell = dataRow.createCell(cellIdx);
 		    urlCell.setCellValue(new HSSFRichTextString(vo.getWriteDate()));
-		 
+		    
 		    cellIdx += 1;
 		    HSSFCell createCell = dataRow.createCell(cellIdx);
 		    createCell.setCellValue(new HSSFRichTextString(vo.getCreateDate()));
