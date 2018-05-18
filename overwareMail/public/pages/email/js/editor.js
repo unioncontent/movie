@@ -28,8 +28,8 @@ tinymce.init({
     if(data.url.indexOf('/watch?v=') != -1 && data.url.indexOf('www.youtube.com') != -1){
       data.url = data.url.replace('/watch?v=','/embed/');
     }
-    else if(data.url.indexOf('www.youtube.com') == -1 && data.url.indexOf('/watch?v=') == -1 && data.url.indexOf('/embed/') == -1){
-      data.url = data.url.replace('www.youtube.com','/embed');
+    else if(data.url.indexOf('https://youtu.be/') != -1 && data.url.indexOf('/watch?v=') == -1 && data.url.indexOf('/embed/') == -1){
+      data.url = data.url.replace('https://youtu.be/','https://www.youtube.com/embed/');
     }
     var embedHtml = '<p style="text-align: center;">\
     <iframe  src="'+ data.url +'" width="640" height="360" allowfullscreen="allowfullscreen" data-mce-fragment="1"></iframe>\
