@@ -41,6 +41,10 @@ var mailAllA = {
       return count[0]['total'];
     }
   },
+  selectEmailOneView:async function(idx){
+    var sql = 'SELECT * FROM mail_write_view where n_idx=?';
+    return await getResult(sql,idx);
+  },
   insert: async function(param){
     var pValue = Object.values(param);
     var sql = insertSqlSetting(Object.keys(param));
