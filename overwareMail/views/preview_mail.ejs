@@ -43,6 +43,7 @@
             </colgroup>
             <tbody>
               <%
+                var idx = pastView[0].n_idx;
                 for(var i=0; i < pastView.length; i++) {
                   var url = 'http://showbox.email/preview?keyword='+pastView[i].keyword_idx+'&idx='+pastView[i].n_idx;
                   if(currentPage != '1'){
