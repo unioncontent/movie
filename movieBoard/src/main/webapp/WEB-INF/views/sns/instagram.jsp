@@ -624,7 +624,7 @@ function drawChart(data){
    	      element: 'line-chart1',
    	      data: data,
    	      xkey: 'period',
-   	   xLabels : 'day',
+   	   	  xLabels : 'day',
    	      redraw: true,
    	      ykeys: ['l1', 'l2', 'l3'],
    	      hideHover: 'auto',

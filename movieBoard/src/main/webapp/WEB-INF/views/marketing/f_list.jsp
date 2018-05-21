@@ -171,7 +171,8 @@
                                 <div class="card">
                                   <div class="card-header">
                                     <!-- <h5>facebook CGV</h5> -->
-                                    <button class="btn btn-warning alert-excel f-right" style="margin-left: 8px"><i class="icofont icofont-download-alt"></i>EXCEL</button>
+                                    <button class="btn btn-warning alert-excelup f-right" style="margin-left: 8px"><i class="icofont icofont-file-excel"></i>증가데이터</button>
+                                    <button class="btn btn-primary alert-excel f-right" style="margin-left: 8px"><i class="icofont icofont-file-excel"></i>전체데이터</button>
                                     <!-- <button class="btn btn-info f-right alert-confirm" onclick = "location.href='http://overware.iptime.org:8080/marketing/f_channel'"><i class="icofont icofont-ui-note"></i>목록으로</button> -->
                                     <button class="btn btn-info f-right alert-confirm" onclick = "history.back(-1);"><i class="icofont icofont-ui-note"></i>목록으로</button>
                                   <div class="col-sm-3 input-group input-group-button input-group-inverse p-l-0 p-r-0 m-b-10 f-left btn-select">
@@ -531,6 +532,32 @@ $(document).ready(function(){
 						+ url
 						+ "&startDate=" + decodeURI(window.location.href.split("startDate=")[1]).split("&")[0].split(" ")[0]
 			 			+ "&endDate=" +  decodeURI(window.location.href.split("endDate=")[1]).split("&")[0].split(" ")[0];
+
+
+	  		swal("Success!", "엑셀출력 되었습니다.", "success");
+
+      });
+	});
+	
+	var url = $('input[name=url]').val();
+	//엑셀출력 확인메시지
+	$(document).on("click",".alert-excelup",function(){
+  	swal({
+        title: "엑셀출력 하시겠습니까?",
+        text: "현재 리스트가 엑셀출력 됩니다.",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonClass: "btn-danger",
+        confirmButtonText: "YES",
+        closeOnConfirm: false
+      },
+      function(){//엑셀 출력하겠다고 할 시 진행 함수
+
+    	  self.location = "excelupfOk?"
+	    		+ "url="
+				+ url
+				+ "&startDate=" + decodeURI(window.location.href.split("startDate=")[1]).split("&")[0].split(" ")[0]
+	 			+ "&endDate=" +  decodeURI(window.location.href.split("endDate=")[1]).split("&")[0].split(" ")[0];
 
 
 	  		swal("Success!", "엑셀출력 되었습니다.", "success");

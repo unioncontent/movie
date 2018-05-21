@@ -14,6 +14,7 @@ import org.union.domain.NvVO;
 import org.union.domain.SNSVO;
 import org.union.domain.SearchCriteria;
 import org.union.domain.SearchFv;
+import org.union.domain.SearchNv;
 import org.union.persistence.KeywordDAO;
 import org.union.persistence.SNSDAO;
 
@@ -384,5 +385,53 @@ public class SNSServiceImpl implements SNSService {
 
 		return snsDAO.fvSearchlistSearchTime(cri);
 	}
+
+	@Override
+	public List<FvVO> facebookCGVallList(SearchCriteria cri) {
+
+		return snsDAO.facebookCGVallList(cri);
+	}
+
+
+	@Override
+	public List<FvVO> fvlistOne(SearchCriteria cri) {
+
+		return snsDAO.fvlistOne(cri);
+	}
+
+	@Override
+	public List<FvVO> fvlistTwo(SearchFv fv) {
+
+		return snsDAO.fvlistTwo(fv);
+	}
+
+
+	@Override
+	public List<FvVO> fvlistPlus(SearchCriteria cri) {
+
+		return snsDAO.fvlistPlus(cri);
+	}
+
+
+	@Override
+	public List<FvVO> fvlistMinus2(SearchCriteria cri) {
+
+		return snsDAO.fvlistMinus2(cri);
+	}
+
+
+	@Override
+	public List<FvVO> fvlistlimt(SearchCriteria cri) {
+
+		return snsDAO.fvlistlimt(cri);
+	}
+
+
+	@Override
+	public List<FvVO> fvlistGraph(SearchFv fv) {
+		
+		return snsDAO.fvlistGraph(fv);
+	}
+
 
 }

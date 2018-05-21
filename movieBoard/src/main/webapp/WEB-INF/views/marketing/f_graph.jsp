@@ -44,7 +44,6 @@
   <!-- Style.css -->
   <link rel="stylesheet" type="text/css" href="../assets/pages/clndr-calendar/css/clndr.css">
   <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
-  <link rel="stylesheet" type="text/css" href="../assets/pages/marketing/css/style.css">
   <link rel="stylesheet" type="text/css" href="../assets/pages/dashboard/css/style.css">
   <!--color css-->
   <link rel="stylesheet" type="text/css" href="../assets/css/color/color-1.css" id="color" />
@@ -79,7 +78,7 @@
                 <div class="page-wrapper">
                   <div class="page-header">
                     <div class="page-header-title">
-                      <h4>Naver Movie</h4>
+                      <h4>Facebook CGV</h4>
                     </div>
                     <div class="page-header-breadcrumb">
                       <ul class="breadcrumb-title">
@@ -88,8 +87,8 @@
                             <i class="icofont icofont-home"></i>
                           </a>
                         </li>
-                        <li class="breadcrumb-item"><a href="http://localhost:8080/marketing/n_channel">마케팅 채널관리</a></li>
-                        <li class="breadcrumb-item"><a href="http://localhost:8080/marketing/n_channel">Naver Movie</a></li>
+                        <li class="breadcrumb-item"><a href="http://localhost:8080/marketing/f_channel">마케팅 채널관리</a></li>
+                        <li class="breadcrumb-item"><a href="http://localhost:8080/marketing/f_channel">Facebook CGV</a></li>
                       </ul>
                     </div>
                   </div>
@@ -114,14 +113,19 @@
                             	<i class="icofont icofont-chart-line m-r-5"></i>
                             	조회수 데이터
                             </h5>
-                            <span><b>'${content}'</b> 최근 48시간 그래프</span>
+                            <span><font color="#fb9678">'<c:forEach items="${list1}" var="list1" varStatus="status">
+                            	${list1.sns_content}
+                            	</c:forEach>'</font> / <font color="#7E81CB">'<c:forEach items="${list2}" var="list1" varStatus="status">
+                            	${list1.sns_content}
+                            	</c:forEach>'</font>
+                            	최근 48시간 그래프</span>
                             <div class="card-header-right">
                               <i class="icofont icofont-rounded-down"></i>
                             </div>
                           </div>
                           <div class="card-block">
                             <!-- <div id="morris-extra-area" style="height:300px;"></div> -->
-                            <div id="morris-extra-line" style="height:150px;"></div>
+                            <div id="morris-extra-line" style="height:200px;"></div>
                           </div>
                         </div>
                       </div>
@@ -134,14 +138,19 @@
                             	<i class="icofont icofont-chart-line m-r-5"></i>
                             	댓글수 데이터
                             </h5>
-                            <span><b>'${content}'</b> 최근 48시간 그래프</span>
+                            <span><font color="#fb9678">'<c:forEach items="${list1}" var="list1" varStatus="status">
+                            	${list1.sns_content}
+                            	</c:forEach>'</font> / <font color="#7E81CB">'<c:forEach items="${list2}" var="list1" varStatus="status">
+                            	${list1.sns_content}
+                            	</c:forEach>'</font>
+                            	최근 48시간 그래프</span>
                             <div class="card-header-right">
                               <i class="icofont icofont-rounded-down"></i>
                             </div>
                           </div>
                           <div class="card-block">
                             <!-- <div id="morris-extra-area" style="height:300px;"></div> -->
-                            <div id="morris-extra-line2" style="height:150px;"></div>
+                            <div id="morris-extra-line2" style="height:200px;"></div>
                           </div>
                         </div>
                       </div>
@@ -154,136 +163,57 @@
                             	<i class="icofont icofont-chart-line m-r-5"></i>
                             	좋아요수 데이터
                             </h5>
-                            <span><b>'${content}'</b> 최근 48시간 그래프</span>
+                            <span><font color="#fb9678">'<c:forEach items="${list1}" var="list1" varStatus="status">
+                            	${list1.sns_content}
+                            	</c:forEach>'</font> / <font color="#7E81CB">'<c:forEach items="${list2}" var="list1" varStatus="status">
+                            	${list1.sns_content}
+                            	</c:forEach>'</font>
+                            	최근 48시간 그래프</span>
                             <div class="card-header-right">
                               <i class="icofont icofont-rounded-down"></i>
                             </div>
                           </div>
                           <div class="card-block">
                             <!-- <div id="morris-extra-area" style="height:300px;"></div> -->
-                            <div id="morris-extra-line3" style="height:150px;"></div>
+                            <div id="morris-extra-line3" style="height:200px;"></div>
                           </div>
                         </div>
                       </div>
                       <!-- Morris chart end -->
-                      <!-- List start -->
-                              <div class="col-md-12">
-                                <div class="card">
-                                  <div class="card-header">
-                                  <button class="btn btn-warning alert-excelup f-right" style="margin-left: 8px"><i class="icofont icofont-file-excel"></i>증가데이터</button>
-			                        <button class="btn btn-primary alert-excel f-right" style="margin-left: 8px"><i class="icofont icofont-file-excel"></i>전체데이터</button>
-                                    <!-- <button class="btn btn-info f-right alert-confirm" onclick = "location.href='http://overware.iptime.org:8080/marketing/n_channel'"><i class="icofont icofont-ui-note"></i>목록으로</button> -->
-                                    <button class="btn btn-info f-right alert-confirm" onclick = "history.back(-1);"><i class="icofont icofont-ui-note"></i>목록으로</button>
-                                    <div class="col-sm-3 input-group input-group-button input-group-inverse p-l-0 p-r-0 m-b-10 f-left btn-select">
-                                    <input type='text' class='datepicker-here form-control m-r-10 m-b-10 f-left' data-language='en' id='startdate' style="width: 50px" placeholder="Date"/>
-	                              	&nbsp;<font size="3"><b>~</b></font>
-	                              	<input type='text' class='datepicker-here form-control f-right p-r-5 p-l-5 m-l-15 m-b-10' data-language='en' id='enddate' style="width: 50px" placeholder="Date"/>
-	                              	<span class="input-group-addon" id="basic-addon1">
-	                              		<button id="searchBtn" class="btn btn-inverse"><i class="icofont icofont-search-alt-2"></i></button>
-	                              	</span>
-	                              </div>
-                                  </div>
-                                  <div class="card-block table-border-style">
-                                    <div class="table-responsive">
-                                      <table class="table table-bordered table-sm">
-                                        <thead>
-                                            <tr align="center">
-                                              <th width="3%">NO</th>
-                                              <th width="5%">검출일</th>
-                                              <th width="3%">총 검출수</th>
-                                              <th width="3%">조회수</th>
-                                              <th width="3%">댓글수</th>
-                                              <th width="3%">좋아요수</th>
-                                              <th width="30%">제목</th>
-                                              <th width="5%"></th>
-                                            </tr>
-                                        </thead>
+                      <table>
                                         <tbody>
-                                        <c:forEach var="list" items="${list}" varStatus="index">
-                                          <tr class = "trList">
-                                            <th scope="row">${totalCount - index.count + 1}</th>
-                                            <td>
-                                            	<fmt:formatDate value="${list.createDate}" type="DATE" pattern="yyyy-MM-dd" />
-                                            	<input type="hidden" value="<fmt:formatDate value="${list.createDate}" type="DATE" pattern="yyyy-MM-dd" />" name="createDate2" id=createDate2>
+                                        <c:forEach items="${list1}" var="list1" varStatus="status">
+                                          <tr>
+                                          	<td>
+                                          	<input type="hidden" value="<fmt:formatDate value="${list1.createDate}" type="DATE" pattern="yyyy-MM-dd HH" />" name="createDate" id=createDate>
                                             </td>
                                             <td>
-                                            	<fmt:formatNumber value="${list.total}" pattern="#,##0" />건
-                                            	<input type="hidden" value="${list.portal_title}" name="content" id="content">
+                                            <input type="hidden" value="${list1.url}" name="url" id="url">
                                             </td>
                                             <td>
-                                            <c:if test="${list.view_cnt != 0}">
-                                            <fmt:formatNumber value="${list.view_cnt}" pattern="#,##0" />회
-                                            <%-- &nbsp;(<i class="icofont icofont-arrow-up" style="color: green"></i>
-                                            <fmt:formatNumber value="${(list.view_cnt - list2[status.index].view_cnt)}" pattern="#,##0" />회) --%>
-                                            </c:if>
-                                            <c:if test="${list.view_cnt == 0}">
-                                            0회
-                                            </c:if>
+                                            <input type="hidden" value="${list1.sns_content}" name="content" id="content">
                                             </td>
-                                            <td>
-                                            <fmt:formatNumber value="${list.reply_cnt}" pattern="#,##0" />회
-                                            <input type="hidden" value="${list.url}" name="url" id="url">
-                                            </td>
-                                            <td>
-                                            <fmt:formatNumber value="${list.like_cnt}" pattern="#,##0" />회
-                                            <c:forEach var="creatDate" items="${creatDate}" varStatus="status">
-                                            <input type="hidden" value="<fmt:formatDate value="${creatDate.createDate}" type="DATE" pattern="yyyy-MM-dd HH" />" name="createDate" id=createDate>
-                                            </c:forEach>
-                                            </td>
-                                            <td>
-                                            <div class="content-nowrap">
-                                            <a href='${list.url}' target="_blank">${list.portal_title}</a>
-                                            </div>
-                                            </td>
-                                            <td>
-                                            <button type="button" class="list-button btn btn-primary waves-effect waves-light" style="margin-right: 5px;" data-toggle="tooltip" data-placement="top" data-original-title="리스트">
-                                            <i class="icofont icofont-ui-note"></i>리스트
-                                            </button>
-		    								</td>
                                           </tr>
                                         </c:forEach>
                                         </tbody>
-                                        <tfoot>
+                                      </table>
+                                    <table> 
+                                        <tbody>
+                                        <c:forEach items="${list2}" var="list2" varStatus="status">
                                           <tr>
-                                            <td colspan="7">
-                                              <%-- <ul class="pagination float-right">
-                                                <c:if test="${pageMaker.prev}">
-                                              		<li class="page-item">
-                                                		  <a class="page-link" href="n_list${pageMaker.makeSearch(pageMaker.startPage - 1) }" aria-label="Previous">&laquo;
-                                                  		<span aria-hidden="true"></span>
-                                                  		<span class="sr-only">Previous</span>
-                                                		  </a>
-                                              		</li>
-                                        	      </c:if>
-
-                                          		  <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
-                                              		<li class= "${pageMaker.cri.page == idx? 'active':''} page-item">
-                                                		  <a class="page-link" href="n_list${pageMaker.makeSearch(idx)}">${idx}</a>
-                                              		</li>
-                                          		  </c:forEach>
-                                          		  <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-                                              		<li class="page-item">
-                                              		  <a class="page-link" href="n_list${pageMaker.makeSearch(pageMaker.endPage +1) }" aria-label="Next">&raquo;
-                                                		<span aria-hidden="true"></span>
-                                                		<span class="sr-only">Next</span>
-                                              		  </a>
-                                              		</li>
-                                          		  </c:if>
-                                          		</ul> --%>
+                                          	<td>
+                                          	<input type="hidden" value="<fmt:formatDate value="${list2.createDate}" type="DATE" pattern="yyyy-MM-dd HH" />" name="createDate2" id=createDate2>
+                                            </td>
+                                            <td>
+                                            <input type="hidden" value="${list2.url}" name="url2" id="url2">
+                                            </td>
+                                            <td>
+                                            <input type="hidden" value="${list2.sns_content}" name="content2" id="content2">
                                             </td>
                                           </tr>
-                                        </tfoot>
+                                        </c:forEach>
+                                        </tbody>
                                       </table>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
                   <!-- page-body end -->
                 </div>
               </div>
@@ -410,15 +340,20 @@ $(document).ready(function(){
 	
 	var url = $('input[name=url]').val();
 	console.log("url:" + url);
+	var url2 = $('input[name=url2]').val();
+	console.log("url2:" + url2);
 	var Mcreate = $('input[name=createDate]').val();
 	console.log("Mcreate:" + Mcreate);
-	
+	var Mcreate2 = $('input[name=createDate2]').val();
+	console.log("Mcreate:2" + Mcreate2);
+	/* var dt = new Date();
+	var time = dt.getHours(); */
 	$.ajax({
-			
+		
 	      type : "POST",
-		  url : "ngraph",
+		  url : "graphOne",
 	 	  dataType : "json",
-	 	  data : {success : 'success', url: url, Mcreate: Mcreate},
+	 	  data : {success : 'success', url: url, url2: url2, Mcreate: Mcreate, Mcreate2: Mcreate2},
 	  	  success : function(data){
 
 	  		  console.log(data);
@@ -428,7 +363,8 @@ $(document).ready(function(){
 			for(var i = 0; i < data.length; i++){
 
 				script += '{"period":' + '"' + data[i].writeDate + '",'
-						+ '"조회수"' + ':' + data[i].type1 + "},";
+						+ '"첫번째조회수"'+ ':' + data[i].type1 + ","
+						+ '"두번째조회수"' + ':' + data[i].type2 + "},";
 						
 
 				if(i == data.length-1){
@@ -449,9 +385,9 @@ $(document).ready(function(){
 	$.ajax({
 		
 	      type : "POST",
-		  url : "ngraph",
+		  url : "graphOne",
 	 	  dataType : "json",
-	 	  data : {success : 'success', url: url, Mcreate: Mcreate},
+	 	  data : {success : 'success', url: url, url2: url2, Mcreate: Mcreate, Mcreate2: Mcreate2},
 	  	  success : function(data){
 
 	  		  console.log(data);
@@ -461,7 +397,8 @@ $(document).ready(function(){
 			for(var i = 0; i < data.length; i++){
 
 				script += '{"period":' + '"' + data[i].writeDate + '",'
-						+ '"댓글수"' + ':' + data[i].type2 + "},";
+				+ '"첫번째댓글수"'+ ':' + data[i].type3 + ","
+				+ '"두번째댓글수"' + ':' + data[i].type4 + "},";
 						
 
 				if(i == data.length-1){
@@ -482,9 +419,9 @@ $(document).ready(function(){
 	$.ajax({
 		
 	      type : "POST",
-		  url : "ngraph",
+		  url : "graphOne",
 	 	  dataType : "json",
-	 	  data : {success : 'success', url: url, Mcreate: Mcreate},
+	 	  data : {success : 'success', url: url, url2: url2, Mcreate: Mcreate, Mcreate2: Mcreate2},
 	  	  success : function(data){
 
 	  		  console.log(data);
@@ -494,7 +431,8 @@ $(document).ready(function(){
 			for(var i = 0; i < data.length; i++){
 
 				script += '{"period":' + '"' + data[i].writeDate + '",'
-						+ '"좋아요수"' + ':' + data[i].type3 + "},";
+				+ '"첫번째좋아요수"'+ ':' + data[i].type5 + ","
+				+ '"두번째좋아요수"' + ':' + data[i].type6 + "},";
 						
 
 				if(i == data.length-1){
@@ -512,150 +450,19 @@ $(document).ready(function(){
 	  	 }
 	});
 	
-	var url = $('input[name=url]').val();
-	//엑셀출력 확인메시지
-	$(document).on("click",".alert-excel",function(){
-  	swal({
-        title: "엑셀출력 하시겠습니까?",
-        text: "현재 리스트가 엑셀출력 됩니다.",
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonClass: "btn-danger",
-        confirmButtonText: "YES",
-        closeOnConfirm: false
-      },
-      function(){//엑셀 출력하겠다고 할 시 진행 함수
-
-    	  self.location = "excel?"
-			    		+ "url="
-						+ url
-						+ "&startDate=" + decodeURI(window.location.href.split("startDate=")[1]).split("&")[0].split(" ")[0]
-			 			+ "&endDate=" +  decodeURI(window.location.href.split("endDate=")[1]).split("&")[0].split(" ")[0];
-
-
-	  		swal("Success!", "엑셀출력 되었습니다.", "success");
-
-      });
-	});
 	
-	var url = $('input[name=url]').val();
-	//엑셀출력 확인메시지
-	$(document).on("click",".alert-excelup",function(){
-  	swal({
-        title: "엑셀출력 하시겠습니까?",
-        text: "현재 리스트가 엑셀출력 됩니다.",
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonClass: "btn-danger",
-        confirmButtonText: "YES",
-        closeOnConfirm: false
-      },
-      function(){//엑셀 출력하겠다고 할 시 진행 함수
-
-    	  self.location = "excelupnOk?"
-	    		+ "url="
-				+ url
-				+ "&startDate=" + decodeURI(window.location.href.split("startDate=")[1]).split("&")[0].split(" ")[0]
-	 			+ "&endDate=" +  decodeURI(window.location.href.split("endDate=")[1]).split("&")[0].split(" ")[0];
-
-
-	  		swal("Success!", "엑셀출력 되었습니다.", "success");
-
-      });
-	});
-	
-	// 검색버튼 클릭시
-	$('#searchBtn').on("click", function(event){
-	  console.log("searchBtn clicked....");
-	
-	  searchList();
-	  
-	});
-	
-	// 리스트 버튼 클릭
-	$(".list-button").on("click", function(event){
-		var parent = event.target.parentNode;
-
-		if(parent.type == 'button'){
-			console.log("button click...");
-			parent = parent.parentNode;
-		}
-
-		var tr = parent.parentNode;
-		console.log(tr); 
-		
-		var td1 = tr.children[4];
-		console.log(td1);
-		
-		var td2 = tr.children[2];
-		console.log(td2);
-		
-		var td3 = tr.children[1];
-		console.log(td3);
-		
-		
-		var url = td1.children[0].value;
-		var content = td2.children[0].value;
-		var createstartDate = td3.children[0].value;
-		var createendDate = td3.children[0].value;
-		
-		console.log("url:" + url, "content:" + content, "createstartDate:" + createstartDate, "createendDate:" + createendDate);
-		
-		self.location = "n_listall?url=" + url + "&content=" + content + "&createstartDate=" + createstartDate + "&createendDate=" + createendDate;
-
-	});
 	
 }); // end ready...
 
-		/* function areaChart(jsonScript) {
-				$("#morris-bar").empty();
-				window.areaChart = Morris.Bar({
-					element: 'morris-bar',
-				    data: jsonScript,
-				    xkey: 'period',
-				    ykeys: ['조회수'],
-				    labels: ['조회수'],
-				    barColors: ['#01C0C8'],
-				    stacked: true,
-				    
-				    hideHover: 'auto',
-				    resize: true,
-				    gridTextColor: '#888'
-				    });
-				} 
-					LabelMargin : 10, */
-
-	  		
-	  	
-	  		/* function areaChart(jsonScript) {
-	  			$("#morris-extra-area").empty();
-	  			window.areaChart = Morris.Area({
-	  				element: 'morris-extra-area',
-	  			    data: jsonScript,
-	  			    lineColors: ['#01C0C8', '#7E81CB', '#fb9678'],
-	  			    xkey: 'period',
-	  			    ykeys: ['조회수', '댓글수', '좋아요수'],
-	  			    labels: ['조회수', '댓글수', '좋아요수'],
-	  			    pointSize: 0,
-	  		        lineWidth: 0,
-	  		        resize: true,
-	  		        fillOpacity: 0.8,
-	  		        behaveLikeLine: true,
-	  		        gridLineColor: '#5FBEAA',
-	  		        hideHover: 'auto'
-	  			    });
-	  			} */
-				
 	  			function areaChart(jsonScript) {
 		  			$("#morris-extra-line").empty();
 		  			window.areaChart = Morris.Line({
 		  				element: 'morris-extra-line',
 		  			    data: jsonScript,
-		  			    xkey: 'period',
-		  			    ykeys: ['조회수'],
-		  			    labels: ['조회수'],
-		  			    lineColors: ['#01C0C8'],
-		  			    lineWidth : 3,
+		  			  	xkey: 'period',
+		  			    ykeys: ['첫번째조회수','두번째조회수'],
+		  			  	labels: ['첫번째조회수','두번째조회수'],
+		  			    lineColors: ['#fb9678', '#7E81CB'],
 		  			  	hideHover : 'auto'
 		  			    });
 		  			}
@@ -664,43 +471,42 @@ $(document).ready(function(){
 		  			window.areaChart2 = Morris.Line({
 		  				element: 'morris-extra-line2',
 		  			    data: jsonScript,
-		  			    xkey: 'period',
-		  			    ykeys: ['댓글수'],
-		  			    labels: ['댓글수'],
-		  			    lineColors: ['#7E81CB'],
-		  			    lineWidth : 3,
-		  			  	hideHover : 'auto'
+		  			  	xkey: 'period',
+		  			    ykeys: ['첫번째댓글수','두번째댓글수'],
+		  			  	labels: ['첫번째댓글수','두번째댓글수'],
+		  			    lineColors: ['#fb9678', '#7E81CB'],
+		  			  	hideHover : 'auto',
+		  			  	axes: false
 		  			    });
-		  			}
+	  			}
 	  			function areaChart3(jsonScript) {
 		  			$("#morris-extra-line3").empty();
 		  			window.areaChart3 = Morris.Line({
 		  				element: 'morris-extra-line3',
 		  			    data: jsonScript,
-		  			    xkey: 'period',
-		  			    ykeys: ['좋아요수'],
-		  			    labels: ['좋아요수'],
-		  			    lineColors: ['#fb9678'],
-		  			    lineWidth : 3,
-		  			  	hideHover : 'auto'
+		  			  	xkey: 'period',
+		  			    ykeys: ['첫번째좋아요수','두번째좋아요수'],
+		  			  	labels: ['첫번째좋아요수','두번째좋아요수'],
+		  			    lineColors: ['#fb9678', '#7E81CB'],
+		  			  	hideHover : 'auto',
+		  			 	axes: false
 		  			    });
-		  			}
-				
+	  			}
+	  			
 	  	//list URL 함수
-	  		var url = $('input[name=url]').val();
-	  		var content = $('input[name=content]').val();
+	  	var url = $('input[name=url]').val();
+	  	var content = $('input[name=content]').val();
 	  		
 	  	  function searchList(event) {
 
-	  		self.location = "n_list?"
-  				  + "url="
-  				  + url
-  				  + "&content="
-				  + content
-  				  + "&startDate=" + makeDateFormat($("#startdate").val(), 0)
-	 			  + "&endDate=" +  makeDateFormat($("#enddate").val(), 0);
-  }
-	  	  
+	  	  	self.location = "f_listall?"
+	  	  				  + "url="
+	  	  				  + url
+	  	  				  + "&content="
+	  				  	  + content
+	    				  + "&startDate=" + makeDateFormat($("#startdate").val(), 0)
+	  	 			      + "&endDate=" +  makeDateFormat($("#enddate").val(), 0);
+	  	  }
 	  	function makeDateFormat(date, index){
 			var splitDate = date.split(" - ")[index];
 				if(splitDate != undefined){

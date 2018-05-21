@@ -169,7 +169,7 @@
                               <div class="col-md-12">
                                 <div class="card">
                                   <div class="card-header">
-                                    <!-- <button class="btn btn-info f-right alert-confirm" onclick = "location.href='http://overware.iptime.org:8080/marketing/f_channel'"><i class="icofont icofont-ui-note"></i>목록으로</button> -->
+                                    <!-- <button class="btn btn-warning alert-excelup f-right" style="margin-left: 8px"><i class="icofont icofont-file-excel"></i>증가데이터</button> -->
                                     <button class="btn btn-info f-right alert-confirm" onclick = "history.back(-1);"><i class="icofont icofont-ui-note"></i>목록으로</button>
                                   </div>
                                   <div class="card-block table-border-style">
@@ -190,7 +190,7 @@
                                           <tr>
                                             <th>${totalCount - status.count + 1}</th>
                                             <td>
-                                            	<fmt:formatDate value="${list1.createDate}" type="DATE" pattern="yyyy-MM-dd HH:mm:ss" />
+                                            	<fmt:formatDate value="${list1.createDate}" type="DATE" pattern="yyyy-MM-dd HH:00" />
                                             </td>
                                             <td>
                                             <c:if test="${list1.view_cnt != 0}">
@@ -490,7 +490,7 @@ $(document).ready(function(){
 	
 	var url = $('input[name=url]').val();
 	//엑셀출력 확인메시지
-	$(document).on("click",".alert-excel",function(){
+	$(document).on("click",".alert-excelup",function(){
   	swal({
         title: "엑셀출력 하시겠습니까?",
         text: "현재 리스트가 엑셀출력 됩니다.",
@@ -502,11 +502,13 @@ $(document).ready(function(){
       },
       function(){//엑셀 출력하겠다고 할 시 진행 함수
 
-    	  self.location = "excelOk?"
+    	  self.location = "excelupOk?"
 			    		+ "url="
 						+ url
 						+ "&startDate=" + decodeURI(window.location.href.split("startDate=")[1]).split("&")[0].split(" ")[0]
-			 			+ "&endDate=" +  decodeURI(window.location.href.split("endDate=")[1]).split("&")[0].split(" ")[0];
+			 			+ "&endDate=" +  decodeURI(window.location.href.split("endDate=")[1]).split("&")[0].split(" ")[0]
+    	 				+ "&createstartDate=" + decodeURI(window.location.href.split("createstartDate=")[1]).split("&")[0].split(" ")[0];
+      					
 
 
 	  		swal("Success!", "엑셀출력 되었습니다.", "success");

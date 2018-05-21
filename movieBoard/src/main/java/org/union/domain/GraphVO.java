@@ -7,11 +7,12 @@ public class GraphVO {
 	private String endDate;
 	private String sns_name;
 	private String writeDate;
+	private String writeDate2;
 	private Integer likeCount;
 	private Integer shareCount;
 	private Integer replyCount;
 	private Integer facebookCount, instagramCount, twitterCount;
-	private Integer type1, type2, type3, type4;
+	private Integer type1, type2, type3, type4, type5, type6;
 	private String company, selectKey;
 	public String getCompany() {
 		return company;
@@ -48,6 +49,16 @@ public class GraphVO {
 	}
 	public void setWriteDate(String writeDate) {
 		this.writeDate = writeDate;
+	}
+	
+	public String getWriteDate2() {
+		return writeDate2;
+	}
+	public void setWriteDate2(String writeDate2) {
+		this.writeDate2 = writeDate2;
+	}
+	public String getSelectKey() {
+		return selectKey;
 	}
 	public Integer getLikeCount() {
 		return likeCount;
@@ -109,13 +120,27 @@ public class GraphVO {
 	public void setType4(Integer type4) {
 		this.type4 = type4;
 	}
+	
+	public Integer getType5() {
+		return type5;
+	}
+	public void setType5(Integer type5) {
+		this.type5 = type5;
+	}
+	public Integer getType6() {
+		return type6;
+	}
+	public void setType6(Integer type6) {
+		this.type6 = type6;
+	}
 	@Override
 	public String toString() {
 		return "GraphVO [startDate=" + startDate + ", endDate=" + endDate + ", sns_name=" + sns_name + ", writeDate="
-				+ writeDate + ", likeCount=" + likeCount + ", shareCount=" + shareCount + ", replyCount=" + replyCount
-				+ ", facebookCount=" + facebookCount + ", instagramCount=" + instagramCount + ", twitterCount="
-				+ twitterCount + ", type1=" + type1 + ", type2=" + type2 + ", type3=" + type3 + ", type4=" + type4
-				+ "]";
+				+ writeDate + ", writeDate2=" + writeDate2 + ", likeCount=" + likeCount + ", shareCount=" + shareCount
+				+ ", replyCount=" + replyCount + ", facebookCount=" + facebookCount + ", instagramCount="
+				+ instagramCount + ", twitterCount=" + twitterCount + ", type1=" + type1 + ", type2=" + type2
+				+ ", type3=" + type3 + ", type4=" + type4 + ", type5=" + type5 + ", type6=" + type6 + ", company="
+				+ company + ", selectKey=" + selectKey + "]";
 	}
 	
 }

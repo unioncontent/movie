@@ -1,5 +1,7 @@
 package org.union.util;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -19,7 +21,9 @@ import org.union.domain.ViralVO;
 @Component
 public class ListUtil {
 	
-	SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
+	SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	
+	SimpleDateFormat date2 = new SimpleDateFormat("yyyy-MM-dd HH:00");
 	
 
 	public List<ExtractVO> listAddList(List<ExtractVO> list, List<ExtractVO> addList) {
@@ -251,7 +255,7 @@ public class ListUtil {
 				vo.setReply_cnt(Integer.toString(addList.get(i).getReply_cnt()));
 				vo.setLike_cnt(Integer.toString(addList.get(i).getLike_cnt()));
 				vo.setWriteDate(addList.get(i).getWriteDate());
-				vo.setCreateDate(date.format(addList.get(i).getUpdateDate()));
+				vo.setCreateDate(date2.format(addList.get(i).getUpdateDate()));
 				
 				list.add(vo);
 			}
@@ -268,22 +272,176 @@ public class ListUtil {
 		try {
 
 			for(int i = 0; i < addList.size(); i++) {
+				
+		            ExtractVO vo = new ExtractVO();
+		            
+		            vo.setDomain("videos");
+		            vo.setDomainType("facebook");
+		            vo.setTitle(addList.get(i).getSns_content());
+		            vo.setWriter(addList.get(i).getSns_writer());
+		            vo.setUrl(addList.get(i).getUrl());
+		            vo.setView_cnt(Integer.toString(addList.get(i).getView_cnt()));
+		            vo.setReply_cnt(Integer.toString(addList.get(i).getReply_cnt()));
+		            vo.setLike_cnt(Integer.toString(addList.get(i).getLike_cnt()));
+		            vo.setWriteDate(addList.get(i).getWriteDate());
+		            vo.setCreateDate(date2.format(addList.get(i).getUpdateDate()));
+		            
+		            list.add(vo);
+		            
+		}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return list;
+	}
+	
+	public List<ExtractVO> listAddFvListUp(List<ExtractVO> list, List<FvVO> addList, List<FvVO> addList2, List<FvVO> addList3) {
+
+		try {
+			int view1 = addList.get(0).getView_cnt();
+			int view2 = addList3.get(0).getView_cnt();
+			if(view1 == view2) {
+				
 				ExtractVO vo = new ExtractVO();
 				
 				vo.setDomain("videos");
-				vo.setDomainType("naver");
-				vo.setTitle(addList.get(i).getSns_content());
-				vo.setWriter(addList.get(i).getSns_writer());
-				vo.setUrl(addList.get(i).getUrl());
-				vo.setView_cnt(Integer.toString(addList.get(i).getView_cnt()));
-				vo.setReply_cnt(Integer.toString(addList.get(i).getReply_cnt()));
-				vo.setLike_cnt(Integer.toString(addList.get(i).getLike_cnt()));
-				vo.setWriteDate(addList.get(i).getWriteDate());
-				vo.setCreateDate(date.format(addList.get(i).getUpdateDate()));
-				
-				list.add(vo);
-			}
+	            vo.setDomainType("facebook");
+	            vo.setTitle(addList.get(0).getSns_content());
+	            vo.setWriter(addList.get(0).getSns_writer());
+	            vo.setUrl(addList.get(0).getUrl());
+	            vo.setView_cnt(Integer.toString(addList.get(0).getView_cnt()));
+	            vo.setReply_cnt(Integer.toString(addList.get(0).getReply_cnt()));
+	            vo.setLike_cnt(Integer.toString(addList.get(0).getLike_cnt()));
+	            vo.setWriteDate(addList.get(0).getWriteDate());
+	            vo.setCreateDate(date2.format(addList.get(0).getUpdateDate()));
+	            
+	            list.add(vo);
+	            
+	            for(int i = 0; i < addList.size(); i++) {
+
+				   ExtractVO vo1 = new ExtractVO();
+		            vo1.setDomain("videos");
+		            vo1.setDomainType("facebook");
+		            vo1.setTitle(addList.get(i).getSns_content());
+		            vo1.setWriter(addList.get(i).getSns_writer());
+		            vo1.setUrl(addList.get(i).getUrl());
+		            vo1.setView_cnt(Integer.toString(addList.get(i+1).getView_cnt() -addList.get(i).getView_cnt()));
+		            vo1.setReply_cnt(Integer.toString(addList.get(i+1).getReply_cnt() -addList.get(i).getReply_cnt()));
+		            vo1.setLike_cnt(Integer.toString(addList.get(i+1).getLike_cnt() - addList.get(i).getLike_cnt()));
+		            vo1.setWriteDate(addList.get(i).getWriteDate());
+		            vo1.setCreateDate(date2.format(addList.get(i+1).getUpdateDate()));
+		            
+		            /*vo.setView_cnt(Integer.toString(addList2.get(i).getView_cnt() - addList.get(i).getView_cnt()));
+		            vo.setReply_cnt(Integer.toString(addList2.get(i).getReply_cnt() - addList.get(i).getReply_cnt()));
+		            vo.setLike_cnt(Integer.toString(addList2.get(i).getLike_cnt() - addList.get(i).getLike_cnt()));*/
+		            System.out.print("view1:" + addList.get(0).getView_cnt());
+		            System.out.print("view2:" + addList3.get(0).getView_cnt());
+		            System.out.print("list1:" + addList.get(i).getUpdateDate());
+		            System.out.print("list2:" + addList.get(i).getUpdateDate());
+		            list.add(vo1);
+	            }
+	            
+		}else {
 			
+			for(int i = 0; i < addList.size(); i++) {
+
+				   ExtractVO vo2 = new ExtractVO();
+		            vo2.setDomain("videos");
+		            vo2.setDomainType("facebook");
+		            vo2.setTitle(addList.get(i).getSns_content());
+		            vo2.setWriter(addList.get(i).getSns_writer());
+		            vo2.setUrl(addList.get(i).getUrl());
+		            vo2.setView_cnt(Integer.toString(addList.get(i).getView_cnt() -addList2.get(i).getView_cnt()));
+		            vo2.setReply_cnt(Integer.toString(addList.get(i).getReply_cnt() -addList2.get(i).getReply_cnt()));
+		            vo2.setLike_cnt(Integer.toString(addList.get(i).getLike_cnt() - addList2.get(i).getLike_cnt()));
+		            vo2.setWriteDate(addList.get(i).getWriteDate());
+		            vo2.setCreateDate(date2.format(addList.get(i).getUpdateDate()));
+		            
+		            System.out.print("view1:" + addList.get(0).getView_cnt());
+		            System.out.print("view2:" + addList3.get(0).getView_cnt());
+		            System.out.print("list1:" + addList.get(i).getUpdateDate());
+		            System.out.print("list2:" + addList.get(i).getUpdateDate());
+		            list.add(vo2);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return list;
+	}
+	
+	public List<ExtractVO> listAddnvListUp(List<ExtractVO> list, List<NvVO> addList, List<NvVO> addList2, List<NvVO> addList3) {
+
+		try {
+			int view1 = addList.get(0).getView_cnt();
+			int view2 = addList3.get(0).getView_cnt();
+			if(view1 == view2) {
+				
+				ExtractVO vo = new ExtractVO();
+				
+				vo.setDomain("videos");
+	            vo.setDomainType("facebook");
+	            vo.setTitle(addList.get(0).getPortal_title());
+	            vo.setWriter(addList.get(0).getPortal_writer());
+	            vo.setUrl(addList.get(0).getUrl());
+	            vo.setView_cnt(Integer.toString(addList.get(0).getView_cnt()));
+	            vo.setReply_cnt(Integer.toString(addList.get(0).getReply_cnt()));
+	            vo.setLike_cnt(Integer.toString(addList.get(0).getLike_cnt()));
+	            vo.setWriteDate(addList.get(0).getWriteDate());
+	            vo.setCreateDate(date2.format(addList.get(0).getUpdateDate()));
+	            
+	            list.add(vo);
+	            
+	            for(int i = 0; i < addList.size(); i++) {
+
+				   ExtractVO vo1 = new ExtractVO();
+		            vo1.setDomain("videos");
+		            vo1.setDomainType("facebook");
+		            vo1.setTitle(addList.get(i).getPortal_title());
+		            vo1.setWriter(addList.get(i).getPortal_writer());
+		            vo1.setUrl(addList.get(i).getUrl());
+		            vo1.setView_cnt(Integer.toString(addList.get(i+1).getView_cnt() -addList.get(i).getView_cnt()));
+		            vo1.setReply_cnt(Integer.toString(addList.get(i+1).getReply_cnt() -addList.get(i).getReply_cnt()));
+		            vo1.setLike_cnt(Integer.toString(addList.get(i+1).getLike_cnt() - addList.get(i).getLike_cnt()));
+		            vo1.setWriteDate(addList.get(i).getWriteDate());
+		            vo1.setCreateDate(date2.format(addList.get(i+1).getUpdateDate()));
+		            
+		            /*vo.setView_cnt(Integer.toString(addList2.get(i).getView_cnt() - addList.get(i).getView_cnt()));
+		            vo.setReply_cnt(Integer.toString(addList2.get(i).getReply_cnt() - addList.get(i).getReply_cnt()));
+		            vo.setLike_cnt(Integer.toString(addList2.get(i).getLike_cnt() - addList.get(i).getLike_cnt()));*/
+		            System.out.print("view1:" + addList.get(0).getView_cnt());
+		            System.out.print("view2:" + addList3.get(0).getView_cnt());
+		            System.out.print("list1:" + addList.get(i).getUpdateDate());
+		            System.out.print("list2:" + addList.get(i).getUpdateDate());
+		            list.add(vo1);
+	            }
+	            
+		}else {
+			
+			for(int i = 0; i < addList.size(); i++) {
+
+				   ExtractVO vo2 = new ExtractVO();
+		            vo2.setDomain("videos");
+		            vo2.setDomainType("facebook");
+		            vo2.setTitle(addList.get(i).getPortal_title());
+		            vo2.setWriter(addList.get(i).getPortal_writer());
+		            vo2.setUrl(addList.get(i).getUrl());
+		            vo2.setView_cnt(Integer.toString(addList.get(i).getView_cnt() -addList2.get(i).getView_cnt()));
+		            vo2.setReply_cnt(Integer.toString(addList.get(i).getReply_cnt() -addList2.get(i).getReply_cnt()));
+		            vo2.setLike_cnt(Integer.toString(addList.get(i).getLike_cnt() - addList2.get(i).getLike_cnt()));
+		            vo2.setWriteDate(addList.get(i).getWriteDate());
+		            vo2.setCreateDate(date2.format(addList.get(i).getUpdateDate()));
+		            
+		            System.out.print("view1:" + addList.get(0).getView_cnt());
+		            System.out.print("view2:" + addList3.get(0).getView_cnt());
+		            System.out.print("list1:" + addList.get(i).getUpdateDate());
+		            System.out.print("list2:" + addList.get(i).getUpdateDate());
+		            list.add(vo2);
+				}
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

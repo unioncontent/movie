@@ -43,10 +43,15 @@
   <link rel="stylesheet" href="../bower_components/jquery-timepicker-1.3.5/jquery.timepicker.min.css">
   <!-- Redial css -->
   <link rel="stylesheet" href="../assets/pages/chart/radial/css/radial.css" type="text/css" media="all">
+  <!-- sweet alert framework -->
+  <link rel="stylesheet" type="text/css" href="../bower_components/sweetalert/dist/sweetalert.css">
+  <!-- sweet alert framework -->
+  <link rel="stylesheet" type="text/css" href="../bower_components/sweetalert/dist/sweetalert.css">
   <!-- Style.css -->
   <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
   <link rel="stylesheet" type="text/css" href="../assets/pages/marketing/css/style.css">
   <link rel="stylesheet" type="text/css" href="../assets/pages/viral/css/style.css">
+  <link rel="stylesheet" type="text/css" href="../assets/pages/division/css/style.css">
   <link rel="stylesheet" type="text/css" href="../assets/css/picker.css">
   <!--color css-->
   <link rel="stylesheet" type="text/css" href="../assets/css/color/color-1.css" id="color" />
@@ -55,6 +60,7 @@
   <link rel="stylesheet" type="text/css" href="../assets/css/ionicons.css">
   <link rel="stylesheet" type="text/css" href="../assets/css/jquery.mCustomScrollbar.css">
   <link href="../assets/dist/css/datepicker.min.css" rel="stylesheet" type="text/css">
+  <link href="../assets/dist/css/select2.css" rel="stylesheet" type="text/css">
 </head>
 
 <body>
@@ -98,6 +104,48 @@
                   <!-- page-body start -->
                   <div class="page-body">
                     <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                          <div class="card-header">
+                            <h5>
+                            	<i class="icofont icofont-chart-line m-r-5"></i>그래프 비교
+                            </h5>
+                            <div class="card-header-right">
+                              <i class="icofont icofont-rounded-down"></i>
+                            </div>
+                          </div>
+                          <div class="card-block">
+                          <form>
+                              <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">제목</label>
+                                <div class="col-sm-5">
+                                  <select class="form-control" id="e1">
+                                  <c:forEach items="${fVallList}" var="fV">
+								  <option value="${fV.url}">${fV.sns_content}</option>
+								  </c:forEach>   
+						          </select>
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">제목</label>
+                                <div class="col-sm-5">
+                                  <select class="form-control" id="e2">
+                                  <c:forEach items="${fVallList}" var="fV">
+								  <option value="${fV.url}">${fV.sns_content}</option>
+								  </c:forEach>   
+						          </select>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <label class="col-sm-2"></label>
+                                <div class="col-sm-10">
+                                <button type="button" class="twin-button btn btn-primary waves-effect waves-light" style="margin-right: 5px;" data-toggle="tooltip" data-placement="top" data-original-title="검색">검색</button>
+                                </div>
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
                               <div class="col-md-12">
                                 <div class="card">
                                   <div class="card-header">
@@ -297,7 +345,8 @@
   <script src="../assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
   <script src="../assets/js/jquery.mousewheel.min.js"></script>                       
   <script src="../assets/dist/js/datepicker.min.js"></script>
-  <script src="../assets/dist/js/i18n/datepicker.en.js"></script>  
+  <script src="../assets/dist/js/i18n/datepicker.en.js"></script>
+  <script src="../assets/dist/js/select2.js"></script>
 </body>
 <script type="text/javascript">
 
@@ -326,6 +375,18 @@
 
 			$fromDate.val(startDateOption + " - " + endDateOption);
 		}
+		
+		//그래프 비교버튼
+		$(".twin-button").on("click", function(event){
+			var url = $("#e1 option:selected").val()
+			var url2 = $("#e2 option:selected").val()
+			
+			console.log("url:" + url);
+			console.log("url2:" + url2);
+			
+			self.location = "f_graph?url=" + url + "&url2=" + url2;
+
+		});
 		
 		// 리스트 버튼 클릭
 		$(".list-button").on("click", function(event){
@@ -362,7 +423,11 @@
 		  searchList();
 		  
 		});
-
+		
+		/* var data = [{ id: 'KOR', text: 'Korea' }, { id: 'JPN', text: 'Japan' }]; */
+		
+		$('#e1').select2({ width: '100%', height: '100%' });
+		$('#e2').select2({ width: '100%', height: '100%' });
 	}); // end ready...
 
 

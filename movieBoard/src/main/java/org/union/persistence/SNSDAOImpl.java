@@ -15,6 +15,7 @@ import org.union.domain.ReplyVO;
 import org.union.domain.SNSVO;
 import org.union.domain.SearchCriteria;
 import org.union.domain.SearchFv;
+import org.union.domain.SearchNv;
 
 @Repository
 public class SNSDAOImpl implements SNSDAO {
@@ -360,6 +361,54 @@ public class SNSDAOImpl implements SNSDAO {
 	public List<FvVO> fvSearchlistSearchTime(SearchCriteria cri) {
 
 		return session.selectList(namespace + "fvSearchlistSearchTime", cri);
+	}
+
+	@Override
+	public List<FvVO> facebookCGVallList(SearchCriteria cri) {
+
+		return session.selectList(namespace + "facebookCGVallList", cri);
+	}
+
+
+	@Override
+	public List<FvVO> fvlistOne(SearchCriteria cri) {
+
+		return session.selectList(namespace + "fvlistOne", cri);
+	}
+
+
+	@Override
+	public List<FvVO> fvlistTwo(SearchFv fv) {
+
+		return session.selectList(namespace + "fvlistOne", fv);
+	}
+
+
+	@Override
+	public List<FvVO> fvlistPlus(SearchCriteria cri) {
+
+		return session.selectList(namespace + "fvlistPlus", cri);
+	}
+
+
+	@Override
+	public List<FvVO> fvlistMinus2(SearchCriteria cri) {
+
+		return session.selectList(namespace + "fvlistMinus2", cri);
+	}
+
+
+	@Override
+	public List<FvVO> fvlistlimt(SearchCriteria cri) {
+
+		return session.selectList(namespace + "fvlistlimt", cri);
+	}
+
+
+	@Override
+	public List<FvVO> fvlistGraph(SearchFv fv) {
+
+		return session.selectList(namespace + "fvlistGraph", fv);
 	}
 
 

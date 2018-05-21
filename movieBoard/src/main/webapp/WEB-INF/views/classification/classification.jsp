@@ -264,7 +264,13 @@
                                       </a>
                                       <span class="text-success">${extractVO.content}</span>
                                     </td>
-                                    <td>${extractVO.createDate} /<br/>${extractVO.writeDate }</td>
+                                    <td>
+                                    <fmt:parseDate value="${extractVO.createDate}" var='issueDate1' pattern="yyyy-MM-dd HH:mm:ss" scope="page" /> 
+                                    <fmt:formatDate value="${issueDate1}" pattern="yyyy-MM-dd HH:mm:ss" />
+                                    <%-- ${extractVO.createDate} --%>
+                                    /<br/>
+                                    ${extractVO.writeDate}
+                                    </td>
                                     <td>
                                       <div class="radios${index.count}">
                                         <c:choose>

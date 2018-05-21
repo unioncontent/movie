@@ -10,6 +10,7 @@ import org.union.domain.NvVO;
 import org.union.domain.SNSVO;
 import org.union.domain.SearchCriteria;
 import org.union.domain.SearchFv;
+import org.union.domain.SearchNv;
 
 public interface SNSService {
 
@@ -73,6 +74,7 @@ public interface SNSService {
 	
 	public List<FvVO> facebookCGV(SearchCriteria cri);
 	public List<FvVO> facebookCGVList(SearchCriteria cri);
+	public List<FvVO> facebookCGVallList(SearchCriteria cri);
 	public Integer facebookCGVListTotalCnt(SearchCriteria cri);
 	public List<FvVO> fvlistSearch(SearchCriteria cri);
 	public List<FvVO> fvlistSearchEx(SearchCriteria cri);
@@ -82,7 +84,13 @@ public interface SNSService {
 	public Integer fvlistViewCnt(SearchFv fv);
 	public Integer fvlistReply_cnt(SearchFv fv);
 	public Integer fvlistlike_cnt(SearchFv fv);
+	public List<FvVO> fvlistPlus(SearchCriteria cri);
+	public List<FvVO> fvlistlimt(SearchCriteria cri);
+	public List<FvVO> fvlistMinus2(SearchCriteria cri);
 	public List<FvVO> fvlistMinus(SearchCriteria cri);
 	public List<FvVO> fvlistSearchTime(SearchCriteria cri);
 	public List<FvVO> fvSearchlistSearchTime(SearchCriteria cri);
+	public List<FvVO> fvlistOne(SearchCriteria cri);
+	public List<FvVO> fvlistTwo(SearchFv fv);
+	public List<FvVO> fvlistGraph(SearchFv fv);
 }

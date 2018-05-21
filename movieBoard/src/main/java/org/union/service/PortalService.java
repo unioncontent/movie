@@ -88,6 +88,7 @@ public interface PortalService {
 	public void modifyThumbnail(PortalVO vo);
 	
 	public List<NvVO> naverVideosList(SearchCriteria cri);
+	public List<NvVO> naverVideosallList(SearchCriteria cri);
 	public Integer naverVideosListTotalCnt(SearchCriteria cri);
 	public List<NvVO> nvlistSearch(SearchCriteria cri);
 	public List<NvVO> nvlistSearchEx(SearchCriteria cri);
@@ -97,8 +98,14 @@ public interface PortalService {
 	public Integer nvlistViewCnt(SearchFv fv);
 	public Integer nvlistReply_cnt(SearchFv fv);
 	public Integer nvlistlike_cnt(SearchFv fv);
+	public List<NvVO> nvlistPlus(SearchCriteria cri);
+	public List<NvVO> nvlistlimt(SearchCriteria cri);
+	public List<NvVO> nvlistMinus2(SearchCriteria cri);
 	public List<NvVO> nvlistMinus(SearchCriteria cri);
 	public List<NvVO> nvlistSearchTime(SearchCriteria cri);
 	public List<NvVO> nvSearchlistSearchTime(SearchCriteria cri);
+	public List<NvVO> nvlistOne(SearchCriteria cri);
+	public List<NvVO> nvlistTwo(SearchFv fv);
+	public List<NvVO> nvlistGraph(SearchFv fv);
 	
 }

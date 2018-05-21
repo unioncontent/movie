@@ -158,6 +158,21 @@
 			</if>
 		</if>
 	</sql>
+	
+	<sql id="search_writeDate5">
+		<if test="startDate != null">
+			and createDate <![CDATA[>=]]>date_add(#{createminusDate}, interval -1 day)
+				and createDate <![CDATA[<=]]> #{endDate}
+		</if>
+	</sql>
+	<sql id="search_writeDate6">
+		<if test="startDate != null">
+			and createDate <![CDATA[>=]]>date_add(#{startDate}, interval -1 hour)
+			<if test="endDate != null">
+				and createDate <![CDATA[<=]]> #{endDate}
+			</if>
+		</if>
+	</sql>
  
  	<insert id="create">
  		insert into
@@ -793,6 +808,16 @@
 			#{startPage}, #{perPageNum}
  	</select>
  	
+ 	<select id="naverVideosallList" resultType="NvVO">
+ 		select 
+		DATE_FORMAT(writeDate,'%Y-%m-%d') writeDate, portal_title, url, max(view_cnt)as view_cnt, max(like_cnt)as like_cnt, max(reply_cnt)as reply_cnt,count(*) as total
+		from naver_videos
+        where
+			url is not null
+        group by portal_title
+        order by writeDate desc
+ 	</select>
+ 	
  	<select id="naverVideosListTotalCnt" resultType="Integer">
 		select 
 		count(*) as total
@@ -827,7 +852,7 @@
  			url = #{url}
  		<include refid="search_writeDate4"></include>
 		order 
-			by createDate desc
+			by createDate asc
  	</select>
  	
  	<select id="nvlistSearchTotalCnt" resultType="Integer">
@@ -876,50 +901,6 @@
 			by createDate desc
  	</select>
  	
- 	<!-- <select id="nvlistViewCnt" resultType="Integer">
- 		select 
- 			view_cnt
- 		from 
- 			naver_videos
- 		where 
- 			createDate between date_add(#{date}, interval -1 hour) and #{date}
- 		and
- 			url = #{url}
- 		order by 
- 			createDate desc 
- 		limit 1;
- 	</select> 
- 	set @num:=0;
- 		set @num1:=0;
- 	-->
- 		
- 	<!-- <select id="nvlistReply_cnt" resultType="Integer">
- 		select 
- 			reply_cnt
- 		from 
- 			naver_videos
- 		where 
- 			createDate between date_add(#{date}, interval -1 hour) and #{date}
- 		and
- 			url = #{url}
- 		order by 
- 			createDate desc 
- 		limit 1;
- 	</select>
- 	<select id="nvlistlike_cnt" resultType="Integer">
- 		select 
- 			like_cnt
- 		from 
- 			naver_videos
- 		where 
- 			createDate between date_add(#{date}, interval -1 hour) and #{date}
- 		and
- 			url = #{url}
- 		order by 
- 			createDate desc 
- 		limit 1;
- 	</select> -->
- 	
  	<select id="nvlistViewCnt" resultType="Integer">
  	select
 		f.view_cnt as view_cnt
@@ -956,9 +937,42 @@
 	where a.rownum = b.rownum) f;
  	</select>
  	
+ 	<select id="nvlistPlus" resultType="NvVO">
+ 		select 
+ 			*
+		from 
+			naver_videos 
+		where  
+			url = #{url}
+		<include refid="search_writeDate4"></include>
+		order 
+			by createDate asc
+ 	</select>
+ 	
+ 	<select id="nvlistlimt" resultType="NvVO">
+ 		select 
+ 			* 
+ 		from 
+ 			naver_videos 
+ 		where url = #{url} 
+ 		order by createDate asc limit 1;
+ 	</select>
+ 	
+ 	<select id="nvlistMinus2" resultType="NvVO">
+ 		select 
+ 			*
+		from 
+			naver_videos 
+		where 
+			url = #{url}
+		<include refid="search_writeDate5"></include>
+		order 
+			by createDate asc
+ 	</select>
+ 	
  	<select id="nvlistMinus" resultType="NvVO">
  		select 
- 			view_cnt 
+ 			view_cnt, reply_cnt, like_cnt
 		from 
 			naver_videos 
 		where 
@@ -985,6 +999,7 @@
  		order by createDate asc 
  		limit 1
  	</select>
+ 	
  	<select id="nvSearchlistSearchTime" resultType="NvVO">
  		select 
  			*
@@ -998,5 +1013,38 @@
 			createDate <![CDATA[<=]]> #{createendDate}
  		order by createDate asc 
  		limit 1
+ 	</select>
+ 	
+ 	<select id="nvlistOne" resultType="NvVO">
+ 		select 
+ 			createDate, portal_title, url 
+ 		from 
+ 			naver_videos 
+ 		where 
+ 			url = #{url}
+		order by createDate asc 
+			limit 1;
+ 	</select>
+ 	
+ 	<select id="nvlistTwo" resultType="NvVO">
+ 		select 
+ 			createDate, portal_title, url 
+ 		from 
+ 			naver_videos 
+ 		where 
+ 			url = #{url}
+		order by createDate asc 
+			limit 1;
+ 	</select>
+ 	
+ 	<select id="nvlistGraph" resultType="NvVO">
+ 		select 0 as 'view_cnt', 0 as 'reply_cnt', 0 as 'like_cnt' from dual 
+        	union all
+ 		select 
+ 			view_cnt, reply_cnt, like_cnt 
+ 		from 
+ 			naver_videos 
+ 		where 
+ 			url = #{url};
  	</select>
  </mapper>

@@ -67,7 +67,6 @@ public class ExcelView extends AbstractXlsView {
 		HSSFCellStyle dateStyle = (HSSFCellStyle) wb.createCellStyle();
 		dateStyle.setDataFormat(wb.createDataFormat().getFormat("yyyy/mm/dd"));
 
-
 		// 데이터 추가
 		List<SNSVO> list = (List) model.get("snsList");
 
