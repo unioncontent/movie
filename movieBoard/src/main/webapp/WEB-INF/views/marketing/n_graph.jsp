@@ -463,7 +463,8 @@ $(document).ready(function(){
 		  			    ykeys: ['첫번째조회수','두번째조회수'],
 		  			  	labels: ['첫번째조회수','두번째조회수'],
 		  			    lineColors: ['#fb9678', '#7E81CB'],
-		  			  	hideHover : 'auto'
+		  			  	hideHover : 'auto',
+		  			  	axes: false
 		  			    });
 		  			}
 	  			function areaChart2(jsonScript) {
