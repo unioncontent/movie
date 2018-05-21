@@ -313,7 +313,7 @@
   // 수정버튼 클릭시
   $(document).on('click','.btn-edit',function(){
     var tdEles = $(this).parents('tr').find('td');
-    if(tdEles.eq(7).text() != '-'){
+    if(tdEles.eq(8).text() != '-'){
       swal("ERROR!", '발송된 메일은 수정하실 수 없습니다.', "error");
       return false;
     }
