@@ -136,9 +136,14 @@ tinymce.init({
   ],
   content_style: [
     // 'body{padding:30px; margin:auto;font-size:14px;font-family:Gulim,"Helvetica Neue",Helvetica,Arial,sans-serif;color:#222} h1,h2,h3,h4,h5,h6 {font-weight:400;margin-top:1.2em} h1 {} h2{} table {width:100%; border-collapse: collapse;} table td, th {border: 1px solid; padding:10px; text-align:left;font-size:14px;font-family:Gulim,"Helvetica Neue",Helvetica,Arial,sans-serif;} table th {background-color:#E2E4E7}'
-    'body{padding:30px; margin:auto;font-size:14px;font-family:Gulim,"Helvetica Neue",Helvetica,Arial,sans-serif;color:#222} .mce-content-body p{margin:0px;line-height:14px;}.mce-content-body{padding-top:25px;}'
+    '.mce-content-body {padding:30px; margin:auto; padding-top:25px; font-size: 12px; font-family: 돋움!important;color: #333333;}.mce-content-body p{margin: 0;padding: 0;}'
   ],
   setup: function(editor) {
+    editor.on('init', function(){
+        this.getDoc().body.style.fontSize = '12';
+        this.getDoc().body.style.fontFamily = 'dotum';
+    });
+
     editor.addButton('fileUpload', {
       icon:'fa fa-folder-open',
       tooltip: '파일 삽입/수정',
@@ -323,7 +328,7 @@ function fileUpload(param){
         var aTagHtml = '<a style="color: #ffffff; font-weight: bold; font-size: 12px; text-decoration: none; " href="'+data.location+'">'+param.name+'</a>'
         var html = '<p><span style="width: 100px; background:#4E4E4E; margin-top:20px; padding: 5px 30px; text-align: center;">'+aTagHtml+'</span>&nbsp; &nbsp; &nbsp;</p><p>﻿﻿<br></p>';
         if(param.type== 'cBtn-b'){
-          aTagHtml = '<a style="color: #000000; font-size: 12px; text-decoration: none; " href="'+data.location+'">'+param.name+'</a>'
+          aTagHtml = '<a style="color: #000000; font-weight: bold; font-size: 12px; text-decoration: none; " href="'+data.location+'">'+param.name+'</a>'
           html = '<p><span style="background:#f9f9f9; border: 1px solid #000000; width: 130px; margin-top:5px; padding: 5px 15px; font-weight: bold; ; font-size: 12px;"">'+aTagHtml+'</span>&nbsp; &nbsp; &nbsp;</p><p>﻿﻿<br></p>';
         }
 

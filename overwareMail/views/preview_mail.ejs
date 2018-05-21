@@ -6,21 +6,17 @@
   <link href="https://fonts.googleapis.com/css?family=Lato:300,300i,400,400i" rel="stylesheet">
   <!-- <link href="https:///www.tinymce.com/css/codepen.min.css" rel="stylesheet"> -->
   <style type="text/css">
-    body{
-      padding:30px;
-      margin:auto;
-      font-size:14px;
-      font-family:Gulim,"Helvetica Neue",Helvetica,Arial,sans-serif;
-      color:#222
-    }
-    .mce-content-body p{
-      margin:0px;
-      line-height:14px;
-    }
     body, table, input, select, textarea {
       font-size: 12px;
       font-family: 돋움, dotum, sans-serif;
       color: rgb(51, 51, 51);
+    }
+    h1, h2, h3, h4, h5, td, th, dl, dt, dd, p, form, fieldset, legend {
+      margin: 0;
+      padding: 0;
+    }
+    p{
+      font-size: 16px;
     }
   </style>
 </head>
@@ -43,6 +39,7 @@
             </colgroup>
             <tbody>
               <%
+                if(pastView.length != 0){
                 var idx = pastView[0].n_idx;
                 for(var i=0; i < pastView.length; i++) {
                   var url = 'http://showbox.email/preview?keyword='+pastView[i].keyword_idx+'&idx='+pastView[i].n_idx;
@@ -60,7 +57,7 @@
                   </td>
                   <td style="font-size: small;padding:5px 0 5px;border-bottom:1px dotted #d9d9d9;color:#444;"><%=pastView[i].M_regdate%></td>
                 </tr>
-              <% } } %>
+              <% } } } %>
               <tr>
                 <td colspan="2" style="text-align: center; font-size: small;padding:10px 0 5px;">
                   <%
