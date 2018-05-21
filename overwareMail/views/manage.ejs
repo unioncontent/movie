@@ -580,7 +580,7 @@
             if(groupArr.length > 1){
               groupStr = item.M_group+' 외 '+(groupArr.length-1);
             }
-            else{
+            else if(item.M_group != null){
               groupStr = item.M_group;
             }
           }
