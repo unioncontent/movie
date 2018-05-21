@@ -1020,6 +1020,8 @@
         data.result.list.forEach(function(item,idx){
           var numIdx = Math.ceil(data.result.listCount-(data.result.offset+idx)).toString();
           var html = '<tr>\
+            <input type="hidden" class="M_regdate" value="'+item.M_regdate+'"/>\
+            <input type="hidden" class="M_send" value="'+item.M_send+'"/>\
             <th>'+numIdx+'</th>\
             <td>'+item.M_regdate+'</td>\
             <td><div class="kwd_nobr">'+item.M_keyword+'</div></td>\
