@@ -118,7 +118,7 @@
                             	</c:forEach>'</font> / <font color="#7E81CB">'<c:forEach items="${list2}" var="list1" varStatus="status">
                             	${list1.portal_title}
                             	</c:forEach>'</font>
-                            	최근 48시간 그래프</span>
+                            	최근 24시간 그래프</span>
                             <div class="card-header-right">
                               <i class="icofont icofont-rounded-down"></i>
                             </div>
@@ -143,7 +143,7 @@
                             	</c:forEach>'</font> / <font color="#7E81CB">'<c:forEach items="${list2}" var="list1" varStatus="status">
                             	${list1.portal_title}
                             	</c:forEach>'</font>
-                            	최근 48시간 그래프</span>
+                            	최근 24시간 그래프</span>
                             <div class="card-header-right">
                               <i class="icofont icofont-rounded-down"></i>
                             </div>
@@ -168,7 +168,7 @@
                             	</c:forEach>'</font> / <font color="#7E81CB">'<c:forEach items="${list2}" var="list1" varStatus="status">
                             	${list1.portal_title}
                             	</c:forEach>'</font>
-                            	최근 48시간 그래프</span>
+                            	최근 24시간 그래프</span>
                             <div class="card-header-right">
                               <i class="icofont icofont-rounded-down"></i>
                             </div>
@@ -346,9 +346,9 @@ $(document).ready(function(){
 	console.log("Mcreate:" + Mcreate);
 	var Mcreate2 = $('input[name=createDate2]').val();
 	console.log("Mcreate:2" + Mcreate2);
-	var dt = new Date();
+	/* var dt = new Date();
 	var time = dt.getHours();
-	$.ajax({
+	$.ajax({ */
 		
 	      type : "POST",
 		  url : "graphTwo",
@@ -362,7 +362,7 @@ $(document).ready(function(){
 
 			for(var i = 0; i < data.length; i++){
 
-				script += '{"period":' + '"' + time + '",'
+				script += '{"period":' + '"' + data[i].writeDate + '",'
 						+ '"첫번째조회수"'+ ':' + data[i].type1 + ","
 						+ '"두번째조회수"' + ':' + data[i].type2 + "},";
 						

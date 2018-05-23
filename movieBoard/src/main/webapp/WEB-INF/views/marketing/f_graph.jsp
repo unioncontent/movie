@@ -118,7 +118,7 @@
                             	</c:forEach>'</font> / <font color="#7E81CB">'<c:forEach items="${list2}" var="list1" varStatus="status">
                             	${list1.sns_content}
                             	</c:forEach>'</font>
-                            	최근 48시간 그래프</span>
+                            	최근24시간 그래프</span>
                             <div class="card-header-right">
                               <i class="icofont icofont-rounded-down"></i>
                             </div>
@@ -143,7 +143,7 @@
                             	</c:forEach>'</font> / <font color="#7E81CB">'<c:forEach items="${list2}" var="list1" varStatus="status">
                             	${list1.sns_content}
                             	</c:forEach>'</font>
-                            	최근 48시간 그래프</span>
+                            	최근 24시간 그래프</span>
                             <div class="card-header-right">
                               <i class="icofont icofont-rounded-down"></i>
                             </div>
@@ -168,7 +168,7 @@
                             	</c:forEach>'</font> / <font color="#7E81CB">'<c:forEach items="${list2}" var="list1" varStatus="status">
                             	${list1.sns_content}
                             	</c:forEach>'</font>
-                            	최근 48시간 그래프</span>
+                            	최근 24시간 그래프</span>
                             <div class="card-header-right">
                               <i class="icofont icofont-rounded-down"></i>
                             </div>
