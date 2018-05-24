@@ -347,8 +347,8 @@ $(document).ready(function(){
 	var Mcreate2 = $('input[name=createDate2]').val();
 	console.log("Mcreate:2" + Mcreate2);
 	/* var dt = new Date();
-	var time = dt.getHours();
-	$.ajax({ */
+	var time = dt.getHours();*/
+	$.ajax({ 
 		
 	      type : "POST",
 		  url : "graphTwo",
