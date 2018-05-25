@@ -3,6 +3,7 @@ var urlencode = require('urlencode');
 var request = require('request');
 var router = express.Router();
 // DB module
+var maillink = require('../models/maillink.js');
 var period = require('../models/period.js');
 var keyword = require('../models/keyword.js');
 var mailType = require('../models/mailType.js');
@@ -160,7 +161,7 @@ router.get('/download/:date/:fileName',async function(req, res) {
 });
 
 router.post('/result',isAuthenticated,async function(req, res, next) {
-  var data = await mailDetailB.selectTable(req.body);
+  var data = await maillink.selectResultDetail(req.body);
   res.send({status:true,result:data});
 });
 // 발송결과 측정 항목을 사용할 경우

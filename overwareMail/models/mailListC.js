@@ -57,6 +57,37 @@ var mailListC = {
     var result = await getResult(sql);
     return [].map.call(result, function(obj) { return obj.M_email; });
   },
+  getOneEmail2:async function(idx,param){
+    var sql = 'select distinct M_idx_a from m_mail_list_c where M_group_title in (select M_group_title from m_mail_list_c ';
+    if(typeof param == 'object'){
+      sql += 'where n_idx ='+param[0];
+      for(var i = 1; i < param.length; i++){
+        sql += ' or';
+        sql += ' n_idx ='+param[i];
+      }
+    }
+    else if(typeof param == 'string'){
+      sql += 'where n_idx ='+param;
+    }
+    sql += ')';
+    var result = await getResult(sql);
+    return [].map.call(result, function(obj) { return obj.M_idx_a; });
+    // var sql = 'select distinct M_email,M_name from m_mail_list_all where M_id = '+idx+' and M_email in (';
+    // sql += 'select distinct M_email from m_mail_list_c where M_group_title in (select M_group_title from m_mail_list_c ';
+    // if(typeof param == 'object'){
+    //   sql += 'where n_idx ='+param[0];
+    //   for(var i = 1; i < param.length; i++){
+    //     sql += ' or';
+    //     sql += ' n_idx ='+param[i];
+    //   }
+    // }
+    // else if(typeof param == 'string'){
+    //   sql += 'where n_idx ='+param;
+    // }
+    // sql += '))';
+    // var result = await getResult(sql);
+    // return [].map.call(result, function(obj) { return [obj.M_name,obj.M_email]; });
+  },
   getIdx : async function(param,idx){
     var sql = 'select M_idx_a from m_mail_list_c where M_ID=? ';
     if(typeof param == 'object'){
