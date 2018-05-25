@@ -6,6 +6,7 @@ var urlencode = require('urlencode');
 var Iconv = require('iconv').Iconv;
 var router = express.Router();
 // DB module
+var maillink = require('../models/maillink.js');
 var content = require('../models/content.js');
 var mailAllA = require('../models/mailAllA.js');
 var mailDetailB = require('../models/mailDetailB.js');
@@ -66,6 +67,40 @@ router.get('/',isAuthenticated, async function(req, res) {
   res.render('email',data);
 });
 
+router.get('/body',async function(req, res) {
+  if(!('keyword' in req.query) && !('idx' in req.query)){
+    res.render('emailBody',{layout: false,veiw: '',pastView: [{keyword:''}],pastCount: 0,msg: '주소에 조건이 없습니다.\n주소를 다시 작성해주세요.',currentPage: 1,keyword: '',idx: ''});
+    return false;
+  }
+  if(!('page' in req.query)){
+    req.query.page = 1;
+  }
+  var viewCode = await mailAllA.selectEmailOneView(req.query.idx);
+  var sideHtmlStart = '<table width="750" align="center" cellpadding="0" cellspacing="0" style="border: solid 1px #cacaca; padding: 20px;"><tbody><tr><td><table width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td width="642"><img src="http://showbox.email/templates/images/logo/show_logo.png" width="135" height="36" alt="로고"></td><td width="92">NEWS No.';
+  sideHtmlStart+= ((viewCode.length == 0) ? '' : viewCode[0].M_seq_number)+'</td></tr></tbody></table><table width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td>';
+  var sideHtmlEnd = '</td></tr></tbody></table></td></tr></tbody></table>';
+  var pastParam = {keyword:req.query.keyword,page:req.query.page};
+  var pastNews = await content.selectView(pastParam);
+  var pastNewsCount = await content.selectViewCount(pastParam);
+  var data = {
+    layout: false,
+    veiw:(viewCode.length == 0) ? '' : sideHtmlStart+viewCode[0].M_body+sideHtmlEnd,
+    pastView:pastNews,
+    pastCount: (pastNewsCount.length == 0) ? '':pastNewsCount[0].total,
+    msg: '',
+    currentPage: 1,
+    keyword:req.query.keyword,
+    idx:req.query.idx
+  };
+  if(viewCode.length == 0){
+    data.msg = '해당 메일이 없습니다.';
+  }
+  if('page' in req.query){
+    data.currentPage = req.query.page;
+  }
+  res.render('emailBody',data);
+});
+
 router.get('/manage',isAuthenticated, async function(req, res) {
   var data = await getListPageData(req.user.n_idx,req.query);
   data.klist = await keyword.selectMovieKwdAll(req.user.user_admin,req.user.n_idx) || [];
@@ -75,7 +110,17 @@ router.get('/manage',isAuthenticated, async function(req, res) {
 
 router.post('/manage/updateMtype',isAuthenticated, async function(req, res) {
   console.log('/manage/updateMtype',req.body);
-  var result = await mailAllA.updateMtype([req.body.type,req.body.idx]);
+  var result = await maillink.deleteMlAMSG(req.body.idx);
+  if(!('protocol41' in result)){
+    res.status(500).send('ml_automail_message delete query 실패');
+    return false;
+  }
+  result = await maillink.deleteMlAT(req.body.idx);
+  if(!('protocol41' in result)){
+    res.status(500).send('ml_automail_tran delete query 실패');
+    return false;
+  }
+  result = await mailAllA.updateMtype([req.body.type,req.body.idx]);
   if(!('protocol41' in result)){
     res.status(500).send('mailAllA delete query 실패');
     return false;
@@ -99,6 +144,16 @@ router.post('/manage/delete',isAuthenticated, async function(req, res) {
   result = await mailDetailB.delete(req.body.idx);
   if(!('protocol41' in result)){
     res.status(500).send('mailDetailB delete query 실패');
+    return false;
+  }
+  result = await maillink.deleteMlAMSG(req.body.idx);
+  if(!('protocol41' in result)){
+    res.status(500).send('ml_automail_message delete query 실패');
+    return false;
+  }
+  result = await maillink.deleteMlAT(req.body.idx);
+  if(!('protocol41' in result)){
+    res.status(500).send('ml_automail_tran delete query 실패');
     return false;
   }
   res.send({status:true});
@@ -250,50 +305,6 @@ router.get('/searchAll',isAuthenticated, async function(req, res) {
   res.send({status:true,result:data});
 });
 
-/* 메일나라 'https://directsend.co.kr/index.php/api/v2/mail' / 'https://directsend.co.kr/index.php/api/result_v2/mail'
- * 필수 파라미터
- * subject  : 받을 mail 제목. "utf-8" => "euc-kr"
- * body  : 받을 mail 본문. "utf-8" => "euc-kr"
- * sender : 발송자 메일주소
- * sender_name : 발송자 이름
- * username : directsend 발급 ID
- * recipients : 발송 할 고객 이메일 , 로 구분함. ex) aaa@naver.com,bbb@nate.com (공백제거해서 입력)
- * key : directsend 발급 api key
- *
- * 메일 발송결과를 받고 싶은 URL
- * return_url : 실제 발송결과를 return 받을 URL
- * unique_id :지정한 고유한 값으로 결과를 받고 싶은 경우 사용
- *
- * 발송결과 측정 항목을 사용할 경우
- * open : 발송측정결과 open값
- * click : 발송측정결과 click값
- * check_period : 트래킹 기간을 지정하며 3 / 7 / 15 / 30 일을 기준으로 지정하여 발송
- * option_return_url : 위의 측정 결과를 받고 싶은 URL을 넣어줍니다. ex) http://domain?type=[click | open | reject]&mail_id=[MailID]&email=[Email]
- *
- * 예약 관련 파라미터 사용할 경우
- * mail_type : 즉시발송 / 예약 발송을 구분합니다. NORMAL - 즉시발송 / ONETIME - 1회예약 / WEEKLY - 매주정기예약 / MONTHLY - 매월정기예약 / YEARLY - 매년정기예약
- * start_reserve_time : 예약시작시간('Y-m-d H:i:s')을 넣어줍니다.
- * end_reserve_time : 예약종료시간('Y-m-d H:i:s')을 넣어줍니다. 1회 예약일경우 start_reserve_time=end_reserve_time
- * remained_count : 예약 기간동안 발송 횟수를 넣어줍니다
- WEEKLY | MONTHLY | YEARLY 일 경우에 시작 시간부터 끝나는 시간까지 발송되는 횟수 Ex) type = WEEKLY, start_reserve_time = '2017-05-17 13:00:00', end_reserve_time = '2017-05-24 13:00:00' 이면 remained_count = 2
- *
- * 필수 안내문구를 추가할 경우
- * agreement_text : 수신동의 문구를 넣어줍니다.
- * deny_text : 수신거부 문구를 넣어줍니다.
- * sender_info_text : 발신자 정보 문구를 넣어줍니다.
- * logo_state : Logo 를 사용할 때 1 / 사용하지 않을 때 0
- * logo_path : 로고 이미지 경로 ( Logo_state 는 1 일 때 path 가 없으면 DirectSend 에
-  등록된 이미지 사용)
- *
- * 첨부파일이 있는 경우
- * file_url : 파일을 download 받아 발송처리를 진행합니다. 파일은 개당5MB 이하로 발송을 해야 하며, 파일의 구분자는 '|(shift+\)'로 사용하며 5개까지만 첨부가 가능 ex) 'http://domain/test.png|http://domain/test1.png'
- * file_path : 첨부파일을 보내고 싶을 때 파일의 경로 (접근이 가능 해야합니다.)
- * 순차적(http://domain/test.png - image.png, http://domain/test1.png - image2.png) 와 같이 적용
- *
- * 메일 내용 텍스트로 보내실 경우
- * bodytag = 1
- */
-
 async function asyncForEach(array, callback) {
   for (var index = 0; index < array.length; index++) {
    var done = await callback(array[index], index, array);
@@ -437,6 +448,9 @@ router.post('/save',isAuthenticated, async function(req, res) {
           try{
             if(typeof req.body.end_reserve_time !='undefined'){
               mailDetailParam['M_send'] = req.body.end_reserve_time;
+              /* 추가 */
+              await maillinkInsert({idx:m_idx_a,time:mailDetailParam['M_send']});
+              /* 추가 */
             }
             var resultInsert = await mailDetailB.insert(mailDetailParam);
             console.log(resultInsert);
@@ -462,6 +476,95 @@ router.post('/save',isAuthenticated, async function(req, res) {
   }
 
   res.send({status:true});
+});
+
+router.post('/send2',isAuthenticated, async function(req, res) {
+  // 메일 보내기
+  await maillinkInsert({idx:req.body.idx});
+  // 메일 결과
+  setTimeout(async () =>{
+    console.log('메일 send result');
+    var result = await maillink.selectResult([mailData.n_idx]);
+    if(result){
+      await mailDetailB.updateSendDateResult(mailData.n_idx);
+      res.send({status:true});
+    }
+    else{
+      res.status(500).send('메일 발송에 실패했습니다.');
+    }
+  },5000);
+});
+
+router.post('/resend',isAuthenticated, async function(req, res) {
+  var dt = datetime.create();
+  var now = dt.format('Y-m-d H:M:S');
+  // 보낼 메일 data 가져오기
+  var result = await mailAllA.getEmailData(req.body.idx);
+  if(result.length == 0){
+    res.status(500).send('메일 정보 없음');
+  }
+  var mailData = result[0];
+  // 0. 재발송 하기전 데이터 삭제
+  await maillink.deleteMlAMSG(mailData.n_idx);
+  await maillink.deleteMlAT(mailData.n_idx);
+
+  // 1. 메일 내용 insert
+  // 'body': await settingMailBody(mailData.M_body,mailData.M_keyword,mailData.n_idx,mailData.M_seq_number),
+  var queryParams = {
+    'MSGID':mailData.n_idx,
+    'CONTENT':await settingMailBody(mailData.M_body,mailData.M_keyword,mailData.n_idx,mailData.M_seq_number),
+    'STATUS':'1',
+    'GENDATE':now
+  };
+  await maillink.insert('ML_AUTOMAIL_MESSAGE',queryParams);
+  // 2. 메일 send insert
+  // 메일 보내는 사람 가져오기
+  var mailSender = await mailListA.getOneEmail2(mailData.M_sender);
+  var sender = (mailSender.length > 0) ? mailSender[0]: [];
+  // 메일 받는 사람 가져오기
+  console.log('mailSender:',mailSender);
+  var recipiArr = mailData.M_recipi.split(',');
+  var recipients = [];
+  // 메일 받는 그룹 가져오기
+  var groups = [];
+  if(mailData.M_group != null){
+    var groupArr = await mailListC.getOneEmail2(req.user.n_idx,mailData.M_group.split(','));
+    var groupArr2 = groupArr.concat(recipiArr);
+    var uniqArray = Array.from(new Set(groupArr2));
+    recipients = await mailListA.getOneEmail2(uniqArray);
+  }
+  else{
+    recipients = await mailListA.getOneEmail2(recipiArr);
+  }
+  console.log('recipient:',recipients);
+  await asyncForEach(recipients, async (item, index, array) => {
+    var param = {
+      'AUTOMAILID':'AU-4126512',
+      'CHANNEL':'1',
+      'EMSUBJECT':mailData.M_subject,
+      'EMFROMNAME':sender[0],
+      'EMFROMADDRESS':sender[1],
+      'EMTONAME':item[0],
+      'EMTOADDRESS':item[1],
+      'SENDTIME':now,
+      'GENDATE':now,
+      'MSGID':mailData.n_idx
+    };
+    console.log(index+'번');
+    await maillink.insert('ml_automail_tran',param);
+  });
+  // 3. 메일 send result
+  setTimeout(async () =>{
+    console.log('메일 send result');
+    var result = await maillink.selectResult([mailData.n_idx]);
+    if(result){
+      await mailDetailB.updateSendDateResult(mailData.n_idx);
+      res.send({status:true});
+    }
+    else{
+      res.status(500).send('메일 발송에 실패했습니다.');
+    }
+  },5000);
 });
 
 router.post('/send',isAuthenticated, async function(req, res) {
@@ -560,7 +663,7 @@ async function settingMailBody(bodyHtml,keyword,idx,num){
   var pastView = await content.selectView(pastParam);
   var pastCount = await content.selectViewCount(pastParam);
   pastCount = (pastCount.length == 0) ? '':pastCount[0].total;
-  var htmlMsg = '<table width="750" align="center" cellpadding="0" cellspacing="0" style="padding: 20px;"><tbody><tr><td align="center" style="font-size: 15px; font-weight: bold;" class="fix">[ 메일 본문이 깨져 보이면 <a href=\"http://showbox.email/preview?keyword='+keyword+'&idx='+idx+'\" target=\"_blank\" style=\"font-family: 맑은고딕,malgungothic,돋움,dotum; font-size:12px;color:#ff6300\">여기</a>를 눌러 주세요 ]</td></tr></tbody></table>';
+  var htmlMsg = '<table width="750" align="center" cellpadding="0" cellspacing="0" style="padding: 20px;"><tbody><tr><td align="center" style="font-size: 15px; font-weight: bold;" class="fix">[ 메일 본문이 깨져 보이면 <a href=\"http://showbox.email/preview?keyword='+keyword+'&idx='+idx+'\" target=\"_blank\" style=\"font-family: 맑은고딕,malgungothic,돋움,dotum;\">여기</a>를 눌러 주세요 ]</td></tr></tbody></table>';
   var html = '<table width="750" align="center" cellpadding="0" cellspacing="0" border="0" style="margin-top: 30px;"><tbody><tr><td>[지난 기사보기]<hr><table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-top: 10px;"><colgroup><col width="78%"><col width="22%"></colgroup><tbody>';
 
   for(var i=0; i < pastView.length; i++) {
@@ -584,6 +687,61 @@ async function settingMailBody(bodyHtml,keyword,idx,num){
   return htmlMsg+sideHtmlStart+bodyHtml+sideHtmlEnd+htmlMsg+html;
 }
 
+async function maillinkInsert(req){
+  var dt = datetime.create();
+  var now = dt.format('Y-m-d H:M:S');
+  // 보낼 메일 data 가져오기
+  var result = await mailAllA.getEmailData(req.idx);
+  if(result.length == 0){
+    res.status(500).send('메일 정보 없음');
+  }
+  var mailData = result[0];
+  // 'body': await settingMailBody(mailData.M_body,mailData.M_keyword,mailData.n_idx,mailData.M_seq_number),
+  var queryParams = {
+    'MSGID':mailData.n_idx,
+    'CONTENT':await settingMailBody(mailData.M_body,mailData.M_keyword,mailData.n_idx,mailData.M_seq_number),
+    'STATUS':'1',
+    'GENDATE':now
+  };
+  await maillink.insert('ML_AUTOMAIL_MESSAGE',queryParams);
+  // 2. 메일 send insert
+  // 메일 보내는 사람 가져오기
+  var mailSender = await mailListA.getOneEmail2(mailData.M_sender);
+  var sender = (mailSender.length > 0) ? mailSender[0]: [];
+  // 메일 받는 사람 가져오기
+  console.log('mailSender:',mailSender);
+  var recipiArr = mailData.M_recipi.split(',');
+  var recipients = [];
+  // 메일 받는 그룹 가져오기
+  var groups = [];
+  if(mailData.M_group != null){
+    var groupArr = await mailListC.getOneEmail2(req.user.n_idx,mailData.M_group.split(','));
+    var groupArr2 = groupArr.concat(recipiArr);
+    var uniqArray = Array.from(new Set(groupArr2));
+    recipients = await mailListA.getOneEmail2(uniqArray);
+  }
+  else{
+    recipients = await mailListA.getOneEmail2(recipiArr);
+  }
+  console.log('recipient:',recipients);
+  await asyncForEach(recipients, async (item, index, array) => {
+    var param = {
+      'AUTOMAILID':'AU-4126512',
+      'CHANNEL':'1',
+      'EMSUBJECT':mailData.M_subject,
+      'EMFROMNAME':sender[0],
+      'EMFROMADDRESS':sender[1],
+      'EMTONAME':item[0],
+      'EMTOADDRESS':item[1],
+      'SENDTIME':('time' in req) ? req.time : now,
+      'GENDATE':now,
+      'MSGID':mailData.n_idx
+    };
+    console.log(index+'번');
+    await maillink.insert('ml_automail_tran',param);
+  });
+}
+
 function getFiles (dir, files_){
   var fs = require('fs');
   files_ = files_ || [];
@@ -599,29 +757,28 @@ function getFiles (dir, files_){
   return files_;
 }
 
-/*m_mail_detail_B table에 저장될 M_result 값 종류
-0 : 정상발송 => 0 : 메일발송에 성공하였습니다.
-9 : 미발송
-103 : 보내는 사람 이메일이 유효하지 않음 => 3 : 보내는 사람 이메일이 유효하지 않습니다.
-104 : 받는 사람 이메일이 유효하지 않음 => 4 : 받는 사람 이메일이 유효하지 않습니다.
-105 : 본문에 포함되면 안되는 확장자가 있음(.exe or 문자열) => 5 : 본문에 포함되면 안되는 확장자가 있습니다.
-113 : 첨부파일이 다운로드 되지 않을 경우(파일 경로가 없음) => 13 : 첨부파일의 경로나 파일이 없습니다.
-----------------------------
-이외 에외들의 값은 9
-에러 메시지 : 메일발송에 문제가 생겼습니다. 다시 시도해주세요.
-100 : Post Validation 실패(파라미터 없음)
-101 : 회원정보가 일치하지 않음
-102 : 제목 내용 없음
-106 : body Validation 실패(euc-kr 에서 utf8로 변환하는 과정에서 에러)
-107 : 받는 사람이 없음
-109 : return_url이 없음
-110 : 첨부파일이 없음(정상적인 url이 아닌경우)
-111 : 첨부파일 개수가 5개를 초과
-112 : 첨부파일 Size가 5MB를 초과
-205 : 잔액 부족
-*/
-
 function emailSendFun(pStr){
+  /*m_mail_detail_B table에 저장될 M_result 값 종류
+  0 : 정상발송 => 0 : 메일발송에 성공하였습니다.
+  9 : 미발송
+  103 : 보내는 사람 이메일이 유효하지 않음 => 3 : 보내는 사람 이메일이 유효하지 않습니다.
+  104 : 받는 사람 이메일이 유효하지 않음 => 4 : 받는 사람 이메일이 유효하지 않습니다.
+  105 : 본문에 포함되면 안되는 확장자가 있음(.exe or 문자열) => 5 : 본문에 포함되면 안되는 확장자가 있습니다.
+  113 : 첨부파일이 다운로드 되지 않을 경우(파일 경로가 없음) => 13 : 첨부파일의 경로나 파일이 없습니다.
+  ----------------------------
+  이외 에외들의 값은 9
+  에러 메시지 : 메일발송에 문제가 생겼습니다. 다시 시도해주세요.
+  100 : Post Validation 실패(파라미터 없음)
+  101 : 회원정보가 일치하지 않음
+  102 : 제목 내용 없음
+  106 : body Validation 실패(euc-kr 에서 utf8로 변환하는 과정에서 에러)
+  107 : 받는 사람이 없음
+  109 : return_url이 없음
+  110 : 첨부파일이 없음(정상적인 url이 아닌경우)
+  111 : 첨부파일 개수가 5개를 초과
+  112 : 첨부파일 Size가 5MB를 초과
+  205 : 잔액 부족
+  */
   var options = {
     url: 'https://directsend.co.kr/index.php/api/result_v2/mail',
     method:'POST',

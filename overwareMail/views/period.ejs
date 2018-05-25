@@ -340,18 +340,14 @@
               <div class="table-responsive">
                 <table class="table table-sm">
                   <thead>
-                    <tr>
-                      <th colspan="6" class="f-w-100 text-muted">
-                        ※ 재발송 대기는 발송실패건 중 일시적인 에러로 발송 안된 건에 대해 30분 후 자동으로 재 발송되는 과정입니다.
-                      </th>
-                    </tr>
                     <tr class="text-capitalize">
                       <th></th>
                       <th>코드</th>
                       <th>이메일</th>
                       <th>회사</th>
                       <th>이름</th>
-                      <th>오류 <span class="text-muted smtpMsg"><i class="fas fa-question-circle"></i></span></th>
+                      <th>오류</th>
+                      <!-- <span class="text-muted smtpMsg"><i class="fas fa-question-circle"></i></span> -->
                     </tr>
                   </thead>
                   <tbody id="error-list" class="text-danger">
@@ -709,7 +705,7 @@
       type: 'post',
       data: {
         M_result: 'success',
-        arr : [$(this).data('idx'),250]
+        arr : [$(this).data('idx'),13]
       },
       datatype : 'json',
       error:function(request,status,error){
@@ -719,9 +715,9 @@
         $('#success-list').empty();
         data.result.forEach(function(ele,idx){
           var html = '<tr><td><i class="fas fa-check"></i></td>'+
-            '<td>'+ele.E_mail+'</td>'+
-            '<td>'+ele.P_title+'</td>'+
-            '<td>'+ele.P_name+'</td>'+
+            '<td>'+ele.EMTOADDRESS+'</td>'+
+            '<td>'+ele.M_ptitle+'</td>'+
+            '<td>'+ele.EMTONAME+'</td>'+
           '</tr>';
           $('#success-list').append(html);
         });
@@ -730,9 +726,9 @@
     });
   });
   // 실패 클릭시
-  $(document).on('click','.smtpMsg',function(){
-    $('#smtp-Modal').modal('show');
-  });
+  // $(document).on('click','.smtpMsg',function(){
+  //   $('#smtp-Modal').modal('show');
+  // });
   $(document).on('click','.error_nobr',function(){
     $(this).toggleClass('error_nobr_more');
   });
@@ -745,7 +741,7 @@
       type: 'post',
       data: {
         M_result: 'fail',
-        arr : [$(this).data('idx'),250]
+        arr : [$(this).data('idx'),13]
       },
       datatype : 'json',
       error:function(request,status,error){
@@ -754,23 +750,21 @@
       success:function(data){
         $('#error-list').empty();
         data.result.forEach(function(ele,idx){
-          var o_msg = ele.M_result_msg.replace('send mail Error: ','');
-          var k_msg = settingErrorMsg(o_msg);
+          // var o_msg = ele.M_result_msg.replace('send mail Error: ','');
+          // var k_msg = settingErrorMsg(o_msg);
+          var code = ele.FINALRESULT;
+          var k_msg = settingErrorMsg(code);
           var html = '<tr><td><i class="fas fa-exclamation-triangle"></i></td>'+
-            '<td>'+ele.M_result+'</td>'+'<td>'+ele.E_mail;
-          var send = new Date(ele.M_send);
-          var code = parseInt(ele.M_result);
-          send.setMinutes(send.getMinutes() + 30);
-          if(code == 421 && (new Date().getTime() < send.getTime())){
-            html+='<label class="label label-warning">재발송대기</label>'
+            '<td>'+code+'</td>'+'<td>'+ele.EMTOADDRESS;
+          if(code != '42' && code != '43' && code != '44' && code != '45'){
+            html+='<label class="label label-warning">재발송가능</label>'
           }
-          html+='</td>'+'<td>'+ele.P_title+'</td>'+
-            '<td>'+ele.P_name+'</td>'+
+          html+='</td>'+'<td>'+ele.M_ptitle+'</td>'+
+            '<td>'+ele.EMTONAME+'</td>'+
             '<td><div class="error_nobr">'+k_msg+'</div></td>'+
           '</tr>';
           $('#error-list').append(html);
         });
-
         $('#error-Modal').modal('show');
       }
     });
