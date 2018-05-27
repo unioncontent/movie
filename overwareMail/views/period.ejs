@@ -812,13 +812,14 @@
           $('#newsCount').text(data.result.newsCount);
           $('#replyCount').text(data.result.replyCount);
 
-          $('#total').text(tag.eq(4).text());
-          $('#success').text(tag.eq(5).text());
-          $('#fail').text(tag.eq(6).text());
-          $('#date1').text(input.eq(1).val());
+          $('#total').text(tag.eq(5).text());
+          $('#success').text(tag.eq(6).text());
+          $('#fail').text(tag.eq(7).text());
+          var sendDate = input.eq(1).val().slice(0,16);
+          $('#date1').text(sendDate);
           if(tag.eq(8).text().trim().indexOf("예약") != -1){
-            $('#date1').text(input.eq(1).val().slice(0,16));
-            $('#date2').text(input.eq(1).val().slice(0,16));
+            $('#date1').text(sendDate);
+            $('#date2').text(sendDate);
           }
           $("#period-Modal").modal('show');
         } else{

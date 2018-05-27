@@ -17,6 +17,8 @@ var mail = {
   },
   deleteMlAT: async function(param){
     var sql = 'delete from ml_automail_tran where MSGID=?;';
+    await getResult(sql,param)
+    sql = 'delete from ml_automail_tran_201805 where MSGID=?;';
     return await getResult(sql,param);
   },
   selectResultDetail:async function(param){
