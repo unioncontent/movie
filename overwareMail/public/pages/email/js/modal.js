@@ -2,11 +2,21 @@
 // 주소록 열기
 $(".btn-modal").on("click",function(){
   var recipiIdxValueArr = $('.recipi-select').val();
-  var recipiIdxTextArr = $.trim($('.recipi-select').text()).split('&gt;');;
+  var recipiIdxTextArr = [];//$.trim($('.recipi-select').text()).split('&gt;');
+  $.each($('.select2-selection__rendered').eq(1).find('li'),function(idx,ele){
+    // console.log($(ele).attr('title'));
+    recipiIdxTextArr.push($(ele).attr('title'));
+  });
   modalboxSetting('recipi',recipiIdxValueArr,recipiIdxTextArr);
+  console.log(recipiIdxValueArr,recipiIdxTextArr);
 
   var groupIdxValueArr = $('.group-select').val();
-  var groupIdxTextArr = $.trim($('.group-select').text()).split('&gt;');;
+  var groupIdxTextArr = [];//$.trim($('.group-select').text()).split('&gt;');
+  $.each($('.select2-selection__rendered').eq(2).find('li'),function(idx,ele){
+    // console.log($(ele).attr('title'));
+    groupIdxTextArr.push($(ele).attr('title'));
+  });
+  console.log(groupIdxValueArr,groupIdxTextArr);
   modalboxSetting('group',groupIdxValueArr,groupIdxTextArr);
 
   // 열기 전 페이징 체크 후 버튼 제거
@@ -28,7 +38,7 @@ function modalboxSetting(name,arr,textArr){
   var groupT = (name == 'group') ? '_g' : '';
   arr.forEach(function(ele,idx){
     var nidx = ele;
-    var text = $.trim(textArr[idx]+'&gt;').replace('\n','');
+    var text = $.trim(textArr[idx]).replace('\n','');
     var html = '<li><input type="checkbox" id="selected_chk'+idx+groupT+'" value="'+nidx+'" title="'+text+'">\
     <label for="selected_chk'+idx+groupT+'" title="'+text+'">'+text+'</label></li>';
     $("#"+name+"Ul").append(html);
@@ -41,7 +51,8 @@ $('#saveBtn').on('click',function(){
   var selectRecipi = $("#recipiUl input").get();
   $('.group-select').empty();
   $('.recipi-select').empty();
-
+  $('#M_recipi').val(null).trigger("change");
+  $('#M_group').val(null).trigger("change");
   selectGroup.forEach(function(ele,idx){
     var param = {
       id:$(ele).val(),

@@ -11,6 +11,12 @@ var mailAllA = {
     if('keyword' in body){
       sql +=' and M_keyword_idx = '+body.keyword;
     }
+    if('searchType' in body){
+      switch (body.searchType) {
+        case 'n': sql+=' and M_seq_number ='+body.search; break;
+        case 't': sql+=' and M_subject like \'%'+body.search+'%\''; break;
+      }
+    }
     sql += ' and (  M_id = ? or M_id in (select n_idx from m_mail_user where user_admin=?)) ';
     sql += ' order by n_idx desc limit ?,?';
     return await getResult(sql,param);
@@ -20,6 +26,12 @@ var mailAllA = {
     if('keyword' in body){
       sql +=' and M_keyword_idx = '+body.keyword;
     }
+    if('searchType' in body){
+      switch (body.searchType) {
+        case 'n': sql+=' and M_seq_number ='+body.search; break;
+        case 't': sql+=' and M_subject like \'%'+body.search+'%\''; break;
+      }
+    }
     sql += ' and (  M_id = ? or M_id in (select n_idx from m_mail_user where user_admin=?))';
     var count = await getResult(sql,param);
     if(count.length == 0){
@@ -28,6 +40,10 @@ var mailAllA = {
     else{
       return count[0]['total'];
     }
+  },
+  selectEmailOneView:async function(idx){
+    var sql = 'SELECT * FROM mail_write_view where n_idx=?';
+    return await getResult(sql,idx);
   },
   insert: async function(param){
     var pValue = Object.values(param);

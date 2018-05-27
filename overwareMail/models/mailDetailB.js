@@ -14,19 +14,19 @@ var mailDetailB = {
     var sql = 'delete from m_mail_detail_b where M_idx_A=?';
     return await getResult(sql,[n_idx]);
   },
-  selectTable:async function(param){
-    var sql = 'SELECT * FROM m_mail_detail_b where M_idx_A=? ';
-    if('M_result' in param){
-      sql+='and M_result';
-      if(param.M_result == 'success'){
-        sql += '=?'
-      }else{
-        sql += '!=?'
-      }
-    }
-    sql+=' group by E_mail';
-    return await getResult(sql,param.arr);
-  },
+  // selectTable:async function(param){
+  //   var sql = 'SELECT * FROM m_mail_detail_b where M_idx_A=? ';
+  //   if('M_result' in param){
+  //     sql+='and M_result';
+  //     if(param.M_result == 'success'){
+  //       sql += '=?'
+  //     }else{
+  //       sql += '!=?'
+  //     }
+  //   }
+  //   sql+=' group by E_mail';
+  //   return await getResult(sql,param.arr);
+  // },
   selectCounResult: async function(param){
     var sql = 'SELECT count(if(M_result=250,1,null)) as s,count(if(M_result!=250,1,null)) as f  from (SELECT * FROM m_mail_detail_b where M_idx_A=? group by E_mail) a';
     return await getResult(sql,param);
@@ -49,14 +49,6 @@ var mailDetailB = {
     // var value = [param[2],param[0],'','',param[1],email,param[2],param[0],param[1]];
     // return await getResult(sql,value);
     return await getResult(sql,param);
-  },
-  getMediaNReporterCount:async function(column,param){
-    var sql = 'select FORMAT(count(DISTINCT '+column+'),0) as c from m_mail_detail_b where M_idx_A=?';
-    var result = await getResult(sql,param);
-    if(result.length == 0){
-      return 0;
-    }
-    return result[0].c || 0;
   }
 }
 

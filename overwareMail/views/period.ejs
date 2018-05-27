@@ -20,19 +20,19 @@
         <div class="col-md-12">
           <div class="card">
             <div class="card-header">
-              <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="selectKeyword">
+              <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 m-r-5 p-r-5 f-left" id="selectKeyword">
                 <option>키워드</option>
                 <%for(var i=0; i < klist.length; i++) {%>
                   <option value='<%=klist[i].M_keyword_idx%>'><%=klist[i].M_keyword%></option>
                 <%}%>
               </select>
-              <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="selectType">
+              <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 m-r-5 p-r-5 f-left" id="selectType">
                 <option>메일타입</option>
                 <%for(var i=0; i < tlist.length; i++) {%>
                   <option value='<%=tlist[i].M_mail_type%>'><%=tlist[i].M_mail_type%></option>
                 <%}%>
               </select>
-              <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="selectMType">
+              <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 m-r-5 p-r-5 f-left" id="selectMType">
                 <option>발송타입</option>
                 <option value='0'>즉시</option>
                 <option value='1'>예약</option>
@@ -51,15 +51,16 @@
                   <thead>
                     <tr>
                       <th width="1%">NO</th>
-                      <th width="10%">발송일</th>
+                      <th width="10%">작성일</th>
                       <th width="5%">키워드</th>
+                      <th width="5%">발송차수</th>
                       <th width="20%">제목</th>
                       <th width="5%" style="min-width:81px">메일타입</th>
-                      <th width="10%" style="min-width:81px">발송건수</th>
+                      <th width="5%" style="min-width:81px">발송건수</th>
                       <th width="5%" style="min-width:58px">성공</th>
                       <th width="5%" style="min-width:58px">실패</th>
-                      <th width="15%" style="min-width:81px">발송타입</th>
-                      <th width="15%" style="min-width:96px">통계보고서</th>
+                      <th width="5%" style="min-width:81px">발송타입</th>
+                      <th width="5%" style="min-width:96px">통계보고서</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -76,11 +77,11 @@
                       <th><%= listCount - i - offset %></th>
                       <td><%= list[i].M_regdate %></td>
                       <td><div class="kwd_nobr"><%= list[i].M_keyword %></div></td>
+                      <td><div class="num_nobr"><%= list[i].M_seq_number %>차</div></td>
                       <td>
-                        <div class="title_nobr"><%= list[i].M_subject %></div>
-                        <div class="mailHtml">
-                          <%= list[i].M_body %>
-                        </div>
+                        <a href="http://showbox.email/preview?keyword=<%= list[i].M_keyword_idx %>&idx=<%= list[i].n_idx %>" target="_blank">
+                          <div class="title_nobr"><%= list[i].M_subject %></div>
+                        </a>
                       </td>
                       <td><%= list[i].M_mail_type %></td>
                       <td><span class="total"><%= parseInt(list[i].success) + parseInt(list[i].fail) %></span></td>
@@ -102,7 +103,7 @@
                     if(pageCount > 1) {
                     %>
                     <tr>
-                      <td colspan="10">
+                      <td colspan="11">
                         <ul class="pagination float-right">
                           <%
                             var pageSize = 5;
@@ -173,10 +174,10 @@
       <input type="hidden" id="mType" value="<%=mType%>"/>
       <!-- Modal start-->
       <div class='modal fade' id='previewMail-Modal' role='dialog'>
-        <div class='modal-dialog modal-lg' role='document'>
+        <div class='modal-dialog modal-lg modal-lg-1' role='document'>
           <div class='modal-content'>
             <div class='modal-header'>
-              <h5 class="modal-title"><span id="date"></span>미리보기</h5>
+              <h5 class="modal-title"><span id="date"></span>메일내용</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">×</span>
               </button>
@@ -339,18 +340,14 @@
               <div class="table-responsive">
                 <table class="table table-sm">
                   <thead>
-                    <tr>
-                      <th colspan="6" class="f-w-100 text-muted">
-                        ※ 재발송 대기는 발송실패건 중 일시적인 에러로 발송 안된 건에 대해 30분 후 자동으로 재 발송되는 과정입니다.
-                      </th>
-                    </tr>
                     <tr class="text-capitalize">
                       <th></th>
                       <th>코드</th>
                       <th>이메일</th>
                       <th>회사</th>
                       <th>이름</th>
-                      <th>오류 <span class="text-muted smtpMsg"><i class="fas fa-question-circle"></i></span></th>
+                      <th>오류</th>
+                      <!-- <span class="text-muted smtpMsg"><i class="fas fa-question-circle"></i></span> -->
                     </tr>
                   </thead>
                   <tbody id="error-list" class="text-danger">
@@ -430,7 +427,9 @@
                       <dd>수신 측 메일서버의 저장공간 부족으로 인하여 발생한 오류입니다. 수신 측 관리자에게 문의 하시기 바랍니다.</dd>
                       <dt>18. 452 4.4.5 MailBox or MessageQuota exceed for &lt;E-mail Address&gt;</dt>
                       <dd>수신자 메일 사서함의 공간부족으로 인하여 발생한 오류입니다. 수신 측 관리자에게 문의 하시기 바랍니다.</dd>
-
+                      <dd>
+                        <span class="text-center text-muted">출처: <a class="text-muted" href="http://sangchul.kr/583 ">http://sangchul.kr/583 [변군이글루]</a></span>
+                      </dd>
                     </dl>
                   </p>
                 </div>
@@ -519,6 +518,9 @@
                       <dd>송신자 또는 수신자의 메일주소가 잘못되어 발생한 오류입니다. 송신자 또는 수신자의 메일주소가 올바른지 확인해 보시기 바랍니다.</dd>
                       <dt>41. 557 you must be virus</dt>
                       <dd>송신자의 메일이 바이러스로 인식되어 수신 측에서 거부된 오류입니다. 클라이언트 및 서버의 상태를 점검해 보시기 바랍니다. 또한 첨부 파일이 있을 경우 첨부 파일에 바이러스가 포함되지 않았는지 확인해 보신 후 재 전송하시기 바랍니다.</dd>
+                      <dd>
+                        <span class="text-center text-muted">출처: <a class="text-muted" href="http://sangchul.kr/583 ">http://sangchul.kr/583 [변군이글루]</a></span>
+                      </dd>
                     </dl>
                   </p>
                 </div>
@@ -571,9 +573,6 @@
                 </div>
               </div>
             </div>
-            <div class="modal-footer">
-              <span class="text-center text-muted">출처: <a class="text-muted" href="http://sangchul.kr/583 ">http://sangchul.kr/583 [변군이글루]</a></span>
-            </div>
           </div>
         </div>
       </div>
@@ -582,13 +581,14 @@
   </div>
 </div>
 <style type="text/css">
-  #smtp-Modal dl{
+  .row #smtp-Modal dl{
     font-size: 14px;
   }
   .table.table-sm td, .table.table-sm th {
-    padding: .6rem .5rem;
+    padding: .3rem;
   }
-  #error-Modal .modal-body{
+  #error-Modal .modal-body,
+  #success-Modal .modal-body{
     padding: 0;
   }
   .tab-content{
@@ -604,8 +604,10 @@
   .btn i {
     margin-right: 0px;
   }
-  .mailHtml{
-    display: none;
+
+  /* mail preview css start */
+  #mailBody{
+    overflow: auto;
   }
   #mailBody{
     overflow: auto;
@@ -616,27 +618,38 @@
     color: #3399cc;
     text-decoration: none;
   }
+  #mailBody table{
+    border-collapse: separate;
+  }
   #mailBody td,th{
     white-space: inherit;
   }
+  .modal-lg-1 {
+      max-width: 1016px;
+  }
+  /* mail preview css end */
   .table-period td,.table-period th{
     text-align: center;
   }
-  .title_nobr,.kwd_nobr,.error_nobr{
+  .title_nobr,.kwd_nobr,.error_nobr,.num_nobr{
     font-size: 15px;
     padding-left: 3px;
     text-overflow: ellipsis;
-    width: 500px;
+    width: 400px;
     overflow: hidden;
   }
+  .num_nobr{
+    width: 50px;
+  }
   .error_nobr{
-    width: 200px;
+    width: 250px;
     margin: 0px;
   }
   .error_nobr_more{
     white-space: pre-line;
   }
   .title_nobr:hover,.fail:hover,.success:hover{
+    cursor:default;
     font-weight: bold;
   }
   .kwd_nobr{
@@ -644,6 +657,7 @@
   }
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/2.1.27/daterangepicker.css" />
+<script type="text/javascript" src="/js/error.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/2.1.27/moment.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/2.1.27/daterangepicker.js"></script>
 <!-- sweetalert -->
@@ -691,7 +705,7 @@
       type: 'post',
       data: {
         M_result: 'success',
-        arr : [$(this).data('idx'),250]
+        arr : [$(this).data('idx'),13]
       },
       datatype : 'json',
       error:function(request,status,error){
@@ -701,9 +715,9 @@
         $('#success-list').empty();
         data.result.forEach(function(ele,idx){
           var html = '<tr><td><i class="fas fa-check"></i></td>'+
-            '<td>'+ele.E_mail+'</td>'+
-            '<td>'+ele.P_title+'</td>'+
-            '<td>'+ele.P_name+'</td>'+
+            '<td>'+ele.EMTOADDRESS+'</td>'+
+            '<td>'+ele.M_ptitle+'</td>'+
+            '<td>'+ele.EMTONAME+'</td>'+
           '</tr>';
           $('#success-list').append(html);
         });
@@ -712,9 +726,9 @@
     });
   });
   // 실패 클릭시
-  $(document).on('click','.smtpMsg',function(){
-    $('#smtp-Modal').modal('show');
-  });
+  // $(document).on('click','.smtpMsg',function(){
+  //   $('#smtp-Modal').modal('show');
+  // });
   $(document).on('click','.error_nobr',function(){
     $(this).toggleClass('error_nobr_more');
   });
@@ -727,7 +741,7 @@
       type: 'post',
       data: {
         M_result: 'fail',
-        arr : [$(this).data('idx'),250]
+        arr : [$(this).data('idx'),13]
       },
       datatype : 'json',
       error:function(request,status,error){
@@ -736,34 +750,24 @@
       success:function(data){
         $('#error-list').empty();
         data.result.forEach(function(ele,idx){
-          var o_msg = ele.M_result_msg.replace('send mail Error: ','');
+          // var o_msg = ele.M_result_msg.replace('send mail Error: ','');
+          // var k_msg = settingErrorMsg(o_msg);
+          var code = ele.FINALRESULT;
+          var k_msg = settingErrorMsg(code);
           var html = '<tr><td><i class="fas fa-exclamation-triangle"></i></td>'+
-            '<td>'+ele.M_result+'</td>'+'<td>'+ele.E_mail;
-          var send = new Date(ele.M_send);
-          var code = parseInt(ele.M_result);
-          send.setMinutes(send.getMinutes() + 30);
-          if(code == 421 && (new Date().getTime() < send.getTime())){
-            html+='<label class="label label-warning">재발송대기</label>'
+            '<td>'+code+'</td>'+'<td>'+ele.EMTOADDRESS;
+          if(code != '42' && code != '43' && code != '44' && code != '45'){
+            html+='<label class="label label-warning">재발송가능</label>'
           }
-          html+='</td>'+'<td>'+ele.P_title+'</td>'+
-            '<td>'+ele.P_name+'</td>'+
-            '<td><div class="error_nobr">'+o_msg+'</div></td>'+
+          html+='</td>'+'<td>'+ele.M_ptitle+'</td>'+
+            '<td>'+ele.EMTONAME+'</td>'+
+            '<td><div class="error_nobr">'+k_msg+'</div></td>'+
           '</tr>';
           $('#error-list').append(html);
         });
-
         $('#error-Modal').modal('show');
       }
     });
-  });
-  // 제목 클릭시
-  $(document).on('click','.title_nobr',function(){
-    // var htmlStr = $(this).next('div').html().replace(/&lt;/g,"<").replace(/&gt;/g,">");
-    var htmlStr = $(this).next('div').text().replace(/&lt;/g,"<").replace(/&gt;/g,">").replace(/&nbsp;/g, '');
-
-    $('#mailBody').empty();
-    $('#mailBody').html(htmlStr);
-    $('#previewMail-Modal').modal('show');
   });
   // 통계보고서 보기버튼 클릭시
   $(document).on("click",".btn-period",function(){
@@ -778,14 +782,18 @@
     var tdEles = trEle.find('td');
     var inputEle = trEle.find('input[type=hidden]');
     console.log(inputEle);
-    var param = {
-      M_idx_A:$(this).data('idx'),
-      M_idx_A2:$(this).data('idx'),
-      keyword:tdEles.eq(1).text(),
-      sDate:tdEles.eq(0).text(),
-      eDate:tdEles.eq(0).text()
-    };
-    ajaxGetPeriod(param,tdEles,inputEle);
+    if(inputEle.eq(1).val() != ''){
+      var param = {
+        M_idx_A:$(this).data('idx'),
+        keyword:tdEles.eq(1).text(),
+        sDate:tdEles.eq(0).text(),
+        eDate:tdEles.eq(0).text()
+      };
+      ajaxGetPeriod(param,tdEles,inputEle);
+    }
+    else{
+      $("#period-Modal").modal('show');
+    }
   });
   function ajaxGetPeriod(param,tag,input){
     $.ajax({
@@ -804,11 +812,12 @@
           $('#newsCount').text(data.result.newsCount);
           $('#replyCount').text(data.result.replyCount);
 
-          $('#total').text(tag.eq(3).text());
-          $('#success').text(tag.eq(4).text());
-          $('#fail').text(tag.eq(5).text());
-          $('#date1').text(input.eq(0).val());
-          if(tag.eq(6).text().trim() == "예약"){
+          $('#total').text(tag.eq(4).text());
+          $('#success').text(tag.eq(5).text());
+          $('#fail').text(tag.eq(6).text());
+          $('#date1').text(input.eq(1).val());
+          if(tag.eq(8).text().trim().indexOf("예약") != -1){
+            $('#date1').text(input.eq(1).val().slice(0,16));
             $('#date2').text(input.eq(1).val().slice(0,16));
           }
           $("#period-Modal").modal('show');
@@ -1001,29 +1010,17 @@
         //   history.pushState(null, null,renewURL);
         // }
         $('#listTable tbody').eq(0).empty();
+
         data.result.list.forEach(function(item,idx){
           var numIdx = Math.ceil(data.result.listCount-(data.result.offset+idx)).toString();
-          var mailHtmlStr = '';
-          // if(item.M_file){
-          //   mailHtmlStr += '<br/><br/>첨부파일 :<br/>';
-          //   var dateStr = item.M_regdate.slice(0,10).replace(/-/g,"");
-          //   var fileArr = item.M_file.split('|');
-          //   var fileNameArr = fileArr;
-          //   if(item.M_file_name){
-          //     fileNameArr = item.M_file_name.split('|');
-          //   }
-          //   fileArr.forEach(function(value, index) {
-          //     var file = value.split('/').pop();
-          //     var fileName = fileNameArr[index];
-          //     mailHtmlStr += '<a href="http://mail.overware.co.kr/period/download/'+dateStr+'/'+file+'" target="_blank" style="font-size:15px;">'+fileName+'</a><br/>';
-          //   });
-          // }
-          // console.log(item.M_body+mailHtmlStr);
           var html = '<tr>\
+            <input type="hidden" class="M_regdate" value="'+item.M_regdate+'"/>\
+            <input type="hidden" class="M_send" value="'+item.M_send+'"/>\
             <th>'+numIdx+'</th>\
             <td>'+item.M_regdate+'</td>\
             <td><div class="kwd_nobr">'+item.M_keyword+'</div></td>\
-            <td><div class="title_nobr">'+item.M_subject+'</div><div class="mailHtml">'+item.M_body+mailHtmlStr+'</div></td>\
+            <td><div class="num_nobr">'+item.M_seq_number+'차</div></td>\
+            <td><a href="http://showbox.email/preview?keyword='+item.M_keyword_idx+'&idx='+item.n_idx+'" target="_blank"><div class="title_nobr">'+item.M_subject+'</div></a></td>\
             <td>'+item.M_mail_type+'</td>\
             <td><span class="total">'+(parseInt(item.success) + parseInt(item.fail))+'</span></td>\
             <td><span class="success" data-idx=\"'+item.n_idx+'\">'+item.success+'</span></td>\
@@ -1041,7 +1038,7 @@
         var pageCount = Math.ceil(data.result.listCount/limit);
         $('#listTable tfoot').eq(0).empty();
         if(pageCount > 1) {
-          var html = '<tr><td colspan="10"><ul class="pagination float-right">';
+          var html = '<tr><td colspan="11"><ul class="pagination float-right">';
           var pageSize = 5;
           var pRCnt = parseInt(data.result.currentPage / pageSize);
           if(data.result.currentPage % pageSize == 0){

@@ -1,0 +1,206 @@
+<div class="main-body">
+  <div class="page-wrapper">
+    <div class="page-header">
+      <div class="page-header-title">
+        <h4>계정 등록</h4>
+      </div>
+      <div class="page-header-breadcrumb">
+        <ul class="breadcrumb-title">
+          <li class="breadcrumb-item">
+            <a href="/">
+              <i class="fas fa-home"></i>
+            </a>
+          </li>
+          <li class="breadcrumb-item"><a href="#!">관리현황</a></li>
+          <li class="breadcrumb-item"><a href="#!">계정 등록</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="page-body">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-block">
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label">* 분류</label>
+                <div class="col-sm-5">
+                  <div id="type" class="form-radio">
+                    <!-- <div class="radio radio-inline">
+                      <label>
+                        <input type="radio" value="1" name="type">
+                        <i class="helper"></i>주계정
+                      </label>
+                    </div> -->
+                    <div class="radio radio-inline">
+                      <label>
+                        <input type="radio" value="2" name="type" checked>
+                        <i class="helper"></i>부계정
+                      </label>
+                    </div>
+                  </div>
+                  <span class='messages'><p class='text-danger error'></p></span>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label">* 아이디</label>
+                <div class="col-sm-5">
+                  <input id="id" type="text" class="form-control" placeholder="아이디 중복체크를 해주세요." readonly>
+                  <input type="hidden" id="idCheck"/>
+                  <span class='messages'><p class='text-danger error'></p></span>
+                </div>
+                <div class="col-sm-1 btn-check">
+                  <button id="idCheckBtn" type="button" class="btn btn-inverse">
+                    중복체크
+                  </button>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label">* 비밀번호</label>
+                <div class="col-sm-5">
+                  <input id="pw" type="password" class="form-control" placeholder="비밀번호">
+                  <span class='messages'><p class='text-danger error'></p></span>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label">* 회사</label>
+                <div class="col-sm-5">
+                  <input id="company" type="text" class="form-control" placeholder="회사">
+                  <span class='messages'><p class='text-danger error'></p></span>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label">* 이름</label>
+                <div class="col-sm-5">
+                  <input id="name" type="text" class="form-control" placeholder="이름">
+                  <span class='messages'><p class='text-danger error'></p></span>
+                </div>
+              </div>
+              <div class="row">
+                <label class="col-sm-2"></label>
+                <div class="col-sm-10">
+                  <button type="submit" class="btn-submit btn btn-inverse m-b-0">등록</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- alert -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert@2.1.0/dist/sweetalert.min.js"></script>
+<script type="text/javascript">
+  // 중복 체크
+  $("#idCheckBtn").on("click",function(){
+    swal({
+      title: "✓ 아이디 중복 체크",
+      content: "input",
+      buttons: ["취소", "확인"],
+      closeOnClickOutside: false,
+      closeOnEsc: false
+    })
+    .then((value) => {
+      console.log(value);
+      if (value != null) {
+        $.ajax({
+          type: "POST",
+          url: "/user/add/idCheck",
+          dataType: "json",
+          data: {id : value},
+          error: function(req,status,error){
+            console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
+            swal("ERROR!", '새로고침 후 다시 시도해주세요.', "error");
+          },
+          success: function(data){
+            console.log(data);
+            if(data.msg == 'fail'){
+              swal("ERROR!", "아이디 중복됩니다. 다시 입력해 주세요.", "error");
+            }else if(data.msg == 'success'){
+              swal("중복확인!", value+"는 사용가능한 아이디입니다.", "success");
+
+              $('#id').val(value);
+              $("#idCheck").val("true");
+              $('#id').removeClass("form-control-danger");
+              $('#id').siblings().children("p").text("");
+            }else{
+              swal("ERROR!", '새로고침 후 다시 시도해주세요.', "error");
+            }
+          }
+        });
+      }
+    });
+  });
+  $('#id').on('focus',function(){
+    $('#idCheckBtn').trigger('click');
+  });
+  // 계정 등록
+  $('.btn-submit').on('click',function(){
+    var check=true;
+    if($("#id").val() == ""){
+      check = requiredMessage("id","아이디를 입력해주세요.");
+    }
+    else if($("#id").val() != "" && $("#idCheck").val() == ""){
+      check = requiredMessage("id","아이디를 중복확인 해주세요.");
+    }
+    if($("#pw").val() == ""){
+      check = requiredMessage("pw","비밀번호를 입력해주세요.");
+    }
+    if($('#company').val() == ""){
+      check = requiredMessage("company","회사명을 입력해주세요.");
+    }
+    if($('#name').val() == ""){
+      check = requiredMessage("name","이름을 입력해주세요.");
+    }
+    if(check == false){
+      return false;
+    }
+    swal({
+      title: "계정등록 하시겠습니까?",
+      icon: "warning",
+      buttons: ["취소", true],
+      dangerMode: true,
+    })
+    .then((value) => {
+      if (value != null) {
+        var param = {
+          'id': $('#id').val(),
+          'pw':$('#pw').val(),
+          'name':$('#name').val(),
+          'company':$("#company").val()
+        };
+        insertAccount(param);
+      }
+    });
+  });
+  // 계정 등록 ajax
+  function insertAccount(param){
+    $.ajax({
+      url: '/user/add',
+      type: 'post',
+      data : param,
+      datatype : 'json',
+      error:function(request,status,error){
+        console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
+        swal("ERROR!", '새로고침 후 다시 시도해주세요.', "error");
+      },
+      success:function(data){
+        if(data.status){
+          swal("SUCCESS!", '계정등록 되었습니다.', "success")
+          .then((value) => {
+            location.href="/user";
+          });
+        }else{
+          swal("ERROR!", '새로고침 후 다시 시도해주세요.', "error");
+        }
+      }
+    });
+
+  }
+  // input box 경고문
+  function requiredMessage(target,msg){
+    $("#"+target).siblings('.messages').children('.error').text(msg);
+    $("#"+target).addClass("form-control-danger");
+    return false;
+  }
+</script>

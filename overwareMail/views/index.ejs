@@ -91,6 +91,7 @@
                     <tr>
                       <th width="10%">발송일</th>
                       <th>키워드</th>
+                      <th>발송차수</th>
                       <th>제목</th>
                       <th>발송건</th>
                       <th>성공</th>
@@ -103,27 +104,11 @@
                     <tr>
                       <th><%= list[i].M_regdate %></th>
                       <td><div class="kwd_nobr"><%= list[i].M_keyword %></div></td>
+                      <td><div class="num_nobr"><%= list[i].M_seq_number %>차</div></td>
                       <td>
-                        <div class="title_nobr"><%= list[i].M_subject %></div>
-                        <div class="mailHtml">
-                          <%= list[i].M_body %>
-                          <% if(list[i].M_file){ %>
-                            <br/><br/>첨부파일 :<br/>
-                          <%
-                            var fileArr = list[i].M_file.split('|');
-                            var fileNameArr = fileArr;
-                            if(list[i].M_file_name){
-                              fileNameArr = list[i].M_file_name.split('|');
-                            }
-                            var dateStr = list[i].M_regdate.slice(0,10).replace(/-/g,"");
-                            fileArr.forEach(function(value, index) {
-                              var file = value.split('/').pop();
-                              var fileName = fileNameArr[index];
-                          %>
-                          <a href="http://mail.overware.co.kr/period/download/<%=dateStr%>/<%=file%>" target="_blank" style="font-size:15px;"><%=fileName%></a>
-                          <br/>
-                          <% }); } %>
-                        </div>
+                        <a href="http://showbox.email/preview?keyword=<%= list[i].M_keyword_idx %>&idx=<%= list[i].n_idx %>" target="_blank">
+                          <div class="title_nobr"><%= list[i].M_subject %></div>
+                        </a>
                       </td>
                       <td><%= parseInt(list[i].success) + parseInt(list[i].fail) %></td>
                       <td><span class="success" data-idx="<%= list[i].n_idx %>"><%= list[i].success %></span></td>
@@ -145,10 +130,10 @@
       </div>
       <!-- Modal start-->
       <div class='modal fade' id='previewMail-Modal' role='dialog'>
-        <div class='modal-dialog modal-lg' role='document'>
+        <div class='modal-dialog modal-lg modal-lg-1' role='document'>
           <div class='modal-content'>
             <div class='modal-header'>
-              <h5 class="modal-title"><span id="date"></span>미리보기</h5>
+              <h5 class="modal-title"><span id="date"></span>메일내용</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">×</span>
               </button>
@@ -157,7 +142,7 @@
               <div class='col-sm-12' id="mailBody"></div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-warning  waves-effect waves-light copy-btn">복사</button>
+              <!-- <button type="button" class="btn btn-warning  waves-effect waves-light copy-btn">복사</button> -->
               <button class="btn btn-secondary mobtn" data-dismiss='modal' aria-label='Close' type="button">취소</button>
             </div>
           </div>
@@ -215,18 +200,14 @@
               <div class="table-responsive">
                 <table class="table table-sm">
                   <thead>
-                    <tr>
-                      <th colspan="6" class="f-w-100 text-muted">
-                        ※ 재발송 대기는 발송실패건 중 일시적인 에러로 발송 안된 건에 대해 30분 후 자동으로 재 발송되는 과정입니다.
-                      </th>
-                    </tr>
                     <tr class="text-capitalize">
                       <th></th>
                       <th>코드</th>
                       <th>이메일</th>
                       <th>회사</th>
                       <th>이름</th>
-                      <th>오류 <span class="text-muted smtpMsg"><i class="fas fa-question-circle"></i></span></th>
+                      <th>오류</th>
+                      <!-- <span class="text-muted smtpMsg"><i class="fas fa-question-circle"></i></span> -->
                     </tr>
                   </thead>
                   <tbody id="error-list" class="text-danger">
@@ -306,7 +287,9 @@
                       <dd>수신 측 메일서버의 저장공간 부족으로 인하여 발생한 오류입니다. 수신 측 관리자에게 문의 하시기 바랍니다.</dd>
                       <dt>18. 452 4.4.5 MailBox or MessageQuota exceed for &lt;E-mail Address&gt;</dt>
                       <dd>수신자 메일 사서함의 공간부족으로 인하여 발생한 오류입니다. 수신 측 관리자에게 문의 하시기 바랍니다.</dd>
-
+                      <dd>
+                        <span class="text-center text-muted">출처: <a class="text-muted" href="http://sangchul.kr/583 ">http://sangchul.kr/583 [변군이글루]</a></span>
+                      </dd>
                     </dl>
                   </p>
                 </div>
@@ -395,6 +378,9 @@
                       <dd>송신자 또는 수신자의 메일주소가 잘못되어 발생한 오류입니다. 송신자 또는 수신자의 메일주소가 올바른지 확인해 보시기 바랍니다.</dd>
                       <dt>41. 557 you must be virus</dt>
                       <dd>송신자의 메일이 바이러스로 인식되어 수신 측에서 거부된 오류입니다. 클라이언트 및 서버의 상태를 점검해 보시기 바랍니다. 또한 첨부 파일이 있을 경우 첨부 파일에 바이러스가 포함되지 않았는지 확인해 보신 후 재 전송하시기 바랍니다.</dd>
+                      <dd>
+                        <span class="text-center text-muted">출처: <a class="text-muted" href="http://sangchul.kr/583 ">http://sangchul.kr/583 [변군이글루]</a></span>
+                      </dd>
                     </dl>
                   </p>
                 </div>
@@ -447,9 +433,6 @@
                 </div>
               </div>
             </div>
-            <div class="modal-footer">
-              <span class="text-center text-muted">출처: <a class="text-muted" href="http://sangchul.kr/583 ">http://sangchul.kr/583 [변군이글루]</a></span>
-            </div>
           </div>
         </div>
       </div>
@@ -457,14 +440,12 @@
     </div>
   </div>
 </div>
+<script type="text/javascript" src="/js/error.js"></script>
 <!-- morris -->
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
 <style type="text/css">
-dl{
+.row dl{
   font-size: 14px;
-}
-.table.table-sm td, .table.table-sm th {
-  padding: .6rem .5rem;
 }
 #error-Modal .modal-body,
 #success-Modal .modal-body{
@@ -477,9 +458,10 @@ dl{
 .table-cp td,.table-cp th{
   text-align: center;
 }
-.mailHtml{
-  display: none;
+.table.table-sm td, .table.table-sm th {
+  padding: .3rem;
 }
+/* mail preview css start */
 #mailBody{
   overflow: auto;
 }
@@ -492,10 +474,17 @@ dl{
   color: #3399cc;
   text-decoration: none;
 }
+#mailBody table{
+  border-collapse: separate;
+}
 #mailBody td,th{
   white-space: inherit;
 }
-.title_nobr,.kwd_nobr,.error_nobr{
+.modal-lg-1 {
+    max-width: 1016px;
+}
+/* mail preview css end */
+.title_nobr,.kwd_nobr,.error_nobr,.num_nobr{
   font-size: 15px;
   padding-left: 3px;
   margin: 0px auto;
@@ -503,15 +492,20 @@ dl{
   width: 500px;
   overflow: hidden;
 }
-.title_nobr:hover,.fail:hover,
+.title_nobr:hover,
+.fail:hover,
 .success:hover{
+  cursor:default;
   font-weight: bold;
 }
+.num_nobr{
+  width: 50px;
+}
 .kwd_nobr{
-  width: 146px;
+  width: 100px;
 }
 .error_nobr{
-  width: 200px;
+  width: 250px;
   margin: 0px;
 }
 .error_nobr_more{
@@ -535,12 +529,10 @@ $('.copy-btn').on('click',function(){
   $('#clip_target').val(text);
   $("#clip_target").select();
 
-  // Use try & catch for unsupported browser
   try {
-    // The important part (copy selected text)
     var successful = document.execCommand('copy');
-    if(successful) alert('Copied!');
-    else alert('Unable to copy!');
+    if(successful) alert('복사 되었습니다.');
+    else alert('다시 시도해주세요.');
   } catch (err) {
     alert('이 브라우저는 지원하지 않습니다.');
   }
@@ -556,7 +548,7 @@ $(document).on('click','.success',function(){
     type: 'post',
     data: {
       M_result: 'success',
-      arr : [$(this).data('idx'),250]
+      arr : [$(this).data('idx'),13]
     },
     datatype : 'json',
     error:function(request,status,error){
@@ -566,9 +558,9 @@ $(document).on('click','.success',function(){
       $('#success-list').empty();
       data.result.forEach(function(ele,idx){
         var html = '<tr><td><i class="fas fa-check"></i></td>'+
-          '<td>'+ele.E_mail+'</td>'+
-          '<td>'+ele.P_title+'</td>'+
-          '<td>'+ele.P_name+'</td>'+
+          '<td>'+ele.EMTOADDRESS+'</td>'+
+          '<td>'+ele.M_ptitle+'</td>'+
+          '<td>'+ele.EMTONAME+'</td>'+
         '</tr>';
         $('#success-list').append(html);
       });
@@ -577,9 +569,9 @@ $(document).on('click','.success',function(){
   });
 });
 // 실패 클릭시
-$(document).on('click','.smtpMsg',function(){
-  $('#smtp-Modal').modal('show');
-});
+// $(document).on('click','.smtpMsg',function(){
+//   $('#smtp-Modal').modal('show');
+// });
 $(document).on('click','.error_nobr',function(){
   $(this).toggleClass('error_nobr_more');
 });
@@ -592,7 +584,7 @@ $(document).on('click','.fail',function(){
     type: 'post',
     data: {
       M_result: 'fail',
-      arr : [$(this).data('idx'),250]
+      arr : [$(this).data('idx'),13]
     },
     datatype : 'json',
     error:function(request,status,error){
@@ -601,32 +593,24 @@ $(document).on('click','.fail',function(){
     success:function(data){
       $('#error-list').empty();
       data.result.forEach(function(ele,idx){
-        var o_msg = ele.M_result_msg.replace('send mail Error: ','');
+        // var o_msg = ele.M_result_msg.replace('send mail Error: ','');
+        // var k_msg = settingErrorMsg(o_msg);
+        var code = ele.FINALRESULT;
+        var k_msg = settingErrorMsg(code);
         var html = '<tr><td><i class="fas fa-exclamation-triangle"></i></td>'+
-          '<td>'+ele.M_result+'</td>'+'<td>'+ele.E_mail;
-        var send = new Date(ele.M_send);
-        var code = parseInt(ele.M_result);
-        send.setMinutes(send.getMinutes() + 30);
-        if(code == 421 && (new Date().getTime() < send.getTime())){
-          html+='<label class="label label-warning">재발송대기</label>'
+          '<td>'+code+'</td>'+'<td>'+ele.EMTOADDRESS;
+        if(code != '42' && code != '43' && code != '44' && code != '45'){
+          html+='<label class="label label-warning">재발송가능</label>'
         }
-        html+='</td>'+'<td>'+ele.P_title+'</td>'+
-          '<td>'+ele.P_name+'</td>'+
-          '<td><div class="error_nobr">'+o_msg+'</div></td>'+
+        html+='</td>'+'<td>'+ele.M_ptitle+'</td>'+
+          '<td>'+ele.EMTONAME+'</td>'+
+          '<td><div class="error_nobr">'+k_msg+'</div></td>'+
         '</tr>';
         $('#error-list').append(html);
       });
       $('#error-Modal').modal('show');
     }
   });
-});
-
-// 제목 클릭시
-$(document).on('click','.title_nobr',function(){
-  var htmlStr = $(this).next('div').text().replace(/&lt;/g,"<").replace(/&gt;/g,">").replace(/&nbsp;/g, '');
-  $('#mailBody').empty();
-  $('#mailBody').html(htmlStr);
-  $('#previewMail-Modal').modal('show');
 });
 
 //date 포멧

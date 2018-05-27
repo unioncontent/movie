@@ -1,0 +1,466 @@
+<div class="main-body">
+  <div class="page-wrapper">
+    <div class="page-header">
+      <div class="page-header-title">
+        <h4>계정 리스트</h4>
+      </div>
+      <div class="page-header-breadcrumb">
+        <ul class="breadcrumb-title">
+          <li class="breadcrumb-item">
+            <a href="/">
+              <i class="fas fa-home"></i>
+            </a>
+          </li>
+          <li class="breadcrumb-item"><a href="#!">계정 리스트</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="page-body">
+      <div class="row" id="listTable">
+        <div class="col-md-12">
+          <button class="btn btn-inverse m-b-20" style="float: right;" onclick="location.href='/user/add'"><i class="fas fa-plus"></i>계정등록</button>
+        </div>
+        <div class="col-md-12">
+          <div class="card m-b-10">
+            <div class="card-block table-border-style">
+              <div class="table-responsive">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th width="5%">NO</th>
+                      <th width="10%">아이디</th>
+                      <th width="10%">비밀번호</th>
+                      <th width="10%">회사</th>
+                      <th width="10%">이름</th>
+                      <th width="15%">등록일</th>
+                      <th width="15%">관리</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <%
+                      var limit = 20;
+                      if(currentPage > 0){
+                        (currentPage - 1) * limit;
+                      }
+                      for(var i=0; i < list.length; i++) {
+                    %>
+                    <tr>
+                      <input type="hidden" id="idx" value="<%=list[i].n_idx%>" />
+                      <th><%= listCount  - i - offset %></th>
+                      <td><%=list[i].user_id%></td>
+                      <td><span class="vStr"><%=list[i].user_pw%></span><input type="text" class="vInput form-control"  id="pw" value="<%=list[i].user_pw%>"><input type="hidden" id="o_pw" value="<%=list[i].user_pw%>"></td>
+                      <td><span class="vStr"><%=list[i].company_name%></span><input type="text" class="vInput form-control" id="company" value="<%=list[i].company_name%>"><input type="hidden" id="o_company" value="<%=list[i].company_name%>"></td>
+                      <td><span class="vStr"><%=list[i].user_name%></span><input type="text" class="vInput form-control" id="name" value="<%=list[i].user_name%>"><input type="hidden" id="o_name" value="<%=list[i].user_name%>"></td>
+                      <td><%=list[i].createDate%></td>
+                      <td>
+                        <button type="button" class="btn-delete btn btn-danger">
+        								  <span class="far fa-trash-alt"></span>
+        								</button>
+      							    <button type="button" class="btn-edit btn btn-primary" style="padding-right:15px;">
+        								  <span class="far fa-edit"></span>
+        								</button>
+      								</td>
+                    </tr>
+                    <% }; %>
+                  </tbody>
+                  <tfoot>
+                    <%
+                    var pageCount = Math.ceil(listCount/limit);
+                    if(pageCount > 1) {
+                    %>
+                    <tr>
+                      <td colspan="8">
+                        <ul class="pagination float-right">
+                          <%
+                            var pageSize = 5;
+                            var pRCnt = parseInt(currentPage / pageSize);
+                            if(currentPage % pageSize == 0){
+                              pRCnt = parseInt(currentPage / pageSize) - 1;
+                            }
+                            if(currentPage > 5) {
+                          %>
+                            <li class="page-item">
+                              <a class="page-link" data-value="1" aria-label="Previous">
+                                <i class="ti-angle-double-left f-12"></i>
+                                <span aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                              </a>
+                            </li>
+                            <li class="page-item">
+                              <a class="page-link" data-value=="<%=(pRCnt * pageSize)%>" aria-label="Previous">
+                                <i class="ti-angle-left f-12"></i>
+                                <span aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                              </a>
+                            </li>
+                          <% } %>
+                          <% for(var index=pRCnt * pageSize + 1;index<(pRCnt + 1)*pageSize + 1;index++){%>
+                            <li class= "<%=(currentPage == index) ? 'active' : ''%> page-item">
+                              <a class="page-link" data-value="<%=index%>" >
+                                <%= index %>
+                              </a>
+                            </li>
+                          <%
+                              if(index == pageCount) {
+                                break;
+                              }
+                            }
+                          %>
+                          <% if((pRCnt + 1) * pageSize < pageCount) { %>
+                            <li class="page-item">
+                              <a class="page-link" data-value="<%=(pRCnt + 1)*pageSize+1%>" aria-label="Next">
+                                <i class="ti-angle-right f-12"></i>
+                                <span aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                              </a>
+                            </li>
+                            <li class="page-item">
+                              <a class="page-link" data-value="<%=pageCount%>" aria-label="Next">
+                                <i class="ti-angle-double-right f-12"></i>
+                                <span aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                              </a>
+                            </li>
+                          <% } %>
+                        </ul>
+                      </td>
+                    </tr>
+                    <% } %>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <input type="hidden" id="page" value="<%=page%>"/>
+    </div>
+  </div>
+</div>
+<style>
+  .vInput{
+    display: none;
+  }
+</style>
+<!-- alert -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert@2.1.0/dist/sweetalert.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function(){
+    // var searchTypeValue = $("#searchType").val();
+    // var searchValue = $("#search").val();
+    // if(searchTypeValue != '' && searchValue != ''){
+    //   $("#selectSearchType").val(searchTypeValue).prop("selected", true);
+    //   $("#keywordInput").val(searchValue);
+    // }
+  });
+  // 수정버튼 클릭시
+  $(document).on('click','.btn-edit',function(){
+    var trEle = $(this).parents('tr');
+    if($(this).find('span').hasClass('fa-edit')){
+      $(this).find('span').removeClass('far fa-edit').addClass('fas fa-check');
+
+      trEle.find('.vStr').hide();
+      trEle.find('.vInput').show();
+    }
+    else{
+      var check=true;
+      var tag = $(this).find('span');
+      if(trEle.find("#name").val() != trEle.find("#o_name").val() && trEle.find("#name").val() == ""){
+        check = requiredMessage("name","이름을 입력해주세요.");
+      }
+      if(trEle.find("#pw").val() != trEle.find("#o_pw").val() && trEle.find("#pw").val() == ""){
+        check = requiredMessage("pw","비밀번호를 입력해주세요.");
+      }
+      if(trEle.find("#company").val() != trEle.find("#o_company").val() && trEle.find("#company").val() == ""){
+        check = requiredMessage("company","회사를 입력해주세요.");
+      }
+      if(trEle.find("#name").val() == trEle.find("#o_name").val() && trEle.find("#pw").val() == trEle.find("#o_pw").val() && trEle.find("#company").val() == trEle.find("#o_company").val()){
+        swal("ERROR!", "변경사항이 없습니다.", "error");
+        $(this).find('span').removeClass('fas fa-check').addClass('far fa-edit');
+
+        trEle.find('.vStr').show();
+        trEle.find('.vInput').hide();
+        return false;
+      }
+      if(check){
+        swal({
+          title: "수정 하시겠습니까?",
+          icon: "warning",
+          buttons: ["취소", true],
+          dangerMode: true,
+        })
+        .then((value) => {
+          if (value != null) {
+            var param = {
+              'name': trEle.find('#name').val(),
+              'pw': trEle.find('#pw').val(),
+              'company':trEle.find('#company').val(),
+              'idx': trEle.find('#idx').val()
+            };
+            updateMail(param,tag,trEle);
+          }
+        });
+      }
+
+    }
+  });
+  // update ajax
+  function updateMail(param,spanTag,trTag){
+    $.ajax({
+      url: '/user/update',
+      type: 'post',
+      data : param,
+      datatype : 'json',
+      error:function(request,status,error){
+        console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
+        swal("ERROR!", '새로고침 후 다시 시도해주세요.', "error");
+      },
+      success:function(data){
+        if(data.status){
+          swal("SUCCESS!", '계정 수정 되었습니다.', "success")
+          .then((value) => {
+            spanTag.removeClass('fas fa-check').addClass('far fa-edit');
+            reloadPage();
+            trTag.find('.vStr').show();
+            trTag.find('.vInput').hide();
+          });
+        }else{
+          swal("ERROR!", '새로고침 후 다시 시도해주세요.', "error");
+        }
+      }
+    });
+  }
+  // 삭제버튼 클릭시
+  $(document).on('click','.btn-delete',function(){
+    swal({
+      title: "삭제 하시겠습니까?",
+      icon: "warning",
+      buttons: ["취소", true],
+      dangerMode: true,
+    })
+    .then((value) => {
+      if (value != null) {
+        var trEle = $(this).parents('tr');
+        $.ajax({
+          url: '/user/delete',
+          type: 'post',
+          data : {
+            'idx': trEle.find('#idx').val()
+          },
+          datatype : 'json',
+          error:function(request,status,error){
+            console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
+            swal("ERROR!", '새로고침 후 다시 시도해주세요.', "error");
+          },
+          success:function(data){
+            if(data.status){
+              swal("SUCCESS!", '계정 삭제 되었습니다.', "success")
+              .then((value)=>{
+                reloadPage();
+              });
+            }else{
+              swal("ERROR!", '새로고침 후 다시 시도해주세요.', "error");
+            }
+          }
+        });
+      }
+    });
+  });
+  // input 선택시 경고문 없앰
+  $('.modal input').on('focus',function(){
+    $(this).parents('.edit-td').find('.error').text('');
+    $(this).parents('.edit-td').find('.messages').hide();
+    $(this).removeClass("form-control-danger");
+  });
+  // input box 경고문
+  function requiredMessage(target,msg){
+    $("#"+target).parents('.edit-td').find('.messages').show();
+    $("#"+target).parents('.edit-td').find('.error').text(msg);
+    $("#"+target).addClass("form-control-danger");
+    return false;
+  }
+  // 중복 체크
+  $("#emailCheckBtn").on("click",function(){
+    swal({
+      title: "✓ 이메일 중복 체크",
+      content: {
+        element: "input",
+        attributes: {
+          value: $('#email').val(),
+          type: "text",
+        },
+      },
+      buttons: ["취소", "확인"],
+      closeOnClickOutside: false,
+      closeOnEsc: false
+    })
+    .then((value) => {
+      console.log('이메일 중복 체크:',value);
+      if (value != null) {
+        var regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+        value = $('.swal-content__input').val();
+        if (value.match(regExp) == null) {
+          swal("ERROR!", "이메일을 다시 입력해주세요.", "error");
+          return false;
+        }
+        $.ajax({
+          type: "POST",
+          url: "/list/add/emailCheck",
+          dataType: "json",
+          data: {email : value},
+          error: function(req,status,error){
+            console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
+            swal("ERROR!", '새로고침 후 다시 시도해주세요.', "error");
+          },
+          success: function(data){
+            console.log(data);
+            if(data.msg == 'fail'){
+              swal("ERROR!", "이메일 중복됩니다. 다시 입력해 주세요.", "error")
+              .then((value)=>{
+                $('#email').val($('#o_email').val());
+              });
+            }else if(data.msg == 'success'){
+              swal("중복확인!", value+"는 사용가능한 이메일입니다.", "success");
+
+              $('#email').val(value);
+              $("#emailCheck").val("true");
+              $('#email').removeClass("form-control-danger");
+              $('#email').siblings().children("p").text("");
+            }else{
+              swal("ERROR!", '새로고침 후 다시 시도해주세요.', "error");
+            }
+          }
+        });
+      }
+    });
+  });
+  // 검색시
+  // $('#keywordInput').on('keyup',function(event){
+  //   if(event.keyCode == 13){
+  //     $('#searchBtn').trigger('click');
+  //   };
+  // });
+  // $('#searchBtn').on('click',function(){
+  //   if($("#keywordInput").val() == ''){
+  //     alert('검색어를 넣어주세요.');
+  //     return false;
+  //   }
+  //   location.href = '/list?page=1&searchType='+$("#selectSearchType option:selected").val()+'&search='+$("#keywordInput").val();
+  // });
+  //페이지 이동
+  $(document).on('click','.page-link',function(){
+    var param = {
+      page : Number($(this).data().value)
+    };
+    ajaxGetPageList(param);
+  });
+  function ajaxGetPageList(param){
+    console.log('ajaxGetPageList:',param);
+    $.ajax({
+      url: '/user/getNextPage',
+      type: 'post',
+      data: param,
+      error: function(request,status,error){
+        console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
+        alert('새로 고침해주세요.');
+      },
+      success: function(data){
+        if(data.status != true){
+          alert('새로 고침해주세요.');
+          return false;
+        }
+        $("#page").val(data.list.currentPage);
+
+        // if(typeof history.pushState == 'function'){
+        //   //현재 주소를 가져온다.
+        //   var renewURL = location.href;
+        //   //현재 주소 중 page 부분이 있다면 새로 부여될 페이지 번호를 할당한다.
+        //   renewURL = renewURL.replace(/\?page=([0-9]+)/ig,'?page='+data.list.currentPage);
+        //   if(renewURL.indexOf("?page=") == -1){
+        //     renewURL += '?page='+data.list.currentPage;
+        //   }
+        //   //페이지 갱신 실행!
+        //   history.pushState(null, null,renewURL);
+        // }
+        $('#listTable tbody').empty();
+        data.list.list.forEach(function(item,idx){
+          var numIdx = Math.ceil(data.list.listCount -(data.list.offset+idx)).toString();
+          var html = '<tr>\
+            <input type="hidden" id="idx" value="'+item.n_idx+'" />\
+            <th>'+numIdx+'</th>\
+            <td>'+item.user_id+'</td>\
+            <td><span class="vStr">'+item.user_pw+'</span><input type="text" class="vInput form-control" id="pw" value="'+item.user_pw+'"><input type="hidden" id="o_pw" value="'+item.user_pw+'"></td>\
+            <td><span class="vStr">'+item.company_name+'</span><input type="text" class="vInput form-control" id="company" value="'+item.company_name+'"><input type="hidden" id="o_company" value="'+item.company_name+'"></td>\
+            <td><span class="vStr">'+item.user_name+'</span><input type="text" class="vInput form-control" id="name" value="'+item.user_name+'"><input type="hidden" id="o_name" value="'+item.user_name+'"></td>\
+            <td>'+item.createDate+'</td>\
+            <td>\
+              <button type="button" class="btn-delete btn btn-danger">\
+                <span class="far fa-trash-alt"></span>\
+              </button>\
+              <button type="button" class="btn-edit btn btn-primary" style="padding-right:15px;">\
+                <span class="far fa-edit"></span>\
+              </button>\
+            </td>\
+          </tr>'
+          $('#listTable tbody').append(html);
+        });
+        var limit = 20;
+        var pageCount = Math.ceil(data.list.listCount /limit);
+        $('#listTable tfoot').empty();
+        if(pageCount > 1) {
+          var html = '<tr><td colspan="8"><ul class="pagination float-right">';
+          var pageSize = 5;
+          var pRCnt = parseInt(data.list.currentPage / pageSize);
+          if(data.list.currentPage % pageSize == 0){
+            pRCnt = parseInt(data.list.currentPage / pageSize) - 1;
+          }
+          if(data.list.currentPage > 5) {
+            html += '<li class="page-item"><a class="page-link" data-value="1" aria-label="Previous">\
+                <i class="ti-angle-double-left f-12"></i>\
+                <span aria-hidden="true"></span>\
+                <span class="sr-only">Previous</span>\
+              </a></li>\
+              <li class="page-item"><a class="page-link" data-value=\"'+(pRCnt * pageSize)+'"\ aria-label="Previous">\
+                <i class="ti-angle-left f-12"></i>\
+                <span aria-hidden="true"></span>\
+                <span class="sr-only">Previous</span>\
+              </a></li>';
+          }
+
+          for(var index=pRCnt * pageSize + 1;index<(pRCnt + 1)*pageSize + 1;index++){
+            var active = (data.list.currentPage == index) ? "active" : "";
+            html += '<li class=\"'+active+' page-item">\
+              <a class="page-link" data-value=\"'+index+'"\ >'+index+'</a></li>'
+
+            if(index == pageCount) {
+              break;
+            }
+          }
+          if((pRCnt + 1) * pageSize < pageCount) {
+            html += '<li class="page-item">\
+                  <a class="page-link" data-value=\"'+((pRCnt + 1)*pageSize+1)+'"\ aria-label="Next">\
+                    <i class="ti-angle-right f-12"></i>\
+                    <span aria-hidden="true"></span>\
+                    <span class="sr-only">Next</span>\
+                  </a></li>\
+                  <li class="page-item">\
+                  <a class="page-link" data-value=\"'+pageCount+'"\ aria-label="Next">\
+                    <i class="ti-angle-double-right f-12"></i>\
+                    <span aria-hidden="true"></span>\
+                    <span class="sr-only">Next</span>\
+                  </a></li>';
+          }
+          html += '</ul></td></tr>';
+          $('#listTable tfoot').append(html);
+        }
+      }
+    });
+  }
+  function reloadPage(){
+    var pageValue = ($("#page").val() == '') ? 1 : parseInt($("#page").val());
+    var param = {
+      page : pageValue
+    };
+    ajaxGetPageList(param);
+  }
+</script>

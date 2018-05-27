@@ -353,7 +353,7 @@
           },
           success:function(data){
             if(data.status){
-              swal("SUCCESS!", "["+tdEles.eq(1).text()+"]을 삭제되었습니다.", "success")
+              swal("SUCCESS!", "["+tdEles.eq(1).text()+"]을 삭제했습니다.", "success")
               .then((value)=>{
                 reloadPage();
               });
@@ -368,12 +368,8 @@
   // 추가 클릭시
   $('#insertBtn').on('click',function(){
     var check=true;
-    var regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
     if($('#email').val()==''){
       check = requiredMessage("email","이메일를 입력해주세요.");
-    }
-    else if ($('#email').val().match(regExp) == null) {
-      check = requiredMessage("email","이메일을 다시 입력해주세요.");
     }
     if($('#name').val()==''){
       check = requiredMessage("name","이름을 입력해주세요.");
@@ -446,6 +442,8 @@
     ajaxGetPageGroupList(param);
     $('#email').val('');
     $('#name').val('');
+    $('#email,#name').siblings('.messages').children('.error').text('');
+    $('#email,#name').removeClass("form-control-danger");
     $('#group-Modal').modal('show');
   });
   function ajaxGetPageGroupList(param){

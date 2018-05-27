@@ -57,6 +57,37 @@ var mailListC = {
     var result = await getResult(sql);
     return [].map.call(result, function(obj) { return obj.M_email; });
   },
+  getOneEmail2:async function(idx,param){
+    var sql = 'select distinct M_idx_a from m_mail_list_c where M_group_title in (select M_group_title from m_mail_list_c ';
+    if(typeof param == 'object'){
+      sql += 'where n_idx ='+param[0];
+      for(var i = 1; i < param.length; i++){
+        sql += ' or';
+        sql += ' n_idx ='+param[i];
+      }
+    }
+    else if(typeof param == 'string'){
+      sql += 'where n_idx ='+param;
+    }
+    sql += ')';
+    var result = await getResult(sql);
+    return [].map.call(result, function(obj) { return obj.M_idx_a; });
+    // var sql = 'select distinct M_email,M_name from m_mail_list_all where M_id = '+idx+' and M_email in (';
+    // sql += 'select distinct M_email from m_mail_list_c where M_group_title in (select M_group_title from m_mail_list_c ';
+    // if(typeof param == 'object'){
+    //   sql += 'where n_idx ='+param[0];
+    //   for(var i = 1; i < param.length; i++){
+    //     sql += ' or';
+    //     sql += ' n_idx ='+param[i];
+    //   }
+    // }
+    // else if(typeof param == 'string'){
+    //   sql += 'where n_idx ='+param;
+    // }
+    // sql += '))';
+    // var result = await getResult(sql);
+    // return [].map.call(result, function(obj) { return [obj.M_name,obj.M_email]; });
+  },
   getIdx : async function(param,idx){
     var sql = 'select M_idx_a from m_mail_list_c where M_ID=? ';
     if(typeof param == 'object'){
@@ -105,7 +136,7 @@ var mailListC = {
     return await getResult(sql,[idx]);
   },
   selectView: async function(body,param){
-    var sql = 'select M_ID,date_format(M_regdate, \'%Y-%m-%d %H:%i:%s\') as M_regdate,user_name,search,count(*) as groupCount,M_group_title,M_group_title';
+    var sql = 'select M_ID,date_format(M_regdate, \'%Y-%m-%d %H:%i:%s\') as M_regdate,user_name,search,FORMAT(count(*),0) as groupCount,M_group_title,M_group_title';
     if (typeof body.as !== 'undefined') {
       sql += body.as+' ,CONCAT(M_group_title, \'&lt;\', count(*), \'명&gt;\') as text ';
     }
@@ -139,12 +170,12 @@ var mailListC = {
     }
   },
   selectView2: async function(body,param){
-    var sql = 'select n_idx, search, M_id, M_group_title, M_idx_a, user_name, M_email, M_name, M_ptitle, M_tel,date_format(M_regdate, \'%Y-%m-%d %H:%i:%s\') as M_regdate FROM mail_list_group_view where M_id = ?';
+    var sql = 'select * FROM mail_list_group_view where M_id = ?';
     if (typeof body.group !== 'undefined') {
       sql += ' and M_group_title=?';
     }
     if (typeof body.order !== 'undefined') {
-      sql += ' order by M_regdate desc limit ?,?';
+      sql += ' order by n_idx desc limit ?,?';
     }
     return await getResult(sql,param);
   },
