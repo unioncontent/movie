@@ -4,13 +4,13 @@ const DBpromise = require('../db/db_info.js');
 */
 var content = {
   selectView: async function(param){
-    var sql = 'SELECT keyword_idx, keyword, n_idx, M_subject, m_body,date_format(M_regdate, \'%Y-%m-%d %H:%i:%s\') as M_regdate FROM content_view where keyword_idx = ? ';
+    var sql = 'SELECT keyword_idx, keyword,M_seq_number, n_idx, M_subject, m_body,date_format(M_regdate, \'%Y-%m-%d %H:%i:%s\') as M_regdate FROM content_view where keyword_idx = ? ';
     var values = [param.keyword];
     if('idx' in param){
       sql += 'and n_idx=? ';
       values.push(param.idx);
     }
-    sql += 'order by n_idx desc ';
+    sql += 'order by M_seq_number desc ';
     if('page' in param){
       if(parseInt(param.page) > -1){
         param.page = (param.page-1) * 5;

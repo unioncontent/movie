@@ -13,7 +13,14 @@ var mailListAll = {
   },
   update: async function(param){
     var pValue = Object.values(param);
-    var sql = 'update m_mail_list_all set M_name=?,M_email=?,M_tel=? where n_idx=?;';
+    var sql = 'update m_mail_list_all set M_ptitle=?,M_reporter=?,M_name=?,M_email=?,M_tel=? where n_idx=?;';
+    return await getResult(sql,pValue);
+  },
+  updateReporter: async function(param){
+    var pValue = Object.values(param);
+    var sql = 'update reporter_data set\
+    reporter_media_name=?, reporter_name=?, reporter_email=?, reporter_phoneNum=?, updateDate=?\
+    where reporter_idx=?;';
     return await getResult(sql,pValue);
   },
   deleteFun: async function(param){
@@ -35,6 +42,21 @@ var mailListAll = {
     var result = await getResult(sql,[]);
     return [].map.call(result, function(obj) { return obj.M_email.replace('\r',''); });
   },
+  getOneEmail2 : async function(param){
+    var sql = 'select M_name,M_email from m_mail_list_all ';
+    if(typeof param == 'object'){
+      sql += 'where n_idx ='+param[0];
+      for(var i = 1; i < param.length; i++){
+        sql += ' or';
+        sql += ' n_idx ='+param[i];
+      }
+    }
+    else if(typeof param == 'string'){
+      sql += 'where n_idx ='+param;
+    }
+    var result = await getResult(sql,[]);
+    return [].map.call(result, function(obj) { return [obj.M_name,obj.M_email.replace('\r','')]; });
+  },
   getOneInfo : async function(n_idx){
     var sql = 'select * from m_mail_list_all where n_idx=?';
     return await getResult(sql,[n_idx]);
@@ -44,11 +66,18 @@ var mailListAll = {
     return await getResult(sql,[n_idx]);
   },
   selectView: async function(body,param){
-    var sql = 'select search, user_name, M_id, M_email, M_name, M_ptitle, M_tel, date_format(M_regdate, \'%Y-%m-%d %H:%i:%s\') as M_regdate,n_idx';
+    var sql = 'select search, user_name,M_reporter, M_id, M_email, M_name, M_ptitle, M_tel, M_regdate,n_idx';
     if (typeof body.as !== 'undefined') {
       sql += body.as+' ,CONCAT(M_name, \'&lt;\', M_email, \'&gt;\') as text ';
     }
     sql += ' from mail_list_all_view where search is not null ';
+    if('userType' in body){
+      switch (body.userType) {
+        case '0': sql+=' and M_reporter =\'0\''; break;
+        case '1': sql+=' and M_reporter =\'1\''; break;
+        case '2': sql+=' and M_reporter =\'2\''; break;
+      }
+    }
     if('searchType' in body){
       switch (body.searchType) {
         case 'c': sql+=' and M_ptitle =\''+body.search+'\''; break;
@@ -73,6 +102,13 @@ var mailListAll = {
   },
   selectViewCount: async function(body,param){
     var sql = 'select count(*) as total from mail_list_all_view where search is not null ';
+    if('userType' in body){
+      switch (body.userType) {
+        case '0': sql+=' and M_reporter =\'0\''; break;
+        case '1': sql+=' and M_reporter =\'1\''; break;
+        case '2': sql+=' and M_reporter =\'2\''; break;
+      }
+    }
     if('searchType' in body){
       switch (body.searchType) {
         case 'c': sql+=' and M_ptitle =\''+body.search+'\''; break;

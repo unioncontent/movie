@@ -1,3 +1,4 @@
+/* select test js */
 // 보내는사람
 var page = 1;
 var totalMax = 0;
@@ -10,9 +11,9 @@ $(".searchSelect").scroll( function() {
     if((page * 10) < totalMax){
       var searchStr = $('#M_sender_test').val();
       if(searchStr != ''){
-        searchEmail({search:searchStr,page: page});
+        setTimeout(searchEmail({search:searchStr,page: page}), 250);
       }else{
-        searchEmail({page: page});
+        setTimeout(searchEmail({page: page}), 250);
       }
     }
     else{
@@ -21,42 +22,43 @@ $(".searchSelect").scroll( function() {
   }
 });
 $('#M_sender_test').on('click',function(){
-  var searchStr = $('#M_sender_test').val();
-  if(page == 1){
-    $('.searchSelect ul').empty();
-    if(searchStr != ''){
-      $(this).select();
-      searchStr = searchStr.replace(/</g,'').replace(/>/g,'');
-      searchEmail({search:searchStr,page: page});
-    }else{
-      searchEmail({page: page});
+  if($('.searchSelect').css('display') == 'none'){
+    var searchStr = $('#M_sender_test').val();
+    if(page == 1){
+      $('.searchSelect ul').empty();
+      if(searchStr != ''){
+        $(this).select();
+        searchStr = searchStr.replace(/</g,'').replace(/>/g,'');
+        setTimeout(searchEmail({search:searchStr,page: page}), 250);
+      }else{
+        setTimeout(searchEmail({page: page}), 250);
+      }
     }
   }
 });
 $('#M_sender_test').on('keyup keypress keydown',function(e){
   // a-Z && 0-9
   console.log(e.keyCode);
-  if(e.keyCode != 8 && !(e.keyCode >= 48 && e.keyCode <= 90) &&
+  if(e.keyCode == 8 && e.keyCode == 13 && !(e.keyCode >= 48 && e.keyCode <= 90) &&
     !(e.keyCode >= 96 && e.keyCode <= 105)){
-      return false;
+      return true;
   }
   var searchStr = $('#M_sender_test').val();
-  $('.searchSelect ul').empty();
   if(is_hangul_char(searchStr)){
     var strLen = getTextLength(searchStr);
     if(strLen >= 2){
       page = 1;
-      searchEmail({search:searchStr,page: 1});
+      setTimeout(searchEmail({search:searchStr,page: 1}), 250);
     }
   }
   else{
     if(searchStr.length > 0){
       $('.searchSelect ul').empty();
       page = 1;
-      searchEmail({search:searchStr,page: 1});
+      setTimeout(searchEmail({search:searchStr,page: 1}), 250);
     }
     else{
-      searchEmail({page: 1});
+      setTimeout(searchEmail({page: 1}), 250);
     }
   }
 });
@@ -109,7 +111,6 @@ function searchEmail(params){
         });
       }
       else{
-        $('.searchSelect ul').empty();
         var html = '<li>검색 결과 없습니다.</li>'
         $('.searchSelect ul').append(html);
       }
@@ -125,6 +126,9 @@ $(".sender-select").select2({
     dataType: 'json',
     delay: 250,
     data: function (params) {
+      if(params.term != undefined){
+        params.term = params.term.replace(/ /gi, "")
+      }
       return {
         search: params.term, // search term
         page: params.page
@@ -149,7 +153,7 @@ $(".sender-select").select2({
     cache: true
   },
   multiple: false,
-  placeholder: '보내는 사람',
+  placeholder: '보내는 사람(이름/이메일/회사)',
   language: 'ko',
   allowClear: true,
   escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
@@ -175,6 +179,9 @@ $(".recipi-select").select2({
     dataType: 'json',
     delay: 250,
     data: function (params) {
+      if(params.term != undefined){
+        params.term = params.term.replace(/ /gi, "")
+      }
       return {
         search: params.term, // search term
         page: params.page
@@ -221,10 +228,10 @@ $(".recipi-select").select2({
     return result.replace('\n','');
   }
 });
-$('.recipi-select').on('select2:opening select2:closing', function( event ) {
-  var $searchfield = $(this).parent().find('.select2-search__field');
-  $searchfield.prop('disabled', true);
-});
+// $('.recipi-select').on('select2:opening select2:closing', function( event ) {
+//   var $searchfield = $(this).parent().find('.select2-search__field');
+//   $searchfield.prop('disabled', true);
+// });
 // 수신자 그룹
 $(".group-select").select2({
   ajax: {
@@ -232,6 +239,9 @@ $(".group-select").select2({
     dataType: 'json',
     delay: 250,
     data: function (params) {
+      if(params.term != undefined){
+        params.term = params.term.replace(/ /gi, "")
+      }
       return {
         search: params.term, // search term
         page: params.page
@@ -277,7 +287,7 @@ $(".group-select").select2({
     return repo['M_group_title']+" &lt; "+repo['groupCount']+"명 &gt;";
   }
 });
-$('.group-select').on('select2:opening select2:closing', function( event ) {
-  var $searchfield = $(this).parent().find('.select2-search__field');
-  $searchfield.prop('disabled', true);
-});
+// $('.group-select').on('select2:opening select2:closing', function( event ) {
+//   var $searchfield = $(this).parent().find('.select2-search__field');
+//   $searchfield.prop('disabled', true);
+// });

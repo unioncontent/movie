@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <title><%=pastView[0].keyword%></title>
+  <title>미리보기</title>
   <link href="https://fonts.googleapis.com/css?family=Lato:300,300i,400,400i" rel="stylesheet">
   <!-- <link href="https:///www.tinymce.com/css/codepen.min.css" rel="stylesheet"> -->
   <style type="text/css">
@@ -36,6 +36,8 @@
             </colgroup>
             <tbody>
               <%
+                if(pastView.length != 0){
+                var idx = pastView[0].n_idx;
                 for(var i=0; i < pastView.length; i++) {
                   var url = 'http://showbox.email/preview?keyword='+pastView[i].keyword_idx+'&idx='+pastView[i].n_idx;
                   if(currentPage != '1'){
@@ -52,14 +54,13 @@
                   </td>
                   <td style="font-size: small;padding:5px 0 5px;border-bottom:1px dotted #d9d9d9;color:#444;"><%=pastView[i].M_regdate%></td>
                 </tr>
-              <% } } %>
+              <% } } } %>
               <tr>
                 <td colspan="2" style="text-align: center; font-size: small;padding:10px 0 5px;">
                   <%
                     var pages = Math.ceil(pastCount / limit);
                     var index=1;
                     for(index;index<=pages;index++){
-                      //http://showbox.email
                       if(currentPage == index){
                   %>
                       <strong><span class="current"><%=index%></span></strong>
@@ -95,6 +96,22 @@
         alert($('#msg').val());
       }
     });
+    // 새로고침 방지
+    $(document).keydown(function(e) {
+      key = (e) ? e.keyCode : event.keyCode;
+
+      var t = document.activeElement;
+
+      if (key == 8 || key == 116 || key == 17 || key == 82) {
+        if (e) {
+            e.preventDefault();
+        } else {
+            event.keyCode = 0;
+            event.returnValue = false;
+        }
+      }
+    });
+
   </script>
 </body>
 </html>

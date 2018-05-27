@@ -9,6 +9,8 @@ var keyword = {
     if(admin != null){
       param = admin;
     }
+    // showbox = 1
+    param = 1;
     var sql = 'SELECT * FROM keyword_data where user_idx=? and keyword_property=\'포함\' group by keyword_main';
     return await getResult(sql,param);
   },

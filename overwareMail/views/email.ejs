@@ -21,7 +21,8 @@
         <div class="col-md-12">
           <div class="card">
             <div class="card-header">
-              <button id="sendBtn" type="submit" class="btn btn-inverse f-right m-b-0">완료</button>
+              <button type="submit" class="btn btn-inverse f-right m-b-0 sendBtn">완료</button>
+              <button type="submit" class="btn btn-inverse f-right m-b-0 m-r-5 perivewBtn">미리보기</button>
             </div>
             <div class="card-block">
               <div class="form-group row">
@@ -95,6 +96,13 @@
                 </div>
               </div>
               <div class="form-group row">
+                <label class="col-sm-2 col-form-label">* 발송차수</label>
+                <div class="col-sm-5">
+                  <input type="text" id="M_seq_number"  class="form-control">
+                  <span class='messages'><p class='text-danger error'></p></span>
+                </div>
+              </div>
+              <div class="form-group row">
                 <label class="col-sm-2 col-form-label">* 키워드</label>
                 <div class="col-sm-5">
                   <select id="M_keyword" name="select" class="col-sm-6 form-control form-control-defalut f-left m-b-10">
@@ -152,7 +160,8 @@
               </div> -->
             </div>
             <div class="card-bottom">
-              <button id="sendBtn" type="submit" class="btn btn-inverse f-right m-b-0">완료</button>
+              <button type="submit" class="btn btn-inverse f-right m-b-0 sendBtn">완료</button>
+              <button type="submit" class="btn btn-inverse f-right m-b-0  m-r-5 perivewBtn">미리보기</button>
             </div>
           </div>
         </div>
@@ -176,7 +185,7 @@
                         <tr>
                           <td rowspan='4'>
                             <div class="right-icon-control m-b-5">
-                              <input type="text" class="form-control  search-text" placeholder="메일주소찾기" id="searchMail">
+                              <input type="text" class="form-control  search-text" placeholder="메일주소찾기(이름/이메일/회사)" id="searchMail">
                               <div class="form-icon">
                                 <i class="fas fa-search"></i>
                               </div>
@@ -352,6 +361,67 @@
         </div>
       </div>
       <!-- login modal end -->
+      <!-- Modal start-->
+      <div class='modal fade' id='fileUpload-Modal' role='dialog'>
+        <div class='modal-dialog' role='document'>
+          <div class='modal-content'>
+            <div class="file-upload-loader">
+              <div class="loader-block">
+                <svg id="loader2" viewBox="0 0 100 100">
+                  <circle id="circle-loader2" cx="50" cy="50" r="45"></circle>
+                </svg>
+              </div>
+            </div>
+            <div class='modal-header'>
+              <h5 class="modal-title"><span id="date"></span>파일첨부</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div class='modal-body'>
+              <p class="text-muted">※ 본문에 링크할 자료 버튼을 삽입합니다.</p>
+              <div class="m-b-20 form-radio">
+                <div class="radio radiofill radio-default radio-inline">
+                    <label>
+                        <input type="radio" name="btnType" value="cBtn-a">
+                        <i class="helper"></i>
+                        <span style="color:white;width: 100px; background:#4E4E4E; margin-top:20px; padding: 5px 20px; text-align: center;">본문자료</span>
+                    </label>
+                </div>
+                <div class="radio radiofill radio-default radio-inline">
+                    <label>
+                        <input type="radio" name="btnType" value="cBtn-b">
+                        <i class="helper"></i>
+                        <span style="background:#f9f9f9; border: 1px solid #000000; width: 130px; margin-top:5px; padding: 5px 15px; font-weight: bold; ; font-size: 12px;">관련 데이터</span>
+                    </label>
+                </div>
+                <div class="radio radiofill radio-default radio-inline">
+                    <label>
+                        <input type="radio" name="btnType" value="cBtn-c">
+                        <i class="helper"></i>
+                        <span style="color:white;width: 100px; background:#3d94f6; margin-top:10px; padding: 5px 20px; text-align: center;">바로가기</span>
+                    </label>
+                </div>
+              </div>
+              <div class="m-b-20">
+                <div class="row">
+                  <label class="col-sm-3 col-form-label">버튼이름</label>
+                  <div class="col-sm-9">
+                    <input type="text" class="form-control" id="btnName">
+                  </div>
+                </div>
+              </div>
+              <input type='file' class="form-control" id="fileUpload"/>
+              <input type='text' class="form-control" id="urlInput" style="display:none" placeholder="URL을 입력해주세요."/>
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-secondary mobtn" data-dismiss='modal' aria-label='Close' type="button">취소</button>
+              <button type="button" class="btn btn-primary mobtn" id="btn-file-upload">업로드</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Modal end-->
     </div>
   </div>
 </div>
@@ -360,8 +430,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/i18n/ko.js"></script>
 <!-- filer -->
-<link rel="stylesheet" type="text/css" href="/css/jquery.filer.css">
-<script src="/js/jquery.filer.min.js"></script>
+<!-- <link rel="stylesheet" type="text/css" href="/css/jquery.filer.css">
+<script src="/js/jquery.filer.min.js"></script> -->
 <!-- editor -->
 <script src='/plugin/tinymce/js/tinymce/tinymce.min.js'></script>
 <script src="/pages/email/js/editor.js"></script>
@@ -387,6 +457,7 @@
       $("#M_keyword option[value='"+mailData.M_keyword+"']").attr('selected','selected');
       $("#M_mail_type option[value='"+mailData.M_mail_type+"']").attr('selected','selected');
       $("#M_subject").val(mailData.M_subject);
+      $("#M_seq_number").val(mailData.M_seq_number);
     }
     // 예약시간
     var dt = new Date();
@@ -573,9 +644,37 @@
   //     }
   //   });
   // }
-  // 메일 보내기 버튼 클릭시
-  $("#sendBtn").on("click",function(){
+  // 메일 미리보기 버튼 클릭시
+  $(".perivewBtn").on("click",function(){
     var param = {
+      'M_keyword': $("#M_keyword option:selected").val() || '',
+      'num': $("#M_seq_number").val() || '',
+      'M_body': get_tinymce_html_content(),
+    };
+    previewAjax(param);
+  });
+  function previewAjax(param) {
+    var win = window.open('about:blank', '_blank');
+    $.ajax({
+      url: '/preview_mail',
+      type: 'post',
+      data : param,
+      datatype : 'json',
+      error:function(request,status,error){
+        console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
+        swal("ERROR!", request.responseText, "error");
+      },
+      success:function(data){
+        if(data){
+          win.location.href = 'http://showbox.email/preview_mail';
+        }
+      }
+    });
+  }
+  // 메일 보내기 버튼 클릭시
+  $(".sendBtn").on("click",function(){
+    var param = {
+      'M_seq_number': $("#M_seq_number").val(),
       'M_sender': $(".sender-select").select2("val"),
       'M_recipi': $(".recipi-select").select2("val"),
       'M_group': $('.group-select').val() || [],
@@ -591,6 +690,9 @@
     }
     if(param["M_recipi"] == ""){
       check = requiredMessage("M_recipi","받는사람을 선택해주세요.");
+    }
+    if(param["M_seq_number"] == ""){
+      check = requiredMessage("M_seq_number","발송차수를 입력해주세요.");
     }
     if(param["M_keyword"] == 0){
       check = requiredMessage("M_keyword","키워드를 선택해주세요.");
@@ -632,7 +734,7 @@
       title: "본문의 내용이 확실합니까?",
       icon: "warning",
       buttons: ["취소", true],
-      dangerMode: true,
+      dangerMode: true
     })
     .then((value) => {
       if (value != null) {

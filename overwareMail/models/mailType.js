@@ -9,6 +9,8 @@ var mailType = {
     if(admin != null){
       param = admin;
     }
+    // showbox = 1
+    param = 1;
     var sql = 'SELECT * FROM m_mail_type where M_id=?';
     return await getResult(sql,param);
   }

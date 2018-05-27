@@ -3,6 +3,7 @@ var urlencode = require('urlencode');
 var request = require('request');
 var router = express.Router();
 // DB module
+var maillink = require('../models/maillink.js');
 var period = require('../models/period.js');
 var keyword = require('../models/keyword.js');
 var mailType = require('../models/mailType.js');
@@ -17,6 +18,7 @@ var isAuthenticated = function (req, res, next) {
   res.redirect('/login');
 };
 
+// 통계 페이지
 router.get('/',isAuthenticated,async function(req, res) {
   var data = await getListPageData(req.user.n_idx,req.query);
   data.klist = await keyword.selectMovieKwdAll(req.user.user_admin,req.user.n_idx) || [];
@@ -30,25 +32,13 @@ router.get('/',isAuthenticated,async function(req, res) {
   res.render('period',data);
 });
 
-router.get('/download/:date/:fileName',isAuthenticated,async function(req, res) {
-  console.log('/download/:date/:fileName = ',req.params);
-  var filePath = '/home/hosting_users/unioncmail/apps/unioncmail_unioncmail/public/uploads/files/'+req.params.date+'/'+req.params.fileName;
-  // var fs = require('fs');
-  // var file = fs.readFileSync(filePath);
-
-  res.download(filePath); // Set disposition and send it.
-});
-
-router.post('/result',isAuthenticated,async function(req, res, next) {
-  var data = await mailDetailB.selectTable(req.body);
-  res.send({status:true,result:data});
-});
-
 router.post('/getPeriod',isAuthenticated,async function(req, res, next) {
   try{
+    console.log('getPeriod:',req.body);
+    var mediaNReporterCount = await period.getPeriodMediaNReporterCount(req.body);
     var data = {
-      media:await mailDetailB.getMediaNReporterCount('P_title',req.body.M_idx_A),
-      reporter:await mailDetailB.getMediaNReporterCount('P_name',req.body.M_idx_A),
+      media:mediaNReporterCount.media_c,
+      reporter:mediaNReporterCount.reporter_c,
       newsCount:await period.getNewsCount(req.body),
       replyCount:await period.getReplyCount(req.body)
     };
@@ -116,6 +106,65 @@ async function getListPageData(idx,param){
   return data;
 }
 
+// 메일 관련 기능
+// 첨부파일 삭제
+router.get('/removeDir/:date',isAuthenticated,async function(req, res) {
+  var fs = require('fs-extra');
+  var filePath = __dirname +'/public/uploads/files/'+req.params.date;
+  try {
+    fs.removeSync(filePath);
+    res.send('success!');
+  } catch (err) {
+    console.error(err)
+  }
+});
+// 첨부파일 다운로드
+router.get('/download/:date/:fileName',async function(req, res) {
+  // console.log('/download/:date/:fileName = ',req.params);
+  var filePath = __dirname.replace('\\routes','') +'/public/uploads/files/'+req.params.date;
+  var fs = require('fs');
+  var fileListLength = fs.readdirSync(filePath).length;
+  var count = 1;
+  if(fileListLength == 0){
+    res.send('해당 날짜의 파일이 없습니다.');
+    return false;
+  }
+  if(req.params.fileName.indexOf('.') == -1){
+    var walk    = require('walk');
+    var files   = [];
+
+    // Walker options
+    var walker  = walk.walk(filePath, { followLinks: false });
+
+    walker.on('file', function(root, stat, next) {
+        // Add this file to the list of files
+        var sFileArr = stat.name.split('.');
+        if(req.params.fileName == sFileArr[0]){
+          filePath +='/'+stat.name;
+          res.download(filePath); // Set disposition and send it.
+          return false;
+        }
+        if(fileListLength == count){
+          res.send('해당 파일이 삭제되었습니다.');
+          return false;
+        }
+        count += 1;
+        next();
+    });
+  }
+  else{
+    filePath +='/'+req.params.fileName;
+    res.download(filePath); // Set disposition and send it.
+  }
+  // var file = fs.readFileSync(filePath);
+
+});
+
+router.post('/result',isAuthenticated,async function(req, res, next) {
+  var data = await maillink.selectResultDetail(req.body);
+  res.send({status:true,result:data});
+});
+// 발송결과 측정 항목을 사용할 경우
 // router.get('/result',function(req,res){
 //   var pStr = '&username='+urlencode('unionc')+'&key='+urlencode('w4EzdnbOY3oypxO')+'&mail_id='+urlencode(212880);
 //   var options = {
@@ -130,4 +179,5 @@ async function getListPageData(idx,param){
 //     res.send(html);
 //   });
 // });
+
 module.exports = router;
