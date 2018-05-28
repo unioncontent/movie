@@ -24,11 +24,10 @@ var mail = {
   selectResultDetail:async function(param){
     var sql = 'SELECT * FROM mail_send_result where n_idx=? ';
     if('M_result' in param){
-      sql+='and (FINALRESULT';
       if(param.M_result == 'success'){
-        sql += '=? or RSLTMSG = \'SUCCESS\')';
+        sql += 'and (FINALRESULT=? or (SENDRESULT = \'OK\' and SENDRESULT is null))';
       }else{
-        sql += '!=? and FINALRESULT is not null)';
+        sql += 'and ((FINALRESULT is not null and FINALRESULT != ?) or (SENDRESULT is not null and SENDRESULT = \'ER\'))';
       }
     }
     sql+=' group by EMTOADDRESS';
