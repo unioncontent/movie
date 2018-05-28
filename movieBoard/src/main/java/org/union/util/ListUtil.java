@@ -84,6 +84,7 @@ public class ListUtil {
 				vo.setKeyword(addList.get(i).getKeyword());
 				vo.setTitle(addList.get(i).getCommunity_title());
 				vo.setContent(addList.get(i).getCommunity_content());
+				vo.setWriter_IP(addList.get(i).getCommunity_writer_IP());
 				vo.setWriteDate(addList.get(i).getWriteDate());
 				vo.setSns_idx(addList.get(i).getCommunity_idx());
 				vo.setUrl(addList.get(i).getUrl());

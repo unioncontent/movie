@@ -4,7 +4,7 @@ public class ExtractVO {
 
 	
 	private String domain, domainType, company,keyword_main, keyword, title, content, writeDate,writer,
-				createDate, url, textType, thumbnail, view_cnt, reply_cnt, like_cnt, reporter_name, reporter_media_name;
+				createDate, url, textType, thumbnail, view_cnt, reply_cnt, like_cnt, reporter_name, reporter_media_name, writer_IP;
 	private Integer sns_idx, community_idx, media_idx, portal_idx, reply_idx;
 	
 	public String getDomain() {
@@ -147,6 +147,12 @@ public class ExtractVO {
 	public void setReporter_media_name(String reporter_media_name) {
 		this.reporter_media_name = reporter_media_name;
 	}
+	public String getWriter_IP() {
+		return writer_IP;
+	}
+	public void setWriter_IP(String writer_IP) {
+		this.writer_IP = writer_IP;
+	}
 	@Override
 	public String toString() {
 		return "ExtractVO [domain=" + domain + ", domainType=" + domainType + ", company=" + company + ", keyword_main="
@@ -154,7 +160,8 @@ public class ExtractVO {
 				+ writeDate + ", writer=" + writer + ", createDate=" + createDate + ", url=" + url + ", textType="
 				+ textType + ", thumbnail=" + thumbnail + ", view_cnt=" + view_cnt + ", reply_cnt=" + reply_cnt
 				+ ", like_cnt=" + like_cnt + ", reporter_name=" + reporter_name + ", reporter_media_name="
-				+ reporter_media_name + ", sns_idx=" + sns_idx + ", community_idx=" + community_idx + ", media_idx="
-				+ media_idx + ", portal_idx=" + portal_idx + ", reply_idx=" + reply_idx + "]";
+				+ reporter_media_name + ", writer_IP=" + writer_IP + ", sns_idx=" + sns_idx + ", community_idx="
+				+ community_idx + ", media_idx=" + media_idx + ", portal_idx=" + portal_idx + ", reply_idx=" + reply_idx
+				+ "]";
 	}
 }

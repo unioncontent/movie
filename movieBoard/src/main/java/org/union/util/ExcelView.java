@@ -132,6 +132,8 @@ public class ExcelView extends AbstractXlsView {
 		    titleList.add("내용");
 		    titleList.add("작성자");
 		    titleList.add("분류");
+		    titleList.add("작성자IP");
+		    
 		}
 		else if (model.get("type").equals("movie")) {
 		    titleList.add("언론사");
@@ -204,6 +206,9 @@ public class ExcelView extends AbstractXlsView {
 			cellIdx += 1;
 			HSSFCell classiCell = dataRow.createCell(cellIdx);
 			classiCell.setCellValue(new HSSFRichTextString(vo.getTextType()));
+			cellIdx += 1;
+			HSSFCell writerIpCell = dataRow.createCell(cellIdx);
+			writerIpCell.setCellValue(new HSSFRichTextString(vo.getWriter_IP()));
 		    }
 		    else if (model.get("type").equals("movie")) {
 			cellIdx += 1;
@@ -239,9 +244,15 @@ public class ExcelView extends AbstractXlsView {
 		    HSSFCell createCell = dataRow.createCell(cellIdx);
 		    createCell.setCellValue(new HSSFRichTextString(vo.getCreateDate()));
 		    
+		    if(vo.getThumbnail() != null) {
 		    cellIdx += 1;
 		    HSSFCell imgCell = dataRow.createCell(cellIdx);
-		    imgCell.setCellValue(new HSSFRichTextString(vo.getThumbnail()));
+		    imgCell.setCellValue(new HSSFRichTextString("http://overware.iptime.org:8080/classification/show?name="+vo.getThumbnail()));
+		    }else {
+		    	cellIdx += 1;
+			    HSSFCell imgCell = dataRow.createCell(cellIdx);
+			    imgCell.setCellValue(new HSSFRichTextString(vo.getThumbnail()));
+		    }
 
 		}
 
