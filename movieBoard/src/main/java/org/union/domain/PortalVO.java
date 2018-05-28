@@ -17,6 +17,7 @@ public class PortalVO {
 	private String keyword_type;
 	private String url;
 	private String textType;
+	private String portal_state;
 	private String thumbnail;
 	private Date createDate;
 	private Date updateDate;
@@ -97,6 +98,12 @@ public class PortalVO {
 	public void setTextType(String textType) {
 		this.textType = textType;
 	}
+	public String getPortal_state() {
+		return portal_state;
+	}
+	public void setPortal_state(String portal_state) {
+		this.portal_state = portal_state;
+	}
 	public String getThumbnail() {
 		return thumbnail;
 	}
@@ -133,14 +140,13 @@ public class PortalVO {
 	public void setCheckCondition(boolean checkCondition) {
 		this.checkCondition = checkCondition;
 	}
-	
 	@Override
 	public String toString() {
 		return "PortalVO [portal_idx=" + portal_idx + ", portal_name=" + portal_name + ", portal_type=" + portal_type
-				+ ", portal_title=" + portal_title + ", deviceType=" + deviceType + ", writeDate=" + writeDate
-				+ ", keyword_main=" + keyword_main + ", keyword=" + keyword + ", keyword_type=" + keyword_type
-				+ ", url=" + url + ", textType=" + textType + ", thumbnail=" + thumbnail + ", createDate=" + createDate
-				+ ", updateDate=" + updateDate + ", writer=" + writer + ", score=" + score + "]";
+				+ ", portal_title=" + portal_title + ", portal_content=" + portal_content + ", deviceType=" + deviceType
+				+ ", writeDate=" + writeDate + ", keyword_main=" + keyword_main + ", keyword=" + keyword
+				+ ", keyword_type=" + keyword_type + ", url=" + url + ", textType=" + textType + ", portal_state="
+				+ portal_state + ", thumbnail=" + thumbnail + ", createDate=" + createDate + ", updateDate="
+				+ updateDate + ", writer=" + writer + ", score=" + score + ", checkCondition=" + checkCondition + "]";
 	}
-	
 }

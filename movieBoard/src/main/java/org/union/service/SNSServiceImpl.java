@@ -434,4 +434,32 @@ public class SNSServiceImpl implements SNSService {
 	}
 
 
+	@Override
+	public Integer snsTotalcount(SearchCriteria cri) {
+
+		return snsDAO.snsTotalcount(cri);
+	}
+
+
+	@Override
+	public Integer graphfacebookCount(SearchCriteria cri) {
+
+		return snsDAO.graphfacebookCount(cri);
+	}
+
+
+	@Override
+	public Integer graphinstaCount(SearchCriteria cri) {
+
+		return snsDAO.graphinstaCount(cri);
+	}
+
+
+	@Override
+	public Integer graphtwitterCount(SearchCriteria cri) {
+
+		return snsDAO.graphtwitterCount(cri);
+	}
+
+
 }

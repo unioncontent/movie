@@ -1047,4 +1047,85 @@
  		where 
  			url = #{url};
  	</select>
+ 	
+ 	<select id="scoreTotalcnt" resultType="Integer">
+		select
+			count(*)
+		from
+			portal_data
+		where
+			portal_type='score'
+        and
+			portal_title is not null
+		<include refid="search_writeDate"></include>
+		and
+			createDate >= curdate();
+		
+	</select>
+	
+	<select id="portalTextcnt" resultType="Integer">
+		select 
+			count(*) 
+		from 
+			portal_data 
+		where 
+			textType is not null
+		<include refid="search_writeDate"></include> 
+		and 
+			createDate >= curdate();
+		
+	</select>
+ 	
+ 	<select id="portalTextcnt2" resultType="Integer">
+		select 
+			count(*) 
+		from 
+			portal_data 
+		where 
+			textType = '나쁜글'
+		<include refid="search_writeDate"></include> 
+		and 
+			createDate >= curdate();
+	</select>
+	
+	<select id="graphNaverCount" resultType="Integer">
+ 		select count(*) from portal_data
+ 		where 
+ 			textType is not null
+ 		and score is null 
+ 		and texttype!='삭제글'
+ 		and
+ 			portal_name = 'naver'
+ 		and keyword in (select keyword from keyword_data where keyword_main = #{selectKey})
+		and
+			createDate between date_add(#{date}, interval -1 day) and #{date}
+ 	</select>
+ 	
+ 	<select id="graphDaumCount" resultType="Integer">
+ 		select count(*) from portal_data
+ 		where 
+ 			textType is not null
+ 		and score is null 
+ 		and texttype!='삭제글'
+ 		and
+ 			portal_name = 'daum'
+ 		and keyword in (select keyword from keyword_data where keyword_main = #{selectKey})
+		and
+			createDate between date_add(#{date}, interval -1 day) and #{date}
+ 	
+ 	</select>
+ 	
+ 	<insert id="scoreCheckList">
+ 		INSERT INTO score_data SELECT * FROM portal_data where portal_idx = #{portal_idx}
+ 	</insert>
+ 	
+ 	<update id="scoreUpdate">
+ 		update 
+ 			portal_data
+ 		set
+ 			portal_state = 1
+ 		where
+ 			portal_idx = #{portal_idx}
+ 		
+ 	</update>
  </mapper>

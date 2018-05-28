@@ -109,11 +109,6 @@ public class PortalController {
 			cri.setCompany(null);
 		}
 	}
-	if (cri.getHour() != null) {
-	    if (cri.getHour().isEmpty()) {
-		cri.setHour(null);
-	    }
-	}
 
 	// 회사 선택에 따른 키워드 재추출
 	if (cri.getCompany() != null) {	
@@ -143,7 +138,6 @@ public class PortalController {
 	logger.info("mobiletotalCount: " + totalCount);
 	
 	PageMaker pageMaker = new PageMaker();
-	//cri.setPerPageNum(24);
 	pageMaker.setCri(cri);
 	pageMaker.setTotalCount(totalCount);
 	
@@ -317,8 +311,100 @@ public class PortalController {
 	model.addAttribute("minusCount", cri.getPerPageNum() * (cri.getPage()-1));
 
     }
+    
+    @ResponseBody
+    @PostMapping("/graph")
+    public List<GraphVO> graph_rePOST(Model model, String success, @ModelAttribute("cri") SearchCriteria cri,String part, String company, String selectKey) {
+		logger.info("graph_rePOST called....");
+		
+		if (cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey())) {
+		    logger.info("selectKey is null");
+		    cri.setSelectKey(null);
+		}
+		if (cri.getCompany() == null || cri.getCompany().equals("회사")) {
+		    logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+		    UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
 
-	@ResponseBody
+		    if (!vo.getUser_name().equals("union")) {
+			cri.setCompany(vo.getUser_name());
+
+		    } else {
+			cri.setCompany(null);
+		    }
+		}
+
+		// 회사 선택에 따른 키워드 재추출
+		if (cri.getCompany() != null) {
+		    if (cri.getCompany().isEmpty() == false) {
+
+			UserVO userVO = userService.viewByName(cri.getCompany());
+			logger.info("userVO: " + userVO);
+			logger.info("keywordList: " + keywordService.listByUser(userVO.getUser_idx()));
+			model.addAttribute("modelKeywordList",
+				keywordService.listByUser(userService.viewByName(cri.getCompany()).getUser_idx()));
+		    }
+		}
+
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH");
+		
+		String current = sdf.format(new Date());
+		logger.info("current: " + current);
+		
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(new Date());
+		
+		List<GraphVO> graphList = new ArrayList<GraphVO>();
+		
+		
+		logger.info("cal.getTime: " + cal.getTime());
+		
+		if(part.equals("ent")) {
+		for(int i = 0; i < 24; i++) {
+			GraphVO graphVO = new GraphVO();
+			
+			
+			/*cri.setSelectKey(selectKey);*/
+			cri.setDate(cal.getTime());
+			/*logger.info("selectcompanygraph: " + company);
+			logger.info("selectKeygraph: " + selectKey);*/
+			
+			graphVO.setWriteDate(sdf.format(cal.getTime()) + ":00:00");
+			graphVO.setType1(mobileEntService.getTypeOfMovieCountGraph(cri));
+			graphVO.setType2(mobileEntService.getTypeOfActorCountGraph(cri));
+			graphVO.setType3(mobileEntService.getMatchCountGraph(cri));
+			
+			graphList.add(graphVO);
+			
+			cal.add(Calendar.HOUR, -1);
+			}
+		}else if(part.equals("movie")) {
+			for(int i = 0; i < 24; i++) {
+				GraphVO graphVO = new GraphVO();
+				
+				
+				/*cri.setSelectKey(selectKey);*/
+				cri.setDate(cal.getTime());
+				/*logger.info("selectcompanygraph: " + company);
+				logger.info("selectKeygraph: " + selectKey);*/
+				
+				graphVO.setWriteDate(sdf.format(cal.getTime()) + ":00:00");
+				graphVO.setType1(mobileEntService.MgetTypeOfMovieCountGraph(cri));
+				graphVO.setType2(mobileEntService.MgetTypeOfActorCountGraph(cri));
+				graphVO.setType3(mobileEntService.MgetMatchCountGraph(cri));
+				
+				graphList.add(graphVO);
+				
+				cal.add(Calendar.HOUR, -1);
+				}
+			
+			
+		}
+		
+		logger.info("graphList: " + graphList);
+		return graphList;
+	}
+    
+	/*@ResponseBody
     @PostMapping("/graph")
     public List<GraphVO> graphPOST(String startDate, String endDate, String company, String selectKey) throws ParseException {
 	logger.info("graphPOST called....");
@@ -349,33 +435,7 @@ public class PortalController {
 	cal.setTime(transStart);
 
 	List<GraphVO> graphList = new ArrayList<GraphVO>();
-
-	long gap = (transEnd.getTime() - transStart.getTime()) / (24 * 60 * 60 * 1000);
-	logger.info("gap: " + gap);
-
-	if(gap != 0) {
-	    while ((transEnd.getTime() - cal.getTimeInMillis()) / (24 * 60 * 60 * 1000) > -1) {
-		cri.setStartDate(standFormat.format(cal.getTime()));
-		cal.add(Calendar.SECOND, (24 * 60 * 60) - 1);
-		cri.setEndDate(standFormat.format(cal.getTime()));
-		
-		GraphVO graphVO = new GraphVO();
-		graphVO.setWriteDate(standFormat.format(cal.getTime()).toString().split(" ")[0]);
-
-		Integer m = mobileEntService.getTypeOfMovieCountGraph(cri);
-		Integer a = mobileEntService.getTypeOfActorCountGraph(cri);
-		Integer n = mobileEntService.getMatchCountGraph(cri);
-
-		graphVO.setType1(m);
-		graphVO.setType2(a);
-		graphVO.setType3(n);
-
-		graphList.add(graphVO);
-
-		cal.add(Calendar.SECOND, 1);
-	    }
-	}
-	else {
+	
 	    cri.setStartDate(startDate);
 	    cri.setEndDate(endDate);
 	    
@@ -404,10 +464,9 @@ public class PortalController {
 
 		graphList.add(graphVO);
 	    }
-	}
 
 	return graphList;
-    }
+    }*/
 	
 	@ResponseBody
     @PostMapping("/Mgraph")
@@ -463,7 +522,7 @@ public class PortalController {
 
 		graphList.add(graphVO);
 
-		cal.add(Calendar.SECOND, 1);
+		cal.add(Calendar.HOUR, 1);
 	    }
 	}
 	else {
@@ -1145,6 +1204,18 @@ public class PortalController {
 
 	model.addAttribute("scoreCount", portalService.getOnlyScore(cri));
     }
+    
+    @ResponseBody
+	@PostMapping("/checkList")
+	public String checkList(Integer idx) {
+		logger.info("checkListPOST called....");
+		logger.info("checkidx: " + idx);
+		
+		portalService.scoreCheckList(idx);
+		portalService.scoreUpdate(idx);
+		
+		return "success";
+	}
 
     @ResponseBody
     @PostMapping("/historyGraph")
@@ -1301,4 +1372,5 @@ public class PortalController {
 		
 		return model;
 	}
+    
 }

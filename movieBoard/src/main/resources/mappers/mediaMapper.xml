@@ -352,6 +352,18 @@
 				and keyword in (select keyword from keyword_data where keyword_main = #{selectKey})
 		</if>
 	</sql>
+	
+	<sql id="search_graph2">
+		<if test="selectKey != null">
+				and keyword in (select keyword from keyword_data where keyword_main = #{selectKey})
+		</if>
+	</sql>
+	
+	<sql id="search_mail">
+		<if test="selectKey != null">
+				and M_keyword in (select keyword from keyword_data where keyword_main = #{selectKey})
+		</if>
+	</sql>
  
  	<insert id="create">
  		insert into
@@ -1083,13 +1095,142 @@
  			media_data
  		where 
 			textType is not null
-		and 
- 			createDate between date_add(#{date}, interval -1 hour) and #{date}
  		and 
 			textType!='삭제글'
-		<include refid="search_graph"></include>
- 		order by 
- 			createDate desc 
- 		limit 1;
+		and 
+			keyword in (select keyword from keyword_data where keyword_main = #{selectKey})
+		and
+			createDate between date_add(#{date}, interval -1 day) and #{date}
  	</select>
+ 	
+ 	<insert id="checkList">
+ 		INSERT INTO headline_data SELECT * FROM media_data where media_idx = #{media_idx}
+ 	</insert>
+ 	
+ 	<select id="headlineList" resultType="MediaVO">
+ 		select 
+			*
+		from 
+			headline_data
+		where
+			url is not null
+		<include refid="search_writeDate"></include>
+		order by updateDate desc limit 5;
+ 	</select>
+ 	
+ 	<update id="headlineUpdate">
+ 		update 
+ 			media_data
+ 		set
+ 			media_state = 1
+ 		where
+ 			media_idx = #{media_idx}
+ 		
+ 	</update>
+ 	
+ 	<update id="headlineUpdate2">
+		update
+			headline_data
+		set 
+			updateDate = now()
+		where
+			news_idx = #{news_idx}
+	
+	</update>
+ 	
+ 	<select id="mediaTotalcnt" resultType="Integer">
+		select
+			count(*)
+		from
+			media_data
+		where
+			url is not null
+		<include refid="search_writeDate"></include>
+		and
+			createDate >= curdate();
+		
+	</select>
+	<select id="replyTotalcnt" resultType="Integer">
+		select
+			count(*)
+		from
+			reply_data
+		where
+			reply_content is not null
+		<include refid="search_writeDate"></include>
+		and
+			createDate >= curdate();
+		
+	</select>
+	
+	<select id="mediaTextcnt" resultType="Integer">
+		select 
+			count(*) 
+		from 
+			media_data 
+		where 
+			textType is not null
+		<include refid="search_writeDate"></include> 
+		and 
+			createDate >= curdate();
+		
+	</select>
+ 	
+ 	<select id="mediaTextcnt2" resultType="Integer">
+		select 
+			count(*) 
+		from 
+			media_data 
+		where 
+			textType = '나쁜글'
+		<include refid="search_writeDate"></include> 
+		and 
+			createDate >= curdate();
+	</select>
+	<select id="mediaCountAll" resultType="Integer">
+		select count(*)
+		from media_data
+		where 
+			textType!='삭제글'
+		and keyword in (select keyword from keyword_data where keyword_main = #{selectKey})
+		and
+			createDate between date_add(#{date}, interval -1 hour) and #{date}
+	
+	</select>
+	
+	<select id="mailList" resultType="MailVO">
+		select 
+			a.M_regdate,a.M_subject, a.sendCount,a.success,a.fail,
+            (select 
+				count(*) 
+			from 
+				media_data 
+            where 
+				title_key = a.M_keyword 
+            and
+				createDate <![CDATA[>=]]> DATE_FORMAT(a.M_regdate,'%Y-%m-%d 00:00:00')
+			and
+				createDate <![CDATA[<=]]> DATE_FORMAT(a.M_regdate,'%Y-%m-%d 23:59:00'))as total from period_view a
+		where 
+			a.M_subject is not null
+		<include refid="search_mail"></include> 
+		order 
+			by a.M_regdate desc limit 5;
+	</select>
+	
+	<select id="mailCountAll" resultType="Integer">
+		select 
+ 			count(*)
+ 		from 
+ 			period_view
+ 		where 
+			M_keyword is not null
+		and 
+			success = '1'
+		and 
+			M_keyword in (select keyword from keyword_data where keyword_main = #{selectKey})
+		and
+			M_regdate between date_add(#{date}, interval -1 day) and #{date}
+	
+	</select>
  </mapper>

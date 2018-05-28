@@ -143,10 +143,6 @@
 											<div class="col-md-5">
 												<!-- date picker start -->
 												<div class="row" style="display: inherit;">
-													<div class="input-group float-right date col p-l-0 p-r-15 m-b-10" style="width: 136px;">
-														<input type="text" id="fromTime" class="form-control form-control-inverse" value=""> <span class="input-group-addon bg-inverse"> <span class="icofont icofont-ui-clock"></span>
-														</span>
-													</div>
 													<div class="input-group float-right date p-l-15 p-r-15 m-b-10">
 														<input type="text" id="fromDate" class="form-control form-control-inverse" value=""> <span class="input-group-addon bg-inverse"> <span class="icofont icofont-ui-calendar"></span>
 														</span>
@@ -248,19 +244,25 @@
 											</div> --%>
 											<!-- counter-card-5 end -->
 											<!-- Morris chart start -->
-											<div class="col-md-12">
-												<div class="card">
-													<div class="card-header">
-														<h5>검출량 그래프</h5>
-														<div class="card-header-right">
-															<i class="icofont icofont-rounded-down"></i></i>
-														</div>
-													</div>
-													<div class="card-block">
-														<div id="morris-extra-area" style="height: 300px;"></div>
-													</div>
-												</div>
-											</div>
+											<div class="col-lg-12">
+				                                <div class="card">
+				                                <div class="card-header">
+				                                  <h5 class="card-header-text">
+				                                    <i class="icofont icofont-chart-line m-r-5"></i>
+				                                    	검출량 그래프
+				                                  </h5>
+				                                  <div class="card-header-right">
+				                                    <i class="icofont icofont-rounded-down"></i>
+				                                    <i class="icofont icofont-refresh"></i>
+				                                  </div>
+				                                </div>
+				                                <div class="card-block">
+				                                  <!-- chart start -->
+				                                  <div class="m-b-35" id="line-chart1"></div>
+				                                  <!-- chart end -->
+				                                </div>
+				                              </div>
+				                              </div>
 											<!-- Morris chart end -->
 											<div class="col-md-12">
 												<!-- Pc table start -->
@@ -450,100 +452,83 @@
 	});
 
 	$(document).ready(function(){
-		var companyOption = decodeURI(window.location.href.split("company=")[1]).split("&")[0];
-		console.log("companyOption: " + companyOption);
 
-		var $selectCompany = $('#selectCompany');
-		if(companyOption != 'undefined'){
-			for(var i = 0; i < $selectCompany[0].length; i++ ){
 
-				if($selectCompany[0].children[i].value == companyOption){
-					$selectCompany[0].children[i].selected = 'selected';
+		  var startDateOption = decodeURI(window.location.href.split("startDate=")[1]).split("&")[0].split(" ")[0];
+			var endDateOption = decodeURI(window.location.href.split("endDate=")[1]).split("&")[0].split(" ")[0];
+			console.log("startDateOption: " + startDateOption);
+			console.log("endDateOption: " + endDateOption);
+
+			if(startDateOption != 'undefined' && endDateOption != 'undefined'
+					&& startDateOption != '' && endDateOption != ''){
+				$("#fromDate").val(startDateOption + " - " + endDateOption);
+			}
+
+
+
+			var companyOption = decodeURI(window.location.href.split("company=")[1]).split("&")[0];
+			console.log("companyOption: " + companyOption);
+
+			var $selectCompany = $('#selectCompany');
+			if(companyOption != 'undefined'){
+				for(var i = 0; i < $selectCompany[0].length; i++ ){
+
+					if($selectCompany[0].children[i].value == companyOption){
+						$selectCompany[0].children[i].selected = 'selected';
+					}
 				}
 			}
-		}
-		$selectCompany[0][0].disabled = true;
+			$selectCompany[0][0].disabled = true;
 
 
-		// 회사 선택시
-		$selectCompany.change(function(){
-			console.log("selectCompany clicked....");
-			console.log($("#selectCompany option:selected").val());
+			// 회사 선택시
+			$selectCompany.change(function(){
+				console.log("selectCompany clicked....");
+				console.log($("#selectCompany option:selected").val());
 
-			searchList();
+				searchList();
 
-		});
+			});
 
 
-		var keywordOption = decodeURI(window.location.href.split("selectKey=")[1]).split("&")[0];
-		console.log("keywordOption: " + keywordOption);
-		console.log(decodeURI(window.location.href.split("&")[1]));
+			var keywordOption = decodeURI(window.location.href.split("selectKey=")[1]).split("&")[0];
+			console.log("keywordOption: " + keywordOption);
+			console.log(decodeURI(window.location.href.split("&selectKey=")[1]));
 
-		var $selectKeyword = $('#selectKeyword');
 
-		if(keywordOption != 'undefined'){
-			for(var i = 0; i < $selectKeyword[0].length; i++ ){
-				if($selectKeyword[0][i].value == keywordOption){
-					$selectKeyword[0][i].selected = 'selected';
+
+			var $selectKeyword = $('#selectKeyword');
+
+			if(keywordOption != 'undefined'){
+				for(var i = 0; i < $selectKeyword[0].length; i++ ){
+					if($selectKeyword[0][i].value == keywordOption){
+						$selectKeyword[0][i].selected = 'selected';
+					}
 				}
 			}
-		}
-		$selectKeyword[0][0].disabled = true;
-		
-	    var hourOption = window.location.href.split("hour")[1];
-	    console.log("hourOption: " + hourOption);
-		if(hourOption == "" || hourOption == undefined){
-			hourOption = "00"
-		}
-		else{
-			hourOption = hourOption.replace("=","")
-		}
-		
-		var startDateOption = decodeURI(window.location.href.split("startDate=")[1]).split("&endDate=")[0]
-		var endDateOption = decodeURI(window.location.href.split("endDate=")[1]).split("&")[0];
-		var sDate = new Date(startDateOption);
-		var eDate = new Date(endDateOption);
-		console.log("startDateOption: " + startDateOption);
-		console.log("endDateOption: " + endDateOption);
+			$selectKeyword[0][0].disabled = true;
 
-		if(startDateOption != "undefined" && endDateOption != "undefined" && startDateOption != '' && endDateOption != ''){
-			startDateOption = startDateOption.split(" ")[0];
-			endDateOption = endDateOption.split(" ")[0];
-			$('#fromDate').data('daterangepicker').setStartDate(sDate);
-			$('#fromDate').data('daterangepicker').setEndDate(eDate);
-			$("#fromTime").data('DateTimePicker').date(hourOption+":00")
-			console.log("ajaxGraph: " + startDateOption + "/" + endDateOption);
-			ajaxGraph(startDateOption, endDateOption);
-			
-			if(dateCompare()){
-				$("#fromTime").prop('disabled', true);
-			}
+
+			// 키워드 선택시
+			$selectKeyword.change(function(){
+				console.log("selectKeyword clicked....");
+				console.log($('#selectKeyword option:selected').val());
+
+				searchList();
+
+				//searchList();
+			});
+
+	// content 길시에 ...으로 변경
+	var $content = $(".text-success");
+
+	var size = 25;
+
+	for (var i =1; i < $content.length; i++){
+		if($content[i].innerText.length >= size){
+			$content[i].textContent = $content[i].innerText.substr(0, size) + '...';
 		}
-		else{
-			var fdate = $('#fromDate').val().split(" - ");
-			console.log("ajaxGraph: " + fdate[0].replace("/","-").replace("/","-") + "/" + fdate[1].replace("/","-").replace("/","-"));
-			ajaxGraph(fdate[0].replace("/","-").replace("/","-"), fdate[1].replace("/","-").replace("/","-"));
-		}
-        
-		// 키워드 선택시
-		$selectKeyword.change(function(){
-			console.log("selectKeyword clicked....");
-			console.log($('#selectKeyword option:selected').val());
-
-			searchList();
-
-		});
-
-		// content 길시에 ...으로 변경
-		var $content = $(".text-success");
-
-		var size = 25;
-
-		for (var i =1; i < $content.length; i++){
-			if($content[i].innerText.length >= size){
-				$content[i].textContent = $content[i].innerText.substr(0, size) + '...';
-			}
-		}
+	}
 
 
 		//캘린더 클릭시..
@@ -557,116 +542,84 @@
 			   searchList();
 		});
 		
-		//시간 클릭시..
-		$('#fromTime').on('dp.change', function(e) {
-			   searchList();
-		});
+		$.ajax({
+			
+		      type : "POST",
+			  url : "graph",
+		 	  dataType : "json",
+		 	  data : {success : 'success',part : 'movie' , company : $("#selectCompany option:selected").val(), selectKey : $("#selectKeyword option:selected").val()},
+		  	  success : function(data){
 
+		  		  console.log(data);
+		  		var script = "[";
+
+
+				for(var i = 0; i < data.length; i++){
+
+					script += '{"period":' + '"' + data[i].writeDate + '",'
+							+ '"movie"'+ ':' + data[i].type1 + ","
+							+ '"actor"'+ ':' + data[i].type2 + ","
+							+ '"match"'+ ':' + data[i].type3 + "},";
+							
+
+					if(i == data.length-1){
+						script =  script.substr(0, script.length-1);
+						script += "]";
+					}
+				}
+				console.log(script);
+
+				// to json
+				var jsonScript = JSON.parse(script);
+
+				drawChart(jsonScript);
+
+		  	 }
+		});
+		
+		// 엑셀 출력
+		//엑셀출력 확인메시지
+		$(document).on("click",".alert-confirm",function(){
+	    	swal({
+	          title: "엑셀출력 하시겠습니까?",
+	          text: "현재 리스트가 엑셀출력 됩니다.",
+	          type: "warning",
+	          showCancelButton: true,
+	          confirmButtonClass: "btn-danger",
+	          confirmButtonText: "YES",
+	          closeOnConfirm: false
+	        },
+	        function(){//엑셀 출력하겠다고 할 시 진행 함수
+	    		
+	        	self.location = "excel?"+
+				  + "&company=" + $("#selectCompany option:selected").val()
+				  + "&selectKey=" + $('#selectKeyword option:selected').val()
+				  + "&startDate=" + decodeURI(window.location.href.split("startDate=")[1]).split("&")[0].split(" ")[0]
+				  + "&endDate=" +  decodeURI(window.location.href.split("endDate=")[1]).split("&")[0].split(" ")[0]
+				  + "&portal_type=" + "mobileM";
+
+
+		  		swal("Success!", "엑셀출력 되었습니다.", "success");
+
+	        });
+		}); 
 	}); // end ready...
 	
-	// 엑셀 출력
-	//엑셀출력 확인메시지
-	$(document).on("click",".alert-confirm",function(){
-    	swal({
-          title: "엑셀출력 하시겠습니까?",
-          text: "현재 리스트가 엑셀출력 됩니다.",
-          type: "warning",
-          showCancelButton: true,
-          confirmButtonClass: "btn-danger",
-          confirmButtonText: "YES",
-          closeOnConfirm: false
-        },
-        function(){//엑셀 출력하겠다고 할 시 진행 함수
-        	var rhour = "="+$("#fromTime").val().split(":")[0];
-    		if(dateCompare()){
-    			rhour = "";
-    		}
-    		
-        	self.location = "excel?"+
-			  + "&company=" + $("#selectCompany option:selected").val()
-			  + "&selectKey=" + $('#selectKeyword option:selected').val()
-			  + "&startDate=" + decodeURI(window.location.href.split("startDate=")[1]).split("&")[0].split(" ")[0]
-			  + "&endDate=" +  decodeURI(window.location.href.split("endDate=")[1]).split("&")[0].split(" ")[0]
-			  + "&hour" + decodeURI(window.location.href.split("hour=")[1]).split("&")[0].split(" ")[0]
-			  + "&portal_type=" + "mobileM";
-
-
-	  		swal("Success!", "엑셀출력 되었습니다.", "success");
-
-        });
-	}); 
-
 	//그래프 함수
-	function ajaxGraph(startDate, endDate){
-		console.log(startDate + "/" + endDate);
-		var now = new Date();
-		
-		$.ajax({
-
-			type : "POST",
-		  	url : "Mgraph",
-	 	  	dataType : "json",
-	 	  	data : {
-	 	  		startDate : startDate, 
-	 	  		endDate : endDate,
-	 		    company : $("#selectCompany option:selected").val(), 
-	 		    selectKey : $("#selectKeyword option:selected").val()
-			},
-	  	  	error : function(){
-	      		alert('graphPOST ajax error....');
-	  	  	},
-	  	  	success : function(data){
-
-	  			var script = "[";
-
-	  			for(var i = 0; i < data.length; i++){
-	  				script += '{"period":' + '"' + data[i].writeDate + '",'
-	  						+ '"movie"'+ ':' + data[i].type1 + ","
-	  						+ '"actor"'+ ':' + data[i].type2 + ","
-	  						+ '"match"'+ ':' + data[i].type3 + "},";
-
-	  				if(i == data.length-1){
-	  					script =  script.substr(0, script.length-1);
-	  					script += "]";
-	  				}
-	  			}
-
-	  		console.log(script);
-
-	  		// to json
-	  		var jsonScript = JSON.parse(script);
-
-	  		drawChart(jsonScript);
-
-	  	 	}
-		});
-	}
-
-	
-	function drawChart(data){
-		var xType = "hour"
-		if(dateCompare()){
-			xType = "day"
-		}
-		$("#morris-extra-area").empty();
-		window.areaChart = Morris.Area({
-   			element: 'morris-extra-area',
-			data: data,
-			xLabels: xType,
-			lineColors: ['#4C5667', '#1ABC9C', '#8c2db5'],
-			xkey: 'period',
-			ykeys: ['movie', 'actor', 'match'],
-			labels: ['영화', '배우', '기사매칭'],
-	 	    hideHover: 'auto',
-	 	    pointSize: 0,
-	 	    lineWidth: 0,
-			resize: true,
-			fillOpacity: 0.8,
-			gridLineColor: '#5FBEAA',
-			hideHover: 'auto'
-		});
-		
-}
+		function drawChart(jsonScript) {
+			$("#line-chart1").empty();
+			window.areaChart = Morris.Line({
+				element: 'line-chart1',
+			    data: jsonScript,
+			    xkey: 'period',
+			    xLabels: "hour",
+			    ykeys: ['movie', 'actor', 'match'],
+			    labels: ['영화', '배우', '기사매칭'],
+			    lineColors: ['#3B5998', '#4099FF', '#8632fb'],
+			    lineWidth : 2,
+			  	hideHover : 'auto'
+			    });
+			}
 
 	function makeDateFormat(date, index){
 		var splitDate = date.split(" - ")[index];
@@ -674,39 +627,23 @@
 				var returnDate = splitDate.replace("/", "-").replace("/", "-")
 				return returnDate;
 			}
+
+
 	}
 	makeDateFormat($("#fromDate").val());
 	
-	function dateCompare(){
-		var sDate = makeDateFormat($("#fromDate").val(), 0)
-    	var eDate = makeDateFormat($("#fromDate").val(), 1)
-		var startDateArr = sDate.split('-');
-        var endDateArr = eDate.split('-');
-        var startDateCompare = new Date(startDateArr[0], startDateArr[1], startDateArr[2]);
-        var endDateCompare = new Date(endDateArr[0], endDateArr[1], endDateArr[2]);
-        var result = false
-        
-        if((endDateCompare.getTime() - startDateCompare.getTime())/(24*60*60*1000) != 0) {
-        	result = true
-        }
-        
-        return result
-	}
-    function searchList(event) {
-		var makeQeury = '${pageMaker.makeQuery(1)}'.slice(0, -2);
-		var rhour = "="+$("#fromTime").val().split(":")[0];
-		if(dateCompare()){
-			rhour = "";
-		}
-		
-		self.location = "n_mobilemovie" + makeQeury
-						+ '10'
-    					+ "&company=" + $("#selectCompany option:selected").val()
-						+ "&selectKey=" + $('#selectKeyword option:selected').val()
-    					+ "&startDate=" + makeDateFormat($("#fromDate").val(), 0)
-    					+ "&endDate=" +  makeDateFormat($("#fromDate").val(), 1)
-    					+ "&hour" + rhour
-	 	}
+	
+  //list URL 함수
+	  function searchList(event) {
+
+	  	self.location = "n_mobilemovie?"
+	  				  + "&company="
+	  				  + $("#selectCompany option:selected").val()
+	  				  + "&selectKey="
+	  				  + $('#selectKeyword option:selected').val()
+	  				  + "&startDate=" + makeDateFormat($("#fromDate").val(), 0)
+	  				  + "&endDate=" +  makeDateFormat($("#fromDate").val(), 1);
+	  }
 
 </script>
 

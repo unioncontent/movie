@@ -488,6 +488,46 @@
 		group by DATE_FORMAT(writeDate,'%Y-%m-%d')
 		ORDER BY writeDate ASC;
  	</select>
-
+	
+	<select id="communityTextcnt" resultType="Integer">
+		select 
+			count(*) 
+		from 
+			community_data 
+		where 
+			textType is not null
+		<include refid="search_writeDate"></include> 
+		and 
+			createDate >= curdate();
+		
+	</select>
+ 	
+ 	<select id="communityTextcnt2" resultType="Integer">
+		select 
+			count(*) 
+		from 
+			community_data 
+		where 
+			textType = '나쁜글'
+		<include refid="search_writeDate"></include> 
+		and 
+			createDate >= curdate();
+	</select>
+	
+	<select id = "graphSearchCount" resultType="Integer">
+		select
+			count(*)
+		from
+			community_data
+		where
+			textType is not null
+		and 
+			keyword in (select keyword from keyword_data where keyword_main = #{selectKey})
+		and
+			createDate between date_add(#{date}, interval -1 day) and #{date}
+		and 
+			textType = #{textType}
+			
+	</select>
 
 </mapper>

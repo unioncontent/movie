@@ -1,6 +1,6 @@
 package org.union.domain;
 
-
+import java.util.Date;
 
 public class SearchCriteria extends Criteria {
 
@@ -8,6 +8,7 @@ public class SearchCriteria extends Criteria {
 	private String searchType, keyword, selectKey, company, textType, portal_name, portal_type, hour, url;
 	private Integer total;
 	private String startDate, endDate, createstartDate, createendDate, createminusDate;
+	private Date date;
 
 	
 	public String getPortal_name() {
@@ -165,6 +166,15 @@ public class SearchCriteria extends Criteria {
 	public void setCreateminusDate(String createminusDate) {
 		this.createminusDate = createminusDate;
 	}
+	
+	public Date getDate() {
+		return date;
+	}
+
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
 
 	@Override
 	public String toString() {
@@ -172,7 +182,6 @@ public class SearchCriteria extends Criteria {
 				+ ", company=" + company + ", textType=" + textType + ", portal_name=" + portal_name + ", portal_type="
 				+ portal_type + ", hour=" + hour + ", url=" + url + ", total=" + total + ", startDate=" + startDate
 				+ ", endDate=" + endDate + ", createstartDate=" + createstartDate + ", createendDate=" + createendDate
-				+ ", createminusDate=" + createminusDate + "]";
+				+ ", createminusDate=" + createminusDate + ", date=" + date + "]";
 	}
-
 }

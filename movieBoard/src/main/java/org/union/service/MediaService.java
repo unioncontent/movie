@@ -1,9 +1,11 @@
 package org.union.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.union.domain.ExtractVO;
 import org.union.domain.GraphVO;
+import org.union.domain.MailVO;
 import org.union.domain.MediaVO;
 import org.union.domain.NewsVO;
 import org.union.domain.PeriodMediaVO;
@@ -26,6 +28,10 @@ public interface MediaService {
 	public void modify(MediaVO vo);
 	
 	public void remove(Integer media_idx);
+	
+	public void checkList(Integer media_idx);
+	public void headlineUpdate(Integer media_idx);
+	public void headlineUpdate2(Integer media_idx);
 	
 	public void newsRemove(Integer media_idx);
 	
@@ -104,5 +110,17 @@ public interface MediaService {
 	public List<MediaVO> mediaCnt(SearchCriteria cri);
 	public List<TextTypeDateVO> textTypeCount2(SearchCriteria cri);
 	public Integer checkUrl(String url);
-	public Integer mTotalCnt(SearchMedia Sm);
+	public Integer mTotalCnt(SearchCriteria cri);
+	
+	public List<MediaVO> headlineList(SearchCriteria cri);
+	public Integer mediaTotalcnt(SearchCriteria cri);
+	public Integer replyTotalcnt(SearchCriteria cri);
+	
+	public Integer mediaTextcnt(SearchCriteria cri);
+	public Integer mediaTextcnt2(SearchCriteria cri);
+	public Integer mediaCountAll(SearchCriteria cri);
+	
+	public List<MailVO> mailList(SearchCriteria cri);
+	
+	public Integer mailCountAll(SearchCriteria cri);
 }

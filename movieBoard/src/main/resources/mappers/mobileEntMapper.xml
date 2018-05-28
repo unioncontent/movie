@@ -7,7 +7,7 @@
  <mapper namespace="org.union.mappers.MobileEntMapper">
  
  	<sql id="search">
-		<if test="company != null">
+		<!-- <if test="company != null">
 			and
 			   keyword in (select 
 						keyword 
@@ -24,18 +24,72 @@
 										keyword_property = '포함'
 									)
 					)
+		</if> -->
+		<if test="selectKey != null">
+				and keyword in (select keyword from keyword_data where keyword_main = #{selectKey})
+			</if>
+		<if test="startDate == null">
+			and writeDate <![CDATA[>=]]> CURDATE()
 		</if>
+		<if test="startDate != null">
+			and writeDate <![CDATA[>=]]> #{startDate}
+		<if test="endDate != null">
+				and writeDate <![CDATA[<=]]> #{endDate}
+		</if>
+		</if>
+	</sql>
+	
+	<sql id="search2">
+		<!-- <if test="company != null">
+			and
+			   keyword in (select 
+						keyword 
+					from 
+						keyword_data
+					where
+						user_idx = (select 
+										user_idx 
+									from 
+										user_data 
+									where 
+										user_name = #{company} 
+									and 
+										keyword_property = '포함'
+									)
+					)
+		</if> -->
 		<if test="selectKey != null">
 				and keyword in (select keyword from keyword_data where keyword_main = #{selectKey})
 			</if>
 		<if test="startDate != null">
 			and writeDate <![CDATA[>=]]> #{startDate}
-			<if test="endDate != null">
+		<if test="endDate != null">
 				and writeDate <![CDATA[<=]]> #{endDate}
-			</if>
 		</if>
-		<if test="hour != null">
-			and hour(writeDate) = #{hour}
+		</if>
+	</sql>
+	
+	<sql id="search3">
+		<!-- <if test="company != null">
+			and
+			   keyword in (select 
+						keyword 
+					from 
+						keyword_data
+					where
+						user_idx = (select 
+										user_idx 
+									from 
+										user_data 
+									where 
+										user_name = #{company} 
+									and 
+										keyword_property = '포함'
+									)
+					)
+		</if> -->
+		<if test="selectKey != null">
+			and keyword in (select keyword from keyword_data where keyword_main = #{selectKey})
 		</if>
 	</sql>
  
@@ -99,8 +153,7 @@
  			keyword_type = '영화'
  		and
  			ME_type='ent'
- 		and
-			writeDate >= curdate()
+ 		<include refid="search"></include>
  	
  	</select>
  	
@@ -113,8 +166,7 @@
  			keyword_type = '배우'
  		and
  			ME_type='ent'
- 		and
-			writeDate >= curdate()
+ 		<include refid="search"></include>
  	
  	</select>
  	
@@ -127,8 +179,7 @@
  			ME_type='ent'
         and    
 			reporter_name is not null
-		and
-			writeDate >= curdate()
+		<include refid="search"></include>
 	</select>
  	
  	<select id="MsearchList" resultType="MobileEntVO">
@@ -221,7 +272,9 @@
  			keyword_type = '영화'
  		and
  			ME_type='ent'
- 		<include refid="search"></include>
+ 		<include refid="search3"></include>
+		and
+			createDate between date_add(#{date}, interval -1 hour) and #{date}
  	
  	</select>
  	
@@ -234,7 +287,9 @@
  			keyword_type = '배우'
  		and
  			ME_type='ent'
- 		<include refid="search"></include>
+ 		<include refid="search3"></include>
+		and
+			createDate between date_add(#{date}, interval -1 hour) and #{date}
  	
  	</select>
  	
@@ -247,7 +302,9 @@
  			ME_type='ent'
         and    
 			reporter_name is not null
-		<include refid="search"></include>
+		<include refid="search3"></include>
+		and
+			createDate between date_add(#{date}, interval -1 hour) and #{date}
 	</select>
 	
 	<select id="MgetTypeOfMovieCountGraph" resultType="Integer">
@@ -259,7 +316,9 @@
  			keyword_type = '영화'
  		and
  			ME_type='movie'
- 		<include refid="search"></include>
+ 		<include refid="search3"></include>
+		and
+			createDate between date_add(#{date}, interval -1 hour) and #{date}
  	
  	</select>
  	
@@ -272,7 +331,9 @@
  			keyword_type = '배우'
  		and
  			ME_type='movie'
- 		<include refid="search"></include>
+ 		<include refid="search3"></include>
+		and
+			createDate between date_add(#{date}, interval -1 hour) and #{date}
  	
  	</select>
  	
@@ -285,6 +346,8 @@
  			ME_type='movie'
         and    
 			reporter_name is not null
-		<include refid="search"></include>
+		<include refid="search3"></include>
+		and
+			createDate between date_add(#{date}, interval -1 hour) and #{date}
 	</select>
  </mapper>

@@ -2,12 +2,14 @@ package org.union.service;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.union.domain.ExtractVO;
 import org.union.domain.GraphVO;
+import org.union.domain.MailVO;
 import org.union.domain.MediaVO;
 import org.union.domain.NewsVO;
 import org.union.domain.PeriodMediaVO;
@@ -70,6 +72,14 @@ public class MediaServiceImpl implements MediaService {
 		mediaDAO.delete(media_idx);
 		
 	}
+	
+	@Override
+	public void checkList(Integer media_idx) {
+
+		mediaDAO.checkList(media_idx);
+		
+	}
+
 
 	@Override
 	public void newsRemove(Integer media_idx) {
@@ -587,9 +597,73 @@ public class MediaServiceImpl implements MediaService {
 	}
 
 	@Override
-	public Integer mTotalCnt(SearchMedia Sm) {
+	public Integer mTotalCnt(SearchCriteria cri) {
 
-		return mediaDAO.mTotalCnt(Sm);
+		return mediaDAO.mTotalCnt(cri);
 	}
 
+	@Override
+	public List<MediaVO> headlineList(SearchCriteria cri) {
+
+		return mediaDAO.headlineList(cri);
+	}
+
+	@Override
+	public Integer mediaTotalcnt(SearchCriteria cri) {
+
+		return mediaDAO.mediaTotalcnt(cri);
+	}
+
+	@Override
+	public Integer replyTotalcnt(SearchCriteria cri) {
+
+		return mediaDAO.replyTotalcnt(cri);
+	}
+
+	@Override
+	public Integer mediaTextcnt(SearchCriteria cri) {
+
+		return mediaDAO.replyTotalcnt(cri);
+	}
+
+	@Override
+	public Integer mediaTextcnt2(SearchCriteria cri) {
+
+		return mediaDAO.mediaTextcnt2(cri);
+	}
+
+	@Override
+	public Integer mediaCountAll(SearchCriteria cri) {
+
+		return mediaDAO.mediaCountAll(cri);
+	}
+
+	@Override
+	public void headlineUpdate(Integer media_idx) {
+
+		mediaDAO.headlineUpdate(media_idx);
+		
+	}
+
+	@Override
+	public void headlineUpdate2(Integer media_idx) {
+
+		mediaDAO.headlineUpdate2(media_idx);
+		
+	}
+
+	@Override
+	public List<MailVO> mailList(SearchCriteria cri) {
+
+		return mediaDAO.mailList(cri);
+		
+	}
+
+	@Override
+	public Integer mailCountAll(SearchCriteria cri) {
+
+		return mediaDAO.mailCountAll(cri);
+	}
+
+	
 }

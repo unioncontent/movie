@@ -491,4 +491,63 @@ public class PortalDAOImpl implements PortalDAO {
 
 		return session.selectList(namespace + "naverVideosallList", cri);
 	}
+
+
+	@Override
+	public Integer scoreTotalcnt(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "scoreTotalcnt", cri);
+	}
+
+
+	@Override
+	public Integer portalTextcnt(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "portalTextcnt", cri);
+	}
+
+
+	@Override
+	public Integer portalTextcnt2(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "portalTextcnt2", cri);
+	}
+
+
+	@Override
+	public Integer graphNaverCount(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "graphNaverCount", cri);
+	}
+
+
+	@Override
+	public Integer graphDaumCount(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "graphDaumCount", cri);
+	}
+
+
+	@Override
+	public void scoreCheckList(Integer portal_idx) {
+		try {
+			session.insert(namespace + "scoreCheckList", portal_idx);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+
+	@Override
+	public void scoreUpdate(Integer portal_idx) {
+		try {
+			session.insert(namespace + "scoreUpdate", portal_idx);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
 }

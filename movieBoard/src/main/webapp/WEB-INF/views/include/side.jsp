@@ -14,16 +14,24 @@
       </div>
     </div>
     <ul class="pcoded-item pcoded-left-item">
-    <c:if test="${user.user_name == 'union'}">
+    <li class="dashBoard_main">
+        <a href="../dashBoard/dashBoard_main">
+          <span class="pcoded-micon"><i class="ti-home"></i></span>
+          <span class="pcoded-mtext" data-i18n="nav.dash.main">대시보드</span>
+          <span class="pcoded-mcaret"></span>
+        </a>
+      </li>
+      <!-- 
+      <c:if test="${user.user_name == 'union'}">
       <li class="dashBoard">
         <a href="../dashBoard/dashBoard">
           <span class="pcoded-micon"><i class="ti-home"></i></span>
           <span class="pcoded-mtext" data-i18n="nav.dash.main">대시보드</span>
           <span class="pcoded-mcaret"></span>
         </a>
-      </li>
-     </c:if>
-     <c:if test="${user.user_name == '쇼박스'}"> 
+      </li> 
+     </c:if>-->
+     <%-- <c:if test="${user.user_name == '쇼박스'}"> 
       <li class="showDashBoard">
         <a href="../dashBoard/showDashBoard">
           <span class="pcoded-micon"><i class="ti-home"></i></span>
@@ -31,9 +39,9 @@
           <span class="pcoded-mcaret"></span>
         </a>
       </li>
-     </c:if>
+     </c:if> --%>
       <li class="period">
-        <a href="../period/main">
+        <a href="../period/period_main">
           <span class="pcoded-micon"><i class="ti-bar-chart-alt"></i></span>
           <span class="pcoded-mtext">통계보고서</span>
           <span class="pcoded-mcaret"></span>
@@ -206,6 +214,15 @@
             <a href="../manage/report" data-i18n="nav.advance-components.grid-stack">
               <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
               <span class="pcoded-mtext">보고서 관리</span>
+              <span class="pcoded-mcaret"></span>
+            </a>
+          </li>
+          </c:if>
+          <c:if test="${user.user_name == 'union'}">
+           <li class=" ">
+            <a href="../manage/report_edit" data-i18n="nav.advance-components.grid-stack">
+              <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+              <span class="pcoded-mtext">보고서 작성</span>
               <span class="pcoded-mcaret"></span>
             </a>
           </li>

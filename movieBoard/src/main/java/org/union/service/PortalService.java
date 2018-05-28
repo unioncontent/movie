@@ -24,6 +24,9 @@ public interface PortalService {
 	
 	public void remove(Integer portal_idx);
 	
+	public void scoreCheckList(Integer portal_idx);
+	public void scoreUpdate(Integer portal_idx);
+	
 	public Integer getScoreCount(SearchCriteria cri);
 	public List<PortalVO> getScoreList(SearchCriteria cri);
 	public List<PortalVO> getScoreExcelList(SearchCriteria cri);
@@ -108,4 +111,11 @@ public interface PortalService {
 	public List<NvVO> nvlistTwo(SearchFv fv);
 	public List<NvVO> nvlistGraph(SearchFv fv);
 	
+	public Integer scoreTotalcnt(SearchCriteria cri);
+	
+	public Integer portalTextcnt(SearchCriteria cri);
+	public Integer portalTextcnt2(SearchCriteria cri);
+	
+	public Integer graphNaverCount(SearchCriteria cri);
+	public Integer graphDaumCount(SearchCriteria cri);
 }

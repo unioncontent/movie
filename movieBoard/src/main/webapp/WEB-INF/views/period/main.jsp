@@ -220,293 +220,83 @@
                                   </div>
                                 </div>
                               <!-- top cards end -->
-                              <!-- 통계보고서 그래프 start -->
-                              <div class="col-lg-12">
+                              <!-- Morris chart start -->
+		                      <div class="col-lg-12">
+		                        <div class="card">
+		                          <div class="card-header">
+		                            <h5>
+		                            	<i class="icofont icofont-chart-line m-r-5"></i>
+		                            	이메일 발송 현황
+		                            </h5>
+		                            <div class="card-header-right">
+		                              <i class="icofont icofont-rounded-down"></i>
+		                            </div>
+		                          </div>
+		                          <div class="card-block">
+		                            <!-- <div id="morris-extra-area" style="height:300px;"></div> -->
+		                            <div id="morris-extra-line" style="height:328px;"></div>
+				                	</div>
+		                        </div>
+		                      </div>
+		                      <!-- Morris chart end -->
+		                      <!-- List start -->
+                              <div class="col-md-12">
                                 <div class="card">
                                   <div class="card-header">
-                                    <h5 class="card-header-text">
-                                      <i class="icofont icofont-chart-line m-r-5"></i>
-                                      통계보고서 그래프
-                                    </h5>
-                                    <div class="card-header-right">
-                                      <i class="icofont icofont-rounded-down"></i>
-                                      <i class="icofont icofont-refresh"></i>
-                                    </div>
-                                  </div>
-                                  <div class="card-block">
-                                    <!-- chart start -->
-                                    <div class="m-b-35" id="line-chart1"></div>
-                                    <!-- chart end -->
-                                  </div>
-                                </div>
-                              </div>
-                              <!-- 통계보고서 그래프 end -->
-                              <div class="col-md-6">
-                                <!-- 전체여론통계 start -->
-                                <div class="card">
-                                  <div class="card-header">
-                                    <h5 class="card-header-text">전체여론통계</h5>
-                                    <div class="card-header-right">
-                                      <i class="icofont icofont-rounded-down"></i>
-                                      <i class="icofont icofont-refresh"></i>
-                                    </div>
-                                  </div>
-                                  <div class="card-block">
-                                    <!-- gauge1 start -->
-                                    <div class="row">
-                                      <div class="col-md-4">
-                                        <div id="gauge1" style="height:300px"></div>
-                                      </div>
-                                      <div class="col-md-8 p-l-0 p-r-0">
-                                        <div class="table-border-style">
-                                          <div class="table-responsive">
-                                            <table class="table table-styling">
-                                              <thead>
-                                                  <tr class="table-inverse">
-                                                      <th>분류</th>
-                                                      <th>호평</th>
-                                                      <th>악평</th>
-                                                      <th>관심</th>
-                                                      <th>기타</th>
-                                                      <th>합계</th>
-                                                  </tr>
-                                              </thead>
-                                              <tbody>
-                                                  <tr height="63px">
-                                                      <th scope="row">포털</th>
-                                                      <td><fmt:formatNumber value="${portalTextType.lik}" groupingUsed="true"/></td>
-                                                      <td><fmt:formatNumber value="${portalTextType.dis}" groupingUsed="true"/></td>
-                                                      <td><fmt:formatNumber value="${portalTextType.cu}" groupingUsed="true"/></td>
-                                                      <td><fmt:formatNumber value="${portalTextType.etc}" groupingUsed="true"/></td>
-                                                      <td><fmt:formatNumber value="${portalTextType.lik + portalTextType.dis + portalTextType.cu
-                                                       + portalTextType.etc}" groupingUsed="true"/></td>
-                                                  </tr>
-                                                  <tr height="63px">
-                                                      <th scope="row">커뮤니티</th>
-                                                      <td><fmt:formatNumber value="${communityTextType.lik}" groupingUsed="true"/></td>
-                                                      <td><fmt:formatNumber value="${communityTextType.dis}" groupingUsed="true"/></td>
-                                                      <td><fmt:formatNumber value="${communityTextType.cu}" groupingUsed="true"/></td>
-                                                      <td><fmt:formatNumber value="${communityTextType.etc}" groupingUsed="true"/></td>
-                                                      <td><fmt:formatNumber value="${communityTextType.lik + communityTextType.dis + communityTextType.cu
-                                                       + communityTextType.etc}" groupingUsed="true"/></td>
-                                                  </tr>
-                                                  <tr height="63px">
-                                                      <th scope="row">합계</th>
-                                                      <td><fmt:formatNumber value="${portalTextType.lik}" groupingUsed="true"/></td>
-                                                      <td><fmt:formatNumber value="${portalTextType.dis}" groupingUsed="true"/></td>
-                                                      <td><fmt:formatNumber value="${portalTextType.cu}" groupingUsed="true"/></td>
-                                                      <td><fmt:formatNumber value="${portalTextType.etc}" groupingUsed="true"/></td>
-                                                      <td><fmt:formatNumber value="${portalTextType.lik + portalTextType.dis + portalTextType.cu
-                                                       + portalTextType.etc}" groupingUsed="true"/></td>
-                                                  </tr>
-                                              </tbody>
-                                            </table>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <!-- gauge1 end -->
-                                  </div>
-                                </div>
-                                <!-- 전체여론통계 end -->
-                              </div>
-                              <div class="col-md-6">
-                                <!-- 포털여론통계 start -->
-                                <div class="card">
-                                  <div class="card-header">
-                                    <h5 class="card-header-text">포털여론통계</h5>
-                                    <div class="card-header-right">
-                                      <i class="icofont icofont-rounded-down"></i>
-                                      <i class="icofont icofont-refresh"></i>
-                                    </div>
-                                  </div>
-                                  <div class="card-block">
-                                    <!-- gauge2 start -->
-                                    <div class="row">
-                                      <div class="col-md-4">
-                                        <div id="gauge2" style="height:300px"></div>
-                                      </div>
-                                      <div class="col-md-8 p-l-0 p-r-0">
-                                        <div class="table-border-style">
-                                          <div class="table-responsive">
-                                            <table class="table table-styling">
-                                              <thead>
-                                                  <tr class="table-inverse">
-                                                      <th>분류</th>
-                                                      <th>호평</th>
-                                                      <th>악평</th>
-                                                      <th>관심</th>
-                                                      <th>기타</th>
-                                                      <th>합계</th>
-                                                  </tr>
-                                              </thead>
-                                              <tbody>
-                                                  <tr height="63px">
-                                                      <th scope="row">블로그 여론</th>
-                                                      <td><fmt:formatNumber value="${blogTextType.lik}" groupingUsed="true"/></td>
-                                                      <td><fmt:formatNumber value="${blogTextType.dis}" groupingUsed="true"/></td>
-                                                      <td><fmt:formatNumber value="${blogTextType.cu}" groupingUsed="true"/></td>
-                                                      <td><fmt:formatNumber value="${blogTextType.etc}" groupingUsed="true"/></td>
-                                                      <td><fmt:formatNumber value="${blogTextType.lik + blogTextType.dis + blogTextType.cu
-                                                       + blogTextType.etc}" groupingUsed="true"/></td>
-                                                  </tr>
-                                                  <tr height="63px">
-                                                      <th scope="row">카페여론</th>
-                                                      <td><fmt:formatNumber value="${cafeTextType.lik}" groupingUsed="true"/></td>
-                                                      <td><fmt:formatNumber value="${cafeTextType.dis}" groupingUsed="true"/></td>
-                                                      <td><fmt:formatNumber value="${cafeTextType.cu}" groupingUsed="true"/></td>
-                                                      <td><fmt:formatNumber value="${cafeTextType.etc}" groupingUsed="true"/></td>
-                                                      <td><fmt:formatNumber value="${cafeTextType.lik + cafeTextType.dis + cafeTextType.cu
-                                                       + cafeTextType.etc}" groupingUsed="true"/></td>
-                                                  </tr>
-                                                  <tr height="63px">
-                                                      <th scope="row">합계</th>
-                                                      <td><fmt:formatNumber value="${blogTextType.lik + cafeTextType.lik}" groupingUsed="true"/></td>
-                                                      <td><fmt:formatNumber value="${blogTextType.dis + cafeTextType.dis}" groupingUsed="true"/></td>
-                                                      <td><fmt:formatNumber value="${blogTextType.cu + cafeTextType.cu}" groupingUsed="true"/></td>
-                                                      <td><fmt:formatNumber value="${blogTextType.etc + cafeTextType.etc}" groupingUsed="true"/></td>
-                                                      <td><fmt:formatNumber value="${blogTextType.lik + blogTextType.dis
-                                                      		+ blogTextType.cu + blogTextType.etc
-                                                      		+cafeTextType.lik + cafeTextType.dis
-                                                      		+ cafeTextType.cu + cafeTextType.etc}" groupingUsed="true"/></td>
-                                                  </tr>
-                                              </tbody>
-                                            </table>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <!-- gauge2 end -->
-                                  </div>
-                                </div>
-                                <!-- 포털여론통계 end -->
-                              </div>
-                              <!-- sns/언론분석 start -->
-                              <div class="col-md-6">
-                                <div class="card">
-                                  <div class="card-header">
-                                    <h5 class="card-header-text">SNS 통계</h5>
-                                    <div class="card-header-right">
-                                      <i class="icofont icofont-rounded-down"></i>
-
-                                    </div>
+                                    <h5>이메일 발송현황</h5>
                                   </div>
                                   <div class="card-block table-border-style">
-                                    <!-- sns table start -->
-                                    <div class="table-border-style">
-                                        <div class="table-responsive">
-                                          <table class="table table-styling">
-                                            <thead>
-                                                <tr class="table-inverse">
-                                                    <th>분류</th>
-                                                    <th>전체검출량</th>
-                                                    <th>좋아요</th>
-                                                    <th>공유</th>
-                                                    <th>댓글</th>
-                                                    <th>합계</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <th scope="row">Facebook</th>
-                                                      <td><fmt:formatNumber value="${facebookTT.type1}" groupingUsed="true"/></td>
-                                                      <td><fmt:formatNumber value="${facebookTT.likeCount}" groupingUsed="true"/></td>
-                                                      <td><fmt:formatNumber value="${facebookTT.shareCount}" groupingUsed="true"/></td>
-                                                      <td><fmt:formatNumber value="${facebookTT.replyCount}" groupingUsed="true"/></td>
-                                                      <td><fmt:formatNumber value="${facebookTT.type1+facebookTT.likeCount+facebookTT.shareCount+
-                                                    facebookTT.replyCount}" groupingUsed="true"/></td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">Twitter</th>
-                                                    <td><fmt:formatNumber value="${twitterTT.type1}" groupingUsed="true"/></td>
-                                                      <td><fmt:formatNumber value="${twitterTT.likeCount}" groupingUsed="true"/></td>
-                                                      <td><fmt:formatNumber value="${twitterTT.shareCount}" groupingUsed="true"/></td>
-                                                      <td><fmt:formatNumber value="${twitterTT.replyCount}" groupingUsed="true"/></td>
-                                                      <td><fmt:formatNumber value="${twitterTT.type1+twitterTT.likeCount+twitterTT.shareCount+
-                                                    twitterTT.replyCount}" groupingUsed="true"/></td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">Instagram</th>
-                                                    <td><fmt:formatNumber value="${instagramTT.type1}" groupingUsed="true"/></td>
-                                                      <td><fmt:formatNumber value="${instagramTT.likeCount}" groupingUsed="true"/></td>
-                                                      <td><fmt:formatNumber value="${instagramTT.shareCount}" groupingUsed="true"/></td>
-                                                      <td><fmt:formatNumber value="${instagramTT.replyCount}" groupingUsed="true"/></td>
-                                                      <td><fmt:formatNumber value="${instagramTT.type1+instagramTT.likeCount+instagramTT.shareCount+
-                                                    instagramTT.replyCount}" groupingUsed="true"/></td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">합계</th>
-                                                    <td><fmt:formatNumber value="${facebookTT.type1 + twitterTT.type1 + instagramTT.type1}" groupingUsed="true"/></td>
-                                                      <td><fmt:formatNumber value="${facebookTT.likeCount + twitterTT.likeCount + instagramTT.likeCount}" groupingUsed="true"/></td>
-                                                      <td><fmt:formatNumber value="${facebookTT.shareCount + twitterTT.shareCount + instagramTT.shareCount}" groupingUsed="true"/></td>
-                                                      <td><fmt:formatNumber value="${facebookTT.replyCount + twitterTT.replyCount + instagramTT.replyCount}" groupingUsed="true"/></td>
-                                                      <td><fmt:formatNumber value="${facebookTT.type1+facebookTT.likeCount+facebookTT.shareCount
-                                                    + facebookTT.replyCount
-                                                    + twitterTT.type1+twitterTT.likeCount+twitterTT.shareCount
-                                                    + twitterTT.replyCount
-                                                    + instagramTT.type1+intagramTT.likeCount+instagramTT.shareCount
-                                                    + instagramTT.replyCount}" groupingUsed="true"/></td>
-                                                </tr>
-                                            </tbody>
-                                          </table>
-                                        </div>
+                                    <div class="table-responsive">
+                                      <table class="table table-bordered table-sm">
+                                      <c:if test="${empty mailList}">
+                                     <tbody>
+                                     <tr>
+                                     <td align="center"><h5>발송된 메일이 없습니다.</h5></td>
+                                     </tr>
+                                     </tbody>
+                                     </c:if>
+                                     <c:if test="${!empty mailList}">
+                                        <thead>
+                                            <tr align="center">
+                                              <th width="10%">발송일</th>
+                                              <th width="30%">메일제목</th>
+                                              <th width="3%">발송건</th>
+                                              <th width="3%">성공건</th>
+                                              <th width="3%">실패건</th>
+                                              <th width="5%">기사매칭건</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        <c:forEach items="${mailList}" var="mvo" varStatus="index">
+                                          <tr>
+                                            <th>
+                                            <fmt:formatDate value="${mvo.m_regdate}" type="DATE" pattern="yyyy-MM-dd HH:mm:ss" />
+                                            </th>
+                                            <td>
+                                            ${mvo.m_subject}	
+                                            </td>
+                                            <td>
+                                            <fmt:formatNumber value="${mvo.sendCount}" pattern="#,##0" />회
+                                            </td>
+                                            <td>
+                                            <fmt:formatNumber value="${mvo.success}" pattern="#,##0" />회
+                                            </td>
+                                            <td>
+                                            <fmt:formatNumber value="${mvo.fail}" pattern="#,##0" />회                    
+                                            </td>
+                                            <td>
+                                            ${mvo.total}건          
+                                            </td>
+                                          </tr>
+                                        </c:forEach>
+                                        </tbody>
+                                        </c:if>
+                                      </table>
                                       </div>
-                                    <!-- sns table end -->
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="col-md-6">
-                                <div class="card">
-                                  <div class="card-header">
-                                    <h5 class="card-header-text">언론 분석</h5>
-                                    <div class="card-header-right">
-                                      <i class="icofont icofont-rounded-down"></i>
-
-                                    </div>
-                                  </div>
-                                  <div class="card-block table-border-style">
-                                    <!-- news table start -->
-                                    <div class="table-border-style">
-                                        <div class="table-responsive">
-                                          <table class="table table-styling">
-                                            <thead>
-                                                <tr class="table-inverse">
-                                                    <th>분류</th>
-                                                    <th>호평</th>
-                                                    <th>악평</th>
-                                                    <th>관심</th>
-                                                    <th>기타</th>
-                                                    <th>합계</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr height="92px">
-                                                    <th scope="row">NAVER기사</th>
-                                                    <td><fmt:formatNumber value="${naverMediaCount.lik}" groupingUsed="true"/></td>
-                                                      <td><fmt:formatNumber value="${naverMediaCount.dis}" groupingUsed="true"/></td>
-                                                      <td><fmt:formatNumber value="${naverMediaCount.cu}" groupingUsed="true"/></td>
-                                                      <td><fmt:formatNumber value="${naverMediaCount.etc}" groupingUsed="true"/></td>
-                                                      <td><fmt:formatNumber value="${naverMediaCount.lik + naverMediaCount.dis + naverMediaCount.cu
-                                                       + naverMediaCount.etc}" groupingUsed="true"/></td>
-                                                </tr>
-                                                <tr height="92px">
-                                                    <th scope="row">DAUM기사</th>
-                                                    <td><fmt:formatNumber value="${daumMediaCount.lik}" groupingUsed="true"/></td>
-                                                      <td><fmt:formatNumber value="${daumMediaCount.dis}" groupingUsed="true"/></td>
-                                                      <td><fmt:formatNumber value="${daumMediaCount.cu}" groupingUsed="true"/></td>
-                                                      <td><fmt:formatNumber value="${daumMediaCount.etc}" groupingUsed="true"/></td>
-                                                      <td><fmt:formatNumber value="${daumMediaCount.lik + daumMediaCount.dis + daumMediaCount.cu
-                                                       + daumMediaCount.etc}" groupingUsed="true"/></td>
-                                                </tr>
-                                            </tbody>
-                                          </table>
-                                        </div>
                                       </div>
-                                    <!-- news table end -->
-                                  </div>
-                                </div>
-                              </div>
-                              <!-- sns/언론분석 end -->
+                                      </div>
+                                      </div>
+		                      <!-- List end -->
                             </div>
                           </div>
                           <!-- tab1 main end -->
@@ -699,15 +489,6 @@
 
 	});
 
-
-	var graphStart = $fromDate.val().split(" - ")[0].replace("/", "-").replace("/", "-");
-	var graphEnd = $fromDate.val().split(" - ")[1].replace("/", "-").replace("/", "-");
-
-	console.log("graphStart: " + graphStart);
-    console.log("graphEnd: " + graphEnd);
-	  
-    ajaxGraph(graphStart, graphEnd);
-	
 	// 당일 클릭시
 	$('#toDay').on("click", function(){
 	  console.log("toDay clicked....");
@@ -757,6 +538,39 @@
 	  searchList();
 	 
 	})
+	
+	$.ajax({
+			
+	      type : "POST",
+		  url : "graph_re",
+	 	  dataType : "json",
+	 	 	data : {success : 'success', part : "main",company : $("#selectCompany option:selected").val(), selectKey : $("#selectKeyword option:selected").val()},
+	  	  success : function(data){
+
+	  		  console.log(data);
+	  		var script = "[";
+
+
+			for(var i = 0; i < data.length; i++){
+
+				script += '{"period":' + '"' + data[i].writeDate + '",'
+						+ '"검출량"' + ':' + data[i].type1 + "},";
+						
+
+				if(i == data.length-1){
+					script =  script.substr(0, script.length-1);
+					script += "]";
+				}
+			}
+			console.log(script);
+
+			// to json
+			var jsonScript = JSON.parse(script);
+
+			areaChart(jsonScript);
+
+	  	 }
+	});
 
 	// 캘린더 클릭시
 	$('#fromDate').on('apply.daterangepicker', function(ev, picker) {	
@@ -769,115 +583,22 @@
 		   searchList();
 
 	});
-
-	var disCount1 = ${portalTextType.dis + communityTextType.dis};
-	var totalCount1 = ${portalTextType.al + communityTextType.al};
-
-	var value1 = Math.round((disCount1/totalCount1)*100);
-
-	var name1 = makeName(value1);
-
-	echart1(value1, name1);
-
-	var disCount2 = ${blogTextType.dis + cafeTextType.dis};
-	var totalCount2 = ${blogTextType.lik + blogTextType.dis
-  					+ blogTextType.cu + blogTextType.etc
-  					+ cafeTextType.lik + cafeTextType.dis
-  					+ cafeTextType.cu + cafeTextType.etc};
-
-  	var value2 = Math.round((disCount2/totalCount2)*100);
-
-	var name2 = makeName(value2);
-
-	echart2(value2, name2);
+	
   }); // end ready...
-
-
-  	// 그래프 상태 계산 함수
-  	function makeName(value){
-
-	  var name;
-
-	  if(value <=5){
-		  name = '아주좋음';
-
-	  }else if(5 < value <= 10){
-		  name = '쾌적';
-
-	  }else if(10 < value <= 20){
-		  name = '안정';
-
-	  }else if(20 < value <= 30){
-		  name = '주의';
-
-	  }else if(30 < value <= 100){
-		  name = '경고'
-
-	  }else{
-		  name = '미확인'
-	  }
-
-	  return name;
-  }
-
-	// 그래프 함수
-	function ajaxGraph(startDate, endDate){
-	  console.log(startDate + "/" + endDate);
-		$.ajax({
-
-	      type : "POST",
-		  url : "graph",
-	 	  dataType : "json",
-	 	  data : {startDate : startDate, endDate : endDate, part : "main",
-	 		      company : $("#selectCompany option:selected").val(), selectKey : $("#selectKeyword option:selected").val()},
-	  	  error : function(){
-	      	alert('graphPOST ajax error....');
-	  	  },
-	  	  success : function(data){
-
-	  		var script = "[";
-
-	  		for(var i = 0; i < data.length; i++){
-	  			console.log(data[i]);
-	  			script += '{"period":' + '"' + data[i].writeDate + '",'
-	  					+ '"l1"'+ ':' + data[i].type1 + ","
-	  					+ '"l2"' + ':' + data[i].type2 + ","
-	  					+ '"l3"' + ':' + data[i].type3 + ","
-	  					+ '"l4"' + ':' + data[i].type4 + "},";
-
-	  			if(i == data.length-1){
-	  				script =  script.substr(0, script.length-1);
-	  				script += "]";
-	  			}
-	  		}
-	  		console.log(script);
-
-	  		// to json
-	  		var jsonScript = JSON.parse(script);
-
-	  		drawChart(jsonScript);
-
-	  	 }
-		});
-	}
-
-
-  function drawChart(data){
-     	// 그래프 초기화
-     	$('#line-chart1').children().remove();
-
-     	window.lineChart = Morris.Line({
-     	      element: 'line-chart1',
-     	      data: data,
-     	      xkey: 'period',
-     	      xLabels : 'day',
-     	      redraw: true,
-     	      ykeys: ['l1', 'l2', 'l3', 'l4'],
-     	      hideHover: 'auto',
-     	      labels: ['포털', '커뮤니티', 'SNS', '언론사'],
-     	      lineColors: ['#2ecc71', '#e74c3c', '#3498DB','#f1c40f']
-     	  });
-     }
+  
+  function areaChart(jsonScript) {
+		$("#morris-extra-line").empty();
+		window.areaChart = Morris.Line({
+			element: 'morris-extra-line',
+		    data: jsonScript,
+		    xkey: 'period',
+		    ykeys: ['검출량'],
+		    labels: ['검출량'],
+		    lineColors: ['#01C0C8'],
+		    lineWidth : 3,
+		  	hideHover : 'auto'
+		    });
+		}
 
   // 날짜 계산 함수
   function getDate(type){

@@ -55,4 +55,9 @@ public interface CommunityDAO {
 	public void updateThumbnail (CommunityVO vo);
 	
 	public List<TextTypeDateVO> textTypeCount2(SearchCriteria cri);
+	
+	public Integer communityTextcnt(SearchCriteria cri);
+	public Integer communityTextcnt2(SearchCriteria cri);
+	
+	public Integer graphSearchCount(SearchCriteria cri);
 }

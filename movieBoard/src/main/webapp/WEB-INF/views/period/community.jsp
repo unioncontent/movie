@@ -611,13 +611,10 @@ var $fromDate = $("#fromDate");
 		$.ajax({
 
 	      type : "POST",
-		  url : "graph",
+		  url : "graph_re",
 	 	  dataType : "json",
 	 	  data : {startDate : startDate, endDate : endDate, part : "community",
 	 		      company : $("#selectCompany option:selected").val(), selectKey : $("#selectKeyword option:selected").val()},
-	  	  error : function(){
-	      	alert('graphPOST ajax error....');
-	  	  },
 	  	  success : function(data){
 
 	  		var script = "[";

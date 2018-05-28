@@ -1,8 +1,10 @@
 package org.union.persistence;
 
+import java.util.Date;
 import java.util.List;
 
 import org.union.domain.GraphVO;
+import org.union.domain.MailVO;
 import org.union.domain.MediaVO;
 import org.union.domain.NewsVO;
 import org.union.domain.ReplyVO;
@@ -23,6 +25,10 @@ public interface MediaDAO {
 	public void update(MediaVO vo);
 	
 	public void delete(Integer media_idx);
+	
+	public void checkList(Integer media_idx);
+	public void headlineUpdate(Integer media_idx);
+	public void headlineUpdate2(Integer media_idx);
 	
 	public void newsDelete(Integer news_idx);
 	public void replyDelete(Integer reply_idx);
@@ -106,5 +112,15 @@ public interface MediaDAO {
 	public List<MediaVO> mediaCnt(SearchCriteria cri);
 	public List<TextTypeDateVO> textTypeCount2(SearchCriteria cri);
 	public Integer checkUrl(String url);
-	public Integer mTotalCnt(SearchMedia Sm);
+	public Integer mTotalCnt(SearchCriteria cri);
+	
+	public List<MediaVO> headlineList(SearchCriteria cri);
+	public Integer mediaTotalcnt(SearchCriteria cri);
+	public Integer replyTotalcnt(SearchCriteria cri);
+	
+	public Integer mediaTextcnt(SearchCriteria cri);
+	public Integer mediaTextcnt2(SearchCriteria cri);
+	public Integer mediaCountAll(SearchCriteria cri);
+	public List<MailVO> mailList(SearchCriteria cri);
+	public Integer mailCountAll(SearchCriteria cri);
 }

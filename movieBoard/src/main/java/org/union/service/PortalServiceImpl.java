@@ -497,4 +497,48 @@ public class PortalServiceImpl implements PortalService {
 		return portalDAO.naverVideosallList(cri);
 	}
 
+	@Override
+	public Integer scoreTotalcnt(SearchCriteria cri) {
+
+		return portalDAO.scoreTotalcnt(cri);
+	}
+
+	@Override
+	public Integer portalTextcnt(SearchCriteria cri) {
+
+		return portalDAO.portalTextcnt(cri);
+	}
+
+	@Override
+	public Integer portalTextcnt2(SearchCriteria cri) {
+
+		return portalDAO.portalTextcnt2(cri);
+	}
+
+	@Override
+	public Integer graphNaverCount(SearchCriteria cri) {
+
+		return portalDAO.graphNaverCount(cri);
+	}
+
+	@Override
+	public Integer graphDaumCount(SearchCriteria cri) {
+
+		return portalDAO.graphDaumCount(cri);
+	}
+
+	@Override
+	public void scoreCheckList(Integer portal_idx) {
+
+		portalDAO.scoreCheckList(portal_idx);
+		
+	}
+
+	@Override
+	public void scoreUpdate(Integer portal_idx) {
+
+		portalDAO.scoreUpdate(portal_idx);
+		
+	}
+
 }

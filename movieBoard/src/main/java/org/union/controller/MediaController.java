@@ -6,6 +6,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,10 +18,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.union.domain.CommunityVO;
 import org.union.domain.ExtractVO;
+import org.union.domain.GraphVO;
 import org.union.domain.MediaVO;
 import org.union.domain.NewsVO;
 import org.union.domain.PageMaker;
@@ -29,6 +33,8 @@ import org.union.domain.ReplyVO;
 import org.union.domain.ReporterVO;
 import org.union.domain.SNSVO;
 import org.union.domain.SearchCriteria;
+import org.union.domain.SearchFv;
+import org.union.domain.SwearwordVO;
 import org.union.domain.UserVO;
 import org.union.persistence.MediaDAO;
 import org.union.service.KeywordService;
@@ -558,6 +564,18 @@ public class MediaController {
 		
 		mediaService.newsRemove(idx);
 		mediaService.replyRemove(idx);
+		
+		return "success";
+	}
+	
+	@ResponseBody
+	@PostMapping("checkList")
+	public String checkList(Integer idx) {
+		logger.info("checkListPOST called....");
+		logger.info("checkidx: " + idx);
+		
+		mediaService.checkList(idx);
+		mediaService.headlineUpdate(idx);
 		
 		return "success";
 	}

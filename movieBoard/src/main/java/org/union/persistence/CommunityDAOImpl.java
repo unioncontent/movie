@@ -218,4 +218,25 @@ public class CommunityDAOImpl implements CommunityDAO {
 	}
 
 
+	@Override
+	public Integer communityTextcnt(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "communityTextcnt", cri);
+	}
+
+
+	@Override
+	public Integer communityTextcnt2(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "communityTextcnt2", cri);
+	}
+
+
+	@Override
+	public Integer graphSearchCount(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "graphSearchCount", cri);
+	}
+
+
 }

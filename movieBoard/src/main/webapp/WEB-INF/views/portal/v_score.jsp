@@ -2,9 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
-
 <head>
   <title>OverWare</title>
   <!-- HTML5 Shim and Respond.js IE9 support of HTML5 elements and media queries -->
@@ -15,6 +14,9 @@
       <![endif]-->
   <!-- Meta -->
   <meta charset="utf-8">
+  <meta name="_csrf" content="${_csrf.token}" />
+  <!-- default header name is X-CSRF-TOKEN -->
+  <meta name="_csrf_header" content="${_csrf.headerName}"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="description" content="Phoenixcoded">
@@ -316,7 +318,8 @@
                                   <div class="card-header">
                                     <h5>평점 관리 리스트</h5>
                                     <div style="position:relative; left:5px;">
-			                        	<button class="btn btn-warning alert-excel f-right"><i class="icofont icofont-download-alt"></i>EXCEL</button>
+			                        	<button class="btn btn-warning alert-excel f-right p-r-5 p-l-5 m-l-15 m-b-10"><i class="icofont icofont-download-alt"></i>EXCEL</button>
+			                        	<button id="alert-check" class="btn btn-primary alert-check f-right p-r-5 p-l-5 m-l-15 m-b-10" ><i class="icofont icofont-ui-check"></i>등록</button>
 			                        </div>
                                   </div>
                                   <div class="card-block table-border-style">
@@ -324,6 +327,7 @@
                                       <table class="table table-styling table-checkbox">
                                         <thead>
                                           <tr>
+                                          	<th width="1%"></th>
                                             <th>NO</th>
                                             <th>등록일</th>
                                             <th>구분</th>
@@ -334,7 +338,16 @@
                                         </thead>
                                         <tbody>
                                           <c:forEach items="${scoreList}" var="score" varStatus="index">
-                                          <tr>
+                                          <tr class = "trList">
+                                          	<input type="hidden" value="${score.portal_idx}" name="portal_idx">
+                                          	<td>
+                                          	<c:if test="${score.portal_state == 1}">
+		                                    <input type="checkbox" name="ck" value="${score.portal_idx}" checked="checked">
+		                                    </c:if>
+		                                    <c:if test="${score.portal_state == null}">
+		                                    <input type="checkbox" name="ck" value="${score.portal_idx}">
+		                                    </c:if>
+                                          	</td>
                                             <th>${totalCount - minusCount - index.count + 1}</th>
                                             <td>${score.writeDate}</td>
                                             <td>${score.portal_name}</td>
@@ -346,7 +359,7 @@
                                         </tbody>
                                         <tfoot>
                                           <tr>
-                                            <td colspan="6">
+                                            <td colspan="7">
                                                <ul class="pagination float-right">
         					                              <c:if test="${pageMaker.prev}">
         					                                <li class="page-item">
@@ -452,25 +465,24 @@
   <script type="text/javascript" src="../assets/pages/advance-elements/moment-with-locales.min.js"></script>
   <!-- Date-range picker js -->
   <script type="text/javascript" src="../bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
-  <!-- jquery timepicker js -->
-  <script src="../bower_components/jquery-timepicker-1.3.5/jquery.timepicker.min.js"></script>
   <!-- modernizr js -->
   <script type="text/javascript" src="../bower_components/modernizr/modernizr.js"></script>
   <script type="text/javascript" src="../bower_components/modernizr/feature-detects/css-scrollbars.js"></script>
   <!-- classie js -->
   <script type="text/javascript" src="../bower_components/classie/classie.js"></script>
+  <!-- Morris Chart js -->
+  <script src="../bower_components/raphael/raphael.min.js"></script>
+  <script src="../bower_components/morris.js/morris.js"></script>
+  <!-- sweet alert js -->
+  <script type="text/javascript" src="../bower_components/sweetalert/dist/sweetalert.min.js"></script>
+  <script type="text/javascript" src="../assets/pages/news/script.js"></script>
   <!-- i18next.min.js -->
   <script type="text/javascript" src="../bower_components/i18next/i18next.min.js"></script>
   <script type="text/javascript" src="../bower_components/i18next-xhr-backend/i18nextXHRBackend.min.js"></script>
   <script type="text/javascript" src="../bower_components/i18next-browser-languagedetector/i18nextBrowserLanguageDetector.min.js"></script>
   <script type="text/javascript" src="../bower_components/jquery-i18next/jquery-i18next.min.js"></script>
-  <!-- sweet alert js -->
-  <script type="text/javascript" src="../bower_components/sweetalert/dist/sweetalert.min.js"></script>
-  <!-- knob js -->
-  <script src="../bower_components/aterrien/jQuery-Knob/js/jquery.knob.js"></script>
   <!-- Custom js -->
   <script type="text/javascript" src="../assets/js/script.js"></script>
-  <script type="text/javascript" src="../assets/pages/viral/script2.js"></script>
   <script src="../assets/pages/picker.js"></script>
   <script src="../assets/js/pcoded.min.js"></script>
   <script src="../assets/js/demo-12.js"></script>
@@ -479,6 +491,16 @@
 </body>
 
 <script type="text/javascript">
+
+	//ajax 보안
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	
+	$(function() {
+	 	$(document).ajaxSend(function(e, xhr, options) {
+	  		xhr.setRequestHeader(header, token);
+	  	});
+	});
 
 	$(document).ready(function(){
 
@@ -617,6 +639,29 @@
 
 		});
 		
+		/* var idx = $('input[name=portal_idx]').val(); */
+		
+		//등록 확인메시지
+			$(document).on("click",".alert-check",function(){
+				swal({
+					title: "등록 처리 하시겠습니까?",
+					text: "바로 등록 됩니다.",
+					type: "warning",
+					showCancelButton: true,
+					confirmButtonClass: "btn-danger",
+					confirmButtonText: "YES",
+					closeOnConfirm: false
+					},
+						function(){
+
+							checkList(event);
+
+							swal("Update!", "등록 처리가 완료되었습니다.", "success");
+							
+							location.reload();
+						});
+		  });
+		
 		//엑셀출력 확인메시지
 		$(document).on("click",".alert-excel",function(){
 	  	swal({
@@ -643,6 +688,26 @@
 		});
 
 	}); // end ready...
+	
+	function checkList(event) {
+
+		  $("input[name='ck']:checked").each(function(i){   //jQuery로 for문 돌면서 check 된값 배열에 담는다
+			  
+			  $.ajax({
+				  	type : "POST",
+					url : "checkList",
+					data : {idx : $(this).val()},
+					contentType:"application/x-www-form-urlencoded;charset=utf-8", //한글 깨짐 방지
+					cache: false, 
+					success : function(data) {
+					console.log(data);
+					}
+
+				});
+			  
+		  });
+
+		}
 
 
 	function searchList() {

@@ -227,5 +227,23 @@ public class CommunityServiceImpl implements CommunityService {
 		return communityDAO.textTypeCount2(cri);
 	}
 
+	@Override
+	public Integer communityTextcnt(SearchCriteria cri) {
+
+		return communityDAO.communityTextcnt(cri);
+	}
+
+	@Override
+	public Integer communityTextcnt2(SearchCriteria cri) {
+
+		return communityDAO.communityTextcnt2(cri);
+	}
+
+	@Override
+	public Integer graphSearchCount(SearchCriteria cri) {
+
+		return communityDAO.graphSearchCount(cri);
+	}
+
 	
 }

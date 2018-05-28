@@ -115,7 +115,6 @@ public class PageMaker {
 		            .queryParam("selectKey", ((SearchCriteria)cri).getSelectKey())
 		            .queryParam("startDate", ((SearchCriteria)cri).getStartDate())
 		            .queryParam("endDate", ((SearchCriteria)cri).getEndDate())
-		            .queryParam("hour", ((SearchCriteria)cri).getHour())
 		            .build();	            
 			
 			return uriComponents.toUriString();

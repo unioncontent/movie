@@ -865,5 +865,55 @@
  		where 
  			url = #{url};
  	</select>
+ 	
+ 	<select id="snsTotalcount" resultType="Integer">
+		select
+			count(*)
+		from
+			sns_data
+		where
+			sns_content is not null
+		<include refid="search_writeDate"></include>
+		and
+			createDate >= curdate();
+		
+	</select>
+	
+	<select id="graphfacebookCount" resultType="Integer">
+ 		select 
+ 			count(*)
+ 		from	
+ 			sns_data
+ 		where
+ 			sns_name = 'facebook'
+ 		and 
+			keyword in (select keyword from keyword_data where keyword_main = #{selectKey})
+		and
+			createDate between date_add(#{date}, interval -1 day) and #{date}
+ 	</select>
+ 	<select id="graphinstaCount" resultType="Integer">
+ 		select 
+ 			count(*)
+ 		from	
+ 			sns_data
+ 		where
+ 			sns_name = 'instagram'
+ 		and 
+			keyword in (select keyword from keyword_data where keyword_main = #{selectKey})
+		and
+			createDate between date_add(#{date}, interval -1 day) and #{date}
+ 	</select>
+ 	<select id="graphtwitterCount" resultType="Integer">
+ 		select 
+ 			count(*)
+ 		from	
+ 			sns_data
+ 		where
+ 			sns_name = 'twitter'
+ 		and 
+			keyword in (select keyword from keyword_data where keyword_main = #{selectKey})
+		and
+			createDate between date_add(#{date}, interval -1 day) and #{date}
+ 	</select>
 
  </mapper>

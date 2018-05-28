@@ -96,4 +96,10 @@ public interface SNSDAO {
 	public List<FvVO> fvlistTwo(SearchFv fv);
 	public List<FvVO> fvlistGraph(SearchFv fv);
 	
+	public Integer snsTotalcount(SearchCriteria cri);
+	
+	public Integer graphfacebookCount(SearchCriteria cri);
+	public Integer graphinstaCount(SearchCriteria cri);
+	public Integer graphtwitterCount(SearchCriteria cri);
+	
 }

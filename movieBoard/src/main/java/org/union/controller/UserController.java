@@ -51,7 +51,7 @@ public class UserController {
 			session.setAttribute("companyList", vo);
 		}
 		
-		if(vo.getUser_name().equals("쇼박스")) {
+		/*if(vo.getUser_name().equals("쇼박스")) {
 			logger.info("쇼박스 접속");
 
 			session.setAttribute("companyList", userService.listAll());
@@ -59,9 +59,9 @@ public class UserController {
 			
 			return "redirect:../dashBoard/showDashBoard";
 		
-		}
+		}*/
 		
-		return "redirect:../dashBoard/dashBoard";
+		return "redirect:../dashBoard/dashBoard_main";
 	}
 	
 	@GetMapping("/logout")

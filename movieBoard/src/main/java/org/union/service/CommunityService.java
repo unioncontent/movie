@@ -57,4 +57,8 @@ public interface CommunityService {
 	
 	public List<TextTypeDateVO> textTypeCount2(SearchCriteria cri);
 	
+	public Integer communityTextcnt(SearchCriteria cri);
+	public Integer communityTextcnt2(SearchCriteria cri);
+	
+	public Integer graphSearchCount(SearchCriteria cri);
 }

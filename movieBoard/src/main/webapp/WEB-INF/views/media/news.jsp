@@ -155,13 +155,17 @@
                               </span>
                             </div>
                             <button class="btn btn-warning alert-confirm f-right p-r-5 p-l-5 m-l-15 m-b-10" ><i class="icofont icofont-download-alt"></i>EXCEL</button>
+                            <button id="alert-check" class="btn btn-primary alert-check f-right p-r-5 p-l-5 m-l-15 m-b-10" ><i class="icofont icofont-ui-check"></i>등록</button>
+                            <!-- <input type="submit" value="등록" class="btn btn-primary alert-check f-right p-r-5 p-l-5 m-l-15 m-b-10" onclick="show()"> -->
                             <!-- <button id="insertAllBtn" type="button" class="alert-success-msg btn btn-success waves-effect f-right p-r-5 p-l-5 m-l-15 m-b-10"><i class="icofont icofont-check-circled"></i>선택처리</button> -->
                           </div>
                           <div class="card-block">
                             <div class="table-responsive">
+                            <form action="checkList">
                               <table class="table table-bordered">
                                 <thead>
                                   <tr>
+                                  	<th width="1%"></th>
                                     <th width="5%">NO</th>
                                     <th width="10%">등록날짜</th>
                                     <th width="40%">제목</th>
@@ -174,7 +178,15 @@
                                 <tbody>
                                   <c:forEach items="${mediaList}" var="mediaList" varStatus="index">
                                   <tr class = "trList">
-                                    <input type="hidden" value="${mediaList.media_idx}">
+                                    <input type="hidden" value="${mediaList.media_idx}" name="media_idx">
+                                    <td>
+                                    <c:if test="${mediaList.media_state == 1}">
+                                    <input type="checkbox" name="ck" value="${mediaList.media_idx}" checked="checked">
+                                    </c:if>
+                                    <c:if test="${mediaList.media_state == null}">
+                                    <input type="checkbox" name="ck" value="${mediaList.media_idx}">
+                                    </c:if>
+                                    </td>
                                     <th width="5%">${totalCount -index.count +1 -minusCount}</th>
                                     <td width="10%">${mediaList.writeDate}</td>
                                     <td width="40%" class="text-success"><a href="${mediaList.url}" target="_blank">${mediaList.media_title}</a></td>
@@ -291,7 +303,7 @@
                                 </tbody>
                                 <tfoot>
                                   <tr>
-                                    <td colspan="7">
+                                    <td colspan="8">
                                       <ul class="pagination float-right">
                                        <c:if test="${pageMaker.prev}">
                                          <li class="page-item">
@@ -321,6 +333,7 @@
                                   </tr>
                                 </tfoot>
                               </table>
+                              </form>
                             </div>
                           </div>
                         </div>
@@ -478,6 +491,12 @@
 		  console.log("insertAll click...");
 		insertAll();
 	  });
+	  
+	/* // 등록처리버튼 클릭시
+	  $(document).on("click","#alert-check",function(){
+		  console.log("checkList click...");
+		checkList();
+	  }); */
 
 
 		// 당일 클릭시
@@ -565,7 +584,30 @@
 			searchList();
 		  }
 		});
+		
+		var idx = $('input[name=media_idx]').val();
+		
+		//등록 확인메시지
+		$(document).on("click",".alert-check",function(){
+			swal({
+				title: "등록 처리 하시겠습니까?",
+				text: "바로 등록 됩니다.",
+				type: "warning",
+				showCancelButton: true,
+				confirmButtonClass: "btn-danger",
+				confirmButtonText: "YES",
+				closeOnConfirm: false
+				},
+					function(){
 
+						checkList(event);
+
+						swal("Update!", "등록 처리가 완료되었습니다.", "success");
+
+						location.reload();
+					});
+	  });
+		
 		//엑셀출력 확인메시지
 		$(document).on("click",".alert-confirm",function(){
 	    swal({
@@ -593,8 +635,26 @@
 		});
 
 	}); // end ready...
+	
+	function checkList(event) {
 
+		  $("input[name='ck']:checked").each(function(i){   //jQuery로 for문 돌면서 check 된값 배열에 담는다
+			  $.ajax({
+					type : "POST",
+					url : "checkList",
+					data : {idx : $(this).val()},
+					contentType:"application/x-www-form-urlencoded;charset=utf-8", //한글 깨짐 방지
+					cache: false, 
+					success : function(data) {
+					console.log(data);
+					}
 
+				});
+			  
+		  });
+
+		}
+			  
 	function insertAll(){
 		  swal({
 				title: "일괄처리 하시겠습니까?",

@@ -245,25 +245,27 @@
                                 </div>
                               </div> --%>
                               <!-- top cards end -->
-                              <!-- Morris chart start -->
-		                      <div class="col-md-12">
-		                        <div class="card">
-		                          <div class="card-header">
-		                            <h5>
-		                            	<i class="icofont icofont-chart-line m-r-5"></i>
-		                            	검출량그래프
-		                            </h5>
-		                            <span>최근 24시간 기사 수 데이터 그래프</span>
-		                            <div class="card-header-right">
-		                              <i class="icofont icofont-rounded-down"></i>
-		                            </div>
-		                          </div>
-		                          <div class="card-block">
-		                            <div id="morris-bar" style="height:300px;"></div>
-		                          </div>
-		                        </div>
-		                      </div>
-		                      <!-- Morris chart end -->
+		                      <!-- 통계보고서 그래프 start -->
+                              <div class="col-lg-12">
+                                <div class="card">
+                                <div class="card-header">
+                                  <h5 class="card-header-text">
+                                    <i class="icofont icofont-chart-line m-r-5"></i>
+                                    	검출량 그래프
+                                  </h5>
+                                  <div class="card-header-right">
+                                    <i class="icofont icofont-rounded-down"></i>
+                                    <i class="icofont icofont-refresh"></i>
+                                  </div>
+                                </div>
+                                <div class="card-block">
+                                  <!-- chart start -->
+                                  <div class="m-b-35" id="line-chart1"></div>
+                                  <!-- chart end -->
+                                </div>
+                              </div>
+                              </div>
+                              <!-- 통계보고서 그래프 end -->
                               <!-- 테이블리스트 start -->
                               <div class="col-lg-12">
                                 <div class="card">
@@ -753,6 +755,39 @@ $(document).ready(function(){
 
 		});
 		
+		$.ajax({
+			
+		      type : "POST",
+			  url : "graph_re",
+		 	  dataType : "json",
+		 	  data : {success : 'success', part : "media",company : $("#selectCompany option:selected").val(), selectKey : $("#selectKeyword option:selected").val()},
+		  	  success : function(data){
+
+		  		  console.log(data);
+		  		var script = "[";
+
+
+				for(var i = 0; i < data.length; i++){
+
+					script += '{"period":' + '"' + data[i].writeDate + '",'
+							+ '"l1"' + ':' + data[i].type1 + "},";
+							
+
+					if(i == data.length-1){
+						script =  script.substr(0, script.length-1);
+						script += "]";
+					}
+				}
+				console.log(script);
+
+				// to json
+				var jsonScript = JSON.parse(script);
+
+				drawChart(jsonScript);
+
+		  	 }
+		});
+		
 		// 당일 클릭시
 		$('#toDay').on("click", function(){
 		  console.log("toDay clicked....");
@@ -832,40 +867,6 @@ $(document).ready(function(){
 		var company = target2.options[target2.selectedIndex].value;
 		console.log("aaacompany:" + company);
 		
-		// 그래프
-		$.ajax({
-			
-	      type : "POST",
-		  url : "mediagraph",
-	 	  dataType : "json",
-	 	  data : {success : 'success', company : company, selectKey : selectKey},
-	  	  success : function(data){
-
-	  		  console.log(data);
-	  		var script = "[";
-
-
-			for(var i = 0; i < data.length; i++){
-
-				script += '{"period":' + '"' + data[i].writeDate + '",'
-						+ '"기사 건수"'+ ':' + data[i].type1 + "},";
-
-				if(i == data.length-1){
-					script =  script.substr(0, script.length-1);
-					script += "]";
-				}
-			}
-			console.log(script);
-
-			// to json
-			var jsonScript = JSON.parse(script);
-
-			areaChart(jsonScript);
-
-	  	 }
-	});
-		
-		
 		// 엑셀 출력
 		document.querySelector('.alert-confirm').onclick = function(){
 		    swal({
@@ -892,6 +893,20 @@ $(document).ready(function(){
 		
 	});
 	
+function drawChart(jsonScript) {
+		$("#line-chart1").empty();
+		window.areaChart = Morris.Line({
+			element: 'line-chart1',
+		    data: jsonScript,
+		    xkey: 'period',
+		    ykeys: ['l1'],
+		    labels: ['기사건수'],
+		    lineColors: ['#01C0C8'],
+		    lineWidth : 3,
+		  	hideHover : 'auto'
+		    });
+		}
+	
 	// allBtn 클릭시
 	  $(".radiosBtn").on("click", function(event){
 		  console.log(event);
@@ -906,6 +921,8 @@ $(document).ready(function(){
 			  $('#radio'+ btnNum + (i+1))[0].checked = true;
 		  }
 	  });
+	
+	
 	
 	// 날짜 계산 함수
 	function getDate(type){
@@ -977,22 +994,7 @@ $(document).ready(function(){
 					  + "&endDate=" +  makeDateFormat($("#fromDate").val(), 1);
 	}
 	
-	function areaChart(jsonScript) {
-		$("#morris-bar").empty();
-		window.areaChart = Morris.Bar({
-			element: 'morris-bar',
-		    data: jsonScript,
-		    xkey: 'period',
-		    ykeys: ['기사 건수'],
-		    labels: ['기사 건수'],
-		    barColors: ['#01C0C8'],
-		    stacked: true,
-		    /* xLabelMargin : 10, */
-		    hideHover: 'auto',
-		    resize: true,
-		    gridTextColor: '#888'
-		    });
-		}
+	
 </script>
 
 </html>

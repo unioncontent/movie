@@ -21,6 +21,7 @@ public class MediaVO {
 	private String keyword_type;
 	private String url;
 	private String textType;
+	private Integer media_state;
 	private String thumbnail;
 	private Date createDate;
 	private Date updateDate;
@@ -123,6 +124,12 @@ public class MediaVO {
 	public void setTextType(String textType) {
 		this.textType = textType;
 	}
+	public Integer getMedia_state() {
+		return media_state;
+	}
+	public void setMedia_state(Integer media_state) {
+		this.media_state = media_state;
+	}
 	public String getThumbnail() {
 		return thumbnail;
 	}
@@ -153,11 +160,9 @@ public class MediaVO {
 				+ ", media_content=" + media_content + ", reporter_name=" + reporter_name + ", reporter_ID="
 				+ reporter_ID + ", reporter_email=" + reporter_email + ", writeDate=" + writeDate + ", last_writeDate="
 				+ last_writeDate + ", last_media_title=" + last_media_title + ", last_media_content="
-				+ last_media_content + ", keyword=" + keyword + ", keyword_type=" + keyword_type + ", url=" + url
-				+ ", textType=" + textType + ", thumbnail=" + thumbnail + ", createDate=" + createDate + ", updateDate="
-				+ updateDate + "]";
+				+ last_media_content + ", keyword_main=" + keyword_main + ", keyword=" + keyword + ", keyword_type="
+				+ keyword_type + ", url=" + url + ", textType=" + textType + ", media_state=" + media_state
+				+ ", thumbnail=" + thumbnail + ", createDate=" + createDate + ", updateDate=" + updateDate
+				+ ", checkCondition=" + checkCondition + "]";
 	}
-	
-	
-	
 }

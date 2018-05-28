@@ -61,7 +61,138 @@ public class DashBaordController {
 	
 	private static Logger logger = LoggerFactory.getLogger(DashBaordController.class);
 	
-	@GetMapping("/dashBoard")
+	@GetMapping("/dashBoard_main")
+	public void dashBoard_mainGET(@ModelAttribute("cri") SearchCriteria cri, Model model) {
+		logger.info("dashBoard_main called....");
+		
+		cri.setKeyword(null);
+		cri.setTextType(null);
+		
+		if(cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey()) ) {
+			logger.info("selectKey is null");
+			cri.setSelectKey(null);
+		}
+		if("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate())
+				|| cri.getStartDate() == "" || cri.getEndDate() == ""){
+			cri.setStartDate(null);
+			cri.setEndDate(null);
+		
+		} 
+		if(cri.getStartDate() != null && cri.getEndDate() != null) {
+			logger.info("not null");
+			logger.info(cri.getStartDate());
+			logger.info(cri.getEndDate());
+			if(cri.getStartDate().indexOf("00:00:00") < 0 && cri.getEndDate().indexOf("23:59:59") < 0){ 
+				cri.setStartDate(cri.getStartDate() + " 00:00:00"); 
+				cri.setEndDate(cri.getEndDate() + " 23:59:59"); 
+			}
+		}
+		
+		
+		if(cri.getCompany() != null) {
+			if(cri.getCompany().isEmpty()) {
+				cri.setCompany(null);
+			}
+		}
+		if(cri.getCompany() == null || cri.getCompany().equals("회사")) {
+			logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+			UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
+			
+			if(!vo.getUser_name().equals("union")) {
+			cri.setCompany(vo.getUser_name());
+			
+			}else {
+				cri.setCompany(null);
+			}
+		}
+
+		// 회사 선택에 따른 키워드 재추출
+		if (cri.getCompany() != null) {	
+			if (cri.getCompany().isEmpty() == false) {
+
+				UserVO userVO = userService.viewByName(cri.getCompany());
+				logger.info("userVO: " + userVO);
+				logger.info("keywordList: " + keywordService.listByUser(userVO.getUser_idx()));
+				model.addAttribute("modelKeywordList",
+						keywordService.listByUser(userService.viewByName(cri.getCompany()).getUser_idx()));
+			}
+		}
+	}
+	
+	@GetMapping("/dashBoard_re")
+	public void dashBoard_re_mainGET(@ModelAttribute("cri") SearchCriteria cri, Model model) {
+		logger.info("dashBoard_re called....");
+		
+		cri.setKeyword(null);
+		cri.setTextType(null);
+		
+		if(cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey()) ) {
+			logger.info("selectKey is null");
+			cri.setSelectKey(null);
+		}
+		if("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate())
+				|| cri.getStartDate() == "" || cri.getEndDate() == ""){
+			cri.setStartDate(null);
+			cri.setEndDate(null);
+		
+		} 
+		if(cri.getStartDate() != null && cri.getEndDate() != null) {
+			logger.info("not null");
+			logger.info(cri.getStartDate());
+			logger.info(cri.getEndDate());
+			if(cri.getStartDate().indexOf("00:00:00") < 0 && cri.getEndDate().indexOf("23:59:59") < 0){ 
+				cri.setStartDate(cri.getStartDate() + " 00:00:00"); 
+				cri.setEndDate(cri.getEndDate() + " 23:59:59"); 
+			}
+		}
+		
+		
+		if(cri.getCompany() != null) {
+			if(cri.getCompany().isEmpty()) {
+				cri.setCompany(null);
+			}
+		}
+		if(cri.getCompany() == null || cri.getCompany().equals("회사")) {
+			logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+			UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
+			
+			if(!vo.getUser_name().equals("union")) {
+			cri.setCompany(vo.getUser_name());
+			
+			}else {
+				cri.setCompany(null);
+			}
+		}
+
+		// 회사 선택에 따른 키워드 재추출
+		if (cri.getCompany() != null) {	
+			if (cri.getCompany().isEmpty() == false) {
+
+				UserVO userVO = userService.viewByName(cri.getCompany());
+				logger.info("userVO: " + userVO);
+				logger.info("keywordList: " + keywordService.listByUser(userVO.getUser_idx()));
+				model.addAttribute("modelKeywordList",
+						keywordService.listByUser(userService.viewByName(cri.getCompany()).getUser_idx()));
+			}
+		}
+		
+		model.addAttribute("headlineList", mediaService.headlineList(cri));
+		
+		model.addAttribute("mediaTotalcnt", mediaService.mediaTotalcnt(cri));
+		model.addAttribute("replyTotalcnt", mediaService.replyTotalcnt(cri));
+		model.addAttribute("snsTotalcount", snsService.snsTotalcount(cri));
+		model.addAttribute("scoreTotalcnt", portalService.scoreTotalcnt(cri));
+		
+		model.addAttribute("mediaTextcnt", mediaService.mediaTextcnt(cri));
+		model.addAttribute("mediaTextcnt2", mediaService.mediaTextcnt2(cri));
+		model.addAttribute("portalTextcnt", portalService.portalTextcnt(cri));
+		model.addAttribute("portalTextcnt2", portalService.portalTextcnt2(cri));
+		model.addAttribute("communityTextcnt", communityService.communityTextcnt(cri));
+		model.addAttribute("communityTextcnt2", communityService.communityTextcnt2(cri));
+		model.addAttribute("mailList", mediaService.mailList(cri));
+		
+	}
+	/*@GetMapping("/dashBoard")
 	public void dashBoardGET(@ModelAttribute("cri") SearchCriteria cri, Model model) {
 		logger.info("dashBaordGET called....");
 		
@@ -127,7 +258,7 @@ public class DashBaordController {
 		model.addAttribute("facebookCount", snsService.yesterdayCount("facebook"));
 		model.addAttribute("twitterCount", snsService.yesterdayCount("twitter"));
 		model.addAttribute("instagramCount", snsService.yesterdayCount("instagram"));
-	}
+	}*/
 	
 	@GetMapping("/showDashBoard")
 	public void showDashBoardGET(@ModelAttribute("cri") SearchCriteria cri, Model model) {
@@ -260,6 +391,44 @@ public class DashBaordController {
 			graphVO.setType1(portalService.showboxCountAll(cal.getTime()));
 			graphVO.setType2(communityService.showboxCountAll(cal.getTime()));
 			graphVO.setType3(snsService.showboxCountAll(cal.getTime()));
+			
+			graphList.add(graphVO);
+			
+			cal.add(Calendar.HOUR, -1);
+			
+		}
+		
+
+		logger.info("graphList: " + graphList);
+		return graphList;
+	}
+	
+	@ResponseBody
+	@PostMapping("/graph_re")
+	public List<GraphVO> graph_rePOST(Model model, String success, @ModelAttribute("cri") SearchCriteria cri, String selectKey) {
+		logger.info("graph_rePOST called....");
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH");
+		
+		String current = sdf.format(new Date());
+		logger.info("current: " + current);
+		
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(new Date());
+		
+		List<GraphVO> graphList = new ArrayList<GraphVO>();
+		
+		
+		logger.info("cal.getTime: " + cal.getTime());
+
+		for(int i = 0; i < 24; i++) {
+			GraphVO graphVO = new GraphVO();
+			
+			cri.setSelectKey(selectKey);
+			cri.setDate(cal.getTime());
+			
+			graphVO.setWriteDate(sdf.format(cal.getTime()) + ":00:00");
+			graphVO.setType1(mediaService.mediaCountAll(cri));
 			
 			graphList.add(graphVO);
 			

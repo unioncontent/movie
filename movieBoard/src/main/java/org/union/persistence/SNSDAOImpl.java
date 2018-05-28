@@ -412,4 +412,32 @@ public class SNSDAOImpl implements SNSDAO {
 	}
 
 
+	@Override
+	public Integer snsTotalcount(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "snsTotalcount", cri);
+	}
+
+
+	@Override
+	public Integer graphfacebookCount(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "graphfacebookCount", cri);
+	}
+
+
+	@Override
+	public Integer graphinstaCount(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "graphinstaCount", cri);
+	}
+
+
+	@Override
+	public Integer graphtwitterCount(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "graphtwitterCount", cri);
+	}
+
+
 }

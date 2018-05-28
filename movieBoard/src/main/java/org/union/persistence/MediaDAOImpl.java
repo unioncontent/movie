@@ -1,5 +1,6 @@
 package org.union.persistence;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.union.controller.MediaController;
 import org.union.domain.GraphVO;
+import org.union.domain.MailVO;
 import org.union.domain.MediaVO;
 import org.union.domain.NewsVO;
 import org.union.domain.ReplyVO;
@@ -464,9 +466,90 @@ public class MediaDAOImpl implements MediaDAO {
 	}
 
 	@Override
-	public Integer mTotalCnt(SearchMedia Sm) {
+	public Integer mTotalCnt(SearchCriteria cri) {
 
-		return session.selectOne(namespace + "mTotalCnt", Sm);
+		return session.selectOne(namespace + "mTotalCnt", cri);
+	}
+
+	@Override
+	public void checkList(Integer media_idx) {
+		try {
+			session.insert(namespace + "checkList", media_idx);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+	@Override
+	public List<MediaVO> headlineList(SearchCriteria cri) {
+
+		return session.selectList(namespace + "headlineList", cri);
+	}
+
+	@Override
+	public Integer mediaTotalcnt(SearchCriteria cri) {
+		
+		return session.selectOne(namespace + "mediaTotalcnt", cri);
+	}
+
+	@Override
+	public Integer replyTotalcnt(SearchCriteria cri) {
+		
+		return session.selectOne(namespace + "replyTotalcnt", cri);
+	}
+
+	@Override
+	public Integer mediaTextcnt(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "mediaTextcnt", cri);
+	}
+
+	@Override
+	public Integer mediaTextcnt2(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "mediaTextcnt2", cri);
+	}
+
+	@Override
+	public Integer mediaCountAll(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "mediaCountAll", cri);
+	}
+
+	@Override
+	public void headlineUpdate(Integer media_idx) {
+		try {
+			session.insert(namespace + "headlineUpdate", media_idx);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+	@Override
+	public void headlineUpdate2(Integer media_idx) {
+		try {
+			session.insert(namespace + "headlineUpdate2", media_idx);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+	@Override
+	public List<MailVO> mailList(SearchCriteria cri) {
+
+		return session.selectList(namespace + "mailList", cri);
+	}
+
+	@Override
+	public Integer mailCountAll(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "mailCountAll", cri);
 	}
 
 	
