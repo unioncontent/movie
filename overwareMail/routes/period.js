@@ -164,6 +164,8 @@ router.post('/result',isAuthenticated,async function(req, res, next) {
   var data = await maillink.selectResultDetail(req.body);
   res.send({status:true,result:data});
 });
+
+// 메일 나라 로직
 // 발송결과 측정 항목을 사용할 경우
 // router.get('/result',function(req,res){
 //   var pStr = '&username='+urlencode('unionc')+'&key='+urlencode('w4EzdnbOY3oypxO')+'&mail_id='+urlencode(212880);
