@@ -11,6 +11,7 @@ import org.union.domain.FvVO;
 import org.union.domain.GraphVO;
 import org.union.domain.NvVO;
 import org.union.domain.PortalVO;
+import org.union.domain.ScoreVO;
 import org.union.domain.SearchCriteria;
 import org.union.domain.SearchFv;
 import org.union.domain.TextTypeDateVO;
@@ -549,5 +550,12 @@ public class PortalDAOImpl implements PortalDAO {
 			e.printStackTrace();
 		}
 		
+	}
+
+
+	@Override
+	public List<ScoreVO> scoreListReport(SearchCriteria cri) {
+
+		return session.selectList(namespace + "scoreListReport", cri);
 	}
 }

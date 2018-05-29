@@ -2,8 +2,11 @@ package org.union.persistence;
 
 import java.util.List;
 
+import org.union.domain.IssueVO;
 import org.union.domain.KeywordListVO;
 import org.union.domain.KeywordVO;
+import org.union.domain.MediaVO;
+import org.union.domain.SearchCriteria;
 import org.union.domain.SwearwordVO;
 
 public interface KeywordDAO {
@@ -47,4 +50,13 @@ public interface KeywordDAO {
 	public void swearwordCreate(SwearwordVO vo);
 	
 	public void swearwordDelete(String swearword);
+	
+	public List<KeywordVO> keywordGetList(SearchCriteria cri);
+	public void createIssue(IssueVO vo);
+	public void issueUpdate(IssueVO vo);
+	public void issueDelete(Integer issue_idx);
+	
+	public List<IssueVO> issueList(SearchCriteria cri);
+	public List<IssueVO> issueUpList(SearchCriteria cri);
+	
 }

@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,6 +28,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.union.domain.GraphVO;
+import org.union.domain.IssueVO;
+import org.union.domain.KeywordVO;
 import org.union.domain.ReporterVO;
 import org.union.domain.SearchCriteria;
 import org.union.domain.TextTypeVO;
@@ -385,6 +388,152 @@ public class ManageController {
 		
 	}
 	
+	@GetMapping("/report_edit")
+	public void report_edit(@ModelAttribute("cri") SearchCriteria cri, Model model, String startDate, String endDate, String company, String selectKey) throws Exception{
+	logger.info("report_editGET called....");
+		
+		cri.setKeyword(null);
+		cri.setTextType(null);
+		
+		if(cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey()) ) {
+			logger.info("selectKey is null");
+			cri.setSelectKey("");
+		}
+		if("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate())
+				|| cri.getStartDate() == "" || cri.getEndDate() == ""){
+			cri.setStartDate(null);
+			cri.setEndDate(null);
+		
+		} 
+		if(cri.getStartDate() != null && cri.getEndDate() != null) {
+			logger.info("not null");
+			logger.info(cri.getStartDate());
+			logger.info(cri.getEndDate());
+			if(cri.getStartDate().indexOf("00:00:00") < 0 && cri.getEndDate().indexOf("23:59:59") < 0){ 
+				cri.setStartDate(cri.getStartDate() + " 00:00:00"); 
+				cri.setEndDate(cri.getEndDate() + " 23:59:59"); 
+			}
+		}
+		
+		
+		if(cri.getCompany() != null) {
+			if(cri.getCompany().isEmpty()) {
+				cri.setCompany(null);
+			}
+		}
+		if(cri.getCompany() == null || cri.getCompany().equals("회사")) {
+			logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+			UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
+			
+			if(!vo.getUser_name().equals("union")) {
+			cri.setCompany(vo.getUser_name());
+			
+			}else {
+				cri.setCompany(null);
+			}
+		}
+
+		// 회사 선택에 따른 키워드 재추출
+		if (cri.getCompany() != null) {	
+			if (cri.getCompany().isEmpty() == false) {
+
+				UserVO userVO = userService.viewByName(cri.getCompany());
+				logger.info("userVO: " + userVO);
+				logger.info("keywordList: " + keywordService.listByUser(userVO.getUser_idx()));
+				model.addAttribute("modelKeywordList",
+						keywordService.listByUser(userService.viewByName(cri.getCompany()).getUser_idx()));
+			}
+		}
+		
+		logger.info("cri: " + cri);
+		
+		/*model.addAttribute("getKeyword", keywordService.getKeyword(selectKey));*/
+		model.addAttribute("getKeyword", keywordService.keywordGetList(cri));
+		
+		java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String today = formatter.format(new java.util.Date());
+		
+		model.addAttribute("today", today);
+		model.addAttribute("company", company);
+		model.addAttribute("selectKey", selectKey);
+
+	}
+	
+	@GetMapping("/report_update")
+	public void report_update(@ModelAttribute("cri") SearchCriteria cri, Model model, String startDate, String endDate, String company, String selectKey, String writeDate) throws Exception{
+	logger.info("report_updateGET called....");
+		
+		cri.setKeyword(null);
+		cri.setTextType(null);
+		
+		if(cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey()) ) {
+			logger.info("selectKey is null");
+			cri.setSelectKey("");
+		}
+		if("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate())
+				|| cri.getStartDate() == "" || cri.getEndDate() == ""){
+			cri.setStartDate(null);
+			cri.setEndDate(null);
+		
+		} 
+		if(cri.getStartDate() != null && cri.getEndDate() != null) {
+			logger.info("not null");
+			logger.info(cri.getStartDate());
+			logger.info(cri.getEndDate());
+			if(cri.getStartDate().indexOf("00:00:00") < 0 && cri.getEndDate().indexOf("23:59:59") < 0){ 
+				cri.setStartDate(cri.getStartDate() + " 00:00:00"); 
+				cri.setEndDate(cri.getEndDate() + " 23:59:59"); 
+			}
+		}
+		
+		
+		if(cri.getCompany() != null) {
+			if(cri.getCompany().isEmpty()) {
+				cri.setCompany(null);
+			}
+		}
+		if(cri.getCompany() == null || cri.getCompany().equals("회사")) {
+			logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+			UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
+			
+			if(!vo.getUser_name().equals("union")) {
+			cri.setCompany(vo.getUser_name());
+			
+			}else {
+				cri.setCompany(null);
+			}
+		}
+
+		// 회사 선택에 따른 키워드 재추출
+		if (cri.getCompany() != null) {	
+			if (cri.getCompany().isEmpty() == false) {
+
+				UserVO userVO = userService.viewByName(cri.getCompany());
+				logger.info("userVO: " + userVO);
+				logger.info("keywordList: " + keywordService.listByUser(userVO.getUser_idx()));
+				model.addAttribute("modelKeywordList",
+						keywordService.listByUser(userService.viewByName(cri.getCompany()).getUser_idx()));
+			}
+		}
+		
+		logger.info("cri: " + cri);
+		
+		cri.setCompany(company);
+		cri.setSelectKey(selectKey);
+		cri.setWriteDate(writeDate);
+		logger.info("writeDate: " + writeDate);
+		
+		model.addAttribute("issueUpList", keywordService.issueUpList(cri));
+		
+		java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String today = formatter.format(new java.util.Date());
+		
+		model.addAttribute("today", today);
+		model.addAttribute("company", company);
+		model.addAttribute("selectKey", selectKey);
+
+	}
+	
 	@GetMapping("/report")
 	public void report(@ModelAttribute("cri") SearchCriteria cri, Model model, String startDate, String endDate, String company, String selectKey) throws Exception{
 	logger.info("reportGET called....");
@@ -476,11 +625,11 @@ public class ManageController {
 		model.addAttribute("naver3", portalService.naverTextTypeCountk(cri));
 		model.addAttribute("naver4", portalService.naverTextTypeCountw(cri));
 		
-		model.addAttribute("daumCount", portalService.getDaumCount(cri));
+		/*model.addAttribute("daumCount", portalService.getDaumCount(cri));
 		model.addAttribute("daum1", portalService.daumTextTypeCountb(cri));
 		model.addAttribute("daum2", portalService.daumTextTypeCountc(cri));
 		model.addAttribute("daum3", portalService.daumTextTypeCountk(cri));
-		model.addAttribute("daum4", portalService.daumTextTypeCountw(cri));
+		model.addAttribute("daum4", portalService.daumTextTypeCountw(cri));*/
 		
 		model.addAttribute("facebookCnt", snsService.facebookCnt(cri));
 		model.addAttribute("instaCnt", snsService.instaCnt(cri));
@@ -497,16 +646,20 @@ public class ManageController {
 		model.addAttribute("list2", communityService.textTypeCount2(cri));
 		model.addAttribute("list3", mediaService.textTypeCount2(cri));
 		
-		model.addAttribute("fV", snsService.facebookCGV(cri));
+		model.addAttribute("scoreList", portalService.scoreListReport(cri));
+		model.addAttribute("headlineList", mediaService.headlineList(cri));
+		model.addAttribute("issueList", keywordService.issueList(cri));
 		
-		cri.setTextType("좋은글");
+		/*model.addAttribute("fV", snsService.facebookCGV(cri));*/
+		
+		/*cri.setTextType("좋은글");
 		model.addAttribute("type1", communityService.getSearchCount2(cri));
 		cri.setTextType("나쁜글");
 		model.addAttribute("type2", communityService.getSearchCount2(cri));
 		cri.setTextType("관심글");
 		model.addAttribute("type3", communityService.getSearchCount2(cri));
 		cri.setTextType("기타글");
-		model.addAttribute("type4", communityService.getSearchCount2(cri));
+		model.addAttribute("type4", communityService.getSearchCount2(cri));*/
 		
 		
 		
@@ -516,6 +669,88 @@ public class ManageController {
 		
 		model.addAttribute("today", today);
 
+	}
+	
+	/*@ResponseBody
+	@PostMapping("insertIssue")
+	public String insertIssue(IssueVO vo) {
+		logger.info("insertKeywordPOST called....");
+		logger.info("IssueVO: " + vo);
+		
+		keywordService.createIssue(vo);
+		
+		return "success";
+	}*/
+	
+	@GetMapping("/insertIssue")
+	public String insertIssue(IssueVO vo) {
+		logger.info("insertKeywordPOST called....");
+		logger.info("IssueVO: " + vo);
+		
+		
+		if(vo.getIssue_content() == "" || vo.getIssue_content() == null) {
+			vo.setIssue_content(null);
+		}
+		
+		
+		String[] company_name = vo.getCompany_name().split(",");
+		String[] title_key = vo.getTitle_key().split(",");
+		String[] keyword = vo.getKeyword().split(",");
+		String[] issue_content = vo.getIssue_content().split(",");
+		String WriteDate = vo.getWriteDate();
+		logger.info("WriteDate: " + vo.getWriteDate());
+		
+		try {
+			
+			for(int i=0;i < issue_content.length;i++){
+				IssueVO issueVO = new IssueVO();
+				
+				issueVO.setCompany_name(company_name[i]);
+				issueVO.setTitle_key(title_key[i]);
+				issueVO.setKeyword(keyword[i]);
+				issueVO.setIssue_content(issue_content[i]);
+				issueVO.setWriteDate(WriteDate);
+				
+				keywordService.createIssue(issueVO);
+				
+				logger.info("issueVO: " + issueVO);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		}
+		
+		return "redirect:/manage/report";
+	}
+	
+	@ResponseBody
+	@PostMapping("/issueUpdate")
+	public String issueUpdate(Integer issue_idx, String issue_content) {
+		logger.info("issueUpdatePOST called....");
+		
+		logger.info("issue_idx: " + issue_idx);
+		logger.info("issue_content: " + issue_content);
+		
+		IssueVO vo = new IssueVO();
+		vo.setIssue_content(issue_content);
+		vo.setIssue_idx(issue_idx);
+		
+		keywordService.issueUpdate(vo);
+		
+		
+		return "success";
+	}
+	
+	@ResponseBody
+	@PostMapping("/issueDelete")
+	public String issueDelete(Integer issue_idx) {
+		logger.info("issueUpdatePOST called....");
+		
+		logger.info("issue_idx: " + issue_idx);
+		
+		keywordService.issueDelete(issue_idx);
+		
+		return "success";
 	}
 	
 	/*@PostMapping("/monitorInsert")

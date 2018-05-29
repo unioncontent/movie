@@ -12,6 +12,7 @@ import org.union.domain.ExtractVO;
 import org.union.domain.GraphVO;
 import org.union.domain.NvVO;
 import org.union.domain.PortalVO;
+import org.union.domain.ScoreVO;
 import org.union.domain.SearchCriteria;
 import org.union.domain.SearchFv;
 import org.union.domain.TextTypeDateVO;
@@ -539,6 +540,12 @@ public class PortalServiceImpl implements PortalService {
 
 		portalDAO.scoreUpdate(portal_idx);
 		
+	}
+
+	@Override
+	public List<ScoreVO> scoreListReport(SearchCriteria cri) {
+
+		return portalDAO.scoreListReport(cri);
 	}
 
 }

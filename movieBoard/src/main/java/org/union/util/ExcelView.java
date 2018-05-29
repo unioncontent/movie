@@ -131,7 +131,6 @@ public class ExcelView extends AbstractXlsView {
 		if (model.get("type") == null) {
 		    titleList.add("내용");
 		    titleList.add("작성자");
-		    titleList.add("분류");
 		    titleList.add("작성자IP");
 		    
 		}
@@ -146,6 +145,9 @@ public class ExcelView extends AbstractXlsView {
 		titleList.add("URL");
 		titleList.add("작성날짜");
 		titleList.add("추출날짜");
+		if (model.get("type") == null) {
+		    titleList.add("분류");
+		}
 		titleList.add("이미지명");
 		
 		
@@ -204,9 +206,6 @@ public class ExcelView extends AbstractXlsView {
 			HSSFCell titleCell = dataRow.createCell(cellIdx);
 			titleCell.setCellValue(new HSSFRichTextString(vo.getWriter()));
 			cellIdx += 1;
-			HSSFCell classiCell = dataRow.createCell(cellIdx);
-			classiCell.setCellValue(new HSSFRichTextString(vo.getTextType()));
-			cellIdx += 1;
 			HSSFCell writerIpCell = dataRow.createCell(cellIdx);
 			writerIpCell.setCellValue(new HSSFRichTextString(vo.getWriter_IP()));
 		    }
@@ -244,6 +243,11 @@ public class ExcelView extends AbstractXlsView {
 		    HSSFCell createCell = dataRow.createCell(cellIdx);
 		    createCell.setCellValue(new HSSFRichTextString(vo.getCreateDate()));
 		    
+		    if (model.get("type") == null) {
+		    cellIdx += 1;
+			HSSFCell classiCell = dataRow.createCell(cellIdx);
+			classiCell.setCellValue(new HSSFRichTextString(vo.getTextType()));
+		    }
 		    if(vo.getThumbnail() != null) {
 		    cellIdx += 1;
 		    HSSFCell imgCell = dataRow.createCell(cellIdx);

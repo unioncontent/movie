@@ -6,8 +6,10 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.union.domain.IssueVO;
 import org.union.domain.KeywordListVO;
 import org.union.domain.KeywordVO;
+import org.union.domain.SearchCriteria;
 import org.union.domain.SwearwordVO;
 
 @Repository
@@ -176,6 +178,56 @@ public class KeywordDAOImpl implements KeywordDAO {
 	@Override
 	public Integer checkSwearword(String swearword) {
 		return session.selectOne(namespace + "checkSwearword", swearword);
+	}
+
+	@Override
+	public List<KeywordVO> keywordGetList(SearchCriteria cri) {
+
+		return session.selectList(namespace + "keywordGetList", cri);
+	}
+
+	@Override
+	public void createIssue(IssueVO vo) {
+		try {
+			session.insert(namespace + "createIssue", vo);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	@Override
+	public List<IssueVO> issueList(SearchCriteria cri) {
+
+		return session.selectList(namespace + "issueList", cri);
+	}
+
+	@Override
+	public List<IssueVO> issueUpList(SearchCriteria cri) {
+
+		return session.selectList(namespace + "issueUpList", cri);
+	}
+
+	@Override
+	public void issueUpdate(IssueVO vo) {
+		try {
+			session.update(namespace + "issueUpdate", vo);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void issueDelete(Integer issue_idx) {
+		try {
+			session.delete(namespace + "issueDelete", issue_idx);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 }

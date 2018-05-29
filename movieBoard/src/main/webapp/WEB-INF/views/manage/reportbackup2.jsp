@@ -200,11 +200,6 @@
                               <input type="text" id="clip_target" value="" style="opacity: 0;">
                               <input type="button"  class="btn btn-primary f-right p-r-5 p-l-5 m-l-15 m-b-10 copyBtn" data-toggle="modal" data-target="#press-modal" value="복사">
                               <input type="button" class="btn btn-primary f-right p-r-5 p-l-5 m-l-15 m-b-10" data-toggle="modal" data-target="#press-modal" value="인쇄" onclick="PrintDiv()">
-                              <c:if test="${startDate != null}">
-                              <button type="button" class="edit-button btn btn-primary waves-effect waves-light" style="margin-right: 5px;" data-toggle="tooltip" data-placement="top" data-original-title="수정">
-                                                                        수정
-                              </button>
-                              </c:if>
                               </td>
                               </tr>
                               <tr>
@@ -225,7 +220,7 @@
 									    <td></td>
 									    <td align="right" valign="bottom" style="color: rgb(153, 153, 153); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 11px;">
 									    <a style="color: rgb(153, 153, 153); letter-spacing: -1px; font-family: gulim,verdana; font-size: 13px; text-decoration: none;" href="http://overware.co.kr" target="_blank" rel="noopener noreferrer">Admin</a>│
-									    <a style="color: rgb(153, 153, 153); letter-spacing: -1px; font-family: gulim,verdana; font-size: 13px; text-decoration: none;" href="http://showbox.email" target="_blank" rel="noopener noreferrer">Email</a>
+									    <a style="color: rgb(153, 153, 153); letter-spacing: -1px; font-family: gulim,verdana; font-size: 13px; text-decoration: none;" href="http://mail.overware.co.kr" target="_blank" rel="noopener noreferrer">Email</a>
 									    </td>
 									    </tr>
 									    </tbody>
@@ -346,186 +341,20 @@
 									  									<tr>
 									  									<td height="20"></td>
 									  									</tr>
-									  									<!-- 헤드라인 start -->
 									  									<tr>
-									                                    <td align="left" style="color: rgb(102, 102, 102); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 13px; font-weight: bold;">1.NEWS HEADLINE</td>
-									                                    <td align="right" style="color: rgb(102, 102, 102); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 11px;"></td>
-									                                    </tr>
-									                                    <tr>
-									                                    <td height="10"></td>
-									                                    </tr>
-									  									<tr>
-												                        <td align="center" height="47" style="border: 0px; border-image: none;">
-												                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
-											                              <tbody>
-											                              <c:forEach items="${headlineList}" var = "headlineList" varStatus="index">
-											                              <tr>
-											                              <td align="left" style="color: rgb(102, 102, 102);  font-family: Gulim,verdana; font-size: 12px;">
-											                              <div style="width: 100px; overflow: hidden; text-overflow: ellipsis;">
-											                              	<img align="absmiddle" width="3" height="3" src="http://file1.jobkorea.co.kr/Mailing/report/bullet.gif"> ${headlineList.writeDate}
-											                              	</div>
-											                              	</td>
-											                              <td align="left" style="color: rgb(102, 102, 102); line-height: 18px; letter-spacing: -1px; font-family: Gulim,verdana; font-size: 12px;">
-											                              <div style="width: 450px; overflow: hidden; text-overflow: ellipsis;">
-												                          	${headlineList.media_title}
-												                          	</div>
-												                          </td>
-												                           </tr>
-												                           </c:forEach>
-												                           </tbody>
-												                           </table>
-												                           </td>
-												                           </tr>
-												                           <!-- 헤드라인 end -->
-												                           <tr>
-									  									<td height="20"> </td>
+									  									<td height="1" bgcolor="#d7d8dc"></td>
 									  									</tr>
-												                           <!-- 키워드별 이슈 start -->
-									  									<tr>
-									                                    <td align="left" style="color: rgb(102, 102, 102); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 13px; font-weight: bold;">2.키워드별 이슈현황</td>
-									                                    <td align="right" style="color: rgb(102, 102, 102); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 11px;"></td>
-									                                    </tr>
-									                                    <tr>
-									                                    <td height="10"></td>
-									                                    </tr>
-									  									<tr>
-												                        <td align="center" height="47" style="border: 0px; border-image: none;">
-												                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
-											                              <tbody>
-											                              <c:forEach items="${issueList}" var = "issueList" varStatus="index">
-											                              <tr>
-											                              <input type="hidden" name="writeDate" value="${issueList.writeDate}">
-											                              <td align="center" width="112" height="22" style="color: rgb(102, 102, 102); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 11px; font-weight: bold; border-color: rgb(228, 228, 228); border-width: 1px; border-style: solid;" bgcolor="#f7f7f7">
-											                              <div style="width: 150px; overflow: hidden; text-overflow: ellipsis;">
-											                              	${issueList.keyword}
-											                              	</div>
-											                              	</td>
-											                              <td align="left" height="22" style="color: rgb(102, 102, 102); font-family: Gulim,verdana; font-size: 11px; border-color: rgb(228, 228, 228); border-width: 1px; border-style: solid;">
-											                              <div style="width: 400px; overflow: hidden; text-overflow: ellipsis;">
-												                          	${issueList.issue_content}
-												                          	</div>
-												                          </td>
-												                           </tr>
-												                           </c:forEach>
-												                           </tbody>
-												                           </table>
-												                           </td>
-												                           </tr>
-												                           <!-- 키워드별 이슈 end -->
 									  									<tr>
 									  									<td height="20"> </td>
-									  									</tr>
 									  									<tr>
 									  									<td align="left">
 									                              		<table width="100%" border="0" cellspacing="0" cellpadding="0">
 									                                    <tbody>
 									                                    <tr>
-									                                    <!-- 평점현황 start -->
-									                                    <tr>
-									                                    <td align="left" style="color: rgb(102, 102, 102); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 13px; font-weight: bold;">3.NAVER 평점현황</td>
-									                                    <td align="right" style="color: rgb(102, 102, 102); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 11px;"></td>
-									                                    </tr>
-									                                    </tbody>
-									                                    </table></td>
-									                                    </tr>
-									                                    <tr>
-									                                    <td height="10"></td>
-									                                    </tr>
-									                                    <tr>
-									                                    <td style="border: 1px solid rgb(228, 228, 228); border-image: none;">
-									                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
-									                                    <tbody>
-										                                    <tr>
-										                                    <td align="center" width="131" height="30" style="color: rgb(102, 102, 102); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 13px; font-weight: bold; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid; border-bottom-color: rgb(228, 228, 228); border-bottom-width: 1px; border-bottom-style: solid;" bgcolor="#fffedd">좋은글 (10-8)</td>
-										                                    <td align="center" width="131" style="color: rgb(102, 102, 102); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 13px; font-weight: bold; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid; border-bottom-color: rgb(228, 228, 228); border-bottom-width: 1px; border-bottom-style: solid;" bgcolor="#fffedd">관심글 (7-5)</td>
-										                                    <td align="center" width="131" style="color: rgb(102, 102, 102); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 13px; font-weight: bold; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid; border-bottom-color: rgb(228, 228, 228); border-bottom-width: 1px; border-bottom-style: solid;" bgcolor="#fffedd">나쁜글 (4-2)</td>
-										                                    <td align="center" width="131" style="color: rgb(102, 102, 102); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 13px; font-weight: bold; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid; border-bottom-color: rgb(228, 228, 228); border-bottom-width: 1px; border-bottom-style: solid;" bgcolor="#fffedd">악성글 (1)</td>
-										                                    <td align="center" width="131" style="color: rgb(102, 102, 102); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 13px; font-weight: bold; border-bottom-color: rgb(228, 228, 228); border-bottom-width: 1px; border-bottom-style: solid;" bgcolor="#fffedd">합계</td></tr>
-										                                    <tr>
-									                                    </tr>
-									                                    <tr>
-									                                    <td align="center" height="28" style="color: rgb(102, 102, 102); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 13px; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid;"><fmt:formatNumber value="${textType.lik}" pattern="#,##0" /> 건 
-									                                    (<c:if test="${textType.lik != 0}">
-																		<fmt:parseNumber var="pages" integerOnly="true" value="${(textType.lik/textType.al) * 100}"></fmt:parseNumber>${pages}%
-																		</c:if>
-																		<c:if test="${textType.lik == 0}">0%</c:if>)</td>
-									                                    <td align="center" style="color: rgb(102, 102, 102); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 13px; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid;"><fmt:formatNumber value="${textType.cu}" pattern="#,##0" /> 건
-									                                    (<c:if test="${textType.cu != 0}">
-																		<fmt:parseNumber var="pages" integerOnly="true" value="${(textType.cu/textType.al) * 100}"></fmt:parseNumber>${pages}%
-																		</c:if>
-																		<c:if test="${textType.cu == 0}">0%</c:if>)</td>
-									                                    <td align="center" style="color: rgb(102, 102, 102); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 13px; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid;"><fmt:formatNumber value="${textType.dis}" pattern="#,##0" /> 건
-									                                    (<c:if test="${textType.dis != 0}">
-																		<fmt:parseNumber var="pages" integerOnly="true" value="${(textType.dis/textType.al) * 100}"></fmt:parseNumber>${pages}%
-																		</c:if>
-																		<c:if test="${textType.dis == 0}">0%</c:if>)</td>
-									                                    <td align="center" style="color: rgb(102, 102, 102); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 13px; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid;"><fmt:formatNumber value="${textType.etc}" pattern="#,##0" /> 건
-									                                    (<c:if test="${textType.etc != 0}">
-																		<fmt:parseNumber var="pages" integerOnly="true" value="${(textType.etc/textType.al) * 100}"></fmt:parseNumber>${pages}%
-																		</c:if>
-																		<c:if test="${textType.etc == 0}">0%</c:if>)</td>
-									                                    <td align="center" style="color: rgb(102, 102, 102); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 13px; font-weight: bold;"><fmt:formatNumber value="${textType.al}" pattern="#,##0" /> 건
-									                                    (<c:if test="${textType.al != 0}">
-																		100%
-																		</c:if>
-																		<c:if test="${textType.al == 0}">0%</c:if>)</td>
-																		</tr></tbody></table>
-									                                    </tr>
-									                                    <tr><td align="left" style="color: rgb(153, 153, 153); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 11px;">
-									  									</td>
-									  									</tr>
-									  									<tr>
-												                        <td align="center" height="20" style="color: rgb(78, 78, 78); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 14px; font-weight: bold;"></td>
-												                        </tr>
-												                        <tr>
-												                        <td align="center" height="47" style="border: 0px; border-image: none;">
-												                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
-											                              <tbody>
-											                              <c:forEach items="${scoreList}" var = "scoreList" varStatus="index">
-											                              <tr>
-											                              <td align="left" style="color: rgb(102, 102, 102);  font-family: Gulim,verdana; font-size: 12px;">
-											                              <div style="width: 150px; overflow: hidden; text-overflow: ellipsis;">
-											                              	<img align="absmiddle" width="3" height="3" src="http://file1.jobkorea.co.kr/Mailing/report/bullet.gif"> ${scoreList.writeDate}
-											                              	</div>
-											                              	</td>
-											                              <td align="left" style="color: rgb(102, 102, 102); line-height: 18px; letter-spacing: -1px; font-family: Gulim,verdana; font-size: 12px;">
-											                              <div style="width: 400px; overflow: hidden; text-overflow: ellipsis;">
-												                          	${scoreList.portal_title}
-												                          	</div>
-												                          </td>
-												                           </tr>
-												                           </c:forEach>
-												                           </tbody>
-												                           </table>
-												                           </td>
-												                           </tr>
-									  									</tbody></table></td></tr>
-									  									<tr>
-									  									<td align="left">
-									                              		<table width="100%" border="0" cellspacing="0" cellpadding="0">
-									                                    <tbody>
-									                                    <!-- 평점현황 end -->
-											                            <tr>
-									                              		<td height="25"></td>
-									                              		</tr>
-									                              		<tr>
-									                              		<td align="left">
-									                              		<table width="100%" border="0" cellspacing="0" cellpadding="0">
-									                                    <tbody>
-									                                    <tr>
-									                                    <td align="left" style="color: rgb(102, 102, 102); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 13px; font-weight: bold;">4.포털 / SNS 노출현황</td>
-									                                    <td align="right" style="color: rgb(102, 102, 102); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 11px;"></td>
-									                                    </tr>
-									                                    </tbody>
-									                                    </table></td>
-									                                    </tr>
-									                                    <tr>
-									                                    <td height="10"></td>
-									                                    </tr>
-									                                    <!-- 포털 / SNS 현황  start-->
+									                                    <!-- 포털 현황  start-->
 									                                    <tr>
 									                                    <td align="left" style="color: rgb(102, 102, 102); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 11px; font-weight: bold;"><img align="absmiddle" width="3" height="3" src="http://file1.jobkorea.co.kr/Mailing/report/bullet.gif"> 포털 현황 / NAVER</td>
-									                                    <td> </td><td align="left" style="color: rgb(102, 102, 102); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 11px; font-weight: bold;"><img align="absmiddle" width="3" height="3" src="http://file1.jobkorea.co.kr/Mailing/report/bullet.gif"> SNS 현황</td></tr>
+									                                    <td> </td><td align="left" style="color: rgb(102, 102, 102); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 11px; font-weight: bold;"><img align="absmiddle" width="3" height="3" src="http://file1.jobkorea.co.kr/Mailing/report/bullet.gif"> 포털 현황 / DAUM</td></tr>
 									                                    <td align="left" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
 								                                          <tbody><tr><td style="border: 1px solid rgb(228, 228, 228); border-image: none;"><table width="100%" border="0" cellspacing="0" cellpadding="0">
 								                                                <tbody><tr>
@@ -607,6 +436,95 @@
 								                                        <td align="left" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
 								                                          <tbody><tr><td style="border: 1px solid rgb(228, 228, 228); border-image: none;"><table width="100%" border="0" cellspacing="0" cellpadding="0">
 								                                          <tbody><tr>
+								                                          
+								                                          <td align="center" width="112" height="22" style="color: rgb(102, 102, 102); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 11px; font-weight: bold; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid;" bgcolor="#f7f7f7">분류</td>
+								                                                <td align="center" width="75" style="color: rgb(102, 102, 102); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 11px; font-weight: bold; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid;" bgcolor="#f7f7f7">검출량</td>
+								                                                <td align="center" style="color: rgb(102, 102, 102); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 11px; font-weight: bold;" bgcolor="#f7f7f7">비율</td></tr>
+								                                                <tr bgcolor="#e4e4e4"><td height="1" colspan="3"></td></tr>
+								                                                <tr>
+								                                                <td align="center" height="22" style="color: rgb(102, 102, 102); font-family: Gulim,verdana; font-size: 11px; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid;">블로그(Blog)</td>
+								                                                <c:forEach items="${daum1}" var="count">
+								                                                <td align="center" style="color: rgb(102, 102, 102); font-family: Gulim,verdana; font-size: 11px; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid;"><fmt:formatNumber value="${count.lik + count.dis + count.cu + count.etc}" pattern="#,##0" /></td>
+								                                                
+								                                                <td align="center" style="color: rgb(102, 102, 102); font-family: Gulim,verdana; font-size: 11px;">
+								                                                <c:if test="${count.lik + count.dis + count.cu + count.etc != 0}">
+								                                                <fmt:parseNumber var="pages" integerOnly="true" value="${(count.lik + count.dis + count.cu + count.etc)/daumCount * 100}"></fmt:parseNumber>${pages}%
+								                                                </c:if>
+								                                                <c:if test="${count.lik + count.dis + count.cu + count.etc == 0}">
+								                                                0%
+								                                                </c:if>
+								                                                
+								                                                </td>
+								                                                </c:forEach>
+								                                                </tr>
+								                                                <tr bgcolor="#e4e4e4"><td height="1" colspan="3"></td></tr><tr><td align="center" height="22" style="color: rgb(102, 102, 102); font-family: Gulim,verdana; font-size: 11px; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid;">카페(Cafe)</td>
+								                                                <c:forEach items="${daum2}" var="count">
+								                                                <td align="center" style="color: rgb(102, 102, 102); font-family: Gulim,verdana; font-size: 11px; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid;"><fmt:formatNumber value="${count.lik + count.dis + count.cu + count.etc}" pattern="#,##0" /></td>
+								                                                
+								                                                <td align="center" style="color: rgb(102, 102, 102); font-family: Gulim,verdana; font-size: 11px;">
+								                                                <c:if test="${count.lik + count.dis + count.cu + count.etc != 0}">
+								                                                <fmt:parseNumber var="pages" integerOnly="true" value="${(count.lik + count.dis + count.cu + count.etc)/daumCount * 100}"></fmt:parseNumber>${pages}%
+								                                                </c:if>
+								                                                <c:if test="${count.lik + count.dis + count.cu + count.etc == 0}">
+								                                                0%
+								                                                </c:if>
+								                                                </td>
+								                                                </c:forEach>
+								                                                </tr>
+								                                                <tr bgcolor="#e4e4e4"><td height="1" colspan="3"></td></tr><tr><td align="center" height="22" style="color: rgb(102, 102, 102); font-family: Gulim,verdana; font-size: 11px; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid;">Tip</td>
+								                                                <c:forEach items="${daum3}" var="count">
+								                                                <td align="center" style="color: rgb(102, 102, 102); font-family: Gulim,verdana; font-size: 11px; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid;"><fmt:formatNumber value="${count.lik + count.dis + count.cu + count.etc}" pattern="#,##0" /></td>
+								                                                
+								                                                <td align="center" style="color: rgb(102, 102, 102); font-family: Gulim,verdana; font-size: 11px;">
+								                                                <c:if test="${count.lik + count.dis + count.cu + count.etc != 0}">
+								                                                <fmt:parseNumber var="pages" integerOnly="true" value="${(count.lik + count.dis + count.cu + count.etc)/daumCount * 100}"></fmt:parseNumber>${pages}%
+								                                                </c:if>
+								                                                <c:if test="${count.lik + count.dis + count.cu + count.etc == 0}">
+								                                                0%
+								                                                </c:if>
+								                                                </td>
+								                                                </c:forEach>
+								                                                </tr>
+								                                                <tr bgcolor="#e4e4e4"><td height="1" colspan="3"></td></tr><tr><td align="center" height="22" style="color: rgb(102, 102, 102); font-family: Gulim,verdana; font-size: 11px; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid;">웹문서</td>
+								                                                <c:forEach items="${daum4}" var="count">
+								                                                <td align="center" style="color: rgb(102, 102, 102); font-family: Gulim,verdana; font-size: 11px; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid;"><fmt:formatNumber value="${count.lik + count.dis + count.cu + count.etc}" pattern="#,##0" /></td>
+								                                                
+								                                                <td align="center" style="color: rgb(102, 102, 102); font-family: Gulim,verdana; font-size: 11px;">
+								                                                <c:if test="${count.lik + count.dis + count.cu + count.etc != 0}">
+								                                                <fmt:parseNumber var="pages" integerOnly="true" value="${(count.lik + count.dis + count.cu + count.etc)/daumCount * 100}"></fmt:parseNumber>${pages}%
+								                                                </c:if>
+								                                                <c:if test="${count.lik + count.dis + count.cu + count.etc == 0}">
+								                                                0%
+								                                                </c:if>
+								                                                </td>
+								                                                </c:forEach>
+								                                                </tr>
+								                                                <tr bgcolor="#e4e4e4"><td height="1" colspan="3"></td>
+								                                                </tr>
+								                                                <tr>
+								                                                <td align="center" height="22" style="color: rgb(102, 102, 102); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 11px; font-weight: bold; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid;">합계</td>
+								                                                <td align="center" width="75" style="color: rgb(102, 102, 102); font-family: Gulim,verdana; font-size: 11px; font-weight: bold; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid;"><fmt:formatNumber value="${daumCount}" pattern="#,##0" /></td>
+								                                                <td align="center" style="color: rgb(102, 102, 102); font-family: Gulim,verdana; font-size: 11px; font-weight: bold;">
+								                                                <c:if test="${daumCount != 0}">
+								                                                100%
+								                                                </c:if>
+								                                                <c:if test="${daumCount == 0}">
+								                                                0%
+								                                                </c:if>
+								                                                </td>
+								                                          
+								                                          </tr></tbody></table></td></tr></tbody></table>
+								                                          </td>
+									                                    </tr>
+									                                    <!-- 포털 현황  end-->
+									                                    <td height="25"> </td>
+									                                    <!-- sns 현황 start-->
+									                                    <tr>
+									                                    <td align="left" style="color: rgb(102, 102, 102); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 11px; font-weight: bold;"><img align="absmiddle" width="3" height="3" src="http://file1.jobkorea.co.kr/Mailing/report/bullet.gif"> SNS 현황 / facebook</td>
+									                                    <td> </td><td align="left" style="color: rgb(102, 102, 102); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 11px; font-weight: bold;"><img align="absmiddle" width="3" height="3" src="http://file1.jobkorea.co.kr/Mailing/report/bullet.gif"> 커뮤니티 현황 / Community site</td></tr>
+									                                    <td align="left" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+								                                          <tbody><tr><td style="border: 1px solid rgb(228, 228, 228); border-image: none;"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+								                                                <tbody><tr>
 								                                                <td align="center" width="60" height="22" style="color: rgb(102, 102, 102); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 11px; font-weight: bold; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid;" bgcolor="#f7f7f7">분류</td>
 								                                                <td align="center" width="50" style="color: rgb(102, 102, 102); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 11px; font-weight: bold; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid;" bgcolor="#f7f7f7">좋아요</td>
 								                                                <td align="center" width="35" style="color: rgb(102, 102, 102); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 11px; font-weight: bold; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid;" bgcolor="#f7f7f7">공유</td>
@@ -752,10 +670,241 @@
 								                                                </td>
 								                                                </c:forEach>
 								                                                </tr></tbody></table></td></tr></tbody></table>
+								                                                </td>
+								                                                <td width="10"> </td>
+								                                                
+								                                        <td align="left" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+								                                          <tbody><tr><td style="border: 1px solid rgb(228, 228, 228); border-image: none;"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+								                                          <tbody><tr>
+								                                          
+								                                          <td align="center" width="112" height="22" style="color: rgb(102, 102, 102); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 11px; font-weight: bold; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid;" bgcolor="#f7f7f7">분류</td>
+								                                                <td align="center" width="75" style="color: rgb(102, 102, 102); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 11px; font-weight: bold; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid;" bgcolor="#f7f7f7">검출량</td>
+								                                                <td align="center" style="color: rgb(102, 102, 102); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 11px; font-weight: bold;" bgcolor="#f7f7f7">비율</td></tr>
+								                                                <tr bgcolor="#e4e4e4"><td height="1" colspan="3"></td></tr>
+								                                                <tr>
+								                                                <td align="center" height="22" style="color: rgb(102, 102, 102); font-family: Gulim,verdana; font-size: 11px; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid;">좋은글</td>
+								                                                <td align="center" style="color: rgb(102, 102, 102); font-family: Gulim,verdana; font-size: 11px; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid;"><fmt:formatNumber value="${type1}" pattern="#,##0" /></td>
+								                                                <td align="center" style="color: rgb(102, 102, 102); font-family: Gulim,verdana; font-size: 11px;">
+								                                                
+								                                                <c:if test="${type1 != 0}">
+								                                                <fmt:parseNumber var="pages" integerOnly="true" value="${type1/(type1+type2+type3+type4) * 100}"></fmt:parseNumber>${pages}%
+								                                                </c:if>
+								                                                <c:if test="${type1 == 0}">
+								                                                0%
+								                                                </c:if>
+								                                                
+								                                                </td>
+								                                                </tr>
+								                                                <tr bgcolor="#e4e4e4"><td height="1" colspan="5"></td></tr><tr><td align="center" height="22" style="color: rgb(102, 102, 102); font-family: Gulim,verdana; font-size: 11px; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid;">나쁜글</td>
+								                                                <td align="center" style="color: rgb(102, 102, 102); font-family: Gulim,verdana; font-size: 11px; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid;"><fmt:formatNumber value="${type2}" pattern="#,##0" /></td>
+								                                                <td align="center" style="color: rgb(102, 102, 102); font-family: Gulim,verdana; font-size: 11px;">
+								                                                <c:if test="${type2 != 0}">
+								                                                <fmt:parseNumber var="pages" integerOnly="true" value="${type2/(type1+type2+type3+type4) * 100}"></fmt:parseNumber>${pages}%
+								                                                </c:if>
+								                                                <c:if test="${type2 == 0}">
+								                                                0%
+								                                                </c:if>
+								                                                </td>
+								                                                </tr>
+								                                                <tr bgcolor="#e4e4e4"><td height="1" colspan="5"></td></tr><tr><td align="center" height="22" style="color: rgb(102, 102, 102); font-family: Gulim,verdana; font-size: 11px; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid;">관심글</td>
+								                                                <td align="center" style="color: rgb(102, 102, 102); font-family: Gulim,verdana; font-size: 11px; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid;"><fmt:formatNumber value="${type3}" pattern="#,##0" /></td>
+								                                                <td align="center" style="color: rgb(102, 102, 102); font-family: Gulim,verdana; font-size: 11px;">
+								                                                <c:if test="${type3 != 0}">
+								                                                <fmt:parseNumber var="pages" integerOnly="true" value="${type3/(type1+type2+type3+type4) * 100}"></fmt:parseNumber>${pages}%
+								                                                </c:if>
+								                                                <c:if test="${type3 == 0}">
+								                                                0%
+								                                                </c:if>
+								                                                </td>
+								                                                </tr>
+								                                                <tr bgcolor="#e4e4e4"><td height="1" colspan="5"></td></tr><tr><td align="center" height="22" style="color: rgb(102, 102, 102); font-family: Gulim,verdana; font-size: 11px; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid;">기타</td>
+								                                                <td align="center" style="color: rgb(102, 102, 102); font-family: Gulim,verdana; font-size: 11px; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid;"><fmt:formatNumber value="${type4}" pattern="#,##0" /></td>
+								                                                <td align="center" style="color: rgb(102, 102, 102); font-family: Gulim,verdana; font-size: 11px;">
+								                                                <c:if test="${type4 != 0}">
+								                                                <fmt:parseNumber var="pages" integerOnly="true" value="${type1/(type1+type2+type3+type4) * 100}"></fmt:parseNumber>${pages}%
+								                                                </c:if>
+								                                                <c:if test="${type4 == 0}">
+								                                                0%
+								                                                </c:if>
+								                                                </td>
+								                                                </tr>
+								                                                <tr bgcolor="#e4e4e4"><td height="1" colspan="5"></td>
+								                                                </tr>
+								                                                <tr>
+								                                                <td align="center" height="22" style="color: rgb(102, 102, 102); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 11px; font-weight: bold; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid;">합계</td>
+								                                                <td align="center" width="75" style="color: rgb(102, 102, 102); font-family: Gulim,verdana; font-size: 11px; font-weight: bold; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid;"><fmt:formatNumber value="${type1+type2+type3+type4}" pattern="#,##0" /></td>
+								                                                <td align="center" style="color: rgb(102, 102, 102); font-family: Gulim,verdana; font-size: 11px; font-weight: bold;">
+								                                                <c:if test="${type1+type2+type3+type4 != 0}">
+								                                                100%
+								                                                </c:if>
+								                                                <c:if test="${type1+type2+type3+type4 == 0}">
+								                                                0%
+								                                                </c:if>
+								                                                </td>
+								                                          
+								                                          </tr></tbody></table></td></tr></tbody></table>
+								                                          </td>
 									                                    </tr>
-									                                    <!-- 포털 현황  end-->
+									                                    <!-- sns 현황 end-->
 									                                    <td height="25"> </td>
-									                                    
+									                                    <!-- 언론사 현황 start-->
+									                                    <tr>
+									                                    <td align="left" style="color: rgb(102, 102, 102); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 11px; font-weight: bold;"><img align="absmiddle" width="3" height="3" src="http://file1.jobkorea.co.kr/Mailing/report/bullet.gif"> 언론사 현황 / NEWS</td>
+									                                    <td> </td><td align="left" style="color: rgb(102, 102, 102); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 11px; font-weight: bold;"><img align="absmiddle" width="3" height="3" src="http://file1.jobkorea.co.kr/Mailing/report/bullet.gif"> 평점현황</td></tr>
+									                                    <td align="left" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+								                                          <tbody><tr><td style="border: 1px solid rgb(228, 228, 228); border-image: none;"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+								                                                <tbody><tr>
+								                                                <td align="center" width="112" height="22" style="color: rgb(102, 102, 102); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 11px; font-weight: bold; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid;" bgcolor="#f7f7f7">분류</td>
+								                                                <td align="center" width="75" style="color: rgb(102, 102, 102); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 11px; font-weight: bold; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid;" bgcolor="#f7f7f7">검출량</td>
+								                                                <td align="center" style="color: rgb(102, 102, 102); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 11px; font-weight: bold;" bgcolor="#f7f7f7">비율</td></tr>
+								                                                <tr bgcolor="#e4e4e4"><td height="1" colspan="3"></td></tr>
+								                                                <tr>
+								                                                <td align="center" height="22" style="color: rgb(102, 102, 102); font-family: Gulim,verdana; font-size: 11px; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid;">좋은글</td>
+								                                                <c:forEach items="${mediaCnt}" var="count">
+								                                                <td align="center" style="color: rgb(102, 102, 102); font-family: Gulim,verdana; font-size: 11px; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid;"><fmt:formatNumber value="${count.lik}" pattern="#,##0" /></td>
+								                                                
+								                                                <td align="center" style="color: rgb(102, 102, 102); font-family: Gulim,verdana; font-size: 11px;">
+								                                                
+								                                                <c:if test="${count.lik != 0}">
+								                                                <fmt:parseNumber var="pages" integerOnly="true" value="${(count.lik/count.al) * 100}"></fmt:parseNumber>${pages}%
+								                                                </c:if>
+								                                                <c:if test="${count.lik == 0}">
+								                                                0%
+								                                                </c:if>
+								                                                
+								                                                </td>
+								                                                </c:forEach>
+								                                                </tr>
+								                                                <tr bgcolor="#e4e4e4"><td height="1" colspan="5"></td></tr><tr><td align="center" height="22" style="color: rgb(102, 102, 102); font-family: Gulim,verdana; font-size: 11px; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid;">나쁜글</td>
+								                                                <c:forEach items="${mediaCnt}" var="count">
+								                                                <td align="center" style="color: rgb(102, 102, 102); font-family: Gulim,verdana; font-size: 11px; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid;"><fmt:formatNumber value="${count.dis}" pattern="#,##0" /></td>
+								                                                
+								                                                <td align="center" style="color: rgb(102, 102, 102); font-family: Gulim,verdana; font-size: 11px;">
+								                                                <c:if test="${count.dis != 0}">
+								                                                <fmt:parseNumber var="pages" integerOnly="true" value="${(count.dis/count.al) * 100}"></fmt:parseNumber>${pages}%
+								                                                </c:if>
+								                                                <c:if test="${count.dis == 0}">
+								                                                0%
+								                                                </c:if>
+								                                                </td>
+								                                                </c:forEach>
+								                                                </tr>
+								                                                <tr bgcolor="#e4e4e4"><td height="1" colspan="5"></td></tr><tr><td align="center" height="22" style="color: rgb(102, 102, 102); font-family: Gulim,verdana; font-size: 11px; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid;">관심글</td>
+								                                                <c:forEach items="${mediaCnt}" var="count">
+								                                                <td align="center" style="color: rgb(102, 102, 102); font-family: Gulim,verdana; font-size: 11px; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid;"><fmt:formatNumber value="${count.cu}" pattern="#,##0" /></td>
+								                                                
+								                                                <td align="center" style="color: rgb(102, 102, 102); font-family: Gulim,verdana; font-size: 11px;">
+								                                                <c:if test="${count.cu != 0}">
+								                                                <fmt:parseNumber var="pages" integerOnly="true" value="${(count.cu/count.al) * 100}"></fmt:parseNumber>${pages}%
+								                                                </c:if>
+								                                                <c:if test="${count.cu == 0}">
+								                                                0%
+								                                                </c:if>
+								                                                </td>
+								                                                </c:forEach>
+								                                                </tr>
+								                                                <tr bgcolor="#e4e4e4"><td height="1" colspan="5"></td></tr><tr><td align="center" height="22" style="color: rgb(102, 102, 102); font-family: Gulim,verdana; font-size: 11px; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid;">기타</td>
+								                                                <c:forEach items="${mediaCnt}" var="count">
+								                                                <td align="center" style="color: rgb(102, 102, 102); font-family: Gulim,verdana; font-size: 11px; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid;"><fmt:formatNumber value="${count.etc}" pattern="#,##0" /></td>
+								                                                
+								                                                <td align="center" style="color: rgb(102, 102, 102); font-family: Gulim,verdana; font-size: 11px;">
+								                                                <c:if test="${count.etc != 0}">
+								                                                <fmt:parseNumber var="pages" integerOnly="true" value="${(count.etc/count.al) * 100}"></fmt:parseNumber>${pages}%
+								                                                </c:if>
+								                                                <c:if test="${count.etc == 0}">
+								                                                0%
+								                                                </c:if>
+								                                                </td>
+								                                                </c:forEach>
+								                                                </tr>
+								                                                <tr bgcolor="#e4e4e4"><td height="1" colspan="5"></td>
+								                                                </tr>
+								                                                <tr>
+								                                                <td align="center" height="22" style="color: rgb(102, 102, 102); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 11px; font-weight: bold; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid;">합계</td>
+								                                                <c:forEach items="${mediaCnt}" var="count">
+								                                                <td align="center" width="75" style="color: rgb(102, 102, 102); font-family: Gulim,verdana; font-size: 11px; font-weight: bold; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid;"><fmt:formatNumber value="${count.al}" pattern="#,##0" /></td>
+								                                                
+								                                                <td align="center" style="color: rgb(102, 102, 102); font-family: Gulim,verdana; font-size: 11px; font-weight: bold;">
+								                                                <c:if test="${count.al != 0}">
+								                                                100%
+								                                                </c:if>
+								                                                <c:if test="${count.al == 0}">
+								                                                0%
+								                                                </c:if>
+								                                                </td>
+								                                                </c:forEach></tr></tbody></table></td></tr></tbody></table>
+								                                                </td>
+								                                                <td width="10"> </td>
+								                                                
+								                                        <td align="left" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+								                                          <tbody><tr><td style="border: 1px solid rgb(228, 228, 228); border-image: none;"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+								                                          <tbody>
+								                                          <tr>
+								                                          <td align="center" width="112" height="22" style="color: rgb(102, 102, 102); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 11px; font-weight: bold; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid;" bgcolor="#f7f7f7">분류</td>
+								                                                <td align="center" width="75" style="color: rgb(102, 102, 102); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 11px; font-weight: bold; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid;" bgcolor="#f7f7f7">검출량</td>
+								                                                <td align="center" style="color: rgb(102, 102, 102); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 11px; font-weight: bold;" bgcolor="#f7f7f7">비율</td></tr>
+								                                                <tr bgcolor="#e4e4e4"><td height="1" colspan="3"></td></tr>
+								                                                <tr>
+								                                                <td align="center" height="22" style="color: rgb(102, 102, 102); font-family: Gulim,verdana; font-size: 11px; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid;">좋은글(10~8)</td>
+								                                                <td align="center" style="color: rgb(102, 102, 102); font-family: Gulim,verdana; font-size: 11px; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid;"><fmt:formatNumber value="${textType.lik}" pattern="#,##0" /></td>
+								                                                <td align="center" style="color: rgb(102, 102, 102); font-family: Gulim,verdana; font-size: 11px;">
+								                                                <c:if test="${textType.lik != 0}">
+								                                                <fmt:parseNumber var="pages" integerOnly="true" value="${(textType.lik/textType.al) * 100}"></fmt:parseNumber>${pages}%
+								                                                </c:if>
+								                                                <c:if test="${textType.lik == 0}">
+								                                                0%
+								                                                </c:if>
+								                                                </td>
+								                                                </tr>
+								                                                <tr bgcolor="#e4e4e4"><td height="1" colspan="5"></td></tr><tr><td align="center" height="22" style="color: rgb(102, 102, 102); font-family: Gulim,verdana; font-size: 11px; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid;">관심글(7~5)</td>
+								                                                <td align="center" style="color: rgb(102, 102, 102); font-family: Gulim,verdana; font-size: 11px; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid;"><fmt:formatNumber value="${textType.cu}" pattern="#,##0" /></td>
+								                                                <td align="center" style="color: rgb(102, 102, 102); font-family: Gulim,verdana; font-size: 11px;">
+								                                                <c:if test="${textType.cu != 0}">
+								                                                <fmt:parseNumber var="pages" integerOnly="true" value="${(textType.cu/textType.al) * 100}"></fmt:parseNumber>${pages}%
+								                                                </c:if>
+								                                                <c:if test="${textType.cu == 0}">
+								                                                0%
+								                                                </c:if>
+								                                                </td>
+								                                                </tr>
+								                                                <tr bgcolor="#e4e4e4"><td height="1" colspan="5"></td></tr><tr><td align="center" height="22" style="color: rgb(102, 102, 102); font-family: Gulim,verdana; font-size: 11px; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid;">나쁜글(4~2)</td>
+								                                                <td align="center" style="color: rgb(102, 102, 102); font-family: Gulim,verdana; font-size: 11px; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid;"><fmt:formatNumber value="${textType.dis}" pattern="#,##0" /></td>
+								                                                <td align="center" style="color: rgb(102, 102, 102); font-family: Gulim,verdana; font-size: 11px;">
+								                                                <c:if test="${textType.dis != 0}">
+								                                                <fmt:parseNumber var="pages" integerOnly="true" value="${(textType.dis/textType.al) * 100}"></fmt:parseNumber>${pages}%
+								                                                </c:if>
+								                                                <c:if test="${textType.dis == 0}">
+								                                                0%
+								                                                </c:if>
+								                                                </td>
+								                                                </tr>
+								                                                <tr bgcolor="#e4e4e4"><td height="1" colspan="5"></td></tr><tr><td align="center" height="22" style="color: rgb(102, 102, 102); font-family: Gulim,verdana; font-size: 11px; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid;">악성글(1)</td>
+								                                                <td align="center" style="color: rgb(102, 102, 102); font-family: Gulim,verdana; font-size: 11px; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid;"><fmt:formatNumber value="${textType.etc}" pattern="#,##0" /></td>
+								                                                <td align="center" style="color: rgb(102, 102, 102); font-family: Gulim,verdana; font-size: 11px;">
+								                                                <c:if test="${textType.etc != 0}">
+								                                                <fmt:parseNumber var="pages" integerOnly="true" value="${(textType.dis/textType.al) * 100}"></fmt:parseNumber>${pages}%
+								                                                </c:if>
+								                                                <c:if test="${textType.etc == 0}">
+								                                                0%
+								                                                </c:if>
+								                                                </td>
+								                                                </tr>
+								                                                <tr bgcolor="#e4e4e4"><td height="1" colspan="5"></td>
+								                                                </tr>
+								                                                <tr>
+								                                                <td align="center" height="22" style="color: rgb(102, 102, 102); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 11px; font-weight: bold; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid;">합계</td>
+								                                                <td align="center" width="75" style="color: rgb(102, 102, 102); font-family: Gulim,verdana; font-size: 11px; font-weight: bold; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid;"><fmt:formatNumber value="${textType.al}" pattern="#,##0" /></td>
+								                                                <td align="center" style="color: rgb(102, 102, 102); font-family: Gulim,verdana; font-size: 11px; font-weight: bold;">
+								                                                <c:if test="${textType.al != 0}">
+								                                                100%
+								                                                </c:if>
+								                                                <c:if test="${textType.al == 0}">
+								                                                0%
+								                                                </c:if>
+								                                                </td>
+								                                          </tr>
+								                                          </tbody></table></td></tr></tbody></table></td></tbody></table>
+								                                          </td>
 									                                    </tr>
 									                                    <td height="25"> </td>
 									                                    <!-- 언론사 현황 end-->
@@ -790,11 +939,15 @@
   												</table>
   												<!-- 복사 끝 -->
   											</div>
+  										</div>
+  									</div>
+  								</div>
   							</div>
   						</div>
                         <!-- tab-content end -->
                       </div>
-                    </div></div></div></div></div>
+                    </div>
+                  </div>
                   <!-- page-body end -->
                 </div>
               </div>
@@ -1041,21 +1194,6 @@ $(function() {
 		   console.log("endDate: " + endDate);
 
 		   searchList();
-	});
-	
-	// 수정 버튼 클릭
-	$(".edit-button").on("click", function(event){
-		
-		var writeDate= $('input[name=writeDate]').val();
-		
-		console.log("writeDate:" + writeDate);
-		
-		self.location = "report_update?company="
-				+ decodeURI(window.location.href.split("company=")[1]).split("&")[0].split(" ")[0]
-				+ "&selectKey="
-				+ decodeURI(window.location.href.split("selectKey=")[1]).split("&")[0].split(" ")[0]
-				+ "&writeDate=" + writeDate;
-
 	});
 	
 	// 복사  클릭시

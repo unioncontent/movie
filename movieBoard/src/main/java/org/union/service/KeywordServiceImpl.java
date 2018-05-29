@@ -5,8 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.union.domain.ExtractVO;
+import org.union.domain.IssueVO;
 import org.union.domain.KeywordListVO;
 import org.union.domain.KeywordVO;
+import org.union.domain.SearchCriteria;
 import org.union.domain.SwearwordVO;
 import org.union.domain.UserVO;
 import org.union.persistence.KeywordDAO;
@@ -206,7 +208,39 @@ public class KeywordServiceImpl implements KeywordService{
 		
 	}
 
-	
+	@Override
+	public List<KeywordVO> keywordGetList(SearchCriteria cri) {
 
+		return keywordDAO.keywordGetList(cri);
+	}
 
+	@Override
+	public void createIssue(IssueVO vo) {
+
+		keywordDAO.createIssue(vo);
+	}
+
+	@Override
+	public List<IssueVO> issueList(SearchCriteria cri) {
+
+		return keywordDAO.issueList(cri);
+	}
+
+	@Override
+	public List<IssueVO> issueUpList(SearchCriteria cri) {
+
+		return keywordDAO.issueUpList(cri);
+	}
+
+	@Override
+	public void issueUpdate(IssueVO vo) {
+
+		keywordDAO.issueUpdate(vo);
+	}
+
+	@Override
+	public void issueDelete(Integer issue_idx) {
+
+		keywordDAO.issueDelete(issue_idx);
+	}
 }

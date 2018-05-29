@@ -8,6 +8,7 @@ import org.union.domain.FvVO;
 import org.union.domain.GraphVO;
 import org.union.domain.NvVO;
 import org.union.domain.PortalVO;
+import org.union.domain.ScoreVO;
 import org.union.domain.SearchCriteria;
 import org.union.domain.SearchFv;
 import org.union.domain.TextTypeDateVO;
@@ -118,4 +119,5 @@ public interface PortalDAO {
 	public Integer graphNaverCount(SearchCriteria cri);
 	public Integer graphDaumCount(SearchCriteria cri);
 	
+	public List<ScoreVO> scoreListReport(SearchCriteria cri);
 }
