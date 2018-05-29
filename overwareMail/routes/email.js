@@ -31,6 +31,7 @@ var isAuthenticated = function (req, res, next) {
   res.redirect('/login');
 };
 
+// 메일 작성 페이지
 router.get('/',isAuthenticated, async function(req, res) {
   var searchParam = [req.user.n_idx,0,10];
   if(req.user.user_admin != null){
@@ -67,40 +68,41 @@ router.get('/',isAuthenticated, async function(req, res) {
   res.render('email',data);
 });
 
-router.get('/body',async function(req, res) {
-  if(!('keyword' in req.query) && !('idx' in req.query)){
-    res.render('emailBody',{layout: false,veiw: '',pastView: [{keyword:''}],pastCount: 0,msg: '주소에 조건이 없습니다.\n주소를 다시 작성해주세요.',currentPage: 1,keyword: '',idx: ''});
-    return false;
-  }
-  if(!('page' in req.query)){
-    req.query.page = 1;
-  }
-  var viewCode = await mailAllA.selectEmailOneView(req.query.idx);
-  var sideHtmlStart = '<table width="750" align="center" cellpadding="0" cellspacing="0" style="border: solid 1px #cacaca; padding: 20px;"><tbody><tr><td><table width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td width="642"><img src="http://showbox.email/templates/images/logo/show_logo.png" width="135" height="36" alt="로고"></td><td width="92">NEWS No.';
-  sideHtmlStart+= ((viewCode.length == 0) ? '' : viewCode[0].M_seq_number)+'</td></tr></tbody></table><table width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td>';
-  var sideHtmlEnd = '</td></tr></tbody></table></td></tr></tbody></table>';
-  var pastParam = {keyword:req.query.keyword,page:req.query.page};
-  var pastNews = await content.selectView(pastParam);
-  var pastNewsCount = await content.selectViewCount(pastParam);
-  var data = {
-    layout: false,
-    veiw:(viewCode.length == 0) ? '' : sideHtmlStart+viewCode[0].M_body+sideHtmlEnd,
-    pastView:pastNews,
-    pastCount: (pastNewsCount.length == 0) ? '':pastNewsCount[0].total,
-    msg: '',
-    currentPage: 1,
-    keyword:req.query.keyword,
-    idx:req.query.idx
-  };
-  if(viewCode.length == 0){
-    data.msg = '해당 메일이 없습니다.';
-  }
-  if('page' in req.query){
-    data.currentPage = req.query.page;
-  }
-  res.render('emailBody',data);
-});
+// router.get('/body',async function(req, res) {
+//   if(!('keyword' in req.query) && !('idx' in req.query)){
+//     res.render('emailBody',{layout: false,veiw: '',pastView: [{keyword:''}],pastCount: 0,msg: '주소에 조건이 없습니다.\n주소를 다시 작성해주세요.',currentPage: 1,keyword: '',idx: ''});
+//     return false;
+//   }
+//   if(!('page' in req.query)){
+//     req.query.page = 1;
+//   }
+//   var viewCode = await mailAllA.selectEmailOneView(req.query.idx);
+//   var sideHtmlStart = '<table width="750" align="center" cellpadding="0" cellspacing="0" style="border: solid 1px #cacaca; padding: 20px;"><tbody><tr><td><table width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td width="642"><img src="http://showbox.email/templates/images/logo/show_logo.png" width="135" height="36" alt="로고"></td><td width="92">NEWS No.';
+//   sideHtmlStart+= ((viewCode.length == 0) ? '' : viewCode[0].M_seq_number)+'</td></tr></tbody></table><table width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td>';
+//   var sideHtmlEnd = '</td></tr></tbody></table></td></tr></tbody></table>';
+//   var pastParam = {keyword:req.query.keyword,page:req.query.page};
+//   var pastNews = await content.selectView(pastParam);
+//   var pastNewsCount = await content.selectViewCount(pastParam);
+//   var data = {
+//     layout: false,
+//     veiw:(viewCode.length == 0) ? '' : sideHtmlStart+viewCode[0].M_body+sideHtmlEnd,
+//     pastView:pastNews,
+//     pastCount: (pastNewsCount.length == 0) ? '':pastNewsCount[0].total,
+//     msg: '',
+//     currentPage: 1,
+//     keyword:req.query.keyword,
+//     idx:req.query.idx
+//   };
+//   if(viewCode.length == 0){
+//     data.msg = '해당 메일이 없습니다.';
+//   }
+//   if('page' in req.query){
+//     data.currentPage = req.query.page;
+//   }
+//   res.render('emailBody',data);
+// });
 
+// 메일 관리 페이지
 router.get('/manage',isAuthenticated, async function(req, res) {
   var data = await getListPageData(req.user.n_idx,req.query);
   data.klist = await keyword.selectMovieKwdAll(req.user.user_admin,req.user.n_idx) || [];
@@ -325,37 +327,28 @@ async function asyncFileRemove(dateF,fileArr){
   });
 }
 
-router.post('/send/result',async function(req, res) {
-  console.log('POST /send/result값 : ',req.body);
-  await mailAllA.updateResult([req.body.Success,req.body.Failed,req.body.ID]);
-
-  // 파일 삭제
-  // var result = await mailAllA.selectfile([req.body.ID]);
-  // console.log(result)
-  // if(result.length > 0){
-  //   if(result[0].M_file != null){
-  //     var removeFileArr = result[0].M_file.split("|");
-  //     console.log('before file list');
-  //     console.log(getFiles('/home/hosting_users/unioncmail/apps/unioncmail_unioncmail/public/uploads/files/'+result[0].dateFile));
-  //     console.log('--------------------');
-  //     asyncFileRemove(result[0].dateFile,removeFileArr);
-  //   }
-  // }
-
-  await asyncForEach(req.body.Recipients, async (item, index, array) => {
-    var result = await mailDetailB.updateResult2([item.SmtpCode,item.SmtpMsg,req.body.ID],item.Email);
-    console.log('updateResult2:',result);
-  });
-  var result = await mailDetailB.selectCounResult(req.body.ID);
-  console.log('selectCounResult:',result);
-  if(result.length > 0){
-    if(parseInt(result[0].s) != parseInt(req.body.Success) || parseInt(result[0].f) != parseInt(req.body.Failed)){
-      await mailAllA.updateResult([result[0].s,result[0].f,req.body.ID]);
-    }
+// 메일 링크 로직
+router.post('/send2',isAuthenticated, async function(req, res) {
+  // 메일 보내기
+  var result = await maillinkInsert({idx:req.body.idx,user:req.user});
+  if(result){
+    res.status(500).send('메일 발송에 실패했습니다.');
+    return false;
   }
-  res.send('true');
+  // 메일 결과
+  setTimeout(async () =>{
+    console.log('메일 send result');
+    var result = await maillink.selectResult([req.body.idx]);
+    if(result){
+      await mailDetailB.updateSendDateResult(req.body.idx);
+      res.send({status:true});
+    }
+    else{
+      res.status(500).send('메일 발송에 실패했습니다.');
+    }
+  },5000);
 });
-
+// 메일 작성 완료 로직
 router.post('/save',isAuthenticated, async function(req, res) {
   console.log('mail save req.body: ',req.body);
   // 이메일 발송
@@ -496,28 +489,7 @@ router.post('/save',isAuthenticated, async function(req, res) {
 
   res.send({status:true});
 });
-
-router.post('/send2',isAuthenticated, async function(req, res) {
-  // 메일 보내기
-  var result = await maillinkInsert({idx:req.body.idx,user:req.user});
-  if(result){
-    res.status(500).send('메일 발송에 실패했습니다.');
-    return false;
-  }
-  // 메일 결과
-  setTimeout(async () =>{
-    console.log('메일 send result');
-    var result = await maillink.selectResult([req.body.idx]);
-    if(result){
-      await mailDetailB.updateSendDateResult(req.body.idx);
-      res.send({status:true});
-    }
-    else{
-      res.status(500).send('메일 발송에 실패했습니다.');
-    }
-  },5000);
-});
-
+// 메일 다시보내기 로직
 router.post('/resend',isAuthenticated, async function(req, res) {
   var result = await maillinkInsert({idx:req.body.idx,type:'resend',user:req.user});
   if(result){
@@ -538,6 +510,7 @@ router.post('/resend',isAuthenticated, async function(req, res) {
   },5000);
 });
 
+// 메일 나라 로직
 router.post('/send',isAuthenticated, async function(req, res) {
   console.log('mail send req.body: ',req.body);
   // 보낼 메일 data 가져오기
@@ -623,6 +596,37 @@ router.post('/send',isAuthenticated, async function(req, res) {
     errorMsg = resultEmail[2];
   }
   await mailDetailB.updateResult([resultEmail[1],errorMsg,param['unique_id']]);
+});
+
+router.post('/send/result',async function(req, res) {
+  console.log('POST /send/result값 : ',req.body);
+  await mailAllA.updateResult([req.body.Success,req.body.Failed,req.body.ID]);
+
+  // 파일 삭제
+  // var result = await mailAllA.selectfile([req.body.ID]);
+  // console.log(result)
+  // if(result.length > 0){
+  //   if(result[0].M_file != null){
+  //     var removeFileArr = result[0].M_file.split("|");
+  //     console.log('before file list');
+  //     console.log(getFiles('/home/hosting_users/unioncmail/apps/unioncmail_unioncmail/public/uploads/files/'+result[0].dateFile));
+  //     console.log('--------------------');
+  //     asyncFileRemove(result[0].dateFile,removeFileArr);
+  //   }
+  // }
+
+  await asyncForEach(req.body.Recipients, async (item, index, array) => {
+    var result = await mailDetailB.updateResult2([item.SmtpCode,item.SmtpMsg,req.body.ID],item.Email);
+    console.log('updateResult2:',result);
+  });
+  var result = await mailDetailB.selectCounResult(req.body.ID);
+  console.log('selectCounResult:',result);
+  if(result.length > 0){
+    if(parseInt(result[0].s) != parseInt(req.body.Success) || parseInt(result[0].f) != parseInt(req.body.Failed)){
+      await mailAllA.updateResult([result[0].s,result[0].f,req.body.ID]);
+    }
+  }
+  res.send('true');
 });
 
 async function settingMailBody(bodyHtml,keyword,idx,num){
@@ -884,6 +888,9 @@ router.post('/send/file',uploadFile.single('file'),function(req, res) {
   var result = req.file.destination.replace('public/uploads/files/','')+'/'+req.file.filename.split('.')[0];
   res.send({location:'http://showbox.email/period/download/'+result});
 });
+
+module.exports = router;
+
 // 첨부파일 upload 및 path get(사용안하고 있음)
 // var storageFiles = multer.diskStorage({
 //   destination: async function (req, file, cb) {
@@ -953,4 +960,3 @@ router.post('/send/file',uploadFile.single('file'),function(req, res) {
 //   }
 //   res.render('email_input',data);
 // });
-module.exports = router;
