@@ -3,14 +3,14 @@ tinymce.init({
   selector: 'textarea',
   theme: 'modern',
   height: 600,
-  language:'ko_KR',
+  // language:'ko_KR',
   mobile: {
     theme: 'mobile',
     plugins: [ 'autosave', 'lists', 'autolink'],
     toolbar: [ 'undo', 'bold', 'italic', 'styleselect', 'image' ]
   },
-  plugins: 'print fullpage searchreplace autolink directionality visualblocks visualchars fullscreen image link media code table charmap hr insertdatetime advlist lists textcolor wordcount imagetools contextmenu colorpicker',
-  toolbar: 'undo redo | fontselect fontsizeselect spaceline | bold italic forecolor backcolor |  image media fileUpload | alignleft aligncenter alignright alignjustify |  numlist bullist outdent indent | removeformat | help',
+  plugins: 'print fullpage searchreplace autolink directionality visualblocks visualchars fullscreen image link media mediaembed code table charmap hr insertdatetime advlist lists textcolor wordcount imagetools contextmenu colorpicker',
+  toolbar: 'undo redo | fontselect fontsizeselect spaceline | bold italic forecolor backcolor |  image media mediaembed fileUpload | alignleft aligncenter alignright alignjustify |  numlist bullist outdent indent | removeformat | help',
   font_formats : '굴림=Gulim;돋움=Dotum;바탕=Batang;궁서=Gungsuh;나눔고딕=nanumgothic;나눔바른고딕=nanumbarungothic;',
   fontsize_formats: "8px 10px 12px 14px 18px 24px 36px",
   image_advtab: true,
