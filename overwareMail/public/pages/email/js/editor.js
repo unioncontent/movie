@@ -3,14 +3,14 @@ tinymce.init({
   selector: 'textarea',
   theme: 'modern',
   height: 600,
-  // language:'ko_KR',
+  language:'ko_KR',
   mobile: {
     theme: 'mobile',
     plugins: [ 'autosave', 'lists', 'autolink'],
     toolbar: [ 'undo', 'bold', 'italic', 'styleselect', 'image' ]
   },
-  plugins: 'print fullpage searchreplace autolink directionality visualblocks visualchars fullscreen image link media mediaembed code table charmap hr insertdatetime advlist lists textcolor wordcount imagetools contextmenu colorpicker',
-  toolbar: 'undo redo | fontselect fontsizeselect spaceline | bold italic forecolor backcolor |  image media mediaembed fileUpload | alignleft aligncenter alignright alignjustify |  numlist bullist outdent indent | removeformat | help',
+  plugins: 'print fullpage searchreplace autolink directionality visualblocks visualchars fullscreen image link media code table charmap hr insertdatetime advlist lists textcolor wordcount imagetools contextmenu colorpicker',
+  toolbar: 'undo redo | fontselect fontsizeselect spaceline | bold italic forecolor backcolor |  image media fileUpload | alignleft aligncenter alignright alignjustify |  numlist bullist outdent indent | removeformat | help',
   font_formats : '굴림=Gulim;돋움=Dotum;바탕=Batang;궁서=Gungsuh;나눔고딕=nanumgothic;나눔바른고딕=nanumbarungothic;',
   fontsize_formats: "8px 10px 12px 14px 18px 24px 36px",
   image_advtab: true,
@@ -23,7 +23,6 @@ tinymce.init({
   media_live_embeds: true,
   media_poster: false,
   media_alt_source: false,
-  extended_valid_elements : 'embed[id|style|width|height|type|src|*]',
   media_url_resolver: function (data, resolve) {
     var aTagHref = data.url;
     if(data.url.indexOf('/watch?v=') != -1 && data.url.indexOf('www.youtube.com') != -1){
@@ -34,9 +33,9 @@ tinymce.init({
       data.url = data.url.replace('https://youtu.be/','https://www.youtube.com/v/');
       // data.url = data.url.replace('https://youtu.be/','https://www.youtube.com/embed/');
     }
-    var embedHtml = '<div style="text-align: center;">\
-    <iframe  src="'+ data.url +'" width="640" height="360" width="640" height="360" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true"></iframe>\
-    <p style="text-align: center;">영상이 안 보이는 경우 <a target="_blank" href="'+ aTagHref +'">여기</a>를 눌러 주세요</p></div><p>﻿﻿<br></p>';
+    var embedHtml = '<div style="position: relative; text-align: center;">\
+    <iframe  src="'+ data.url +'" width="640" height="360"></iframe>\
+    <p style="text-align: center;">영상이 안 보이는 경우 <a target="_blank" href="'+ aTagHref +'">여기</a>를 눌러 주세요</p></div>';
     resolve({html: embedHtml});
     // if (data.url.indexOf('YOUR_SPECIAL_VIDEO_URL') !== -1) {
     // } else {
