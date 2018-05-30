@@ -1109,7 +1109,7 @@
  	
  	<select id="headlineList" resultType="MediaVO">
  		select 
-			DATE_FORMAT(writeDate,'%Y-%m-%d')as writeDate,DATE_FORMAT(createDate,'%Y-%m-%d')as createDate, media_title
+			DATE_FORMAT(writeDate,'%Y-%m-%d')as writeDate,DATE_FORMAT(createDate,'%Y-%m-%d')as createDate, media_title,url
 		from 
 			headline_data
 		where
