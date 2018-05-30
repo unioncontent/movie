@@ -11,7 +11,7 @@
       <a class="mobile-menu" id="mobile-collapse" href="#!">
         <i class="ti-menu"></i>
       </a>
-      <a href="../dashBoard/dashBoard">
+      <a href="../dashBoard/dashBoard_main">
         <img class="img-fluid" src="../assets/images/logo.png" alt="Theme-Logo" style='margin-top: 3px;'/>
       </a>
       <a class="mobile-options">
