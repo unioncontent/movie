@@ -23,17 +23,20 @@ tinymce.init({
   media_live_embeds: true,
   media_poster: false,
   media_alt_source: false,
-  // extended_valid_elements : 'embed[id|style|width|height|type|src|*]',
+  extended_valid_elements : 'embed[id|style|width|height|type|src|*]',
   media_url_resolver: function (data, resolve) {
+    var aTagHref = data.url;
     if(data.url.indexOf('/watch?v=') != -1 && data.url.indexOf('www.youtube.com') != -1){
-      data.url = data.url.replace('/watch?v=','/embed/');
+      data.url = data.url.replace('/watch?v=','/v/');
+      // data.url = data.url.replace('/watch?v=','/embed/');
     }
     else if(data.url.indexOf('https://youtu.be/') != -1 && data.url.indexOf('/watch?v=') == -1 && data.url.indexOf('/embed/') == -1){
-      data.url = data.url.replace('https://youtu.be/','https://www.youtube.com/embed/');
+      data.url = data.url.replace('https://youtu.be/','https://www.youtube.com/v/');
+      // data.url = data.url.replace('https://youtu.be/','https://www.youtube.com/embed/');
     }
-    var embedHtml = '<p style="text-align: center;">\
-    <iframe  src="'+ data.url +'" width="640" height="360" allowfullscreen="allowfullscreen" data-mce-fragment="1"></iframe>\
-    <p style="text-align: center;">영상이 안 보이는 경우 <a target="_blank" href="'+ data.url +'">여기</a>를 눌러 주세요</p></p><p>﻿﻿<br></p>';
+    var embedHtml = '<div style="text-align: center;">\
+    <iframe  src="'+ data.url +'" width="640" height="360" width="640" height="360" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true"></iframe>\
+    <p style="text-align: center;">영상이 안 보이는 경우 <a target="_blank" href="'+ aTagHref +'">여기</a>를 눌러 주세요</p></div><p>﻿﻿<br></p>';
     resolve({html: embedHtml});
     // if (data.url.indexOf('YOUR_SPECIAL_VIDEO_URL') !== -1) {
     // } else {
@@ -264,7 +267,9 @@ function setContent(){
 }
 
 function get_tinymce_html_content(){
-  return tinyMCE.activeEditor.getBody().innerHTML
+  var html = tinyMCE.activeEditor.getBody().innerHTML;
+  html = html.replace(/<iframe/g,'<embed').replace(/iframe>/g,'embed>');
+  return html;
 }
 
 // 파일 업로드 js
