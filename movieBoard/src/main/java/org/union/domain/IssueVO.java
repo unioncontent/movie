@@ -13,6 +13,8 @@ public class IssueVO {
 	private String issue_content;
 	private String writeDate;
 	private Date createDate;
+	private String company;
+	private String selectKey;
 	
 	public Integer getIssue_idx() {
 		return issue_idx;
@@ -56,10 +58,22 @@ public class IssueVO {
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
 	}
+	public String getCompany() {
+		return company;
+	}
+	public void setCompany(String company) {
+		this.company = company;
+	}
+	public String getSelectKey() {
+		return selectKey;
+	}
+	public void setSelectKey(String selectKey) {
+		this.selectKey = selectKey;
+	}
 	@Override
 	public String toString() {
 		return "IssueVO [issue_idx=" + issue_idx + ", company_name=" + company_name + ", title_key=" + title_key
 				+ ", keyword=" + keyword + ", issue_content=" + issue_content + ", writeDate=" + writeDate
-				+ ", createDate=" + createDate + "]";
+				+ ", createDate=" + createDate + ", company=" + company + ", selectKey=" + selectKey + "]";
 	}
 }

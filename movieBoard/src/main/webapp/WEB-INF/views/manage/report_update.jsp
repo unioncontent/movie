@@ -89,7 +89,7 @@
                             <i class="icofont icofont-home"></i>
                           </a>
                         </li>
-                        <li class="breadcrumb-item"><a href="http://localhost:8080/manage/report_edit">보고서작성</a>
+                        <li class="breadcrumb-item"><a href="http://overware.iptime.org:8080/manage/report_update">보고서수정</a>
                       </ul>
                     </div>
                   </div>
@@ -495,14 +495,15 @@ $(document).ready(function(){
 					  data : {issue_idx : idx},
 					  dataType: "json",
 				 	  success : function(data){
-				 	  		if(data == "success"){
+				 	  		/* if(data == "success"){
 								location.reload();
-				 	  		}
+				 	  		} */
 
 				 	  	}
 					});
 
 					swal("Success!", "삭제처리가 완료되었습니다.", "success");
+					location.reload();
 				});
 
 
@@ -528,7 +529,11 @@ $(document).ready(function(){
 				closeOnConfirm: false
 			},
 			function(){
-
+	
+				var company = decodeURI(window.location.href.split("company=")[1]).split("&")[0].split(" ")[0];
+				var selectKey = decodeURI(window.location.href.split("selectKey=")[1]).split("&")[0].split(" ")[0];
+				var startDate = decodeURI(window.location.href.split("startDate=")[1]).split("&")[0].split(" ")[0];
+				var endDate = decodeURI(window.location.href.split("endDate=")[1]).split("&")[0].split(" ")[0];
 				
 				for(var i = 0; i < tr.length; i++){
 					var issue_idx = tr[i].children[0].value;
@@ -542,15 +547,17 @@ $(document).ready(function(){
 					  	dataType: "json",
 				 	  	success : function(data){
 
-				 	  		if(data == "success"){
+				 	  		/* if(data == "success"){
 				 	  			location.reload();
-				 	  		}
+				 	  		} */
 
 				 	  	}
 					});
 				}
 				
 				swal("Success!", "수정처리가 완료되었습니다.", "success");
+				self.location = "report?company=" + company + "&selectKey=" + selectKey + "&startDate=" + startDate + "&endDate=" + endDate;
+				/* location.reload(); */
 			});
 
 

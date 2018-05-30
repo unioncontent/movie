@@ -170,6 +170,8 @@
                                 <c:if test="${selectKey != null}">
                                     <!-- <button id="alert-check" class="btn btn-primary alert-check f-right p-r-5 p-l-5 m-l-15 m-b-10" ><i class="icofont icofont-ui-check"></i>등록</button> -->
                                     <input type='text' class='datepicker-here form-control m-r-10 m-b-10 f-left' data-language='en' id='writeDate' style="width: 105px" placeholder="보고날짜" name="writeDate" autocomplete="off"/>
+                                    <input type="hidden" value="${company}" name="company">
+                              	  	<input type="hidden" value="${selectKey}" name="selectKey">
                                  </c:if>
                                 </div>
                               </div>

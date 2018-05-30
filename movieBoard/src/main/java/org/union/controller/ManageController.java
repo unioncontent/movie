@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.union.domain.GraphVO;
 import org.union.domain.IssueVO;
 import org.union.domain.KeywordVO;
@@ -520,7 +521,8 @@ public class ManageController {
 		
 		cri.setCompany(company);
 		cri.setSelectKey(selectKey);
-		cri.setWriteDate(writeDate);
+		cri.setStartDate(startDate);
+		cri.setEndDate(endDate);
 		logger.info("writeDate: " + writeDate);
 		
 		model.addAttribute("issueUpList", keywordService.issueUpList(cri));
@@ -683,10 +685,12 @@ public class ManageController {
 	}*/
 	
 	@GetMapping("/insertIssue")
-	public String insertIssue(IssueVO vo) {
+	public String insertIssue(IssueVO vo,RedirectAttributes redirectAttributes) {
 		logger.info("insertKeywordPOST called....");
 		logger.info("IssueVO: " + vo);
 		
+		String company=vo.getCompany();
+		String selectKey=vo.getSelectKey();
 		
 		if(vo.getIssue_content() == "" || vo.getIssue_content() == null) {
 			vo.setIssue_content(null);
@@ -719,6 +723,8 @@ public class ManageController {
 			e.printStackTrace();
 			
 		}
+		redirectAttributes.addAttribute("company", company);
+		redirectAttributes.addAttribute("selectKey", selectKey);
 		
 		return "redirect:/manage/report";
 	}

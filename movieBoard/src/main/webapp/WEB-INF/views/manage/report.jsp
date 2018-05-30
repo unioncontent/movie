@@ -298,7 +298,7 @@
 										                          </c:forEach>
 										                          </c:if>
 										                          </td></tr>
-									                              <tr><td height="1" bgcolor="#e4e4e4"></td><td bgcolor="#e4e4e4"></td><td height="1" bgcolor="#e4e4e4"></td></tr><tr><td align="center" style="color: rgb(57, 130, 199); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 12px; font-weight: bold; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid;" bgcolor="#eff7ff">보고기간</td><td> </td><td align="left" style="padding: 10px 10px 10px 0px; color: rgb(102, 102, 102); line-height: 18px; letter-spacing: -1px; font-family: Gulim,verdana; font-size: 12px;">&nbsp;${startDate} ~ ${endDate }</td></tr>
+									                              <tr><td height="1" bgcolor="#e4e4e4"></td><td bgcolor="#e4e4e4"></td><td height="1" bgcolor="#e4e4e4"></td></tr><tr><td align="center" style="color: rgb(57, 130, 199); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 12px; font-weight: bold; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid;" bgcolor="#eff7ff">보고기간</td><td> </td><td align="left" style="padding: 10px 10px 10px 0px; color: rgb(102, 102, 102); line-height: 18px; letter-spacing: -1px; font-family: Gulim,verdana; font-size: 12px;">&nbsp;${startDate} ~ ${endDate}</td></tr>
 									                              <tr><td height="1" bgcolor="#e4e4e4"></td><td bgcolor="#e4e4e4"></td><td height="1" bgcolor="#e4e4e4"></td></tr><tr><td align="center" style="color: rgb(57, 130, 199); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 12px; font-weight: bold; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid;" bgcolor="#eff7ff">보고날짜</td><td> </td><td align="left" style="padding: 10px 10px 10px 0px; color: rgb(102, 102, 102); line-height: 18px; font-family: Gulim,verdana; font-size: 12px;">&nbsp;${today}</td></tr></tbody></table></td></tr><tr><td align="center">
 									                              
 																		<table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -367,7 +367,8 @@
 											                              	</td>
 											                              <td align="left" style="color: rgb(102, 102, 102); line-height: 18px; letter-spacing: -1px; font-family: Gulim,verdana; font-size: 12px;">
 											                              <div style="width: 450px; overflow: hidden; text-overflow: ellipsis;">
-												                          	${headlineList.media_title}
+												                          	<a href="${headlineList.url}" target="_blank" style="font-size: 13px; color: #282727; text-decoration:none;">
+												                          	${headlineList.media_title}</a>
 												                          	</div>
 												                          </td>
 												                           </tr>
@@ -1047,6 +1048,8 @@ $(function() {
 	$(".edit-button").on("click", function(event){
 		
 		var writeDate= $('input[name=writeDate]').val();
+		var startDate = decodeURI(window.location.href.split("startDate=")[1]).split("&")[0].split(" ")[0];
+		var endDate = decodeURI(window.location.href.split("endDate=")[1]).split("&")[0].split(" ")[0];
 		
 		console.log("writeDate:" + writeDate);
 		
@@ -1054,7 +1057,8 @@ $(function() {
 				+ decodeURI(window.location.href.split("company=")[1]).split("&")[0].split(" ")[0]
 				+ "&selectKey="
 				+ decodeURI(window.location.href.split("selectKey=")[1]).split("&")[0].split(" ")[0]
-				+ "&writeDate=" + writeDate;
+				+ "&startDate=" + startDate
+				+ "&endDate=" + endDate;
 
 	});
 	
