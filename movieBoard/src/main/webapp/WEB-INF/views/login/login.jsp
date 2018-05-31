@@ -35,12 +35,19 @@
     <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
     <!-- color .css -->
     <link rel="stylesheet" type="text/css" href="../assets/css/color/color-1.css" id="color"/>
+    <!-- 추가 -->
+    <style>
+      #link:hover{
+        text-decoration: underline;
+      }
+    </style>
+
 </head>
 
 <body class="fix-menu">
     <section class="login p-fixed d-flex text-center bg-primary common-img-bg">
         <!-- Container-fluid starts -->
-        <div class="container-fluid">
+        <div class="container-fluid auth-body">
             <div class="row">
                 <div class="col-sm-12">
                     <!-- Authentication card start -->
@@ -59,7 +66,7 @@
                                 <hr/>
                                 <div class="input-group m-b-10">
                                     <input name ="username" type="email" class="form-control" placeholder="ID">
-                                    
+
                                     <span class="md-line"></span>
                                 </div>
                                 <div class="input-group">
@@ -68,10 +75,17 @@
                                 </div>
                                 <div class="row m-t-30">
                                     <div class="col-md-12">
-                                      <button id='loginBtn' type="button" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20" 
+                                      <button id='loginBtn' type="button" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20"
                                       onclick="login();" >Sign in</button>
-
                                     </div>
+                                </div>
+                                <hr />
+                                <div class="row">
+                                  <div class="col-md-10">
+                                    <a id="link" href="http://unionc.co.kr/unionc/ow/index.html" target="_blank"><p class="text-inverse text-left m-b-0">© Union Contents.</p></a>
+                                    <p class="text-inverse text-left m-b-0">TEL : 070-7424-7510</p>
+                                    <p class="text-inverse text-left">ADRESS : 서울시 서초구 서초대로25길 6 3층</p>
+                                  </div>
                                 </div>
                             </div>
                         </form>
@@ -153,16 +167,16 @@
 
 
 	$(document).ready(function(event){
-		
-		
-		
+
+
+
 	});
 
 	function login(){
 		$('#loginForm').submit();
 	}
 
-		
+
 	function enter_login(){
 		if(event.keyCode == 13){
 
@@ -170,8 +184,8 @@
 			//$("loginBtn").trigger("click");
 		}
 	}
-		
-	
+
+
 </script>
 
 </html>
