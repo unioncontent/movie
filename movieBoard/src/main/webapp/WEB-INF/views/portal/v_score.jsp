@@ -317,10 +317,10 @@
                                 <div class="card">
                                   <div class="card-header">
                                     <h5>평점 관리 리스트</h5>
-                                    <div style="position:relative; left:5px;">
-			                        	<button class="btn btn-warning alert-excel f-right p-r-5 p-l-5 m-l-15 m-b-10"><i class="icofont icofont-download-alt"></i>EXCEL</button>
-			                        	<button id="alert-check" class="btn btn-primary alert-check f-right p-r-5 p-l-5 m-l-15 m-b-10" ><i class="icofont icofont-ui-check"></i>등록</button>
-			                        </div>
+                                    <div class="f-right m-t-10">
+                                      <button class="btn btn-warning alert-excel f-right p-r-5 p-l-5 m-l-15 m-b-10"><i class="icofont icofont-download-alt"></i>EXCEL</button>
+                                      <button id="alert-check" class="btn btn-primary alert-check f-right p-r-5 p-l-5 m-l-15 m-b-10"><i class="icofont icofont-ui-check"></i>등록</button>
+                                    </div>
                                   </div>
                                   <div class="card-block table-border-style">
                                     <div class="table-responsive">
@@ -495,7 +495,7 @@
 	//ajax 보안
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
-	
+
 	$(function() {
 	 	$(document).ajaxSend(function(e, xhr, options) {
 	  		xhr.setRequestHeader(header, token);
@@ -638,9 +638,9 @@
 			   searchList();
 
 		});
-		
+
 		/* var idx = $('input[name=portal_idx]').val(); */
-		
+
 		//등록 확인메시지
 			$(document).on("click",".alert-check",function(){
 				swal({
@@ -657,11 +657,11 @@
 							checkList(event);
 
 							swal("Update!", "등록 처리가 완료되었습니다.", "success");
-							
+
 							location.reload();
 						});
 		  });
-		
+
 		//엑셀출력 확인메시지
 		$(document).on("click",".alert-excel",function(){
 	  	swal({
@@ -688,23 +688,23 @@
 		});
 
 	}); // end ready...
-	
+
 	function checkList(event) {
 
 		  $("input[name='ck']:checked").each(function(i){   //jQuery로 for문 돌면서 check 된값 배열에 담는다
-			  
+
 			  $.ajax({
 				  	type : "POST",
 					url : "checkList",
 					data : {idx : $(this).val()},
 					contentType:"application/x-www-form-urlencoded;charset=utf-8", //한글 깨짐 방지
-					cache: false, 
+					cache: false,
 					success : function(data) {
 					console.log(data);
 					}
 
 				});
-			  
+
 		  });
 
 		}
@@ -744,12 +744,12 @@
 
 	 	}else if(type == "month"){
 	 		var calcDate = month-1;
-	 		
+
 	 		if(calcDate == 0){
 	   			calcDate = 12;
 	   			year -= 1;
 	   		}
-	 		
+
 	 		startDate = year + "-" + calcDate + "-" + day;
 
 	 	}else if(type == "week"){

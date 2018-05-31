@@ -86,7 +86,7 @@
                   <!-- page-header start -->
                   <div class="page-header">
                     <div class="page-header-title">
-                      <h4>언론사 댓글 기사 리스트</h4>
+                      <h4>언론사 댓글 리스트</h4>
                     </div>
                     <div class="page-header-breadcrumb">
                       <ul class="breadcrumb-title">
@@ -95,7 +95,7 @@
                             <i class="icofont icofont-home"></i>
                           </a>
                         </li>
-                        <li class="breadcrumb-item"><a href="#!">언론사 댓글 기사 리스트</a>
+                        <li class="breadcrumb-item"><a href="#!">언론사 댓글 리스트</a>
                         </li>
                       </ul>
                     </div>
@@ -119,7 +119,7 @@
                           </c:if>
                         </select>
 						</c:if>
-						
+
 						<c:if test="${user.user_name != 'union'}">
                          <select style="display: none;" name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="selectCompany">
                           <option>회사</option>
@@ -133,7 +133,7 @@
                           </c:if>
                         </select>
 						</c:if>
-						
+
                         <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left" id="selectKeyword">
                           <option>키워드</option>
                           <c:if test="${modelKeywordList == null}" >
@@ -147,7 +147,7 @@
                           </c:forEach>
                           </c:if>
                         </select>
-                        <select id= "selectPerPageNum" name="select" class="col-md-1 form-control form-control-inverse m-r-10 m-b-10 p-r-5 f-left select-left">	
+                        <select id= "selectPerPageNum" name="select" class="col-md-1 form-control form-control-inverse m-r-10 m-b-10 p-r-5 f-left select-left">
                         	<option value="30">리스트</option>
 	                        <option id= "30">30</option>
 	                        <option id = "60">60</option>
@@ -198,7 +198,7 @@
                                   </span>
                                   </div>
 			                        <div style="position:relative; left:5px;">
-			                        	<button class="btn btn-warning alert-excel f-right"><i class="icofont icofont-download-alt"></i>EXCEL</button>
+			                        	<button class="btn btn-warning alert-excel f-right m-l-10 m-b-10"><i class="icofont icofont-download-alt"></i>EXCEL</button>
 			                        </div>
 		                          	<div class="btn-group f-right p-r-0">
 	                                  <button type="button" id="allBtn1" class="radiosBtn btn btn-primary btn-outline-primary btn-sm waves-effect waves-light">좋은글</button>
@@ -208,7 +208,7 @@
 	                                  <button type="button" id="allBtn5" class="radiosBtn btn btn-primary btn-outline-primary btn-sm waves-effect waves-light">삭제글</button>
 	                                  <button type="button" id="insertAllBtn" class="alert-confirm btn btn-sm btn-primary waves-effect f-right p-b-10"><i class="icofont icofont-exchange" style="margin: 0px;font-size: 16px;"></i></button>
 	                                </div>
-		                          	
+
                                     <h5 class="card-header-text m-b-10"></h5>
                                     </div>
                                     <div class="card-block table-border-style">
@@ -303,13 +303,13 @@
 		                                           </a>
 		                                         </li>
 		                                       </c:if>
-		
+
 		                                       <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
 		                                         <li class= "${pageMaker.cri.page == idx? 'active':''} page-item">
 		                                           <a class="page-link" href="reply${pageMaker.makeSearch(idx)}">${idx}</a>
 		                                         </li>
 		                                       </c:forEach>
-		
+
 		                                       <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
 		                                         <li class="page-item">
 		                                           <a class="page-link" href="reply${pageMaker.makeSearch(pageMaker.endPage +1) }" aria-label="Next">&raquo;
@@ -429,7 +429,7 @@
   <script src="../assets/js/pcoded.min.js"></script>
   <script src="../assets/js/demo-12.js"></script>
   <script src="../assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
-  <script src="../assets/js/jquery.mousewheel.min.js"></script>                       
+  <script src="../assets/js/jquery.mousewheel.min.js"></script>
 </body>
 <script type="text/javascript">
 
@@ -481,13 +481,13 @@ $(document).ready(function(){
 			searchList();
 
 		});
-		
+
 		var ListOption = decodeURI(window.location.href.split("PerPageNum=")[1]).split("&")[0];
 
 		var $selectPerPageNum = $('#selectPerPageNum');
-		
+
 		$selectPerPageNum[0][0].disabled = true;
-		
+
 		// 글 수 변경 선택시
 		$selectPerPageNum.change(function(){
 			console.log("selectPerPageNum clicked....");
@@ -524,7 +524,7 @@ $(document).ready(function(){
 
 			//searchList();
 		});
-		
+
 		// allBtn 클릭시
 		  $(".radiosBtn").on("click", function(event){
 			  console.log(event);
@@ -564,7 +564,7 @@ $(document).ready(function(){
 		 $(document).on("click","#insertAllBtn",function(){
 			insertAll();
 		 });
-		
+
 	  // 삭제버튼 클릭시
 	  $(document).on("click",".alert-confirm1",function(event){
 			swal({
@@ -593,7 +593,7 @@ $(document).ready(function(){
 						console.log("idx:" + idx);
 
 						$.ajax({
-							  
+
 							  type: "POST",
 							  url: "remove",
 							  data: {idx: idx},
@@ -603,7 +603,7 @@ $(document).ready(function(){
 							  }
 
 						});
-						
+
 						swal("Delete!", "삭제처리가 완료되었습니다.", "success");
 
 						location.reload();
@@ -731,14 +731,14 @@ $(document).ready(function(){
 
       });
 	});
-	
+
 	// 검색버튼 클릭시
 	$('#searchBtn').on("click", function(event){
 	  console.log("searchBtn clicked....");
 	  console.log($('#selectSearchType option:selected').val());
-	
+
 	  searchList();
-	  
+
 	});
 
 
@@ -794,7 +794,7 @@ $(document).ready(function(){
 
 		}
 	}
-	
+
 	function insertAll(){
 		  swal({
 				title: "일괄처리 하시겠습니까?",
@@ -862,9 +862,9 @@ function makeDateFormat(date, index){
 
 	//list URL 함수
 	  function searchList(event) {
-	
+
 		var makeQeury = '${pageMaker.makeQuery(1)}'.slice(0, -2);
-		
+
 	  	self.location = "reply" + makeQeury
 	  				  + $('#selectPerPageNum option:selected').val()
 	  				  + "&company=" + $("#selectCompany option:selected").val()
@@ -893,12 +893,12 @@ function getDate(type){
 
  	}else if(type == "month"){
  		var calcDate = month-1;
- 		
+
  		if(calcDate == 0){
  			calcDate = 12;
  			year -= 1;
  		}
- 		
+
  		startDate = year + "-" + calcDate + "-" + day;
 
  	}else if(type == "week"){
@@ -920,6 +920,6 @@ function getDate(type){
  		endDate : endDate
  	}
 
-}	 
+}
 </script>
 </html>

@@ -114,7 +114,7 @@
                           </c:if>
                         </select>
 						</c:if>
-						
+
 						<c:if test="${user.user_name != 'union'}">
                          <select style="display: none;" name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="selectCompany">
                           <option>회사</option>
@@ -128,7 +128,7 @@
                           </c:if>
                         </select>
 						</c:if>
-						
+
                         <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left" id="selectKeyword">
                           <option>키워드</option>
                           <c:if test="${modelKeywordList == null}" >
@@ -169,7 +169,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                     
+
                                           <c:forEach items="${headlineList}" var = "list" varStatus="index">
                                           <tr class = "trList">
                                             <td>
@@ -189,7 +189,7 @@
                                       <table class="table table-bordered">
                                 <thead>
                                   <tr>
-                                    <th width="30%">분류</th>
+                                    <th width="40%">분류</th>
                                     <th>검출량</th>
                                   </tr>
                                 </thead>
@@ -203,7 +203,7 @@
                                     <td><fmt:formatNumber value="${replyTotalcnt}" groupingUsed="true"/>건</td>
                                   </tr>
                                   <tr>
-                                    <th scope="row">SNS ( facebook, instagram, twitter )</th>
+                                    <th scope="row" style="white-space:initial;">SNS ( facebook, instagram, twitter )</th>
                                     <td><fmt:formatNumber value="${snsTotalcount}" groupingUsed="true"/>건</td>
                                   </tr>
                                   <tr>
@@ -319,7 +319,7 @@
                                             <fmt:formatDate value="${mvo.m_regdate}" type="DATE" pattern="yyyy-MM-dd HH:mm:ss" />
                                             </th>
                                             <td>
-                                            ${mvo.m_subject}	
+                                            ${mvo.m_subject}
                                             </td>
                                             <td>
                                             <fmt:formatNumber value="${mvo.sendCount}" pattern="#,##0" />회
@@ -328,10 +328,10 @@
                                             <fmt:formatNumber value="${mvo.success}" pattern="#,##0" />회
                                             </td>
                                             <td>
-                                            <fmt:formatNumber value="${mvo.fail}" pattern="#,##0" />회                    
+                                            <fmt:formatNumber value="${mvo.fail}" pattern="#,##0" />회
                                             </td>
                                             <td>
-                                            ${mvo.total}건          
+                                            ${mvo.total}건
                                             </td>
                                           </tr>
                                         </c:forEach>
@@ -606,7 +606,7 @@ $(document).ready(function(){
 
 			//searchList();
 		});
-		
+
 		// allBtn 클릭시
 		  $(".radiosBtn").on("click", function(event){
 			  console.log(event);
@@ -622,7 +622,7 @@ $(document).ready(function(){
 			  }
 
 		  });
-		
+
 		// 일괄처리버튼 클릭시
 		 $(document).on("click","#insertAllBtn",function(){
 			insertAll();
@@ -657,7 +657,7 @@ $(document).ready(function(){
 						console.log("idx:" + idx);
 
 						$.ajax({
-							  
+
 							  type: "POST",
 							  url: "remove",
 							  data: {idx: idx},
@@ -667,7 +667,7 @@ $(document).ready(function(){
 							  }
 
 						});
-						
+
 						swal("Delete!", "삭제처리가 완료되었습니다.", "success");
 
 						location.reload();
@@ -675,7 +675,7 @@ $(document).ready(function(){
 	  			});
 	  var selectKey = decodeURI(window.location.href.split("selectKey=")[1]).split("&")[0].split(" ")[0];
 	  $.ajax({
-			
+
 	      type : "POST",
 		  url : "graph_re",
 	 	  dataType : "json",
@@ -690,7 +690,7 @@ $(document).ready(function(){
 
 				script += '{"period":' + '"' + data[i].writeDate + '",'
 						+ '"검출량"' + ':' + data[i].type1 + "},";
-						
+
 
 				if(i == data.length-1){
 					script =  script.substr(0, script.length-1);
@@ -728,9 +728,9 @@ $(document).ready(function(){
 						location.reload();
 					});
 	  });
-	  
-	
-	
+
+
+
 	// 상태변경 버튼 클릭시
 	  $(document).on("click",".alert-confirm3",function(event){
 		  swal({
@@ -751,9 +751,9 @@ $(document).ready(function(){
 						location.reload();
 					});
 	  });
-	
-	
-	  
+
+
+
 		// 당일 클릭시
 		$('#toDay').on("click", function(){
 		  console.log("toDay clicked....");
@@ -863,7 +863,7 @@ function makeDateFormat(date, index){
 	  				  + "&selectKey="
 	  				  + $('#selectKeyword option:selected').val();
 	  }
-	
+
 	//list URL 함수
 	  function searchList2(event) {
 
@@ -873,7 +873,7 @@ function makeDateFormat(date, index){
 	  				  + "&selectKey="
 	  				  + $('#selectKeyword option:selected').val();
 	  }
-	
+
 	  function areaChart(jsonScript) {
 			$("#morris-extra-line").empty();
 			window.areaChart = Morris.Line({
@@ -906,12 +906,12 @@ function getDate(type){
 
  	}else if(type == "month"){
  		var calcDate = month-1;
- 		
+
  		if(calcDate == 0){
  			calcDate = 12;
  			year -= 1;
  		}
- 		
+
  		startDate = year + "-" + calcDate + "-" + day;
 
  	}else if(type == "week"){
@@ -933,6 +933,6 @@ function getDate(type){
  		endDate : endDate
  	}
 
-}	 
+}
 </script>
 </html>

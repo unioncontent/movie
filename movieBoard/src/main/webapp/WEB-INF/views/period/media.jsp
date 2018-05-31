@@ -149,7 +149,7 @@
                           </c:if>
                         </select>
 						</c:if>
-						
+
 						<c:if test="${user.user_name != 'union'}">
                          <select style="display: none;" name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="selectCompany">
                           <option>회사</option>
@@ -163,7 +163,7 @@
                           </c:if>
                         </select>
 						</c:if>
-						
+
                         <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left" id="selectKeyword">
                           <option>키워드</option>
                           <c:if test="${modelKeywordList == null}" >
@@ -271,11 +271,11 @@
                                 <div class="card">
                                   <div class="card-header">
                                     <h5 class="card-header-text m-b-10"> 검출데이터</h5>
-                                    <table class="padd"><tr><td>
-                                    <div class="btn-group f-right p-r-0">
-                                   	 	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#textType1">좋은글</button>
-                                   	 	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#textType2" style="margin-left: 2px">나쁜글</button>
-                                   	 	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#textType3" style="margin-left: 2px">관심글</button>
+                                    <table class="padd m-t-10"><tr><td>
+                                    <div class="btn-group f-right p-r-0 ">
+                                   	 	<button type="button" class="btn btn-primary m-b-5" data-toggle="modal" data-target="#textType1">좋은글</button>
+                                   	 	<button type="button" class="btn btn-primary m-b-5" data-toggle="modal" data-target="#textType2" style="margin-left: 2px">나쁜글</button>
+                                   	 	<button type="button" class="btn btn-primary m-b-5" data-toggle="modal" data-target="#textType3" style="margin-left: 2px">관심글</button>
                                    	 	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#textType4" style="margin-left: 2px">기타글</button>
 		                            </div></td><td></td><td></td><td>
 	                                <div class="btn-group f-right p-r-0">
@@ -409,7 +409,7 @@
                         </div>
                       </div>
                       <!-- textType Modal end-->
-                      
+
                       <!-- textType Modal start-->
                       <div class="modal fade" id="textType2" tabindex="-1" role="dialog">
                         <div class="modal-dialog modal-lg" role="document">
@@ -572,7 +572,7 @@
                         </div>
                       </div>
                       <!-- textType Modal end-->
-                      
+
                     </div>
                   </div>
                   <!-- page-body end -->
@@ -692,21 +692,21 @@ $(function() {
 });
 
 $(document).ready(function(){
-		
+
 		var $fromDate = $("#fromDate");
-		  
+
 		var startDateOption = decodeURI(window.location.href.split("startDate=")[1]).split("&")[0].split(" ")[0];
 		var endDateOption = decodeURI(window.location.href.split("endDate=")[1]).split("&")[0].split(" ")[0];
 		console.log("startDateOption: " + startDateOption);
 		console.log("endDateOption: " + endDateOption);
-			
+
 		if(startDateOption != 'undefined' && endDateOption != 'undefined'
 				&& startDateOption != '' && endDateOption != ''){
-			  
+
 			$fromDate.val(startDateOption + " - " + endDateOption);
-		  		
+
 		}
-		
+
 		var selectOption = decodeURI(window.location.href.split("selectKey=")[1]).split("&")[0];
 		console.log("selectOption: " + selectOption);
 
@@ -754,9 +754,9 @@ $(document).ready(function(){
 			searchList();
 
 		});
-		
+
 		$.ajax({
-			
+
 		      type : "POST",
 			  url : "graph_re",
 		 	  dataType : "json",
@@ -771,7 +771,7 @@ $(document).ready(function(){
 
 					script += '{"period":' + '"' + data[i].writeDate + '",'
 							+ '"l1"' + ':' + data[i].type1 + "},";
-							
+
 
 					if(i == data.length-1){
 						script =  script.substr(0, script.length-1);
@@ -787,7 +787,7 @@ $(document).ready(function(){
 
 		  	 }
 		});
-		
+
 		// 당일 클릭시
 		$('#toDay').on("click", function(){
 		  console.log("toDay clicked....");
@@ -797,7 +797,7 @@ $(document).ready(function(){
 
 		  $("#fromDate").val(endDate + " - " + endDate)
 		  console.log($("#fromDate").val());
-		  searchList(); 
+		  searchList();
 		});
 
 		// 전일 클릭시
@@ -830,16 +830,16 @@ $(document).ready(function(){
 		  var date = getDate("month");
 		  var startDate = date.startDate;
 		  var endDate = date.endDate;
-		
+
 		  $("#fromDate").val(startDate + " - " + endDate)
 		  console.log($("#fromDate").val());
-		  
+
 		  searchList();
-		 
+
 		})
 
 		// 캘린더 클릭시
-		$('#fromDate').on('apply.daterangepicker', function(ev, picker) {	
+		$('#fromDate').on('apply.daterangepicker', function(ev, picker) {
 			var startDate = picker.startDate.format('YYYY-MM-DD');
 			var endDate = picker.endDate.format('YYYY-MM-DD');
 
@@ -849,24 +849,24 @@ $(document).ready(function(){
 			searchList();
 
 		});
-		
+
 		/* var selectKey = decodeURI(window.location.href.split("selectKey=")[1]).split("&")[0];
 		console.log("aaaselectKey:" + selectKey);
 		var company = decodeURI(window.location.href.split("company=")[1]).split("&")[0];
 		console.log("aaacompany:" + company); */
-		
+
 		/* var selectKey = $('#selectKeyword option:selected').val();
 		console.log("aaaselectKey:" + selectKey);
 		var company = $("#selectCompany option:selected").val();
 		console.log("aaacompany:" + company); */
-		
+
 		var target = document.getElementById("selectKeyword");
 		var selectKey = target.options[target.selectedIndex].value;
 		console.log("aaaselectKey:" + selectKey);
 		var target2 = document.getElementById("selectCompany");
 		var company = target2.options[target2.selectedIndex].value;
 		console.log("aaacompany:" + company);
-		
+
 		// 엑셀 출력
 		document.querySelector('.alert-confirm').onclick = function(){
 		    swal({
@@ -879,7 +879,7 @@ $(document).ready(function(){
 		          closeOnConfirm: false
 		        },
 		        function(){//엑셀 출력하겠다고 할 시 진행 함수
-		          
+
 		        	self.location = "excel?"
 		  			  + "company=" + $("#selectCompany option:selected").val()
 		  			  + "&selectKey=" + $('#selectKeyword option:selected').val()
@@ -890,9 +890,9 @@ $(document).ready(function(){
 		  	  		swal("Success!", "엑셀출력 되었습니다.", "success");
 		        });
 		  };
-		
+
 	});
-	
+
 function drawChart(jsonScript) {
 		$("#line-chart1").empty();
 		window.areaChart = Morris.Line({
@@ -906,7 +906,7 @@ function drawChart(jsonScript) {
 		  	hideHover : 'auto'
 		    });
 		}
-	
+
 	// allBtn 클릭시
 	  $(".radiosBtn").on("click", function(event){
 		  console.log(event);
@@ -921,9 +921,9 @@ function drawChart(jsonScript) {
 			  $('#radio'+ btnNum + (i+1))[0].checked = true;
 		  }
 	  });
-	
-	
-	
+
+
+
 	// 날짜 계산 함수
 	function getDate(type){
 		console.log("TYPE : " + type);
@@ -942,12 +942,12 @@ function drawChart(jsonScript) {
 
 		}else if(type == "month"){
 			var calcDate = month-1;
-			
+
 			if(calcDate == 0){
 	   			calcDate = 12;
 	   			year -= 1;
 	   		}
-			
+
 			startDate = year + "-" + calcDate + "-" + day;
 
 		}else if(type == "week"){
@@ -973,12 +973,12 @@ function drawChart(jsonScript) {
 				var returnDate = splitDate.replace("/", "-").replace("/", "-")
 				return returnDate;
 			}
-		
-		
+
+
 	}
-	
+
 	//list URL 함수
-	
+
 	function searchList(event) {
 
 		var makeQeury = '${pageMaker.makeQuery(1)}'.slice(0,-2);
@@ -993,8 +993,8 @@ function drawChart(jsonScript) {
 					  + "&startDate=" + makeDateFormat($("#fromDate").val(), 0)
 					  + "&endDate=" +  makeDateFormat($("#fromDate").val(), 1);
 	}
-	
-	
+
+
 </script>
 
 </html>

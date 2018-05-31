@@ -82,7 +82,7 @@
                 <div class="page-wrapper">
                   <div class="page-header">
                     <div class="page-header-title">
-                      <!-- <h4>Naver Movie</h4> -->
+                      <h4>Naver Movie</h4>
                     </div>
                     <div class="page-header-breadcrumb">
                       <ul class="breadcrumb-title">
@@ -117,7 +117,7 @@
                                   <select class="form-control" id="e1">
                                   <c:forEach items="${nVallList}" var="nV">
 								  <option value="${nV.url}">${nV.portal_title}</option>
-								  </c:forEach>   
+								  </c:forEach>
 						          </select>
                                 </div>
                               </div>
@@ -127,7 +127,7 @@
                                   <select class="form-control" id="e2">
                                   <c:forEach items="${nVallList}" var="nV">
 								  <option value="${nV.url}">${nV.portal_title}</option>
-								  </c:forEach>   
+								  </c:forEach>
 						          </select>
                                 </div>
                               </div>
@@ -144,16 +144,14 @@
                               <div class="col-md-12">
                                 <div class="card">
                                   <div class="card-header">
-                                    <h5>Naver Movie</h5>
-                                    <div class="col-sm-3 input-group input-group-button input-group-inverse" style="float: right; margin-right: 280px;">
-                                    <input type='text' class='datepicker-here form-control f-right p-r-5 p-l-5 m-l-15 m-b-10' data-language='en' id='startdate' style="width: 130px" placeholder="Date"/>
-	                              	&nbsp;&nbsp;&nbsp;<font size="3"><b>~</b></font>
-	                              	<input type='text' class='datepicker-here form-control f-right p-r-5 p-l-5 m-l-15 m-b-10' data-language='en' id='enddate' style="width: 130px" placeholder="Date"/>
-	                              	<input onkeyup="if(event.keyCode == 13){$('#searchBtn').trigger('click');};" id="keywordInput" type="text" class="form-control  f-right p-r-5 p-l-5 m-l-15 m-b-10" placeholder=""  style="width: 200px">
-	                              <span class="input-group-addon" id="basic-addon1">
-	                              	<button id="searchBtn" class="btn btn-inverse"><i class="icofont icofont-search-alt-2"></i></button>
-	                              </span>
-	                              </div>
+                                    <div class="col-sm-3 m-t-10 m-b-10 f-right input-group input-group-button input-group-inverse">
+                                      <input onkeyup="if(event.keyCode == 13){$('#searchBtn').trigger('click');};" id="keywordInput" type="text" class="form-control  f-right p-r-5 p-l-5 m-b-10" placeholder="" style="width: 200px;">
+                                      <span class="input-group-addon" id="basic-addon1"><button id="searchBtn" class="btn btn-inverse"><i class="icofont icofont-search-alt-2"></i></button></span>
+                                  	</div>
+                                    <div class="p-l-15 p-t-10 p-r-15 f-right input-group input-group-inverse" style="max-width: 293px;">
+                                      <input type="text" class="datepicker-here form-control col-sm-1 f-left" data-language="en" id="startdate" placeholder="Date" style="max-width:130px;"><div size="3" class="f-left m-l-5 m-r-5"><b>~</b></div>
+    	                              	<input type="text" class="datepicker-here form-control col-sm-1 f-left m-b-10" data-language="en" id="enddate" placeholder="Date" style="max-width:130px;">
+                                    </div>
                                   </div>
                                   <div class="card-block table-border-style">
                                     <div class="table-responsive">
@@ -341,8 +339,16 @@
   <script src="../assets/js/jquery.mousewheel.min.js"></script>
   <script src="../assets/dist/js/datepicker.min.js"></script>
   <script src="../assets/dist/js/i18n/datepicker.en.js"></script>
-  <script src="../assets/dist/js/select2.js"></script>                       
+  <script src="../assets/dist/js/select2.js"></script>
 </body>
+<style>
+.select2-container .select2-selection—single{
+  height: 40px;
+}
+.select2-container--default .select2-selection--single .select2-selection__arrow{
+  height: 40px;
+}
+</style>
 <script type="text/javascript">
 
 	$(document).ready(function(){
@@ -370,19 +376,19 @@
 
 			$fromDate.val(startDateOption + " - " + endDateOption);
 		}
-		
+
 		//그래프 비교버튼
 		$(".twin-button").on("click", function(event){
 			var url = $("#e1 option:selected").val()
 			var url2 = $("#e2 option:selected").val()
-			
+
 			console.log("url:" + url);
 			console.log("url2:" + url2);
-			
+
 			self.location = "n_graph?url=" + url + "&url2=" + url2;
 
 		});
-		
+
 		// 리스트 버튼 클릭
 		$(".list-button").on("click", function(event){
 			var parent = event.target.parentNode;
@@ -393,34 +399,34 @@
 			}
 
 			var tr = parent.parentNode;
-			console.log(tr); 
-			
+			console.log(tr);
+
 			var td1 = tr.children[1];
 			console.log(td1);
-			
+
 			var td2 = tr.children[5];
 			console.log(td2);
-			
-			
+
+
 			var url = td1.children[0].value;
 			var content = td2.children[0].value;
-			
+
 			console.log("url:" + url, "content:" + content);
-			
+
 			self.location = "n_list?url=" + url + "&content=" + content;
 
 		});
-		
+
 		// 검색버튼 클릭시
 		$('#searchBtn').on("click", function(event){
 		  console.log("searchBtn clicked....");
-		
+
 		  searchList();
-		  
+
 		});
-	
+
 		/* var data = [{ id: 'KOR', text: 'Korea' }, { id: 'JPN', text: 'Japan' }]; */
-		
+
 		$('#e1').select2({ width: '100%', height: '100%' });
 		$('#e2').select2({ width: '100%', height: '100%' });
 	}); // end ready...
@@ -458,12 +464,12 @@
 
 	 	}else if(type == "month"){
 	 		var calcDate = month-1;
-	 		
+
 	 		if(calcDate == 0){
 	   			calcDate = 12;
 	   			year -= 1;
 	   		}
-	 		
+
 	 		startDate = year + "-" + calcDate + "-" + day;
 
 	 	}else if(type == "week"){

@@ -145,7 +145,7 @@
 			                    </div>
 	                            </td>
                                 <td class="text-center">
-  								  <div class="btn-group btn-group-md text-center" style="padding-right: 0;">
+  								  <div class="btn-group btn-group-md text-center" style="min-width: 115px; padding-right: 0;">
     							    <button type="button" class="tabledit-edit-button btn btn-primary waves-effect waves-light" style="margin-right: 5px;" data-toggle="tooltip" data-placement="top" data-original-title="키워드 추가">
       								  <span class="icofont icofont-ui-edit"></span>
     								</button>
@@ -258,7 +258,7 @@
   <script src="../assets/js/pcoded.min.js"></script>
   <script src="../assets/js/demo-12.js"></script>
   <script src="../assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
-  <script src="../assets/js/jquery.mousewheel.min.js"></script>      
+  <script src="../assets/js/jquery.mousewheel.min.js"></script>
 </body>
 
 
@@ -297,7 +297,7 @@
 			self.location = "modify?keyword_main=" + keyword_main.data;
 
 		});
-		
+
 		// 상태변경 버튼 클릭시On
 		  $(document).on("click",".alert-confirm2",function(event){
 			  var div = event.target.parentNode;
@@ -315,7 +315,7 @@
 
 				var keyword_main = td.childNodes[0];
 				console.log("keyword_main:"+keyword_main.data);
-			  
+
 			  swal({
 					title: "상태On 처리 하시겠습니까?",
 					text: "바로 상태변경 됩니다.",
@@ -326,7 +326,7 @@
 					closeOnConfirm: false
 				},
 					function(){
-					
+
 						$.ajax({
 							type : "POST",
 							url : "updateOn",
@@ -337,13 +337,13 @@
 							}
 
 						});
-						
+
 						swal("Update!", "상태변경 처리가 완료되었습니다.", "success");
 
 						location.reload();
 					});
 	  			});
-		
+
 		// 상태변경 버튼 클릭시Off
 		  $(document).on("click",".alert-confirm3",function(event){
 			  var div = event.target.parentNode;
@@ -361,7 +361,7 @@
 
 				var keyword_main = td.childNodes[0];
 				console.log("keyword_main:"+keyword_main.data);
-			  
+
 			  swal({
 					title: "상태Off 처리 하시겠습니까?",
 					text: "바로 상태변경 됩니다.",
@@ -372,7 +372,7 @@
 					closeOnConfirm: false
 				},
 					function(){
-					
+
 						$.ajax({
 							type : "POST",
 							url : "updateOff",
@@ -383,7 +383,7 @@
 							}
 
 						});
-						
+
 						swal("Update!", "상태변경 처리가 완료되었습니다.", "success");
 
 						location.reload();

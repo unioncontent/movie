@@ -133,13 +133,13 @@
                                         <div class="radio radiofill radio-success  radio-inline">
                                             <c:if test="${portal.checkCondition == true}">
                                             <label>
-                                                <input type="radio" name="radio1" checked="checked">
+                                                <input type="radio" name="radio1" checked="checked" disabled >
                                                 <i class="helper"></i>정상
                                             </label>
                                             </c:if>
                                             <c:if test="${portal.checkCondition == false}">
                                             <label>
-                                                <input type="radio" name="radio">
+                                                <input type="radio" name="radio" disabled >
                                                 <i class="helper"></i>비정상
                                             </label>
                                             </c:if>

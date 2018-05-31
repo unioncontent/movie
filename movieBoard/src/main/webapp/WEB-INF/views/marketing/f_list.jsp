@@ -171,10 +171,10 @@
                                 <div class="card">
                                   <div class="card-header">
                                     <!-- <h5>facebook CGV</h5> -->
-                                    <button class="btn btn-warning alert-excelup f-right" style="margin-left: 8px"><i class="icofont icofont-file-excel"></i>증가데이터</button>
-                                    <button class="btn btn-primary alert-excel f-right" style="margin-left: 8px"><i class="icofont icofont-file-excel"></i>전체데이터</button>
+                                    <button class="btn btn-warning alert-excelup f-right" style="margin-left: 8px;margin-bottom: 10px; "><i class="icofont icofont-file-excel"></i>증가데이터</button>
+                                    <button class="btn btn-primary alert-excel f-right" style="margin-left: 8px;margin-bottom: 10px; "><i class="icofont icofont-file-excel"></i>전체데이터</button>
                                     <!-- <button class="btn btn-info f-right alert-confirm" onclick = "location.href='http://overware.iptime.org:8080/marketing/f_channel'"><i class="icofont icofont-ui-note"></i>목록으로</button> -->
-                                    <button class="btn btn-info f-right alert-confirm" onclick = "history.back(-1);"><i class="icofont icofont-ui-note"></i>목록으로</button>
+                                    <button class="btn btn-info f-right alert-confirm" style="margin-left: 8px;margin-bottom: 10px; " onclick = "history.back(-1);"><i class="icofont icofont-ui-note"></i>목록으로</button>
                                   <div class="col-sm-3 input-group input-group-button input-group-inverse p-l-0 p-r-0 m-b-10 f-left btn-select">
                                     <input type='text' class='datepicker-here form-control m-r-10 m-b-10 f-left' data-language='en' id='startdate' style="width: 50px" placeholder="Date"/>
 	                              	&nbsp;<font size="3"><b>~</b></font>
@@ -395,7 +395,7 @@ $(function() {
 });
 
 $(document).ready(function(){
-	
+
 	var $fromDate = $("#fromDate");
 
 	var startDateOption = decodeURI(window.location.href.split("startDate=")[1]).split("&")[0].split(" ")[0];
@@ -408,14 +408,14 @@ $(document).ready(function(){
 
 		$fromDate.val(startDateOption + " - " + endDateOption);
 	}
-	
+
 	var url = $('input[name=url]').val();
 	console.log("url:" + url);
 	var Mcreate = $('input[name=createDate]').val();
 	console.log("Mcreate:" + Mcreate);
-	
+
 	$.ajax({
-		
+
 	      type : "POST",
 		  url : "graph",
 	 	  dataType : "json",
@@ -430,7 +430,7 @@ $(document).ready(function(){
 
 				script += '{"period":' + '"' + data[i].writeDate + '",'
 						+ '"조회수"' + ':' + data[i].type1 + "},";
-						
+
 
 				if(i == data.length-1){
 					script =  script.substr(0, script.length-1);
@@ -446,9 +446,9 @@ $(document).ready(function(){
 
 	  	 }
 	});
-	
+
 	$.ajax({
-		
+
 	      type : "POST",
 		  url : "graph",
 	 	  dataType : "json",
@@ -463,7 +463,7 @@ $(document).ready(function(){
 
 				script += '{"period":' + '"' + data[i].writeDate + '",'
 						+ '"댓글수"' + ':' + data[i].type2 + "},";
-						
+
 
 				if(i == data.length-1){
 					script =  script.substr(0, script.length-1);
@@ -479,9 +479,9 @@ $(document).ready(function(){
 
 	  	 }
 	});
-	
+
 	$.ajax({
-		
+
 	      type : "POST",
 		  url : "graph",
 	 	  dataType : "json",
@@ -496,7 +496,7 @@ $(document).ready(function(){
 
 				script += '{"period":' + '"' + data[i].writeDate + '",'
 						+ '"좋아요수"' + ':' + data[i].type3 + "},";
-						
+
 
 				if(i == data.length-1){
 					script =  script.substr(0, script.length-1);
@@ -512,7 +512,7 @@ $(document).ready(function(){
 
 	  	 }
 	});
-	
+
 	var url = $('input[name=url]').val();
 	//엑셀출력 확인메시지
 	$(document).on("click",".alert-excel",function(){
@@ -538,7 +538,7 @@ $(document).ready(function(){
 
       });
 	});
-	
+
 	var url = $('input[name=url]').val();
 	//엑셀출력 확인메시지
 	$(document).on("click",".alert-excelup",function(){
@@ -564,15 +564,15 @@ $(document).ready(function(){
 
       });
 	});
-	
+
 	// 검색버튼 클릭시
 	$('#searchBtn').on("click", function(event){
 	  console.log("searchBtn clicked....");
-	
+
 	  searchList();
-	  
+
 	});
-	
+
 	// 리스트 버튼 클릭
 	$(".list-button").on("click", function(event){
 		var parent = event.target.parentNode;
@@ -583,29 +583,29 @@ $(document).ready(function(){
 		}
 
 		var tr = parent.parentNode;
-		console.log(tr); 
-		
+		console.log(tr);
+
 		var td1 = tr.children[4];
 		console.log(td1);
-		
+
 		var td2 = tr.children[2];
 		console.log(td2);
-		
+
 		var td3 = tr.children[1];
 		console.log(td3);
-		
-		
+
+
 		var url = td1.children[0].value;
 		var content = td2.children[0].value;
 		var createstartDate = td3.children[0].value;
 		var createendDate = td3.children[0].value;
-		
+
 		console.log("url:" + url, "content:" + content, "createstartDate:" + createstartDate, "createendDate:" + createendDate);
-		
+
 		self.location = "f_listall?url=" + url + "&createstartDate=" + createstartDate + "&createendDate=" + createendDate + "&content=" + content;
 
 	});
-	
+
 }); // end ready...
 
 	/* function areaChart(jsonScript) {
@@ -624,8 +624,8 @@ $(document).ready(function(){
 		    });
 		} */
 
-	  		
-	  	
+
+
 	  		/* function areaChart(jsonScript) {
 	  			$("#morris-extra-area").empty();
 	  			window.areaChart = Morris.Area({
@@ -644,7 +644,7 @@ $(document).ready(function(){
 	  		        hideHover: 'auto'
 	  			    });
 	  			} */
-	  			
+
 	  			function areaChart(jsonScript) {
 		  			$("#morris-extra-line").empty();
 		  			window.areaChart = Morris.Line({
@@ -684,11 +684,11 @@ $(document).ready(function(){
 		  			  	hideHover : 'auto'
 		  			    });
 		  			}
-	  			
+
 	  	//list URL 함수
 	  	var url = $('input[name=url]').val();
 	  	var content = $('input[name=content]').val();
-	  		
+
 	  	  function searchList(event) {
 
 	  	  	self.location = "f_list?"
@@ -708,7 +708,7 @@ $(document).ready(function(){
 
 
 		}
-	  	
+
 </script>
 
 

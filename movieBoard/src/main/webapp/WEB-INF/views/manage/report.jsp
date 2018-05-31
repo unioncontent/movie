@@ -132,7 +132,7 @@
                           </c:if>
                         </select>
 						</c:if>
-						
+
 						<c:if test="${user.user_name != 'union'}">
                          <select style="display: none;" name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="selectCompany">
                           <option>회사</option>
@@ -162,7 +162,7 @@
                       </div>
 					  <!-- <input type="button" class="btn btn-primary m-b-0 f-left select-left" data-toggle="modal" data-target="#press-modal" value="미리보기" onclick="fn_layer_popup()"> -->
                       <!-- <input type="button" class="btn btn-primary m-b-0 f-left select-left" data-toggle="modal" data-target="#press-modal" value="미리보기" onclick="PrintDiv()"> -->
-					  
+
                       <div class="col-md-5" style="float: left;">
                         <!-- date picker start -->
                         <div class="row">
@@ -191,9 +191,9 @@
                           <!-- tab1 main start -->
                           <div class="tab-pane fade show active" id="main" role="tabpanel">
                             <div class="row">
-                            <div class="col-lg-12">	
-                              <div style="background-color:white; padding:20px; width: 100%;" class="card">
-                              <div class="copyarea">
+                            <div class="col-lg-12">
+                              <div style="overflow: auto; background-color:white; padding:20px; width: 100%;" class="card">
+                              <div class="copyarea p-l-10 p-r-10 ">
                               <table width="600" border="0" cellspacing="0" cellpadding="0">
                               <tr>
                               <td align="right" colspan="2">
@@ -269,7 +269,7 @@
 									                        </tr>
 									                        <tr>
 									                        	<td height="15"></td>
-									                        </tr>	
+									                        </tr>
 									                        <tr>
 									                        	<td height="1" bgcolor="#d4d8e1"></td>
 									                        </tr>
@@ -288,7 +288,7 @@
 									                              <tr>
 									                              <td align="center" style="color: rgb(57, 130, 199); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 12px; font-weight: bold; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid;" bgcolor="#eff7ff">키워드</td>
 									                              <td> </td>
-									                              <td align="left" style="padding: 10px 10px 10px 0px; color: rgb(102, 102, 102); line-height: 18px; letter-spacing: -1px; font-family: Gulim,verdana; font-size: 12px;"> 
+									                              <td align="left" style="padding: 10px 10px 10px 0px; color: rgb(102, 102, 102); line-height: 18px; letter-spacing: -1px; font-family: Gulim,verdana; font-size: 12px;">
 									                              <c:if test="${getKeyword != null}">
 										                          	<c:forEach items="${getKeyword}" var = "getKeyword" varStatus="status">
 										                          	&nbsp;${getKeyword.keyword}
@@ -300,7 +300,7 @@
 										                          </td></tr>
 									                              <tr><td height="1" bgcolor="#e4e4e4"></td><td bgcolor="#e4e4e4"></td><td height="1" bgcolor="#e4e4e4"></td></tr><tr><td align="center" style="color: rgb(57, 130, 199); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 12px; font-weight: bold; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid;" bgcolor="#eff7ff">보고기간</td><td> </td><td align="left" style="padding: 10px 10px 10px 0px; color: rgb(102, 102, 102); line-height: 18px; letter-spacing: -1px; font-family: Gulim,verdana; font-size: 12px;">&nbsp;${startDate} ~ ${endDate}</td></tr>
 									                              <tr><td height="1" bgcolor="#e4e4e4"></td><td bgcolor="#e4e4e4"></td><td height="1" bgcolor="#e4e4e4"></td></tr><tr><td align="center" style="color: rgb(57, 130, 199); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 12px; font-weight: bold; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid;" bgcolor="#eff7ff">보고날짜</td><td> </td><td align="left" style="padding: 10px 10px 10px 0px; color: rgb(102, 102, 102); line-height: 18px; font-family: Gulim,verdana; font-size: 12px;">&nbsp;${today}</td></tr></tbody></table></td></tr><tr><td align="center">
-									                              
+
 																		<table width="100%" border="0" cellspacing="0" cellpadding="0">
 									                              		<tbody>
 									                              		<tr>
@@ -445,7 +445,7 @@
 										                                    <tr>
 									                                    </tr>
 									                                    <tr>
-									                                    <td align="center" height="28" style="color: rgb(102, 102, 102); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 13px; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid;"><fmt:formatNumber value="${textType.lik}" pattern="#,##0" /> 건 
+									                                    <td align="center" height="28" style="color: rgb(102, 102, 102); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 13px; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid;"><fmt:formatNumber value="${textType.lik}" pattern="#,##0" /> 건
 									                                    (<c:if test="${textType.lik != 0}">
 																		<fmt:parseNumber var="pages" integerOnly="true" value="${(textType.lik/textType.al) * 100}"></fmt:parseNumber>${pages}%
 																		</c:if>
@@ -545,7 +545,7 @@
 								                                                <c:if test="${count.lik + count.dis + count.cu + count.etc == 0}">
 								                                                0%
 								                                                </c:if>
-								                                                
+
 								                                                </td>
 								                                                </c:forEach>
 								                                                </tr>
@@ -577,7 +577,7 @@
 								                                                <tr bgcolor="#e4e4e4"><td height="1" colspan="3"></td></tr><tr><td align="center" height="22" style="color: rgb(102, 102, 102); font-family: Gulim,verdana; font-size: 11px; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid;">웹문서</td>
 								                                                <c:forEach items="${naver4}" var="count">
 								                                                <td align="center" style="color: rgb(102, 102, 102); font-family: Gulim,verdana; font-size: 11px; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid;"><fmt:formatNumber value="${count.lik + count.dis + count.cu + count.etc}" pattern="#,##0" /></td>
-								                                                
+
 								                                                <td align="center" style="color: rgb(102, 102, 102); font-family: Gulim,verdana; font-size: 11px;">
 								                                                <c:if test="${count.lik + count.dis + count.cu + count.etc != 0}">
 								                                                <fmt:parseNumber var="pages" integerOnly="true" value="${(count.lik + count.dis + count.cu + count.etc)/naverCount * 100}"></fmt:parseNumber>${pages}%
@@ -592,7 +592,7 @@
 								                                                </tr>
 								                                                <tr>
 								                                                <td align="center" height="22" style="color: rgb(102, 102, 102); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 11px; font-weight: bold; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid;">합계</td>
-								                                                
+
 								                                                <td align="center" width="75" style="color: rgb(102, 102, 102); font-family: Gulim,verdana; font-size: 11px; font-weight: bold; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid;"><fmt:formatNumber value="${naverCount}" pattern="#,##0" /></td>
 								                                                <td align="center" style="color: rgb(102, 102, 102); font-family: Gulim,verdana; font-size: 11px; font-weight: bold;">
 								                                                <c:if test="${naverCount != 0}">
@@ -604,7 +604,7 @@
 								                                                </td></tr></tbody></table></td></tr></tbody></table>
 								                                                </td>
 								                                                <td width="10"> </td>
-								                                                
+
 								                                        <td align="left" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
 								                                          <tbody><tr><td style="border: 1px solid rgb(228, 228, 228); border-image: none;"><table width="100%" border="0" cellspacing="0" cellpadding="0">
 								                                          <tbody><tr>
@@ -636,16 +636,16 @@
 								                                                </c:if>
 								                                                <fmt:formatNumber value="${count.reply_cnt}" pattern="#,##0" />
 								                                                </td>
-								                                                
+
 								                                                <td align="center" style="color: rgb(102, 102, 102); font-family: Gulim,verdana; font-size: 11px;">
-								                                                
+
 								                                                <c:if test="${count.like_cnt + count.share_cnt + count.reply_cnt != 0}">
 								                                                <fmt:parseNumber var="pages" integerOnly="true" value="${(count.like_cnt + count.share_cnt + count.reply_cnt)/(countTotal.like_cnt + countTotal.share_cnt + countTotal.reply_cnt) * 100}"></fmt:parseNumber>${pages}%
 								                                                </c:if>
 								                                                <c:if test="${count.like_cnt + count.share_cnt + count.reply_cnt == 0}">
 								                                                0%
 								                                                </c:if>
-								                                                
+
 								                                                </td>
 								                                                </c:forEach>
 								                                                </c:forEach>
@@ -674,7 +674,7 @@
 								                                                </c:if>
 								                                                <fmt:formatNumber value="${count.reply_cnt}" pattern="#,##0" />
 								                                                </td>
-								                                                
+
 								                                                <td align="center" style="color: rgb(102, 102, 102); font-family: Gulim,verdana; font-size: 11px;">
 								                                                <c:if test="${count.like_cnt + count.share_cnt + count.reply_cnt != 0}">
 								                                                <fmt:parseNumber var="pages" integerOnly="true" value="${(count.like_cnt + count.share_cnt + count.reply_cnt)/(countTotal.like_cnt + countTotal.share_cnt + countTotal.reply_cnt) * 100}"></fmt:parseNumber>${pages}%
@@ -707,7 +707,7 @@
 								                                                </c:if>
 								                                                <fmt:formatNumber value="${count.reply_cnt}" pattern="#,##0" />
 								                                                </td>
-								                                                
+
 								                                                <td align="center" style="color: rgb(102, 102, 102); font-family: Gulim,verdana; font-size: 11px;">
 								                                                <c:if test="${count.like_cnt + count.share_cnt + count.reply_cnt != 0}">
 								                                                <fmt:parseNumber var="pages" integerOnly="true" value="${(count.like_cnt + count.share_cnt + count.reply_cnt)/(countTotal.like_cnt + countTotal.share_cnt + countTotal.reply_cnt) * 100}"></fmt:parseNumber>${pages}%
@@ -742,7 +742,7 @@
 								                                                </c:if>
 								                                                <fmt:formatNumber value="${countTotal.reply_cnt}" pattern="#,##0" />
 								                                                </td>
-								                                                
+
 								                                                <td align="center" width="35" style="color: rgb(102, 102, 102); font-family: Gulim,verdana; font-size: 11px; font-weight: bold;">
 								                                                <c:if test="${countTotal.like_cnt + countTotal.share_cnt + countTotal.reply_cnt != 0}">
 								                                                100%
@@ -756,7 +756,7 @@
 									                                    </tr>
 									                                    <!-- 포털 현황  end-->
 									                                    <td height="25"> </td>
-									                                    
+
 									                                    </tr>
 									                                    <td height="25"> </td>
 									                                    <!-- 언론사 현황 end-->
@@ -771,7 +771,7 @@
 									                                    <tr>
 									                                    <td align="left" style="color: rgb(153, 153, 153); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 11px;">
 									  									</td>
-									  									</tr>						
+									  									</tr>
   																		</table>
   																		</td>
   																		</tr>
@@ -807,7 +807,7 @@
       </div>
       <!-- main container end -->
     </div>
-  </div>                            
+  </div>
   <!-- Warning Section Starts -->
   <!-- Older IE warning message -->
   <!--[if lt IE 9]>
@@ -907,16 +907,16 @@ $(function() {
 
 
 	var $fromDate = $("#fromDate");
-	  
+
 	  var startDateOption = decodeURI(window.location.href.split("startDate=")[1]).split("&")[0];
 	  var endDateOption = decodeURI(window.location.href.split("endDate=")[1]).split("&")[0];
 	  console.log("startDateOption: " + startDateOption);
 	  console.log("endDateOption: " + endDateOption);
-		
+
 	  if(startDateOption != 'undefined' && endDateOption != 'undefined'
 			&& startDateOption != '' && endDateOption != ''){
 		  $fromDate.val(startDateOption + " - " + endDateOption);
-	  		
+
 		}
 
 
@@ -940,8 +940,8 @@ $(function() {
 		$selectCompany.change(function(){
 			console.log("selectCompany clicked....");
 			console.log($("#selectCompany option:selected").val());
-			
-			
+
+
 			searchList();
 
 		});
@@ -960,8 +960,8 @@ $(function() {
 			}
 		}
 		$selectKeyword[0][0].disabled = true;
-		
-		
+
+
 		// 키워드 선택시
 		$selectKeyword.change(function(){
 			console.log($('#selectKeyword option:selected').val());
@@ -969,14 +969,14 @@ $(function() {
 			searchList();
 
 		});
-		
+
 		// 당일 클릭시
 		$('#toDay').on("click", function(){
 		  console.log("toDay clicked....");
 		  var date = getDate("toDay");
 		  var startDate = date.startDate;
 		  var endDate = date.endDate;
-		 
+
 
 		  $("#fromDate").val(endDate + " - " + endDate)
 		  console.log($("#fromDate").val());
@@ -1043,16 +1043,16 @@ $(function() {
 
 		   searchList();
 	});
-	
+
 	// 수정 버튼 클릭
 	$(".edit-button").on("click", function(event){
-		
+
 		var writeDate= $('input[name=writeDate]').val();
 		var startDate = decodeURI(window.location.href.split("startDate=")[1]).split("&")[0].split(" ")[0];
 		var endDate = decodeURI(window.location.href.split("endDate=")[1]).split("&")[0].split(" ")[0];
-		
+
 		console.log("writeDate:" + writeDate);
-		
+
 		self.location = "report_update?company="
 				+ decodeURI(window.location.href.split("company=")[1]).split("&")[0].split(" ")[0]
 				+ "&selectKey="
@@ -1061,26 +1061,26 @@ $(function() {
 				+ "&endDate=" + endDate;
 
 	});
-	
+
 	// 복사  클릭시
-	$('.copyBtn').on('click', function(e) { 
-		// div의 텍스트값을 가져옴 
-		var text = $("#reportdiv").clone().wrapAll("<div/>").parent().html(); 
-		//숨겨진 input박스 value값으로 text 변수 넣어줌. 
-		$('#clip_target').val(text); 
+	$('.copyBtn').on('click', function(e) {
+		// div의 텍스트값을 가져옴
+		var text = $("#reportdiv").clone().wrapAll("<div/>").parent().html();
+		//숨겨진 input박스 value값으로 text 변수 넣어줌.
+		$('#clip_target').val(text);
 		//input박스 value를 선택
-		$('#clip_target').select(); 
-		// Use try & catch for unsupported browser 
-		try { 
-			// The important part (copy selected text) 
-			var successful = document.execCommand('copy'); 
-			// if(successful) answer.innerHTML = 'Copied!'; 
-			// else answer.innerHTML = 'Unable to copy!'; 
-			} catch (err) { 
-				alert('이 브라우저는 지원하지 않습니다.') 
+		$('#clip_target').select();
+		// Use try & catch for unsupported browser
+		try {
+			// The important part (copy selected text)
+			var successful = document.execCommand('copy');
+			// if(successful) answer.innerHTML = 'Copied!';
+			// else answer.innerHTML = 'Unable to copy!';
+			} catch (err) {
+				alert('이 브라우저는 지원하지 않습니다.')
 			}
 	});
-	
+
   }); // end ready...
 
   function makeDateFormat(date, index){
@@ -1105,7 +1105,7 @@ $(function() {
 	  				  + "&startDate=" + makeDateFormat($("#fromDate").val(), 0)
 	  				  + "&endDate=" +  makeDateFormat($("#fromDate").val(), 1);
 	  }
-	
+
 //날짜 계산 함수
   function getDate(type){
   	console.log("TYPE : " + type);
@@ -1124,12 +1124,12 @@ $(function() {
 
    	}else if(type == "month"){
    		var calcDate = month-1;
-   		
+
    		if(calcDate == 0){
    			calcDate = 12;
    			year -= 1;
    		}
-   		
+
    		startDate = year + "-" + calcDate + "-" + day;
 
    	}else if(type == "week"){
@@ -1152,17 +1152,17 @@ $(function() {
    	}
 
   }
-  
+
   var sel = document.getElementById("select");
   var val = sel.options[sel.selectedIndex].value;
-  
+
   function fn_layer_popup() {
-	  
-	  
-	  var w = window.open(); 
-	  w.document.write( $("#hidden").html() ); 
+
+
+	  var w = window.open();
+	  w.document.write( $("#hidden").html() );
 	  w.document.close(); // 페이지 로딩 끝.
-	
+
 }
   function PrintDiv() {
       var contents = document.getElementById("reportdiv").innerHTML;
@@ -1185,7 +1185,7 @@ $(function() {
       }, 500);
       return false;
   }
-  
-  
+
+
 </script>
 </html>
