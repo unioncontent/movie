@@ -14,14 +14,14 @@
       </div>
     </div>
     <ul class="pcoded-item pcoded-left-item">
-    <li class="dashBoard_main">
+    <li class="dashBoard">
         <a href="../dashBoard/dashBoard_main">
           <span class="pcoded-micon"><i class="ti-home"></i></span>
           <span class="pcoded-mtext" data-i18n="nav.dash.main">대시보드</span>
           <span class="pcoded-mcaret"></span>
         </a>
       </li>
-      <!-- 
+      <!--
       <c:if test="${user.user_name == 'union'}">
       <li class="dashBoard">
         <a href="../dashBoard/dashBoard">
@@ -29,9 +29,9 @@
           <span class="pcoded-mtext" data-i18n="nav.dash.main">대시보드</span>
           <span class="pcoded-mcaret"></span>
         </a>
-      </li> 
+      </li>
      </c:if>-->
-     <%-- <c:if test="${user.user_name == '쇼박스'}"> 
+     <%-- <c:if test="${user.user_name == '쇼박스'}">
       <li class="showDashBoard">
         <a href="../dashBoard/showDashBoard">
           <span class="pcoded-micon"><i class="ti-home"></i></span>
@@ -190,7 +190,7 @@
             </a>
           </li>
           </c:if>
-          
+
         </ul>
       </li>
       <li class="pcoded-hasmenu manage">
@@ -335,12 +335,12 @@
 		var domain = url.split("8080/")[1].split("/")[0];
 
 		var li = window.document.getElementsByClassName(domain)[0];
-		
+
 		console.log(li);
 		if(li != undefined){
 			li.className += " active pcoded-trigger";
 		}
-		
-	
+
+
 </script>
 <!-- left menu end -->
