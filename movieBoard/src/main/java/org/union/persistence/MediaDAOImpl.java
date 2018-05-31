@@ -552,5 +552,29 @@ public class MediaDAOImpl implements MediaDAO {
 		return session.selectOne(namespace + "mailCountAll", cri);
 	}
 
+	@Override
+	public List<MediaVO> mediaMatchList(SearchCriteria cri) {
+
+		return session.selectList(namespace + "mediaMatchList", cri);
+	}
+
+	@Override
+	public Integer mediaMatchCount(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "mediaMatchCount", cri);
+	}
+
+	@Override
+	public List<MediaVO> mediaMatchList2(SearchCriteria cri) {
+
+		return session.selectList(namespace + "mediaMatchList2", cri);
+	}
+
+	@Override
+	public Integer mediaMatchCount2(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "mediaMatchCount2", cri);
+	}
+
 	
 }

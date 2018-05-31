@@ -14,6 +14,9 @@ public class GraphVO {
 	private Integer facebookCount, instagramCount, twitterCount;
 	private Integer type1, type2, type3, type4, type5, type6;
 	private String company, selectKey;
+	private String media;
+	private double media_total;
+	
 	public String getCompany() {
 		return company;
 	}
@@ -133,6 +136,19 @@ public class GraphVO {
 	public void setType6(Integer type6) {
 		this.type6 = type6;
 	}
+	public String getMedia() {
+		return media;
+	}
+	public void setMedia(String media) {
+		this.media = media;
+	}
+	
+	public double getMedia_total() {
+		return media_total;
+	}
+	public void setMedia_total(double media_total) {
+		this.media_total = media_total;
+	}
 	@Override
 	public String toString() {
 		return "GraphVO [startDate=" + startDate + ", endDate=" + endDate + ", sns_name=" + sns_name + ", writeDate="
@@ -140,7 +156,6 @@ public class GraphVO {
 				+ ", replyCount=" + replyCount + ", facebookCount=" + facebookCount + ", instagramCount="
 				+ instagramCount + ", twitterCount=" + twitterCount + ", type1=" + type1 + ", type2=" + type2
 				+ ", type3=" + type3 + ", type4=" + type4 + ", type5=" + type5 + ", type6=" + type6 + ", company="
-				+ company + ", selectKey=" + selectKey + "]";
+				+ company + ", selectKey=" + selectKey + ", media=" + media + ", media_total=" + media_total + "]";
 	}
-	
 }

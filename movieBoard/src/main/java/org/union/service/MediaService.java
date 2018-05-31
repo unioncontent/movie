@@ -123,4 +123,9 @@ public interface MediaService {
 	public List<MailVO> mailList(SearchCriteria cri);
 	
 	public Integer mailCountAll(SearchCriteria cri);
+	
+	public List<MediaVO> mediaMatchList(SearchCriteria cri);
+	public Integer mediaMatchCount(SearchCriteria cri);
+	public List<MediaVO> mediaMatchList2(SearchCriteria cri);
+	public Integer mediaMatchCount2(SearchCriteria cri);
 }

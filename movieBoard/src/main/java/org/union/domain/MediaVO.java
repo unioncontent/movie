@@ -26,6 +26,7 @@ public class MediaVO {
 	private Date createDate;
 	private Date updateDate;
 	private boolean checkCondition;
+	private double total;
 	
 	
 	public String getKeyword_main() {
@@ -154,6 +155,12 @@ public class MediaVO {
 	public void setCheckCondition(boolean checkCondition) {
 		this.checkCondition = checkCondition;
 	}
+	public double getTotal() {
+		return total;
+	}
+	public void setTotal(double total) {
+		this.total = total;
+	}
 	@Override
 	public String toString() {
 		return "MediaVO [media_idx=" + media_idx + ", media_name=" + media_name + ", media_title=" + media_title
@@ -163,6 +170,6 @@ public class MediaVO {
 				+ last_media_content + ", keyword_main=" + keyword_main + ", keyword=" + keyword + ", keyword_type="
 				+ keyword_type + ", url=" + url + ", textType=" + textType + ", media_state=" + media_state
 				+ ", thumbnail=" + thumbnail + ", createDate=" + createDate + ", updateDate=" + updateDate
-				+ ", checkCondition=" + checkCondition + "]";
+				+ ", checkCondition=" + checkCondition + ", total=" + total + "]";
 	}
 }

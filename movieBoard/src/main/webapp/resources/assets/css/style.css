@@ -1123,10 +1123,10 @@ a.bg-danger:hover {
   .nav-tabs .slide .nav-item.show .nav-link, .nav-tabs .slide .main-menu .main-menu-content .nav-item .tree-1 a.show .nav-link, .main-menu .main-menu-content .nav-item .tree-1 .nav-tabs .slide a.show .nav-link, .nav-tabs .slide .main-menu .main-menu-content .nav-item .tree-2 a.show .nav-link, .main-menu .main-menu-content .nav-item .tree-2 .nav-tabs .slide a.show .nav-link, .nav-tabs .slide .main-menu .main-menu-content .nav-item .tree-3 a.show .nav-link, .main-menu .main-menu-content .nav-item .tree-3 .nav-tabs .slide a.show .nav-link, .nav-tabs .slide .main-menu .main-menu-content .nav-item .tree-4 a.show .nav-link, .main-menu .main-menu-content .nav-item .tree-4 .nav-tabs .slide a.show .nav-link,
   .nav-tabs .slide .nav-link {
     color: #34495e; }
-
+       
 .nav-vtabs .slide {
   width: calc(100% / 6); }
-
+ 
 .img-tabs img {
   width: 100px;
   margin: 0 auto; }

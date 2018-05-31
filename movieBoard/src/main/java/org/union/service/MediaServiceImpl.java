@@ -665,5 +665,29 @@ public class MediaServiceImpl implements MediaService {
 		return mediaDAO.mailCountAll(cri);
 	}
 
+	@Override
+	public List<MediaVO> mediaMatchList(SearchCriteria cri) {
+
+		return mediaDAO.mediaMatchList(cri);
+	}
+
+	@Override
+	public Integer mediaMatchCount(SearchCriteria cri) {
+
+		return mediaDAO.mediaMatchCount(cri);
+	}
+
+	@Override
+	public List<MediaVO> mediaMatchList2(SearchCriteria cri) {
+
+		return mediaDAO.mediaMatchList2(cri);
+	}
+
+	@Override
+	public Integer mediaMatchCount2(SearchCriteria cri) {
+
+		return mediaDAO.mediaMatchCount2(cri);
+	}
+
 	
 }

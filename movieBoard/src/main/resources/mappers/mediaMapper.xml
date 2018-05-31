@@ -364,6 +364,42 @@
 				and M_keyword in (select keyword from keyword_data where keyword_main = #{selectKey})
 		</if>
 	</sql>
+	
+	<sql id="search_match">
+		<if test="company != null">
+			and
+			   keyword in (select 
+						keyword 
+					from 
+						keyword_data
+					where
+						user_idx = (select 
+										user_idx 
+									from 
+										user_data 
+									where 
+										user_name = #{company} 
+									and 
+										keyword_property = '포함'
+									)
+					)
+		</if>
+		<if test="selectKey != null">
+				and keyword in (select keyword from keyword_data where keyword_main = #{selectKey})
+		</if>
+		<if test="startDate == null">
+			and createDate <![CDATA[>=]]> CURDATE()
+		</if>
+		<if test="startDate != null">
+			and createDate <![CDATA[>=]]> #{startDate}
+			<if test="endDate != null">
+				and createDate <![CDATA[<=]]> #{endDate}
+			</if>
+		</if>
+		<if test="textType != null">
+			and textType = #{textType}
+		</if>
+	</sql>
  
  	<insert id="create">
  		insert into
@@ -1232,5 +1268,55 @@
 		and
 			M_regdate between date_add(#{date}, interval -1 day) and #{date}
 	
+	</select>
+	
+	<select id="mediaMatchList" resultType="MediaVO">
+ 		select 
+ 			media_name,count(*)as total 
+ 		from 
+ 			media_data
+		where
+			media_name !='naver'
+        and 
+        	media_name !='daum'
+		<include refid="search_match"></include>
+		group by media_name
+        order by total desc
+        limit 10
+ 	</select>
+	<select id="mediaMatchCount" resultType="Integer">
+		select 
+			count(*) 
+		from 
+			media_data 
+		WHERE
+			url is not null 
+		<include refid="search_match"></include>
+	</select>
+	
+	<select id="mediaMatchList2" resultType="MediaVO">
+ 		select 
+ 			media_name,count(*)as total 
+ 		from 
+ 			media_data
+		where
+			media_name !='naver'
+        and 
+        	media_name !='daum'
+        and
+			keyword != 'press'
+		<include refid="search_match"></include>
+		group by media_name
+        order by total desc
+        limit 10
+ 	</select>
+	<select id="mediaMatchCount2" resultType="Integer">
+		select 
+			count(*) 
+		from 
+			media_data 
+		WHERE
+			keyword != 'press' 
+		<include refid="search_match"></include>
 	</select>
  </mapper>

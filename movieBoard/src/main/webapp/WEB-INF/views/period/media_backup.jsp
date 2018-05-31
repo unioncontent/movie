@@ -286,7 +286,6 @@
                                                 <td class='news' onclick='showModal("#news-Modal", "${mediaList.media}")'>${mediaList.media}</td>
                                                 <td><fmt:formatNumber value="${mediaList.allCount}" groupingUsed="true"/></td>
                                                 <td><fmt:formatNumber value="${mediaList.searchCount}" groupingUsed="true"/></td>
-                                                <td><fmt:parseNumber value="${mediaList.matchPercent}" integerOnly="true"></fmt:parseNumber>%</td>
                                               </tr>
                                               </c:forEach>
                                             </tbody>
@@ -340,7 +339,6 @@
                                                 <td>${pressList.media}</td>
                                                 <td><fmt:formatNumber value="${pressList.allCount}" groupingUsed="true"/></td>
                                                 <td><fmt:formatNumber value="${pressList.searchCount}" groupingUsed="true"/></td>
-                                                <td><fmt:parseNumber value="${pressList.matchPercent}" integerOnly="true"></fmt:parseNumber>%</td>
                                               </tr>
                                             </c:forEach>
                                           </tbody>
