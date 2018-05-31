@@ -1,3 +1,5 @@
+overwareMail/bin/
 overwareMail/node_modules/
+overwareMail/public/uploads/
 overwareMail/package.json
 overwareMail/package-lock.json
