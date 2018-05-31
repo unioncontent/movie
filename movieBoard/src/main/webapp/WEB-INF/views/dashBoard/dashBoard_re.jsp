@@ -189,7 +189,7 @@
                                       <table class="table table-bordered">
                                 <thead>
                                   <tr>
-                                    <th width="40%">분류</th>
+                                    <th width="50%">분류</th>
                                     <th>검출량</th>
                                   </tr>
                                 </thead>

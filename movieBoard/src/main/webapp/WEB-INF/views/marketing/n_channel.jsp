@@ -342,7 +342,7 @@
   <script src="../assets/dist/js/select2.js"></script>
 </body>
 <style>
-.select2-container .select2-selection—single{
+.select2-container .select2-selection--single{
   height: 40px;
 }
 .select2-container--default .select2-selection--single .select2-selection__arrow{

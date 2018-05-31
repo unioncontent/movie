@@ -360,7 +360,7 @@
                         <div class="modal-dialog modal-lg" role="document">
                           <div class="modal-content">
                             <div class="modal-header">
-                              <h5 class="modal-title">좋은 글</h5>
+                              <h5 class="modal-title">좋은글</h5>
                               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true"><i class="icofont icofont-close-line"></i></span>
                               </button>
@@ -372,32 +372,34 @@
                                          	<h5 align="center">등록된 게시글이 없습니다.</h5>
                                      </c:if>
                                      <c:if test="${!empty textTypelistSearch}">
-                                      <table class="tabc" align="center">
-                                        <thead>
-                                            <tr align="center">
-                                              <th width="5%">NO</th>
-                                              <th width="20%">등록날짜</th>
-                                              <th width="25%">언론사</th>
-                                              <th width="50%">제목</th>
-                                              <th width="25%">키워드</th>
-                                              <th width="25%">여론현황</th>
+                                       <div class="table-responsive">
+                                         <table class="table tabc" align="center">
+                                          <thead>
+                                              <tr align="center">
+                                                <th width="5%">NO</th>
+                                                <th width="20%">등록날짜</th>
+                                                <th width="25%">언론사</th>
+                                                <th width="50%">제목</th>
+                                                <th width="25%">키워드</th>
+                                                <th width="25%">여론현황</th>
+                                              </tr>
+                                          </thead>
+                                          <tbody>
+                                            <c:forEach items="${textTypelistSearch}" var = "mediaVO" varStatus="index">
+                                            <tr>
+                                              <th scope="row">${index.count}</th>
+                                              <td>
+                                              <fmt:formatDate value="${mediaVO.updateDate}" pattern="yyyy-MM-dd"/>
+                                              </td>
+                                              <td>${mediaVO.media_name}</td>
+                                              <td><a href='${mediaVO.url}' target="_blank" style="font-size: 12px;"><b>${mediaVO.media_title}</b></a></td>
+                                              <td>${mediaVO.keyword}</td>
+                                              <td>${mediaVO.textType}</td>
                                             </tr>
-                                        </thead>
-                                        <tbody>
-                                          <c:forEach items="${textTypelistSearch}" var = "mediaVO" varStatus="index">
-                                          <tr>
-                                            <th scope="row">${index.count}</th>
-                                            <td>
-                                            <fmt:formatDate value="${mediaVO.updateDate}" pattern="yyyy-MM-dd"/>
-                                            </td>
-                                            <td>${mediaVO.media_name}</td>
-                                            <td><a href='${mediaVO.url}' target="_blank" style="font-size: 12px;"><b>${mediaVO.media_title}</b></a></td>
-                                            <td>${mediaVO.keyword}</td>
-                                            <td>${mediaVO.textType}</td>
-                                          </tr>
-                                          </c:forEach>
-                                        </tbody>
-                                      </table>
+                                            </c:forEach>
+                                          </tbody>
+                                        </table>
+                                      </div>
                                       </c:if>
                                   <!-- list end -->
                               </div>
@@ -415,7 +417,7 @@
                         <div class="modal-dialog modal-lg" role="document">
                           <div class="modal-content">
                             <div class="modal-header">
-                              <h5 class="modal-title">나쁜 글</h5>
+                              <h5 class="modal-title">나쁜글</h5>
                               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true"><i class="icofont icofont-close-line"></i></span>
                               </button>
@@ -427,32 +429,34 @@
                                          	<h5 align="center">등록된 게시글이 없습니다.</h5>
                                      </c:if>
                                      <c:if test="${!empty textTypelistSearch2}">
-                                      <table class="tabc" align="center">
-                                        <thead>
-                                            <tr align="center">
-                                              <th width="5">NO</th>
-                                              <th width="20">등록날짜</th>
-                                              <th width="25">언론사</th>
-                                              <th width="50">제목</th>
-                                              <th width="25">키워드</th>
-                                              <th width="25">여론현황</th>
+                                       <div class="table-responsive">
+                                         <table class="table tabc" align="center">
+                                          <thead>
+                                              <tr align="center">
+                                                <th width="5">NO</th>
+                                                <th width="20">등록날짜</th>
+                                                <th width="25">언론사</th>
+                                                <th width="50">제목</th>
+                                                <th width="25">키워드</th>
+                                                <th width="25">여론현황</th>
+                                              </tr>
+                                          </thead>
+                                          <tbody>
+                                            <c:forEach items="${textTypelistSearch2}" var = "mediaVO" varStatus="index">
+                                            <tr>
+                                              <th scope="row">${index.count}</th>
+                                              <td>
+                                              <fmt:formatDate value="${mediaVO.updateDate}" pattern="yyyy-MM-dd"/>
+                                              </td>
+                                              <td>${mediaVO.media_name}</td>
+                                              <td><a href='${mediaVO.url}' target="_blank" style="font-size: 12px;"><b>${mediaVO.media_title}</b></a></td>
+                                              <td>${mediaVO.keyword}</td>
+                                              <td>${mediaVO.textType}</td>
                                             </tr>
-                                        </thead>
-                                        <tbody>
-                                          <c:forEach items="${textTypelistSearch2}" var = "mediaVO" varStatus="index">
-                                          <tr>
-                                            <th scope="row">${index.count}</th>
-                                            <td>
-                                            <fmt:formatDate value="${mediaVO.updateDate}" pattern="yyyy-MM-dd"/>
-                                            </td>
-                                            <td>${mediaVO.media_name}</td>
-                                            <td><a href='${mediaVO.url}' target="_blank" style="font-size: 12px;"><b>${mediaVO.media_title}</b></a></td>
-                                            <td>${mediaVO.keyword}</td>
-                                            <td>${mediaVO.textType}</td>
-                                          </tr>
-                                          </c:forEach>
-                                        </tbody>
-                                      </table>
+                                            </c:forEach>
+                                          </tbody>
+                                        </table>
+                                      </div>
                                       </c:if>
                                   <!-- list end -->
                               </div>
@@ -469,7 +473,7 @@
                         <div class="modal-dialog modal-lg" role="document">
                           <div class="modal-content">
                             <div class="modal-header">
-                              <h5 class="modal-title">관심 글</h5>
+                              <h5 class="modal-title">관심글</h5>
                               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true"><i class="icofont icofont-close-line"></i></span>
                               </button>
@@ -481,32 +485,34 @@
                                          	<h5 align="center">등록된 게시글이 없습니다.</h5>
                                      </c:if>
                                      <c:if test="${!empty textTypelistSearch3}">
-                                      <table class="tabc" align="center">
-                                        <thead>
-                                            <tr align="center">
-                                              <th width="5">NO</th>
-                                              <th width="20">등록날짜</th>
-                                              <th width="25">언론사</th>
-                                              <th width="25">제목</th>
-                                              <th width="25">키워드</th>
-                                              <th width="25">여론현황</th>
+                                      <div class="table-responsive">
+                                        <table class="table tabc" align="center">
+                                          <thead>
+                                              <tr align="center">
+                                                <th width="5">NO</th>
+                                                <th width="20">등록날짜</th>
+                                                <th width="25">언론사</th>
+                                                <th width="25">제목</th>
+                                                <th width="25">키워드</th>
+                                                <th width="25">여론현황</th>
+                                              </tr>
+                                          </thead>
+                                          <tbody>
+                                            <c:forEach items="${textTypelistSearch3}" var = "mediaVO" varStatus="index">
+                                            <tr>
+                                              <th scope="row">${index.count}</th>
+                                              <td>
+                                              <fmt:formatDate value="${mediaVO.updateDate}" pattern="yyyy-MM-dd"/>
+                                              </td>
+                                              <td>${mediaVO.media_name}</td>
+                                              <td><a href='${mediaVO.url}' target="_blank" style="font-size: 12px;"><b>${mediaVO.media_title}</b></a></td>
+                                              <td>${mediaVO.keyword}</td>
+                                              <td>${mediaVO.textType}</td>
                                             </tr>
-                                        </thead>
-                                        <tbody>
-                                          <c:forEach items="${textTypelistSearch3}" var = "mediaVO" varStatus="index">
-                                          <tr>
-                                            <th scope="row">${index.count}</th>
-                                            <td>
-                                            <fmt:formatDate value="${mediaVO.updateDate}" pattern="yyyy-MM-dd"/>
-                                            </td>
-                                            <td>${mediaVO.media_name}</td>
-                                            <td><a href='${mediaVO.url}' target="_blank" style="font-size: 12px;"><b>${mediaVO.media_title}</b></a></td>
-                                            <td>${mediaVO.keyword}</td>
-                                            <td>${mediaVO.textType}</td>
-                                          </tr>
-                                          </c:forEach>
-                                        </tbody>
-                                      </table>
+                                            </c:forEach>
+                                          </tbody>
+                                        </table>
+                                      </div>
                                       </c:if>
                                   <!-- list end -->
                               </div>
@@ -535,32 +541,34 @@
                                          	<h5 align="center">등록된 게시글이 없습니다.</h5>
                                      </c:if>
                                      <c:if test="${!empty textTypelistSearch4}">
-                                      <table class="tabc" align="center">
-                                        <thead>
-                                            <tr align="center">
-                                              <th width="5">NO</th>
-                                              <th width="20">등록날짜</th>
-                                              <th width="25">언론사</th>
-                                              <th width="50">제목</th>
-                                              <th width="25">키워드</th>
-                                              <th width="25">여론현황</th>
+                                       <div class="table-responsive">
+                                         <table class="table tabc" align="center">
+                                          <thead>
+                                              <tr align="center">
+                                                <th width="5">NO</th>
+                                                <th width="20">등록날짜</th>
+                                                <th width="25">언론사</th>
+                                                <th width="50">제목</th>
+                                                <th width="25">키워드</th>
+                                                <th width="25">여론현황</th>
+                                              </tr>
+                                          </thead>
+                                          <tbody>
+                                            <c:forEach items="${textTypelistSearch4}" var = "mediaVO" varStatus="index">
+                                            <tr>
+                                              <th scope="row">${index.count}</th>
+                                              <td>
+                                              <fmt:formatDate value="${mediaVO.updateDate}" pattern="yyyy-MM-dd"/>
+                                              </td>
+                                              <td>${mediaVO.media_name}</td>
+                                              <td><a href='${mediaVO.url}' target="_blank" style="font-size: 12px;"><b>${mediaVO.media_title}</b></a></td>
+                                              <td>${mediaVO.keyword}</td>
+                                              <td>${mediaVO.textType}</td>
                                             </tr>
-                                        </thead>
-                                        <tbody>
-                                          <c:forEach items="${textTypelistSearch4}" var = "mediaVO" varStatus="index">
-                                          <tr>
-                                            <th scope="row">${index.count}</th>
-                                            <td>
-                                            <fmt:formatDate value="${mediaVO.updateDate}" pattern="yyyy-MM-dd"/>
-                                            </td>
-                                            <td>${mediaVO.media_name}</td>
-                                            <td><a href='${mediaVO.url}' target="_blank" style="font-size: 12px;"><b>${mediaVO.media_title}</b></a></td>
-                                            <td>${mediaVO.keyword}</td>
-                                            <td>${mediaVO.textType}</td>
-                                          </tr>
-                                          </c:forEach>
-                                        </tbody>
-                                      </table>
+                                            </c:forEach>
+                                          </tbody>
+                                        </table>
+                                      </div>
                                       </c:if>
                                   <!-- list end -->
                               </div>
