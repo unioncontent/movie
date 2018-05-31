@@ -279,7 +279,7 @@
                                    	 	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#textType4" style="margin-left: 2px">기타글</button>
 		                            </div></td><td></td><td></td><td>
 	                                <div class="btn-group f-right p-r-0">
-	                                	<button class="btn btn-warning f-right alert-confirm" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'alert-confirm']);"><i class="icofont icofont-download-alt"></i>EXCEL</button>
+	                                	<button class="btn btn-warning m-b-5 f-right alert-confirm" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'alert-confirm']);"><i class="icofont icofont-download-alt"></i>EXCEL</button>
 	                                </div></td></tr></table>
                                   </div>
                                     <!-- list satart -->
