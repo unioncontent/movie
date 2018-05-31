@@ -150,7 +150,7 @@
                                 <div class="card">
                                   <div class="card-header">
                                     <div class="col-sm-3 m-t-10 m-b-10 f-right input-group input-group-button input-group-inverse">
-                                      <input onkeyup="if(event.keyCode == 13){$('#searchBtn').trigger('click');};" id="keywordInput" type="text" class="form-control  f-right p-r-5 p-l-5 m-b-10" placeholder="" style="width: 200px;">
+                                      <input onkeyup="if(event.keyCode == 13){$('#searchBtn').trigger('click');};" id="keywordInput" type="text" class="form-control  f-right p-r-5 p-l-5 m-b-10" placeholder="">
                                       <span class="input-group-addon" id="basic-addon1"><button id="searchBtn" class="btn btn-inverse"><i class="icofont icofont-search-alt-2"></i></button></span>
                                   	</div>
                                     <div class="p-l-15 p-t-10 p-r-15 f-right input-group input-group-inverse" style="max-width: 293px;">
