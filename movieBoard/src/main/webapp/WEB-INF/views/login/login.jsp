@@ -83,7 +83,7 @@
                                 <div class="row">
                                   <div class="col-md-10">
                                     <a id="link" href="http://unionc.co.kr/unionc/ow/index.html" target="_blank"><p class="text-inverse text-left m-b-0">© Union Contents.</p></a>
-                                    <p class="text-inverse text-left m-b-0">TEL : 070-7424-7510</p>
+                                    <p class="text-inverse text-left m-b-0">TEL : 070-7700-1555</p>
                                     <p class="text-inverse text-left">ADRESS : 서울시 서초구 서초대로25길 6 3층</p>
                                   </div>
                                 </div>

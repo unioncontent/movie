@@ -14,7 +14,7 @@
       </div>
     </div>
     <ul class="pcoded-item pcoded-left-item">
-    <li class="dashBoard_main">
+    <li class="dashBoard">
         <a href="../dashBoard/dashBoard_main">
           <span class="pcoded-micon"><i class="ti-home"></i></span>
           <span class="pcoded-mtext" data-i18n="nav.dash.main">대시보드</span>
