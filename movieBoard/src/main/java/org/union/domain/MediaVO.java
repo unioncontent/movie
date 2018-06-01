@@ -27,6 +27,8 @@ public class MediaVO {
 	private Date updateDate;
 	private boolean checkCondition;
 	private double total;
+	private Integer match_total;
+	private Integer match_total2;
 	
 	
 	public String getKeyword_main() {
@@ -161,6 +163,18 @@ public class MediaVO {
 	public void setTotal(double total) {
 		this.total = total;
 	}
+	public Integer getMatch_total() {
+		return match_total;
+	}
+	public void setMatch_total(Integer match_total) {
+		this.match_total = match_total;
+	}
+	public Integer getMatch_total2() {
+		return match_total2;
+	}
+	public void setMatch_total2(Integer match_total2) {
+		this.match_total2 = match_total2;
+	}
 	@Override
 	public String toString() {
 		return "MediaVO [media_idx=" + media_idx + ", media_name=" + media_name + ", media_title=" + media_title
@@ -170,6 +184,7 @@ public class MediaVO {
 				+ last_media_content + ", keyword_main=" + keyword_main + ", keyword=" + keyword + ", keyword_type="
 				+ keyword_type + ", url=" + url + ", textType=" + textType + ", media_state=" + media_state
 				+ ", thumbnail=" + thumbnail + ", createDate=" + createDate + ", updateDate=" + updateDate
-				+ ", checkCondition=" + checkCondition + ", total=" + total + "]";
+				+ ", checkCondition=" + checkCondition + ", total=" + total + ", match_total=" + match_total
+				+ ", match_total2=" + match_total2 + "]";
 	}
 }

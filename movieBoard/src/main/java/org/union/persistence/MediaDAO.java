@@ -128,4 +128,22 @@ public interface MediaDAO {
 	public Integer mediaMatchCount(SearchCriteria cri);
 	public List<MediaVO> mediaMatchList2(SearchCriteria cri);
 	public Integer mediaMatchCount2(SearchCriteria cri);
+	public Integer mediaMatchCount3(SearchCriteria cri);
+	public Integer mediaMatchCount4(SearchCriteria cri);
+	public List<MediaVO> mediaTotalMatchList(SearchCriteria cri);
+	public List<MediaVO> mediaDataList(SearchCriteria cri);
+	public List<MediaVO> mediaMatchDataList(SearchCriteria cri);
+	
+	public List<MediaVO> reporterMatchList(SearchCriteria cri);
+	public Integer reporterMatchCount(SearchCriteria cri);
+	public List<MediaVO> reporterMatchList2(SearchCriteria cri);
+	public Integer reporterMatchCount2(SearchCriteria cri);
+	public Integer reporterMatchCount3(SearchCriteria cri);
+	public Integer reporterMatchCount4(SearchCriteria cri);
+	public List<MediaVO> reporterTotalMatchList(SearchCriteria cri);
+	public List<MediaVO> reporterDataList(SearchCriteria cri);
+	public List<MediaVO> reporterMatchDataList(SearchCriteria cri);
+	
+	public List<MediaVO> mediaMatchallList(SearchCriteria cri);
+	public List<MediaVO> reporterMatchallList(SearchCriteria cri);
 }

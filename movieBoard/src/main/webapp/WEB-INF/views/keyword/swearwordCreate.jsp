@@ -95,10 +95,10 @@
 										<div class="page-header-breadcrumb">
 											<ul class="breadcrumb-title">
 												<li class="breadcrumb-item"><a
-													href="../dashBoard/dashBoard"> <i
+													href="../dashBoard/dashBoard_main"> <i
 														class="icofont icofont-home"></i>
 												</a></li>
-												<li class="breadcrumb-item"><a href="/keyword/swearword">악성글관리</a></li>
+												<li class="breadcrumb-item"><a href="../keyword/swearword">악성글관리</a></li>
 												<li class="breadcrumb-item"><a href="#!">악성글 등록</a></li>
 											</ul>
 										</div>

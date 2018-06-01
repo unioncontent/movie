@@ -104,11 +104,11 @@
                     <div class="page-header-breadcrumb">
                       <ul class="breadcrumb-title">
                         <li class="breadcrumb-item">
-                          <a href="../dashBoard/dashBoard">
+                          <a href="../dashBoard/dashBoard_main">
                             <i class="icofont icofont-home"></i>
                           </a>
                         </li>
-                        <li class="breadcrumb-item"><a href="http://localhost:8080/manage/report">보고서관리</a>
+                        <li class="breadcrumb-item"><a href="#!">보고서관리</a>
                         </li>
                       </ul>
                     </div>

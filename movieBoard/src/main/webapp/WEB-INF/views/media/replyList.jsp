@@ -91,10 +91,11 @@
                     <div class="page-header-breadcrumb">
                       <ul class="breadcrumb-title">
                         <li class="breadcrumb-item">
-                          <a href="../dashBoard/dashBoard">
+                          <a href="../dashBoard/dashBoard_main">
                             <i class="icofont icofont-home"></i>
                           </a>
                         </li>
+                        <li class="breadcrumb-item"><a href="#!">언론사관리</a></li>
                         <li class="breadcrumb-item"><a href="#!">언론사 댓글 기사 리스트</a>
                         </li>
                       </ul>

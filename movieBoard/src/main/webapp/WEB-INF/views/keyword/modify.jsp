@@ -81,11 +81,11 @@
                     <div class="page-header-breadcrumb">
                       <ul class="breadcrumb-title">
                         <li class="breadcrumb-item">
-                          <a href="../dashBoard/dashBoard">
+                          <a href="../dashBoard/dashBoard_main">
                             <i class="icofont icofont-home"></i>
                           </a>
                         </li>
-                        <li class="breadcrumb-item"><a href="mngKeyword.html">키워드관리</a></li>
+                        <li class="breadcrumb-item"><a href="../keyword/keyword">키워드관리</a></li>
                         <li class="breadcrumb-item"><a href="#!">키워드수정</a></li>
                       </ul>
                     </div>

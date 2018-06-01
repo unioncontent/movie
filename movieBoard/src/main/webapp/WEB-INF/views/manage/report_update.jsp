@@ -85,11 +85,11 @@
                     <div class="page-header-breadcrumb">
                       <ul class="breadcrumb-title">
                         <li class="breadcrumb-item">
-                          <a href="../dashBoard/dashBoard">
+                          <a href="../dashBoard/dashBoard_main">
                             <i class="icofont icofont-home"></i>
                           </a>
                         </li>
-                        <li class="breadcrumb-item"><a href="http://overware.iptime.org:8080/manage/report_update">보고서수정</a>
+                        <li class="breadcrumb-item"><a href="#!">보고서수정</a>
                       </ul>
                     </div>
                   </div>

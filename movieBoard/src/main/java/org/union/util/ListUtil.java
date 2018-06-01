@@ -211,6 +211,36 @@ public class ListUtil {
 		return list;
 	}
 	
+	public List<ExtractVO> listAddMediaMatchList(List<ExtractVO> list, List<MediaVO> addList) {
+
+		try {
+
+			for(int i = 0; i < addList.size(); i++) {
+				ExtractVO vo = new ExtractVO();
+				
+				vo.setDomain("media");
+				vo.setDomainType(addList.get(i).getMedia_name());
+				vo.setTitle(addList.get(i).getMedia_title());
+				vo.setContent(addList.get(i).getMedia_content());
+				vo.setWriter(addList.get(i).getReporter_name());
+				vo.setWriteDate(addList.get(i).getWriteDate());
+				vo.setKeyword_main(addList.get(i).getKeyword_main());
+				vo.setKeyword(addList.get(i).getKeyword());
+				vo.setUrl(addList.get(i).getUrl());
+				vo.setCreateDate(date.format(addList.get(i).getUpdateDate()));
+				vo.setTextType(addList.get(i).getTextType());
+				vo.setThumbnail(addList.get(i).getThumbnail());
+				
+				list.add(vo);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return list;
+	}
+	
 	public List<ExtractVO> listAddReplyList(List<ExtractVO> list, List<ReplyVO> addList) {
 
 		try {

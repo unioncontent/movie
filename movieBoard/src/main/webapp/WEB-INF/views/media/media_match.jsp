@@ -37,6 +37,8 @@
   <link rel="stylesheet" type="text/css" href="../assets/icon/icofont/css/icofont.css">
   <!-- font awesome -->
   <link rel="stylesheet" type="text/css" href="../assets/icon/font-awesome/css/font-awesome.css">
+  <!-- sweet alert framework -->
+  <link rel="stylesheet" type="text/css" href="../bower_components/sweetalert/dist/sweetalert.css">
   <!-- Menu-Search css -->
   <link rel="stylesheet" type="text/css" href="../assets/pages/menu-search/css/component.css">
   <!-- Horizontal-Timeline css -->
@@ -89,7 +91,7 @@
                     <div class="page-header-breadcrumb">
                       <ul class="breadcrumb-title">
                         <li class="breadcrumb-item">
-                          <a href="../dashBoard/dashBoard">
+                          <a href="../dashBoard/dashBoard_main">
                             <i class="icofont icofont-home"></i>
                           </a>
                         </li>
@@ -215,105 +217,64 @@
                       </div>
                       <!-- Morris chart end -->
                       <!-- List start -->
-                              <%-- <div class="col-md-12">
+                              <!-- 언론사,기자 통계 start -->
+                              <div class="col-md-12">
                                 <div class="card">
                                   <div class="card-header">
+                                    <h5>언론사 통계</h5>
+                                    <button id="excel" class="btn btn-warning f-right alert-confirm">
+										<i class="icofont icofont-download-alt"></i>EXCEL
+									</button>
                                   </div>
                                   <div class="card-block table-border-style">
-                                    <div class="table-responsive">
-                                      <table class="table table-bordered table-sm">
-                                        <thead>
-                                            <tr align="center">
-                                              <th width="3%">NO</th>
-                                              <th width="5%">검출일</th>
-                                              <th width="3%">총 검출수</th>
-                                              <th width="3%">조회수</th>
-                                              <th width="3%">댓글수</th>
-                                              <th width="3%">좋아요수</th>
-                                              <th width="30%">제목</th>
-                                              <th width="5%"></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                        <c:forEach items="${list}" var="list" varStatus="index">
-                                          <tr class = "trList">
-                                            <th>${totalCount - minusCount - index.count + 1}</th>
-                                            <td>
-                                            	<fmt:formatDate value="${list.createDate}" type="DATE" pattern="yyyy-MM-dd" />
-                                            	<input type="hidden" value="<fmt:formatDate value="${list.createDate}" type="DATE" pattern="yyyy-MM-dd" />" name="createDate2" id=createDate2>
-                                            </td>
-                                            <td>
-                                            	<fmt:formatNumber value="${list.total}" pattern="#,##0" />건
-                                            	<input type="hidden" value="${list.sns_content}" name="content" id="content">
-                                            </td>
-                                            <td>
-                                            <c:if test="${list.view_cnt != 0}">
-                                            <fmt:formatNumber value="${list.view_cnt}" pattern="#,##0" />회
-                                            &nbsp;(<i class="icofont icofont-arrow-up" style="color: green"></i>
-                                            <fmt:formatNumber value="${(list.view_cnt - list2[status.index].view_cnt)}" pattern="#,##0" />회)
-                                            </c:if>
-                                            <c:if test="${list.view_cnt == 0}">
-                                            0회
-                                            </c:if>
-                                            </td>
-                                            <td>
-                                            <fmt:formatNumber value="${list.reply_cnt}" pattern="#,##0" />회
-                                            <input type="hidden" value="${list.url}" name="url" id="url">
-                                            </td>
-                                            <td>
-                                            <fmt:formatNumber value="${list.like_cnt}" pattern="#,##0" />회
-                                            <c:forEach var="creatDate" items="${creatDate}" varStatus="status">
-                                            <fmt:formatDate value="${creatDate.createDate}" type="DATE" pattern="yyyy-MM-dd HH:mm:ss" />
-                                            <input type="hidden" value="<fmt:formatDate value="${creatDate.createDate}" type="DATE" pattern="yyyy-MM-dd HH" />" name="createDate" id=createDate>
-                                            </c:forEach>
-                                            </td>
-                                            <td>
-                                            <div class="content-nowrap">
-                                            <a href='${list.url}' target="_blank">${list.sns_content}</a>
-                                            </div>
-                                            </td>
-                                            <td>
-                                            <button type="button" class="list-button btn btn-primary waves-effect waves-light" style="margin-right: 5px;" data-toggle="tooltip" data-placement="top" data-original-title="리스트">
-                                            <i class="icofont icofont-ui-note"></i>리스트
-                                            </button>
-		    								</td>
-                                          </tr>
-                                        </c:forEach>
-                                        </tbody>
-                                        <tfoot>
-                                          <tr>
-                                            <td colspan="7">
-                                              <ul class="pagination float-right">
-                                                <c:if test="${pageMaker.prev}">
-                                              		<li class="page-item">
-                                                		  <a class="page-link" href="f_list${pageMaker.makeSearch(pageMaker.startPage - 1) }" aria-label="Previous">&laquo;
-                                                  		<span aria-hidden="true"></span>
-                                                  		<span class="sr-only">Previous</span>
-                                                		  </a>
-                                              		</li>
-                                        	      </c:if>
-                                          		  <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
-                                              		<li class= "${pageMaker.cri.page == idx? 'active':''} page-item">
-                                                		  <a class="page-link" href="f_list${pageMaker.makeSearch(idx)}">${idx}</a>
-                                              		</li>
-                                          		  </c:forEach>
-                                          		  <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-                                              		<li class="page-item">
-                                              		  <a class="page-link" href="f_list${pageMaker.makeSearch(pageMaker.endPage +1) }" aria-label="Next">&raquo;
-                                                		<span aria-hidden="true"></span>
-                                                		<span class="sr-only">Next</span>
-                                              		  </a>
-                                              		</li>
-                                          		  </c:if>
-                                          		</ul>
-                                            </td>
-                                          </tr>
-                                        </tfoot>
-                                      </table>
-                                    </div>
+                                    <!-- sns table start -->
+                                    <div class="table-border-style" id="newsMore">
+                                        <div class="table-responsive">
+                                          <table class="table table-styling">
+                                            <thead>
+                                                <tr class="table-inverse">
+                                                    <th>순위</th>
+                                                    <th>언론사</th>
+                                                    <th>전체기사건수</th>
+                                                    <th>매칭기사</th>
+                                                    <th>매칭비율</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="news-ranking">
+                                              <c:forEach items="${mediaTotalMatchList}" var="mediaList" varStatus="index">
+                                              <tr>
+                                                <th scope="row">${index.count}</th>
+                                                <td>${mediaList.media_name}</td>
+                                                <td>
+                                                <a href="javascript:popupOpen('${mediaList.media_name}');" ><fmt:formatNumber value="${mediaList.match_total}" groupingUsed="true"/>건</a>
+                                                </td>
+                                                <td>
+                                                <c:if test="${mediaList.match_total2 == null}">
+                                                0건
+                                                </c:if>
+                                                <c:if test="${mediaList.match_total2 != null}">
+                                                <a href="javascript:popupOpen2('${mediaList.media_name}');" ><fmt:formatNumber value="${mediaList.match_total2}" groupingUsed="true"/>건</a>
+                                                </c:if>
+                                                </td>
+                                                <td>
+                                                <c:if test="${mediaList.match_total2 != 0}">
+								                <fmt:parseNumber var="pages" integerOnly="true" value="${mediaList.match_total2/mediaList.match_total * 100}"></fmt:parseNumber>${pages}%
+								                </c:if>
+								                <c:if test="${mediaList.match_total2 == 0}">
+								                0%
+								                </c:if>
+                                                </td>
+                                              </tr>
+                                              </c:forEach>
+                                            </tbody>
+                                          </table>
+                                        </div>
+                                      </div>
                                   </div>
                                 </div>
-                              </div> --%>
+                              </div>
+                              <!-- List end -->
+                              </div></div></div></div>
                             </div>
                           </div>
                         </div>
@@ -397,6 +358,8 @@
   <script type="text/javascript" src="../bower_components/i18next-xhr-backend/i18nextXHRBackend.min.js"></script>
   <script type="text/javascript" src="../bower_components/i18next-browser-languagedetector/i18nextBrowserLanguageDetector.min.js"></script>
   <script type="text/javascript" src="../bower_components/jquery-i18next/jquery-i18next.min.js"></script>
+  <!-- sweet alert js -->
+  <script type="text/javascript" src="../bower_components/sweetalert/dist/sweetalert.min.js"></script>
   <!-- Custom js -->
   <script type="text/javascript" src="../assets/js/script.js"></script>
   <script src="../assets/js/pcoded.min.js"></script>
@@ -552,7 +515,9 @@
 	      type : "POST",
 		  url : "graphMatch",
 	 	  dataType : "json",
-	 	  data : {success : 'success'},
+	 	  data : {success : 'success', part : 'media',
+	 		  	company : $("#selectCompany option:selected").val(), selectKey : $("#selectKeyword option:selected").val(),
+	 		 	startDate : decodeURI(window.location.href.split("startDate=")[1]).split("&")[0], endDate : decodeURI(window.location.href.split("endDate=")[1]).split("&")[0]},
 	  	  success : function(data){
 
 	  		  console.log(data);
@@ -575,7 +540,7 @@
 			// to json
 			var jsonScript = JSON.parse(script);
 
-			areaChart(jsonScript);
+			matchChart(jsonScript);
 
 	  	 }
 	});
@@ -585,7 +550,9 @@
 	      type : "POST",
 		  url : "graphMatch2",
 	 	  dataType : "json",
-	 	  data : {success : 'success'},
+	 	  data : {success : 'success', part : 'media',
+	 		  	company : $("#selectCompany option:selected").val(), selectKey : $("#selectKeyword option:selected").val(),
+	 		 	startDate : decodeURI(window.location.href.split("startDate=")[1]).split("&")[0], endDate : decodeURI(window.location.href.split("endDate=")[1]).split("&")[0]},
 	  	  success : function(data){
 
 	  		  console.log(data);
@@ -625,9 +592,34 @@
 
 	});
 	
+	//엑셀출력 확인메시지
+	$(document).on("click",".alert-confirm",function(){
+    	swal({
+          title: "엑셀출력 하시겠습니까?",
+          text: "현재 리스트가 엑셀출력 됩니다.",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonClass: "btn-danger",
+          confirmButtonText: "YES",
+          closeOnConfirm: false
+        },
+        function(){//엑셀 출력하겠다고 할 시 진행 함수
+    		
+        	self.location = "excel_match?"+
+			  + "&company=" + $("#selectCompany option:selected").val()
+			  + "&selectKey=" + $('#selectKeyword option:selected').val()
+			  + "&startDate=" + decodeURI(window.location.href.split("startDate=")[1]).split("&")[0].split(" ")[0]
+			  + "&endDate=" +  decodeURI(window.location.href.split("endDate=")[1]).split("&")[0].split(" ")[0]
+        	  + "&part=media"
+        
+	  		swal("Success!", "엑셀출력 되었습니다.", "success");
+
+        });
+	}); 
+	
   }); // end ready...
   
-  function areaChart(jsonScript) {
+  	function matchChart(jsonScript) {
 		$("#morris-bar").empty();
 		window.areaChart = Morris.Bar({
 			element: 'morris-bar',
@@ -643,7 +635,7 @@
 		    });
 		} 
 		
-	function areaChart2(jsonScript) {
+  	function areaChart2(jsonScript) {
 		$("#morris-bar2").empty();
 		window.areaChart = Morris.Bar({
 			element: 'morris-bar2',
@@ -658,6 +650,44 @@
 		    gridTextColor: '#888'
 		    });
 		} 
+  	
+  	function popupOpen(media_name){
+		
+		var company = $("#selectCompany option:selected").val();
+		
+		var selectKey = $("#selectKeyword option:selected").val();
+		
+		var startDate = decodeURI(window.location.href.split("startDate=")[1]).split("&")[0];
+		
+		var endDate = decodeURI(window.location.href.split("endDate=")[1]).split("&")[0];
+  		
+  		var popUrl = "media_popUp?media_name="+media_name+"&part=media&company="+company
+					+"&selectKey="+selectKey+"&startDate="+startDate+"&endDate="+endDate;	//팝업창에 출력될 페이지 URL
+
+  		var popOption = "width=1500, height=900, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
+
+  			window.open(popUrl,"",popOption);
+
+  		}
+  	
+	function popupOpen2(media_name){
+		
+		var company = $("#selectCompany option:selected").val();
+		
+		var selectKey = $("#selectKeyword option:selected").val();
+		
+		var startDate = decodeURI(window.location.href.split("startDate=")[1]).split("&")[0];
+		
+		var endDate = decodeURI(window.location.href.split("endDate=")[1]).split("&")[0];
+		
+  		var popUrl = "media_popUp?media_name="+media_name+"&part=match&company="+company
+  					+"&selectKey="+selectKey+"&startDate="+startDate+"&endDate="+endDate;	//팝업창에 출력될 페이지 URL
+
+  		var popOption = "width=1500, height=900, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
+
+  			window.open(popUrl,"",popOption);
+
+  		}
 
   // 날짜 계산 함수
   function getDate(type){

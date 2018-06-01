@@ -47,7 +47,7 @@
   <link rel="stylesheet" type="text/css" href="../bower_components/sweetalert/dist/sweetalert.css">
   <!-- Style.css -->
   <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
-  <link rel="stylesheet" type="text/css" href="../assets/pages/reply/css/style.css">
+  <link rel="stylesheet" type="text/css" href="../assets/pages/sns/css/style.css">
   <link rel="stylesheet" type="text/css" href="../assets/css/picker.css">
   <!--color css-->
   <link rel="stylesheet" type="text/css" href="../assets/css/color/color-1.css" id="color" />
@@ -57,278 +57,108 @@
   <link rel="stylesheet" type="text/css" href="../assets/css/jquery.mCustomScrollbar.css">
 </head>
 <body>
-  <!-- Pre-loader start -->
-  <div class="theme-loader">
-    <div class="ball-scale">
-      <div></div>
-    </div>
-  </div>
-  <!-- Pre-loader end -->
-
+  
+  <!-- Pre-loader end -->	
   <div id="pcoded" class="pcoded">
-    <div class="pcoded-overlay-box"></div>
-    <div class="pcoded-container navbar-wrapper">
+    
       <!-- top menu start -->
-      <jsp:include page='../include/header.jsp' />
       <!-- top menu end -->
       <!-- main container start -->
-      <div class="pcoded-main-container">
-        <div class="pcoded-wrapper">
           <!-- right menu start -->
-          <jsp:include page='../include/side.jsp' />
           <!-- right menu end -->
           <!-- content start -->
-          <div class="pcoded-content">
-            <div class="pcoded-inner-content">
               <!-- main-body start -->
               <div class="main-body">
                 <div class="page-wrapper">
                   <!-- page-header start -->
                   <div class="page-header">
                     <div class="page-header-title">
-                      <h4>언론사 댓글 기사 리스트</h4>
-                    </div>
-                    <div class="page-header-breadcrumb">
-                      <ul class="breadcrumb-title">
-                        <li class="breadcrumb-item">
-                          <a href="../dashBoard/dashBoard_main">
-                            <i class="icofont icofont-home"></i>
-                          </a>
-                        </li>
-                        <li class="breadcrumb-item"><a href="#!">언론사관리</a></li>
-                        <li class="breadcrumb-item"><a href="#!">언론사 댓글 기사 리스트</a>
-                        </li>
-                      </ul>
                     </div>
                   </div>
                   <!-- page-header end -->
-                  <!-- Page-body start -->
-                  <div class="page-body">
-                    <div class="row">
-                      <!-- data setting start -->
-                      <div class="col-md-7">
-                        <c:if test="${user.user_name == 'union'}">
-                         <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="selectCompany">
-                          <option>회사</option>
-                          <c:if test="${user.user_type == 1 }">
-                          <c:forEach items="${companyList}" var = "companyList">
-                          <option value="${companyList.user_name}">${companyList.user_name}</option>
-                          </c:forEach>
-                          </c:if>
-                          <c:if test="${user.user_type == 2}">
-                          <option value="${companyList.user_name}">${companyList.user_name}</option>
-                          </c:if>
-                        </select>
-						</c:if>
-						
-						<c:if test="${user.user_name != 'union'}">
-                         <select style="display: none;" name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="selectCompany">
-                          <option>회사</option>
-                          <c:if test="${user.user_type == 1 }">
-                          <c:forEach items="${companyList}" var = "companyList">
-                          <option value="${companyList.user_name}">${companyList.user_name}</option>
-                          </c:forEach>
-                          </c:if>
-                          <c:if test="${user.user_type == 2}">
-                          <option value="${companyList.user_name}">${companyList.user_name}</option>
-                          </c:if>
-                        </select>
-						</c:if>
-						
-                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left" id="selectKeyword">
-                          <option>키워드</option>
-                          <c:if test="${modelKeywordList == null}" >
-                          	<c:forEach items="${keywordList}" var = "keywordList">
-                          <option value="${keywordList.keyword_main}">${keywordList.keyword_main}</option>
-                          </c:forEach>
-                          </c:if>
-                          <c:if test="${modelKeywordList != null}">
-                          	<c:forEach items="${modelKeywordList}" var = "keywordList">
-                          <option value="${keywordList.keyword_main}">${keywordList.keyword_main}</option>
-                          </c:forEach>
-                          </c:if>
-                        </select>
-                        <select id= "selectPerPageNum" name="select" class="col-md-1 form-control form-control-inverse m-r-10 m-b-10 p-r-5 f-left select-left">	
-                        	<option value="30">리스트</option>
-	                        <option id= "30">30</option>
-	                        <option id = "60">60</option>
-	                        <option id = "90">90</option>
-                        </select>
-                      </div>
-                      <div class="col-md-5">
-                        <!-- date picker start -->
-                        <div class="row">
-                          <div class="btn-group float-right m-b-10 p-l-15 p-r-10" role="group">
-                            <button id="toDay" type="button" class="btn btn-inverse btn-sm waves-effect waves-light">당일</button>
-                            <button id="yesterDay" type="button" class="btn btn-inverse btn-sm waves-effect waves-light">전일</button>
-                            <button id="week" type="button" class="btn btn-inverse btn-sm waves-effect waves-light">최근7일</button>
-                            <button id="month" type="button" class="btn btn-inverse btn-sm waves-effect waves-light">최근30일</button>
-                          </div>
-                          <div class="input-group float-right date col p-l-15 p-r-15 m-b-10">
-                            <input type="text" id="fromDate" class="form-control form-control-inverse" value="">
-                            <span class="input-group-addon bg-inverse">
-                              <span class="icofont icofont-ui-calendar"></span>
-                            </span>
-                          </div>
-
-                        </div>
-                        <!-- date picker end -->
-                      </div>
+                  <!-- page-body start -->
                       <!-- data setting end -->
                       <div class="col-lg-12">
                         <!-- tab header start -->
                         <!-- tab header end -->
                         <!-- tab-content start -->
-                         <div class="tab-content">
+                        <div class="tab-content">
                           <!-- tab1 main start -->
-                          <div class="tab-pane fade show active" id="main" role="tabpanel">
+                          <div class="tab-pane fade show active" id="media_match" role="tabpanel">
                             <div class="row">
                               <!-- top cards end -->
-                              <!-- list satart -->
                               <div class="col-lg-12">
 		                        <div class="card">
 		                          <div class="card-header">
-                                <select id = "selectSearchType" name="select" class="col-sm-1 form-control form-control-inverse m-r-10 m-b-10 f-left search-select">
-                                  <option id="t" value="t">기사 제목</option>
-                                  <option id="c" value="c">댓글 내용</option>
-                                </select>
-                                <div class="col-sm-3 input-group input-group-button input-group-inverse p-l-0 p-r-0 m-b-10 f-left btn-select">
-                                   <input onkeyup="if(event.keyCode == 13){$('#searchBtn').trigger('click');};"id="keywordInput" type="text" class="form-control" placeholder="">
-                                  <span class="input-group-addon" id="basic-addon1">
-                                    <button id="searchBtn" class=" btn btn-inverse">검색</button>
-                                  </span>
-                                  </div>
-			                        <div style="position:relative; left:5px;">
-			                        	<button class="btn btn-warning alert-excel f-right"><i class="icofont icofont-download-alt"></i>EXCEL</button>
-			                        </div>
-		                          	<div class="btn-group f-right p-r-0">
-	                                  <button type="button" id="allBtn1" class="radiosBtn btn btn-primary btn-outline-primary btn-sm waves-effect waves-light">좋은글</button>
-	                                  <button type="button" id="allBtn2" class="radiosBtn btn btn-primary btn-outline-primary btn-sm waves-effect waves-light">나쁜글</button>
-	                                  <button type="button" id="allBtn3" class="radiosBtn btn btn-primary btn-outline-primary btn-sm waves-effect waves-light">관심글</button>
-	                                  <button type="button" id="allBtn4" class="radiosBtn btn btn-primary btn-outline-primary btn-sm waves-effect waves-light">기타글</button>
-	                                  <button type="button" id="allBtn5" class="radiosBtn btn btn-primary btn-outline-primary btn-sm waves-effect waves-light">삭제글</button>
-	                                  <button type="button" id="insertAllBtn" class="alert-confirm btn btn-sm btn-primary waves-effect f-right p-b-10"><i class="icofont icofont-exchange" style="margin: 0px;font-size: 16px;"></i></button>
-	                                </div>
-		                          	
-                                    <h5 class="card-header-text m-b-10"></h5>
+                                    <h5 class="card-header-text m-b-10">언론사 매칭 리스트</h5>
                                     </div>
                                     <div class="card-block table-border-style">
-                            		<div class="card-block table-border-style table-responsive">
+                            		<div class="table-responsive">
                                       <table class="table table-bordered table-sm">
                                         <thead>
-                                            <tr>
-                                              <th width="5%">NO</th>
-                                              <th width="5%">회사</th>
-                                              <th width="5%">키워드</th>
-                                              <th width="10%">기사명 / URL</th>
-                                              <th width="3%">댓글 작성자</th>
-                                              <th width="5%">댓글 내용</th>
-                                              <th width="10%">추출일/작성일</th>
-                                              <th width="3%">분류글</th>
-                                              <th width="5%">분류변경</th>
-                                              <th width="5%">분류처리</th>
+                                            <tr align="center">
+                                              <th width="1">NO</th>
+                                              <th width="2">기자</th>
+                                              <th width="2">언론사</th>
+                                              <th width="20">제목</th>
+                                              <th width="20">내용</th>
+                                              <th width="5">키워드</th>
+                                              <th width="10">작성날짜</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                          <c:forEach items="${replyList}" var = "ReplyVO" varStatus="index">
-                                          <tr class = "trList">
-                                          	<c:if test="${ReplyVO.reply_idx != null}">
-                                          		<input type="hidden" value="${ReplyVO.reply_idx}" name="reply_idx">
-                                          	</c:if>
-                                            <th scope="row">
-                                            	${totalCount -index.count +1 -minusCount}
-                                            </th>
+                                        <c:if test="${!empty reporterDataList}">
+                                          <c:forEach items="${reporterDataList}" var = "reportVO" varStatus="index">
+                                          <tr>
+                                            <th scope="row">${index.count}</th>
+                                            <td>${reportVO.reporter_name}</td>
+                                            <td>${reportVO.media_name}</td>
                                             <td>
-                                            ${ReplyVO.company_name}
+                                            <div class="popup-title-nowrap">
+                                            <a href='${reportVO.url}' target="_blank" style="font-size: 12px;">
+                                            <b>${reportVO.media_title}</b></a>
+                                            </div>
                                             </td>
                                             <td>
-                                            	${ReplyVO.keyword}
+                                            <div class="popup-contents-nowrap">
+                                            ${reportVO.media_content}
+                                            </div>
                                             </td>
-                                            <td>
-                                            	<div class="url-nowrap">
-                                            	${ReplyVO.media_title} /<br/><a href='${ReplyVO.url}' target="_blank">${ReplyVO.url}</a>
-                                            	</div>
-                                            </td>
-                                            <td>
-                                            	${ReplyVO.reply_writer}
-                                            </td>
-                                            <td>
-                                            	<div class="url-nowrap">
-                                            	${ReplyVO.reply_content}
-                                            	</div>
-                                            </td>
-                                            <td>
-                                            	<fmt:formatDate value="${ReplyVO.createDate}" type="DATE" pattern="yyyy-MM-dd HH:mm:ss" />
-                                            	/<br>
-                                            	${ReplyVO.writeDate}
-                                            </td>
-                                            <td>
-                                            	<c:if test="${empty ReplyVO.textType}">
-			                                         	미분류
-			                                     </c:if>
-                                            	${ReplyVO.textType}
-                                            </td>
-                                            <td>
-                                            	<div class="radios${index.count}">
-			                                        <input type="radio" id="radio1${index.count}" name="radios${index.count}">
-			                                        <label for="radio1${index.count}">좋은글</label>
-			                                        <input type="radio" id="radio2${index.count}" name="radios${index.count}">
-			                                        <label for="radio2${index.count}">나쁜글</label>
-			                                        <input type="radio" id="radio3${index.count}" name="radios${index.count}">
-			                                        <label for="radio3${index.count}">관심글</label>
-			                                        <br/>
-			                                        <input type="radio" id="radio4${index.count}" name="radios${index.count}">
-			                                        <label for="radio4${index.count}">기타글</label>
-			                                        <input type="radio" id="radio5${index.count}" name="radios${index.count}">
-			                                        <label for="radio5${index.count}">삭제글</label>
-			                                        <input type="radio" id="radio6${index.count}" name="radios${index.count}" checked>
-			                                        <label for="radio6${index.count}">미분류</label>
-			                                      </div>
-                                            </td>
-		                                    <td>
-		                                      <button class="btn btn-danger btn-sm alert-confirm1" data-toggle="tooltip" data-placement="top" data-original-title="삭제"><i class="icofont icofont-ui-delete" style="margin-right:0"></i></button>
-		                                      <button class="btn btn-primary btn-sm alert-confirm2" data-toggle="tooltip" data-placement="top" data-original-title="즉시처리"><i class="icofont icofont-ui-check" style="margin-right:0"></i></button>
-		                                    </td>
+                                            <td>${reportVO.keyword}</td>
+                                            <td>${reportVO.writeDate}</td>
                                           </tr>
                                           </c:forEach>
+                                          </c:if>
+                                          <c:if test="${!empty reporterMatchDataList}">
+                                          <c:forEach items="${reporterMatchDataList}" var = "reportVO" varStatus="index">
+                                          <tr>
+                                            <th scope="row">${index.count}</th>
+                                            <td>${reportVO.reporter_name}</td>
+                                            <td>${reportVO.media_name}</td>
+                                            <td>
+                                            <div class="popup-title-nowrap">
+                                            <a href='${reportVO.url}' target="_blank" style="font-size: 12px;">
+                                            <b>${reportVO.media_title}</b></a>
+                                            </div>
+                                            </td>
+                                            <td>
+                                            <div class="popup-contents-nowrap">
+                                            ${reportVO.media_content}
+                                            </div>
+                                            </td>
+                                            <td>${reportVO.keyword}</td>
+                                            <td>${reportVO.writeDate}</td>
+                                          </tr>
+                                          </c:forEach>
+                                          </c:if>
                                         </tbody>
-                                        <tfoot>
-		                                  <tr>
-		                                    <td colspan="10">
-		                                      <ul class="pagination float-right">
-		                                       <c:if test="${pageMaker.prev}">
-		                                         <li class="page-item">
-		                                           <a class="page-link" href="reply${pageMaker.makeSearch(pageMaker.startPage - 1) }" aria-label="Previous">&laquo;
-		                                             <span aria-hidden="true"></span>
-		                                             <span class="sr-only">Previous</span>
-		                                           </a>
-		                                         </li>
-		                                       </c:if>
-		
-		                                       <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
-		                                         <li class= "${pageMaker.cri.page == idx? 'active':''} page-item">
-		                                           <a class="page-link" href="reply${pageMaker.makeSearch(idx)}">${idx}</a>
-		                                         </li>
-		                                       </c:forEach>
-		
-		                                       <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-		                                         <li class="page-item">
-		                                           <a class="page-link" href="reply${pageMaker.makeSearch(pageMaker.endPage +1) }" aria-label="Next">&raquo;
-		                                             <span aria-hidden="true"></span>
-		                                             <span class="sr-only">Next</span>
-		                                           </a>
-		                                         </li>
-		                                       </c:if>
-		                                     </ul>
-		                                    </td>
-		                                  </tr>
-		                                </tfoot>
                                       </table>
                                     </div>
                                     </div>
                                    </div>
                                   </div>
-                                  </div></div></div>
+                                 </div>
+                                </div>
                               <!-- list end -->
                         <!-- tab-content end -->
                       </div>
@@ -339,13 +169,6 @@
               </div>
               <!-- main-body end -->
             </div>
-          </div>
-          <!-- content end -->
-        </div>
-      </div>
-      <!-- main container end -->
-    </div>
-  </div>
   <!-- Warning Section Starts -->
   <!-- Older IE warning message -->
   <!--[if lt IE 9]>
@@ -482,21 +305,7 @@ $(document).ready(function(){
 			searchList();
 
 		});
-		
-		var ListOption = decodeURI(window.location.href.split("PerPageNum=")[1]).split("&")[0];
 
-		var $selectPerPageNum = $('#selectPerPageNum');
-		
-		$selectPerPageNum[0][0].disabled = true;
-		
-		// 글 수 변경 선택시
-		$selectPerPageNum.change(function(){
-			console.log("selectPerPageNum clicked....");
-			console.log($("#selectPerPageNum option:selected").val());
-
-			searchList();
-
-		});
 
 		var keywordOption = decodeURI(window.location.href.split("selectKey=")[1]).split("&")[0];
 		console.log("keywordOption: " + keywordOption);
@@ -537,35 +346,17 @@ $(document).ready(function(){
 			  var $trList = $(".trList");
 
 			  for(var i = 0; i < $trList.length; i++){
-				  $('#radio'+ btnNum + (i+1))[0].checked = true;
+				  $('#state'+ btnNum + (i+1))[0].checked = true;
 			  }
-
-
-
-			  /* var value;
-
-			  switch(input){
-
-			  case "allBtn1" : value = "좋은글"; break;
-			  case "allBtn2" : value = "나쁜글"; break;
-			  case "allBtn3" : value = "관심글"; break;
-			  case "allBtn4" : value = "기타글"; break;
-			  case "allBtn5" : value = "삭제글"; break;
-
-			  }
-
-			  console.log(value); */
-
-
-
 
 		  });
-
-	// 일괄처리버튼 클릭시
+		
+		// 일괄처리버튼 클릭시
 		 $(document).on("click","#insertAllBtn",function(){
 			insertAll();
 		 });
-		
+
+
 	  // 삭제버튼 클릭시
 	  $(document).on("click",".alert-confirm1",function(event){
 			swal({
@@ -632,8 +423,32 @@ $(document).ready(function(){
 						location.reload();
 					});
 	  });
+	  
+	
+	
+	// 상태변경 버튼 클릭시
+	  $(document).on("click",".alert-confirm3",function(event){
+		  swal({
+				title: "상태변경 처리 하시겠습니까?",
+				text: "바로 상태변경 됩니다.",
+				type: "warning",
+				showCancelButton: true,
+				confirmButtonClass: "btn-danger",
+				confirmButtonText: "YES",
+				closeOnConfirm: false
+			},
+					function(){
 
+						insertState(event);
 
+						swal("Update!", "상태변경 처리가 완료되었습니다.", "success");
+
+						location.reload();
+					});
+	  });
+	
+	
+	  
 		// 당일 클릭시
 		$('#toDay').on("click", function(){
 		  console.log("toDay clicked....");
@@ -708,9 +523,21 @@ $(document).ready(function(){
 	});
 
 
+	// 검색버튼 클릭시
+	$('#searchBtn').on("click", function(event){
+	  console.log("searchBtn clicked....");
+	  console.log($('#selectSearchType option:selected').val());
+
+	  if($('#keywordInput').val() == ''){
+		alert("검색어를 입력해주세요.");
+	  }else{
+		searchList();
+	  }
+	});
+	
 	//엑셀출력 확인메시지
 	$(document).on("click",".alert-excel",function(){
-  	swal({
+  swal({
         title: "엑셀출력 하시겠습니까?",
         text: "현재 리스트가 엑셀출력 됩니다.",
         type: "warning",
@@ -721,30 +548,21 @@ $(document).ready(function(){
       },
       function(){//엑셀 출력하겠다고 할 시 진행 함수
 
-    	  self.location = "excelOk?"+
-		  + "&company=" + $("#selectCompany option:selected").val()
-		  + "&selectKey=" + $('#selectKeyword option:selected').val()
-		  + "&startDate=" + makeDateFormat($("#fromDate").val(), 0)
-	  	  + "&endDate=" +  makeDateFormat($("#fromDate").val(), 1);
+      	self.location = "excel?"+  "searchType=" + decodeURI(window.location.href.split("&searchType=")[1]).split("&")[0]
+		 	  + "&keyword=" + decodeURI(window.location.href.split("&keyword=")[1]).split("&")[0]
+      	  	  + "&company=" + $("#selectCompany option:selected").val()
+	          + "&selectKey=" + $('#selectKeyword option:selected').val()
+    		  + "&startDate=" + makeDateFormat($("#fromDate").val(), 0)
+    		  + "&endDate=" +  makeDateFormat($("#fromDate").val(), 1);
 
 
 	  		swal("Success!", "엑셀출력 되었습니다.", "success");
 
       });
 	});
-	
-	// 검색버튼 클릭시
-	$('#searchBtn').on("click", function(event){
-	  console.log("searchBtn clicked....");
-	  console.log($('#selectSearchType option:selected').val());
-	
-	  searchList();
-	  
-	});
 
 
 }); // end ready...
-
 
 	function insertType(event) {
 
@@ -762,8 +580,8 @@ $(document).ready(function(){
 			console.log(idx);
 		}
 
-		if (tr.children[9].children[0].children != 'undefined') {
-			var arr = tr.children[9].children[0].children;
+		if (tr.children[10].children[0].children != 'undefined') {
+			var arr = tr.children[10].children[0].children;
 			console.log(arr);
 		} else {
 			clacInsertData(event);
@@ -781,6 +599,56 @@ $(document).ready(function(){
 						data : {
 							idx : idx,
 							textType : textType
+						},
+						dataType : "json",
+						success : function(data) {
+							console.log(data);
+						}
+
+					});
+
+					break;
+				}
+			}
+
+		}
+	}
+	
+	function insertState(event) {
+
+		var parent = event.target.parentNode;
+		if(parent.type == 'submit'){
+			console.log("button click...");
+			parent = parent.parentNode;
+		}
+
+		var tr = parent.parentNode;
+		console.log(tr);
+
+		if (tr.children[0].value != 'undefined') {
+			var idx = tr.children[0].value;
+			console.log(idx);
+		}
+
+		if (tr.children[11].children[0].children != 'undefined') {
+			var arr = tr.children[11].children[0].children;
+			console.log(arr);
+		} else {
+			clacInsertData(event);
+		}
+
+		for (var i = 0; i < arr.length; i++) {
+			console.log(arr[i]);
+			if (arr[i].type == "radio") {
+				if (arr[i].checked) {
+					var state = arr[i].value;
+
+					 $.ajax({
+						type : "POST",
+						url : "update",
+						data : {
+							idx : idx,
+							state : state
 						},
 						dataType : "json",
 						success : function(data) {
@@ -814,32 +682,30 @@ $(document).ready(function(){
 
 				for(var i = 0; i < tr.length; i++){
 					var idx = tr[i].children[0].value;
-					var arr = tr[i].children[9].children[0].children;
+					var arr = tr[i].children[11].children[0].children;
 
 
 					for (var l = 0; l < arr.length; l++) {
 						if (arr[l].type == "radio") {
 
 							if (arr[l].checked) {
-								var textType = arr[l + 1].innerText;
+								var state = arr[l].value;
 
 								break;
 							}
 						}
 					}
-
-					if(textType != '미분류'){
 						$.ajax({
 							  type: "POST",
-							  url: "insert",
-							  data: {idx : idx, textType : textType},
+							  url: "allUpdate",
+							  data: {idx : idx, state : state},
 							  dataType: "json",
 							  success: function(data){
 								  console.log(data);
 							  }
 
 							});
-					}
+					
 
 				}
 
@@ -863,15 +729,12 @@ function makeDateFormat(date, index){
 
 	//list URL 함수
 	  function searchList(event) {
-	
-		var makeQeury = '${pageMaker.makeQuery(1)}'.slice(0, -2);
-		
-	  	self.location = "reply" + makeQeury
-	  				  + $('#selectPerPageNum option:selected').val()
-	  				  + "&company=" + $("#selectCompany option:selected").val()
-	  				  + "&selectKey=" + $('#selectKeyword option:selected').val()
-	  				  + "&searchType=" + $("#selectSearchType option:selected").val()
-					  + "&keyword=" + $('#keywordInput').val()
+
+	  	self.location = "replyList?"
+	  				  + "&company="
+	  				  + $("#selectCompany option:selected").val()
+	  				  + "&selectKey="
+	  				  + $('#selectKeyword option:selected').val()
 	  				  + "&startDate=" + makeDateFormat($("#fromDate").val(), 0)
 	  				  + "&endDate=" +  makeDateFormat($("#fromDate").val(), 1);
 	  }

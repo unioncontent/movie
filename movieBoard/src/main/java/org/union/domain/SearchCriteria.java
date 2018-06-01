@@ -5,7 +5,7 @@ import java.util.Date;
 public class SearchCriteria extends Criteria {
 
 	
-	private String searchType, keyword, selectKey, company, textType, portal_name, portal_type, hour, url;
+	private String searchType, keyword, selectKey, company, textType, portal_name, portal_type, hour, url, media_name, reporter_name;
 	private Integer total;
 	private String startDate, endDate, createstartDate, createendDate, createminusDate, writeDate;
 	private Date date;
@@ -185,14 +185,33 @@ public class SearchCriteria extends Criteria {
 	public void setDate(Date date) {
 		this.date = date;
 	}
+	
+	public String getMedia_name() {
+		return media_name;
+	}
+
+
+	public void setMedia_name(String media_name) {
+		this.media_name = media_name;
+	}
+	
+	public String getReporter_name() {
+		return reporter_name;
+	}
+
+
+	public void setReporter_name(String reporter_name) {
+		this.reporter_name = reporter_name;
+	}
 
 	@Override
 	public String toString() {
 		return "SearchCriteria [searchType=" + searchType + ", keyword=" + keyword + ", selectKey=" + selectKey
 				+ ", company=" + company + ", textType=" + textType + ", portal_name=" + portal_name + ", portal_type="
-				+ portal_type + ", hour=" + hour + ", url=" + url + ", total=" + total + ", startDate=" + startDate
-				+ ", endDate=" + endDate + ", createstartDate=" + createstartDate + ", createendDate=" + createendDate
-				+ ", createminusDate=" + createminusDate + ", writeDate=" + writeDate + ", date=" + date + "]";
+				+ portal_type + ", hour=" + hour + ", url=" + url + ", media_name=" + media_name + ", reporter_name="
+				+ reporter_name + ", total=" + total + ", startDate=" + startDate + ", endDate=" + endDate
+				+ ", createstartDate=" + createstartDate + ", createendDate=" + createendDate + ", createminusDate="
+				+ createminusDate + ", writeDate=" + writeDate + ", date=" + date + "]";
 	}
 
 }

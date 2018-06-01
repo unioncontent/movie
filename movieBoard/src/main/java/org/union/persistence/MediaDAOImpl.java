@@ -575,6 +575,100 @@ public class MediaDAOImpl implements MediaDAO {
 
 		return session.selectOne(namespace + "mediaMatchCount2", cri);
 	}
-
 	
+	@Override
+	public Integer mediaMatchCount3(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "mediaMatchCount3", cri);
+	}
+
+	@Override
+	public List<MediaVO> mediaTotalMatchList(SearchCriteria cri) {
+
+		return session.selectList(namespace + "mediaTotalMatchList", cri);
+	}
+
+	@Override
+	public List<MediaVO> reporterMatchList(SearchCriteria cri) {
+
+		return session.selectList(namespace + "reporterMatchList", cri);
+	}
+
+	@Override
+	public Integer reporterMatchCount(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "reporterMatchCount", cri);
+	}
+
+	@Override
+	public List<MediaVO> reporterMatchList2(SearchCriteria cri) {
+
+		return session.selectList(namespace + "reporterMatchList2", cri);
+	}
+
+	@Override
+	public Integer reporterMatchCount2(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "reporterMatchCount2", cri);
+	}
+
+	@Override
+	public Integer reporterMatchCount3(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "reporterMatchCount3", cri);
+	}
+
+	@Override
+	public List<MediaVO> reporterTotalMatchList(SearchCriteria cri) {
+
+		return session.selectList(namespace + "reporterTotalMatchList", cri);
+	}
+
+	@Override
+	public List<MediaVO> mediaMatchallList(SearchCriteria cri) {
+
+		return session.selectList(namespace + "mediaMatchallList", cri);
+	}
+
+	@Override
+	public List<MediaVO> reporterMatchallList(SearchCriteria cri) {
+
+		return session.selectList(namespace + "reporterMatchallList", cri);
+	}
+
+	@Override
+	public List<MediaVO> mediaDataList(SearchCriteria cri) {
+
+		return session.selectList(namespace + "mediaDataList", cri);
+	}
+
+	@Override
+	public List<MediaVO> mediaMatchDataList(SearchCriteria cri) {
+
+		return session.selectList(namespace + "mediaMatchDataList", cri);
+	}
+
+	@Override
+	public List<MediaVO> reporterDataList(SearchCriteria cri) {
+
+		return session.selectList(namespace + "reporterDataList", cri);
+	}
+
+	@Override
+	public List<MediaVO> reporterMatchDataList(SearchCriteria cri) {
+
+		return session.selectList(namespace + "reporterMatchDataList", cri);
+	}
+
+	@Override
+	public Integer mediaMatchCount4(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "mediaMatchCount4", cri);
+	}
+
+	@Override
+	public Integer reporterMatchCount4(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "reporterMatchCount4", cri);
+	}
 }

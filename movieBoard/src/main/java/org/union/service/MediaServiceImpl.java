@@ -688,6 +688,100 @@ public class MediaServiceImpl implements MediaService {
 
 		return mediaDAO.mediaMatchCount2(cri);
 	}
-
 	
+	@Override
+	public Integer mediaMatchCount3(SearchCriteria cri) {
+
+		return mediaDAO.mediaMatchCount3(cri);
+	}
+
+	@Override
+	public List<MediaVO> mediaTotalMatchList(SearchCriteria cri) {
+
+		return mediaDAO.mediaTotalMatchList(cri);
+	}
+
+	@Override
+	public List<MediaVO> reporterMatchList(SearchCriteria cri) {
+
+		return mediaDAO.reporterMatchList(cri);
+	}
+
+	@Override
+	public Integer reporterMatchCount(SearchCriteria cri) {
+
+		return mediaDAO.reporterMatchCount(cri);
+	}
+
+	@Override
+	public List<MediaVO> reporterMatchList2(SearchCriteria cri) {
+
+		return mediaDAO.reporterMatchList2(cri);
+	}
+
+	@Override
+	public Integer reporterMatchCount2(SearchCriteria cri) {
+
+		return mediaDAO.reporterMatchCount2(cri);
+	}
+
+	@Override
+	public Integer reporterMatchCount3(SearchCriteria cri) {
+
+		return mediaDAO.reporterMatchCount3(cri);
+	}
+
+	@Override
+	public List<MediaVO> reporterTotalMatchList(SearchCriteria cri) {
+
+		return mediaDAO.reporterTotalMatchList(cri);
+	}
+
+	@Override
+	public List<MediaVO> mediaMatchallList(SearchCriteria cri) {
+
+		return mediaDAO.mediaMatchallList(cri);
+	}
+
+	@Override
+	public List<MediaVO> reporterMatchallList(SearchCriteria cri) {
+
+		return mediaDAO.reporterMatchallList(cri);
+	}
+
+	@Override
+	public List<MediaVO> mediaDataList(SearchCriteria cri) {
+
+		return mediaDAO.mediaDataList(cri);
+	}
+
+	@Override
+	public List<MediaVO> mediaMatchDataList(SearchCriteria cri) {
+
+		return mediaDAO.mediaMatchDataList(cri);
+	}
+
+	@Override
+	public List<MediaVO> reporterDataList(SearchCriteria cri) {
+
+		return mediaDAO.reporterDataList(cri);
+	}
+
+	@Override
+	public List<MediaVO> reporterMatchDataList(SearchCriteria cri) {
+
+		return mediaDAO.reporterMatchDataList(cri);
+	}
+
+	@Override
+	public Integer mediaMatchCount4(SearchCriteria cri) {
+
+		return mediaDAO.mediaMatchCount4(cri);
+	}
+
+	@Override
+	public Integer reporterMatchCount4(SearchCriteria cri) {
+
+		return mediaDAO.reporterMatchCount4(cri);
+	}
 }

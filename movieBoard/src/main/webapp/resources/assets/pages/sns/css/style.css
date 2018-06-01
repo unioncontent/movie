@@ -29,4 +29,15 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
- 
+.popup-contents-nowrap{
+  width: 450px;
+  margin:0 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.popup-title-nowrap{
+  width: 350px;
+  margin:0 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}  

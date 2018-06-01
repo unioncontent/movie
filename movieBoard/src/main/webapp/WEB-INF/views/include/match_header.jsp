@@ -32,7 +32,7 @@
 			</li>
 			</a>
 			<a class="nav-item">
-				<li id="portal" class="nav-link" style="cursor:pointer;">
+				<li id="reporter_match" class="nav-link" style="cursor:pointer;">
 					<p>기자통계</p>
 					<div class="slide"></div>
 			</li>
@@ -54,8 +54,8 @@
 	if(selectOption == 'media_match'){
 		$("#media_match").addClass('active');
 		
-	}else if(selectOption == 'portal'){
-		$("#portal").addClass('active');
+	}else if(selectOption == 'reporter_match'){
+		$("#reporter_match").addClass('active');
 		
 	}
 	

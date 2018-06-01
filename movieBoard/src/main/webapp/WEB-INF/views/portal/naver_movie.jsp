@@ -85,7 +85,7 @@
 										</div>
 										<div class="page-header-breadcrumb">
 											<ul class="breadcrumb-title">
-												<li class="breadcrumb-item"><a href="../dashBoard/dashBoard"> <i class="icofont icofont-home"></i>
+												<li class="breadcrumb-item"><a href="../dashBoard/dashBoard_main"> <i class="icofont icofont-home"></i>
 												</a></li>
 												<li class="breadcrumb-item"><a href="#!">포털관리</a></li>
 												<li class="breadcrumb-item"><a href="#!">네이버영화관리</a></li>

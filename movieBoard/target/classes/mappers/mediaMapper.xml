@@ -1319,4 +1319,281 @@
 			keyword != 'press' 
 		<include refid="search_match"></include>
 	</select>
+	<select id="mediaMatchCount3" resultType="Integer">
+		select 
+			count(*)
+        from(
+		select 
+ 			media_name,count(*)as total 
+ 		from 
+ 			media_data 
+		where
+			media_name !='naver'
+        and 
+        	media_name !='daum'
+        and
+			keyword != 'press' 
+		<include refid="search_match"></include>
+		group by media_name
+        order by total desc
+        limit 10
+        ) as total;
+	</select>
+	<select id="mediaMatchCount4" resultType="Integer">
+		select 
+			count(*)
+        from(
+		select 
+ 			media_name,count(*)as total 
+ 		from 
+ 			media_data 
+		where
+			media_name !='naver'
+        and 
+        	media_name !='daum'
+		<include refid="search_match"></include>
+		group by media_name
+        order by total desc
+        limit 10
+        ) as total;
+	</select>
+	
+	<select id="mediaTotalMatchList" resultType="MediaVO">
+ 		 select a.media_name,a.total as match_total, b.total as match_total2 
+		from 
+			(select 
+				media_name,count(*)as total 
+			from 
+				media_data 
+			WHERE
+				media_name !='naver'
+			and 
+				media_name !='daum' 
+			<include refid="search_match"></include>
+			group by media_name
+			order by total desc) as a
+        left join 
+			(select 
+				media_name,count(*)as total 
+			from 
+				media_data
+			where
+				media_name !='naver'
+			and 
+				media_name !='daum'
+			and
+				keyword != 'press'
+			<include refid="search_match"></include>
+			group by media_name
+			order by total desc) as b
+        on a.media_name  = b.media_name 
+        order by match_total desc
+        limit 10;
+ 	</select>
+ 	
+ 	<select id="reporterMatchList" resultType="MediaVO">
+ 		select 
+ 			reporter_name,media_name,count(*)as total 
+ 		from 
+ 			media_data
+		where
+			media_name !='naver'
+        and 
+        	media_name !='daum'
+        and
+			reporter_name is not null
+		<include refid="search_match"></include>
+		group by reporter_name
+        order by total desc
+        limit 10
+ 	</select>
+	<select id="reporterMatchCount" resultType="Integer">
+		select 
+			count(*) 
+		from 
+			media_data 
+		WHERE
+			url is not null
+		and
+			reporter_name is not null 
+		<include refid="search_match"></include>
+	</select>
+	
+	<select id="reporterMatchList2" resultType="MediaVO">
+ 		select 
+ 			reporter_name,media_name,count(*)as total 
+ 		from 
+ 			media_data
+		where
+			media_name !='naver'
+        and 
+        	media_name !='daum'
+        and
+			keyword != 'press'
+		and
+			reporter_name is not null
+		<include refid="search_match"></include>
+		group by reporter_name
+        order by total desc
+        limit 10
+ 	</select>
+	<select id="reporterMatchCount2" resultType="Integer">
+		select 
+			count(*) 
+		from 
+			media_data 
+		WHERE
+			keyword != 'press'
+		and
+			reporter_name is not null 
+		<include refid="search_match"></include>
+	</select>
+	<select id="reporterMatchCount3" resultType="Integer">
+		select 
+			count(*)
+        from(
+		select 
+ 			reporter_name,media_name,count(*)as total 
+ 		from 
+ 			media_data 
+		where
+			media_name !='naver'
+        and 
+        	media_name !='daum'
+        and
+			keyword != 'press'
+		and
+			reporter_name is not null 
+		<include refid="search_match"></include>
+		group by reporter_name
+        order by total desc
+        limit 10
+        ) as total;
+	</select>
+	<select id="reporterMatchCount4" resultType="Integer">
+		select 
+			count(*)
+        from(
+		select 
+ 			reporter_name,media_name,count(*)as total 
+ 		from 
+ 			media_data 
+		where
+			media_name !='naver'
+        and 
+        	media_name !='daum'
+		and
+			reporter_name is not null 
+		<include refid="search_match"></include>
+		group by reporter_name
+        order by total desc
+        limit 10
+        ) as total;
+	</select>
+	<select id="reporterTotalMatchList" resultType="MediaVO">
+ 		 select a.reporter_name,a.media_name,a.total as match_total, b.total as match_total2 
+		from 
+			(select
+				reporter_name,media_name,count(*)as total 
+			from 
+				media_data 
+			WHERE
+				media_name !='naver'
+			and 
+				media_name !='daum'
+			and
+				reporter_name is not null 
+			<include refid="search_match"></include>
+			group by reporter_name
+			order by total desc) as a
+        left join 
+			(select 
+				reporter_name,media_name,count(*)as total 
+			from 
+				media_data
+			where
+				media_name !='naver'
+			and 
+				media_name !='daum'
+			and
+				keyword != 'press'
+			and
+				reporter_name is not null
+			<include refid="search_match"></include>
+			group by reporter_name
+			order by total desc) as b
+        on a.reporter_name  = b.reporter_name 
+        order by match_total desc
+        limit 10;
+ 	</select>
+ 	<select id="mediaMatchallList" resultType="MediaVO">
+		select 
+			* 
+		from 
+			media_data
+		where
+			media_name !='naver'
+		and 
+			media_name !='daum' 
+		<include refid="search_match"></include>
+		order by media_name, createDate desc;
+	</select>
+	<select id="reporterMatchallList" resultType="MediaVO">
+		select 
+			* 
+		from 
+			media_data
+		where
+			media_name !='naver'
+		and 
+			media_name !='daum'
+		and
+			reporter_name is not null 
+		<include refid="search_match"></include>
+		order by reporter_name, createDate desc;
+	</select>
+	<select id="mediaDataList" resultType="MediaVO">
+		select 
+			* 
+		from 
+			media_data
+		where 
+			media_name=#{media_name}
+	    <include refid="search_match"></include>
+		order by createDate desc;
+	</select>
+	<select id="mediaMatchDataList" resultType="MediaVO">
+		select 
+			* 
+		from 
+			media_data
+		where 
+			media_name=#{media_name}
+		and
+			keyword != 'press'
+	    <include refid="search_match"></include>
+		order by createDate desc;
+	</select>
+	<select id="reporterDataList" resultType="MediaVO">
+		select 
+			* 
+		from 
+			media_data
+		where 
+			reporter_name=#{reporter_name}
+	    <include refid="search_match"></include>
+		order by createDate desc;
+	</select>
+	<select id="reporterMatchDataList" resultType="MediaVO">
+		select 
+			* 
+		from 
+			media_data
+		where 
+			reporter_name=#{reporter_name}
+		and
+			keyword != 'press'
+	    <include refid="search_match"></include>
+		order by createDate desc;
+	</select>
  </mapper>

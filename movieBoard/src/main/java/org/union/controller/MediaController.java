@@ -46,7 +46,9 @@ import org.union.service.MediaService;
 import org.union.service.ReporterService;
 import org.union.service.UserService;
 import org.union.util.ExcelView;
+import org.union.util.ExcelViewM;
 import org.union.util.ListUtil;
+import org.union.util.Match_Excel;
 
 @Controller
 @RequestMapping("/media/*")
@@ -392,6 +394,203 @@ public class MediaController {
 		
 		logger.info("cri: " + cri);
 		
+		model.addAttribute("mediaTotalMatchList", mediaService.mediaTotalMatchList(cri));
+	}
+	
+	@GetMapping("/media_popUp")
+	public void media_popUp(@ModelAttribute("cri") SearchCriteria cri, Model model, String media_name,String part, String company, String selectKey, String startDate, String endDate) throws Exception{
+		logger.info("media_popUp called....");
+		
+		cri.setKeyword(null);
+		cri.setTextType(null);
+		
+		if(cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey()) ) {
+			logger.info("selectKey is null");
+			cri.setSelectKey(null);
+		}
+		if("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate())
+				|| cri.getStartDate() == "" || cri.getEndDate() == ""){
+			cri.setStartDate(null);
+			cri.setEndDate(null);
+		
+		} 
+		if(cri.getStartDate() != null && cri.getEndDate() != null) {
+			logger.info("not null");
+			logger.info(cri.getStartDate());
+			logger.info(cri.getEndDate());
+			if(cri.getStartDate().indexOf("00:00:00") < 0 && cri.getEndDate().indexOf("23:59:59") < 0){ 
+				cri.setStartDate(cri.getStartDate() + " 00:00:00"); 
+				cri.setEndDate(cri.getEndDate() + " 23:59:59"); 
+			}
+		}
+		
+		
+		if(cri.getCompany() != null) {
+			if(cri.getCompany().isEmpty()) {
+				cri.setCompany(null);
+			}
+		}
+		if(cri.getCompany() == null || cri.getCompany().equals("회사")) {
+			logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+			UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
+			
+			if(!vo.getUser_name().equals("union")) {
+			cri.setCompany(vo.getUser_name());
+			
+			}else {
+				cri.setCompany(null);
+			}
+		}
+
+		// 회사 선택에 따른 키워드 재추출
+		if (cri.getCompany() != null) {	
+			if (cri.getCompany().isEmpty() == false) {
+
+				UserVO userVO = userService.viewByName(cri.getCompany());
+				logger.info("userVO: " + userVO);
+				logger.info("keywordList: " + keywordService.listByUser(userVO.getUser_idx()));
+				model.addAttribute("modelKeywordList",
+						keywordService.listByUser(userService.viewByName(cri.getCompany()).getUser_idx()));
+			}
+		}
+		cri.setMedia_name(media_name);
+		
+		logger.info("cri: " + cri);
+		
+		if(part.equals("media")) {
+		model.addAttribute("mediaDataList", mediaService.mediaDataList(cri));
+		}else if(part.equals("match")) {
+		model.addAttribute("mediaMatchDataList", mediaService.mediaMatchDataList(cri));
+		}
+	}
+	
+	@GetMapping("/reporter_popUp")
+	public void reporter_popUp(@ModelAttribute("cri") SearchCriteria cri, Model model, String reporter_name,String part, String company, String selectKey, String startDate, String endDate) throws Exception{
+		logger.info("reporter_popUp called....");
+		
+		cri.setKeyword(null);
+		cri.setTextType(null);
+		
+		if(cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey()) ) {
+			logger.info("selectKey is null");
+			cri.setSelectKey(null);
+		}
+		if("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate())
+				|| cri.getStartDate() == "" || cri.getEndDate() == ""){
+			cri.setStartDate(null);
+			cri.setEndDate(null);
+		
+		} 
+		if(cri.getStartDate() != null && cri.getEndDate() != null) {
+			logger.info("not null");
+			logger.info(cri.getStartDate());
+			logger.info(cri.getEndDate());
+			if(cri.getStartDate().indexOf("00:00:00") < 0 && cri.getEndDate().indexOf("23:59:59") < 0){ 
+				cri.setStartDate(cri.getStartDate() + " 00:00:00"); 
+				cri.setEndDate(cri.getEndDate() + " 23:59:59"); 
+			}
+		}
+		
+		
+		if(cri.getCompany() != null) {
+			if(cri.getCompany().isEmpty()) {
+				cri.setCompany(null);
+			}
+		}
+		if(cri.getCompany() == null || cri.getCompany().equals("회사")) {
+			logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+			UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
+			
+			if(!vo.getUser_name().equals("union")) {
+			cri.setCompany(vo.getUser_name());
+			
+			}else {
+				cri.setCompany(null);
+			}
+		}
+
+		// 회사 선택에 따른 키워드 재추출
+		if (cri.getCompany() != null) {	
+			if (cri.getCompany().isEmpty() == false) {
+
+				UserVO userVO = userService.viewByName(cri.getCompany());
+				logger.info("userVO: " + userVO);
+				logger.info("keywordList: " + keywordService.listByUser(userVO.getUser_idx()));
+				model.addAttribute("modelKeywordList",
+						keywordService.listByUser(userService.viewByName(cri.getCompany()).getUser_idx()));
+			}
+		}
+		cri.setReporter_name(reporter_name);
+		
+		logger.info("cri: " + cri);
+		
+		if(part.equals("media")) {
+		model.addAttribute("reporterDataList", mediaService.reporterDataList(cri));
+		}else if(part.equals("match")) {
+		model.addAttribute("reporterMatchDataList", mediaService.reporterMatchDataList(cri));
+		}
+	}
+	
+	@GetMapping("/reporter_match")
+	public void reporter_match(@ModelAttribute("cri") SearchCriteria cri, Model model) throws Exception{
+		logger.info("reporter_match called....");
+		
+		cri.setKeyword(null);
+		cri.setTextType(null);
+		
+		if(cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey()) ) {
+			logger.info("selectKey is null");
+			cri.setSelectKey(null);
+		}
+		if("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate())
+				|| cri.getStartDate() == "" || cri.getEndDate() == ""){
+			cri.setStartDate(null);
+			cri.setEndDate(null);
+		
+		} 
+		if(cri.getStartDate() != null && cri.getEndDate() != null) {
+			logger.info("not null");
+			logger.info(cri.getStartDate());
+			logger.info(cri.getEndDate());
+			if(cri.getStartDate().indexOf("00:00:00") < 0 && cri.getEndDate().indexOf("23:59:59") < 0){ 
+				cri.setStartDate(cri.getStartDate() + " 00:00:00"); 
+				cri.setEndDate(cri.getEndDate() + " 23:59:59"); 
+			}
+		}
+		
+		
+		if(cri.getCompany() != null) {
+			if(cri.getCompany().isEmpty()) {
+				cri.setCompany(null);
+			}
+		}
+		if(cri.getCompany() == null || cri.getCompany().equals("회사")) {
+			logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+			UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
+			
+			if(!vo.getUser_name().equals("union")) {
+			cri.setCompany(vo.getUser_name());
+			
+			}else {
+				cri.setCompany(null);
+			}
+		}
+
+		// 회사 선택에 따른 키워드 재추출
+		if (cri.getCompany() != null) {	
+			if (cri.getCompany().isEmpty() == false) {
+
+				UserVO userVO = userService.viewByName(cri.getCompany());
+				logger.info("userVO: " + userVO);
+				logger.info("keywordList: " + keywordService.listByUser(userVO.getUser_idx()));
+				model.addAttribute("modelKeywordList",
+						keywordService.listByUser(userService.viewByName(cri.getCompany()).getUser_idx()));
+			}
+		}
+		
+		logger.info("cri: " + cri);
+		
+		model.addAttribute("reporterTotalMatchList", mediaService.reporterTotalMatchList(cri));
 	}
 	
 	@ResponseBody
@@ -536,6 +735,76 @@ public class MediaController {
 		
 		model.addObject("list", util.listAddReplyList(extractList, mediaService.replyAllPage(cri)));
 		model.addObject("type", "news");
+		model.setView(excelView);
+		
+		return model;
+	}
+	
+	@ResponseBody
+	@GetMapping("/excel_match")
+	public ModelAndView excel_matchGET(ModelAndView model, Match_Excel excelView, SearchCriteria cri, String part) {
+		
+		if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
+			logger.info("keyword is null");
+			cri.setKeyword(null);
+			
+		} 
+		if(cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey()) ) {
+			logger.info("selectKey is null");
+			cri.setSelectKey(null);
+		}
+		
+		if("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate())
+				|| cri.getStartDate() == "" || cri.getEndDate() == ""){
+			cri.setStartDate(null);
+			cri.setEndDate(null);
+		
+		} 
+		if(cri.getStartDate() != null && cri.getEndDate() != null) {
+			logger.info("not null");
+			logger.info(cri.getStartDate());
+			logger.info(cri.getEndDate());
+			if(cri.getStartDate().indexOf("00:00:00") < 0 && cri.getEndDate().indexOf("23:59:59") < 0){ 
+				cri.setStartDate(cri.getStartDate() + " 00:00:00"); 
+				cri.setEndDate(cri.getEndDate() + " 23:59:59"); 
+			}
+		}
+		if(cri.getCompany() != null) {
+			if(cri.getCompany().isEmpty()) {
+				cri.setCompany(null);
+			}
+		}
+		
+		if(cri.getCompany() == null || cri.getCompany().equals("회사")) {
+			logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+			UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
+			
+			if(!vo.getUser_name().equals("union")) {
+			cri.setCompany(vo.getUser_name());
+			
+			}else {
+				cri.setCompany(null);
+			}
+		}
+		if(cri.getTextType() != null) {
+			if(cri.getTextType().equals("undefined") || cri.getTextType().equals("분류") || cri.getTextType().isEmpty()) {
+				cri.setTextType(null);
+			}
+		}
+		
+		logger.info("cri: " + cri);
+		logger.info("perPageNum: " + cri.getPerPageNum());
+		logger.info("getStartPage: " + cri.getStartPage());
+		ListUtil util = new ListUtil();
+		List<ExtractVO> extractList = new ArrayList<ExtractVO>();
+		
+		if(part.equals("media")) {
+			model.addObject("list", util.listAddMediaMatchList(extractList, mediaService.mediaMatchallList(cri)));
+		}else if(part.equals("reporter")) {
+			model.addObject("list", util.listAddMediaMatchList(extractList, mediaService.reporterMatchallList(cri)));
+		}
+		
+		model.addObject("type", "match");
 		model.setView(excelView);
 		
 		return model;
@@ -694,7 +963,7 @@ public class MediaController {
 	
 	@ResponseBody
 	@PostMapping("/graphMatch")
-	public List<GraphVO> graphMatch(Model model, String success, @ModelAttribute("cri") SearchCriteria cri,String part) throws ParseException {
+	public List<GraphVO> graphMatch(Model model, String success, @ModelAttribute("cri") SearchCriteria cri, String company, String selectKey, String startDate, String endDate, String part) throws ParseException {
 		logger.info("graphMatchPOST called....");
 		
 		if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
@@ -752,17 +1021,23 @@ public class MediaController {
 			}
 		}
 		
-		Integer totalCount = mediaService.mediaMatchCount(cri);
-		logger.info("totalCount: " + totalCount);
+	List<GraphVO> graphList = new ArrayList<GraphVO>();
 		
-		List<GraphVO> graphList = new ArrayList<GraphVO>();
-		for(int i = 0; i < 10; i++) {
+	if(part.equals("media")) {
+		
+		Integer totalCount = mediaService.mediaMatchCount(cri);
+		Integer totalCount2 = mediaService.mediaMatchCount4(cri);
+		logger.info("totalCount: " + totalCount);
+		logger.info("totalCount2: " + totalCount2);
+		
+		
+		for(int i = 0; i < totalCount2; i++) {
 			
 			GraphVO graphVO = new GraphVO();
 			
 			double media = mediaService.mediaMatchList(cri).get(i).getTotal();
 			
-			graphVO.setMedia_total( Math.round(media / totalCount * 100));
+			graphVO.setMedia_total(Math.round(media / totalCount * 100));
 			graphVO.setMedia(mediaService.mediaMatchList(cri).get(i).getMedia_name());
 			
 			graphList.add(graphVO);
@@ -771,12 +1046,38 @@ public class MediaController {
 			logger.info("graphW2: " + graphList.get(i).getMedia_total());*/
 			
 		}
+	}else if(part.equals("reporter")) {
+		
+		Integer totalCount = mediaService.reporterMatchCount(cri);
+		logger.info("totalCount: " + totalCount);
+		Integer totalCount2 = mediaService.reporterMatchCount4(cri);
+		logger.info("totalCount2: " + totalCount2);
+		
+		
+		for(int i = 0; i < totalCount2; i++) {
+			
+			GraphVO graphVO = new GraphVO();
+			
+			double reporter = mediaService.reporterMatchList(cri).get(i).getTotal();
+			
+			graphVO.setMedia_total(Math.round(reporter / totalCount * 100));
+			graphVO.setMedia(mediaService.reporterMatchList(cri).get(i).getReporter_name());
+			
+			graphList.add(graphVO);
+			
+			/*logger.info("graphset1: " + graphList.get(i).getMedia());
+			logger.info("graphW2: " + graphList.get(i).getMedia_total());*/
+			
+		}
+		
+		
+	}
 		logger.info("graphList: " + graphList);
 		return graphList;
 	}
 	@ResponseBody
 	@PostMapping("/graphMatch2")
-	public List<GraphVO> graphMatch2(Model model, String success, @ModelAttribute("cri") SearchCriteria cri,String part) throws ParseException {
+	public List<GraphVO> graphMatch2(Model model, String success, @ModelAttribute("cri") SearchCriteria cri, String company, String selectKey, String startDate, String endDate, String part) throws ParseException {
 		logger.info("graphMatch2POST called....");
 		
 		if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
@@ -834,25 +1135,57 @@ public class MediaController {
 			}
 		}
 		
-		Integer totalCount = mediaService.mediaMatchCount2(cri);
-		logger.info("totalCount2: " + totalCount);
-		
 		List<GraphVO> graphList = new ArrayList<GraphVO>();
-		for(int i = 0; i < 10; i++) {
+		
+		if(part.equals("media")) {
 			
-			GraphVO graphVO = new GraphVO();
+			Integer totalCount = mediaService.mediaMatchCount2(cri);
+			Integer totalCount2 = mediaService.mediaMatchCount3(cri);
+			logger.info("totalCount2: " + totalCount);
+			logger.info("matchTotalCount: " + totalCount2);
 			
-			double media = mediaService.mediaMatchList2(cri).get(i).getTotal();
 			
-			graphVO.setMedia_total( Math.round(media / totalCount * 100));
-			graphVO.setMedia(mediaService.mediaMatchList2(cri).get(i).getMedia_name());
+			for(int i = 0; i < totalCount2; i++) {
+				
+				GraphVO graphVO = new GraphVO();
+				
+				double media = mediaService.mediaMatchList2(cri).get(i).getTotal();
+				
+				graphVO.setMedia_total( Math.round(media / totalCount * 100));
+				graphVO.setMedia(mediaService.mediaMatchList2(cri).get(i).getMedia_name());
+				
+				graphList.add(graphVO);
+				
+				/*logger.info("media: " + graphList.get(i).getMedia());
+				logger.info("total: " + graphList.get(i).getMedia_total());*/
+				
+			}
+		}else if(part.equals("reporter")) {
+
+			Integer totalCount = mediaService.reporterMatchCount2(cri);
+			Integer totalCount2 = mediaService.reporterMatchCount3(cri);
+			logger.info("totalCount2: " + totalCount);
+			logger.info("matchTotalCount: " + totalCount2);
 			
-			graphList.add(graphVO);
 			
-			/*logger.info("media: " + graphList.get(i).getMedia());
-			logger.info("total: " + graphList.get(i).getMedia_total());*/
+			for(int i = 0; i < totalCount2; i++) {
+				
+				GraphVO graphVO = new GraphVO();
+				
+				double reporter = mediaService.reporterMatchList2(cri).get(i).getTotal();
+				
+				graphVO.setMedia_total( Math.round(reporter / totalCount * 100));
+				graphVO.setMedia(mediaService.reporterMatchList2(cri).get(i).getReporter_name());
+				
+				graphList.add(graphVO);
+				
+				/*logger.info("media: " + graphList.get(i).getMedia());
+				logger.info("total: " + graphList.get(i).getMedia_total());*/
+				
+			}
 			
 		}
+		
 		logger.info("graphList: " + graphList);
 		return graphList;
 	}

@@ -89,7 +89,7 @@
                     <div class="page-header-breadcrumb">
                       <ul class="breadcrumb-title">
                         <li class="breadcrumb-item">
-                          <a href="../dashBoard/dashBoard">
+                          <a href="../dashBoard/dashBoard_main">
                             <i class="icofont icofont-home"></i>
                           </a>
                         </li>
@@ -98,131 +98,116 @@
                       </ul>
                     </div>
                   </div>
-                  <!-- page-body start -->
-                  <div class="page-body">
-                    <div class="row">
-                      <div class="col-lg-12">
-                      	<div class="card">
-    	                    <div class="card-header">
-    		                    <h5 class="card-header-text m-b-10"></h5>
-    		                    <form action="/media/replyAddOk">
-        		                    <div class="form-group row">
-                                  <label class="col-sm-2 col-form-label">*회사명</label>
-                                  <div class="col-sm-10">
-                                    <select name="company_name" class="form-control" id="selectCompany">
-                                      <c:forEach items="${companyList}" var="company">
-                                      <option value="${company.company_name}">${company.company_name}</option>
-                                      </c:forEach>
-                                    </select>
-                                  </div>
+                  <div class="col-lg-12">
+                  	<div class="card">
+	                    <div class="card-header">
+		                    <h5 class="card-header-text m-b-10"></h5>
+		                    <form action="/media/replyAddOk">
+		                    <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">*회사명</label>
+                                <div class="col-sm-10">
+                                  <select name="company_name" class="form-control" id="selectCompany">
+                                    <c:forEach items="${companyList}" var="company">
+                                    <option value="${company.company_name}">${company.company_name}</option>
+                                    </c:forEach>
+                                  </select>
                                 </div>
-                                <div class="form-group row">
-                                  <label class="col-sm-2 col-form-label">*메인 키워드</label>
-                                  <div class="col-sm-10">
-                                    <input type="text" class="form-control" name="title_key">
-                                  </div>
+                              </div>
+                              <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">*메인 키워드</label>
+                                <div class="col-sm-10">
+                                  <input type="text" class="form-control" name="title_key">
                                 </div>
-                                <div class="form-group row">
-                                  <label class="col-sm-2 col-form-label">*키워드</label>
-                                  <div class="col-sm-10">
-                                      <input type="text" class="form-control" name="keyword">
-                                  </div>
+                              </div>
+                              <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">*키워드</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" name="keyword">
                                 </div>
-                                <div class="form-group row">
-                                  <label class="col-sm-2 col-form-label">*기사 제목</label>
-                                  <div class="col-sm-10">
-                                      <input type="text" class="form-control" name="media_title">
-                                  </div>
+                              </div>
+                              <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">*기사 제목</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" name="media_title">
                                 </div>
-                                <div class="form-group row">
-                                  <label class="col-sm-2 col-form-label">*URL</label>
-                                  <div class="col-sm-10">
-                                      <input type="text" class="form-control" name="url" id="url">
-                                      <div style="height: 10px;"></div>
-                                      <button id="checkMainBtn" type="button"
-                    										class="btn btn-sm btn-inverse alert-prompt"
-                    										onclick="_gaq.push(['_trackEvent', 'example', 'try', 'alert-prompt']);">
-                    										<i class="icofont icofont icofont-ui-check"></i> 중복체크
-                    									</button>
-                                  </div>
+                              </div>
+                              <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">*URL</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" name="url" id="url">
+                                    <div style="height: 10px;"></div>
+                                    <button id="checkMainBtn" type="button"
+										class="btn btn-sm btn-inverse alert-prompt"
+										onclick="_gaq.push(['_trackEvent', 'example', 'try', 'alert-prompt']);">
+										<i class="icofont icofont icofont-ui-check"></i> 중복체크
+									</button>
                                 </div>
-                                <div class="form-group row">
-                                  <label class="col-sm-2 col-form-label">언론사</label>
-                                  <div class="col-sm-10">
-                                      <input type="text" class="form-control" name="media_name">
-                                  </div>
+                              </div>							
+                              <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">언론사</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" name="media_name">
                                 </div>
-                                <div class="form-group row">
-                                  <label class="col-sm-2 col-form-label">기자</label>
-                                  <div class="col-sm-10">
-                                      <input type="text" class="form-control" name="reporter_name">
-                                  </div>
+                              </div>
+                              <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">기자</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" name="reporter_name">
                                 </div>
-                                <div class="form-group row">
-                                  <label class="col-sm-2 col-form-label">*날짜</label>
-                                  <div class="col-sm-10">
-                                      <input type="text" class="form-control" name="writeDate" onkeyup="AddNum(this)">
-                                  </div>
+                              </div>
+                              <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">*날짜</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" name="writeDate" onkeyup="AddNum(this)">
                                 </div>
-                                <div class="form-group row">
-                                  <label class="col-sm-2 col-form-label">*유형</label>
-                                  <div class="col-sm-10">
-                                      <div class="col-sm-5">
-                                          <div class="form-radio">
-                                            <div class="radio radio-inline">
-                                              <label>
-                                                <input type="radio" name="news_type" value="A" checked="checked">
-                                                <i class="helper"></i>A형
-                                              </label>
-                                            </div>
-                                            <div class="radio radio-inline">
-                                              <label>
-                                                <input type="radio" name="news_type" value="B" checked="checked">
-                                                <i class="helper"></i>B형
-                                              </label>
-                                            </div>
+                              </div>
+                              <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">*유형</label>
+                                <div class="col-sm-10">
+                                    <div class="col-sm-5">
+                                        <div class="form-radio">
+                                          <div class="radio radio-inline">
+                                            <label>
+                                              <input type="radio" name="news_type" value="A" checked="checked">
+                                              <i class="helper"></i>A형
+                                            </label>
+                                          </div>
+                                          <div class="radio radio-inline">
+                                            <label>
+                                              <input type="radio" name="news_type" value="B" checked="checked">
+                                              <i class="helper"></i>B형
+                                            </label>
                                           </div>
                                         </div>
-                                  </div>
+                                      </div>
                                 </div>
-                                <div class="form-group row">
-                                  <label class="col-sm-2 col-form-label">*상태</label>
-                                  <div class="col-sm-10">
+                              </div>
+                              <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">*상태</label>
+                                <div class="col-sm-10">
                                     <div class="col-sm-5">
-                                      <div class="form-radio">
-                                        <div class="radio radio-inline">
-                                          <label>
-                                            <input type="radio" name="news_state" value="1" checked="checked">
-                                            <i class="helper"></i>On
-                                          </label>
-                                        </div>
-                                        <div class="radio radio-inline">
-                                          <label>
-                                            <input type="radio" name="news_state" value="2" checked="checked">
-                                            <i class="helper"></i>Off
-                                          </label>
+                                        <div class="form-radio">
+                                          <div class="radio radio-inline">
+                                            <label>
+                                              <input type="radio" name="news_state" value="1" checked="checked">
+                                              <i class="helper"></i>On
+                                            </label>
+                                          </div>
+                                          <div class="radio radio-inline">
+                                            <label>
+                                              <input type="radio" name="news_state" value="2" checked="checked">
+                                              <i class="helper"></i>Off
+                                            </label>
+                                          </div>
                                         </div>
                                       </div>
-                                    </div>
-                                    </div>
-                                  </div>
-                                    <br>
-                                    <input type="submit" value="등록" class="submit btn btn-primary m-b-0">
-                            	</form>
+                                      <br>
+                                      <input type="submit" value="등록" class="submit btn btn-primary m-b-0">
+                                	</form>
 	                    		</div>
                     		</div>
                   		</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
+                             
   <!-- Warning Section Starts -->
   <!-- Older IE warning message -->
   <!--[if lt IE 9]>
@@ -308,16 +293,16 @@
 	//ajax 보안
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
-
+	
 	$(function() {
 		  $(document).ajaxSend(function(e, xhr, options) {
 		  	xhr.setRequestHeader(header, token);
 		  });
 	});
-
-
+	
+	
 	$(document).ready(function(){
-
+		
 		document.querySelector('.alert-prompt').onclick = function(){
 		    swal({
 		      title: "✓ URL 중복체크",
@@ -328,7 +313,7 @@
 		      inputValue:$("#url").val(),
 		      inputPlaceholder: "url 입력"
 		    }, function (inputValue) {
-
+		    	
 		    	$.ajax({
 
 					type : "POST",
@@ -348,7 +333,7 @@
 				        swal.showInputError("url이 중복됩니다. 다시 입력해 주세요.");
 				        return false
 				      }
-
+				      
 				      $("#url").val(inputValue);
 				      $("#keywordCheck").val("true");
 				      $("#url").removeClass("form-control-danger");
@@ -356,10 +341,10 @@
 				      swal("중복확인!", inputValue+"는 사용가능한 url입니다.", "success");
 			  	  	}
 				});
-
+		      
 		    });
 		  };
-
+		
 	}); // end ready...
 
 </script>

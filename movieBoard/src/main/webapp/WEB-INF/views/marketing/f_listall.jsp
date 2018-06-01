@@ -83,12 +83,12 @@
                     <div class="page-header-breadcrumb">
                       <ul class="breadcrumb-title">
                         <li class="breadcrumb-item">
-                          <a href="../dashBoard/dashBoard">
+                          <a href="../dashBoard/dashBoard_main">
                             <i class="icofont icofont-home"></i>
                           </a>
                         </li>
-                        <li class="breadcrumb-item"><a href="http://localhost:8080/marketing/f_channel">마케팅 채널관리</a></li>
-                        <li class="breadcrumb-item"><a href="http://localhost:8080/marketing/f_channel">Facebook CGV</a></li>
+                        <li class="breadcrumb-item"><a href="#!">마케팅 채널관리</a></li>
+                        <li class="breadcrumb-item"><a href="../marketing/f_channel">Facebook CGV</a></li>
                       </ul>
                     </div>
                   </div>
