@@ -122,6 +122,14 @@ router.post('/manage/updateMtype',isAuthenticated, async function(req, res) {
     res.status(500).send('ml_automail_tran delete query 실패');
     return false;
   }
+  result = await maillink.selectMailTableName();
+  await asyncForEach(result, async (item, index, array) => {
+    var result2 = await maillink.deleteMlABackUp(item.TABLE_NAME,req.body.idx);
+    if(!('protocol41' in result2)){
+      res.status(500).send('ml_automail_tran backup delete query 실패');
+      return false;
+    }
+  });
   result = await mailAllA.updateMtype([req.body.type,req.body.idx]);
   if(!('protocol41' in result)){
     res.status(500).send('mailAllA delete query 실패');
@@ -158,6 +166,14 @@ router.post('/manage/delete',isAuthenticated, async function(req, res) {
     res.status(500).send('ml_automail_tran delete query 실패');
     return false;
   }
+  result = await maillink.selectMailTableName();
+  await asyncForEach(result, async (item, index, array) => {
+    var result2 = await maillink.deleteMlABackUp(item.TABLE_NAME,req.body.idx);
+    if(!('protocol41' in result2)){
+      res.status(500).send('ml_automail_tran backup delete query 실패');
+      return false;
+    }
+  });
   res.send({status:true});
 });
 
@@ -439,6 +455,10 @@ router.post('/save',isAuthenticated, async function(req, res) {
         insertCheck = true;
         await maillink.deleteMlAMSG(m_idx_a);
         await maillink.deleteMlAT(m_idx_a);
+        var resultTName = await maillink.selectMailTableName();
+        await asyncForEach(resultTName, async (item, index, array) => {
+          await maillink.deleteMlABackUp(item.TABLE_NAME,m_idx_a);
+        });
       }
     }
     /* 추가 */
@@ -466,6 +486,10 @@ router.post('/save',isAuthenticated, async function(req, res) {
             if(typeof req.body.end_reserve_time !='undefined'){
               await maillink.deleteMlAMSG(m_idx_a);
               await maillink.deleteMlAT(m_idx_a);
+              var resultTName = await maillink.selectMailTableName();
+              await asyncForEach(resultTName, async (item, index, array) => {
+                await maillink.deleteMlABackUp(item.TABLE_NAME,m_idx_a);
+              });
             }
             await mailAllA.delete(m_idx_a);
             insertCheck = true;
@@ -678,6 +702,10 @@ async function maillinkInsert(req){
       // 0. 재발송 하기전 데이터 삭제
       await maillink.deleteMlAMSG(mailData.n_idx);
       await maillink.deleteMlAT(mailData.n_idx);
+      var resultTName = await maillink.selectMailTableName();
+      await asyncForEach(resultTName, async (item, index, array) => {
+        await maillink.deleteMlABackUp(item.TABLE_NAME,mailData.n_idx);
+      });
     }
   }
 

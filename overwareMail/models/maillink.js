@@ -6,6 +6,12 @@ const DBpromise = require('../db/db_info.js');
   메일 발송 상세 결과 view - mail_send_result
 */
 var mail = {
+  selectMailTableName: async function(){
+    sql = 'SELECT TABLE_NAME FROM Information_schema.tables \
+    WHERE table_schema = \'union\' \
+    AND table_name LIKE \'ml_automail_tran_%\';';
+    return await getResult(sql);
+  },
   insert: async function(table,param){
     var pValue = Object.values(param);
     var sql = insertSqlSetting(table,Object.keys(param));
@@ -17,8 +23,12 @@ var mail = {
   },
   deleteMlAT: async function(param){
     var sql = 'delete from ml_automail_tran where MSGID=?;';
-    await getResult(sql,param)
-    sql = 'delete from ml_automail_tran_201805 where MSGID=?;';
+    return await getResult(sql,param)
+    // sql = 'delete from ml_automail_tran_201805 where MSGID=?;';
+    // return await getResult(sql,param);
+  },
+  deleteMlABackUp: async function(table,param){
+    sql = 'delete from '+table+' where MSGID=?;';
     return await getResult(sql,param);
   },
   selectResultDetail:async function(param){

@@ -111,8 +111,8 @@
                         </a>
                       </td>
                       <td><%= parseInt(list[i].success) + parseInt(list[i].fail) %></td>
-                      <td><span class="success" data-idx="<%= list[i].n_idx %>"><%= list[i].success %></span></td>
-                      <td><span class="fail" data-idx="<%= list[i].n_idx %>"><%= list[i].fail %></span></td>
+                      <td class="success" data-idx="<%= list[i].n_idx %>"><%= list[i].success %></td>
+                      <td class="fail" data-idx="<%= list[i].n_idx %>"><%= list[i].fail %></td>
                       <td>
                         <%=(list[i].M_type == '0') ? '즉시' : '예약'%>
                         <% if((new Date().getTime() < new Date(list[i].M_send).getTime()) && parseInt(list[i].success) == 0 && parseInt(list[i].fail) == 0){ %>
@@ -152,7 +152,7 @@
       <!-- Modal end-->
       <!-- Modal start-->
       <div class='modal fade' id='success-Modal' role='dialog'>
-        <div class='modal-dialog' role='document'>
+        <div class='modal-dialog  modal-lg' role='document'>
           <div class='modal-content'>
             <div class='modal-header'>
               <h5 class="modal-title">성공 상세보기</h5>
@@ -166,9 +166,11 @@
                   <thead>
                     <tr class="text-capitalize">
                       <th></th>
+                      <th>NO</th>
                       <th>이메일</th>
                       <th>회사</th>
                       <th>이름</th>
+                      <th>개봉시각</th>
                     </tr>
                   </thead>
                   <tbody id="success-list" class="text-success">
@@ -499,7 +501,7 @@
 .title_nobr:hover,
 .fail:hover,
 .success:hover{
-  cursor:default;
+  cursor:pointer;
   font-weight: bold;
 }
 .num_nobr{
@@ -562,9 +564,11 @@ $(document).on('click','.success',function(){
       $('#success-list').empty();
       data.result.forEach(function(ele,idx){
         var html = '<tr><td><i class="fas fa-check"></i></td>'+
+          '<td>'+(idx+1)+'</td>'+
           '<td>'+ele.EMTOADDRESS+'</td>'+
           '<td>'+ele.M_ptitle+'</td>'+
           '<td>'+ele.EMTONAME+'</td>'+
+          '<td>'+((ele.OPENTIME != null) ? ele.OPENTIME:'')+'</td>'+
         '</tr>';
         $('#success-list').append(html);
       });
