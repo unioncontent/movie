@@ -462,4 +462,11 @@ public class SNSServiceImpl implements SNSService {
 	}
 
 
+	@Override
+	public Integer reportSnsCount(SearchCriteria cri) {
+
+		return snsDAO.reportSnsCount(cri);
+	}
+
+
 }

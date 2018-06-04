@@ -652,6 +652,15 @@ public class ManageController {
 		model.addAttribute("headlineList", mediaService.headlineList(cri));
 		model.addAttribute("issueList", keywordService.issueList(cri));
 		
+		cri.setSns_name("facebook");
+		model.addAttribute("facebookCount", snsService.reportSnsCount(cri));
+		
+		cri.setSns_name("twitter");
+		model.addAttribute("twitterCount", snsService.reportSnsCount(cri));
+		
+		cri.setSns_name("instagram");
+		model.addAttribute("instagramCount", snsService.reportSnsCount(cri));
+		
 		/*model.addAttribute("fV", snsService.facebookCGV(cri));*/
 		
 		/*cri.setTextType("좋은글");

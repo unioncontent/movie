@@ -440,4 +440,11 @@ public class SNSDAOImpl implements SNSDAO {
 	}
 
 
+	@Override
+	public Integer reportSnsCount(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "reportSnsCount", cri);
+	}
+
+
 }

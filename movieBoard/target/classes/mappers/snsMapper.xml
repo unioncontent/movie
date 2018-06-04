@@ -46,6 +46,7 @@
 			and textType = #{textType}
 		</if>
 	</sql>
+	
 	<sql id="search_writeDate">
  		<if test="keyword != null">
 			<if test="searchType != null">
@@ -263,6 +264,15 @@
 	
 	</select>
 	
+	<select id="reportSnsCount" resultType="Integer">
+ 		select
+ 			count(*) 
+ 		from 
+ 			sns_data 
+ 		where 
+ 			sns_name = #{sns_name}
+ 		<include refid="search_writeDate"></include>
+ 	</select>
 	
  	<select id="yesterdayCount" resultType="GraphVO">
  		select count(if(writeDate <![CDATA[<]]> date_add(now(), interval -1 day), writeDate, null)) type1,

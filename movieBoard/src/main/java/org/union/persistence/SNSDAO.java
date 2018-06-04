@@ -29,6 +29,8 @@ public interface SNSDAO {
 	
 	public Integer showboxCountAll(Date date);
 	
+	public Integer reportSnsCount(SearchCriteria cri);
+	
 	public GraphVO yesterdayCount(String name);
 	
 	public GraphVO showboxYesterdayCount(String name);

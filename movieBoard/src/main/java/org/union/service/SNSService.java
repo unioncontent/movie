@@ -28,6 +28,8 @@ public interface SNSService {
 	public Integer countAll(Date date);
 	public Integer showboxCountAll(Date date);
 	
+	public Integer reportSnsCount(SearchCriteria cri);
+	
 	public GraphVO yesterdayCount(String name);
 	public GraphVO showboxYesterdayCount(String name);
 	
