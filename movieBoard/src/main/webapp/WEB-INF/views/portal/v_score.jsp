@@ -344,7 +344,7 @@
                                           	<c:if test="${score.portal_state == 1}">
 		                                    <input type="checkbox" name="ck" value="${score.portal_idx}" checked="checked">
 		                                    </c:if>
-		                                    <c:if test="${score.portal_state == null}">
+		                                    <c:if test="${score.portal_state == null || score.portal_state == 0}">
 		                                    <input type="checkbox" name="ck" value="${score.portal_idx}">
 		                                    </c:if>
                                           	</td>
@@ -706,6 +706,21 @@
 				});
 
 		  });
+		  $("input[name='ck']").each(function(i,e){   //jQuery로 for문 돌면서 check 된값 배열에 담는다
+				if($(e).is(':checked') != true){
+				  $.ajax({
+						type : "POST",
+						url : "uncheckList",
+						data : {idx : $(e).val()},
+						contentType:"application/x-www-form-urlencoded;charset=utf-8", //한글 깨짐 방지
+						cache: false, 
+						success : function(data) {
+						console.log(data);
+						}
+
+					});
+					}
+			  });
 
 		}
 

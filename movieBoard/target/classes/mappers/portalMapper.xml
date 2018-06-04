@@ -1119,11 +1119,28 @@
  		INSERT INTO score_data SELECT * FROM portal_data where portal_idx = #{portal_idx}
  	</insert>
  	
+ 	<delete id="scoreCheckDelete">
+ 		delete from
+ 			score_data
+ 		where
+ 			portal_idx = #{portal_idx}
+ 	</delete>
+ 	
  	<update id="scoreUpdate">
  		update 
  			portal_data
  		set
  			portal_state = 1
+ 		where
+ 			portal_idx = #{portal_idx}
+ 		
+ 	</update>
+ 	
+ 	<update id="scoreUpdate2">
+ 		update 
+ 			portal_data
+ 		set
+ 			portal_state = 0
  		where
  			portal_idx = #{portal_idx}
  		

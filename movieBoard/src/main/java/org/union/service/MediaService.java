@@ -30,6 +30,7 @@ public interface MediaService {
 	public void remove(Integer media_idx);
 	
 	public void checkList(Integer media_idx);
+	public void checkDelete(Integer media_idx);
 	public void headlineUpdate(Integer media_idx);
 	public void headlineUpdate2(Integer media_idx);
 	

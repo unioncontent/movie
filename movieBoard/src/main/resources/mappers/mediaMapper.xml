@@ -329,6 +329,42 @@
 		</if>
 	</sql>
 	
+	<sql id="search_writeDate4">
+		<if test="company != null">
+			and
+			   keyword in (select 
+						keyword 
+					from 
+						keyword_data
+					where
+						user_idx = (select 
+										user_idx 
+									from 
+										user_data 
+									where 
+										user_name = #{company} 
+									and 
+										keyword_property = '포함'
+									)
+					)
+		</if>
+		<if test="selectKey != null">
+				and keyword in (select keyword from keyword_data where keyword_main = #{selectKey})
+		</if>
+		<if test="startDate == null">
+			and createDate <![CDATA[>=]]> CURDATE()
+		</if>
+		<if test="startDate != null">
+			and createDate <![CDATA[>=]]> #{startDate}
+			<if test="endDate != null">
+				and createDate <![CDATA[<=]]> #{endDate}
+			</if>
+		</if>
+		<if test="textType != null">
+			and textType = #{textType}
+		</if>
+	</sql>
+	
 	<sql id="search_graph">
 		<if test="company != null">
 			and
@@ -1143,6 +1179,13 @@
  		INSERT INTO headline_data SELECT * FROM media_data where media_idx = #{media_idx}
  	</insert>
  	
+ 	<delete id="checkDelete">
+ 		delete from
+ 			headline_data
+ 		where
+ 			media_idx = #{media_idx}
+ 	</delete>
+ 	
  	<select id="headlineList" resultType="MediaVO">
  		select 
 			DATE_FORMAT(writeDate,'%Y-%m-%d')as writeDate,DATE_FORMAT(createDate,'%Y-%m-%d')as createDate, media_title,url
@@ -1165,12 +1208,12 @@
  	</update>
  	
  	<update id="headlineUpdate2">
-		update
-			headline_data
-		set 
-			updateDate = now()
-		where
-			news_idx = #{news_idx}
+		update 
+ 			media_data
+ 		set
+ 			media_state = 0
+ 		where
+ 			media_idx = #{media_idx}
 	
 	</update>
  	
@@ -1193,9 +1236,7 @@
 			reply_data
 		where
 			reply_content is not null
-		<include refid="search_writeDate"></include>
-		and
-			createDate >= curdate();
+		<include refid="search_writeDate4"></include>
 		
 	</select>
 	
@@ -1227,8 +1268,7 @@
 		select count(*)
 		from media_data
 		where 
-			textType!='삭제글'
-		and keyword in (select keyword from keyword_data where keyword_main = #{selectKey})
+			keyword in (select keyword from keyword_data where keyword_main = #{selectKey})
 		and
 			createDate between date_add(#{date}, interval -1 hour) and #{date}
 	
@@ -1236,7 +1276,7 @@
 	
 	<select id="mailList" resultType="MailVO">
 		select 
-			a.M_regdate,a.M_subject, a.sendCount,a.success,a.fail,
+			a.n_idx,a.M_regdate,a.M_subject, a.sendCount,a.success,a.fail,a.M_keyword_idx,
             (select 
 				count(*) 
 			from 

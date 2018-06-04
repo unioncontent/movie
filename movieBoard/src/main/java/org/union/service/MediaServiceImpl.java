@@ -784,4 +784,11 @@ public class MediaServiceImpl implements MediaService {
 
 		return mediaDAO.reporterMatchCount4(cri);
 	}
+
+	@Override
+	public void checkDelete(Integer media_idx) {
+
+		mediaDAO.checkDelete(media_idx);
+		
+	}
 }

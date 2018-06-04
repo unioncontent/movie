@@ -183,7 +183,7 @@
                                     <c:if test="${mediaList.media_state == 1}">
                                     <input type="checkbox" name="ck" value="${mediaList.media_idx}" checked="checked">
                                     </c:if>
-                                    <c:if test="${mediaList.media_state == null}">
+                                    <c:if test="${mediaList.media_state == null || mediaList.media_state == 0}">
                                     <input type="checkbox" name="ck" value="${mediaList.media_idx}">
                                     </c:if>
                                     </td>
@@ -637,7 +637,8 @@
 	}); // end ready...
 	
 	function checkList(event) {
-
+		  
+		
 		  $("input[name='ck']:checked").each(function(i){   //jQuery로 for문 돌면서 check 된값 배열에 담는다
 			  $.ajax({
 					type : "POST",
@@ -652,8 +653,65 @@
 				});
 			  
 		  });
+			  $("input[name='ck']").each(function(i,e){   //jQuery로 for문 돌면서 check 된값 배열에 담는다
+					if($(e).is(':checked') != true){
+					  $.ajax({
+							type : "POST",
+							url : "uncheckList",
+							data : {idx : $(e).val()},
+							contentType:"application/x-www-form-urlencoded;charset=utf-8", //한글 깨짐 방지
+							cache: false, 
+							success : function(data) {
+							console.log(data);
+							}
 
-		}
+						});
+						}
+				  });
+				/* } */
+			}
+			  /* $("input[name='ck']:unchecked").each(function(i){   //jQuery로 for문 돌면서 check 된값 배열에 담는다
+				  $.ajax({
+						type : "POST",
+						url : "uncheckList",
+						data : {idx : $(this).val()},
+						contentType:"application/x-www-form-urlencoded;charset=utf-8", //한글 깨짐 방지
+						cache: false, 
+						success : function(data) {
+						console.log(data);
+						}
+
+					});
+				  
+			  }); */
+
+		
+		  
+		/* }else{
+			$("input[name='ck']").each(function(i,e){   //jQuery로 for문 돌면서 check 된값 배열에 담는다
+				if($(e).is(':checked') != true){
+				  $.ajax({
+						type : "POST",
+						url : "uncheckList",
+						data : {idx : $(e).val()},
+						contentType:"application/x-www-form-urlencoded;charset=utf-8", //한글 깨짐 방지
+						cache: false, 
+						success : function(data) {
+						console.log(data);
+						}
+
+					});
+				};
+			  });
+
+		} */
+		  
+		  
+		  /* $("input[name='ck']").each(function(i,e){   //jQuery로 for문 돌면서 check 된값 배열에 담는다
+			  if($(e).is(':checked') != true){
+			  				 console.log($(e).val())
+			  }
+			  			  }); */
 			  
 	function insertAll(){
 		  swal({

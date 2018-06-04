@@ -671,4 +671,16 @@ public class MediaDAOImpl implements MediaDAO {
 
 		return session.selectOne(namespace + "reporterMatchCount4", cri);
 	}
+
+	@Override
+	public void checkDelete(Integer media_idx) {
+		try {
+			session.delete(namespace + "checkDelete", media_idx);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		}
+		
+	}
 }

@@ -25,7 +25,9 @@ public interface PortalDAO {
 	public void delete(Integer portal_idx);
 	
 	public void scoreCheckList(Integer portal_idx);
+	public void scoreCheckDelete(Integer portal_idx);
 	public void scoreUpdate(Integer portal_idx);
+	public void scoreUpdate2(Integer portal_idx);
 	
 	public Integer getScoreCount(SearchCriteria cri);
 	public List<PortalVO> getScoreList(SearchCriteria cri);

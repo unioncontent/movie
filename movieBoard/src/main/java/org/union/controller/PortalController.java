@@ -1216,6 +1216,18 @@ public class PortalController {
 		
 		return "success";
 	}
+    
+    @ResponseBody
+	@PostMapping("uncheckList")
+	public String uncheckList(Integer idx) {
+		logger.info("uncheckListPOST called....");
+		logger.info("checkidx: " + idx);
+		
+		portalService.scoreUpdate2(idx);
+		portalService.scoreCheckDelete(idx);
+		
+		return "success";
+	}
 
     @ResponseBody
     @PostMapping("/historyGraph")

@@ -530,8 +530,8 @@ $(document).ready(function(){
 			},
 			function(){
 	
-				var company = decodeURI(window.location.href.split("company=")[1]).split("&")[0].split(" ")[0];
-				var selectKey = decodeURI(window.location.href.split("selectKey=")[1]).split("&")[0].split(" ")[0];
+				var company = $("#selectCompany option:selected").val();
+				var selectKey = $('#selectKeyword option:selected').val();
 				var startDate = decodeURI(window.location.href.split("startDate=")[1]).split("&")[0].split(" ")[0];
 				var endDate = decodeURI(window.location.href.split("endDate=")[1]).split("&")[0].split(" ")[0];
 				

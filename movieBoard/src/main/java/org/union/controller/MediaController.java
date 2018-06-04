@@ -915,6 +915,18 @@ public class MediaController {
 	}
 	
 	@ResponseBody
+	@PostMapping("uncheckList")
+	public String uncheckList(Integer idx) {
+		logger.info("uncheckListPOST called....");
+		logger.info("checkidx: " + idx);
+		
+		mediaService.headlineUpdate2(idx);
+		mediaService.checkDelete(idx);
+		
+		return "success";
+	}
+	
+	@ResponseBody
 	@PostMapping("update")
 	public String newsUpdate(Integer idx, Integer state) {
 		logger.info("newsUpdate called....");

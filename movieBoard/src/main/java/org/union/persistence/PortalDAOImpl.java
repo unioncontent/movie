@@ -558,4 +558,27 @@ public class PortalDAOImpl implements PortalDAO {
 
 		return session.selectList(namespace + "scoreListReport", cri);
 	}
+
+
+	@Override
+	public void scoreCheckDelete(Integer portal_idx) {
+		try {
+			session.delete(namespace + "scoreCheckDelete", portal_idx);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+
+	@Override
+	public void scoreUpdate2(Integer portal_idx) {
+		try {
+			session.insert(namespace + "scoreUpdate2", portal_idx);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
 }

@@ -548,4 +548,17 @@ public class PortalServiceImpl implements PortalService {
 		return portalDAO.scoreListReport(cri);
 	}
 
+	@Override
+	public void scoreCheckDelete(Integer portal_idx) {
+
+		portalDAO.scoreCheckDelete(portal_idx);
+	}
+
+	@Override
+	public void scoreUpdate2(Integer portal_idx) {
+
+		portalDAO.scoreUpdate2(portal_idx);
+		
+	}
+
 }

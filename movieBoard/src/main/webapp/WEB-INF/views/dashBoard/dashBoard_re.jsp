@@ -319,7 +319,9 @@
                                             <fmt:formatDate value="${mvo.m_regdate}" type="DATE" pattern="yyyy-MM-dd HH:mm:ss" />
                                             </th>
                                             <td>
-                                            ${mvo.m_subject}
+                                            <a href="http://showbox.email/preview?keyword=${mvo.m_keyword_idx}&amp;idx=${mvo.n_idx}" target="_blank">
+					                          ${mvo.m_subject}
+					                        </a>
                                             </td>
                                             <td>
                                             <fmt:formatNumber value="${mvo.sendCount}" pattern="#,##0" />회
