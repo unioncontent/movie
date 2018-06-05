@@ -421,6 +421,17 @@
 		order 
 			by updateDate desc
 	</select>
+	<select id="totalAllPageex" resultType="CommunityVO">
+		select
+			*
+		from
+			community_data_history
+		where
+			url is not null
+		<include refid="search"></include>
+		order 
+			by updateDate desc
+	</select>
 	
 	<select id="allPageCount" resultType="Integer">
 		select

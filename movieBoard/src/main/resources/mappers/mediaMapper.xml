@@ -550,6 +550,22 @@
 			media_data
 		where
 			url is not null
+		and
+			texttype!='삭제글'
+		<include refid="search"></include>
+		order 
+			by updateDate desc
+		
+	</select>
+	<select id="totalAllPageex" resultType="MediaVO">
+		select
+			*
+		from
+			media_data_history
+		where
+			url is not null
+		and
+			texttype!='삭제글'
 		<include refid="search"></include>
 		order 
 			by updateDate desc
@@ -566,7 +582,6 @@
 		<include refid="search3"></include>
 		order 
 			by updateDate desc
-		
 	</select>
 	
 	<select id="allPageCount" resultType="Integer">
@@ -1224,6 +1239,8 @@
 			media_data
 		where
 			url is not null
+		and
+			texttype!='삭제글'
 		<include refid="search_writeDate"></include>
 		and
 			createDate >= curdate();
@@ -1267,7 +1284,9 @@
 	<select id="mediaCountAll" resultType="Integer">
 		select count(*)
 		from media_data
-		where 
+		where
+			texttype!='삭제글'
+		and 
 			keyword in (select keyword from keyword_data where keyword_main = #{selectKey})
 		and
 			createDate between date_add(#{date}, interval -1 hour) and #{date}

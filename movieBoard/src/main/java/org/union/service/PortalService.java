@@ -45,6 +45,7 @@ public interface PortalService {
 	public Integer allPageCount(SearchCriteria cri);
 	public Integer TotalAllPageCount(SearchCriteria cri);
 	public List<PortalVO> allPage(SearchCriteria cri);
+	public List<PortalVO> totalAllPageex(SearchCriteria cri);
 	
 	public Integer countAll(Date date);
 	public Integer showboxCountAll(Date date);

@@ -791,4 +791,10 @@ public class MediaServiceImpl implements MediaService {
 		mediaDAO.checkDelete(media_idx);
 		
 	}
+
+	@Override
+	public List<MediaVO> totalAllPageex(SearchCriteria cri) {
+
+		return mediaDAO.totalAllPageex(cri);
+	}
 }

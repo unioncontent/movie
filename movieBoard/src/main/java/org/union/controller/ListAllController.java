@@ -337,6 +337,9 @@ public class ListAllController {
 		listUtil.listAddCommunityList(extractList, communityService.allPage(cri));
 		listUtil.listAddPortalList(extractList, portalService.allPage(cri));
 		listUtil.listAddMediaList(extractList, mediaService.allPage(cri));
+		listUtil.listAddCommunityList(extractList, communityService.totalAllPageex(cri));
+		listUtil.listAddPortalList(extractList, portalService.totalAllPageex(cri));
+		listUtil.listAddMediaList(extractList, mediaService.totalAllPageex(cri));
 		
 		ExtractComparator comparator = new ExtractComparator();
 		Collections.sort(extractList, comparator);

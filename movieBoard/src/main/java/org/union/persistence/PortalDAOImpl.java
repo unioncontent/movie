@@ -581,4 +581,11 @@ public class PortalDAOImpl implements PortalDAO {
 		}
 		
 	}
+
+
+	@Override
+	public List<PortalVO> totalAllPageex(SearchCriteria cri) {
+
+		return session.selectList(namespace + "totalAllPageex", cri);
+	}
 }

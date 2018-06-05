@@ -46,6 +46,7 @@ public interface MediaDAO {
 	public Integer replyAllPageCount(SearchCriteria cri);
 	
 	public List<MediaVO> allPage(SearchCriteria cri);
+	public List<MediaVO> totalAllPageex(SearchCriteria cri);
 	public List<ReplyVO> replyAllPage(SearchCriteria cri);
 	
 	public GraphVO yesterdayCount();

@@ -239,4 +239,11 @@ public class CommunityDAOImpl implements CommunityDAO {
 	}
 
 
+	@Override
+	public List<CommunityVO> totalAllPageex(SearchCriteria cri) {
+
+		return session.selectList(namespace + "totalAllPageex", cri);
+	}
+
+
 }

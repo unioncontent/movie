@@ -683,4 +683,10 @@ public class MediaDAOImpl implements MediaDAO {
 		}
 		
 	}
+
+	@Override
+	public List<MediaVO> totalAllPageex(SearchCriteria cri) {
+
+		return session.selectList(namespace + "totalAllPageex", cri);
+	}
 }

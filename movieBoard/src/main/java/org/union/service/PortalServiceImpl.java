@@ -561,4 +561,10 @@ public class PortalServiceImpl implements PortalService {
 		
 	}
 
+	@Override
+	public List<PortalVO> totalAllPageex(SearchCriteria cri) {
+
+		return portalDAO.totalAllPageex(cri);
+	}
+
 }

@@ -245,5 +245,11 @@ public class CommunityServiceImpl implements CommunityService {
 		return communityDAO.graphSearchCount(cri);
 	}
 
+	@Override
+	public List<CommunityVO> totalAllPageex(SearchCriteria cri) {
+
+		return communityDAO.totalAllPageex(cri);
+	}
+
 	
 }

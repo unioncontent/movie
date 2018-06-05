@@ -23,6 +23,7 @@ public interface CommunityDAO {
 	public Integer allPageCount(SearchCriteria cri);
 	public Integer TotalAllPageCount(SearchCriteria cri);
 	public List<CommunityVO> allPage(SearchCriteria cri);
+	public List<CommunityVO> totalAllPageex(SearchCriteria cri);
 	
 	public Integer countAll(Date date);
 	public Integer showboxCountAll(Date date);

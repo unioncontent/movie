@@ -24,6 +24,7 @@ public interface CommunityService {
 	public Integer allPageCount(SearchCriteria cri);
 	public Integer TotalAllPageCount(SearchCriteria cri);
 	public List<CommunityVO> allPage(SearchCriteria cri);
+	public List<CommunityVO> totalAllPageex(SearchCriteria cri);
 	
 	public List<CommunityVO> wPageSearch(SearchCriteria cri);
 	
