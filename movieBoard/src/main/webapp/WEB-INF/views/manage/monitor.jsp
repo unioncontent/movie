@@ -937,7 +937,9 @@
                                     <td>community</td>
                                     <td>${communityList.community_name}</td>
                                     <td></td>
-                                    <td><a href="${communityList.url}" target="_blank">${communityList.community_title}</a></td>
+                                    <td><a href="${communityList.url}" target="_blank">
+                                    <div class="title-nowrap">${communityList.community_title}</div>
+                                    </a></td>
                                     <td><fmt:formatDate value="${communityList.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>
                                     <td>
                                       <div class="form-radio">
