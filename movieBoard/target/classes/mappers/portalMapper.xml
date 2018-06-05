@@ -729,10 +729,9 @@
 		from 
 			portal_data
 		where 
-			textType is not null
+			textType!='삭제글'
 		and score is null
 		<include refid="search"></include>
- 	
  	</select>
  	
  	<update id="updateTextType">
@@ -1081,10 +1080,10 @@
 		from 
 			portal_data 
 		where 
-			textType is not null
-		<include refid="search_writeDate"></include> 
+			textType!='삭제글'
 		and 
-			createDate >= curdate();
+			score is null
+		<include refid="search"></include>
 		
 	</select>
  	

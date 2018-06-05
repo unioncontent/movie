@@ -148,4 +148,5 @@ public interface MediaService {
 	
 	public List<MediaVO> mediaMatchallList(SearchCriteria cri);
 	public List<MediaVO> reporterMatchallList(SearchCriteria cri);
+	public List<MediaVO> mailMatch(SearchCriteria cri);
 }

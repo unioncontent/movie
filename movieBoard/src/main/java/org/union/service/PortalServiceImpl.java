@@ -566,5 +566,4 @@ public class PortalServiceImpl implements PortalService {
 
 		return portalDAO.totalAllPageex(cri);
 	}
-
 }

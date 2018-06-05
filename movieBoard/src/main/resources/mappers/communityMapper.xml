@@ -459,9 +459,8 @@
 		from 
 			community_data
 		where 
-			textType is not null
+			textType!='삭제글'
 		<include refid="search"></include>
-	
 	</select>
 
 	<update id="updateTextType">
@@ -506,10 +505,8 @@
 		from 
 			community_data 
 		where 
-			textType is not null
-		<include refid="search_writeDate"></include> 
-		and 
-			createDate >= curdate();
+			textType!='삭제글'
+		<include refid="search"></include>
 		
 	</select>
  	
@@ -520,9 +517,7 @@
 			community_data 
 		where 
 			textType = '나쁜글'
-		<include refid="search_writeDate"></include> 
-		and 
-			createDate >= curdate();
+		<include refid="search"></include>
 	</select>
 	
 	<select id = "graphSearchCount" resultType="Integer">

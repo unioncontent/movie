@@ -689,4 +689,10 @@ public class MediaDAOImpl implements MediaDAO {
 
 		return session.selectList(namespace + "totalAllPageex", cri);
 	}
+
+	@Override
+	public List<MediaVO> mailMatch(SearchCriteria cri) {
+
+		return session.selectList(namespace + "mailMatch", cri);
+	}
 }

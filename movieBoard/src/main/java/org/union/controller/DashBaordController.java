@@ -3,6 +3,7 @@ package org.union.controller;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.union.domain.CalendarVO;
+import org.union.domain.ExtractVO;
 import org.union.domain.GraphVO;
 import org.union.domain.SearchCriteria;
 import org.union.domain.UserVO;
@@ -29,6 +31,8 @@ import org.union.service.PortalService;
 import org.union.service.RelationService;
 import org.union.service.SNSService;
 import org.union.service.UserService;
+import org.union.util.ExtractComparator;
+import org.union.util.ListUtil;
 
 @Controller
 @RequestMapping("/dashBoard/*")
@@ -176,22 +180,173 @@ public class DashBaordController {
 			}
 		}
 		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		
+		String current = sdf.format(new Date());
+		logger.info("current: " + current);
+		
 		model.addAttribute("headlineList", mediaService.headlineList(cri));
 		
 		model.addAttribute("mediaTotalcnt", mediaService.mediaTotalcnt(cri));
 		model.addAttribute("replyTotalcnt", mediaService.replyTotalcnt(cri));
 		model.addAttribute("snsTotalcount", snsService.snsTotalcount(cri));
 		model.addAttribute("scoreTotalcnt", portalService.scoreTotalcnt(cri));
+		model.addAttribute("mailList", mediaService.mailList(cri));
 		
-		model.addAttribute("mediaTextcnt", mediaService.mediaTextcnt(cri));
+		cri.setStartDate(current + " 00:00:00");
+		cri.setEndDate(current + " 23:59:59");
+		model.addAttribute("mediaTextcnt", mediaService.mediaTotalcnt(cri));
 		model.addAttribute("mediaTextcnt2", mediaService.mediaTextcnt2(cri));
 		model.addAttribute("portalTextcnt", portalService.portalTextcnt(cri));
 		model.addAttribute("portalTextcnt2", portalService.portalTextcnt2(cri));
 		model.addAttribute("communityTextcnt", communityService.communityTextcnt(cri));
 		model.addAttribute("communityTextcnt2", communityService.communityTextcnt2(cri));
-		model.addAttribute("mailList", mediaService.mailList(cri));
+		
+		cri.setSns_name("facebook");
+		cri.setStartDate(current + " 00:00:00");
+		cri.setEndDate(current + " 23:59:59");
+		model.addAttribute("facebookCount", snsService.reportSnsCount(cri));
+		
+		cri.setSns_name("twitter");
+		cri.setStartDate(current + " 00:00:00");
+		cri.setEndDate(current + " 23:59:59");
+		model.addAttribute("twitterCount", snsService.reportSnsCount(cri));
+		
+		cri.setSns_name("instagram");
+		cri.setStartDate(current + " 00:00:00");
+		cri.setEndDate(current + " 23:59:59");
+		model.addAttribute("instagramCount", snsService.reportSnsCount(cri));
 		
 	}
+	
+	@GetMapping("/dashBoard_popUp")
+	public void dashBoard_popupGET(@ModelAttribute("cri") SearchCriteria cri, Model model, String part, String company, String selectKey, String emailDate) {
+		logger.info("dashBoard_popup called....");
+		
+		cri.setKeyword(null);
+		cri.setTextType(null);
+		
+		if(cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey()) ) {
+			logger.info("selectKey is null");
+			cri.setSelectKey(null);
+		}
+		if("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate())
+				|| cri.getStartDate() == "" || cri.getEndDate() == ""){
+			cri.setStartDate(null);
+			cri.setEndDate(null);
+		
+		} 
+		if(cri.getStartDate() != null && cri.getEndDate() != null) {
+			logger.info("not null");
+			logger.info(cri.getStartDate());
+			logger.info(cri.getEndDate());
+			if(cri.getStartDate().indexOf("00:00:00") < 0 && cri.getEndDate().indexOf("23:59:59") < 0){ 
+				cri.setStartDate(cri.getStartDate() + " 00:00:00"); 
+				cri.setEndDate(cri.getEndDate() + " 23:59:59"); 
+			}
+		}
+		
+		
+		if(cri.getCompany() != null) {
+			if(cri.getCompany().isEmpty()) {
+				cri.setCompany(null);
+			}
+		}
+		if(cri.getCompany() == null || cri.getCompany().equals("회사")) {
+			logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+			UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
+			
+			if(!vo.getUser_name().equals("union")) {
+			cri.setCompany(vo.getUser_name());
+			
+			}else {
+				cri.setCompany(null);
+			}
+		}
+
+		// 회사 선택에 따른 키워드 재추출
+		if (cri.getCompany() != null) {	
+			if (cri.getCompany().isEmpty() == false) {
+
+				UserVO userVO = userService.viewByName(cri.getCompany());
+				logger.info("userVO: " + userVO);
+				logger.info("keywordList: " + keywordService.listByUser(userVO.getUser_idx()));
+				model.addAttribute("modelKeywordList",
+						keywordService.listByUser(userService.viewByName(cri.getCompany()).getUser_idx()));
+			}
+		}
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		
+		String current = sdf.format(new Date());
+		logger.info("current: " + current);
+		
+		cri.setStartDate(current + " 00:00:00");
+		cri.setEndDate(current + " 23:59:59");
+		
+		if(part.equals("기사")) {
+			model.addAttribute("mediaList", mediaService.allPage(cri));
+			model.addAttribute("part", part);
+		}else if(part.equals("댓글")) {
+			model.addAttribute("replyList", mediaService.replyAllPage(cri));
+			model.addAttribute("part", part);
+		}else if(part.equals("페이스북")) {
+			cri.setPortal_name("facebook");
+			model.addAttribute("snsList", snsService.listAll(cri));
+			model.addAttribute("part", part);
+		}else if(part.equals("인스타그램")) {
+			cri.setPortal_name("instagram");
+			model.addAttribute("snsList", snsService.listAll(cri));
+			model.addAttribute("part", part);
+		}else if(part.equals("트위터")) {
+			cri.setPortal_name("twitter");
+			model.addAttribute("snsList", snsService.listAll(cri));
+			model.addAttribute("part", part);
+		}else if(part.equals("평점")) {
+			model.addAttribute("scoreList", portalService.getScoreExcelList(cri));
+			model.addAttribute("part", part);
+		}else if(part.equals("분류글")) {
+			
+			List<ExtractVO> classiList = new ArrayList<ExtractVO>();
+			ListUtil listUtil = new ListUtil();
+			
+			listUtil.listAddCommunityList(classiList, communityService.listAll(cri));
+			listUtil.listAddPortalList(classiList, portalService.listAll(cri));
+			listUtil.listAddMediaList(classiList, mediaService.listAll(cri));
+			
+			// 리스트 정렬
+			ExtractComparator comparator = new ExtractComparator();
+			Collections.sort(classiList, comparator);
+			
+			model.addAttribute("classiList", classiList);
+			model.addAttribute("part", part);
+		}else if(part.equals("나쁜글")) {
+			cri.setTextType("나쁜글");
+			
+			List<ExtractVO> classiList = new ArrayList<ExtractVO>();
+			ListUtil listUtil = new ListUtil();
+			
+			listUtil.listAddCommunityList(classiList, communityService.listAll(cri));
+			listUtil.listAddPortalList(classiList, portalService.listAll(cri));
+			listUtil.listAddMediaList(classiList, mediaService.listAll(cri));
+			
+			// 리스트 정렬
+			ExtractComparator comparator = new ExtractComparator();
+			Collections.sort(classiList, comparator);
+			
+			model.addAttribute("classiList2", classiList);
+			model.addAttribute("part", part);
+		}else if(part.equals("이메일")) {
+			cri.setStartDate(emailDate + " 00:00:00");
+			cri.setEndDate(emailDate + " 23:59:59");
+			logger.info("mail:" + cri.getStartDate());
+			logger.info("mail:" + cri.getEndDate());
+			model.addAttribute("emailList", mediaService.mailMatch(cri));
+			model.addAttribute("part", part);
+		}
+	
+	}
+	
 	/*@GetMapping("/dashBoard")
 	public void dashBoardGET(@ModelAttribute("cri") SearchCriteria cri, Model model) {
 		logger.info("dashBaordGET called....");

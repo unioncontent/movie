@@ -797,4 +797,10 @@ public class MediaServiceImpl implements MediaService {
 
 		return mediaDAO.totalAllPageex(cri);
 	}
+
+	@Override
+	public List<MediaVO> mailMatch(SearchCriteria cri) {
+
+		return mediaDAO.mailMatch(cri);
+	}
 }

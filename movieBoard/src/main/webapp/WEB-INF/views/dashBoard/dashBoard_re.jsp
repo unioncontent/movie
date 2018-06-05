@@ -196,19 +196,59 @@
                                 <tbody>
                                   <tr>
                                     <th scope="row">언론사 기사글</th>
-                                    <td><fmt:formatNumber value="${mediaTotalcnt}" groupingUsed="true"/>건</td>
+                                    <td>
+                                    <c:if test="${mediaTotalcnt == 0}">
+                                    <fmt:formatNumber value="${mediaTotalcnt}" groupingUsed="true"/>건
+                                    </c:if>
+                                    <c:if test="${mediaTotalcnt != 0}">
+                                    <a href="javascript:popupOpen();" ><fmt:formatNumber value="${mediaTotalcnt}" groupingUsed="true"/>건</a>
+                                    </c:if>
+                                    </td>
                                   </tr>
                                   <tr>
                                     <th scope="row">언론사 댓글</th>
-                                    <td><fmt:formatNumber value="${replyTotalcnt}" groupingUsed="true"/>건</td>
+                                    <td>
+                                    <c:if test="${replyTotalcnt == 0}">
+                                    <fmt:formatNumber value="${replyTotalcnt}" groupingUsed="true"/>건
+                                    </c:if>
+                                    <c:if test="${replyTotalcnt != 0}">
+                                    <a href="javascript:popupOpen2();" ><fmt:formatNumber value="${replyTotalcnt}" groupingUsed="true"/>건</a>
+                                    </c:if>
+                                    </td>
                                   </tr>
                                   <tr>
-                                    <th scope="row" style="white-space:initial;">SNS ( facebook, instagram, twitter )</th>
-                                    <td><fmt:formatNumber value="${snsTotalcount}" groupingUsed="true"/>건</td>
+                                    <th scope="row" style="white-space:initial;">SNS ( facebook / instagram / twitter )</th>
+                                    <td>
+                                    <c:if test="${facebookCount == 0}">
+                                    <fmt:formatNumber value="${facebookCount}" groupingUsed="true"/>건 /
+                                    </c:if>
+                                    <c:if test="${facebookCount != 0}">
+                                    <a href="javascript:popupOpen3();" ><fmt:formatNumber value="${facebookCount}" groupingUsed="true"/>건 /</a>
+                                    </c:if>
+                                    <c:if test="${instagramCount == 0}">
+                                    <fmt:formatNumber value="${instagramCount}" groupingUsed="true"/>건 /
+                                    </c:if>
+                                    <c:if test="${instagramCount != 0}">
+                                    <a href="javascript:popupOpen4();" ><fmt:formatNumber value="${instagramCount}" groupingUsed="true"/>건 /</a>
+                                    </c:if>
+                                    <c:if test="${twitterCount == 0}">
+                                    <fmt:formatNumber value="${twitterCount}" groupingUsed="true"/>건 /
+                                    </c:if>
+                                    <c:if test="${twitterCount != 0}">
+                                    <a href="javascript:popupOpen5();" ><fmt:formatNumber value="${twitterCount}" groupingUsed="true"/>건 </a>
+                                    </c:if>
+                                    </td>
                                   </tr>
                                   <tr>
                                     <th scope="row">Naver 평점</th>
-                                    <td><fmt:formatNumber value="${scoreTotalcnt}" groupingUsed="true"/>건</td>
+                                    <td>
+                                    <c:if test="${scoreTotalcnt == 0}">
+                                    <fmt:formatNumber value="${scoreTotalcnt}" groupingUsed="true"/>건
+                                    </c:if>
+                                    <c:if test="${scoreTotalcnt != 0}">
+                                    <a href="javascript:popupOpen6();" ><fmt:formatNumber value="${scoreTotalcnt}" groupingUsed="true"/>건</a>
+                                    </c:if>
+                                    </td>
                                   </tr>
                                   <tr class="bg-inverse">
                                     <th scope="row">합계</th>
@@ -249,15 +289,23 @@
                                   </thead>
                                   <tbody>
                                     <tr>
-                                      <td><fmt:formatNumber value="${mediaTextcnt + portalTextcnt + communityTextcnt}" groupingUsed="true"/>건</td>
                                       <td>
-                                      <fmt:formatNumber value="${mediaTextcnt2 + portalTextcnt2 + communityTextcnt2}" groupingUsed="true"/>건
                                       <c:if test="${mediaTextcnt + portalTextcnt + communityTextcnt != 0}">
+                                      <a href="javascript:popupOpen7();" ><fmt:formatNumber value="${mediaTextcnt + portalTextcnt + communityTextcnt}" groupingUsed="true"/>건</a>
+                                      </c:if>
+                                      <c:if test="${mediaTextcnt + portalTextcnt + communityTextcnt == 0}">
+                                      <fmt:formatNumber value="${mediaTextcnt + portalTextcnt + communityTextcnt}" groupingUsed="true"/>건
+								      </c:if>
+                                      </td>
+                                      <td>
+                                      <c:if test="${mediaTextcnt + portalTextcnt + communityTextcnt != 0}">
+                                      <a href="javascript:popupOpen8();" ><fmt:formatNumber value="${mediaTextcnt2 + portalTextcnt2 + communityTextcnt2}" groupingUsed="true"/>건</a>
                                       (
                                       <fmt:parseNumber var="pages" integerOnly="true" value="${(mediaTextcnt2 + portalTextcnt2 + communityTextcnt2)/(mediaTextcnt + portalTextcnt + communityTextcnt) * 100}"></fmt:parseNumber>${pages}%
                                       )
                                       </c:if>
                                       <c:if test="${mediaTextcnt + portalTextcnt + communityTextcnt == 0}">
+                                      <fmt:formatNumber value="${mediaTextcnt2 + portalTextcnt2 + communityTextcnt2}" groupingUsed="true"/>건
 								      (0%)
 								      </c:if>
                                       </td>
@@ -333,7 +381,7 @@
                                             <fmt:formatNumber value="${mvo.fail}" pattern="#,##0" />회
                                             </td>
                                             <td>
-                                            ${mvo.total}건
+                                            <a href="javascript:popupOpen9('<fmt:formatDate value="${mvo.m_regdate}" type="DATE" pattern="yyyy-MM-dd" />');" >${mvo.total}건</a>
                                             </td>
                                           </tr>
                                         </c:forEach>
@@ -889,6 +937,135 @@ function makeDateFormat(date, index){
 			  	hideHover : 'auto'
 			    });
 			}
+	  
+	//팝업
+	  function popupOpen(){
+			
+			var company = $("#selectCompany option:selected").val();
+			
+			var selectKey = $("#selectKeyword option:selected").val();
+	  		
+	  		var popUrl = "dashBoard_popUp?part=기사&company="+company
+						+"&selectKey="+selectKey;	//팝업창에 출력될 페이지 URL
+
+	  		var popOption = "width=1500, height=900, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
+
+	  			window.open(popUrl,"",popOption);
+
+	  		}
+	  
+	  function popupOpen2(){
+			
+			var company = $("#selectCompany option:selected").val();
+			
+			var selectKey = $("#selectKeyword option:selected").val();
+	  		
+	  		var popUrl = "dashBoard_popUp?part=댓글&company="+company
+						+"&selectKey="+selectKey;	//팝업창에 출력될 페이지 URL
+
+	  		var popOption = "width=1500, height=900, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
+
+	  			window.open(popUrl,"",popOption);
+
+	  		}
+	  function popupOpen3(){
+			
+			var company = $("#selectCompany option:selected").val();
+			
+			var selectKey = $("#selectKeyword option:selected").val();
+	  		
+	  		var popUrl = "dashBoard_popUp?part=페이스북&company="+company
+						+"&selectKey="+selectKey;	//팝업창에 출력될 페이지 URL
+
+	  		var popOption = "width=1500, height=900, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
+
+	  			window.open(popUrl,"",popOption);
+
+	  		}
+	  function popupOpen4(){
+			
+			var company = $("#selectCompany option:selected").val();
+			
+			var selectKey = $("#selectKeyword option:selected").val();
+	  		
+	  		var popUrl = "dashBoard_popUp?part=인스타그램&company="+company
+						+"&selectKey="+selectKey;	//팝업창에 출력될 페이지 URL
+
+	  		var popOption = "width=1500, height=900, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
+
+	  			window.open(popUrl,"",popOption);
+
+	  		}
+	  function popupOpen5(){
+			
+			var company = $("#selectCompany option:selected").val();
+			
+			var selectKey = $("#selectKeyword option:selected").val();
+	  		
+	  		var popUrl = "dashBoard_popUp?part=트위터&company="+company
+						+"&selectKey="+selectKey;	//팝업창에 출력될 페이지 URL
+
+	  		var popOption = "width=1500, height=900, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
+
+	  			window.open(popUrl,"",popOption);
+
+	  		}
+	  
+	  function popupOpen6(){
+			
+			var company = $("#selectCompany option:selected").val();
+			
+			var selectKey = $("#selectKeyword option:selected").val();
+	  		
+	  		var popUrl = "dashBoard_popUp?part=평점&company="+company
+						+"&selectKey="+selectKey;	//팝업창에 출력될 페이지 URL
+
+	  		var popOption = "width=1500, height=900, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
+
+	  			window.open(popUrl,"",popOption);
+
+	  		}
+	  function popupOpen7(){
+			
+			var company = $("#selectCompany option:selected").val();
+			
+			var selectKey = $("#selectKeyword option:selected").val();
+	  		
+	  		var popUrl = "dashBoard_popUp?part=분류글&company="+company
+						+"&selectKey="+selectKey;	//팝업창에 출력될 페이지 URL
+
+	  		var popOption = "width=1500, height=900, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
+
+	  			window.open(popUrl,"",popOption);
+
+	  		}
+	  function popupOpen8(){
+			
+			var company = $("#selectCompany option:selected").val();
+			
+			var selectKey = $("#selectKeyword option:selected").val();
+	  		
+	  		var popUrl = "dashBoard_popUp?part=나쁜글&company="+company
+						+"&selectKey="+selectKey;	//팝업창에 출력될 페이지 URL
+
+	  		var popOption = "width=1500, height=900, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
+
+	  			window.open(popUrl,"",popOption);
+
+	  		}
+	  function popupOpen9(date){
+			var company = $("#selectCompany option:selected").val();
+			
+			var selectKey = $("#selectKeyword option:selected").val();
+	  		
+	  		var popUrl = "dashBoard_popUp?part=이메일&company="+company
+						+"&selectKey="+selectKey+"&emailDate="+date;	//팝업창에 출력될 페이지 URL
+
+	  		var popOption = "width=1500, height=900, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
+
+	  			window.open(popUrl,"",popOption);
+
+	  		}
 
 //날짜 계산 함수
 function getDate(type){

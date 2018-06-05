@@ -908,11 +908,8 @@
 		from 
 			media_data
 		where 
-			textType is not null
-		and
 			textType!='삭제글'
 		<include refid="search"></include>
- 	
  	</select>
  	
  	<select id="wPageSearch" resultType="MediaVO">
@@ -1259,14 +1256,12 @@
 	
 	<select id="mediaTextcnt" resultType="Integer">
 		select 
-			count(*) 
+			count(*)
 		from 
-			media_data 
+			media_data
 		where 
-			textType is not null
-		<include refid="search_writeDate"></include> 
-		and 
-			createDate >= curdate();
+			textType!='삭제글'
+		<include refid="search_writeDate2"></include>
 		
 	</select>
  	
@@ -1277,9 +1272,7 @@
 			media_data 
 		where 
 			textType = '나쁜글'
-		<include refid="search_writeDate"></include> 
-		and 
-			createDate >= curdate();
+		<include refid="search_writeDate"></include>
 	</select>
 	<select id="mediaCountAll" resultType="Integer">
 		select count(*)
@@ -1301,11 +1294,13 @@
 			from 
 				media_data 
             where 
-				title_key = a.M_keyword 
-            and
-				createDate <![CDATA[>=]]> DATE_FORMAT(a.M_regdate,'%Y-%m-%d 00:00:00')
+				title_key = a.M_keyword
 			and
-				createDate <![CDATA[<=]]> DATE_FORMAT(a.M_regdate,'%Y-%m-%d 23:59:00'))as total from period_view a
+				textType != '삭제글' 
+            and
+				updateDate <![CDATA[>=]]> DATE_FORMAT(a.M_regdate,'%Y-%m-%d 00:00:00')
+			and
+				updateDate <![CDATA[<=]]> DATE_FORMAT(a.M_regdate,'%Y-%m-%d 23:59:00'))as total from period_view a
 		where 
 			a.M_subject is not null
 		<include refid="search_mail"></include> 
@@ -1654,5 +1649,19 @@
 			keyword != 'press'
 	    <include refid="search_match"></include>
 		order by createDate desc;
+	</select>
+	<select id="mailMatch" resultType="MediaVO">
+		select
+			*
+		from
+			media_data
+		where
+			url is not null
+		and
+			texttype!='삭제글'
+		<include refid="search"></include>
+		order 
+			by writeDate desc
+		
 	</select>
  </mapper>
