@@ -588,4 +588,11 @@ public class PortalDAOImpl implements PortalDAO {
 
 		return session.selectList(namespace + "totalAllPageex", cri);
 	}
+
+
+	@Override
+	public Integer getNvCount(String url) {
+
+		return session.selectOne(namespace + "getNvCount", url);
+	}
 }

@@ -125,7 +125,7 @@
                                     <td>Portal</td>
                                     <td>${portal.portal_name}</td>
                                     <td>${portal.portal_type}</td>
-                                    <td><a href="${portal.url}" target="_blank">${portal.portal_title}</a></td>
+                                    <td><a href="${portal.url}" target="_blank"><div class="title-nowrap">${portal.portal_title}</div></a></td>
                                     <td><fmt:formatDate value="${portal.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>
                                     <td>
                                       <div class="form-radio">
@@ -183,7 +183,7 @@
                                     <td>Portal</td>
                                     <td>${portalw.portal_name}</td>
                                     <td>${portalw.portal_type}</td>
-                                    <td><a href="${portalw.url}" target="_blank">${portalw.portal_title}</a></td>
+                                    <td><a href="${portalw.url}" target="_blank"><div class="title-nowrap">${portalw.portal_title}</div></a></td>
                                     <td><fmt:formatDate value="${portalw.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>
                                     <td>
                                       <div class="form-radio">
@@ -212,7 +212,7 @@
                                     <td>Portal</td>
                                     <td>${portal2.portal_name}</td>
                                     <td>${portal2.portal_type}</td>
-                                    <td><a href="${portal2.url}" target="_blank">${portal2.portal_title}</a></td>
+                                    <td><a href="${portal2.url}" target="_blank"><div class="title-nowrap">${portal2.portal_title}</div></a></td>
                                     <td><fmt:formatDate value="${portal2.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>
                                     <td>
                                       <div class="form-radio">
@@ -241,7 +241,7 @@
                                     <td>Portal</td>
                                     <td>${portalc2.portal_name}</td>
                                     <td>${portalc2.portal_type}</td>
-                                    <td><a href="${portalc2.url}" target="_blank">${portalc2.portal_title}</a></td>
+                                    <td><a href="${portalc2.url}" target="_blank"><div class="title-nowrap">${portalc2.portal_title}</div></a></td>
                                     <td><fmt:formatDate value="${portalc2.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>
                                     <td>
                                       <div class="form-radio">
@@ -270,7 +270,7 @@
                                     <td>Portal</td>
                                     <td>${portalw2.portal_name}</td>
                                     <td>${portalw2.portal_type}</td>
-                                    <td><a href="${portalw2.url}" target="_blank">${portalw2.portal_title}</a></td>
+                                    <td><a href="${portalw2.url}" target="_blank"><div class="title-nowrap">${portalw2.portal_title}</div></a></td>
                                     <td><fmt:formatDate value="${portalw2.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>
                                     <td>
                                       <div class="form-radio">
@@ -299,7 +299,7 @@
                                     <td>SNS</td>
                                     <td>${snsListf.sns_name}</td>
                                     <td>페이스북</td>
-                                    <td><a href="${snsListf.url}" target="_blank">${snsListf.sns_title}</a></td>
+                                    <td><a href="${snsListf.url}" target="_blank"><div class="title-nowrap">${snsListf.sns_title}</div></a></td>
                                     <td><fmt:formatDate value="${snsListf.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>
                                     <td>
                                       <div class="form-radio">
@@ -328,7 +328,7 @@
                                     <td>SNS</td>
                                     <td>${snsListi.sns_name}</td>
                                     <td>인스타그램</td>
-                                    <td><a href="${snsListi.url}" target="_blank">${snsListi.sns_title}</a></td>
+                                    <td><a href="${snsListi.url}" target="_blank"><div class="title-nowrap">${snsListi.sns_title}</div></a></td>
                                     <td><fmt:formatDate value="${snsListi.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>
                                     <td>
                                       <div class="form-radio">
@@ -357,7 +357,7 @@
                                     <td>SNS</td>
                                     <td>${snsListt.sns_name}</td>
                                     <td>트위터</td>
-                                    <td><a href="${snsListt.url}" target="_blank">${snsListt.sns_title}</a></td>
+                                    <td><a href="${snsListt.url}" target="_blank"><div class="title-nowrap">${snsListt.sns_title}</div></a></td>
                                     <td><fmt:formatDate value="${snsListt.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>
                                     <td>
                                       <div class="form-radio">
@@ -386,7 +386,7 @@
                                     <td>Media</td>
                                     <td>${mediaListA.media_name}</td>
                                     <td>네이버</td>
-                                    <td><a href="${mediaListA.url}" target="_blank">${mediaListA.media_title}</a></td>
+                                    <td><a href="${mediaListA.url}" target="_blank"><div class="title-nowrap">${mediaListA.media_title}</div></a></td>
                                     <td><fmt:formatDate value="${mediaListA.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>
                                     <td>
                                       <div class="form-radio">
@@ -415,7 +415,7 @@
                                     <td>Media</td>
                                     <td>${mediaListA.media_name}</td>
                                     <td>다음</td>
-                                    <td><a href="${mediaListA.url}" target="_blank">${mediaListA.media_title}</a></td>
+                                    <td><a href="${mediaListA.url}" target="_blank"><div class="title-nowrap">${mediaListA.media_title}</div></a></td>
                                     <td><fmt:formatDate value="${mediaListA.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>
                                     <td>
                                       <div class="form-radio">
@@ -444,7 +444,7 @@
                                     <td>community</td>
                                     <td>${communityList.community_name}</td>
                                     <td></td>
-                                    <td><a href="${communityList.url}" target="_blank">${communityList.community_title}</a></td>
+                                    <td><a href="${communityList.url}" target="_blank"><div class="title-nowrap">${communityList.community_title}</div></a></td>
                                     <td><fmt:formatDate value="${communityList.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>
                                     <td>
                                       <div class="form-radio">
@@ -473,7 +473,7 @@
                                     <td>community</td>
                                     <td>${communityList.community_name}</td>
                                     <td></td>
-                                    <td><a href="${communityList.url}" target="_blank">${communityList.community_title}</a></td>
+                                    <td><a href="${communityList.url}" target="_blank"><div class="title-nowrap">${communityList.community_title}</div></a></td>
                                     <td><fmt:formatDate value="${communityList.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>
                                     <td>
                                       <div class="form-radio">
@@ -502,7 +502,7 @@
                                     <td>community</td>
                                     <td>${communityList.community_name}</td>
                                     <td></td>
-                                    <td><a href="${communityList.url}" target="_blank">${communityList.community_title}</a></td>
+                                    <td><a href="${communityList.url}" target="_blank"><div class="title-nowrap">${communityList.community_title}</div></a></td>
                                     <td><fmt:formatDate value="${communityList.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>
                                     <td>
                                       <div class="form-radio">
@@ -531,7 +531,7 @@
                                     <td>community</td>
                                     <td>${communityList.community_name}</td>
                                     <td></td>
-                                    <td><a href="${communityList.url}" target="_blank">${communityList.community_title}</a></td>
+                                    <td><a href="${communityList.url}" target="_blank"><div class="title-nowrap">${communityList.community_title}</div></a></td>
                                     <td><fmt:formatDate value="${communityList.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>
                                     <td>
                                       <div class="form-radio">
@@ -560,7 +560,7 @@
                                     <td>community</td>
                                     <td>${communityList.community_name}</td>
                                     <td></td>
-                                    <td><a href="${communityList.url}" target="_blank">${communityList.community_title}</a></td>
+                                    <td><a href="${communityList.url}" target="_blank"><div class="title-nowrap">${communityList.community_title}</div></a></td>
                                     <td><fmt:formatDate value="${communityList.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>
                                     <td>
                                       <div class="form-radio">
@@ -589,7 +589,7 @@
                                     <td>community</td>
                                     <td>${communityList.community_name}</td>
                                     <td></td>
-                                    <td><a href="${communityList.url}" target="_blank">${communityList.community_title}</a></td>
+                                    <td><a href="${communityList.url}" target="_blank"><div class="title-nowrap">${communityList.community_title}</div></a></td>
                                     <td><fmt:formatDate value="${communityList.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>
                                     <td>
                                       <div class="form-radio">
@@ -618,7 +618,7 @@
                                     <td>community</td>
                                     <td>${communityList.community_name}</td>
                                     <td></td>
-                                    <td><a href="${communityList.url}" target="_blank">${communityList.community_title}</a></td>
+                                    <td><a href="${communityList.url}" target="_blank"><div class="title-nowrap">${communityList.community_title}</div></a></td>
                                     <td><fmt:formatDate value="${communityList.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>
                                     <td>
                                       <div class="form-radio">
@@ -647,7 +647,7 @@
                                     <td>community</td>
                                     <td>${communityList.community_name}</td>
                                     <td></td>
-                                    <td><a href="${communityList.url}" target="_blank">${communityList.community_title}</a></td>
+                                    <td><a href="${communityList.url}" target="_blank"><div class="title-nowrap">${communityList.community_title}</div></a></td>
                                     <td><fmt:formatDate value="${communityList.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>
                                     <td>
                                       <div class="form-radio">
@@ -676,7 +676,7 @@
                                     <td>community</td>
                                     <td>${communityList.community_name}</td>
                                     <td></td>
-                                    <td><a href="${communityList.url}" target="_blank">${communityList.community_title}</a></td>
+                                    <td><a href="${communityList.url}" target="_blank"><div class="title-nowrap">${communityList.community_title}</div></a></td>
                                     <td><fmt:formatDate value="${communityList.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>
                                     <td>
                                       <div class="form-radio">
@@ -705,7 +705,7 @@
                                     <td>community</td>
                                     <td>${communityList.community_name}</td>
                                     <td></td>
-                                    <td><a href="${communityList.url}" target="_blank">${communityList.community_title}</a></td>
+                                    <td><a href="${communityList.url}" target="_blank"><div class="title-nowrap">${communityList.community_title}</div></a></td>
                                     <td><fmt:formatDate value="${communityList.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>
                                     <td>
                                       <div class="form-radio">
@@ -734,7 +734,7 @@
                                     <td>community</td>
                                     <td>${communityList.community_name}</td>
                                     <td></td>
-                                    <td><a href="${communityList.url}" target="_blank">${communityList.community_title}</a></td>
+                                    <td><a href="${communityList.url}" target="_blank"><div class="title-nowrap">${communityList.community_title}</div></a></td>
                                     <td><fmt:formatDate value="${communityList.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>
                                     <td>
                                       <div class="form-radio">
@@ -763,7 +763,7 @@
                                     <td>community</td>
                                     <td>${communityList.community_name}</td>
                                     <td></td>
-                                    <td><a href="${communityList.url}" target="_blank">${communityList.community_title}</a></td>
+                                    <td><a href="${communityList.url}" target="_blank"><div class="title-nowrap">${communityList.community_title}</div></a></td>
                                     <td><fmt:formatDate value="${communityList.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>
                                     <td>
                                       <div class="form-radio">
@@ -792,7 +792,7 @@
                                     <td>community</td>
                                     <td>${communityList.community_name}</td>
                                     <td></td>
-                                    <td><a href="${communityList.url}" target="_blank">${communityList.community_title}</a></td>
+                                    <td><a href="${communityList.url}" target="_blank"><div class="title-nowrap">${communityList.community_title}</div></a></td>
                                     <td><fmt:formatDate value="${communityList.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>
                                     <td>
                                       <div class="form-radio">
@@ -821,7 +821,7 @@
                                     <td>community</td>
                                     <td>${communityList.community_name}</td>
                                     <td></td>
-                                    <td><a href="${communityList.url}" target="_blank">${communityList.community_title}</a></td>
+                                    <td><a href="${communityList.url}" target="_blank"><div class="title-nowrap">${communityList.community_title}</div></a></td>
                                     <td><fmt:formatDate value="${communityList.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>
                                     <td>
                                       <div class="form-radio">
@@ -850,7 +850,7 @@
                                     <td>community</td>
                                     <td>${communityList.community_name}</td>
                                     <td></td>
-                                    <td><a href="${communityList.url}" target="_blank">${communityList.community_title}</a></td>
+                                    <td><a href="${communityList.url}" target="_blank"><div class="title-nowrap">${communityList.community_title}</div></a></td>
                                     <td><fmt:formatDate value="${communityList.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>
                                     <td>
                                       <div class="form-radio">
@@ -879,7 +879,7 @@
                                     <td>community</td>
                                     <td>${communityList.community_name}</td>
                                     <td></td>
-                                    <td><a href="${communityList.url}" target="_blank">${communityList.community_title}</a></td>
+                                    <td><a href="${communityList.url}" target="_blank"><div class="title-nowrap">${communityList.community_title}</div></a></td>
                                     <td><fmt:formatDate value="${communityList.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>
                                     <td>
                                       <div class="form-radio">
@@ -908,7 +908,7 @@
                                     <td>community</td>
                                     <td>${communityList.community_name}</td>
                                     <td></td>
-                                    <td><a href="${communityList.url}" target="_blank">${communityList.community_title}</a></td>
+                                    <td><a href="${communityList.url}" target="_blank"><div class="title-nowrap">${communityList.community_title}</div></a></td>
                                     <td><fmt:formatDate value="${communityList.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>
                                     <td>
                                       <div class="form-radio">
@@ -1000,7 +1000,7 @@
                                     <td>${communityList.community_name}</td>
                                     <td></td>
                                     <td><a href="${communityList.url}" target="_blank">
-                                    ${communityList.community_title}
+                                    <div class="title-nowrap">${communityList.community_title}</div>
                                     </a></td>
                                     <td><fmt:formatDate value="${communityList.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>
                                     <td>
@@ -1030,7 +1030,7 @@
                                     <td>community</td>
                                     <td>${communityList.community_name}</td>
                                     <td></td>
-                                    <td><a href="${communityList.url}" target="_blank">${communityList.community_title}</a></td>
+                                    <td><a href="${communityList.url}" target="_blank"><div class="title-nowrap">${communityList.community_title}</div></a></td>
                                     <td><fmt:formatDate value="${communityList.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>
                                     <td>
                                       <div class="form-radio">
@@ -1059,7 +1059,7 @@
                                     <td>community</td>
                                     <td>${communityList.community_name}</td>
                                     <td></td>
-                                    <td><a href="${communityList.url}" target="_blank">${communityList.community_title}</a></td>
+                                    <td><a href="${communityList.url}" target="_blank"><div class="title-nowrap">${communityList.community_title}</div></a></td>
                                     <td><fmt:formatDate value="${communityList.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>
                                     <td>
                                       <div class="form-radio">
@@ -1088,7 +1088,7 @@
                                     <td>community</td>
                                     <td>${communityList.community_name}</td>
                                     <td></td>
-                                    <td><a href="${communityList.url}" target="_blank">${communityList.community_title}</a></td>
+                                    <td><a href="${communityList.url}" target="_blank"><div class="title-nowrap">${communityList.community_title}</div></a></td>
                                     <td><fmt:formatDate value="${communityList.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>
                                     <td>
                                       <div class="form-radio">

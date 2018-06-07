@@ -951,7 +951,7 @@ public class MarketingController {
 			logger.info("graphset3: " + graphList.get(i).getType3());
 			logger.info("graphset4: " + graphList.get(i).getType4());*/
 		}
-		logger.info("graphList: " + graphList);
+		/*logger.info("graphList: " + graphList);*/
 		return graphList;
 	}
 	

@@ -52,7 +52,7 @@
   <style type="text/css">
 	.layer{
 		position:absolute;
-		top:auto;
+		top:0;
 		left:0;
 		width:100%;
 		height:100%;
@@ -116,53 +116,10 @@
                   <div class="page-body">
                     <div class="row">
                       <!-- data setting start -->
-                      <div class="col-md-7">
-                        <%-- <c:if test="${user.user_name == 'union'}">
-                         <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="selectCompany">
-                          <option>회사</option>
-                          <c:if test="${user.user_type == 1 }">
-                          <c:forEach items="${companyList}" var = "companyList">
-                          <option value="${companyList.user_name}">${companyList.user_name}</option>
-                          </c:forEach>
-                          </c:if>
-                          <c:if test="${user.user_type == 2}">
-                          <option value="${companyList.user_name}">${companyList.user_name}</option>
-                          </c:if>
-                        </select>
-						</c:if>
-						
-						<c:if test="${user.user_name != 'union'}">
-                         <select style="display: none;" name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="selectCompany">
-                          <option>회사</option>
-                          <c:if test="${user.user_type == 1 }">
-                          <c:forEach items="${companyList}" var = "companyList">
-                          <option value="${companyList.user_name}">${companyList.user_name}</option>
-                          </c:forEach>
-                          </c:if>
-                          <c:if test="${user.user_type == 2}">
-                          <option value="${companyList.user_name}">${companyList.user_name}</option>
-                          </c:if>
-                        </select>
-						</c:if>
-						
-                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left" id="selectKeyword">
-                          <option>키워드</option>
-                          <c:if test="${modelKeywordList == null}" >
-                          	<c:forEach items="${keywordList}" var = "keywordList">
-                          <option value="${keywordList.keyword_main}">${keywordList.keyword_main}</option>
-                          </c:forEach>
-                          </c:if>
-                          <c:if test="${modelKeywordList != null}">
-                          	<c:forEach items="${modelKeywordList}" var = "keywordList">
-                          <option value="${keywordList.keyword_main}">${keywordList.keyword_main}</option>
-                          </c:forEach>
-                          </c:if>
-                        </select>--%>
-                      </div>
                       <div class="layer">
 					  <span class="content">
 					  <img src="http://overware.iptime.org:8080/classification/show?name=/union_logo/overware_logo.png" alt="Theme-Logo" style="width: 250px; height: 45px;">
-					  <br><br>
+					  <div style="height: 5px"></div>
 					  <font style="font-family:color: rgb(102, 102, 102); gulim,verdana; font-size: 20px; font-weight: bold;">
 					  먼저 키워드를 선택 후<br>
 					  해당 서비스를 관리하세요
@@ -212,6 +169,8 @@
                         </select> 
 					  </span>
 					</div> 
+					</div>
+					</div>
                   <!-- page-body end -->
                 </div>
               </div>

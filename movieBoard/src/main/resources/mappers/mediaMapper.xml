@@ -1241,7 +1241,6 @@
 		<include refid="search_writeDate"></include>
 		and
 			createDate >= curdate();
-		
 	</select>
 	<select id="replyTotalcnt" resultType="Integer">
 		select

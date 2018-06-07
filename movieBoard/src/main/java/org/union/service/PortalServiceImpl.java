@@ -566,4 +566,10 @@ public class PortalServiceImpl implements PortalService {
 
 		return portalDAO.totalAllPageex(cri);
 	}
+
+	@Override
+	public Integer getNvCount(String url) {
+
+		return portalDAO.getNvCount(url);
+	}
 }

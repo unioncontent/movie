@@ -124,4 +124,5 @@ public interface PortalService {
 	public Integer graphDaumCount(SearchCriteria cri);
 	
 	public List<ScoreVO> scoreListReport(SearchCriteria cri);
+	public Integer getNvCount(String url);
 }
