@@ -20,25 +20,25 @@
         <div class="col-md-12">
           <div class="card">
             <div class="card-header">
-              <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 m-r-5 p-r-5 f-left" id="selectKeyword">
+              <select name="select" class="col-md-1 form-control form-control-default m-b-10 m-r-5 p-r-5 f-left" id="selectKeyword">
                 <option>키워드</option>
                 <%for(var i=0; i < klist.length; i++) {%>
                   <option value='<%=klist[i].M_keyword_idx%>'><%=klist[i].M_keyword%></option>
                 <%}%>
               </select>
-              <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 m-r-5 p-r-5 f-left" id="selectType">
+              <select name="select" class="col-md-1 form-control form-control-default m-b-10 m-r-5 p-r-5 f-left" id="selectType">
                 <option>메일타입</option>
                 <%for(var i=0; i < tlist.length; i++) {%>
                   <option value='<%=tlist[i].M_mail_type%>'><%=tlist[i].M_mail_type%></option>
                 <%}%>
               </select>
-              <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 m-r-5 p-r-5 f-left" id="selectMType">
+              <select name="select" class="col-md-1 form-control form-control-default m-b-10 m-r-5 p-r-5 f-left" id="selectMType">
                 <option>발송타입</option>
                 <option value='0'>즉시</option>
                 <option value='1'>예약</option>
               </select>
               <div class="col-md-3 p-r-0 p-l-0 f-right">
-                <div id="reportrange" class="form-control form-control-inverse">
+                <div id="reportrange" class="form-control form-control-default">
                   <i class="glyphicon glyphicon-calendar far fa-calendar-alt"></i>
                   <span></span>
                   <i class="f-right fa fa-angle-down" style="font-size: 17px;"></i>
