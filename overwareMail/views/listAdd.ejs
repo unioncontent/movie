@@ -145,7 +145,7 @@
       closeOnClickOutside: false,
       closeOnEsc: false
     })
-    .then((value) => {
+    .then(function(value) {
       console.log(value);
       var regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
       if (value != null) {
@@ -302,7 +302,7 @@
       buttons: ["취소", true],
       dangerMode: true,
     })
-    .then((value) => {
+    .then(function(value) {
       if (value != null) {
         var param = {
           'M_email': $('#email').val(),
@@ -337,7 +337,7 @@
       success:function(data){
         if(data.status){
           swal("SUCCESS!", '메일등록 되었습니다.', "success")
-          .then((value) => {
+          .then(function(value) {
             window.location.reload();
           });
         }else{

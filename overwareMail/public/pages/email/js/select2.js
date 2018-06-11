@@ -242,12 +242,14 @@ $(".group-select").select2({
       if(params.term != undefined){
         params.term = params.term.replace(/ /gi, "")
       }
+      console.log({search: params.term,page: params.page});
       return {
         search: params.term, // search term
         page: params.page
       };
     },
     processResults: function (data, params) {
+      console.log(data);
       if(data.status){
         params.page = params.page || 1;
         return {

@@ -332,19 +332,21 @@
   $(document).on('click','.btn-delete',function(){
     var trEle = $(this).parents('tr');
     var tdEles = trEle.find('td');
+    var sendData = tdEles.eq(1).text();
+
     swal({
-      title: "["+tdEles.eq(1).text()+"]을 삭제하시겠습니까?",
+      title: "["+sendData+"]을 삭제하시겠습니까?",
       icon: "warning",
       buttons: ["취소", true],
       dangerMode: true,
     })
-    .then((value) => {
+    .then(function(value) {
       if (value != null) {
         $.ajax({
           url: '/list/group/delete',
           type: 'post',
           data : {
-            title: tdEles.eq(1).text()
+            title: sendData
           },
           datatype : 'json',
           error:function(request,status,error){
@@ -354,7 +356,7 @@
           success:function(data){
             if(data.status){
               swal("SUCCESS!", "["+tdEles.eq(1).text()+"]을 삭제했습니다.", "success")
-              .then((value)=>{
+              .then(function(value) {
                 reloadPage();
               });
             }else{
@@ -381,7 +383,7 @@
         buttons: ["취소", true],
         dangerMode: true,
       })
-      .then((value) => {
+      .then(function(value) {
         if (value != null) {
           $.ajax({
             type: "POST",
@@ -425,7 +427,7 @@
   $('#searchBtn').on('click',function(){
     var url = '/list/group?page=1';
     if($("#keywordInput").val() != ''){
-      url += '&search='+$("#keywordInput").val();
+      url += '&search='+$.urlPostParam($("#keywordInput").val());
     }
     location.href = url;
   });
@@ -566,7 +568,7 @@
       buttons: ["취소", true],
       dangerMode: true,
     })
-    .then((value) => {
+    .then(function(value) {
       if (value != null) {
         addGroup(list);
       }
@@ -585,7 +587,7 @@
       success:function(data){
         if(data.status){
           swal("SUCCESS!", '그룹에 추가했습니다.', "success")
-          .then((value)=>{
+          .then(function(value) {
             var param = {
               page : 1,
               group : $('#group').text()
@@ -726,19 +728,20 @@
   });
   // 모달 그룹 삭제
   $(document).on('click','.btn-remove',function(){
+    var deleteGroupParam = $(this).data('value');
     swal({
       title: "그룹에서 삭제하시겠습니까?",
       icon: "warning",
       buttons: ["취소", true],
       dangerMode: true,
     })
-    .then((value) => {
+    .then(function(value) {
       if (value != null) {
         $.ajax({
           url: '/list/group/delete',
           type: 'post',
           data : {
-            idx: $(this).data('value')
+            idx: deleteGroupParam
           },
           datatype : 'json',
           error:function(request,status,error){
@@ -749,7 +752,7 @@
             console.log(data);
             if(data.status){
               swal("SUCCESS!", '그룹에서 삭제 완료되었습니다.', "success")
-              .then((value)=>{
+              .then(function(value) {
                 var param = {
                   page : 1,
                   group : $('#group').text()

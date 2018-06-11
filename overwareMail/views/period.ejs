@@ -701,6 +701,7 @@
   });
   // 성공 클릭시
   $(document).on('click','.success',function(){
+    var clickParam = $(this).data('idx');
     if($(this).text() == '0'){
       return false;
     }
@@ -709,7 +710,7 @@
       type: 'post',
       data: {
         M_result: 'success',
-        arr : [$(this).data('idx'),13]
+        arr : [clickParam,13]
       },
       datatype : 'json',
       error:function(request,status,error){
@@ -739,6 +740,7 @@
     $(this).toggleClass('error_nobr_more');
   });
   $(document).on('click','.fail',function(){
+    var clickFParam = $(this).data('idx');
     if($(this).text() == '0'){
       return false;
     }
@@ -747,7 +749,7 @@
       type: 'post',
       data: {
         M_result: 'fail',
-        arr : [$(this).data('idx'),13]
+        arr : [clickFParam,13]
       },
       datatype : 'json',
       error:function(request,status,error){
@@ -798,10 +800,10 @@
     var trEle = $(this).parents('tr');
     var tdEles = trEle.find('td');
     var inputEle = trEle.find('input[type=hidden]');
-    console.log(inputEle);
+    var idxParam = $(this).data('idx');
     if(inputEle.eq(1).val() != ''){
       var param = {
-        M_idx_A:$(this).data('idx'),
+        M_idx_A:idxParam,
         keyword:tdEles.eq(1).text(),
         sDate:tdEles.eq(0).text(),
         eDate:tdEles.eq(0).text()
