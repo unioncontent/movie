@@ -34,32 +34,32 @@
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.css">
     <%- style %>
   </head>
-    <body>
-      <!-- 로딩화면 -->
-      <div class="theme-loader">
-        <div class="ball-scale">
-          <div></div>
-        </div>
+  <body>
+    <!-- 로딩화면 -->
+    <div class="theme-loader">
+      <div class="ball-scale">
+        <div></div>
       </div>
-      <div id="pcoded" class="pcoded">
-        <div class="pcoded-overlay-box"></div>
-        <div class="pcoded-container navbar-wrapper">
-          <% include header.ejs %>
-          <div class="pcoded-main-container" style="top: 56px;">
-            <div class="pcoded-wrapper">
-              <!-- left menu start -->
-              <% include side.ejs %>
-              <!-- left menu end -->
-              <div class="pcoded-content">
-                <div class="pcoded-inner-content">
-                  <%- body %>
-                </div>
+    </div>
+    <div id="pcoded" class="pcoded">
+      <div class="pcoded-overlay-box"></div>
+      <div class="pcoded-container navbar-wrapper">
+        <% include header.ejs %>
+        <div class="pcoded-main-container" style="top: 56px;">
+          <div class="pcoded-wrapper">
+            <!-- left menu start -->
+            <% include side.ejs %>
+            <!-- left menu end -->
+            <div class="pcoded-content">
+              <div class="pcoded-inner-content">
+                <%- body %>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </body>
+    </div>
+  </body>
   <!-- Required Jquery -->
   <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="crossorigin="anonymous"></script>
   <script src="http://code.jquery.com/ui/1.12.1/jquery-ui.min.js"integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="crossorigin="anonymous"></script>
@@ -72,6 +72,7 @@
   <!-- Custom js -->
   <script type="text/javascript" src="/js/script-min.js"></script>
   <script src="/js/pcoded.min.js"></script>
+  <script src="/js/ie.js"></script>
   <script src="/js/demo-12.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-mousewheel/3.1.13/jquery.mousewheel.min.js"></script>

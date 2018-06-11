@@ -272,34 +272,41 @@
     if(keywordValue != ''){
       $("#selectKeyword option[value='"+keywordValue+"']").attr('selected','selected');
     }
-    var url = new URL(window.location.href);
-    var searchTypeParams = url.searchParams.get("searchType");
-    var searchParams = url.searchParams.get("search");
+    // var url = new URL(window.location.href);
+    // var searchTypeParams = url.searchParams.get("searchType");
+    // var searchParams = url.searchParams.get("search");
+    // if(searchTypeParams != null && searchParams != null){
+    //   $("#selectSearchType").val(searchTypeParams).prop("selected", true);
+    //   $("#keywordInput").val(searchParams);
+    // }
+    var searchTypeParams = $.urlParam("searchType");
+    var searchParams = $.urlParam("search");
+    var keywordParams = $.urlParam("keyword");
     if(searchTypeParams != null && searchParams != null){
       $("#selectSearchType").val(searchTypeParams).prop("selected", true);
       $("#keywordInput").val(searchParams);
     }
-    var keywordParams = url.searchParams.get("keyword");
     if(keywordParams != null){
       $("#selectKeyword option[value='"+keywordParams+"']").attr('selected','selected');
     }
   });
   // 삭제버튼 클릭시
   $(document).on('click','.btn-delete',function(){
+    var removeParam = $(this).data('idx');
     swal({
       title: "삭제하시겠습니까?",
       icon: "warning",
       buttons: ["취소", true],
       dangerMode: true,
     })
-    .then((value) => {
+    .then(function(value) {
       if (value == null) {
         return false;
       }
       $.ajax({
         url: '/email/manage/delete',
         type: 'post',
-        data : {idx:$(this).data('idx')},
+        data : {idx:removeParam},
         datatype : 'json',
         error:function(request,status,error){
           console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
@@ -308,7 +315,7 @@
         success:function(data){
           if(data.status){
             swal("SUCCESS!", '삭제 되었습니다.', "success")
-            .then((value)=>{
+            .then(function(value) {
               reloadPage();
             });
           }else{
@@ -333,7 +340,7 @@
       buttons: ["취소", true],
       dangerMode: true,
     })
-    .then((value) => {
+    .then(function(value) {
       if (value == null) {
         return false;
       }
@@ -378,7 +385,7 @@
         closeModal: false,
       }
     })
-    .then((value) => {
+    .then(function(value) {
       if (value == null) {
         return false;
       }
@@ -418,7 +425,7 @@
         closeModal: false,
       }
     })
-    .then((value) => {
+    .then(function(value) {
       if (value == null) {
         return false;
       }
@@ -459,7 +466,7 @@
       success:function(data){
         if(data.status){
           swal("SUCCESS!", '메일이 발송 되었습니다.', "success")
-          .then((value)=>{
+          .then(function(value) {
             reloadPage();
           });
         }else{
@@ -483,7 +490,7 @@
       success:function(data){
         if(data.status){
           swal("SUCCESS!", '메일이 재발송 되었습니다.', "success")
-          .then((value)=>{
+          .then(function(value) {
             reloadPage();
           });
         }else{
@@ -494,17 +501,18 @@
   }
   // 메일 재전송버튼 클릭시
   $(document).on('click','.btn-rewrite',function(){
+    var idxParam = $(this).data('idx');
     swal({
       title: '이번 회차를 바탕으로 재작성 하시겠습니까?',
       icon: "warning",
       buttons: ["취소", true],
       dangerMode: true,
     })
-    .then((value) => {
+    .then(function(value) {
       if (value == null) {
         return false;
       }
-      location.href='../email?type=rewrite&idx='+$(this).data('idx');
+      location.href='../email?type=rewrite&idx='+idxParam;
     });
   });
   function reloadPage(){
@@ -517,10 +525,9 @@
     // if(keywordValue != ''){
     //   param.keyword = keywordValue;
     // }
-    var url = new URL(window.location.href);
-    var searchTypeParams = url.searchParams.get("searchType");
-    var searchParams = url.searchParams.get("search");
-    var keywordParams = url.searchParams.get("keyword");
+    var searchTypeParams = $.urlParam("searchType");
+    var searchParams = $.urlParam("search");
+    var keywordParams = $.urlParam("keyword");
     if(keywordParams != '' && keywordParams != null){
       param.keyword = keywordParams;
     }
@@ -543,13 +550,18 @@
     else{
       $('#keyword').val('');
     }
-
-    var href = new URL(window.location.href);
-    if(href.searchParams.get("searchType") != '' && href.searchParams.get("searchType") != null){
-      param.searchType = href.searchParams.get("searchType");
+    // var href = new URL(window.location.href);
+    // if(href.searchParams.get("searchType") != '' && href.searchParams.get("searchType") != null){
+    //   param.searchType = href.searchParams.get("searchType");
+    // }
+    // if(href.searchParams.get("search") != '' && href.searchParams.get("search") != null){
+    //   param.search = href.searchParams.get("search");
+    // }
+    if($.urlParam("searchType") != '' && $.urlParam("searchType") != null){
+      param.searchType = $.urlParam("searchType");
     }
-    if(href.searchParams.get("search") != '' && href.searchParams.get("search") != null){
-      param.search = href.searchParams.get("search");
+    if($.urlParam("search") != '' && $.urlParam("search") != null){
+      param.search = $.urlParam("search");
     }
     // data input hidden values
     ajaxGetPageList(param,0);
@@ -567,8 +579,15 @@
     if(searchType == 'n'){
       search = search.replace(/[^0-9]/g,'');
     }
-    var href = new URL(window.location.href);
-    var keywordParams = href.searchParams.get("keyword");
+    // var href = new URL(window.location.href);
+    // var keywordParams = href.searchParams.get("keyword");
+    // if(searchType != '' && search != ''){
+    //   url += '&searchType='+searchType+'&search='+search;
+    // }
+    // if(keywordParams != null && keywordParams != ''){
+    //   url += '&keyword='+keywordParams;
+    // }
+    var keywordParams = $.urlParam("keyword");
     if(searchType != '' && search != ''){
       url += '&searchType='+searchType+'&search='+search;
     }
@@ -587,15 +606,24 @@
     // if(keywordValue != ''){
     //   param.keyword = keywordValue;
     // }
-    var href = new URL(window.location.href);
-    if(href.searchParams.get("keyword") != '' && href.searchParams.get("keyword") != null){
-      param.keyword = href.searchParams.get("keyword");
+    // var href = new URL(window.location.href);
+    // if(href.searchParams.get("keyword") != '' && href.searchParams.get("keyword") != null){
+    //   param.keyword = href.searchParams.get("keyword");
+    // }
+    // if(href.searchParams.get("searchType") != '' && href.searchParams.get("searchType") != null){
+    //   param.searchType = href.searchParams.get("searchType");
+    // }
+    // if(href.searchParams.get("search") != '' && href.searchParams.get("search") != null){
+    //   param.search = href.searchParams.get("search");
+    // }
+    if($.urlParam("keyword") != '' && $.urlParam("keyword") != null){
+      param.keyword = $.urlParam("keyword");
     }
-    if(href.searchParams.get("searchType") != '' && href.searchParams.get("searchType") != null){
-      param.searchType = href.searchParams.get("searchType");
+    if($.urlParam("searchType") != '' && $.urlParam("searchType") != null){
+      param.searchType = $.urlParam("searchType");
     }
-    if(href.searchParams.get("search") != '' && href.searchParams.get("search") != null){
-      param.search = href.searchParams.get("search");
+    if($.urlParam("search") != '' && $.urlParam("search") != null){
+      param.search = $.urlParam("search");
     }
     ajaxGetPageList(param,num);
   });

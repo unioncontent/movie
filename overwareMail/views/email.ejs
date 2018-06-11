@@ -446,6 +446,10 @@
 <script src="/pages/email/js/select2.js"></script>
 <script type="text/javascript">
   $(document).ready(function() {
+    // ie label css
+    $('.modal label').css('line-height','16px');
+    $('.select2-search__field').css('line-height','16px')
+    
     if($('#mailType').val()!=''){
       var senderArr = $('#mailSender').val().split('|');
       var param = {
@@ -736,7 +740,7 @@
       buttons: ["취소", true],
       dangerMode: true
     })
-    .then((value) => {
+    .then(function(value) {
       if (value != null) {
         var now = $.datepicker.formatDate('yymmdd', new Date());
         // var fileListArr = $("#fileList").val().split(',');
