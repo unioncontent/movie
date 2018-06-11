@@ -13,7 +13,7 @@
 }
 /* loader */
 .loader, .loader-block {
-  display: initial;
+  display: block;
 }
 /* select test css */
 .searchSelect{
@@ -59,7 +59,7 @@
   width:  100%;
   height:  100%;
   z-index: 65601;
-  background: #ffffff26;
+  background: rgba(255, 255, 255, 0.14);
 }
 .modal{
   z-index: 65621;
