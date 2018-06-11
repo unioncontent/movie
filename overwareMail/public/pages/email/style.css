@@ -11,6 +11,10 @@
   border-top: 1px solid rgba(0,0,0,.125);
   border-bottom: 0px;
 }
+/* loader */
+.loader, .loader-block {
+  display: initial;
+}
 /* select test css */
 .searchSelect{
   display: none;
