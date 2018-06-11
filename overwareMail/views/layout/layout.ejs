@@ -45,7 +45,7 @@
       <div class="pcoded-overlay-box"></div>
       <div class="pcoded-container navbar-wrapper">
         <% include header.ejs %>
-        <div class="pcoded-main-container" style="top: 56px;">
+        <div class="pcoded-main-container" style="margin-top: 56px;">
           <div class="pcoded-wrapper">
             <!-- left menu start -->
             <% include side.ejs %>
@@ -76,13 +76,13 @@
   <script src="/js/demo-12.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-mousewheel/3.1.13/jquery.mousewheel.min.js"></script>
-  <style>
+  <!-- <style>
   @media only screen and (max-width: 992px){
     .pcoded-navbar {
       top: 56px;
     }
   }
-  </style>
+  </style> -->
   <script>
   $( document ).ready(function() {
     // $( "#pcoded" ).pcodedmenu({
@@ -90,13 +90,14 @@
     // });
     $('.header-navbar').attr('pcoded-header-position','fixed');
     $('.pcoded-navbar').attr('pcoded-navbar-position','fixed');
-    if ($('#pcoded').attr('pcoded-device-type') != "phone") {
-      $('.pcoded-main-container').css('top','56px');
-    }
-    else{
-      $('.pcoded-container').css('padding-bottom','0px');
-      $('.pcoded-main-container').css('top','0px');
-    }
+    $('.pcoded-main-container').css('margin-top','56px');
+    // if ($('#pcoded').attr('pcoded-device-type') != "phone") {
+    //   $('.pcoded-main-container').css('top','56px');
+    // }
+    // else{
+    //   $('.pcoded-container').css('padding-bottom','0px');
+    //   $('.pcoded-main-container').css('top','0px');
+    // }
     var className = $(location).attr('pathname').replace("/","").split("/")[0];
     if(className == ""){
       className = "dashBoard";
