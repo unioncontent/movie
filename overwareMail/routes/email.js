@@ -756,7 +756,7 @@ async function maillinkInsert(req){
       'EMTOADDRESS':item[1],
       'SENDTIME':('time' in req) ? req.time : now,
       'GENDATE':now,
-      'MODDATE':now,
+      // 'MODDATE':now,
       'MSGID':mailData.n_idx
     };
     console.log(index+'번');
