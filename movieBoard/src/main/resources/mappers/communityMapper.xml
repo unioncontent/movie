@@ -41,9 +41,9 @@
 			and updateDate <![CDATA[>=]]> CURDATE()
 		</if>
 		<if test="startDate != null">
-			and updateDate <![CDATA[>=]]> #{startDate}
+			and createDate <![CDATA[>=]]> #{startDate}
 			<if test="endDate != null">
-				and updateDate <![CDATA[<=]]> #{endDate}
+				and createDate <![CDATA[<=]]> #{endDate}
 			</if>
 		</if>
 		<if test="textType != null">
@@ -362,7 +362,7 @@
 		from
 			community_data
 		where
-			textType is not null
+			(textType is null or textType != '삭제글')
 		<include refid="search_writeDate"></include>
 			
 	</select>
@@ -459,7 +459,7 @@
 		from 
 			community_data
 		where 
-			textType!='삭제글'
+			(textType is null or textType != '삭제글')
 		<include refid="search"></include>
 	</select>
 

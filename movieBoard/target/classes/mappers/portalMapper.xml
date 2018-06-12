@@ -727,7 +727,7 @@
 		from 
 			portal_data
 		where 
-			textType!='삭제글'
+			(textType is null or textType != '삭제글')
 		and score is null
 		<include refid="search"></include>
  	</select>
@@ -762,7 +762,7 @@
 		from
 			portal_data
 		where
-			textType is not null
+			(textType is null or textType != '삭제글')
 		and
 			score is null
 		<include refid="search_writeDate"></include>
