@@ -51,7 +51,7 @@ public class ListUtil {
 				vo.setWriteDate(addList.get(i).getWriteDate());
 				vo.setSns_idx(addList.get(i).getSns_idx());
 				vo.setUrl(addList.get(i).getUrl());
-				vo.setCreateDate(date.format(addList.get(i).getUpdateDate()));
+				vo.setCreateDate(date.format(addList.get(i).getCreateDate()));
 				vo.setTextType(addList.get(i).getTextType());
 				vo.setWriter(addList.get(i).getSns_writer());
 				
@@ -88,7 +88,7 @@ public class ListUtil {
 				vo.setWriteDate(addList.get(i).getWriteDate());
 				vo.setSns_idx(addList.get(i).getCommunity_idx());
 				vo.setUrl(addList.get(i).getUrl());
-				vo.setCreateDate(date.format(addList.get(i).getUpdateDate()));
+				vo.setCreateDate(date.format(addList.get(i).getCreateDate()));
 				vo.setTextType(addList.get(i).getTextType());
 				vo.setWriter(addList.get(i).getCommunity_writer());
 				vo.setThumbnail(addList.get(i).getThumbnail());
@@ -118,7 +118,7 @@ public class ListUtil {
 				vo.setContent(addList.get(i).getPortal_type());
 				vo.setPortal_idx(addList.get(i).getViral_idx());
 				vo.setUrl(addList.get(i).getUrl());
-				vo.setCreateDate(date.format(addList.get(i).getUpdateDate()));
+				vo.setCreateDate(date.format(addList.get(i).getCreateDate()));
 				vo.setThumbnail(addList.get(i).getThumbnail());
 				
 				list.add(vo);
@@ -196,7 +196,7 @@ public class ListUtil {
 				vo.setWriteDate(addList.get(i).getWriteDate());
 				vo.setSns_idx(addList.get(i).getMedia_idx());
 				vo.setUrl(addList.get(i).getUrl());
-				vo.setCreateDate(date.format(addList.get(i).getUpdateDate()));
+				vo.setCreateDate(date.format(addList.get(i).getCreateDate()));
 				vo.setTextType(addList.get(i).getTextType());
 				vo.setWriter(addList.get(i).getReporter_name());
 				vo.setThumbnail(addList.get(i).getThumbnail());
@@ -227,7 +227,7 @@ public class ListUtil {
 				vo.setKeyword_main(addList.get(i).getKeyword_main());
 				vo.setKeyword(addList.get(i).getKeyword());
 				vo.setUrl(addList.get(i).getUrl());
-				vo.setCreateDate(date.format(addList.get(i).getUpdateDate()));
+				vo.setCreateDate(date.format(addList.get(i).getCreateDate()));
 				vo.setTextType(addList.get(i).getTextType());
 				vo.setThumbnail(addList.get(i).getThumbnail());
 				
@@ -497,7 +497,7 @@ public class ListUtil {
 				vo.setWriteDate(addList.get(i).getWriteDate());
 				vo.setSns_idx(addList.get(i).getPortal_idx());
 				vo.setUrl(addList.get(i).getUrl());
-				vo.setCreateDate(date.format(addList.get(i).getUpdateDate()));
+				vo.setCreateDate(date.format(addList.get(i).getCreateDate()));
 				vo.setTextType(addList.get(i).getTextType());
 				vo.setThumbnail(addList.get(i).getThumbnail());
 				
