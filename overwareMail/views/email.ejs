@@ -225,7 +225,7 @@
                                 <ul class="submenu groupLi">
                                   <% for(var i=0; i < groupList.length; i++) { %>
                                     <li>
-                                      <input type="checkbox" id="chk<%=i+1%>_g" value="<%=groupList[i].M_id%>" title="<%= groupList[i].M_group_title %>&lt;<%=groupList[i].groupCount%>명&gt;"/>
+                                      <input type="checkbox" id="chk<%=i+1%>_g" value="<%=groupList[i].M_group_title%>" title="<%= groupList[i].M_group_title %>&lt;<%=groupList[i].groupCount%>명&gt;"/>
                                       <label for="chk<%=i+1%>_g" title="<%= groupList[i].M_group_title %>&lt;<%=groupList[i].groupCount%>명&gt;"><%= groupList[i].M_group_title%>&lt;<%=groupList[i].groupCount%>명&gt;</label>
                                     </li>
                                     <% }; %>
@@ -449,7 +449,7 @@
     // ie label css
     $('.modal label').css('line-height','16px');
     $('.select2-search__field').css('line-height','16px')
-    
+
     if($('#mailType').val()!=''){
       var senderArr = $('#mailSender').val().split('|');
       var param = {
@@ -764,7 +764,6 @@
         // param['M_file'] = fileListStr;
         // param['M_fileName'] = fileNameStr;
         // param['M_file_d'] = fileDBListStr;
-
         $('span.messages').find('.error').text('');
         if($('#mailType').val()!=''){
           param.type = $('#mailType').val();

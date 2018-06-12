@@ -133,8 +133,13 @@ $(document).on("click",".rightLeftBtn button",function(){
           groupBool = true;
         }
       }
-      else if(boxType == "recipi" && $("#recipiUl").find('input[title=\''+checkText+'\']').length == 0){
-        $("#recipiUl").append(html);
+      else if(boxType == "recipi"){
+        if(id.indexOf("_g") != -1){
+          groupBool = true;
+        }
+        else if(id.indexOf("_g") == -1 && $("#recipiUl").find('input[title=\''+checkText+'\']').length == 0){
+          $("#recipiUl").append(html);
+        }
       }
       $(this).prop('checked', groupBool);
     });
