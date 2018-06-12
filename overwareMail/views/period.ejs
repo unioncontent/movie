@@ -90,7 +90,7 @@
                       <td>
                         <%=(list[i].M_type == '0') ? '즉시' : '예약'%>
                         <% if((new Date().getTime() < new Date(list[i].M_send).getTime())){ %>
-                        <label class="badge badge-danger">대기</label>
+                        <label class="badge badge-danger m-b-0">대기</label>
                         <%}%>
                       </td>
                       <td><button class="btn btn-inverse btn-period" data-idx="<%= list[i].n_idx %>"><i class="fas fa-chart-bar"></i></button></td>
@@ -1047,7 +1047,7 @@
             <td class="fail" data-idx=\"'+item.n_idx+'\">'+item.fail+'</td>';
           html += '<td>'+ ((item.M_type == '0') ? '즉시' : '예약');
           if((new Date().getTime() < new Date(item.M_send).getTime()) && parseInt(item.success) == 0 && parseInt(item.fail) ==0){
-            html += '<label class="badge badge-danger">대기</label>'
+            html += '<label class="badge badge-danger m-b-0">대기</label>'
           }
           html += '</td>';
           html += '<td><button class="btn btn-inverse btn-period"  data-idx="'+item.n_idx+'"><i class="fas fa-chart-bar"></i></button></td>\
