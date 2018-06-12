@@ -38,12 +38,12 @@
 				and keyword in (select keyword from keyword_data where keyword_main = #{selectKey})
 			</if>
 		<if test="startDate == null">
-			and updateDate <![CDATA[>=]]> CURDATE()
+			and createDate <![CDATA[>=]]> CURDATE()
 		</if>
 		<if test="startDate != null">
-			and updateDate <![CDATA[>=]]> #{startDate}
+			and createDate <![CDATA[>=]]> #{startDate}
 			<if test="endDate != null">
-				and updateDate <![CDATA[<=]]> #{endDate}
+				and createDate <![CDATA[<=]]> #{endDate}
 			</if>
 		</if>
 		<if test="textType != null">
@@ -654,9 +654,7 @@
 		where 
 			textType is not null
 		and
-			score is null
-		and 
-			textType!='삭제글'	
+			score is null	
 		<include refid="search_writeDate"></include>
 		order 
 			by updateDate desc
