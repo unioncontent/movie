@@ -626,8 +626,6 @@
 		where
 			textType is null
 		<include refid="search"></include>
-	
-	
 	</select>
  
  	<select id="listSearch" resultType="PortalVO">

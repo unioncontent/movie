@@ -728,18 +728,15 @@
 		where
 			textType is null
 		<include refid="search"></include>
-	
-	
 	</select>
  	
- 
  	<select id="listSearch" resultType="MediaVO">
  		select 
 			*
 		from 
 			media_data
 		where 
-			(textType is null or textType != '삭제글')
+			textType is not null
 		<include refid="search4"></include>
 		order 
 			by createdate desc
@@ -1609,7 +1606,7 @@
 		where 
 			media_name=#{media_name}
 	    <include refid="search_match"></include>
-		order by createDate desc;
+		order by writeDate desc;
 	</select>
 	<select id="mediaMatchDataList" resultType="MediaVO">
 		select 
@@ -1621,7 +1618,7 @@
 		and
 			keyword != 'press'
 	    <include refid="search_match"></include>
-		order by createDate desc;
+		order by writeDate desc;
 	</select>
 	<select id="reporterDataList" resultType="MediaVO">
 		select 
@@ -1631,7 +1628,7 @@
 		where 
 			reporter_name=#{reporter_name}
 	    <include refid="search_match"></include>
-		order by createDate desc;
+		order by writeDate desc;
 	</select>
 	<select id="reporterMatchDataList" resultType="MediaVO">
 		select 
@@ -1643,7 +1640,7 @@
 		and
 			keyword != 'press'
 	    <include refid="search_match"></include>
-		order by createDate desc;
+		order by writeDate desc;
 	</select>
 	<select id="mailMatch" resultType="MediaVO">
 		select
