@@ -116,7 +116,7 @@
                       <td>
                         <%=(list[i].M_type == '0') ? '즉시' : '예약'%>
                         <% if((new Date().getTime() < new Date(list[i].M_send).getTime()) && parseInt(list[i].success) == 0 && parseInt(list[i].fail) == 0){ %>
-                        <label class="badge badge-danger">대기</label>
+                        <label class="badge badge-danger m-b-0">대기</label>
                         <%}%>
                       </td>
                     </tr>
