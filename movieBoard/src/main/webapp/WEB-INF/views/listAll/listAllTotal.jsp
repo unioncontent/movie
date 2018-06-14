@@ -57,6 +57,12 @@
   .text-success {
     color: #f73b00 !important;
 	}
+	.table-hover th{
+	text-align: center;
+	}
+	.table-hover td{
+	text-align: center;
+	}
   </style>
 </head>
 
@@ -250,9 +256,8 @@
                                     <td>
                                       <a href="${extractVO.url}" target="_blank">
                                         <div class="nobr">${extractVO.title}</div>
-                                      </a>
-                                      <span class="text-muted"></span>
-                                      <span class="text-success">${extractVO.content}</span>
+                                      </a><br>
+                                      <span class="text-success" style="text-align: center;">${extractVO.content}</span>
                                     </td>
                                     <c:if test="${user.user_name != 'union'}">
                                     <td>

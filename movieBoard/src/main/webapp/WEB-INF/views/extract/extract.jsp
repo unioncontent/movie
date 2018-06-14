@@ -57,6 +57,12 @@
   .text-success {
     color: #f73b00 !important;
 	}
+	.table-hover th{
+	text-align: center;
+	}
+	.table-hover td{
+	text-align: center;
+	}
   </style>
 </head>
 
@@ -224,10 +230,10 @@
                                 <thead>
                                   <tr>
                                     <th width="5%">No</th>
-                                    <th width="7%">페이지 분류<span class="text-muted"></span></th>
-                                    <th width="7%">페이지 명</th>
-                                    <th width="7%">회사명</th>
-                                    <th width="7%"><span class="text-muted">키워드</span></th>
+                                    <th width="5%">페이지 분류<span class="text-muted"></span></th>
+                                    <th width="5%">페이지 명</th>
+                                    <th width="5%">회사명</th>
+                                    <th width="5%"><span class="text-muted">키워드</span></th>
                                     <th width="30%">제목 &<span class="text-muted"></span><span class="text-success"> 컨텐츠</span></th>
                                     <th width="10%">추출일 / 작성일</th>
                                     <c:if test="${user.user_name == 'union'}">
@@ -302,28 +308,26 @@
                                     <td>${extractVO.keyword}<span class="text-muted"></span></td>
                                     <td>
                                       <a href="${extractVO.url}" target="_blank">
-                                        <div class="nobr">${extractVO.title}</div>
-                                      </a>
-                                      <span class="text-muted"></span>
-                                      <span class="text-success">${extractVO.content}</span>
+                                        ${extractVO.title}
+                                      </a><br>
+                                      <span class="text-success" style="text-align: center;">${extractVO.content}</span>
+                                      
                                     </td>
                                     <td>${extractVO.createDate} /<br/>${extractVO.writeDate }</td>
                                     <c:if test="${user.user_name == 'union'}">
                                     <td>
-                                      <div class="radios${index.count}">
+                                      <div class="radios${index.count}" style="vertical-align:middle; text-align: center;">
                                         <input type="radio" id="radio1${index.count}" name="radios${index.count}">
                                         <label for="radio1${index.count}">좋은글</label>
                                         <input type="radio" id="radio2${index.count}" name="radios${index.count}">
                                         <label for="radio2${index.count}">나쁜글</label>
                                         <input type="radio" id="radio3${index.count}" name="radios${index.count}">
                                         <label for="radio3${index.count}">관심글</label>
-                                        <br/>
+                                        
                                         <input type="radio" id="radio4${index.count}" name="radios${index.count}">
                                         <label for="radio4${index.count}">기타글</label>
                                         <input type="radio" id="radio5${index.count}" name="radios${index.count}">
                                         <label for="radio5${index.count}">삭제글</label>
-                                        <input type="radio" id="radio6${index.count}" name="radios${index.count}" checked>
-                                        <label for="radio6${index.count}">미분류</label>
                                       </div>
                                     </td>
                                     <td>

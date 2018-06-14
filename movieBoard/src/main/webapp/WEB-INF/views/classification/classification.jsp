@@ -71,6 +71,15 @@
   .text-success {
     color: #f73b00 !important;
 	}
+	.text-success {
+    color: #f73b00 !important;
+	}
+	.table-hover th{
+	text-align: center;
+	}
+	.table-hover td{
+	text-align: center;
+	}
   </style>
 </head>
 
@@ -255,6 +264,7 @@
                                     <th width="7%">회사명</th>
                                     <th width="7%"><span class="text-muted">키워드</span></th>
                                     <th width="30%">제목 &<span class="text-muted"></span><span class="text-success"> 컨텐츠</span></th>
+                                    
                                     <c:if test="${user.user_name != 'union'}">
                                     <th width="5%">분류글</th>
                                     </c:if>
@@ -284,14 +294,14 @@
                                     	${totalCount -index.count +1 -minusCount}
                                     </th>
                                     <td>${extractVO.domain}</td>
-                                    <td>${extractVO.domainType} / ${extractVO.textType}</td>
+                                    <td>${extractVO.domainType}</td>
                                     <td>
                                     <c:if test="${extractVO.company != null}">${extractVO.company}</c:if>
                                     <c:if test="${extractVO.company == null}"><i class="icofont icofont-minus"></i></c:if>
                                     </td>
                                     <td><div class='keyword-nowrap'>${extractVO.keyword}</div></td>
                                     <td>
-                                      <c:if test="${extractVO.thumbnail != null}">
+                                    <c:if test="${extractVO.thumbnail != null}">
                                       	<input type = "hidden" value = "${extractVO.thumbnail}">
                                       	<div class="image btn-list-image"><i class="icofont icofont-ui-image"></i></div>
                                       </c:if>
@@ -299,10 +309,11 @@
                                       	<input type = "hidden" value = "${extractVO.thumbnail}">
                                       	<div class="image btn-list-image"><i class="icofont icofont-clip"></i></div>
                                       </c:if>
+                                    
                                       <a href="${extractVO.url}" target="_blank">
-                                        <div class="nobr">${extractVO.title}</div>
-                                      </a>
-                                      <span class="text-success">${extractVO.content}</span>
+                                        ${extractVO.title}
+                                      </a><br>
+                                      <span class="text-success" style="text-align: center;">${extractVO.content}</span>
                                     </td>
                                     <c:if test="${user.user_name != 'union'}">
                                     <td>
