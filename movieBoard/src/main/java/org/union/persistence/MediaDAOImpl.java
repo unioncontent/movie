@@ -695,4 +695,16 @@ public class MediaDAOImpl implements MediaDAO {
 
 		return session.selectList(namespace + "mailMatch", cri);
 	}
+
+	@Override
+	public List<MediaVO> mediaListData(SearchCriteria cri) {
+
+		return session.selectList(namespace + "mediaListData", cri);
+	}
+
+	@Override
+	public Integer graphmTotalCnt(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "graphmTotalCnt", cri);
+	}
 }

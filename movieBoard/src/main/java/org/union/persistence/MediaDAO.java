@@ -67,7 +67,8 @@ public interface MediaDAO {
 	public List<MediaVO> textTypelistSearch4(SearchCriteria cri);
 	
 	public Integer getSearchCount(SearchCriteria cri);
-
+	
+	public List<MediaVO> mediaListData(SearchCriteria cri);
 	public List<MediaVO> wlistSearch(SearchCriteria cri);
 	public List<MediaVO> wlistSearch2(SearchCriteria cri);
 	public List<MediaVO> wPageSearch(SearchCriteria cri);
@@ -115,6 +116,7 @@ public interface MediaDAO {
 	public List<TextTypeDateVO> textTypeCount2(SearchCriteria cri);
 	public Integer checkUrl(String url);
 	public Integer mTotalCnt(SearchCriteria cri);
+	public Integer graphmTotalCnt(SearchCriteria cri);
 	
 	public List<MediaVO> headlineList(SearchCriteria cri);
 	public Integer mediaTotalcnt(SearchCriteria cri);

@@ -67,6 +67,11 @@
       obj.value = n;
    }
   </script>
+  <style type="text/css">
+  .text-success {
+    color: #f73b00 !important;
+	}
+  </style>
 </head>
 
 <body>
@@ -124,22 +129,6 @@
                           <option value="${companyList.user_name}">${companyList.user_name}</option>
                           </c:if>
                         </select>
-						</c:if>
-
-						<c:if test="${user.user_name != 'union'}">
-                         <select style="display: none;" name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="selectCompany">
-                          <option>회사</option>
-                          <c:if test="${user.user_type == 1 }">
-                          <c:forEach items="${companyList}" var = "companyList">
-                          <option value="${companyList.user_name}">${companyList.user_name}</option>
-                          </c:forEach>
-                          </c:if>
-                          <c:if test="${user.user_type == 2}">
-                          <option value="${companyList.user_name}">${companyList.user_name}</option>
-                          </c:if>
-                        </select>
-						</c:if>
-
                         <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left" id="selectKeyword">
                           <option>키워드</option>
                           <c:if test="${modelKeywordList == null}" >
@@ -153,7 +142,6 @@
                           </c:forEach>
                           </c:if>
                         </select>
-                        
                         <select id = "selectTextType" name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left">
                           <option>분류</option>
                           <option value="좋은글">좋은글</option>
@@ -170,6 +158,50 @@
 	                        <option id = "120">120</option>
 	                        <option id = "150">150</option>
                         </select>
+						</c:if>
+
+						<c:if test="${user.user_name != 'union'}">
+                         <select style="display: none;" name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="selectCompany">
+                          <option>회사</option>
+                          <c:if test="${user.user_type == 1 }">
+                          <c:forEach items="${companyList}" var = "companyList">
+                          <option value="${companyList.user_name}">${companyList.user_name}</option>
+                          </c:forEach>
+                          </c:if>
+                          <c:if test="${user.user_type == 2}">
+                          <option value="${companyList.user_name}">${companyList.user_name}</option>
+                          </c:if>
+                        </select>
+                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 m-l-0 p-r-5 f-left select-left" id="selectKeyword">
+                          <option>키워드</option>
+                          <c:if test="${modelKeywordList == null}" >
+                          	<c:forEach items="${keywordList}" var = "keywordList">
+                          <option value="${keywordList.keyword_main}">${keywordList.keyword_main}</option>
+                          </c:forEach>
+                          </c:if>
+                          <c:if test="${modelKeywordList != null}">
+                          	<c:forEach items="${modelKeywordList}" var = "keywordList">
+                          <option value="${keywordList.keyword_main}">${keywordList.keyword_main}</option>
+                          </c:forEach>
+                          </c:if>
+                        </select>
+                        <select id = "selectTextType" name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left">
+                          <option>분류</option>
+                          <option value="좋은글">좋은글</option>
+                          <option value="나쁜글">나쁜글</option>
+                          <option value="관심글">관심글</option>
+                          <option value="기타글">기타</option>
+                          <option value="삭제글">삭제</option>
+                        </select>
+                        
+                        <select id= "selectPerPageNum" name="select" class="col-md-1 form-control form-control-inverse m-r-10 m-b-10 p-r-5 f-left select-left">	
+	                        <option value="30">리스트</option>
+	                        <option id= "30" >30</option>
+	                        <option id = "60">60</option>
+	                        <option id = "120">120</option>
+	                        <option id = "150">150</option>
+                        </select>
+						</c:if>
                       </div>
                       <div class="col-md-5">
                         <!-- date picker start -->
@@ -181,7 +213,7 @@
                             <button id="month" type="button" class="btn btn-inverse btn-sm waves-effect waves-light">최근30일</button>
                           </div>
                           <div class="input-group float-right date col p-l-15 p-r-15 m-b-10">
-                            <input type="text" id="fromDate" class="form-control form-control-inverse" value="">
+                            <input type="text" id="fromDate" class="form-control form-control-inverse" value="" style="text-align: center;">
                             <span class="input-group-addon bg-inverse">
                               <span class="icofont icofont-ui-calendar"></span>
                             </span>
@@ -195,21 +227,21 @@
                       <div class="col-lg-12">
                         <div class="card">
                           <div class="card-header">
-                                <select id = "selectSearchType" name="select" class="col-sm-1 form-control form-control-inverse m-r-10 m-b-10 f-left search-select">
+                                <select id = "selectSearchType" name="select" class="col-sm-1 form-control form-control-inverse m-r-5 m-b-5 m-t-5 f-left search-select" style="height:40px;">
                                   <option id="t" value="t">제목</option>
                                   <option id="c" value="c">게시글</option>
                                 </select>
-                                <div class="col-sm-3 input-group input-group-button input-group-inverse p-l-0 p-r-0 m-b-10 f-left btn-select">
-                                   <input onkeyup="if(event.keyCode == 13){$('#searchBtn').trigger('click');};"id="keywordInput" type="text" class="form-control" placeholder="">
+                                <div class="col-sm-3 input-group input-group-button input-group-inverse p-l-0 p-r-0 m-b-5 m-t-5 f-left btn-select">
+                                   <input onkeyup="if(event.keyCode == 13){$('#searchBtn').trigger('click');};"id="keywordInput" type="text" class="form-control" placeholder="" style="height:40px;">
                                   <span class="input-group-addon" id="basic-addon1">
-                                    <button id="searchBtn" class=" btn btn-inverse">검색</button>
+                                    <button id="searchBtn" class=" btn btn-search"><i class="icofont icofont-ui-search"></i></button>
                               </span>
                             </div>
-                            <button class="btn btn-warning alert-excel f-right p-r-5 p-l-5 m-l-15 m-b-10"><i class="icofont icofont-download-alt"></i>EXCEL</button>
-                            <button class="btn btn-info alert-image f-right p-r-5 p-l-5 m-l-15 m-b-10"><i class="icofont icofont-file-image"></i>IMAGE</button>
+                            <button class="btn btn-warning alert-excel f-right p-r-5 p-l-5 m-l-15 m-b-5 m-t-5"><i class="icofont icofont-download-alt"></i>EXCEL</button>
+                            <button class="btn btn-info alert-image f-right p-r-5 p-l-5 m-l-15 m-b-5 m-t-5"><i class="icofont icofont-file-image"></i>IMAGE</button>
                             <c:if test="${user.user_name == 'union'}">
-                            <button type="button" class="btn btn-inverse  waves-effect  f-right p-r-5 p-l-5 m-l-15 m-b-10" data-toggle="modal" data-target="#frmModal"><i class="ti-pencil-alt"></i>수동입력</button>
-                            <button id="insertAllBtn" type="button" class="alert-confirm btn btn-primary waves-effect f-right p-r-0 p-l-5 m-l-15 m-b-10  f-right"><i class="icofont icofont-check-circled"></i>일괄처리</button>
+                            <button type="button" class="btn btn-list  waves-effect  f-right p-r-5 p-l-5 m-l-15 m-b-5 m-t-5" data-toggle="modal" data-target="#frmModal"><i class="ti-pencil-alt"></i>수동입력</button>
+                            <button id="insertAllBtn" type="button" class="alert-confirm btn btn-list waves-effect f-right p-r-0 p-l-5 m-l-15 m-b-5 m-t-5  f-right"><i class="icofont icofont-check-circled"></i>일괄처리</button>
                           	</c:if>
                           </div>
                           <div class="card-block table-border-style">
@@ -223,9 +255,14 @@
                                     <th width="7%">회사명</th>
                                     <th width="7%"><span class="text-muted">키워드</span></th>
                                     <th width="30%">제목 &<span class="text-muted"></span><span class="text-success"> 컨텐츠</span></th>
+                                    <c:if test="${user.user_name != 'union'}">
+                                    <th width="5%">분류글</th>
+                                    </c:if>
                                     <th width="10%">추출일 / 작성일</th>
+                                    <c:if test="${user.user_name == 'union'}">
                                     <th width="10%">분류변경</th>
                                     <th width="5%">분류처리</th>
+                                    </c:if>
                                   </tr>
                                 </thead>
                                 <tbody>
@@ -247,8 +284,11 @@
                                     	${totalCount -index.count +1 -minusCount}
                                     </th>
                                     <td>${extractVO.domain}</td>
-                                    <td>${extractVO.domainType}</td>
-                                    <td>${extractVO.company}</td>
+                                    <td>${extractVO.domainType} / ${extractVO.textType}</td>
+                                    <td>
+                                    <c:if test="${extractVO.company != null}">${extractVO.company}</c:if>
+                                    <c:if test="${extractVO.company == null}"><i class="icofont icofont-minus"></i></c:if>
+                                    </td>
                                     <td><div class='keyword-nowrap'>${extractVO.keyword}</div></td>
                                     <td>
                                       <c:if test="${extractVO.thumbnail != null}">
@@ -264,6 +304,11 @@
                                       </a>
                                       <span class="text-success">${extractVO.content}</span>
                                     </td>
+                                    <c:if test="${user.user_name != 'union'}">
+                                    <td>
+                                    ${extractVO.textType}
+                                    </td>
+                                    </c:if>
                                     <td>
                                     <fmt:parseDate value="${extractVO.createDate}" var='issueDate1' pattern="yyyy-MM-dd HH:mm:ss" scope="page" /> 
                                     <fmt:formatDate value="${issueDate1}" pattern="yyyy-MM-dd HH:mm:ss" />
@@ -271,6 +316,7 @@
                                     /<br/>
                                     ${extractVO.writeDate}
                                     </td>
+                                    <c:if test="${user.user_name == 'union'}">
                                     <td>
                                       <div class="radios${index.count}">
                                         <c:choose>
@@ -346,15 +392,21 @@
                                       </div>
                                     </td>
                                     <td >
-                                      <button class="btn btn-danger btn-sm alert-confirm1" data-toggle="tooltip" data-placement="top" data-original-title="삭제"><i class="icofont icofont-ui-delete" style="margin-right:0"></i></button>
-                                      <button class="btn btn-primary btn-sm alert-confirm2" data-toggle="tooltip" data-placement="top" data-original-title="즉시처리"><i class="icofont icofont-ui-check" style="margin-right:0"></i></button>
+                                      <button class="btn btn-list btn-sm alert-confirm1" data-toggle="tooltip" data-placement="top" data-original-title="삭제"><i class="icofont icofont-ui-delete" style="margin-right:0"></i></button>
+                                      <button class="btn btn-list btn-sm alert-confirm2" data-toggle="tooltip" data-placement="top" data-original-title="즉시처리"><i class="icofont icofont-ui-check" style="margin-right:0"></i></button>
                                     </td>
+                                    </c:if>
                                   </tr>
                                   </c:forEach>
                                 </tbody>
                                 <tfoot>
                                   <tr>
+                                  <c:if test="${user.user_name != 'union'}">
+                                    <td colspan="8">
+                                    </c:if>
+                                  <c:if test="${user.user_name == 'union'}">
                                     <td colspan="9">
+                                    </c:if>
                                       <ul class="pagination float-right">
                                         <c:if test="${pageMaker.prev}">
                                           <li class="page-item">

@@ -96,7 +96,7 @@
                         <!-- Form Inputs card start -->
                         <div class="card">
                             <div class="card-header">
-                                <h5>거래처등록</h5>
+                                <h5><font style="font-weight: bold; color: black;">거래처등록</font></h5>
                                 <span>* 항목은 필수 입력입니다.</span>
                                 <div class="card-header-right">
                                     <i class="icofont icofont-rounded-down"></i>
@@ -194,11 +194,11 @@
                         <!-- table card start -->
                         <div class="card">
                             <div class="card-header">
-                              <h5 class="card-header-text">거래처리스트</h3>
+                              <h5 class="card-header-text"><font style="font-weight: bold; color: black;">거래처리스트</font></h3>
                             </div>
                             <div class="card-block table-border-style">
                               <div class="table-responsive">
-                                <table class="table table-bordered">
+                                <table class="table table-bordered table-sm">
                                   <thead>
                                     <tr>
                                       <th width="5%">NO</th>
@@ -222,10 +222,15 @@
                                       <td>${userVO.user_PW}</td>
                                       <td>${userVO.company_licensee}</td>
                                       <td>${userVO.user_phoneNum}</td>
-                  									  <td>${userVO.user_name}</td>
-                                      <td>${userVO.user_email}</td>
-                                      <td>${userVO.company_location}</td>
-                                      <td></td>
+                  					  <td>${userVO.user_name}</td>
+                                      <td>
+                                      ${userVO.user_email}
+                                      </td>
+                                      <td>
+                                      ${userVO.company_location}
+                                      </td>
+                                      <td>
+                                    </td>
                                     </tr>
                                   	</c:forEach>
                                   </tbody>

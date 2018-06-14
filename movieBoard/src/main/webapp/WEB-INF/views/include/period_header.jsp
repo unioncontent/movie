@@ -5,9 +5,22 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<style type="text/css">
+.card {
+    border-radius: 2px;
+    border-top: 1px solid #34495e;
+    box-shadow: 0 2px 1px rgba(0, 0, 0, 0.05);
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+    margin-bottom: 30px;
+	}
+</style>
 </head>
 <body>
+	
 	<div class="tab-header">
+	<div class="card">
 		<ul class="nav nav-tabs md-tabs tab-timeline" role="tablist"
 			id="mytab">
 			<a class="nav-item">
@@ -41,7 +54,9 @@
 			</li>
 			</a>
 		</ul>
+		</div>
 	</div>
+	
 </body>
 </html>
 

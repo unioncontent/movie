@@ -101,8 +101,9 @@
                       <div class="col-lg-12">
                         <!-- Form Inputs card start -->
                         <div class="card">
-                          <div class="card-header">
-                            <h3 class="card-header-text f-left m-t-15 m-b-15">모니터링 리스트</h3>
+                          <div class="card-header" style="height:50px;">
+                            <h5><font style="font-weight: bold; color: black; vertical-align:middle;">모니터링 리스트</font></h5>
+                            각 플랫폼 별 최근 검출된 데이터를 확인 할 수 있습니다.
                           </div>
                           <div class="card-block">
                             <div class="table-responsive">

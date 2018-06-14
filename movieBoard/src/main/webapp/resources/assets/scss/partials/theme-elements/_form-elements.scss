@@ -30,7 +30,7 @@
     border-radius: 2px;
     border-width: 2px;
     &:focus {
-        border-color: $info-color !important;
+        border-color: none;
     }
     &.form-control-normal {
         font-weight: 400;

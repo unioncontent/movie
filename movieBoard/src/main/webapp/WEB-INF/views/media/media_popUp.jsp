@@ -90,7 +90,11 @@
                               <div class="col-lg-12">
 		                        <div class="card">
 		                          <div class="card-header">
-                                    <h5 class="card-header-text m-b-10">언론사 매칭 리스트</h5>
+                                    <h5>
+					               <font style="font-weight: bold; color: black;">                     
+					                                    언론사 매칭 리스트
+					               </font>
+					               </h5>
                                     </div>
                                     <div class="card-block table-border-style">
                             		<div class="table-responsive">

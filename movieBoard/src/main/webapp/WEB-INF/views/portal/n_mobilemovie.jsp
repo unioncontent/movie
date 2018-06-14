@@ -99,52 +99,64 @@
 										<div class="row">
 											<div class="col-md-7">
 												<c:if test="${user.user_name == 'union'}">
-													<select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="selectCompany">
-														<option>회사</option>
-														<c:if test="${user.user_type == 1 }">
-															<c:forEach items="${companyList}" var="companyList">
-																<option value="${companyList.user_name}">${companyList.user_name}</option>
-															</c:forEach>
-														</c:if>
-														<c:if test="${user.user_type == 2}">
-															<option value="${companyList.user_name}">${companyList.user_name}</option>
-														</c:if>
-													</select>
-												</c:if>
+                         <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="selectCompany">
+                          <option>회사</option>
+                          <c:if test="${user.user_type == 1 }">
+                          <c:forEach items="${companyList}" var = "companyList">
+                          <option value="${companyList.user_name}">${companyList.user_name}</option>
+                          </c:forEach>
+                          </c:if>
+                          <c:if test="${user.user_type == 2}">
+                          <option value="${companyList.user_name}">${companyList.user_name}</option>
+                          </c:if>
+                        </select>
+                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left" id="selectKeyword">
+                          <option>키워드</option>
+                          <c:if test="${modelKeywordList == null}" >
+                          	<c:forEach items="${keywordList}" var = "keywordList">
+                          <option value="${keywordList.keyword_main}">${keywordList.keyword_main}</option>
+                          </c:forEach>
+                          </c:if>
+                          <c:if test="${modelKeywordList != null}">
+                          	<c:forEach items="${modelKeywordList}" var = "keywordList">
+                          <option value="${keywordList.keyword_main}">${keywordList.keyword_main}</option>
+                          </c:forEach>
+                          </c:if>
+                        </select>
+						</c:if>
 
-												<c:if test="${user.user_name != 'union'}">
-													<select style="display: none;" name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="selectCompany">
-														<option>회사</option>
-														<c:if test="${user.user_type == 1 }">
-															<c:forEach items="${companyList}" var="companyList">
-																<option value="${companyList.user_name}">${companyList.user_name}</option>
-															</c:forEach>
-														</c:if>
-														<c:if test="${user.user_type == 2}">
-															<option value="${companyList.user_name}">${companyList.user_name}</option>
-														</c:if>
-													</select>
-												</c:if>
-
-												<select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left" id="selectKeyword">
-													<option>키워드</option>
-													<c:if test="${modelKeywordList == null}">
-														<c:forEach items="${keywordList}" var="keywordList">
-															<option value="${keywordList.keyword_main}">${keywordList.keyword_main}</option>
-														</c:forEach>
-													</c:if>
-													<c:if test="${modelKeywordList != null}">
-														<c:forEach items="${modelKeywordList}" var="keywordList">
-															<option value="${keywordList.keyword_main}">${keywordList.keyword_main}</option>
-														</c:forEach>
-													</c:if>
-												</select>
+						<c:if test="${user.user_name != 'union'}">
+                         <select style="display: none;" name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="selectCompany">
+                          <option>회사</option>
+                          <c:if test="${user.user_type == 1 }">
+                          <c:forEach items="${companyList}" var = "companyList">
+                          <option value="${companyList.user_name}">${companyList.user_name}</option>
+                          </c:forEach>
+                          </c:if>
+                          <c:if test="${user.user_type == 2}">
+                          <option value="${companyList.user_name}">${companyList.user_name}</option>
+                          </c:if>
+                        </select>
+                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 m-l-0 p-r-5 f-left select-left" id="selectKeyword">
+                          <option>키워드</option>
+                          <c:if test="${modelKeywordList == null}" >
+                          	<c:forEach items="${keywordList}" var = "keywordList">
+                          <option value="${keywordList.keyword_main}">${keywordList.keyword_main}</option>
+                          </c:forEach>
+                          </c:if>
+                          <c:if test="${modelKeywordList != null}">
+                          	<c:forEach items="${modelKeywordList}" var = "keywordList">
+                          <option value="${keywordList.keyword_main}">${keywordList.keyword_main}</option>
+                          </c:forEach>
+                          </c:if>
+                        </select>
+						</c:if>
 											</div>
 											<div class="col-md-5">
 												<!-- date picker start -->
 												<div class="row" style="display: inherit;">
 													<div class="input-group float-right date p-l-15 p-r-15 m-b-10">
-														<input type="text" id="fromDate" class="form-control form-control-inverse" value=""> <span class="input-group-addon bg-inverse"> <span class="icofont icofont-ui-calendar"></span>
+														<input type="text" id="fromDate" class="form-control form-control-inverse" value="" style="text-align: center;"> <span class="input-group-addon bg-inverse"> <span class="icofont icofont-ui-calendar"></span>
 														</span>
 													</div>
 												</div>
@@ -155,11 +167,11 @@
 										<div class="row">
 											<!-- counter-card-1 start-->
 											<div class="col-md-3">
-												<div class="card counter-card-1">
+												<div class="card counter-card-1" style="border-top: 0px;">
 													<div class="card-block-big">
 														<div>
 															<h3>
-																<fmt:formatNumber value="${totalCount}" groupingUsed="true" />
+																<font style="color:#00a0e8;"><fmt:formatNumber value="${totalCount}" groupingUsed="true" /></font>
 															</h3>
 															<p class='pCard'>전체모니터링</p>
 															<div class="progress ">
@@ -173,11 +185,11 @@
 											<!-- counter-card-1 end-->
 											<!-- counter-card-2 start -->
 											<div class="col-md-3">
-												<div class="card counter-card-1">
+												<div class="card counter-card-1" style="border-top: 0px;">
 													<div class="card-block-big">
 														<div>
 															<h3>
-																<fmt:formatNumber value="${movieCount}" groupingUsed="true" />
+																<font style="color:#00a0e8;"><fmt:formatNumber value="${movieCount}" groupingUsed="true" /></font>
 															</h3>
 															<p class='pCard'>영화</p>
 															<div class="progress ">
@@ -191,11 +203,11 @@
 											<!-- counter-card-2 end -->
 											<!-- counter-card-3 start -->
 											<div class="col-md-3">
-												<div class="card counter-card-1">
+												<div class="card counter-card-1" style="border-top: 0px;">
 													<div class="card-block-big">
 														<div>
 															<h3>
-																<fmt:formatNumber value="${actorCount}" groupingUsed="true" />
+																<font style="color:#00a0e8;"><fmt:formatNumber value="${actorCount}" groupingUsed="true" /></font>
 															</h3>
 															<p class='pCard'>배우</p>
 															<div class="progress ">
@@ -209,11 +221,11 @@
 											<!-- counter-card-3 end -->
 											<!-- counter-card-4 start -->
 											<div class="col-md-3">
-												<div class="card counter-card-1">
+												<div class="card counter-card-1" style="border-top: 0px;">
 													<div class="card-block-big">
 														<div>
 															<h3>
-																<fmt:formatNumber value="${matchCount}" groupingUsed="true" />
+																<font style="color:#00a0e8;"><fmt:formatNumber value="${matchCount}" groupingUsed="true" /></font>
 															</h3>
 															<p class='pCard'>기사매칭</p>
 															<div class="progress ">
@@ -248,8 +260,10 @@
 				                                <div class="card">
 				                                <div class="card-header">
 				                                  <h5 class="card-header-text">
+				                                  <font style="font-weight: bold; color: black;">
 				                                    <i class="icofont icofont-chart-line m-r-5"></i>
 				                                    	검출량 그래프
+				                                    	</font>
 				                                  </h5>
 				                                  <div class="card-header-right">
 				                                    <i class="icofont icofont-rounded-down"></i>
@@ -297,9 +311,18 @@
 																					<a href="${elist.url}" target="_blank"> ${elist.ME_title} </a>
 																				</div>
 																			</td>
-																			<td><div class="keyword-nowrap">${elist.keyword}</div></td>
-																			<td><div class="keyword-nowrap">${elist.reporter_name}</div></td>
-																			<td><div class="keyword-nowrap">${elist.reporter_media_name}</div></td>
+																			<td><div class="keyword-nowrap">
+																			<c:if test="${elist.keyword != null}">${elist.keyword}</c:if>
+                                            								<c:if test="${elist.keyword == null}"><i class="icofont icofont-minus"></i></c:if>
+																			</div></td>
+																			<td><div class="keyword-nowrap">
+																			<c:if test="${elist.reporter_name != null}">${elist.reporter_name}</c:if>
+                                            								<c:if test="${elist.reporter_name == null}"><i class="icofont icofont-minus"></i></c:if>
+																			</div></td>
+																			<td><div class="keyword-nowrap">
+																			<c:if test="${elist.reporter_name != null}">${elist.reporter_media_name}</c:if>
+                                            								<c:if test="${elist.reporter_name == null}"><i class="icofont icofont-minus"></i></c:if>
+																			</div></td>
 																		</tr>
 																	</c:forEach>
 																</tbody>
@@ -615,7 +638,7 @@
 			    xLabels: "hour",
 			    ykeys: ['movie', 'actor', 'match'],
 			    labels: ['영화', '배우', '기사매칭'],
-			    lineColors: ['#3B5998', '#4099FF', '#8632fb'],
+			    lineColors: ['#3B5998', '#4099FF', '#00c73c'],
 			    lineWidth : 2,
 			  	hideHover : 'auto'
 			    });

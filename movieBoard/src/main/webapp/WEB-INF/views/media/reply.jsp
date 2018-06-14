@@ -119,22 +119,6 @@
                           <option value="${companyList.user_name}">${companyList.user_name}</option>
                           </c:if>
                         </select>
-						</c:if>
-						
-						<c:if test="${user.user_name != 'union'}">
-                         <select style="display: none;" name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="selectCompany">
-                          <option>회사</option>
-                          <c:if test="${user.user_type == 1 }">
-                          <c:forEach items="${companyList}" var = "companyList">
-                          <option value="${companyList.user_name}">${companyList.user_name}</option>
-                          </c:forEach>
-                          </c:if>
-                          <c:if test="${user.user_type == 2}">
-                          <option value="${companyList.user_name}">${companyList.user_name}</option>
-                          </c:if>
-                        </select>
-						</c:if>
-						
                         <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left" id="selectKeyword">
                           <option>키워드</option>
                           <c:if test="${modelKeywordList == null}" >
@@ -154,6 +138,41 @@
 	                        <option id = "60">60</option>
 	                        <option id = "90">90</option>
                         </select>
+						</c:if>
+
+						<c:if test="${user.user_name != 'union'}">
+                         <select style="display: none;" name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="selectCompany">
+                          <option>회사</option>
+                          <c:if test="${user.user_type == 1 }">
+                          <c:forEach items="${companyList}" var = "companyList">
+                          <option value="${companyList.user_name}">${companyList.user_name}</option>
+                          </c:forEach>
+                          </c:if>
+                          <c:if test="${user.user_type == 2}">
+                          <option value="${companyList.user_name}">${companyList.user_name}</option>
+                          </c:if>
+                        </select>
+                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 m-l-0 p-r-5 f-left select-left" id="selectKeyword">
+                          <option>키워드</option>
+                          <c:if test="${modelKeywordList == null}" >
+                          	<c:forEach items="${keywordList}" var = "keywordList">
+                          <option value="${keywordList.keyword_main}">${keywordList.keyword_main}</option>
+                          </c:forEach>
+                          </c:if>
+                          <c:if test="${modelKeywordList != null}">
+                          	<c:forEach items="${modelKeywordList}" var = "keywordList">
+                          <option value="${keywordList.keyword_main}">${keywordList.keyword_main}</option>
+                          </c:forEach>
+                          </c:if>
+                        </select>
+                        <select id= "selectPerPageNum" name="select" class="col-md-1 form-control form-control-inverse m-r-10 m-b-10 p-r-5 f-left select-left">	
+                        	<option value="30">리스트</option>
+	                        <option id= "30">30</option>
+	                        <option id = "60">60</option>
+	                        <option id = "90">90</option>
+                        </select>
+						</c:if>
+                        
                       </div>
                       <div class="col-md-5">
                         <!-- date picker start -->
@@ -165,7 +184,7 @@
                             <button id="month" type="button" class="btn btn-inverse btn-sm waves-effect waves-light">최근30일</button>
                           </div>
                           <div class="input-group float-right date col p-l-15 p-r-15 m-b-10">
-                            <input type="text" id="fromDate" class="form-control form-control-inverse" value="">
+                            <input type="text" id="fromDate" class="form-control form-control-inverse" value="" style="text-align: center;">
                             <span class="input-group-addon bg-inverse">
                               <span class="icofont icofont-ui-calendar"></span>
                             </span>
@@ -188,26 +207,26 @@
                               <div class="col-lg-12">
 		                        <div class="card">
 		                          <div class="card-header">
-                                <select id = "selectSearchType" name="select" class="col-sm-1 form-control form-control-inverse m-r-10 m-b-10 f-left search-select">
+                                <select id = "selectSearchType" name="select" class="col-sm-1 form-control form-control-inverse m-r-5 m-b-5 m-t-5 f-left search-select" style="height:40px;">
                                   <option id="t" value="t">기사 제목</option>
                                   <option id="c" value="c">댓글 내용</option>
                                 </select>
-                                <div class="col-sm-3 input-group input-group-button input-group-inverse p-l-0 p-r-0 m-b-10 f-left btn-select">
-                                   <input onkeyup="if(event.keyCode == 13){$('#searchBtn').trigger('click');};"id="keywordInput" type="text" class="form-control" placeholder="">
+                                <div class="col-sm-3 input-group input-group-button input-group-inverse p-l-0 p-r-0 m-r-5 m-b-5 m-t-5 f-left btn-select">
+                                   <input onkeyup="if(event.keyCode == 13){$('#searchBtn').trigger('click');};"id="keywordInput" type="text" class="form-control" placeholder="키워드를 선택 후 검색해주세요." style="height:40px;">
                                   <span class="input-group-addon" id="basic-addon1">
-                                    <button id="searchBtn" class=" btn btn-inverse">검색</button>
+                                    <button id="searchBtn" class=" btn btn-search"><i class="icofont icofont-ui-search"></i></button>
                                   </span>
                                   </div>
 			                        <div style="position:relative; left:5px;">
-			                        	<button class="btn btn-warning alert-excel f-right"><i class="icofont icofont-download-alt"></i>EXCEL</button>
+			                        	<button class="btn btn-warning alert-excel f-right m-t-5" style="height:40px;"><i class="icofont icofont-download-alt"></i>EXCEL</button>
 			                        </div>
-		                          	<div class="btn-group f-right p-r-0">
-	                                  <button type="button" id="allBtn1" class="radiosBtn btn btn-primary btn-outline-primary btn-sm waves-effect waves-light">좋은글</button>
-	                                  <button type="button" id="allBtn2" class="radiosBtn btn btn-primary btn-outline-primary btn-sm waves-effect waves-light">나쁜글</button>
-	                                  <button type="button" id="allBtn3" class="radiosBtn btn btn-primary btn-outline-primary btn-sm waves-effect waves-light">관심글</button>
-	                                  <button type="button" id="allBtn4" class="radiosBtn btn btn-primary btn-outline-primary btn-sm waves-effect waves-light">기타글</button>
-	                                  <button type="button" id="allBtn5" class="radiosBtn btn btn-primary btn-outline-primary btn-sm waves-effect waves-light">삭제글</button>
-	                                  <button type="button" id="insertAllBtn" class="alert-confirm btn btn-sm btn-primary waves-effect f-right p-b-10"><i class="icofont icofont-exchange" style="margin: 0px;font-size: 16px;"></i></button>
+		                          	<div class="btn-group f-right p-r-0 m-r-10">
+	                                  <button type="button" id="allBtn1" class="radiosBtn btn btn-primary btn-outline-primary btn-sm waves-effect waves-light m-t-5" style="height:40px;">좋은글</button>
+	                                  <button type="button" id="allBtn2" class="radiosBtn btn btn-primary btn-outline-primary btn-sm waves-effect waves-light m-t-5" style="height:40px;">나쁜글</button>
+	                                  <button type="button" id="allBtn3" class="radiosBtn btn btn-primary btn-outline-primary btn-sm waves-effect waves-light m-t-5" style="height:40px;">관심글</button>
+	                                  <button type="button" id="allBtn4" class="radiosBtn btn btn-primary btn-outline-primary btn-sm waves-effect waves-light m-t-5" style="height:40px;">기타글</button>
+	                                  <button type="button" id="allBtn5" class="radiosBtn btn btn-primary btn-outline-primary btn-sm waves-effect waves-light m-t-5" style="height:40px;">삭제글</button>
+	                                  <button type="button" id="insertAllBtn" class="alert-confirm btn btn-sm btn-primary waves-effect f-right p-b-10 m-t-5" style="height:40px;"><i class="icofont icofont-exchange" style="margin: 0px;font-size: 16px;"></i></button>
 	                                </div>
 		                          	
                                     <h5 class="card-header-text m-b-10"></h5>
@@ -264,7 +283,7 @@
                                             </td>
                                             <td>
                                             	<c:if test="${empty ReplyVO.textType}">
-			                                         	미분류
+			                                         	<i class="icofont icofont-minus"></i>
 			                                     </c:if>
                                             	${ReplyVO.textType}
                                             </td>

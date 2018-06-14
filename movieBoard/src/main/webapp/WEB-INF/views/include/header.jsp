@@ -5,8 +5,14 @@
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <!-- top menu start -->
+<style>
+.pcoded .pcoded-header[header-theme="theme4"] {
+    background: linear-gradient(-350deg,#00a0e8,#8fc320);
+}
+</style>
+
 <nav class="navbar header-navbar pcoded-header" header-theme="theme4">
-  <div class="navbar-wrapper">
+  <div class="navbar-wrapper" style="background: red;">
     <div class="navbar-logo">
       <a class="mobile-menu" id="mobile-collapse" href="#!">
         <i class="ti-menu"></i>

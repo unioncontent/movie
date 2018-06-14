@@ -119,22 +119,6 @@
                           <option value="${companyList.user_name}">${companyList.user_name}</option>
                           </c:if>
                         </select>
-						</c:if>
-						
-						<c:if test="${user.user_name != 'union'}">
-                         <select style="display: none;" name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="selectCompany">
-                          <option>회사</option>
-                          <c:if test="${user.user_type == 1 }">
-                          <c:forEach items="${companyList}" var = "companyList">
-                          <option value="${companyList.user_name}">${companyList.user_name}</option>
-                          </c:forEach>
-                          </c:if>
-                          <c:if test="${user.user_type == 2}">
-                          <option value="${companyList.user_name}">${companyList.user_name}</option>
-                          </c:if>
-                        </select>
-						</c:if>
-
                         <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left" id="selectKeyword">
                           <option>키워드</option>
                           <c:if test="${modelKeywordList == null}" >
@@ -148,6 +132,34 @@
                           </c:forEach>
                           </c:if>
                         </select>
+						</c:if>
+
+						<c:if test="${user.user_name != 'union'}">
+                         <select style="display: none;" name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="selectCompany">
+                          <option>회사</option>
+                          <c:if test="${user.user_type == 1 }">
+                          <c:forEach items="${companyList}" var = "companyList">
+                          <option value="${companyList.user_name}">${companyList.user_name}</option>
+                          </c:forEach>
+                          </c:if>
+                          <c:if test="${user.user_type == 2}">
+                          <option value="${companyList.user_name}">${companyList.user_name}</option>
+                          </c:if>
+                        </select>
+                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 m-l-0 p-r-5 f-left select-left" id="selectKeyword">
+                          <option>키워드</option>
+                          <c:if test="${modelKeywordList == null}" >
+                          	<c:forEach items="${keywordList}" var = "keywordList">
+                          <option value="${keywordList.keyword_main}">${keywordList.keyword_main}</option>
+                          </c:forEach>
+                          </c:if>
+                          <c:if test="${modelKeywordList != null}">
+                          	<c:forEach items="${modelKeywordList}" var = "keywordList">
+                          <option value="${keywordList.keyword_main}">${keywordList.keyword_main}</option>
+                          </c:forEach>
+                          </c:if>
+                        </select>
+						</c:if>
                       </div>
                       <div class="col-md-5">
                          <!-- date picker start -->
@@ -159,7 +171,7 @@
                             <button id="month" type="button" class="btn btn-inverse btn-sm waves-effect waves-light">최근30일</button>
                           </div>
                           <div class="input-group float-right date col p-l-15 p-r-15 m-b-10">
-                            <input type="text" id="fromDate" class="form-control form-control-inverse" value="">
+                            <input type="text" id="fromDate" class="form-control form-control-inverse" value="" style="text-align: center;">
                             <span class="input-group-addon bg-inverse">
                               <span class="icofont icofont-ui-calendar"></span>
                             </span>
@@ -182,9 +194,10 @@
                       <div class="col-md-12">
                         <div class="card">
                           <div class="card-header">
-                            <h5>
+                            <h5><font style="font-weight: bold; color: black;">
                             	<i class="icofont icofont-chart-line m-r-5"></i>
                             	전체 기사 건수
+                            	</font>
                             </h5>
                             <div class="card-header-right">
                               <i class="icofont icofont-rounded-down"></i>
@@ -202,8 +215,10 @@
                         <div class="card">
                           <div class="card-header">
                             <h5>
+                            <font style="font-weight: bold; color: black;">
                             	<i class="icofont icofont-chart-line m-r-5"></i>
                             	매칭 기사 건수
+                            	</font>
                             </h5>
                             <div class="card-header-right">
                               <i class="icofont icofont-rounded-down"></i>
@@ -221,7 +236,7 @@
                               <div class="col-md-12">
                                 <div class="card">
                                   <div class="card-header">
-                                    <h5>기자 통계</h5>
+                                    <h5 class="card-header-text m-b-10 m-t-10"><font style="font-weight: bold; color: black;">기자 통계</font></h5>
                                     <button id="excel" class="btn btn-warning f-right alert-confirm">
 										<i class="icofont icofont-download-alt"></i>EXCEL
 									</button>
@@ -230,9 +245,17 @@
                                     <!-- sns table start -->
                                     <div class="table-border-style" id="newsMore">
                                         <div class="table-responsive">
-                                          <table class="table table-styling">
+                                          <table class="table table-bordered table-sm">
+                                          <c:if test="${empty reporterTotalMatchList}">
+		                                    <tbody>
+		                                     <tr>
+		                                     <td style="vertical-align:middle;" align="center" height="150px"><h5>등록된 기사가 없습니다.</h5></td>
+		                                     </tr>
+		                                     </tbody>
+		                                    </c:if>
+		                                    <c:if test="${!empty reporterTotalMatchList}">
                                             <thead>
-                                                <tr class="table-inverse">
+                                                <tr>
                                                     <th>순위</th>
                                                     <th>기자</th>
                                                     <th>언론사</th>
@@ -271,6 +294,7 @@
                                               </tr>
                                               </c:forEach>
                                             </tbody>
+                                            </c:if>
                                           </table>
                                         </div>
                                       </div>

@@ -16831,7 +16831,7 @@ body[themebg-pattern="pattern9"] {
 .pcoded .pcoded-navbar .pcoded-header.nocollapsed .pcoded-left-header[lheader-theme="theme4"] {
   background: transparent; }
 .pcoded .pcoded-navbar .pcoded-header.iscollapsed .pcoded-left-header[lheader-theme="theme4"] {
-  background: #2c3e50; }
+  background: red; }
 .pcoded .pcoded-navbar[navbar-theme="theme4"] {
   background: #2c3e50; }
   .pcoded .pcoded-navbar[navbar-theme="theme4"] .main-menu {

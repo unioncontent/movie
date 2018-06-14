@@ -110,6 +110,19 @@
                           <option value="${companyList.user_name}">${companyList.user_name}</option>
                           </c:if>
                         </select>
+                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left" id="selectKeyword">
+                          <option>키워드</option>
+                          <c:if test="${modelKeywordList == null}" >
+                          	<c:forEach items="${keywordList}" var = "keywordList">
+                          <option value="${keywordList.keyword_main}">${keywordList.keyword_main}</option>
+                          </c:forEach>
+                          </c:if>
+                          <c:if test="${modelKeywordList != null}">
+                          	<c:forEach items="${modelKeywordList}" var = "keywordList">
+                          <option value="${keywordList.keyword_main}">${keywordList.keyword_main}</option>
+                          </c:forEach>
+                          </c:if>
+                        </select>
 						</c:if>
 
 						<c:if test="${user.user_name != 'union'}">
@@ -124,9 +137,7 @@
                           <option value="${companyList.user_name}">${companyList.user_name}</option>
                           </c:if>
                         </select>
-						</c:if>
-
-                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left" id="selectKeyword">
+                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 m-l-0 p-r-5 f-left select-left" id="selectKeyword">
                           <option>키워드</option>
                           <c:if test="${modelKeywordList == null}" >
                           	<c:forEach items="${keywordList}" var = "keywordList">
@@ -139,6 +150,7 @@
                           </c:forEach>
                           </c:if>
                         </select>
+						</c:if>
                       </div>
                       <div class="col-md-5">
                         <!-- date picker start -->
@@ -150,7 +162,7 @@
                             <button id="month" type="button" class="btn btn-inverse btn-sm waves-effect waves-light">최근30일</button>
                           </div>
                           <div class="input-group float-right date col p-l-15 p-r-15 m-b-10">
-                            <input type="text" id="fromDate" class="form-control form-control-inverse" value="">
+                            <input type="text" id="fromDate" class="form-control form-control-inverse" value="" style="text-align: center;">
                             <span class="input-group-addon bg-inverse">
                               <span class="icofont icofont-ui-calendar"></span>
                             </span>
@@ -164,8 +176,10 @@
                         <div class="card">
                           <div class="card-header">
                             <h5 class="card-header-text">
+                            <font style="font-weight: bold; color: black;">
                               <i class="icofont icofont-chart-line m-r-5"></i>
                               인스타그램 그래프
+                              </font>
                             </h5>
                             <div class="card-header-right">
                               <i class="icofont icofont-rounded-down"></i>
@@ -183,22 +197,22 @@
                       <div class="col-lg-12">
                         <div class="card">
                           <div class="card-header">
-                            <select id= "selectPerPageNum" name="select" class="col-sm-1 form-control form-control-inverse m-r-10 m-b-10 p-r-5 f-left list-select">
+                            <select id= "selectPerPageNum" name="select" class="col-sm-1 form-control form-control-inverse m-r-5 m-b-5 m-t-5 p-r-5 f-left list-select" style="height:40px;">
                                   <option id= "10" >10</option>
                                   <option id = "50">50</option>
                                   <option id = "100">100</option>
                                 </select>
-                                <select id = "selectSearchType" name="select" class="col-sm-1 form-control form-control-inverse m-r-10 m-b-10 f-left search-select">
+                                <select id = "selectSearchType" name="select" class="col-sm-1 form-control form-control-inverse m-r-5 m-b-5 m-t-5 f-left search-select" style="height:40px;">
                                   <option id="t" value="t">제목</option>
                                   <option id="c">게시글</option>
                                 </select>
-                            <div class="col-sm-3 input-group input-group-button input-group-inverse p-l-0 p-r-0 m-b-10 f-left btn-select">
-							   <input onkeyup="if(event.keyCode == 13){$('#searchBtn').trigger('click');};"id="keywordInput" type="text" class="form-control" placeholder="">
+                            <div class="col-sm-3 input-group input-group-button input-group-inverse p-l-0 p-r-0 m-b-5 m-t-5 f-left btn-select">
+							   <input onkeyup="if(event.keyCode == 13){$('#searchBtn').trigger('click');};"id="keywordInput" type="text" class="form-control" placeholder="" style="height:40px;">
                               <span class="input-group-addon" id="basic-addon1">
-                                <button id="searchBtn" class="btn btn-inverse">검색</button>
+                                <button id="searchBtn" class="btn btn-search"><i class="icofont icofont-ui-search"></i></button>
                               </span>
                             </div>
-                            <button id="excel" class="btn btn-warning f-right alert-confirm" ><i class="icofont icofont-download-alt"></i>EXCEL</button>
+                            <button id="excel" class="btn btn-warning f-right m-t-5 alert-confirm" ><i class="icofont icofont-download-alt"></i>EXCEL</button>
                           </div>
                           <div class="card-block table-border-style table-responsive">
                             <table class="table table-bordered table-sm">

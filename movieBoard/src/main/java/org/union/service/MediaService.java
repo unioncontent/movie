@@ -73,6 +73,7 @@ public interface MediaService {
 	
 	public Integer getSearchCount(SearchCriteria cri);
 
+	public List<MediaVO> mediaListData(SearchCriteria cri);
 	public List<MediaVO> wlistSearch(SearchCriteria criteria);
 	public List<MediaVO> wlistSearch2(SearchCriteria criteria);
 	public List<MediaVO> wPageSearch(SearchCriteria criteria);
@@ -113,6 +114,7 @@ public interface MediaService {
 	public List<TextTypeDateVO> textTypeCount2(SearchCriteria cri);
 	public Integer checkUrl(String url);
 	public Integer mTotalCnt(SearchCriteria cri);
+	public Integer graphmTotalCnt(SearchCriteria cri);
 	
 	public List<MediaVO> headlineList(SearchCriteria cri);
 	public Integer mediaTotalcnt(SearchCriteria cri);

@@ -99,7 +99,7 @@
                     </div>
                   </div>
                   <div class="col-lg-12">
-                  	<div class="card">
+                        <div class="card">
 	                    <div class="card-header">
 		                    <h5 class="card-header-text m-b-10"></h5>
 		                    <form action="/media/replyAddOk">

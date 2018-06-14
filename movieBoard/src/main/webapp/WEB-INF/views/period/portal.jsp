@@ -117,22 +117,6 @@
                           <option value="${companyList.user_name}">${companyList.user_name}</option>
                           </c:if>
                         </select>
-						</c:if>
-						
-						<c:if test="${user.user_name != 'union'}">
-                         <select style="display: none;" name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="selectCompany">
-                          <option>회사</option>
-                          <c:if test="${user.user_type == 1 }">
-                          <c:forEach items="${companyList}" var = "companyList">
-                          <option value="${companyList.user_name}">${companyList.user_name}</option>
-                          </c:forEach>
-                          </c:if>
-                          <c:if test="${user.user_type == 2}">
-                          <option value="${companyList.user_name}">${companyList.user_name}</option>
-                          </c:if>
-                        </select>
-						</c:if>
-
                         <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left" id="selectKeyword">
                           <option>키워드</option>
                           <c:if test="${modelKeywordList == null}" >
@@ -146,6 +130,34 @@
                           </c:forEach>
                           </c:if>
                         </select>
+						</c:if>
+
+						<c:if test="${user.user_name != 'union'}">
+                         <select style="display: none;" name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="selectCompany">
+                          <option>회사</option>
+                          <c:if test="${user.user_type == 1 }">
+                          <c:forEach items="${companyList}" var = "companyList">
+                          <option value="${companyList.user_name}">${companyList.user_name}</option>
+                          </c:forEach>
+                          </c:if>
+                          <c:if test="${user.user_type == 2}">
+                          <option value="${companyList.user_name}">${companyList.user_name}</option>
+                          </c:if>
+                        </select>
+                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 m-l-0 p-r-5 f-left select-left" id="selectKeyword">
+                          <option>키워드</option>
+                          <c:if test="${modelKeywordList == null}" >
+                          	<c:forEach items="${keywordList}" var = "keywordList">
+                          <option value="${keywordList.keyword_main}">${keywordList.keyword_main}</option>
+                          </c:forEach>
+                          </c:if>
+                          <c:if test="${modelKeywordList != null}">
+                          	<c:forEach items="${modelKeywordList}" var = "keywordList">
+                          <option value="${keywordList.keyword_main}">${keywordList.keyword_main}</option>
+                          </c:forEach>
+                          </c:if>
+                        </select>
+						</c:if>
                       </div>
                       <div class="col-md-5">
                          <!-- date picker start -->
@@ -157,7 +169,7 @@
                             <button id="month" type="button" class="btn btn-inverse btn-sm waves-effect waves-light">최근30일</button>
                           </div>
                           <div class="input-group float-right date col p-l-15 p-r-15 m-b-10">
-                            <input type="text" id="fromDate" class="form-control form-control-inverse" value="">
+                            <input type="text" id="fromDate" class="form-control form-control-inverse" value="" style="text-align: center;">
                             <span class="input-group-addon bg-inverse">
                               <span class="icofont icofont-ui-calendar"></span>
                             </span>
@@ -177,7 +189,7 @@
                             <div class="row">
                               <!-- top cards start -->
                               <div class="col-md-6 col-xl-4 main-card">
-                                <div class="card social-widget-card">
+                                <div class="card social-widget-card" style="border-top: 0px;">
                                   <div class="card-block-big bg-inverse">
                                     <h3><fmt:formatNumber value="${naverCount + daumCount}" groupingUsed="true"/></h3>
                                     <span class="m-t-10">전체검색</span>
@@ -186,7 +198,7 @@
                                 </div>
                               </div>
                               <div class="col-md-6 col-xl-4 main-card">
-                                <div class="card social-widget-card">
+                                <div class="card social-widget-card" style="border-top: 0px;">
                                   <div class="card-block-big bg-success">
                                    <h3><fmt:formatNumber value="${naverCount}" groupingUsed="true"/></h3>
                                     <span class="m-t-10">네이버</span>
@@ -195,7 +207,7 @@
                                 </div>
                               </div>
                               <div class="col-md-6 col-xl-4 main-card">
-                                <div class="card social-widget-card">
+                                <div class="card social-widget-card" style="border-top: 0px;">
                                   <div class="card-block-big bg-twitter">
                                    <h3><fmt:formatNumber value="${daumCount}" groupingUsed="true"/></h3>
                                     <span class="m-t-10">다음</span>
@@ -209,8 +221,10 @@
                                 <div class="card">
                                 <div class="card-header">
                                   <h5 class="card-header-text">
+                                  <font style="font-weight: bold; color: black;">
                                     <i class="icofont icofont-chart-line m-r-5"></i>
-                                    포털통계 그래프
+                                    	포털통계 그래프
+                                    </font>
                                   </h5>
                                   <div class="card-header-right">
                                     <i class="icofont icofont-rounded-down"></i>
@@ -229,7 +243,12 @@
                               <div class="col-md-6">
                                 <div class="card">
                                   <div class="card-header">
-                                    <h5 class="card-header-text">포털통계 분석 / NAVER</h5>
+                                  	<img alt="naver" src="../assets/images/naver.png" style="width: 30px; height: 30px;">
+                                    <h5 class="card-header-text">
+						               <font style="font-weight: bold; color: black;">                     
+						                                    포털통계 분석 / NAVER
+                                    </font>
+                                    </h5>
                                     <div class="card-header-right">
                                       <i class="icofont icofont-rounded-down"></i>
                                     </div>
@@ -237,9 +256,9 @@
                                   <div class="card-block table-border-style">
                                     <div class="table-border-style">
                                       <div class="table-responsive">
-                                        <table class="table table-styling">
+                                        <table class="table table-bordered table-sm">
                                           <thead>
-                                              <tr class="table-inverse">
+                                              <tr>
                                                   <th>분류</th>
                                                   <th>호평</th>
                                                   <th>악평</th>
@@ -305,7 +324,12 @@
                               <div class="col-md-6">
                                 <div class="card">
                                   <div class="card-header">
-                                    <h5 class="card-header-text">포털통계 분석 / DAUM</h5>
+                                  <img alt="naver" src="../assets/images/daum.jpg" style="width: 30px; height: 30px;">
+                                    <h5 class="card-header-text">
+					               <font style="font-weight: bold; color: black;">                     
+					                                    포털통계 분석 / DAUM
+                                    </font>
+                                    </h5>
                                     <div class="card-header-right">
                                       <i class="icofont icofont-rounded-down"></i>
 
@@ -314,9 +338,9 @@
                                   <div class="card-block table-border-style">
                                     <div class="table-border-style">
                                       <div class="table-responsive">
-                                        <table class="table table-styling">
+                                        <table class="table table-bordered table-sm">
                                           <thead>
-                                              <tr class="table-inverse">
+                                              <tr>
                                                   <th>분류</th>
                                                   <th>호평</th>
                                                   <th>악평</th>
@@ -382,13 +406,15 @@
                               <div class="col-lg-12">
                                 <div class="card">
                                   <div class="card-header">
-                                    <h5 class="card-header-text"> 검출데이터</h5>
+                                    <h5 class="card-header-text m-b-5 m-t-5">
+						               <font style="font-weight: bold; color: black;">검출데이터</font>
+                                    </h5>
                                     <button id = "excel" class="btn btn-warning f-right alert-confirm" ><i class="icofont icofont-download-alt"></i>EXCEL</button>
                                   </div>
                                   <div class="card-block table-border-style">
                                     <!-- list satart -->
                                     <div class="table-responsive">
-                                      <table class="table">
+                                      <table class="table table-bordered table-sm">
                                         <thead>
                                           <tr>
                                             <th width="5%">NO</th>

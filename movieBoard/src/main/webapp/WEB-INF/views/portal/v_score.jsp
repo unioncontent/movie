@@ -50,6 +50,7 @@
   <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
   <link rel="stylesheet" type="text/css" href="../assets/pages/viral/css/style.css">
   <link rel="stylesheet" type="text/css" href="../assets/css/picker.css">
+  <link rel="stylesheet" type="text/css" href="../assets/pages/naver/css/style.css">
   <!--color css-->
   <link rel="stylesheet" type="text/css" href="../assets/css/color/color-1.css" id="color" />
   <link rel="stylesheet" type="text/css" href="../assets/css/linearicons.css">
@@ -112,6 +113,19 @@
                           <option value="${companyList.user_name}">${companyList.user_name}</option>
                           </c:if>
                         </select>
+                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left" id="selectKeyword">
+                          <option>키워드</option>
+                          <c:if test="${modelKeywordList == null}" >
+                          	<c:forEach items="${keywordList}" var = "keywordList">
+                          <option value="${keywordList.keyword_main}">${keywordList.keyword_main}</option>
+                          </c:forEach>
+                          </c:if>
+                          <c:if test="${modelKeywordList != null}">
+                          	<c:forEach items="${modelKeywordList}" var = "keywordList">
+                          <option value="${keywordList.keyword_main}">${keywordList.keyword_main}</option>
+                          </c:forEach>
+                          </c:if>
+                        </select>
 						</c:if>
 
 						<c:if test="${user.user_name != 'union'}">
@@ -126,9 +140,7 @@
                           <option value="${companyList.user_name}">${companyList.user_name}</option>
                           </c:if>
                         </select>
-						</c:if>
-
-                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left" id="selectKeyword">
+                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 m-l-0 p-r-5 f-left select-left" id="selectKeyword">
                           <option>키워드</option>
                           <c:if test="${modelKeywordList == null}" >
                           	<c:forEach items="${keywordList}" var = "keywordList">
@@ -141,6 +153,7 @@
                           </c:forEach>
                           </c:if>
                         </select>
+						</c:if>
                       </div>
                       <div class="col-md-5">
                         <!-- date picker start -->
@@ -152,7 +165,7 @@
                             <button id="month" type="button" class="btn btn-inverse btn-sm waves-effect waves-light">최근30일</button>
                           </div>
                           <div class="input-group float-right date col p-l-15 p-r-15 m-b-10">
-                            <input type="text" id="fromDate" class="form-control form-control-inverse" value="">
+                            <input type="text" id="fromDate" class="form-control form-control-inverse" value="" style="text-align: center;">
                             <span class="input-group-addon bg-inverse">
                               <span class="icofont icofont-ui-calendar"></span>
                             </span>
@@ -168,7 +181,11 @@
                               <div class="col-md-6 col-xl-3">
                                 <div class="card client-blocks">
                                   <div class="card-block-big card1">
-                                    <h5 class="mt"  style="font-size: 25px;     padding-top: 5px;">전체건수</h5>
+                                    <h5 class="mt"  style="font-size: 25px;     padding-top: 5px;">
+                                    <font style="font-weight: bold; color: black;">
+                                    	전체건수
+                                    </font>
+                                    </h5>
                                     <ul>
                                       <li class="p-t-10">
                                         <i class="icofont icofont-document-search"></i>
@@ -183,7 +200,7 @@
               							      <div class="card user-activity-card" style="border-radius: 0;">
               							        <div class="card-header">
               							          <div>
-              							            <h5>좋은글</h5>
+              							            <h5><font style="font-weight: bold; color: black;">좋은글</font></h5>
               							            <span>점수 범위 : 10 ~ 8</span>
               							          </div>
               							        </div>
@@ -195,6 +212,9 @@
                 							              <fmt:parseNumber var="pages" integerOnly="true" value="${(textType.lik/textType.al) * 100}"></fmt:parseNumber>
 			                                            ${pages}%
 			                                          </c:if>
+			                                          <c:if test="${textType.al == 0}">
+                							              0%
+                                          			</c:if>
               							            </label>
               							          </div>
               							        </div>
@@ -203,7 +223,7 @@
               							    <div class="col-sm-3 p-l-0 p-r-0 f-left">
               							      <div class="card user-activity-card" style="border-radius: 0;">
               							        <div class="card-header">
-              							          <h5>관심글</h5>
+              							          <h5><font style="font-weight: bold; color: black;">관심글</font></h5>
               							          <span>점수 범위 : 7 ~ 5</span>
               							        </div>
               							        <div class="card-block-big text-center typography" style="padding-left: 5px;padding-right: 5px;">
@@ -214,6 +234,9 @@
                 							              <fmt:parseNumber var="pages" integerOnly="true" value="${(textType.cu/textType.al) * 100}"></fmt:parseNumber>
                                             ${pages}%
                                           </c:if>
+                                          <c:if test="${textType.al == 0}">
+                							              0%
+                                          </c:if>
               							            </label>
               							          </div>
               							        </div>
@@ -222,7 +245,11 @@
               							    <div class="col-sm-3 p-l-0 p-r-0 f-left">
               							      <div class="card user-activity-card" style="border-radius: 0;">
               							        <div class="card-header">
-              							          <h5>나쁜글</h5>
+              							          <h5>
+              							          <font style="font-weight: bold; color: black;">
+              							          나쁜글
+              							          </font>
+              							          </h5>
               							          <span>점수 범위 : 4 ~ 2</span>
               							        </div>
               							        <div class="card-block-big text-center typography" style="padding-left: 5px;padding-right: 5px;">
@@ -233,6 +260,9 @@
                 							              <fmt:parseNumber var="pages" integerOnly="true" value="${(textType.dis/textType.al) * 100}"></fmt:parseNumber>
                                             ${pages}%
                                           </c:if>
+                                          <c:if test="${textType.al == 0}">
+                							              0%
+                                          </c:if>
               							            </label>
               							          </div>
               							        </div>
@@ -241,7 +271,11 @@
               							    <div class="col-sm-3 p-l-0 p-r-0 f-left">
               							      <div class="card user-activity-card" style="border-radius: 0;">
               							        <div class="card-header">
-              							          <h5>악성글</h5>
+              							          <h5>
+              							    <font style="font-weight: bold; color: black;">      
+              							          악성글
+              							          </font>
+              							          </h5>
               							          <span>점수 범위 : 1</span>
               							        </div>
               							        <div class="card-block-big text-center typography"  style="padding-left: 5px;padding-right: 5px;">
@@ -251,6 +285,9 @@
                 							            <c:if test="${textType.al != 0}">
                 							              <fmt:parseNumber var="pages" integerOnly="true" value="${(textType.etc/textType.al) * 100}"></fmt:parseNumber>
                                             ${pages}%
+                                          </c:if>
+                                          <c:if test="${textType.al == 0}">
+                							              0%
                                           </c:if>
               							            </label>
               							          </div>
@@ -298,15 +335,15 @@
                                           <dd class="col-sm-7"><label class="label label-danger">경고</label></dd>
                                         </dl>
                                       </div>
-                                      <div class="col-sm-6">
-                  									    <h4 class="sub-title">분류비율표</h4>
+                                      <div class="col-sm-6" style="text-align: center;">
+                  									    <h4 class="sub-title"><font style="font-weight: bold; color: black;">분류비율표</font></h4>
                     										<h2 class="text-info text-center typography p-t-5 p-b-25 m-b-0">
                                           <c:if test="${scoreCount == 1 or scoreCount == 2 or scoreCount == 3}"><strong class="text-danger">경고</strong></c:if>
                                           <c:if test="${scoreCount == 4 or scoreCount == 5}"><strong class="text-warning">주의</strong></c:if>
                                           <c:if test="${scoreCount == 6 or scoreCount == 7}"><strong class="text-info">양호</strong></c:if>
                                           <c:if test="${scoreCount == 8 or scoreCount == 9}"><strong class="text-primary">좋음</strong></c:if>
                                           <c:if test="${scoreCount == 10}"><strong class="text-success">아주좋음</strong></c:if>
-                    										  <small style="margin-left: 0;">${scoreCount}</small>
+                    										  <small style="margin-left: 0;"><font style="font-weight: bold; color: black;">${scoreCount}</font></small>
                   									    </h2>
                   									  </div>
                                     </div>
@@ -316,15 +353,23 @@
                               <div class="col-md-12">
                                 <div class="card">
                                   <div class="card-header">
-                                    <h5>평점 관리 리스트</h5>
+                                    <h5 class="card-header-text m-b-10 m-t-10"><font style="font-weight: bold; color: black;">평점 관리 리스트</font></h5>
                                     <div class="f-right m-t-10">
                                       <button class="btn btn-warning alert-excel f-right p-r-5 p-l-5 m-l-15 m-b-10"><i class="icofont icofont-download-alt"></i>EXCEL</button>
-                                      <button id="alert-check" class="btn btn-primary alert-check f-right p-r-5 p-l-5 m-l-15 m-b-10"><i class="icofont icofont-ui-check"></i>등록</button>
+                                      <button id="alert-check" class="btn btn-list alert-check f-right p-r-5 p-l-5 m-l-15 m-b-10"><i class="icofont icofont-ui-check"></i>등록</button>
                                     </div>
                                   </div>
                                   <div class="card-block table-border-style">
                                     <div class="table-responsive">
-                                      <table class="table table-styling table-checkbox">
+                                      <table class="table table-bordered table-sm">
+                                      <c:if test="${empty scoreList}">
+	                                    <tbody>
+	                                     <tr>
+	                                     <td style="vertical-align:middle;" align="center" height="150px"><h5>등록된 평점이 없습니다.</h5></td>
+	                                     </tr>
+	                                     </tbody>
+	                                    </c:if>
+	                                    <c:if test="${!empty scoreList}">
                                         <thead>
                                           <tr>
                                           	<th width="1%"></th>
@@ -388,6 +433,7 @@
                                             </td>
                                           </tr>
                                         </tfoot>
+                                        </c:if>
                                       </table>
                                     </div>
                                   </div>

@@ -1,5 +1,6 @@
 package org.union.controller;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -358,6 +359,7 @@ public class PeriodController {
 		model.addAttribute("minusCount", cri.getPerPageNum() * (cri.getPage()-1));
 		
 		logger.info("pageMaker: " + pageMaker);
+		logger.info("aaaaatotalCount: " + totalCount);
 		model.addAttribute("pageMaker", pageMaker);
 		
 		model.addAttribute("naver1", portalService.naverTextTypeCountb(cri));
@@ -462,13 +464,13 @@ public class PeriodController {
 		  // 리스트
 		  String keyword=  cri.getKeyword();
 		  cri.setKeyword(null);
-		  model.addAttribute("searchList", mediaService.wlistSearch(cri));
-		  model.addAttribute("searchList2", mediaService.wlistSearch2(cri));
+		  model.addAttribute("wlistSearch", mediaService.wlistSearch(cri));
 		  model.addAttribute("textTypelistSearch", mediaService.textTypelistSearch(cri));
 		  model.addAttribute("textTypelistSearch2", mediaService.textTypelistSearch2(cri));
 		  model.addAttribute("textTypelistSearch3", mediaService.textTypelistSearch3(cri));
 		  model.addAttribute("textTypelistSearch4", mediaService.textTypelistSearch4(cri));
-		  model.addAttribute("reporterGetTextTypeCount", mediaService.reporterGetTextTypeCount(cri, pressName, textType));
+		  model.addAttribute("mediaList", mediaService.mediaListData(cri));
+		  
 		  /*logger.info("reporter: " + pressName);
 		  logger.info("textType: " + textType);*/
 		  PageMaker pageMaker = new PageMaker();
@@ -484,11 +486,13 @@ public class PeriodController {
 		  
 		  //cri.setKeyword(keyword);
 
-		  model.addAttribute("mediaTypeCount", mediaService.periodTextTypeCount(cri));
+		  /*model.addAttribute("mediaTypeCount", mediaService.periodTextTypeCount(cri));
 		  logger.info(mediaService.periodTextTypeCount(cri) + "");
+		  model.addAttribute("searchList2", mediaService.wlistSearch2(cri));
+		  model.addAttribute("reporterGetTextTypeCount", mediaService.reporterGetTextTypeCount(cri, pressName, textType));
 		  
 		  cri.setTextType("press");
-		  model.addAttribute("pressTypeCount", mediaService.periodTextTypeCount(cri));
+		  model.addAttribute("pressTypeCount", mediaService.periodTextTypeCount(cri));*/
 		  //cri.setTextType(null);
 		  
 	}
@@ -740,7 +744,7 @@ public class PeriodController {
 	
 	@ResponseBody
 	@PostMapping("/graph_re")
-	public List<GraphVO> graph_rePOST(@ModelAttribute("cri") SearchCriteria cri,Model model, String success, String company, String selectKey, String part) {
+	public List<GraphVO> graph_rePOST(@ModelAttribute("cri") SearchCriteria cri,Model model, String success, String company, String selectKey, String part) throws ParseException {
 		logger.info("graph_rePOST called....");
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -761,11 +765,14 @@ public class PeriodController {
 				GraphVO graphVO = new GraphVO();
 			
 			cri.setSelectKey(selectKey);
-			cri.setDate(cal.getTime());
+			String  startDate = sdf.format(cal.getTime());
+			String  endDate = sdf.format(cal.getTime());
+			cri.setStartDate(startDate + " 00:00:00");
+			cri.setEndDate(endDate + " 23:59:59");
+			/*logger.info("cal.getTimeaaaaa: " + cri.getStartDate());*/
 			
 			graphVO.setWriteDate(sdf.format(cal.getTime()));
-			graphVO.setType1(mediaService.mTotalCnt(cri));
-				
+			graphVO.setType1(mediaService.graphmTotalCnt(cri));
 			graphList.add(graphVO);
 				
 			cal.add(Calendar.DATE, -1);

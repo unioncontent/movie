@@ -64,6 +64,14 @@
 		vertical-align:middle;
 		padding: 100px 0px;
 	}
+	.form-control-inverse {
+    border-color: #dcdcdc;
+	}
+	.form-control {
+    font-size: 14px;
+    border-radius: 2px;
+    border-width: 2px;
+	}
   </style>
 </head>
 

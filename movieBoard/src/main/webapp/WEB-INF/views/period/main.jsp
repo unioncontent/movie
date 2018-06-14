@@ -51,6 +51,12 @@
   <link rel="stylesheet" type="text/css" href="../assets/css/simple-line-icons.css">
   <link rel="stylesheet" type="text/css" href="../assets/css/ionicons.css">
   <link rel="stylesheet" type="text/css" href="../assets/css/jquery.mCustomScrollbar.css">
+  <style type="text/css">
+  .md-tabs li.active p {
+  	font-weight: bold;
+    color: black;
+}
+  </style>
 </head>
 
 <body>
@@ -115,6 +121,19 @@
                           <option value="${companyList.user_name}">${companyList.user_name}</option>
                           </c:if>
                         </select>
+                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left" id="selectKeyword">
+                          <option>키워드</option>
+                          <c:if test="${modelKeywordList == null}" >
+                          	<c:forEach items="${keywordList}" var = "keywordList">
+                          <option value="${keywordList.keyword_main}">${keywordList.keyword_main}</option>
+                          </c:forEach>
+                          </c:if>
+                          <c:if test="${modelKeywordList != null}">
+                          	<c:forEach items="${modelKeywordList}" var = "keywordList">
+                          <option value="${keywordList.keyword_main}">${keywordList.keyword_main}</option>
+                          </c:forEach>
+                          </c:if>
+                        </select>
 						</c:if>
 						
 						<c:if test="${user.user_name != 'union'}">
@@ -129,9 +148,7 @@
                           <option value="${companyList.user_name}">${companyList.user_name}</option>
                           </c:if>
                         </select>
-						</c:if>
-
-                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left" id="selectKeyword">
+                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 m-l-0 f-left select-left" id="selectKeyword">
                           <option>키워드</option>
                           <c:if test="${modelKeywordList == null}" >
                           	<c:forEach items="${keywordList}" var = "keywordList">
@@ -144,6 +161,9 @@
                           </c:forEach>
                           </c:if>
                         </select>
+						</c:if>
+
+                        
                       </div>
                       <div class="col-md-5">
                          <!-- date picker start -->
@@ -155,7 +175,7 @@
                             <button id="month" type="button" class="btn btn-inverse btn-sm waves-effect waves-light">최근30일</button>
                           </div>
                           <div class="input-group float-right date col p-l-15 p-r-15 m-b-10">
-                            <input type="text" id="fromDate" class="form-control form-control-inverse" value="">
+                            <input type="text" id="fromDate" class="form-control form-control-inverse" value="" style="text-align: center;">
                             <span class="input-group-addon bg-inverse">
                               <span class="icofont icofont-ui-calendar"></span>
                             </span>
@@ -175,7 +195,7 @@
                             <div class="row">
                               <!-- top cards start -->
                               <div class="col-md-6 col-xl-2 main-card">
-                                <div class="card social-widget-card">
+                                <div class="card social-widget-card" style="border-top: 0px;">
                                   <div class="card-block-big bg-inverse">
                                     <h3><fmt:formatNumber value="${portalCount+communityCount+snsCount+mediaCount}" groupingUsed="true"/></h3>
                                     <span class="m-t-10">전체검색</span>
@@ -184,7 +204,7 @@
                                 </div>
                               </div>
                               <div class="col-md-6 col-xl-2 main-card">
-                                <div class="card social-widget-card">
+                                <div class="card social-widget-card" style="border-top: 0px;">
                                   <div class="card-block-big bg-primary">
                                     <h3><fmt:formatNumber value="${portalCount}" groupingUsed="true"/></h3>
                                     <span class="m-t-10">포털검색</span>
@@ -193,7 +213,7 @@
                                 </div>
                               </div>
                               <div class="col-md-6 col-xl-2 main-card">
-                                <div class="card social-widget-card">
+                                <div class="card social-widget-card" style="border-top: 0px;">
                                   <div class="card-block-big bg-success">
                                     <h3><fmt:formatNumber value="${communityCount}" groupingUsed="true"/></h3>
                                     <span class="m-t-10">커뮤니티검색</span>
@@ -202,7 +222,7 @@
                                 </div>
                               </div>
                               <div class="col-md-6 col-xl-2 main-card">
-                                <div class="card social-widget-card">
+                                <div class="card social-widget-card" style="border-top: 0px;">
                                   <div class="card-block-big bg-twitter">
                                     <h3><fmt:formatNumber value="${snsCount}" groupingUsed="true"/></h3>
                                     <span class="m-t-10">SNS검색</span>
@@ -211,7 +231,7 @@
                                 </div>
                               </div>
                               <div class="col-md-6 col-xl-2 main-card">
-                                  <div class="card social-widget-card">
+                                  <div class="card social-widget-card" style="border-top: 0px;">
                                     <div class="card-block-big bg-news">
                                       <h3><fmt:formatNumber value="${mediaCount}" groupingUsed="true"/></h3>
                                       <span class="m-t-10">언론사검색</span>
@@ -224,9 +244,10 @@
 		                      <div class="col-lg-12">
 		                        <div class="card">
 		                          <div class="card-header">
-		                            <h5>
+		                            <h5><font style="font-weight: bold; color: black;">
 		                            	<i class="icofont icofont-chart-line m-r-5"></i>
 		                            	이메일 발송 현황
+		                            	</font>
 		                            </h5>
 		                            <div class="card-header-right">
 		                              <i class="icofont icofont-rounded-down"></i>
@@ -243,7 +264,11 @@
                               <div class="col-md-12">
                                 <div class="card">
                                   <div class="card-header">
-                                    <h5>이메일 발송현황</h5>
+                                    <h5>
+						               <font style="font-weight: bold; color: black;">                     
+						                                    이메일 발송현황
+                                    </font>
+                                    </h5>
                                   </div>
                                   <div class="card-block table-border-style">
                                     <div class="table-responsive">
@@ -273,7 +298,9 @@
                                             <fmt:formatDate value="${mvo.m_regdate}" type="DATE" pattern="yyyy-MM-dd HH:mm:ss" />
                                             </th>
                                             <td>
-                                            ${mvo.m_subject}	
+                                            <a href="http://showbox.email/preview?keyword=${mvo.m_keyword_idx}&amp;idx=${mvo.n_idx}" target="_blank">
+                                            ${mvo.m_subject}
+                                            </a>
                                             </td>
                                             <td>
                                             <fmt:formatNumber value="${mvo.sendCount}" pattern="#,##0" />회

@@ -51,7 +51,6 @@
   <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
   <link rel="stylesheet" type="text/css" href="../assets/pages/marketing/css/style.css">
   <link rel="stylesheet" type="text/css" href="../assets/pages/viral/css/style.css">
-  <link rel="stylesheet" type="text/css" href="../assets/pages/division/css/style.css">
   <link rel="stylesheet" type="text/css" href="../assets/css/picker.css">
   <!--color css-->
   <link rel="stylesheet" type="text/css" href="../assets/css/color/color-1.css" id="color" />
@@ -102,56 +101,116 @@
                     </div>
                   </div>
                   <!-- page-body start -->
-                  <div class="page-body">
+                  <div class="page-body" style="float: center">
                     <div class="row">
                     <div class="col-md-12">
                         <div class="card">
                           <div class="card-header">
-                            <h5>
-                            	<i class="icofont icofont-chart-line m-r-5"></i>그래프 비교
-                            </h5>
+                          	<h5><font style="font-weight: bold; color: black;"><i class="icofont icofont-chart-line m-r-5"></i>그래프 비교</font></h5>
+                          	총 검출수 24건 영화를 선택하여 그래프를 비교할 수 있습니다.
                             <div class="card-header-right">
                               <i class="icofont icofont-rounded-down"></i>
                             </div>
                           </div>
-                          <div class="card-block">
-                          <form>
-                              <div class="form-group row">
-                                <label class="col-sm-2 col-form-label">제목</label>
-                                <div class="col-sm-5">
-                                  <select class="form-control" id="e1">
-                                    <c:forEach items="${fVallList}" var="fV">
-                  								  <option value="${fV.url}">${fV.sns_content}</option>
-                  								  </c:forEach>
-            						          </select>
-                                </div>
-                              </div>
-                              <div class="form-group row">
-                                <label class="col-sm-2 col-form-label">제목</label>
-                                <div class="col-sm-5">
-                                  <select class="form-control" id="e2">
-                                    <c:forEach items="${fVallList}" var="fV">
-                  								  <option value="${fV.url}">${fV.sns_content}</option>
-                  								  </c:forEach>
-            						          </select>
-                                </div>
-                              </div>
-                              <div class="row">
-                                <label class="col-sm-2"></label>
-                                <div class="col-sm-10">
-                                <button type="button" class="twin-button btn btn-primary waves-effect waves-light" style="margin-right: 5px;" data-toggle="tooltip" data-placement="top" data-original-title="검색">검색</button>
-                                </div>
-                              </div>
-                            </form>
+                          <div class="card-block" style="width: 100%;">
+                          <%-- <div class="card-block table-border-style">
+                          <div class="table-responsive">
+                          <table>
+                          	<tr>
+                          	<th>제목&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                          	<td>
+                          	<select class="form-control" id="e1" style="width:700px;">
+	                            <c:forEach items="${fVallList}" var="fV">
+	                  				<option value="${fV.url}">${fV.sns_content}</option>
+	                  			</c:forEach>
+            				</select>
+                          	</td>
+                          	<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                          	<th>제목&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                          	<td>
+                          	<select class="form-control" id="e2" style="width:700px;">
+	                            <c:forEach items="${fVallList}" var="fV">
+	                  				<option value="${fV.url}">${fV.sns_content}</option>
+	                  			</c:forEach>
+            				</select>
+                          	</td>
+                          	</tr>
+                          	<tr>
+                          	<td height="30"></td>
+                          	</tr>
+                          	<tr>
+                          	<td colspan="5" align="center">
+                          	<button type="button" class="twin-button btn btn-twin waves-effect waves-light" style="width: 150px;" data-toggle="tooltip" data-placement="top" data-original-title="비교검색">비교 검색</button> 
+                          	</td>
+                          	</tr>
+                          </table>
                           </div>
-                        </div>
-                      </div>
+                            </div> --%>
+                            
+                            
+                            <div style="float: left; width: 45%;">
+                              <div style="width: 100%;">
+                              <label style="float: left; width: 9%; height: 40px; margin-top: 10px;">제목</label>
+                                <div style="float: left; width: 90%;">
+                               <!--  <label style="width: 10%;">제목</label>
+                                <div style="width: 80%; margin-left: 10px;"> -->
+                                  <select class="form-control form-control-inverse" id="e1">
+                                    <c:forEach items="${fVallList}" var="fV">
+                  								  <option value="${fV.url}">${fV.sns_content}</option>
+                  								  </c:forEach>
+            						          </select>
+                                </div>
+                              </div>
+                              </div>
+                               <div style="float: left; width: 10%; text-align: center;">
+                              <font style="font-weight: bold; color: black; font-size: 25px;">VS</font>
+                              </div>
+                              <div style="float: left; width: 45%;">
+                              <div style="width: 100%;">
+                              <label style="float: left; width: 9%; height: 40px; margin-top: 10px;">제목</label>
+                                <div style="float: left; width: 90%;">
+                                <!-- <label style="width: 10%;">제목</label>
+                                <div style="width: 80%; margin-left: 10px;"> -->
+                                  <select class="form-control form-control-inverse" id="e2">
+                                    <c:forEach items="${fVallList}" var="fV">
+                  								  <option value="${fV.url}">${fV.sns_content}</option>
+                  								  </c:forEach>
+            						          </select>
+                                </div>
+                              </div>
+		                        </div>
+		                        </div>
+		                        <div style="padding:10px 0px 20px 0px ; width: 100%; text-align: center;">
+                                <button type="button" class="twin-button btn btn-twin waves-effect waves-light" style="width: 150px;" data-toggle="tooltip" data-placement="top" data-original-title="비교검색">비교 검색</button> 
+                                </div>
+		                      </div>
+		                      
+		                      <%-- <div class="row">
+		                      <label style="margin-left: 15px; margin-right: 15px;">제목</label>
+		                      <select class="form-control" style="width: 700px; margin-left: 15px; margin-right: 15px;" id="e1">
+                              	<c:forEach items="${fVallList}" var="fV">
+                  			  		<option value="${fV.url}">${fV.sns_content}</option>
+                  			  	</c:forEach>
+            				  </select>
+            				  <label style="margin-left: 15px; margin-right: 15px;">제목</label>
+            				  <select class="form-control" style="width: 700px; margin-left: 15px; margin-right: 15px;" id="e2">
+	                              <c:forEach items="${fVallList}" var="fV">
+	                  			  	<option value="${fV.url}">${fV.sns_content}</option>
+	                  			  </c:forEach>
+            				  </select>
+            				  </div>
+            				  <div style="padding:20px 0px 10px 0px ; width: 100%; text-align: center;">
+                                <button type="button" class="twin-button btn btn-twin waves-effect waves-light" style="width: 150px;" data-toggle="tooltip" data-placement="top" data-original-title="비교검색">비교 검색</button> 
+                                </div>
+            				  </div> --%>
+            				  </div>
+		                      </div>
                               <div class="col-md-12">
                                 <div class="card">
                                   <div class="card-header">
                                     <div class="col-sm-3 m-t-10 m-b-10 f-right input-group input-group-button input-group-inverse">
-                                      <input onkeyup="if(event.keyCode == 13){$('#searchBtn').trigger('click');};" id="keywordInput" type="text" class="form-control  f-right p-r-5 p-l-5 m-b-10" placeholder="">
-                                      <span class="input-group-addon" id="basic-addon1"><button id="searchBtn" class="btn btn-inverse"><i class="icofont icofont-search-alt-2"></i></button></span>
+                                      <input onkeyup="if(event.keyCode == 13){$('#searchBtn').trigger('click');};" id="keywordInput" type="text" class="form-control f-right p-r-5 p-l-5 m-b-10" placeholder="">
+                                      <span class="input-group-addon" id="basic-addon1"><button id="searchBtn" class="btn btn-search" data-original-title="검색"><i class="icofont icofont-ui-search"></i></button></span>
                                   	</div>
                                     <div class="p-l-15 p-t-10 p-r-15 f-right input-group input-group-inverse" style="max-width: 293px;">
                                       <input type="text" class="datepicker-here form-control col-sm-1 f-left" data-language="en" id="startdate" placeholder="Date" style="max-width:130px;"><div size="3" class="f-left m-l-5 m-r-5"><b>~</b></div>
@@ -205,7 +264,7 @@
                                             </div>
                                             </td>
                                             <td>
-                                            <button type="button" class="list-button btn btn-primary waves-effect waves-light" style="margin-right: 5px;" data-toggle="tooltip" data-placement="top" data-original-title="리스트">
+                                            <button type="button" class="list-button btn btn-list waves-effect waves-light" style="margin-right: 5px;" data-toggle="tooltip" data-placement="top" data-original-title="리스트">
                                             <i class="icofont icofont-ui-note"></i>리스트
                                             </button>
 		    								</td>
@@ -432,8 +491,8 @@
 
 		/* var data = [{ id: 'KOR', text: 'Korea' }, { id: 'JPN', text: 'Japan' }]; */
 
-		$('#e1').select2({ width: '100%', height: '100%' });
-		$('#e2').select2({ width: '100%', height: '100%' });
+		$('#e1').select2({ width: '100%', height: '45%' });
+		$('#e2').select2({ width: '100%', height: '45%' });
 	}); // end ready...
 
 

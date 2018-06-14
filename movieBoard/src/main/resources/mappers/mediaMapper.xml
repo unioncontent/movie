@@ -807,22 +807,31 @@
 		<include refid="search4"></include>
 			
 	</select>
-	
+	<select id="mediaListData" resultType="MediaVO">
+ 		select 
+			*
+		from 
+			media_data
+		where 
+			textType != '삭제글'
+		<include refid="search_writeDate"></include>
+		order 
+			by writeDate desc
+		limit  
+			#{startPage}, #{perPageNum}
+ 	</select>
 	<select id="wlistSearch" resultType="MediaVO">
  		select 
 			*
 		from 
 			media_data
 		where 
-			textType is not null
-		and 
-			textType!='삭제글'
+			textType != '삭제글'
 		<include refid="search_writeDate"></include>
 		order 
-			by updateDate desc
+			by writeDate desc
 		limit  
 			#{startPage}, #{perPageNum}
- 	
  	</select>
  	<select id="wlistSearch2" resultType="MediaVO">
  		select 
@@ -832,7 +841,7 @@
 		where 
 			textType is not null
 		and 
-			textType!='삭제글'
+			textType !='삭제글'
 		<include refid="search_writeDate"></include>
 		order 
 			by updateDate desc
@@ -844,10 +853,10 @@
  	<select id = "wgetSearchCount" resultType="Integer">
 		select
 			count(*)
-		from
+		from 
 			media_data
-		where
-			(textType is null or textType != '삭제글')
+		where 
+			textType!='삭제글'
 		<include refid="search_writeDate"></include>
 			
 	</select>
@@ -1171,13 +1180,27 @@
  		from 
  			media_data
  		where 
-			textType is not null
- 		and 
-			textType!='삭제글'
+ 			textType != '삭제글'
 		and 
 			keyword in (select keyword from keyword_data where keyword_main = #{selectKey})
 		and
-			createDate between date_add(#{date}, interval -1 day) and #{date}
+			writeDate between date_add(#{date}, interval -1 day) and #{date}
+		and writeDate != #{date}
+ 	</select>
+ 	
+ 	<select id="graphmTotalCnt" resultType="Integer">
+ 		select 
+ 			count(*)
+ 		from 
+ 			media_data
+ 		where 
+ 			textType != '삭제글'
+		and 
+			keyword in (select keyword from keyword_data where keyword_main = #{selectKey})
+		 and
+		 	writeDate <![CDATA[>=]]> #{startDate}
+		 and
+		 	writeDate <![CDATA[<=]]> #{endDate};
  	</select>
  	
  	<insert id="checkList">
@@ -1325,6 +1348,8 @@
 			media_name !='naver'
         and 
         	media_name !='daum'
+        and
+			media_name !='쇼박스'
 		<include refid="search_match"></include>
 		group by media_name
         order by total desc
@@ -1349,6 +1374,8 @@
 			media_name !='naver'
         and 
         	media_name !='daum'
+        and
+			media_name !='쇼박스'
         and
 			keyword != 'press'
 		<include refid="search_match"></include>
@@ -1378,6 +1405,8 @@
         and 
         	media_name !='daum'
         and
+			media_name !='쇼박스'
+        and
 			keyword != 'press' 
 		<include refid="search_match"></include>
 		group by media_name
@@ -1397,6 +1426,8 @@
 			media_name !='naver'
         and 
         	media_name !='daum'
+        and
+			media_name !='쇼박스'
 		<include refid="search_match"></include>
 		group by media_name
         order by total desc
@@ -1415,6 +1446,8 @@
 				media_name !='naver'
 			and 
 				media_name !='daum' 
+			and
+				media_name !='쇼박스'
 			<include refid="search_match"></include>
 			group by media_name
 			order by total desc) as a
@@ -1427,6 +1460,8 @@
 				media_name !='naver'
 			and 
 				media_name !='daum'
+			and
+				media_name !='쇼박스'
 			and
 				keyword != 'press'
 			<include refid="search_match"></include>
@@ -1447,6 +1482,9 @@
         and 
         	media_name !='daum'
         and
+			media_name !='쇼박스'
+        and
+        
 			reporter_name is not null
 		<include refid="search_match"></include>
 		group by reporter_name
@@ -1474,6 +1512,8 @@
 			media_name !='naver'
         and 
         	media_name !='daum'
+        and
+			media_name !='쇼박스'
         and
 			keyword != 'press'
 		and
@@ -1507,6 +1547,8 @@
         and 
         	media_name !='daum'
         and
+			media_name !='쇼박스'
+        and
 			keyword != 'press'
 		and
 			reporter_name is not null 
@@ -1528,6 +1570,8 @@
 			media_name !='naver'
         and 
         	media_name !='daum'
+        and
+			media_name !='쇼박스'
 		and
 			reporter_name is not null 
 		<include refid="search_match"></include>
@@ -1548,6 +1592,8 @@
 			and 
 				media_name !='daum'
 			and
+				media_name !='쇼박스'
+			and
 				reporter_name is not null 
 			<include refid="search_match"></include>
 			group by reporter_name
@@ -1561,6 +1607,8 @@
 				media_name !='naver'
 			and 
 				media_name !='daum'
+			and
+				media_name !='쇼박스'
 			and
 				keyword != 'press'
 			and
@@ -1580,7 +1628,9 @@
 		where
 			media_name !='naver'
 		and 
-			media_name !='daum' 
+			media_name !='daum'
+		and
+			media_name !='쇼박스' 
 		<include refid="search_match"></include>
 		order by media_name, createDate desc;
 	</select>
@@ -1593,6 +1643,8 @@
 			media_name !='naver'
 		and 
 			media_name !='daum'
+		and
+			media_name !='쇼박스'
 		and
 			reporter_name is not null 
 		<include refid="search_match"></include>

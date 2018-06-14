@@ -44,6 +44,7 @@
   <!-- Style.css -->
   <link rel="stylesheet" type="text/css" href="../assets/pages/clndr-calendar/css/clndr.css">
   <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
+  <link rel="stylesheet" type="text/css" href="../assets/pages/marketing/css/style.css">
   <link rel="stylesheet" type="text/css" href="../assets/pages/dashboard/css/style.css">
   <!--color css-->
   <link rel="stylesheet" type="text/css" href="../assets/css/color/color-1.css" id="color" />
@@ -169,7 +170,7 @@
                                 <div class="card">
                                   <div class="card-header">
                                     <!-- <button class="btn btn-info f-right alert-confirm" onclick = "location.href='http://overware.iptime.org:8080/marketing/n_channel'"><i class="icofont icofont-ui-note"></i>목록으로</button> -->
-                                    <button class="btn btn-info f-right alert-confirm" onclick = "history.back(-1);"><i class="icofont icofont-ui-note"></i>목록으로</button>
+                                    <button class="btn btn-list f-right alert-confirm" onclick = "history.back(-1);"><i class="icofont icofont-ui-note"></i>목록으로</button>
                                   </div>
                                   <div class="card-block table-border-style">
                                     <div class="table-responsive">

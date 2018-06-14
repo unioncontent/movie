@@ -4,6 +4,17 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <!-- left menu start -->
+<style>
+.pcoded .pcoded-navbar[active-item-theme="theme4"] .pcoded-item > li.active > a:before {
+    border-left-color: #8fc320 !important;
+}
+.pcoded .pcoded-navbar[active-item-theme="theme4"] .pcoded-item li.pcoded-hasmenu.active > a {
+    background: #8fc320 !important;
+}
+.pcoded .pcoded-navbar[active-item-theme="theme4"] .pcoded-item li:hover > a {
+    color: #8fc320 !important;
+}
+</style>
 <nav class="pcoded-navbar" pcoded-header-position="relative">
   <div class="pcoded-inner-navbar main-menu">
     <div class="">

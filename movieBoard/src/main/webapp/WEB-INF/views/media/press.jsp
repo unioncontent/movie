@@ -92,7 +92,7 @@
                         <!-- Form Inputs card start -->
                         <div class="card">
                             <div class="card-header">
-                                <h5>기자등록</h5>
+                                <h5><font style="font-weight: bold; color: black;">기자등록</font></h5>
                                 <span>* 항목은 필수 입력입니다.</span>
                                 <div class="card-header-right">
                                     <i class="icofont icofont-rounded-down"></i>
@@ -158,7 +158,7 @@
                         <!-- table card start -->
                         <div class="card">
                           <div class="card-header">
-                            <h3 class="card-header-text f-left m-t-15 m-b-15">기자리스트</h3>
+                            <h3 class="card-header-text f-left m-t-15 m-b-15"><font style="font-weight: bold; color: black;">기자리스트</font></h3>
                             <div class="">
                               <div class="col-md-6 p-r-0 f-right press-setting">
                                 <div class="col-sm-5 input-group input-group-button input-group-inverse p-l-0 p-r-0 m-b-10 m-l-10 f-right btn-select">
@@ -182,17 +182,17 @@
                           </div>
                           <div class="card-block">
                             <div class="table-responsive">
-                              <table class="table table-bordered">
+                              <table class="table table-bordered table-sm">
                                 <thead>
                                   <tr>
                                     <th width="5%">NO</th>
                                     <th width="5%">언론사명</th>
                                     <th width="5%">검색언론사명</th>
-                                    <th width="5%">부서</th>
                                     <th width="5%">기자명</th>
-                                    <th width="5%">기자ID</th>
                                     <th width="10%">이메일</th>
                                     <th width="10%">연락처</th>
+                                    <th width="5%">기자ID</th>
+                                    <th width="5%">부서</th>
                                   </tr>
                                 </thead>
                                 <tbody>
@@ -201,10 +201,17 @@
                                     <th>${totalCount -index.count +1 -minusCount}</th>
                                     <td>${reporterList.reporter_media_name}</td>
                                     <td>${reporterList.reporter_media_name}</td>
-                                    <td>${reporterList.reporter_part_name}</td>
+                                    
                                     <td>${reporterList.reporter_name}</td>
-                                    <td>${reporterList.reporter_email}</td>
-                                    <td>${reporterList.reporter_phoneNum}</td>
+                                    <td>
+                                    ${reporterList.reporter_email}
+                                    </td>
+                                    <td>
+                                    ${reporterList.reporter_phoneNum}
+                                    </td>
+                                    <td>
+                                    ${reporterList.reporter_part_name}
+                                    </td>
                                     <td></td>
                                   </tr>
                                   </c:forEach>

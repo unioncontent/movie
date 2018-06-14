@@ -44,6 +44,7 @@
   <!-- Style.css -->
   <link rel="stylesheet" type="text/css" href="../assets/pages/clndr-calendar/css/clndr.css">
   <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
+  <link rel="stylesheet" type="text/css" href="../assets/pages/marketing/css/style.css">
   <link rel="stylesheet" type="text/css" href="../assets/pages/dashboard/css/style.css">
   <!--color css-->
   <link rel="stylesheet" type="text/css" href="../assets/css/color/color-1.css" id="color" />

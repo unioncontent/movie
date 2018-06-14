@@ -49,6 +49,26 @@
   <link rel="stylesheet" type="text/css" href="../assets/css/simple-line-icons.css">
   <link rel="stylesheet" type="text/css" href="../assets/css/ionicons.css">
   <link rel="stylesheet" type="text/css" href="../assets/css/jquery.mCustomScrollbar.css">
+  <style type="text/css">
+  a:hover { color: black; text-decoration: underline;}
+  .card {
+    border-radius: 2px;
+    border-top: 1px solid #34495e;
+    box-shadow: 0 2px 1px rgba(0, 0, 0, 0.05);
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+    margin-bottom: 30px;
+	}
+	.form-control-inverse {
+    border-color: #dcdcdc;
+	}
+	.form-control {
+    font-size: 14px;
+    border-radius: 2px;
+    border-width: 2px;
+	}
+  </style>
 </head>
 
 <body>
@@ -113,6 +133,19 @@
                           <option value="${companyList.user_name}">${companyList.user_name}</option>
                           </c:if>
                         </select>
+                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left" id="selectKeyword">
+                          <option>키워드</option>
+                          <c:if test="${modelKeywordList == null}" >
+                          	<c:forEach items="${keywordList}" var = "keywordList">
+                          <option value="${keywordList.keyword_main}">${keywordList.keyword_main}</option>
+                          </c:forEach>
+                          </c:if>
+                          <c:if test="${modelKeywordList != null}">
+                          	<c:forEach items="${modelKeywordList}" var = "keywordList">
+                          <option value="${keywordList.keyword_main}">${keywordList.keyword_main}</option>
+                          </c:forEach>
+                          </c:if>
+                        </select>
 						</c:if>
 
 						<c:if test="${user.user_name != 'union'}">
@@ -127,9 +160,7 @@
                           <option value="${companyList.user_name}">${companyList.user_name}</option>
                           </c:if>
                         </select>
-						</c:if>
-
-                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left" id="selectKeyword">
+                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 m-l-0 p-r-5 f-left select-left" id="selectKeyword">
                           <option>키워드</option>
                           <c:if test="${modelKeywordList == null}" >
                           	<c:forEach items="${keywordList}" var = "keywordList">
@@ -142,11 +173,12 @@
                           </c:forEach>
                           </c:if>
                         </select>
+						</c:if>
                       </div>
                       <div class="col-md-6">
                         <div class="card">
                           <div class="card-header">
-                            <h5>NEWS HEADLINE</h5>
+                            <h5><font style="font-weight: bold; color: black;">NEWS HEADLINE</font></h5>
                             <div class="card-header-right">
                                 <i class="icofont icofont-rounded-down"></i>
                             </div>
@@ -157,7 +189,7 @@
                               <c:if test="${empty headlineList}">
                                      <tbody>
                                      <tr>
-                                     <td align="center" height="243px"><h5>등록된 기사가 없습니다.</h5></td>
+                                     <td style="vertical-align:middle;" align="center" height="243px">등록된 기사가 없습니다.</td>
                                      </tr>
                                      </tbody>
                                      </c:if>
@@ -217,7 +249,8 @@
                                     </td>
                                   </tr>
                                   <tr>
-                                    <th scope="row" style="white-space:initial;">SNS ( facebook / instagram / twitter )</th>
+                                    <th scope="row" style="white-space:initial;">
+                                    SNS ( <i class="icofont icofont-social-facebook"></i> / <i class="icofont icofont-social-instagram"></i> / <i class="icofont icofont-social-twitter"></i> )</th>
                                     <td>
                                     <c:if test="${facebookCount == 0}">
                                     <fmt:formatNumber value="${facebookCount}" groupingUsed="true"/>건 /
@@ -250,10 +283,13 @@
                                     </c:if>
                                     </td>
                                   </tr>
-                                  <tr class="bg-inverse">
-                                    <th scope="row">합계</th>
-                                    <td><fmt:formatNumber value="${mediaTotalcnt + replyTotalcnt
-                                    	+ snsTotalcount + scoreTotalcnt}" groupingUsed="true"/>건</td>
+                                  <tr>
+                                    <th scope="row" style="background-color: #f5f5f5;"><font style="font-weight: bold; color: #e74e02;">합계</font></th>
+                                    <td style="background-color: #f5f5f5;">
+										<font style="font-weight: bold; color: #e74e02;">	
+										<fmt:formatNumber value="${mediaTotalcnt + replyTotalcnt + snsTotalcount + scoreTotalcnt}" groupingUsed="true"/>건
+										</font>
+									</td>
                                   </tr>
                                 </tbody>
                               </table>
@@ -266,8 +302,9 @@
                         <div class="card">
                           <div class="card-header">
                             <h5>
+                            <font style="font-weight: bold; color: black;">
                             	<i class="icofont icofont-chart-line m-r-5"></i>
-                            	기사글 증가현황(금일)
+                            	기사글 증가현황(금일)</font>
                             </h5>
                             <div class="card-header-right">
                               <i class="icofont icofont-rounded-down"></i>
@@ -337,7 +374,7 @@
                               <div class="col-md-12">
                                 <div class="card">
                                   <div class="card-header">
-                                    <h5>이메일 발송현황</h5>
+                                    <h5><font style="font-weight: bold; color: black;">이메일 발송현황</font></h5>
                                   </div>
                                   <div class="card-block table-border-style">
                                     <div class="table-responsive">

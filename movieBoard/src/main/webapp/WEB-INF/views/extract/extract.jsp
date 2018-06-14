@@ -53,6 +53,11 @@
   <link rel="stylesheet" type="text/css" href="../assets/css/simple-line-icons.css">
   <link rel="stylesheet" type="text/css" href="../assets/css/ionicons.css">
   <link rel="stylesheet" type="text/css" href="../assets/css/jquery.mCustomScrollbar.css">
+  <style type="text/css">
+  .text-success {
+    color: #f73b00 !important;
+	}
+  </style>
 </head>
 
 <body>
@@ -110,21 +115,6 @@
                           <option value="${companyList.user_name}">${companyList.user_name}</option>
                           </c:if>
                         </select>
-						</c:if>
-						
-						<c:if test="${user.user_name != 'union'}">
-                         <select style="display: none;" name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="selectCompany">
-                          <option>회사</option>
-                          <c:if test="${user.user_type == 1 }">
-                          <c:forEach items="${companyList}" var = "companyList">
-                          <option value="${companyList.user_name}">${companyList.user_name}</option>
-                          </c:forEach>
-                          </c:if>
-                          <c:if test="${user.user_type == 2}">
-                          <option value="${companyList.user_name}">${companyList.user_name}</option>
-                          </c:if>
-                        </select>
-						</c:if>
                         <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left" id="selectKeyword">
                           <option>키워드</option>
                           <c:if test="${modelKeywordList == null}" >
@@ -145,6 +135,42 @@
 	                        <option id = "120">120</option>
 	                        <option id = "150">150</option>
                         </select>
+						</c:if>
+						
+						<c:if test="${user.user_name != 'union'}">
+                         <select style="display: none;" name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="selectCompany">
+                          <option>회사</option>
+                          <c:if test="${user.user_type == 1 }">
+                          <c:forEach items="${companyList}" var = "companyList">
+                          <option value="${companyList.user_name}">${companyList.user_name}</option>
+                          </c:forEach>
+                          </c:if>
+                          <c:if test="${user.user_type == 2}">
+                          <option value="${companyList.user_name}">${companyList.user_name}</option>
+                          </c:if>
+                        </select>
+                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 m-l-0 f-left select-left" id="selectKeyword">
+                          <option>키워드</option>
+                          <c:if test="${modelKeywordList == null}" >
+                          	<c:forEach items="${keywordList}" var = "keywordList">
+                          <option value="${keywordList.keyword_main}">${keywordList.keyword_main}</option>
+                          </c:forEach>
+                          </c:if>
+                          <c:if test="${modelKeywordList != null}">
+                          	<c:forEach items="${modelKeywordList}" var = "keywordList">
+                          <option value="${keywordList.keyword_main}">${keywordList.keyword_main}</option>
+                          </c:forEach>
+                          </c:if>
+                        </select>
+                        <select id= "selectPerPageNum" name="select" class="col-md-1 form-control form-control-inverse m-r-10 m-b-10 p-r-5 f-left select-left">	
+                        	<option value="30">리스트</option>
+	                        <option id= "30" >30</option>
+	                        <option id = "60">60</option>
+	                        <option id = "120">120</option>
+	                        <option id = "150">150</option>
+                        </select>
+						</c:if>
+                        
                       </div>
                       <div class="col-md-5">
                         <!-- date picker start -->
@@ -170,18 +196,18 @@
                       <div class="col-lg-12">
                         <div class="card">
                           <div class="card-header">
-                                <select id = "selectSearchType" name="select" class="col-sm-1 form-control form-control-inverse m-r-10 m-b-10 f-left search-select">
+                                <select id = "selectSearchType" name="select" class="col-sm-1 form-control form-control-inverse m-r-5 m-b-5 m-t-5 f-left search-select" style="height:40px;">
                                   <option id="t" value="t">제목</option>
                                   <option id="c" value="c">게시글</option>
                                 </select>
-                                <div class="col-sm-3 input-group input-group-button input-group-inverse p-l-0 p-r-0 m-b-10 f-left btn-select">
-                                   <input onkeyup="if(event.keyCode == 13){$('#searchBtn').trigger('click');};"id="keywordInput" type="text" class="form-control" placeholder="">
+                                <div class="col-sm-3 input-group input-group-button input-group-inverse p-l-0 p-r-0 m-b-5 m-t-5 f-left btn-select">
+                                   <input onkeyup="if(event.keyCode == 13){$('#searchBtn').trigger('click');};"id="keywordInput" type="text" class="form-control" placeholder="" style="height:40px;">
                                   <span class="input-group-addon" id="basic-addon1">
-                                    <button id="searchBtn" class=" btn btn-inverse">검색</button>
+                                    <button id="searchBtn" class=" btn btn-search"><i class="icofont icofont-ui-search"></i></button>
                                   </span>
                                 </div>
                                 <c:if test="${user.user_name == 'union'}">
-                                <div class="btn-group f-right p-r-0">
+                                <div class="btn-group f-right p-r-0 m-b-5 m-t-5">
                                   <button type="button" id="allBtn1" class="radiosBtn btn btn-primary btn-outline-primary btn-sm waves-effect waves-light">좋은글</button>
                                   <button type="button" id="allBtn2" class="radiosBtn btn btn-primary btn-outline-primary btn-sm waves-effect waves-light">나쁜글</button>
                                   <button type="button" id="allBtn3" class="radiosBtn btn btn-primary btn-outline-primary btn-sm waves-effect waves-light">관심글</button>
@@ -204,8 +230,8 @@
                                     <th width="7%"><span class="text-muted">키워드</span></th>
                                     <th width="30%">제목 &<span class="text-muted"></span><span class="text-success"> 컨텐츠</span></th>
                                     <th width="10%">추출일 / 작성일</th>
-                                    <th width="10%">분류변경</th>
                                     <c:if test="${user.user_name == 'union'}">
+                                    <th width="10%">분류변경</th>
                                     <th width="5%">분류처리</th>
                                     </c:if>
                                   </tr>
@@ -268,7 +294,11 @@
                                     </th>
                                     <td>${extractVO.domain}<span class="text-muted"></span></td>
                                     <td>${extractVO.domainType}</td>
-                                    <td>${extractVO.company}<span class="text-muted"></span></td>
+                                    <td>
+                                    <c:if test="${extractVO.company != null}">${extractVO.company}<span class="text-muted"></span></c:if>
+                                    <c:if test="${extractVO.company == null}"><i class="icofont icofont-minus"></i></c:if>
+                                    </td>
+                                    </td>
                                     <td>${extractVO.keyword}<span class="text-muted"></span></td>
                                     <td>
                                       <a href="${extractVO.url}" target="_blank">
@@ -278,6 +308,7 @@
                                       <span class="text-success">${extractVO.content}</span>
                                     </td>
                                     <td>${extractVO.createDate} /<br/>${extractVO.writeDate }</td>
+                                    <c:if test="${user.user_name == 'union'}">
                                     <td>
                                       <div class="radios${index.count}">
                                         <input type="radio" id="radio1${index.count}" name="radios${index.count}">
@@ -295,10 +326,9 @@
                                         <label for="radio6${index.count}">미분류</label>
                                       </div>
                                     </td>
-                                    <c:if test="${user.user_name == 'union'}">
                                     <td>
-                                      <button class="btn btn-danger btn-sm alert-confirm1" data-toggle="tooltip" data-placement="top" data-original-title="삭제"><i class="icofont icofont-ui-delete" style="margin-right:0"></i></button>
-                                      <button class="btn btn-primary btn-sm alert-confirm2" data-toggle="tooltip" data-placement="top" data-original-title="즉시처리"><i class="icofont icofont-ui-check" style="margin-right:0"></i></button>
+                                      <button class="btn btn-list btn-sm alert-confirm1" data-toggle="tooltip" data-placement="top" data-original-title="삭제"><i class="icofont icofont-ui-delete" style="margin-right:0"></i></button>
+                                      <button class="btn btn-list btn-sm alert-confirm2" data-toggle="tooltip" data-placement="top" data-original-title="즉시처리"><i class="icofont icofont-ui-check" style="margin-right:0"></i></button>
                                     </td>
                                     </c:if>
                                   </tr>
@@ -306,7 +336,12 @@
                                 </tbody>
                                 <tfoot>
                                   <tr>
+                                  <c:if test="${user.user_name != 'union'}">
+                                    <td colspan="7">
+                                    </c:if>
+                                  <c:if test="${user.user_name == 'union'}">
                                     <td colspan="9">
+                                    </c:if>
                                       <ul class="pagination float-right">
                                         <c:if test="${pageMaker.prev}">
                                           <li class="page-item">

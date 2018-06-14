@@ -123,7 +123,7 @@
                             <button id="month" type="button" class="btn btn-inverse btn-sm waves-effect waves-light">최근30일</button>
                           </div>
                           <div class="input-group float-right date col p-l-15 p-r-15 m-b-10">
-                            <input type="text" id="fromDate" class="form-control form-control-inverse" value="">
+                            <input type="text" id="fromDate" class="form-control form-control-inverse" value="" style="text-align: center;">
                             <span class="input-group-addon bg-inverse">
                               <span class="icofont icofont-ui-calendar"></span>
                             </span>
@@ -138,31 +138,31 @@
                       <div class="col-lg-12">
                         <div class="card">
                           <div class="card-header">
-                            <select id= "selectPerPageNum" name="select" class="col-sm-1 form-control form-control-inverse m-r-10 m-b-10 p-r-5 f-left list-select">
+                            <select id= "selectPerPageNum" name="select" class="col-sm-1 form-control form-control-inverse m-r-5 m-b-5 m-t-5 p-r-5 f-left list-select" style="height:40px;">
                               <option value="10">10</option>
                               <option value="30">30</option>
                               <option value="50">50</option>
                               <option value="100">100</option>
                             </select>
-                            <select id = "selectSearchType" name="select" class="col-sm-1 form-control form-control-inverse m-r-10 m-b-10 f-left search-select">
+                            <select id = "selectSearchType" name="select" class="col-sm-1 form-control form-control-inverse m-r-5 m-b-5 m-t-5 f-left search-select" style="height:40px;">
 							  <option id="r" value="r">기자명</option>
                               <option id="m" value="m">언론사명</option>
                             </select>
-                            <div class="col-sm-2 input-group input-group-button input-group-inverse p-l-0 p-r-0 m-b-10 f-left btn-select">
-                               <input onkeyup="if(event.keyCode == 13){$('#searchBtn').trigger('click');};"id="keywordInput" type="text" class="form-control" placeholder="">
+                            <div class="col-sm-2 input-group input-group-button input-group-inverse p-l-0 p-r-0 m-r-5 m-b-5 m-t-5 f-left btn-select">
+                               <input onkeyup="if(event.keyCode == 13){$('#searchBtn').trigger('click');};"id="keywordInput" type="text" class="form-control" placeholder="" style="height:40px;">
                               <span class="input-group-addon" id="basic-addon1">
-                                <button id="searchBtn" class="btn btn-inverse">검색</button>
+                                <button id="searchBtn" class="btn btn-search"><i class="icofont icofont-ui-search"></i></button>
                               </span>
                             </div>
-                            <button class="btn btn-warning alert-confirm f-right p-r-5 p-l-5 m-l-15 m-b-10" ><i class="icofont icofont-download-alt"></i>EXCEL</button>
-                            <button id="alert-check" class="btn btn-primary alert-check f-right p-r-5 p-l-5 m-l-15 m-b-10" ><i class="icofont icofont-ui-check"></i>등록</button>
+                            <button class="btn btn-warning alert-confirm f-right p-r-5 p-l-5 m-l-15 m-b-5  m-t-5" style="height:40px;"><i class="icofont icofont-download-alt"></i>EXCEL</button>
+                            <button id="alert-check" class="btn btn-list alert-check f-right p-r-5 p-l-5 m-l-15 m-b-5  m-t-5" style="height:40px;"><i class="icofont icofont-ui-check"></i>등록</button>
                             <!-- <input type="submit" value="등록" class="btn btn-primary alert-check f-right p-r-5 p-l-5 m-l-15 m-b-10" onclick="show()"> -->
                             <!-- <button id="insertAllBtn" type="button" class="alert-success-msg btn btn-success waves-effect f-right p-r-5 p-l-5 m-l-15 m-b-10"><i class="icofont icofont-check-circled"></i>선택처리</button> -->
                           </div>
                           <div class="card-block">
                             <div class="table-responsive">
                             <form action="checkList">
-                              <table class="table table-bordered">
+                              <table class="table table-bordered table-sm" style="vertical-align:middle;">
                                 <thead>
                                   <tr>
                                   	<th width="1%"></th>
@@ -172,7 +172,7 @@
                                     <th width="5%">언론사</th>
                                     <th width="5%">기자</th>
                                     <th width="5%">키워드</th>
-                                    <th width="5%">분류변경</th>
+                                    <th width="5%">분류글</th>
                                   </tr>
                                 </thead>
                                 <tbody>
@@ -187,13 +187,19 @@
                                     <input type="checkbox" name="ck" value="${mediaList.media_idx}">
                                     </c:if>
                                     </td>
-                                    <th width="5%">${totalCount -index.count +1 -minusCount}</th>
+                                    <th width="5%" style="vertical-align:middle;">${totalCount -index.count +1 -minusCount}</th>
                                     <td width="10%">${mediaList.writeDate}</td>
                                     <td width="40%" class="text-success"><a href="${mediaList.url}" target="_blank">${mediaList.media_title}</a></td>
                                     <td width="5%">${mediaList.media_name}</td>
-                                    <td width="5%">${mediaList.reporter_name}</td>
+                                    <td width="5%" style="text-align: center;">
+                                    <c:if test="${mediaList.reporter_name != null}">${mediaList.reporter_name}</c:if>
+                                    <c:if test="${mediaList.reporter_name == null}"><i class="icofont icofont-minus"></i></c:if>
+                                    </td>
                                     <td width="5%">${mediaList.keyword}</td>
-                                   	<td width="5%"> <div class="radios${index.count}">
+                                   	<td width="5%" style="text-align: center;">
+                                   	<c:if test="${mediaList.textType != null}">${mediaList.textType}</c:if>
+                                    <c:if test="${mediaList.textType == null}"><i class="icofont icofont-minus"></i></c:if>
+                                   	<%-- <div class="radios${index.count}">
                                         <c:choose>
                                         	<c:when test="${mediaList.textType eq '좋은글'}">
                                         	<input type="radio" id="radio1${index.count}" name="radios${index.count}" checked>
@@ -297,7 +303,7 @@
                                         	</c:when>
                                         </c:choose>
 
-                                      </div></td>
+                                      </div> --%></td>
                                   </tr>
                                   </c:forEach>
                                 </tbody>

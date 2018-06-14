@@ -803,4 +803,16 @@ public class MediaServiceImpl implements MediaService {
 
 		return mediaDAO.mailMatch(cri);
 	}
+
+	@Override
+	public List<MediaVO> mediaListData(SearchCriteria cri) {
+
+		return mediaDAO.mediaListData(cri);
+	}
+
+	@Override
+	public Integer graphmTotalCnt(SearchCriteria cri) {
+
+		return mediaDAO.graphmTotalCnt(cri);
+	}
 }

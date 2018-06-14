@@ -66,12 +66,12 @@
 }
 .tabc th{
 	text-align: center;
-	background-color: #EAEAEA;
-	border-bottom: 2px solid #ddd;
+	background-color: white;
+	border-bottom: 1px solid #ddd;
 }
 .tabc td{
 	text-align: center;
-	border-bottom: 2px solid #ddd;
+	border-bottom: 1px solid #ddd;
 }
   /* .modal-dialog{
   width: 100%;
@@ -148,22 +148,6 @@
                           <option value="${companyList.user_name}">${companyList.user_name}</option>
                           </c:if>
                         </select>
-						</c:if>
-
-						<c:if test="${user.user_name != 'union'}">
-                         <select style="display: none;" name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="selectCompany">
-                          <option>회사</option>
-                          <c:if test="${user.user_type == 1 }">
-                          <c:forEach items="${companyList}" var = "companyList">
-                          <option value="${companyList.user_name}">${companyList.user_name}</option>
-                          </c:forEach>
-                          </c:if>
-                          <c:if test="${user.user_type == 2}">
-                          <option value="${companyList.user_name}">${companyList.user_name}</option>
-                          </c:if>
-                        </select>
-						</c:if>
-
                         <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left" id="selectKeyword">
                           <option>키워드</option>
                           <c:if test="${modelKeywordList == null}" >
@@ -177,6 +161,34 @@
                           </c:forEach>
                           </c:if>
                         </select>
+						</c:if>
+						
+						<c:if test="${user.user_name != 'union'}">
+                         <select style="display: none;" name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="selectCompany">
+                          <option>회사</option>
+                          <c:if test="${user.user_type == 1 }">
+                          <c:forEach items="${companyList}" var = "companyList">
+                          <option value="${companyList.user_name}">${companyList.user_name}</option>
+                          </c:forEach>
+                          </c:if>
+                          <c:if test="${user.user_type == 2}">
+                          <option value="${companyList.user_name}">${companyList.user_name}</option>
+                          </c:if>
+                        </select>
+                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 m-l-0 f-left select-left" id="selectKeyword">
+                          <option>키워드</option>
+                          <c:if test="${modelKeywordList == null}" >
+                          	<c:forEach items="${keywordList}" var = "keywordList">
+                          <option value="${keywordList.keyword_main}">${keywordList.keyword_main}</option>
+                          </c:forEach>
+                          </c:if>
+                          <c:if test="${modelKeywordList != null}">
+                          	<c:forEach items="${modelKeywordList}" var = "keywordList">
+                          <option value="${keywordList.keyword_main}">${keywordList.keyword_main}</option>
+                          </c:forEach>
+                          </c:if>
+                        </select>
+						</c:if>
                       </div>
                       <div class="col-md-5">
                         <!-- date picker start -->
@@ -188,7 +200,7 @@
                             <button id="month" type="button" class="btn btn-inverse btn-sm waves-effect waves-light">최근30일</button>
                           </div>
                           <div class="input-group float-right date col p-l-15 p-r-15 m-b-10">
-                            <input type="text" id="fromDate" class="form-control form-control-inverse" value="">
+                            <input type="text" id="fromDate" class="form-control form-control-inverse" value="" style="text-align: center;">
                             <span class="input-group-addon bg-inverse">
                               <span class="icofont icofont-ui-calendar"></span>
                             </span>
@@ -250,8 +262,9 @@
                                 <div class="card">
                                 <div class="card-header">
                                   <h5 class="card-header-text">
-                                    <i class="icofont icofont-chart-line m-r-5"></i>
-                                    	검출량 그래프
+                                  <font style="font-weight: bold; color: black;">
+                                    <i class="icofont icofont-chart-line m-r-5"></i>검출량 그래프
+                                    </font>
                                   </h5>
                                   <div class="card-header-right">
                                     <i class="icofont icofont-rounded-down"></i>
@@ -270,13 +283,13 @@
                               <div class="col-lg-12">
                                 <div class="card">
                                   <div class="card-header">
-                                    <h5 class="card-header-text m-b-10"> 검출데이터</h5>
+                                    <h5 class="card-header-text m-b-10 m-t-10"><font style="font-weight: bold; color: black;">검출데이터</font></h5>
                                     <table class="padd m-t-10"><tr><td>
                                     <div class="btn-group f-right p-r-0 ">
-                                   	 	<button type="button" class="btn btn-primary m-b-5" data-toggle="modal" data-target="#textType1">좋은글</button>
-                                   	 	<button type="button" class="btn btn-primary m-b-5" data-toggle="modal" data-target="#textType2" style="margin-left: 2px">나쁜글</button>
-                                   	 	<button type="button" class="btn btn-primary m-b-5" data-toggle="modal" data-target="#textType3" style="margin-left: 2px">관심글</button>
-                                   	 	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#textType4" style="margin-left: 2px">기타글</button>
+                                   	 	<button type="button" class="btn btn-modal m-b-5" data-toggle="modal" data-target="#textType1">좋은글</button>
+                                   	 	<button type="button" class="btn btn-modal m-b-5" data-toggle="modal" data-target="#textType2" style="margin-left: 2px">나쁜글</button>
+                                   	 	<button type="button" class="btn btn-modal m-b-5" data-toggle="modal" data-target="#textType3" style="margin-left: 2px">관심글</button>
+                                   	 	<button type="button" class="btn btn-modal" data-toggle="modal" data-target="#textType4" style="margin-left: 2px">기타글</button>
 		                            </div></td><td></td><td></td><td>
 	                                <div class="btn-group f-right p-r-0">
 	                                	<button class="btn btn-warning m-b-5 f-right alert-confirm" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'alert-confirm']);"><i class="icofont icofont-download-alt"></i>EXCEL</button>
@@ -284,7 +297,15 @@
                                   </div>
                                     <!-- list satart -->
                                     <div class="table-responsive">
-                                      <table class="table">
+                                      <table class="table table-bordered table-sm">
+                                      <c:if test="${empty mediaList}">
+                                      <tbody>
+	                                     <tr>
+	                                     <td style="vertical-align:middle;" align="center" height="100px">등록된 기사가 없습니다.</td>
+	                                     </tr>
+	                                     </tbody>
+                                     	</c:if>
+                                     	<c:if test="${!empty mediaList}">
                                         <thead>
                                             <tr>
                                               <th width="5%">NO</th>
@@ -297,17 +318,21 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                          <c:forEach items="${searchList}" var = "mediaVO" varStatus="index">
+                                          <c:forEach items="${mediaList}" var = "List" varStatus="index">
                                           <tr>
                                             <th scope="row">${totalCountPage -index.count +1 -minusCount}</th>
                                             <td>
-                                            <fmt:formatDate value="${mediaVO.updateDate}" pattern="yyyy-MM-dd kk:mm:ss"/>
+                                            ${List.writeDate}
+                                            <%-- <fmt:formatDate value="${mediaVO.writeDate}" pattern="yyyy-MM-dd kk:mm:ss"/> --%>
                                             </td>
-                                            <td>${mediaVO.media_name}</td>
-                                            <td>${mediaVO.reporter_name}</td>
-                                            <td><a href='${mediaVO.url}' target="_blank">${mediaVO.media_title}</a></td>
-                                            <td>${mediaVO.keyword}</td>
-                                            <td>${mediaVO.textType}</td>
+                                            <td>${List.media_name}</td>
+                                            <td>
+                                            <c:if test="${List.reporter_name != null}">${List.reporter_name}</c:if>
+                                            <c:if test="${List.reporter_name == null}"><i class="icofont icofont-minus"></i></c:if>
+                                            </td>
+                                            <td><a href='${List.url}' target="_blank">${List.media_title}</a></td>
+                                            <td>${List.keyword}</td>
+                                            <td>${List.textType}</td>
                                           </tr>
                                           </c:forEach>
                                         </tbody>
@@ -342,6 +367,7 @@
                                             </td>
                                           </tr>
                                         </tfoot>
+                                        </c:if>
                                       </table>
                                     </div>
                                     <!-- list end -->
@@ -505,7 +531,7 @@
                                               <fmt:formatDate value="${mediaVO.updateDate}" pattern="yyyy-MM-dd"/>
                                               </td>
                                               <td>${mediaVO.media_name}</td>
-                                              <td><a href='${mediaVO.url}' target="_blank" style="font-size: 12px;"><b>${mediaVO.media_title}</b></a></td>
+                                              <td><a href='${mediaVO.url}' target="_blank" style="font-size: 12px;"><div class="content-nowrap"><b>${mediaVO.media_title}</b></div></a></td>
                                               <td>${mediaVO.keyword}</td>
                                               <td>${mediaVO.textType}</td>
                                             </tr>

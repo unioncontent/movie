@@ -131,6 +131,19 @@
                           <option value="${companyList.user_name}">${companyList.user_name}</option>
                           </c:if>
                         </select>
+                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left" id="selectKeyword">
+                          <option>키워드</option>
+                          <c:if test="${modelKeywordList == null}" >
+                          	<c:forEach items="${keywordList}" var = "keywordList">
+                          <option value="${keywordList.keyword_main}">${keywordList.keyword_main}</option>
+                          </c:forEach>
+                          </c:if>
+                          <c:if test="${modelKeywordList != null}">
+                          	<c:forEach items="${modelKeywordList}" var = "keywordList">
+                          <option value="${keywordList.keyword_main}">${keywordList.keyword_main}</option>
+                          </c:forEach>
+                          </c:if>
+                        </select>
 						</c:if>
 
 						<c:if test="${user.user_name != 'union'}">
@@ -145,8 +158,7 @@
                           <option value="${companyList.user_name}">${companyList.user_name}</option>
                           </c:if>
                         </select>
-						</c:if>
-                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left" id="selectKeyword">
+                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 m-l-0 p-r-5 f-left select-left" id="selectKeyword">
                           <option>키워드</option>
                           <c:if test="${modelKeywordList == null}" >
                           	<c:forEach items="${keywordList}" var = "keywordList">
@@ -159,6 +171,7 @@
                           </c:forEach>
                           </c:if>
                         </select>
+						</c:if>
                       </div>
 					  <!-- <input type="button" class="btn btn-primary m-b-0 f-left select-left" data-toggle="modal" data-target="#press-modal" value="미리보기" onclick="fn_layer_popup()"> -->
                       <!-- <input type="button" class="btn btn-primary m-b-0 f-left select-left" data-toggle="modal" data-target="#press-modal" value="미리보기" onclick="PrintDiv()"> -->
@@ -173,7 +186,7 @@
                             <button id="month" type="button" class="btn btn-inverse btn-sm waves-effect waves-light">최근30일</button>
                           </div>
                           <div class="input-group float-right date col p-l-15 p-r-15 m-b-10">
-                            <input type="text" id="fromDate" class="form-control form-control-inverse" value="">
+                            <input type="text" id="fromDate" class="form-control form-control-inverse" value="" style="text-align: center;">
                             <span class="input-group-addon bg-inverse">
                               <span class="icofont icofont-ui-calendar"></span>
                             </span>
@@ -199,9 +212,9 @@
                               <td align="right" colspan="2">
                               <input type="text" id="clip_target" value="" style="opacity: 0;">
                               <input type="button"  class="btn btn-primary f-right p-r-5 p-l-5 m-l-15 m-b-10 copyBtn" data-toggle="modal" data-target="#press-modal" value="복사">
-                              <input type="button" class="btn btn-primary f-right p-r-5 p-l-5 m-l-15 m-b-10" data-toggle="modal" data-target="#press-modal" value="인쇄" onclick="PrintDiv()">
+                              <input type="button" class="btn btn-list f-right p-r-5 p-l-5 m-l-15 m-b-10" data-toggle="modal" data-target="#press-modal" value="인쇄" onclick="PrintDiv()">
                               <c:if test="${startDate != null}">
-                              <button type="button" class="edit-button btn btn-primary waves-effect waves-light" style="margin-right: 5px;" data-toggle="tooltip" data-placement="top" data-original-title="수정">
+                              <button type="button" class="edit-button btn btn-list waves-effect waves-light" style="margin-right: 5px;" data-toggle="tooltip" data-placement="top" data-original-title="수정">
                                                                         수정
                               </button>
                               </c:if>

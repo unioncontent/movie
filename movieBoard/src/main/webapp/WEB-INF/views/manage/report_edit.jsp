@@ -191,7 +191,7 @@
                                 <label class="col-sm-2"></label>
                                 <div class="col-sm-12">
                                 <c:if test="${selectKey == null}">
-                                    <h5><font color="darkgrey">키워드를 선택해주세요.</font></h5>
+                                    <h5><font style="font-weight: bold; color: black;">키워드를 선택해주세요.</font></h5>
                                  </c:if>
                                 <c:if test="${selectKey != null}">
                                     <!-- <button id="alert-check" class="btn btn-primary alert-check f-right p-r-5 p-l-5 m-l-15 m-b-10" ><i class="icofont icofont-ui-check"></i>등록</button> -->
