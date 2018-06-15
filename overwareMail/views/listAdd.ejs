@@ -19,12 +19,21 @@
     <div class="page-body">
       <div class="row">
         <div class="col-md-12">
+          <div class="alert alert-default" style="border-radius:  0; border-width:  2px;  margin-bottom: 1rem;">
+          	<ul class="p-l-15 f-12" style="list-style-type: disc; color:  #666;">
+              	<li>회사명은 검색창에서 선택해주세요. 검색창에 회사가 없을 시 회사명을 입력해주시기 바랍니다.</li>
+                <li>기자로 분류 시 메일 발송 후 통계페이지에서 해당 기자의 기사건과 댓글 수를 확인할 수 있습니다.</li>
+                <li>이름에 '기자'가 들어갈 경우 이름 뒤에 공백 후 '기자'를 넣어주시기 바랍니다. ex) 홍길동 기자( ○ ) / 홍길동기자 ( X )</li>
+          	</ul>
+        	</div>
+        </div>
+        <div class="col-md-12">
           <div class="card">
             <div class="card-block">
               <div class="form-group row">
                 <label class="col-sm-2 col-form-label">* 회사</label>
                 <div class="col-sm-5">
-                  <input id="mediaName" type="text" class="form-control" placeholder="회사명은 검색창에서 선택해주세요. 검색창에 회사가 없을 시 회사명을 입력해주세요.">
+                  <input id="mediaName" type="text" class="form-control" placeholder="회사명">
                   <span class='messages'><p class='text-danger error'></p></span>
                 </div>
                 <div class="col-sm-1 btn-check">
