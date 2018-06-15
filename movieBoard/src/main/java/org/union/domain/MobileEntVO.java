@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class MobileEntVO {
 	private Integer ME_idx;
-    	private String ME_rank;
+    private String ME_rank;
 	private String ME_title;
 	private String writeDate;
 	private String title_key;
@@ -14,6 +14,7 @@ public class MobileEntVO {
 	private String url;
 	private String reporter_name;
 	private String reporter_media_name;
+	private Integer reply_cnt;
 	private Date createDate;
 	private Date updateDate;
 		
@@ -120,12 +121,22 @@ public class MobileEntVO {
 	public void setReporter_media_name(String reporter_media_name) {
 		this.reporter_media_name = reporter_media_name;
 	}
+	
+	public Integer getReply_cnt() {
+		return reply_cnt;
+	}
+
+	public void setReply_cnt(Integer reply_cnt) {
+		this.reply_cnt = reply_cnt;
+	}
 
 	@Override
 	public String toString() {
 		return "MobileEntVO [ME_idx=" + ME_idx + ", ME_rank=" + ME_rank + ", ME_title=" + ME_title + ", writeDate="
 				+ writeDate + ", title_key=" + title_key + ", keyword=" + keyword + ", keyword_type=" + keyword_type
 				+ ", uid=" + uid + ", url=" + url + ", reporter_name=" + reporter_name + ", reporter_media_name="
-				+ reporter_media_name + ", createDate=" + createDate + ", updateDate=" + updateDate + "]";
+				+ reporter_media_name + ", reply_cnt=" + reply_cnt + ", createDate=" + createDate + ", updateDate="
+				+ updateDate + "]";
 	}
+
 }

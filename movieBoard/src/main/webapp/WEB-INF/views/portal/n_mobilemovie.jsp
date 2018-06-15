@@ -295,6 +295,7 @@
 																		<th>등록날짜</th>
 																		<!-- <th>순위</th> -->
 																		<th>제목</th>
+																		<th>댓글수</th>
 																		<th>키워드</th>
 																		<th>기자</th>
 																		<th>언론사</th>
@@ -310,6 +311,10 @@
 																				<div class="nobr content">
 																					<a href="${elist.url}" target="_blank"> ${elist.ME_title} </a>
 																				</div>
+																			</td>
+																			<td>
+																			<c:if test="${elist.reply_cnt != null}">${elist.reply_cnt}</c:if>
+                                            								<c:if test="${elist.reply_cnt == null}"><i class="icofont icofont-minus"></i></c:if>
 																			</td>
 																			<td><div class="keyword-nowrap">
 																			<c:if test="${elist.keyword != null}">${elist.keyword}</c:if>
@@ -328,7 +333,7 @@
 																</tbody>
 																<tfoot>
 																	<tr>
-																		<td colspan="6">
+																		<td colspan="7">
 																			<ul class="pagination float-right">
 							                                                <c:if test="${pageMaker.prev}">
 							                                              		<li class="page-item">
