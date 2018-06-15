@@ -8,7 +8,7 @@ const DBpromise = require('../db/db_info.js');
 var mail = {
   selectMailTableName: async function(){
     sql = 'SELECT TABLE_NAME FROM Information_schema.tables \
-    WHERE table_schema = \'union\' \
+    WHERE table_schema = \'union_mail\' \
     AND table_name LIKE \'ml_automail_tran_%\';';
     return await getResult(sql);
   },
@@ -18,17 +18,17 @@ var mail = {
     return await getResult(sql,pValue);
   },
   deleteMlAMSG: async function(param){
-    var sql = 'delete from ml_automail_message where MSGID=?;';
+    var sql = 'delete from union_mail.ml_automail_message where MSGID=?;';
     return await getResult(sql,param);
   },
   deleteMlAT: async function(param){
-    var sql = 'delete from ml_automail_tran where MSGID=?;';
+    var sql = 'delete from union_mail.ml_automail_tran where MSGID=?;';
     return await getResult(sql,param)
     // sql = 'delete from ml_automail_tran_201805 where MSGID=?;';
     // return await getResult(sql,param);
   },
   deleteMlABackUp: async function(table,param){
-    sql = 'delete from '+table+' where MSGID=?;';
+    sql = 'delete from union_mail.'+table+' where MSGID=?;';
     return await getResult(sql,param);
   },
   selectResultDetail:async function(param){
@@ -44,7 +44,7 @@ var mail = {
     return await getResult(sql,param.arr);
   },
   selectResult: async function(param){
-    var sql = 'select distinct RSLTMSG from ml_automail_tran where MSGID = ?';
+    var sql = 'select distinct RSLTMSG from union_mail.ml_automail_tran where MSGID = ?';
     var result = await getResult(sql,param);
     var returnVal = false;
     console.log(result);
@@ -55,11 +55,11 @@ var mail = {
     return returnVal;
   },
   selectResult2: async function(param){
-    var sql = 'select * from ml_automail_tran where MSGID = ?';
+    var sql = 'select * from union_mail.ml_automail_tran where MSGID = ?';
     return await getResult(sql,param);
   },
   selectResult3: async function(param){
-    var sql = 'select * from ml_automail_tran where MSGID = ? and EMTOADDRESS = ?';
+    var sql = 'select * from union_mail.ml_automail_tran where MSGID = ? and EMTOADDRESS = ?';
     return await getResult(sql,param);
   }
 }
@@ -71,7 +71,7 @@ function insertSqlSetting(table,keys){
   var arr = [].map.call(keys, function(obj) { return '?'; });
   columns = keys.join(', ');
   placeholders = arr.join(', ');
-  var sql = "INSERT INTO "+table+" ( "+columns+" ) VALUES ( "+placeholders+" );";
+  var sql = "INSERT INTO union_mail."+table+" ( "+columns+" ) VALUES ( "+placeholders+" );";
   return sql;
 }
 
