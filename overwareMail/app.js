@@ -64,20 +64,16 @@ app.use(function(req, res, next) {
 
 var index = require('./routes/index');
 app.use('/', index);
-app.use('/login', index);
-app.use('/preview',index);
-app.use('/preview_mail',index);
 var period = require('./routes/period');
 app.use('/period', period);
+var newsclipping = require('./routes/newsclipping');
+app.use('/newsclipping', newsclipping);
 var email = require('./routes/email');
 app.use('/email', email);
-app.use('/email/body',email);
-app.use('/email/manage', email);
 var list = require('./routes/list');
 app.use('/list', list);
 var user = require('./routes/user');
 app.use('/user', user);
-app.use('/user/add', user);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
