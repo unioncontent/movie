@@ -41,7 +41,7 @@ tinymce.init({
     '//use.fontawesome.com/releases/v5.0.13/css/all.css'
   ],
   content_style: [
-    '.mce-content-body {padding:30px; margin:auto; padding-top:25px; font-size: 12px; font-family: 돋움!important;color: #333333;}.mce-content-body p{margin:12px 0;padding: 0;}'
+    '.mce-content-body {line-height: 1.5; padding:30px; margin:auto; padding-top:25px; font-size: 12px; font-family: 돋움!important;color: #333333;}.mce-content-body p{margin:0;padding: 0;} .mce-content-body hr{margin: 6px 0px;}'
   ],
   setup: function(editor) {
     editor.on('init', function(){
