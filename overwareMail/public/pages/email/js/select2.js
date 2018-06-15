@@ -208,7 +208,7 @@ $(".recipi-select").select2({
     cache: true
   },
   multiple: true,
-  placeholder: '받는 사람',
+  placeholder: '받는 사람(이름/이메일/회사)',
   allowClear: true,
   language: 'ko',
   minimumInputLength: 0,

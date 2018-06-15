@@ -21,7 +21,7 @@
         <div class="col-md-12">
           <div class="card">
             <div class="card-header">
-              <button type="submit" class="btn btn-inverse f-right m-b-0 sendBtn">완료</button>
+              <button type="submit" class="btn btn-inverse f-right m-b-0 sendBtn">저장</button>
               <button type="submit" class="btn btn-inverse f-right m-b-0 m-r-5 perivewBtn">미리보기</button>
             </div>
             <div class="card-block">
@@ -85,7 +85,7 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-sm-2 col-form-label">수신그룹</label>
+                <label class="col-sm-2 col-form-label">수신자 그룹</label>
                 <div class="col-sm-5">
                   <select id="M_group" class="group-select col-sm-12 form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true">
                   </select>
@@ -160,7 +160,7 @@
               </div> -->
             </div>
             <div class="card-bottom">
-              <button type="submit" class="btn btn-inverse f-right m-b-0 sendBtn">완료</button>
+              <button type="submit" class="btn btn-inverse f-right m-b-0 sendBtn">저장</button>
               <button type="submit" class="btn btn-inverse f-right m-b-0  m-r-5 perivewBtn">미리보기</button>
             </div>
           </div>
@@ -379,31 +379,41 @@
               </button>
             </div>
             <div class='modal-body'>
-              <p class="text-muted">※ 본문에 링크할 자료 버튼을 삽입합니다.</p>
-              <div class="m-b-20 form-radio">
-                <div class="radio radiofill radio-default radio-inline">
-                    <label>
-                        <input type="radio" name="btnType" value="cBtn-a">
-                        <i class="helper"></i>
-                        <span style="color:white;width: 100px; background:#4E4E4E; margin-top:20px; padding: 5px 20px; text-align: center;">본문자료</span>
-                    </label>
-                </div>
-                <div class="radio radiofill radio-default radio-inline">
-                    <label>
-                        <input type="radio" name="btnType" value="cBtn-b">
-                        <i class="helper"></i>
-                        <span style="background:#f9f9f9; border: 1px solid #000000; width: 130px; margin-top:5px; padding: 5px 15px; font-weight: bold; ; font-size: 12px;">관련 데이터</span>
-                    </label>
-                </div>
-                <div class="radio radiofill radio-default radio-inline">
-                    <label>
-                        <input type="radio" name="btnType" value="cBtn-c">
-                        <i class="helper"></i>
-                        <span style="color:white;width: 100px; background:#3d94f6; margin-top:10px; padding: 5px 20px; text-align: center;">바로가기</span>
-                    </label>
+              <!-- <p class="text-muted">※ 본문에 링크할 자료 버튼을 삽입합니다.</p> -->
+              <div class="col-md-12">
+                <div class="alert alert-default" style="border-radius:  0; border-width:  2px;  margin-bottom: 2rem;">
+                	<ul class="p-l-15 f-12" style="list-style-type: disc; color:  #666;">
+                    	<li>본문에 링크할 자료 버튼을 삽입합니다.</li>
+                      <li>버튼 삽입 후 버튼 이름을 수정할 시, 이름에 커서를 위치하거나 이름을 드래그한 후 마우스 오른쪽 클릭 후 링크 메뉴를 선택해주시고 본문 항목의 이름을 수정하면 됩니다.</li>
+                	</ul>
+              	</div>
+              </div>
+              <div class="col-md-12">
+                <div class="m-b-0 form-radio">
+                  <div class="radio radiofill radio-default radio-inline" style="height: 36px;">
+                      <label>
+                          <input type="radio" name="btnType" value="cBtn-a">
+                          <i class="helper"></i>
+                          <span style="color:white;width: 100px; background:#4E4E4E; margin-top:20px; padding: 5px 20px; text-align: center;">본문자료</span>
+                      </label>
+                  </div>
+                  <div class="radio radiofill radio-default radio-inline" style="height: 36px;">
+                      <label>
+                          <input type="radio" name="btnType" value="cBtn-b">
+                          <i class="helper"></i>
+                          <span style="background:#f9f9f9; border: 1px solid #000000; width: 130px; margin-top:5px; padding: 5px 15px; font-weight: bold; ; font-size: 12px;">관련 데이터</span>
+                      </label>
+                  </div>
+                  <div class="radio radiofill radio-default radio-inline" style="height: 36px;">
+                      <label>
+                          <input type="radio" name="btnType" value="cBtn-c">
+                          <i class="helper"></i>
+                          <span style="color:white;width: 100px; background:#3d94f6; margin-top:10px; padding: 5px 20px; text-align: center;">바로가기</span>
+                      </label>
+                  </div>
                 </div>
               </div>
-              <div class="m-b-20">
+              <div class="col-md-12 m-b-10">
                 <div class="row">
                   <label class="col-sm-3 col-form-label">버튼이름</label>
                   <div class="col-sm-9">
@@ -411,8 +421,10 @@
                   </div>
                 </div>
               </div>
-              <input type='file' class="form-control" id="fileUpload"/>
-              <input type='text' class="form-control" id="urlInput" style="display:none" placeholder="URL을 입력해주세요."/>
+              <div class="col-md-12">
+                <input type='file' class="form-control" id="fileUpload"/>
+                <input type='text' class="form-control" id="urlInput" style="display:none" placeholder="URL을 입력해주세요."/>
+              </div>
             </div>
             <div class="modal-footer">
               <button class="btn btn-secondary mobtn" data-dismiss='modal' aria-label='Close' type="button">취소</button>
@@ -675,7 +687,7 @@
       }
     });
   }
-  // 메일 보내기 버튼 클릭시
+  // 메일 저장 버튼 클릭시
   $(".sendBtn").on("click",function(){
     var param = {
       'M_seq_number': $("#M_seq_number").val(),

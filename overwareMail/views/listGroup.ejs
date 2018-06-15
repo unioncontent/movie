@@ -176,26 +176,24 @@
                     <table class="table table-columned table-striped" id="modal-groupList">
                       <thead>
                         <tr>
-                          <th></th>
                           <th class="text-center">이메일</th>
                           <th class="text-center">이름</th>
-                          <th class="text-center">검색</th>
                           <th class="text-center">추가</th>
+                          <th class="text-center">검색</th>
                         </tr>
                       </thead>
                       <tbody>
                         <tr id="inputKey"  class="text-center">
-                          <th  class="text-center centerTh">등록</th>
                           <td>
-                            <input type="text" class="form-control" id="email">
+                            <input type="text" class="form-control" id="email" placeholder="등록된 이메일">
                             <span class="messages"><p class="text-danger error m-b-0"></p></span>
                           </td>
                           <td>
-                            <input type="text" class="form-control" id="name">
+                            <input type="text" class="form-control" id="name" placeholder="등록된 이메일의 이름">
                             <span class="messages"><p class="text-danger error m-b-0"></p></span>
                           </td>
-                          <td><button class="btn btn-inverse btn-sm" id="searchMail"><i class="fas fa-search" style="margin-right:0"></i></button></td>
                           <td><button class="btn btn-success btn-sm" id="insertBtn"><i class="fas fa-plus" style="margin-right:0"></i></button></td>
+                          <td><button class="btn btn-inverse btn-sm" id="searchMail"><i class="fas fa-search" style="margin-right:0"></i></button></td>
                       </tbody>
                     </table>
                   </div>
@@ -891,9 +889,8 @@
                 <span class="sr-only">Previous</span>\
               </a></li>';
           }
-
           for(var index=pRCnt * pageSize + 1;index<(pRCnt + 1)*pageSize + 1;index++){
-            var active = (data.currentPage == index) ? "active" : "";
+            var active = (data.list.currentPage == index) ? "active" : "";
             html += '<li class=\"'+active+' page-item">\
               <a class="page-link" data-value=\"'+index+'"\ >'+index+'</a></li>'
 
