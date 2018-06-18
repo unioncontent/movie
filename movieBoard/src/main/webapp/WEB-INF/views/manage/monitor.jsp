@@ -1198,5 +1198,4 @@
   <script src="../assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
   <script src="../assets/js/jquery.mousewheel.min.js"></script>
 </body>
-
 </html>

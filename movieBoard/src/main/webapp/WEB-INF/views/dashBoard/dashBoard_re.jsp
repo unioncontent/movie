@@ -49,26 +49,6 @@
   <link rel="stylesheet" type="text/css" href="../assets/css/simple-line-icons.css">
   <link rel="stylesheet" type="text/css" href="../assets/css/ionicons.css">
   <link rel="stylesheet" type="text/css" href="../assets/css/jquery.mCustomScrollbar.css">
-  <style type="text/css">
-  a:hover { color: black; text-decoration: underline;}
-  .card {
-    border-radius: 2px;
-    border-top: 1px solid #34495e;
-    box-shadow: 0 2px 1px rgba(0, 0, 0, 0.05);
-    border-left: none;
-    border-right: none;
-    border-bottom: none;
-    margin-bottom: 30px;
-	}
-	.form-control-inverse {
-    border-color: #dcdcdc;
-	}
-	.form-control {
-    font-size: 14px;
-    border-radius: 2px;
-    border-width: 2px;
-	}
-  </style>
 </head>
 
 <body>
@@ -624,6 +604,19 @@ $(function() {
 	  $(document).ajaxSend(function(e, xhr, options) {
 	  	xhr.setRequestHeader(header, token);
 	  });
+});
+
+//BODY 에 로딩화면 추가
+var loading = $('<div id="loading" class="loading"></div><img id="loading_img" alt="loading" src="../assets/images/ajax-loader.gif">').appendTo(document.body).hide();
+
+//	ajax 통신 시작시 실행
+$(window).ajaxStart(function() {
+	loading.show();
+});
+
+//	ajax 통신 종료시 실행
+$(window).ajaxStop(function() {
+	loading.hide();
 });
 
 $(document).ready(function(){

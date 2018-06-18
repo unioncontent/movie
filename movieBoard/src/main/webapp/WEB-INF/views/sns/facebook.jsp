@@ -47,6 +47,11 @@
   <link rel="stylesheet" type="text/css" href="../assets/css/simple-line-icons.css">
   <link rel="stylesheet" type="text/css" href="../assets/css/ionicons.css">
   <link rel="stylesheet" type="text/css" href="../assets/css/jquery.mCustomScrollbar.css">
+  <style type="text/css">
+  .pcoded .pcoded-navbar[active-item-theme=theme5] .pcoded-item li .pcoded-submenu li.active>a {
+    color: #8fc320!important;
+}
+  </style>
 </head>
 <body>
 	<!-- Pre-loader start -->
@@ -377,6 +382,7 @@
 	  	  xhr.setRequestHeader(header, token);
 	  });
   });
+  
 
   $(document).ready(function(){
 
