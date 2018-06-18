@@ -356,7 +356,9 @@
                                     <h5 class="card-header-text m-b-10 m-t-10"><font style="font-weight: bold; color: black;">평점 관리 리스트</font></h5>
                                     <div class="f-right m-t-10">
                                       <button class="btn btn-warning alert-excel f-right p-r-5 p-l-5 m-l-15 m-b-10"><i class="icofont icofont-download-alt"></i>EXCEL</button>
+                                      <c:if test="${user.user_name == 'union'}">
                                       <button id="alert-check" class="btn btn-list alert-check f-right p-r-5 p-l-5 m-l-15 m-b-10"><i class="icofont icofont-ui-check"></i>등록</button>
+                                      </c:if>
                                     </div>
                                   </div>
                                   <div class="card-block table-border-style">
@@ -372,7 +374,9 @@
 	                                    <c:if test="${!empty scoreList}">
                                         <thead>
                                           <tr>
+                                          	<c:if test="${user.user_name == 'union'}">
                                           	<th width="1%"></th>
+                                          	</c:if>
                                             <th>NO</th>
                                             <th>등록일</th>
                                             <th>구분</th>
@@ -385,6 +389,7 @@
                                           <c:forEach items="${scoreList}" var="score" varStatus="index">
                                           <tr class = "trList">
                                           	<input type="hidden" value="${score.portal_idx}" name="portal_idx">
+                                          	<c:if test="${user.user_name == 'union'}">
                                           	<td>
                                           	<c:if test="${score.portal_state == 1}">
 		                                    <input type="checkbox" name="ck" value="${score.portal_idx}" checked="checked">
@@ -393,6 +398,7 @@
 		                                    <input type="checkbox" name="ck" value="${score.portal_idx}">
 		                                    </c:if>
                                           	</td>
+                                          	</c:if>
                                             <th>${totalCount - minusCount - index.count + 1}</th>
                                             <td>${score.writeDate}</td>
                                             <td>${score.portal_name}</td>
@@ -404,7 +410,12 @@
                                         </tbody>
                                         <tfoot>
                                           <tr>
-                                            <td colspan="7">
+                                          <c:if test="${user.user_name != 'union'}">
+		                                    <td colspan="6">
+		                                    </c:if>
+		                                  <c:if test="${user.user_name == 'union'}">
+		                                    <td colspan="7">
+		                                    </c:if>
                                                <ul class="pagination float-right">
         					                              <c:if test="${pageMaker.prev}">
         					                                <li class="page-item">

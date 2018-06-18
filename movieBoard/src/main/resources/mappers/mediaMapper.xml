@@ -71,7 +71,7 @@
 				and keyword in (select keyword from keyword_data where keyword_main = #{selectKey})
 			</if>
 		<if test="startDate == null">
-			and writeDate <![CDATA[>=]]> CURDATE()
+			and createDate <![CDATA[>=]]> CURDATE()
 		</if>	
 		<if test="startDate != null and endDate != null">
 			and createDate <![CDATA[>=]]> #{startDate}
@@ -120,6 +120,9 @@
 		<if test="selectKey != null">
 				and keyword in (select keyword from keyword_data where keyword_main = #{selectKey})
 			</if>
+		<if test="startDate == null">
+			and createDate <![CDATA[>=]]> CURDATE()
+		</if>
 		<if test="startDate != null">
 			and createDate <![CDATA[>]]> #{startDate}
 			<if test="endDate != null">
@@ -522,7 +525,7 @@
 			url is not null
 		<include refid="search2"></include>
 		order 
-			by updateDate desc
+			by createDate desc
 		limit  
 		#{startPage}, #{perPageNum}
 		

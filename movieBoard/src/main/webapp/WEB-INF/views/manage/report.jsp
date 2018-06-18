@@ -213,10 +213,12 @@
                               <input type="text" id="clip_target" value="" style="opacity: 0;">
                               <input type="button"  class="btn btn-primary f-right p-r-5 p-l-5 m-l-15 m-b-10 copyBtn" data-toggle="modal" data-target="#press-modal" value="복사">
                               <input type="button" class="btn btn-list f-right p-r-5 p-l-5 m-l-15 m-b-10" data-toggle="modal" data-target="#press-modal" value="인쇄" onclick="PrintDiv()">
+                              <c:if test="${user.user_name == 'union'}">
                               <c:if test="${startDate != null}">
                               <button type="button" class="edit-button btn btn-list waves-effect waves-light" style="margin-right: 5px;" data-toggle="tooltip" data-placement="top" data-original-title="수정">
                                                                         수정
                               </button>
+                              </c:if>
                               </c:if>
                               </td>
                               </tr>

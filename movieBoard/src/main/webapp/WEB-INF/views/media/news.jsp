@@ -155,7 +155,9 @@
                               </span>
                             </div>
                             <button class="btn btn-warning alert-confirm f-right p-r-5 p-l-5 m-l-15 m-b-5  m-t-5" style="height:40px;"><i class="icofont icofont-download-alt"></i>EXCEL</button>
+                            <c:if test="${user.user_name == 'union'}">
                             <button id="alert-check" class="btn btn-list alert-check f-right p-r-5 p-l-5 m-l-15 m-b-5  m-t-5" style="height:40px;"><i class="icofont icofont-ui-check"></i>등록</button>
+                            </c:if>
                             <!-- <input type="submit" value="등록" class="btn btn-primary alert-check f-right p-r-5 p-l-5 m-l-15 m-b-10" onclick="show()"> -->
                             <!-- <button id="insertAllBtn" type="button" class="alert-success-msg btn btn-success waves-effect f-right p-r-5 p-l-5 m-l-15 m-b-10"><i class="icofont icofont-check-circled"></i>선택처리</button> -->
                           </div>
@@ -165,7 +167,9 @@
                               <table class="table table-bordered table-sm" style="vertical-align:middle;">
                                 <thead>
                                   <tr>
+                                  <c:if test="${user.user_name == 'union'}">
                                   	<th width="1%"></th>
+                                  </c:if>
                                     <th width="5%">NO</th>
                                     <th width="10%">등록날짜</th>
                                     <th width="40%">제목</th>
@@ -179,6 +183,7 @@
                                   <c:forEach items="${mediaList}" var="mediaList" varStatus="index">
                                   <tr class = "trList">
                                     <input type="hidden" value="${mediaList.media_idx}" name="media_idx">
+                                    <c:if test="${user.user_name == 'union'}">
                                     <td>
                                     <c:if test="${mediaList.media_state == 1}">
                                     <input type="checkbox" name="ck" value="${mediaList.media_idx}" checked="checked">
@@ -187,6 +192,7 @@
                                     <input type="checkbox" name="ck" value="${mediaList.media_idx}">
                                     </c:if>
                                     </td>
+                                    </c:if>
                                     <th width="5%" style="vertical-align:middle;">${totalCount -index.count +1 -minusCount}</th>
                                     <td width="10%">${mediaList.writeDate}</td>
                                     <td width="40%" class="text-success"><a href="${mediaList.url}" target="_blank">${mediaList.media_title}</a></td>
@@ -309,7 +315,12 @@
                                 </tbody>
                                 <tfoot>
                                   <tr>
+                                  <c:if test="${user.user_name != 'union'}">
+                                    <td colspan="7">
+                                  </c:if>
+                                  <c:if test="${user.user_name == 'union'}">
                                     <td colspan="8">
+                                  </c:if> 
                                       <ul class="pagination float-right">
                                        <c:if test="${pageMaker.prev}">
                                          <li class="page-item">

@@ -220,6 +220,7 @@
 			                        <div style="position:relative; left:5px;">
 			                        	<button class="btn btn-warning alert-excel f-right m-t-5" style="height:40px;"><i class="icofont icofont-download-alt"></i>EXCEL</button>
 			                        </div>
+			                        <c:if test="${user.user_name == 'union'}">
 		                          	<div class="btn-group f-right p-r-0 m-r-10">
 	                                  <button type="button" id="allBtn1" class="radiosBtn btn btn-primary btn-outline-primary btn-sm waves-effect waves-light m-t-5" style="height:40px;">좋은글</button>
 	                                  <button type="button" id="allBtn2" class="radiosBtn btn btn-primary btn-outline-primary btn-sm waves-effect waves-light m-t-5" style="height:40px;">나쁜글</button>
@@ -228,6 +229,7 @@
 	                                  <button type="button" id="allBtn5" class="radiosBtn btn btn-primary btn-outline-primary btn-sm waves-effect waves-light m-t-5" style="height:40px;">삭제글</button>
 	                                  <button type="button" id="insertAllBtn" class="alert-confirm btn btn-sm btn-primary waves-effect f-right p-b-10 m-t-5" style="height:40px;"><i class="icofont icofont-exchange" style="margin: 0px;font-size: 16px;"></i></button>
 	                                </div>
+	                                </c:if>
 		                          	
                                     <h5 class="card-header-text m-b-10"></h5>
                                     </div>
@@ -244,8 +246,10 @@
                                               <th width="5%">댓글 내용</th>
                                               <th width="10%">추출일/작성일</th>
                                               <th width="3%">분류글</th>
+                                              <c:if test="${user.user_name == 'union'}">
                                               <th width="5%">분류변경</th>
                                               <th width="5%">분류처리</th>
+                                              </c:if>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -287,6 +291,7 @@
 			                                     </c:if>
                                             	${ReplyVO.textType}
                                             </td>
+                                            <c:if test="${user.user_name == 'union'}">
                                             <td>
                                             	<div class="radios${index.count}">
 			                                        <input type="radio" id="radio1${index.count}" name="radios${index.count}">
@@ -308,12 +313,18 @@
 		                                      <button class="btn btn-danger btn-sm alert-confirm1" data-toggle="tooltip" data-placement="top" data-original-title="삭제"><i class="icofont icofont-ui-delete" style="margin-right:0"></i></button>
 		                                      <button class="btn btn-primary btn-sm alert-confirm2" data-toggle="tooltip" data-placement="top" data-original-title="즉시처리"><i class="icofont icofont-ui-check" style="margin-right:0"></i></button>
 		                                    </td>
+		                                    </c:if>
                                           </tr>
                                           </c:forEach>
                                         </tbody>
                                         <tfoot>
 		                                  <tr>
+		                                  <c:if test="${user.user_name != 'union'}">
+		                                    <td colspan="8">
+		                                    </c:if>
+		                                  <c:if test="${user.user_name == 'union'}">
 		                                    <td colspan="10">
+		                                    </c:if>
 		                                      <ul class="pagination float-right">
 		                                       <c:if test="${pageMaker.prev}">
 		                                         <li class="page-item">

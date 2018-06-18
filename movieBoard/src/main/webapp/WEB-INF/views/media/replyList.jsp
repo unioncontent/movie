@@ -195,9 +195,11 @@
 		                        <div class="card">
 		                          <div class="card-header">
 		                          <div class="btn-group f-right p-r-0">
+		                          	<c:if test="${user.user_name == 'union'}">
 	                                  <button type="button" id="allBtn1" class="radiosBtn btn btn-primary btn-outline-primary btn-sm waves-effect waves-light">ON</button>
 	                                  <button type="button" id="allBtn2" class="radiosBtn btn btn-primary btn-outline-primary btn-sm waves-effect waves-light">OFF</button>
 	                                  <button type="button" id="insertAllBtn" class="alert-confirm btn btn-sm btn-primary waves-effect f-right p-b-10"><i class="icofont icofont-exchange" style="margin: 0px;font-size: 16px;"></i></button>
+	                                </c:if>
 	                                </div>
                                     <h5 class="card-header-text m-b-10"></h5>
                                     </div>
@@ -213,11 +215,13 @@
                                               <th width="7%">댓글수</th>
                                               <th width="7%">추출일/작성일</th>
                                               <th width="5%">타입</th>
-                                              <th width="10%">상태</th>
+                                              <th width="5%">상태</th>
                                               <th width="5%">분류글</th>
+                                              <c:if test="${user.user_name == 'union'}">
                                               <th width="7%">분류변경</th>
                                               <th width="7%">상태변경</th>
                                               <th width="10%">분류처리</th>
+                                              </c:if>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -247,12 +251,12 @@
                                             <td>${NewsVO.news_type}</td>
                                            		<c:if test="${NewsVO.news_state eq '1'}" >
                                            		<td>
-                                           		ON
+                                           		<font style="color: #1abc9c; font-weight: bold;">ON</font>
                                            		</td>
                                            		</c:if>
                                            		<c:if test="${NewsVO.news_state eq '2'}" >
                                            		<td>
-                                           		OFF
+                                           		<font style="color: #e74c3c; font-weight: bold;">OFF</font>
                                            		</td>
                                            		</c:if>
                                            		<td>
@@ -261,6 +265,7 @@
 			                                    </c:if>
                                             		${NewsVO.textType}
                                             	</td>
+                                            	<c:if test="${user.user_name == 'union'}">
                                             	<td>
                                             	<div class="radios${index.count}">
 			                                        <input type="radio" id="radio1${index.count}" name="radios${index.count}">
@@ -291,12 +296,19 @@
 		                                      <button class="btn btn-list btn-sm alert-confirm2" data-toggle="tooltip" data-placement="top" data-original-title="분류변경"><i class="icofont icofont-ui-check" style="margin-right:0"></i></button>
 		                                      <button class="btn btn-list btn-sm alert-confirm3" data-toggle="tooltip" data-placement="top" data-original-title="상태변경"><i class="icofont icofont-ui-laoding" style="margin-right:0"></i></button>
 		                                    </td>
+		                                    </c:if>
                                           </tr>
                                           </c:forEach>
                                         </tbody>
                                         <tfoot>
                                           <tr>
-                                            <td colspan="12">
+                                          <c:if test="${user.user_name != 'union'}">
+		                                    <td colspan="9">
+		                                    </c:if>
+		                                  <c:if test="${user.user_name == 'union'}">
+		                                    <td colspan="12">
+		                                    </c:if>
+                                            
                                               <ul class="pagination float-right">
                                                 <c:if test="${pageMaker.prev}">
                                               		<li class="page-item">
