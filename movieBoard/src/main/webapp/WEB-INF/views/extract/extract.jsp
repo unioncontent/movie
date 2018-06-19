@@ -308,10 +308,9 @@
                                     <td>${extractVO.keyword}<span class="text-muted"></span></td>
                                     <td>
                                       <a href="${extractVO.url}" target="_blank">
-                                        ${extractVO.title}
+                                        <div class="title-nowrap">${extractVO.title}</div>
                                       </a><br>
-                                      <span class="text-success" style="text-align: center;">${extractVO.content}</span>
-                                      
+                                      <span class="text-success" style="text-align: center;"><div class="title-nowrap">${extractVO.content}</div></span>
                                     </td>
                                     <td>${extractVO.createDate} /<br/>${extractVO.writeDate }</td>
                                     <c:if test="${user.user_name == 'union'}">

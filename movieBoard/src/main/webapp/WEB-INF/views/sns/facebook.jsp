@@ -382,7 +382,19 @@
 	  	  xhr.setRequestHeader(header, token);
 	  });
   });
-  
+
+//BODY 에 로딩화면 추가
+  var loading = $('<div id="loading" class="loading"></div><img id="loading_img" alt="loading" src="../assets/images/ajax-loader.gif">').appendTo(document.body).hide();
+
+//  	ajax 통신 시작시 실행
+  $(window).ajaxStart(function() {
+  	loading.show();
+  });
+
+//  	ajax 통신 종료시 실행
+  $(window).ajaxStop(function() {
+  	loading.hide();
+  });
 
   $(document).ready(function(){
 
@@ -429,6 +441,47 @@
 		  		swal("Success!", "엑셀출력 되었습니다.", "success");
 
 	        });
+		});
+	
+	var selectKey = decodeURI(window.location.href.split("selectKey=")[1]).split("&")[0];
+	if(selectKey == 'undefined'){
+			var selectKey = '키워드'
+	}
+	var company = decodeURI(window.location.href.split("company=")[1]).split("&")[0];
+	if(company == 'undefined'){
+		var company = '회사'
+	}
+	$.ajax({
+
+	      type : "POST",
+		  url : "graph",
+		  dataType : "json",
+	 	  data : {success : 'success', portal_name : "facebook", company : company, selectKey : selectKey},
+	 	  success : function(data){
+	  		  console.log(data);
+
+	  		var script = "[";
+
+	  		for(var i = 0; i < data.length; i++){
+	  			
+	  			script += '{"period":' + '"' + data[i].writeDate + '",'
+	  				+ '"l1"'+ ':' + data[i].likeCount + ","
+	  				+ '"l2"' + ':' + data[i].shareCount + ","
+	  				+ '"l3"' + ':' + data[i].replyCount + "},";
+
+	  			if(i == data.length-1){
+					script =  script.substr(0, script.length-1);
+					script += "]";
+				}
+			}
+	  		console.log(script);
+
+	  		// to json
+	  		var jsonScript = JSON.parse(script);
+
+	  		drawChart(jsonScript);
+
+	  	 }
 		});
 
 
@@ -594,62 +647,20 @@ function searchList(event) {
 				  + "&endDate=" +  makeDateFormat($("#fromDate").val(), 1);
 }
 
-// 그래프 함수
-function ajaxGraph(startDate, endDate){
-	$.ajax({
-
-      type : "POST",
-	  url : "graph",
- 	  dataType : "json",
- 	 data : {startDate : startDate, endDate : endDate, company : $("#selectCompany option:selected").val(),
-		  selectKey : $("#selectKeyword option:selected").val(),
-		  searchType: decodeURI(window.location.href.split("&searchType=")[1]).split("&")[0],
-		  keyword : decodeURI(window.location.href.split("&keyword=")[1]).split("&")[0],
-		  portal_name : "facebook"},
-  	  error : function(){
-      	alert('graphPOST ajax error....');
-  	  },
-  	  success : function(data){
-
-  		var script = "[";
-
-  		for(var i = 0; i < data.length; i++){
-  			console.log(data[i]);
-  			script += '{"period":' + '"' + data[i].writeDate + '",'+ '"l1"'+ ':' + data[i].likeCount + ","+ '"l2"' + ':' + data[i].shareCount + ","+ '"l3"' + ':' + data[i].replyCount + "},";
-
-  			if(i == data.length-1){
-  				script =  script.substr(0, script.length-1);
-  				script += "]";
-  			}
-  		}
-  		console.log(script);
-
-  		// to json
-  		var jsonScript = JSON.parse(script);
-
-  		drawChart(jsonScript);
-
-  	 }
-	});
-}
-
-
-function drawChart(data){
-   	// 그래프 초기화
-   	$('#line-chart1').children().remove();
-
-   	window.lineChart = Morris.Line({
-   	      element: 'line-chart1',
-   	      data: data,
-   	      xkey: 'period',
-   	   xLabels : 'day',
-   	      redraw: true,
-   	      ykeys: ['l1', 'l2', 'l3'],
-   	      hideHover: 'auto',
-   	      labels: ['좋아요', '공유', '댓글'],
-   	      lineColors: ['#fb9678', '#7E81CB', '#01C0C8']
-   	  });
-   }
+	//그래프 함수
+	function drawChart(jsonScript) {
+		$("#line-chart1").empty();
+		window.areaChart = Morris.Line({
+			element: 'line-chart1',
+		    data: jsonScript,
+		    xkey: 'period',
+	   	 	ykeys: ['l1', 'l2', 'l3'],
+	   	 	labels: ['좋아요', '공유', '댓글'],
+	   	 	lineColors: ['#fb9678', '#7E81CB', '#01C0C8'],
+		    lineWidth : 3,
+		  	hideHover : 'auto'
+		    });
+		}
 
 // 날짜 계산 함수
 function getDate(type){

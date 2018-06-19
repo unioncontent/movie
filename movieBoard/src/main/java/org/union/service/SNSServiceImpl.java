@@ -469,4 +469,25 @@ public class SNSServiceImpl implements SNSService {
 	}
 
 
+	@Override
+	public Integer replyGetDateCount(SearchCriteria cri) {
+
+		return snsDAO.replyGetDateCount(cri);
+	}
+
+
+	@Override
+	public Integer likeGetDateCount(SearchCriteria cri) {
+
+		return snsDAO.likeGetDateCount(cri);
+	}
+
+
+	@Override
+	public Integer shareGetDateCount(SearchCriteria cri) {
+
+		return snsDAO.shareGetDateCount(cri);
+	}
+
+
 }

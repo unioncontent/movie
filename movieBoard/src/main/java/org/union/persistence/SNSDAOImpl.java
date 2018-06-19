@@ -447,4 +447,25 @@ public class SNSDAOImpl implements SNSDAO {
 	}
 
 
+	@Override
+	public Integer replyGetDateCount(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "replyGetDateCount", cri);
+	}
+
+
+	@Override
+	public Integer likeGetDateCount(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "likeGetDateCount", cri);
+	}
+
+
+	@Override
+	public Integer shareGetDateCount(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "shareGetDateCount", cri);
+	}
+
+
 }

@@ -101,4 +101,8 @@ public interface SNSService {
 	public Integer graphfacebookCount(SearchCriteria cri);
 	public Integer graphinstaCount(SearchCriteria cri);
 	public Integer graphtwitterCount(SearchCriteria cri);
+	
+	public Integer replyGetDateCount(SearchCriteria cri);
+	public Integer likeGetDateCount(SearchCriteria cri);
+	public Integer shareGetDateCount(SearchCriteria cri);
 }

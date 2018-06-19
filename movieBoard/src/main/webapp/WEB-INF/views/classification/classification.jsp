@@ -264,7 +264,6 @@
                                     <th width="7%">회사명</th>
                                     <th width="7%"><span class="text-muted">키워드</span></th>
                                     <th width="30%">제목 &<span class="text-muted"></span><span class="text-success"> 컨텐츠</span></th>
-                                    
                                     <c:if test="${user.user_name != 'union'}">
                                     <th width="5%">분류글</th>
                                     </c:if>
@@ -305,11 +304,12 @@
                                       	<input type = "hidden" value = "${extractVO.thumbnail}">
                                       	<div class="image btn-list-image"><i class="icofont icofont-ui-image"></i></div>
                                       </c:if>
+                                      <c:if test="${user.user_name == 'union'}">
                                       <c:if test="${extractVO.thumbnail == null}">
                                       	<input type = "hidden" value = "${extractVO.thumbnail}">
                                       	<div class="image btn-list-image"><i class="icofont icofont-clip"></i></div>
                                       </c:if>
-                                    
+                                    </c:if>
                                       <a href="${extractVO.url}" target="_blank">
                                         ${extractVO.title}
                                       </a><br>
@@ -582,12 +582,16 @@
                               </div>
                               <div class="modal-body">
                                 <div class="imageBox"><img id = "thumbnail" src="../assets/images/capture/Koala.jpg"></div>
+                                <c:if test="${user.user_name == 'union'}">
                                 <input id = "imageIinput" type="file" name = "file" class="form-control">
+                                </c:if>
                               </div>
                               <div class="modal-footer">
                                   <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">취소</button>
+                                  <c:if test="${user.user_name == 'union'}">
                                   <button type="button" class="btn btn-danger waves-effect alert-delete">삭제</button>
                                   <button type="button" class="btn btn-primary waves-effect waves-light alert-upload">업로드</button>
+                                  </c:if>
                               </div>
                           </div>
                       </div>

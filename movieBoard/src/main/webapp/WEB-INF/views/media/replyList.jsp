@@ -176,7 +176,6 @@
                               <span class="icofont icofont-ui-calendar"></span>
                             </span>
                           </div>
-
                         </div>
                         <!-- date picker end -->
                       </div>
@@ -194,6 +193,7 @@
                               <div class="col-lg-12">
 		                        <div class="card">
 		                          <div class="card-header">
+		                          <h5 class="card-header-text m-b-5 m-t-5"><font style="font-weight: bold; color: black;">댓글 기사 리스트</font></h5>
 		                          <div class="btn-group f-right p-r-0">
 		                          	<c:if test="${user.user_name == 'union'}">
 	                                  <button type="button" id="allBtn1" class="radiosBtn btn btn-primary btn-outline-primary btn-sm waves-effect waves-light">ON</button>
@@ -201,7 +201,6 @@
 	                                  <button type="button" id="insertAllBtn" class="alert-confirm btn btn-sm btn-primary waves-effect f-right p-b-10"><i class="icofont icofont-exchange" style="margin: 0px;font-size: 16px;"></i></button>
 	                                </c:if>
 	                                </div>
-                                    <h5 class="card-header-text m-b-10"></h5>
                                     </div>
                                     <div class="card-block table-border-style">
                             		<div class="table-responsive">

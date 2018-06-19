@@ -4,7 +4,12 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
+.title-nowrap{
+  width: 350px;
+  margin:0 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 .btn-list-image{
   margin-right: 0;
   display: inline-block;

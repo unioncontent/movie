@@ -497,6 +497,37 @@
  	
  	</select>
  	
+ 	<select id="replyGetDateCount" resultType="Integer">
+ 		select sum(reply_cnt)
+		from sns_data
+		where
+			sns_name = #{portal_name}
+		<include refid="search"></include>
+		and
+			createDate between date_add(#{date}, interval -1 hour) and #{date}
+ 	
+ 	</select>
+ 	<select id="likeGetDateCount" resultType="Integer">
+ 		select sum(like_cnt)
+		from sns_data
+		where
+			sns_name = #{portal_name}
+		<include refid="search"></include>
+		and
+			createDate between date_add(#{date}, interval -1 hour) and #{date}
+ 	
+ 	</select>
+ 	<select id="shareGetDateCount" resultType="Integer">
+ 		select sum(share_cnt)
+		from sns_data
+		where
+			sns_name = #{portal_name}
+		<include refid="search"></include>
+		and
+			createDate between date_add(#{date}, interval -1 hour) and #{date}
+ 	
+ 	</select>
+ 	
  	<update id="updateTextType">
 		update
 			sns_data

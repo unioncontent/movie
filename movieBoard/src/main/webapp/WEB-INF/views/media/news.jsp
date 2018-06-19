@@ -128,12 +128,19 @@
                               <span class="icofont icofont-ui-calendar"></span>
                             </span>
                           </div>
-
                         </div>
                         <!-- date picker end -->
                       </div>
                       <!-- data setting end -->
-
+					  <div class="col-lg-12">
+                        <!-- tab header start -->
+                        <!-- tab header end -->
+                        <!-- tab-content start -->
+                         <div class="tab-content">
+                          <!-- tab1 main start -->
+                          <div class="tab-pane fade show active" id="main" role="tabpanel">
+                            <div class="row">
+                              <!-- top cards end -->
                       <!-- list table card start -->
                       <div class="col-lg-12">
                         <div class="card">
@@ -161,9 +168,8 @@
                             <!-- <input type="submit" value="등록" class="btn btn-primary alert-check f-right p-r-5 p-l-5 m-l-15 m-b-10" onclick="show()"> -->
                             <!-- <button id="insertAllBtn" type="button" class="alert-success-msg btn btn-success waves-effect f-right p-r-5 p-l-5 m-l-15 m-b-10"><i class="icofont icofont-check-circled"></i>선택처리</button> -->
                           </div>
-                          <div class="card-block">
-                            <div class="table-responsive">
-                            <form action="checkList">
+                          <div class="card-block table-border-style">
+                            		<div class="table-responsive">
                               <table class="table table-bordered table-sm" style="vertical-align:middle;">
                                 <thead>
                                   <tr>
@@ -350,10 +356,8 @@
                                   </tr>
                                 </tfoot>
                               </table>
-                              </form>
-                            </div>
-                          </div>
-                        </div>
+                             </div></div></div>
+                      </div></div></div></div>
                       </div>
                       <!-- list table card end -->
                     </div>

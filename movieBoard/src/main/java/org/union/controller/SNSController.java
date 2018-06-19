@@ -1,7 +1,10 @@
 package org.union.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -292,7 +295,7 @@ public class SNSController {
 	}
 	
 	
-	@PostMapping("/graph")
+	/*@PostMapping("/graph")
 	@ResponseBody
 	public List<GraphVO> graphPOST(SearchCriteria cri) throws Exception{
 		logger.info("grpahPOST called....");
@@ -409,6 +412,75 @@ public class SNSController {
 				graphList.remove(graphList.size()-1);
 			}
 		}
+		
+		return graphList;
+		
+	}*/
+	
+	@ResponseBody
+	@PostMapping("/graph")
+	public List<GraphVO> graphPOST(Model model, String success, @ModelAttribute("cri") SearchCriteria cri,String portal_name, String company, String selectKey) {
+		logger.info("grpahPOST called....");
+		
+		if (cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey())) {
+		    logger.info("selectKey is null");
+		    cri.setSelectKey(null);
+		}
+		if (cri.getCompany() == null || cri.getCompany().equals("회사")) {
+		    logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+		    UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
+
+		    if (!vo.getUser_name().equals("union")) {
+			cri.setCompany(vo.getUser_name());
+
+		    } else {
+			cri.setCompany(null);
+		    }
+		}
+
+		// 회사 선택에 따른 키워드 재추출
+		if (cri.getCompany() != null) {
+		    if (cri.getCompany().isEmpty() == false) {
+
+			UserVO userVO = userService.viewByName(cri.getCompany());
+			logger.info("userVO: " + userVO);
+			logger.info("keywordList: " + keywordService.listByUser(userVO.getUser_idx()));
+			model.addAttribute("modelKeywordList",
+				keywordService.listByUser(userService.viewByName(cri.getCompany()).getUser_idx()));
+		    }
+		}
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH");
+		
+		String current = sdf.format(new Date());
+		logger.info("current: " + current);
+		
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(new Date());
+		
+		List<GraphVO> graphList = new ArrayList<GraphVO>();
+		
+		logger.info("cal.getTime: " + cal.getTime());
+		
+		/*logger.info("companyaaaa: " + company);
+		logger.info("selectkeyaaaa: " + selectKey);
+		logger.info("portalnameaaaa: " + portal_name);*/
+		for(int i = 0; i < 24; i++) {
+			
+				GraphVO graphData = new GraphVO();
+				
+				cri.setPortal_name(portal_name);
+				cri.setDate(cal.getTime());
+				
+				graphData.setWriteDate(sdf.format(cal.getTime()) + ":00:00");
+				graphData.setLikeCount(snsService.likeGetDateCount(cri));
+				graphData.setShareCount(snsService.shareGetDateCount(cri));
+				graphData.setReplyCount(snsService.replyGetDateCount(cri));
+				
+				graphList.add(graphData);
+				
+				cal.add(Calendar.HOUR, -1);
+		}// end for
 		
 		return graphList;
 		
