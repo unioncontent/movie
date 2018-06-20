@@ -9,6 +9,7 @@
       </div>
     </div>
     <ul class="pcoded-item pcoded-left-item">
+      <% if(user.n_idx != 30){ %>
       <li class="dashBoard">
         <a href="/">
           <span class="pcoded-micon"><i class="ti-home"></i></span>
@@ -39,7 +40,53 @@
           </li>
         </ul>
       </li>
-      <% if(user.user_type == 1){ %>
+      <% } else{ %>
+        <li class="pcoded-hasmenu newsclipping news">
+          <a href="javascript:void(0)" data-i18n="nav.advance-components.main">
+            <span class="pcoded-micon"><i class="ti-receipt"></i></span>
+            <span class="pcoded-mtext">NEWS CLIPPING</span>
+            <span class="pcoded-mcaret"></span>
+          </a>
+          <ul class="pcoded-submenu">
+            <li>
+              <a href="/news" data-i18n="nav.advance-components.draggable">
+                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                <span class="pcoded-mtext">기사선택</span>
+                <span class="pcoded-mcaret"></span>
+              </a>
+            </li>
+            <li>
+              <a href="/news/list">
+                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                <span class="pcoded-mtext">선택기사 리스트</span>
+                <span class="pcoded-mcaret"></span>
+              </a>
+            </li>
+            <li>
+              <a href="/newsclipping/send">
+                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                <span class="pcoded-mtext">미리보기/발송</span>
+                <span class="pcoded-mcaret"></span>
+              </a>
+            </li>
+            <li>
+              <a href="/newsclipping/period">
+                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                <span class="pcoded-mtext">발송현황</span>
+                <span class="pcoded-mcaret"></span>
+              </a>
+            </li>
+            <li>
+              <a href="/newsclipping/list">
+                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                <span class="pcoded-mtext">지난 리스트</span>
+                <span class="pcoded-mcaret"></span>
+              </a>
+            </li>
+          </ul>
+        </li>
+      <% } %>
+      <% if(user.user_type == 1 && user.n_idx != 30){ %>
       <li class="period">
         <a href="/period">
           <span class="pcoded-micon"><i class="ti-dashboard"></i></span>
