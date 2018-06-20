@@ -128,7 +128,14 @@ router.post('/login', function (req, res, next) {
       if(req.get('referer').indexOf('/email') != -1){
         return res.send(true);
       }
-      return res.redirect('/');
+      if('n_idx' in user){
+        if(user.n_idx == 30){
+          return res.redirect('/news');
+        }
+        else{
+          return res.redirect('/');
+        }
+      }
     });
   })(req, res, next);
 
