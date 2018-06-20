@@ -114,12 +114,15 @@
                             	<i class="icofont icofont-chart-line m-r-5"></i>
                             	조회수 데이터
                             </h5>
-                            <span><font color="#fb9678">'<c:forEach items="${list1}" var="list1" varStatus="status">
-                            	${list1.sns_content}
-                            	</c:forEach>'</font> / <font color="#7E81CB">'<c:forEach items="${list2}" var="list1" varStatus="status">
+                            <font style="color: #fb9678; font-size: 13px;">'<c:forEach items="${list1}" var="list1" varStatus="status">
                             	${list1.sns_content}
                             	</c:forEach>'</font>
-                            	최근24시간 그래프</span>
+                            	<font style="color: #9f9f9f; font-size: 13px;">/</font>
+                            	<font  style="color: #7E81CB; font-size: 13px;">'<c:forEach items="${list2}" var="list1" varStatus="status">
+                            	${list1.sns_content}
+                            	</c:forEach>'
+                            </font>
+                            <font style="color: #9f9f9f; font-size: 13px;">	최근 24시간 그래프</font>
                             <div class="card-header-right">
                               <i class="icofont icofont-rounded-down"></i>
                             </div>
@@ -139,12 +142,15 @@
                             	<i class="icofont icofont-chart-line m-r-5"></i>
                             	댓글수 데이터
                             </h5>
-                            <span><font color="#fb9678">'<c:forEach items="${list1}" var="list1" varStatus="status">
-                            	${list1.sns_content}
-                            	</c:forEach>'</font> / <font color="#7E81CB">'<c:forEach items="${list2}" var="list1" varStatus="status">
+                            <font style="color: #fb9678; font-size: 13px;">'<c:forEach items="${list1}" var="list1" varStatus="status">
                             	${list1.sns_content}
                             	</c:forEach>'</font>
-                            	최근 24시간 그래프</span>
+                            	<font style="color: #9f9f9f; font-size: 13px;">/</font>
+                            	<font  style="color: #7E81CB; font-size: 13px;">'<c:forEach items="${list2}" var="list1" varStatus="status">
+                            	${list1.sns_content}
+                            	</c:forEach>'
+                            </font>
+                            <font style="color: #9f9f9f; font-size: 13px;">	최근 24시간 그래프</font>
                             <div class="card-header-right">
                               <i class="icofont icofont-rounded-down"></i>
                             </div>
@@ -164,12 +170,15 @@
                             	<i class="icofont icofont-chart-line m-r-5"></i>
                             	좋아요수 데이터
                             </h5>
-                            <span><font color="#fb9678">'<c:forEach items="${list1}" var="list1" varStatus="status">
-                            	${list1.sns_content}
-                            	</c:forEach>'</font> / <font color="#7E81CB">'<c:forEach items="${list2}" var="list1" varStatus="status">
+                            <font style="color: #fb9678; font-size: 13px;">'<c:forEach items="${list1}" var="list1" varStatus="status">
                             	${list1.sns_content}
                             	</c:forEach>'</font>
-                            	최근 24시간 그래프</span>
+                            	<font style="color: #9f9f9f; font-size: 13px;">/</font>
+                            	<font  style="color: #7E81CB; font-size: 13px;">'<c:forEach items="${list2}" var="list1" varStatus="status">
+                            	${list1.sns_content}
+                            	</c:forEach>'
+                            </font>
+                            <font style="color: #9f9f9f; font-size: 13px;">	최근 24시간 그래프</font>
                             <div class="card-header-right">
                               <i class="icofont icofont-rounded-down"></i>
                             </div>

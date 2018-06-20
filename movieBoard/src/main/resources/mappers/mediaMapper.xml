@@ -227,6 +227,56 @@
 		</if>
 	</sql>
 	
+	<sql id="search5">
+ 		<if test="keyword != null">
+			<if test="searchType != null">
+				<if test="searchType == 't'.toString()">
+					and media_title like concat('%', #{keyword}, '%')
+				</if>
+				<if test="searchType == 'c'.toString()">
+					and media_content like concat('%', #{keyword}, '%')
+				</if>
+				<if test="searchType == 'm'.toString()">
+					and media_name like concat('%', #{keyword}, '%')
+				</if>
+				<if test="searchType == 'r'.toString()">
+					and reporter_name like concat('%', #{keyword}, '%')
+				</if>
+			</if>
+		</if>
+		<if test="company != null">
+			and
+			   keyword in (select 
+						keyword 
+					from 
+						keyword_data
+					where
+						user_idx = (select 
+										user_idx 
+									from 
+										user_data 
+									where 
+										user_name = #{company} 
+									and 
+										keyword_property = '포함'
+									)
+					)
+		</if>
+		<if test="selectKey != null">
+				and keyword in (select keyword from keyword_data where keyword_main = #{selectKey})
+			</if>
+		<if test="startDate == null">
+			and writeDate <![CDATA[>=]]> CURDATE()
+		</if>	
+		<if test="startDate != null and endDate != null">
+			and updateDate <![CDATA[>=]]> #{startDate}
+			and updateDate <![CDATA[<=]]> #{endDate}
+		</if>
+		<if test="textType != null">
+			and textType = #{textType}
+		</if>
+	</sql>
+	
  	<sql id="search_writeDate">
 		<if test="company != null">
 			and
@@ -553,13 +603,25 @@
 			media_data
 		where
 			url is not null
-		and
-			texttype!='삭제글'
 		<include refid="search"></include>
 		order 
 			by updateDate desc
 		
 	</select>
+	
+	<select id="newsExcel" resultType="MediaVO">
+		select
+			*
+		from
+			media_data
+		where
+			url is not null
+		<include refid="search"></include>
+		order 
+			by updateDate desc
+		
+	</select>
+	
 	<select id="totalAllPageex" resultType="MediaVO">
 		select
 			*
@@ -567,8 +629,6 @@
 			media_data_history
 		where
 			url is not null
-		and
-			texttype!='삭제글'
 		<include refid="search"></include>
 		order 
 			by updateDate desc
@@ -594,7 +654,7 @@
 			media_data
 		where
 			url is not null
-		<include refid="search"></include>
+		<include refid="search2"></include>
 	</select>
 	
 	<select id="newsAllPageCount" resultType="Integer">
@@ -913,8 +973,18 @@
 		from 
 			media_data
 		where
-			(textType is null or textType != '삭제글')
+			textType is not null
 		<include refid="search"></include>
+ 	</select>
+ 	
+ 	<select id="dashListAll" resultType="MediaVO">
+ 		select 
+			*
+		from 
+			media_data
+		where 
+			textType!='삭제글'
+		<include refid="search5"></include>
  	</select>
  	
  	<select id="wPageSearch" resultType="MediaVO">
@@ -923,9 +993,10 @@
 		from 
 			media_data
 		where 
-			textType is not null
+			textType != '삭제글'
 		<include refid="search_writeDate"></include>
- 	
+		order 
+			by writeDate desc
  	</select>
  	
  	<select id="mediaGetTotalCount" resultType="Integer">
@@ -1337,8 +1408,8 @@
 			success = '1'
 		and 
 			M_keyword in (select keyword from keyword_data where keyword_main = #{selectKey})
-		and
-			M_regdate between date_add(#{date}, interval -1 day) and #{date}
+		and M_regdate <![CDATA[>=]]> #{startDate}
+		and M_regdate <![CDATA[<=]]> #{endDate}
 	
 	</select>
 	
@@ -1706,7 +1777,7 @@
 			url is not null
 		and
 			texttype!='삭제글'
-		<include refid="search"></include>
+		<include refid="search5"></include>
 		order 
 			by writeDate desc
 		

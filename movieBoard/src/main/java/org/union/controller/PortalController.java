@@ -241,22 +241,21 @@ public class PortalController {
 	    cri.setKeyword(null);
 
 	}
-	if (cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey())) {
-	    logger.info("selectKey is null");
-	    cri.setSelectKey(null);
+	if(cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey()) ) {
+		logger.info("selectKey is null");
+		cri.setSelectKey(null);
 	}
-
-	if ("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate()) || cri.getStartDate() == ""
-		|| cri.getEndDate() == "") {
-	    cri.setStartDate(strDate + " 00:00:00");
-	    cri.setEndDate(strDate + " 23:59:59");
-	}
+	if("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate())
+			|| cri.getStartDate() == "" || cri.getEndDate() == ""){
+		cri.setStartDate(null);
+		cri.setEndDate(null);
 	
-	if (cri.getStartDate() != null && cri.getEndDate() != null) {
-	    if (cri.getStartDate().indexOf("00:00:00") < 0 && cri.getEndDate().indexOf("23:59:59") < 0) {
-		cri.setStartDate(cri.getStartDate() + " 00:00:00");
-		cri.setEndDate(cri.getEndDate() + " 23:59:59");
-	    }
+	} 
+	if(cri.getStartDate() != null && cri.getEndDate() != null) {
+		if(cri.getStartDate().indexOf("00:00:00") < 0 && cri.getEndDate().indexOf("23:59:59") < 0){ 
+			cri.setStartDate(cri.getStartDate() + " 00:00:00"); 
+			cri.setEndDate(cri.getEndDate() + " 23:59:59"); 
+		}
 	}
 	
 	if (cri.getCompany() != null) {
@@ -264,50 +263,51 @@ public class PortalController {
 		cri.setCompany(null);
 	    }
 	}
-
-	if (cri.getCompany() == null || cri.getCompany().equals("회사")) {
-	    logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
-	    UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
-
-	    if (!vo.getUser_name().equals("union")) {
+	if(cri.getCompany() == null || cri.getCompany().equals("회사")) {
+		logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+		UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
+		
+		if(!vo.getUser_name().equals("union")) {
 		cri.setCompany(vo.getUser_name());
-
-	    } else {
-		cri.setCompany(null);
-	    }
+		
+		}else {
+			cri.setCompany(null);
+		}
 	}
 
 	// 회사 선택에 따른 키워드 재추출
-	if (cri.getCompany() != null) {
-	    if (cri.getCompany().isEmpty() == false) {
+		if (cri.getCompany() != null) {	
+			if (cri.getCompany().isEmpty() == false) {
 
-		UserVO userVO = userService.viewByName(cri.getCompany());
-		logger.info("userVO: " + userVO);
-		logger.info("keywordList: " + keywordService.listByUser(userVO.getUser_idx()));
-		model.addAttribute("modelKeywordList",
+			UserVO userVO = userService.viewByName(cri.getCompany());
+			logger.info("userVO: " + userVO);
+			logger.info("keywordList: " + keywordService.listByUser(userVO.getUser_idx()));
+			model.addAttribute("modelKeywordList",
 			keywordService.listByUser(userService.viewByName(cri.getCompany()).getUser_idx()));
-	    }
-	}
+			}
+		}
 	
-	logger.info("cri: " + cri);
+	/*logger.info("cri: " + cri);
 	PageMaker pageMaker = new PageMaker();
 	if (cri.getPerPageNum() != null) {
 	    if (cri.getPerPageNum() == 10) {
 		cri.setPerPageNum(30);
 	    }
-	}
+	}*/
 
 	// 네이버영화리스트
 	List<NaverMovieVO> movieList = naverMovieService.searchList(cri);
 	Integer totalCount = naverMovieService.getSearchCount(cri);
-
+	logger.info("totalCountaaa:" + totalCount);
 	model.addAttribute("movieList", movieList);
-	model.addAttribute("totalCount", totalCount);
-
+	
+	PageMaker pageMaker = new PageMaker();
+	//cri.setPerPageNum(24);
 	pageMaker.setCri(cri);
 	pageMaker.setTotalCount(totalCount);
 
 	model.addAttribute("pageMaker", pageMaker);
+	model.addAttribute("totalCount", totalCount);
 	model.addAttribute("minusCount", cri.getPerPageNum() * (cri.getPage()-1));
 
     }

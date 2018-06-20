@@ -310,9 +310,9 @@ public class DashBaordController {
 			List<ExtractVO> classiList = new ArrayList<ExtractVO>();
 			ListUtil listUtil = new ListUtil();
 			
-			listUtil.listAddCommunityList(classiList, communityService.listAll(cri));
-			listUtil.listAddPortalList(classiList, portalService.listAll(cri));
-			listUtil.listAddMediaList(classiList, mediaService.listAll(cri));
+			listUtil.listAddCommunityList(classiList, communityService.dashListAll(cri));
+			listUtil.listAddPortalList(classiList, portalService.dashListAll(cri));
+			listUtil.listAddMediaList(classiList, mediaService.dashListAll(cri));
 			
 			// 리스트 정렬
 			ExtractComparator comparator = new ExtractComparator();
@@ -326,9 +326,9 @@ public class DashBaordController {
 			List<ExtractVO> classiList = new ArrayList<ExtractVO>();
 			ListUtil listUtil = new ListUtil();
 			
-			listUtil.listAddCommunityList(classiList, communityService.listAll(cri));
-			listUtil.listAddPortalList(classiList, portalService.listAll(cri));
-			listUtil.listAddMediaList(classiList, mediaService.listAll(cri));
+			listUtil.listAddCommunityList(classiList, communityService.dashListAll(cri));
+			listUtil.listAddPortalList(classiList, portalService.dashListAll(cri));
+			listUtil.listAddMediaList(classiList, mediaService.dashListAll(cri));
 			
 			// 리스트 정렬
 			ExtractComparator comparator = new ExtractComparator();

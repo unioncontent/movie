@@ -268,6 +268,14 @@
                                     <!-- list satart -->
                                     <div class="table-responsive">
                                       <table class="table table-bordered table-sm">
+                                      <c:if test="${empty communityList}">
+	                                    <tbody>
+	                                     <tr>
+	                                     <td style="vertical-align:middle;" align="center" height="150px"><h5>등록된 게시글이 없습니다.</h5></td>
+	                                     </tr>
+	                                     </tbody>
+	                                    </c:if>
+	                                    <c:if test="${!empty communityList}">
                                         <thead>
                                             <tr>
                                               <th width="5%">NO</th>
@@ -323,6 +331,7 @@
                                             </td>
                                           </tr>
                                         </tfoot>
+                                        </c:if>
                                       </table>
                                     </div>
                                     <!-- list end -->

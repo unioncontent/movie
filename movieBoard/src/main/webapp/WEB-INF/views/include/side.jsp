@@ -320,7 +320,7 @@
         </a>
       </li>
       <li class="classification">
-        <a href="../classification/classification" data-i18n="nav.advance-components.main">
+        <a href="../classification/classification?perPageNum=90" data-i18n="nav.advance-components.main">
           <span class="pcoded-micon"><i class="ti-filter"></i></span>
           <span class="pcoded-mtext">분류글관리</span>
           <span class="pcoded-mcaret"></span>

@@ -177,7 +177,7 @@
                           <div class="card-header">
                             <h5 class="card-header-text">
                             <font style="font-weight: bold; color: black;">
-                              <i class="icofont icofont-chart-line m-r-5"></i>
+                              <img alt="naver" src="../assets/images/instagram_logo.jpg" style="width: 20px; height: 20px;">
                               인스타그램 그래프
                               </font>
                             </h5>

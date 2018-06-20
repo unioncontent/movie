@@ -255,7 +255,12 @@
                           </div>
                           <div class="card-block table-border-style">
                             <div class="table-responsive">
+                              <c:if test="${user.user_name == 'union'}">
                               <table class="table table-hover">
+                             </c:if>
+                             <c:if test="${user.user_name != 'union'}">
+                              <table class="table table-bordered table-sm">
+                             </c:if>
                                 <thead>
                                   <tr>
                                     <th width="5%">No</th>
@@ -311,7 +316,7 @@
                                       </c:if>
                                     </c:if>
                                       <a href="${extractVO.url}" target="_blank">
-                                        ${extractVO.title}
+                                        <div class="title-nowrap">${extractVO.title}</div>
                                       </a><br>
                                       <span class="text-success" style="text-align: center;">${extractVO.content}</span>
                                     </td>

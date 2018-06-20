@@ -187,6 +187,14 @@
 											<div class="card-block table-border-style">
 												<div class="table-responsive">
 													<table class="table table-bordered table-sm">
+													<c:if test="${empty movieList}">
+				                                    <tbody>
+				                                     <tr>
+				                                     <td style="vertical-align:middle;" align="center" height="150px"><h5>등록된 게시글이 없습니다.</h5></td>
+				                                     </tr>
+				                                     </tbody>
+				                                    </c:if>
+				                                    <c:if test="${!empty movieList}">
 														<thead>
 															<tr>
 																<th>NO</th>
@@ -213,21 +221,32 @@
 															<tr>
 																<td colspan="5">
 																	<ul class="pagination float-right">
-																		<c:if test="${pageMaker.prev}">
-																			<li class="page-item"><a class="page-link" href="naver_movie${pageMaker.makeSearch(pageMaker.startPage - 1) }" aria-label="Previous">&laquo; <span aria-hidden="true"></span> <span class="sr-only">Previous</span>
-																			</a></li>
-																		</c:if>
-																		<c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
-																			<li class="${pageMaker.cri.page == idx? 'active':''} page-item"><a class="page-link" href="naver_movie${pageMaker.makeSearch(idx)}">${idx}</a></li>
-																		</c:forEach>
-																		<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-																			<li class="page-item"><a class="page-link" href="naver_movie${pageMaker.makeSearch(pageMaker.endPage +1) }" aria-label="Next">&raquo; <span aria-hidden="true"></span> <span class="sr-only">Next</span>
-																			</a></li>
-																		</c:if>
-																	</ul>
-																</td>
-															</tr>
-														</tfoot>
+							                                        	<c:if test="${pageMaker.prev}">
+							                                              		<li class="page-item">
+							                                                		  <a class="page-link" href="naver_movie${pageMaker.makeSearchMobile(pageMaker.startPage - 1) }" aria-label="Previous">&laquo;
+							                                                  		<span aria-hidden="true"></span>
+							                                                  		<span class="sr-only">Previous</span>
+							                                                		  </a>
+							                                              		</li>
+							                                        	      </c:if>
+							                                          		  <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
+							                                              		<li class= "${pageMaker.cri.page == idx? 'active':''} page-item">
+							                                                		  <a class="page-link" href="naver_movie${pageMaker.makeSearchMobile(idx)}">${idx}</a>
+							                                              		</li>
+							                                          		  </c:forEach>
+							                                          		  <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+							                                              		<li class="page-item">
+							                                              		  <a class="page-link" href="naver_movie${pageMaker.makeSearchMobile(pageMaker.endPage +1) }" aria-label="Next">&raquo;
+							                                                		<span aria-hidden="true"></span>
+							                                                		<span class="sr-only">Next</span>
+							                                              		  </a>
+							                                              		</li>
+							                                          		  </c:if>
+							                                          		</ul>
+																		</td>
+																	</tr>
+																</tfoot>
+																</c:if>
 													</table>
 												</div>
 
@@ -498,8 +517,8 @@
 	makeDateFormat($("#fromDate").val());
 
     function searchList(event) {
-		var makeQeury = '${pageMaker.makeQuery(1)}'.slice(0, -2);
-		self.location = "naver_movie" + makeQeury + "30"
+    	
+		self.location = "naver_movie?"
     					+ "&company=" + $("#selectCompany option:selected").val()
 						+ "&selectKey=" + $('#selectKeyword option:selected').val()
 						+ "&searchType=" + $("#selectSearchType option:selected").val()

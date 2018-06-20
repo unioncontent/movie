@@ -736,8 +736,7 @@ $(document).ready(function(){
 
 		   searchList();
 	});
-
-
+	
 	//엑셀출력 확인메시지
 	$(document).on("click",".alert-excel",function(){
   	swal({
@@ -749,13 +748,14 @@ $(document).ready(function(){
         confirmButtonText: "YES",
         closeOnConfirm: false
       },
+      
       function(){//엑셀 출력하겠다고 할 시 진행 함수
 
     	  self.location = "excelOk?"+
 		  + "&company=" + $("#selectCompany option:selected").val()
 		  + "&selectKey=" + $('#selectKeyword option:selected').val()
-		  + "&startDate=" + makeDateFormat($("#fromDate").val(), 0)
-	  	  + "&endDate=" +  makeDateFormat($("#fromDate").val(), 1);
+		  + "&startDate=" + decodeURI(window.location.href.split("startDate=")[1]).split("&")[0]
+	  	  + "&endDate=" +  decodeURI(window.location.href.split("endDate=")[1]).split("&")[0];
 
 
 	  		swal("Success!", "엑셀출력 되었습니다.", "success");

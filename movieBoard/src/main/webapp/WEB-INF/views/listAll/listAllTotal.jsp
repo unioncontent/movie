@@ -209,7 +209,12 @@
                           </div>
                           <div class="card-block table-border-style">
                             <div class="table-responsive">
+                              <c:if test="${user.user_name == 'union'}">
                               <table class="table table-hover">
+                             </c:if>
+                             <c:if test="${user.user_name != 'union'}">
+                              <table class="table table-bordered table-sm">
+                             </c:if>
                                 <thead>
                                   <tr>
                                     <th width="5%">No</th>
@@ -261,7 +266,8 @@
                                     </td>
                                     <c:if test="${user.user_name != 'union'}">
                                     <td>
-                                    ${extractVO.textType}
+                                    <c:if test="${extractVO.textType != null}">${extractVO.textType}<span class="text-muted"></span></c:if>
+                                    <c:if test="${extractVO.textType == null}"><i class="icofont icofont-minus"></i></c:if>
                                     </td>
                                     </c:if>
                                     <td>${extractVO.createDate} /<br/>${extractVO.writeDate }</td>

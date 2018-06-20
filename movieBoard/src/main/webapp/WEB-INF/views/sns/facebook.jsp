@@ -177,7 +177,7 @@
                           <div class="card-header">
                             <h5 class="card-header-text">
                             <font style="font-weight: bold; color: black;">
-                              <i class="icofont icofont-chart-line m-r-5"></i>
+                              <img alt="naver" src="../assets/images/facebook_logo.png" style="width: 20px; height: 20px;">
                              	 페이스북 그래프
                              	 </font>
                             </h5>

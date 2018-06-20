@@ -51,10 +51,10 @@
  		<if test="keyword != null">
 			<if test="searchType != null">
 				<if test="searchType == 't'.toString()">
-					and portal_title like concat('%', #{keyword}, '%')
+					and sns_title like concat('%', #{keyword}, '%')
 				</if>
 				<if test="searchType == 'c'.toString()">
-					and portal_title like concat('%', #{keyword}, '%')
+					and sns_content like concat('%', #{keyword}, '%')
 				</if>
 			</if>
 		</if>
@@ -343,7 +343,7 @@
 			sns_data
 		where 
 			url is not null
-		<include refid="search"></include>
+		<include refid="search_writeDate"></include>
 		order 
 			by updateDate desc
 		limit  
@@ -358,7 +358,7 @@
 			sns_data
 		where
 			url is not null
-		<include refid="search"></include>
+		<include refid="search_writeDate"></include>
 			
 	</select>
  	
@@ -426,8 +426,7 @@
  			sns_data
  		where
  			sns_name = 'facebook'
- 		
- 		<include refid="search"></include>
+ 		<include refid="search_writeDate"></include>
  		
  	</select>
  	
@@ -454,7 +453,7 @@
  		where
  			sns_name = 'instagram'
  		
- 		<include refid="search"></include>
+ 		<include refid="search_writeDate"></include>
  		
  	</select>
  	
@@ -481,7 +480,7 @@
  		where
  			sns_name = 'twitter'
  		
- 		<include refid="search"></include>
+ 		<include refid="search_writeDate"></include>
  		
  	</select>
  	
@@ -929,8 +928,9 @@
  			sns_name = 'facebook'
  		and 
 			keyword in (select keyword from keyword_data where keyword_main = #{selectKey})
-		and
-			createDate between date_add(#{date}, interval -1 day) and #{date}
+		and createDate <![CDATA[>=]]> #{startDate}
+		and createDate <![CDATA[<=]]> #{endDate}
+
  	</select>
  	<select id="graphinstaCount" resultType="Integer">
  		select 
@@ -941,8 +941,9 @@
  			sns_name = 'instagram'
  		and 
 			keyword in (select keyword from keyword_data where keyword_main = #{selectKey})
-		and
-			createDate between date_add(#{date}, interval -1 day) and #{date}
+		and createDate <![CDATA[>=]]> #{startDate}
+		and createDate <![CDATA[<=]]> #{endDate}
+
  	</select>
  	<select id="graphtwitterCount" resultType="Integer">
  		select 
@@ -953,8 +954,9 @@
  			sns_name = 'twitter'
  		and 
 			keyword in (select keyword from keyword_data where keyword_main = #{selectKey})
-		and
-			createDate between date_add(#{date}, interval -1 day) and #{date}
+		and createDate <![CDATA[>=]]> #{startDate}
+		and createDate <![CDATA[<=]]> #{endDate}
+
  	</select>
 
  </mapper>

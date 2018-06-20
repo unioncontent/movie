@@ -45,12 +45,14 @@ public interface CommunityService {
 	public List<CommunityVO> wlistSearch(SearchCriteria vo);
 	
 	public Integer wgetSearchCount(SearchCriteria cri);
+	public Integer periodWgetSearchCount(SearchCriteria cri);
 	
 	public List<CommunityVO> listComplete(SearchCriteria cri);
 	
 	public Integer getCompleteCount(SearchCriteria cri);
 	
 	public List<CommunityVO> listAll(SearchCriteria cri);
+	public List<CommunityVO> dashListAll(SearchCriteria cri);
 	
 	public void modifyType (CommunityVO vo);
 	

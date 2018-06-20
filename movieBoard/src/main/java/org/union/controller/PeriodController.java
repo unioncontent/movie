@@ -181,8 +181,8 @@ public class PeriodController {
 		
 		logger.info("cri: " + cri);
 		
-		model.addAttribute("portalCount", portalService.wgetSearchCount(cri));
-		model.addAttribute("communityCount", communityService.wgetSearchCount(cri));
+		model.addAttribute("portalCount", portalService.periodWgetSearchCount(cri));
+		model.addAttribute("communityCount", communityService.periodWgetSearchCount(cri));
 		model.addAttribute("snsCount", snsService.getSearchCount(cri));
 		model.addAttribute("mediaCount", mediaService.wgetSearchCount(cri));
 		
@@ -258,16 +258,16 @@ public class PeriodController {
 		logger.info("cri: " + cri);
 		
 		cri.setTextType("좋은글");
-		model.addAttribute("type1", communityService.wgetSearchCount(cri));
+		model.addAttribute("type1", communityService.periodWgetSearchCount(cri));
 		
 		cri.setTextType("나쁜글");
-		model.addAttribute("type2", communityService.wgetSearchCount(cri));
+		model.addAttribute("type2", communityService.periodWgetSearchCount(cri));
 		
 		cri.setTextType("관심글");
-		model.addAttribute("type3", communityService.wgetSearchCount(cri));
+		model.addAttribute("type3", communityService.periodWgetSearchCount(cri));
 		
 		cri.setTextType("기타글");
-		model.addAttribute("type4", communityService.wgetSearchCount(cri));
+		model.addAttribute("type4", communityService.periodWgetSearchCount(cri));
 		
 		cri.setTextType(null);
 		model.addAttribute("communityList", communityService.listComplete(cri));
@@ -346,11 +346,11 @@ public class PeriodController {
 		model.addAttribute("naverCount", naverCount);
 		model.addAttribute("daumCount", daumCount);
 		
-		model.addAttribute("portalList", portalService.wlistSearch(cri));
-		logger.info("list: " + portalService.wlistSearch(cri));
+		model.addAttribute("portalList", portalService.periodWlistSearch(cri));
+		logger.info("list: " + portalService.periodWlistSearch(cri));
 		PageMaker pageMaker = new PageMaker();
 		
-		Integer totalCount = portalService.wgetSearchCount(cri);
+		Integer totalCount = portalService.periodWgetSearchCount(cri);
 		
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(totalCount);
@@ -741,6 +741,81 @@ public class PeriodController {
 		
 	}
 	
+	@GetMapping("/period_popUp")
+	public void dashBoard_popupGET(@ModelAttribute("cri") SearchCriteria cri, Model model, String part, String company, String selectKey, String emailDate) {
+		logger.info("dashBoard_popup called....");
+		
+		cri.setKeyword(null);
+		cri.setTextType(null);
+		
+		if(cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey()) ) {
+			logger.info("selectKey is null");
+			cri.setSelectKey(null);
+		}
+		if("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate())
+				|| cri.getStartDate() == "" || cri.getEndDate() == ""){
+			cri.setStartDate(null);
+			cri.setEndDate(null);
+		
+		} 
+		if(cri.getStartDate() != null && cri.getEndDate() != null) {
+			logger.info("not null");
+			logger.info(cri.getStartDate());
+			logger.info(cri.getEndDate());
+			if(cri.getStartDate().indexOf("00:00:00") < 0 && cri.getEndDate().indexOf("23:59:59") < 0){ 
+				cri.setStartDate(cri.getStartDate() + " 00:00:00"); 
+				cri.setEndDate(cri.getEndDate() + " 23:59:59"); 
+			}
+		}
+		
+		
+		if(cri.getCompany() != null) {
+			if(cri.getCompany().isEmpty()) {
+				cri.setCompany(null);
+			}
+		}
+		if(cri.getCompany() == null || cri.getCompany().equals("회사")) {
+			logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+			UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
+			
+			if(!vo.getUser_name().equals("union")) {
+			cri.setCompany(vo.getUser_name());
+			
+			}else {
+				cri.setCompany(null);
+			}
+		}
+
+		// 회사 선택에 따른 키워드 재추출
+		if (cri.getCompany() != null) {	
+			if (cri.getCompany().isEmpty() == false) {
+
+				UserVO userVO = userService.viewByName(cri.getCompany());
+				logger.info("userVO: " + userVO);
+				logger.info("keywordList: " + keywordService.listByUser(userVO.getUser_idx()));
+				model.addAttribute("modelKeywordList",
+						keywordService.listByUser(userService.viewByName(cri.getCompany()).getUser_idx()));
+			}
+		}
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		
+		String current = sdf.format(new Date());
+		logger.info("current: " + current);
+		
+		cri.setStartDate(current + " 00:00:00");
+		cri.setEndDate(current + " 23:59:59");
+		
+		if(part.equals("이메일")) {
+			cri.setStartDate(emailDate + " 00:00:00");
+			cri.setEndDate(emailDate + " 23:59:59");
+			logger.info("mail:" + cri.getStartDate());
+			logger.info("mail:" + cri.getEndDate());
+			model.addAttribute("emailList", mediaService.mailMatch(cri));
+			model.addAttribute("part", part);
+		}
+	
+	}
 	
 	@ResponseBody
 	@PostMapping("/graph_re")
@@ -784,7 +859,10 @@ public class PeriodController {
 				GraphVO graphVO = new GraphVO();
 				
 			cri.setSelectKey(selectKey);
-			cri.setDate(cal.getTime());	
+			String  startDate = sdf.format(cal.getTime());
+			String  endDate = sdf.format(cal.getTime());
+			cri.setStartDate(startDate + " 00:00:00");
+			cri.setEndDate(endDate + " 23:59:59");
 				
 				graphVO.setWriteDate(sdf.format(cal.getTime()));
 				graphVO.setFacebookCount(snsService.graphfacebookCount(cri));
@@ -801,7 +879,10 @@ public class PeriodController {
 				GraphVO graphVO = new GraphVO();
 				
 			cri.setSelectKey(selectKey);
-			cri.setDate(cal.getTime());	
+			String  startDate = sdf.format(cal.getTime());
+			String  endDate = sdf.format(cal.getTime());
+			cri.setStartDate(startDate + " 00:00:00");
+			cri.setEndDate(endDate + " 23:59:59");
 				
 			graphVO.setWriteDate(sdf.format(cal.getTime()));
 				cri.setTextType("좋은글");
@@ -827,7 +908,10 @@ public class PeriodController {
 				GraphVO graphVO = new GraphVO();
 			
 			cri.setSelectKey(selectKey);
-			cri.setDate(cal.getTime());	
+			String  startDate = sdf.format(cal.getTime());
+			String  endDate = sdf.format(cal.getTime());
+			cri.setStartDate(startDate + " 00:00:00");
+			cri.setEndDate(endDate + " 23:59:59");
 				
 			graphVO.setWriteDate(sdf.format(cal.getTime()));
 			graphVO.setType1(portalService.graphNaverCount(cri));
@@ -844,7 +928,10 @@ public class PeriodController {
 				GraphVO graphVO = new GraphVO();
 				
 				cri.setSelectKey(selectKey);
-				cri.setDate(cal.getTime());	
+				String  startDate = sdf.format(cal.getTime());
+				String  endDate = sdf.format(cal.getTime());
+				cri.setStartDate(startDate + " 00:00:00");
+				cri.setEndDate(endDate + " 23:59:59");	
 				
 				graphVO.setWriteDate(sdf.format(cal.getTime()));
 				graphVO.setType1(mediaService.mailCountAll(cri));

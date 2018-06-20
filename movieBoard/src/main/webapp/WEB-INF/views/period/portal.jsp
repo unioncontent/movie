@@ -415,6 +415,14 @@
                                     <!-- list satart -->
                                     <div class="table-responsive">
                                       <table class="table table-bordered table-sm">
+                                      <c:if test="${empty portalList}">
+	                                    <tbody>
+	                                     <tr>
+	                                     <td style="vertical-align:middle;" align="center" height="150px"><h5>등록된 게시글이 없습니다.</h5></td>
+	                                     </tr>
+	                                     </tbody>
+	                                    </c:if>
+	                                    <c:if test="${!empty portalList}">
                                         <thead>
                                           <tr>
                                             <th width="5%">NO</th>
@@ -472,6 +480,7 @@
                                             </td>
                                           </tr>
                                         </tfoot>
+                                        </c:if>
                                       </table>
                                     </div>
                                     <!-- list end -->
@@ -785,12 +794,11 @@ $(document).ready(function(){
 function ajaxGraph(startDate, endDate){
   console.log(startDate + "/" + endDate);
 	$.ajax({
-
       type : "POST",
 	  url : "graph_re",
  	  dataType : "json",
  	  data : {startDate : startDate, endDate : endDate, part : "portal",
- 		      company : $("#selectCompany option:selected").val(), selectKey : $("#selectKeyword option:selected").val()},
+ 		      company : decodeURI(window.location.href.split("company=")[1]).split("&")[0], selectKey : decodeURI(window.location.href.split("selectKey=")[1]).split("&")[0]},
   	  success : function(data){
 
   		var script = "[";

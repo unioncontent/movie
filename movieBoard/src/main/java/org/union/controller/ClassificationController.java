@@ -126,6 +126,8 @@ public class ClassificationController {
 			}
 		}
 		
+		PageMaker pageMaker = new PageMaker();
+		
 		// 3번 리스트기 때문에  perPageNum / 3
 		if(cri.getPerPageNum() != 10) {
 			cri.setPerPageNum(cri.getPerPageNum()/3);
@@ -149,8 +151,6 @@ public class ClassificationController {
 		listUtil.listAddMediaList(classiList, mediaService.listSearch(cri));
 		
 		cri.setPerPageNum(cri.getPerPageNum()*3);
-		
-		PageMaker pageMaker = new PageMaker();
 		
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(totalCount);
@@ -179,7 +179,7 @@ public class ClassificationController {
 		
 		
 		// 리스트 회사 추가
-		keywordService.viewByKeyword(classiList);
+		/*keywordService.viewByKeyword(classiList);*/
 		
 		model.addAttribute("classiList", classiList);
 

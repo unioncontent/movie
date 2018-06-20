@@ -85,10 +85,12 @@ public interface PortalService {
 	public Integer getSearchCount(SearchCriteria cri);
 
 	public List<PortalVO> wlistSearch(SearchCriteria vo);
-	
 	public Integer wgetSearchCount(SearchCriteria cri);
+	public List<PortalVO> periodWlistSearch(SearchCriteria cri);
+	public Integer periodWgetSearchCount(SearchCriteria cri);
 	
 	public List<PortalVO> listAll(SearchCriteria cri);
+	public List<PortalVO> dashListAll(SearchCriteria cri);
 	
 	public void modifyType(PortalVO vo);
 	

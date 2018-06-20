@@ -294,7 +294,7 @@
                             <!-- <div id="morris-extra-area" style="height:300px;"></div> -->
                             <div id="morris-extra-line" style="height:328px;"></div>
                             <br>
-                            <h5>분류글 현황</h5>
+                            <h5>분류글 현황<!-- ( community / portal / media ) --></h5>
                             <br><br>
                             <table class="table table-bordered">
                                   <thead>
@@ -315,15 +315,17 @@
 								      </c:if>
                                       </td>
                                       <td>
-                                      <c:if test="${mediaTextcnt + portalTextcnt + communityTextcnt != 0}">
+                                      <c:if test="${mediaTextcnt2 + portalTextcnt2 + communityTextcnt2 != 0}">
                                       <a href="javascript:popupOpen8();" ><fmt:formatNumber value="${mediaTextcnt2 + portalTextcnt2 + communityTextcnt2}" groupingUsed="true"/>건</a>
                                       (
                                       <fmt:parseNumber var="pages" integerOnly="true" value="${(mediaTextcnt2 + portalTextcnt2 + communityTextcnt2)/(mediaTextcnt + portalTextcnt + communityTextcnt) * 100}"></fmt:parseNumber>${pages}%
                                       )
                                       </c:if>
-                                      <c:if test="${mediaTextcnt + portalTextcnt + communityTextcnt == 0}">
+                                      <c:if test="${mediaTextcnt2 + portalTextcnt2 + communityTextcnt2 == 0}">
                                       <fmt:formatNumber value="${mediaTextcnt2 + portalTextcnt2 + communityTextcnt2}" groupingUsed="true"/>건
-								      (0%)
+                                      (
+								      <fmt:parseNumber var="pages" integerOnly="true" value="${(mediaTextcnt2 + portalTextcnt2 + communityTextcnt2)/(mediaTextcnt + portalTextcnt + communityTextcnt) * 100}"></fmt:parseNumber>${pages}%
+								      )
 								      </c:if>
                                       </td>
                                       <td>

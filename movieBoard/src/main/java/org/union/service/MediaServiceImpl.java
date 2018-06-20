@@ -815,4 +815,16 @@ public class MediaServiceImpl implements MediaService {
 
 		return mediaDAO.graphmTotalCnt(cri);
 	}
+
+	@Override
+	public List<MediaVO> dashListAll(SearchCriteria cri) {
+
+		return mediaDAO.dashListAll(cri);
+	}
+
+	@Override
+	public List<MediaVO> newsExcel(SearchCriteria cri) {
+
+		return mediaDAO.newsExcel(cri);
+	}
 }

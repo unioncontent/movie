@@ -14,7 +14,7 @@
 				</if>
 			</if>
 		</if>
-		<if test="company != null">
+		<!-- <if test="company != null">
 			and
 			   keyword in (select 
 						keyword 
@@ -31,13 +31,18 @@
 										keyword_property = '포함'
 									)
 					)
-		</if>
+		</if> -->
 		<if test="selectKey != null">
-				and title_key = #{selectKey}
+				and keyword in (select keyword from keyword_data where keyword_main = #{selectKey})
 			</if>
-		<if test="startDate != null and endDate != null">
-			and writeDate <![CDATA[>]]> #{startDate}
-			and writeDate <![CDATA[<]]> #{endDate}
+		<if test="startDate == null">
+			and writeDate <![CDATA[>=]]> CURDATE()
+		</if>
+		<if test="startDate != null">
+			and writeDate <![CDATA[>=]]> #{startDate}
+			<if test="endDate != null">
+				and writeDate <![CDATA[<=]]> #{endDate}
+			</if>
 		</if>
 	</sql>
  	

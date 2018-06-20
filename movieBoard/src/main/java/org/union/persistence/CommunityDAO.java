@@ -43,6 +43,7 @@ public interface CommunityDAO {
 	public List<CommunityVO> wPageSearch(SearchCriteria cri);
 	
 	public Integer wgetSearchCount(SearchCriteria cri);
+	public Integer periodWgetSearchCount(SearchCriteria cri);
 	
 	
 	public List<CommunityVO> listComplete(SearchCriteria cri);
@@ -50,6 +51,7 @@ public interface CommunityDAO {
 	public Integer getCompleteCount(SearchCriteria cri);
 	
 	public List<CommunityVO> listAll(SearchCriteria cri);
+	public List<CommunityVO> dashListAll(SearchCriteria cri);
 	
 	public void updateTextType (CommunityVO vo);
 	

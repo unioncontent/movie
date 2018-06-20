@@ -246,4 +246,18 @@ public class CommunityDAOImpl implements CommunityDAO {
 	}
 
 
+	@Override
+	public List<CommunityVO> dashListAll(SearchCriteria cri) {
+
+		return session.selectList(namespace + "dashListAll", cri);
+	}
+
+
+	@Override
+	public Integer periodWgetSearchCount(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "periodWgetSearchCount", cri);
+	}
+
+
 }

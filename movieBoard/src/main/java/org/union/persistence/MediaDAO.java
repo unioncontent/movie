@@ -46,6 +46,7 @@ public interface MediaDAO {
 	public Integer replyAllPageCount(SearchCriteria cri);
 	
 	public List<MediaVO> allPage(SearchCriteria cri);
+	public List<MediaVO> newsExcel(SearchCriteria cri);
 	public List<MediaVO> totalAllPageex(SearchCriteria cri);
 	public List<ReplyVO> replyAllPage(SearchCriteria cri);
 	
@@ -76,6 +77,7 @@ public interface MediaDAO {
 	
 	
 	public List<MediaVO> listAll(SearchCriteria cri);
+	public List<MediaVO> dashListAll(SearchCriteria cri);
 	
 	public List<MediaVO> searchAll(SearchCriteria cri);
 	

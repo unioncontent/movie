@@ -707,4 +707,16 @@ public class MediaDAOImpl implements MediaDAO {
 
 		return session.selectOne(namespace + "graphmTotalCnt", cri);
 	}
+
+	@Override
+	public List<MediaVO> dashListAll(SearchCriteria cri) {
+
+		return session.selectList(namespace + "dashListAll", cri);
+	}
+
+	@Override
+	public List<MediaVO> newsExcel(SearchCriteria cri) {
+
+		return session.selectList(namespace + "newsExcel", cri);
+	}
 }

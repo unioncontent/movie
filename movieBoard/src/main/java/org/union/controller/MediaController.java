@@ -667,7 +667,7 @@ public class MediaController {
 		ListUtil util = new ListUtil();
 		List<ExtractVO> extractList = new ArrayList<ExtractVO>();
 		
-		mav.addObject("list", util.listAddMediaList(extractList, mediaService.allPage(cri)));
+		mav.addObject("list", util.listAddMediaList(extractList, mediaService.newsExcel(cri)));
 		mav.setView(excelView);
 		
 		return mav;

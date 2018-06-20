@@ -123,7 +123,8 @@ public class ListAllController {
 		Integer totalCount = + communityService.allPageCount(cri)
 							+ portalService.allPageCount(cri)
 							+ mediaService.allPageCount(cri);
-
+		
+		logger.info("totalCount: " + totalCount);
 		model.addAttribute("totalCount", totalCount);
 		
 		
@@ -160,7 +161,7 @@ public class ListAllController {
 		Collections.sort(extractList, comparator);
 		
 		// 회사 추가
-		keywordService.viewByKeyword(extractList);
+		/*keywordService.viewByKeyword(extractList);*/
 		
 		model.addAttribute("extractList", extractList);
 		
@@ -273,7 +274,7 @@ public class ListAllController {
 		Collections.sort(extractList, comparator);
 		
 		// 회사 추가
-		keywordService.viewByKeyword(extractList);
+		/*keywordService.viewByKeyword(extractList);*/
 		
 		model.addAttribute("extractList", extractList);
 		

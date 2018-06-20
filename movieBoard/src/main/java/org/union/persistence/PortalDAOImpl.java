@@ -595,4 +595,25 @@ public class PortalDAOImpl implements PortalDAO {
 
 		return session.selectOne(namespace + "getNvCount", url);
 	}
+
+
+	@Override
+	public List<PortalVO> dashListAll(SearchCriteria cri) {
+
+		return session.selectList(namespace + "dashListAll", cri);
+	}
+
+
+	@Override
+	public List<PortalVO> periodWlistSearch(SearchCriteria cri) {
+
+		return session.selectList(namespace + "periodWlistSearch", cri);
+	}
+
+
+	@Override
+	public Integer periodWgetSearchCount(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "periodWgetSearchCount", cri);
+	}
 }

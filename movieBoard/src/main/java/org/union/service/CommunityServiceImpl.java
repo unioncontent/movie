@@ -251,5 +251,17 @@ public class CommunityServiceImpl implements CommunityService {
 		return communityDAO.totalAllPageex(cri);
 	}
 
+	@Override
+	public List<CommunityVO> dashListAll(SearchCriteria cri) {
+
+		return communityDAO.dashListAll(cri);
+	}
+
+	@Override
+	public Integer periodWgetSearchCount(SearchCriteria cri) {
+
+		return communityDAO.periodWgetSearchCount(cri);
+	}
+
 	
 }

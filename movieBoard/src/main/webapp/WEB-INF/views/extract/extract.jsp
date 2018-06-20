@@ -226,7 +226,12 @@
                           </div>
                           <div class="card-block table-border-style">
                             <div class="table-responsive">
+                            <c:if test="${user.user_name == 'union'}">
                               <table class="table table-hover">
+                             </c:if>
+                             <c:if test="${user.user_name != 'union'}">
+                              <table class="table table-bordered table-sm">
+                             </c:if>
                                 <thead>
                                   <tr>
                                     <th width="5%">No</th>

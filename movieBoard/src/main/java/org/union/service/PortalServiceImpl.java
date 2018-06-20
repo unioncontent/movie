@@ -572,4 +572,22 @@ public class PortalServiceImpl implements PortalService {
 
 		return portalDAO.getNvCount(url);
 	}
+
+	@Override
+	public List<PortalVO> dashListAll(SearchCriteria cri) {
+
+		return portalDAO.dashListAll(cri);
+	}
+
+	@Override
+	public List<PortalVO> periodWlistSearch(SearchCriteria cri) {
+
+		return portalDAO.periodWlistSearch(cri);
+	}
+
+	@Override
+	public Integer periodWgetSearchCount(SearchCriteria cri) {
+
+		return portalDAO.periodWgetSearchCount(cri);
+	}
 }

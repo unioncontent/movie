@@ -312,7 +312,7 @@
                                             <fmt:formatNumber value="${mvo.fail}" pattern="#,##0" />회                    
                                             </td>
                                             <td>
-                                            ${mvo.total}건          
+                                            <a href="javascript:popupOpen('<fmt:formatDate value="${mvo.m_regdate}" type="DATE" pattern="yyyy-MM-dd" />');" >${mvo.total}건</a>      
                                             </td>
                                           </tr>
                                         </c:forEach>
@@ -584,7 +584,7 @@
 	      type : "POST",
 		  url : "graph_re",
 	 	  dataType : "json",
-	 	 	data : {success : 'success', part : "main",company : $("#selectCompany option:selected").val(), selectKey : $("#selectKeyword option:selected").val()},
+	 	 	data : {success : 'success', part : "main", company : decodeURI(window.location.href.split("company=")[1]).split("&")[0], selectKey : decodeURI(window.location.href.split("selectKey=")[1]).split("&")[0]},
 	  	  success : function(data){
 
 	  		  console.log(data);
@@ -640,6 +640,20 @@
 		    });
 		}
 
+  function popupOpen(date){
+		var company = $("#selectCompany option:selected").val();
+		
+		var selectKey = $("#selectKeyword option:selected").val();
+		
+		var popUrl = "period_popUp?part=이메일&company="+company
+					+"&selectKey="+selectKey+"&emailDate="+date;	//팝업창에 출력될 페이지 URL
+
+		var popOption = "width=1500, height=900, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
+
+			window.open(popUrl,"",popOption);
+
+		}
+  
   // 날짜 계산 함수
   function getDate(type){
   	console.log("TYPE : " + type);
