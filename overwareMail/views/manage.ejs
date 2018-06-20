@@ -651,6 +651,8 @@
           alert('새로고침 후 다시 시도해주세요.');
           return false;
         }
+        $("#page").val(data.result.currentPage);
+        $("#keyword").val(param.keyword);
         if(typeof history.pushState == 'function'){
           //현재 주소를 가져온다.
           var renewURL = location.href;
