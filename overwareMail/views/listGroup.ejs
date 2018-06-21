@@ -871,6 +871,7 @@
           return false;
         }
         if(data.currentPage != ''){
+          $("#page").val(data.list.currentPage);
           if(typeof(history.pushState) == 'function'){
             //현재 주소를 가져온다.
             var renewURL = location.href;
