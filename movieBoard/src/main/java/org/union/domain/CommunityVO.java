@@ -29,6 +29,8 @@ public class CommunityVO {
 	private String thumbnail;
 	private Date createDate;
 	private Date updateDate;
+	private String domain;
+	
 	public Integer getCommunity_idx() {
 		return community_idx;
 	}
@@ -125,17 +127,20 @@ public class CommunityVO {
 	public void setCheckCondition(boolean checkCondition) {
 		this.checkCondition = checkCondition;
 	}
+	public String getDomain() {
+		return domain;
+	}
+	public void setDomain(String domain) {
+		this.domain = domain;
+	}
 	@Override
 	public String toString() {
 		return "CommunityVO [community_idx=" + community_idx + ", community_name=" + community_name
 				+ ", community_title=" + community_title + ", community_content=" + community_content
 				+ ", community_writer=" + community_writer + ", community_writer_IP=" + community_writer_IP
-				+ ", writeDate=" + writeDate + ", keyword=" + keyword + ", keyword_type=" + keyword_type + ", url="
-				+ url + ", board_number=" + board_number + ", textType=" + textType + ", thumbnail=" + thumbnail
-				+ ", createDate=" + createDate + ", updateDate=" + updateDate + "]";
+				+ ", writeDate=" + writeDate + ", keyword_main=" + keyword_main + ", checkCondition=" + checkCondition
+				+ ", keyword=" + keyword + ", keyword_type=" + keyword_type + ", url=" + url + ", board_number="
+				+ board_number + ", textType=" + textType + ", thumbnail=" + thumbnail + ", createDate=" + createDate
+				+ ", updateDate=" + updateDate + ", domain=" + domain + "]";
 	}
-	
-	
-	
-	
 }

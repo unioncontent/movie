@@ -468,4 +468,11 @@ public class SNSDAOImpl implements SNSDAO {
 	}
 
 
+	@Override
+	public Integer snsFacebookTotalCount(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "snsFacebookTotalCount", cri);
+	}
+
+
 }

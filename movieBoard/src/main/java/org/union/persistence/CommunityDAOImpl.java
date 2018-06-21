@@ -260,4 +260,59 @@ public class CommunityDAOImpl implements CommunityDAO {
 	}
 
 
+	@Override
+	public List<CommunityVO> alllistExtract(SearchCriteria cri) {
+
+		return session.selectList(namespace + "alllistExtract", cri);
+	}
+
+
+	@Override
+	public Integer allgetExtractCount(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "allgetExtractCount", cri);
+	}
+
+
+	@Override
+	public List<CommunityVO> alllistSearch(SearchCriteria cri) {
+
+		return session.selectList(namespace + "alllistSearch", cri);
+	}
+
+
+	@Override
+	public Integer allgetSearchCount(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "allgetSearchCount", cri);
+	}
+
+
+	@Override
+	public List<CommunityVO> allPageallList(SearchCriteria cri) {
+
+		return session.selectList(namespace + "allPageallList", cri);
+	}
+
+
+	@Override
+	public Integer allPageallCount(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "allPageallCount", cri);
+	}
+
+
+	@Override
+	public List<CommunityVO> totalallPageallList(SearchCriteria cri) {
+
+		return session.selectList(namespace + "totalallPageallList", cri);
+	}
+
+
+	@Override
+	public Integer totalallPageallCount(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "totalallPageallCount", cri);
+	}
+
 }

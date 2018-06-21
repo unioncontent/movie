@@ -490,4 +490,11 @@ public class SNSServiceImpl implements SNSService {
 	}
 
 
+	@Override
+	public Integer snsFacebookTotalCount(SearchCriteria cri) {
+
+		return snsDAO.snsFacebookTotalCount(cri);
+	}
+
+
 }

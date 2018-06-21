@@ -779,8 +779,6 @@
 			createDate desc
 		limit
 			#{startPage}, #{perPageNum}
-			
-	
 	</select>
  	
  	<select id="getExtractCount" resultType="Integer">

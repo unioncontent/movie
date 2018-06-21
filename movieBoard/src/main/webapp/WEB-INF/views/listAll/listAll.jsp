@@ -221,7 +221,6 @@
                                     <th width="5%">No</th>
                                     <th width="7%">페이지 분류<span class="text-muted"></span></th>
                                     <th width="7%">페이지 명</th>
-                                    <th width="7%">회사명</th>
                                     <th width="7%"><span class="text-muted">키워드</span></th>
                                     <th width="30%">제목 &<span class="text-muted"></span><span class="text-success"> 컨텐츠</span></th>
                                     <c:if test="${user.user_name != 'union'}">
@@ -237,33 +236,18 @@
                                 <tbody>
                                   <c:forEach items="${extractList}" var="extractVO" varStatus="index">
                                   <tr class = "trList">
-                                    <c:if test="${extractVO.sns_idx != null}">
-                                      <input type="hidden" value="${extractVO.sns_idx}">
-                                    </c:if>
                                     <c:if test="${extractVO.community_idx != null}">
                                       <input type="hidden" value="${extractVO.community_idx}">
                                     </c:if>
-                                    <c:if test="${extractVO.media_idx != null}">
-                                      <input type="hidden" value="${extractVO.media_idx}">
-                                    </c:if>
-                                    <c:if test="${extractVO.portal_idx != null}">
-                                      <input type="hidden" value="${extractVO.portal_idx}">
-                                    </c:if>
-                                    <th scope="row">
-                                      ${totalCount -index.count +1 -minusCount}
-                                    </th>
+                                    <th scope="row">${totalCount - minusCount - index.count +1}</th>
                                     <td>${extractVO.domain}<span class="text-muted"></span></td>
-                                    <td>${extractVO.domainType}</td>
-                                    <td>
-                                    <c:if test="${extractVO.company != null}">${extractVO.company}<span class="text-muted"></span></c:if>
-                                    <c:if test="${extractVO.company == null}"><i class="icofont icofont-minus"></i></c:if>
-                                    </td>
+                                    <td>${extractVO.community_name}</td>
                                     <td><div class="keyword-nowrap">${extractVO.keyword}</div><span class="text-muted"></span></td>
                                     <td>
                                       <a href="${extractVO.url}" target="_blank">
-                                        ${extractVO.title}
+                                        ${extractVO.community_title}
                                       </a><br>
-                                      <span class="text-success" style="text-align: center;">${extractVO.content}</span>
+                                      <span class="text-success" style="text-align: center;">${extractVO.community_content}</span>
                                     </td>
                                     <c:if test="${user.user_name != 'union'}">
                                     <td>
@@ -271,7 +255,7 @@
                                     <c:if test="${extractVO.textType == null}"><i class="icofont icofont-minus"></i></c:if>
                                     </td>
                                     </c:if>
-                                    <td>${extractVO.createDate} /<br/>${extractVO.writeDate }</td>
+                                    <td><fmt:formatDate value="${extractVO.createDate}" type="DATE" pattern="yyyy-MM-dd HH:mm:ss" /> /<br/>${extractVO.writeDate }</td>
                                     <c:if test="${user.user_name == 'union'}">
                                     <td>
                                       <div class="radios${index.count}">

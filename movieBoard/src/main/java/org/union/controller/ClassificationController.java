@@ -126,6 +126,93 @@ public class ClassificationController {
 			}
 		}
 		
+		// 회사 선택에 따른 키워드 재추출
+				if(cri.getCompany() != null) {
+					if(cri.getCompany().isEmpty() == false) {
+					
+						UserVO userVO  = userService.viewByName(cri.getCompany());
+						logger.info("userVO: " + userVO);
+					    logger.info("keywordList: " + keywordService.listByUser(userVO.getUser_idx()));
+						model.addAttribute("modelKeywordList", keywordService.listByUser(
+								userService.viewByName(cri.getCompany()).getUser_idx()));
+					}
+				}
+		
+		model.addAttribute("classiList", communityService.alllistSearch(cri));		
+				
+		PageMaker pageMaker = new PageMaker();
+		
+		logger.info("cri: " + cri);
+		
+		Integer totalCount = communityService.allgetSearchCount(cri);
+		
+		logger.info("totalCount: " + totalCount);
+		model.addAttribute("totalCount", totalCount);
+		
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(totalCount);
+		
+		model.addAttribute("minusCount", cri.getPerPageNum() * (cri.getPage()-1));
+		
+		logger.info("pageMaker: " + pageMaker);
+		model.addAttribute("pageMaker", pageMaker);
+		
+	}
+	
+	/*@GetMapping("/classification")
+	public void classificationGET(@ModelAttribute("cri") SearchCriteria cri, Model model) {
+		logger.info("classificationGET called....");
+
+		if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
+			logger.info("keyword is null");
+			cri.setKeyword(null);
+			
+		} 
+		if(cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey()) ) {
+			logger.info("selectKey is null");
+			cri.setSelectKey(null);
+		}
+		
+		if("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate())
+				|| cri.getStartDate() == "" || cri.getEndDate() == ""){
+			cri.setStartDate(null);
+			cri.setEndDate(null);
+		
+		} 
+		
+		if(cri.getStartDate() != null && cri.getEndDate() != null) {
+			logger.info("not null");
+			logger.info(cri.getStartDate());
+			logger.info(cri.getEndDate());
+			if(cri.getStartDate().indexOf("00:00:00") < 0 && cri.getEndDate().indexOf("23:59:59") < 0){ 
+				cri.setStartDate(cri.getStartDate() + " 00:00:00"); 
+				cri.setEndDate(cri.getEndDate() + " 23:59:59"); 
+			}
+		}
+		if(cri.getCompany() != null) {
+			if(cri.getCompany().isEmpty()) {
+				cri.setCompany(null);
+			}
+		}
+		
+		if(cri.getCompany() == null || cri.getCompany().equals("회사")) {
+			logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+			UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
+			
+			if(!vo.getUser_name().equals("union")) {
+			cri.setCompany(vo.getUser_name());
+			
+			}else {
+				cri.setCompany(null);
+			}
+		}
+		
+		if(cri.getTextType() != null) {
+			if(cri.getTextType().equals("undefined") || cri.getTextType().equals("분류") || cri.getTextType().isEmpty()) {
+				cri.setTextType(null);
+			}
+		}
+		
 		PageMaker pageMaker = new PageMaker();
 		
 		// 3번 리스트기 때문에  perPageNum / 3
@@ -179,14 +266,12 @@ public class ClassificationController {
 		
 		
 		// 리스트 회사 추가
-		/*keywordService.viewByKeyword(classiList);*/
+		keywordService.viewByKeyword(classiList);
 		
 		model.addAttribute("classiList", classiList);
 
 		//excelList = classiList;
-	}
-	
-	
+	}*/
 	
 	@ResponseBody
 	@GetMapping("/excel")

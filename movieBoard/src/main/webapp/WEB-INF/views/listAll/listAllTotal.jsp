@@ -220,7 +220,6 @@
                                     <th width="5%">No</th>
                                     <th width="7%">페이지 분류<span class="text-muted"></span></th>
                                     <th width="7%">페이지 명</th>
-                                    <th width="7%">회사명</th>
                                     <th width="7%"><span class="text-muted">키워드</span></th>
                                     <th width="30%">제목 &<span class="text-muted"></span><span class="text-success"> 컨텐츠</span></th>
                                     <c:if test="${user.user_name != 'union'}">
@@ -236,33 +235,18 @@
                                 <tbody>
                                   <c:forEach items="${extractList}" var="extractVO" varStatus="index">
                                   <tr class = "trList">
-                                    <c:if test="${extractVO.sns_idx != null}">
-                                      <input type="hidden" value="${extractVO.sns_idx}">
-                                    </c:if>
                                     <c:if test="${extractVO.community_idx != null}">
                                       <input type="hidden" value="${extractVO.community_idx}">
                                     </c:if>
-                                    <c:if test="${extractVO.media_idx != null}">
-                                      <input type="hidden" value="${extractVO.media_idx}">
-                                    </c:if>
-                                    <c:if test="${extractVO.portal_idx != null}">
-                                      <input type="hidden" value="${extractVO.portal_idx}">
-                                    </c:if>
-                                    <th scope="row">
-                                      ${totalCount -index.count +1 -minusCount}
-                                    </th>
+                                    <th scope="row">${totalCount - minusCount - index.count +1}</th>
                                     <td>${extractVO.domain}<span class="text-muted"></span></td>
-                                    <td>${extractVO.domainType}</td>
-                                    <td>
-                                    <c:if test="${extractVO.company != null}">${extractVO.company}<span class="text-muted"></span></c:if>
-                                    <c:if test="${extractVO.company == null}"><i class="icofont icofont-minus"></i></c:if>
-                                    </td>
+                                    <td>${extractVO.community_name}</td>
                                     <td><div class="keyword-nowrap">${extractVO.keyword}</div><span class="text-muted"></span></td>
                                     <td>
                                       <a href="${extractVO.url}" target="_blank">
-                                        <div class="nobr">${extractVO.title}</div>
+                                        <div class="nobr">${extractVO.community_title}</div>
                                       </a><br>
-                                      <span class="text-success" style="text-align: center;">${extractVO.content}</span>
+                                      <span class="text-success" style="text-align: center;">${extractVO.community_content}</span>
                                     </td>
                                     <c:if test="${user.user_name != 'union'}">
                                     <td>
@@ -270,7 +254,7 @@
                                     <c:if test="${extractVO.textType == null}"><i class="icofont icofont-minus"></i></c:if>
                                     </td>
                                     </c:if>
-                                    <td>${extractVO.createDate} /<br/>${extractVO.writeDate }</td>
+                                    <td><fmt:formatDate value="${extractVO.createDate}" type="DATE" pattern="yyyy-MM-dd HH:mm:ss" /> /<br/>${extractVO.writeDate }</td>
                                     <c:if test="${user.user_name == 'union'}">
                                     <td>
                                       <div class="radios${index.count}">
@@ -390,15 +374,15 @@
                                 <tfoot>
                                   <tr>
                                     <c:if test="${user.user_name != 'union'}">
-                                    <td colspan="8">
+                                    <td colspan="7">
                                     </c:if>
                                   <c:if test="${user.user_name == 'union'}">
-                                    <td colspan="9">
+                                    <td colspan="8">
                                     </c:if>
                                       <ul class="pagination float-right">
                                         <c:if test="${pageMaker.prev}">
                                           <li class="page-item">
-                                            <a class="page-link" href="listALl${pageMaker.makeSearch(pageMaker.startPage - 1) }" aria-label="Previous">&laquo;
+                                            <a class="page-link" href="listAllTotal${pageMaker.makeSearch(pageMaker.startPage - 1) }" aria-label="Previous">&laquo;
                                               <span aria-hidden="true"></span>
                                               <span class="sr-only">Previous</span>
                                             </a>
@@ -407,13 +391,13 @@
 
                                         <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
                                           <li class= "${pageMaker.cri.page == idx? 'active':''} page-item">
-                                            <a class="page-link" href="listAll${pageMaker.makeSearch(idx)}">${idx}</a>
+                                            <a class="page-link" href="listAllTotal${pageMaker.makeSearch(idx)}">${idx}</a>
                                           </li>
                                         </c:forEach>
 
                                         <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
                                           <li class="page-item">
-                                            <a class="page-link" href="listAll${pageMaker.makeSearch(pageMaker.endPage +1) }" aria-label="Next">&raquo;
+                                            <a class="page-link" href="listAllTotal${pageMaker.makeSearch(pageMaker.endPage +1) }" aria-label="Next">&raquo;
                                               <span aria-hidden="true"></span>
                                               <span class="sr-only">Next</span>
                                             </a>
@@ -841,8 +825,8 @@ $(function() {
 			calcInsertData(event);
 		}
 
-		if (tr.children[8].children[0].children != 'undefined') {
-			var arr = tr.children[8].children[0].children;
+		if (tr.children[7].children[0].children != 'undefined') {
+			var arr = tr.children[7].children[0].children;
 			console.log(arr);
 		} else {
 			clacInsertData(event);
@@ -895,7 +879,7 @@ $(function() {
 			for(var i = 0; i < tr.length; i++){
 				var idx = tr[i].children[0].value;
 				var table = tr[i].children[2].innerText;
-				var arr = tr[i].children[8].children[0].children;
+				var arr = tr[i].children[7].children[0].children;
 
 
 				for (var l = 0; l < arr.length; l++) {

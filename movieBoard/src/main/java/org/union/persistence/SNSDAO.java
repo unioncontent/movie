@@ -56,6 +56,7 @@ public interface SNSDAO {
 	public List<SNSVO> facebookList(SearchCriteria cri);
 	
 	public Integer facebookTotalCount(SearchCriteria  cri);
+	public Integer snsFacebookTotalCount(SearchCriteria  cri);
 	
 	public List<SNSVO> instaList(SearchCriteria cri);
 	

@@ -18,6 +18,11 @@ public interface CommunityDAO {
 
 	public void delete(Integer community_idx);
 	
+	public List<CommunityVO> totalallPageallList(SearchCriteria cri);
+	public Integer totalallPageallCount(SearchCriteria cri);
+	public List<CommunityVO> allPageallList(SearchCriteria cri);
+	public Integer allPageallCount(SearchCriteria cri);
+	
 	public List<CommunityVO> allPageList(SearchCriteria cri);
 	public List<CommunityVO> TotalAllPageList(SearchCriteria cri);
 	public Integer allPageCount(SearchCriteria cri);
@@ -31,8 +36,13 @@ public interface CommunityDAO {
 	public TextTypeVO textTypeCount(SearchCriteria cri);
 	
 	public List<CommunityVO> listExtract(SearchCriteria cri);
-	
 	public Integer getExtractCount(SearchCriteria cri);
+	
+	public List<CommunityVO> alllistExtract(SearchCriteria cri);
+	public Integer allgetExtractCount(SearchCriteria cri);
+	
+	public List<CommunityVO> alllistSearch(SearchCriteria cri);
+	public Integer allgetSearchCount(SearchCriteria cri);
 	
 	public List<CommunityVO> listSearch(SearchCriteria cri);
 	

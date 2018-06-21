@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
  <mapper namespace="org.union.mappers.PortalMapper">
- 
+
  	<sql id="search">
  		<if test="keyword != null">
 			<if test="searchType != null">
@@ -659,7 +659,6 @@
 			createDate desc
 		limit
 			#{startPage}, #{perPageNum}
-	
 	</select>
  
  	<select id="getExtractCount" resultType="Integer">

@@ -315,13 +315,13 @@
 								      </c:if>
                                       </td>
                                       <td>
-                                      <c:if test="${mediaTextcnt + portalTextcnt + communityTextcnt != 0}">
+                                      <c:if test="${mediaTextcnt2 + portalTextcnt2 + communityTextcnt2 != 0}">
                                       <a href="javascript:popupOpen8();" ><fmt:formatNumber value="${mediaTextcnt2 + portalTextcnt2 + communityTextcnt2}" groupingUsed="true"/>건</a>
                                       (
                                       <fmt:parseNumber var="pages" integerOnly="true" value="${(mediaTextcnt2 + portalTextcnt2 + communityTextcnt2)/(mediaTextcnt + portalTextcnt + communityTextcnt) * 100}"></fmt:parseNumber>${pages}%
                                       )
                                       </c:if>
-                                      <c:if test="${mediaTextcnt + portalTextcnt + communityTextcnt == 0}">
+                                      <c:if test="${mediaTextcnt2 + portalTextcnt2 + communityTextcnt2 == 0}">
                                       <fmt:formatNumber value="${mediaTextcnt2 + portalTextcnt2 + communityTextcnt2}" groupingUsed="true"/>건
 								      (0%)
 								      </c:if>
@@ -342,7 +342,7 @@
 								      <c:if test="${pages >= 20}">
 								      <strong class="text-danger">아주나쁨</strong>
 								      </c:if>
-								      <c:if test="${mediaTextcnt + portalTextcnt + communityTextcnt == 0}">
+								      <c:if test="${mediaTextcnt2 + portalTextcnt2 + communityTextcnt2 == 0}">
                                       <strong class="text-success">아주좋음</strong>
 								      </c:if>
                                       </td>

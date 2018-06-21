@@ -235,9 +235,8 @@
                                 <thead>
                                   <tr>
                                     <th width="5%">No</th>
-                                    <th width="5%">페이지 분류<span class="text-muted"></span></th>
+                                    <th width="5%">페이지 분류</th>
                                     <th width="5%">페이지 명</th>
-                                    <th width="5%">회사명</th>
                                     <th width="5%"><span class="text-muted">키워드</span></th>
                                     <th width="30%">제목 &<span class="text-muted"></span><span class="text-success"> 컨텐츠</span></th>
                                     <th width="10%">추출일 / 작성일</th>
@@ -288,36 +287,22 @@
 
                                   <c:forEach items="${extractList}" var="extractVO" varStatus="index">
                                   <tr class = "trList">
-                                    <c:if test="${extractVO.sns_idx != null}">
-                                      <input type="hidden" value="${extractVO.sns_idx}">
-                                    </c:if>
                                     <c:if test="${extractVO.community_idx != null}">
                                       <input type="hidden" value="${extractVO.community_idx}">
                                     </c:if>
-                                    <c:if test="${extractVO.media_idx != null}">
-                                      <input type="hidden" value="${extractVO.media_idx}">
-                                    </c:if>
-                                    <c:if test="${extractVO.portal_idx != null}">
-                                      <input type="hidden" value="${extractVO.portal_idx}">
-                                    </c:if>
-                                    <th scope="row">
-                                      ${totalCount -index.count +1 -minusCount}
-                                    </th>
-                                    <td>${extractVO.domain}<span class="text-muted"></span></td>
-                                    <td>${extractVO.domainType}</td>
-                                    <td>
-                                    <c:if test="${extractVO.company != null}">${extractVO.company}<span class="text-muted"></span></c:if>
-                                    <c:if test="${extractVO.company == null}"><i class="icofont icofont-minus"></i></c:if>
-                                    </td>
-                                    </td>
+                                    <th scope="row">${totalCount - minusCount - index.count +1}</th>
+                                    <td>${extractVO.domain}</td>
+                                    <td>${extractVO.community_name}</td>
                                     <td>${extractVO.keyword}<span class="text-muted"></span></td>
                                     <td>
                                       <a href="${extractVO.url}" target="_blank">
-                                        <div class="title-nowrap">${extractVO.title}</div>
+                                        <div class="title-nowrap">${extractVO.community_title}</div>
                                       </a><br>
-                                      <span class="text-success" style="text-align: center;"><div class="title-nowrap">${extractVO.content}</div></span>
+                                      <span class="text-success" style="text-align: center;"><div class="title-nowrap">${extractVO.community_content}</div></span>
                                     </td>
-                                    <td>${extractVO.createDate} /<br/>${extractVO.writeDate }</td>
+                                    <td>
+                                    <fmt:formatDate value="${extractVO.createDate}" type="DATE" pattern="yyyy-MM-dd HH:mm:ss" /> /<br/>${extractVO.writeDate }
+                                    </td>
                                     <c:if test="${user.user_name == 'union'}">
                                     <td>
                                       <div class="radios${index.count}" style="vertical-align:middle; text-align: center;">
@@ -345,10 +330,10 @@
                                 <tfoot>
                                   <tr>
                                   <c:if test="${user.user_name != 'union'}">
-                                    <td colspan="7">
+                                    <td colspan="6">
                                     </c:if>
                                   <c:if test="${user.user_name == 'union'}">
-                                    <td colspan="9">
+                                    <td colspan="8">
                                     </c:if>
                                       <ul class="pagination float-right">
                                         <c:if test="${pageMaker.prev}">
@@ -805,8 +790,8 @@ $(function() {
 			calcInsertData(event);
 		}
 
-		if (tr.children[8].children[0].children != 'undefined') {
-			var arr = tr.children[8].children[0].children;
+		if (tr.children[7].children[0].children != 'undefined') {
+			var arr = tr.children[7].children[0].children;
 			console.log(arr);
 		} else {
 			clacInsertData(event);
@@ -859,7 +844,7 @@ $(function() {
 			for(var i = 0; i < tr.length; i++){
 				var idx = tr[i].children[0].value;
 				var table = tr[i].children[2].innerText;
-				var arr = tr[i].children[8].children[0].children;
+				var arr = tr[i].children[7].children[0].children;
 
 
 				for (var l = 0; l < arr.length; l++) {
@@ -910,7 +895,8 @@ $(function() {
   function searchList(event) {
 
 		var makeQeury = '${pageMaker.makeQuery(1)}'.slice(0, -2);
-
+		console.log("makeQeury: " + makeQeury);
+		
 		self.location = "extract" + makeQeury
 						+ $('#selectPerPageNum option:selected').val()
     					+ "&company=" + $("#selectCompany option:selected").val()

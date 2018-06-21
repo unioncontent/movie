@@ -263,5 +263,53 @@ public class CommunityServiceImpl implements CommunityService {
 		return communityDAO.periodWgetSearchCount(cri);
 	}
 
+	@Override
+	public List<CommunityVO> alllistExtract(SearchCriteria cri) {
+
+		return communityDAO.alllistExtract(cri);
+	}
+
+	@Override
+	public Integer allgetExtractCount(SearchCriteria cri) {
+
+		return communityDAO.allgetExtractCount(cri);
+	}
+
+	@Override
+	public List<CommunityVO> alllistSearch(SearchCriteria cri) {
+
+		return communityDAO.alllistSearch(cri);
+	}
+
+	@Override
+	public Integer allgetSearchCount(SearchCriteria cri) {
+
+		return communityDAO.allgetSearchCount(cri);
+	}
+
+	@Override
+	public List<CommunityVO> allPageallList(SearchCriteria cri) {
+
+		return communityDAO.allPageallList(cri);
+	}
+
+	@Override
+	public Integer allPageallCount(SearchCriteria cri) {
+
+		return communityDAO.allPageallCount(cri);
+	}
+
+	@Override
+	public List<CommunityVO> totalallPageallList(SearchCriteria cri) {
+
+		return communityDAO.totalallPageallList(cri);
+	}
+
+	@Override
+	public Integer totalallPageallCount(SearchCriteria cri) {
+
+		return communityDAO.totalallPageallCount(cri);
+	}
+
 	
 }

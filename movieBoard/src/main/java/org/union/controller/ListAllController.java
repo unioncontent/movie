@@ -109,33 +109,28 @@ public class ListAllController {
 			}
 		}
 		
+		// 회사 선택에 따른 키워드 재추출
+				if(cri.getCompany() != null) {
+					if(cri.getCompany().isEmpty() == false) {
+					
+						UserVO userVO  = userService.viewByName(cri.getCompany());
+						logger.info("userVO: " + userVO);
+					    logger.info("keywordList: " + keywordService.listByUser(userVO.getUser_idx()));
+						model.addAttribute("modelKeywordList", keywordService.listByUser(
+								userService.viewByName(cri.getCompany()).getUser_idx()));
+					}
+				}
+		
+		model.addAttribute("extractList", communityService.allPageallList(cri));
 		
 		PageMaker pageMaker = new PageMaker();
 		
-		// 3번 리스트기 때문에  perPageNum / 3
-		if(cri.getPerPageNum() != 10) {
-			cri.setPerPageNum(cri.getPerPageNum()/3);
-		
-		}
-		
 		logger.info("cri: " + cri);
 		
-		Integer totalCount = + communityService.allPageCount(cri)
-							+ portalService.allPageCount(cri)
-							+ mediaService.allPageCount(cri);
+		Integer totalCount = communityService.allPageallCount(cri);
 		
 		logger.info("totalCount: " + totalCount);
 		model.addAttribute("totalCount", totalCount);
-		
-		
-		List<ExtractVO> extractList = new ArrayList<ExtractVO>();
-		ListUtil listUtil = new ListUtil();
-		
-		listUtil.listAddCommunityList(extractList, communityService.allPageList(cri));
-		listUtil.listAddPortalList(extractList, portalService.allPageList(cri));
-		listUtil.listAddMediaList(extractList, mediaService.allPageList(cri));
-
-		cri.setPerPageNum(cri.getPerPageNum()*3);
 		
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(totalCount);
@@ -144,27 +139,6 @@ public class ListAllController {
 		
 		logger.info("pageMaker: " + pageMaker);
 		model.addAttribute("pageMaker", pageMaker);
-		
-		// 회사 선택에 따른 키워드 재추출
-		if(cri.getCompany() != null) {
-			if(cri.getCompany().isEmpty() == false) {
-			
-				UserVO userVO  = userService.viewByName(cri.getCompany());
-				logger.info("userVO: " + userVO);
-			    logger.info("keywordList: " + keywordService.listByUser(userVO.getUser_idx()));
-				model.addAttribute("modelKeywordList", keywordService.listByUser(
-						userService.viewByName(cri.getCompany()).getUser_idx()));
-			}
-		}
-		
-		ExtractComparator comparator = new ExtractComparator();
-		Collections.sort(extractList, comparator);
-		
-		// 회사 추가
-		/*keywordService.viewByKeyword(extractList);*/
-		
-		model.addAttribute("extractList", extractList);
-		
 	}
 	
 	@GetMapping("/listAllTotal")
@@ -216,39 +190,27 @@ public class ListAllController {
 				cri.setCompany(null);
 			}
 		}
+		// 회사 선택에 따른 키워드 재추출
+				if(cri.getCompany() != null) {
+					if(cri.getCompany().isEmpty() == false) {
+					
+						UserVO userVO  = userService.viewByName(cri.getCompany());
+						logger.info("userVO: " + userVO);
+					    logger.info("keywordList: " + keywordService.listByUser(userVO.getUser_idx()));
+						model.addAttribute("modelKeywordList", keywordService.listByUser(
+								userService.viewByName(cri.getCompany()).getUser_idx()));
+					}
+				}
 		
+		model.addAttribute("extractList", communityService.totalallPageallList(cri));
 		
 		PageMaker pageMaker = new PageMaker();
 		
-		// 3번 리스트기 때문에  perPageNum / 3
-		if(cri.getPerPageNum() != 10) {
-			cri.setPerPageNum(cri.getPerPageNum()/3);
-		
-		}
-		
 		logger.info("cri: " + cri);
 		
-		Integer totalCount = + communityService.allPageCount(cri)
-							+ portalService.allPageCount(cri)
-							+ mediaService.allPageCount(cri)
-							+ communityService.TotalAllPageCount(cri)
-							+ portalService.TotalAllPageCount(cri)
-							+ mediaService.TotalAllPageCount(cri);
+		Integer totalCount = communityService.totalallPageallCount(cri);
 
 		model.addAttribute("totalCount", totalCount);
-		
-		
-		List<ExtractVO> extractList = new ArrayList<ExtractVO>();
-		ListUtil listUtil = new ListUtil();
-		
-		listUtil.listAddCommunityList(extractList, communityService.allPageList(cri));
-		listUtil.listAddPortalList(extractList, portalService.allPageList(cri));
-		listUtil.listAddMediaList(extractList, mediaService.allPageList(cri));
-		listUtil.listAddCommunityList(extractList, communityService.TotalAllPageList(cri));
-		listUtil.listAddPortalList(extractList, portalService.TotalAllPageList(cri));
-		listUtil.listAddMediaList(extractList, mediaService.TotalAllPageList(cri));
-
-		cri.setPerPageNum(cri.getPerPageNum()*3);
 		
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(totalCount);
@@ -257,27 +219,6 @@ public class ListAllController {
 		
 		logger.info("pageMaker: " + pageMaker);
 		model.addAttribute("pageMaker", pageMaker);
-		
-		// 회사 선택에 따른 키워드 재추출
-		if(cri.getCompany() != null) {
-			if(cri.getCompany().isEmpty() == false) {
-			
-				UserVO userVO  = userService.viewByName(cri.getCompany());
-				logger.info("userVO: " + userVO);
-			    logger.info("keywordList: " + keywordService.listByUser(userVO.getUser_idx()));
-				model.addAttribute("modelKeywordList", keywordService.listByUser(
-						userService.viewByName(cri.getCompany()).getUser_idx()));
-			}
-		}
-		
-		ExtractComparator comparator = new ExtractComparator();
-		Collections.sort(extractList, comparator);
-		
-		// 회사 추가
-		/*keywordService.viewByKeyword(extractList);*/
-		
-		model.addAttribute("extractList", extractList);
-		
 	}
 	
 	@ResponseBody

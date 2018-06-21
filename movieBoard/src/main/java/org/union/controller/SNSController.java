@@ -115,7 +115,7 @@ public class SNSController {
 		
 		PageMaker pageMaker = new PageMaker();
 		
-		Integer totalCount = snsService.facebookTotalCount(cri);
+		Integer totalCount = snsService.snsFacebookTotalCount(cri);
 		model.addAttribute("totalCount", totalCount);
 		model.addAttribute("minusCount", cri.getPerPageNum() * (cri.getPage()-1));
 		

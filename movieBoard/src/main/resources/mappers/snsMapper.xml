@@ -430,6 +430,17 @@
  		
  	</select>
  	
+ 	<select id="snsFacebookTotalCount" resultType="Integer">
+ 		select 
+ 			count(*)
+ 		from	
+ 			sns_data
+ 		where
+ 			sns_name = 'facebook'
+ 		<include refid="search"></include>
+ 		
+ 	</select>
+ 	
  	<select id="instaList" resultType="SNSVO">
  		select 
 			*
@@ -437,7 +448,7 @@
 			sns_data
 		where 
 			sns_name = 'instagram'
-		<include refid="search"></include>
+		<include refid="search_writeDate"></include>
 		order 
 			by writeDate desc
 		limit  
@@ -464,7 +475,7 @@
 			sns_data
 		where 
 			sns_name = 'twitter'
-		<include refid="search"></include>
+		<include refid="search_writeDate"></include>
 		order 
 			by writeDate desc
 		limit  
