@@ -21,8 +21,8 @@
           <div class="alert alert-default" style="border-radius:  0; border-width:  2px;  margin-bottom: 1rem;">
           	<ul class="p-l-15 f-12" style="list-style-type: disc; color:  #666;">
               <li>기사의 썸네일은 넣고자 하는 이미지의 URL 주소를 해당 기사의 박스 칸에 작성하시면 됩니다.</li>
-              <li>썸네일, 기사분류 수정 및 선택기사 삭제는 선택기사 리스트 페이지에서 할 수있습니다.</li>
-              <li>기사분류 칸에 들어갈 코드와 의미 : 1=쇼박스, 2=보도국, 3=캐스팅, 4=영화산업, 5=영화제, 6=개봉영화, 7=박스오피스, 8=오리온</li>
+              <li>썸네일, 대분류, 세부기사 수정 및 선택기사 삭제는 선택기사 리스트 페이지에서 할 수있습니다.</li>
+              <li>대표기사에 있는 번호를 다른 기사의 세부기사 칸에 작성해주시면 기사 그룹핑이 됩니다.</li>
           	</ul>
         	</div>
         </div>
@@ -63,8 +63,10 @@
                       <th width="5%" style="min-width: 80px;">기자</th>
                       <th width="5%" style="min-width: 80px;">키워드</th>
                       <th width="5%" style="min-width: 50px;">분류글</th>
-                      <th width="20%" style="min-width: 200px;">썸네일</th>
-                      <th width="10%" style="min-width: 80px;">기사분류</th>
+                      <th width="20%" style="min-width: 150px;">썸네일</th>
+                      <th width="10%" style="min-width: 140px;">대분류</th>
+                      <th width="10%" style="min-width: 120px;">대표기사</th>
+                      <th width="10%" style="min-width: 120px;">세부기사</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -88,19 +90,50 @@
                       <th><%= listCount - i - offset %></th>
                       <td><%= list[i].createDate %></td>
                       <td>
-                        <a href="<%= list[i].url %>" target="_blank">
+                        <a href="<%= list[i].url %>" target="_blank" title="<%= list[i].media_title %>">
                           <div class="title_nobr"><%= list[i].media_title %></div>
                         </a>
                       </td>
-                      <td><div class="nobr"><%= list[i].media_name %></div></td>
-                      <td><div class="nobr"><%=(list[i].reporter_name == null) ? '-' : list[i].reporter_name%></div></td>
-                      <td><div class="nobr"><%= list[i].keyword %></div></td>
-                      <td><div class="nobr"><%=(list[i].textType == null) ? '-' : list[i].textType%></div></td>
+                      <td><div class="nobr" title="<%= list[i].media_name %>"><%= list[i].media_name %></div></td>
                       <td>
-                        <input type="text" placeholder="이미지 주소(URL)" id="thumbnail" class="form-control">
+                        <div class="nobr" title="<%= list[i].reporter_name %>">
+                          <% if(list[i].reporter_name == null){ %>
+                            <i class="fas fa-minus"></i>
+                          <%}else{%>
+                            <%=list[i].reporter_name%>
+                          <%}%>
+                        </div>
+                      </td>
+                      <td><div class="nobr" title="<%= list[i].keyword %>"><%= list[i].keyword %></div></td>
+                      <td>
+                        <div class="nobr" title="<%= list[i].textType %>">
+                          <% if(list[i].textType == null){ %>
+                            <i class="fas fa-minus"></i>
+                          <%}else{%>
+                            <%=list[i].textType%>
+                          <%}%>
+                        </div>
                       </td>
                       <td>
-                        <input type="number" min="1" max="8" value="1"  id="thumbnailCode" class="form-control">
+                        <input type="text" placeholder="이미지주소(URL)" id="thumbnail" class="form-control selectText">
+                      </td>
+                      <td>
+                        <!-- <input type="number" min="1" max="8" value="1"  id="newsType" class="form-control"> -->
+                        <select class="form-control form-control-default p-l-5 select-news" id="newsType">
+                          <option value="1">쇼박스영화</option>
+                          <option value="2">경쟁영화</option>
+                          <option value="3">캐스팅</option>
+                          <option value="4">박스오피스</option>
+                          <option value="5">쇼박스기업뉴스</option>
+                          <option value="6">영화일반</option>
+                          <option value="7">보도국</option>
+                        </select>
+                      </td>
+                      <td>
+                        <input type="text" placeholder="대표기사" id="news_title" value="<%=list[i].media_idx%>" class="form-control selectText">
+                      </td>
+                      <td>
+                        <input type="text" placeholder="세부기사" id="news_detail" class="form-control selectText">
                       </td>
                     </tr>
                     <% } %>
@@ -114,7 +147,7 @@
                     var pageCount = Math.ceil(listCount/limit);
                     if(pageCount > 1) {
                     %>
-                      <td colspan="5">
+                      <td colspan="7">
                         <ul class="pagination float-right">
                           <%
                             var pageSize = 5;
@@ -196,7 +229,15 @@
     overflow: hidden;
   }
   .nobr{
-    width: 112px;
+    width: 66px;
+  }
+  .nobr>i{
+    font-size: 10px;
+  }
+  .select-news{
+    font-size: 12px;
+    max-height: 35px;
+    line-height: 16px;
   }
   .title_nobr:hover{
     cursor:pointer;
@@ -244,6 +285,10 @@
     else{
       $('#reportrange span').html(moment(new Date(sDateValue)).format('YYYY.MM.DD') + ' - ' + moment(new Date(eDateValue+' 23:59:59')).format('YYYY.MM.DD'));
     }
+  });
+  // 대표기사,썸네일,세부기사 클릭시 텍스트 전체 선택
+  $(document).on("click",".selectText", function(){
+    $(this).select();
   });
   // 키워드 선택시
   $('#selectKeyword').on('change',function(){
@@ -296,7 +341,7 @@
         var list = [];
         $('input.news-checkbox[type=checkbox]:checked').each(function(idx,ele){
           var trEle = $(ele).parents('tr');
-          list.push({idx:trEle.find('#idx').val(),thumbnail:trEle.find('#thumbnail').val(),code:trEle.find('#thumbnailCode').val()});
+          list.push({idx:trEle.find('#idx').val(),thumbnail:trEle.find('#thumbnail').val(),code:trEle.find('#newsType option:selected').val(),detail:trEle.find('#news_detail').val()});
         });
         $('#checkboxAll').prop('checked', false);
         addNews(list);
@@ -374,19 +419,33 @@
           <th>'+numIdx+'</th>\
           <td>'+item.createDate+'</td>\
           <td>\
-            <a href="'+item.url+'" target="_blank">\
+            <a href="'+item.url+'" target="_blank" title="'+item.media_title+'">\
               <div class="title_nobr">'+item.media_title+'</div>\
             </a>\
           </td>\
-          <td><div class="nobr">'+item.media_name+'</div></td>\
-          <td><div class="nobr">'+((item.reporter_name == null) ? '-' : item.reporter_name)+'</div></td>\
-          <td><div class="nobr">'+item.keyword+'</div></td>\
-          <td><div class="nobr">'+((item.textType == null) ? '-' : item.textType)+'</div></td>\
+          <td><div class="nobr" title="'+item.media_name+'">'+item.media_name+'</div></td>\
+          <td><div class="nobr" title="'+item.reporter_name+'">'+((item.reporter_name == null) ? '<i class="fas fa-minus"></i>' : item.reporter_name)+'</div></td>\
+          <td><div class="nobr" title="'+item.keyword+'">'+item.keyword+'</div></td>\
+          <td><div class="nobr" title="'+item.textType+'">'+((item.textType == null) ? '<i class="fas fa-minus"></i>' : item.textType)+'</div></td>\
           <td>\
-            <input type="text" placeholder="이미지 주소(URL)" id="thumbnail" class="form-control">\
+            <input type="text" placeholder="이미지주소(URL)" id="thumbnail" class="form-control selectText">\
           </td>\
           <td>\
-            <input type="number" min="1" max="8" value="1" id="thumbnailCode" class="form-control">\
+            <select class="form-control form-control-default p-l-5 select-news" id="newsType">\
+              <option value="1">쇼박스영화</option>\
+              <option value="2">경쟁영화</option>\
+              <option value="3">캐스팅</option>\
+              <option value="4">박스오피스</option>\
+              <option value="5">쇼박스기업뉴스</option>\
+              <option value="6">영화일반</option>\
+              <option value="7">보도국</option>\
+            </select>\
+          </td>\
+          <td>\
+            <input type="text" placeholder="대표기사" id="news_title" value="'+item.media_idx+'" class="form-control selectText">\
+          </td>\
+          <td>\
+            <input type="text" placeholder="세부기사" id="news_detail" class="form-control selectText">\
           </td>';
           $('#listTable tbody').eq(0).append(html);
         });
@@ -395,7 +454,7 @@
         $('#listTable tfoot').eq(0).empty();
         var html = '<tr><td colspan="5"><button id="addBtn" class="btn btn-list alert-check p-r-5 p-l-5 m-l-15 m-b-5  f-left m-t-5"><i class="fas fa-angle-down"></i>선택저장</button></td>'
         if(pageCount > 1) {
-          html += '<td colspan="5"><ul class="pagination float-right">';
+          html += '<td colspan="7"><ul class="pagination float-right">';
           var pageSize = 5;
           var pRCnt = parseInt(data.result.currentPage / pageSize);
           if(data.result.currentPage % pageSize == 0){

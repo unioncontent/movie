@@ -39,23 +39,17 @@
                 <table class="table">
                   <thead>
                     <tr>
-                      <th width="1%">
-                        <div class="border-checkbox-section" style="max-width: 30px;">
-                          <div class="border-checkbox-group border-checkbox-group-default">
-                            <input class="border-checkbox" type="checkbox" id="checkboxAll">
-                            <label class="border-checkbox-label" for="checkboxAll"></label>
-                          </div>
-                        </div>
-                      </th>
                       <th width="5%">NO</th>
                       <th width="10%" style="min-width: 80px;">등록날짜</th>
-                      <th width="20%" style="min-width:58px">제목</th>
+                      <th width="20%">제목</th>
                       <th width="5%" style="min-width: 80px;">언론사</th>
                       <th width="5%" style="min-width: 80px;">기자</th>
                       <th width="5%" style="min-width: 80px;">키워드</th>
                       <th width="5%" style="min-width: 50px;">분류글</th>
-                      <th width="20%" style="min-width: 200px;">썸네일</th>
-                      <th width="10%" style="min-width: 80px;">기사분류</th>
+                      <th width="20%" style="min-width: 180px;">썸네일</th>
+                      <th width="10%" style="min-width: 140px;">대분류</th>
+                      <th width="10%" style="min-width: 120px;">대표기사</th>
+                      <th width="10%" style="min-width: 120px;">세부기사</th>
                       <th width="10%" style="min-width: 80px;">관리</th>
                     </tr>
                   </thead>
@@ -69,49 +63,71 @@
                     %>
                     <tr>
                       <input type="hidden" id="idx" value="<%=list[i].media_idx%>" />
-                      <td>
-                        <div class="border-checkbox-section" style="max-width: 30px;">
-                          <div class="border-checkbox-group border-checkbox-group-default">
-                            <input class="border-checkbox news-checkbox" type="checkbox" id="checkbox<%=i%>">
-                            <label class="border-checkbox-label" for="checkbox<%=i%>"></label>
-                          </div>
-                        </div>
-                      </td>
                       <th><%= listCount - i - offset %></th>
                       <td><%= list[i].createDate %></td>
                       <td>
-                        <a href="<%= list[i].url %>" target="_blank">
+                        <a href="<%= list[i].url %>" target="_blank" title="<%= list[i].media_title %>">
                           <div class="title_nobr"><%= list[i].media_title %></div>
                         </a>
                       </td>
                       <td><div class="nobr"><%= list[i].media_name %></div></td>
-                      <td><div class="nobr"><%=(list[i].reporter_name == null) ? '-' : list[i].reporter_name%></div></td>
+                      <td>
+                        <div class="nobr">
+                          <% if(list[i].reporter_name == null){ %>
+                            <i class="fas fa-minus"></i>
+                          <%}else{%>
+                            <%=list[i].reporter_name%>
+                          <%}%>
+                        </div>
+                      </td>
                       <td><div class="nobr"><%= list[i].keyword %></div></td>
-                      <td><div class="nobr"><%=(list[i].textType == null) ? '-' : list[i].textType%></div></td>
                       <td>
-                        <input type="text" placeholder="이미지 주소(URL)" id="thumbnail" value="<%=list[i].thumbnail%>" class="form-control">
+                        <div class="nobr">
+                          <% if(list[i].textType == null){ %>
+                            <i class="fas fa-minus"></i>
+                          <%}else{%>
+                            <%=list[i].textType%>
+                          <%}%>
+                        </div>
                       </td>
                       <td>
-                        <input type="number" min="1" max="8" id="thumbnailCode" value="<%=list[i].thumbnail_code%>" class="form-control">
+                        <input type="text" placeholder="이미지주소(URL)" id="thumbnail" value="<%=list[i].thumbnail%>" class="form-control selectText">
                       </td>
                       <td>
-                        <button class="btn btn-sm btn-danger btn-delete">삭제</button>
-                        <button class="btn btn-sm btn-primary btn-edit">수정</button>
+                        <!-- <input type="number" min="1" max="8" id="newsType" value="<%=list[i].news_type%>" class="form-control"> -->
+                        <select class="form-control form-control-default p-l-5 select-news" id="newsType">
+                          <option value="1" <%=(list[i].news_type == '1') ? 'selected' : ''%>>쇼박스영화</option>
+                          <option value="2" <%=(list[i].news_type == '2') ? 'selected' : ''%>>경쟁영화</option>
+                          <option value="3" <%=(list[i].news_type == '3') ? 'selected' : ''%>>캐스팅</option>
+                          <option value="4" <%=(list[i].news_type == '4') ? 'selected' : ''%>>박스오피스</option>
+                          <option value="5" <%=(list[i].news_type == '5') ? 'selected' : ''%>>쇼박스기업뉴스</option>
+                          <option value="6" <%=(list[i].news_type == '6') ? 'selected' : ''%>>영화일반</option>
+                          <option value="7" <%=(list[i].news_type == '7') ? 'selected' : ''%>>보도국</option>
+                        </select>
+                      </td>
+                      <td>
+                        <input type="text" placeholder="대표기사" id="news_title" value="<%=list[i].media_idx%>" class="form-control selectText">
+                      </td>
+                      <td>
+                        <input type="text" placeholder="세부기사" id="news_detail" value="<%=list[i].news_detail%>" class="form-control selectText">
+                      </td>
+                      <td>
+                        <button class="btn btn-sm btn-danger btn-delete"><i class="far fa-trash-alt"></i></button>
+                        <button class="btn btn-sm btn-primary btn-edit"><i class="far fa-edit"></i></button>
                       </td>
                     </tr>
                     <% } %>
                   </tbody>
                   <tfoot>
                     <tr>
-                      <td colspan="5">
-                        <button id="addBtn" class="btn btn-list f-left alert-check p-r-5 p-l-5 m-l-15 m-b-5  m-t-5"><i class="fas fa-angle-down"></i>선택저장</button>
-                        <button id="newsAddBtn" class="btn btn-warning alert-check p-r-5 p-l-5 m-l-15 m-b-5  f-left m-t-5"><i class="fas fa-angle-down"></i>기사입력</button>
+                      <td colspan="4">
+                        <button id="newsAddBtn" class="btn btn-warning alert-check p-r-5 p-l-5 m-l-15 m-b-5  f-left m-t-5"><i class="fas fa-file-alt"></i>기사입력</button>
                       </td>
                     <%
                     var pageCount = Math.ceil(listCount/limit);
                     if(pageCount > 1) {
                     %>
-                      <td colspan="6">
+                      <td colspan="8">
                         <ul class="pagination float-right">
                           <%
                             var pageSize = 5;
@@ -179,10 +195,120 @@
           </div>
         </div>
       </div>
+      <!-- Modal start-->
+      <div class="modal fade" id="news-Modal" data-backdrop="static" data-keyboard="false" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">기사입력</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label">작성일</label>
+                <div class="col-sm-5">
+                  <input type="text" id="m_writeDate" placeholder="YYYY-MM-DD" class="form-control">
+                </div>
+                <div class="col-sm-5">
+                  <input type="text" id="m_writeDateTime" placeholder="HH:MM:SS" class="form-control">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label">키워드</label>
+                <div class="col-sm-10">
+                  <select class="form-control form-control-default" id="m_keyword">
+                    <option>키워드</option>
+                    <%for(var i=0; i < klist.length; i++) {%>
+                      <option value='<%=klist[i].M_keyword%>'><%=klist[i].M_keyword%></option>
+                      <%}%>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label">분류</label>
+                <div class="col-sm-10">
+                  <select class="form-control form-control-default" id="m_text_type">
+                    <option value="좋은글">좋은글</option>
+                    <option value="나쁜글">나쁜글</option>
+                    <option value="관심글">관심글</option>
+                    <option value="기타">기타</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label">제목</label>
+                <div class="col-sm-10">
+                  <input type="text" id="m_media_title" placeholder="제목" class="form-control">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label">내용</label>
+                <div class="col-sm-10">
+                  <textarea rows="5" cols="5" class="form-control" placeholder="내용" id="m_media_content"></textarea>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label">언론사</label>
+                <div class="col-sm-10">
+                  <input type="text" id="m_media_name" placeholder="언론사" class="form-control">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label">기자</label>
+                <div class="col-sm-10">
+                  <input type="text" id="m_reporter_name" placeholder="기자" class="form-control">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label">URL</label>
+                <div class="col-sm-10">
+                  <input type="text" id="m_url" placeholder="URL" class="form-control">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label">썸네일</label>
+                <div class="col-sm-10">
+                  <input type="text" id="m_thumbnail" placeholder="이미지주소(URL)" class="form-control">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label">기사분류</label>
+                <div class="col-sm-10">
+                  <select class="form-control form-control-default" id="m_news_type">
+                    <option value="1">쇼박스 영화</option>
+                    <option value="2">경쟁 영화</option>
+                    <option value="3">캐스팅</option>
+                    <option value="4">박스오피스</option>
+                    <option value="5">쇼박스 기업 뉴스</option>
+                    <option value="6">영화 일반</option>
+                    <option value="7">보도국</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label">세부기사</label>
+                <div class="col-sm-10">
+                  <input type="text" id="m_news_detail" placeholder="세부기사" class="form-control">
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">취소</button>
+              <button type="button" class="btn btn-primary waves-effect waves-light" id="submit">등록</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Modal end-->
     </div>
   </div>
 </div>
 <style type="text/css">
+  .btn-sm.btn-edit{
+    padding-right: 10px;
+  }
   .table td, .table th {
     text-align: center;
   }
@@ -190,11 +316,19 @@
     font-size: 15px;
     padding-left: 3px;
     text-overflow: ellipsis;
-    width: 400px;
+    width: 292px;
     overflow: hidden;
   }
   .nobr{
     width: 66px;
+  }
+  .nobr>i{
+    font-size: 10px;
+  }
+  .select-news{
+    font-size: 12px;
+    max-height: 35px;
+    line-height: 16px;
   }
   .title_nobr:hover{
     cursor:pointer;
@@ -210,9 +344,12 @@
   #addBtn{
     font-weight: bold;
     color: white;
-    height: 40px;
+    height: 36px;
     background-color: #a6a6a6;
     border-color: #a6a6a6;
+  }
+  #newsAddBtn{
+    font-weight: bold;
   }
   /* daterangepicker */
   .card .card-header span:not(.input-group-addon) {
@@ -225,6 +362,9 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/2.1.27/daterangepicker.js"></script>
 <!-- sweetalert -->
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sweetalert@2.1.0/dist/sweetalert.min.js"></script>
+<!-- Bootstrap date-time-picker js -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
 <script type="text/javascript">
   // data input hidden values
   var sDateValue = $('#sDate').val();
@@ -241,6 +381,107 @@
     }
     else{
       $('#reportrange span').html(moment(new Date(sDateValue)).format('YYYY.MM.DD') + ' - ' + moment(new Date(eDateValue+' 23:59:59')).format('YYYY.MM.DD'));
+    }
+  });
+  // 대표기사,썸네일,세부기사 클릭시 텍스트 전체 선택
+  $(document).on("click",".selectText", function(){
+    $(this).select();
+  });
+  // 기사입력 클릭시
+  $(document).on("click","#newsAddBtn",function(){
+    // modal 초기화
+    $('#m_keyword').find('option:first').prop('selected', 'selected');
+    $('#m_text_type').find('option:first').prop('selected', 'selected');
+    $('#m_news_type').find('option:first').prop('selected', 'selected');
+    $('#m_media_content').val('');
+    $('#news-Modal input').val('');
+
+    $("#news-Modal").modal('show');
+  });
+  // 기사입력 submit 시
+  $('#submit').on("click",function(){
+    var param = {
+      writeDate:$('#m_writeDate').val()+' '+$('#m_writeDateTime').val(),
+      media_title:$('#m_media_title').val(),
+      media_content:$('#m_media_content').val(),
+      title_key:$('#m_keyword option:selected').val(),
+      keyword:$('#m_keyword option:selected').val(),
+      url:$('#m_url').val(),
+      textType:$('#m_text_type').val(),
+      media_name:$('#m_media_name').val()
+    }
+    // 작성일
+    var datetime_pattern = /^(19|20)\d{2}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[0-1]) (0[0-9]|1[0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])$/;
+    if(!datetime_pattern.test(param.writeDate)){
+      alert('작성일을 다시 입력해주세요');
+    }
+    // 키워드
+    else if(param.keyword == '키워드'){
+      alert('키워드를 선택해주세요');
+    }
+    // 제목
+    else if(param.media_title == ''){
+      alert('제목을 입력해주세요');
+    }
+    // 내용
+    else if(param.media_content == ''){
+      alert('내용을 입력해주세요');
+    }
+    // 언론사
+    else if(param.media_name == ''){
+      alert('언론사를 입력해주세요');
+    }
+    // url
+    else if(param.url == ''){
+      alert('URL을 입력해주세요');
+    }
+    else{
+      var reporter_name = $('#m_reporter_name').val();
+      var thumbnail = $('#m_thumbnail').val();
+      var news_type = $('#m_news_type option:selected').val();
+      var news_detail = $('#m_news_detail').val();
+      if(reporter_name != ''){
+        param['reporter_name'] = reporter_name;
+      }
+      if(thumbnail != ''){
+        param['thumbnail'] = thumbnail;
+      }
+      if(news_type != ''){
+        param['news_type'] = news_type;
+      }
+      if(news_detail != ''){
+        param['news_detail'] = news_detail;
+      }
+
+      swal({
+        title: "등록 하시겠습니까?",
+        icon: "warning",
+        buttons: ["취소", true],
+        dangerMode: true,
+      }).then(function(value) {
+        if (value != null) {
+          $.ajax({
+            type: "POST",
+            url: "/news/list/delete",
+            data: param,
+            error:function(request,status,error){
+              console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
+              swal("ERROR!", '새로고침 후 다시 시도해주세요.', "error");
+            },
+            success:function(data){
+              if(data.status){
+                swal("SUCCESS!", '기사가 등록되었습니다.', "success")
+                .then(function(value) {
+                  reloadPage();
+                  $("#news-Modal").modal('hide');
+                });
+              }else{
+                swal("ERROR!", '새로고침 후 다시 시도해주세요.', "error");
+              }
+            }
+          });
+        }
+      });
     }
   });
   // 키워드 선택시
@@ -264,42 +505,6 @@
       param.eDate = eDateValue;
     }
     ajaxGetPageList(param,0);
-  });
-  // 뉴스 전체 선택시
-  $('#checkboxAll').on('click',function(){
-    var checkBool = null;
-    if($(this).is(":checked")){
-      checkBool = true;
-    }else{
-      checkBool = false;
-    }
-    $('.news-checkbox').prop('checked', checkBool);
-  });
-  $(document).on('click','.news-checkbox',function(){
-    $('#checkboxAll').prop('checked', false);
-  });
-  // 선택저장 클릭시
-  $(document).on('click','#addBtn',function(){
-    if($('input.news-checkbox[type=checkbox]:checked').length < 1){
-      swal("ERROR!", '체크박스를 선택해주세요.', "error");
-      return false;
-    }
-    swal({
-      title: "선택저장 처리 하시겠습니까?",
-      icon: "warning",
-      buttons: ["취소", true],
-      dangerMode: true,
-    }).then(function(value) {
-      if (value != null) {
-        var list = [];
-        $('input.news-checkbox[type=checkbox]:checked').each(function(idx,ele){
-          var trEle = $(ele).parents('tr');
-          list.push({idx:trEle.find('#idx').val(),thumbnail:trEle.find('#thumbnail').val(),code:trEle.find('#thumbnailCode').val()});
-        });
-        $('#checkboxAll').prop('checked', false);
-        addNews(list);
-      }
-    });
   });
   // 삭제 클릭시
   $(document).on('click','.btn-delete',function(){
@@ -334,7 +539,7 @@
       }
     });
   });
-  // 삭제 클릭시
+  // 수정 클릭시
   $(document).on('click','.btn-edit',function(){
     var trEle = $(this).parents('tr');
     swal({
@@ -350,7 +555,8 @@
           url: "/news/list/update",
           data: {
             'thumbnail' : trEle.find('#thumbnail').val(),
-            'thumbnail_code' : trEle.find('#thumbnailCode').val(),
+            'news_type' : trEle.find('#newsType').val(),
+            'news_detail' : trEle.find('#news_detail').val(),
             'idx' : trEle.find('#idx').val()
           },
           error:function(request,status,error){
@@ -417,43 +623,37 @@
           var numIdx = Math.ceil(data.result.listCount-(data.result.offset+idx)).toString();
           var html = '<tr>\
           <input type="hidden" id="idx" value="'+item.media_idx+'" />\
-          <td>\
-            <div class="border-checkbox-section" style="max-width: 30px;">\
-              <div class="border-checkbox-group border-checkbox-group-default">\
-                <input class="border-checkbox news-checkbox" type="checkbox" id="checkbox'+idx+'">\
-                <label class="border-checkbox-label" for="checkbox'+idx+'"></label>\
-              </div>\
-            </div>\
-          </td>\
           <th>'+numIdx+'</th>\
           <td>'+item.createDate+'</td>\
           <td>\
-            <a href="'+item.url+'" target="_blank">\
+            <a href="'+item.url+'" target="_blank" title="'+item.media_title+'">\
               <div class="title_nobr">'+item.media_title+'</div>\
             </a>\
           </td>\
-          <td><div class="nobr">'+item.media_name+'</div></td>\
-          <td><div class="nobr">'+((item.reporter_name == null) ? '-' : item.reporter_name)+'</div></td>\
+          <td><div class="nobr">'+item.media_name+'</div></td>';
+          html+='<td><div class="nobr">'+((item.reporter_name == null) ? '<i class="fas fa-minus"></i>' : item.reporter_name)+'</div></td>\
           <td><div class="nobr">'+item.keyword+'</div></td>\
-          <td><div class="nobr">'+((item.textType == null) ? '-' : item.textType)+'</div></td>\
-          <td>\
-            <input type="text" placeholder="이미지 주소(URL)" id="thumbnail" value=\"'+item.thumbnail+'\" class="form-control">\
-          </td>\
-          <td>\
-            <input type="number" min="1" max="8" id="thumbnailCode" value=\"'+item.thumbnail_code+'\" class="form-control">\
-          </td>\
-          <td>\
-            <button class="btn btn-sm btn-danger btn-delete">삭제</button>\
-            <button class="btn btn-sm btn-primary btn-edit">수정</button>\
-          </td>';
+          <td><div class="nobr">'+((item.textType == null) ? '<i class="fas fa-minus"></i>' : item.textType)+'</div></td>\
+          <td><input type="text" placeholder="이미지주소(URL)" id="thumbnail" value=\"'+((item.thumbnail == null) ? '' : item.thumbnail)+'\" class="form-control selectText"></td>';
+          html+='<td><select class="form-control form-control-default p-l-5 select-news" id="newsType">\
+            <option value="1" '+((item.news_type == '1') ? 'selected' : '')+'>쇼박스영화</option>\
+            <option value="2" '+((item.news_type == '2') ? 'selected' : '')+'>경쟁영화</option>\
+            <option value="3" '+((item.news_type == '3') ? 'selected' : '')+'>캐스팅</option>\
+            <option value="4" '+((item.news_type == '4') ? 'selected' : '')+'>박스오피스</option>\
+            <option value="5" '+((item.news_type == '5') ? 'selected' : '')+'>쇼박스기업뉴스</option>\
+            <option value="6" '+((item.news_type == '6') ? 'selected' : '')+'>영화일반</option>\
+            <option value="7" '+((item.news_type == '7') ? 'selected' : '')+'>보도국</option>\
+          </select></td>';
+          html+='<td><input type="text" placeholder="대표기사" id="news_title" value="'+item.media_idx+'" class="form-control selectText"></td><td><input type="text" placeholder="세부기사" id="news_detail" value="'+((item.news_detail == null) ? '' : item.news_detail)+'" class="form-control selectText"></td>\
+          <td><button class="btn btn-sm btn-danger btn-delete"><i class="far fa-trash-alt"></i></button>&nbsp;<button class="btn btn-sm btn-primary btn-edit"><i class="far fa-edit"></i></button></td>';
           $('#listTable tbody').eq(0).append(html);
         });
         var limit = 10;
         var pageCount = Math.ceil(data.result.listCount/limit);
         $('#listTable tfoot').eq(0).empty();
-        var html = '<tr><td colspan="5"><button id="addBtn" class="btn btn-list f-left alert-check p-r-5 p-l-5 m-l-15 m-b-5  m-t-5"><i class="fas fa-angle-down"></i>선택저장</button><button id="newsAddBtn" class="btn btn-warning alert-check p-r-5 p-l-5 m-l-15 m-b-5  f-left m-t-5"><i class="fas fa-angle-down"></i>기사입력</button></td>'
+        var html = '<tr><td colspan="4"><button id="newsAddBtn" class="btn btn-warning alert-check p-r-5 p-l-5 m-l-15 m-b-5  f-left m-t-5"><i class="fas fa-file-alt"></i>기사입력</button></td>'
         if(pageCount > 1) {
-          html += '<td colspan="6"><ul class="pagination float-right">';
+          html += '<td colspan="8"><ul class="pagination float-right">';
           var pageSize = 5;
           var pRCnt = parseInt(data.result.currentPage / pageSize);
           if(data.result.currentPage % pageSize == 0){
@@ -520,6 +720,21 @@
     }
     ajaxGetPageList(param);
   }
+  // 모달 달력
+  $('#m_writeDate').daterangepicker({
+    singleDatePicker: true,
+    showDropdowns: true,
+    locale: {
+      format: 'YYYY-MM-DD',
+      "customRangeLabel": "Custom",
+      "daysOfWeek": [
+          "일", "월", "화", "수", "목", "금", "토"
+      ],
+      "monthNames": [
+        "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"
+      ],
+    }
+  });
   //날짜 선택 시
   function searchDate(){
     var dateArr = $("#reportrange span").text().split(' - ');
