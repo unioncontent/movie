@@ -747,6 +747,10 @@
           history.pushState(null, null,renewURL);
         }
         $("#page").val(data.list.currentPage);
+        $("#userType").val(param.userType);
+        $("#searchType").val(param.searchType);
+        $("#search").val(param.search);
+
         $('#checkboxAll').prop('checked', false);
         $('#listTable tbody').empty();
         data.list.mailList.forEach(function(item,idx){

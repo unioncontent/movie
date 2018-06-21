@@ -74,20 +74,20 @@
                         var recipiArr = list[i].M_recipi_idx.split(',');
                         var recipiStr = '';
                         if(recipiArr.length > 1){
-                          recipiStr = list[i].M_recipi+' 외 '+(recipiArr.length-1);
+                          recipiStr = ((list[i].M_recipi == null)? '(삭제된메일)':list[i].M_recipi)+' 외 '+(recipiArr.length-1);
                         }
                         else{
-                          recipiStr = list[i].M_recipi;
+                          recipiStr = ((list[i].M_recipi == null)? '(삭제된메일)':list[i].M_recipi);
                         }
 
                         var groupStr = '';
                         if(list[i].M_group_idx != null){
                           var groupArr = list[i].M_group_idx.split(',');
                           if(groupArr.length > 1){
-                            groupStr = list[i].M_group+' 외 '+(groupArr.length-1);
+                            groupStr = ((list[i].M_group == null)? '(삭제된그룹)':list[i].M_group)+' 외 '+(groupArr.length-1);
                           }
                           else{
-                            groupStr = list[i].M_group;
+                            groupStr = ((list[i].M_group == null)? '(삭제된그룹)':list[i].M_group);
                           }
                         }
                     %>
@@ -265,7 +265,7 @@
     width: 60px;
   }
   .group-nobr{
-    width: 100px;
+    width: 119px;
   }
   .kwd_nobr{
     width: 112px;
@@ -681,20 +681,20 @@
           var recipiArr = item.M_recipi_idx.split(',');
           var recipiStr = '';
           if(recipiArr.length > 1){
-            recipiStr = item.M_recipi+' 외 '+(recipiArr.length-1);
+            recipiStr = ((item.M_recipi == null) ? '(삭제된메일)':item.M_recipi)+' 외 '+(recipiArr.length-1);
           }
           else{
-            recipiStr = item.M_recipi;
+            recipiStr = ((item.M_recipi == null) ? '(삭제된메일)':item.M_recipi);
           }
 
           var groupStr = '';
           if(item.M_group_idx != null){
             var groupArr = item.M_group_idx.split(',');
             if(groupArr.length > 1){
-              groupStr = item.M_group+' 외 '+(groupArr.length-1);
+              groupStr = ((item.M_group == null) ? '(삭제된그룹)':item.M_group)+' 외 '+(groupArr.length-1);
             }
             else if(item.M_group != null){
-              groupStr = item.M_group;
+              groupStr = ((item.M_group == null) ? '(삭제된그룹)':item.M_group);
             }
           }
           var html = '<tr>\
