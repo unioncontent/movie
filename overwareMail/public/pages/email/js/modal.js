@@ -20,11 +20,11 @@ $(".btn-modal").on("click",function(){
   modalboxSetting('group',groupIdxValueArr,groupIdxTextArr);
 
   // 열기 전 페이징 체크 후 버튼 제거
-  $('.paging .count').each(function() {
-    if($(this).text() == '1'){
-      $(this).next('.bottomBtn').hide();
-    }
-  });
+  // $('.paging .count').each(function() {
+  //   if($(this).text() == '1'){
+  //     $(this).next('.bottomBtn').hide();
+  //   }
+  // });
   $("#mailList-Modal").modal('show');
 });
 // 주소록 li setting
@@ -298,9 +298,9 @@ function bottomPagingSetting(tagEq,page,total){
     btnTag.find('button').eq(3).data('num',endStartNum);
     btnTag.show();
   }
-  else{
-    btnTag.hide();
-  }
+  // else{
+  //   btnTag.hide();
+  // }
 }
 // 주소록 shift키 범위선택
 // $(document).on('click','#groupUl input, #recipiUl input',function(e) {
