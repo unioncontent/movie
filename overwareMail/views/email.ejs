@@ -238,7 +238,7 @@
                                / <p class="count"><%=(Math.ceil(groupListCount/10) < 1)? 1 : Math.ceil(groupListCount/10)%></p>
                               <div class="bottomBtn">
                                 <button class="btn btn-default btn-sm" data-type="group" data-value="first" data-num="0"><i class="fas fa-angle-double-left"></i></button>
-                                <button class="btn btn-default btn-sm" data-type="group" data-value="prev" data-num="<%=(groupListPageNum != 1) ? groupListPageNum-1 : 1%>"><i class="fas fa-chevron-left"></i></button>
+                                <button class="btn btn-default btn-sm" data-type="group" data-value="prev" data-num="<%=(groupListPageNum != 1) ? groupListPageNum-1 : 0%>"><i class="fas fa-chevron-left"></i></button>
                                 <button class="btn btn-default btn-sm" data-type="group" data-value="next" data-num="<%=(groupListPageNum != groupListCount) ? groupListPageNum+1 : groupListCount%>"><i class="fas fa-chevron-right"></i></button>
                                 <button class="btn btn-default btn-sm" data-type="group" data-value="end" data-num="<%=Math.ceil(groupListCount/10)%>"><i class="fas fa-angle-double-right"></i></button>
                               </div>
