@@ -234,6 +234,10 @@ async function getGroupListPageData(idx,param,type){
     data['offset'] = searchParam[1];
   }
   if (typeof param.search !== 'undefined') {
+    searchBody['searchType'] = param.searchType;
+    data['searchType'] = param.searchType;
+  }
+  if (typeof param.search !== 'undefined') {
     searchBody['search'] = param.search;
     data['search'] = param.search;
   }
