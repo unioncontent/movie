@@ -78,7 +78,7 @@ router.post('/addNews',isAuthenticated,async function(req, res, next) {
       var param = item;
       console.log(item);
       try{
-        await newsclipping.insert([param.thumbnail,param.code,param.idx,param.idx]);
+        await newsclipping.insert(param.detail,[param.thumbnail,param.code,param.idx,param.idx]);
       }
       catch(err){
         console.log(err);
@@ -117,10 +117,18 @@ router.post('/list/getNextPage',isAuthenticated,async function(req, res, next) {
     res.status(500).send(e);
   }
 });
+router.post('/list/insert',isAuthenticated,async function(req, res, next) {
+  try{
+    await newsclipping.update(req.body.news_detail,[req.body.thumbnail,req.body.news_type,req.body.idx]);
+    res.send({status:true});
+  } catch(e){
+    res.status(500).send(e);
+  }
+});
 
 router.post('/list/delete',isAuthenticated,async function(req, res, next) {
   try{
-    await newsclipping.delete(req.body.idx);
+    await newsclipping.insert2(req.body);
     res.send({status:true});
   } catch(e){
     res.status(500).send(e);
@@ -129,7 +137,7 @@ router.post('/list/delete',isAuthenticated,async function(req, res, next) {
 
 router.post('/list/update',isAuthenticated,async function(req, res, next) {
   try{
-    await newsclipping.update([req.body.thumbnail,req.body.thumbnail_code,req.body.idx]);
+    await newsclipping.update(req.body.news_detail,[req.body.thumbnail,req.body.news_type,req.body.idx]);
     res.send({status:true});
   } catch(e){
     res.status(500).send(e);

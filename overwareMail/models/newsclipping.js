@@ -10,21 +10,40 @@ const DBpromise = require('../db/db_info.js');
 */
 
 var newsclipping = {
-  insert: async function(param){
+  insert: async function(detail,param){
     var sql = 'insert into news_mail(media_idx, media_name, media_title, media_content, reporter_name, reporter_ID, reporter_email, writeDate, last_WriteDate, last_media_title, \
-    last_media_content, title_key, keyword, keyword_type, url, thumbnail, thumbnail_code, textType, media_state, createDate, replynum, updateDate)\
-    SELECT media_idx, media_name, media_title, media_content, reporter_name, reporter_ID, reporter_email, writeDate, last_WriteDate, last_media_title, last_media_content, \
-    title_key, keyword, keyword_type, url, ?, ?, textType, media_state, createDate, replynum, updateDate FROM `union`.media_data where media_idx = ?';
+    last_media_content, title_key, keyword, keyword_type, url, thumbnail, news_type, textType, media_state, createDate, replynum, updateDate';
+    if(detail != ''){
+      sql += ',news_detail';
+    }
+    sql += ')SELECT media_idx, media_name, media_title, media_content, reporter_name, reporter_ID, reporter_email, writeDate, last_WriteDate, last_media_title, last_media_content, \
+    title_key, keyword, keyword_type, url, ?, ?, textType, media_state, createDate, replynum, updateDate ';
+    if(detail != ''){
+      sql += ',\''+detail+'\' ';
+    }
+    sql += 'FROM `union`.media_data where media_idx = ?';
     // 값이 있으면 insert 안되도록
     sql += ' and NOT EXISTS (SELECT * FROM news_mail WHERE media_idx = ?);'
     return await getResult(sql,param);
+  },
+  insert2: async function(param){
+    var pValue = Object.values(param);
+    var sql = insertSqlSetting(Object.keys(param));
+    return await getResult(sql,pValue);
   },
   delete: async function(param){
     var sql = "delete from news_mail where media_idx=?";
     return await getResult(sql,param);
   },
-  update: async function(param){
-    var sql = "update news_mail set thumbnail=?,thumbnail_code=? where media_idx=?";
+  update: async function(detail,param){
+    var sql = "update news_mail set thumbnail=?,news_type=?";
+    if(detail != ''){
+      sql += ',news_detail=\''+detail+'\'';
+    }
+    else{
+      sql += ',news_detail=NULL';
+    }
+    sql+= " where media_idx=?";
     return await getResult(sql,param);
   },
   selectMediaTable: async function(body,param){
@@ -55,7 +74,7 @@ var newsclipping = {
     }
   },
   selectNewsMailTable: async function(body,param){
-    var sql = "SELECT url,media_idx,DATE_FORMAT(createDate, '%Y-%m-%d %H:%i:%s') AS `createDate`,media_title,media_name,reporter_name,keyword,textType,thumbnail,thumbnail_code FROM news_mail where title_key in (select distinct keyword_main from keyword_data where user_idx=?)";
+    var sql = "SELECT url,media_idx,DATE_FORMAT(createDate, '%Y-%m-%d %H:%i:%s') AS `createDate`,media_title,media_name,reporter_name,keyword,textType,thumbnail,news_type,news_detail FROM news_mail where title_key in (select distinct keyword_main from keyword_data where user_idx=?)";
     if(('sDate' in body) && ('eDate' in body)){
       sql+=' and createDate between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
     }
@@ -81,6 +100,15 @@ var newsclipping = {
       return count[0]['total'];
     }
   }
+}
+
+function insertSqlSetting(keys){
+  var arr = [].map.call(keys, function(obj) { return '?'; });
+  columns = keys.join(', ');
+  placeholders = arr.join(', ');
+  var sql = "INSERT INTO news_mail ( "+columns+" ) VALUES ( "+placeholders+" );";
+
+  return sql;
 }
 
 async function getResult(sql,param) {
