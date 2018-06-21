@@ -668,6 +668,9 @@
               renewURL += '&keyword='+param.keyword;
             }
           }
+          else{
+            renewURL = renewURL.replace(/&keyword=([0-9]+)/ig,'');
+          }
           //페이지 갱신 실행!
           history.pushState(null, null,renewURL);
         }

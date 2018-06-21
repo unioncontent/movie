@@ -200,6 +200,19 @@
                 </div>
               </div>
               <div class="card">
+                <div class="card-header">
+                  <div class="col-12 col-md-3 f-right col-sm-9 m-l-10 p-l-0 p-r-0 right-icon-control">
+                    <input type="text" class="form-control p-t-10 form-control-default search-text" id="mailInput1">
+                    <div class="form-icon" id="searchMailBtn1">
+                      <i class="fas fa-search"></i>
+                    </div>
+                  </div>
+                  <select id="selectSearchType1" name="select" class="col-12 col-md-1 form-control form-control-default f-right search-select">
+                    <option value="e">이메일</option>
+                    <option value="n">이름</option>
+                    <option value="t">연락처</option>
+                  </select>
+                </div>
                 <div class="card-block table-border-style">
                   <div class="table-responsive">
                     <table class="table table-columned table-striped" id="modal-cntList">
@@ -435,6 +448,8 @@
     var tdEles = $(this).parents('tr').find('td');
     $('#company').text(tdEles.eq(0).text());
     $('#group').text(tdEles.eq(1).text());
+    $('#selectSearchType1').find('option:first').prop('selected', 'selected');
+    $('#mailInput1').val('');
     var param = {
       page : 1,
       group : $('#group').text()
@@ -530,6 +545,23 @@
       }
     });
   }
+  // 메일 그룹 리스트검색 검색시
+  $('#mailInput1').on('keyup',function(event){
+    if(event.keyCode == 13){
+      $('#searchMailBtn1').trigger('click');
+    };
+  });
+  $('#searchMailBtn1').on('click',function(){
+    var param = {
+      page : 1,
+      group : $('#group').text()
+    };
+    if($('#mailInput1').val() != ''){
+      param.search = $('#mailInput1').val();
+      param.searchType = $("#selectSearchType1 option:selected").val();
+    }
+    ajaxGetPageGroupList(param);
+  });
   // 모달 등록 이메일 검색 클릭시
   $('#searchMail').on('click',function(){
     var param = {
@@ -621,7 +653,7 @@
     var param = {
       page : Number($(this).data().value)
     };
-    if(mailInput != ''){
+    if($('#mailInput').val() != ''){
       param.search = $('#mailInput').val();
       param.searchType = $("#selectSearchType option:selected").val();
     }
@@ -772,6 +804,10 @@
       page : Number($(this).data().value),
       group : $('#group').text()
     };
+    if($('#mailInput1').val() != ''){
+      param.search = $('#mailInput1').val();
+      param.searchType = $("#selectSearchType1 option:selected").val();
+    }
     ajaxGetPageGroupList(param);
   });
   function phoneFomatter(num,type){

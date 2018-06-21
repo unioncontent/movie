@@ -174,6 +174,13 @@ var mailListC = {
     if (typeof body.group !== 'undefined') {
       sql += ' and M_group_title=?';
     }
+    if('searchType' in body){
+      switch (body.searchType) {
+        case 'e': sql+=' and M_email like \'%'+body.search+'%\''; break;
+        case 'n': sql+=' and M_name like \'%'+body.search+'%\''; break;
+        case 't': sql+=' and M_tel =\''+body.search.replace( /(\s*)/g, "")+'\''; break;
+      }
+    }
     if (typeof body.order !== 'undefined') {
       sql += ' order by n_idx desc limit ?,?';
     }
@@ -183,6 +190,13 @@ var mailListC = {
     var sql = 'select count(*) as total FROM mail_list_group_view where M_id = ?';
     if (typeof body.group !== 'undefined') {
       sql += ' and M_group_title=?';
+    }
+    if('searchType' in body){
+      switch (body.searchType) {
+        case 'e': sql+=' and M_email like \'%'+body.search+'%\''; break;
+        case 'n': sql+=' and M_name like \'%'+body.search+'%\''; break;
+        case 't': sql+=' and M_tel =\''+body.search.replace( /(\s*)/g, "")+'\''; break;
+      }
     }
     var count = await getResult(sql,param);
     if(count.length == 0){
