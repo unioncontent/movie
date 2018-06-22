@@ -211,8 +211,8 @@ $("#btn-file-upload").on('click',function(){
     }
 
     var aTagHtml = '<a style="color: #ffffff; font-weight: bold; font-size: 12px; text-decoration: none; " href="'+urlVal+'" target="_blank">'+btnNameVal+'</a>'
-    // var html = '<p><span style="width: 100px; background:#3d94f6; margin-top:10px; padding: 5px 30px; text-align: center;">'+aTagHtml+'</span>&nbsp; &nbsp; &nbsp;</p>'
-    var html = '<span style="width: 100px; background:#3d94f6; margin-top:10px; padding: 5px 30px; text-align: center;">'+aTagHtml+'</span>&nbsp; &nbsp;'
+    var html = '<p style="margin: 12px 0px;"><span style="width: 100px; background:#3d94f6; margin-top:10px; padding: 5px 30px; text-align: center;">'+aTagHtml+'</span>&nbsp;&nbsp;</p>'
+    // var html = '<span style="width: 100px; background:#3d94f6; margin-top:10px; padding: 5px 30px; text-align: center;">'+aTagHtml+'</span>&nbsp &nbsp;'
     tinymce.activeEditor.execCommand('mceInsertContent', false, html);
     $("#fileUpload-Modal").modal('hide');
   }
@@ -232,12 +232,12 @@ function fileUpload(param){
       console.log("File available at: ", data);
       if(data.location != undefined){
         var aTagHtml = '<a style="color: #ffffff; font-weight: bold; font-size: 12px; text-decoration: none; " href="'+data.location+'">'+param.name+'</a>'
-        // var html = '<p><span style="width: 100px; background:#4E4E4E; margin-top:20px; padding: 5px 30px; text-align: center;">'+aTagHtml+'</span>&nbsp; &nbsp; &nbsp;</p>';
-        var html = '<span style="width: 100px; background:#4E4E4E; margin-top:20px; padding: 5px 30px; text-align: center;">'+aTagHtml+'</span>&nbsp; &nbsp;';
+        var html = '<p style="margin: 12px 0px;"><span style="width: 100px; background:#4E4E4E; margin-top:20px; padding: 5px 30px; text-align: center;">'+aTagHtml+'</span>&nbsp;&nbsp;</p>';
+        // var html = '<span style="width: 100px; background:#4E4E4E; margin-top:20px; padding: 5px 30px; text-align: center;">'+aTagHtml+'</span>&nbsp;&nbsp;';
         if(param.type== 'cBtn-b'){
           aTagHtml = '<a style="color: #000000; font-weight: bold; font-size: 12px; text-decoration: none; " href="'+data.location+'">'+param.name+'</a>'
-          // html = '<p><span style="background:#f9f9f9; border: 1px solid #000000; width: 130px; margin-top:5px; padding: 5px 15px; font-weight: bold;font-size: 12px;"">'+aTagHtml+'</span>&nbsp; &nbsp; &nbsp;</p>';
-          html = '<span style="background:#f9f9f9; border: 1px solid #000000; width: 130px; margin-top:5px; padding: 5px 15px; font-weight: bold;font-size: 12px;"">'+aTagHtml+'</span>&nbsp; &nbsp;';
+          html = '<p style="margin: 12px 0px;"><span style="background:#f9f9f9; border: 1px solid #000000; width: 130px; margin-top:5px; padding: 5px 15px; font-weight: bold;font-size: 12px;"">'+aTagHtml+'</span>&nbsp;&nbsp;</p>';
+          // html = '<span style="background:#f9f9f9; border: 1px solid #000000; width: 130px; margin-top:5px; padding: 5px 15px; font-weight: bold;font-size: 12px;"">'+aTagHtml+'</span>&nbsp;&nbsp;';
         }
 
         $('.file-upload-loader').fadeOut(500);
