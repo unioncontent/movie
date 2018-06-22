@@ -108,13 +108,14 @@ $(document).ready(function () {
 	  domain = tr[2].innerHTML;
 	  idx = tr[0].value;
 	  
-	  var thumbName = tr[6].children[0].value;
+	  var thumbName = tr[5].children[0].value;
 	  console.log(thumbName);
 	  
 	  
 	  var path = '../classification/show?name=' + thumbName;
 	  $("#thumbnail").attr("src", path);
 	  $('#imageModal').modal('show');
+	  
   });
   //이미지업로드 클릭시
   $(document).on("click",".alert-upload",function(){
