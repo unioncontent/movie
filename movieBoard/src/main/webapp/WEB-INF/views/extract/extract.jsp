@@ -232,6 +232,14 @@
                              <c:if test="${user.user_name != 'union'}">
                               <table class="table table-bordered table-sm">
                              </c:if>
+                             <c:if test="${empty extractList}">
+	                                    <tbody>
+	                                     <tr>
+	                                     <td style="vertical-align:middle;" align="center" height="150px"><h5>등록된 게시글이 없습니다.</h5></td>
+	                                     </tr>
+	                                     </tbody>
+	                                    </c:if>
+	                            <c:if test="${!empty extractList}">
                                 <thead>
                                   <tr>
                                     <th width="5%">No</th>
@@ -361,6 +369,7 @@
                                     </td>
                                   </tr>
                                 </tfoot>
+                                </c:if>
                               </table>
                             </div>
                           </div>
@@ -875,7 +884,8 @@ $(function() {
 
 
 			swal("Success!", "일괄처리가 완료되었습니다.", "success");
-
+			
+			window.setTimeout("pagereload()", 2000);
 			location.reload();
 		});
   }
