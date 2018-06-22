@@ -409,6 +409,19 @@
 	  	xhr.setRequestHeader(header, token);
 	  });
   });
+  
+//BODY 에 로딩화면 추가
+	var loading = $('<div id="loading" class="loading"></div><img id="loading_img" alt="loading" src="../assets/images/ajax-loader.gif">').appendTo(document.body).hide();
+
+//		ajax 통신 시작시 실행
+	$(window).ajaxStart(function() {
+		loading.show();
+	});
+
+//		ajax 통신 종료시 실행
+	$(window).ajaxStop(function() {
+		loading.hide();
+	});
 
   $(document).ready(function(){
 
@@ -548,6 +561,7 @@
 	 		 	startDate : decodeURI(window.location.href.split("startDate=")[1]).split("&")[0], endDate : decodeURI(window.location.href.split("endDate=")[1]).split("&")[0]},
 	  	  success : function(data){
 
+	  		if (data != "") {
 	  		  console.log(data);
 	  		var script = "[";
 
@@ -570,7 +584,10 @@
 
 			matchChart(jsonScript);
 
-	  	 }
+	  		}else if (data == ""){
+		  		loading.hide();
+		  		 }
+		  	 }
 	});
 	
 	$.ajax({

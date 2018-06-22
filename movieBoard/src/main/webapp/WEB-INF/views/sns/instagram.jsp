@@ -216,6 +216,14 @@
                           </div>
                           <div class="card-block table-border-style table-responsive">
                             <table class="table table-bordered table-sm">
+                            <c:if test="${empty instagramList}">
+	                                    <tbody>
+	                                     <tr>
+	                                     <td style="vertical-align:middle;" align="center" height="150px"><h5>등록된 게시글이 없습니다.</h5></td>
+	                                     </tr>
+	                                     </tbody>
+	                                    </c:if>
+	                                    <c:if test="${!empty instagramList}">
                               <thead>
                                 <tr>
                                   <th width="3%">NO</th>
@@ -274,6 +282,7 @@
                                   </td>
                                 </tr>
                               </tfoot>
+                              </c:if>
                             </table>
                           </div>
                         </div>
@@ -401,19 +410,142 @@
 
   $(document).ready(function(){
 
-	  var $fromDate = $("#fromDate");
-
 	  var startDateOption = decodeURI(window.location.href.split("startDate=")[1]).split("&")[0].split(" ")[0];
-	  var endDateOption = decodeURI(window.location.href.split("endDate=")[1]).split("&")[0].split(" ")[0];
-	  console.log("startDateOption: " + startDateOption);
-	  console.log("endDateOption: " + endDateOption);
+		var endDateOption = decodeURI(window.location.href.split("endDate=")[1]).split("&")[0].split(" ")[0];
+		console.log("startDateOption: " + startDateOption);
+		console.log("endDateOption: " + endDateOption);
 
-	  if(startDateOption != 'undefined' && endDateOption != 'undefined'
-			&& startDateOption != '' && endDateOption != ''){
-		  $fromDate.val(startDateOption + " - " + endDateOption);
-
-
+		if(startDateOption != 'undefined' && endDateOption != 'undefined'
+				&& startDateOption != '' && endDateOption != ''){
+			$("#fromDate").val(startDateOption + " - " + endDateOption);
 		}
+
+
+
+		var companyOption = decodeURI(window.location.href.split("company=")[1]).split("&")[0];
+		console.log("companyOption: " + companyOption);
+
+		var $selectCompany = $('#selectCompany');
+		if(companyOption != 'undefined'){
+			for(var i = 0; i < $selectCompany[0].length; i++ ){
+
+				if($selectCompany[0].children[i].value == companyOption){
+					$selectCompany[0].children[i].selected = 'selected';
+				}
+			}
+		}
+		$selectCompany[0][0].disabled = true;
+
+
+		// 회사 선택시
+		$selectCompany.change(function(){
+			console.log("selectCompany clicked....");
+			console.log($("#selectCompany option:selected").val());
+
+			searchList();
+
+		});
+
+
+		var keywordOption = decodeURI(window.location.href.split("selectKey=")[1]).split("&")[0];
+		console.log("keywordOption: " + keywordOption);
+		console.log(decodeURI(window.location.href.split("&selectKey=")[1]));
+
+
+
+		var $selectKeyword = $('#selectKeyword');
+
+		if(keywordOption != 'undefined'){
+			for(var i = 0; i < $selectKeyword[0].length; i++ ){
+				if($selectKeyword[0][i].value == keywordOption){
+					$selectKeyword[0][i].selected = 'selected';
+				}
+			}
+		}
+		$selectKeyword[0][0].disabled = true;
+
+
+		// 키워드 선택시
+		$selectKeyword.change(function(){
+			console.log("selectKeyword clicked....");
+			console.log($('#selectKeyword option:selected').val());
+
+			searchList();
+
+			//searchList();
+		});
+
+//content 길시에 ...으로 변경
+var $content = $(".text-success");
+
+var size = 25;
+
+for (var i =1; i < $content.length; i++){
+	if($content[i].innerText.length >= size){
+		$content[i].textContent = $content[i].innerText.substr(0, size) + '...';
+	}
+}
+
+//당일 클릭시
+$('#toDay').on("click", function(){
+console.log("toDay clicked....");
+var date = getDate("toDay");
+var startDate = date.startDate;
+var endDate = date.endDate;
+
+$("#fromDate").val(endDate + " - " + endDate)
+console.log($("#fromDate").val());
+searchList(); 
+});
+
+//전일 클릭시
+$('#yesterDay').on("click", function(){
+console.log("yesterDay clicked....");
+var date = getDate("yesterDay");
+var startDate = date.startDate;
+var endDate = date.endDate;
+
+$("#fromDate").val(startDate + " - " + endDate)
+console.log($("#fromDate").val());
+searchList();
+});
+
+//7일  클릭시
+$('#week').on("click", function(){
+console.log("week clicked....");
+var date = getDate("week");
+var startDate = date.startDate;
+var endDate = date.endDate;
+
+$("#fromDate").val(startDate + " - " + endDate)
+console.log($("#fromDate").val());
+searchList();
+})
+
+//30일 클릭시
+$('#month').on("click", function(){
+console.log("month clicked....");
+var date = getDate("month");
+var startDate = date.startDate;
+var endDate = date.endDate;
+
+$("#fromDate").val(startDate + " - " + endDate)
+console.log($("#fromDate").val());
+
+searchList();
+
+})
+
+	//캘린더 클릭시..
+	$('#fromDate').on('apply.daterangepicker', function(ev, picker) {
+		   var startDate = picker.startDate.format('YYYY-MM-DD');
+		   var endDate = picker.endDate.format('YYYY-MM-DD');
+
+		   console.log("startDate: " + startDate);
+		   console.log("endDate: " + endDate);
+
+		   searchList();
+	});
 
 
 	// 엑셀 출력시
@@ -504,47 +636,6 @@
 	}
 	$selectKeyword[0][0].disabled = true;
 
-	// 키워드 선택시
-	$selectKeyword.change(function(){
-		console.log("selectKeyword clicked....");
-		console.log($('#selectKeyword option:selected').val());
-
-		searchList();
-	});
-
-	var companyOption = decodeURI(window.location.href.split("company=")[1]).split("&")[0];
-
-
-	var $selectCompany = $('#selectCompany');
-	if(companyOption != 'undefined'){
-		for(var i = 0; i < $selectCompany[0].length; i++ ){
-
-			if($selectCompany[0].children[i].value == companyOption){
-				$selectCompany[0].children[i].selected = 'selected';
-			}
-		}
-	}
-	$selectCompany[0][0].disabled = true;
-
-
-	// 회사 선택시
-	$selectCompany.change(function(){
-		console.log("selectCompany clicked....");
-		console.log($("#selectCompany option:selected").val());
-
-		searchList();
-
-	});
-
-	 var graphStart = $fromDate.val().split(" - ")[0].replace("/", "-").replace("/", "-");
-	  var graphEnd = $fromDate.val().split(" - ")[1].replace("/", "-").replace("/", "-");
-
-	  console.log("graphStart: " + graphStart);
-	  console.log("graphEnd: " + graphEnd);
-
-	  ajaxGraph(graphStart, graphEnd);
-
-
 	// 검색 클릭시
 	$('#searchBtn').on("click", function(event){
 	  console.log("searchBtn clicked....");
@@ -558,91 +649,7 @@
 
     });
 
-
-	// 당일 클릭시
-	$('#toDay').on("click", function(){
-	  console.log("toDay clicked....");
-	  var date = getDate("toDay");
-	  var startDate = date.startDate;
-	  var endDate = date.endDate;
-
-	  $("#fromDate").val(endDate + " - " + endDate)
-	  console.log($("#fromDate").val());
-	  searchList();
-	});
-
-	// 전일 클릭시
-	$('#yesterDay').on("click", function(){
-	  console.log("yesterDay clicked....");
-	  var date = getDate("yesterDay");
-	  var startDate = date.startDate;
-	  var endDate = date.endDate;
-
-	  $("#fromDate").val(startDate + " - " + endDate)
-	  console.log($("#fromDate").val());
-	  searchList();
-	});
-
-	// 7일  클릭시
-	$('#week').on("click", function(){
-	  console.log("week clicked....");
-	  var date = getDate("week");
-	  var startDate = date.startDate;
-	  var endDate = date.endDate;
-
-	  $("#fromDate").val(startDate + " - " + endDate)
-	  console.log($("#fromDate").val());
-	  searchList();
-	})
-
-	// 30일 클릭시
-	$('#month').on("click", function(){
-	  console.log("month clicked....");
-	  var date = getDate("month");
-	  var startDate = date.startDate;
-	  var endDate = date.endDate;
-
-	  $("#fromDate").val(startDate + " - " + endDate)
-	  console.log($("#fromDate").val());
-
-	  searchList();
-
-	})
-
-
-	// 캘린더 클릭시
-	$('#fromDate').on('apply.daterangepicker', function(ev, picker) {
-		   var startDate = picker.startDate.format('YYYY-MM-DD');
-		   var endDate = picker.endDate.format('YYYY-MM-DD');
-
-		   console.log("startDate: " + startDate);
-		   console.log("endDate: " + endDate);
-
-		   searchList();
-
-	});
-
 }); // end ready....
-
-//list URL 함수
-function searchList(event) {
-
-	var makeQeury = '${pageMaker.makeQuery(1)}'.slice(0,-2);
-
-	self.location = "instagram"
-				  + makeQeury
-				  + $('#selectPerPageNum option:selected').val()
-				  + "&searchType="
-				  + $("#selectSearchType option:selected").val()
-				  + "&keyword="
-				  + $('#keywordInput').val()
-				  + "&selectKey="
-				  + $('#selectKeyword option:selected').val()
-				  + "&company="
-				  + $("#selectCompany option:selected").val()
-				  + "&startDate=" + makeDateFormat($("#fromDate").val(), 0)
-				  + "&endDate=" +  makeDateFormat($("#fromDate").val(), 1);
-}
 
 	//그래프 함수
 	function drawChart(jsonScript) {
@@ -710,6 +717,27 @@ function makeDateFormat(date, index){
 		}
 
 
+}
+makeDateFormat($("#fromDate").val());
+
+//list URL 함수
+function searchList(event) {
+
+	var makeQeury = '${pageMaker.makeQuery(1)}'.slice(0,-2);
+
+	self.location = "instagram"
+				  + makeQeury
+				  + $('#selectPerPageNum option:selected').val()
+				  + "&searchType="
+				  + $("#selectSearchType option:selected").val()
+				  + "&keyword="
+				  + $('#keywordInput').val()
+				  + "&selectKey="
+				  + $('#selectKeyword option:selected').val()
+				  + "&company="
+				  + $("#selectCompany option:selected").val()
+				  + "&startDate=" + makeDateFormat($("#fromDate").val(), 0)
+				  + "&endDate=" +  makeDateFormat($("#fromDate").val(), 1);
 }
 
 

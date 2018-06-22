@@ -154,16 +154,24 @@
 											</div>
 											<div class="col-md-5">
 												<!-- date picker start -->
-												<div class="row" style="display: inherit;">
-													<div class="input-group float-right date p-l-15 p-r-15 m-b-10">
+												<div class="row">
+													<div class="btn-group float-right m-b-10 p-l-15 p-r-10" role="group">
+														<button id="toDay" type="button" class="btn btn-inverse btn-sm waves-effect waves-light">당일</button>
+														<button id="yesterDay" type="button" class="btn btn-inverse btn-sm waves-effect waves-light">전일</button>
+														<button id="week" type="button" class="btn btn-inverse btn-sm waves-effect waves-light">최근7일</button>
+														<button id="month" type="button" class="btn btn-inverse btn-sm waves-effect waves-light">최근30일</button>
+													</div>
+													<div class="input-group float-right date col p-l-15 p-r-15 m-b-10">
 														<input type="text" id="fromDate" class="form-control form-control-inverse" value="" style="text-align: center;"> <span class="input-group-addon bg-inverse"> <span class="icofont icofont-ui-calendar"></span>
 														</span>
 													</div>
 												</div>
 												<!-- date picker end -->
 											</div>
-										</div>
 										<!-- data setting end -->
+										<div class="col-lg-12">
+				                        <div class="tab-content">
+				                          <div class="tab-pane fade show active" id="main" role="tabpanel">
 										<div class="row">
 											<!-- counter-card-1 start-->
 											<div class="col-md-3">
@@ -370,12 +378,8 @@
 																</tfoot>
 																</c:if>
 															</table>
-														</div>
-													</div>
-												</div>
 												<!-- Pc table end -->
-											</div>
-										</div>
+										</div></div></div></div></div></div></div></div></div>
 										<!-- 네이버 관리 end -->
 									</div>
 								</div>
@@ -580,7 +584,56 @@
 		}
 	}
 
+	// 당일 클릭시
+	$('#toDay').on("click", function(){
+	  console.log("toDay clicked....");
+	  var date = getDate("toDay");
+	  var startDate = date.startDate;
+	  var endDate = date.endDate;
 
+	  $("#fromDate").val(endDate + " - " + endDate)
+	  console.log($("#fromDate").val());
+	  searchList(); 
+	});
+
+	// 전일 클릭시
+	$('#yesterDay').on("click", function(){
+	  console.log("yesterDay clicked....");
+	  var date = getDate("yesterDay");
+	  var startDate = date.startDate;
+	  var endDate = date.endDate;
+
+	  $("#fromDate").val(startDate + " - " + endDate)
+	  console.log($("#fromDate").val());
+	  searchList();
+	});
+
+	// 7일  클릭시
+	$('#week').on("click", function(){
+	  console.log("week clicked....");
+	  var date = getDate("week");
+	  var startDate = date.startDate;
+	  var endDate = date.endDate;
+
+	  $("#fromDate").val(startDate + " - " + endDate)
+	  console.log($("#fromDate").val());
+	  searchList();
+	})
+
+	// 30일 클릭시
+	$('#month').on("click", function(){
+	  console.log("month clicked....");
+	  var date = getDate("month");
+	  var startDate = date.startDate;
+	  var endDate = date.endDate;
+	
+	  $("#fromDate").val(startDate + " - " + endDate)
+	  console.log($("#fromDate").val());
+	  
+	  searchList();
+	 
+	})
+	
 		//캘린더 클릭시..
 		$('#fromDate').on('apply.daterangepicker', function(ev, picker) {
 			   var startDate = picker.startDate.format('YYYY-MM-DD');
@@ -670,6 +723,48 @@
 			  	hideHover : 'auto'
 			    });
 			}
+	
+		// 날짜 계산 함수
+		  function getDate(type){
+		  	console.log("TYPE : " + type);
+		  	var date = new Date();
+
+		   	var month = date.getMonth()+1;
+		   	var day = date.getDate();
+		   	var year = date.getFullYear();
+
+		   	var endDate = year + "-" + month + "-" + day;
+		   	var startDate;
+
+		   	if(type == "yesterDay"){
+		   		var calcDate = day-1;
+		   		startDate = year + "-" + month + "-" + calcDate;
+
+		   	}else if(type == "month"){
+		   		var calcDate = month-1;
+		   		
+		   		if(calcDate == 0){
+		   			calcDate = 12;
+		   			year -= 1;
+		   		}
+		   		
+		   		startDate = year + "-" + calcDate + "-" + day;
+
+		   	}else if(type == "week"){
+		   		var calcDate = day-7;
+		   		if(calcDate < 0){
+		   			var lastDay = (new Date(year, month-1, 0)).getDate();
+		   			calcDate += lastDay;
+		   			month -= 1;
+		   		}
+		   		startDate = year + "-" + month + "-" + calcDate;
+		   	}
+
+		   	return {
+		   		startDate : startDate,
+		   		endDate : endDate
+		   	}
+		}
 
 	function makeDateFormat(date, index){
 		var splitDate = date.split(" - ")[index];

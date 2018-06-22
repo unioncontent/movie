@@ -739,6 +739,17 @@ var $fromDate = $("#fromDate");
    	}
 
   }
+  
+  //tab witdh 수정
+  function cardResize(){
+	  setTimeout(function(){
+	    if($(".tab-pane > .row").width() > 1200){
+	      var card = Math.ceil($(".tab-pane > .row").width()/5)-1;
+	      $(".main-card").css("min-width",card -3);
+	    }
+	  }, 400);
+
+	}
 
   function makeDateFormat(date, index){
 		var splitDate = date.split(" - ")[index];
