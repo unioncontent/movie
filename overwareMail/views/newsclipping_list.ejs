@@ -1,0 +1,436 @@
+<div class="main-body">
+  <div class="page-wrapper">
+    <div class="page-header">
+      <div class="page-header-title">
+        <h4>지난리스트</h4>
+      </div>
+      <div class="page-header-breadcrumb">
+        <ul class="breadcrumb-title">
+          <li class="breadcrumb-item">
+            <a href="/">
+              <i class="fas fa-home"></i>
+            </a>
+          </li>
+          <li class="breadcrumb-item"><a href="#!">지난리스트</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="page-body">
+      <div class="row" id="listTable">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header">
+              <!--날짜추가하기-->
+            </div>
+            <div class="card-block table-border-style">
+              <div class="table-responsive">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th width="1%">NO</th>
+                      <th width="5%">키워드</th>
+                      <th width="15%">제목</th>
+                      <th width="5%">발송자</th>
+                      <th width="5%">수신자</th>
+                      <th width="20%">수신그룹</th>
+                      <th width="5%">작성일</th>
+                      <th width="5%">예약일</th>
+                      <th width="5%">발송일</th>
+                      <th width="25%">관리</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <%
+                      var limit = 20;
+                      if(currentPage > 0){
+                        (currentPage - 1) * limit;
+                      }
+                      for(var i=0; i < list.length; i++) {
+                        var recipiArr = list[i].M_recipi_idx.split(',');
+                        var recipiStr = '';
+                        if(recipiArr.length > 1){
+                          recipiStr = ((list[i].M_recipi == null)? '(삭제된메일)':list[i].M_recipi)+' 외 '+(recipiArr.length-1);
+                        }
+                        else{
+                          recipiStr = ((list[i].M_recipi == null)? '(삭제된메일)':list[i].M_recipi);
+                        }
+
+                        var groupStr = '';
+                        if(list[i].M_group_idx != null){
+                          var groupArr = list[i].M_group_idx.split(',');
+                          if(groupArr.length > 1){
+                            groupStr = ((list[i].M_group == null)? '(삭제된그룹)':list[i].M_group)+' 외 '+(groupArr.length-1);
+                          }
+                          else{
+                            groupStr = ((list[i].M_group == null)? '(삭제된그룹)':list[i].M_group);
+                          }
+                        }
+                    %>
+                    <tr>
+                      <th><%= listCount - i - offset %></th>
+                      <td><div class="kwd_nobr"><%= list[i].keyword %></div></td>
+                      <td>
+                        <a href="http://showbox.email/preview?keyword=<%= list[i].M_keyword_idx %>&idx=<%= list[i].n_idx %>" target="_blank">
+                          <div class="title_nobr"><%= list[i].M_subject %></div>
+                        </a>
+                      </td>
+                      <td><%= list[i].M_sender %></td>
+                      <td><%= recipiStr %></td>
+                      <td><div class="group-nobr" title="<%= groupStr %>"><%= groupStr %></div></td>
+                      <td><div class="date-nobr"><%= list[i].M_regdate %></div></td>
+                      <td><div class="date-nobr"><%= (list[i].M_type != 1) ?'-': list[i].M_send %></div></td>
+                      <td><div class="date-nobr"><%= ((list[i].M_send == null) || (list[i].M_type == 1 &&list[i].success ==0 &&list[i].fail==0)) ?'-': list[i].M_send %></div></td>
+                      <td>
+                        <button class="btn btn-sm btn-inverse btn-delete" data-idx="<%= list[i].n_idx %>">삭제</button>
+                      </td>
+                    </tr>
+                    <% } %>
+                  </tbody>
+                  <tfoot>
+                    <%
+                    var pageCount = Math.ceil(listCount/limit);
+                    if(pageCount > 1) {
+                    %>
+                    <tr>
+                      <td colspan="10">
+                        <ul class="pagination float-right">
+                          <%
+                            var pageSize = 5;
+                            var pRCnt = parseInt(currentPage / pageSize);
+                            if(currentPage % pageSize == 0){
+                              pRCnt = parseInt(currentPage / pageSize) - 1;
+                            }
+                            if(currentPage > 5) {
+                          %>
+                            <li class="page-item">
+                              <a class="page-link" data-value="1" aria-label="Previous">
+                                <i class="ti-angle-double-left f-12"></i>
+                                <span aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                              </a>
+                            </li>
+                            <li class="page-item">
+                              <a class="page-link" data-value=="<%=(pRCnt * pageSize)%>" aria-label="Previous">
+                                <i class="ti-angle-left f-12"></i>
+                                <span aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                              </a>
+                            </li>
+                          <% } %>
+                          <% for(var index=pRCnt * pageSize + 1;index<(pRCnt + 1)*pageSize + 1;index++){%>
+                            <li class= "<%=(currentPage == index) ? 'active' : ''%> page-item">
+                              <a class="page-link" data-value="<%=index%>" >
+                                <%= index %>
+                              </a>
+                            </li>
+                          <%
+                              if(index == pageCount) {
+                                break;
+                              }
+                            }
+                          %>
+                          <% if((pRCnt + 1) * pageSize < pageCount) { %>
+                            <li class="page-item">
+                              <a class="page-link" data-value="<%=(pRCnt + 1)*pageSize+1%>" aria-label="Next">
+                                <i class="ti-angle-right f-12"></i>
+                                <span aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                              </a>
+                            </li>
+                            <li class="page-item">
+                              <a class="page-link" data-value="<%=pageCount%>" aria-label="Next">
+                                <i class="ti-angle-double-right f-12"></i>
+                                <span aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                              </a>
+                            </li>
+                          <% } %>
+                        </ul>
+                      </td>
+                    </tr>
+                    <% } %>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <input type="hidden" id="page" value="<%=page%>"/>
+    </div>
+  </div>
+</div>
+<style type="text/css">
+  .table.table-sm td, .table.table-sm th {
+    padding: .6rem .5rem;
+  }
+  .card .card-header span:not(.input-group-addon){
+    display: inline;
+  }
+  .table td, .table th{
+    vertical-align: middle;
+  }
+  .title_nobr,.kwd_nobr,.group-nobr,.num_nobr{
+    font-size: 15px;
+    padding-left: 3px;
+    text-overflow: ellipsis;
+    width: 300px;
+    overflow: hidden;
+  }
+  .date-nobr{
+    width: 90px;
+    word-wrap: break-word;
+    white-space: initial;
+    white-space: pre-line;
+
+  }
+  .title_nobr:hover{
+    cursor:default;
+    font-weight: bold;
+  }
+  .num_nobr{
+    width: 60px;
+  }
+  .group-nobr{
+    width: 119px;
+  }
+  .kwd_nobr{
+    width: 112px;
+  }
+</style>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/2.1.27/moment.js"></script>
+<!-- sweetalert -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sweetalert@2.1.0/dist/sweetalert.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function(){
+    // 날짜추가하기
+  });
+  // 삭제버튼 클릭시
+  $(document).on('click','.btn-delete',function(){
+    var removeParam = $(this).data('idx');
+    swal({
+      title: "삭제하시겠습니까?",
+      icon: "warning",
+      buttons: ["취소", true],
+      dangerMode: true,
+    })
+    .then(function(value) {
+      if (value == null) {
+        return false;
+      }
+      $.ajax({
+        url: '/email/manage/delete',
+        type: 'post',
+        data : {idx:removeParam},
+        datatype : 'json',
+        error:function(request,status,error){
+          console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
+          swal("ERROR!","삭제 실패했습니다. 다시 시도해주세요.", "error");
+        },
+        success:function(data){
+          if(data.status){
+            swal("SUCCESS!", '삭제 되었습니다.', "success")
+            .then(function(value) {
+              reloadPage();
+            });
+          }else{
+            swal("ERROR!", '새로고침 후 다시 시도해주세요.', "error");
+          }
+        }
+      });
+    });
+  });
+  function reloadPage(){
+    console.log('reloadPage');
+    var pageValue = ($("#page").val() == '') ? 1 : parseInt($("#page").val());
+    var param = {
+      page : pageValue
+    };
+    // var keywordValue = $("#keyword").val();
+    // if(keywordValue != ''){
+    //   param.keyword = keywordValue;
+    // }
+    var searchTypeParams = $.urlParam("searchType");
+    var searchParams = $.urlParam("search");
+    var keywordParams = $.urlParam("keyword");
+    if(keywordParams != '' && keywordParams != null){
+      param.keyword = keywordParams;
+    }
+    if(searchTypeParams != null && searchParams != null){
+      page.searchType=searchTypeParams;
+      page.search=searchParams;
+    }
+    ajaxGetPageList(param);
+  }
+  //페이지 이동
+  $(document).on('click','.page-link',function(){
+    var num = Number($(this).text()) || Number($(this).data().num);
+    var param = {
+      page : Number($(this).data().value)
+    };
+    // var keywordValue = $('#keyword').val();
+    // if(keywordValue != ''){
+    //   param.keyword = keywordValue;
+    // }
+    // var href = new URL(window.location.href);
+    // if(href.searchParams.get("keyword") != '' && href.searchParams.get("keyword") != null){
+    //   param.keyword = href.searchParams.get("keyword");
+    // }
+    // if(href.searchParams.get("searchType") != '' && href.searchParams.get("searchType") != null){
+    //   param.searchType = href.searchParams.get("searchType");
+    // }
+    // if(href.searchParams.get("search") != '' && href.searchParams.get("search") != null){
+    //   param.search = href.searchParams.get("search");
+    // }
+    // if($.urlParam("keyword") != '' && $.urlParam("keyword") != null){
+    //   param.keyword = $.urlParam("keyword");
+    // }
+    // if($.urlParam("searchType") != '' && $.urlParam("searchType") != null){
+    //   param.searchType = $.urlParam("searchType");
+    // }
+    // if($.urlParam("search") != '' && $.urlParam("search") != null){
+    //   param.search = $.urlParam("search");
+    // }
+    ajaxGetPageList(param,num);
+  });
+  function ajaxGetPageList(param){
+    console.log('ajaxGetPageList:',param);
+    $.ajax({
+      url: '/email/menage/getNextPage',
+      type: 'post',
+      data: param,
+      error: function(request,status,error){
+        console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
+        alert('새로고침 후 다시 시도해주세요.');
+      },
+      success: function(data){
+        console.log(data);
+        if(data.status != true){
+          alert('새로고침 후 다시 시도해주세요.');
+          return false;
+        }
+        $("#page").val(data.result.currentPage);
+        // $("#keyword").val(param.keyword);
+        // if(typeof history.pushState == 'function'){
+        //   //현재 주소를 가져온다.
+        //   var renewURL = location.href;
+        //   //현재 주소 중 page 부분이 있다면 새로 부여될 페이지 번호를 할당한다.
+        //   renewURL = renewURL.replace(/\?page=([0-9]+)/ig,'?page='+data.result.currentPage);
+        //   if(renewURL.indexOf("?page=") == -1){
+        //     renewURL += '?page='+data.result.currentPage;
+        //   }
+        //   if('keyword' in param){
+        //     console.log(renewURL);
+        //     renewURL = renewURL.replace(/&keyword=([0-9]+)/ig,'&keyword='+param.keyword);
+        //     if(renewURL.indexOf("&keyword=") == -1){
+        //       renewURL += '&keyword='+param.keyword;
+        //     }
+        //   }
+        //   else{
+        //     renewURL = renewURL.replace(/&keyword=([0-9]+)/ig,'');
+        //   }
+        //   //페이지 갱신 실행!
+        //   history.pushState(null, null,renewURL);
+        // }
+        $('#listTable tbody').eq(0).empty();
+        data.result.list.forEach(function(item,idx){
+          var numIdx = Math.ceil(data.result.listCount-(data.result.offset+idx)).toString();
+          var mailHtmlStr = '';
+          var recipiArr = item.M_recipi_idx.split(',');
+          var recipiStr = '';
+          if(recipiArr.length > 1){
+            recipiStr = ((item.M_recipi == null) ? '(삭제된메일)':item.M_recipi)+' 외 '+(recipiArr.length-1);
+          }
+          else{
+            recipiStr = ((item.M_recipi == null) ? '(삭제된메일)':item.M_recipi);
+          }
+
+          var groupStr = '';
+          if(item.M_group_idx != null){
+            var groupArr = item.M_group_idx.split(',');
+            if(groupArr.length > 1){
+              groupStr = ((item.M_group == null) ? '(삭제된그룹)':item.M_group)+' 외 '+(groupArr.length-1);
+            }
+            else if(item.M_group != null){
+              groupStr = ((item.M_group == null) ? '(삭제된그룹)':item.M_group);
+            }
+          }
+          var html = '<tr>\
+            <th>'+numIdx+'</th>\
+            <td><div class="kwd_nobr">'+item.keyword+'</div></td>\
+            <td><a href="http://showbox.email/preview?keyword='+item.M_keyword_idx+'&idx='+item.n_idx+'" target="_blank">\
+              <div class="title_nobr">'+item.M_subject+'</div>\
+            </a></td>\
+            <td>'+item.M_sender+'</td>\
+            <td>'+recipiStr+'</td>\
+            <td><div class="group-nobr" title="'+groupStr+'">'+groupStr+'</div></td>\
+            <td><div class="date-nobr">'+item.M_regdate+'</div></td>\
+            <td><div class="date-nobr">'+((item.M_type != 1) ?'-': item.M_send)+'</div></td>\
+            <td><div class="date-nobr">'+(((item.M_send == null) || (item.M_type == 1 &&item.success ==0 &&item.fail==0)) ? '-': item.M_send)+'</div></td>\
+            <td>';
+            if(item.M_send == null || (item.M_type == 1 &&item.success ==0 &&item.fail==0)){
+              html += '<button class="btn btn-sm btn-inverse btn-send" data-idx="'+item.n_idx+'">보내기</button> ';
+            }
+            else{
+              html += '<button class="btn btn-sm btn-inverse btn-resend" data-idx="'+item.n_idx+'">재발송</button> ';
+            }
+            html += '<button class="btn btn-sm btn-inverse btn-delete" data-idx="'+item.n_idx+'">삭제</button> ';
+            if(item.M_send == null || (item.M_type == 1 &&item.success ==0 &&item.fail==0)){
+              html += '<button class="btn btn-sm btn-inverse btn-edit" data-idx="'+item.n_idx+'">수정</button> ';
+            }
+            html += '<button class="btn btn-sm btn-inverse btn-rewrite" data-idx="'+item.n_idx+'">재작성</button></td></tr>';
+          $('#listTable tbody').eq(0).append(html);
+        });
+        var limit = 20;
+        var pageCount = Math.ceil(data.result.listCount/limit);
+        $('#listTable tfoot').eq(0).empty();
+        if(pageCount > 1) {
+          var html = '<tr><td colspan="10"><ul class="pagination float-right">';
+          var pageSize = 5;
+          var pRCnt = parseInt(data.result.currentPage / pageSize);
+          if(data.result.currentPage % pageSize == 0){
+            pRCnt = parseInt(data.result.currentPage / pageSize) - 1;
+          }
+          if(data.result.currentPage > 5) {
+            html += '<li class="page-item"><a class="page-link" data-value="1" aria-label="Previous">\
+                <i class="ti-angle-double-left f-12"></i>\
+                <span aria-hidden="true"></span>\
+                <span class="sr-only">Previous</span>\
+              </a></li>\
+              <li class="page-item"><a class="page-link" data-value=\"'+(pRCnt * pageSize)+'"\ aria-label="Previous">\
+                <i class="ti-angle-left f-12"></i>\
+                <span aria-hidden="true"></span>\
+                <span class="sr-only">Previous</span>\
+              </a></li>';
+          }
+
+          for(var index=pRCnt * pageSize + 1;index<(pRCnt + 1)*pageSize + 1;index++){
+            var active = (data.result.currentPage == index) ? "active" : "";
+            html += '<li class=\"'+active+' page-item">\
+              <a class="page-link" data-value=\"'+index+'"\ >'+index+'</a></li>'
+
+            if(index == pageCount) {
+              break;
+            }
+          }
+          if((pRCnt + 1) * pageSize < pageCount) {
+            html += '<li class="page-item">\
+                  <a class="page-link" data-value=\"'+((pRCnt + 1)*pageSize+1)+'"\ aria-label="Next">\
+                    <i class="ti-angle-right f-12"></i>\
+                    <span aria-hidden="true"></span>\
+                    <span class="sr-only">Next</span>\
+                  </a></li>\
+                  <li class="page-item">\
+                  <a class="page-link" data-value=\"'+pageCount+'"\ aria-label="Next">\
+                    <i class="ti-angle-double-right f-12"></i>\
+                    <span aria-hidden="true"></span>\
+                    <span class="sr-only">Next</span>\
+                  </a></li>';
+          }
+          html += '</ul></td></tr>';
+          $('#listTable tfoot').eq(0).append(html);
+        }
+      }
+    });
+  }
+</script>

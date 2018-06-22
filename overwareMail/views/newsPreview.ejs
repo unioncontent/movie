@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>메일내용</title>
+  <link href="https://fonts.googleapis.com/css?family=Lato:300,300i,400,400i" rel="stylesheet">
+  <!-- <link href="https:///www.tinymce.com/css/codepen.min.css" rel="stylesheet"> -->
+  <style type="text/css">
+    #mail{
+      line-height: 1.5;
+    }
+    body, table, input, select, textarea {
+      font-size: 12px;
+      font-family: 돋움, dotum, sans-serif;
+      color: rgb(51, 51, 51);
+    }
+    h1, h2, h3, h4, h5, td, th, dl, dt, dd, p, form, fieldset, legend {
+      margin: 0;
+      padding: 0;
+    }
+    hr{
+      margin: 6px 0px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="mail">
+  <!-- DB html -->
+  <%-veiw%>
+  <!-- 지난기사 -->
+  <table width="750" align="center" cellpadding="0" cellspacing="0" border="0" style="margin-top: 30px;">
+    <tbody>
+      <tr>
+        <td>
+          [지난 기사보기]
+          <hr>
+          <table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-top: 10px;">
+            <colgroup>
+              <col width="78%">
+              <col width="22%">
+            </colgroup>
+            <tbody>
+              <%
+                for(var i=0; i < pastView.length; i++) {
+                  var url = 'http://showbox.email/preview?keyword='+pastView[i].keyword_idx+'&idx='+pastView[i].n_idx;
+                  if(currentPage != '1'){
+                    url += '&page='+currentPage
+                  }
+                  var limit = 5;
+                  var numIdx = Math.ceil(pastCount-(((currentPage - 1) * limit)+i)).toString();
+                  if(numIdx != '0'){
+                %>
+                <tr>
+                  <td style="font-size: small;padding:5px 0 5px;border-bottom:1px dotted #d9d9d9;color:#444;">
+                    [No.<%=pastView[i].M_seq_number%>차]
+                    <a style="text-decoration:none; color:black;" href="<%=url%>" target="_blank"><%=pastView[i].M_subject%></a>
+                  </td>
+                  <td style="font-size: small;padding:5px 0 5px;border-bottom:1px dotted #d9d9d9;color:#444;"><%=pastView[i].M_regdate%></td>
+                </tr>
+              <% } } %>
+              <tr>
+                <td colspan="2" style="text-align: center; font-size: small;padding:10px 0 5px;">
+                  <%
+                    var pages = Math.ceil(pastCount / limit);
+                    var index=1;
+                    for(index;index<=pages;index++){
+                      //http://showbox.email
+                      if(currentPage == index){
+                  %>
+                      <strong><span class="current"><%=index%></span></strong>
+                    <%} else{%>
+                    <a href="http://showbox.email/preview?keyword=<%=keyword%>&idx=<%=idx%>&page=<%=index%>"><%=index%></a>
+                    <%}%>
+                  <%}%>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <table cellpadding="0" cellspacing="0" border="0" width="750" align="center" style="margin-top: 30px;">
+    <tbody>
+      <tr>
+        <td align="center">Copyright ⓒ unioncontents All rights reserved.</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>&nbsp;</p>
+  </div>
+  <input type="hidden" id="msg" value="<%=msg%>"/>
+  <script
+  src="http://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+  <script>
+    $( document ).ready(function() {
+      if($('#msg').val()!= ''){
+        alert($('#msg').val());
+      }
+    });
+  </script>
+</body>
+</html>

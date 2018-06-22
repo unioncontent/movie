@@ -10,10 +10,18 @@ var isAuthenticated = function (req, res, next) {
   res.redirect('/login');
 };
 
-router.get('/',isAuthenticated,async function(req, res) {
-  var data = await getListPageData(req.user.n_idx,req.query);
-  res.render('user',data);
+router.get('/send',async function(req, res) {
+  res.render('newsclipping_email',data);
 });
 
+router.get('/period',isAuthenticated,async function(req, res) {
+  var data = await getListPageData(req.user.n_idx,req.query);
+  res.render('newsclipping_period',data);
+});
+
+router.get('/list',isAuthenticated,async function(req, res) {
+  var data = await getListPageData(req.user.n_idx,req.query);
+  res.render('newsclippin_list',data);
+});
 
 module.exports = router;
