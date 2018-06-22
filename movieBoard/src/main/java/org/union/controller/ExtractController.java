@@ -60,7 +60,7 @@ public class ExtractController {
 	private UserService userService;
 	
 	@GetMapping("/extract")
-	public void extractGET(@ModelAttribute("cri") SearchCriteria cri, Model model,Integer perPageNum) {
+	public void extractGET(@ModelAttribute("cri") SearchCriteria cri, Model model) {
 		logger.info("extractGET called....");
 		
 		if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
@@ -142,9 +142,8 @@ public class ExtractController {
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(totalCount);
 		
-		model.addAttribute("minusCount", perPageNum * (cri.getPage()-1));
+		model.addAttribute("minusCount", cri.getPerPageNum() * (cri.getPage()-1));
 		
-		logger.info("perPageNum: " + perPageNum);
 		logger.info("pageMaker: " + pageMaker);
 		model.addAttribute("pageMaker", pageMaker);
 		
