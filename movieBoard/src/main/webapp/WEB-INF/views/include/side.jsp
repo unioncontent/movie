@@ -313,21 +313,21 @@
       </li>
       </c:if>
       <li class="extract">
-        <a href="../extract/extract?" data-i18n="nav.advance-components.main">
+        <a href="../extract/extract" data-i18n="nav.advance-components.main">
           <span class="pcoded-micon"><i class="ti-search"></i></span>
           <span class="pcoded-mtext">추출글관리</span>
           <span class="pcoded-mcaret"></span>
         </a>
       </li>
       <li class="classification">
-        <a href="../classification/classification?" data-i18n="nav.advance-components.main">
+        <a href="../classification/classification" data-i18n="nav.advance-components.main">
           <span class="pcoded-micon"><i class="ti-filter"></i></span>
           <span class="pcoded-mtext">분류글관리</span>
           <span class="pcoded-mcaret"></span>
         </a>
    		</li>
         <li class="listAll">
-          <a href="../listAll/listAll?" data-i18n="nav.advance-components.main">
+          <a href="../listAll/listAll" data-i18n="nav.advance-components.main">
             <span class="pcoded-micon"><i class="ti-menu"></i></span>
             <span class="pcoded-mtext">전체글관리</span>
             <span class="pcoded-mcaret"></span>
