@@ -919,6 +919,9 @@
   <script src="../assets/pages/chart/echarts/js/echarts-all.js" type="text/javascript"></script>
   <!-- Date-range picker js -->
   <script type="text/javascript" src="../bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+  <!-- sweet alert js -->
+  <script type="text/javascript" src="../bower_components/sweetalert/dist/sweetalert.min.js"></script>
+  <script type="text/javascript" src="../assets/pages/division/script.js"></script>
   <!-- i18next.min.js -->
   <script type="text/javascript" src="../bower_components/i18next/i18next.min.js"></script>
   <script type="text/javascript" src="../bower_components/i18next-xhr-backend/i18nextXHRBackend.min.js"></script>
@@ -1115,6 +1118,8 @@ $(function() {
 		//input박스 value를 선택
 		$('#clip_target').select();
 		// Use try & catch for unsupported browser
+		
+		swal("Success!", "복사되었습니다.", "success");
 		try {
 			// The important part (copy selected text)
 			var successful = document.execCommand('copy');
