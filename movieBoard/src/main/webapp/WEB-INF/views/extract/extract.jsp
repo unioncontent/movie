@@ -886,9 +886,7 @@ $(function() {
 
 			swal("Success!", "일괄처리가 완료되었습니다.", "success");
 			
-			function pageRefresh() {
-				window.setTimeout("pageReload()", 3000);
-			}
+			window.setTimeout("pageReload()", 3000);
 			
 		});
   }
