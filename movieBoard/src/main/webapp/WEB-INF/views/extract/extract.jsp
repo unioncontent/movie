@@ -684,8 +684,9 @@ $(function() {
 						insertType(event);
 
 						swal("Success!", "즉시처리가 완료되었습니다.", "success");
-
-						location.reload();
+						
+						window.setTimeout("pageReload()", 3000);
+						
 					});
 	  });
 
@@ -885,11 +886,16 @@ $(function() {
 
 			swal("Success!", "일괄처리가 완료되었습니다.", "success");
 			
-			window.setTimeout("pagereload()", 2000);
-			location.reload();
+			function pageRefresh() {
+				window.setTimeout("pageReload()", 3000);
+			}
+			
 		});
   }
-
+  
+  function pageReload() {
+	  location.reload();
+  }
 
   function makeDateFormat(date, index){
 		var splitDate = date.split(" - ")[index];
