@@ -297,6 +297,13 @@
 			order by createDate desc 
 			limit 1;
 		</if>
+		<if test="_parameter == 'dramameeting_broad'.toString()">
+			select *
+			from community_data
+			where community_name='dramameeting_broad' and createDate >=  date_format(now(), '%x-%m-%d')
+			order by createDate desc 
+			limit 1;
+		</if>
 		<if test="_parameter == 'dyb'.toString()">
 			select *
 			from community_data

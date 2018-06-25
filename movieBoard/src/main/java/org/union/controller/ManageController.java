@@ -147,20 +147,21 @@ public class ManageController {
 		model.addAttribute("communityList7", monitorService.communityMonitor("dcinside"));
 		model.addAttribute("communityList8", monitorService.communityMonitor("dogdrip"));
 		model.addAttribute("communityList9", monitorService.communityMonitor("dramameeting"));
-		model.addAttribute("communityList10", monitorService.communityMonitor("dyb"));
-		model.addAttribute("communityList11", monitorService.communityMonitor("ygosu"));
-		model.addAttribute("communityList12", monitorService.communityMonitor("extrememovie"));
-		model.addAttribute("communityList13", monitorService.communityMonitor("humoruniv"));
-		model.addAttribute("communityList14", monitorService.communityMonitor("ilbe"));
-		model.addAttribute("communityList16", monitorService.communityMonitor("instiz"));
-		model.addAttribute("communityList17", monitorService.communityMonitor("inven"));
-		model.addAttribute("communityList18", monitorService.communityMonitor("issuein"));
-		model.addAttribute("communityList19", monitorService.communityMonitor("mlbpark"));
-		model.addAttribute("communityList20", monitorService.communityMonitor("slrclub"));
-		model.addAttribute("communityList21", monitorService.communityMonitor("ruliweb"));
-		model.addAttribute("communityList22", monitorService.communityMonitor("soccerline"));
-		model.addAttribute("communityList23", monitorService.communityMonitor("square"));
-		model.addAttribute("communityList24", monitorService.communityMonitor("extrememovie_best"));
+		model.addAttribute("communityList10", monitorService.communityMonitor("dramameeting_broad"));
+		model.addAttribute("communityList11", monitorService.communityMonitor("square"));
+		model.addAttribute("communityList12", monitorService.communityMonitor("dyb"));
+		model.addAttribute("communityList13", monitorService.communityMonitor("ygosu"));
+		model.addAttribute("communityList14", monitorService.communityMonitor("extrememovie"));
+		model.addAttribute("communityList15", monitorService.communityMonitor("extrememovie_best"));
+		model.addAttribute("communityList16", monitorService.communityMonitor("ilbe"));
+		model.addAttribute("communityList17", monitorService.communityMonitor("humoruniv"));
+		model.addAttribute("communityList18", monitorService.communityMonitor("instiz"));
+		model.addAttribute("communityList19", monitorService.communityMonitor("inven"));
+		model.addAttribute("communityList20", monitorService.communityMonitor("issuein"));
+		model.addAttribute("communityList21", monitorService.communityMonitor("mlbpark"));
+		model.addAttribute("communityList22", monitorService.communityMonitor("slrclub"));
+		model.addAttribute("communityList23", monitorService.communityMonitor("ruliweb"));
+		model.addAttribute("communityList24", monitorService.communityMonitor("soccerline"));
 	}
 	
 	@PostMapping("/reportbackup")

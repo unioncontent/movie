@@ -835,8 +835,8 @@ $(function() {
 			calcInsertData(event);
 		}
 
-		if (tr.children[8].children[0].children != 'undefined') {
-			var arr = tr.children[8].children[0].children;
+		if (tr.children[7].children[0].children != 'undefined') {
+			var arr = tr.children[7].children[0].children;
 			console.log(arr);
 		} else {
 			clacInsertData(event);
@@ -889,7 +889,7 @@ $(function() {
 			for(var i = 0; i < tr.length; i++){
 				var idx = tr[i].children[0].value;
 				var table = tr[i].children[2].innerText;
-				var arr = tr[i].children[8].children[0].children;
+				var arr = tr[i].children[7].children[0].children;
 
 
 				for (var l = 0; l < arr.length; l++) {
