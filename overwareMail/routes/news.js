@@ -119,7 +119,7 @@ router.post('/list/getNextPage',isAuthenticated,async function(req, res, next) {
 });
 router.post('/list/insert',isAuthenticated,async function(req, res, next) {
   try{
-    await newsclipping.update(req.body.news_detail,[req.body.thumbnail,req.body.news_type,req.body.idx]);
+    await newsclipping.insert2(req.body);
     res.send({status:true});
   } catch(e){
     res.status(500).send(e);
@@ -128,7 +128,7 @@ router.post('/list/insert',isAuthenticated,async function(req, res, next) {
 
 router.post('/list/delete',isAuthenticated,async function(req, res, next) {
   try{
-    await newsclipping.insert2(req.body);
+    await newsclipping.delete(req.body.idx);
     res.send({status:true});
   } catch(e){
     res.status(500).send(e);

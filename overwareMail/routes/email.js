@@ -21,6 +21,7 @@ var isAuthenticated = function (req, res, next) {
   if (req.isAuthenticated()){
     return next();
   }
+
   else if(req.method == "GET" && ( url.indexOf('searchAll') != -1 || url.indexOf('searchGroup') != -1)){
     req.query.session=false;
     return next();

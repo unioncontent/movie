@@ -91,28 +91,174 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-sm-2 col-form-label">* 키워드</label>
+                <label class="col-sm-2 col-form-label">* 보고날짜</label>
                 <div class="col-sm-5">
-                  <select id="M_keyword" name="select" class="col-sm-6 form-control form-control-defalut f-left m-b-10">
-                    <option value="0">선택</option>
-                    <% for(var i=0; i < keywordList.length; i++) { %>
-                      <option value="<%=keywordList[i].keyword_idx%>"><%=keywordList[i].keyword_main%></option>
-                    <% } %>
-                  </select>
-                  <select id="M_mail_type" name="select" class="col-sm-6 form-control form-control-defalut f-left m-b-10">
-                    <option value="0">선택</option>
-                    <% for(var i=0; i < typeList.length; i++) { %>
-                      <option value="<%=typeList[i].M_mail_type%>"><%=typeList[i].M_mail_type%></option>
-                    <% } %>
-                  </select>
-                  <span class='messages'><p class='text-danger error'></p></span>
+                  <input type="text" id="datepicker2" class="form-control" />
                 </div>
               </div>
               <div class="form-group row">
                 <label class="col-sm-2 col-form-label">* 메일내용</label>
                 <div class="col-sm-10">
-                  <textarea id="M_body"></textarea>
-                  <span class='messages'><p class='text-danger error'></p></span>
+                  <div id="M_body" style="float:left;font-family: 굴림, Gulim, Arial, sans-serif;">
+                    <div id="header">
+                      <img src="\images\newsclipping\header.jpg" alt="" style="display: inherit;">
+                      <div id="info" style="font-size:  11px;color: #686868;background-color: #f7f7f7;height: 37px;">
+                        <span style="padding: 14px;display: inline-block;">ShowBox News Clipping</span>
+                        <span id="date-span" style="float:  right;display:  inline-block;padding: 14px;padding-right: 25px;">2018.06.01 (금)</span>
+                      </div>
+                    </div>
+                    <div id="body" style="padding:27px 24px;">
+                      <div id="body-header">
+                        <table style="border-collapse: collapse;border-spacing: 0;">
+                          <tbody>
+                            <tr>
+                              <td style="width: 133px;height: 42px;border: 1px solid #e3e3e3;text-align: center;font-size: 12px;color: #878787;">주요뉴스</td>
+                              <td style="width: 133px;height: 42px;border: 1px solid #e3e3e3;text-align: center;font-size: 12px;color: #878787;">키워드 이슈</td>
+                              <td style="width: 133px;height: 42px;border: 1px solid #e3e3e3;text-align: center;font-size: 12px;color: #878787;">박스오피스</td>
+                              <td style="width: 133px;height: 42px;border: 1px solid #e3e3e3;text-align: center;font-size: 12px;color: #878787;">기업 뉴스</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div id="body-content">
+                        <div class="section" data-type="1" style="padding-top:24px">
+                          <div class="section-header" style="border-bottom: 2px solid #efefef;padding-bottom: 8px;">
+                            <img src="\images\newsclipping\icon.jpg" alt="" style="display: inherit; float:left;">
+                            <span style="font-family:NanumGothic;font-size: 16px;padding-left:  5px; float:left;">쇼박스 영화</span>
+                            <span style="font-family:Gulim;font-size:  12px;padding-left:  5px;color: #868686;">쇼박스 영화 일일 주요뉴스</span>
+                          </div>
+                          <div class="section-body" style="font-family: 굴림, Gulim, Arial, sans-serif;">
+
+                          </div>
+                        </div>
+                        <div class="section" data-type="2" style="padding-top:50px">
+                          <div class="section-header" style="border-bottom: 2px solid #efefef;padding-bottom: 8px;">
+                            <img src="\images\newsclipping\icon.jpg" alt="" style="display: inherit; float:left;">
+                            <span style="font-family:NanumGothic;font-size: 16px;padding-left:  5px; float:left;">경쟁 영화</span>
+                            <span style="font-family:Gulim;font-size:  12px;padding-left:  5px;color: #868686;">경쟁 영화 일일 주요뉴스</span>
+                          </div>
+                          <div class="section-body" style="font-family: 굴림, Gulim, Arial, sans-serif;">
+                          </div>
+                        </div>
+                        <div class="section" data-type="5" style="padding-top:50px">
+                          <div class="section-header" style="border-bottom: 2px solid #efefef;padding-bottom: 8px;">
+                            <img src="\images\newsclipping\icon.jpg" alt="" style="display: inherit; float:left;">
+                            <span style="font-family:NanumGothic;font-size: 16px;padding-left:  5px; float:left;">영화 일반</span>
+                            <span style="font-family:Gulim;font-size:  12px;padding-left:  5px;color: #868686;">영화 일반 일일 주요뉴스</span>
+                          </div>
+                          <div class="section-body" style="font-family: 굴림, Gulim, Arial, sans-serif;">
+                          </div>
+                        </div>
+                        <div class="section" data-type="6" style="padding-top:50px">
+                          <div class="section-header" style="border-bottom: 2px solid #efefef;padding-bottom: 8px;">
+                            <img src="\images\newsclipping\icon.jpg" alt="" style="display: inherit; float:left;">
+                            <span style="font-family:NanumGothic;font-size: 16px;padding-left:  5px; float:left;">보도국</span>
+                            <span style="font-family:Gulim;font-size:  12px;padding-left:  5px;color: #868686;">보도국 일일 주요뉴스</span>
+                          </div>
+                          <div class="section-body" style="font-family: 굴림, Gulim, Arial, sans-serif;">
+                          </div>
+                        </div>
+                        <div class="section" data-type="3" style="padding-top:50px">
+                          <div class="section-header" style="border-bottom: 2px solid #efefef;padding-bottom: 8px;">
+                            <img src="\images\newsclipping\icon.jpg" alt="" style="display: inherit; float:left;">
+                            <span style="font-family:NanumGothic;font-size: 16px;padding-left:  5px; float:left;">캐스팅</span>
+                            <span style="font-family:Gulim;font-size:  12px;padding-left:  5px;color: #868686;">캐스팅 일일 주요뉴스</span>
+                          </div>
+                          <div class="section-body" style="font-family: 굴림, Gulim, Arial, sans-serif;">
+                          </div>
+                        </div>
+                        <div class="section" data-type="issue" style="padding-top:50px">
+                          <div class="section-header" style="border-bottom: 2px solid #efefef;padding-bottom: 8px;height: 31px;">
+                            <img src="\images\newsclipping\icon.jpg" alt="" style="display: inherit; float:left;">
+                            <span style="font-family:NanumGothic;font-size: 16px;padding-left:  5px; float:left;">키워드이슈</span>
+                          </div>
+                          <div class="section-body" style="font-family: 굴림, Gulim, Arial, sans-serif;">
+                            <table style="border-collapse: collapse;border-spacing: 0;">
+                              <colgroup>
+                                <col width="140px">
+                                <col width="411px">
+                              </colgroup>
+                              <tbody style="font-family:Gulim; font-size:12px">
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                        <div class="section" data-type="movie" style="padding-top:50px">
+                          <div class="section-header" style="border-bottom: 2px solid #efefef;padding-bottom: 8px;height: 31px;">
+                            <img src="\images\newsclipping\icon.jpg" alt="" style="display: inherit; float:left;">
+                            <span style="font-family:NanumGothic;font-size: 16px;padding-left:  5px; float:left;">박스오피스</span>
+                            <a href="http://movie.daum.net/boxoffice/weekly" target="_blank">
+                              <img src="\images\newsclipping\link_icon.jpg" alt="" style="display: inherit;float:left;padding-top:  5px;padding-left:  11px;">
+                            </a>
+                          </div>
+                          <div class="section-body" style="font-family: 굴림, Gulim, Arial, sans-serif;">
+                            <table style="font-family: 굴림;font-size:12px">
+                              <colgroup>
+                                <col width="40px">
+                                <col width="340px">
+                                <col width="111px">
+                                <col width="50px">
+                              </colgroup>
+                              <tbody id="movieList">
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                        <div class="section" data-type="4" style="padding-top:50px">
+                          <div class="section-header" style="border-bottom: 2px solid #efefef;padding-bottom: 8px;height: 31px;">
+                            <img src="\images\newsclipping\icon.jpg" alt="" style="display: inherit; float:left;">
+                            <span style="font-family:NanumGothic;font-size: 16px;padding-left:  5px; float:left;">쇼박스 기업 뉴스</span>
+                          </div>
+                          <div class="section-body" style="font-family: 굴림, Gulim, Arial, sans-serif;">
+                            <table style="font-size: 12px;border-collapse: collapse;border-spacing: 0;">
+                              <colgroup>
+                                <col width="377px"/>
+                                <col width="83px"/>
+                                <col width="83px"/>
+                              </colgroup>
+                              <tbody>
+                                <tr class="head">
+                                  <td colspan="3" style="padding: 10px 0;border-bottom: 1px solid #dddddd;">
+                                    <span style="font-family:NanumGothic;font-size: 35px;font-weight: 500; padding:5px;">쇼박스</span>
+                                    <a href="http://finance.naver.com/item/news.nhn?code=086980" target="_blank">
+                                      <img src="\images\newsclipping\link_icon.jpg" alt="" style="display: inherit;float:right;padding-top: 23px;padding-left:  11px;">
+                                    </a>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                            <!-- <table style="font-size: 12px;border-collapse: collapse;border-spacing: 0;">
+                              <colgroup>
+                                <col width="377px"/>
+                                <col width="83px"/>
+                                <col width="83px"/>
+                              </colgroup>
+                              <tbody>
+                                <tr>
+                                  <td colspan="3" style="padding: 10px 0;border-bottom: 1px solid #dddddd;">
+                                    <span style="font-family:NanumGothic;font-size: 35px;font-weight: 500; padding:5px;">오리온</span>
+                                    <a href="http://movie.daum.net/boxoffice/weekly" target="_blank">
+                                      <img src="\images\newsclipping\link_icon.jpg" alt="" style="display: inherit;float:right;padding-top: 23px;padding-left:  11px;">
+                                    </a>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td style="padding: 16px 7px;border-bottom: 1px solid #f4f4f4;"><a href="">화이브라더스, 유정훈 대표 영입...'제2 쇼박스'나오나</a></td>
+                                  <td style="padding: 13px 0;border: 1px solid #f4f4f4;text-align: center;color: #666;">머니투데이</td>
+                                  <td style="padding: 13px 0;border-bottom: 1px solid #f4f4f4;text-align: center;color: #666;">2018.05.15</td>
+                                </tr>
+                                <tr>
+                                  <td style="padding: 16px 7px;border-bottom: 1px solid #f4f4f4;"><a href="">화이브라더스, 유정훈 대표 영입...'제2 쇼박스'나오나</a></td>
+                                  <td style="padding: 13px 0;border: 1px solid #f4f4f4;text-align: center;color: #666;">머니투데이</td>
+                                  <td style="padding: 13px 0;border-bottom: 1px solid #f4f4f4;text-align: center;color: #666;">2018.05.15</td>
+                                </tr>
+                              </tbody>
+                            </table> -->
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -288,79 +434,209 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/i18n/ko.js"></script>
 <!-- alert -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert@2.1.0/dist/sweetalert.min.js"></script>
+<!-- Bootstrap daterangepicker js -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/2.1.27/daterangepicker.css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/2.1.27/moment.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/2.1.27/daterangepicker.js"></script>
 <!-- time  -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/wickedpicker@0.4.3/stylesheets/wickedpicker.css">
 <script src="https://cdn.jsdelivr.net/npm/wickedpicker@0.4.3/dist/wickedpicker.min.js"></script>
 <!-- custom -->
 <link rel="stylesheet" href="/pages/email/style.css">
+<link rel="stylesheet" href="/pages/email/style2.css">
 <script src="/pages/email/js/modal.js"></script>
 <script src="/pages/email/js/select2.js"></script>
+<script src="/pages/email/js/movie.js"></script>
 <script type="text/javascript">
   $(document).ready(function() {
     // ie label css
     $('.modal label').css('line-height','16px');
-    $('.select2-search__field').css('line-height','16px')
+    $('.select2-search__field').css('line-height','16px');
 
-    if($('#mailType').val()!=''){
-      var senderArr = $('#mailSender').val().split('|');
-      var param = {
-        id:senderArr[0],
-        text:senderArr[1]
-      };
-      pushEle($('.sender-select'),param);
-      var mailData = JSON.parse($("#mailData").val());
-      $("#M_keyword option[value='"+mailData.M_keyword+"']").attr('selected','selected');
-      $("#M_mail_type option[value='"+mailData.M_mail_type+"']").attr('selected','selected');
-      $("#M_subject").val(mailData.M_subject);
-      $("#M_seq_number").val(mailData.M_seq_number);
+    getNewsClippingData();
+    boxoffice();
+    var dateStr = $('#datepicker2').val().replace(/[-]/gi,'.');
+    var previewStr = 'window.open("/preview/newsclipping?date='+$('#datepicker2').val()+'")';
+    $('#date-span').text(dateStr+' ('+getInputDayLabel($('#datepicker2').val())+')');
+    $('#date-span').attr('onclick', previewStr);
+    $('#body-header').attr('onclick', previewStr);
+  });
+
+  $('#datepicker2').on('change',function(){
+    getNewsClippingData();
+    boxoffice();
+    var dateStr = $('#datepicker2').val().replace(/[-]/gi,'.');
+    var previewStr = 'window.open("/preview/newsclipping?date='+$('#datepicker2').val()+'")';
+    $('#date-span').text(dateStr+' ('+getInputDayLabel($('#datepicker2').val())+')');
+    $('#date-span').attr('onclick', previewStr);
+    $('#body-header').attr('onclick', previewStr);
+  });
+
+  // 오늘 날짜
+  function getTimeStamp() {
+    var d = new Date();
+    var date = leadingZeros(d.getFullYear(), 4) + '-' +
+        leadingZeros(d.getMonth() + 1, 2) + '-' +
+        leadingZeros(d.getDate(), 2);
+    return date;
+  }
+  function leadingZeros(n, digits) {
+    var zero = '';
+    n = n.toString();
+
+    if (n.length < digits) {
+        for (i = 0; i < digits - n.length; i++)
+            zero += '0';
     }
-    // 예약시간
-    var dt = new Date();
-    var options = {
-      now: dt.getHours()+":"+String(Math.ceil(dt.getMinutes() / 10) * 10),
-      twentyFour: true, //Display 24 hour format, defaults to false
-      upArrow: 'wickedpicker__controls__control-up', //The up arrow class selector to use, for custom CSS
-      downArrow: 'wickedpicker__controls__control-down', //The down arrow class selector to use, for custom CSS
-      close: 'wickedpicker__close', //The close class selector to use, for custom CSS
-      hoverState: 'hover-state', //The hover state class to use, for custom CSS
-      title: '10분단위로 설정해주세요.', //The Wickedpicker's title,
-      showSeconds: false, //Whether or not to show seconds, secondsInterval: 1, //Change interval for seconds, defaults to 1  ,
-      minutesInterval: 10, //Change interval for minutes, defaults to 1
-      beforeShow: null, //A function to be called before the Wickedpicker is shown
-      show: null, //A function to be called when the Wickedpicker is shown
-      clearable: false, //Make the picker's input clearable (has clickable "x")
-    };
-    $('#timepicker').wickedpicker(options);
-    $('#datepicker').datepicker({
-      dateFormat: 'yy-mm-dd',
-      prevText: '이전 달',
-      nextText: '다음 달',
-      monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
-      monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
-      dayNames: ['일','월','화','수','목','금','토'],
-      dayNamesShort: ['일','월','화','수','목','금','토'],
-      dayNamesMin: ['일','월','화','수','목','금','토'],
-      yearSuffix: '년',
-      showMonthAfterYear: true,
-      minDate: 0,
-      maxDate: "+7D"
+    return zero + n;
+  }
+  // 어제 날짜
+  function yesterday(d,str){
+    var dateStr = new Date(d);
+    var yesterday = new Date(dateStr.valueOf() - (24*60*60*1000));
+
+  	var yyyy = yesterday.getFullYear().toString();
+  	var mm = (yesterday.getMonth()+1).toString(); // getMonth() is zero-based
+  	var dd  = yesterday.getDate().toString();
+
+  	var resultDate = yyyy + str + (mm[1]?mm:"0"+mm[0]) + str + (dd[1]?dd:"0"+dd[0]);
+    return resultDate;
+  }
+  // 콤마
+  function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+  // 요일
+  function getInputDayLabel(d) {
+    var week = new Array('일', '월', '화', '수', '목', '금', '토');
+
+    var today = new Date(d).getDay();
+    var todayLabel = week[today];
+
+    return todayLabel;
+  }
+
+  // 뉴스클리핑 세팅
+  function getNewsClippingData(){
+    var newsEDate = $('#datepicker2').val();
+    var newsSDate = yesterday($('#datepicker2').val(),'-');
+
+    $.ajax({
+      url: '/newsclipping/getData',
+      type: 'post',
+      data : {
+        sDate : newsSDate,
+        eDate : newsEDate
+      },
+      datatype : 'json',
+      error:function(request,status,error){
+        console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
+        swal("ERROR!", request.responseText, "error");
+      },
+      success:function(data){
+        if(data.status){
+          console.log(data);
+          $.each(data.result.issue, function(index, value) {
+            var html = '<tr>\
+              <td style="text-align:center; color: #ed1252;padding: 17px 0;border: 1px solid #f4f4f4; border-left: 0px; border-top: 0px; text-align: center;">#'+value.keyword+'</td>\
+              <td style="border-bottom: 1px solid #f4f4f4;text-align: center;color: #666;"><div class="text" style="width:371px;display: inline-block;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;" title="'+value.issue_content+'">'+value.issue_content+'</div></td>\
+            </tr>';
+            $('div[data-type=issue] .section-body tbody').append(html);
+          });
+          $('.section:not(div[data-type=4],div[data-type=issue],div[data-type=movie]) .section-body').empty();
+          $('div[data-type=issue] .section-body tbody tr:not(.head)').remove();
+          $('div[data-type=4] .section-body tbody tr:not(.head)').remove();
+          var obj = new Object();
+          $.each(data.result.news, function(index, value) {
+            // 4.쇼박스기업뉴스
+            if(value.news_type == "4"){
+              var html = '<tr>\
+                <td style="padding: 16px 7px;border-bottom: 1px solid #f4f4f4;"><a href="'+value.url+'" title="'+value.media_title+'">'+value.media_title+'</a></td>\
+                <td style="padding: 13px 0;border: 1px solid #f4f4f4;text-align: center;color: #666;">'+value.media_name+'</td>\
+                <td style="padding: 13px 0;border-bottom: 1px solid #f4f4f4;text-align: center;color: #666;">'+value.writeDate+'</td>\
+              </tr>'
+              $('div[data-type='+value.news_type+'] .section-body tbody').append(html);
+            }
+            else{
+              var html = '<div class="news" style="padding: 22px 5px 0px 5px">';
+              if(value.thumbnail != null && value.thumbnail != ''){
+                html += '<img src="'+value.thumbnail+'" alt="" style="display: inherit; float:left;width:80px;height:80px;padding-right: 13px;">';
+              }
+              html += '<div class="news-content" style="font-size:12px; width:541px">\
+              <div class="title" style="padding-bottom:5px"><a href="'+value.url+'" title="'+value.media_title+'" target="_blank">'+value.media_title+'</a></div>\
+              <div clacss="info" style="padding-bottom:5px; color: #666;"><span class="media-name">'+value.media_name+'</span> <span class="bar" style="display: inline-block;overflow: hidden;width: 0;height: 11px;margin: -1px 5px 1px 4px;border-left: 1px solid #eaeaea;vertical-align: middle;"></span> <span class="date">'+value.writeDate+'</span></div>\
+              <div class="content" data-idx="'+value.media_idx+'" style="line-height:16px" title="'+value.media_content+'">'+value.media_content+'</div>';
+              html +='</div></div>';
+              if(value.news_detail != null && value.news_detail != ''){
+                if(value.news_detail in obj){
+                  obj[value.news_detail].push(value);
+                }
+                else{
+                  obj[value.news_detail] = new Array();
+                  obj[value.news_detail].push(value);
+                }
+              }
+              else{
+                $('div[data-type='+value.news_type+'] .section-body').append(html);
+              }
+            }
+          });
+          $.each(obj, function(index, value) {
+            var html ='<ul class="relation_lst"  style="list-style: none;padding:0;margin:0;line-height: 18px;"></ul>';
+            $('div[data-idx='+index+']').after(html);
+            $.each(value, function(i, v) {
+              html ='<li> <img src="https://ssl.pstatic.net/sstatic/search/pc/img/bu_news_sublst.gif" style="vertical-align:  text-top;">\
+              <a href="'+v.url+'" target="_blank" title="'+v.media_title+'" style="display: inline-block;overflow: hidden;max-width: 210px;margin-right: 5px;color: #0000ee;text-overflow: ellipsis;white-space: nowrap;word-wrap: normal;word-break: normal;vertical-align: top;">'+v.media_title+'</a> \
+              <span class="txt_sinfo" style="display: inline-block;overflow: hidden;max-width: 260px;white-space: nowrap;text-overflow: ellipsis;vertical-align: top;"> \
+              <span class="press" style="color: #666;" title="'+v.media_name+'">'+v.media_name+'</span> \
+              <span class="bar" style="color: #666;display: inline-block;overflow: hidden;width: 0;height: 11px;margin: -1px 5px 1px 4px;border-left: 1px solid #eaeaea;vertical-align: middle;"></span> '+v.writeDate+' </span> </li>';
+              $('div[data-idx='+index+']').siblings('.relation_lst').append(html);
+            });
+          });
+        }
+      }
     });
-  });
-  // 예약기능 클릭시
-  $('input[name=M_type]').on('change',function(){
-    $('.reserveTime').toggle();
-  });
-  // 메일 저장 버튼 클릭시
+
+  }
+
+  // 박스오피스
+  function boxoffice(){
+    var movieDate = $('#datepicker2').val().replace(/[-]/gi,'');
+    if(getTimeStamp() == $('#datepicker2').val()){
+      movieDate = yesterday($('#datepicker2').val(),'');
+    }
+
+    var movieAPI = new KobisOpenAPIRestService('0c4c68be2ac6da9c6283754c7fdac877');
+    var result = movieAPI.getDailyBoxOffice(true,{targetDt:movieDate});
+    $('#movieList').empty();
+    $.each(result.boxOfficeResult.dailyBoxOfficeList, function(index, value) {
+      // console.log(value.rank + ': '+ value.movieNm +" " + value.rankInten +'='+value.audiAcc);
+      var html= '<tr><td style="padding-top: 10px; padding-left: 5px; padding-bottom:10px;border-bottom: 1px solid #f4f4f4;"><span style="background: #707070;color:  white;width: 18px;height:  10px;display:  inherit;text-align:  center;border-radius:  2px;padding: 2px;">'+value.rank+'</span></td>\
+        <td style="border-bottom: 1px solid #f4f4f4;">'+value.movieNm+'</td>\
+        <td style="border-bottom: 1px solid #f4f4f4;color: #666;">'+numberWithCommas(value.audiAcc)+' 명</td>\
+        <td style="border-bottom: 1px solid #f4f4f4;">';
+      var rankIntenVal = Math.abs(value.rankInten);
+      if(Number(value.rankInten) > 0){
+        html +='<img src="/images/newsclipping/up_icon.jpg" alt="" style="display: inherit; float:left;">';
+      }
+      else if(Number(value.rankInten) < 0){
+        html +='<img src="/images/newsclipping/down_icon.jpg" alt="" style="display: inherit; float:left;">';
+      }
+      else{
+        rankIntenVal = '-';
+      }
+      html +='<span style="padding-left:  12px;vertical-align: -webkit-baseline-middle;">'+rankIntenVal+'</span></td></tr>';
+      $('#movieList').append(html);
+    });
+  }
+
+  // 메일 발송 버튼 클릭시
   $(".sendBtn").on("click",function(){
     var param = {
-      'M_seq_number': $("#M_seq_number").val(),
       'M_sender': $(".sender-select").select2("val"),
       'M_recipi': $(".recipi-select").select2("val"),
       'M_group': $('.group-select').val() || [],
-      'M_keyword': $("#M_keyword option:selected").val(),
-      'M_mail_type': $("#M_mail_type option:selected").val(),
-      'M_body': get_tinymce_html_content(),
-      'M_subject': $("#M_subject").val(),
+      'M_body': $("#M_body").parents('.col-sm-10').html(),
       'M_type': $("input:radio[name=M_type]:checked").val()
     };
     var check=true;
@@ -370,17 +646,8 @@
     if(param["M_recipi"] == ""){
       check = requiredMessage("M_recipi","받는사람을 선택해주세요.");
     }
-    if(param["M_seq_number"] == ""){
-      check = requiredMessage("M_seq_number","발송차수를 입력해주세요.");
-    }
-    if(param["M_keyword"] == 0){
-      check = requiredMessage("M_keyword","키워드를 선택해주세요.");
-    }
-    if(param["M_mail_type"] == 0){
-      check = requiredMessage("M_mail_type","메일타입을 선택해주세요.");
-    }
-    if(param["M_subject"] == ""){
-      check = requiredMessage("M_subject","메일제목을 입력해주세요.");
+    if($('#datepicker2').val() == ""){
+      check = requiredMessage("datepicker2","보고날짜를 선택해주세요.");
     }
     if(param["M_body"] == "" || param["M_body"] == "<p><br></p>"){
       check = requiredMessage("M_body","메일내용 입력해주세요.");
@@ -418,35 +685,9 @@
     .then(function(value) {
       if (value != null) {
         var now = $.datepicker.formatDate('yymmdd', new Date());
-        // var fileListArr = $("#fileList").val().split(',');
-        // var fileListStr = "";
-        // var fileNameStr = "";
-        // var fileDBListStr = "";
-        // $.each(fileListArr, function(index, value) {
-        //   if(value != "" && value != 'undefined'){
-        //     fileDBListStr += value;
-        //     var now = $.datepicker.formatDate('yymmdd', new Date());
-        //     fileListStr += 'http://mail.overware.co.kr/uploads/files/'+now+'/'+value;
-        //     fileNameStr += $.trim($('.jFiler-items-list').find('[data-value=\"'+value+'\"]').attr('title'));
-        //     if(fileListArr.length-1 != index){
-        //       fileListStr += '|';
-        //       fileDBListStr += '|';
-        //       fileNameStr += '|';
-        //     }
-        //   }
-        // });
-
-        // param['M_file'] = fileListStr;
-        // param['M_fileName'] = fileNameStr;
-        // param['M_file_d'] = fileDBListStr;
         $('span.messages').find('.error').text('');
-        if($('#mailType').val()!=''){
-          param.type = $('#mailType').val();
-          var mailData = JSON.parse($("#mailData").val());
-          param.idx = mailData.n_idx;
-          param.Mid = mailData.M_id;
-        }
-        SendEmails(param);
+        console.log(param);
+        // SendEmails(param);
       }
     });
   });
@@ -478,4 +719,56 @@
     $("#"+target).siblings('.messages').children('.error').text(msg);
     return false;
   }
+
+  // 예약기능 클릭시
+  $('input[name=M_type]').on('change',function(){
+    $('.reserveTime').toggle();
+  });
+  // 예약시간
+  var dt = new Date();
+  var options = {
+    now: dt.getHours()+":"+String(Math.ceil(dt.getMinutes() / 10) * 10),
+    twentyFour: true, //Display 24 hour format, defaults to false
+    upArrow: 'wickedpicker__controls__control-up', //The up arrow class selector to use, for custom CSS
+    downArrow: 'wickedpicker__controls__control-down', //The down arrow class selector to use, for custom CSS
+    close: 'wickedpicker__close', //The close class selector to use, for custom CSS
+    hoverState: 'hover-state', //The hover state class to use, for custom CSS
+    title: '10분단위로 설정해주세요.', //The Wickedpicker's title,
+    showSeconds: false, //Whether or not to show seconds, secondsInterval: 1, //Change interval for seconds, defaults to 1  ,
+    minutesInterval: 10, //Change interval for minutes, defaults to 1
+    beforeShow: null, //A function to be called before the Wickedpicker is shown
+    show: null, //A function to be called when the Wickedpicker is shown
+    clearable: false, //Make the picker's input clearable (has clickable "x")
+  };
+  $('#timepicker').wickedpicker(options);
+  // 예약날짜
+  $('#datepicker').datepicker({
+    dateFormat: 'yy-mm-dd',
+    prevText: '이전 달',
+    nextText: '다음 달',
+    monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+    monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+    dayNames: ['일','월','화','수','목','금','토'],
+    dayNamesShort: ['일','월','화','수','목','금','토'],
+    dayNamesMin: ['일','월','화','수','목','금','토'],
+    yearSuffix: '년',
+    showMonthAfterYear: true,
+    minDate: 0,
+    maxDate: "+7D"
+  });
+  // 일일보고날짜
+  $('#datepicker2').daterangepicker({
+    singleDatePicker: true,
+    showDropdowns: true,
+    locale: {
+      format: 'YYYY-MM-DD',
+      "customRangeLabel": "Custom",
+      "daysOfWeek": [
+          "일", "월", "화", "수", "목", "금", "토"
+      ],
+      "monthNames": [
+        "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"
+      ],
+    }
+  });
 </script>

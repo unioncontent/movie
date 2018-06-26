@@ -57,7 +57,6 @@ app.use(function(req, res, next) {
   };
   if('user' in req){
     res.locals.user = req.user;
-    // console.log(res.locals.user);
   }
   next();
 });
