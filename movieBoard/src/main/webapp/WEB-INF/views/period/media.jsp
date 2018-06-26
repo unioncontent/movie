@@ -296,12 +296,13 @@
 	                                </div></td></tr></table>
                                   </div>
                                     <!-- list satart -->
+                                    <div class="card-block table-border-style">
                                     <div class="table-responsive">
                                       <table class="table table-bordered table-sm">
                                       <c:if test="${empty mediaList}">
                                       <tbody>
 	                                     <tr>
-	                                     <td style="vertical-align:middle;" align="center" height="100px">등록된 기사가 없습니다.</td>
+	                                     <td style="vertical-align:middle;" align="center" height="150px"><h5>등록된 게시글이 없습니다.</h5></td>
 	                                     </tr>
 	                                     </tbody>
                                      	</c:if>

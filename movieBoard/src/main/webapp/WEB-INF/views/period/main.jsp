@@ -276,7 +276,7 @@
                                       <c:if test="${empty mailList}">
                                      <tbody>
                                      <tr>
-                                     <td align="center"><h5>발송된 메일이 없습니다.</h5></td>
+                                      <td style="vertical-align:middle;" align="center" height="150px"><h5>발송된 메일이 없습니다.</h5></td>
                                      </tr>
                                      </tbody>
                                      </c:if>

@@ -336,16 +336,16 @@
                                         </dl>
                                       </div>
                                       <div class="col-sm-6" style="text-align: center;">
-                  									    <h4 class="sub-title"><font style="font-weight: bold; color: black;">분류비율표</font></h4>
-                    										<h2 class="text-info text-center typography p-t-5 p-b-25 m-b-0">
+                  						  <h4 class="sub-title"><font style="font-weight: bold; color: black;">분류비율표</font></h4>
+                    					  <h2 class="text-info text-center typography p-t-5 p-b-25 m-b-0">
                                           <c:if test="${scoreCount == 1 or scoreCount == 2 or scoreCount == 3}"><strong class="text-danger">경고</strong></c:if>
                                           <c:if test="${scoreCount == 4 or scoreCount == 5}"><strong class="text-warning">주의</strong></c:if>
                                           <c:if test="${scoreCount == 6 or scoreCount == 7}"><strong class="text-info">양호</strong></c:if>
                                           <c:if test="${scoreCount == 8 or scoreCount == 9}"><strong class="text-primary">좋음</strong></c:if>
                                           <c:if test="${scoreCount == 10}"><strong class="text-success">아주좋음</strong></c:if>
-                    										  <small style="margin-left: 0;"><font style="font-weight: bold; color: black;">${scoreCount}</font></small>
-                  									    </h2>
-                  									  </div>
+                    					  <small style="margin-left: 0;"><font style="font-weight: bold; color: black;">${scoreCount}</font></small>
+                  						  </h2>
+                  						</div>
                                     </div>
                                   </div>
                                 </div>

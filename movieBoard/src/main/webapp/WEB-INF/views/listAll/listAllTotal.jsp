@@ -59,9 +59,11 @@
 	}
 	.table-hover th{
 	text-align: center;
+	vertical-align:middle;
 	}
 	.table-hover td{
 	text-align: center;
+	vertical-align:middle;
 	}
   </style>
 </head>

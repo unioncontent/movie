@@ -314,7 +314,7 @@
                                             </c:if>
                                             <c:if test="${snsListf.checkCondition == false}">
                                             <label>
-                                                <input type="radio" name="radio7" disabled >
+                                                <input type="radio" name="radio" disabled >
                                                 <i class="helper"></i>비정상
                                             </label>
                                             </c:if>
@@ -685,7 +685,7 @@
                                         <div class="radio radiofill radio-success  radio-inline">
                                             <c:if test="${communityList.checkCondition == true}">
                                             <label>
-                                                <input type="radio" name="radio34" checked="checked" disabled >
+                                                <input type="radio" name="radio20" checked="checked" disabled >
                                                 <i class="helper"></i>정상
                                             </label>
                                             </c:if>
@@ -801,7 +801,7 @@
                                         <div class="radio radiofill radio-success  radio-inline">
                                             <c:if test="${communityList.checkCondition == true}">
                                             <label>
-                                                <input type="radio" name="radio35" checked="checked" disabled >
+                                                <input type="radio" name="radio24" checked="checked" disabled >
                                                 <i class="helper"></i>정상
                                             </label>
                                             </c:if>
@@ -859,7 +859,7 @@
                                         <div class="radio radiofill radio-success  radio-inline">
                                             <c:if test="${communityList.checkCondition == true}">
                                             <label>
-                                                <input type="radio" name="radio24" checked="checked" disabled >
+                                                <input type="radio" name="radio26" checked="checked" disabled >
                                                 <i class="helper"></i>정상
                                             </label>
                                             </c:if>
@@ -1097,7 +1097,7 @@
                                         <div class="radio radiofill radio-success  radio-inline">
                                             <c:if test="${communityList.checkCondition == true}">
                                             <label>
-                                                <input type="radio" name="radio20" checked="checked" disabled >
+                                                <input type="radio" name="radio34" checked="checked" disabled >
                                                 <i class="helper"></i>정상
                                             </label>
                                             </c:if>
@@ -1126,7 +1126,7 @@
                                         <div class="radio radiofill radio-success  radio-inline">
                                             <c:if test="${communityList.checkCondition == true}">
                                             <label>
-                                                <input type="radio" name="radio34" checked="checked" disabled >
+                                                <input type="radio" name="radio35" checked="checked" disabled >
                                                 <i class="helper"></i>정상
                                             </label>
                                             </c:if>

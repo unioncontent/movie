@@ -206,4 +206,4 @@ input[type=radio] + label{
 	text-align: center;
 	vertical-align:middle;
 }
-
+a:hover { color: black; text-decoration: underline;}

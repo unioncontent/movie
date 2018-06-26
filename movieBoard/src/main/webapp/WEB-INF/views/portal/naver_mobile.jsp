@@ -50,14 +50,14 @@
 <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
 <link rel="stylesheet" type="text/css" href="../assets/css/picker.css">
 <link rel="stylesheet" type="text/css" href="../assets/pages/naver/css/style.css">
+<!-- <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css"> -->
 <!--color css-->
 <link rel="stylesheet" type="text/css" href="../assets/css/color/color-1.css" id="color" />
 <link rel="stylesheet" type="text/css" href="../assets/css/linearicons.css">
 <link rel="stylesheet" type="text/css" href="../assets/css/simple-line-icons.css">
 <link rel="stylesheet" type="text/css" href="../assets/css/ionicons.css">
-<link rel="stylesheet" type="text/css" href="../assets/css/jquery.mCustomScrollbar.css">
+<link rel="stylesheet" type="text/css" href="../assets/css/_charts.css">
 </head>
-
 <body>
 	<!-- Pre-loader start -->
 	<div class="theme-loader">
@@ -463,10 +463,10 @@
 	<script src="../bower_components/d3/d3.min.js"></script>
 	<script src="../bower_components/c3/c3.js"></script>
 	<!-- sweet alert js -->
-  <script type="text/javascript" src="../bower_components/sweetalert/dist/sweetalert.min.js"></script>
+  	<script type="text/javascript" src="../bower_components/sweetalert/dist/sweetalert.min.js"></script>
 	<!-- Morris Chart js -->
-	<script src="../bower_components/raphael/raphael.min.js"></script>
-	<script src="../bower_components/morris.js/morris.js"></script>
+  	<script src="../bower_components/raphael/raphael.min.js"></script>
+  	<script src="../bower_components/morris.js/morris.js"></script>
 	<!-- i18next.min.js -->
 	<script type="text/javascript" src="../bower_components/i18next/i18next.min.js"></script>
 	<script type="text/javascript" src="../bower_components/i18next-xhr-backend/i18nextXHRBackend.min.js"></script>

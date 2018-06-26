@@ -153,3 +153,4 @@
     transition: all ease-in 0.3s;
     background-color: white;
 }
+a:hover { color: black; text-decoration: underline;}
