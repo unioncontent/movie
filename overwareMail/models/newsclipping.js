@@ -17,7 +17,7 @@ var newsclipping = {
       sql += ',news_detail';
     }
     sql += ')SELECT media_idx, media_name, media_title, media_content, reporter_name, reporter_ID, reporter_email, writeDate, last_WriteDate, last_media_title, last_media_content, \
-    title_key, keyword, keyword_type, url, ?, ?, textType, media_state, createDate, replynum, updateDate ';
+    title_key, keyword, keyword_type, url, ?, ?, textType, media_state, now(), replynum, now() ';
     if(detail != ''){
       sql += ',\''+detail+'\' ';
     }
@@ -81,7 +81,7 @@ var newsclipping = {
     if('keyword' in body){
       sql +=' and title_key = \''+body.keyword+'\'';
     }
-    sql += ' order by media_idx desc limit ?,?';
+    sql += ' order by createDate desc limit ?,?';
     return await getResult(sql,param);
   },
   selectNewsMailTableCount: async function(body,param){
@@ -99,6 +99,15 @@ var newsclipping = {
     else{
       return count[0]['total'];
     }
+  },
+  selectNewsMailAllTable: async function(body,param){
+    var sql = "SELECT url,media_content,thumbnail,media_idx,DATE_FORMAT(createDate, '%Y-%m-%d %H:%i:%s') AS `createDate`,DATE_FORMAT(writeDate, '%Y.%m.%d') AS `writeDate`,media_title,media_name,reporter_name,keyword,textType,thumbnail,news_type,news_detail FROM news_mail where title_key in (select distinct keyword_main from keyword_data where user_idx=?)";
+    sql+=' and createDate between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
+    return await getResult(sql,param);
+  },
+  selectIssueTable: async function(param){
+    var sql = 'SELECT * FROM issue_data where company_name = \'쇼박스\' and  writeDate between \''+param.sDate+' 00:00:00\' and \''+param.eDate+' 23:59:59\'';
+    return await getResult(sql);
   }
 }
 
