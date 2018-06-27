@@ -52,13 +52,12 @@
 
 .morris-hover {
     position: absolute;
-    left: auto !important;
-    top: -21px !important;
+    left: none !important;
+    top: none !important;
+    width: 200px;
     right: 0;
     background: #fff;
     padding: 20px;
     border: 1px solid #ccc;
 }
-
-
 /**====== Chart css end ======**/

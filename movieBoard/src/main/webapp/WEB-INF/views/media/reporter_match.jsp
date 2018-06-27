@@ -49,6 +49,7 @@
   <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
   <link rel="stylesheet" type="text/css" href="../assets/css/picker.css">
   <link rel="stylesheet" type="text/css" href="../assets/pages/period/css/style.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
   <!--color css-->
   <link rel="stylesheet" type="text/css" href="../assets/css/color/color-1.css" id="color" />
   <link rel="stylesheet" type="text/css" href="../assets/css/linearicons.css">
@@ -672,10 +673,11 @@
 		    xkey: 'media',
 		    ykeys: ['퍼센트'],
 		    labels: ['퍼센트(%)'],
-		    barColors: ['#01C0C8'],
+		    barColors: ['#4acab4'],
 		    stacked: true,
 		    hideHover: 'auto',
 		    resize: true,
+		    fillOpacity: 0.6,
 		    gridTextColor: '#888'
 		    });
 		} 
@@ -692,6 +694,7 @@
 		    stacked: true,
 		    hideHover: 'auto',
 		    resize: true,
+		    fillOpacity: 0.6,
 		    gridTextColor: '#888'
 		    });
 		} 

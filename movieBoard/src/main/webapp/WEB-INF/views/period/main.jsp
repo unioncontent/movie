@@ -45,6 +45,7 @@
   <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
   <link rel="stylesheet" type="text/css" href="../assets/css/picker.css">
   <link rel="stylesheet" type="text/css" href="../assets/pages/period/css/style.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
   <!--color css-->
   <link rel="stylesheet" type="text/css" href="../assets/css/color/color-1.css" id="color" />
   <link rel="stylesheet" type="text/css" href="../assets/css/linearicons.css">

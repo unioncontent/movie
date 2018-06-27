@@ -43,6 +43,7 @@
   <link rel="stylesheet" type="text/css" href="../assets/pages/clndr-calendar/css/clndr.css">
   <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
   <link rel="stylesheet" type="text/css" href="../assets/pages/dashboard/css/style.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
   <!--color css-->
   <link rel="stylesheet" type="text/css" href="../assets/css/color/color-1.css" id="color" />
   <link rel="stylesheet" type="text/css" href="../assets/css/linearicons.css">
@@ -169,7 +170,7 @@
                               <c:if test="${empty headlineList}">
                                      <tbody>
                                      <tr>
-                                     <td style="vertical-align:middle;" align="center" height="243px">등록된 기사가 없습니다.</td>
+                                     <td style="vertical-align:middle;" align="center" height="243px"><h5>등록된 기사가 없습니다.</h5></td>
                                      </tr>
                                      </tbody>
                                      </c:if>
@@ -230,7 +231,13 @@
                                   </tr>
                                   <tr>
                                     <th scope="row" style="white-space:initial;">
-                                    SNS ( <i class="icofont icofont-social-facebook"></i> / <i class="icofont icofont-social-instagram"></i> / <i class="icofont icofont-social-twitter"></i> )</th>
+                                    SNS ( 
+                                    <img alt="naver" src="../assets/images/facebook_logo.png" style="width: 13px; height: 13px; margin-bottom: 3px;">
+                                    / 
+                                    <img alt="naver" src="../assets/images/instagram_logo.jpg" style="width: 13px; height: 13px; margin-bottom: 3px;">
+                                    / 
+                                    <img alt="naver" src="../assets/images/Twitter_logo.png" style="width: 13px; height: 13px; margin-bottom: 3px;">
+                                     )</th>
                                     <td>
                                     <c:if test="${facebookCount == 0}">
                                     <fmt:formatNumber value="${facebookCount}" groupingUsed="true"/>건 /
