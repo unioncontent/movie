@@ -191,10 +191,60 @@ async function asyncForEach(array, callback) {
   }
 }
 
+// 발송현황
 router.get('/period',isAuthenticated,async function(req, res) {
-  res.render('newsclipping_period');
+  var data = await getListPageData(req.user.n_idx,req.query);
+  data.sDate = '';
+  data.eDate = '';
+  res.render('newsclipping_period',data);
 });
 
+router.post('/period/getNextPage',isAuthenticated,async function(req, res, next) {
+  try{
+    var data = await getListPageData(req.user.n_idx,req.body);
+    res.send({status:true,result:data});
+  } catch(e){
+    res.status(500).send(e);
+  }
+});
+
+async function getListPageData(idx,param){
+  console.log('getListPageData:',param);
+  var data = {
+    list:[],
+    listCount:{total:0},
+    sDate: '',
+    eDate: ''
+  };
+  var limit = 10;
+  var searchParam = [idx,idx,0,limit];
+  var currentPage = 1;
+  var searchBody = {};
+  if (typeof param.page !== 'undefined') {
+    currentPage = param.page;
+  }
+  if (parseInt(currentPage) > 0) {
+    searchParam[2] = (currentPage - 1) * limit
+    data['offset'] = searchParam[2];
+  }
+  if (typeof param.sDate !== 'undefined' && typeof param.eDate !== 'undefined') {
+    searchBody['sDate'] = param.sDate;
+    searchBody['eDate'] = param.eDate;
+    data['sDate'] = param.sDate;
+    data['eDate'] = param.eDate;
+  }
+  try{
+    data['list'] = await newsclipping.selectView(searchBody,searchParam);
+    data['listCount'] = await newsclipping.selectViewCount(searchBody,searchParam);
+    data['currentPage'] = currentPage;
+  }
+  catch(e){
+    console.log(e);
+  }
+  return data;
+}
+
+// 지난리스트
 router.get('/list',isAuthenticated,async function(req, res) {
   res.render('newsclippin_list');
 });
