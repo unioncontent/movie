@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var datetime = require('node-datetime');
 // DB module
 var newsclipping = require('../models/newsclipping.js');
 var mailListA = require('../models/mailListA.js');
@@ -43,8 +44,7 @@ router.post('/getData',async function(req, res) {
 
 // 메일 발송
 router.post('/send',isAuthenticated, async function(req, res) {
-  console.log('mail save req.body: ',req.body);
-  // 이메일 발송
+  // 받는 사람, 수신자 그룹 세팅
   var recipiList = req.body['M_recipi'];
   var groupList = req.body['M_group'];
   if('M_recipi[]' in req.body){
@@ -68,15 +68,12 @@ router.post('/send',isAuthenticated, async function(req, res) {
     }
   }
 
-  var dt = datetime.create();
-  var now = dt.format('Y-m-d H:M:S');
-
-  // 이메일발송 결과 DB 저장
+  // 메일 info 세팅
   var mailAllParam = {
     M_sender: req.body['M_sender'],
     M_type: req.body['M_type'],
     M_body: req.body['M_body'],
-    M_subject: '[날짜] 일일 주요 뉴스',
+    M_subject: req.body['M_subject'],
     M_id: req.user.n_idx
   };
 
@@ -92,55 +89,32 @@ router.post('/send',isAuthenticated, async function(req, res) {
       mailAllParam['M_group'] = groupsIdx.join(',');
     }
   }
-  console.log('groupsIdx:',groupsIdx.join(','));
-  if( 'M_file_d' in req.body ){
-    if(req.body['M_file_d'] != ""){
-      mailAllParam['M_file'] = req.body['M_file_d'];
-      mailAllParam['M_file_name'] = req.body['M_fileName'];
-    }
-  }
-  var m_idx_a = null;
-  if('type' in req.body){
-    if(req.body.type == 'edit'){
-      mailAllParam['n_idx'] = req.body['idx'];
-      mailAllParam['M_id'] = req.body['Mid'];
 
-      await nMailAll.delete(mailAllParam['n_idx']);
-      await nMailDetailB.delete(mailAllParam['n_idx']);
-    }
-  }
+  var m_idx_a = null;
   // 메일발송 리스트 insert
   var resultInsert = await nMailAll.insert(mailAllParam);
   m_idx_a = resultInsert.insertId;
-  // 메일발송 리스트 table에 inser되었는지 체크문
+  // 메일발송 리스트 table에 inser되었는지 체크
   var insertCheck = false;
   // 메일발송 상세정보 insert
   if(m_idx_a){
-    /* 추가 */
-    if(typeof req.body.end_reserve_time !='undefined'){
-      try{
-        var result = await maillinkInsert({idx:m_idx_a,time:req.body.end_reserve_time,user:req.user});
-        console.log(result);
-        if(result){
-          throw new Error('maillink insert 실패');
-        }
-      }
-      catch(e){
-        console.log(e);
-        insertCheck = true;
-        await maillink.deleteMlAMSG(m_idx_a);
-        await maillink.deleteMlAT(m_idx_a);
-        var resultTName = await maillink.selectMailTableName();
-        await asyncForEach(resultTName, async (item, index, array) => {
-          await maillink.deleteMlABackUp(item.TABLE_NAME,m_idx_a);
-        });
-      }
-    }
-    /* 추가 */
+    var dt = datetime.create();
+    var now = dt.format('Y-m-d H:M:S');
+    var queryParam = {
+      'MSGID':m_idx_a,
+      'CONTENT':mailAllParam.M_body,
+      'STATUS':'1',
+      'GENDATE':now
+    };
+    await maillink.insert('ML_AUTOMAIL_MESSAGE',queryParam);
+
+    var senderInfo = await mailListA.getOneInfo(mailAllParam.M_sender);
+    var sender = (senderInfo.length > 0) ? senderInfo[0]: [];
     var recipiArr = JSON.parse('['+mailAllParam.M_recipi+']');
     var recipiNgroup = recipiArr.concat(groups2allIdx);
     await asyncForEach(recipiNgroup, async (item, index, array) => {
       if(insertCheck == false){
+        // 보내는 사람 email 확인
         var recipiInfo = await mailListA.getOneInfo(item);
         if(recipiInfo.length != 0){
           var mailDetailParam = {
@@ -150,27 +124,38 @@ router.post('/send',isAuthenticated, async function(req, res) {
             P_name : recipiInfo[0].M_name
           };
           try{
-            if(typeof req.body.end_reserve_time !='undefined'){
+            if('end_reserve_time' in req.body){
               mailDetailParam['M_send'] = req.body.end_reserve_time;
             }
-            var resultInsert = await nMailDetailB.insert(mailDetailParam);
-            console.log(resultInsert);
+            await nMailDetailB.insert(mailDetailParam);
+
+            // 메일 보내기
+            var param = {
+              'AUTOMAILID':'AU-4126512',
+              'CHANNEL':'1',
+              'EMSUBJECT':mailAllParam.M_subject,
+              'EMFROMNAME':sender.M_email,
+              'EMFROMADDRESS':sender.M_name,
+              'EMTONAME': mailDetailParam.P_name,
+              'EMTOADDRESS':mailDetailParam.E_mail,
+              'SENDTIME':('end_reserve_time' in req.body) ? mailDetailParam['M_send'] : now,
+              'GENDATE':now,
+              'MSGID':m_idx_a
+            };
+            console.log(param);
+            await maillink.insert('ml_automail_tran',param);
+
           }
           catch(e){
-            if(typeof req.body.end_reserve_time !='undefined'){
-              await maillink.deleteMlAMSG(m_idx_a);
-              await maillink.deleteMlAT(m_idx_a);
-              var resultTName = await maillink.selectMailTableName();
-              await asyncForEach(resultTName, async (item, index, array) => {
-                await maillink.deleteMlABackUp(item.TABLE_NAME,m_idx_a);
-              });
-            }
+            await maillink.deleteMlAMSG(m_idx_a);
+            await maillink.deleteMlAT(m_idx_a);
+            var resultTName = await maillink.selectMailTableName();
+            await asyncForEach(resultTName, async (item, index, array) => {
+              await maillink.deleteMlABackUp(item.TABLE_NAME,m_idx_a);
+            });
             await nMailAll.delete(m_idx_a);
             insertCheck = true;
           }
-        }
-        else {
-          await nMailAll.delete(m_idx_a);
         }
       }
     });
@@ -183,18 +168,12 @@ router.post('/send',isAuthenticated, async function(req, res) {
     res.status(500).send('메일 발송에 실패했습니다.');
     return false;
   }
-  // 메일 보내기
-  var result = await maillinkInsert({idx:req.body.idx,user:req.user});
-  if(result){
-    res.status(500).send('메일 발송에 실패했습니다.');
-    return false;
-  }
+
   // 메일 결과
   setTimeout(async () =>{
     console.log('메일 send result');
-    var result = await maillink.selectResult([req.body.idx]);
+    var result = await maillink.selectResult([m_idx_a]);
     if(result){
-      await nMailDetailB.updateSendDateResult(req.body.idx);
       res.send({status:true});
     }
     else{
@@ -202,90 +181,6 @@ router.post('/send',isAuthenticated, async function(req, res) {
     }
   },5000);
 });
-
-async function settingMailBody(bodyHtml,keyword,idx,num){
-  // 메일이 안보이면 텍스트 추가
-  var htmlMsg = '<table width="750" align="center" cellpadding="0" cellspacing="0" style="padding: 20px;"><tbody><tr><td align="center" style="font-size: 15px; font-weight: bold;" class="fix">[ 메일 본문이 깨져 보이면 <a href=\"http://showbox.email/preview?keyword='+keyword+'&idx='+idx+'\" target=\"_blank\" style=\"font-family: 맑은고딕,malgungothic,돋움,dotum;\">여기</a>를 눌러 주세요 ]</td></tr></tbody></table>';
-  return htmlMsg+bodyHtml+htmlMsg;
-}
-
-async function maillinkInsert(req){
-  console.log('maillinkInsert');
-  var dt = datetime.create();
-  var now = dt.format('Y-m-d H:M:S');
-  // 보낼 메일 data 가져오기
-  var result = await nMailAll.getEmailData(req.idx);
-  if(result.length == 0){
-    return true;
-  }
-  var mailData = result[0];
-
-  if('type' in req){
-    if(req.type == 'resend'){
-      // 0. 재발송 하기전 데이터 삭제
-      await maillink.deleteMlAMSG(mailData.n_idx);
-      await maillink.deleteMlAT(mailData.n_idx);
-      var resultTName = await maillink.selectMailTableName();
-      await asyncForEach(resultTName, async (item, index, array) => {
-        await maillink.deleteMlABackUp(item.TABLE_NAME,mailData.n_idx);
-      });
-    }
-  }
-
-  // 'body': await settingMailBody(mailData.M_body,mailData.M_keyword,mailData.n_idx),
-  var queryParams = {
-    'MSGID':mailData.n_idx,
-    'CONTENT':await settingMailBody(mailData.M_body,mailData.M_keyword,mailData.n_idx),
-    'STATUS':'1',
-    'GENDATE':now
-  };
-  await maillink.insert('ML_AUTOMAIL_MESSAGE',queryParams);
-  // 2. 메일 send insert
-  // 메일 보내는 사람 가져오기
-  var mailSender = await mailListA.getOneEmail2(mailData.M_sender);
-  var sender = (mailSender.length > 0) ? mailSender[0]: [];
-  // 메일 받는 사람 가져오기
-  console.log('mailSender:',mailSender);
-  var recipiArr = mailData.M_recipi.split(',');
-  var recipients = [];
-  // 메일 받는 그룹 가져오기
-  var groups = [];
-  console.log('check:',mailData.M_group != null);
-  if(mailData.M_group != null){
-    if(mailData.M_group.indexOf(',') != -1){
-      mailData.M_group = mailData.M_group.split(',');
-    }
-    console.log(req.user);
-    var groupArr = await mailListC.getOneEmail2(req.user.n_idx,mailData.M_group);
-    console.log('groupArr:',groupArr);
-    var groupArr2 = groupArr.concat(recipiArr);
-    console.log('groupArr2:',groupArr2);
-    var uniqArray = Array.from(new Set(groupArr2));
-    console.log('uniqArray:',uniqArray);
-    recipients = await mailListA.getOneEmail2(uniqArray);
-  }
-  else{
-    recipients = await mailListA.getOneEmail2(recipiArr);
-  }
-  console.log('recipient:',recipients);
-  await asyncForEach(recipients, async (item, index, array) => {
-    var param = {
-      'AUTOMAILID':'AU-4126512',
-      'CHANNEL':'1',
-      'EMSUBJECT':mailData.M_subject,
-      'EMFROMNAME':sender[0],
-      'EMFROMADDRESS':sender[1],
-      'EMTONAME':item[0],
-      'EMTOADDRESS':item[1],
-      'SENDTIME':('time' in req) ? req.time : now,
-      'GENDATE':now,
-      // 'MODDATE':now,
-      'MSGID':mailData.n_idx
-    };
-    console.log(index+'번');
-    await maillink.insert('ml_automail_tran',param);
-  });
-}
 
 async function asyncForEach(array, callback) {
   for (var index = 0; index < array.length; index++) {
