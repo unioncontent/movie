@@ -21,7 +21,6 @@
           <div class="alert alert-default" style="border-radius:  0; border-width:  2px;  margin-bottom: 1rem;">
           	<ul class="p-l-15 f-12" style="list-style-type: disc; color:  #666;">
               	<li>발송되지 않은 메일은 발송 건수, 성공, 실패 건이 모두 0으로 보입니다.</li>
-                <li>통계보고서의 통계는 수신자 중 기자로 등록된 수신자의 메일 발송 후 48시간 동안 작성된 기사건과 댓글 수가 보입니다.</li>
           	</ul>
         	</div>
         </div>
@@ -43,7 +42,6 @@
                     <tr>
                       <th width="1%">NO</th>
                       <th width="10%" style="min-width: 80px;">작성일</th>
-                      <th width="5%" style="min-width: 80px;">키워드</th>
                       <th width="20%" style="min-width:58px">제목</th>
                       <th width="5%" style="min-width:81px">발송건수</th>
                       <th width="5%" style="min-width:58px">성공</th>
@@ -53,7 +51,7 @@
                   </thead>
                   <tbody>
                     <%
-                      var limit = 20;
+                      var limit = 10;
                       if(currentPage > 0){
                         (currentPage - 1) * limit;
                       }
@@ -61,10 +59,9 @@
                     %>
                     <tr>
                       <th><%= listCount - i - offset %></th>
-                      <td><%= list[i].M_regdate %></td>
-                      <td><div class="kwd_nobr"><%= list[i].M_keyword %></div></td>
+                      <td><%= list[i].GENDATE %></td>
                       <td>
-                        <a href="http://showbox.email/preview?keyword=<%= list[i].M_keyword_idx %>&idx=<%= list[i].n_idx %>" target="_blank">
+                        <a href="http://showbox.email/preview/newsclipping?idx=<%= list[i].n_idx %>" target="_blank">
                           <div class="title_nobr"><%= list[i].M_subject %></div>
                         </a>
                       </td>
@@ -73,7 +70,7 @@
                       <td class="fail" data-idx="<%= list[i].n_idx %>"><%= list[i].fail %></td>
                       <td>
                         <%=(list[i].M_type == '0') ? '즉시' : '예약'%>
-                        <% if((new Date().getTime() < new Date(list[i].M_send).getTime())){ %>
+                        <% if((new Date().getTime() < new Date(list[i].SENDTIME).getTime())){ %>
                         <label class="badge badge-danger m-b-0">대기</label>
                         <%}%>
                       </td>
@@ -86,7 +83,7 @@
                     if(pageCount > 1) {
                     %>
                     <tr>
-                      <td colspan="8">
+                      <td colspan="7">
                         <ul class="pagination float-right">
                           <%
                             var pageSize = 5;
@@ -217,7 +214,7 @@
       return false;
     }
     $.ajax({
-      url: '/period/result',
+      url: '/newsclipping/period/result',
       type: 'post',
       data: {
         M_result: 'success',
@@ -253,7 +250,7 @@
       return false;
     }
     $.ajax({
-      url: '/period/result',
+      url: '/newsclipping/period/result',
       type: 'post',
       data: {
         M_result: 'fail',
@@ -315,7 +312,7 @@
   function ajaxGetPageList(param){
     console.log('ajaxGetPageList:',param);
     $.ajax({
-      url: '/period/getNextPage',
+      url: '/newsclipping/period/getNextPage',
       type: 'post',
       data: param,
       error: function(request,status,error){
@@ -333,15 +330,13 @@
           var numIdx = Math.ceil(data.result.listCount-(data.result.offset+idx)).toString();
           var html = '<tr>\
             <th>'+numIdx+'</th>\
-            <td>'+item.M_regdate+'</td>\
-            <td><div class="kwd_nobr">'+item.M_keyword+'</div></td>\
-            <td><div class="num_nobr">'+item.M_seq_number+'차</div></td>\
-            <td><a href="http://showbox.email/preview?keyword='+item.M_keyword_idx+'&idx='+item.n_idx+'" target="_blank"><div class="title_nobr">'+item.M_subject+'</div></a></td>\
+            <td>'+item.GENDATE+'</td>\
+            <td><a href="http://showbox.email/preview/newsclipping?idx='+item.n_idx+'" target="_blank"><div class="title_nobr">'+item.M_subject+'</div></a></td>\
             <td><span class="total">'+(parseInt(item.success) + parseInt(item.fail))+'</span></td>\
             <td class="success" data-idx=\"'+item.n_idx+'\">'+item.success+'</td>\
             <td class="fail" data-idx=\"'+item.n_idx+'\">'+item.fail+'</td>';
           html += '<td>'+ ((item.M_type == '0') ? '즉시' : '예약');
-          if((new Date().getTime() < new Date(item.M_send).getTime()) && parseInt(item.success) == 0 && parseInt(item.fail) ==0){
+          if((new Date().getTime() < new Date(item.SENDTIME).getTime()) && parseInt(item.success) == 0 && parseInt(item.fail) ==0){
             html += '<label class="badge badge-danger m-b-0">대기</label>'
           }
           html += '</td></tr>';
@@ -351,7 +346,7 @@
         var pageCount = Math.ceil(data.result.listCount/limit);
         $('#listTable tfoot').eq(0).empty();
         if(pageCount > 1) {
-          var html = '<tr><td colspan="8"><ul class="pagination float-right">';
+          var html = '<tr><td colspan="7"><ul class="pagination float-right">';
           var pageSize = 5;
           var pRCnt = parseInt(data.result.currentPage / pageSize);
           if(data.result.currentPage % pageSize == 0){

@@ -7,6 +7,7 @@ const DBpromise = require('../db/db_info.js');
  키워드 테이블 - keyword_data
  기업 뉴스 테이블 - companynews_data
  지난 뉴스 클리핑 테이블 - n_mail_all , n_mail_detail
+ 뷰 - newsclipping_view
 */
 
 var newsclipping = {
@@ -108,6 +109,29 @@ var newsclipping = {
   selectIssueTable: async function(param){
     var sql = 'SELECT * FROM issue_data where company_name = \'쇼박스\' and  writeDate between \''+param.sDate+' 00:00:00\' and \''+param.eDate+' 23:59:59\'';
     return await getResult(sql);
+  },
+  selectView: async function(body,param){
+    var sql = 'SELECT * FROM newsclipping_view where n_idx is not null ';
+    if(('sDate' in body) && ('eDate' in body)){
+      sql+=' and GENDATE between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
+    }
+    sql += ' and (  M_id = ? or M_id in (select n_idx from m_mail_user where user_admin=?)) ';
+    sql += ' order by n_idx desc limit ?,?';
+    return await getResult(sql,param);
+  },
+  selectViewCount: async function(body,param){
+    var sql = 'SELECT count(*) as total FROM newsclipping_view where n_idx is not null ';
+    if(('sDate' in body) && ('eDate' in body)){
+      sql+=' and GENDATE between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
+    }
+    sql += ' and (  M_id = ? or M_id in (select n_idx from m_mail_user where user_admin=?))';
+    var count = await getResult(sql,param);
+    if(count.length == 0){
+      return 0;
+    }
+    else{
+      return count[0]['total'];
+    }
   }
 }
 

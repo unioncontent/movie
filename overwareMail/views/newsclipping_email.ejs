@@ -102,10 +102,10 @@
                   <div id="M_body" style="float:left;font-family: 굴림, Gulim, Arial, sans-serif;">
                     <div id="header">
                       <img src="http://showbox.email/images/newsclipping/header.jpg" alt="" style="display: inherit;">
-                      <div id="info" style="font-size:  11px;color: #686868;background-color: #f7f7f7;height: 37px;">
-                        <span style="padding: 14px;display: inline-block;">ShowBox News Clipping</span>
-                        <span id="date-span" style="float:  right;display:  inline-block;padding: 14px;padding-right: 25px;">
-                          <a href="" target="_blank" style="cursor:pointer">2018.06.01 (금)</a>
+                      <div id="info" style="background-color: #f7f7f7;height: 37px;">
+                        <span style="padding: 14px;display: inline-block;font-size:  11px;color: #686868;">ShowBox News Clipping</span>
+                        <span id="date-span" style="float:  right;display:  inline-block;padding: 8px;padding-right: 25px;">
+                          <a href="" target="_blank" style="cursor:pointer;text-decoration: blink;font-size:  11px;color: #686868">2018.06.01 (금)</a>
                         </span>
                       </div>
                     </div>
@@ -135,7 +135,7 @@
                           <div class="section-header" style="border-bottom: 2px solid #efefef;padding-bottom: 8px;">
                             <img src="http://showbox.email/images/newsclipping/icon.jpg" alt="" style="display: inherit; float:left;">
                             <span style="font-family:NanumGothic;font-size: 16px;padding-left:  5px; float:left;">쇼박스 영화</span>
-                            <span style="font-family:Gulim;font-size:  12px;padding-left:  5px;color: #868686;">쇼박스 영화 일일 주요뉴스</span>
+                            <span style="font-family:Gulim;font-size:  12px;padding-left:  5px;color: #868686;line-height: 1.6;">쇼박스 영화 일일 주요뉴스</span>
                           </div>
                           <div class="section-body" style="font-family: 굴림, Gulim, Arial, sans-serif;">
 
@@ -145,7 +145,7 @@
                           <div class="section-header" style="border-bottom: 2px solid #efefef;padding-bottom: 8px;">
                             <img src="http://showbox.email/images/newsclipping/icon.jpg" alt="" style="display: inherit; float:left;">
                             <span style="font-family:NanumGothic;font-size: 16px;padding-left:  5px; float:left;">경쟁 영화</span>
-                            <span style="font-family:Gulim;font-size:  12px;padding-left:  5px;color: #868686;">경쟁 영화 일일 주요뉴스</span>
+                            <span style="font-family:Gulim;font-size:  12px;padding-left:  5px;color: #868686;line-height: 1.6;">경쟁 영화 일일 주요뉴스</span>
                           </div>
                           <div class="section-body" style="font-family: 굴림, Gulim, Arial, sans-serif;">
                           </div>
@@ -154,7 +154,7 @@
                           <div class="section-header" style="border-bottom: 2px solid #efefef;padding-bottom: 8px;">
                             <img src="http://showbox.email/images/newsclipping/icon.jpg" alt="" style="display: inherit; float:left;">
                             <span style="font-family:NanumGothic;font-size: 16px;padding-left:  5px; float:left;">영화 일반</span>
-                            <span style="font-family:Gulim;font-size:  12px;padding-left:  5px;color: #868686;">영화 일반 일일 주요뉴스</span>
+                            <span style="font-family:Gulim;font-size:  12px;padding-left:  5px;color: #868686;line-height: 1.6;">영화 일반 일일 주요뉴스</span>
                           </div>
                           <div class="section-body" style="font-family: 굴림, Gulim, Arial, sans-serif;">
                           </div>
@@ -163,7 +163,7 @@
                           <div class="section-header" style="border-bottom: 2px solid #efefef;padding-bottom: 8px;">
                             <img src="http://showbox.email/images/newsclipping/icon.jpg" alt="" style="display: inherit; float:left;">
                             <span style="font-family:NanumGothic;font-size: 16px;padding-left:  5px; float:left;">보도국</span>
-                            <span style="font-family:Gulim;font-size:  12px;padding-left:  5px;color: #868686;">보도국 일일 주요뉴스</span>
+                            <span style="font-family:Gulim;font-size:  12px;padding-left:  5px;color: #868686;line-height: 1.6;">보도국 일일 주요뉴스</span>
                           </div>
                           <div class="section-body" style="font-family: 굴림, Gulim, Arial, sans-serif;">
                           </div>
@@ -172,7 +172,7 @@
                           <div class="section-header" style="border-bottom: 2px solid #efefef;padding-bottom: 8px;">
                             <img src="http://showbox.email/images/newsclipping/icon.jpg" alt="" style="display: inherit; float:left;">
                             <span style="font-family:NanumGothic;font-size: 16px;padding-left:  5px; float:left;">캐스팅</span>
-                            <span style="font-family:Gulim;font-size:  12px;padding-left:  5px;color: #868686;">캐스팅 일일 주요뉴스</span>
+                            <span style="font-family:Gulim;font-size:  12px;padding-left:  5px;color: #868686;line-height: 1.6;">캐스팅 일일 주요뉴스</span>
                           </div>
                           <div class="section-body" style="font-family: 굴림, Gulim, Arial, sans-serif;">
                           </div>
@@ -466,7 +466,7 @@
     getNewsClippingData();
     boxoffice();
     var dateStr = $('#datepicker2').val().replace(/[-]/gi,'.');
-    $('#date-span').text(dateStr+' ('+getInputDayLabel($('#datepicker2').val())+')');
+    $('#date-span a').text(dateStr+' ('+getInputDayLabel($('#datepicker2').val())+')');
     $('#date-span a').attr('href', "http://showbox.email/preview/newsclipping?date="+$('#datepicker2').val());
     $('#body-header a').attr('href', "http://showbox.email/preview/newsclipping?date="+$('#datepicker2').val());
   });
@@ -475,7 +475,7 @@
     getNewsClippingData();
     boxoffice();
     var dateStr = $('#datepicker2').val().replace(/[-]/gi,'.');
-    $('#date-span').text(dateStr+' ('+getInputDayLabel($('#datepicker2').val())+')');
+    $('#date-span a').text(dateStr+' ('+getInputDayLabel($('#datepicker2').val())+')');
     $('#date-span').attr('href', "http://showbox.email/preview/newsclipping?date="+$('#datepicker2').val());
     $('#body-header').attr('href', "http://showbox.email/preview/newsclipping?date="+$('#datepicker2').val());
   });
@@ -594,7 +594,7 @@
             $('div[data-idx='+index+']').after(html);
             $.each(value, function(i, v) {
               html ='<li> <img src="https://ssl.pstatic.net/sstatic/search/pc/img/bu_news_sublst.gif" style="vertical-align:  text-top;">\
-              <a href="'+v.url+'" target="_blank" title="'+v.media_title+'" style="display: inline-block;overflow: hidden;max-width: 210px;margin-right: 5px;color: #0000ee;text-overflow: ellipsis;white-space: nowrap;word-wrap: normal;word-break: normal;vertical-align: top;">'+v.media_title+'</a> \
+              <a href="'+v.url+'" target="_blank" title="'+v.media_title+'" style="display: inline-block;overflow: hidden; max-width: 210px;margin-right: 5px;color: #0000ee;text-overflow: ellipsis;white-space: nowrap;word-wrap: normal;word-break: normal;vertical-align: top;">'+v.media_title+'</a> \
               <span class="txt_sinfo" style="display: inline-block;overflow: hidden;max-width: 260px;white-space: nowrap;text-overflow: ellipsis;vertical-align: top;"> \
               <span class="press" style="color: #666;" title="'+v.media_name+'">'+v.media_name+'</span> \
               <span class="bar" style="color: #666;display: inline-block;overflow: hidden;width: 0;height: 11px;margin: -1px 5px 1px 4px;border-left: 1px solid #eaeaea;vertical-align: middle;"></span> '+v.writeDate+' </span> </li>';
