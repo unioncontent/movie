@@ -251,7 +251,89 @@ async function getListPageData(idx,param){
 
 // 지난리스트
 router.get('/list',isAuthenticated,async function(req, res) {
-  res.render('newsclippin_list');
+  var data = await getListPageData2(req.user.n_idx,req.query);
+  data.page = '';
+  data.sDate = '';
+  data.eDate = '';
+  res.render('newsclipping_list',data);
 });
+
+router.post('/list/getNextPage',isAuthenticated,async function(req, res, next) {
+  try{
+    var data = await getListPageData2(req.user.n_idx,req.body);
+    res.send({status:true,result:data});
+  } catch(e){
+    res.status(500).send(e);
+  }
+});
+
+router.post('/list/delete',isAuthenticated, async function(req, res) {
+  var result = await nMailAll.delete(req.body.idx);
+  if(!('protocol41' in result)){
+    res.status(500).send('nMailAll delete query 실패');
+    return false;
+  }
+  result = await nMailDetailB.delete(req.body.idx);
+  if(!('protocol41' in result)){
+    res.status(500).send('nMailDetailB delete query 실패');
+    return false;
+  }
+  result = await maillink.deleteMlAMSG(req.body.idx);
+  if(!('protocol41' in result)){
+    res.status(500).send('ml_automail_message delete query 실패');
+    return false;
+  }
+  result = await maillink.deleteMlAT(req.body.idx);
+  if(!('protocol41' in result)){
+    res.status(500).send('ml_automail_tran delete query 실패');
+    return false;
+  }
+  result = await maillink.selectMailTableName();
+  await asyncForEach(result, async (item, index, array) => {
+    var result2 = await maillink.deleteMlABackUp(item.TABLE_NAME,req.body.idx);
+    if(!('protocol41' in result2)){
+      res.status(500).send('ml_automail_tran backup delete query 실패');
+      return false;
+    }
+  });
+  res.send({status:true});
+});
+
+async function getListPageData2(idx,param){
+  console.log('getListPageData:',param);
+  var data = {
+    list:[],
+    listCount:{total:0},
+    sDate: '',
+    eDate: ''
+  };
+  var limit = 10;
+  var searchParam = [idx,idx,0,limit];
+  var currentPage = 1;
+  var searchBody = {};
+  if (typeof param.page !== 'undefined') {
+    currentPage = param.page;
+    data['page'] = currentPage;
+  }
+  if (parseInt(currentPage) > 0) {
+    searchParam[2] = (currentPage - 1) * limit
+    data['offset'] = searchParam[2];
+  }
+  if (typeof param.sDate !== 'undefined' && typeof param.eDate !== 'undefined') {
+    searchBody['sDate'] = param.sDate;
+    searchBody['eDate'] = param.eDate;
+    data['sDate'] = param.sDate;
+    data['eDate'] = param.eDate;
+  }
+  try{
+    data['list'] = await newsclipping.selectListView(searchBody,searchParam);
+    data['listCount'] = await newsclipping.selectListViewCount(searchBody,searchParam);
+    data['currentPage'] = currentPage;
+  }
+  catch(e){
+    console.log(e);
+  }
+  return data;
+}
 
 module.exports = router;

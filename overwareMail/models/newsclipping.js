@@ -133,6 +133,29 @@ var newsclipping = {
       return count[0]['total'];
     }
   },
+  selectListView: async function(body,param){
+    var sql = 'SELECT * FROM newsclipping_list_view where n_idx is not null ';
+    if(('sDate' in body) && ('eDate' in body)){
+      sql+=' and GENDATE between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
+    }
+    sql += ' and (  M_id = ? or M_id in (select n_idx from m_mail_user where user_admin=?)) ';
+    sql += ' order by n_idx desc limit ?,?';
+    return await getResult(sql,param);
+  },
+  selectListViewCount: async function(body,param){
+    var sql = 'SELECT count(*) as total FROM  newsclipping_list_view where n_idx is not null ';
+    if(('sDate' in body) && ('eDate' in body)){
+      sql+=' and GENDATE between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
+    }
+    sql += ' and (  M_id = ? or M_id in (select n_idx from m_mail_user where user_admin=?))';
+    var count = await getResult(sql,param);
+    if(count.length == 0){
+      return 0;
+    }
+    else{
+      return count[0]['total'];
+    }
+  },
   selectResultDetail:async function(param){
     var sql = 'SELECT * FROM newsclipping_view where MSGID=? ';
     if('M_result' in param){
