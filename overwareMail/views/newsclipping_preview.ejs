@@ -15,7 +15,7 @@
     <div id="header">
       <img src="\images\newsclipping\header.jpg" alt="" style="display: inherit;">
       <div id="info" style="font-size:  11px;color: #686868;background-color: #f7f7f7;height: 37px;">
-        <span style="padding: 14px;display: inline-block;">ShowBox News Clipping</span>
+        <span style="padding: 10px;padding-left: 15px;display: inline-block;">ShowBox News Clipping</span>
         <!-- <span id="date-span" style="float:  right;display:  inline-block;padding: 14px;padding-right: 25px;">2018.06.01 (금)</span> -->
         <select id="date-select" style="border: 1px solid #e4e4e4;float:  right;display:  inline-block;font-family: Gulim;font-size: 11px;padding:  4px;padding-right: 15px;margin-right: 28px;margin-top: 7px;">
         </select>
@@ -23,7 +23,7 @@
     </div>
     <div id="body" style="padding:27px 24px;">
       <div id="body-header">
-        <table style="border-spacing: 0;">
+        <table style="border-collapse: collapse;border-spacing: 0;">
           <tbody>
             <tr>
               <td onclick='window.open("/preview/newsclipping?date=<%=date%>")' style="width: 133px;height: 42px;text-align: center;font-size: 12px;color: #878787;">주요뉴스</td>
@@ -157,7 +157,7 @@
   $(document).ready(function() {
     getNewsClippingData();
     boxoffice();
-    var date = getTimeStamp().replace(/[-]/gi,'.');
+    var date = $('#date').val().replace(/[-]/gi,'.');
     for (var i = 0; i < 7; i++) {
       $('#date-select').append('<option value="'+date.replace(/[.]/gi,'-')+'">'+(date+' ('+getInputDayLabel(date)+')')+'</option>');
       date = yesterday(date,'.');
@@ -231,6 +231,9 @@
       success:function(data){
         if(data.status){
           console.log(data);
+          $('.section:not(div[data-type=4],div[data-type=issue],div[data-type=movie]) .section-body').empty();
+          $('div[data-type=issue] .section-body tbody tr:not(.head)').remove();
+          $('div[data-type=4] .section-body tbody tr:not(.head)').remove();
           $.each(data.result.issue, function(index, value) {
             var html = '<tr>\
               <td style="text-align:center; color: #ed1252;padding: 17px 0;border: 1px solid #f4f4f4; border-left: 0px; border-top: 0px; text-align: center;">#'+value.keyword+'</td>\
@@ -238,9 +241,6 @@
             </tr>';
             $('div[data-type=issue] .section-body tbody').append(html);
           });
-          $('.section:not(div[data-type=4],div[data-type=issue],div[data-type=movie]) .section-body').empty();
-          $('div[data-type=issue] .section-body tbody tr:not(.head)').remove();
-          $('div[data-type=4] .section-body tbody tr:not(.head)').remove();
           var obj = new Object();
           $.each(data.result.news, function(index, value) {
             // 4.쇼박스기업뉴스

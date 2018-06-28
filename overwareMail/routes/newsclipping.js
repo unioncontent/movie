@@ -199,6 +199,11 @@ router.get('/period',isAuthenticated,async function(req, res) {
   res.render('newsclipping_period',data);
 });
 
+router.post('/period/result',isAuthenticated,async function(req, res, next) {
+  var data = await newsclipping.selectResultDetail(req.body);
+  res.send({status:true,result:data});
+});
+
 router.post('/period/getNextPage',isAuthenticated,async function(req, res, next) {
   try{
     var data = await getListPageData(req.user.n_idx,req.body);
