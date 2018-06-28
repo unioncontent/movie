@@ -587,8 +587,13 @@
 
 	  		}else if (data == ""){
 		  		loading.hide();
-		  		 }
-		  	 }
+		  		
+		  		var obj = document.createElement("div");
+		  		obj.innerHTML="<table align='center' height='300px'><tr><td style='vertical-align:middle;' align='center' height='150px'><h5>등록된 데이터가 없습니다.</h5></td></tr></table>";
+		  		var morrisbar = document.getElementById("morris-bar");
+		  		morrisbar.prepend(obj);
+		  	}
+		}
 	});
 	
 	$.ajax({
@@ -600,8 +605,9 @@
 	 		 	company : $("#selectCompany option:selected").val(), selectKey : $("#selectKeyword option:selected").val(),
 	 		 	startDate : decodeURI(window.location.href.split("startDate=")[1]).split("&")[0], endDate : decodeURI(window.location.href.split("endDate=")[1]).split("&")[0]},
 	  	  success : function(data){
+	  		if (data != "") {
 
-	  		  console.log(data);
+	  		console.log(data);
 	  		var script = "[";
 
 
@@ -623,7 +629,14 @@
 
 			areaChart2(jsonScript);
 
-	  	 }
+			}else if (data == ""){
+		  		
+		  		var obj = document.createElement("div");
+		  		obj.innerHTML="<table align='center' height='300px'><tr><td style='vertical-align:middle;' align='center' height='150px'><h5>등록된 데이터가 없습니다.</h5></td></tr></table>";
+		  		var morrisbar = document.getElementById("morris-bar2");
+		  		morrisbar.prepend(obj);
+			}
+		}
 	});
 
 	// 캘린더 클릭시

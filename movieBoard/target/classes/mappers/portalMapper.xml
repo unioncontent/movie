@@ -798,6 +798,8 @@
 			textType!='삭제글'
 		and score is null
 		<include refid="search2"></include>
+		and
+			createDate >= curdate();
  	</select>
  	
  	<update id="updateTextType">
@@ -1163,6 +1165,8 @@
 		and 
 			score is null
 		<include refid="search"></include>
+		and
+			createDate >= curdate();
 		
 	</select>
  	

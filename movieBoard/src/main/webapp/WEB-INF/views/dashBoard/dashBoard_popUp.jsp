@@ -217,7 +217,7 @@
                                             <th scope="row">${index.count}</th>
                                             <td>${score.writeDate}</td>
                                             <td>${score.portal_name}</td>
-                                            <td><a class = 'title_score' href="${score.url}">${score.portal_title}</a></td>
+                                            <td><a class = 'title_score' href="${score.url}" target="_blank">${score.portal_title}</a></td>
                                             <td>${score.keyword}</td>
                                             <td>${score.score}</td>
                                           </tr>

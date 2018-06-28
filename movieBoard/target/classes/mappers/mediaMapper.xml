@@ -983,6 +983,8 @@
 		where 
 			textType!='삭제글'
 		<include refid="search5"></include>
+		and
+			createDate >= curdate();
  	</select>
  	
  	<select id="wPageSearch" resultType="MediaVO">
