@@ -1782,4 +1782,19 @@
 			by writeDate desc
 		
 	</select>
+	<select id="dashMediaMatch" resultType="MediaVO">
+		select
+			*
+		from
+			media_data
+		where
+			url is not null
+		and
+			texttype!='삭제글'
+		<include refid="search5"></include>
+		and
+			createDate >= curdate()
+		order 
+			by createDate desc
+	</select>
  </mapper>

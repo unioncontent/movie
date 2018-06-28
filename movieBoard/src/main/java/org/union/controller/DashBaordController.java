@@ -285,7 +285,7 @@ public class DashBaordController {
 		cri.setEndDate(current + " 23:59:59");
 		
 		if(part.equals("기사")) {
-			model.addAttribute("mediaList", mediaService.mailMatch(cri));
+			model.addAttribute("mediaList", mediaService.dashMediaMatch(cri));
 			model.addAttribute("part", part);
 		}else if(part.equals("댓글")) {
 			model.addAttribute("replyList", mediaService.replyAllPage(cri));

@@ -153,4 +153,5 @@ public interface MediaDAO {
 	public List<MediaVO> mediaMatchallList(SearchCriteria cri);
 	public List<MediaVO> reporterMatchallList(SearchCriteria cri);
 	public List<MediaVO> mailMatch(SearchCriteria cri);
+	public List<MediaVO> dashMediaMatch(SearchCriteria cri);
 }

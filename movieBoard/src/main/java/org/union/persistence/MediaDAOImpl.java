@@ -719,4 +719,10 @@ public class MediaDAOImpl implements MediaDAO {
 
 		return session.selectList(namespace + "newsExcel", cri);
 	}
+
+	@Override
+	public List<MediaVO> dashMediaMatch(SearchCriteria cri) {
+
+		return session.selectList(namespace + "dashMediaMatch", cri);
+	}
 }

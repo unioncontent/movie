@@ -827,4 +827,10 @@ public class MediaServiceImpl implements MediaService {
 
 		return mediaDAO.newsExcel(cri);
 	}
+
+	@Override
+	public List<MediaVO> dashMediaMatch(SearchCriteria cri) {
+
+		return mediaDAO.dashMediaMatch(cri);
+	}
 }
