@@ -246,7 +246,7 @@
             // 4.쇼박스기업뉴스
             if(value.news_type == "4"){
               var html = '<tr>\
-                <td style="padding: 16px 7px;border-bottom: 1px solid #f4f4f4;"><a href="'+value.url+'" title="'+value.media_title+'">'+value.media_title+'</a></td>\
+                <td style="padding: 16px 7px;border-bottom: 1px solid #f4f4f4;"><a href="'+value.url+'" title="'+value.media_title+'" style="width: 371px;display: inline-block;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">'+value.media_title+'</a></td>\
                 <td style="padding: 13px 0;border: 1px solid #f4f4f4;text-align: center;color: #666;">'+value.media_name+'</td>\
                 <td style="padding: 13px 0;border-bottom: 1px solid #f4f4f4;text-align: center;color: #666;">'+value.writeDate+'</td>\
               </tr>'
@@ -258,7 +258,7 @@
                 html += '<img src="'+value.thumbnail+'" alt="" style="display: inherit; float:left;width:80px;height:80px;padding-right: 13px;">';
               }
               html += '<div class="news-content" style="font-size:12px; width:541px">\
-              <div class="title" style="padding-bottom:5px"><a href="'+value.url+'" title="'+value.media_title+'" target="_blank">'+value.media_title+'</a></div>\
+              <div class="title" style="padding-bottom:5px"><a href="'+value.url+'" title="'+value.media_title+'" target="_blank" >'+value.media_title+'</a></div>\
               <div clacss="info" style="padding-bottom:5px; color: #666;"><span class="media-name">'+value.media_name+'</span> <span class="bar" style="display: inline-block;overflow: hidden;width: 0;height: 11px;margin: -1px 5px 1px 4px;border-left: 1px solid #eaeaea;vertical-align: middle;"></span> <span class="date">'+value.writeDate+'</span></div>\
               <div class="content" data-idx="'+value.media_idx+'" style="line-height:16px" title="'+value.media_content+'">'+value.media_content+'</div>';
               html +='</div></div>';
