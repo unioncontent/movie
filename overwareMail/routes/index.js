@@ -4,6 +4,7 @@ var bcrypt = require('bcrypt-nodejs');
 var LocalStrategy = require('passport-local').Strategy;
 var router = express.Router();
 // DB module
+var newsclipping = require('../models/newsclipping.js');
 var content = require('../models/content.js');
 var period = require('../models/period.js');
 var user = require('../models/user.js');
@@ -73,7 +74,25 @@ router.get('/preview',async function(req, res, next) {
   res.render('preview',data);
 });
 router.get('/preview/newsclipping',async function(req, res, next) {
-  res.render('newsclipping_preview',{layout: false,date:req.query.date});
+  var data = {layout: false};
+  if('idx' in req.query){
+    var queryResult = await newsclipping.selectOneMailBodyDate(req.query.idx);
+    if(queryResult.length > 0){
+      data.date = queryResult[0].SENDTIME;
+      data.view = queryResult[0].M_body;
+      data.status = 'true';
+    }
+    else{
+      data.date = '';
+      data.view = '';
+      data.status = 'false';
+    }
+    res.render('newsclipping_preview2',data);
+  }
+  else{
+    data.date = req.query.date;
+    res.render('newsclipping_preview',data);
+  }
 });
 
 // 메일 미리보기

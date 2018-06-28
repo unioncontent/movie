@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title><%=date%> 메일</title>
+  <!-- jqeury ui.css -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" />
+  <!-- custom css -->
+  <link rel="stylesheet" href="/pages/email/style3.css">
+</head>
+
+<body>
+  <input type="hidden" id="date" class="form-control" value="<%=date%>"/>
+  <input type="hidden" id="status" class="form-control" value="<%=status%>"/>
+  <%- view %>
+  <!-- Required Jquery -->
+  <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="crossorigin="anonymous"></script>
+  <script src="http://code.jquery.com/ui/1.12.1/jquery-ui.min.js"integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+  <!-- custom -->
+  <script src="/pages/email/js/movie.js"></script>
+  <script>
+    $(document).ready(function() {
+      if($('#status').val() == 'false'){
+        alert('해당 메일이 없습니다.');
+      }
+    });
+  </script>
+</body>
+</html>

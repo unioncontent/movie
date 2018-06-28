@@ -116,15 +116,15 @@ var newsclipping = {
       sql+=' and GENDATE between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
     }
     sql += ' and (  M_id = ? or M_id in (select n_idx from m_mail_user where user_admin=?)) ';
-    sql += ' order by n_idx desc limit ?,?';
+    sql += ' group by M_idx_A order by n_idx desc limit ?,?';
     return await getResult(sql,param);
   },
   selectViewCount: async function(body,param){
-    var sql = 'SELECT count(*) as total FROM newsclipping_view where n_idx is not null ';
+    var sql = 'SELECT count(*) as total FROM (SELECT * from newsclipping_view where n_idx is not null ';
     if(('sDate' in body) && ('eDate' in body)){
       sql+=' and GENDATE between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
     }
-    sql += ' and (  M_id = ? or M_id in (select n_idx from m_mail_user where user_admin=?))';
+    sql += ' and (  M_id = ? or M_id in (select n_idx from m_mail_user where user_admin=?)) group by M_idx_A) a';
     var count = await getResult(sql,param);
     if(count.length == 0){
       return 0;
@@ -132,6 +132,22 @@ var newsclipping = {
     else{
       return count[0]['total'];
     }
+  },
+  selectResultDetail:async function(param){
+    var sql = 'SELECT * FROM newsclipping_view where MSGID=? ';
+    if('M_result' in param){
+      if(param.M_result == 'success'){
+        sql += 'and (FINALRESULT=? or (SENDRESULT = \'OK\' and FINALRESULT is null))';
+      }else{
+        sql += 'and ((FINALRESULT is not null and FINALRESULT != ?) or (SENDRESULT is not null and SENDRESULT = \'ER\'))';
+      }
+    }
+    sql+=' group by E_mail';
+    return await getResult(sql,param.arr);
+  },
+  selectOneMailBodyDate: async function(param){
+    var sql = "SELECT DATE_FORMAT(SENDTIME, '%Y-%m-%d') AS SENDTIME,M_body FROM newsclipping_view where MSGID=? group by M_body";
+    return await getResult(sql,param);
   }
 }
 
