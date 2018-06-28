@@ -231,12 +231,14 @@
   }
   .table td, .table th{
     vertical-align: middle;
+    text-align: center;
   }
   .btn i {
     margin-right: 0px;
   }
   .title_nobr,.kwd_nobr,.error_nobr,.num_nobr{
     font-size: 15px;
+    margin: 0px auto;
     padding-left: 3px;
     text-overflow: ellipsis;
     width: 400px;
@@ -257,14 +259,14 @@
     font-weight: bold;
   }
 </style>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/2.1.27/daterangepicker.css" />
 <script type="text/javascript" src="/js/error.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/2.1.27/daterangepicker.css" />
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/2.1.27/moment.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/2.1.27/daterangepicker.js"></script>
 <!-- sweetalert -->
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sweetalert@2.1.0/dist/sweetalert.min.js"></script>
 <script type="text/javascript">
-    // data input hidden values
+ // data input hidden values
   var sDateValue = $('#sDate').val();
   var eDateValue = $('#eDate').val();
   $(document).ready(function(){

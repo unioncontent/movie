@@ -20,7 +20,13 @@
         <div class="col-md-12">
           <div class="card">
             <div class="card-header">
-              <!--날짜추가하기-->
+              <div class="col-md-3 p-r-0 p-l-0 f-right">
+                <div id="reportrange" class="form-control form-control-default">
+                  <i class="glyphicon glyphicon-calendar far fa-calendar-alt"></i>
+                  <span></span>
+                  <i class="f-right fa fa-angle-down" style="font-size: 17px;"></i>
+                </div>
+              </div>
             </div>
             <div class="card-block table-border-style">
               <div class="table-responsive">
@@ -28,20 +34,19 @@
                   <thead>
                     <tr>
                       <th width="1%">NO</th>
-                      <th width="5%">키워드</th>
-                      <th width="15%">제목</th>
+                      <th width="20%">제목</th>
                       <th width="5%">발송자</th>
                       <th width="5%">수신자</th>
-                      <th width="20%">수신그룹</th>
+                      <th width="5%">수신그룹</th>
                       <th width="5%">작성일</th>
                       <th width="5%">예약일</th>
                       <th width="5%">발송일</th>
-                      <th width="25%">관리</th>
+                      <th width="5%">관리</th>
                     </tr>
                   </thead>
                   <tbody>
                     <%
-                      var limit = 20;
+                      var limit = 10;
                       if(currentPage > 0){
                         (currentPage - 1) * limit;
                       }
@@ -68,18 +73,17 @@
                     %>
                     <tr>
                       <th><%= listCount - i - offset %></th>
-                      <td><div class="kwd_nobr"><%= list[i].keyword %></div></td>
                       <td>
-                        <a href="http://showbox.email/preview?keyword=<%= list[i].M_keyword_idx %>&idx=<%= list[i].n_idx %>" target="_blank">
+                        <a href="http://showbox.email/preview/newsclipping?idx=<%= list[i].n_idx %>" target="_blank">
                           <div class="title_nobr"><%= list[i].M_subject %></div>
                         </a>
                       </td>
                       <td><%= list[i].M_sender %></td>
                       <td><%= recipiStr %></td>
                       <td><div class="group-nobr" title="<%= groupStr %>"><%= groupStr %></div></td>
-                      <td><div class="date-nobr"><%= list[i].M_regdate %></div></td>
-                      <td><div class="date-nobr"><%= (list[i].M_type != 1) ?'-': list[i].M_send %></div></td>
-                      <td><div class="date-nobr"><%= ((list[i].M_send == null) || (list[i].M_type == 1 &&list[i].success ==0 &&list[i].fail==0)) ?'-': list[i].M_send %></div></td>
+                      <td><div class="date-nobr"><%= list[i].GENDATE %></div></td>
+                      <td><div class="date-nobr"><%= (list[i].M_type != 1) ?'-': list[i].SENDTIME %></div></td>
+                      <td><div class="date-nobr"><%= (list[i].M_type == 1 &&list[i].success ==0 && list[i].fail==0) ?'-': list[i].SENDTIME %></div></td>
                       <td>
                         <button class="btn btn-sm btn-inverse btn-delete" data-idx="<%= list[i].n_idx %>">삭제</button>
                       </td>
@@ -92,7 +96,7 @@
                     if(pageCount > 1) {
                     %>
                     <tr>
-                      <td colspan="10">
+                      <td colspan="9">
                         <ul class="pagination float-right">
                           <%
                             var pageSize = 5;
@@ -157,6 +161,8 @@
         </div>
       </div>
       <input type="hidden" id="page" value="<%=page%>"/>
+      <input type="hidden" id="sDate" value="<%=sDate%>"/>
+      <input type="hidden" id="eDate" value="<%=eDate%>"/>
     </div>
   </div>
 </div>
@@ -169,9 +175,11 @@
   }
   .table td, .table th{
     vertical-align: middle;
+    text-align: center;
   }
-  .title_nobr,.kwd_nobr,.group-nobr,.num_nobr{
+  .title_nobr,.group-nobr,.num_nobr{
     font-size: 15px;
+    margin:0px auto;
     padding-left: 3px;
     text-overflow: ellipsis;
     width: 300px;
@@ -179,10 +187,10 @@
   }
   .date-nobr{
     width: 90px;
+    margin:0px auto;
     word-wrap: break-word;
     white-space: initial;
     white-space: pre-line;
-
   }
   .title_nobr:hover{
     cursor:default;
@@ -194,16 +202,25 @@
   .group-nobr{
     width: 119px;
   }
-  .kwd_nobr{
-    width: 112px;
-  }
 </style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/2.1.27/daterangepicker.css" />
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/2.1.27/moment.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/2.1.27/daterangepicker.js"></script>
 <!-- sweetalert -->
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sweetalert@2.1.0/dist/sweetalert.min.js"></script>
 <script type="text/javascript">
+  // data input hidden values
+  var sDateValue = $('#sDate').val();
+  var eDateValue = $('#eDate').val();
   $(document).ready(function(){
-    // 날짜추가하기
+    $('#reportrange').daterangepicker(optionSet1,cb);
+
+    if(sDateValue == '' && eDateValue == ''){
+      $('#reportrange span').html(moment().format('YYYY.MM.DD') + ' - ' + moment().format('YYYY.MM.DD'));
+    }
+    else{
+      $('#reportrange span').html(moment(new Date(sDateValue)).format('YYYY.MM.DD') + ' - ' + moment(new Date(eDateValue+' 23:59:59')).format('YYYY.MM.DD'));
+    }
   });
   // 삭제버튼 클릭시
   $(document).on('click','.btn-delete',function(){
@@ -219,7 +236,7 @@
         return false;
       }
       $.ajax({
-        url: '/email/manage/delete',
+        url: '/newsclipping/list/delete',
         type: 'post',
         data : {idx:removeParam},
         datatype : 'json',
@@ -268,35 +285,19 @@
     var param = {
       page : Number($(this).data().value)
     };
-    // var keywordValue = $('#keyword').val();
-    // if(keywordValue != ''){
-    //   param.keyword = keywordValue;
-    // }
-    // var href = new URL(window.location.href);
-    // if(href.searchParams.get("keyword") != '' && href.searchParams.get("keyword") != null){
-    //   param.keyword = href.searchParams.get("keyword");
-    // }
-    // if(href.searchParams.get("searchType") != '' && href.searchParams.get("searchType") != null){
-    //   param.searchType = href.searchParams.get("searchType");
-    // }
-    // if(href.searchParams.get("search") != '' && href.searchParams.get("search") != null){
-    //   param.search = href.searchParams.get("search");
-    // }
-    // if($.urlParam("keyword") != '' && $.urlParam("keyword") != null){
-    //   param.keyword = $.urlParam("keyword");
-    // }
-    // if($.urlParam("searchType") != '' && $.urlParam("searchType") != null){
-    //   param.searchType = $.urlParam("searchType");
-    // }
-    // if($.urlParam("search") != '' && $.urlParam("search") != null){
-    //   param.search = $.urlParam("search");
-    // }
+    // data input hidden values
+    var sDateValue = $('#sDate').val();
+    var eDateValue = $('#eDate').val();
+    if(sDateValue != '' && eDateValue != '' ){
+      param.sDate = moment(sDateValue).format('YYYY-MM-DD');
+      param.eDate = moment(eDateValue).format('YYYY-MM-DD');
+    }
     ajaxGetPageList(param,num);
   });
   function ajaxGetPageList(param){
     console.log('ajaxGetPageList:',param);
     $.ajax({
-      url: '/email/menage/getNextPage',
+      url: '/newsclipping/list/getNextPage',
       type: 'post',
       data: param,
       error: function(request,status,error){
@@ -310,28 +311,8 @@
           return false;
         }
         $("#page").val(data.result.currentPage);
-        // $("#keyword").val(param.keyword);
-        // if(typeof history.pushState == 'function'){
-        //   //현재 주소를 가져온다.
-        //   var renewURL = location.href;
-        //   //현재 주소 중 page 부분이 있다면 새로 부여될 페이지 번호를 할당한다.
-        //   renewURL = renewURL.replace(/\?page=([0-9]+)/ig,'?page='+data.result.currentPage);
-        //   if(renewURL.indexOf("?page=") == -1){
-        //     renewURL += '?page='+data.result.currentPage;
-        //   }
-        //   if('keyword' in param){
-        //     console.log(renewURL);
-        //     renewURL = renewURL.replace(/&keyword=([0-9]+)/ig,'&keyword='+param.keyword);
-        //     if(renewURL.indexOf("&keyword=") == -1){
-        //       renewURL += '&keyword='+param.keyword;
-        //     }
-        //   }
-        //   else{
-        //     renewURL = renewURL.replace(/&keyword=([0-9]+)/ig,'');
-        //   }
-        //   //페이지 갱신 실행!
-        //   history.pushState(null, null,renewURL);
-        // }
+        $("#sDate").val(param.sDate);
+        $("#eDate").val(param.eDate);
         $('#listTable tbody').eq(0).empty();
         data.result.list.forEach(function(item,idx){
           var numIdx = Math.ceil(data.result.listCount-(data.result.offset+idx)).toString();
@@ -357,35 +338,24 @@
           }
           var html = '<tr>\
             <th>'+numIdx+'</th>\
-            <td><div class="kwd_nobr">'+item.keyword+'</div></td>\
-            <td><a href="http://showbox.email/preview?keyword='+item.M_keyword_idx+'&idx='+item.n_idx+'" target="_blank">\
+            <td><a href="http://showbox.email/preview/newsclipping?idx='+item.n_idx+'" target="_blank">\
               <div class="title_nobr">'+item.M_subject+'</div>\
             </a></td>\
             <td>'+item.M_sender+'</td>\
             <td>'+recipiStr+'</td>\
             <td><div class="group-nobr" title="'+groupStr+'">'+groupStr+'</div></td>\
-            <td><div class="date-nobr">'+item.M_regdate+'</div></td>\
-            <td><div class="date-nobr">'+((item.M_type != 1) ?'-': item.M_send)+'</div></td>\
-            <td><div class="date-nobr">'+(((item.M_send == null) || (item.M_type == 1 &&item.success ==0 &&item.fail==0)) ? '-': item.M_send)+'</div></td>\
+            <td><div class="date-nobr">'+item.GENDATE+'</div></td>\
+            <td><div class="date-nobr">'+((item.M_type != 1) ?'-': item.SENDTIME)+'</div></td>\
+            <td><div class="date-nobr">'+((item.M_type == 1 && item.success ==0 && item.fail==0) ? '-': item.SENDTIME)+'</div></td>\
             <td>';
-            if(item.M_send == null || (item.M_type == 1 &&item.success ==0 &&item.fail==0)){
-              html += '<button class="btn btn-sm btn-inverse btn-send" data-idx="'+item.n_idx+'">보내기</button> ';
-            }
-            else{
-              html += '<button class="btn btn-sm btn-inverse btn-resend" data-idx="'+item.n_idx+'">재발송</button> ';
-            }
             html += '<button class="btn btn-sm btn-inverse btn-delete" data-idx="'+item.n_idx+'">삭제</button> ';
-            if(item.M_send == null || (item.M_type == 1 &&item.success ==0 &&item.fail==0)){
-              html += '<button class="btn btn-sm btn-inverse btn-edit" data-idx="'+item.n_idx+'">수정</button> ';
-            }
-            html += '<button class="btn btn-sm btn-inverse btn-rewrite" data-idx="'+item.n_idx+'">재작성</button></td></tr>';
           $('#listTable tbody').eq(0).append(html);
         });
-        var limit = 20;
+        var limit = 10;
         var pageCount = Math.ceil(data.result.listCount/limit);
         $('#listTable tfoot').eq(0).empty();
         if(pageCount > 1) {
-          var html = '<tr><td colspan="10"><ul class="pagination float-right">';
+          var html = '<tr><td colspan="9"><ul class="pagination float-right">';
           var pageSize = 5;
           var pRCnt = parseInt(data.result.currentPage / pageSize);
           if(data.result.currentPage % pageSize == 0){
@@ -433,4 +403,55 @@
       }
     });
   }
+  //날짜 선택 시
+  function searchDate(){
+    var dateArr = $("#reportrange span").text().split(' - ');
+    var start = moment(new Date(dateArr[0]));
+    var end = moment(new Date(dateArr[1]+' 23:59:59'));
+    var param = {
+      page : 1,
+      sDate : start.format('YYYY-MM-DD'),
+      eDate : end.format('YYYY-MM-DD')
+    };
+    $('#sDate').val(param.sDate);
+    $('#eDate').val(param.eDate);
+    ajaxGetPageList(param);
+  }
+  $(document).on('click','.applyBtn',searchDate);
+  //날짜 설정
+  var cb = function(start, end, label) {
+    console.log('FUNC: cb',start.toISOString(), end.toISOString(), label);
+    $('#reportrange span').html(moment(new Date(start.toISOString())).format('YYYY.MM.DD') + ' - ' + moment(new Date(end.toISOString())).format('YYYY.MM.DD'));
+    searchDate();
+  }
+  var ranges = {
+    '당일': [moment(), moment()],
+    '전일': [moment().subtract(1, 'days'), moment()],
+    '최근 7일': [moment().subtract(6, 'days'), moment()],
+    '최근 30일': [moment().subtract(29, 'days'), moment()]
+  };
+  var optionSet1 = {
+    startDate: (sDateValue != '') ? moment(new Date(sDateValue)) : moment(),
+    endDate:  (eDateValue != '') ? moment(new Date(eDateValue+' 23:59:59')) : moment(),
+    dateLimit: {
+      days: 60
+    },
+    showDropdowns: true,
+    showRangeInputsOnCustomRangeOnly: false,
+    ranges: ranges,
+    opens: 'left',
+    buttonClasses: ['btn'],
+    applyClass: 'btn-small btn-primary',
+    cancelClass: 'btn-small',
+    format: 'YYYY.MM.DD',
+    separator: ' to ',
+    locale: {
+      applyLabel: '확인',
+      cancelLabel: '취소',
+      customRangeLabel: '직접선택',
+      daysOfWeek: ['일', '월', '화', '수', '목', '금', '토'],
+      monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+      firstDay: 1
+    }
+  };
 </script>
