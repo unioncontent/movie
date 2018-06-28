@@ -82,8 +82,12 @@
                       <td><%= recipiStr %></td>
                       <td><div class="group-nobr" title="<%= groupStr %>"><%= groupStr %></div></td>
                       <td><div class="date-nobr"><%= list[i].GENDATE %></div></td>
-                      <td><div class="date-nobr"><%= (list[i].M_type != 1) ?'-': list[i].SENDTIME %></div></td>
-                      <td><div class="date-nobr"><%= (list[i].M_type == 1 &&list[i].success ==0 && list[i].fail==0) ?'-': list[i].SENDTIME %></div></td>
+                      <td>
+                        <div class="date-nobr"><%if(list[i].M_type != 1){%><i class="fas fa-minus"></i><%}else{%><%=list[i].SENDTIME%><%}%></div>
+                      </td>
+                      <td>
+                        <div class="date-nobr"><%if(list[i].M_type == 1 &&list[i].success ==0 && list[i].fail==0){%><i class="fas fa-minus"></i><%}else{%><%=list[i].SENDTIME%><%}%></div>
+                      </td>
                       <td>
                         <button class="btn btn-sm btn-inverse btn-delete" data-idx="<%= list[i].n_idx %>">삭제</button>
                       </td>
@@ -167,6 +171,9 @@
   </div>
 </div>
 <style type="text/css">
+  .fa-minus{
+    font-size: 10px;
+  }
   .table.table-sm td, .table.table-sm th {
     padding: .6rem .5rem;
   }
@@ -345,8 +352,8 @@
             <td>'+recipiStr+'</td>\
             <td><div class="group-nobr" title="'+groupStr+'">'+groupStr+'</div></td>\
             <td><div class="date-nobr">'+item.GENDATE+'</div></td>\
-            <td><div class="date-nobr">'+((item.M_type != 1) ?'-': item.SENDTIME)+'</div></td>\
-            <td><div class="date-nobr">'+((item.M_type == 1 && item.success ==0 && item.fail==0) ? '-': item.SENDTIME)+'</div></td>\
+            <td><div class="date-nobr">'+((item.M_type != 1) ?'<i class="fas fa-minus"></i>': item.SENDTIME)+'</div></td>\
+            <td><div class="date-nobr">'+((item.M_type == 1 && item.success ==0 && item.fail==0) ? '<i class="fas fa-minus"></i>': item.SENDTIME)+'</div></td>\
             <td>';
             html += '<button class="btn btn-sm btn-inverse btn-delete" data-idx="'+item.n_idx+'">삭제</button> ';
           $('#listTable tbody').eq(0).append(html);
