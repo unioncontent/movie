@@ -279,10 +279,9 @@
                     <option value="1">쇼박스 영화</option>
                     <option value="2">경쟁 영화</option>
                     <option value="3">캐스팅</option>
-                    <option value="4">박스오피스</option>
-                    <option value="5">쇼박스 기업 뉴스</option>
-                    <option value="6">영화 일반</option>
-                    <option value="7">보도국</option>
+                    <option value="4">쇼박스 기업 뉴스</option>
+                    <option value="5">영화 일반</option>
+                    <option value="6">보도국</option>
                   </select>
                 </div>
               </div>
@@ -462,7 +461,7 @@
         if (value != null) {
           $.ajax({
             type: "POST",
-            url: "/news/list/delete",
+            url: "/news/list/insert",
             data: param,
             error:function(request,status,error){
               console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
