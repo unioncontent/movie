@@ -162,6 +162,12 @@ public class ManageController {
 		model.addAttribute("communityList22", monitorService.communityMonitor("slrclub"));
 		model.addAttribute("communityList23", monitorService.communityMonitor("ruliweb"));
 		model.addAttribute("communityList24", monitorService.communityMonitor("soccerline"));
+		
+		model.addAttribute("communityList25", monitorService.communityMonitor("insight"));
+		model.addAttribute("communityList26", monitorService.communityMonitor("gasengi"));
+		model.addAttribute("communityList27", monitorService.communityMonitor("threppa"));
+		model.addAttribute("communityList28", monitorService.communityMonitor("fmkorea"));
+		model.addAttribute("communityList29", monitorService.communityMonitor("postshare"));
 	}
 	
 	@PostMapping("/reportbackup")

@@ -451,6 +451,41 @@
 			order by createDate desc 
 			limit 1;
 		</if>
+		<if test="_parameter == 'insight'.toString()">
+			select *
+			from community_data
+			where community_name='insight' and createDate >=  date_format(now(), '%x-%m-%d')
+			order by createDate desc 
+			limit 1;
+		</if>
+		<if test="_parameter == 'gasengi'.toString()">
+			select *
+			from community_data
+			where community_name='gasengi' and createDate >=  date_format(now(), '%x-%m-%d')
+			order by createDate desc 
+			limit 1;
+		</if>
+		<if test="_parameter == 'threppa'.toString()">
+			select *
+			from community_data
+			where community_name='threppa' and createDate >=  date_format(now(), '%x-%m-%d')
+			order by createDate desc 
+			limit 1;
+		</if>
+		<if test="_parameter == 'fmkorea'.toString()">
+			select *
+			from community_data
+			where community_name='fmkorea' and createDate >=  date_format(now(), '%x-%m-%d')
+			order by createDate desc 
+			limit 1;
+		</if>
+		<if test="_parameter == 'postshare'.toString()">
+			select *
+			from community_data
+			where community_name='postshare' and createDate >=  date_format(now(), '%x-%m-%d')
+			order by createDate desc 
+			limit 1;
+		</if>
 	</select>
 	
 	<select id="portalBMonitor" parameterType="Map" resultType="PortalVO">
