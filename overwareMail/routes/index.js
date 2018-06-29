@@ -87,7 +87,7 @@ router.get('/preview/newsclipping',async function(req, res, next) {
     var lastDic = await nMailAll.selectSendMailDate();
     data.last = lastDic.M_subject;
     data.lastIdx = lastDic.n_idx;
-    data.idx = queryResult[0].idx;
+    data.idx = queryResult[0].n_idx;
     data.date = queryResult[0].SENDTIME;
     data.view = queryResult[0].M_body;
     data.status = 'true';
