@@ -13,6 +13,24 @@ var nMailAll = {
   delete: async function(n_idx){
     var sql = 'delete from n_mail_all where n_idx=?';
     return await getResult(sql,[n_idx]);
+  },
+  selectSendMailDate:async function(n_idx){
+    var sql = 'SELECT distinct M_subject,n_idx FROM n_mail_all order by M_subject desc';
+    var result = await getResult(sql);
+    if(result.length == 0){
+      return [];
+    }
+    else{
+      return {
+        M_subject: [].map.call(result, function(obj) {
+          var arr = obj.M_subject.split(']');
+          return arr[0].replace('[','');
+        }),
+        n_idx:[].map.call(result, function(obj) {return obj.n_idx;})
+      };
+
+    }
+    return ;
   }
 }
 

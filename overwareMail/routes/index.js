@@ -5,6 +5,7 @@ var LocalStrategy = require('passport-local').Strategy;
 var router = express.Router();
 // DB module
 var newsclipping = require('../models/newsclipping.js');
+var nMailAll = require('../models/nMailAll.js');
 var content = require('../models/content.js');
 var period = require('../models/period.js');
 var user = require('../models/user.js');
@@ -78,11 +79,18 @@ router.get('/preview/newsclipping',async function(req, res, next) {
   if('idx' in req.query){
     var queryResult = await newsclipping.selectOneMailBodyDate(req.query.idx);
     if(queryResult.length > 0){
+      var lastDic = await nMailAll.selectSendMailDate();
+      data.last = lastDic.M_subject;
+      data.lastIdx = lastDic.n_idx;
+      data.idx = req.query.idx;
       data.date = queryResult[0].SENDTIME;
       data.view = queryResult[0].M_body;
       data.status = 'true';
     }
     else{
+      data.last = [];
+      data.lastIdx = [];
+      data.idx = '';
       data.date = '';
       data.view = '';
       data.status = 'false';
