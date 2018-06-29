@@ -76,31 +76,31 @@ router.get('/preview',async function(req, res, next) {
 });
 router.get('/preview/newsclipping',async function(req, res, next) {
   var data = {layout: false};
+  var queryResult = [];
   if('idx' in req.query){
-    var queryResult = await newsclipping.selectOneMailBodyDate(req.query.idx);
-    if(queryResult.length > 0){
-      var lastDic = await nMailAll.selectSendMailDate();
-      data.last = lastDic.M_subject;
-      data.lastIdx = lastDic.n_idx;
-      data.idx = req.query.idx;
-      data.date = queryResult[0].SENDTIME;
-      data.view = queryResult[0].M_body;
-      data.status = 'true';
-    }
-    else{
-      data.last = [];
-      data.lastIdx = [];
-      data.idx = '';
-      data.date = '';
-      data.view = '';
-      data.status = 'false';
-    }
-    res.render('newsclipping_preview2',data);
+    queryResult = await newsclipping.selectOneMailBodyDate(req.query.idx);
   }
   else{
-    data.date = req.query.date;
-    res.render('newsclipping_preview',data);
+    queryResult = await newsclipping.selectOneMailBodyDate2(req.query.date);
   }
+  if(queryResult.length > 0){
+    var lastDic = await nMailAll.selectSendMailDate();
+    data.last = lastDic.M_subject;
+    data.lastIdx = lastDic.n_idx;
+    data.idx = queryResult[0].idx;
+    data.date = queryResult[0].SENDTIME;
+    data.view = queryResult[0].M_body;
+    data.status = 'true';
+  }
+  else{
+    data.last = [];
+    data.lastIdx = [];
+    data.idx = '';
+    data.date = '';
+    data.view = '';
+    data.status = 'false';
+  }
+  res.render('newsclipping_preview2',data);
 });
 
 // 메일 미리보기

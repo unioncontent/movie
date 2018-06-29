@@ -169,8 +169,12 @@ var newsclipping = {
     return await getResult(sql,param.arr);
   },
   selectOneMailBodyDate: async function(param){
-    var sql = "SELECT DATE_FORMAT(SENDTIME, '%Y-%m-%d') AS SENDTIME,M_body FROM newsclipping_view where MSGID=? group by M_body";
+    var sql = "SELECT DATE_FORMAT(SENDTIME, '%Y-%m-%d') AS SENDTIME,M_body,n_idx FROM newsclipping_view where MSGID=? group by M_body";
     return await getResult(sql,param);
+  },
+  selectOneMailBodyDate2: async function(param){
+    var sql = "SELECT DATE_FORMAT(SENDTIME, '%Y-%m-%d') AS SENDTIME,M_body,n_idx FROM newsclipping_view where M_subject like '%"+param+"%' group by M_body";
+    return await getResult(sql);
   }
 }
 
