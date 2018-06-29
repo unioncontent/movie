@@ -54,7 +54,7 @@
                       <th><%= listCount - i - offset %></th>
                       <td><%= list[i].GENDATE %></td>
                       <td>
-                        <a href="http://showbox.email/preview/newsclipping?idx=<%= list[i].n_idx %>" target="_blank">
+                        <a href="http://showbox.email/preview/newsclipping?idx=<%= list[i].MSGID %>" target="_blank">
                           <div class="title_nobr"><%= list[i].M_subject %></div>
                         </a>
                       </td>
@@ -404,7 +404,7 @@
           var html = '<tr>\
             <th>'+numIdx+'</th>\
             <td>'+item.GENDATE+'</td>\
-            <td><a href="http://showbox.email/preview/newsclipping?idx='+item.n_idx+'" target="_blank"><div class="title_nobr">'+item.M_subject+'</div></a></td>\
+            <td><a href="http://showbox.email/preview/newsclipping?idx='+item.MSGID+'" target="_blank"><div class="title_nobr">'+item.M_subject+'</div></a></td>\
             <td><span class="total">'+(parseInt(item.success) + parseInt(item.fail))+'</span></td>\
             <td class="success" data-idx=\"'+item.MSGID+'\">'+item.success+'</td>\
             <td class="fail" data-idx=\"'+item.MSGID+'\">'+item.fail+'</td>';

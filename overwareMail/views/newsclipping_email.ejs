@@ -476,8 +476,8 @@
     boxoffice();
     var dateStr = $('#datepicker2').val().replace(/[-]/gi,'.');
     $('#date-span a').text(dateStr+' ('+getInputDayLabel($('#datepicker2').val())+')');
-    $('#date-span').attr('href', "http://showbox.email/preview/newsclipping?date="+$('#datepicker2').val());
-    $('#body-header').attr('href', "http://showbox.email/preview/newsclipping?date="+$('#datepicker2').val());
+    $('#date-span a').attr('href', "http://showbox.email/preview/newsclipping?date="+$('#datepicker2').val());
+    $('#body-header a').attr('href', "http://showbox.email/preview/newsclipping?date="+$('#datepicker2').val());
   });
 
   // 오늘 날짜
