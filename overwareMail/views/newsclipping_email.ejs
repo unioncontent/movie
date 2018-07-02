@@ -689,8 +689,12 @@
     swal({
       title: "본문의 내용이 확실합니까?",
       icon: "warning",
-      buttons: ["취소", true],
-      dangerMode: true
+      // buttons: ["취소", true],
+      dangerMode: true,
+      button: {
+        text: "보내기",
+        closeModal: false,
+      }
     })
     .then(function(value) {
       if (value != null) {
