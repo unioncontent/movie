@@ -281,7 +281,7 @@
             $('div[data-idx='+index+']').after(html);
             $.each(value, function(i, v) {
               html ='<li> <img src="https://ssl.pstatic.net/sstatic/search/pc/img/bu_news_sublst.gif" style="vertical-align:  text-top;">\
-              <a href="'+v.url+'" target="_blank" title="'+v.media_title+'" style="display: inline-block;overflow: hidden;max-width: 210px;margin-right: 5px;color: #0000ee;text-overflow: ellipsis;white-space: nowrap;word-wrap: normal;word-break: normal;vertical-align: top;">'+v.media_title+'</a> \
+              <a href="'+v.url+'" target="_blank" title="'+v.media_title+'" ><div style="display: inline-block;overflow: hidden;max-width: 210px;margin-right: 5px;color: #0000ee;text-overflow: ellipsis;white-space: nowrap;word-wrap: normal;word-break: normal;vertical-align: top;">'+v.media_title+'</div></a> \
               <span class="txt_sinfo" style="display: inline-block;overflow: hidden;max-width: 260px;white-space: nowrap;text-overflow: ellipsis;vertical-align: top;"> \
               <span class="press" style="color: #666;" title="'+v.media_name+'">'+v.media_name+'</span> \
               <span class="bar" style="color: #666;display: inline-block;overflow: hidden;width: 0;height: 11px;margin: -1px 5px 1px 4px;border-left: 1px solid #eaeaea;vertical-align: middle;"></span> '+v.writeDate+' </span> </li>';
