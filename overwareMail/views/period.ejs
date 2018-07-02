@@ -1118,8 +1118,8 @@
   //날짜 선택 시
   function searchDate(){
     var dateArr = $("#reportrange span").text().split(' - ');
-    var start = moment(new Date(dateArr[0]));
-    var end = moment(new Date(dateArr[1]+' 23:59:59'));
+    var start = moment(new Date(dateArr[0].replace(/[.]/gi,'-')));
+    var end = moment(new Date(dateArr[1].replace(/[.]/gi,'-')));
     var param = {
       page : 1,
       sDate : start.format('YYYY-MM-DD'),
