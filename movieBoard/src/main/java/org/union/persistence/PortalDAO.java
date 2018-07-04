@@ -90,6 +90,7 @@ public interface PortalDAO {
 	public Integer periodWgetSearchCount(SearchCriteria cri);
 	
 	public List<PortalVO> listAll(SearchCriteria cri);
+	public List<PortalVO> listAllEx(SearchCriteria cri);
 	public List<PortalVO> dashListAll(SearchCriteria cri);
 	
 	public void updateTextType(PortalVO vo);

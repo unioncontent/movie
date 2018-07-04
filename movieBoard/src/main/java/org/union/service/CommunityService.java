@@ -62,6 +62,7 @@ public interface CommunityService {
 	public Integer getCompleteCount(SearchCriteria cri);
 	
 	public List<CommunityVO> listAll(SearchCriteria cri);
+	public List<CommunityVO> listAllEx(SearchCriteria cri);
 	public List<CommunityVO> dashListAll(SearchCriteria cri);
 	
 	public void modifyType (CommunityVO vo);

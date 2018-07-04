@@ -833,4 +833,10 @@ public class MediaServiceImpl implements MediaService {
 
 		return mediaDAO.dashMediaMatch(cri);
 	}
+
+	@Override
+	public List<MediaVO> listAllEx(SearchCriteria cri) {
+
+		return mediaDAO.listAllEx(cri);
+	}
 }

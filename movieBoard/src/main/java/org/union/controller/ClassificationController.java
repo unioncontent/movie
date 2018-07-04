@@ -331,9 +331,9 @@ public class ClassificationController {
 		ListUtil listUtil = new ListUtil();
 		
 		
-		listUtil.listAddCommunityList(classiList, communityService.listAll(cri));
-		listUtil.listAddPortalList(classiList, portalService.listAll(cri));
-		listUtil.listAddMediaList(classiList, mediaService.listAll(cri));
+		listUtil.listAddCommunityList(classiList, communityService.listAllEx(cri));
+		listUtil.listAddPortalList(classiList, portalService.listAllEx(cri));
+		listUtil.listAddMediaList(classiList, mediaService.listAllEx(cri));
 		
 		ExtractComparator comparator = new ExtractComparator();
 		Collections.sort(classiList, comparator);

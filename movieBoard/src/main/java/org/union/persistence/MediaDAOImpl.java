@@ -725,4 +725,10 @@ public class MediaDAOImpl implements MediaDAO {
 
 		return session.selectList(namespace + "dashMediaMatch", cri);
 	}
+
+	@Override
+	public List<MediaVO> listAllEx(SearchCriteria cri) {
+
+		return session.selectList(namespace + "listAllEx", cri);
+	}
 }

@@ -616,4 +616,11 @@ public class PortalDAOImpl implements PortalDAO {
 
 		return session.selectOne(namespace + "periodWgetSearchCount", cri);
 	}
+
+
+	@Override
+	public List<PortalVO> listAllEx(SearchCriteria cri) {
+
+		return session.selectList(namespace + "listAllEx", cri);
+	}
 }

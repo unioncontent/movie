@@ -789,6 +789,18 @@
 		and score is null
 		<include refid="search"></include>
  	</select>
+ 	
+ 	<select id="listAllEx" resultType="PortalVO">
+ 		select 
+			*
+		from 
+			portal_data
+		where 
+			textType!='삭제글'
+		and score is null
+		<include refid="search"></include>
+ 	</select>
+ 	
  	<select id="dashListAll" resultType="PortalVO">
  		select 
 			*

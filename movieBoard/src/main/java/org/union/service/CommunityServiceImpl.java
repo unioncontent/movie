@@ -311,5 +311,11 @@ public class CommunityServiceImpl implements CommunityService {
 		return communityDAO.totalallPageallCount(cri);
 	}
 
+	@Override
+	public List<CommunityVO> listAllEx(SearchCriteria cri) {
+
+		return communityDAO.listAllEx(cri);
+	}
+
 	
 }

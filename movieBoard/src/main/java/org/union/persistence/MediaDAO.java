@@ -77,6 +77,7 @@ public interface MediaDAO {
 	
 	
 	public List<MediaVO> listAll(SearchCriteria cri);
+	public List<MediaVO> listAllEx(SearchCriteria cri);
 	public List<MediaVO> dashListAll(SearchCriteria cri);
 	
 	public List<MediaVO> searchAll(SearchCriteria cri);

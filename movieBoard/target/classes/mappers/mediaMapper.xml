@@ -975,6 +975,16 @@
 		<include refid="search"></include>
  	</select>
  	
+ 	<select id="listAllEx" resultType="MediaVO">
+ 		select 
+			*
+		from 
+			media_data
+		where
+			textType!='삭제글'
+		<include refid="search"></include>
+ 	</select>
+ 	
  	<select id="dashListAll" resultType="MediaVO">
  		select 
 			*

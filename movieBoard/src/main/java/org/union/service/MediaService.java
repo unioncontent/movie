@@ -82,6 +82,7 @@ public interface MediaService {
 	public Integer wgetSearchCount(SearchCriteria cri);
 	
 	public List<MediaVO> listAll(SearchCriteria cri);
+	public List<MediaVO> listAllEx(SearchCriteria cri);
 	public List<MediaVO> dashListAll(SearchCriteria cri);
 	
 	public List<PeriodMediaVO> periodMedia(SearchCriteria criteria);

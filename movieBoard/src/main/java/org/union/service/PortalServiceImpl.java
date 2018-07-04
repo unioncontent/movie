@@ -590,4 +590,10 @@ public class PortalServiceImpl implements PortalService {
 
 		return portalDAO.periodWgetSearchCount(cri);
 	}
+
+	@Override
+	public List<PortalVO> listAllEx(SearchCriteria cri) {
+
+		return portalDAO.listAllEx(cri);
+	}
 }
