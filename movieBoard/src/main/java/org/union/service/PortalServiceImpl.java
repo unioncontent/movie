@@ -596,4 +596,124 @@ public class PortalServiceImpl implements PortalService {
 
 		return portalDAO.listAllEx(cri);
 	}
+
+	@Override
+	public List<NvVO> naverVideosList2(SearchCriteria cri) {
+
+		return portalDAO.naverVideosList2(cri);
+	}
+
+	@Override
+	public List<NvVO> naverVideosallList2(SearchCriteria cri) {
+
+		return portalDAO.naverVideosallList2(cri);
+	}
+
+	@Override
+	public Integer naverVideosListTotalCnt2(SearchCriteria cri) {
+
+		return portalDAO.naverVideosListTotalCnt2(cri);
+	}
+
+	@Override
+	public List<NvVO> nvlistSearch2(SearchCriteria cri) {
+
+		return portalDAO.nvlistSearch2(cri);
+	}
+
+	@Override
+	public List<NvVO> nvlistSearchList2(SearchCriteria cri) {
+
+		return portalDAO.nvlistSearchList2(cri);
+	}
+
+	@Override
+	public List<NvVO> nvlistMinus3(SearchCriteria cri) {
+
+		return portalDAO.nvlistMinus3(cri);
+	}
+
+	@Override
+	public List<NvVO> nvlistSearchTime2(SearchCriteria cri) {
+
+		return portalDAO.nvlistSearchTime2(cri);
+	}
+
+	@Override
+	public Integer nvlistSearchTotalCnt2(SearchCriteria cri) {
+
+		return portalDAO.nvlistSearchTotalCnt2(cri);
+	}
+
+	@Override
+	public Integer nvlistViewCnt2(SearchFv fv) {
+
+		return portalDAO.nvlistViewCnt2(fv);
+	}
+
+	@Override
+	public Integer nvlistReply_cnt2(SearchFv fv) {
+
+		return portalDAO.nvlistReply_cnt2(fv);
+	}
+
+	@Override
+	public Integer nvlistlike_cnt2(SearchFv fv) {
+
+		return portalDAO.nvlistlike_cnt2(fv);
+	}
+
+	@Override
+	public List<NvVO> nvlistSearchEx2(SearchCriteria cri) {
+
+		return portalDAO.nvlistSearchEx2(cri);
+	}
+
+	@Override
+	public List<NvVO> nvlistPlus2(SearchCriteria cri) {
+
+		return portalDAO.nvlistPlus2(cri);
+	}
+
+	@Override
+	public List<NvVO> nvlistMinus4(SearchCriteria cri) {
+
+		return portalDAO.nvlistMinus4(cri);
+	}
+
+	@Override
+	public List<NvVO> nvlistlimt2(SearchCriteria cri) {
+
+		return portalDAO.nvlistlimt2(cri);
+	}
+
+	@Override
+	public List<NvVO> nvSearchlistSearchTime2(SearchCriteria cri) {
+
+		return portalDAO.nvSearchlistSearchTime2(cri);
+	}
+
+	@Override
+	public Integer nvlistSearchListTotalCnt2(SearchCriteria cri) {
+
+		return portalDAO.nvlistSearchListTotalCnt2(cri);
+	}
+
+	@Override
+	public List<NvVO> nvlistGraph2(SearchFv fv) {
+
+		return portalDAO.nvlistGraph2(fv);
+	}
+
+	@Override
+	public List<NvVO> nvlistOne2(SearchCriteria cri) {
+
+		return portalDAO.nvlistOne2(cri);
+	}
+
+	@Override
+	public List<NvVO> nvlistTwo2(SearchFv fv) {
+
+		return portalDAO.nvlistTwo2(fv);
+	}
 }

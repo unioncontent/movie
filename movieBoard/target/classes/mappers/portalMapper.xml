@@ -922,12 +922,45 @@
         order by writeDate desc
  	</select>
  	
+ 	<select id="naverVideosList2" resultType="NvVO">
+ 		select 
+		DATE_FORMAT(writeDate,'%Y-%m-%d') writeDate, portal_title, url, max(view_cnt)as view_cnt, max(like_cnt)as like_cnt, max(reply_cnt)as reply_cnt,count(*) as total
+		from naver_videos_detail
+        where url is not null
+        <include refid="search_writeDate3"></include>
+        group by portal_title
+        order by writeDate desc
+        limit  
+			#{startPage}, #{perPageNum}
+ 	</select>
+ 	
+ 	<select id="naverVideosallList2" resultType="NvVO">
+ 		select 
+		DATE_FORMAT(writeDate,'%Y-%m-%d') writeDate, portal_title, url, max(view_cnt)as view_cnt, max(like_cnt)as like_cnt, max(reply_cnt)as reply_cnt,count(*) as total
+		from naver_videos_detail
+        where
+			url is not null
+        group by portal_title
+        order by writeDate desc
+ 	</select>
+ 	
  	<select id="naverVideosListTotalCnt" resultType="Integer">
 		select 
 		count(*) as total
         from(
         select DATE_FORMAT(writeDate,'%Y-%m-%d') writeDate, portal_title
 		from naver_videos
+        where url is not null
+        <include refid="search_writeDate3"></include>
+        group by portal_title) as total;
+	</select>
+	
+	<select id="naverVideosListTotalCnt2" resultType="Integer">
+		select 
+		count(*) as total
+        from(
+        select DATE_FORMAT(writeDate,'%Y-%m-%d') writeDate, portal_title
+		from naver_videos_detail
         where url is not null
         <include refid="search_writeDate3"></include>
         group by portal_title) as total;
@@ -1266,4 +1299,225 @@
  	<select id = "getNvCount" resultType="Integer">
 		select count(*) from naver_videos where url = #{url}
 	</select>
+	
+	
+	
+	<select id="nvlistSearch2" resultType="NvVO">
+ 		select 
+ 			DATE_FORMAT(createDate,'%Y-%m-%d') createDate, portal_title, url, max(view_cnt)as view_cnt, max(like_cnt)as like_cnt, max(reply_cnt)as reply_cnt,count(*) as total
+		from 
+			naver_videos_detail 
+ 		where 
+ 			url = #{url}
+ 		<include refid="search_writeDate4"></include>
+		group 
+			by DATE_FORMAT(createDate,'%Y-%m-%d')
+		order 
+			by createDate desc
+ 	</select>
+	<select id="nvlistSearchList2" resultType="NvVO">
+ 		select 
+ 			* 
+ 		from 
+ 			naver_videos_detail 
+ 		where 
+ 			url = #{url}
+ 		and 
+ 			createDate <![CDATA[>=]]> #{createstartDate}
+		and 
+			createDate <![CDATA[<=]]> #{createendDate}
+		order 
+			by createDate desc
+ 	</select>
+
+	<select id="nvlistMinus3" resultType="NvVO">
+ 		select 
+ 			view_cnt, reply_cnt, like_cnt
+		from 
+			naver_videos_detail 
+		where 
+			view_cnt != (select view_cnt from naver_videos_detail where url=#{url} and 
+ 			createDate <![CDATA[>=]]> date_add(#{createminusDate}, interval -1 day)
+		and 
+			createDate <![CDATA[<=]]> #{createendDate} order by createDate desc limit 1) 
+		and 
+			url = #{url}
+		and 
+ 			createDate <![CDATA[>=]]> date_add(#{createminusDate}, interval -1 day)
+		and 
+			createDate <![CDATA[<=]]> #{createendDate}
+		order 
+			by createDate desc
+ 	</select>
+	<select id="nvlistSearchTime2" resultType="NvVO">
+ 		select 
+ 			*
+ 		from 
+ 			naver_videos_detail
+ 		where
+ 			url = #{url}
+ 		order by createDate asc 
+ 		limit 1
+ 	</select>
+
+	<select id="nvlistSearchTotalCnt2" resultType="Integer">
+ 		select 
+			count(*) as total
+        from(
+ 		select 
+ 			DATE_FORMAT(createDate,'%Y-%m-%d') createDate, portal_title, url, max(view_cnt)as view_cnt, max(like_cnt)as like_cnt, max(reply_cnt)as reply_cnt,count(*) as total 
+ 		from 
+ 			naver_videos_detail 
+ 		where 
+ 			url = #{url}
+ 		<include refid="search_writeDate4"></include>	
+ 		group by DATE_FORMAT(createDate,'%Y-%m-%d')
+		order 
+			by createDate desc) as total;	
+ 	</select>
+ 	
+ 	<select id="nvlistViewCnt2" resultType="Integer">
+ 	select
+		f.view_cnt as view_cnt
+	from
+	(select 
+			(b.view_cnt-a.view_cnt) as view_cnt
+	from
+		(select @RNUM:=@RNUM+1 AS ROWNUM, view_cnt from (SELECT @RNUM:=0) R,(SELECT IFNULL(SUM(view_cnt), 0)as view_cnt FROM naver_videos_detail WHERE view_cnt !=1 and url = #{url} and createDate between date_add(#{date}, interval -1 hour) and #{date} order by createDate desc limit 1)c) a,
+        (select @RNUM1:=@RNUM1+1 AS ROWNUM, view_cnt from (SELECT @RNUM1:=0) R,(select * from naver_videos_detail where url = #{url} and createDate >= #{date} order by createDate asc limit 1)d) b
+	where a.rownum = b.rownum) f;
+ 	</select>
+ 	
+ 	<select id="nvlistReply_cnt2" resultType="Integer">
+ 		select
+		f.reply_cnt as reply_cnt
+	from
+	(select 
+			(b.reply_cnt-a.reply_cnt) as reply_cnt
+	from
+		(select @RNUM:=@RNUM+1 AS ROWNUM, reply_cnt from (SELECT @RNUM:=0) R,(SELECT IFNULL(SUM(reply_cnt), 0)as reply_cnt FROM naver_videos_detail WHERE reply_cnt !=1 and url = #{url} and createDate between date_add(#{date}, interval -1 hour) and #{date} order by createDate desc limit 1)c) a,
+        (select @RNUM1:=@RNUM1+1 AS ROWNUM, reply_cnt from (SELECT @RNUM1:=0) R,(select * from naver_videos_detail where url = #{url} and createDate >= #{date} order by createDate asc limit 1)d) b
+	where a.rownum = b.rownum) f;
+ 	</select>
+ 	
+ 	<select id="nvlistlike_cnt2" resultType="Integer">
+ 		select
+		f.like_cnt as like_cnt
+	from
+	(select 
+			(b.like_cnt-a.like_cnt) as like_cnt
+	from
+		(select @RNUM:=@RNUM+1 AS ROWNUM, like_cnt from (SELECT @RNUM:=0) R,(SELECT IFNULL(SUM(like_cnt), 0)as like_cnt FROM naver_videos_detail WHERE like_cnt !=1 and url = #{url} and createDate between date_add(#{date}, interval -1 hour) and #{date} order by createDate desc limit 1)c) a,
+        (select @RNUM1:=@RNUM1+1 AS ROWNUM, like_cnt from (SELECT @RNUM1:=0) R,(select * from naver_videos_detail where url = #{url} and createDate >= #{date} order by createDate asc limit 1)d) b
+	where a.rownum = b.rownum) f;
+ 	</select>
+ 	
+ 	<select id="nvlistSearchEx2" resultType="NvVO">
+ 		select 
+ 			* 
+ 		from 
+ 			naver_videos_detail 
+ 		where 
+ 			url = #{url}
+ 		<include refid="search_writeDate4"></include>
+		order 
+			by createDate asc
+ 	</select>
+
+	<select id="nvlistPlus2" resultType="NvVO">
+ 		select 
+ 			*
+		from 
+			naver_videos_detail 
+		where  
+			url = #{url}
+		<include refid="search_writeDate4"></include>
+		order 
+			by createDate asc
+ 	</select>
+
+
+	<select id="nvlistMinus4" resultType="NvVO">
+ 		select 
+ 			*
+		from 
+			naver_videos_detail 
+		where 
+			url = #{url}
+		<include refid="search_writeDate5"></include>
+		order 
+			by createDate asc
+ 	</select>
+
+	<select id="nvlistlimt2" resultType="NvVO">
+ 		select 
+ 			* 
+ 		from 
+ 			naver_videos_detail 
+ 		where url = #{url} 
+ 		order by createDate asc limit 1;
+ 	</select>
+ 	
+ 	<select id="nvSearchlistSearchTime2" resultType="NvVO">
+ 		select 
+ 			*
+ 		from 
+ 			naver_videos_detail
+ 		where
+ 			url = #{url}
+ 		and 
+ 			createDate <![CDATA[>=]]> #{createstartDate}
+		and 
+			createDate <![CDATA[<=]]> #{createendDate}
+ 		order by createDate asc 
+ 		limit 1
+ 	</select>
+ 	
+ 	<select id="nvlistSearchListTotalCnt2" resultType="Integer">
+ 		select 
+ 			count(*) 
+ 		from 
+ 			naver_videos_detail 
+ 		where 
+ 			url = #{url}
+ 		and 
+ 			createDate <![CDATA[>=]]> #{createstartDate}
+		and 
+			createDate <![CDATA[<=]]> #{createendDate}
+ 		order 
+			by createDate desc
+ 	</select>
+ 	
+ 	<select id="nvlistGraph2" resultType="NvVO">
+ 		select 0 as 'view_cnt', 0 as 'reply_cnt', 0 as 'like_cnt' from dual 
+        	union all
+ 		select 
+ 			view_cnt, reply_cnt, like_cnt 
+ 		from 
+ 			naver_videos_detail 
+ 		where 
+ 			url = #{url}
+ 	</select>
+ 	
+ 	<select id="nvlistOne2" resultType="NvVO">
+ 		select 
+ 			createDate, portal_title, url 
+ 		from 
+ 			naver_videos_detail 
+ 		where 
+ 			url = #{url}
+		order by createDate asc 
+			limit 1;
+ 	</select>
+ 	
+ 	<select id="nvlistTwo2" resultType="NvVO">
+ 		select 
+ 			createDate, portal_title, url 
+ 		from 
+ 			naver_videos_detail 
+ 		where 
+ 			url = #{url}
+		order by createDate asc 
+			limit 1;
+ 	</select>
  </mapper>

@@ -12,14 +12,14 @@ public class CommunityVO {
 	private String community_writer;
 	private String community_writer_IP;
 	private String writeDate;
-	private String keyword_main;
+	private String title_key;
 	private boolean checkCondition;
 	
 	public String getKeyword_main() {
-		return keyword_main;
+		return title_key;
 	}
 	public void setKeyword_main(String keyword_main) {
-		this.keyword_main = keyword_main;
+		this.title_key = keyword_main;
 	}
 	private String keyword;
 	private String keyword_type;
@@ -30,7 +30,7 @@ public class CommunityVO {
 	private Date createDate;
 	private Date updateDate;
 	private String domain;
-	
+
 	public Integer getCommunity_idx() {
 		return community_idx;
 	}
@@ -72,6 +72,18 @@ public class CommunityVO {
 	}
 	public void setWriteDate(String writeDate) {
 		this.writeDate = writeDate;
+	}
+	public String getTitle_key() {
+		return title_key;
+	}
+	public void setTitle_key(String title_key) {
+		this.title_key = title_key;
+	}
+	public boolean isCheckCondition() {
+		return checkCondition;
+	}
+	public void setCheckCondition(boolean checkCondition) {
+		this.checkCondition = checkCondition;
 	}
 	public String getKeyword() {
 		return keyword;
@@ -121,12 +133,6 @@ public class CommunityVO {
 	public void setUpdateDate(Date updateDate) {
 		this.updateDate = updateDate;
 	}
-	public boolean isCheckCondition() {
-		return checkCondition;
-	}
-	public void setCheckCondition(boolean checkCondition) {
-		this.checkCondition = checkCondition;
-	}
 	public String getDomain() {
 		return domain;
 	}
@@ -138,9 +144,11 @@ public class CommunityVO {
 		return "CommunityVO [community_idx=" + community_idx + ", community_name=" + community_name
 				+ ", community_title=" + community_title + ", community_content=" + community_content
 				+ ", community_writer=" + community_writer + ", community_writer_IP=" + community_writer_IP
-				+ ", writeDate=" + writeDate + ", keyword_main=" + keyword_main + ", checkCondition=" + checkCondition
+				+ ", writeDate=" + writeDate + ", title_key=" + title_key + ", checkCondition=" + checkCondition
 				+ ", keyword=" + keyword + ", keyword_type=" + keyword_type + ", url=" + url + ", board_number="
 				+ board_number + ", textType=" + textType + ", thumbnail=" + thumbnail + ", createDate=" + createDate
 				+ ", updateDate=" + updateDate + ", domain=" + domain + "]";
 	}
+	
+	
 }

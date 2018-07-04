@@ -99,7 +99,10 @@ public interface PortalService {
 	
 	public List<NvVO> naverVideosList(SearchCriteria cri);
 	public List<NvVO> naverVideosallList(SearchCriteria cri);
+	public List<NvVO> naverVideosList2(SearchCriteria cri);
+	public List<NvVO> naverVideosallList2(SearchCriteria cri);
 	public Integer naverVideosListTotalCnt(SearchCriteria cri);
+	public Integer naverVideosListTotalCnt2(SearchCriteria cri);
 	public List<NvVO> nvlistSearch(SearchCriteria cri);
 	public List<NvVO> nvlistSearchEx(SearchCriteria cri);
 	public Integer nvlistSearchTotalCnt(SearchCriteria cri);
@@ -128,4 +131,26 @@ public interface PortalService {
 	
 	public List<ScoreVO> scoreListReport(SearchCriteria cri);
 	public Integer getNvCount(String url);
+	
+	public List<NvVO> nvlistSearch2(SearchCriteria cri);
+	public List<NvVO> nvlistSearchList2(SearchCriteria cri);
+	public List<NvVO> nvlistMinus3(SearchCriteria cri);
+	public List<NvVO> nvlistSearchTime2(SearchCriteria cri);
+	public Integer nvlistSearchTotalCnt2(SearchCriteria cri);
+	
+	public Integer nvlistViewCnt2(SearchFv fv);
+	public Integer nvlistReply_cnt2(SearchFv fv);
+	public Integer nvlistlike_cnt2(SearchFv fv);
+	
+	public List<NvVO> nvlistSearchEx2(SearchCriteria cri);
+	public List<NvVO> nvlistPlus2(SearchCriteria cri);
+	public List<NvVO> nvlistMinus4(SearchCriteria cri);
+	public List<NvVO> nvlistlimt2(SearchCriteria cri);
+	
+	public List<NvVO> nvSearchlistSearchTime2(SearchCriteria cri);
+	public Integer nvlistSearchListTotalCnt2(SearchCriteria cri);
+	
+	public List<NvVO> nvlistGraph2(SearchFv fv);
+	public List<NvVO> nvlistOne2(SearchCriteria cri);
+	public List<NvVO> nvlistTwo2(SearchFv fv);
 }

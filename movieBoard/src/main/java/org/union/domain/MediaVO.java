@@ -16,7 +16,13 @@ public class MediaVO {
 	private String last_writeDate;
 	private Date last_media_title;
 	private Date last_media_content;
-	private String keyword_main;
+	private String title_key;
+	public String getKeyword_main() {
+		return title_key;
+	}
+	public void setKeyword_main(String keyword_main) {
+		this.title_key = keyword_main;
+	}
 	private String keyword;
 	private String keyword_type;
 	private String url;
@@ -30,12 +36,11 @@ public class MediaVO {
 	private Integer match_total;
 	private Integer match_total2;
 	
-	
-	public String getKeyword_main() {
-		return keyword_main;
+	public String getTitle_key() {
+		return title_key;
 	}
-	public void setKeyword_main(String keyword_main) {
-		this.keyword_main = keyword_main;
+	public void setTitle_key(String title_key) {
+		this.title_key = title_key;
 	}
 	public Integer getMedia_idx() {
 		return media_idx;
@@ -181,10 +186,11 @@ public class MediaVO {
 				+ ", media_content=" + media_content + ", reporter_name=" + reporter_name + ", reporter_ID="
 				+ reporter_ID + ", reporter_email=" + reporter_email + ", writeDate=" + writeDate + ", last_writeDate="
 				+ last_writeDate + ", last_media_title=" + last_media_title + ", last_media_content="
-				+ last_media_content + ", keyword_main=" + keyword_main + ", keyword=" + keyword + ", keyword_type="
+				+ last_media_content + ", title_key=" + title_key + ", keyword=" + keyword + ", keyword_type="
 				+ keyword_type + ", url=" + url + ", textType=" + textType + ", media_state=" + media_state
 				+ ", thumbnail=" + thumbnail + ", createDate=" + createDate + ", updateDate=" + updateDate
 				+ ", checkCondition=" + checkCondition + ", total=" + total + ", match_total=" + match_total
 				+ ", match_total2=" + match_total2 + "]";
 	}
+
 }

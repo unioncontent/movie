@@ -623,4 +623,144 @@ public class PortalDAOImpl implements PortalDAO {
 
 		return session.selectList(namespace + "listAllEx", cri);
 	}
+
+
+	@Override
+	public List<NvVO> naverVideosList2(SearchCriteria cri) {
+
+		return session.selectList(namespace + "naverVideosList2", cri);
+	}
+
+
+	@Override
+	public List<NvVO> naverVideosallList2(SearchCriteria cri) {
+
+		return session.selectList(namespace + "naverVideosallList2", cri);
+	}
+
+
+	@Override
+	public Integer naverVideosListTotalCnt2(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "naverVideosListTotalCnt2", cri);
+	}
+
+
+	@Override
+	public List<NvVO> nvlistSearch2(SearchCriteria cri) {
+
+		return session.selectList(namespace + "nvlistSearch2", cri);
+	}
+
+
+	@Override
+	public List<NvVO> nvlistSearchList2(SearchCriteria cri) {
+
+		return session.selectList(namespace + "nvlistSearchList2", cri);
+	}
+
+
+	@Override
+	public List<NvVO> nvlistMinus3(SearchCriteria cri) {
+
+		return session.selectList(namespace + "nvlistMinus3", cri);
+	}
+
+
+	@Override
+	public List<NvVO> nvlistSearchTime2(SearchCriteria cri) {
+
+		return session.selectList(namespace + "nvlistSearchTime2", cri);
+	}
+
+
+	@Override
+	public Integer nvlistSearchTotalCnt2(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "nvlistSearchTotalCnt2", cri);
+	}
+
+
+	@Override
+	public Integer nvlistViewCnt2(SearchFv fv) {
+
+		return session.selectOne(namespace + "nvlistViewCnt2", fv);
+	}
+
+
+	@Override
+	public Integer nvlistReply_cnt2(SearchFv fv) {
+
+		return session.selectOne(namespace + "nvlistReply_cnt2", fv);
+	}
+
+
+	@Override
+	public Integer nvlistlike_cnt2(SearchFv fv) {
+
+		return session.selectOne(namespace + "nvlistlike_cnt2", fv);
+	}
+
+
+	@Override
+	public List<NvVO> nvlistSearchEx2(SearchCriteria cri) {
+
+		return session.selectList(namespace + "nvlistSearchEx2", cri);
+	}
+
+
+	@Override
+	public List<NvVO> nvlistPlus2(SearchCriteria cri) {
+
+		return session.selectList(namespace + "nvlistPlus2", cri);
+	}
+
+
+	@Override
+	public List<NvVO> nvlistMinus4(SearchCriteria cri) {
+
+		return session.selectList(namespace + "nvlistMinus4", cri);
+	}
+
+
+	@Override
+	public List<NvVO> nvlistlimt2(SearchCriteria cri) {
+
+		return session.selectList(namespace + "nvlistlimt2", cri);
+	}
+
+
+	@Override
+	public List<NvVO> nvSearchlistSearchTime2(SearchCriteria cri) {
+
+		return session.selectList(namespace + "nvSearchlistSearchTime2", cri);
+	}
+
+
+	@Override
+	public Integer nvlistSearchListTotalCnt2(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "nvlistSearchListTotalCnt2", cri);
+	}
+
+
+	@Override
+	public List<NvVO> nvlistGraph2(SearchFv fv) {
+
+		return session.selectList(namespace + "nvlistGraph2", fv);
+	}
+
+
+	@Override
+	public List<NvVO> nvlistOne2(SearchCriteria cri) {
+
+		return session.selectList(namespace + "nvlistOne2", cri);
+	}
+
+
+	@Override
+	public List<NvVO> nvlistTwo2(SearchFv fv) {
+
+		return session.selectList(namespace + "nvlistTwo2", fv);
+	}
 }

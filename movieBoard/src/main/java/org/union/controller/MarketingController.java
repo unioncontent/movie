@@ -653,6 +653,249 @@ public class MarketingController {
 		
     }
 	
+	@GetMapping("/n_channel2")
+    public void n_channelGET2(@ModelAttribute("cri") SearchCriteria cri, Model model, String sns_content) throws ParseException {
+    	logger.info("f_channelGET called....");
+    	
+    	if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
+			logger.info("keyword is null");
+			cri.setKeyword(null);
+			
+		} 
+		if(cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey()) ) {
+			logger.info("selectKey is null");
+			cri.setSelectKey(null);
+		}
+		if("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate())
+				|| cri.getStartDate() == "" || cri.getEndDate() == ""){
+			cri.setStartDate(null);
+			cri.setEndDate(null);
+		
+		} 
+		if(cri.getStartDate() != null && cri.getEndDate() != null) {
+			if(cri.getStartDate().indexOf("00:00:00") < 0 && cri.getEndDate().indexOf("23:59:59") < 0){ 
+				cri.setStartDate(cri.getStartDate() + " 00:00:00"); 
+				cri.setEndDate(cri.getEndDate() + " 23:59:59"); 
+			}
+		}
+		if(cri.getCompany() != null) {
+			if(cri.getCompany().isEmpty()) {
+				cri.setCompany(null);
+			}
+		}
+		if(cri.getCompany() == null || cri.getCompany().equals("회사")) {
+			logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+			UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
+			
+			if(!vo.getUser_name().equals("union")) {
+			cri.setCompany(vo.getUser_name());
+			
+			}else {
+				cri.setCompany(null);
+			}
+		}
+
+		// 회사 선택에 따른 키워드 재추출
+		if (cri.getCompany() != null) {	
+			if (cri.getCompany().isEmpty() == false) {
+
+				UserVO userVO = userService.viewByName(cri.getCompany());
+				logger.info("userVO: " + userVO);
+				logger.info("keywordList: " + keywordService.listByUser(userVO.getUser_idx()));
+				model.addAttribute("modelKeywordList",
+						keywordService.listByUser(userService.viewByName(cri.getCompany()).getUser_idx()));
+			}
+		}
+		logger.info("cri: " + cri);
+		
+		model.addAttribute("nVList", portalService.naverVideosList2(cri));
+		model.addAttribute("nVallList", portalService.naverVideosallList2(cri));
+		//model.addAttribute("fVListsearch", snsService.fvlistSearch(sns_content));
+		
+		Integer totalCount = portalService.naverVideosListTotalCnt2(cri);
+		
+		logger.info("totalCount: " + totalCount);
+		
+		PageMakerFv pageMakerFv = new PageMakerFv();
+		
+		pageMakerFv.setCri(cri);
+		pageMakerFv.setTotalCount(portalService.naverVideosListTotalCnt2(cri));
+		
+		logger.info("pageMaker: " + pageMakerFv);
+		
+		model.addAttribute("pageMaker", pageMakerFv);
+		model.addAttribute("totalCount", totalCount);
+		model.addAttribute("minusCount", cri.getPerPageNum() * (cri.getPage()-1));
+		
+    }
+	
+	@GetMapping("/n_list2")
+    public void n_listGET2(@ModelAttribute("cri") SearchCriteria cri, Model model, String url, String content, String startDate, String endDate) throws ParseException {
+    	logger.info("f_list called....");
+    	if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
+			logger.info("keyword is null");
+			cri.setKeyword(null);
+			
+		} 
+		if(cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey()) ) {
+			logger.info("selectKey is null");
+			cri.setSelectKey(null);
+		}
+		if("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate())
+				|| cri.getStartDate() == "" || cri.getEndDate() == ""){
+			cri.setStartDate(null);
+			cri.setEndDate(null);
+		
+		} 
+		if(cri.getStartDate() != null && cri.getEndDate() != null) {
+			if(cri.getStartDate().indexOf("00:00:00") < 0 && cri.getEndDate().indexOf("23:59:59") < 0){ 
+				cri.setStartDate(cri.getStartDate() + " 00:00:00"); 
+				cri.setEndDate(cri.getEndDate() + " 23:59:59"); 
+			}
+		}
+		if(cri.getCompany() != null) {
+			if(cri.getCompany().isEmpty()) {
+				cri.setCompany(null);
+			}
+		}
+		if(cri.getCompany() == null || cri.getCompany().equals("회사")) {
+			logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+			UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
+			
+			if(!vo.getUser_name().equals("union")) {
+			cri.setCompany(vo.getUser_name());
+			
+			}else {
+				cri.setCompany(null);
+			}
+		}
+
+		// 회사 선택에 따른 키워드 재추출
+		if (cri.getCompany() != null) {	
+			if (cri.getCompany().isEmpty() == false) {
+
+				UserVO userVO = userService.viewByName(cri.getCompany());
+				logger.info("userVO: " + userVO);
+				logger.info("keywordList: " + keywordService.listByUser(userVO.getUser_idx()));
+				model.addAttribute("modelKeywordList",
+						keywordService.listByUser(userService.viewByName(cri.getCompany()).getUser_idx()));
+			}
+		}
+		
+		cri.setUrl(url);
+		logger.info("crifvList: " + cri);
+		
+		model.addAttribute("list", portalService.nvlistSearch2(cri));
+		model.addAttribute("list1", portalService.nvlistSearchList2(cri));
+		model.addAttribute("list2", portalService.nvlistMinus3(cri));
+		model.addAttribute("creatDate", portalService.nvlistSearchTime2(cri));
+		
+		logger.info("url: " + url);
+		model.addAttribute("content", content);
+		
+		Integer totalCount = portalService.nvlistSearchTotalCnt2(cri);
+		
+		logger.info("totalCount: " + totalCount);
+		
+		PageMakerFv pageMakerFv = new PageMakerFv();
+		
+		cri.setPortal_name(content);
+		pageMakerFv.setCri(cri);
+		pageMakerFv.setTotalCount(portalService.nvlistSearchTotalCnt2(cri));
+		
+		logger.info("pageMaker: " + pageMakerFv);
+		
+		model.addAttribute("pageMaker", pageMakerFv);
+		model.addAttribute("totalCount", totalCount);
+		model.addAttribute("minusCount", cri.getPerPageNum() * (cri.getPage()-1));
+		
+		
+    }
+	
+	@GetMapping("/n_listall2")
+    public void n_listallGET2(@ModelAttribute("cri") SearchCriteria cri, Model model, String url, String content, String createstartDate, String createendDate) throws ParseException {
+    	logger.info("n_listall called....");
+    	if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
+			logger.info("keyword is null");
+			cri.setKeyword(null);
+			
+		} 
+		if(cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey()) ) {
+			logger.info("selectKey is null");
+			cri.setSelectKey(null);
+		}
+		if("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate())
+				|| cri.getStartDate() == "" || cri.getEndDate() == ""){
+			cri.setStartDate(null);
+			cri.setEndDate(null);
+		
+		} 
+		if(cri.getStartDate() != null && cri.getEndDate() != null) {
+			if(cri.getStartDate().indexOf("00:00:00") < 0 && cri.getEndDate().indexOf("23:59:59") < 0){ 
+				cri.setStartDate(cri.getStartDate() + " 00:00:00"); 
+				cri.setEndDate(cri.getEndDate() + " 23:59:59"); 
+			}
+		}
+		if(cri.getCompany() != null) {
+			if(cri.getCompany().isEmpty()) {
+				cri.setCompany(null);
+			}
+		}
+		if(cri.getCompany() == null || cri.getCompany().equals("회사")) {
+			logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+			UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
+			
+			if(!vo.getUser_name().equals("union")) {
+			cri.setCompany(vo.getUser_name());
+			
+			}else {
+				cri.setCompany(null);
+			}
+		}
+
+		// 회사 선택에 따른 키워드 재추출
+		if (cri.getCompany() != null) {	
+			if (cri.getCompany().isEmpty() == false) {
+
+				UserVO userVO = userService.viewByName(cri.getCompany());
+				logger.info("userVO: " + userVO);
+				logger.info("keywordList: " + keywordService.listByUser(userVO.getUser_idx()));
+				model.addAttribute("modelKeywordList",
+						keywordService.listByUser(userService.viewByName(cri.getCompany()).getUser_idx()));
+			}
+		}
+		cri.setUrl(url);
+		cri.setCreatestartDate(createstartDate + " 00:00:00");
+		cri.setCreateminusDate(createstartDate + " 23:00:00");
+		cri.setCreateendDate(createendDate + " 23:59:59");
+		logger.info("crinvList: " + cri);
+		
+		model.addAttribute("list1", portalService.nvlistSearchList2(cri));
+		model.addAttribute("list2", portalService.nvlistMinus3(cri));
+		model.addAttribute("creatDate", portalService.nvSearchlistSearchTime2(cri));
+		
+		logger.info("url: " + url);
+		model.addAttribute("content", content);
+		
+		Integer totalCount = portalService.nvlistSearchListTotalCnt2(cri);
+		
+		logger.info("totalCount: " + totalCount);
+		
+		PageMakerFv pageMakerFv = new PageMakerFv();
+		
+		cri.setPortal_name(content);
+		pageMakerFv.setCri(cri);
+		pageMakerFv.setTotalCount(portalService.nvlistSearchListTotalCnt2(cri));
+		
+		logger.info("pageMaker: " + pageMakerFv);
+		
+		model.addAttribute("pageMaker", pageMakerFv);
+		model.addAttribute("totalCount", totalCount);
+		model.addAttribute("minusCount", cri.getPerPageNum() * (cri.getPage()-1));
+		
+		
+    }
+	
 	@GetMapping("/n_graph")
     public void n_graphGET(@ModelAttribute("cri") SearchCriteria cri,SearchFv fv, Model model, String url, String url2) throws ParseException {
     	logger.info("n_graph called....");
@@ -713,6 +956,69 @@ public class MarketingController {
 		model.addAttribute("url2", url2);
 		model.addAttribute("list1", portalService.nvlistOne(cri));
 		model.addAttribute("list2", portalService.nvlistTwo(fv));
+		
+    }
+	
+	@GetMapping("/n_graph2")
+    public void n_graphGET2(@ModelAttribute("cri") SearchCriteria cri,SearchFv fv, Model model, String url, String url2) throws ParseException {
+    	logger.info("n_graph called....");
+    	if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
+			logger.info("keyword is null");
+			cri.setKeyword(null);
+			
+		} 
+		if(cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey()) ) {
+			logger.info("selectKey is null");
+			cri.setSelectKey(null);
+		}
+		if("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate())
+				|| cri.getStartDate() == "" || cri.getEndDate() == ""){
+			cri.setStartDate(null);
+			cri.setEndDate(null);
+		
+		} 
+		if(cri.getStartDate() != null && cri.getEndDate() != null) {
+			if(cri.getStartDate().indexOf("00:00:00") < 0 && cri.getEndDate().indexOf("23:59:59") < 0){ 
+				cri.setStartDate(cri.getStartDate() + " 00:00:00"); 
+				cri.setEndDate(cri.getEndDate() + " 23:59:59"); 
+			}
+		}
+		if(cri.getCompany() != null) {
+			if(cri.getCompany().isEmpty()) {
+				cri.setCompany(null);
+			}
+		}
+		if(cri.getCompany() == null || cri.getCompany().equals("회사")) {
+			logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+			UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
+			
+			if(!vo.getUser_name().equals("union")) {
+			cri.setCompany(vo.getUser_name());
+			
+			}else {
+				cri.setCompany(null);
+			}
+		}
+
+		// 회사 선택에 따른 키워드 재추출
+		if (cri.getCompany() != null) {	
+			if (cri.getCompany().isEmpty() == false) {
+
+				UserVO userVO = userService.viewByName(cri.getCompany());
+				logger.info("userVO: " + userVO);
+				logger.info("keywordList: " + keywordService.listByUser(userVO.getUser_idx()));
+				model.addAttribute("modelKeywordList",
+						keywordService.listByUser(userService.viewByName(cri.getCompany()).getUser_idx()));
+			}
+		}
+		cri.setUrl(url);
+		fv.setUrl(url2);
+		logger.info("crifvonegraph: " + cri);
+		logger.info("crifvtwograph: " + fv);
+		model.addAttribute("url", url);
+		model.addAttribute("url2", url2);
+		model.addAttribute("list1", portalService.nvlistOne2(cri));
+		model.addAttribute("list2", portalService.nvlistTwo2(fv));
 		
     }
 	
@@ -1044,6 +1350,168 @@ public class MarketingController {
 	}
 	
 	@ResponseBody
+	@PostMapping("/ngraph2")
+	public List<GraphVO> NgraphPOST2(Model model, String success, String url, SearchFv fv, String Mcreate) throws ParseException {
+		logger.info("graphPOST called....");
+		
+		String current2 = Mcreate;
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH");
+		
+		String current = sdf.format(new Date());
+		logger.info("current: " + current);
+		
+		Date Mcreatedate = sdf.parse(current2); 
+		
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(Mcreatedate);
+		
+		List<GraphVO> graphList = new ArrayList<GraphVO>();
+		
+		logger.info("cal.getTime: " + cal.getTime());
+		logger.info("graphUrl: " + url);
+		logger.info("graphCreate: " + Mcreate);
+		
+		for(int i = 0; i < 48; i++) {
+			GraphVO graphVO = new GraphVO();
+			
+			fv.setDate(cal.getTime());
+			fv.setUrl(url);
+			
+			graphVO.setWriteDate(sdf.format(cal.getTime()) + ":00:00");
+			graphVO.setType1(portalService.nvlistViewCnt2(fv));
+			graphVO.setType2(portalService.nvlistReply_cnt2(fv));
+			graphVO.setType3(portalService.nvlistlike_cnt2(fv));
+			
+			graphList.add(graphVO);
+			
+			cal.add(Calendar.HOUR, +1);
+			
+		}
+		
+		logger.info("graphList: " + graphList);
+		return graphList;
+	}
+	
+	@ResponseBody
+	@PostMapping("/nallgraph2")
+	public List<GraphVO> NallgraphPOST2(Model model, String success, String url, SearchFv fv, String Mcreate) throws ParseException {
+		logger.info("nallgraphPOST called....");
+		
+		String current2 = Mcreate;
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH");
+		
+		String current = sdf.format(new Date());
+		logger.info("current: " + current);
+		
+		Date Mcreatedate = sdf.parse(current2); 
+		
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(Mcreatedate);
+		
+		List<GraphVO> graphList = new ArrayList<GraphVO>();
+		
+		logger.info("cal.getTime: " + cal.getTime());
+		logger.info("graphUrl: " + url);
+		logger.info("graphCreate: " + Mcreate);
+		
+		for(int i = 0; i < 24; i++) {
+			GraphVO graphVO = new GraphVO();
+			
+			fv.setDate(cal.getTime());
+			fv.setUrl(url);
+			
+			graphVO.setWriteDate(sdf.format(cal.getTime()) + ":00:00");
+			graphVO.setType1(portalService.nvlistViewCnt2(fv));
+			graphVO.setType2(portalService.nvlistReply_cnt2(fv));
+			graphVO.setType3(portalService.nvlistlike_cnt2(fv));
+			
+			graphList.add(graphVO);
+			
+			cal.add(Calendar.HOUR, +1);
+			
+		}
+		
+		logger.info("graphList: " + graphList);
+		return graphList;
+	}
+	
+	@ResponseBody
+	@PostMapping("/graphTwo2")
+	public List<GraphVO> graphTwo2(Model model, String success, String url, String url2,SearchFv fv,SearchNv nv, String Mcreate, String Mcreate2) throws ParseException {
+		logger.info("graphTwoPOST called....");
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH");
+		
+		Date current = new Date();
+		logger.info("current: " + current);
+		
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(current);
+		
+		logger.info("cal.getTime: " + cal.getTime());
+		
+		List<NvVO> viewList = new ArrayList<NvVO>();
+		for(int i = 0; i < 24; i++) {
+		
+			NvVO nvVO = new NvVO();
+			fv.setUrl(url);
+			
+			
+			nvVO.setView_cnt(portalService.nvlistGraph2(fv).get(i+1).getView_cnt() - portalService.nvlistGraph2(fv).get(i).getView_cnt());
+			nvVO.setReply_cnt(portalService.nvlistGraph2(fv).get(i+1).getReply_cnt() - portalService.nvlistGraph2(fv).get(i).getReply_cnt());
+			nvVO.setLike_cnt(portalService.nvlistGraph2(fv).get(i+1).getLike_cnt() - portalService.nvlistGraph2(fv).get(i).getLike_cnt());
+			
+			viewList.add(nvVO);
+			/*logger.info("viewList: " + viewList.get(i).getView_cnt());
+			logger.info("viewListW: " + viewList.get(i).getWriteDate());*/
+		}
+		
+		List<NvVO> viewList2 = new ArrayList<NvVO>();
+		for(int i = 0; i < 24; i++) {
+		
+			NvVO nvVO2 = new NvVO();
+			fv.setUrl(url2);
+			
+			
+			nvVO2.setView_cnt(portalService.nvlistGraph2(fv).get(i+1).getView_cnt() - portalService.nvlistGraph2(fv).get(i).getView_cnt());
+			nvVO2.setReply_cnt(portalService.nvlistGraph2(fv).get(i+1).getReply_cnt() - portalService.nvlistGraph2(fv).get(i).getReply_cnt());
+			nvVO2.setLike_cnt(portalService.nvlistGraph2(fv).get(i+1).getLike_cnt() - portalService.nvlistGraph2(fv).get(i).getLike_cnt());
+			
+			viewList2.add(nvVO2);
+			/*logger.info("viewList2: " + viewList2.get(i).getView_cnt());
+			logger.info("viewListW2: " + viewList2.get(i).getWriteDate());*/
+		}
+		
+		List<GraphVO> graphList = new ArrayList<GraphVO>();
+		for(int i = 0; i < 24; i++) {
+			GraphVO graphVO = new GraphVO();
+			
+			graphVO.setWriteDate(sdf.format(cal.getTime()) + ":00");
+			graphVO.setType1(viewList.get(i).getView_cnt());
+			graphVO.setType2(viewList2.get(i).getView_cnt());
+			graphVO.setType3(viewList.get(i).getReply_cnt());
+			graphVO.setType4(viewList2.get(i).getReply_cnt());
+			graphVO.setType5(viewList.get(i).getLike_cnt());
+			graphVO.setType6(viewList2.get(i).getLike_cnt());
+			
+			graphList.add(graphVO);
+			
+			cal.add(Calendar.HOUR, -1);
+			
+			/*logger.info("graphW1: " + graphList.get(i).getWriteDate());
+			logger.info("graphW2: " + graphList.get(i).getWriteDate2());
+			logger.info("graphset1: " + graphList.get(i).getType1());
+			logger.info("graphset2: " + graphList.get(i).getType2());
+			logger.info("graphset3: " + graphList.get(i).getType3());
+			logger.info("graphset4: " + graphList.get(i).getType4());*/
+		}
+		/*logger.info("graphList: " + graphList);*/
+		return graphList;
+	}
+	
+	@ResponseBody
 	@GetMapping("/excel")
 	public ModelAndView nListlGET(ModelAndView model, ExcelViewM excelView, SearchCriteria cri,String url) {
 		
@@ -1301,6 +1769,139 @@ public class MarketingController {
 		ListUtil util = new ListUtil();
 		List<ExtractVO> extractList = new ArrayList<ExtractVO>();
 		model.addObject("list", util.listAddnvListUp(extractList, portalService.nvlistPlus(cri), portalService.nvlistMinus2(cri), portalService.nvlistlimt(cri)));
+		model.addObject("type", "videosUp");
+		model.setView(excelView);
+		
+		return model;
+	}
+	
+	@ResponseBody
+	@GetMapping("/excel2")
+	public ModelAndView nListlGET2(ModelAndView model, ExcelViewM excelView, SearchCriteria cri,String url) {
+		
+		if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
+			logger.info("keyword is null");
+			cri.setKeyword(null);
+			
+		} 
+		if(cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey()) ) {
+			logger.info("selectKey is null");
+			cri.setSelectKey(null);
+		}
+		
+		if("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate())
+				|| cri.getStartDate() == "" || cri.getEndDate() == ""){
+			cri.setStartDate(null);
+			cri.setEndDate(null);
+		
+		} 
+		if(cri.getStartDate() != null && cri.getEndDate() != null) {
+			logger.info("not null");
+			logger.info(cri.getStartDate());
+			logger.info(cri.getEndDate());
+			if(cri.getStartDate().indexOf("00:00:00") < 0 && cri.getEndDate().indexOf("23:59:59") < 0){ 
+				cri.setStartDate(cri.getStartDate() + " 00:00:00"); 
+				cri.setEndDate(cri.getEndDate() + " 23:59:59"); 
+			}
+		}
+		if(cri.getCompany() != null) {
+			if(cri.getCompany().isEmpty()) {
+				cri.setCompany(null);
+			}
+		}
+		
+		if(cri.getCompany() == null || cri.getCompany().equals("회사")) {
+			logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+			UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
+			
+			if(!vo.getUser_name().equals("union")) {
+			cri.setCompany(vo.getUser_name());
+			
+			}else {
+				cri.setCompany(null);
+			}
+		}
+		if(cri.getTextType() != null) {
+			if(cri.getTextType().equals("undefined") || cri.getTextType().equals("분류") || cri.getTextType().isEmpty()) {
+				cri.setTextType(null);
+			}
+		}
+		
+		cri.setUrl(url);
+		
+		logger.info("cri: " + cri);
+		logger.info("perPageNum: " + cri.getPerPageNum());
+		logger.info("getStartPage: " + cri.getStartPage());
+		ListUtil util = new ListUtil();
+		List<ExtractVO> extractList = new ArrayList<ExtractVO>();
+		
+		model.addObject("list", util.listAddNvList(extractList, portalService.nvlistSearchEx2(cri)));
+		model.addObject("type", "videos");
+		model.setView(excelView);
+		
+		return model;
+	}
+	
+	@ResponseBody
+	@GetMapping("/excelupnOk2")
+	public ModelAndView fListlnupGET2(ModelAndView model, ExcelViewM excelView, SearchCriteria cri,String url,String startDate, String endDate) {
+		
+		if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
+			logger.info("keyword is null");
+			cri.setKeyword(null);
+			
+		} 
+		if(cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey()) ) {
+			logger.info("selectKey is null");
+			cri.setSelectKey(null);
+		}
+		
+		if("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate())
+				|| cri.getStartDate() == "" || cri.getEndDate() == ""){
+			cri.setStartDate(null);
+			cri.setEndDate(null);
+		
+		} 
+		if(cri.getStartDate() != null && cri.getEndDate() != null) {
+			logger.info("not null");
+			logger.info(cri.getStartDate());
+			logger.info(cri.getEndDate());
+			if(cri.getStartDate().indexOf("00:00:00") < 0 && cri.getEndDate().indexOf("23:59:59") < 0){ 
+				cri.setStartDate(cri.getStartDate() + " 00:00:00"); 
+				cri.setEndDate(cri.getEndDate() + " 23:59:59"); 
+			}
+		}
+		if(cri.getCompany() != null) {
+			if(cri.getCompany().isEmpty()) {
+				cri.setCompany(null);
+			}
+		}
+		
+		if(cri.getCompany() == null || cri.getCompany().equals("회사")) {
+			logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+			UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
+			
+			if(!vo.getUser_name().equals("union")) {
+			cri.setCompany(vo.getUser_name());
+			
+			}else {
+				cri.setCompany(null);
+			}
+		}
+		if(cri.getTextType() != null) {
+			if(cri.getTextType().equals("undefined") || cri.getTextType().equals("분류") || cri.getTextType().isEmpty()) {
+				cri.setTextType(null);
+			}
+		}
+		
+		cri.setUrl(url);
+		cri.setCreateminusDate(startDate + " 23:00:00");
+		logger.info("cri: " + cri);
+		logger.info("perPageNum: " + cri.getPerPageNum());
+		logger.info("getStartPage: " + cri.getStartPage());
+		ListUtil util = new ListUtil();
+		List<ExtractVO> extractList = new ArrayList<ExtractVO>();
+		model.addObject("list", util.listAddnvListUp(extractList, portalService.nvlistPlus2(cri), portalService.nvlistMinus4(cri), portalService.nvlistlimt2(cri)));
 		model.addObject("type", "videosUp");
 		model.setView(excelView);
 		

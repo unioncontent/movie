@@ -12,7 +12,13 @@ public class PortalVO {
 	private String portal_content;
 	private Integer deviceType; // 1 = PC, 2 = Mobile
 	private String writeDate;
-	private String keyword_main;
+	private String title_key;
+	public String getKeyword_main() {
+		return title_key;
+	}
+	public void setKeyword_main(String keyword_main) {
+		this.title_key = keyword_main;
+	}
 	private String keyword;
 	private String keyword_type;
 	private String url;
@@ -24,8 +30,6 @@ public class PortalVO {
 	private String writer;
 	private Integer score;
 	private boolean checkCondition;
-	
-	
 	public Integer getPortal_idx() {
 		return portal_idx;
 	}
@@ -68,11 +72,11 @@ public class PortalVO {
 	public void setWriteDate(String writeDate) {
 		this.writeDate = writeDate;
 	}
-	public String getKeyword_main() {
-		return keyword_main;
+	public String getTitle_key() {
+		return title_key;
 	}
-	public void setKeyword_main(String keyword_main) {
-		this.keyword_main = keyword_main;
+	public void setTitle_key(String title_key) {
+		this.title_key = title_key;
 	}
 	public String getKeyword() {
 		return keyword;
@@ -144,9 +148,10 @@ public class PortalVO {
 	public String toString() {
 		return "PortalVO [portal_idx=" + portal_idx + ", portal_name=" + portal_name + ", portal_type=" + portal_type
 				+ ", portal_title=" + portal_title + ", portal_content=" + portal_content + ", deviceType=" + deviceType
-				+ ", writeDate=" + writeDate + ", keyword_main=" + keyword_main + ", keyword=" + keyword
-				+ ", keyword_type=" + keyword_type + ", url=" + url + ", textType=" + textType + ", portal_state="
-				+ portal_state + ", thumbnail=" + thumbnail + ", createDate=" + createDate + ", updateDate="
-				+ updateDate + ", writer=" + writer + ", score=" + score + ", checkCondition=" + checkCondition + "]";
+				+ ", writeDate=" + writeDate + ", title_key=" + title_key + ", keyword=" + keyword + ", keyword_type="
+				+ keyword_type + ", url=" + url + ", textType=" + textType + ", portal_state=" + portal_state
+				+ ", thumbnail=" + thumbnail + ", createDate=" + createDate + ", updateDate=" + updateDate + ", writer="
+				+ writer + ", score=" + score + ", checkCondition=" + checkCondition + "]";
 	}
+	
 }
