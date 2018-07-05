@@ -2292,6 +2292,7 @@ public class MarketingController {
 		String current2 = Mcreate;
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH");
+		SimpleDateFormat sdf2 = new SimpleDateFormat("MM-dd HH");
 		
 		String current = sdf.format(new Date());
 		logger.info("current: " + current);
@@ -2313,7 +2314,7 @@ public class MarketingController {
 			fv.setDate(cal.getTime());
 			fv.setUrl(url);
 			
-			graphVO.setWriteDate(sdf.format(cal.getTime()) + ":00");
+			graphVO.setWriteDate(sdf2.format(cal.getTime()) + ":00");
 			graphVO.setType1(portalService.nvlistViewCnt2(fv));
 			graphVO.setType2(portalService.nvlistReply_cnt2(fv));
 			graphVO.setType3(portalService.nvlistlike_cnt2(fv));

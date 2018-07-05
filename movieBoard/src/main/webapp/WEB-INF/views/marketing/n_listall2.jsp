@@ -693,6 +693,17 @@ $(document).ready(function(){
 		  			        name: '조회수',
 		  			        data: jsonScript
 		  			    }],
+		  			  	credits: {
+		  			    	enabled : false
+		  			    },
+		  			  	exporting: {
+			  		        sourceWidth: 1200,
+			  		        sourceHeight: 330,
+			  		        // scale: 2 (default)
+			  		        chartOptions: {
+			  		            subtitle: null
+			  		        }
+			  		    },
 		  			    responsive: {
 		  			        rules: [{
 		  			            condition: {
@@ -742,6 +753,17 @@ $(document).ready(function(){
 		  			      	data: jsonScript,
 		  			        color : '#7E81CB'
 		  			    }],
+		  			  	credits: {
+		  			    	enabled : false
+		  			    },
+		  			  	exporting: {
+			  		        sourceWidth: 1200,
+			  		        sourceHeight: 330,
+			  		        // scale: 2 (default)
+			  		        chartOptions: {
+			  		            subtitle: null
+			  		        }
+			  		    },
 		  			    responsive: {
 		  			        rules: [{
 		  			            condition: {
@@ -791,6 +813,17 @@ $(document).ready(function(){
 		  			      	data: jsonScript,
 		  			        color : '#fb9678'
 		  			    }],
+		  			  	credits: {
+		  			    	enabled : false
+		  			    },
+		  			  	exporting: {
+			  		        sourceWidth: 1200,
+			  		        sourceHeight: 330,
+			  		        // scale: 2 (default)
+			  		        chartOptions: {
+			  		            subtitle: null
+			  		        }
+			  		    },
 		  			    responsive: {
 		  			        rules: [{
 		  			            condition: {
