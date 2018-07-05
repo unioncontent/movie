@@ -98,12 +98,16 @@
     //   $('.pcoded-container').css('padding-bottom','0px');
     //   $('.pcoded-main-container').css('top','0px');
     // }
-    var className = $(location).attr('pathname').replace("/","").split("/")[0];
+    var classNameArr = $(location).attr('pathname').replace("/","").split("/");
+    var className = classNameArr[0];
     if(className == ""){
       className = "dashBoard";
     }
     else if(className == "user"){
       className = "list";
+    }
+    else if(className == "newsclipping"){
+      className = classNameArr[1];
     }
     $("ul.pcoded-item li."+className).addClass('active pcoded-trigger');
   });

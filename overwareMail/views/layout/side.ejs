@@ -1,11 +1,9 @@
 <!-- left menu start -->
 <nav class="pcoded-navbar" pcoded-header-position="relative" style="top: 56px;">
   <div class="pcoded-inner-navbar main-menu">
-    <div class="">
-      <div class="main-menu-header">
-        <div class="user-details">
-          <span id="more-details"><%=user.user_name%></span>
-        </div>
+    <div class="main-menu-header" style="background: #5eb764;">
+      <div class="user-details">
+        <span id="more-details"><%=user.user_name%></span>
       </div>
     </div>
     <ul class="pcoded-item pcoded-left-item">
@@ -41,10 +39,10 @@
         </ul>
       </li>
       <% } else{ %>
-        <li class="pcoded-hasmenu newsclipping news">
-          <a href="javascript:void(0)" data-i18n="nav.advance-components.main">
+        <li class="pcoded-hasmenu news">
+          <a href="javascript:void(0)">
             <span class="pcoded-micon"><i class="ti-receipt"></i></span>
-            <span class="pcoded-mtext">NEWS CLIPPING</span>
+            <span class="pcoded-mtext">기사관리</span>
             <span class="pcoded-mcaret"></span>
           </a>
           <ul class="pcoded-submenu">
@@ -58,32 +56,62 @@
             <li>
               <a href="/news/list">
                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                <span class="pcoded-mtext">선택기사 리스트</span>
-                <span class="pcoded-mcaret"></span>
-              </a>
-            </li>
-            <li>
-              <a href="/newsclipping/send">
-                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                <span class="pcoded-mtext">미리보기/발송</span>
-                <span class="pcoded-mcaret"></span>
-              </a>
-            </li>
-            <li>
-              <a href="/newsclipping/period">
-                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                <span class="pcoded-mtext">발송현황</span>
-                <span class="pcoded-mcaret"></span>
-              </a>
-            </li>
-            <li>
-              <a href="/newsclipping/list">
-                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                <span class="pcoded-mtext">지난 리스트</span>
+                <span class="pcoded-mtext">선택 기사 리스트</span>
                 <span class="pcoded-mcaret"></span>
               </a>
             </li>
           </ul>
+        </li>
+        <li class="pcoded-hasmenu marketing">
+          <a href="javascript:void(0)">
+            <span class="pcoded-micon"><i class="ti-control-play"></i></span>
+            <span class="pcoded-mtext">마케팅채널관리</span>
+            <span class="pcoded-mcaret"></span>
+          </a>
+          <ul class="pcoded-submenu">
+            <li class="ms-hover">
+              <a href="menu-static.html" data-i18n="nav.page_layout.vertical.static-layout">
+                <span class="pcoded-micon"><i class="icon-chart"></i></span>
+                <span class="pcoded-mtext">FACEBOOK CGV</span>
+                <span class="pcoded-mcaret"></span>
+              </a>
+            </li>
+            <li class="ms-hover">
+              <a href="menu-static.html" data-i18n="nav.page_layout.vertical.static-layout">
+                <span class="pcoded-micon"><i class="icon-chart"></i></span>
+                <span class="pcoded-mtext">NAVER MOVIE</span>
+                <span class="pcoded-mcaret"></span>
+              </a>
+            </li>
+            <li class="ms-hover">
+              <a href="menu-static.html" data-i18n="nav.page_layout.vertical.static-layout">
+                <span class="pcoded-micon"><i class="icon-chart"></i></span>
+                <span class="pcoded-mtext">선택 마케팅 리스트</span>
+                <span class="pcoded-mcaret"></span>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li class="send">
+          <a href="/newsclipping/send">
+            <span class="pcoded-micon"><i class="ti-email"></i></span>
+            <span class="pcoded-mtext">미리보기/발송</span>
+            <span class="pcoded-mcaret"></span>
+          </a>
+        </li>
+        <li class="period">
+          <a href="/newsclipping/period">
+            <span class="pcoded-micon"><i class="ti-clipboard"></i></span>
+            <span class="pcoded-mtext">발송현황</span>
+            <span class="pcoded-mcaret"></span>
+          </a>
+        </li>
+        <li class="list">
+          <a href="/newsclipping/list">
+            <span class="pcoded-micon"><i class="ti-check-box"></i></span>
+            <span class="pcoded-mtext">지난 리스트</span>
+            <span class="pcoded-mcaret"></span>
+          </a>
         </li>
       <% } %>
       <% if(user.user_type == 1 && user.n_idx != 30){ %>
