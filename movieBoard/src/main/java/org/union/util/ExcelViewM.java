@@ -133,6 +133,7 @@ public class ExcelViewM extends AbstractXlsView {
 		ArrayList<String> titleList = new ArrayList<String>();
 		if (model.get("type").equals("videos")) {
 			titleList.add("사이트");
+			titleList.add("페이지");
 			titleList.add("제목");
 			titleList.add("조회수");
 		    titleList.add("댓글수");
@@ -210,24 +211,27 @@ public class ExcelViewM extends AbstractXlsView {
 			    domainCell.setCellValue(new HSSFRichTextString(vo.getDomainType()));
 			    
 			    HSSFCell writerCell = dataRow.createCell(1);
-			    writerCell.setCellValue(new HSSFRichTextString(vo.getTitle()));
+			    writerCell.setCellValue(new HSSFRichTextString(vo.getWriter()));
 			    
-				HSSFCell viewCell = dataRow.createCell(2);
+			    HSSFCell titleCell = dataRow.createCell(2);
+			    titleCell.setCellValue(new HSSFRichTextString(vo.getTitle()));
+			    
+				HSSFCell viewCell = dataRow.createCell(3);
 				viewCell.setCellValue(new HSSFRichTextString(vo.getView_cnt()));
 				
-				HSSFCell replyCell = dataRow.createCell(3);
+				HSSFCell replyCell = dataRow.createCell(4);
 				replyCell.setCellValue(new HSSFRichTextString(vo.getReply_cnt()));
 				
-				HSSFCell likeCell = dataRow.createCell(4);
+				HSSFCell likeCell = dataRow.createCell(5);
 				likeCell.setCellValue(new HSSFRichTextString(vo.getLike_cnt()));
 				
-				HSSFCell dateCell = dataRow.createCell(5);
+				HSSFCell dateCell = dataRow.createCell(6);
 			    dateCell.setCellValue(new HSSFRichTextString(vo.getUrl()));
 				
-			    HSSFCell urlCell = dataRow.createCell(6);
+			    HSSFCell urlCell = dataRow.createCell(7);
 			    urlCell.setCellValue(new HSSFRichTextString(vo.getWriteDate()));
 			    
-			    HSSFCell createCell = dataRow.createCell(7);
+			    HSSFCell createCell = dataRow.createCell(8);
 			    createCell.setCellValue(new HSSFRichTextString(vo.getCreateDate()));
 		    	
 		    }else if (model.get("type").equals("videosUp")) {

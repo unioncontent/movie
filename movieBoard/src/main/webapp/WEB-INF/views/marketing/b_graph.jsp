@@ -80,7 +80,7 @@
                 <div class="page-wrapper">
                   <div class="page-header">
                     <div class="page-header-title">
-                      <h4>Naver Movie</h4>
+                      <h4>Facebook BANGWOOL</h4>
                     </div>
                     <div class="page-header-breadcrumb">
                       <ul class="breadcrumb-title">
@@ -90,7 +90,7 @@
                           </a>
                         </li>
                         <li class="breadcrumb-item"><a href="#!">마케팅 채널관리</a></li>
-                        <li class="breadcrumb-item"><a href="../marketing/n_channel">Naver Movie</a></li>
+                        <li class="breadcrumb-item"><a href="../marketing/b_channel">Facebook BANGWOOL</a></li>
                       </ul>
                     </div>
                   </div>
@@ -114,14 +114,23 @@
                             <h5>
                             	<i class="icofont icofont-chart-line m-r-5"></i>
                             	조회수 데이터
-                            </h5><font style="color: #9f9f9f; font-size: 13px;">'${content}' 최근 48시간 그래프</font>
+                            </h5>
+                            <font style="color: #fb9678; font-size: 13px;">'<c:forEach items="${list1}" var="list1" varStatus="status">
+                            	${list1.sns_content}
+                            	</c:forEach>'</font>
+                            	<font style="color: #9f9f9f; font-size: 13px;">/</font>
+                            	<font  style="color: #7E81CB; font-size: 13px;">'<c:forEach items="${list2}" var="list1" varStatus="status">
+                            	${list1.sns_content}
+                            	</c:forEach>'
+                            </font>
+                            <font style="color: #9f9f9f; font-size: 13px;">	최근 24시간 그래프</font>
                             <div class="card-header-right">
                               <i class="icofont icofont-rounded-down"></i>
                             </div>
                           </div>
                           <div class="card-block">
                             <!-- <div id="morris-extra-area" style="height:300px;"></div> -->
-                            <div id="container" style="height:350px;"></div>
+                            <div id="morris-extra-line" style="height:200px;"></div>
                           </div>
                         </div>
                       </div>
@@ -133,14 +142,23 @@
                             <h5>
                             	<i class="icofont icofont-chart-line m-r-5"></i>
                             	댓글수 데이터
-                            </h5><font style="color: #9f9f9f; font-size: 13px;">'${content}' 최근 48시간 그래프</font>
+                            </h5>
+                            <font style="color: #fb9678; font-size: 13px;">'<c:forEach items="${list1}" var="list1" varStatus="status">
+                            	${list1.sns_content}
+                            	</c:forEach>'</font>
+                            	<font style="color: #9f9f9f; font-size: 13px;">/</font>
+                            	<font  style="color: #7E81CB; font-size: 13px;">'<c:forEach items="${list2}" var="list1" varStatus="status">
+                            	${list1.sns_content}
+                            	</c:forEach>'
+                            </font>
+                            <font style="color: #9f9f9f; font-size: 13px;">	최근 24시간 그래프</font>
                             <div class="card-header-right">
                               <i class="icofont icofont-rounded-down"></i>
                             </div>
                           </div>
                           <div class="card-block">
                             <!-- <div id="morris-extra-area" style="height:300px;"></div> -->
-                            <div id="container2" style="height:350px;"></div>
+                            <div id="morris-extra-line2" style="height:200px;"></div>
                           </div>
                         </div>
                       </div>
@@ -151,115 +169,62 @@
                           <div class="card-header">
                             <h5>
                             	<i class="icofont icofont-chart-line m-r-5"></i>
-                            	좋아요 데이터
-                            </h5><font style="color: #9f9f9f; font-size: 13px;">'${content}' 최근 48시간 그래프</font>
+                            	좋아요수 데이터
+                            </h5>
+                            <font style="color: #fb9678; font-size: 13px;">'<c:forEach items="${list1}" var="list1" varStatus="status">
+                            	${list1.sns_content}
+                            	</c:forEach>'</font>
+                            	<font style="color: #9f9f9f; font-size: 13px;">/</font>
+                            	<font  style="color: #7E81CB; font-size: 13px;">'<c:forEach items="${list2}" var="list1" varStatus="status">
+                            	${list1.sns_content}
+                            	</c:forEach>'
+                            </font>
+                            <font style="color: #9f9f9f; font-size: 13px;">	최근 24시간 그래프</font>
                             <div class="card-header-right">
                               <i class="icofont icofont-rounded-down"></i>
                             </div>
                           </div>
                           <div class="card-block">
                             <!-- <div id="morris-extra-area" style="height:300px;"></div> -->
-                            <div id="container3" style="height:350px;"></div>
+                            <div id="morris-extra-line3" style="height:200px;"></div>
                           </div>
                         </div>
                       </div>
                       <!-- Morris chart end -->
-                      <!-- List start -->
-                              <div class="col-md-12">
-                                <div class="card">
-                                  <div class="card-header">
-                                    <!-- <button class="btn btn-info f-right alert-confirm" onclick = "location.href='http://overware.iptime.org:8080/marketing/n_channel'"><i class="icofont icofont-ui-note"></i>목록으로</button> -->
-                                    <button class="btn btn-list f-right alert-confirm" onclick = "history.back(-1);"><i class="icofont icofont-ui-note"></i>목록으로</button>
-                                  </div>
-                                  <div class="card-block table-border-style">
-                                    <div class="table-responsive">
-                                      <table class="table table-bordered table-sm">
-                                        <thead>
-                                            <tr align="center">
-                                              <th width="3%">NO</th>
-                                              <th width="5%">검출일</th>
-                                              <th width="3%">조회수</th>
-                                              <th width="3%">댓글수</th>
-                                              <th width="3%">좋아요수</th>
-                                              <th width="30%">제목</th>
-                                            </tr>
-                                        </thead>
+                      <table>
                                         <tbody>
-                                        <c:forEach var="list1" items="${list1}" varStatus="status">
-                                          <tr class = "trList">
-                                            <th scope="row">${totalCount - status.count + 1}</th>
-                                            <td>
-                                            	<fmt:formatDate value="${list1.createDate}" type="DATE" pattern="yyyy-MM-dd HH:00" />
+                                        <c:forEach items="${list1}" var="list1" varStatus="status">
+                                          <tr>
+                                          	<td>
+                                          	<input type="hidden" value="<fmt:formatDate value="${list1.createDate}" type="DATE" pattern="yyyy-MM-dd HH" />" name="createDate" id=createDate>
                                             </td>
                                             <td>
-                                            <c:if test="${list1.view_cnt != 0}">
-                                            <fmt:formatNumber value="${list1.view_cnt}" pattern="#,##0" />회
-                                            &nbsp;(<i class="icofont icofont-arrow-up" style="color: green"></i>
-                                            <fmt:formatNumber value="${(list1.view_cnt - list2[status.index].view_cnt)}" pattern="#,##0" />회)
-                                            </c:if>
-                                            <c:if test="${list1.view_cnt == 0}">
-                                            0회
-                                            </c:if>
                                             <input type="hidden" value="${list1.url}" name="url" id="url">
                                             </td>
                                             <td>
-                                            <fmt:formatNumber value="${list1.reply_cnt}" pattern="#,##0" />회
-                                            </td>
-                                            <td>
-                                            <fmt:formatNumber value="${list1.like_cnt}" pattern="#,##0" />회
-                                            <c:forEach var="creatDate" items="${creatDate}" varStatus="status">
-                                            <%-- <fmt:formatDate value="${creatDate.createDate}" type="DATE" pattern="yyyy-MM-dd HH:mm:ss" /> --%>
-                                            <input type="hidden" value="<fmt:formatDate value="${creatDate.createDate}" type="DATE" pattern="yyyy-MM-dd HH" />" name="createDate" id=createDate>
-                                            </c:forEach>
-                                            </td>
-                                            <td>
-                                            <a href='${list1.url}' target="_blank">${list1.portal_title}</a>
-                                            <input type="hidden" value="${list1.portal_title}" name="content" id="content">
+                                            <input type="hidden" value="${list1.sns_content}" name="content" id="content">
                                             </td>
                                           </tr>
                                         </c:forEach>
                                         </tbody>
-                                        <tfoot>
+                                      </table>
+                                    <table> 
+                                        <tbody>
+                                        <c:forEach items="${list2}" var="list2" varStatus="status">
                                           <tr>
-                                            <td colspan="6">
-                                              <%-- <ul class="pagination float-right">
-                                                <c:if test="${pageMaker.prev}">
-                                              		<li class="page-item">
-                                                		  <a class="page-link" href="n_listall2${pageMaker.makeSearch(pageMaker.startPage - 1) }" aria-label="Previous">&laquo;
-                                                  		<span aria-hidden="true"></span>
-                                                  		<span class="sr-only">Previous</span>
-                                                		  </a>
-                                              		</li>
-                                        	      </c:if>
-
-                                          		  <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
-                                              		<li class= "${pageMaker.cri.page == idx? 'active':''} page-item">
-                                                		  <a class="page-link" href="n_listall2${pageMaker.makeSearch(idx)}">${idx}</a>
-                                              		</li>
-                                          		  </c:forEach>
-                                          		  <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-                                              		<li class="page-item">
-                                              		  <a class="page-link" href="n_listall2${pageMaker.makeSearch(pageMaker.endPage +1) }" aria-label="Next">&raquo;
-                                                		<span aria-hidden="true"></span>
-                                                		<span class="sr-only">Next</span>
-                                              		  </a>
-                                              		</li>
-                                          		  </c:if>
-                                          		</ul> --%>
+                                          	<td>
+                                          	<input type="hidden" value="<fmt:formatDate value="${list2.createDate}" type="DATE" pattern="yyyy-MM-dd HH" />" name="createDate2" id=createDate2>
+                                            </td>
+                                            <td>
+                                            <input type="hidden" value="${list2.url}" name="url2" id="url2">
+                                            </td>
+                                            <td>
+                                            <input type="hidden" value="${list2.sns_content}" name="content2" id="content2">
                                             </td>
                                           </tr>
-                                        </tfoot>
+                                        </c:forEach>
+                                        </tbody>
                                       </table>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
                   <!-- page-body end -->
                 </div>
               </div>
@@ -336,11 +301,6 @@
   <!-- Morris Chart js -->
   <script src="../bower_components/raphael/raphael.min.js"></script>
   <script src="../bower_components/morris.js/morris.js"></script>
-  <!-- High Chart js -->
-  <script src="https://code.highcharts.com/highcharts.js"></script>
-  <script src="https://code.highcharts.com/modules/series-label.js"></script>
-  <script src="https://code.highcharts.com/modules/exporting.js"></script>
-  <script src="https://code.highcharts.com/modules/export-data.js"></script>
   <!-- sweet alert js -->
   <script type="text/javascript" src="../bower_components/sweetalert/dist/sweetalert.min.js"></script>
   <script type="text/javascript" src="../assets/pages/division/script.js"></script>
@@ -404,15 +364,20 @@ $(document).ready(function(){
 	
 	var url = $('input[name=url]').val();
 	console.log("url:" + url);
+	var url2 = $('input[name=url2]').val();
+	console.log("url2:" + url2);
 	var Mcreate = $('input[name=createDate]').val();
 	console.log("Mcreate:" + Mcreate);
-	
+	var Mcreate2 = $('input[name=createDate2]').val();
+	console.log("Mcreate:2" + Mcreate2);
+	/* var dt = new Date();
+	var time = dt.getHours(); */
 	$.ajax({
-
+		
 	      type : "POST",
-		  url : "ngraph2",
+		  url : "graphOne",
 	 	  dataType : "json",
-	 	  data : {success : 'success', url: url, Mcreate: Mcreate},
+	 	  data : {success : 'success', url: url, url2: url2, Mcreate: Mcreate, Mcreate2: Mcreate2},
 	  	  success : function(data){
 
 	  		  console.log(data);
@@ -421,46 +386,36 @@ $(document).ready(function(){
 
 			for(var i = 0; i < data.length; i++){
 
-				script += data[i].type1 + ",";
-
+				script += '{"period":' + '"' + data[i].writeDate + '",'
+						+ '"첫번째조회수"'+ ':' + data[i].type1 + ","
+						+ '"두번째조회수"' + ':' + data[i].type2 + "},";
+						
 
 				if(i == data.length-1){
 					script =  script.substr(0, script.length-1);
 					script += "]";
 				}
 			}
-			
-			var script2 = "[";
-
-	
-			for(var i = 0; i < data.length; i++){
-
-				script2 += '"' + data[i].writeDate + '",';
-
-				if(i == data.length-1){
-					script2 =  script2.substr(0, script2.length-1);
-					script2 += "]";
-				}
-			}
-			
 			console.log(script);
-			console.log(script2);
 
 			// to json
 			var jsonScript = JSON.parse(script);
-			var jsonScript2 = JSON.parse(script2);
 
-			areaChart1(jsonScript, jsonScript2);
+			areaChart(jsonScript);
 
-	  	 }
+	  	 },
+	  	error : function(request,status,error){
+	  		swal("warning!", "총 검출수가 24건이 아닙니다.", "warning");
+	  		self.location = "f_channel"
+	       }
 	});
-
+	
 	$.ajax({
-
+		
 	      type : "POST",
-		  url : "ngraph2",
+		  url : "graphOne",
 	 	  dataType : "json",
-	 	  data : {success : 'success', url: url, Mcreate: Mcreate},
+	 	  data : {success : 'success', url: url, url2: url2, Mcreate: Mcreate, Mcreate2: Mcreate2},
 	  	  success : function(data){
 
 	  		  console.log(data);
@@ -469,46 +424,32 @@ $(document).ready(function(){
 
 			for(var i = 0; i < data.length; i++){
 
-				script += data[i].type2 + ",";
-
+				script += '{"period":' + '"' + data[i].writeDate + '",'
+				+ '"첫번째댓글수"'+ ':' + data[i].type3 + ","
+				+ '"두번째댓글수"' + ':' + data[i].type4 + "},";
+						
 
 				if(i == data.length-1){
 					script =  script.substr(0, script.length-1);
 					script += "]";
 				}
 			}
-			
-			var script2 = "[";
-
-	
-			for(var i = 0; i < data.length; i++){
-
-				script2 += '"' + data[i].writeDate + '",';
-
-				if(i == data.length-1){
-					script2 =  script2.substr(0, script2.length-1);
-					script2 += "]";
-	  		
-				}
-			}
 			console.log(script);
-			console.log(script2);
 
 			// to json
 			var jsonScript = JSON.parse(script);
-			var jsonScript2 = JSON.parse(script2);
 
-			areaChart2(jsonScript, jsonScript2);
+			areaChart2(jsonScript);
 
 	  	 }
 	});
-
+	
 	$.ajax({
-
+		
 	      type : "POST",
-		  url : "ngraph2",
+		  url : "graphOne",
 	 	  dataType : "json",
-	 	  data : {success : 'success', url: url, Mcreate: Mcreate},
+	 	  data : {success : 'success', url: url, url2: url2, Mcreate: Mcreate, Mcreate2: Mcreate2},
 	  	  success : function(data){
 
 	  		  console.log(data);
@@ -517,312 +458,84 @@ $(document).ready(function(){
 
 			for(var i = 0; i < data.length; i++){
 
-				script += data[i].type3 + ",";
-
+				script += '{"period":' + '"' + data[i].writeDate + '",'
+				+ '"첫번째좋아요수"'+ ':' + data[i].type5 + ","
+				+ '"두번째좋아요수"' + ':' + data[i].type6 + "},";
+						
 
 				if(i == data.length-1){
 					script =  script.substr(0, script.length-1);
 					script += "]";
 				}
 			}
-			
-			var script2 = "[";
-
-	
-			for(var i = 0; i < data.length; i++){
-
-				script2 += '"' + data[i].writeDate + '",';
-
-				if(i == data.length-1){
-					script2 =  script2.substr(0, script2.length-1);
-					script2 += "]";
-	  		
-				}
-			}
 			console.log(script);
-			console.log(script2);
 
 			// to json
 			var jsonScript = JSON.parse(script);
-			var jsonScript2 = JSON.parse(script2);
 
-			areaChart3(jsonScript, jsonScript2);
+			areaChart3(jsonScript);
 
 	  	 }
 	});
 	
-	var url = $('input[name=url]').val();
-	//엑셀출력 확인메시지
-	$(document).on("click",".alert-excel",function(){
-  	swal({
-        title: "엑셀출력 하시겠습니까?",
-        text: "현재 리스트가 엑셀출력 됩니다.",
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonClass: "btn-danger",
-        confirmButtonText: "YES",
-        closeOnConfirm: false
-      },
-      function(){//엑셀 출력하겠다고 할 시 진행 함수
-
-    	  self.location = "excel?"
-			    		+ "url="
-						+ url
-						+ "&startDate=" + decodeURI(window.location.href.split("startDate=")[1]).split("&")[0].split(" ")[0]
-			 			+ "&endDate=" +  decodeURI(window.location.href.split("endDate=")[1]).split("&")[0].split(" ")[0];
-
-
-	  		swal("Success!", "엑셀출력 되었습니다.", "success");
-
-      });
-	});
 	
-	// 검색버튼 클릭시
-	$('#searchBtn').on("click", function(event){
-	  console.log("searchBtn clicked....");
-	
-	  searchList();
-	  
-	});
-	
-	// 리스트 버튼 클릭
-	$(".list-button").on("click", function(event){
-		var parent = event.target.parentNode;
-
-		if(parent.type == 'button'){
-			console.log("button click...");
-			parent = parent.parentNode;
-		}
-
-		var tr = parent.parentNode;
-		console.log(tr); 
-		
-		var td1 = tr.children[1];
-		console.log(td1);
-		
-		var td2 = tr.children[5];
-		console.log(td2);
-		
-		
-		var url = td1.children[0].value;
-		var content = td2.children[0].value;
-		
-		console.log("url:" + url, "content:" + content);
-		
-		self.location = "n_listall2?url=" + url + "&content=" + content;
-
-	});
-	
-	// 검색버튼 클릭시
-	$('#searchBtn').on("click", function(event){
-	  console.log("searchBtn clicked....");
-	
-	  searchList();
-	  
-	});
 	
 }); // end ready...
 
-		/* function areaChart(jsonScript) {
-				$("#morris-bar").empty();
-				window.areaChart = Morris.Bar({
-					element: 'morris-bar',
-				    data: jsonScript,
-				    xkey: 'period',
-				    ykeys: ['조회수'],
-				    labels: ['조회수'],
-				    barColors: ['#01C0C8'],
-				    stacked: true,
-				    
-				    hideHover: 'auto',
-				    resize: true,
-				    gridTextColor: '#888'
-				    });
-				} 
-					LabelMargin : 10, */
-
-	  		
-	  	
-	  		/* function areaChart(jsonScript) {
-	  			$("#morris-extra-area").empty();
-	  			window.areaChart = Morris.Area({
-	  				element: 'morris-extra-area',
-	  			    data: jsonScript,
-	  			    lineColors: ['#01C0C8', '#7E81CB', '#fb9678'],
-	  			    xkey: 'period',
-	  			    ykeys: ['조회수', '댓글수', '좋아요수'],
-	  			    labels: ['조회수', '댓글수', '좋아요수'],
-	  			    pointSize: 0,
-	  		        lineWidth: 0,
-	  		        resize: true,
-	  		        fillOpacity: 0.8,
-	  		        behaveLikeLine: true,
-	  		        gridLineColor: '#5FBEAA',
-	  		        hideHover: 'auto'
-	  			    });
-	  			} */
-				
-	  			function areaChart1(jsonScript,jsonScript2) {
-		  			Highcharts.chart('container', {
-
-		  			    title: {
-		  			         text: ''
-		  			    },
-		  			    subtitle: {
-		  			        text: ''
-		  			    },
-		  			    yAxis: {
-		  			        title: {
-		  			            text: ''
-		  			        }
-		  			    },
-		  			    legend: {
-		  			        layout: 'vertical',
-		  			        align: 'right',
-		  			        verticalAlign: 'middle'
-		  			    },
-		  			  	xAxis: {
-		  			  	 categories: jsonScript2
-		  			    },
-			  		    plotOptions: {
-			  		        series: {
-			  		            allowPointSelect: true
-			  		        }
-			  		    },
-		  			    series: [{
-		  			        name: '조회수',
-		  			        data: jsonScript
-		  			    }],
-		  			    responsive: {
-		  			        rules: [{
-		  			            condition: {
-		  			                maxWidth: 500
-		  			            },
-		  			            chartOptions: {
-		  			                legend: {
-		  			                    layout: 'horizontal',
-		  			                    align: 'center',
-		  			                    verticalAlign: 'bottom'
-		  			                }
-		  			            }
-		  			        }]
-		  			    }
-		  			});
+	  			function areaChart(jsonScript) {
+		  			$("#morris-extra-line").empty();
+		  			window.areaChart = Morris.Line({
+		  				element: 'morris-extra-line',
+		  			    data: jsonScript,
+		  			  	xkey: 'period',
+		  			    ykeys: ['첫번째조회수','두번째조회수'],
+		  			  	labels: ['첫번째조회수','두번째조회수'],
+		  			    lineColors: ['#fb9678', '#7E81CB'],
+		  			  	hideHover : 'auto',
+		  			  	axes: false
+		  			    });
 		  			}
+	  			function areaChart2(jsonScript) {
+		  			$("#morris-extra-line2").empty();
+		  			window.areaChart2 = Morris.Line({
+		  				element: 'morris-extra-line2',
+		  			    data: jsonScript,
+		  			  	xkey: 'period',
+		  			    ykeys: ['첫번째댓글수','두번째댓글수'],
+		  			  	labels: ['첫번째댓글수','두번째댓글수'],
+		  			    lineColors: ['#fb9678', '#7E81CB'],
+		  			  	hideHover : 'auto',
+		  			  	axes: false
+		  			    });
+	  			}
+	  			function areaChart3(jsonScript) {
+		  			$("#morris-extra-line3").empty();
+		  			window.areaChart3 = Morris.Line({
+		  				element: 'morris-extra-line3',
+		  			    data: jsonScript,
+		  			  	xkey: 'period',
+		  			    ykeys: ['첫번째좋아요수','두번째좋아요수'],
+		  			  	labels: ['첫번째좋아요수','두번째좋아요수'],
+		  			    lineColors: ['#fb9678', '#7E81CB'],
+		  			  	hideHover : 'auto',
+		  			 	axes: false
+		  			    });
+	  			}
 	  			
-	  			function areaChart2(jsonScript,jsonScript2) {
-		  			Highcharts.chart('container2', {
-
-		  			    title: {
-		  			         text: ''
-		  			    },
-		  			    subtitle: {
-		  			        text: ''
-		  			    },
-		  			    yAxis: {
-		  			        title: {
-		  			            text: ''
-		  			        }
-		  			    },
-		  			    legend: {
-		  			        layout: 'vertical',
-		  			        align: 'right',
-		  			        verticalAlign: 'middle'
-		  			    },
-		  			  	xAxis: {
-		  			  	 categories: jsonScript2
-		  			    },
-			  		    plotOptions: {
-			  		        series: {
-			  		            allowPointSelect: true
-			  		        }
-			  		    },
-		  			    series: [{
-		  			        name: '댓글수',
-		  			      	data: jsonScript,
-		  			        color : '#7E81CB'
-		  			    }],
-		  			    responsive: {
-		  			        rules: [{
-		  			            condition: {
-		  			                maxWidth: 500
-		  			            },
-		  			            chartOptions: {
-		  			                legend: {
-		  			                    layout: 'horizontal',
-		  			                    align: 'center',
-		  			                    verticalAlign: 'bottom'
-		  			                }
-		  			            }
-		  			        }]
-		  			    }
-		  			});
-		  			}
-	  			
-	  			function areaChart3(jsonScript,jsonScript2) {
-	  				Highcharts.chart('container3', {
-
-		  			    title: {
-		  			         text: ''
-		  			    },
-		  			    subtitle: {
-		  			        text: ''
-		  			    },
-		  			    yAxis: {
-		  			        title: {
-		  			            text: ''
-		  			        }
-		  			    },
-		  			    legend: {
-		  			        layout: 'vertical',
-		  			        align: 'right',
-		  			        verticalAlign: 'middle'
-		  			    },
-		  			  	xAxis: {
-		  			  	 categories: jsonScript2
-		  			    },
-			  		    plotOptions: {
-			  		        series: {
-			  		            allowPointSelect: true
-			  		        }
-			  		    },
-		  			    series: [{
-		  			        name: '좋아요',
-		  			      	data: jsonScript,
-		  			        color : '#fb9678'
-		  			    }],
-		  			    responsive: {
-		  			        rules: [{
-		  			            condition: {
-		  			                maxWidth: 500
-		  			            },
-		  			            chartOptions: {
-		  			                legend: {
-		  			                    layout: 'horizontal',
-		  			                    align: 'center',
-		  			                    verticalAlign: 'bottom'
-		  			                }
-		  			            }
-		  			        }]
-		  			    }
-		  			});
-		  			}
-				
 	  	//list URL 함수
-	  		var url = $('input[name=url]').val();
-	  		var content = $('input[name=content]').val();
+	  	var url = $('input[name=url]').val();
+	  	var content = $('input[name=content]').val();
 	  		
 	  	  function searchList(event) {
 
-	  		self.location = "n_listall2?"
-  				  + "url="
-  				  + url
-  				  + "&content="
-				  + content
-  				  + "&startDate=" + makeDateFormat($("#startdate").val(), 0)
-	 			  + "&endDate=" +  makeDateFormat($("#enddate").val(), 0);
-  }
-	  	  
+	  	  	self.location = "f_listall?"
+	  	  				  + "url="
+	  	  				  + url
+	  	  				  + "&content="
+	  				  	  + content
+	    				  + "&startDate=" + makeDateFormat($("#startdate").val(), 0)
+	  	 			      + "&endDate=" +  makeDateFormat($("#enddate").val(), 0);
+	  	  }
 	  	function makeDateFormat(date, index){
 			var splitDate = date.split(" - ")[index];
 				if(splitDate != undefined){

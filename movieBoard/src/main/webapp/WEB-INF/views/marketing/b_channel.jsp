@@ -86,7 +86,7 @@
                 <div class="page-wrapper">
                   <div class="page-header">
                     <div class="page-header-title">
-                      <h4>Facebook CGV</h4>
+                      <h4>Facebook BANGWOOL</h4>
                     </div>
                     <div class="page-header-breadcrumb">
                       <ul class="breadcrumb-title">
@@ -96,7 +96,7 @@
                           </a>
                         </li>
                         <li class="breadcrumb-item"><a href="#!">마케팅 채널관리</a></li>
-                        <li class="breadcrumb-item"><a href="../marketing/f_channel">Facebook CGV</a></li>
+                        <li class="breadcrumb-item"><a href="../marketing/b_channel">Facebook BANGWOOL</a></li>
                       </ul>
                     </div>
                   </div>
@@ -276,7 +276,7 @@
                                                <ul class="pagination float-right">
 	        					                   <c:if test="${pageMaker.prev}">
 		        					                   <li class="page-item">
-			        					                   <a class="page-link" href="f_channel${pageMaker.makeSearch(pageMaker.startPage - 1) }" aria-label="Previous">&laquo;
+			        					                   <a class="page-link" href="b_channel${pageMaker.makeSearch(pageMaker.startPage - 1) }" aria-label="Previous">&laquo;
 				        					               <span aria-hidden="true"></span>
 				        					               <span class="sr-only">Previous</span>
 			        					                   </a>
@@ -284,12 +284,12 @@
 	        					                   </c:if>
         					                   <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
 	        					                   <li class= "${pageMaker.cri.page == idx? 'active':''} page-item">
-	        					                   	<a class="page-link" href="f_channel${pageMaker.makeSearch(idx)}">${idx}</a>
+	        					                   	<a class="page-link" href="b_channel${pageMaker.makeSearch(idx)}">${idx}</a>
 	        					                   </li>
         					                   </c:forEach>
         					                   <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
 	        					                   <li class="page-item">
-		        					                   <a class="page-link" href="f_channel${pageMaker.makeSearch(pageMaker.endPage +1) }" aria-label="Next">&raquo;
+		        					                   <a class="page-link" href="b_channel${pageMaker.makeSearch(pageMaker.endPage +1) }" aria-label="Next">&raquo;
 			        					               <span aria-hidden="true"></span>
 			        					               <span class="sr-only">Next</span>
 		        					                   </a>
@@ -448,7 +448,7 @@
 			console.log("url:" + url);
 			console.log("url2:" + url2);
 
-			self.location = "f_graph?url=" + url + "&url2=" + url2;
+			self.location = "b_graph?url=" + url + "&url2=" + url2;
 
 		});
 
@@ -476,7 +476,7 @@
 
 			console.log("url:" + url, "content:" + content);
 
-			self.location = "f_list?url=" + url + "&content=" + content;
+			self.location = "b_list?url=" + url + "&content=" + content;
 
 		});
 
@@ -501,7 +501,7 @@
 
 		console.log(makeQeury);
 
-    	self.location = "f_channel"
+    	self.location = "b_channel"
     						+ makeQeury + '10'
     						+ "&keyword=" + $('#keywordInput').val()
     						+ "&startDate=" + makeDateFormat($("#startdate").val(), 0)

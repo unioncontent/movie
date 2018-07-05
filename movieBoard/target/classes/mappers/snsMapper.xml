@@ -621,7 +621,7 @@
 		DATE_FORMAT(writeDate,'%Y-%m-%d') writeDate, sns_content, url, max(view_cnt)as view_cnt, max(like_cnt)as like_cnt, max(reply_cnt)as reply_cnt,count(*) as total
 		from facebook_videos
         where
-			sns_writer = 'CGV'
+			sns_writer = #{sns_writer}
         <include refid="search_writeDate3"></include>
         group by writeDate
         order by writeDate desc
@@ -634,7 +634,7 @@
 		DATE_FORMAT(writeDate,'%Y-%m-%d') writeDate, sns_content, url, max(view_cnt)as view_cnt, max(like_cnt)as like_cnt, max(reply_cnt)as reply_cnt,count(*) as total
 		from facebook_videos
         where
-			sns_writer = 'CGV'
+			sns_writer = #{sns_writer}
         group by url
         order by writeDate desc
  	</select>
@@ -646,7 +646,7 @@
         select DATE_FORMAT(writeDate,'%Y-%m-%d') writeDate, sns_content
 		from facebook_videos
         where
-			sns_writer = 'CGV'
+			sns_writer = #{sns_writer}
         <include refid="search_writeDate3"></include>
         group by writeDate) as total
 	</select>

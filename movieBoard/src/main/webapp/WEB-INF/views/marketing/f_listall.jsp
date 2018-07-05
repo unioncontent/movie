@@ -219,8 +219,10 @@
                                             </c:forEach>
                                             </td>
                                             <td>
+                                            <div class="content-nowrap">
                                             <a href='${list1.url}' target="_blank">${list1.sns_content}</a>
                                             <input type="hidden" value="${list1.sns_content}" name="content" id="content">
+                                            </div>
                                             </td>
                                           </tr>
                                         </c:forEach>

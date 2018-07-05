@@ -121,7 +121,7 @@
                           </div>
                           <div class="card-block">
                             <!-- <div id="morris-extra-area" style="height:300px;"></div> -->
-                            <div id="morris-extra-line" style="height:150px;"></div>
+                            <div id="container" style="height:350px;"></div>
                           </div>
                         </div>
                       </div>
@@ -140,7 +140,7 @@
                           </div>
                           <div class="card-block">
                             <!-- <div id="morris-extra-area" style="height:300px;"></div> -->
-                            <div id="morris-extra-line2" style="height:150px;"></div>
+                            <div id="container2" style="height:350px;"></div>
                           </div>
                         </div>
                       </div>
@@ -158,8 +158,7 @@
                             </div>
                           </div>
                           <div class="card-block">
-                            <!-- <div id="morris-extra-area" style="height:300px;"></div> -->
-                            <div id="morris-extra-line3" style="height:150px;"></div>
+                            <div id="container3" style="height:350px;"></div>
                           </div>
                         </div>
                       </div>
@@ -358,6 +357,11 @@
   <!-- Morris Chart js -->
   <script src="../bower_components/raphael/raphael.min.js"></script>
   <script src="../bower_components/morris.js/morris.js"></script>
+  <!-- High Chart js -->
+  <script src="https://code.highcharts.com/highcharts.js"></script>
+  <script src="https://code.highcharts.com/modules/series-label.js"></script>
+  <script src="https://code.highcharts.com/modules/exporting.js"></script>
+  <script src="https://code.highcharts.com/modules/export-data.js"></script>
   <!-- sweet alert js -->
   <script type="text/javascript" src="../bower_components/sweetalert/dist/sweetalert.min.js"></script>
   <script type="text/javascript" src="../assets/pages/division/script.js"></script>
@@ -438,8 +442,7 @@ $(document).ready(function(){
 
 			for(var i = 0; i < data.length; i++){
 
-				script += '{"period":' + '"' + data[i].writeDate + '",'
-						+ '"조회수"' + ':' + data[i].type1 + "},";
+				script += data[i].type1 + ",";
 
 
 				if(i == data.length-1){
@@ -447,12 +450,28 @@ $(document).ready(function(){
 					script += "]";
 				}
 			}
+			
+			var script2 = "[";
+
+	
+			for(var i = 0; i < data.length; i++){
+
+				script2 += '"' + data[i].writeDate + '",';
+
+				if(i == data.length-1){
+					script2 =  script2.substr(0, script2.length-1);
+					script2 += "]";
+	  		
+				}
+			}
 			console.log(script);
+			console.log(script2);
 
 			// to json
 			var jsonScript = JSON.parse(script);
+			var jsonScript2 = JSON.parse(script2);
 
-			areaChart(jsonScript);
+			areaChart1(jsonScript, jsonScript2);
 
 	  	 }
 	});
@@ -471,8 +490,7 @@ $(document).ready(function(){
 
 			for(var i = 0; i < data.length; i++){
 
-				script += '{"period":' + '"' + data[i].writeDate + '",'
-						+ '"댓글수"' + ':' + data[i].type2 + "},";
+				script += data[i].type2 + ",";
 
 
 				if(i == data.length-1){
@@ -480,12 +498,28 @@ $(document).ready(function(){
 					script += "]";
 				}
 			}
+			
+			var script2 = "[";
+
+	
+			for(var i = 0; i < data.length; i++){
+
+				script2 += '"' + data[i].writeDate + '",';
+
+				if(i == data.length-1){
+					script2 =  script2.substr(0, script2.length-1);
+					script2 += "]";
+	  		
+				}
+			}
 			console.log(script);
+			console.log(script2);
 
 			// to json
 			var jsonScript = JSON.parse(script);
+			var jsonScript2 = JSON.parse(script2);
 
-			areaChart2(jsonScript);
+			areaChart2(jsonScript, jsonScript2);
 
 	  	 }
 	});
@@ -504,8 +538,7 @@ $(document).ready(function(){
 
 			for(var i = 0; i < data.length; i++){
 
-				script += '{"period":' + '"' + data[i].writeDate + '",'
-						+ '"좋아요수"' + ':' + data[i].type3 + "},";
+				script += data[i].type3 + ",";
 
 
 				if(i == data.length-1){
@@ -513,12 +546,28 @@ $(document).ready(function(){
 					script += "]";
 				}
 			}
+			
+			var script2 = "[";
+
+	
+			for(var i = 0; i < data.length; i++){
+
+				script2 += '"' + data[i].writeDate + '",';
+
+				if(i == data.length-1){
+					script2 =  script2.substr(0, script2.length-1);
+					script2 += "]";
+	  		
+				}
+			}
 			console.log(script);
+			console.log(script2);
 
 			// to json
 			var jsonScript = JSON.parse(script);
+			var jsonScript2 = JSON.parse(script2);
 
-			areaChart3(jsonScript);
+			areaChart3(jsonScript, jsonScript2);
 
 	  	 }
 	});
@@ -656,8 +705,156 @@ $(document).ready(function(){
 	  		        hideHover: 'auto'
 	  			    });
 	  			} */
+	  			
+	  			function areaChart1(jsonScript,jsonScript2) {
+		  			Highcharts.chart('container', {
 
-	  			function areaChart(jsonScript) {
+		  			    title: {
+		  			         text: ''
+		  			    },
+		  			    subtitle: {
+		  			        text: ''
+		  			    },
+		  			    yAxis: {
+		  			        title: {
+		  			            text: ''
+		  			        }
+		  			    },
+		  			    legend: {
+		  			        layout: 'vertical',
+		  			        align: 'right',
+		  			        verticalAlign: 'middle'
+		  			    },
+		  			  	xAxis: {
+		  			  	 categories: jsonScript2
+		  			    },
+			  		    plotOptions: {
+			  		        series: {
+			  		            allowPointSelect: true
+			  		        }
+			  		    },
+		  			    series: [{
+		  			        name: '조회수',
+		  			        data: jsonScript
+		  			    }],
+		  			    responsive: {
+		  			        rules: [{
+		  			            condition: {
+		  			                maxWidth: 500
+		  			            },
+		  			            chartOptions: {
+		  			                legend: {
+		  			                    layout: 'horizontal',
+		  			                    align: 'center',
+		  			                    verticalAlign: 'bottom'
+		  			                }
+		  			            }
+		  			        }]
+		  			    }
+		  			});
+		  			}
+	  			
+	  			function areaChart2(jsonScript,jsonScript2) {
+		  			Highcharts.chart('container2', {
+
+		  			    title: {
+		  			         text: ''
+		  			    },
+		  			    subtitle: {
+		  			        text: ''
+		  			    },
+		  			    yAxis: {
+		  			        title: {
+		  			            text: ''
+		  			        }
+		  			    },
+		  			    legend: {
+		  			        layout: 'vertical',
+		  			        align: 'right',
+		  			        verticalAlign: 'middle'
+		  			    },
+		  			  	xAxis: {
+		  			  	 categories: jsonScript2
+		  			    },
+			  		    plotOptions: {
+			  		        series: {
+			  		            allowPointSelect: true
+			  		        }
+			  		    },
+		  			    series: [{
+		  			        name: '댓글수',
+		  			      	data: jsonScript,
+		  			        color : '#7E81CB'
+		  			    }],
+		  			    responsive: {
+		  			        rules: [{
+		  			            condition: {
+		  			                maxWidth: 500
+		  			            },
+		  			            chartOptions: {
+		  			                legend: {
+		  			                    layout: 'horizontal',
+		  			                    align: 'center',
+		  			                    verticalAlign: 'bottom'
+		  			                }
+		  			            }
+		  			        }]
+		  			    }
+		  			});
+		  			}
+	  			
+	  			function areaChart3(jsonScript,jsonScript2) {
+	  				Highcharts.chart('container3', {
+
+		  			    title: {
+		  			         text: ''
+		  			    },
+		  			    subtitle: {
+		  			        text: ''
+		  			    },
+		  			    yAxis: {
+		  			        title: {
+		  			            text: ''
+		  			        }
+		  			    },
+		  			    legend: {
+		  			        layout: 'vertical',
+		  			        align: 'right',
+		  			        verticalAlign: 'middle'
+		  			    },
+		  			  	xAxis: {
+		  			  	 categories: jsonScript2
+		  			    },
+			  		    plotOptions: {
+			  		        series: {
+			  		            allowPointSelect: true
+			  		        }
+			  		    },
+		  			    series: [{
+		  			        name: '좋아요',
+		  			      	data: jsonScript,
+		  			        color : '#fb9678'
+		  			    }],
+		  			    responsive: {
+		  			        rules: [{
+		  			            condition: {
+		  			                maxWidth: 500
+		  			            },
+		  			            chartOptions: {
+		  			                legend: {
+		  			                    layout: 'horizontal',
+		  			                    align: 'center',
+		  			                    verticalAlign: 'bottom'
+		  			                }
+		  			            }
+		  			        }]
+		  			    }
+		  			});
+		  			}
+	  			
+	  			
+	  			
+	  			/* function areaChart(jsonScript) {
 		  			$("#morris-extra-line").empty();
 		  			window.areaChart = Morris.Line({
 		  				element: 'morris-extra-line',
@@ -682,8 +879,8 @@ $(document).ready(function(){
 		  			    lineWidth : 3,
 		  			  	hideHover : 'auto'
 		  			    });
-		  			}
-	  			function areaChart3(jsonScript) {
+		  			} */
+	  			/* function areaChart3(jsonScript) {
 		  			$("#morris-extra-line3").empty();
 		  			window.areaChart3 = Morris.Line({
 		  				element: 'morris-extra-line3',
@@ -695,7 +892,7 @@ $(document).ready(function(){
 		  			    lineWidth : 3,
 		  			  	hideHover : 'auto'
 		  			    });
-		  			}
+		  			} */
 
 	  	//list URL 함수
 	  		var url = $('input[name=url]').val();

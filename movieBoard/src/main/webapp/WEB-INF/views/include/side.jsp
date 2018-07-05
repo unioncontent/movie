@@ -66,6 +66,13 @@
         </a>
         <ul class="pcoded-submenu">
           <li class="">
+            <a href="../marketing/n_channel" data-i18n="nav.advance-components.draggable">
+              <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+              <span class="pcoded-mtext">NAVER MOVIE</span>
+              <span class="pcoded-mcaret"></span>
+            </a>
+          </li>
+          <li class="">
             <a href="../marketing/f_channel" data-i18n="nav.advance-components.draggable">
               <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
               <span class="pcoded-mtext">FACEBOOK CGV</span>
@@ -73,9 +80,23 @@
             </a>
           </li>
           <li class="">
-            <a href="../marketing/n_channel" data-i18n="nav.advance-components.draggable">
+            <a href="../marketing/l_channel" data-i18n="nav.advance-components.draggable">
               <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-              <span class="pcoded-mtext">NAVER MOVIE</span>
+              <span class="pcoded-mtext">FACEBOOK LOTTE</span>
+              <span class="pcoded-mcaret"></span>
+            </a>
+          </li>
+          <li class="">
+            <a href="../marketing/m_channel" data-i18n="nav.advance-components.draggable">
+              <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+              <span class="pcoded-mtext">FACEBOOK MEGABOX</span>
+              <span class="pcoded-mcaret"></span>
+            </a>
+          </li>
+          <li class="">
+            <a href="../marketing/b_channel" data-i18n="nav.advance-components.draggable">
+              <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+              <span class="pcoded-mtext">FACEBOOK BANGWOOL</span>
               <span class="pcoded-mcaret"></span>
             </a>
           </li>

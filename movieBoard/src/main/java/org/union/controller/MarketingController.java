@@ -146,6 +146,9 @@ public class MarketingController {
 						keywordService.listByUser(userService.viewByName(cri.getCompany()).getUser_idx()));
 			}
 		}
+		
+		cri.setSns_writer("CGV");
+		
 		logger.info("cri: " + cri);
 		
 		model.addAttribute("fV", snsService.facebookCGV(cri));
@@ -168,18 +171,6 @@ public class MarketingController {
 		model.addAttribute("minusCount", cri.getPerPageNum() * (cri.getPage()-1));
 		
     }
-	
-	/*@ResponseBody
-	@PostMapping("/fvsearchList")
-	public List<FvVO> fvsearchList(String url, String sns_content){
-		logger.info("fvsearchList called....");
-		logger.info("sns_content");
-		List<FvVO> list = snsService.fvlistSearch(sns_content);
-		
-		
-		
-		return list;
-	}*/
 	
 	@GetMapping("/f_list")
     public void f_listGET(@ModelAttribute("cri") SearchCriteria cri, Model model, String url, String content) throws ParseException {
@@ -234,6 +225,7 @@ public class MarketingController {
 			}
 		}
 		
+		cri.setSns_writer("CGV");
 		cri.setUrl(url);
 		cri.setPortal_name(content);
 		logger.info("crifvList: " + cri);
@@ -314,6 +306,8 @@ public class MarketingController {
 						keywordService.listByUser(userService.viewByName(cri.getCompany()).getUser_idx()));
 			}
 		}
+		
+		cri.setSns_writer("CGV");
 		cri.setUrl(url);
 		cri.setCreatestartDate(createstartDate + " 00:00:00");
 		cri.setCreateminusDate(createstartDate + " 23:00:00");
@@ -399,6 +393,947 @@ public class MarketingController {
 						keywordService.listByUser(userService.viewByName(cri.getCompany()).getUser_idx()));
 			}
 		}
+		
+		cri.setSns_writer("CGV");
+		cri.setUrl(url);
+		fv.setUrl(url2);
+		logger.info("crifvonegraph: " + cri);
+		logger.info("crifvtwograph: " + fv);
+		model.addAttribute("url", url);
+		model.addAttribute("url2", url2);
+		model.addAttribute("list1", snsService.fvlistOne(cri));
+		model.addAttribute("list2", snsService.fvlistTwo(fv));
+		
+    }
+	
+	@GetMapping("/m_channel")
+    public void m_channelGET(@ModelAttribute("cri") SearchCriteria cri, Model model, String sns_content) throws ParseException {
+    	logger.info("m_channelGET called....");
+    	
+    	if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
+			logger.info("keyword is null");
+			cri.setKeyword(null);
+			
+		}
+		if(cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey()) ) {
+			logger.info("selectKey is null");
+			cri.setSelectKey(null);
+		}
+		if("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate())
+				|| cri.getStartDate() == "" || cri.getEndDate() == ""){
+			cri.setStartDate(null);
+			cri.setEndDate(null);
+		
+		} 
+		if(cri.getStartDate() != null && cri.getEndDate() != null) {
+			if(cri.getStartDate().indexOf("00:00:00") < 0 && cri.getEndDate().indexOf("23:59:59") < 0){ 
+				cri.setStartDate(cri.getStartDate() + " 00:00:00"); 
+				cri.setEndDate(cri.getEndDate() + " 23:59:59"); 
+			}
+		}
+		if(cri.getCompany() != null) {
+			if(cri.getCompany().isEmpty()) {
+				cri.setCompany(null);
+			}
+		}
+		if(cri.getCompany() == null || cri.getCompany().equals("회사")) {
+			logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+			UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
+			
+			if(!vo.getUser_name().equals("union")) {
+			cri.setCompany(vo.getUser_name());
+			
+			}else {
+				cri.setCompany(null);
+			}
+		}
+
+		// 회사 선택에 따른 키워드 재추출
+		if (cri.getCompany() != null) {	
+			if (cri.getCompany().isEmpty() == false) {
+
+				UserVO userVO = userService.viewByName(cri.getCompany());
+				logger.info("userVO: " + userVO);
+				logger.info("keywordList: " + keywordService.listByUser(userVO.getUser_idx()));
+				model.addAttribute("modelKeywordList",
+						keywordService.listByUser(userService.viewByName(cri.getCompany()).getUser_idx()));
+			}
+		}
+		
+		cri.setSns_writer("메가박스");
+		
+		logger.info("cri: " + cri);
+		
+		model.addAttribute("fV", snsService.facebookCGV(cri));
+		model.addAttribute("fVList", snsService.facebookCGVList(cri));
+		model.addAttribute("fVallList", snsService.facebookCGVallList(cri));
+		
+		Integer totalCount = snsService.facebookCGVListTotalCnt(cri);
+		
+		logger.info("totalCount: " + totalCount);
+		
+		PageMakerFv pageMakerFv = new PageMakerFv();
+		
+		pageMakerFv.setCri(cri);
+		pageMakerFv.setTotalCount(snsService.facebookCGVListTotalCnt(cri));
+		
+		logger.info("pageMaker: " + pageMakerFv);
+		
+		model.addAttribute("pageMaker", pageMakerFv);
+		model.addAttribute("totalCount", totalCount);
+		model.addAttribute("minusCount", cri.getPerPageNum() * (cri.getPage()-1));
+		
+    }
+	
+	@GetMapping("/m_list")
+    public void m_listGET(@ModelAttribute("cri") SearchCriteria cri, Model model, String url, String content) throws ParseException {
+    	logger.info("m_list called....");
+    	if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
+			logger.info("keyword is null");
+			cri.setKeyword(null);
+			
+		} 
+		if(cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey()) ) {
+			logger.info("selectKey is null");
+			cri.setSelectKey(null);
+		}
+		if("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate())
+				|| cri.getStartDate() == "" || cri.getEndDate() == ""){
+			cri.setStartDate(null);
+			cri.setEndDate(null);
+		
+		} 
+		if(cri.getStartDate() != null && cri.getEndDate() != null) {
+			if(cri.getStartDate().indexOf("00:00:00") < 0 && cri.getEndDate().indexOf("23:59:59") < 0){ 
+				cri.setStartDate(cri.getStartDate() + " 00:00:00"); 
+				cri.setEndDate(cri.getEndDate() + " 23:59:59"); 
+			}
+		}
+		if(cri.getCompany() != null) {
+			if(cri.getCompany().isEmpty()) {
+				cri.setCompany(null);
+			}
+		}
+		if(cri.getCompany() == null || cri.getCompany().equals("회사")) {
+			logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+			UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
+			
+			if(!vo.getUser_name().equals("union")) {
+			cri.setCompany(vo.getUser_name());
+			
+			}else {
+				cri.setCompany(null);
+			}
+		}
+
+		// 회사 선택에 따른 키워드 재추출
+		if (cri.getCompany() != null) {	
+			if (cri.getCompany().isEmpty() == false) {
+
+				UserVO userVO = userService.viewByName(cri.getCompany());
+				logger.info("userVO: " + userVO);
+				logger.info("keywordList: " + keywordService.listByUser(userVO.getUser_idx()));
+				model.addAttribute("modelKeywordList",
+						keywordService.listByUser(userService.viewByName(cri.getCompany()).getUser_idx()));
+			}
+		}
+		
+		cri.setSns_writer("메가박스");
+		cri.setUrl(url);
+		cri.setPortal_name(content);
+		logger.info("crifvList: " + cri);
+		
+		model.addAttribute("list", snsService.fvlistSearch(cri));
+		model.addAttribute("creatDate", snsService.fvlistSearchTime(cri));
+		
+		logger.info("url: " + url);
+		model.addAttribute("content", content);
+		
+		Integer totalCount = snsService.fvlistSearchTotalCnt(cri);
+		
+		logger.info("totalCount: " + totalCount);
+		
+		PageMakerFv pageMakerFv = new PageMakerFv();
+		
+		pageMakerFv.setCri(cri);
+		pageMakerFv.setTotalCount(snsService.fvlistSearchTotalCnt(cri));
+		
+		logger.info("pageMaker: " + pageMakerFv);
+		
+		model.addAttribute("pageMaker", pageMakerFv);
+		model.addAttribute("totalCount", totalCount);
+		model.addAttribute("minusCount", cri.getPerPageNum() * (cri.getPage()-1));
+		
+		
+    }
+	
+	@GetMapping("/m_listall")
+    public void m_listallGET(@ModelAttribute("cri") SearchCriteria cri, Model model, String url, String content, String createstartDate, String createendDate) throws ParseException {
+    	logger.info("m_listall called....");
+    	if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
+			logger.info("keyword is null");
+			cri.setKeyword(null);
+			
+		} 
+		if(cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey()) ) {
+			logger.info("selectKey is null");
+			cri.setSelectKey(null);
+		}
+		if("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate())
+				|| cri.getStartDate() == "" || cri.getEndDate() == ""){
+			cri.setStartDate(null);
+			cri.setEndDate(null);
+		
+		} 
+		if(cri.getStartDate() != null && cri.getEndDate() != null) {
+			if(cri.getStartDate().indexOf("00:00:00") < 0 && cri.getEndDate().indexOf("23:59:59") < 0){ 
+				cri.setStartDate(cri.getStartDate() + " 00:00:00"); 
+				cri.setEndDate(cri.getEndDate() + " 23:59:59"); 
+			}
+		}
+		if(cri.getCompany() != null) {
+			if(cri.getCompany().isEmpty()) {
+				cri.setCompany(null);
+			}
+		}
+		if(cri.getCompany() == null || cri.getCompany().equals("회사")) {
+			logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+			UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
+			
+			if(!vo.getUser_name().equals("union")) {
+			cri.setCompany(vo.getUser_name());
+			
+			}else {
+				cri.setCompany(null);
+			}
+		}
+
+		// 회사 선택에 따른 키워드 재추출
+		if (cri.getCompany() != null) {	
+			if (cri.getCompany().isEmpty() == false) {
+
+				UserVO userVO = userService.viewByName(cri.getCompany());
+				logger.info("userVO: " + userVO);
+				logger.info("keywordList: " + keywordService.listByUser(userVO.getUser_idx()));
+				model.addAttribute("modelKeywordList",
+						keywordService.listByUser(userService.viewByName(cri.getCompany()).getUser_idx()));
+			}
+		}
+		
+		cri.setSns_writer("메가박스");
+		cri.setUrl(url);
+		cri.setCreatestartDate(createstartDate + " 00:00:00");
+		cri.setCreateminusDate(createstartDate + " 23:00:00");
+		cri.setCreateendDate(createendDate + " 23:59:59");
+		logger.info("crifvList: " + cri);
+		
+		model.addAttribute("list1", snsService.fvlistSearchList(cri));
+		model.addAttribute("list2", snsService.fvlistMinus(cri));
+		model.addAttribute("creatDate", snsService.fvSearchlistSearchTime(cri));
+		
+		logger.info("createstartDate: " + createstartDate);
+		logger.info("createendDate: " + createendDate);
+		logger.info("url: " + url);
+		model.addAttribute("content", content);
+		
+		Integer totalCount = snsService.fvlistSearchListTotalCnt(cri);
+		
+		logger.info("totalCount: " + totalCount);
+		
+		PageMakerFv pageMakerFv = new PageMakerFv();
+		
+		pageMakerFv.setCri(cri);
+		pageMakerFv.setTotalCount(snsService.fvlistSearchListTotalCnt(cri));
+		
+		logger.info("pageMaker: " + pageMakerFv);
+		
+		model.addAttribute("pageMaker", pageMakerFv);
+		model.addAttribute("totalCount", totalCount);
+		model.addAttribute("minusCount", cri.getPerPageNum() * (cri.getPage()-1));
+		
+		
+    }
+	
+	@GetMapping("/m_graph")
+    public void m_graphGET(@ModelAttribute("cri") SearchCriteria cri,SearchFv fv, Model model, String url, String url2) throws ParseException {
+    	logger.info("m_graph called....");
+    	if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
+			logger.info("keyword is null");
+			cri.setKeyword(null);
+			
+		} 
+		if(cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey()) ) {
+			logger.info("selectKey is null");
+			cri.setSelectKey(null);
+		}
+		if("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate())
+				|| cri.getStartDate() == "" || cri.getEndDate() == ""){
+			cri.setStartDate(null);
+			cri.setEndDate(null);
+		
+		} 
+		if(cri.getStartDate() != null && cri.getEndDate() != null) {
+			if(cri.getStartDate().indexOf("00:00:00") < 0 && cri.getEndDate().indexOf("23:59:59") < 0){ 
+				cri.setStartDate(cri.getStartDate() + " 00:00:00"); 
+				cri.setEndDate(cri.getEndDate() + " 23:59:59"); 
+			}
+		}
+		if(cri.getCompany() != null) {
+			if(cri.getCompany().isEmpty()) {
+				cri.setCompany(null);
+			}
+		}
+		if(cri.getCompany() == null || cri.getCompany().equals("회사")) {
+			logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+			UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
+			
+			if(!vo.getUser_name().equals("union")) {
+			cri.setCompany(vo.getUser_name());
+			
+			}else {
+				cri.setCompany(null);
+			}
+		}
+
+		// 회사 선택에 따른 키워드 재추출
+		if (cri.getCompany() != null) {	
+			if (cri.getCompany().isEmpty() == false) {
+
+				UserVO userVO = userService.viewByName(cri.getCompany());
+				logger.info("userVO: " + userVO);
+				logger.info("keywordList: " + keywordService.listByUser(userVO.getUser_idx()));
+				model.addAttribute("modelKeywordList",
+						keywordService.listByUser(userService.viewByName(cri.getCompany()).getUser_idx()));
+			}
+		}
+		
+		cri.setSns_writer("메가박스");
+		cri.setUrl(url);
+		fv.setUrl(url2);
+		logger.info("crifvonegraph: " + cri);
+		logger.info("crifvtwograph: " + fv);
+		model.addAttribute("url", url);
+		model.addAttribute("url2", url2);
+		model.addAttribute("list1", snsService.fvlistOne(cri));
+		model.addAttribute("list2", snsService.fvlistTwo(fv));
+		
+    }
+	
+	@GetMapping("/l_channel")
+    public void l_channelGET(@ModelAttribute("cri") SearchCriteria cri, Model model, String sns_content) throws ParseException {
+    	logger.info("l_channelGET called....");
+    	
+    	if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
+			logger.info("keyword is null");
+			cri.setKeyword(null);
+			
+		}
+		if(cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey()) ) {
+			logger.info("selectKey is null");
+			cri.setSelectKey(null);
+		}
+		if("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate())
+				|| cri.getStartDate() == "" || cri.getEndDate() == ""){
+			cri.setStartDate(null);
+			cri.setEndDate(null);
+		
+		} 
+		if(cri.getStartDate() != null && cri.getEndDate() != null) {
+			if(cri.getStartDate().indexOf("00:00:00") < 0 && cri.getEndDate().indexOf("23:59:59") < 0){ 
+				cri.setStartDate(cri.getStartDate() + " 00:00:00"); 
+				cri.setEndDate(cri.getEndDate() + " 23:59:59"); 
+			}
+		}
+		if(cri.getCompany() != null) {
+			if(cri.getCompany().isEmpty()) {
+				cri.setCompany(null);
+			}
+		}
+		if(cri.getCompany() == null || cri.getCompany().equals("회사")) {
+			logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+			UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
+			
+			if(!vo.getUser_name().equals("union")) {
+			cri.setCompany(vo.getUser_name());
+			
+			}else {
+				cri.setCompany(null);
+			}
+		}
+
+		// 회사 선택에 따른 키워드 재추출
+		if (cri.getCompany() != null) {	
+			if (cri.getCompany().isEmpty() == false) {
+
+				UserVO userVO = userService.viewByName(cri.getCompany());
+				logger.info("userVO: " + userVO);
+				logger.info("keywordList: " + keywordService.listByUser(userVO.getUser_idx()));
+				model.addAttribute("modelKeywordList",
+						keywordService.listByUser(userService.viewByName(cri.getCompany()).getUser_idx()));
+			}
+		}
+		
+		cri.setSns_writer("롯데시네마");
+		
+		logger.info("cri: " + cri);
+		
+		model.addAttribute("fV", snsService.facebookCGV(cri));
+		model.addAttribute("fVList", snsService.facebookCGVList(cri));
+		model.addAttribute("fVallList", snsService.facebookCGVallList(cri));
+		
+		Integer totalCount = snsService.facebookCGVListTotalCnt(cri);
+		
+		logger.info("totalCount: " + totalCount);
+		
+		PageMakerFv pageMakerFv = new PageMakerFv();
+		
+		pageMakerFv.setCri(cri);
+		pageMakerFv.setTotalCount(snsService.facebookCGVListTotalCnt(cri));
+		
+		logger.info("pageMaker: " + pageMakerFv);
+		
+		model.addAttribute("pageMaker", pageMakerFv);
+		model.addAttribute("totalCount", totalCount);
+		model.addAttribute("minusCount", cri.getPerPageNum() * (cri.getPage()-1));
+		
+    }
+	
+	@GetMapping("/l_list")
+    public void l_listGET(@ModelAttribute("cri") SearchCriteria cri, Model model, String url, String content) throws ParseException {
+    	logger.info("l_list called....");
+    	if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
+			logger.info("keyword is null");
+			cri.setKeyword(null);
+			
+		} 
+		if(cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey()) ) {
+			logger.info("selectKey is null");
+			cri.setSelectKey(null);
+		}
+		if("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate())
+				|| cri.getStartDate() == "" || cri.getEndDate() == ""){
+			cri.setStartDate(null);
+			cri.setEndDate(null);
+		
+		} 
+		if(cri.getStartDate() != null && cri.getEndDate() != null) {
+			if(cri.getStartDate().indexOf("00:00:00") < 0 && cri.getEndDate().indexOf("23:59:59") < 0){ 
+				cri.setStartDate(cri.getStartDate() + " 00:00:00"); 
+				cri.setEndDate(cri.getEndDate() + " 23:59:59"); 
+			}
+		}
+		if(cri.getCompany() != null) {
+			if(cri.getCompany().isEmpty()) {
+				cri.setCompany(null);
+			}
+		}
+		if(cri.getCompany() == null || cri.getCompany().equals("회사")) {
+			logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+			UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
+			
+			if(!vo.getUser_name().equals("union")) {
+			cri.setCompany(vo.getUser_name());
+			
+			}else {
+				cri.setCompany(null);
+			}
+		}
+
+		// 회사 선택에 따른 키워드 재추출
+		if (cri.getCompany() != null) {	
+			if (cri.getCompany().isEmpty() == false) {
+
+				UserVO userVO = userService.viewByName(cri.getCompany());
+				logger.info("userVO: " + userVO);
+				logger.info("keywordList: " + keywordService.listByUser(userVO.getUser_idx()));
+				model.addAttribute("modelKeywordList",
+						keywordService.listByUser(userService.viewByName(cri.getCompany()).getUser_idx()));
+			}
+		}
+		
+		cri.setSns_writer("롯데시네마");
+		cri.setUrl(url);
+		cri.setPortal_name(content);
+		logger.info("crifvList: " + cri);
+		
+		model.addAttribute("list", snsService.fvlistSearch(cri));
+		model.addAttribute("creatDate", snsService.fvlistSearchTime(cri));
+		
+		logger.info("url: " + url);
+		model.addAttribute("content", content);
+		
+		Integer totalCount = snsService.fvlistSearchTotalCnt(cri);
+		
+		logger.info("totalCount: " + totalCount);
+		
+		PageMakerFv pageMakerFv = new PageMakerFv();
+		
+		pageMakerFv.setCri(cri);
+		pageMakerFv.setTotalCount(snsService.fvlistSearchTotalCnt(cri));
+		
+		logger.info("pageMaker: " + pageMakerFv);
+		
+		model.addAttribute("pageMaker", pageMakerFv);
+		model.addAttribute("totalCount", totalCount);
+		model.addAttribute("minusCount", cri.getPerPageNum() * (cri.getPage()-1));
+		
+		
+    }
+	
+	@GetMapping("/l_listall")
+    public void l_listallGET(@ModelAttribute("cri") SearchCriteria cri, Model model, String url, String content, String createstartDate, String createendDate) throws ParseException {
+    	logger.info("l_listall called....");
+    	if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
+			logger.info("keyword is null");
+			cri.setKeyword(null);
+			
+		} 
+		if(cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey()) ) {
+			logger.info("selectKey is null");
+			cri.setSelectKey(null);
+		}
+		if("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate())
+				|| cri.getStartDate() == "" || cri.getEndDate() == ""){
+			cri.setStartDate(null);
+			cri.setEndDate(null);
+		
+		} 
+		if(cri.getStartDate() != null && cri.getEndDate() != null) {
+			if(cri.getStartDate().indexOf("00:00:00") < 0 && cri.getEndDate().indexOf("23:59:59") < 0){ 
+				cri.setStartDate(cri.getStartDate() + " 00:00:00"); 
+				cri.setEndDate(cri.getEndDate() + " 23:59:59"); 
+			}
+		}
+		if(cri.getCompany() != null) {
+			if(cri.getCompany().isEmpty()) {
+				cri.setCompany(null);
+			}
+		}
+		if(cri.getCompany() == null || cri.getCompany().equals("회사")) {
+			logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+			UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
+			
+			if(!vo.getUser_name().equals("union")) {
+			cri.setCompany(vo.getUser_name());
+			
+			}else {
+				cri.setCompany(null);
+			}
+		}
+
+		// 회사 선택에 따른 키워드 재추출
+		if (cri.getCompany() != null) {	
+			if (cri.getCompany().isEmpty() == false) {
+
+				UserVO userVO = userService.viewByName(cri.getCompany());
+				logger.info("userVO: " + userVO);
+				logger.info("keywordList: " + keywordService.listByUser(userVO.getUser_idx()));
+				model.addAttribute("modelKeywordList",
+						keywordService.listByUser(userService.viewByName(cri.getCompany()).getUser_idx()));
+			}
+		}
+		
+		cri.setSns_writer("롯데시네마");
+		cri.setUrl(url);
+		cri.setCreatestartDate(createstartDate + " 00:00:00");
+		cri.setCreateminusDate(createstartDate + " 23:00:00");
+		cri.setCreateendDate(createendDate + " 23:59:59");
+		logger.info("crifvList: " + cri);
+		
+		model.addAttribute("list1", snsService.fvlistSearchList(cri));
+		model.addAttribute("list2", snsService.fvlistMinus(cri));
+		model.addAttribute("creatDate", snsService.fvSearchlistSearchTime(cri));
+		
+		logger.info("createstartDate: " + createstartDate);
+		logger.info("createendDate: " + createendDate);
+		logger.info("url: " + url);
+		model.addAttribute("content", content);
+		
+		Integer totalCount = snsService.fvlistSearchListTotalCnt(cri);
+		
+		logger.info("totalCount: " + totalCount);
+		
+		PageMakerFv pageMakerFv = new PageMakerFv();
+		
+		pageMakerFv.setCri(cri);
+		pageMakerFv.setTotalCount(snsService.fvlistSearchListTotalCnt(cri));
+		
+		logger.info("pageMaker: " + pageMakerFv);
+		
+		model.addAttribute("pageMaker", pageMakerFv);
+		model.addAttribute("totalCount", totalCount);
+		model.addAttribute("minusCount", cri.getPerPageNum() * (cri.getPage()-1));
+		
+		
+    }
+	
+	@GetMapping("/l_graph")
+    public void l_graphGET(@ModelAttribute("cri") SearchCriteria cri,SearchFv fv, Model model, String url, String url2) throws ParseException {
+    	logger.info("l_graph called....");
+    	if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
+			logger.info("keyword is null");
+			cri.setKeyword(null);
+			
+		} 
+		if(cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey()) ) {
+			logger.info("selectKey is null");
+			cri.setSelectKey(null);
+		}
+		if("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate())
+				|| cri.getStartDate() == "" || cri.getEndDate() == ""){
+			cri.setStartDate(null);
+			cri.setEndDate(null);
+		
+		} 
+		if(cri.getStartDate() != null && cri.getEndDate() != null) {
+			if(cri.getStartDate().indexOf("00:00:00") < 0 && cri.getEndDate().indexOf("23:59:59") < 0){ 
+				cri.setStartDate(cri.getStartDate() + " 00:00:00"); 
+				cri.setEndDate(cri.getEndDate() + " 23:59:59"); 
+			}
+		}
+		if(cri.getCompany() != null) {
+			if(cri.getCompany().isEmpty()) {
+				cri.setCompany(null);
+			}
+		}
+		if(cri.getCompany() == null || cri.getCompany().equals("회사")) {
+			logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+			UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
+			
+			if(!vo.getUser_name().equals("union")) {
+			cri.setCompany(vo.getUser_name());
+			
+			}else {
+				cri.setCompany(null);
+			}
+		}
+
+		// 회사 선택에 따른 키워드 재추출
+		if (cri.getCompany() != null) {	
+			if (cri.getCompany().isEmpty() == false) {
+
+				UserVO userVO = userService.viewByName(cri.getCompany());
+				logger.info("userVO: " + userVO);
+				logger.info("keywordList: " + keywordService.listByUser(userVO.getUser_idx()));
+				model.addAttribute("modelKeywordList",
+						keywordService.listByUser(userService.viewByName(cri.getCompany()).getUser_idx()));
+			}
+		}
+		
+		cri.setSns_writer("롯데시네마");
+		cri.setUrl(url);
+		fv.setUrl(url2);
+		logger.info("crifvonegraph: " + cri);
+		logger.info("crifvtwograph: " + fv);
+		model.addAttribute("url", url);
+		model.addAttribute("url2", url2);
+		model.addAttribute("list1", snsService.fvlistOne(cri));
+		model.addAttribute("list2", snsService.fvlistTwo(fv));
+		
+    }
+	
+	@GetMapping("/b_channel")
+    public void b_channelGET(@ModelAttribute("cri") SearchCriteria cri, Model model, String sns_content) throws ParseException {
+    	logger.info("b_channelGET called....");
+    	
+    	if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
+			logger.info("keyword is null");
+			cri.setKeyword(null);
+			
+		}
+		if(cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey()) ) {
+			logger.info("selectKey is null");
+			cri.setSelectKey(null);
+		}
+		if("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate())
+				|| cri.getStartDate() == "" || cri.getEndDate() == ""){
+			cri.setStartDate(null);
+			cri.setEndDate(null);
+		
+		} 
+		if(cri.getStartDate() != null && cri.getEndDate() != null) {
+			if(cri.getStartDate().indexOf("00:00:00") < 0 && cri.getEndDate().indexOf("23:59:59") < 0){ 
+				cri.setStartDate(cri.getStartDate() + " 00:00:00"); 
+				cri.setEndDate(cri.getEndDate() + " 23:59:59"); 
+			}
+		}
+		if(cri.getCompany() != null) {
+			if(cri.getCompany().isEmpty()) {
+				cri.setCompany(null);
+			}
+		}
+		if(cri.getCompany() == null || cri.getCompany().equals("회사")) {
+			logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+			UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
+			
+			if(!vo.getUser_name().equals("union")) {
+			cri.setCompany(vo.getUser_name());
+			
+			}else {
+				cri.setCompany(null);
+			}
+		}
+
+		// 회사 선택에 따른 키워드 재추출
+		if (cri.getCompany() != null) {	
+			if (cri.getCompany().isEmpty() == false) {
+
+				UserVO userVO = userService.viewByName(cri.getCompany());
+				logger.info("userVO: " + userVO);
+				logger.info("keywordList: " + keywordService.listByUser(userVO.getUser_idx()));
+				model.addAttribute("modelKeywordList",
+						keywordService.listByUser(userService.viewByName(cri.getCompany()).getUser_idx()));
+			}
+		}
+		
+		cri.setSns_writer("방울방울");
+		
+		logger.info("cri: " + cri);
+		
+		model.addAttribute("fV", snsService.facebookCGV(cri));
+		model.addAttribute("fVList", snsService.facebookCGVList(cri));
+		model.addAttribute("fVallList", snsService.facebookCGVallList(cri));
+		
+		Integer totalCount = snsService.facebookCGVListTotalCnt(cri);
+		
+		logger.info("totalCount: " + totalCount);
+		
+		PageMakerFv pageMakerFv = new PageMakerFv();
+		
+		pageMakerFv.setCri(cri);
+		pageMakerFv.setTotalCount(snsService.facebookCGVListTotalCnt(cri));
+		
+		logger.info("pageMaker: " + pageMakerFv);
+		
+		model.addAttribute("pageMaker", pageMakerFv);
+		model.addAttribute("totalCount", totalCount);
+		model.addAttribute("minusCount", cri.getPerPageNum() * (cri.getPage()-1));
+		
+    }
+	
+	@GetMapping("/b_list")
+    public void b_listGET(@ModelAttribute("cri") SearchCriteria cri, Model model, String url, String content) throws ParseException {
+    	logger.info("b_list called....");
+    	if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
+			logger.info("keyword is null");
+			cri.setKeyword(null);
+			
+		} 
+		if(cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey()) ) {
+			logger.info("selectKey is null");
+			cri.setSelectKey(null);
+		}
+		if("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate())
+				|| cri.getStartDate() == "" || cri.getEndDate() == ""){
+			cri.setStartDate(null);
+			cri.setEndDate(null);
+		
+		} 
+		if(cri.getStartDate() != null && cri.getEndDate() != null) {
+			if(cri.getStartDate().indexOf("00:00:00") < 0 && cri.getEndDate().indexOf("23:59:59") < 0){ 
+				cri.setStartDate(cri.getStartDate() + " 00:00:00"); 
+				cri.setEndDate(cri.getEndDate() + " 23:59:59"); 
+			}
+		}
+		if(cri.getCompany() != null) {
+			if(cri.getCompany().isEmpty()) {
+				cri.setCompany(null);
+			}
+		}
+		if(cri.getCompany() == null || cri.getCompany().equals("회사")) {
+			logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+			UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
+			
+			if(!vo.getUser_name().equals("union")) {
+			cri.setCompany(vo.getUser_name());
+			
+			}else {
+				cri.setCompany(null);
+			}
+		}
+
+		// 회사 선택에 따른 키워드 재추출
+		if (cri.getCompany() != null) {	
+			if (cri.getCompany().isEmpty() == false) {
+
+				UserVO userVO = userService.viewByName(cri.getCompany());
+				logger.info("userVO: " + userVO);
+				logger.info("keywordList: " + keywordService.listByUser(userVO.getUser_idx()));
+				model.addAttribute("modelKeywordList",
+						keywordService.listByUser(userService.viewByName(cri.getCompany()).getUser_idx()));
+			}
+		}
+		
+		cri.setSns_writer("방울방울");
+		cri.setUrl(url);
+		cri.setPortal_name(content);
+		logger.info("crifvList: " + cri);
+		
+		model.addAttribute("list", snsService.fvlistSearch(cri));
+		model.addAttribute("creatDate", snsService.fvlistSearchTime(cri));
+		
+		logger.info("url: " + url);
+		model.addAttribute("content", content);
+		
+		Integer totalCount = snsService.fvlistSearchTotalCnt(cri);
+		
+		logger.info("totalCount: " + totalCount);
+		
+		PageMakerFv pageMakerFv = new PageMakerFv();
+		
+		pageMakerFv.setCri(cri);
+		pageMakerFv.setTotalCount(snsService.fvlistSearchTotalCnt(cri));
+		
+		logger.info("pageMaker: " + pageMakerFv);
+		
+		model.addAttribute("pageMaker", pageMakerFv);
+		model.addAttribute("totalCount", totalCount);
+		model.addAttribute("minusCount", cri.getPerPageNum() * (cri.getPage()-1));
+		
+		
+    }
+	
+	@GetMapping("/b_listall")
+    public void b_listallGET(@ModelAttribute("cri") SearchCriteria cri, Model model, String url, String content, String createstartDate, String createendDate) throws ParseException {
+    	logger.info("b_listall called....");
+    	if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
+			logger.info("keyword is null");
+			cri.setKeyword(null);
+			
+		} 
+		if(cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey()) ) {
+			logger.info("selectKey is null");
+			cri.setSelectKey(null);
+		}
+		if("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate())
+				|| cri.getStartDate() == "" || cri.getEndDate() == ""){
+			cri.setStartDate(null);
+			cri.setEndDate(null);
+		
+		} 
+		if(cri.getStartDate() != null && cri.getEndDate() != null) {
+			if(cri.getStartDate().indexOf("00:00:00") < 0 && cri.getEndDate().indexOf("23:59:59") < 0){ 
+				cri.setStartDate(cri.getStartDate() + " 00:00:00"); 
+				cri.setEndDate(cri.getEndDate() + " 23:59:59"); 
+			}
+		}
+		if(cri.getCompany() != null) {
+			if(cri.getCompany().isEmpty()) {
+				cri.setCompany(null);
+			}
+		}
+		if(cri.getCompany() == null || cri.getCompany().equals("회사")) {
+			logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+			UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
+			
+			if(!vo.getUser_name().equals("union")) {
+			cri.setCompany(vo.getUser_name());
+			
+			}else {
+				cri.setCompany(null);
+			}
+		}
+
+		// 회사 선택에 따른 키워드 재추출
+		if (cri.getCompany() != null) {	
+			if (cri.getCompany().isEmpty() == false) {
+
+				UserVO userVO = userService.viewByName(cri.getCompany());
+				logger.info("userVO: " + userVO);
+				logger.info("keywordList: " + keywordService.listByUser(userVO.getUser_idx()));
+				model.addAttribute("modelKeywordList",
+						keywordService.listByUser(userService.viewByName(cri.getCompany()).getUser_idx()));
+			}
+		}
+		
+		cri.setSns_writer("방울방울");
+		cri.setUrl(url);
+		cri.setCreatestartDate(createstartDate + " 00:00:00");
+		cri.setCreateminusDate(createstartDate + " 23:00:00");
+		cri.setCreateendDate(createendDate + " 23:59:59");
+		logger.info("crifvList: " + cri);
+		
+		model.addAttribute("list1", snsService.fvlistSearchList(cri));
+		model.addAttribute("list2", snsService.fvlistMinus(cri));
+		model.addAttribute("creatDate", snsService.fvSearchlistSearchTime(cri));
+		
+		logger.info("createstartDate: " + createstartDate);
+		logger.info("createendDate: " + createendDate);
+		logger.info("url: " + url);
+		model.addAttribute("content", content);
+		
+		Integer totalCount = snsService.fvlistSearchListTotalCnt(cri);
+		
+		logger.info("totalCount: " + totalCount);
+		
+		PageMakerFv pageMakerFv = new PageMakerFv();
+		
+		pageMakerFv.setCri(cri);
+		pageMakerFv.setTotalCount(snsService.fvlistSearchListTotalCnt(cri));
+		
+		logger.info("pageMaker: " + pageMakerFv);
+		
+		model.addAttribute("pageMaker", pageMakerFv);
+		model.addAttribute("totalCount", totalCount);
+		model.addAttribute("minusCount", cri.getPerPageNum() * (cri.getPage()-1));
+		
+		
+    }
+	
+	@GetMapping("/b_graph")
+    public void b_graphGET(@ModelAttribute("cri") SearchCriteria cri,SearchFv fv, Model model, String url, String url2) throws ParseException {
+    	logger.info("b_graph called....");
+    	if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
+			logger.info("keyword is null");
+			cri.setKeyword(null);
+			
+		} 
+		if(cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey()) ) {
+			logger.info("selectKey is null");
+			cri.setSelectKey(null);
+		}
+		if("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate())
+				|| cri.getStartDate() == "" || cri.getEndDate() == ""){
+			cri.setStartDate(null);
+			cri.setEndDate(null);
+		
+		} 
+		if(cri.getStartDate() != null && cri.getEndDate() != null) {
+			if(cri.getStartDate().indexOf("00:00:00") < 0 && cri.getEndDate().indexOf("23:59:59") < 0){ 
+				cri.setStartDate(cri.getStartDate() + " 00:00:00"); 
+				cri.setEndDate(cri.getEndDate() + " 23:59:59"); 
+			}
+		}
+		if(cri.getCompany() != null) {
+			if(cri.getCompany().isEmpty()) {
+				cri.setCompany(null);
+			}
+		}
+		if(cri.getCompany() == null || cri.getCompany().equals("회사")) {
+			logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+			UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
+			
+			if(!vo.getUser_name().equals("union")) {
+			cri.setCompany(vo.getUser_name());
+			
+			}else {
+				cri.setCompany(null);
+			}
+		}
+
+		// 회사 선택에 따른 키워드 재추출
+		if (cri.getCompany() != null) {	
+			if (cri.getCompany().isEmpty() == false) {
+
+				UserVO userVO = userService.viewByName(cri.getCompany());
+				logger.info("userVO: " + userVO);
+				logger.info("keywordList: " + keywordService.listByUser(userVO.getUser_idx()));
+				model.addAttribute("modelKeywordList",
+						keywordService.listByUser(userService.viewByName(cri.getCompany()).getUser_idx()));
+			}
+		}
+		
+		cri.setSns_writer("방울방울");
 		cri.setUrl(url);
 		fv.setUrl(url2);
 		logger.info("crifvonegraph: " + cri);
@@ -412,7 +1347,7 @@ public class MarketingController {
 	
 	@GetMapping("/n_channel")
     public void n_channelGET(@ModelAttribute("cri") SearchCriteria cri, Model model, String sns_content) throws ParseException {
-    	logger.info("f_channelGET called....");
+    	logger.info("n_channelGET called....");
     	
     	if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
 			logger.info("keyword is null");
@@ -488,7 +1423,7 @@ public class MarketingController {
 	
 	@GetMapping("/n_list")
     public void n_listGET(@ModelAttribute("cri") SearchCriteria cri, Model model, String url, String content, String startDate, String endDate) throws ParseException {
-    	logger.info("f_list called....");
+    	logger.info("n_list called....");
     	if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
 			logger.info("keyword is null");
 			cri.setKeyword(null);
@@ -655,7 +1590,7 @@ public class MarketingController {
 	
 	@GetMapping("/n_channel2")
     public void n_channelGET2(@ModelAttribute("cri") SearchCriteria cri, Model model, String sns_content) throws ParseException {
-    	logger.info("f_channelGET called....");
+    	logger.info("n_channelGET called....");
     	
     	if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
 			logger.info("keyword is null");
@@ -1378,7 +2313,7 @@ public class MarketingController {
 			fv.setDate(cal.getTime());
 			fv.setUrl(url);
 			
-			graphVO.setWriteDate(sdf.format(cal.getTime()) + ":00:00");
+			graphVO.setWriteDate(sdf.format(cal.getTime()) + ":00");
 			graphVO.setType1(portalService.nvlistViewCnt2(fv));
 			graphVO.setType2(portalService.nvlistReply_cnt2(fv));
 			graphVO.setType3(portalService.nvlistlike_cnt2(fv));
