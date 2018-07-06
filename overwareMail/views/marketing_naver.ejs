@@ -1,0 +1,562 @@
+<div class="main-body">
+  <div class="page-wrapper">
+    <div class="page-header">
+      <div class="page-header-title">
+        <h4>기사선택</h4>
+      </div>
+      <div class="page-header-breadcrumb">
+        <ul class="breadcrumb-title">
+          <li class="breadcrumb-item">
+            <a href="/">
+              <i class="fas fa-home"></i>
+            </a>
+          </li>
+          <li class="breadcrumb-item"><a href="#!">기사선택</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="page-body">
+      <div class="row" id="listTable">
+        <div class="col-md-12">
+          <div class="alert alert-default" style="border-radius:  0; border-width:  2px;  margin-bottom: 1rem;">
+          	<ul class="p-l-15 f-12" style="list-style-type: disc; color:  #666;">
+              <li>기사의 썸네일은 넣고자 하는 이미지의 URL 주소를 해당 기사의 박스 칸에 작성하시면 됩니다.</li>
+              <li>썸네일, 대분류, 세부기사 수정 및 선택기사 삭제는 선택기사 리스트 페이지에서 할 수있습니다.</li>
+              <li>대표기사에 있는 번호를 다른 기사의 세부기사 칸에 작성해주시면 기사 그룹핑이 됩니다.</li>
+          	</ul>
+        	</div>
+        </div>
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header">
+              <select name="select" class="col-md-1 form-control form-control-default m-b-10 m-r-5 p-r-5 f-left" id="selectKeyword">
+                <option>키워드</option>
+                <%for(var i=0; i < klist.length; i++) {%>
+                  <option value='<%=klist[i].M_keyword%>'><%=klist[i].M_keyword%></option>
+                <%}%>
+              </select>
+              <div class="col-md-3 p-r-0 p-l-0 f-right">
+                <div id="reportrange" class="form-control form-control-default">
+                  <i class="glyphicon glyphicon-calendar far fa-calendar-alt"></i>
+                  <span></span>
+                  <i class="f-right fa fa-angle-down" style="font-size: 17px;"></i>
+                </div>
+              </div>
+            </div>
+            <div class="card-block table-border-style">
+              <div class="table-responsive">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th width="1%">
+                        <div class="border-checkbox-section" style="max-width: 30px;">
+                          <div class="border-checkbox-group border-checkbox-group-default">
+                            <input class="border-checkbox" type="checkbox" id="checkboxAll">
+                            <label class="border-checkbox-label" for="checkboxAll"></label>
+                          </div>
+                        </div>
+                      </th>
+                      <th width="5%">NO</th>
+                      <th width="10%" style="min-width: 80px;">등록날짜</th>
+                      <th width="20%" style="min-width:58px">제목</th>
+                      <th width="5%" style="min-width: 80px;">언론사</th>
+                      <th width="5%" style="min-width: 80px;">기자</th>
+                      <th width="5%" style="min-width: 80px;">키워드</th>
+                      <th width="5%" style="min-width: 50px;">분류글</th>
+                      <th width="20%" style="min-width: 150px;">썸네일</th>
+                      <th width="10%" style="min-width: 140px;">대분류</th>
+                      <th width="10%" style="min-width: 120px;">대표기사</th>
+                      <th width="10%" style="min-width: 120px;">세부기사</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <%
+                      var limit = 10;
+                      if(currentPage > 0){
+                        (currentPage - 1) * limit;
+                      }
+                      for(var i=0; i < list.length; i++) {
+                    %>
+                    <tr>
+                      <input type="hidden" id="idx" value="<%=list[i].media_idx%>" />
+                      <td>
+                        <div class="border-checkbox-section" style="max-width: 30px;">
+                          <div class="border-checkbox-group border-checkbox-group-default">
+                            <input class="border-checkbox news-checkbox" type="checkbox" id="checkbox<%=i%>">
+                            <label class="border-checkbox-label" for="checkbox<%=i%>"></label>
+                          </div>
+                        </div>
+                      </td>
+                      <th><%= listCount - i - offset %></th>
+                      <td><%= list[i].createDate %></td>
+                      <td>
+                        <a href="<%= list[i].url %>" target="_blank" title="<%= list[i].media_title %>">
+                          <div class="title_nobr"><%= list[i].media_title %></div>
+                        </a>
+                      </td>
+                      <td><div class="nobr" title="<%= list[i].media_name %>"><%= list[i].media_name %></div></td>
+                      <td>
+                        <div class="nobr" title="<%= list[i].reporter_name %>">
+                          <% if(list[i].reporter_name == null){ %>
+                            <i class="fas fa-minus"></i>
+                          <%}else{%>
+                            <%=list[i].reporter_name%>
+                          <%}%>
+                        </div>
+                      </td>
+                      <td><div class="nobr" title="<%= list[i].keyword %>"><%= list[i].keyword %></div></td>
+                      <td>
+                        <div class="nobr" title="<%= list[i].textType %>">
+                          <% if(list[i].textType == null){ %>
+                            <i class="fas fa-minus"></i>
+                          <%}else{%>
+                            <%=list[i].textType%>
+                          <%}%>
+                        </div>
+                      </td>
+                      <td>
+                        <input type="text" placeholder="이미지주소(URL)" id="thumbnail" class="form-control selectText">
+                      </td>
+                      <td>
+                        <!-- <input type="number" min="1" max="8" value="1"  id="newsType" class="form-control"> -->
+                        <select class="form-control form-control-default p-l-5 select-news" id="newsType">
+                          <option value="1">쇼박스영화</option>
+                          <option value="2">경쟁영화</option>
+                          <option value="3">캐스팅</option>
+                          <option value="4">쇼박스기업뉴스</option>
+                          <option value="5">영화일반</option>
+                          <option value="6">보도국</option>
+                        </select>
+                      </td>
+                      <td>
+                        <input type="text" placeholder="대표기사" id="news_title" value="<%=list[i].media_idx%>" class="form-control selectText">
+                      </td>
+                      <td>
+                        <input type="text" placeholder="세부기사" id="news_detail" class="form-control selectText">
+                      </td>
+                    </tr>
+                    <% } %>
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td colspan="5">
+                        <button id="addBtn" class="btn btn-list alert-check p-r-5 p-l-5 m-l-15 m-b-5  f-left m-t-5"><i class="fas fa-angle-down"></i>선택저장</button>
+                      </td>
+                    <%
+                    var pageCount = Math.ceil(listCount/limit);
+                    if(pageCount > 1) {
+                    %>
+                      <td colspan="7">
+                        <ul class="pagination float-right">
+                          <%
+                            var pageSize = 5;
+                            var pRCnt = parseInt(currentPage / pageSize);
+                            if(currentPage % pageSize == 0){
+                              pRCnt = parseInt(currentPage / pageSize) - 1;
+                            }
+                            if(currentPage > 5) {
+                          %>
+                            <li class="page-item">
+                              <a class="page-link" data-value="1" aria-label="Previous">
+                                <i class="ti-angle-double-left f-12"></i>
+                                <span aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                              </a>
+                            </li>
+                            <li class="page-item">
+                              <a class="page-link" data-value=="<%=(pRCnt * pageSize)%>" aria-label="Previous">
+                                <i class="ti-angle-left f-12"></i>
+                                <span aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                              </a>
+                            </li>
+                          <% } %>
+                          <% for(var index=pRCnt * pageSize + 1;index<(pRCnt + 1)*pageSize + 1;index++){%>
+                            <li class= "<%=(currentPage == index) ? 'active' : ''%> page-item">
+                              <a class="page-link" data-value="<%=index%>" >
+                                <%= index %>
+                              </a>
+                            </li>
+                          <%
+                              if(index == pageCount) {
+                                break;
+                              }
+                            }
+                          %>
+                          <% if((pRCnt + 1) * pageSize < pageCount) { %>
+                            <li class="page-item">
+                              <a class="page-link" data-value="<%=(pRCnt + 1)*pageSize+1%>" aria-label="Next">
+                                <i class="ti-angle-right f-12"></i>
+                                <span aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                              </a>
+                            </li>
+                            <li class="page-item">
+                              <a class="page-link" data-value="<%=pageCount%>" aria-label="Next">
+                                <i class="ti-angle-double-right f-12"></i>
+                                <span aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                              </a>
+                            </li>
+                          <% } %>
+                        </ul>
+                      </td>
+                    <% } %>
+                    </tr>
+                  </tfoot>
+                </table>
+                <input type="hidden" id="sDate" value="<%=sDate%>"/>
+                <input type="hidden" id="eDate" value="<%=eDate%>"/>
+                <input type="hidden" id="keyword" value="<%=keyword%>"/>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<style type="text/css">
+  .table td, .table th {
+    text-align: center;
+  }
+  .title_nobr,.nobr{
+    font-size: 15px;
+    padding-left: 3px;
+    text-overflow: ellipsis;
+    width: 400px;
+    overflow: hidden;
+  }
+  .nobr{
+    width: 66px;
+  }
+  .nobr>i{
+    font-size: 10px;
+  }
+  .select-news{
+    font-size: 12px;
+    max-height: 35px;
+    line-height: 16px;
+  }
+  .title_nobr:hover{
+    cursor:pointer;
+    font-weight: bold;
+  }
+  .border-checkbox-section .border-checkbox-group .border-checkbox-label{
+    margin: 0px;
+  }
+  #listTable .table thead th{
+    vertical-align: middle;
+    text-align: center;
+  }
+  #addBtn{
+    font-weight: bold;
+    color: white;
+    height: 40px;
+    background-color: #a6a6a6;
+    border-color: #a6a6a6;
+  }
+  /* daterangepicker */
+  .card .card-header span:not(.input-group-addon) {
+    display: inline;
+  }
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/2.1.27/daterangepicker.css" />
+<script type="text/javascript" src="/js/error.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/2.1.27/moment.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/2.1.27/daterangepicker.js"></script>
+<!-- sweetalert -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sweetalert@2.1.0/dist/sweetalert.min.js"></script>
+<script type="text/javascript">
+  // data input hidden values
+  var sDateValue = $('#sDate').val();
+  var eDateValue = $('#eDate').val();
+  var keywordValue = $('#keyword').val();
+  $(document).ready(function(){
+    if(keywordValue != ''){
+      $("#selectKeyword option[value='"+keywordValue+"']").attr('selected','selected');
+    }
+    $('#reportrange').daterangepicker(optionSet1,cb);
+
+    if(sDateValue == '' && eDateValue == ''){
+      $('#reportrange span').html(moment().format('YYYY.MM.DD') + ' - ' + moment().format('YYYY.MM.DD'));
+    }
+    else{
+      $('#reportrange span').html(moment(new Date(sDateValue)).format('YYYY.MM.DD') + ' - ' + moment(new Date(eDateValue+' 23:59:59')).format('YYYY.MM.DD'));
+    }
+  });
+  // 대표기사,썸네일,세부기사 클릭시 텍스트 전체 선택
+  $(document).on("click",".selectText", function(){
+    $(this).select();
+  });
+  // 키워드 선택시
+  $('#selectKeyword').on('change',function(){
+    var param = {
+      page : 1
+    };
+    var optionVal = $("#selectKeyword option:selected").val();
+    if(optionVal != '키워드'){
+      param.keyword=optionVal;
+      $('#keyword').val(optionVal);
+    }
+    else{
+      $('#keyword').val('');
+    }
+    // data input hidden values
+    var sDateValue = $('#sDate').val();
+    var eDateValue = $('#eDate').val();
+    if(sDateValue != '' && eDateValue != ''){
+      param.sDate = sDateValue;
+      param.eDate = eDateValue;
+    }
+    ajaxGetPageList(param,0);
+  });
+  // 뉴스 전체 선택시
+  $('#checkboxAll').on('click',function(){
+    var checkBool = null;
+    if($(this).is(":checked")){
+      checkBool = true;
+    }else{
+      checkBool = false;
+    }
+    $('.news-checkbox').prop('checked', checkBool);
+  });
+  $(document).on('click','.news-checkbox',function(){
+    $('#checkboxAll').prop('checked', false);
+  });
+  // 선택저장 클릭시
+  $(document).on('click','#addBtn',function(){
+    if($('input.news-checkbox[type=checkbox]:checked').length < 1){
+      swal("ERROR!", '체크박스를 선택해주세요.', "error");
+      return false;
+    }
+    swal({
+      title: "선택저장 처리 하시겠습니까?",
+      icon: "warning",
+      buttons: ["취소", true],
+      dangerMode: true,
+    }).then(function(value) {
+      if (value != null) {
+        var list = [];
+        $('input.news-checkbox[type=checkbox]:checked').each(function(idx,ele){
+          var trEle = $(ele).parents('tr');
+          list.push({idx:trEle.find('#idx').val(),thumbnail:trEle.find('#thumbnail').val(),code:trEle.find('#newsType option:selected').val(),detail:trEle.find('#news_detail').val()});
+        });
+        $('#checkboxAll').prop('checked', false);
+        addNews(list);
+      }
+    });
+  });
+  function addNews(arr){
+    $('input[type=checkbox]:checked').prop('checked',false);
+    $.ajax({
+      type: "POST",
+      url: "/news/addNews",
+      data: {'list' : JSON.stringify(arr)},
+      error:function(request,status,error){
+        console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
+        swal("ERROR!", '새로고침 후 다시 시도해주세요.', "error");
+      },
+      success:function(data){
+        if(data.status){
+          swal("SUCCESS!", '선택저장 완료했습니다.', "success");
+        }else{
+          swal("ERROR!", '새로고침 후 다시 시도해주세요.', "error");
+        }
+      }
+    });
+  }
+  //페이지 이동
+  $(document).on('click','.page-link',function(){
+    var num = Number($(this).text()) || Number($(this).data().num);
+    var param = {
+      page : Number($(this).data().value)
+    };
+    // data input hidden values
+    var sDateValue = $('#sDate').val();
+    var eDateValue = $('#eDate').val();
+    var keywordValue = $('#keyword').val();
+    if(sDateValue != '' && eDateValue != '' ){
+      param.sDate = moment(sDateValue).format('YYYY-MM-DD');
+      param.eDate = moment(eDateValue).format('YYYY-MM-DD');
+    }
+    if(keywordValue != ''){
+      param.keyword = keywordValue;
+    }
+    ajaxGetPageList(param,num);
+  });
+  function ajaxGetPageList(param){
+    console.log('ajaxGetPageList:',param);
+    $.ajax({
+      url: '/news/getNextPage',
+      type: 'post',
+      data: param,
+      error: function(request,status,error){
+        console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
+        alert('새로고침 후 다시 시도해주세요.');
+      },
+      success: function(data){
+        if(data.status != true){
+          alert('새로고침 후 다시 시도해주세요.');
+          return false;
+        }
+        $('#listTable tbody').eq(0).empty();
+
+        console.log(data);
+        data.result.list.forEach(function(item,idx){
+          var numIdx = Math.ceil(data.result.listCount-(data.result.offset+idx)).toString();
+          var html = '<tr>\
+          <input type="hidden" id="idx" value="'+item.media_idx+'" />\
+          <td>\
+            <div class="border-checkbox-section" style="max-width: 30px;">\
+              <div class="border-checkbox-group border-checkbox-group-default">\
+                <input class="border-checkbox news-checkbox" type="checkbox" id="checkbox'+idx+'">\
+                <label class="border-checkbox-label" for="checkbox'+idx+'"></label>\
+              </div>\
+            </div>\
+          </td>\
+          <th>'+numIdx+'</th>\
+          <td>'+item.createDate+'</td>\
+          <td>\
+            <a href="'+item.url+'" target="_blank" title="'+item.media_title+'">\
+              <div class="title_nobr">'+item.media_title+'</div>\
+            </a>\
+          </td>\
+          <td><div class="nobr" title="'+item.media_name+'">'+item.media_name+'</div></td>\
+          <td><div class="nobr" title="'+item.reporter_name+'">'+((item.reporter_name == null) ? '<i class="fas fa-minus"></i>' : item.reporter_name)+'</div></td>\
+          <td><div class="nobr" title="'+item.keyword+'">'+item.keyword+'</div></td>\
+          <td><div class="nobr" title="'+item.textType+'">'+((item.textType == null) ? '<i class="fas fa-minus"></i>' : item.textType)+'</div></td>\
+          <td>\
+            <input type="text" placeholder="이미지주소(URL)" id="thumbnail" class="form-control selectText">\
+          </td>\
+          <td>\
+            <select class="form-control form-control-default p-l-5 select-news" id="newsType">\
+              <option value="1">쇼박스영화</option>\
+              <option value="2">경쟁영화</option>\
+              <option value="3">캐스팅</option>\
+              <option value="4">쇼박스기업뉴스</option>\
+              <option value="5">영화일반</option>\
+              <option value="6">보도국</option>\
+            </select>\
+          </td>\
+          <td>\
+            <input type="text" placeholder="대표기사" id="news_title" value="'+item.media_idx+'" class="form-control selectText">\
+          </td>\
+          <td>\
+            <input type="text" placeholder="세부기사" id="news_detail" class="form-control selectText">\
+          </td>';
+          $('#listTable tbody').eq(0).append(html);
+        });
+        var limit = 10;
+        var pageCount = Math.ceil(data.result.listCount/limit);
+        $('#listTable tfoot').eq(0).empty();
+        var html = '<tr><td colspan="5"><button id="addBtn" class="btn btn-list alert-check p-r-5 p-l-5 m-l-15 m-b-5  f-left m-t-5"><i class="fas fa-angle-down"></i>선택저장</button></td>'
+        if(pageCount > 1) {
+          html += '<td colspan="7"><ul class="pagination float-right">';
+          var pageSize = 5;
+          var pRCnt = parseInt(data.result.currentPage / pageSize);
+          if(data.result.currentPage % pageSize == 0){
+            pRCnt = parseInt(data.result.currentPage / pageSize) - 1;
+          }
+          if(data.result.currentPage > 5) {
+            html += '<li class="page-item"><a class="page-link" data-value="1" aria-label="Previous">\
+                <i class="ti-angle-double-left f-12"></i>\
+                <span aria-hidden="true"></span>\
+                <span class="sr-only">Previous</span>\
+              </a></li>\
+              <li class="page-item"><a class="page-link" data-value=\"'+(pRCnt * pageSize)+'"\ aria-label="Previous">\
+                <i class="ti-angle-left f-12"></i>\
+                <span aria-hidden="true"></span>\
+                <span class="sr-only">Previous</span>\
+              </a></li>';
+          }
+
+          for(var index=pRCnt * pageSize + 1;index<(pRCnt + 1)*pageSize + 1;index++){
+            var active = (data.result.currentPage == index) ? "active" : "";
+            html += '<li class=\"'+active+' page-item">\
+              <a class="page-link" data-value=\"'+index+'"\ >'+index+'</a></li>'
+
+            if(index == pageCount) {
+              break;
+            }
+          }
+          if((pRCnt + 1) * pageSize < pageCount) {
+            html += '<li class="page-item">\
+                  <a class="page-link" data-value=\"'+((pRCnt + 1)*pageSize+1)+'"\ aria-label="Next">\
+                    <i class="ti-angle-right f-12"></i>\
+                    <span aria-hidden="true"></span>\
+                    <span class="sr-only">Next</span>\
+                  </a></li>\
+                  <li class="page-item">\
+                  <a class="page-link" data-value=\"'+pageCount+'"\ aria-label="Next">\
+                    <i class="ti-angle-double-right f-12"></i>\
+                    <span aria-hidden="true"></span>\
+                    <span class="sr-only">Next</span>\
+                  </a></li>';
+          }
+          html += '</ul></td>';
+        }
+        html += '</tr>';
+        $('#listTable tfoot').eq(0).append(html);
+      }
+    });
+  }
+
+  //날짜 선택 시
+  function searchDate(){
+    var dateArr = $("#reportrange span").text().split(' - ');
+    var start = moment(new Date(dateArr[0].replace(/[.]/gi,'-')));
+    var end = moment(new Date(dateArr[1].replace(/[.]/gi,'-')));
+    var param = {
+      page : 1,
+      sDate : start.format('YYYY-MM-DD'),
+      eDate : end.format('YYYY-MM-DD')
+    };
+    $('#sDate').val(param.sDate);
+    $('#eDate').val(param.eDate);
+
+    // data input hidden values
+    var keywordValue = $('#keyword').val();
+    if(keywordValue != ''){
+      param.keyword = keywordValue;
+    }
+    ajaxGetPageList(param);
+  }
+  $(document).on('click','.applyBtn',searchDate);
+  //날짜 설정
+  var cb = function(start, end, label) {
+    console.log('FUNC: cb',start.toISOString(), end.toISOString(), label);
+    $('#reportrange span').html(moment(new Date(start.toISOString())).format('YYYY.MM.DD') + ' - ' + moment(new Date(end.toISOString())).format('YYYY.MM.DD'));
+    searchDate();
+  }
+  var ranges = {
+    '당일': [moment(), moment()],
+    '전일': [moment().subtract(1, 'days'), moment()],
+    '최근 7일': [moment().subtract(6, 'days'), moment()],
+    '최근 30일': [moment().subtract(29, 'days'), moment()]
+  };
+  var optionSet1 = {
+    startDate: (sDateValue != '') ? moment(new Date(sDateValue)) : moment(),
+    endDate:  (eDateValue != '') ? moment(new Date(eDateValue+' 23:59:59')) : moment(),
+    dateLimit: {
+      days: 60
+    },
+    showDropdowns: true,
+    showRangeInputsOnCustomRangeOnly: false,
+    ranges: ranges,
+    opens: 'left',
+    buttonClasses: ['btn'],
+    applyClass: 'btn-small btn-primary',
+    cancelClass: 'btn-small',
+    format: 'YYYY.MM.DD',
+    separator: ' to ',
+    locale: {
+      applyLabel: '확인',
+      cancelLabel: '취소',
+      customRangeLabel: '직접선택',
+      daysOfWeek: ['일', '월', '화', '수', '목', '금', '토'],
+      monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+      firstDay: 1
+    }
+  };
+</script>
