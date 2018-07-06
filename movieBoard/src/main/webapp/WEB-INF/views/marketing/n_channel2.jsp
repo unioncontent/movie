@@ -248,13 +248,14 @@
                                             <th width="3%">조회수</th>
                                             <th width="3%">댓글수</th>
                                             <th width="3%">좋아요수</th>
+                                            <th width="15%">영화제목</th>
                                             <th width="15%">제목</th>
                                             <th width="5%"></th>
                                           </tr>
                                         </thead>
                                         <tbody>
                                           <c:forEach items="${nVList}" var="nV" varStatus="index">
-                                          <tr>
+                                          <tr class = "trList">
                                           	<th>${totalCount - minusCount - index.count + 1}</th>
                                             <td>
                                             ${nV.writeDate}
@@ -279,6 +280,21 @@
                                             <input type="hidden" value="${nV.portal_title}" name="portal_title">
                                             </td>
                                             <td>
+                                            <input type="text" value="${nV.portal_subtitle}" name="portal_subtitle" style="vertical-align:middle; max-width:300px; height: 35px;">
+                                            <button type="button" class="insertBtn2 btn btn-primary waves-effect waves-light alert-confirm1" data-original-title="등록">
+		      								  <span class="icofont icofont-ui-check"></span>
+		    								</button>
+                                            </td>
+                                            <%-- <td>
+                                            ${nV.portal_subtitle}
+                                            <c:if test="${nV.portal_subtitle == null}">
+                                            <input type="text" value="${nV.portal_subtitle}" style="vertical-align:middle; max-width:300px; height: 35px;">
+                                            <button type="button" class="insertBtn btn btn-primary waves-effect waves-light alert-confirm1" data-toggle="tooltip" data-placement="top" data-original-title="등록">
+		      								  <span class="icofont icofont-ui-check"></span>
+		    								</button>
+                                            </c:if>
+                                            </td> --%>
+                                            <td>
                                             <div class="content-nowrap">
                                             <a href='${nV.url}' target="_blank">${nV.portal_title}</a>
                                             </div>
@@ -293,7 +309,7 @@
                                         </tbody>
                                         <tfoot>
                                           <tr>
-                                            <td colspan="8">
+                                            <td colspan="9">
                                                <ul class="pagination float-right">
 	        					                   <c:if test="${pageMaker.prev}">
 		        					                   <li class="page-item">
@@ -381,7 +397,6 @@
   <![endif]-->
   <!-- Warning Section Ends -->
 
-
   <!-- Required Jquery -->
   <script type="text/javascript" src="../bower_components/jquery/dist/jquery.min.js"></script>
   <script type="text/javascript" src="../bower_components/jquery-ui/jquery-ui.min.js"></script>
@@ -389,30 +404,32 @@
   <script type="text/javascript" src="../bower_components/bootstrap/js/bootstrap.min.js"></script>
   <!-- jquery slimscroll js -->
   <script type="text/javascript" src="../bower_components/jquery-slimscroll/jquery.slimscroll.js"></script>
-  <!-- modernizr js -->
-  <script type="text/javascript" src="../bower_components/modernizr/modernizr.js"></script>
-  <script type="text/javascript" src="../bower_components/modernizr/feature-detects/css-scrollbars.js"></script>
-  <!-- classie js -->
-  <script type="text/javascript" src="../bower_components/classie/classie.js"></script>
-  <!-- Bootstrap date-time-picker js -->
-  <script type="text/javascript" src="../assets/pages/advance-elements/moment-with-locales.min.js"></script>
-  <!-- Date-range picker js -->
-  <script type="text/javascript" src="../bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
   <!-- Bootstrap date-time-picker js -->
   <script type="text/javascript" src="../assets/pages/advance-elements/moment-with-locales.min.js"></script>
   <script type="text/javascript" src="../bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
   <script type="text/javascript" src="../assets/pages/advance-elements/bootstrap-datetimepicker.min.js"></script>
-  <!-- Morris Chart js -->
-  <script src="../bower_components/raphael/raphael.min.js"></script>
-  <script src="../bower_components/morris.js/morris.js"></script>
-  <!-- sweet alert js -->
-  <script type="text/javascript" src="../bower_components/sweetalert/dist/sweetalert.min.js"></script>
-  <script type="text/javascript" src="../assets/pages/division/script.js"></script>
+  <!-- modernizr js사 -->
+  <script type="text/javascript" src="../bower_components/modernizr/modernizr.js"></script>
+  <script type="text/javascript" src="../bower_components/modernizr/feature-detects/css-scrollbars.js"></script>
+  <!-- classie js -->
+  <script type="text/javascript" src="../bower_components/classie/classie.js"></script>
+  <!-- calendar -->
+  <script type="text/javascript" src="../assets/pages/dashboard/pgcalendar/calendar.js"></script>
+  <!-- Date-range picker js -->
+  <script type="text/javascript" src="../bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+  <!-- Bootstrap date-time-picker js -->
+  <script type="text/javascript" src="../assets/pages/advance-elements/moment-with-locales.min.js"></script>
   <!-- i18next.min.js -->
   <script type="text/javascript" src="../bower_components/i18next/i18next.min.js"></script>
   <script type="text/javascript" src="../bower_components/i18next-xhr-backend/i18nextXHRBackend.min.js"></script>
   <script type="text/javascript" src="../bower_components/i18next-browser-languagedetector/i18nextBrowserLanguageDetector.min.js"></script>
   <script type="text/javascript" src="../bower_components/jquery-i18next/jquery-i18next.min.js"></script>
+  <!-- sweet alert js -->
+  <script type="text/javascript" src="../bower_components/sweetalert/dist/sweetalert.min.js"></script>
+  <script type="text/javascript" src="../assets/pages/division/script.js"></script>
+  <!-- Morris Chart js -->
+  <script src="../bower_components/raphael/raphael.min.js"></script>
+  <script src="../bower_components/morris.js/morris.js"></script>
   <!-- Custom js -->
   <script type="text/javascript" src="../assets/js/script.js"></script>
   <script type="text/javascript" src="../assets/pages/division/script2.js"></script>
@@ -424,7 +441,7 @@
   <script src="../assets/dist/js/datepicker.min.js"></script>
   <script src="../assets/dist/js/i18n/datepicker.en.js"></script>
   <script src="../assets/dist/js/select2.js"></script>
-</body>
+</body>	
 <style>
 .select2-container .select2-selection--single{
   height: 40px;
@@ -460,6 +477,58 @@
 
 			$fromDate.val(startDateOption + " - " + endDateOption);
 		}
+		
+		//등록버튼 클릭시
+		$(document).on("click",".insertBtn2",function(event){
+			var parent = event.target.parentNode;
+
+			if(parent.type == 'button'){
+				console.log("button click...");
+				parent = parent.parentNode;
+			}
+
+			var tr = parent.parentNode;
+			console.log(tr);
+
+			var td1 = tr.children[1];
+
+			var td2 = tr.children[6];
+
+
+			var url = td1.children[0].value;
+			var portal_subtitle = td2.children[0].value;
+			
+			console.log(url);
+			console.log(portal_subtitle);
+			
+		    swal({
+				title: "등록 하시겠습니까?",
+				text: "바로 등록처리 됩니다.",
+				type: "warning",
+				showCancelButton: true,
+				confirmButtonClass: "btn-danger",
+				confirmButtonText: "YES",
+				closeOnConfirm: false
+				},
+			function(){
+					
+					$.ajax({
+							type: "GET",
+							url: "n_update",
+							data: {portal_subtitle: portal_subtitle, url: url},
+							dataType: "json",
+							success: function(data){
+									console.log(data);
+							}
+				
+					});
+				
+				swal("Success!", "등록처리가 완료되었습니다.", "success");
+
+				location.reload();
+			});
+		
+		});
 
 		//그래프 비교버튼
 		$(".twin-button").on("click", function(event){
@@ -497,7 +566,7 @@
 
 			console.log("url:" + url, "content:" + content);
 
-			self.location = "n_list2?url=" + url + "&content=" + content;
+			self.location = "n_list?url=" + url + "&content=" + content;
 
 		});
 
@@ -513,6 +582,29 @@
 
 		$('#e1').select2({ width: '100%', height: '100%' });
 		$('#e2').select2({ width: '100%', height: '100%' });
+		
+		/* //등록버튼 클릭시
+		$(".insertBtn").on("click", function(event){
+			
+		    swal({
+				title: "등록 하시겠습니까?",
+				text: "바로 등록처리 됩니다.",
+				type: "warning",
+				showCancelButton: true,
+				confirmButtonClass: "btn-danger",
+				confirmButtonText: "YES",
+				closeOnConfirm: false
+				},
+				function(){
+
+					insertType(event);
+
+					swal("Success!", "등록처리가 완료되었습니다.", "success");
+
+					location.reload();
+				});
+  		}); */
+		
 	}); // end ready...
 
 
@@ -572,6 +664,40 @@
 	 	}
 
 	}
+	
+	/* function insertType(event) {
+
+		var parent = event.target.parentNode;
+
+		if(parent.type == 'button'){
+			console.log("button click...");
+			parent = parent.parentNode;
+		}
+
+		var tr = parent.parentNode;
+		console.log(tr);
+
+		var td1 = tr.children[1];
+
+		var td2 = tr.children[6];
+
+
+		var url = td1.children[0].value;
+		var portal_subtitle = td2.children[0].value;
+		console.log(url);
+		console.log(portal_subtitle);
+
+		$.ajax({
+				type: "POST",
+				url: "nvUpdate",
+				data: {portal_subtitle : portal_subtitle, url : url, },
+				dataType: "json",
+				success: function(data){
+						console.log(data);
+				}
+	
+		});
+	} */
 
 	function makeDateFormat(date, index){
 		var splitDate = date.split(" - ")[index];

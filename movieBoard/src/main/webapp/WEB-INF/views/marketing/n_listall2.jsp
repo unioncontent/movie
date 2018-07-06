@@ -114,7 +114,7 @@
                             <h5>
                             	<i class="icofont icofont-chart-line m-r-5"></i>
                             	조회수 데이터
-                            </h5><font style="color: #9f9f9f; font-size: 13px;">'${content}' 최근 48시간 그래프</font>
+                            </h5><font style="color: #9f9f9f; font-size: 13px;">'${content}' 최근 24시간 그래프</font>
                             <div class="card-header-right">
                               <i class="icofont icofont-rounded-down"></i>
                             </div>
@@ -133,7 +133,7 @@
                             <h5>
                             	<i class="icofont icofont-chart-line m-r-5"></i>
                             	댓글수 데이터
-                            </h5><font style="color: #9f9f9f; font-size: 13px;">'${content}' 최근 48시간 그래프</font>
+                            </h5><font style="color: #9f9f9f; font-size: 13px;">'${content}' 최근 24시간 그래프</font>
                             <div class="card-header-right">
                               <i class="icofont icofont-rounded-down"></i>
                             </div>
@@ -152,7 +152,7 @@
                             <h5>
                             	<i class="icofont icofont-chart-line m-r-5"></i>
                             	좋아요 데이터
-                            </h5><font style="color: #9f9f9f; font-size: 13px;">'${content}' 최근 48시간 그래프</font>
+                            </h5><font style="color: #9f9f9f; font-size: 13px;">'${content}' 최근 24시간 그래프</font>
                             <div class="card-header-right">
                               <i class="icofont icofont-rounded-down"></i>
                             </div>
@@ -410,7 +410,7 @@ $(document).ready(function(){
 	$.ajax({
 
 	      type : "POST",
-		  url : "ngraph2",
+		  url : "nallgraph2",
 	 	  dataType : "json",
 	 	  data : {success : 'success', url: url, Mcreate: Mcreate},
 	  	  success : function(data){
@@ -458,7 +458,7 @@ $(document).ready(function(){
 	$.ajax({
 
 	      type : "POST",
-		  url : "ngraph2",
+		  url : "nallgraph2",
 	 	  dataType : "json",
 	 	  data : {success : 'success', url: url, Mcreate: Mcreate},
 	  	  success : function(data){
@@ -506,7 +506,7 @@ $(document).ready(function(){
 	$.ajax({
 
 	      type : "POST",
-		  url : "ngraph2",
+		  url : "nallgraph2",
 	 	  dataType : "json",
 	 	  data : {success : 'success', url: url, Mcreate: Mcreate},
 	  	  success : function(data){

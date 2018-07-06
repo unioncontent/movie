@@ -716,4 +716,10 @@ public class PortalServiceImpl implements PortalService {
 
 		return portalDAO.nvlistTwo2(fv);
 	}
+
+	@Override
+	public void nvUpdate(NvVO vo) {
+
+		portalDAO.nvUpdate(vo);
+	}
 }

@@ -7,6 +7,7 @@ public class NvVO {
 	private Integer portal_idx;
 	private String portal_name;
 	private String portal_title;
+	private String portal_subtitle;
 	private String portal_writer;
 	private String url;
 	private Integer view_cnt;
@@ -42,6 +43,12 @@ public class NvVO {
 	}
 	public void setPortal_title(String portal_title) {
 		this.portal_title = portal_title;
+	}
+	public String getPortal_subtitle() {
+		return portal_subtitle;
+	}
+	public void setPortal_subtitle(String portal_subtitle) {
+		this.portal_subtitle = portal_subtitle;
 	}
 	public String getPortal_writer() {
 		return portal_writer;
@@ -149,10 +156,11 @@ public class NvVO {
 	@Override
 	public String toString() {
 		return "NvVO [portal_idx=" + portal_idx + ", portal_name=" + portal_name + ", portal_title=" + portal_title
-				+ ", portal_writer=" + portal_writer + ", url=" + url + ", view_cnt=" + view_cnt + ", like_cnt="
-				+ like_cnt + ", reply_cnt=" + reply_cnt + ", share_cnt=" + share_cnt + ", writeDate=" + writeDate
-				+ ", board_number=" + board_number + ", uid=" + uid + ", title_key=" + title_key + ", keyword="
-				+ keyword + ", keyword_type=" + keyword_type + ", textType=" + textType + ", thumbnail=" + thumbnail
-				+ ", createDate=" + createDate + ", updateDate=" + updateDate + ", total=" + total + "]";
+				+ ", portal_subtitle=" + portal_subtitle + ", portal_writer=" + portal_writer + ", url=" + url
+				+ ", view_cnt=" + view_cnt + ", like_cnt=" + like_cnt + ", reply_cnt=" + reply_cnt + ", share_cnt="
+				+ share_cnt + ", writeDate=" + writeDate + ", board_number=" + board_number + ", uid=" + uid
+				+ ", title_key=" + title_key + ", keyword=" + keyword + ", keyword_type=" + keyword_type + ", textType="
+				+ textType + ", thumbnail=" + thumbnail + ", createDate=" + createDate + ", updateDate=" + updateDate
+				+ ", total=" + total + "]";
 	}
 }

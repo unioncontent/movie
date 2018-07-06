@@ -24,6 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.union.domain.ExtractVO;
 import org.union.domain.GraphVO;
 import org.union.domain.NaverMovieVO;
+import org.union.domain.NvVO;
 import org.union.domain.MobileEntVO;
 import org.union.domain.PageMaker;
 import org.union.domain.SearchCriteria;

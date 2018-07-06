@@ -153,4 +153,6 @@ public interface PortalService {
 	public List<NvVO> nvlistGraph2(SearchFv fv);
 	public List<NvVO> nvlistOne2(SearchCriteria cri);
 	public List<NvVO> nvlistTwo2(SearchFv fv);
+	
+	public void nvUpdate(NvVO vo);
 }

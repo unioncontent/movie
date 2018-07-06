@@ -763,4 +763,15 @@ public class PortalDAOImpl implements PortalDAO {
 
 		return session.selectList(namespace + "nvlistTwo2", fv);
 	}
+
+
+	@Override
+	public void nvUpdate(NvVO vo) {
+		try {
+			session.update(namespace + "nvUpdate", vo);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

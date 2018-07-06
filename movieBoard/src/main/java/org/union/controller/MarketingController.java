@@ -23,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.union.domain.ExtractVO;
 import org.union.domain.FvVO;
 import org.union.domain.GraphVO;
+import org.union.domain.NewsVO;
 import org.union.domain.NvVO;
 import org.union.domain.PageMaker;
 import org.union.domain.PageMakerFv;
@@ -1958,6 +1959,24 @@ public class MarketingController {
     }
 	
 	@ResponseBody
+	@GetMapping("/n_update")
+	public String nvUpdate2(String portal_subtitle, String url) {
+		logger.info("nvUpdate called....");
+		
+		logger.info("url: " + url);
+		logger.info("portal_subtitle: " + portal_subtitle);
+		
+		NvVO vo = new NvVO();
+		
+		vo.setPortal_subtitle(portal_subtitle);
+		vo.setUrl(url);
+		
+		portalService.nvUpdate(vo);
+		
+		return "success";
+	}
+	
+	@ResponseBody
 	@PostMapping("/graph")
 	public List<GraphVO> graphPOST(Model model, String success, String url, SearchFv fv, String Mcreate) throws ParseException {
 		logger.info("graphPOST called....");
@@ -2337,6 +2356,7 @@ public class MarketingController {
 		String current2 = Mcreate;
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH");
+		SimpleDateFormat sdf2 = new SimpleDateFormat("MM-dd HH");
 		
 		String current = sdf.format(new Date());
 		logger.info("current: " + current);
@@ -2358,7 +2378,7 @@ public class MarketingController {
 			fv.setDate(cal.getTime());
 			fv.setUrl(url);
 			
-			graphVO.setWriteDate(sdf.format(cal.getTime()) + ":00:00");
+			graphVO.setWriteDate(sdf2.format(cal.getTime()) + ":00:00");
 			graphVO.setType1(portalService.nvlistViewCnt2(fv));
 			graphVO.setType2(portalService.nvlistReply_cnt2(fv));
 			graphVO.setType3(portalService.nvlistlike_cnt2(fv));
@@ -2379,6 +2399,7 @@ public class MarketingController {
 		logger.info("graphTwoPOST called....");
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH");
+		SimpleDateFormat sdf2 = new SimpleDateFormat("MM-dd HH");
 		
 		Date current = new Date();
 		logger.info("current: " + current);
@@ -2424,7 +2445,7 @@ public class MarketingController {
 		for(int i = 0; i < 24; i++) {
 			GraphVO graphVO = new GraphVO();
 			
-			graphVO.setWriteDate(sdf.format(cal.getTime()) + ":00");
+			graphVO.setWriteDate(sdf2.format(cal.getTime()) + ":00");
 			graphVO.setType1(viewList.get(i).getView_cnt());
 			graphVO.setType2(viewList2.get(i).getView_cnt());
 			graphVO.setType3(viewList.get(i).getReply_cnt());
@@ -2843,4 +2864,5 @@ public class MarketingController {
 		
 		return model;
 	}
+	
 }

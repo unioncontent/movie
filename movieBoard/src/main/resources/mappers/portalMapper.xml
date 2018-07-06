@@ -924,7 +924,7 @@
  	
  	<select id="naverVideosList2" resultType="NvVO">
  		select 
-		DATE_FORMAT(writeDate,'%Y-%m-%d') writeDate, portal_title, url, max(view_cnt)as view_cnt, max(like_cnt)as like_cnt, max(reply_cnt)as reply_cnt,count(*) as total
+		DATE_FORMAT(writeDate,'%Y-%m-%d') writeDate, portal_title, url, portal_subtitle, max(view_cnt)as view_cnt, max(like_cnt)as like_cnt, max(reply_cnt)as reply_cnt,count(*) as total
 		from naver_videos_detail
         where url is not null
         <include refid="search_writeDate3"></include>
@@ -1501,7 +1501,7 @@
  	
  	<select id="nvlistOne2" resultType="NvVO">
  		select 
- 			createDate, portal_title, url 
+ 			createDate, portal_title, portal_subtitle, url 
  		from 
  			naver_videos_detail 
  		where 
@@ -1512,7 +1512,7 @@
  	
  	<select id="nvlistTwo2" resultType="NvVO">
  		select 
- 			createDate, portal_title, url 
+ 			createDate, portal_title, portal_subtitle, url 
  		from 
  			naver_videos_detail 
  		where 
@@ -1520,4 +1520,13 @@
 		order by createDate asc 
 			limit 1;
  	</select>
+ 	
+ 	<update id="nvUpdate">
+ 		update
+ 			naver_videos_detail
+ 		set
+ 			portal_subtitle = #{portal_subtitle}
+ 		where
+ 			url = #{url};
+ 	</update>
  </mapper>
