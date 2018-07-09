@@ -3,6 +3,7 @@ var router = express.Router();
 var datetime = require('node-datetime');
 // DB module
 var newsclipping = require('../models/newsclipping.js');
+var marketing = require('../models/marketing.js');
 var mailListA = require('../models/mailListA.js');
 var mailListC = require('../models/mailListC.js');
 var maillink = require('../models/maillink.js');
@@ -37,7 +38,8 @@ router.post('/getData',async function(req, res) {
   }
   var data = {
     issue:await newsclipping.selectIssueTable(req.body),
-    news:await newsclipping.selectNewsMailAllTable(req.body, req.user.user_admin)
+    news:await newsclipping.selectNewsMailAllTable(req.body, req.user.user_admin),
+    marketing:await marketing.selectMarketingMailTable(req.body)
   };
   res.send({status:true,result:data});
 });
