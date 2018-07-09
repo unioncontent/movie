@@ -190,7 +190,7 @@
                           </div>
                           <div class="card-block">
                             <!-- chart start -->
-                            <div id="line-chart1"></div>
+                            <div id="container" style="height:350px;"></div>
                             <!-- chart end -->
                           </div>
                         </div>
@@ -369,6 +369,10 @@
   <!-- Morris Chart js -->
   <script src="../bower_components/raphael/raphael.min.js"></script>
   <script src="../bower_components/morris.js/morris.js"></script>
+  <!-- High Chart js -->
+  <script src="https://code.highcharts.com/highcharts.js"></script>
+  <script src="https://code.highcharts.com/modules/series-label.js"></script>
+  <script src="https://code.highcharts.com/modules/exporting.js"></script>
   <!-- i18next.min.js -->
   <script type="text/javascript" src="../bower_components/i18next/i18next.min.js"></script>
   <script type="text/javascript" src="../bower_components/i18next-xhr-backend/i18nextXHRBackend.min.js"></script>
@@ -597,30 +601,77 @@ searchList();
 	 	  data : {success : 'success', portal_name : "twitter", company : company, selectKey : selectKey},
 	 	  success : function(data){
 	  		  console.log(data);
-
+			
 	  		var script = "[";
 
-	  		for(var i = 0; i < data.length; i++){
-	  			
-	  			script += '{"period":' + '"' + data[i].writeDate + '",'
-	  				+ '"l1"'+ ':' + data[i].likeCount + ","
-	  				+ '"l2"' + ':' + data[i].shareCount + ","
-	  				+ '"l3"' + ':' + data[i].replyCount + "},";
+			for(var i = 0; i < data.length; i++){
 
-	  			if(i == data.length-1){
+				script += data[i].likeCount + ",";
+
+
+				if(i == data.length-1){
 					script =  script.substr(0, script.length-1);
 					script += "]";
 				}
 			}
-	  		console.log(script);
+			
+			var script2 = "[";
 
-	  		// to json
-	  		var jsonScript = JSON.parse(script);
 
-	  		drawChart(jsonScript);
+			for(var i = 0; i < data.length; i++){
 
+				script2 += data[i].shareCount + ",";
+
+				if(i == data.length-1){
+					script2 =  script2.substr(0, script2.length-1);
+					script2 += "]";
+	  		
+				}
+			}
+			
+			var script3 = "[";
+
+
+			for(var i = 0; i < data.length; i++){
+
+				script3 += data[i].replyCount + ",";
+
+				if(i == data.length-1){
+					script3 =  script3.substr(0, script3.length-1);
+					script3 += "]";
+	  		
+				}
+			}
+			
+			var script4 = "[";
+
+
+			for(var i = 0; i < data.length; i++){
+
+				script4 += '"' + data[i].writeDate + '",';
+
+				if(i == data.length-1){
+					script4 =  script4.substr(0, script4.length-1);
+					script4 += "]";
+	  		
+				}
+			}
+
+			// to json
+			var jsonScript = JSON.parse(script);
+			var jsonScript2 = JSON.parse(script2);
+			var jsonScript3 = JSON.parse(script3);
+			var jsonScript4 = JSON.parse(script4);
+			
+			console.log(jsonScript);
+			console.log(jsonScript2);
+			console.log(jsonScript3);
+			console.log(jsonScript4);
+			
+			areaChart(jsonScript, jsonScript2, jsonScript3, jsonScript4);
+			
 	  	 }
-		});
+	});
 
 
 	var selectOption = decodeURI(window.location.href.split("selectKey=")[1]).split("&")[0];
@@ -657,20 +708,70 @@ searchList();
 }); // end ready....
 
 
-	// 그래프 함수
-	function drawChart(jsonScript) {
-			$("#line-chart1").empty();
-			window.areaChart = Morris.Line({
-				element: 'line-chart1',
-			    data: jsonScript,
-			    xkey: 'period',
-		   	 	ykeys: ['l1', 'l2', 'l3'],
-		   	 	labels: ['좋아요', '공유', '댓글'],
-		   	 	lineColors: ['#fb9678', '#7E81CB', '#01C0C8'],
-			    lineWidth : 3,
-			  	hideHover : 'auto'
-			    });
-			}
+//그래프 함수
+function areaChart(jsonScript,jsonScript2,jsonScript3,jsonScript4) {
+	Highcharts.setOptions({
+		lang: {
+			thousandsSep: ','
+		}
+	});
+	Highcharts.chart('container', {
+		chart: {
+			type: 'spline'
+		},
+		title: {
+			text: ''
+		},
+		subtitle: {
+			text: ''
+		},
+		xAxis: {
+			categories: jsonScript4
+		},
+		yAxis: {
+		    title: {
+		      text: ''
+		    }
+		  },
+		  tooltip: {
+		    crosshairs: true,
+		    shared: true
+		  },
+		  plotOptions: {
+		    spline: {
+		      marker: {
+		        radius: 4,
+		        lineColor: '#666666',
+		        lineWidth: 1
+		      }
+		    }
+		  },
+		  credits: {
+			    	enabled : false
+			  },
+			  exporting: {
+		        sourceWidth: 1200,
+		        sourceHeight: 330,
+		        // scale: 2 (default)
+		        chartOptions: {
+		            subtitle: null
+		        }
+		      },
+		    series: [{
+	        name: '좋아요',
+	        data: jsonScript,
+	        color: '#fb9678'
+	    },{
+	        name: '공유',
+	        data: jsonScript2,
+	        color: '#7E81CB'
+	    },{
+	        name: '댓글',
+	        data: jsonScript3,
+	        color: '#01C0C8'
+	    },]
+		});
+	}
 	
 // 날짜 계산 함수
 function getDate(type){

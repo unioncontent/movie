@@ -564,6 +564,7 @@ public class DashBaordController {
 		logger.info("graph_rePOST called....");
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH");
+		SimpleDateFormat sdf2 = new SimpleDateFormat("MM-dd HH");
 		
 		String current = sdf.format(new Date());
 		logger.info("current: " + current);
@@ -579,10 +580,10 @@ public class DashBaordController {
 		for(int i = 0; i < 24; i++) {
 			GraphVO graphVO = new GraphVO();
 			
-			cri.setSelectKey(selectKey);
 			cri.setDate(cal.getTime());
+			cri.setSelectKey(selectKey);
 			
-			graphVO.setWriteDate(sdf.format(cal.getTime()) + ":00:00");
+			graphVO.setWriteDate(sdf2.format(cal.getTime()) + ":00:00");
 			graphVO.setType1(mediaService.mediaCountAll(cri));
 			
 			graphList.add(graphVO);
@@ -591,7 +592,7 @@ public class DashBaordController {
 			
 		}
 		
-
+		Collections.reverse(graphList);
 		logger.info("graphList: " + graphList);
 		return graphList;
 	}

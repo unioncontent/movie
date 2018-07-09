@@ -40,8 +40,8 @@
 }
 .form-control {
     font-size: 14px;
-    border-radius: 2px;
-    border-width: 2px;
+    border-radius: 1px;
+    border-width: 1px;
 }
 .md-tabs li.active p {
   	font-weight: bold;
@@ -56,12 +56,12 @@
     background-color: #ffffff !important;
     color: black;
     border-color: #dcdcdc;
-    border-width: 2px;
+    border-width: 1px;
 }
 .card {
-    border-radius: 2px;
+    border-radius: 1px;
     border-top: 1px solid #34495e;
-    box-shadow: 0 2px 1px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
     border-left: none;
     border-right: none;
     border-bottom: none;
@@ -87,11 +87,11 @@
 }
 .input-group-inverse .form-control {
     border-color: #dcdcdc;
-    border: 2px solid #dcdcdc;
+    border: 1px solid #dcdcdc;
 }
 .input-group-inverse .input-group-addon {
     background-color: white;
-    border: 2px solid #dcdcdc;
+    border: 1px solid #dcdcdc;
 }
 .btn-inverse {
     background-color: white;

@@ -90,7 +90,7 @@
                           </a>
                         </li>
                         <li class="breadcrumb-item"><a href="#!">마케팅 채널관리</a></li>
-                        <li class="breadcrumb-item"><a href="../marketing/n_channel">Naver Movie</a></li>
+                        <li class="breadcrumb-item"><a href="../marketing/n_channel2">Naver Movie</a></li>
                       </ul>
                     </div>
                   </div>
@@ -523,8 +523,6 @@ $(document).ready(function(){
 
 		  	 }
 	});
-	
-	
 	
 }); // end ready...
 				var title1 = $('input[name=title1]').val();

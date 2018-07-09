@@ -115,12 +115,14 @@
                             	<i class="icofont icofont-chart-line m-r-5"></i>
                             	조회수 데이터
                             </h5>
-                            <font style="color: #fb9678; font-size: 13px;">'<c:forEach items="${list1}" var="list1" varStatus="status">
+                            <font style="color: #7cb5ec; font-size: 13px;">'<c:forEach items="${list1}" var="list1" varStatus="status">
                             	${list1.sns_content}
+                            	<input type="hidden" name="title1" value="${list1.sns_subcontent}">
                             	</c:forEach>'</font>
                             	<font style="color: #9f9f9f; font-size: 13px;">/</font>
                             	<font  style="color: #7E81CB; font-size: 13px;">'<c:forEach items="${list2}" var="list1" varStatus="status">
                             	${list1.sns_content}
+                            	<input type="hidden" name="title2" value="${list1.sns_subcontent}">
                             	</c:forEach>'
                             </font>
                             <font style="color: #9f9f9f; font-size: 13px;">	최근 24시간 그래프</font>
@@ -130,7 +132,7 @@
                           </div>
                           <div class="card-block">
                             <!-- <div id="morris-extra-area" style="height:300px;"></div> -->
-                            <div id="morris-extra-line" style="height:200px;"></div>
+                            <div id="container" style="height:350px;"></div>
                           </div>
                         </div>
                       </div>
@@ -143,7 +145,7 @@
                             	<i class="icofont icofont-chart-line m-r-5"></i>
                             	댓글수 데이터
                             </h5>
-                            <font style="color: #fb9678; font-size: 13px;">'<c:forEach items="${list1}" var="list1" varStatus="status">
+                            <font style="color: #7cb5ec; font-size: 13px;">'<c:forEach items="${list1}" var="list1" varStatus="status">
                             	${list1.sns_content}
                             	</c:forEach>'</font>
                             	<font style="color: #9f9f9f; font-size: 13px;">/</font>
@@ -158,7 +160,7 @@
                           </div>
                           <div class="card-block">
                             <!-- <div id="morris-extra-area" style="height:300px;"></div> -->
-                            <div id="morris-extra-line2" style="height:200px;"></div>
+                            <div id="container2" style="height:350px;"></div>
                           </div>
                         </div>
                       </div>
@@ -171,7 +173,7 @@
                             	<i class="icofont icofont-chart-line m-r-5"></i>
                             	좋아요수 데이터
                             </h5>
-                            <font style="color: #fb9678; font-size: 13px;">'<c:forEach items="${list1}" var="list1" varStatus="status">
+                            <font style="color: #7cb5ec; font-size: 13px;">'<c:forEach items="${list1}" var="list1" varStatus="status">
                             	${list1.sns_content}
                             	</c:forEach>'</font>
                             	<font style="color: #9f9f9f; font-size: 13px;">/</font>
@@ -186,7 +188,7 @@
                           </div>
                           <div class="card-block">
                             <!-- <div id="morris-extra-area" style="height:300px;"></div> -->
-                            <div id="morris-extra-line3" style="height:200px;"></div>
+                            <div id="container3" style="height:350px;"></div>
                           </div>
                         </div>
                       </div>
@@ -301,6 +303,10 @@
   <!-- Morris Chart js -->
   <script src="../bower_components/raphael/raphael.min.js"></script>
   <script src="../bower_components/morris.js/morris.js"></script>
+  <!-- High Chart js -->
+  <script src="https://code.highcharts.com/highcharts.js"></script>
+  <script src="https://code.highcharts.com/modules/series-label.js"></script>
+  <script src="https://code.highcharts.com/modules/exporting.js"></script>
   <!-- sweet alert js -->
   <script type="text/javascript" src="../bower_components/sweetalert/dist/sweetalert.min.js"></script>
   <script type="text/javascript" src="../assets/pages/division/script.js"></script>
@@ -383,12 +389,9 @@ $(document).ready(function(){
 	  		  console.log(data);
 	  		var script = "[";
 
+	  		for(var i = 0; i < data.length; i++){
 
-			for(var i = 0; i < data.length; i++){
-
-				script += '{"period":' + '"' + data[i].writeDate + '",'
-						+ '"첫번째조회수"'+ ':' + data[i].type1 + ","
-						+ '"두번째조회수"' + ':' + data[i].type2 + "},";
+				script += data[i].type1 + ",";
 						
 
 				if(i == data.length-1){
@@ -396,18 +399,36 @@ $(document).ready(function(){
 					script += "]";
 				}
 			}
+	  		
+	  		var script2 = "[";
+
+	  		for(var i = 0; i < data.length; i++){
+
+				script2 += data[i].type2 + ",";
+						
+
+				if(i == data.length-1){
+					script2 =  script2.substr(0, script2.length-1);
+					script2 += "]";
+				}
+			}
+	  		
 			console.log(script);
+			console.log(script2);
 
 			// to json
 			var jsonScript = JSON.parse(script);
+			var jsonScript2 = JSON.parse(script2);
 
-			areaChart(jsonScript);
+			areaChart(jsonScript, jsonScript2);
 
-	  	 },
-	  	error : function(request,status,error){
-	  		swal("warning!", "총 검출수가 24건이 아닙니다.", "warning");
-	  		self.location = "f_channel"
-	       }
+	  	 	},
+		  	error : function(request,status,error){
+		  		swal("warning!", "총 검출수가 24건이 아닙니다.", "warning");
+		  		window.setTimeout("pageReload()", 1000);
+		  		
+		       }
+	  	 
 	});
 	
 	$.ajax({
@@ -421,12 +442,9 @@ $(document).ready(function(){
 	  		  console.log(data);
 	  		var script = "[";
 
+	  		for(var i = 0; i < data.length; i++){
 
-			for(var i = 0; i < data.length; i++){
-
-				script += '{"period":' + '"' + data[i].writeDate + '",'
-				+ '"첫번째댓글수"'+ ':' + data[i].type3 + ","
-				+ '"두번째댓글수"' + ':' + data[i].type4 + "},";
+				script += data[i].type3 + ",";
 						
 
 				if(i == data.length-1){
@@ -434,15 +452,30 @@ $(document).ready(function(){
 					script += "]";
 				}
 			}
+	  		
+	  		var script2 = "[";
+
+	  		for(var i = 0; i < data.length; i++){
+
+				script2 += data[i].type4 + ",";
+						
+
+				if(i == data.length-1){
+					script2 =  script2.substr(0, script2.length-1);
+					script2 += "]";
+				}
+			}
 			console.log(script);
+			console.log(script2);
 
 			// to json
 			var jsonScript = JSON.parse(script);
+			var jsonScript2 = JSON.parse(script2);
 
-			areaChart2(jsonScript);
+			areaChart2(jsonScript, jsonScript2);
 
 	  	 }
-	});
+});
 	
 	$.ajax({
 		
@@ -455,12 +488,9 @@ $(document).ready(function(){
 	  		  console.log(data);
 	  		var script = "[";
 
+	  		for(var i = 0; i < data.length; i++){
 
-			for(var i = 0; i < data.length; i++){
-
-				script += '{"period":' + '"' + data[i].writeDate + '",'
-				+ '"첫번째좋아요수"'+ ':' + data[i].type5 + ","
-				+ '"두번째좋아요수"' + ':' + data[i].type6 + "},";
+				script += data[i].type5 + ",";
 						
 
 				if(i == data.length-1){
@@ -468,12 +498,27 @@ $(document).ready(function(){
 					script += "]";
 				}
 			}
+	  		
+	  		var script2 = "[";
+
+	  		for(var i = 0; i < data.length; i++){
+
+				script2 += data[i].type6 + ",";
+						
+
+				if(i == data.length-1){
+					script2 =  script2.substr(0, script2.length-1);
+					script2 += "]";
+				}
+			}
 			console.log(script);
+			console.log(script2);
 
 			// to json
 			var jsonScript = JSON.parse(script);
+			var jsonScript2 = JSON.parse(script2);
 
-			areaChart3(jsonScript);
+			areaChart3(jsonScript, jsonScript2);
 
 	  	 }
 	});
@@ -481,8 +526,218 @@ $(document).ready(function(){
 	
 	
 }); // end ready...
+var title1 = $('input[name=title1]').val();
+var title2 = $('input[name=title2]').val();
+console.log(title1);
+console.log(title2);
+function areaChart(jsonScript,jsonScript2) {
+		Highcharts.setOptions({
+			lang: {
+				thousandsSep: ','
+			}
+		});
+		Highcharts.chart('container', {
+		  chart: {
+		    type: 'spline'
+		  },
+		  title: {
+		    text: ''
+		  },
+		  subtitle: {
+		    text: ''
+		  },
+		  xAxis: {
+		    categories: ['00:00', '01:00', '02:00', '03:00', '04:00', '05:00',
+		        '06:00', '07:00', '08:00', '09:00', '10:00', '11:00', '12:00', 
+		        '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', 
+		        '20:00', '21:00', '22:00', '23:00']
+		  },
+		  yAxis: {
+		    title: {
+		      text: ''
+		    }
+		  },
+		  tooltip: {
+		    crosshairs: true,
+		    shared: true
+		  },
+		  plotOptions: {
+		    spline: {
+		      marker: {
+		        radius: 4,
+		        lineColor: '#666666',
+		        lineWidth: 1
+		      }
+		    }
+		  },
+		  credits: {
+			    	enabled : false
+			  },
+			  exporting: {
+		        sourceWidth: 1200,
+		        sourceHeight: 330,
+		        // scale: 2 (default)
+		        chartOptions: {
+		            subtitle: null
+		        }
+		      },
+		  series: [{
+		    name: title1,
+		    marker: {
+		      symbol: 'square'
+		    },
+		    data: jsonScript
 
-	  			function areaChart(jsonScript) {
+		  }, {
+		    name: title2,
+		    marker: {
+		      symbol: 'diamond'
+		    },
+		    data: jsonScript2,
+		    color: '#7E81CB'
+		  }]
+		});
+	}
+	
+	function areaChart2(jsonScript,jsonScript2) {
+		Highcharts.setOptions({
+			lang: {
+				thousandsSep: ','
+			}
+		});
+		Highcharts.chart('container2', {
+		  chart: {
+		    type: 'spline'
+		  },
+		  title: {
+		    text: ''
+		  },
+		  subtitle: {
+		    text: ''
+		  },
+		  xAxis: {
+		    categories: ['00:00', '01:00', '02:00', '03:00', '04:00', '05:00',
+		        '06:00', '07:00', '08:00', '09:00', '10:00', '11:00', '12:00', 
+		        '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', 
+		        '20:00', '21:00', '22:00', '23:00']
+		  },
+		  yAxis: {
+		    title: {
+		      text: ''
+		    }
+		  },
+		  tooltip: {
+		    crosshairs: true,
+		    shared: true
+		  },
+		  plotOptions: {
+		    spline: {
+		      marker: {
+		        radius: 4,
+		        lineColor: '#666666',
+		        lineWidth: 1
+		      }
+		    }
+		  },
+		  credits: {
+			    	enabled : false
+			  },
+			  exporting: {
+		        sourceWidth: 1200,
+		        sourceHeight: 330,
+		        // scale: 2 (default)
+		        chartOptions: {
+		            subtitle: null
+		        }
+		      },
+		  series: [{
+		    name: title1,
+		    marker: {
+		      symbol: 'square'
+		    },
+		    data: jsonScript
+
+		  }, {
+		    name: title2,
+		    marker: {
+		      symbol: 'diamond'
+		    },
+		    data: jsonScript2,
+		    color: '#7E81CB'
+		  }]
+		});
+	}
+		
+		
+	function areaChart3(jsonScript,jsonScript2) {
+		Highcharts.setOptions({
+			lang: {
+				thousandsSep: ','
+			}
+		});
+		Highcharts.chart('container3', {
+		  chart: {
+		    type: 'spline'
+		  },
+		  title: {
+		    text: ''
+		  },
+		  subtitle: {
+		    text: ''
+		  },
+		  xAxis: {
+		    categories: ['00:00', '01:00', '02:00', '03:00', '04:00', '05:00',
+		        '06:00', '07:00', '08:00', '09:00', '10:00', '11:00', '12:00', 
+		        '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', 
+		        '20:00', '21:00', '22:00', '23:00']
+		  },
+		  yAxis: {
+		    title: {
+		      text: ''
+		    }
+		  },
+		  tooltip: {
+		    crosshairs: true,
+		    shared: true
+		  },
+		  plotOptions: {
+		    spline: {
+		      marker: {
+		        radius: 4,
+		        lineColor: '#666666',
+		        lineWidth: 1
+		      }
+		    }
+		  },
+		  credits: {
+			    	enabled : false
+			  },
+			  exporting: {
+		        sourceWidth: 1200,
+		        sourceHeight: 330,
+		        // scale: 2 (default)
+		        chartOptions: {
+		            subtitle: null
+		        }
+		      },
+		  series: [{
+		    name: title1,
+		    marker: {
+		      symbol: 'square'
+		    },
+		    data: jsonScript
+
+		  }, {
+		    name: title2,
+		    marker: {
+		      symbol: 'diamond'
+		    },
+		    data: jsonScript2,
+		    color: '#7E81CB'
+		  }]
+		});
+	}
+	  			/* function areaChart(jsonScript) {
 		  			$("#morris-extra-line").empty();
 		  			window.areaChart = Morris.Line({
 		  				element: 'morris-extra-line',
@@ -490,7 +745,7 @@ $(document).ready(function(){
 		  			  	xkey: 'period',
 		  			    ykeys: ['첫번째조회수','두번째조회수'],
 		  			  	labels: ['첫번째조회수','두번째조회수'],
-		  			    lineColors: ['#fb9678', '#7E81CB'],
+		  			    lineColors: ['#7cb5ec', '#7E81CB'],
 		  			  	hideHover : 'auto',
 		  			  	axes: false
 		  			    });
@@ -503,7 +758,7 @@ $(document).ready(function(){
 		  			  	xkey: 'period',
 		  			    ykeys: ['첫번째댓글수','두번째댓글수'],
 		  			  	labels: ['첫번째댓글수','두번째댓글수'],
-		  			    lineColors: ['#fb9678', '#7E81CB'],
+		  			    lineColors: ['#7cb5ec', '#7E81CB'],
 		  			  	hideHover : 'auto',
 		  			  	axes: false
 		  			    });
@@ -516,11 +771,11 @@ $(document).ready(function(){
 		  			  	xkey: 'period',
 		  			    ykeys: ['첫번째좋아요수','두번째좋아요수'],
 		  			  	labels: ['첫번째좋아요수','두번째좋아요수'],
-		  			    lineColors: ['#fb9678', '#7E81CB'],
+		  			    lineColors: ['#7cb5ec', '#7E81CB'],
 		  			  	hideHover : 'auto',
 		  			 	axes: false
 		  			    });
-	  			}
+	  			} */
 	  			
 	  	//list URL 함수
 	  	var url = $('input[name=url]').val();

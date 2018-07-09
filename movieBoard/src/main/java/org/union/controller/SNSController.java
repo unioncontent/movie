@@ -451,6 +451,7 @@ public class SNSController {
 		}
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH");
+		SimpleDateFormat sdf2 = new SimpleDateFormat("MM-dd HH:00:00");
 		
 		String current = sdf.format(new Date());
 		logger.info("current: " + current);
@@ -461,27 +462,25 @@ public class SNSController {
 		List<GraphVO> graphList = new ArrayList<GraphVO>();
 		
 		logger.info("cal.getTime: " + cal.getTime());
-		
-		/*logger.info("companyaaaa: " + company);
-		logger.info("selectkeyaaaa: " + selectKey);
-		logger.info("portalnameaaaa: " + portal_name);*/
 		for(int i = 0; i < 24; i++) {
 			
 				GraphVO graphData = new GraphVO();
 				
 				cri.setPortal_name(portal_name);
-				cri.setDate(cal.getTime());
+				cri.setWriteDate(sdf.format(cal.getTime()) + ":00:00");
 				
-				graphData.setWriteDate(sdf.format(cal.getTime()) + ":00:00");
+				graphData.setWriteDate(sdf2.format(cal.getTime()));
 				graphData.setLikeCount(snsService.likeGetDateCount(cri));
 				graphData.setShareCount(snsService.shareGetDateCount(cri));
 				graphData.setReplyCount(snsService.replyGetDateCount(cri));
+				
 				
 				graphList.add(graphData);
 				
 				cal.add(Calendar.HOUR, -1);
 		}// end for
 		
+		Collections.reverse(graphList);
 		return graphList;
 		
 	}

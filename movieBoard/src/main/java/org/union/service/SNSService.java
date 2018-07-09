@@ -106,4 +106,6 @@ public interface SNSService {
 	public Integer replyGetDateCount(SearchCriteria cri);
 	public Integer likeGetDateCount(SearchCriteria cri);
 	public Integer shareGetDateCount(SearchCriteria cri);
+	
+	public void fvUpdate(FvVO vo);
 }

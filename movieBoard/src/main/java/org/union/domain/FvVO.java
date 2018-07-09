@@ -7,6 +7,7 @@ public class FvVO {
 	private Integer sns_idx;
 	private String sns_name;
 	private String sns_content;
+	private String sns_subcontent;
 	private String sns_writer;
 	private String url;
 	private Integer view_cnt;
@@ -41,6 +42,12 @@ public class FvVO {
 	}
 	public void setSns_content(String sns_content) {
 		this.sns_content = sns_content;
+	}
+	public String getSns_subcontent() {
+		return sns_subcontent;
+	}
+	public void setSns_subcontent(String sns_subcontent) {
+		this.sns_subcontent = sns_subcontent;
 	}
 	public String getSns_writer() {
 		return sns_writer;
@@ -142,12 +149,11 @@ public class FvVO {
 	
 	@Override
 	public String toString() {
-		return "FvVO [sns_idx=" + sns_idx + ", sns_name=" + sns_name + ", sns_content=" + sns_content + ", sns_writer="
-				+ sns_writer + ", url=" + url + ", view_cnt=" + view_cnt + ", like_cnt=" + like_cnt + ", reply_cnt="
-				+ reply_cnt + ", share_cnt=" + share_cnt + ", writeDate=" + writeDate + ", uid=" + uid + ", title_key="
-				+ title_key + ", keyword=" + keyword + ", keyword_type=" + keyword_type + ", textType=" + textType
-				+ ", thumbnail=" + thumbnail + ", createDate=" + createDate + ", updateDate=" + updateDate + ", total="
-				+ total + "]";
+		return "FvVO [sns_idx=" + sns_idx + ", sns_name=" + sns_name + ", sns_content=" + sns_content
+				+ ", sns_subcontent=" + sns_subcontent + ", sns_writer=" + sns_writer + ", url=" + url + ", view_cnt="
+				+ view_cnt + ", like_cnt=" + like_cnt + ", reply_cnt=" + reply_cnt + ", share_cnt=" + share_cnt
+				+ ", writeDate=" + writeDate + ", uid=" + uid + ", title_key=" + title_key + ", keyword=" + keyword
+				+ ", keyword_type=" + keyword_type + ", textType=" + textType + ", thumbnail=" + thumbnail
+				+ ", createDate=" + createDate + ", updateDate=" + updateDate + ", total=" + total + "]";
 	}
-	
 }

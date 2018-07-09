@@ -207,7 +207,7 @@
                           </div>
                           <div class="card-block">
                             <!-- <div id="morris-extra-area" style="height:300px;"></div> -->
-                            <div id="morris-bar" style="height:300px;"></div>
+                            <div id="container" style="height:350px;"></div>
                           </div>
                         </div>
                       </div>
@@ -228,7 +228,7 @@
                           </div>
                           <div class="card-block">
                             <!-- <div id="morris-extra-area" style="height:300px;"></div> -->
-                            <div id="morris-bar2" style="height:300px;"></div>
+                            <div id="container2" style="height:350px;"></div>
                           </div>
                         </div>
                       </div>
@@ -375,6 +375,10 @@
   <!-- Morris Chart js -->
   <script src="../bower_components/raphael/raphael.min.js"></script>
   <script src="../bower_components/morris.js/morris.js"></script>
+  <!-- High Chart js -->
+  <script src="https://code.highcharts.com/highcharts.js"></script>
+  <script src="https://code.highcharts.com/modules/series-label.js"></script>
+  <script src="https://code.highcharts.com/modules/exporting.js"></script>
   <!-- echart js -->
   <script src="../assets/pages/chart/echarts/js/echarts-all.js" type="text/javascript"></script>
   <!-- Date-range picker js -->
@@ -561,26 +565,39 @@
 			
 	  		if (data != "") {  
 	  		  console.log("data : " + data);
+	  		  
 	  		var script = "[";
-
 
 			for(var i = 0; i < data.length; i++){
 
-				script += '{"media":' + '"' + data[i].media + '",'
-						+ '"퍼센트"' + ':' + data[i].media_total + "},";
-						
+				script += '"' + data[i].media + '",';
+
 
 				if(i == data.length-1){
 					script =  script.substr(0, script.length-1);
 					script += "]";
 				}
-			}
-			console.log("script:" + script);
+			}  
+			
+			var script2 = "[";
 
+			
+			for(var i = 0; i < data.length; i++){
+
+				script2 += data[i].media_total + ',';
+
+				if(i == data.length-1){
+					script2 =  script2.substr(0, script2.length-1);
+					script2 += "]";
+	  		
+				}
+			}
+	  		  
 			// to json
 			var jsonScript = JSON.parse(script);
+			var jsonScript2 = JSON.parse(script2);
 
-			matchChart(jsonScript);
+			matchChart(jsonScript, jsonScript2);
 
 	  	 }else if (data == ""){
 	  		 
@@ -588,7 +605,7 @@
 		  		
 		  		var obj = document.createElement("div");
 		  		obj.innerHTML="<table align='center' height='300px'><tr><td style='vertical-align:middle;' align='center' height='150px'><h5>등록된 데이터가 없습니다.</h5></td></tr></table>";
-		  		var morrisbar = document.getElementById("morris-bar");
+		  		var morrisbar = document.getElementById("container");
 		  		morrisbar.prepend(obj);
 	  		 }
 	  	 }
@@ -602,35 +619,50 @@
 	 	  data : {success : 'success', part : 'media',
 	 		  	company : $("#selectCompany option:selected").val(), selectKey : $("#selectKeyword option:selected").val(),
 	 		 	startDate : decodeURI(window.location.href.split("startDate=")[1]).split("&")[0], endDate : decodeURI(window.location.href.split("endDate=")[1]).split("&")[0]},
-	  	  success : function(data){
-	  		if (data != "") {  
-	  		  console.log(data);
-	  		var script = "[";
+	 		 	success : function(data){
+	 				
+	 		  		if (data != "") {  
+	 		  		  console.log("data : " + data);
+	 		  		  
+	 		  		var script = "[";
 
 
-			for(var i = 0; i < data.length; i++){
+	 				for(var i = 0; i < data.length; i++){
 
-				script += '{"mediaa":' + '"' + data[i].media + '",'
-						+ '"퍼센트a"' + ':' + data[i].media_total + "},";
-						
+	 					script += '"' + data[i].media + '",';
 
-				if(i == data.length-1){
-					script =  script.substr(0, script.length-1);
-					script += "]";
-				}
-			}
-			console.log("script:" + script);
 
-			// to json
-			var jsonScript = JSON.parse(script);
+	 					if(i == data.length-1){
+	 						script =  script.substr(0, script.length-1);
+	 						script += "]";
+	 					}
+	 				}  
+	 				
+	 				var script2 = "[";
 
-			areaChart2(jsonScript);
+	 				
+	 				for(var i = 0; i < data.length; i++){
+
+	 					script2 += data[i].media_total + ',';
+
+	 					if(i == data.length-1){
+	 						script2 =  script2.substr(0, script2.length-1);
+	 						script2 += "]";
+	 		  		
+	 					}
+	 				}
+	 		  		  
+	 				// to json
+	 				var jsonScript = JSON.parse(script);
+	 				var jsonScript2 = JSON.parse(script2);
+
+	 				matchChart2(jsonScript, jsonScript2);
 
 	  	 }else if (data == ""){
 		  		
 		  		var obj = document.createElement("div");
 		  		obj.innerHTML="<table align='center' height='300px'><tr><td style='vertical-align:middle;' align='center' height='150px'><h5>등록된 데이터가 없습니다.</h5></td></tr></table>";
-		  		var morrisbar = document.getElementById("morris-bar2");
+		  		var morrisbar = document.getElementById("container2");
 		  		morrisbar.prepend(obj);
 	  	}
 		  	 }
@@ -675,7 +707,7 @@
 	
   }); // end ready...
   
-  	function matchChart(jsonScript) {
+  	/* function matchChart(jsonScript) {
 		$("#morris-bar").empty();
 		window.areaChart = Morris.Bar({
 			element: 'morris-bar',
@@ -690,24 +722,124 @@
 		    fillOpacity: 0.6,
 		    gridTextColor: '#888'
 		    });
-		} 
+		}  */
 		
-  	function areaChart2(jsonScript) {
-		$("#morris-bar2").empty();
-		window.areaChart = Morris.Bar({
-			element: 'morris-bar2',
-		    data: jsonScript,
-		    xkey: 'mediaa',
-		    ykeys: ['퍼센트a'],
-		    labels: ['퍼센트(%)'],
-		    barColors: ['#fb9678'],
-		    stacked: true,
-		    hideHover: 'auto',
-		    resize: true,
-		    fillOpacity: 0.6,
-		    gridTextColor: '#888'
-		    });
-		} 
+		function matchChart(jsonScript, jsonScript2) {
+			Highcharts.chart('container', {
+				  chart: {
+				    type: 'column'
+				  },
+				  title: {
+				    text: ''
+				  },
+				  subtitle: {
+				    text: ''
+				  },
+				  xAxis: {
+				    categories: jsonScript,
+				    crosshair: true
+				  },
+				  yAxis: {
+				    min: 0,
+				    title: {
+				      text: ''
+				    }
+				  },
+				  plotOptions: {
+				    column: {
+				      pointPadding: 0.2,
+				      borderWidth: 0
+				    }
+				  },
+				  navigation: {
+				        buttonOptions: {
+				            height: 40,
+				            width: 48,
+				            symbolSize: 24,
+				            symbolX: 23,
+				            symbolY: 21,
+				            symbolStrokeWidth: 2
+				        }
+				    },
+				  credits: {
+	  			    	enabled : false
+	  			    },
+	  			  	exporting: {
+		  		        sourceWidth: 1200,
+		  		        sourceHeight: 330,
+		  		        // scale: 2 (default)
+		  		        chartOptions: {
+		  		            subtitle: null
+		  		        }
+		  		  },
+				  series: [{
+				    name: '퍼센트(%)',
+				    data: jsonScript2
+
+				  }]
+				});
+			}
+		
+  	function matchChart2(jsonScript,jsonScript2) {
+  		Highcharts.setOptions({
+  			lang: {
+  				thousandsSep: ','
+  			}
+  		});
+  		Highcharts.chart('container2', {
+			  chart: {
+			    type: 'column'
+			  },
+			  title: {
+			    text: ''
+			  },
+			  subtitle: {
+			    text: ''
+			  },
+			  xAxis: {
+			    categories: jsonScript,
+			    crosshair: true
+			  },
+			  yAxis: {
+			    min: 0,
+			    title: {
+			      text: ''
+			    }
+			  },
+			  plotOptions: {
+			    column: {
+			      pointPadding: 0.2,
+			      borderWidth: 0
+			    }
+			  },
+			  navigation: {
+			        buttonOptions: {
+			            height: 40,
+			            width: 48,
+			            symbolSize: 24,
+			            symbolX: 23,
+			            symbolY: 21,
+			            symbolStrokeWidth: 2
+			        }
+			    },
+			  credits: {
+			    	enabled : false
+			    },
+			  	exporting: {
+	  		        sourceWidth: 1200,
+	  		        sourceHeight: 330,
+	  		        // scale: 2 (default)
+	  		        chartOptions: {
+	  		            subtitle: null
+	  		        }
+	  		  },
+			  series: [{
+			    name: '퍼센트(%)',
+			    data: jsonScript2,
+				color: '#f7a35c'
+			  }]
+			});
+		}
   	
   	function popupOpen(media_name){
 		

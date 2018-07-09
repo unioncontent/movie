@@ -497,4 +497,9 @@ public class SNSServiceImpl implements SNSService {
 	}
 
 
+	@Override
+	public void fvUpdate(FvVO vo) {
+
+		snsDAO.fvUpdate(vo);
+	}
 }

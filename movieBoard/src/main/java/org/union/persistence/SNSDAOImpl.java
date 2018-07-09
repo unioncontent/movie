@@ -475,4 +475,13 @@ public class SNSDAOImpl implements SNSDAO {
 	}
 
 
+	@Override
+	public void fvUpdate(FvVO vo) {
+		try {
+			session.update(namespace + "fvUpdate", vo);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

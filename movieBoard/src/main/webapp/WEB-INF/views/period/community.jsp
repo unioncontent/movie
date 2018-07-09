@@ -252,7 +252,7 @@
                                 </div>
                                 <div class="card-block">
                                   <!-- chart start -->
-                                  <div class="m-b-35" id="line-chart1"></div>
+                                  <div id="container" style="height:350px;"></div>
                                   <!-- chart end -->
                                 </div>
                               </div>
@@ -423,6 +423,10 @@
   <!-- Morris Chart js -->
   <script src="../bower_components/raphael/raphael.min.js"></script>
   <script src="../bower_components/morris.js/morris.js"></script>
+  <!-- High Chart js -->
+  <script src="https://code.highcharts.com/highcharts.js"></script>
+  <script src="https://code.highcharts.com/modules/series-label.js"></script>
+  <script src="https://code.highcharts.com/modules/exporting.js"></script>
   <!-- Date-range picker js -->
   <script type="text/javascript" src="../bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
   <!-- echart js -->
@@ -656,47 +660,158 @@ var $fromDate = $("#fromDate");
 
 	  		var script = "[";
 
-	  		for(var i = 0; i < data.length; i++){
-	  			console.log(data[i]);
-	  			script += '{"period":' + '"' + data[i].writeDate + '",'
-	  					+ '"l1"'+ ':' + data[i].type1 + ","
-	  					+ '"l2"' + ':' + data[i].type2 + ","
-	  					+ '"l3"' + ':' + data[i].type3 + ","
-	  					+ '"l4"' + ':' + data[i].type4 + "},";
 
-	  			if(i == data.length-1){
-	  				script =  script.substr(0, script.length-1);
-	  				script += "]";
-	  			}
-	  		}
-	  		console.log(script);
+			for(var i = 0; i < data.length; i++){
 
-	  		// to json
-	  		var jsonScript = JSON.parse(script);
+				script += data[i].type1 + ",";
 
-	  		drawChart(jsonScript);
+
+				if(i == data.length-1){
+					script =  script.substr(0, script.length-1);
+					script += "]";
+				}
+			}
+			
+			var script2 = "[";
+
+
+			for(var i = 0; i < data.length; i++){
+
+				script2 += data[i].type2 + ",";
+
+				if(i == data.length-1){
+					script2 =  script2.substr(0, script2.length-1);
+					script2 += "]";
+	  		
+				}
+			}
+			
+			var script3 = "[";
+
+
+			for(var i = 0; i < data.length; i++){
+
+				script3 += data[i].type3 + ",";
+
+				if(i == data.length-1){
+					script3 =  script3.substr(0, script3.length-1);
+					script3 += "]";
+	  		
+				}
+			}
+			
+			var script4 = "[";
+
+
+			for(var i = 0; i < data.length; i++){
+
+				script4 += data[i].type4 + ",";
+
+				if(i == data.length-1){
+					script4 =  script4.substr(0, script4.length-1);
+					script4 += "]";
+	  		
+				}
+			}
+			
+			var script5 = "[";
+
+			for(var i = 0; i < data.length; i++){
+
+				script5 += '"' + data[i].writeDate + '",';
+
+				if(i == data.length-1){
+					script5 =  script5.substr(0, script5.length-1);
+					script5 += "]";
+	  		
+				}
+			}
+			
+			/* console.log(script);
+			console.log(script2);
+			console.log(script3); */
+
+			// to json
+			var jsonScript = JSON.parse(script);
+			var jsonScript2 = JSON.parse(script2);
+			var jsonScript3 = JSON.parse(script3);
+			var jsonScript4 = JSON.parse(script4);
+			var jsonScript5 = JSON.parse(script5);
+
+			areaChart(jsonScript, jsonScript2, jsonScript3, jsonScript4, jsonScript5);
 
 	  	 }
-		});
+	});
 	}
 
 
-  function drawChart(data){
-     	// 그래프 초기화
-     	$('#line-chart1').children().remove();
-
-     	window.lineChart = Morris.Line({
-     	      element: 'line-chart1',
-     	      data: data,
-     	      xkey: 'period',
-     	      xLabels : 'day',
-     	      redraw: true,
-     	      ykeys: ['l1', 'l2', 'l3', 'l4'],
-     	      hideHover: 'auto',
-     	      labels: ['좋은글', '나쁜글', '관심글', '기타'],
-     	      lineColors: ['#2ecc71', '#e74c3c', '#3498DB','#f1c40f']
-     	  });
-     }
+  function areaChart(jsonScript,jsonScript2,jsonScript3,jsonScript4,jsonScript5) {
+	 	 Highcharts.setOptions({
+			lang: {
+				thousandsSep: ','
+			}
+		});
+		Highcharts.chart('container', {
+			chart: {
+				type: 'spline'
+			},
+			title: {
+				text: ''
+			},
+			subtitle: {
+				text: ''
+			},
+			xAxis: {
+				categories: jsonScript5
+			},
+			yAxis: {
+			    title: {
+			      text: ''
+			    }
+			  },
+			  tooltip: {
+			    crosshairs: true,
+			    shared: true
+			  },
+			  plotOptions: {
+			    spline: {
+			      marker: {
+			        radius: 4,
+			        lineColor: '#666666',
+			        lineWidth: 1
+			      }
+			    }
+			  },
+			  credits: {
+  			    	enabled : false
+  			  },
+  			  exporting: {
+  		        sourceWidth: 1200,
+  		        sourceHeight: 330,
+  		        // scale: 2 (default)
+  		        chartOptions: {
+  		            subtitle: null
+  		        }
+  		      },
+  		    series: [{
+		        name: '좋은글',
+		        data: jsonScript,
+		        color: '#2ecc71'
+		    },{
+		        name: '나쁜글',
+		        data: jsonScript2,
+		        color: '#e74c3c'
+		    },{
+		        name: '관심글',
+		        data: jsonScript3,
+		        color: '#3498DB'
+		    },{
+		        name: '기타글',
+		        data: jsonScript4,
+		        color: '#f1c40f'
+		    },]
+			});
+		}
 
   // 날짜 계산 함수
   function getDate(type){

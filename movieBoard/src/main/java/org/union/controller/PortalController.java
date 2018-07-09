@@ -347,6 +347,7 @@ public class PortalController {
 		}
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH");
+		SimpleDateFormat sdf2 = new SimpleDateFormat("MM-dd HH");
 		
 		String current = sdf.format(new Date());
 		logger.info("current: " + current);
@@ -369,7 +370,7 @@ public class PortalController {
 			/*logger.info("selectcompanygraph: " + company);
 			logger.info("selectKeygraph: " + selectKey);*/
 			
-			graphVO.setWriteDate(sdf.format(cal.getTime()) + ":00:00");
+			graphVO.setWriteDate(sdf2.format(cal.getTime()) + ":00:00");
 			graphVO.setType1(mobileEntService.getTypeOfMovieCountGraph(cri));
 			graphVO.setType2(mobileEntService.getTypeOfActorCountGraph(cri));
 			graphVO.setType3(mobileEntService.getMatchCountGraph(cri));
@@ -388,7 +389,7 @@ public class PortalController {
 				/*logger.info("selectcompanygraph: " + company);
 				logger.info("selectKeygraph: " + selectKey);*/
 				
-				graphVO.setWriteDate(sdf.format(cal.getTime()) + ":00:00");
+				graphVO.setWriteDate(sdf2.format(cal.getTime()) + ":00:00");
 				graphVO.setType1(mobileEntService.MgetTypeOfMovieCountGraph(cri));
 				graphVO.setType2(mobileEntService.MgetTypeOfActorCountGraph(cri));
 				graphVO.setType3(mobileEntService.MgetMatchCountGraph(cri));
@@ -401,6 +402,7 @@ public class PortalController {
 			
 		}
 		
+		Collections.reverse(graphList);
 		logger.info("graphList: " + graphList);
 		return graphList;
 	}

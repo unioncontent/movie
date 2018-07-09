@@ -234,7 +234,7 @@
                                 </div>
                                 <div class="card-block">
                                   <!-- chart start -->
-                                  <div class="m-b-35" id="line-chart1"></div>
+                                  <div id="container" style="height:350px;"></div>
                                   <!-- chart end -->
                                 </div>
                               </div>
@@ -572,6 +572,10 @@
   <!-- Morris Chart js -->
   <script src="../bower_components/raphael/raphael.min.js"></script>
   <script src="../bower_components/morris.js/morris.js"></script>
+  <!-- High Chart js -->
+  <script src="https://code.highcharts.com/highcharts.js"></script>
+  <script src="https://code.highcharts.com/modules/series-label.js"></script>
+  <script src="https://code.highcharts.com/modules/exporting.js"></script>
   <!-- Date-range picker js -->
   <script type="text/javascript" src="../bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
   <!-- echart js -->
@@ -804,30 +808,121 @@ function ajaxGraph(startDate, endDate){
 
   		var script = "[";
 
-  		for(var i = 0; i < data.length; i++){
-  			console.log(data[i]);
-  			script += '{"period":' + '"' + data[i].writeDate + '",'
-  					+ '"naver"'+ ':' + data[i].type1 + ","
-  					+ '"daum"' + ':' + data[i].type2 + "},";
 
-  			if(i == data.length-1){
-  				script =  script.substr(0, script.length-1);
-  				script += "]";
-  			}
-  		}
-  		console.log(script);
+		for(var i = 0; i < data.length; i++){
 
-  		// to json
-  		var jsonScript = JSON.parse(script);
+			script += data[i].type1 + ",";
 
-  		drawChart(jsonScript);
+
+			if(i == data.length-1){
+				script =  script.substr(0, script.length-1);
+				script += "]";
+			}
+		}
+		
+		var script2 = "[";
+
+
+		for(var i = 0; i < data.length; i++){
+
+			script2 += data[i].type2 + ",";
+
+			if(i == data.length-1){
+				script2 =  script2.substr(0, script2.length-1);
+				script2 += "]";
+  		
+			}
+		}
+		
+		var script3 = "[";
+
+		for(var i = 0; i < data.length; i++){
+
+			script3 += '"' + data[i].writeDate + '",';
+
+			if(i == data.length-1){
+				script3 =  script3.substr(0, script3.length-1);
+				script3 += "]";
+  		
+			}
+		}
+		
+		console.log(script);
+		console.log(script2);
+		console.log(script3);
+
+		// to json
+		var jsonScript = JSON.parse(script);
+		var jsonScript2 = JSON.parse(script2);
+		var jsonScript3 = JSON.parse(script3);
+
+		areaChart(jsonScript, jsonScript2, jsonScript3);
 
   	 }
-	});
+});
 }
 
+function areaChart(jsonScript,jsonScript2,jsonScript3) {
+		Highcharts.setOptions({
+			lang: {
+				thousandsSep: ','
+			}
+		});
+		Highcharts.chart('container', {
+			chart: {
+				type: 'spline'
+			},
+			title: {
+				text: ''
+			},
+			subtitle: {
+				text: ''
+			},
+			xAxis: {
+				categories: jsonScript3
+			},
+			yAxis: {
+			    title: {
+			      text: ''
+			    }
+			  },
+			  tooltip: {
+			    crosshairs: true,
+			    shared: true
+			  },
+			  plotOptions: {
+			    spline: {
+			      marker: {
+			        radius: 4,
+			        lineColor: '#666666',
+			        lineWidth: 1
+			      }
+			    }
+			  },
+			  credits: {
+  			    	enabled : false
+  			  },
+  			  exporting: {
+  		        sourceWidth: 1200,
+  		        sourceHeight: 330,
+  		        // scale: 2 (default)
+  		        chartOptions: {
+  		            subtitle: null
+  		        }
+  		      },
+  		    series: [{
+		        name: 'NAVER',
+		        data: jsonScript,
+		        color: '#2ecc71'
+		    },{
+		        name: 'DAUM',
+		        data: jsonScript2,
+		        color: '#4099FF'
+		    }]
+			});
+		}
 
-function drawChart(data){
+/* function drawChart(data){
  	// 그래프 초기화
  	$('#line-chart1').children().remove();
 
@@ -842,7 +937,7 @@ function drawChart(data){
  	      labels: ['네이버', '다음'],
  	      lineColors: ['#2ecc71', '#4099FF']
  	  });
- }
+ } */
 
 // 날짜 계산 함수
 function getDate(type){

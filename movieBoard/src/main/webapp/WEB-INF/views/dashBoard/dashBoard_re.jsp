@@ -299,7 +299,7 @@
                           </div>
                           <div class="card-block">
                             <!-- <div id="morris-extra-area" style="height:300px;"></div> -->
-                            <div id="morris-extra-line" style="height:328px;"></div>
+                            <div id="container" style="height:328px;"></div>
                             <br>
                             <h5>분류글 현황<!-- ( community / portal / media ) --></h5>
                             <br><br>
@@ -590,6 +590,10 @@
   <!-- Morris Chart js -->
   <script src="../bower_components/raphael/raphael.min.js"></script>
   <script src="../bower_components/morris.js/morris.js"></script>
+  <!-- High Chart js -->
+  <script src="https://code.highcharts.com/highcharts.js"></script>
+  <script src="https://code.highcharts.com/modules/series-label.js"></script>
+  <script src="https://code.highcharts.com/modules/exporting.js"></script>
   <!-- i18next.min.js -->
   <script type="text/javascript" src="../bower_components/i18next/i18next.min.js"></script>
   <script type="text/javascript" src="../bower_components/i18next-xhr-backend/i18nextXHRBackend.min.js"></script>
@@ -779,8 +783,7 @@ $(document).ready(function(){
 
 			for(var i = 0; i < data.length; i++){
 
-				script += '{"period":' + '"' + data[i].writeDate + '",'
-						+ '"검출량"' + ':' + data[i].type1 + "},";
+				script += data[i].type1 + ",";
 
 
 				if(i == data.length-1){
@@ -788,12 +791,28 @@ $(document).ready(function(){
 					script += "]";
 				}
 			}
+			
+			var script2 = "[";
+
+	
+			for(var i = 0; i < data.length; i++){
+
+				script2 += '"' + data[i].writeDate + '",';
+
+				if(i == data.length-1){
+					script2 =  script2.substr(0, script2.length-1);
+					script2 += "]";
+	  		
+				}
+			}
 			console.log(script);
+			console.log(script2);
 
 			// to json
 			var jsonScript = JSON.parse(script);
+			var jsonScript2 = JSON.parse(script2);
 
-			areaChart(jsonScript);
+			areaChart(jsonScript, jsonScript2);
 
 	  	 }
 	});
@@ -965,7 +984,71 @@ function makeDateFormat(date, index){
 	  				  + $('#selectKeyword option:selected').val();
 	  }
 
-	  function areaChart(jsonScript) {
+	  function areaChart(jsonScript,jsonScript2) {
+		  Highcharts.setOptions({
+				lang: {
+					thousandsSep: ','
+				}
+			});
+		  Highcharts.chart('container', {
+
+			    title: {
+			         text: ''
+			    },
+			    subtitle: {
+			        text: ''
+			    },
+			    yAxis: {
+			        title: {
+			            text: ''
+			        }
+			    },
+			    legend: {
+			        layout: 'vertical',
+			        align: 'right',
+			        verticalAlign: 'middle'
+			    },
+			  	xAxis: {
+			  	 categories: jsonScript2
+			    },
+	  		    plotOptions: {
+	  		        series: {
+	  		            allowPointSelect: true
+	  		        }
+	  		    },
+			    series: [{
+			        name: '검출수',
+			        data: jsonScript
+			    }],
+			  	credits: {
+			    	enabled : false
+			    },
+			  	exporting: {
+		        sourceWidth: 1200,
+		        sourceHeight: 330,
+		        // scale: 2 (default)
+		        chartOptions: {
+		            subtitle: null
+		        }
+		    	},
+			    responsive: {
+			        rules: [{
+			            condition: {
+			                maxWidth: 500
+			            },
+			            chartOptions: {
+			                legend: {
+			                    layout: 'horizontal',
+			                    align: 'center',
+			                    verticalAlign: 'bottom'
+			                }
+			            }
+			        }]
+			    }
+			});
+			}
+	  
+	  /* function areaChart(jsonScript) {
 			$("#morris-extra-line").empty();
 			window.areaChart = Morris.Line({
 				element: 'morris-extra-line',
@@ -977,7 +1060,7 @@ function makeDateFormat(date, index){
 			    lineWidth : 3,
 			  	hideHover : 'auto'
 			    });
-			}
+			} */
 	  
 	//팝업
 	  function popupOpen(){

@@ -122,7 +122,7 @@
                           </div>
                           <div class="card-block">
                             <!-- <div id="morris-extra-area" style="height:300px;"></div> -->
-                            <div id="morris-extra-line" style="height:150px;"></div>
+                            <div id="container" style="height:350px;"></div>
                           </div>
                         </div>
                       </div>
@@ -143,7 +143,7 @@
                           </div>
                           <div class="card-block">
                             <!-- <div id="morris-extra-area" style="height:300px;"></div> -->
-                            <div id="morris-extra-line2" style="height:150px;"></div>
+                            <div id="container2" style="height:350px;"></div>
                           </div>
                         </div>
                       </div>
@@ -164,7 +164,7 @@
                           </div>
                           <div class="card-block">
                             <!-- <div id="morris-extra-area" style="height:300px;"></div> -->
-                            <div id="morris-extra-line3" style="height:150px;"></div>
+                            <div id="container3" style="height:350px;"></div>
                           </div>
                         </div>
                       </div>
@@ -364,6 +364,10 @@
   <!-- Morris Chart js -->
   <script src="../bower_components/raphael/raphael.min.js"></script>
   <script src="../bower_components/morris.js/morris.js"></script>
+  <!-- High Chart js -->
+  <script src="https://code.highcharts.com/highcharts.js"></script>
+  <script src="https://code.highcharts.com/modules/series-label.js"></script>
+  <script src="https://code.highcharts.com/modules/exporting.js"></script>
   <!-- sweet alert js -->
   <script type="text/javascript" src="../bower_components/sweetalert/dist/sweetalert.min.js"></script>
   <script type="text/javascript" src="../assets/pages/division/script.js"></script>
@@ -444,8 +448,7 @@ $(document).ready(function(){
 
 			for(var i = 0; i < data.length; i++){
 
-				script += '{"period":' + '"' + data[i].writeDate + '",'
-						+ '"조회수"' + ':' + data[i].type1 + "},";
+				script += data[i].type1 + ",";
 
 
 				if(i == data.length-1){
@@ -453,12 +456,28 @@ $(document).ready(function(){
 					script += "]";
 				}
 			}
+			
+			var script2 = "[";
+
+	
+			for(var i = 0; i < data.length; i++){
+
+				script2 += '"' + data[i].writeDate + '",';
+
+				if(i == data.length-1){
+					script2 =  script2.substr(0, script2.length-1);
+					script2 += "]";
+				}
+			}
+			
 			console.log(script);
+			console.log(script2);
 
 			// to json
 			var jsonScript = JSON.parse(script);
+			var jsonScript2 = JSON.parse(script2);
 
-			areaChart(jsonScript);
+			areaChart1(jsonScript, jsonScript2);
 
 	  	 }
 	});
@@ -477,8 +496,7 @@ $(document).ready(function(){
 
 			for(var i = 0; i < data.length; i++){
 
-				script += '{"period":' + '"' + data[i].writeDate + '",'
-						+ '"댓글수"' + ':' + data[i].type2 + "},";
+				script += data[i].type2 + ",";
 
 
 				if(i == data.length-1){
@@ -486,12 +504,28 @@ $(document).ready(function(){
 					script += "]";
 				}
 			}
+			
+			var script2 = "[";
+
+	
+			for(var i = 0; i < data.length; i++){
+
+				script2 += '"' + data[i].writeDate + '",';
+
+				if(i == data.length-1){
+					script2 =  script2.substr(0, script2.length-1);
+					script2 += "]";
+	  		
+				}
+			}
 			console.log(script);
+			console.log(script2);
 
 			// to json
 			var jsonScript = JSON.parse(script);
+			var jsonScript2 = JSON.parse(script2);
 
-			areaChart2(jsonScript);
+			areaChart2(jsonScript, jsonScript2);
 
 	  	 }
 	});
@@ -510,8 +544,7 @@ $(document).ready(function(){
 
 			for(var i = 0; i < data.length; i++){
 
-				script += '{"period":' + '"' + data[i].writeDate + '",'
-						+ '"좋아요수"' + ':' + data[i].type3 + "},";
+				script += data[i].type3 + ",";
 
 
 				if(i == data.length-1){
@@ -519,12 +552,28 @@ $(document).ready(function(){
 					script += "]";
 				}
 			}
+			
+			var script2 = "[";
+
+	
+			for(var i = 0; i < data.length; i++){
+
+				script2 += '"' + data[i].writeDate + '",';
+
+				if(i == data.length-1){
+					script2 =  script2.substr(0, script2.length-1);
+					script2 += "]";
+	  		
+				}
+			}
 			console.log(script);
+			console.log(script2);
 
 			// to json
 			var jsonScript = JSON.parse(script);
+			var jsonScript2 = JSON.parse(script2);
 
-			areaChart3(jsonScript);
+			areaChart3(jsonScript, jsonScript2);
 
 	  	 }
 	});
@@ -624,82 +673,199 @@ $(document).ready(function(){
 
 }); // end ready...
 
-	/* function areaChart(jsonScript) {
-		$("#morris-bar").empty();
-		window.areaChart = Morris.Bar({
-			element: 'morris-bar',
-		    data: jsonScript,
-		    xkey: 'period',
-		    ykeys: ['조회수'],
-		    labels: ['조회수'],
-		    barColors: ['#01C0C8'],
-		    stacked: true,
-		    hideHover: 'auto',
-		    resize: true,
-		    gridTextColor: '#888'
-		    });
-		} */
+function areaChart1(jsonScript,jsonScript2) {
+	Highcharts.setOptions({
+		lang: {
+			thousandsSep: ','
+		}
+	});
+	Highcharts.chart('container', {
 
+	    title: {
+	         text: ''
+	    },
+	    subtitle: {
+	        text: ''
+	    },
+	    yAxis: {
+	        title: {
+	            text: ''
+	        }
+	    },
+	    legend: {
+	        layout: 'vertical',
+	        align: 'right',
+	        verticalAlign: 'middle'
+	    },
+	  	xAxis: {
+	  	 categories: jsonScript2
+	    },
+	    plotOptions: {
+	        series: {
+	            allowPointSelect: true
+	        }
+	    },
+	    series: [{
+	        name: '조회수',
+	        data: jsonScript
+	    }],
+	  	credits: {
+	    	enabled : false
+	    },
+	  	exporting: {
+	        sourceWidth: 1200,
+	        sourceHeight: 330,
+	        // scale: 2 (default)
+	        chartOptions: {
+	            subtitle: null
+	        }
+	    },
+	    responsive: {
+	        rules: [{
+	            condition: {
+	                maxWidth: 500
+	            },
+	            chartOptions: {
+	                legend: {
+	                    layout: 'horizontal',
+	                    align: 'center',
+	                    verticalAlign: 'bottom'
+	                }
+	            }
+	        }]
+	    }
+	});
+	}
 
+function areaChart2(jsonScript,jsonScript2) {
+	Highcharts.setOptions({
+		lang: {
+			thousandsSep: ','
+		}
+	});
+	Highcharts.chart('container2', {
 
-	  		/* function areaChart(jsonScript) {
-	  			$("#morris-extra-area").empty();
-	  			window.areaChart = Morris.Area({
-	  				element: 'morris-extra-area',
-	  			    data: jsonScript,
-	  			  	lineColors: ['#01C0C8', '#7E81CB', '#fb9678'],
-	  			    xkey: 'period',
-	  			 	ykeys: ['조회수', '댓글수', '좋아요수'],
-	  			    labels: ['조회수', '댓글수', '좋아요수'],
-	  			    pointSize: 0,
-	  		        lineWidth: 0,
-	  		        resize: true,
-	  		        fillOpacity: 0.8,
-	  		        behaveLikeLine: true,
-	  		        gridLineColor: '#5FBEAA',
-	  		        hideHover: 'auto'
-	  			    });
-	  			} */
+	    title: {
+	         text: ''
+	    },
+	    subtitle: {
+	        text: ''
+	    },
+	    yAxis: {
+	        title: {
+	            text: ''
+	        }
+	    },
+	    legend: {
+	        layout: 'vertical',
+	        align: 'right',
+	        verticalAlign: 'middle'
+	    },
+	  	xAxis: {
+	  	 categories: jsonScript2
+	    },
+	    plotOptions: {
+	        series: {
+	            allowPointSelect: true
+	        }
+	    },
+	    series: [{
+	        name: '댓글수',
+	      	data: jsonScript,
+	        color : '#7E81CB'
+	    }],
+	  	credits: {
+	    	enabled : false
+	    },
+	  	exporting: {
+	        sourceWidth: 1200,
+	        sourceHeight: 330,
+	        // scale: 2 (default)
+	        chartOptions: {
+	            subtitle: null
+	        }
+	    },
+	    responsive: {
+	        rules: [{
+	            condition: {
+	                maxWidth: 500
+	            },
+	            chartOptions: {
+	                legend: {
+	                    layout: 'horizontal',
+	                    align: 'center',
+	                    verticalAlign: 'bottom'
+	                }
+	            }
+	        }]
+	    }
+	});
+	}
 
-	  			function areaChart(jsonScript) {
-		  			$("#morris-extra-line").empty();
-		  			window.areaChart = Morris.Line({
-		  				element: 'morris-extra-line',
-		  			    data: jsonScript,
-		  			    xkey: 'period',
-		  			    ykeys: ['조회수'],
-		  			    labels: ['조회수'],
-		  			    lineColors: ['#01C0C8'],
-		  			    lineWidth : 3,
-		  			  	hideHover : 'auto'
-		  			    });
-		  			}
-	  			function areaChart2(jsonScript) {
-		  			$("#morris-extra-line2").empty();
-		  			window.areaChart2 = Morris.Line({
-		  				element: 'morris-extra-line2',
-		  			    data: jsonScript,
-		  			    xkey: 'period',
-		  			    ykeys: ['댓글수'],
-		  			    labels: ['댓글수'],
-		  			    lineColors: ['#7E81CB'],
-		  			    lineWidth : 3,
-		  			  	hideHover : 'auto'
-		  			    });
-		  			}
-	  			function areaChart3(jsonScript) {
-		  			$("#morris-extra-line3").empty();
-		  			window.areaChart3 = Morris.Line({
-		  				element: 'morris-extra-line3',
-		  			    data: jsonScript,
-		  			    xkey: 'period',
-		  			    ykeys: ['좋아요수'],
-		  			    labels: ['좋아요수'],
-		  			    lineColors: ['#fb9678'],
-		  			    lineWidth : 3,
-		  			  	hideHover : 'auto'
-		  			    });
-		  			}
+function areaChart3(jsonScript,jsonScript2) {
+	Highcharts.setOptions({
+		lang: {
+			thousandsSep: ','
+		}
+	});
+	Highcharts.chart('container3', {
+
+	    title: {
+	         text: ''
+	    },
+	    subtitle: {
+	        text: ''
+	    },
+	    yAxis: {
+	        title: {
+	            text: ''
+	        }
+	    },
+	    legend: {
+	        layout: 'vertical',
+	        align: 'right',
+	        verticalAlign: 'middle'
+	    },
+	  	xAxis: {
+	  	 categories: jsonScript2
+	    },
+	    plotOptions: {
+	        series: {
+	            allowPointSelect: true
+	        }
+	    },
+	    series: [{
+	        name: '좋아요',
+	      	data: jsonScript,
+	        color : '#fb9678'
+	    }],
+	  	credits: {
+	    	enabled : false
+	    },
+	  	exporting: {
+	        sourceWidth: 1200,
+	        sourceHeight: 330,
+	        // scale: 2 (default)
+	        chartOptions: {
+	            subtitle: null
+	        }
+	    },
+	    responsive: {
+	        rules: [{
+	            condition: {
+	                maxWidth: 500
+	            },
+	            chartOptions: {
+	                legend: {
+	                    layout: 'horizontal',
+	                    align: 'center',
+	                    verticalAlign: 'bottom'
+	                }
+	            }
+	        }]
+	    }
+	});
+	}
 
 	  	//list URL 함수
 	  	var url = $('input[name=url]').val();

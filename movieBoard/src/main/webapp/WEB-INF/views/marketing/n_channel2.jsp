@@ -280,8 +280,8 @@
                                             <input type="hidden" value="${nV.portal_title}" name="portal_title">
                                             </td>
                                             <td>
-                                            <input type="text" value="${nV.portal_subtitle}" name="portal_subtitle" style="vertical-align:middle; max-width:300px; height: 35px;">
-                                            <button type="button" class="insertBtn2 btn btn-primary waves-effect waves-light alert-confirm1" data-original-title="등록">
+                                            <input type="text" value="${nV.portal_subtitle}" name="portal_subtitle" style="vertical-align:middle; max-width:300px; height: 35px; border-color: #dcdcdc; border: 1px solid #dcdcdc;">
+                                            <button type="button" class="insertBtn2 btn btn-list waves-effect waves-light alert-confirm1" data-original-title="등록">
 		      								  <span class="icofont icofont-ui-check"></span>
 		    								</button>
                                             </td>
@@ -514,7 +514,7 @@
 					
 					$.ajax({
 							type: "GET",
-							url: "n_update",
+							url: "n_update2",
 							data: {portal_subtitle: portal_subtitle, url: url},
 							dataType: "json",
 							success: function(data){
@@ -524,8 +524,9 @@
 					});
 				
 				swal("Success!", "등록처리가 완료되었습니다.", "success");
-
-				location.reload();
+				
+				window.setTimeout("pageReload()", 1000);
+				/* location.reload(); */
 			});
 		
 		});
@@ -566,7 +567,7 @@
 
 			console.log("url:" + url, "content:" + content);
 
-			self.location = "n_list?url=" + url + "&content=" + content;
+			self.location = "n_list2?url=" + url + "&content=" + content;
 
 		});
 
@@ -620,7 +621,10 @@
     						+ "&startDate=" + makeDateFormat($("#startdate").val(), 0)
 				 			+ "&endDate=" +  makeDateFormat($("#enddate").val(), 0);
     }
-
+	
+	function pageReload() {
+		location.reload();
+	}
 
 	// 날짜 계산 함수
 	function getDate(type){

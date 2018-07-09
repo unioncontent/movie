@@ -227,6 +227,7 @@
                                             <th width="3%">조회수</th>
                                             <th width="3%">댓글수</th>
                                             <th width="3%">좋아요수</th>
+                                            <th width="15%">영화제목</th>
                                             <th width="15%">제목</th>
                                             <th width="5%"></th>
                                           </tr>
@@ -258,6 +259,12 @@
                                             <input type="hidden" value="${fV.sns_content}" name="sns_content">
                                             </td>
                                             <td>
+                                            <input type="text" value="${fV.sns_subcontent}" name="sns_subcontent" style="vertical-align:middle; max-width:300px; height: 35px; border-color: #dcdcdc; border: 1px solid #dcdcdc;">
+                                            <button type="button" class="insertBtn2 btn btn-list waves-effect waves-light alert-confirm1" data-original-title="등록">
+		      								  <span class="icofont icofont-ui-check"></span>
+		    								</button>
+                                            </td>
+                                            <td>
                                             <div class="content-nowrap">
                                             <a href='${fV.url}' target="_blank">${fV.sns_content}</a>
                                             </div>
@@ -272,7 +279,7 @@
                                         </tbody>
                                         <tfoot>
                                           <tr>
-                                            <td colspan="8">
+                                            <td colspan="9">
                                                <ul class="pagination float-right">
 	        					                   <c:if test="${pageMaker.prev}">
 		        					                   <li class="page-item">
@@ -439,6 +446,59 @@
 
 			$fromDate.val(startDateOption + " - " + endDateOption);
 		}
+		
+		//등록버튼 클릭시
+		$(document).on("click",".insertBtn2",function(event){
+			var parent = event.target.parentNode;
+
+			if(parent.type == 'button'){
+				console.log("button click...");
+				parent = parent.parentNode;
+			}
+
+			var tr = parent.parentNode;
+			console.log(tr);
+
+			var td1 = tr.children[1];
+
+			var td2 = tr.children[6];
+
+
+			var url = td1.children[0].value;
+			var sns_subcontent = td2.children[0].value;
+			
+			console.log(url);
+			console.log(sns_subcontent);
+			
+		    swal({
+				title: "등록 하시겠습니까?",
+				text: "바로 등록처리 됩니다.",
+				type: "warning",
+				showCancelButton: true,
+				confirmButtonClass: "btn-danger",
+				confirmButtonText: "YES",
+				closeOnConfirm: false
+				},
+			function(){
+					
+					$.ajax({
+							type: "GET",
+							url: "f_update",
+							data: {sns_subcontent: sns_subcontent, url: url},
+							dataType: "json",
+							success: function(data){
+									console.log(data);
+							}
+				
+					});
+				
+				swal("Success!", "등록처리가 완료되었습니다.", "success");
+				
+				window.setTimeout("pageReload()", 1000);
+				/* location.reload(); */
+			});
+		
+		});
 
 		//그래프 비교버튼
 		$(".twin-button").on("click", function(event){
@@ -508,6 +568,9 @@
 				 			+ "&endDate=" +  makeDateFormat($("#enddate").val(), 0);
     }
 
+	function pageReload() {
+		location.reload();
+	}
 
 	// 날짜 계산 함수
 	function getDate(type){

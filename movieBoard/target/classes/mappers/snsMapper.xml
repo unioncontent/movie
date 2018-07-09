@@ -508,33 +508,33 @@
  	</select>
  	
  	<select id="replyGetDateCount" resultType="Integer">
- 		select sum(reply_cnt)
+ 		select IFNULL(sum(reply_cnt), 0)
 		from sns_data
 		where
 			sns_name = #{portal_name}
 		<include refid="search"></include>
 		and
-			createDate between date_add(#{date}, interval -1 hour) and #{date}
+			writeDate between date_add(date_add(#{writeDate}, interval +1 hour), interval -1 hour) and date_add(#{writeDate}, interval +1 hour)
  	
  	</select>
  	<select id="likeGetDateCount" resultType="Integer">
- 		select sum(like_cnt)
+ 		select IFNULL(sum(like_cnt), 0)
 		from sns_data
 		where
 			sns_name = #{portal_name}
 		<include refid="search"></include>
 		and
-			createDate between date_add(#{date}, interval -1 hour) and #{date}
+			writeDate between date_add(date_add(#{writeDate}, interval +1 hour), interval -1 hour) and date_add(#{writeDate}, interval +1 hour)
  	
  	</select>
  	<select id="shareGetDateCount" resultType="Integer">
- 		select sum(share_cnt)
+ 		select IFNULL(sum(share_cnt), 0)
 		from sns_data
 		where
 			sns_name = #{portal_name}
 		<include refid="search"></include>
 		and
-			createDate between date_add(#{date}, interval -1 hour) and #{date}
+			writeDate between date_add(date_add(#{writeDate}, interval +1 hour), interval -1 hour) and date_add(#{writeDate}, interval +1 hour)
  	
  	</select>
  	
@@ -618,7 +618,7 @@
  	
  	<select id="facebookCGVList" resultType="FvVO">
  		select 
-		DATE_FORMAT(writeDate,'%Y-%m-%d') writeDate, sns_content, url, max(view_cnt)as view_cnt, max(like_cnt)as like_cnt, max(reply_cnt)as reply_cnt,count(*) as total
+		DATE_FORMAT(writeDate,'%Y-%m-%d') writeDate, sns_content, sns_subcontent, url, max(view_cnt)as view_cnt, max(like_cnt)as like_cnt, max(reply_cnt)as reply_cnt,count(*) as total
 		from facebook_videos
         where
 			sns_writer = #{sns_writer}
@@ -877,7 +877,7 @@
  	
  	<select id="fvlistOne" resultType="FvVO">
  		select 
- 			createDate, sns_content, url 
+ 			createDate, sns_content, url, sns_subcontent
  		from 
  			facebook_videos 
  		where 
@@ -887,7 +887,7 @@
  	</select>
  	<select id="fvlistTwo" resultType="FvVO">
  		select 
- 			createDate, sns_content, url 
+ 			createDate, sns_content, url, sns_subcontent
  		from 
  			facebook_videos 
  		where 
@@ -967,7 +967,14 @@
 			keyword in (select keyword from keyword_data where keyword_main = #{selectKey})
 		and createDate <![CDATA[>=]]> #{startDate}
 		and createDate <![CDATA[<=]]> #{endDate}
-
  	</select>
 
+	<update id="fvUpdate">
+ 		update
+ 			facebook_videos
+ 		set
+ 			sns_subcontent = #{sns_subcontent}
+ 		where
+ 			url = #{url};
+ 	</update>
  </mapper>

@@ -256,7 +256,7 @@
 		                          </div>
 		                          <div class="card-block">
 		                            <!-- <div id="morris-extra-area" style="height:300px;"></div> -->
-		                            <div id="morris-extra-line" style="height:328px;"></div>
+		                            <div id="container" style="height:350px;"></div>
 				                	</div>
 		                        </div>
 		                      </div>
@@ -408,6 +408,10 @@
   <!-- Morris Chart js -->
   <script src="../bower_components/raphael/raphael.min.js"></script>
   <script src="../bower_components/morris.js/morris.js"></script>
+  <!-- High Chart js -->
+  <script src="https://code.highcharts.com/highcharts.js"></script>
+  <script src="https://code.highcharts.com/modules/series-label.js"></script>
+  <script src="https://code.highcharts.com/modules/exporting.js"></script>
   <!-- echart js -->
   <script src="../assets/pages/chart/echarts/js/echarts-all.js" type="text/javascript"></script>
   <!-- Date-range picker js -->
@@ -594,21 +598,36 @@
 
 			for(var i = 0; i < data.length; i++){
 
-				script += '{"period":' + '"' + data[i].writeDate + '",'
-						+ '"검출량"' + ':' + data[i].type1 + "},";
-						
+				script += data[i].type1 + ",";
+
 
 				if(i == data.length-1){
 					script =  script.substr(0, script.length-1);
 					script += "]";
 				}
 			}
+			
+			var script2 = "[";
+
+	
+			for(var i = 0; i < data.length; i++){
+
+				script2 += '"' + data[i].writeDate + '",';
+
+				if(i == data.length-1){
+					script2 =  script2.substr(0, script2.length-1);
+					script2 += "]";
+	  		
+				}
+			}
 			console.log(script);
+			console.log(script2);
 
 			// to json
 			var jsonScript = JSON.parse(script);
+			var jsonScript2 = JSON.parse(script2);
 
-			areaChart(jsonScript);
+			areaChart1(jsonScript, jsonScript2);
 
 	  	 }
 	});
@@ -627,18 +646,68 @@
 	
   }); // end ready...
   
-  function areaChart(jsonScript) {
-		$("#morris-extra-line").empty();
-		window.areaChart = Morris.Line({
-			element: 'morris-extra-line',
-		    data: jsonScript,
-		    xkey: 'period',
-		    ykeys: ['검출량'],
-		    labels: ['검출량'],
-		    lineColors: ['#01C0C8'],
-		    lineWidth : 3,
-		  	hideHover : 'auto'
-		    });
+  function areaChart1(jsonScript,jsonScript2) {
+	  Highcharts.setOptions({
+			lang: {
+				thousandsSep: ','
+			}
+		});
+	  Highcharts.chart('container', {
+
+		    title: {
+		         text: ''
+		    },
+		    subtitle: {
+		        text: ''
+		    },
+		    yAxis: {
+		        title: {
+		            text: ''
+		        }
+		    },
+		    legend: {
+		        layout: 'vertical',
+		        align: 'right',
+		        verticalAlign: 'middle'
+		    },
+		  	xAxis: {
+		  	 categories: jsonScript2
+		    },
+		    plotOptions: {
+		        series: {
+		            allowPointSelect: true
+		        }
+		    },
+		    series: [{
+		        name: '조회수',
+		        data: jsonScript
+		    }],
+		  	credits: {
+		    	enabled : false
+		    },
+		  	exporting: {
+	        sourceWidth: 1200,
+	        sourceHeight: 330,
+	        // scale: 2 (default)
+	        chartOptions: {
+	            subtitle: null
+	        }
+	    	},
+		    responsive: {
+		        rules: [{
+		            condition: {
+		                maxWidth: 500
+		            },
+		            chartOptions: {
+		                legend: {
+		                    layout: 'horizontal',
+		                    align: 'center',
+		                    verticalAlign: 'bottom'
+		                }
+		            }
+		        }]
+		    }
+		});
 		}
 
   function popupOpen(date){

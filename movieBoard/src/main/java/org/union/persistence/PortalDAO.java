@@ -156,4 +156,5 @@ public interface PortalDAO {
 	public List<NvVO> nvlistTwo2(SearchFv fv);
 	
 	public void nvUpdate(NvVO vo);
+	public void nvUpdate2(NvVO vo);
 }

@@ -774,4 +774,15 @@ public class PortalDAOImpl implements PortalDAO {
 			e.printStackTrace();
 		}
 	}
+
+
+	@Override
+	public void nvUpdate2(NvVO vo) {
+		try {
+			session.update(namespace + "nvUpdate2", vo);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

@@ -1959,8 +1959,26 @@ public class MarketingController {
     }
 	
 	@ResponseBody
+	@GetMapping("/f_update")
+	public String fvUpdate(String sns_subcontent, String url) {
+		logger.info("fvUpdate called....");
+		
+		logger.info("url: " + url);
+		logger.info("sns_subcontent: " + sns_subcontent);
+		
+		FvVO vo = new FvVO();
+		
+		vo.setSns_subcontent(sns_subcontent);;
+		vo.setUrl(url);
+		
+		snsService.fvUpdate(vo);
+		
+		return "success";
+	}
+	
+	@ResponseBody
 	@GetMapping("/n_update")
-	public String nvUpdate2(String portal_subtitle, String url) {
+	public String nvUpdate(String portal_subtitle, String url) {
 		logger.info("nvUpdate called....");
 		
 		logger.info("url: " + url);
@@ -1977,6 +1995,24 @@ public class MarketingController {
 	}
 	
 	@ResponseBody
+	@GetMapping("/n_update2")
+	public String nvUpdate2(String portal_subtitle, String url) {
+		logger.info("nvUpdate2 called....");
+		
+		logger.info("url: " + url);
+		logger.info("portal_subtitle: " + portal_subtitle);
+		
+		NvVO vo = new NvVO();
+		
+		vo.setPortal_subtitle(portal_subtitle);
+		vo.setUrl(url);
+		
+		portalService.nvUpdate2(vo);
+		
+		return "success";
+	}
+	
+	@ResponseBody
 	@PostMapping("/graph")
 	public List<GraphVO> graphPOST(Model model, String success, String url, SearchFv fv, String Mcreate) throws ParseException {
 		logger.info("graphPOST called....");
@@ -1984,6 +2020,7 @@ public class MarketingController {
 		String current2 = Mcreate;
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH");
+		SimpleDateFormat sdf2 = new SimpleDateFormat("MM-dd HH");
 		
 		String current = sdf.format(new Date());
 		logger.info("current: " + current);
@@ -2006,7 +2043,7 @@ public class MarketingController {
 			fv.setDate(cal.getTime());
 			fv.setUrl(url);
 			
-			graphVO.setWriteDate(sdf.format(cal.getTime()) + ":00:00");
+			graphVO.setWriteDate(sdf2.format(cal.getTime()) + ":00:00");
 			graphVO.setType1(snsService.fvlistViewCnt(fv));
 			graphVO.setType2(snsService.fvlistReply_cnt(fv));
 			graphVO.setType3(snsService.fvlistlike_cnt(fv));
@@ -2030,6 +2067,7 @@ public class MarketingController {
 		String current2 = Mcreate;
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH");
+		SimpleDateFormat sdf2 = new SimpleDateFormat("MM-dd HH");
 		
 		String current = sdf.format(new Date());
 		logger.info("current: " + current);
@@ -2052,7 +2090,7 @@ public class MarketingController {
 			fv.setDate(cal.getTime());
 			fv.setUrl(url);
 			
-			graphVO.setWriteDate(sdf.format(cal.getTime()) + ":00:00");
+			graphVO.setWriteDate(sdf2.format(cal.getTime()) + ":00:00");
 			graphVO.setType1(snsService.fvlistViewCnt(fv));
 			graphVO.setType2(snsService.fvlistReply_cnt(fv));
 			graphVO.setType3(snsService.fvlistlike_cnt(fv));
@@ -2223,6 +2261,7 @@ public class MarketingController {
 		String current2 = Mcreate;
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH");
+		SimpleDateFormat sdf2 = new SimpleDateFormat("MM-dd HH");
 		
 		String current = sdf.format(new Date());
 		logger.info("current: " + current);
@@ -2244,7 +2283,7 @@ public class MarketingController {
 			fv.setDate(cal.getTime());
 			fv.setUrl(url);
 			
-			graphVO.setWriteDate(sdf.format(cal.getTime()) + ":00:00");
+			graphVO.setWriteDate(sdf2.format(cal.getTime()) + ":00:00");
 			graphVO.setType1(portalService.nvlistViewCnt(fv));
 			graphVO.setType2(portalService.nvlistReply_cnt(fv));
 			graphVO.setType3(portalService.nvlistlike_cnt(fv));
@@ -2267,6 +2306,7 @@ public class MarketingController {
 		String current2 = Mcreate;
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH");
+		SimpleDateFormat sdf2 = new SimpleDateFormat("MM-dd HH");
 		
 		String current = sdf.format(new Date());
 		logger.info("current: " + current);
@@ -2288,7 +2328,7 @@ public class MarketingController {
 			fv.setDate(cal.getTime());
 			fv.setUrl(url);
 			
-			graphVO.setWriteDate(sdf.format(cal.getTime()) + ":00:00");
+			graphVO.setWriteDate(sdf2.format(cal.getTime()) + ":00:00");
 			graphVO.setType1(portalService.nvlistViewCnt(fv));
 			graphVO.setType2(portalService.nvlistReply_cnt(fv));
 			graphVO.setType3(portalService.nvlistlike_cnt(fv));

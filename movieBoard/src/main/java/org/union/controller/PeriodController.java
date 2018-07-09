@@ -943,6 +943,7 @@ public class PeriodController {
 			}
 		}
 		
+		Collections.reverse(graphList);
 		logger.info("graphList: " + graphList);
 		return graphList;
 	}
