@@ -566,6 +566,7 @@
           console.log(data.result.issue);
           $('.section:not(div[data-type=4],div[data-type=issue],div[data-type=marketing],div[data-type=movie]) .section-body').empty();
           $('div[data-type=issue] .section-body tbody tr:not(.head)').remove();
+          $('div[data-type=marketing] .section-body tbody tr:not(.head)').remove();
           $('div[data-type=4] .section-body tbody tr:not(.head)').remove();
           $.each(data.result.issue, function(index, value) {
             console.log(value);
