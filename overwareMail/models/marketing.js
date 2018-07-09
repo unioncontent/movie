@@ -55,7 +55,7 @@ var marketing = {
   selectMarketingMailTable: async function(param){
     var sql = 'SELECT ps_name, ps_title, ps_writer, url, FORMAT(view_cnt,0) as view_cnt, FORMAT(like_cnt,0) as like_cnt,  \
     FORMAT(reply_cnt,0) as reply_cnt, FORMAT(total_cnt,0) as total_cnt, DATE_FORMAT(writeDate, \'%Y-%m-%d\') AS writeDate\
-    FROM marketing_mail where writeDate between \''+param.sDate+' 00:00:00\' and \''+param.eDate+' 23:59:59\'';
+    FROM marketing_mail where createDate between \''+param.sDate+' 00:00:00\' and \''+param.eDate+' 23:59:59\' order by createDate desc';
     return await getResult(sql);
   },
   selectMarketingTable: async function(body,param){
