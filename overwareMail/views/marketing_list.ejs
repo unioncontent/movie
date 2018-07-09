@@ -2,7 +2,7 @@
   <div class="page-wrapper">
     <div class="page-header">
       <div class="page-header-title">
-        <h4>선택 기사 리스트</h4>
+        <h4>선택 마케팅 리스트</h4>
       </div>
       <div class="page-header-breadcrumb">
         <ul class="breadcrumb-title">
@@ -11,7 +11,7 @@
               <i class="fas fa-home"></i>
             </a>
           </li>
-          <li class="breadcrumb-item"><a href="#!">선택 기사 리스트</a></li>
+          <li class="breadcrumb-item"><a href="#!">선택 마케팅 리스트</a></li>
         </ul>
       </div>
     </div>
@@ -20,12 +20,6 @@
         <div class="col-md-12">
           <div class="card">
             <div class="card-header">
-              <select name="select" class="col-md-1 form-control form-control-default m-b-10 m-r-5 p-r-5 f-left" id="selectKeyword">
-                <option>키워드</option>
-                <%for(var i=0; i < klist.length; i++) {%>
-                  <option value='<%=klist[i].M_keyword%>'><%=klist[i].M_keyword%></option>
-                <%}%>
-              </select>
               <div class="col-md-3 p-r-0 p-l-0 f-right">
                 <div id="reportrange" class="form-control form-control-default">
                   <i class="glyphicon glyphicon-calendar far fa-calendar-alt"></i>
@@ -41,75 +35,41 @@
                     <tr>
                       <th width="5%">NO</th>
                       <th width="10%" style="min-width: 80px;">등록날짜</th>
-                      <th width="20%">제목</th>
-                      <th width="5%" style="min-width: 80px;">언론사</th>
-                      <th width="5%" style="min-width: 80px;">기자</th>
-                      <th width="5%" style="min-width: 80px;">키워드</th>
-                      <th width="5%" style="min-width: 50px;">분류글</th>
-                      <th width="20%" style="min-width: 180px;">썸네일</th>
-                      <th width="10%" style="min-width: 140px;">대분류</th>
-                      <th width="10%" style="min-width: 120px;">대표기사</th>
-                      <th width="10%" style="min-width: 120px;">세부기사</th>
+                      <th width="5%" style="min-width: 80px;">사이트</th>
+                      <th width="5%" style="min-width: 80px;">총검출수</th>
+                      <th width="5%" style="min-width: 80px;">조회수</th>
+                      <th width="5%" style="min-width: 80px;">댓글수</th>
+                      <th width="5%" style="min-width: 80px;">좋아요수</th>
+                      <th width="20%" style="min-width:120px">제목</th>
+                      <th width="20%" style="min-width:120px">영화제목</th>
                       <th width="10%" style="min-width: 80px;">관리</th>
                     </tr>
                   </thead>
                   <tbody>
                     <%
                       var limit = 10;
-                      if(currentPage > 0){
-                        (currentPage - 1) * limit;
+                      if(page > 0){
+                        (page - 1) * limit;
                       }
                       for(var i=0; i < list.length; i++) {
                     %>
                     <tr>
-                      <input type="hidden" id="idx" value="<%=list[i].media_idx%>" />
+                      <input type="hidden" id="idx" value="<%=((list[i].portal_idx == '0')? list[i].sns_idx: list[i].portal_idx)%>" />
                       <th><%= listCount - i - offset %></th>
                       <td><%= list[i].createDate %></td>
                       <td>
-                        <a href="<%= list[i].url %>" target="_blank" title="<%= list[i].media_title %>">
-                          <div class="title_nobr"><%= list[i].media_title %></div>
+                        <div class="nobr" title="<%=list[i].ps_writer%>"><%=list[i].ps_writer%></div>
+                      </td>
+                      <td><span id="cnt"><%= list[i].total_cnt %></span>건</td>
+                      <td><%= list[i].view_cnt %>회</td>
+                      <td><%= list[i].reply_cnt %>회</td>
+                      <td><%= list[i].like_cnt %>회</td>
+                      <td>
+                        <a href="<%= list[i].url %>" target="_blank" title="<%= list[i].ps_content %>">
+                          <div class="title_nobr"><%= list[i].ps_content %></div>
                         </a>
                       </td>
-                      <td><div class="nobr"><%= list[i].media_name %></div></td>
-                      <td>
-                        <div class="nobr">
-                          <% if(list[i].reporter_name == null){ %>
-                            <i class="fas fa-minus"></i>
-                          <%}else{%>
-                            <%=list[i].reporter_name%>
-                          <%}%>
-                        </div>
-                      </td>
-                      <td><div class="nobr"><%= list[i].keyword %></div></td>
-                      <td>
-                        <div class="nobr">
-                          <% if(list[i].textType == null){ %>
-                            <i class="fas fa-minus"></i>
-                          <%}else{%>
-                            <%=list[i].textType%>
-                          <%}%>
-                        </div>
-                      </td>
-                      <td>
-                        <input type="text" placeholder="이미지주소(URL)" id="thumbnail" value="<%=list[i].thumbnail%>" class="form-control selectText">
-                      </td>
-                      <td>
-                        <!-- <input type="number" min="1" max="8" id="newsType" value="<%=list[i].news_type%>" class="form-control"> -->
-                        <select class="form-control form-control-default p-l-5 select-news" id="newsType">
-                          <option value="1" <%=(list[i].news_type == '1') ? 'selected' : ''%>>쇼박스영화</option>
-                          <option value="2" <%=(list[i].news_type == '2') ? 'selected' : ''%>>경쟁영화</option>
-                          <option value="3" <%=(list[i].news_type == '3') ? 'selected' : ''%>>캐스팅</option>
-                          <option value="4" <%=(list[i].news_type == '4') ? 'selected' : ''%>>쇼박스기업뉴스</option>
-                          <option value="5" <%=(list[i].news_type == '5') ? 'selected' : ''%>>영화일반</option>
-                          <option value="6" <%=(list[i].news_type == '6') ? 'selected' : ''%>>보도국</option>
-                        </select>
-                      </td>
-                      <td>
-                        <input type="text" placeholder="대표기사" id="news_title" value="<%=list[i].media_idx%>" class="form-control selectText">
-                      </td>
-                      <td>
-                        <input type="text" placeholder="세부기사" id="news_detail" value="<%=list[i].news_detail%>" class="form-control selectText">
-                      </td>
+                      <td><input type="text" placeholder="제목" id="title" value="<%= list[i].ps_title %>" class="form-control  title_input"/></td>
                       <td>
                         <button class="btn btn-sm btn-danger btn-delete"><i class="far fa-trash-alt"></i></button>
                         <button class="btn btn-sm btn-primary btn-edit"><i class="far fa-edit"></i></button>
@@ -119,22 +79,19 @@
                   </tbody>
                   <tfoot>
                     <tr>
-                      <td colspan="4">
-                        <button id="newsAddBtn" class="btn btn-warning alert-check p-r-5 p-l-5 m-l-15 m-b-5  f-left m-t-5"><i class="fas fa-file-alt"></i>기사입력</button>
-                      </td>
                     <%
                     var pageCount = Math.ceil(listCount/limit);
                     if(pageCount > 1) {
                     %>
-                      <td colspan="8">
+                      <td colspan="10">
                         <ul class="pagination float-right">
                           <%
                             var pageSize = 5;
-                            var pRCnt = parseInt(currentPage / pageSize);
-                            if(currentPage % pageSize == 0){
-                              pRCnt = parseInt(currentPage / pageSize) - 1;
+                            var pRCnt = parseInt(page / pageSize);
+                            if(page % pageSize == 0){
+                              pRCnt = parseInt(page / pageSize) - 1;
                             }
-                            if(currentPage > 5) {
+                            if(page > 5) {
                           %>
                             <li class="page-item">
                               <a class="page-link" data-value="1" aria-label="Previous">
@@ -152,7 +109,7 @@
                             </li>
                           <% } %>
                           <% for(var index=pRCnt * pageSize + 1;index<(pRCnt + 1)*pageSize + 1;index++){%>
-                            <li class= "<%=(currentPage == index) ? 'active' : ''%> page-item">
+                            <li class= "<%=(page == index) ? 'active' : ''%> page-item">
                               <a class="page-link" data-value="<%=index%>" >
                                 <%= index %>
                               </a>
@@ -188,118 +145,11 @@
                 <input type="hidden" id="page" value="<%=page%>"/>
                 <input type="hidden" id="sDate" value="<%=sDate%>"/>
                 <input type="hidden" id="eDate" value="<%=eDate%>"/>
-                <input type="hidden" id="keyword" value="<%=keyword%>"/>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <!-- Modal start-->
-      <div class="modal fade" id="news-Modal" data-backdrop="static" data-keyboard="false" role="dialog">
-        <div class="modal-dialog modal-lg" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">기사입력</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">×</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <div class="form-group row">
-                <label class="col-sm-2 col-form-label">작성일</label>
-                <div class="col-sm-5">
-                  <input type="text" id="m_writeDate" placeholder="YYYY-MM-DD" class="form-control">
-                </div>
-                <div class="col-sm-5">
-                  <input type="text" id="m_writeDateTime" placeholder="HH:MM:SS" class="form-control">
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-2 col-form-label">키워드</label>
-                <div class="col-sm-10">
-                  <select class="form-control form-control-default" id="m_keyword">
-                    <option>키워드</option>
-                    <%for(var i=0; i < klist.length; i++) {%>
-                      <option value='<%=klist[i].M_keyword%>'><%=klist[i].M_keyword%></option>
-                      <%}%>
-                  </select>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-2 col-form-label">분류</label>
-                <div class="col-sm-10">
-                  <select class="form-control form-control-default" id="m_text_type">
-                    <option value="좋은글">좋은글</option>
-                    <option value="나쁜글">나쁜글</option>
-                    <option value="관심글">관심글</option>
-                    <option value="기타">기타</option>
-                  </select>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-2 col-form-label">제목</label>
-                <div class="col-sm-10">
-                  <input type="text" id="m_media_title" placeholder="제목" class="form-control">
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-2 col-form-label">내용</label>
-                <div class="col-sm-10">
-                  <textarea rows="5" cols="5" class="form-control" placeholder="내용" id="m_media_content"></textarea>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-2 col-form-label">언론사</label>
-                <div class="col-sm-10">
-                  <input type="text" id="m_media_name" placeholder="언론사" class="form-control">
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-2 col-form-label">기자</label>
-                <div class="col-sm-10">
-                  <input type="text" id="m_reporter_name" placeholder="기자" class="form-control">
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-2 col-form-label">URL</label>
-                <div class="col-sm-10">
-                  <input type="text" id="m_url" placeholder="URL" class="form-control">
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-2 col-form-label">썸네일</label>
-                <div class="col-sm-10">
-                  <input type="text" id="m_thumbnail" placeholder="이미지주소(URL)" class="form-control">
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-2 col-form-label">기사분류</label>
-                <div class="col-sm-10">
-                  <select class="form-control form-control-default" id="m_news_type">
-                    <option value="1">쇼박스 영화</option>
-                    <option value="2">경쟁 영화</option>
-                    <option value="3">캐스팅</option>
-                    <option value="4">쇼박스 기업 뉴스</option>
-                    <option value="5">영화 일반</option>
-                    <option value="6">보도국</option>
-                  </select>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-2 col-form-label">세부기사</label>
-                <div class="col-sm-10">
-                  <input type="text" id="m_news_detail" placeholder="세부기사" class="form-control">
-                </div>
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">취소</button>
-              <button type="button" class="btn btn-primary waves-effect waves-light" id="submit">등록</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- Modal end-->
     </div>
   </div>
 </div>
@@ -314,11 +164,11 @@
     font-size: 15px;
     padding-left: 3px;
     text-overflow: ellipsis;
-    width: 292px;
+    width: 455px;
     overflow: hidden;
   }
   .nobr{
-    width: 66px;
+    width: 104px;
   }
   .nobr>i{
     font-size: 10px;
@@ -461,7 +311,7 @@
         if (value != null) {
           $.ajax({
             type: "POST",
-            url: "/news/list/insert",
+            url: "/marketing/list/insert",
             data: param,
             error:function(request,status,error){
               console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
@@ -518,7 +368,7 @@
         console.log(trEle.find('#idx').val())
         $.ajax({
           type: "POST",
-          url: "/news/list/delete",
+          url: "/marketing/list/delete",
           data: {'idx' : trEle.find('#idx').val()},
           error:function(request,status,error){
             console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
@@ -551,11 +401,9 @@
       if (value != null) {
         $.ajax({
           type: "POST",
-          url: "/news/list/update",
+          url: "/marketing/list/update",
           data: {
-            'thumbnail' : trEle.find('#thumbnail').val(),
-            'news_type' : trEle.find('#newsType option:selected').val(),
-            'news_detail' : trEle.find('#news_detail').val(),
+            'title' : trEle.find('#title').val(),
             'idx' : trEle.find('#idx').val()
           },
           error:function(request,status,error){
@@ -585,20 +433,16 @@
     // data input hidden values
     var sDateValue = $('#sDate').val();
     var eDateValue = $('#eDate').val();
-    var keywordValue = $('#keyword').val();
     if(sDateValue != '' && eDateValue != '' ){
       param.sDate = moment(sDateValue).format('YYYY-MM-DD');
       param.eDate = moment(eDateValue).format('YYYY-MM-DD');
-    }
-    if(keywordValue != ''){
-      param.keyword = keywordValue;
     }
     ajaxGetPageList(param,num);
   });
   function ajaxGetPageList(param){
     console.log('ajaxGetPageList:',param);
     $.ajax({
-      url: '/news/list/getNextPage',
+      url: '/marketing/list/getNextPage',
       type: 'post',
       data: param,
       error: function(request,status,error){
@@ -613,51 +457,43 @@
         $('#listTable tbody').eq(0).empty();
 
         console.log(data);
-        $("#page").val(data.result.currentPage);
+        $("#page").val(data.result.page);
         $("#sDate").val(param.sDate);
         $("#eDate").val(param.eDate);
-        $("#keyword").val(param.keyword);
 
         data.result.list.forEach(function(item,idx){
           var numIdx = Math.ceil(data.result.listCount-(data.result.offset+idx)).toString();
           var html = '<tr>\
-          <input type="hidden" id="idx" value="'+item.media_idx+'" />\
+          <input type="hidden" id="idx" value="'+((item.portal_idx == '0') ? item.sns_idx: item.portal_idx)+'" />\
           <th>'+numIdx+'</th>\
           <td>'+item.createDate+'</td>\
+          <td><div class="nobr" title ="'+item.ps_writer+'">'+item.ps_writer+'</div></td>\
+          <td><span id="cnt">'+item.total_cnt+'</span>건</td>\
+          <td>'+item.view_cnt+'회</td>\
+          <td>'+item.reply_cnt+'회</td>\
+          <td>'+item.like_cnt+'회</td>\
           <td>\
-            <a href="'+item.url+'" target="_blank" title="'+item.media_title+'">\
-              <div class="title_nobr">'+item.media_title+'</div>\
+            <a href="'+item.url+'" target="_blank" title="'+item.ps_content+'">\
+              <div class="title_nobr">'+item.ps_content+'</div>\
             </a>\
           </td>\
-          <td><div class="nobr">'+item.media_name+'</div></td>';
-          html+='<td><div class="nobr">'+((item.reporter_name == null) ? '<i class="fas fa-minus"></i>' : item.reporter_name)+'</div></td>\
-          <td><div class="nobr">'+item.keyword+'</div></td>\
-          <td><div class="nobr">'+((item.textType == null) ? '<i class="fas fa-minus"></i>' : item.textType)+'</div></td>\
-          <td><input type="text" placeholder="이미지주소(URL)" id="thumbnail" value=\"'+((item.thumbnail == null) ? '' : item.thumbnail)+'\" class="form-control selectText"></td>';
-          html+='<td><select class="form-control form-control-default p-l-5 select-news" id="newsType">\
-            <option value="1" '+((item.news_type == '1') ? 'selected' : '')+'>쇼박스영화</option>\
-            <option value="2" '+((item.news_type == '2') ? 'selected' : '')+'>경쟁영화</option>\
-            <option value="3" '+((item.news_type == '3') ? 'selected' : '')+'>캐스팅</option>\
-            <option value="4" '+((item.news_type == '4') ? 'selected' : '')+'>쇼박스기업뉴스</option>\
-            <option value="5" '+((item.news_type == '5') ? 'selected' : '')+'>영화일반</option>\
-            <option value="6" '+((item.news_type == '6') ? 'selected' : '')+'>보도국</option>\
-          </select></td>';
-          html+='<td><input type="text" placeholder="대표기사" id="news_title" value="'+item.media_idx+'" class="form-control selectText"></td><td><input type="text" placeholder="세부기사" id="news_detail" value="'+((item.news_detail == null) ? '' : item.news_detail)+'" class="form-control selectText"></td>\
-          <td><button class="btn btn-sm btn-danger btn-delete"><i class="far fa-trash-alt"></i></button>&nbsp;<button class="btn btn-sm btn-primary btn-edit"><i class="far fa-edit"></i></button></td>';
+          <td><input type="text" placeholder="제목" id="title" value="'+item.ps_title+'" class="form-control  title_input"/></td>';
+          html+='<td><button class="btn btn-sm btn-danger btn-delete"><i class="far fa-trash-alt"></i></button>&nbsp;\
+          <button class="btn btn-sm btn-primary btn-edit"><i class="far fa-edit"></i></button></td>';
           $('#listTable tbody').eq(0).append(html);
         });
         var limit = 10;
         var pageCount = Math.ceil(data.result.listCount/limit);
         $('#listTable tfoot').eq(0).empty();
-        var html = '<tr><td colspan="4"><button id="newsAddBtn" class="btn btn-warning alert-check p-r-5 p-l-5 m-l-15 m-b-5  f-left m-t-5"><i class="fas fa-file-alt"></i>기사입력</button></td>'
         if(pageCount > 1) {
-          html += '<td colspan="8"><ul class="pagination float-right">';
+          var html = '<tr>';
+          html += '<td colspan="10"><ul class="pagination float-right">';
           var pageSize = 5;
-          var pRCnt = parseInt(data.result.currentPage / pageSize);
-          if(data.result.currentPage % pageSize == 0){
-            pRCnt = parseInt(data.result.currentPage / pageSize) - 1;
+          var pRCnt = parseInt(data.result.page / pageSize);
+          if(data.result.page % pageSize == 0){
+            pRCnt = parseInt(data.result.page / pageSize) - 1;
           }
-          if(data.result.currentPage > 5) {
+          if(data.result.page > 5) {
             html += '<li class="page-item"><a class="page-link" data-value="1" aria-label="Previous">\
                 <i class="ti-angle-double-left f-12"></i>\
                 <span aria-hidden="true"></span>\
@@ -671,7 +507,7 @@
           }
 
           for(var index=pRCnt * pageSize + 1;index<(pRCnt + 1)*pageSize + 1;index++){
-            var active = (data.result.currentPage == index) ? "active" : "";
+            var active = (data.result.page == index) ? "active" : "";
             html += '<li class=\"'+active+' page-item">\
               <a class="page-link" data-value=\"'+index+'"\ >'+index+'</a></li>'
 
@@ -694,8 +530,8 @@
                   </a></li>';
           }
           html += '</ul></td>';
+          html += '</tr>';
         }
-        html += '</tr>';
         $('#listTable tfoot').eq(0).append(html);
       }
     });
