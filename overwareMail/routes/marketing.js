@@ -12,6 +12,16 @@ var isAuthenticated = function (req, res, next) {
   }
   res.redirect('/login');
 };
+
+async function asyncForEach(array, callback) {
+  for (var index = 0; index < array.length; index++) {
+    var done = await callback(array[index], index, array);
+    if(done == false){
+      break;
+    }
+  }
+}
+
 // 페이스북 선택 페이지
 router.get('/facebook/:id',isAuthenticated,async function(req, res) {
   var data = await getFacebookListPageData(req.params.id,req.query);
@@ -101,28 +111,88 @@ router.post('/add',isAuthenticated,async function(req, res, next) {
   }
 });
 
-async function asyncForEach(array, callback) {
-  for (var index = 0; index < array.length; index++) {
-   var done = await callback(array[index], index, array);
-    if(done == false){
-     break;
-    }
+// 네이버 무비 선택 페이지
+router.get('/naver',isAuthenticated,async function(req, res) {
+  var data = await getNaverListPageData(req.query);
+  data.sDate = '';
+  data.eDate = '';
+  res.render('marketing_naver',data);
+});
+
+router.post('/naver/getNextPage',isAuthenticated,async function(req, res, next) {
+  try{
+    var data = await getNaverListPageData(req.body);
+    res.send({status:true,result:data});
+  } catch(e){
+    res.status(500).send(e);
   }
+});
+
+async function getNaverListPageData(param){
+  var data = {
+    list:[],
+    listCount:{total:0},
+    sDate: '',
+    eDate: ''
+  };
+  var limit = 10;
+  var searchParam = [0,limit];
+  var currentPage = 1;
+  var searchBody = {};
+  if (typeof param.page !== 'undefined') {
+    currentPage = param.page;
+  }
+  if (parseInt(currentPage) > 0) {
+    searchParam[0] = (currentPage - 1) * limit
+    data['offset'] = searchParam[0];
+  }
+  if (typeof param.sDate !== 'undefined' && typeof param.eDate !== 'undefined') {
+    searchBody['sDate'] = param.sDate;
+    searchBody['eDate'] = param.eDate;
+    data['sDate'] = param.sDate;
+    data['eDate'] = param.eDate;
+  }
+  try{
+    data['list'] = await marketing.selectNaverTable(searchBody,searchParam);
+    data['listCount'] = await marketing.selectNaverTableCount(searchBody,searchParam);
+    data['currentPage'] = currentPage;
+  }
+  catch(e){
+    console.log('e');
+  }
+  return data;
 }
+
+router.post('/naver/add',isAuthenticated,async function(req, res, next) {
+  try{
+    var list = JSON.parse(req.body.list);
+    await asyncForEach(list, async (item, index, array) => {
+      var param = item;
+      console.log(item);
+      try{
+        await marketing.insertPortal(param);
+      }
+      catch(err){
+        console.log(err);
+      }
+    });
+    res.send({status:true});
+  } catch(e){
+    res.status(500).send(e);
+  }
+});
 
 // 선택 마케팅 리스트 페이지
 router.get('/list',isAuthenticated,async function(req, res) {
-  var data = await getListPageData2(req.user.user_admin,req.query);
-  data.klist = await keyword.selectMovieKwdAll(req.user.user_admin,req.user.n_idx) || [];
+  var data = await getListPageData(req.query);
   data.sDate = '';
   data.eDate = '';
-  data.keyword = '';
-  res.render('newsList',data);
+  res.render('marketing_list',data);
 });
 
 router.post('/list/getNextPage',isAuthenticated,async function(req, res, next) {
   try{
-    var data = await getListPageData2(req.user.user_admin,req.body);
+    var data = await getListPageData(req.body);
     res.send({status:true,result:data});
   } catch(e){
     res.status(500).send(e);
@@ -131,7 +201,7 @@ router.post('/list/getNextPage',isAuthenticated,async function(req, res, next) {
 
 router.post('/list/insert',isAuthenticated,async function(req, res, next) {
   try{
-    await newsclipping.insert2(req.body);
+    await marketing.insert(req.body);
     res.send({status:true});
   } catch(e){
     res.status(500).send(e);
@@ -140,7 +210,7 @@ router.post('/list/insert',isAuthenticated,async function(req, res, next) {
 
 router.post('/list/delete',isAuthenticated,async function(req, res, next) {
   try{
-    await newsclipping.delete(req.body.idx);
+    await marketing.delete([req.body.idx,req.body.idx]);
     res.send({status:true});
   } catch(e){
     res.status(500).send(e);
@@ -149,24 +219,23 @@ router.post('/list/delete',isAuthenticated,async function(req, res, next) {
 
 router.post('/list/update',isAuthenticated,async function(req, res, next) {
   try{
-    await newsclipping.update(req.body.news_detail,[req.body.thumbnail,req.body.news_type,req.body.idx]);
+    await marketing.update([req.body.title,req.body.idx,req.body.idx]);
     res.send({status:true});
   } catch(e){
     res.status(500).send(e);
   }
 });
 
-async function getListPageData2(idx,param){
+async function getListPageData(param){
   var data = {
     list:[],
     listCount:{total:0},
     sDate: '',
     eDate: '',
-    keyword: '',
     page: 1
   };
   var limit = 10;
-  var searchParam = [idx,0,limit];
+  var searchParam = [0,limit];
   var currentPage = 1;
   var searchBody = {};
   if (typeof param.page !== 'undefined') {
@@ -174,8 +243,8 @@ async function getListPageData2(idx,param){
     data['page'] = currentPage;
   }
   if (parseInt(currentPage) > 0) {
-    searchParam[1] = (currentPage - 1) * limit
-    data['offset'] = searchParam[1];
+    searchParam[0] = (currentPage - 1) * limit
+    data['offset'] = searchParam[0];
   }
   if (typeof param.sDate !== 'undefined' && typeof param.eDate !== 'undefined') {
     searchBody['sDate'] = param.sDate;
@@ -183,14 +252,9 @@ async function getListPageData2(idx,param){
     data['sDate'] = param.sDate;
     data['eDate'] = param.eDate;
   }
-  if (typeof param.keyword !== 'undefined') {
-    searchBody['keyword'] = param.keyword;
-    data['keyword'] = param.keyword;
-  }
   try{
-    data['list'] = await newsclipping.selectNewsMailTable(searchBody,searchParam);
-    data['listCount'] = await newsclipping.selectNewsMailTableCount(searchBody,searchParam);
-    data['currentPage'] = currentPage;
+    data['list'] = await marketing.selectMarketingTable(searchBody,searchParam);
+    data['listCount'] = await marketing.selectMarketingTableCount(searchBody,searchParam);
   }
   catch(e){
     console.log('e');
