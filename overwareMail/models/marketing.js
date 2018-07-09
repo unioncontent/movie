@@ -52,6 +52,12 @@ var marketing = {
     sql+= " where sns_idx=? or portal_idx = ?";
     return await getResult(sql,param);
   },
+  selectMarketingMailTable: async function(param){
+    var sql = 'SELECT ps_name, ps_title, ps_writer, url, FORMAT(view_cnt,0) as view_cnt, FORMAT(like_cnt,0) as like_cnt,  \
+    FORMAT(reply_cnt,0) as reply_cnt, FORMAT(total_cnt,0) as total_cnt, DATE_FORMAT(writeDate, \'%Y-%m-%d\') AS writeDate\
+    FROM marketing_mail where writeDate between \''+param.sDate+' 00:00:00\' and \''+param.eDate+' 23:59:59\'';
+    return await getResult(sql);
+  },
   selectMarketingTable: async function(body,param){
     var sql = 'SELECT portal_idx, sns_idx, ps_name, ps_title, ps_content, ps_writer, url, \
     FORMAT(view_cnt,0) as view_cnt, FORMAT(like_cnt,0) as like_cnt, FORMAT(reply_cnt,0) as reply_cnt, FORMAT(total_cnt,0) as total_cnt, DATE_FORMAT(createDate, \'%Y-%m-%d %H:%i:%s\') AS createDate\
