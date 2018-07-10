@@ -582,8 +582,8 @@
             var html = '<tr>\
               <td style="padding: 16px 7px;border-bottom: 1px solid #f4f4f4;">\
                 <img alt="'+value.ps_name+'" src="http://showbox.email/images/newsclipping/'+value.ps_name+'_logo.png" style="width: 13px;height: 13px;margin-bottom: 3px;vertical-align: text-bottom;">\
-                <a href="'+value.url+'" target="_blank" title="'+m_title+'">\
-                <div class="text" style="width:294px;display: inline-block;text-overflow: ellipsis;overflow: hidden;vertical-align: baseline;white-space: nowrap;    top: 4px;" title="'+m_title+'">'+m_title+'</div></a>\
+                <div class="text" style="width:294px;display: inline-block;text-overflow: ellipsis;overflow: hidden;vertical-align: baseline;white-space: nowrap;    top: 4px;">\
+                <a href="'+value.url+'" target="_blank" title="'+m_title+'">'+m_title+'</a></div>\
                 <div class="info" style="color: #666;font-size: 11px;">\
                     <span class="date">총검출수 '+value.total_cnt+'</span>\
                     <span class="bar" style="display: inline-block;overflow: hidden;width: 0;height: 11px;margin: -1px 5px 1px 4px;border-left: 1px solid #eaeaea;vertical-align: middle;"></span>\
@@ -604,7 +604,7 @@
             // 4.쇼박스기업뉴스
             if(value.news_type == "4"){
               var html = '<tr>\
-                <td style="padding: 16px 7px;border-bottom: 1px solid #f4f4f4;"><a href="'+value.url+'" title="'+value.media_title+'"><div style="max-width: 371px;display: inline-block;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">'+value.media_title+'</div></a></td>\
+                <td style="padding: 16px 7px;border-bottom: 1px solid #f4f4f4;"><div style="max-width: 371px;display: inline-block;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;"><a href="'+value.url+'" title="'+value.media_title+'">'+value.media_title+'</a></div></td>\
                 <td style="padding: 13px 0;border: 1px solid #f4f4f4;text-align: center;color: #666;">'+value.media_name+'</td>\
                 <td style="padding: 13px 0;border-bottom: 1px solid #f4f4f4;text-align: center;color: #666;">'+value.writeDate+'</td>\
               </tr>'
