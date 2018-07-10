@@ -54,7 +54,7 @@
                       <th width="5%" style="min-width: 80px;">댓글수</th>
                       <th width="5%" style="min-width: 80px;">좋아요수</th>
                       <th width="20%" style="min-width:58px">제목</th>
-                      <th width="20%" style="min-width:58px">영화제목</th>
+                      <th width="20%" style="min-width:58px">대표제목</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -86,7 +86,7 @@
                           <div class="title_nobr"><%= list[i].portal_title %></div>
                         </a>
                       </td>
-                      <td><input type="text" placeholder="제목" id="title" class="form-control  title_input"/></td>
+                      <td><input type="text" placeholder="대표제목" id="title" class="form-control  title_input"/></td>
                     </tr>
                     <% } %>
                   </tbody>
@@ -160,6 +160,7 @@
                 </table>
                 <input type="hidden" id="sDate" value="<%=sDate%>"/>
                 <input type="hidden" id="eDate" value="<%=eDate%>"/>
+                <input type="hidden" id="search" value="<%=search%>"/>
               </div>
             </div>
           </div>
@@ -169,6 +170,9 @@
   </div>
 </div>
 <style type="text/css">
+  #searchInput{
+    font-size: 12px
+  }
   .table td, .table th {
     text-align: center;
   }
@@ -372,7 +376,7 @@
                 <div class="title_nobr">'+item.portal_title+'</div>\
               </a>\
             </td>\
-            <td><input type="text" placeholder="제목"  id="title" class="form-control title_input"/></td>\
+            <td><input type="text" placeholder="대표제목"  id="title" class="form-control title_input"/></td>\
           </tr>';
           $('#listTable tbody').eq(0).append(html);
         });
