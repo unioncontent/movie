@@ -25,10 +25,6 @@ async function asyncForEach(array, callback) {
 // 페이스북 선택 페이지
 router.get('/facebook/:id',isAuthenticated,async function(req, res) {
   var data = await getFacebookListPageData(req.params.id,req.query);
-  // data.klist = await marketing.selectMovieKwdAll(req.user.user_admin,req.user.n_idx) || [];
-  data.sDate = '';
-  data.eDate = '';
-  data.writer = req.params.id;
   res.render('marketing_facebook',data);
 });
 
@@ -47,7 +43,8 @@ async function getFacebookListPageData(writer,param){
     listCount:{total:0},
     sDate: '',
     eDate: '',
-    writer: ''
+    writer: writer,
+    search: ''
   };
   var limit = 10;
   var searchParam = [0,limit];
@@ -65,6 +62,10 @@ async function getFacebookListPageData(writer,param){
     searchBody['eDate'] = param.eDate;
     data['sDate'] = param.sDate;
     data['eDate'] = param.eDate;
+  }
+  if (typeof param.search !== 'undefined') {
+    searchBody['search'] = param.search;
+    data['search'] = param.search;
   }
   if (typeof writer !== '') {
     if(writer == 'LOTTE'){
@@ -114,8 +115,6 @@ router.post('/add',isAuthenticated,async function(req, res, next) {
 // 네이버 무비 선택 페이지
 router.get('/naver',isAuthenticated,async function(req, res) {
   var data = await getNaverListPageData(req.query);
-  data.sDate = '';
-  data.eDate = '';
   res.render('marketing_naver',data);
 });
 
@@ -133,7 +132,8 @@ async function getNaverListPageData(param){
     list:[],
     listCount:{total:0},
     sDate: '',
-    eDate: ''
+    eDate: '',
+    search: ''
   };
   var limit = 10;
   var searchParam = [0,limit];
@@ -151,6 +151,10 @@ async function getNaverListPageData(param){
     searchBody['eDate'] = param.eDate;
     data['sDate'] = param.sDate;
     data['eDate'] = param.eDate;
+  }
+  if (typeof param.search !== 'undefined') {
+    searchBody['search'] = param.search;
+    data['search'] = param.search;
   }
   try{
     data['list'] = await marketing.selectNaverTable(searchBody,searchParam);
