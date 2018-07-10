@@ -548,6 +548,7 @@ public class MarketingController {
 		model.addAttribute("creatDate", snsService.fvlistSearchTime(cri));
 		
 		logger.info("url: " + url);
+		logger.info("content: " + content);
 		model.addAttribute("content", content);
 		
 		Integer totalCount = snsService.fvlistSearchTotalCnt(cri);
@@ -635,6 +636,7 @@ public class MarketingController {
 		logger.info("createstartDate: " + createstartDate);
 		logger.info("createendDate: " + createendDate);
 		logger.info("url: " + url);
+		logger.info("content" + content);
 		model.addAttribute("content", content);
 		
 		Integer totalCount = snsService.fvlistSearchListTotalCnt(cri);

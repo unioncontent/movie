@@ -12,7 +12,7 @@
     text-align: center;
 }
 .nav-tabs .slide {
-    background: #50b772;
+    background: #7cb5ec;
     width: calc(100% / 2);
     height: 4px;
     position: absolute;

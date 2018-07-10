@@ -236,6 +236,11 @@
                                       <input type="text" class="datepicker-here form-control col-sm-1 f-left" data-language="en" id="startdate" placeholder="Date" style="max-width:130px;"><div size="3" class="f-left m-l-5 m-r-5"><b>~</b></div>
     	                              	<input type="text" class="datepicker-here form-control col-sm-1 f-left m-b-10" data-language="en" id="enddate" placeholder="Date" style="max-width:130px;">
                                     </div>
+                                    <c:if test="${user.user_name == 'union'}">
+                                    <button type="button" class="tabledit-update-button btn btn-primary waves-effect waves-light alert-confirm1" style="float: left; margin-left: 5px; margin-top: 10px;" data-toggle="tooltip" data-placement="top" data-original-title="일괄등록">
+      									일괄등록
+    								</button>
+    								</c:if>
                                   </div>
                                   <div class="card-block table-border-style">
                                     <div class="table-responsive">
@@ -255,7 +260,7 @@
                                         </thead>
                                         <tbody>
                                           <c:forEach items="${nVList}" var="nV" varStatus="index">
-                                          <tr>
+                                          <tr class = "trList">
                                           	<th>${totalCount - minusCount - index.count + 1}</th>
                                             <td>
                                             ${nV.writeDate}
@@ -573,7 +578,55 @@
 
 		$('#e1').select2({ width: '100%', height: '100%' });
 		$('#e2').select2({ width: '100%', height: '100%' });
-	}); // end ready...
+		
+		// 수정 버튼 클릭
+		$(document).on("click",".tabledit-update-button",function(event){
+			swal({
+				title: "일괄처리 하시겠습니까?",
+				text: "등록처리 됩니다.",
+				type: "warning",
+				showCancelButton: true,
+				confirmButtonClass: "btn-danger",
+				confirmButtonText: "YES",
+				closeOnConfirm: false
+			},
+			function(){
+					
+				var tr = $(".trList");;
+				console.log(tr);
+				
+				for(var i = 0; i < tr.length; i++){
+					
+					var td1 = tr[i].children[1];
+					var td2 = tr[i].children[6];
+					
+					var url = td1.children[0].value;
+					var portal_subtitle = td2.children[0].value;
+					
+					console.log(url);
+					console.log(portal_subtitle);
+					
+					$.ajax({
+						type: "GET",
+						url: "n_update",
+						data: {portal_subtitle: portal_subtitle, url: url},
+						dataType: "json",
+						success: function(data){
+								console.log(data);
+						}
+					});
+				} 
+				
+				swal("Success!", "등록처리가 완료되었습니다.", "success");
+				
+				window.setTimeout("pageReload()", 2000);
+				/* location.reload(); */
+			});
+
+
+		});
+		
+}); // end ready...
 
 
 	function searchList() {
