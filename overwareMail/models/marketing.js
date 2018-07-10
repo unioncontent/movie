@@ -88,6 +88,9 @@ var marketing = {
     if(('sDate' in body) && ('eDate' in body)){
       sql+=' and writeDate between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
     }
+    if('search' in body){
+      sql +=' and sns_content like \'%'+body.search+'%\'';
+    }
     if('writer' in body){
       sql +=' and sns_writer = \''+body.writer+'\'';
     }
@@ -98,6 +101,9 @@ var marketing = {
     var sql = "SELECT count(*) as total FROM (SELECT  * from facebook_videos where url is not null ";
     if(('sDate' in body) && ('eDate' in body)){
       sql+=' and writeDate between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
+    }
+    if('search' in body){
+      sql +=' and sns_content like \'%'+body.search+'%\'';
     }
     if('writer' in body){
       sql +=' and sns_writer = \''+body.writer+'\'';
@@ -115,9 +121,12 @@ var marketing = {
     var sql = "SELECT portal_idx, portal_name, portal_title, portal_writer, url, board_number, uid,\
     FORMAT(count(*),0) as total_cnt,FORMAT(max(view_cnt),0) as view_cnt, FORMAT(max(like_cnt),0) as like_cnt, FORMAT(max(reply_cnt),0) as reply_cnt,FORMAT(max(share_cnt),0) as share_cnt,\
     DATE_FORMAT(writeDate, '%Y-%m-%d') AS writeDate, title_key, keyword, keyword_type, textType, thumbnail\
-    FROM naver_videos where portal_name = \'naver\'";
+    FROM naver_videos where portal_name like \'naver\'";
     if(('sDate' in body) && ('eDate' in body)){
       sql+=' and writeDate between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
+    }
+    if('search' in body){
+      sql +=' and portal_title like \'%'+body.search+'%\'';
     }
     sql += ' group by url order by writeDate desc limit ?,?';
     return await getResult(sql,param);
@@ -126,6 +135,9 @@ var marketing = {
     var sql = "SELECT count(*) as total FROM (SELECT  * from naver_videos where portal_name = \'naver\'";
     if(('sDate' in body) && ('eDate' in body)){
       sql+=' and writeDate between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
+    }
+    if('search' in body){
+      sql +=' and portal_title like \'%'+body.search+'%\'';
     }
     sql += ' group by url) as a';
     var count = await getResult(sql);
