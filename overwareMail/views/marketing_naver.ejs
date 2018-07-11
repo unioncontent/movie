@@ -375,7 +375,7 @@
                 <div class="title_nobr">'+item.portal_title+'</div>\
               </a>\
             </td>\
-            <td><input type="text" placeholder="대표제목"  id="title" value="'+item.portal_subtitle+'"class="form-control title_input"/></td>\
+            <td><input type="text" placeholder="대표제목"  id="title" value="'+((item.portal_subtitle  == null) ? '' :item.portal_subtitle)+'"class="form-control title_input"/></td>\
           </tr>';
           $('#listTable tbody').eq(0).append(html);
         });
