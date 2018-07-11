@@ -679,7 +679,7 @@
 		        }
 		    },
 		    series: [{
-		        name: '조회수',
+		        name: '발송건',
 		        data: jsonScript
 		    }],
 		  	credits: {
