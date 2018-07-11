@@ -86,7 +86,7 @@
                           <div class="title_nobr"><%= list[i].sns_content %></div>
                         </a>
                       </td>
-                      <td><input type="text" placeholder="제목" id="title" class="form-control title_input"/></td>
+                      <td><input type="text" placeholder="제목" id="title" value="<%= list[i].sns_subcontent %>" class="form-control title_input"/></td>
                     </tr>
                     <% } %>
                   </tbody>
@@ -287,7 +287,6 @@
       },
       success:function(data){
         if(data.status){
-          $('.title_input').val('');
           swal("SUCCESS!", '선택저장 완료했습니다.', "success");
         }else{
           swal("ERROR!", '새로고침 후 다시 시도해주세요.', "error");
@@ -378,7 +377,7 @@
                 <div class="title_nobr">'+item.sns_content+'</div>\
               </a>\
             </td>\
-            <td><input type="text" placeholder="제목"  id="title" class="form-control title_input"/></td>\
+            <td><input type="text" placeholder="제목"  id="title" value="'+ item.sns_subcontent +'"class="form-control title_input"/></td>\
           </tr>';
           $('#listTable tbody').eq(0).append(html);
         });
