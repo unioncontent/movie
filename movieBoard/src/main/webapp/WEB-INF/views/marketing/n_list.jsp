@@ -114,7 +114,11 @@
                             <h5>
                             	<i class="icofont icofont-chart-line m-r-5"></i>
                             	조회수 데이터
-                            </h5><font style="color: #9f9f9f; font-size: 13px;">${content} 최근 48시간 그래프</font>
+                            </h5><c:forEach items="${title}" var="list1" varStatus="status">
+                            <font style="color: #9f9f9f; font-size: 13px;">
+                            '${list1.portal_title}' 최근 48시간 그래프
+                            </font>
+                            </c:forEach>
                             <div class="card-header-right">
                               <i class="icofont icofont-rounded-down"></i>
                             </div>
@@ -133,7 +137,11 @@
                             <h5>
                             	<i class="icofont icofont-chart-line m-r-5"></i>
                             	댓글수 데이터
-                            </h5><font style="color: #9f9f9f; font-size: 13px;">${content} 최근 48시간 그래프</font>
+                            </h5><c:forEach items="${title}" var="list1" varStatus="status">
+                            <font style="color: #9f9f9f; font-size: 13px;">
+                            '${list1.portal_title}' 최근 48시간 그래프
+                            </font>
+                            </c:forEach>
                             <div class="card-header-right">
                               <i class="icofont icofont-rounded-down"></i>
                             </div>
@@ -152,7 +160,11 @@
                             <h5>
                             	<i class="icofont icofont-chart-line m-r-5"></i>
                             	좋아요수 데이터
-                            </h5><font style="color: #9f9f9f; font-size: 13px;">${content} 최근 48시간 그래프</font>
+                            </h5><c:forEach items="${title}" var="list1" varStatus="status">
+                            <font style="color: #9f9f9f; font-size: 13px;">
+                            '${list1.portal_title}' 최근 48시간 그래프
+                            </font>
+                            </c:forEach>
                             <div class="card-header-right">
                               <i class="icofont icofont-rounded-down"></i>
                             </div>
@@ -661,7 +673,7 @@ $(document).ready(function(){
 
 		console.log("url:" + url, "content:" + content, "createstartDate:" + createstartDate, "createendDate:" + createendDate);
 
-		self.location = "n_listall?url=" + url + "&content=" + content + "&createstartDate=" + createstartDate + "&createendDate=" + createendDate;
+		self.location = "n_listall?url=" + url + "&createstartDate=" + createstartDate + "&createendDate=" + createendDate;
 
 	});
 

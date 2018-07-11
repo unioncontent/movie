@@ -174,7 +174,7 @@ public class MarketingController {
     }
 	
 	@GetMapping("/f_list")
-    public void f_listGET(@ModelAttribute("cri") SearchCriteria cri, Model model, String url, String content) throws ParseException {
+    public void f_listGET(@ModelAttribute("cri") SearchCriteria cri, Model model, String url) throws ParseException {
     	logger.info("f_list called....");
     	if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
 			logger.info("keyword is null");
@@ -228,14 +228,13 @@ public class MarketingController {
 		
 		cri.setSns_writer("CGV");
 		cri.setUrl(url);
-		cri.setPortal_name(content);
 		logger.info("crifvList: " + cri);
 		
 		model.addAttribute("list", snsService.fvlistSearch(cri));
 		model.addAttribute("creatDate", snsService.fvlistSearchTime(cri));
+		model.addAttribute("title", snsService.fvlistOne(cri));
 		
 		logger.info("url: " + url);
-		model.addAttribute("content", content);
 		
 		Integer totalCount = snsService.fvlistSearchTotalCnt(cri);
 		
@@ -256,7 +255,7 @@ public class MarketingController {
     }
 	
 	@GetMapping("/f_listall")
-    public void f_listallGET(@ModelAttribute("cri") SearchCriteria cri, Model model, String url, String content, String createstartDate, String createendDate) throws ParseException {
+    public void f_listallGET(@ModelAttribute("cri") SearchCriteria cri, Model model, String url, String createstartDate, String createendDate) throws ParseException {
     	logger.info("f_listall called....");
     	if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
 			logger.info("keyword is null");
@@ -318,11 +317,11 @@ public class MarketingController {
 		model.addAttribute("list1", snsService.fvlistSearchList(cri));
 		model.addAttribute("list2", snsService.fvlistMinus(cri));
 		model.addAttribute("creatDate", snsService.fvSearchlistSearchTime(cri));
+		model.addAttribute("title", snsService.fvlistOne(cri));
 		
 		logger.info("createstartDate: " + createstartDate);
 		logger.info("createendDate: " + createendDate);
 		logger.info("url: " + url);
-		model.addAttribute("content", content);
 		
 		Integer totalCount = snsService.fvlistSearchListTotalCnt(cri);
 		
@@ -487,7 +486,7 @@ public class MarketingController {
     }
 	
 	@GetMapping("/m_list")
-    public void m_listGET(@ModelAttribute("cri") SearchCriteria cri, Model model, String url, String content) throws ParseException {
+    public void m_listGET(@ModelAttribute("cri") SearchCriteria cri, Model model, String url) throws ParseException {
     	logger.info("m_list called....");
     	if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
 			logger.info("keyword is null");
@@ -541,15 +540,13 @@ public class MarketingController {
 		
 		cri.setSns_writer("메가박스");
 		cri.setUrl(url);
-		cri.setPortal_name(content);
 		logger.info("crifvList: " + cri);
 		
 		model.addAttribute("list", snsService.fvlistSearch(cri));
 		model.addAttribute("creatDate", snsService.fvlistSearchTime(cri));
+		model.addAttribute("title", snsService.fvlistOne(cri));
 		
 		logger.info("url: " + url);
-		logger.info("content: " + content);
-		model.addAttribute("content", content);
 		
 		Integer totalCount = snsService.fvlistSearchTotalCnt(cri);
 		
@@ -570,7 +567,7 @@ public class MarketingController {
     }
 	
 	@GetMapping("/m_listall")
-    public void m_listallGET(@ModelAttribute("cri") SearchCriteria cri, Model model, String url, String content, String createstartDate, String createendDate) throws ParseException {
+    public void m_listallGET(@ModelAttribute("cri") SearchCriteria cri, Model model, String url, String createstartDate, String createendDate) throws ParseException {
     	logger.info("m_listall called....");
     	if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
 			logger.info("keyword is null");
@@ -632,12 +629,11 @@ public class MarketingController {
 		model.addAttribute("list1", snsService.fvlistSearchList(cri));
 		model.addAttribute("list2", snsService.fvlistMinus(cri));
 		model.addAttribute("creatDate", snsService.fvSearchlistSearchTime(cri));
+		model.addAttribute("title", snsService.fvlistOne(cri));
 		
 		logger.info("createstartDate: " + createstartDate);
 		logger.info("createendDate: " + createendDate);
 		logger.info("url: " + url);
-		logger.info("content" + content);
-		model.addAttribute("content", content);
 		
 		Integer totalCount = snsService.fvlistSearchListTotalCnt(cri);
 		
@@ -802,7 +798,7 @@ public class MarketingController {
     }
 	
 	@GetMapping("/l_list")
-    public void l_listGET(@ModelAttribute("cri") SearchCriteria cri, Model model, String url, String content) throws ParseException {
+    public void l_listGET(@ModelAttribute("cri") SearchCriteria cri, Model model, String url) throws ParseException {
     	logger.info("l_list called....");
     	if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
 			logger.info("keyword is null");
@@ -856,14 +852,13 @@ public class MarketingController {
 		
 		cri.setSns_writer("롯데시네마");
 		cri.setUrl(url);
-		cri.setPortal_name(content);
 		logger.info("crifvList: " + cri);
 		
 		model.addAttribute("list", snsService.fvlistSearch(cri));
 		model.addAttribute("creatDate", snsService.fvlistSearchTime(cri));
+		model.addAttribute("title", snsService.fvlistOne(cri));
 		
 		logger.info("url: " + url);
-		model.addAttribute("content", content);
 		
 		Integer totalCount = snsService.fvlistSearchTotalCnt(cri);
 		
@@ -884,7 +879,7 @@ public class MarketingController {
     }
 	
 	@GetMapping("/l_listall")
-    public void l_listallGET(@ModelAttribute("cri") SearchCriteria cri, Model model, String url, String content, String createstartDate, String createendDate) throws ParseException {
+    public void l_listallGET(@ModelAttribute("cri") SearchCriteria cri, Model model, String url, String createstartDate, String createendDate) throws ParseException {
     	logger.info("l_listall called....");
     	if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
 			logger.info("keyword is null");
@@ -946,11 +941,11 @@ public class MarketingController {
 		model.addAttribute("list1", snsService.fvlistSearchList(cri));
 		model.addAttribute("list2", snsService.fvlistMinus(cri));
 		model.addAttribute("creatDate", snsService.fvSearchlistSearchTime(cri));
+		model.addAttribute("title", snsService.fvlistOne(cri));
 		
 		logger.info("createstartDate: " + createstartDate);
 		logger.info("createendDate: " + createendDate);
 		logger.info("url: " + url);
-		model.addAttribute("content", content);
 		
 		Integer totalCount = snsService.fvlistSearchListTotalCnt(cri);
 		
@@ -1115,7 +1110,7 @@ public class MarketingController {
     }
 	
 	@GetMapping("/b_list")
-    public void b_listGET(@ModelAttribute("cri") SearchCriteria cri, Model model, String url, String content) throws ParseException {
+    public void b_listGET(@ModelAttribute("cri") SearchCriteria cri, Model model, String url) throws ParseException {
     	logger.info("b_list called....");
     	if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
 			logger.info("keyword is null");
@@ -1169,14 +1164,13 @@ public class MarketingController {
 		
 		cri.setSns_writer("방울방울");
 		cri.setUrl(url);
-		cri.setPortal_name(content);
 		logger.info("crifvList: " + cri);
 		
 		model.addAttribute("list", snsService.fvlistSearch(cri));
 		model.addAttribute("creatDate", snsService.fvlistSearchTime(cri));
+		model.addAttribute("title", snsService.fvlistOne(cri));
 		
 		logger.info("url: " + url);
-		model.addAttribute("content", content);
 		
 		Integer totalCount = snsService.fvlistSearchTotalCnt(cri);
 		
@@ -1197,7 +1191,7 @@ public class MarketingController {
     }
 	
 	@GetMapping("/b_listall")
-    public void b_listallGET(@ModelAttribute("cri") SearchCriteria cri, Model model, String url, String content, String createstartDate, String createendDate) throws ParseException {
+    public void b_listallGET(@ModelAttribute("cri") SearchCriteria cri, Model model, String url, String createstartDate, String createendDate) throws ParseException {
     	logger.info("b_listall called....");
     	if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
 			logger.info("keyword is null");
@@ -1259,11 +1253,11 @@ public class MarketingController {
 		model.addAttribute("list1", snsService.fvlistSearchList(cri));
 		model.addAttribute("list2", snsService.fvlistMinus(cri));
 		model.addAttribute("creatDate", snsService.fvSearchlistSearchTime(cri));
+		model.addAttribute("title", snsService.fvlistOne(cri));
 		
 		logger.info("createstartDate: " + createstartDate);
 		logger.info("createendDate: " + createendDate);
 		logger.info("url: " + url);
-		model.addAttribute("content", content);
 		
 		Integer totalCount = snsService.fvlistSearchListTotalCnt(cri);
 		
@@ -1425,7 +1419,7 @@ public class MarketingController {
     }
 	
 	@GetMapping("/n_list")
-    public void n_listGET(@ModelAttribute("cri") SearchCriteria cri, Model model, String url, String content, String startDate, String endDate) throws ParseException {
+    public void n_listGET(@ModelAttribute("cri") SearchCriteria cri, Model model, String url, String startDate, String endDate) throws ParseException {
     	logger.info("n_list called....");
     	if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
 			logger.info("keyword is null");
@@ -1484,9 +1478,9 @@ public class MarketingController {
 		model.addAttribute("list1", portalService.nvlistSearchList(cri));
 		model.addAttribute("list2", portalService.nvlistMinus(cri));
 		model.addAttribute("creatDate", portalService.nvlistSearchTime(cri));
+		model.addAttribute("title", portalService.nvlistOne(cri));
 		
 		logger.info("url: " + url);
-		model.addAttribute("content", content);
 		
 		Integer totalCount = portalService.nvlistSearchTotalCnt(cri);
 		
@@ -1494,7 +1488,6 @@ public class MarketingController {
 		
 		PageMakerFv pageMakerFv = new PageMakerFv();
 		
-		cri.setPortal_name(content);
 		pageMakerFv.setCri(cri);
 		pageMakerFv.setTotalCount(portalService.nvlistSearchTotalCnt(cri));
 		
@@ -1508,7 +1501,7 @@ public class MarketingController {
     }
 	
 	@GetMapping("/n_listall")
-    public void n_listallGET(@ModelAttribute("cri") SearchCriteria cri, Model model, String url, String content, String createstartDate, String createendDate) throws ParseException {
+    public void n_listallGET(@ModelAttribute("cri") SearchCriteria cri, Model model, String url, String createstartDate, String createendDate) throws ParseException {
     	logger.info("n_listall called....");
     	if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
 			logger.info("keyword is null");
@@ -1568,9 +1561,9 @@ public class MarketingController {
 		model.addAttribute("list1", portalService.nvlistSearchList(cri));
 		model.addAttribute("list2", portalService.nvlistMinus(cri));
 		model.addAttribute("creatDate", portalService.nvSearchlistSearchTime(cri));
+		model.addAttribute("title", portalService.nvlistOne(cri));
 		
 		logger.info("url: " + url);
-		model.addAttribute("content", content);
 		
 		Integer totalCount = portalService.nvlistSearchListTotalCnt(cri);
 		
@@ -1578,7 +1571,6 @@ public class MarketingController {
 		
 		PageMakerFv pageMakerFv = new PageMakerFv();
 		
-		cri.setPortal_name(content);
 		pageMakerFv.setCri(cri);
 		pageMakerFv.setTotalCount(portalService.nvlistSearchListTotalCnt(cri));
 		

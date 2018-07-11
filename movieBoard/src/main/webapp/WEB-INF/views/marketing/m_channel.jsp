@@ -542,7 +542,7 @@
 
 			console.log("url:" + url, "content:" + content);
 
-			self.location = "m_list?url=" + url + "&content=" + content;
+			self.location = "m_list?url=" + url;
 
 		});
 

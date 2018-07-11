@@ -562,7 +562,7 @@
 
 			console.log("url:" + url, "content:" + content);
 
-			self.location = "n_list?url=" + url + "&content=" + content;
+			self.location = "n_list?url=" + url;
 
 		});
 

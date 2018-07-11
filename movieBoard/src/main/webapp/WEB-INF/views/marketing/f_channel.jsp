@@ -541,7 +541,7 @@
 
 			console.log("url:" + url, "content:" + content);
 
-			self.location = "f_list?url=" + url + "&content=" + content;
+			self.location = "f_list?url=" + url;
 
 		});
 

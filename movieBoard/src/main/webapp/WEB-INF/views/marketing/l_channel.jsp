@@ -284,7 +284,7 @@
                                         </tbody>
                                         <tfoot>
                                           <tr>
-                                            <td colspan="8">
+                                            <td colspan="9">
                                                <ul class="pagination float-right">
 	        					                   <c:if test="${pageMaker.prev}">
 		        					                   <li class="page-item">
@@ -541,7 +541,7 @@
 
 			console.log("url:" + url, "content:" + content);
 
-			self.location = "l_list?url=" + url + "&content=" + content;
+			self.location = "l_list?url=" + url;
 
 		});
 
