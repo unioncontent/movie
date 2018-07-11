@@ -82,7 +82,7 @@ var marketing = {
     }
   },
   selectFacebookTable: async function(body,param){
-    var sql = "SELECT sns_idx, sns_content, sns_writer, url, FORMAT(count(*),0) as total_cnt,\
+    var sql = "SELECT sns_idx, sns_content,sns_subcontent, sns_writer, url, FORMAT(count(*),0) as total_cnt,\
     FORMAT(max(view_cnt),0) as view_cnt, FORMAT(max(like_cnt),0) as like_cnt, FORMAT(max(reply_cnt),0) as reply_cnt,FORMAT(max(share_cnt),0) as share_cnt,\
     uid, title_key, keyword, keyword_type, textType, thumbnail,DATE_FORMAT(writeDate, '%Y-%m-%d') AS writeDate FROM facebook_videos where url is not null ";
     if(('sDate' in body) && ('eDate' in body)){
@@ -118,7 +118,7 @@ var marketing = {
     }
   },
   selectNaverTable: async function(body,param){
-    var sql = "SELECT portal_idx, portal_name, portal_title, portal_writer, url, board_number, uid,\
+    var sql = "SELECT portal_idx, portal_name,portal_subtitle, portal_title, portal_writer, url, board_number, uid,\
     FORMAT(count(*),0) as total_cnt,FORMAT(max(view_cnt),0) as view_cnt, FORMAT(max(like_cnt),0) as like_cnt, FORMAT(max(reply_cnt),0) as reply_cnt,FORMAT(max(share_cnt),0) as share_cnt,\
     DATE_FORMAT(writeDate, '%Y-%m-%d') AS writeDate, title_key, keyword, keyword_type, textType, thumbnail\
     FROM naver_videos where portal_name like \'naver\'";
