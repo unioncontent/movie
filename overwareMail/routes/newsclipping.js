@@ -114,6 +114,10 @@ router.post('/send',isAuthenticated, async function(req, res) {
     var sender = (senderInfo.length > 0) ? senderInfo[0]: [];
     var recipiArr = JSON.parse('['+mailAllParam.M_recipi+']');
     var recipiNgroup = recipiArr.concat(groups2allIdx);
+    recipiNgroup = recipiNgroup.slice().sort(function(a,b){return a - b}).reduce(function(a,b){if (a.slice(-1)[0] != b) a.push(b);return a;},[]);
+    // console.log(groups2allIdx);
+    // console.log(recipiArr);
+    // console.log(recipiNgroup);
     await asyncForEach(recipiNgroup, async (item, index, array) => {
       if(insertCheck == false){
         // 보내는 사람 email 확인
