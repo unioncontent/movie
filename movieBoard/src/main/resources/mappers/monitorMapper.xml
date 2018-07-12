@@ -486,6 +486,41 @@
 			order by createDate desc 
 			limit 1;
 		</if>
+		<if test="_parameter == 'flash24'.toString()">
+			select *
+			from community_data
+			where community_name='flash24' and createDate >=  date_format(now(), '%x-%m-%d')
+			order by createDate desc 
+			limit 1;
+		</if>
+		<if test="_parameter == 'coolenjoy'.toString()">
+			select *
+			from community_data
+			where community_name='coolenjoy' and createDate >=  date_format(now(), '%x-%m-%d')
+			order by createDate desc 
+			limit 1;
+		</if>
+		<if test="_parameter == 'paxnet'.toString()">
+			select *
+			from community_data
+			where community_name='paxnet' and createDate >=  date_format(now(), '%x-%m-%d')
+			order by createDate desc 
+			limit 1;
+		</if>
+		<if test="_parameter == 'redtea'.toString()">
+			select *
+			from community_data
+			where community_name='redtea' and createDate >=  date_format(now(), '%x-%m-%d')
+			order by createDate desc 
+			limit 1;
+		</if>
+		<if test="_parameter == 'orbi'.toString()">
+			select *
+			from community_data
+			where community_name='orbi' and createDate >=  date_format(now(), '%x-%m-%d')
+			order by createDate desc 
+			limit 1;
+		</if>
 	</select>
 	
 	<select id="portalBMonitor" parameterType="Map" resultType="PortalVO">
