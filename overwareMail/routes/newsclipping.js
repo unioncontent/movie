@@ -200,8 +200,6 @@ async function asyncForEach(array, callback) {
 // 발송현황
 router.get('/period',isAuthenticated,async function(req, res) {
   var data = await getListPageData(req.user.n_idx,req.query);
-  data.sDate = '';
-  data.eDate = '';
   res.render('newsclipping_period',data);
 });
 
@@ -218,14 +216,23 @@ router.post('/period/getNextPage',isAuthenticated,async function(req, res, next)
     res.status(500).send(e);
   }
 });
-
+function formatDate(d) {
+  var month = '' + (d.getMonth() + 1),
+  day = '' + d.getDate(),
+  year = d.getFullYear();
+  if (month.length < 2)
+    month = '0' + month;
+  if (day.length < 2)
+    day = '0' + day;
+  return [year, month, day].join('-');
+}
 async function getListPageData(idx,param){
   console.log('getListPageData:',param);
   var data = {
     list:[],
     listCount:{total:0},
-    sDate: '',
-    eDate: ''
+    sDate: formatDate(new Date(Date.now() - 1 * 24 * 3600 * 1000)),
+    eDate: formatDate(new Date())
   };
   var limit = 10;
   var searchParam = [idx,idx,0,limit];
@@ -243,6 +250,10 @@ async function getListPageData(idx,param){
     searchBody['eDate'] = param.eDate;
     data['sDate'] = param.sDate;
     data['eDate'] = param.eDate;
+  }else{
+    searchBody['sDate'] = data.sDate;
+    searchBody['eDate'] = data.eDate;
+
   }
   try{
     data['list'] = await newsclipping.selectView(searchBody,searchParam);
@@ -310,8 +321,8 @@ async function getListPageData2(idx,param){
   var data = {
     list:[],
     listCount:{total:0},
-    sDate: '',
-    eDate: ''
+    sDate: formatDate(new Date(Date.now() - 1 * 24 * 3600 * 1000)),
+    eDate: formatDate(new Date())
   };
   var limit = 10;
   var searchParam = [idx,idx,0,limit];
@@ -330,6 +341,9 @@ async function getListPageData2(idx,param){
     searchBody['eDate'] = param.eDate;
     data['sDate'] = param.sDate;
     data['eDate'] = param.eDate;
+  }else{
+    searchBody['sDate'] = data.sDate;
+    searchBody['eDate'] = data.eDate;
   }
   try{
     data['list'] = await newsclipping.selectListView(searchBody,searchParam);

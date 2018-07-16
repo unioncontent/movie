@@ -47,8 +47,16 @@ var newsclipping = {
     sql+= " where media_idx=?";
     return await getResult(sql,param);
   },
-  selectMediaTable: async function(body,param){
-    var sql = "SELECT url,media_idx,DATE_FORMAT(createDate, '%Y-%m-%d %H:%i:%s') AS `createDate`,media_title,media_name,reporter_name,keyword,textType FROM `union`.media_data where title_key in (select distinct keyword_main from keyword_data where user_idx=?)";
+  selectKeywordMailTable: async function(param){
+    var sql = 'select * FROM keyword_mail ';
+    if(param != ''){
+      sql += ' where k_type=? ';
+    }
+    sql += 'order by k_type,k_main';
+    return await getResult(sql,param);
+  },
+  selectMediaTable2: async function(body,param,keyword){
+    var sql = "SELECT url,media_idx,media_content,DATE_FORMAT(createDate, '%Y-%m-%d %H:%i:%s') AS `createDate`,media_title,media_name,reporter_name,keyword,textType FROM `union`.media_data where title_key in (select distinct keyword_main from keyword_data where user_idx=?) "+keyword;;
     if(('sDate' in body) && ('eDate' in body)){
       sql+=' and createDate between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
     }
@@ -56,7 +64,80 @@ var newsclipping = {
       sql +=' and title_key = \''+body.keyword+'\'';
     }
     sql += ' order by media_idx desc limit ?,?';
-    return await getResult(sql,param);
+
+    var result = await getResult(sql,param);
+    return [].map.call(result, function(obj) {
+      obj.type = body.type;
+      return obj;
+    });
+  },
+  selectMediaTableCount2: async function(body,param,keyword){
+    var sql = 'SELECT count(*) as total FROM `union`.media_data where title_key in (select distinct keyword_main from keyword_data where user_idx=?) '+keyword;
+    if(('sDate' in body) && ('eDate' in body)){
+      sql+=' and createDate between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
+    }
+    if('keyword' in body){
+      sql +=' and title_key = \''+body.keyword+'\'';
+    }
+    var count = await getResult(sql,param[0]);
+    if(count.length == 0){
+      return 0;
+    }
+    else{
+      return count[0]['total'];
+    }
+  },
+  selectMediaTable: async function(body,param,keyword){
+    var sql = "SELECT url,media_idx,media_content,DATE_FORMAT(createDate, '%Y-%m-%d %H:%i:%s') AS `createDate`,media_title,media_name,reporter_name,keyword,textType FROM `union`.media_data where title_key in (select distinct keyword_main from keyword_data where user_idx=?)";
+    if(('sDate' in body) && ('eDate' in body)){
+      sql+=' and createDate between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
+    }
+    if('keyword' in body){
+      sql +=' and title_key = \''+body.keyword+'\'';
+    }
+    sql += ' order by media_idx desc limit ?,?';
+
+    var result = await getResult(sql,param);
+    return [].map.call(result, function(obj) {
+      obj.type = '0';
+      try{
+        keyword.forEach( function( v, i ){
+          if(v.k_main != ''){
+            if((obj.media_title.indexOf(v.k_main) != -1 || obj.media_content.indexOf(v.k_main) != -1)
+            && (obj.media_title.indexOf(v.k_sub) != -1 || obj.media_content.indexOf(v.k_sub) != -1)){
+              console.log(v);
+              obj.type = v.k_type;
+              throw arr;
+            }
+          }
+          else {
+            if(obj.media_title.indexOf(v.k_sub) != -1 || obj.media_content.indexOf(v.k_sub) != -1){
+              console.log(v);
+              obj.type = v.k_type;
+              throw arr;
+            }
+          }
+        });
+      }
+      catch(e){
+        console.log(obj.type);
+      }
+      // var k = [].map.call(keyword, function(obj2) {
+      //   if(obj2.k_main != ''){
+      //     if((obj.media_title.indexOf(obj2.k_main) != -1 || obj.media_content.indexOf(obj2.k_main) != -1)
+      //         && (obj.media_title.indexOf(obj2.k_sub) != -1 || obj.media_content.indexOf(obj2.k_sub) != -1)){
+      //       return obj2.k_type;
+      //     }
+      //   }
+      //   else {
+      //       if(obj.media_title.indexOf(obj2.k_sub) != -1 || obj.media_content.indexOf(obj2.k_sub) != -1){
+      //         return obj2.k_type;
+      //       }
+      //   }
+      //   return '0';
+      // });
+      return obj;
+    });
   },
   selectMediaTableCount: async function(body,param){
     var sql = 'SELECT count(*) as total FROM `union`.media_data where title_key in (select distinct keyword_main from keyword_data where user_idx=?)';
@@ -82,6 +163,9 @@ var newsclipping = {
     if('keyword' in body){
       sql +=' and title_key = \''+body.keyword+'\'';
     }
+    if('type' in body){
+      sql +=' and news_type = \''+body.type+'\'';
+    }
     sql += ' order by createDate desc limit ?,?';
     return await getResult(sql,param);
   },
@@ -92,6 +176,9 @@ var newsclipping = {
     }
     if('keyword' in body){
       sql +=' and title_key = \''+body.keyword+'\'';
+    }
+    if('type' in body){
+      sql +=' and news_type = \''+body.type+'\'';
     }
     var count = await getResult(sql,param[0]);
     if(count.length == 0){
