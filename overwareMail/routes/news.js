@@ -12,13 +12,38 @@ var isAuthenticated = function (req, res, next) {
   }
   res.redirect('/login');
 };
+function is_number(v) {
+  var reg = /^(\s|\d)+$/;
+  return reg.test(v);
+}
+async function getKeyDic(type){
+  var dic = {};
+  var keyArr = await newsclipping.selectKeywordMailTable(type);
+  keyArr.forEach(function(ele) {
+    if(ele.k_main!= ''){
+      ele.k_main = ele.k_main;
+      if(!(ele.k_main in dic)){
+        dic[ele.k_main] = [ele.k_sub];
+      }
+      else{
+        dic[ele.k_main].push(ele.k_sub);
+      }
+    }
+    else{
+      if(!('none' in dic)){
+        dic['none'] = [ele.k_sub];
+      }
+      else{
+        dic['none'].push(ele.k_sub);
+      }
+    }
+  });
+  return dic;
+}
 // 기사 선택 페이지
 router.get('/',isAuthenticated,async function(req, res) {
   var data = await getListPageData(req.user.user_admin,req.query);
   data.klist = await keyword.selectMovieKwdAll(req.user.user_admin,req.user.n_idx) || [];
-  data.sDate = '';
-  data.eDate = '';
-  data.keyword = '';
   res.render('news',data);
 });
 
@@ -31,13 +56,25 @@ router.post('/getNextPage',isAuthenticated,async function(req, res, next) {
   }
 });
 
+function formatDate(d) {
+  var month = '' + (d.getMonth() + 1),
+  day = '' + d.getDate(),
+  year = d.getFullYear();
+  if (month.length < 2)
+    month = '0' + month;
+  if (day.length < 2)
+    day = '0' + day;
+  return [year, month, day].join('-');
+}
+
 async function getListPageData(idx,param){
   var data = {
     list:[],
     listCount:{total:0},
-    sDate: '',
-    eDate: '',
-    keyword: ''
+    sDate: formatDate(new Date(Date.now() - 1 * 24 * 3600 * 1000)),
+    eDate: formatDate(new Date()),
+    keyword: '',
+    type: ''
   };
   var limit = 10;
   var searchParam = [idx,0,limit];
@@ -55,14 +92,45 @@ async function getListPageData(idx,param){
     searchBody['eDate'] = param.eDate;
     data['sDate'] = param.sDate;
     data['eDate'] = param.eDate;
+  }else{
+    searchBody['sDate'] = data.sDate;
+    searchBody['eDate'] = data.eDate;
   }
   if (typeof param.keyword !== 'undefined') {
     searchBody['keyword'] = param.keyword;
     data['keyword'] = param.keyword;
   }
+  if (typeof param.type !== 'undefined') {
+    searchBody['type'] = param.type;
+    data['type'] = param.type;
+  }
   try{
-    data['list'] = await newsclipping.selectMediaTable(searchBody,searchParam);
-    data['listCount'] = await newsclipping.selectMediaTableCount(searchBody,searchParam);
+    if(data['type'] == ''){
+      data['list'] = await newsclipping.selectMediaTable(searchBody,searchParam,await newsclipping.selectKeywordMailTable(''));
+      data['listCount'] = await newsclipping.selectMediaTableCount(searchBody,searchParam);
+    }
+    else{
+      const keySetting = async () => {
+        var keywordSql = 'and (';
+        var resultDic = await getKeyDic('1');
+        var length = Object.keys( resultDic ).length;
+        await asyncForEach(Object.keys( resultDic ), async (key, idx, arr) => {
+          if(key != 'none'){
+            keywordSql += "(media_title like '%"+key+"%' or (media_title regexp '"+resultDic[key].join('|')+"') and media_content like '%"+key+"%' and (media_content regexp '"+resultDic[key].join('|')+"'))";
+          }
+          else{
+            keywordSql += "(media_title regexp '"+resultDic[key].join('|')+"' or media_content regexp '"+resultDic[key].join('|')+"')";
+          }
+          if(idx != (length-1)){
+            keywordSql += " or ";
+          }
+        });
+        keywordSql += ")";
+        data['list'] = await newsclipping.selectMediaTable2(searchBody,searchParam,keywordSql);
+        data['listCount'] = await newsclipping.selectMediaTableCount2(searchBody,searchParam,keywordSql);
+      }
+      await keySetting();
+    }
     data['currentPage'] = currentPage;
   }
   catch(e){
@@ -103,9 +171,6 @@ async function asyncForEach(array, callback) {
 router.get('/list',isAuthenticated,async function(req, res) {
   var data = await getListPageData2(req.user.user_admin,req.query);
   data.klist = await keyword.selectMovieKwdAll(req.user.user_admin,req.user.n_idx) || [];
-  data.sDate = '';
-  data.eDate = '';
-  data.keyword = '';
   res.render('newsList',data);
 });
 
@@ -148,9 +213,10 @@ async function getListPageData2(idx,param){
   var data = {
     list:[],
     listCount:{total:0},
-    sDate: '',
-    eDate: '',
+    sDate: formatDate(new Date(Date.now() - 1 * 24 * 3600 * 1000)),
+    eDate: formatDate(new Date()),
     keyword: '',
+    type: '',
     page: 1
   };
   var limit = 10;
@@ -165,11 +231,18 @@ async function getListPageData2(idx,param){
     searchParam[1] = (currentPage - 1) * limit
     data['offset'] = searchParam[1];
   }
+  if (typeof param.type !== 'undefined') {
+    searchBody['type'] = param.type;
+    data['type'] = param.type;
+  }
   if (typeof param.sDate !== 'undefined' && typeof param.eDate !== 'undefined') {
     searchBody['sDate'] = param.sDate;
     searchBody['eDate'] = param.eDate;
     data['sDate'] = param.sDate;
     data['eDate'] = param.eDate;
+  } else{
+    searchBody['sDate'] = data.sDate;
+    searchBody['eDate'] = data.eDate;
   }
   if (typeof param.keyword !== 'undefined') {
     searchBody['keyword'] = param.keyword;

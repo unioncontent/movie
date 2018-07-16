@@ -26,6 +26,16 @@
                   <option value='<%=klist[i].M_keyword%>'><%=klist[i].M_keyword%></option>
                 <%}%>
               </select>
+              <select class="form-control col-md-1 form-control-default p-l-5 f-left" id="selectNewsType">
+                <option value="0">대분류</option>
+                <option value="1">쇼박스영화</option>
+                <option value="2">경쟁영화</option>
+                <option value="3">캐스팅</option>
+                <option value="4">쇼박스기업뉴스</option>
+                <option value="5">영화일반</option>
+                <option value="6">보도국</option>
+                <option value="7">박스오피스</option>
+              </select>
               <div class="col-md-3 p-r-0 p-l-0 f-right">
                 <div id="reportrange" class="form-control form-control-default">
                   <i class="glyphicon glyphicon-calendar far fa-calendar-alt"></i>
@@ -102,6 +112,7 @@
                           <option value="4" <%=(list[i].news_type == '4') ? 'selected' : ''%>>쇼박스기업뉴스</option>
                           <option value="5" <%=(list[i].news_type == '5') ? 'selected' : ''%>>영화일반</option>
                           <option value="6" <%=(list[i].news_type == '6') ? 'selected' : ''%>>보도국</option>
+                          <option value="7" <%=(list[i].news_type == '7') ? 'selected' : ''%>>박스오피스</option>
                         </select>
                       </td>
                       <td>
@@ -186,6 +197,7 @@
                   </tfoot>
                 </table>
                 <input type="hidden" id="page" value="<%=page%>"/>
+                <input type="hidden" id="type" value="<%=type%>"/>
                 <input type="hidden" id="sDate" value="<%=sDate%>"/>
                 <input type="hidden" id="eDate" value="<%=eDate%>"/>
                 <input type="hidden" id="keyword" value="<%=keyword%>"/>
@@ -282,6 +294,7 @@
                     <option value="4">쇼박스 기업 뉴스</option>
                     <option value="5">영화 일반</option>
                     <option value="6">보도국</option>
+                    <option value="7">박스오피스</option>
                   </select>
                 </div>
               </div>
@@ -318,7 +331,7 @@
     overflow: hidden;
   }
   .nobr{
-    width: 66px;
+    width: 59px;
   }
   .nobr>i{
     font-size: 10px;
@@ -369,9 +382,13 @@
   var sDateValue = $('#sDate').val();
   var eDateValue = $('#eDate').val();
   var keywordValue = $('#keyword').val();
+  var typeValue = $('#type').val();
   $(document).ready(function(){
     if(keywordValue != ''){
       $("#selectKeyword option[value='"+keywordValue+"']").attr('selected','selected');
+    }
+    if(typeValue != ''){
+      $("#selectNewsType option[value='"+typeValue+"']").attr('selected','selected');
     }
     $('#reportrange').daterangepicker(optionSet1,cb);
 
@@ -503,6 +520,40 @@
       param.sDate = sDateValue;
       param.eDate = eDateValue;
     }
+    var typeValue = $('#type').val();
+    if(typeValue != ''){
+      param.type = typeValue;
+    }
+    ajaxGetPageList(param,0);
+  });
+  // 뉴스 대분류 선택시
+  $('#selectNewsType').on('change',function(){
+    var param = {
+      page : 1
+    };
+    var optionVal = $("#selectNewsType option:selected").val();
+    if(optionVal != '0'){
+      param.type=optionVal;
+      $('#type').val(optionVal);
+    }
+    else{
+      $('#type').val('');
+    }
+    // data input hidden values
+    var sDateValue = $('#sDate').val();
+    var eDateValue = $('#eDate').val();
+    var keywordValue = $('#keyword').val();
+    if(sDateValue != '' && eDateValue != ''){
+      param.sDate = sDateValue;
+      param.eDate = eDateValue;
+    }
+    if(keywordValue != ''){
+      param.keyword = keywordValue;
+    }
+    var typeValue = $('#type').val();
+    if(typeValue != ''){
+      param.type = typeValue;
+    }
     ajaxGetPageList(param,0);
   });
   // 삭제 클릭시
@@ -593,6 +644,10 @@
     if(keywordValue != ''){
       param.keyword = keywordValue;
     }
+    var typeValue = $('#type').val();
+    if(typeValue != ''){
+      param.type = typeValue;
+    }
     ajaxGetPageList(param,num);
   });
   function ajaxGetPageList(param){
@@ -641,6 +696,7 @@
             <option value="4" '+((item.news_type == '4') ? 'selected' : '')+'>쇼박스기업뉴스</option>\
             <option value="5" '+((item.news_type == '5') ? 'selected' : '')+'>영화일반</option>\
             <option value="6" '+((item.news_type == '6') ? 'selected' : '')+'>보도국</option>\
+            <option value="7" '+((item.news_type == '7') ? 'selected' : '')+'>박스오피스</option>\
           </select></td>';
           html+='<td><input type="text" placeholder="대표기사" id="news_title" value="'+item.media_idx+'" class="form-control selectText"></td><td><input type="text" placeholder="세부기사" id="news_detail" value="'+((item.news_detail == null) ? '' : item.news_detail)+'" class="form-control selectText"></td>\
           <td><button class="btn btn-sm btn-danger btn-delete"><i class="far fa-trash-alt"></i></button>&nbsp;<button class="btn btn-sm btn-primary btn-edit"><i class="far fa-edit"></i></button></td>';
@@ -716,6 +772,10 @@
     if(keywordValue != ''){
       param.keyword = keywordValue;
     }
+    var typeValue = $('#type').val();
+    if(typeValue != ''){
+      param.type = typeValue;
+    }
     ajaxGetPageList(param);
   }
   // 모달 달력
@@ -750,6 +810,10 @@
     var keywordValue = $('#keyword').val();
     if(keywordValue != ''){
       param.keyword = keywordValue;
+    }
+    var typeValue = $('#type').val();
+    if(typeValue != ''){
+      param.type = typeValue;
     }
     ajaxGetPageList(param);
   }

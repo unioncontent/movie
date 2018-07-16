@@ -221,6 +221,9 @@
                             </a>
                           </div>
                           <div class="section-body" style="font-family: 굴림, Gulim, Arial, sans-serif;">
+                            <div data-type="7">
+
+                            </div>
                             <table style="font-family: 굴림;font-size:12px">
                               <colgroup>
                                 <col width="40px">
@@ -256,33 +259,6 @@
                                 </tr>
                               </tbody>
                             </table>
-                            <!-- <table style="width:100%; font-size: 12px;border-collapse: collapse;border-spacing: 0;">
-                              <colgroup>
-                                <col width="377px"/>
-                                <col width="83px"/>
-                                <col width="83px"/>
-                              </colgroup>
-                              <tbody>
-                                <tr>
-                                  <td colspan="3" style="padding: 10px 0;border-bottom: 1px solid #dddddd;">
-                                    <span style="font-family:NanumGothic;font-size: 35px;font-weight: 500; padding:5px;">오리온</span>
-                                    <a href="http://movie.daum.net/boxoffice/weekly" target="_blank">
-                                      <img src="\images\newsclipping\link_icon.jpg" alt="" style="display: inherit;float:right;padding-top: 23px;padding-left:  11px;">
-                                    </a>
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <td style="padding: 16px 7px;border-bottom: 1px solid #f4f4f4;"><a href="">화이브라더스, 유정훈 대표 영입...'제2 쇼박스'나오나</a></td>
-                                  <td style="padding: 13px 0;border: 1px solid #f4f4f4;text-align: center;color: #666;">머니투데이</td>
-                                  <td style="padding: 13px 0;border-bottom: 1px solid #f4f4f4;text-align: center;color: #666;">2018.05.15</td>
-                                </tr>
-                                <tr>
-                                  <td style="padding: 16px 7px;border-bottom: 1px solid #f4f4f4;"><a href="">화이브라더스, 유정훈 대표 영입...'제2 쇼박스'나오나</a></td>
-                                  <td style="padding: 13px 0;border: 1px solid #f4f4f4;text-align: center;color: #666;">머니투데이</td>
-                                  <td style="padding: 13px 0;border-bottom: 1px solid #f4f4f4;text-align: center;color: #666;">2018.05.15</td>
-                                </tr>
-                              </tbody>
-                            </table> -->
                           </div>
                         </div>
                       </div>
@@ -562,12 +538,13 @@
       },
       success:function(data){
         if(data.status){
-          console.log(data);
-          console.log(data.result.issue);
+          // 초기화
           $('.section:not(div[data-type=4],div[data-type=issue],div[data-type=marketing],div[data-type=movie]) .section-body').empty();
           $('div[data-type=issue] .section-body tbody tr:not(.head)').remove();
           $('div[data-type=marketing] .section-body tbody tr:not(.head)').remove();
           $('div[data-type=4] .section-body tbody tr:not(.head)').remove();
+          $('div[data-type=7]').empty();
+          // 생성
           $.each(data.result.issue, function(index, value) {
             console.log(value);
             var html = '<tr>\
@@ -630,7 +607,15 @@
                 }
               }
               else{
-                $('div[data-type='+value.news_type+'] .section-body').append(html);
+                if(value.news_type != '7'){
+                  $('div[data-type='+value.news_type+'] .section-body').append(html);
+                }
+                else{
+                  console.log(value);
+                  console.log($('div[data-type='+value.news_type+']'));
+                  console.log(html);
+                  $('div[data-type='+value.news_type+']').append(html);
+                }
               }
             }
           });

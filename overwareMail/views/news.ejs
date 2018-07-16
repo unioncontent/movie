@@ -35,6 +35,16 @@
                   <option value='<%=klist[i].M_keyword%>'><%=klist[i].M_keyword%></option>
                 <%}%>
               </select>
+              <select class="form-control col-md-1 form-control-default p-l-5 f-left" id="selectNewsType">
+                <option value="0">대분류</option>
+                <option value="1">쇼박스영화</option>
+                <option value="2">경쟁영화</option>
+                <option value="3">캐스팅</option>
+                <option value="4">쇼박스기업뉴스</option>
+                <option value="5">영화일반</option>
+                <option value="6">보도국</option>
+                <option value="7">박스오피스</option>
+              </select>
               <div class="col-md-3 p-r-0 p-l-0 f-right">
                 <div id="reportrange" class="form-control form-control-default">
                   <i class="glyphicon glyphicon-calendar far fa-calendar-alt"></i>
@@ -120,12 +130,14 @@
                       <td>
                         <!-- <input type="number" min="1" max="8" value="1"  id="newsType" class="form-control"> -->
                         <select class="form-control form-control-default p-l-5 select-news" id="newsType">
-                          <option value="1">쇼박스영화</option>
-                          <option value="2">경쟁영화</option>
-                          <option value="3">캐스팅</option>
-                          <option value="4">쇼박스기업뉴스</option>
-                          <option value="5">영화일반</option>
-                          <option value="6">보도국</option>
+                          <option value="0" <%=(list[i].type == '0') ? 'selected' : ''%>>-</option>
+                          <option value="1" <%=(list[i].type == '1') ? 'selected' : ''%>>쇼박스영화</option>
+                          <option value="2" <%=(list[i].type == '2') ? 'selected' : ''%>>경쟁영화</option>
+                          <option value="3" <%=(list[i].type == '3') ? 'selected' : ''%>>캐스팅</option>
+                          <option value="4" <%=(list[i].type == '4') ? 'selected' : ''%>>쇼박스기업뉴스</option>
+                          <option value="5" <%=(list[i].type == '5') ? 'selected' : ''%>>영화일반</option>
+                          <option value="6" <%=(list[i].type == '6') ? 'selected' : ''%>>보도국</option>
+                          <option value="7" <%=(list[i].type == '7') ? 'selected' : ''%>>박스오피스</option>
                         </select>
                       </td>
                       <td>
@@ -208,6 +220,7 @@
                 <input type="hidden" id="sDate" value="<%=sDate%>"/>
                 <input type="hidden" id="eDate" value="<%=eDate%>"/>
                 <input type="hidden" id="keyword" value="<%=keyword%>"/>
+                <input type="hidden" id="type" value="<%=type%>"/>
               </div>
             </div>
           </div>
@@ -224,7 +237,7 @@
     font-size: 15px;
     padding-left: 3px;
     text-overflow: ellipsis;
-    width: 400px;
+    width: 323px;
     overflow: hidden;
   }
   .nobr{
@@ -272,9 +285,13 @@
   var sDateValue = $('#sDate').val();
   var eDateValue = $('#eDate').val();
   var keywordValue = $('#keyword').val();
+  var typeValue = $('#type').val();
   $(document).ready(function(){
     if(keywordValue != ''){
       $("#selectKeyword option[value='"+keywordValue+"']").attr('selected','selected');
+    }
+    if(typeValue != ''){
+      $("#selectNewsType option[value='"+typeValue+"']").attr('selected','selected');
     }
     $('#reportrange').daterangepicker(optionSet1,cb);
 
@@ -309,6 +326,38 @@
       param.sDate = sDateValue;
       param.eDate = eDateValue;
     }
+    var typeValue = $('#type').val();
+    if(typeValue != ''){
+      param.type = typeValue;
+    }
+    ajaxGetPageList(param,0);
+  });
+
+  // 뉴스 대분류 선택시
+  $('#selectNewsType').on('change',function(){
+    var param = {
+      page : 1
+    };
+    var optionVal = $("#selectNewsType option:selected").val();
+    if(optionVal != '0'){
+      param.type=optionVal;
+      $('#type').val(optionVal);
+    }
+    else{
+      $('#type').val('');
+    }
+    // data input hidden values
+    var sDateValue = $('#sDate').val();
+    var eDateValue = $('#eDate').val();
+    var keywordValue = $('#keyword').val();
+    if(sDateValue != '' && eDateValue != ''){
+      param.sDate = sDateValue;
+      param.eDate = eDateValue;
+    }
+    if(keywordValue != ''){
+      param.keyword = keywordValue;
+    }
+
     ajaxGetPageList(param,0);
   });
   // 뉴스 전체 선택시
@@ -375,13 +424,17 @@
     // data input hidden values
     var sDateValue = $('#sDate').val();
     var eDateValue = $('#eDate').val();
-    var keywordValue = $('#keyword').val();
     if(sDateValue != '' && eDateValue != '' ){
       param.sDate = moment(sDateValue).format('YYYY-MM-DD');
       param.eDate = moment(eDateValue).format('YYYY-MM-DD');
     }
+    var keywordValue = $('#keyword').val();
     if(keywordValue != ''){
       param.keyword = keywordValue;
+    }
+    var typeValue = $('#type').val();
+    if(typeValue != ''){
+      param.type = typeValue;
     }
     ajaxGetPageList(param,num);
   });
@@ -431,12 +484,14 @@
           </td>\
           <td>\
             <select class="form-control form-control-default p-l-5 select-news" id="newsType">\
-              <option value="1">쇼박스영화</option>\
-              <option value="2">경쟁영화</option>\
-              <option value="3">캐스팅</option>\
-              <option value="4">쇼박스기업뉴스</option>\
-              <option value="5">영화일반</option>\
-              <option value="6">보도국</option>\
+              <option value="0" '+((item.type == '0') ? 'selected' : '')+'>-</option>\
+              <option value="1" '+((item.type == '1') ? 'selected' : '')+'>쇼박스영화</option>\
+              <option value="2" '+((item.type == '2') ? 'selected' : '')+'>경쟁영화</option>\
+              <option value="3" '+((item.type == '3') ? 'selected' : '')+'>캐스팅</option>\
+              <option value="4" '+((item.type == '4') ? 'selected' : '')+'>쇼박스기업뉴스</option>\
+              <option value="5" '+((item.type == '5') ? 'selected' : '')+'>영화일반</option>\
+              <option value="6" '+((item.type == '6') ? 'selected' : '')+'>보도국</option>\
+              <option value="7" '+((item.type == '7') ? 'selected' : '')+'>박스오피스</option>\
             </select>\
           </td>\
           <td>\
@@ -519,6 +574,10 @@
     var keywordValue = $('#keyword').val();
     if(keywordValue != ''){
       param.keyword = keywordValue;
+    }
+    var typeValue = $('#type').val();
+    if(typeValue != ''){
+      param.type = typeValue;
     }
     ajaxGetPageList(param);
   }

@@ -41,8 +41,8 @@ async function getFacebookListPageData(writer,param){
   var data = {
     list:[],
     listCount:{total:0},
-    sDate: '',
-    eDate: '',
+    sDate: formatDate(new Date(Date.now() - 1 * 24 * 3600 * 1000)),
+    eDate: formatDate(new Date()),
     writer: writer,
     search: ''
   };
@@ -62,6 +62,9 @@ async function getFacebookListPageData(writer,param){
     searchBody['eDate'] = param.eDate;
     data['sDate'] = param.sDate;
     data['eDate'] = param.eDate;
+  }else{
+    searchBody['sDate'] = data.sDate;
+    searchBody['eDate'] = data.eDate;
   }
   if (typeof param.search !== 'undefined') {
     searchBody['search'] = param.search;
@@ -131,8 +134,8 @@ async function getNaverListPageData(param){
   var data = {
     list:[],
     listCount:{total:0},
-    sDate: '',
-    eDate: '',
+    sDate: formatDate(new Date(Date.now() - 1 * 24 * 3600 * 1000)),
+    eDate: formatDate(new Date()),
     search: ''
   };
   var limit = 10;
@@ -151,6 +154,9 @@ async function getNaverListPageData(param){
     searchBody['eDate'] = param.eDate;
     data['sDate'] = param.sDate;
     data['eDate'] = param.eDate;
+  }else{
+    searchBody['sDate'] = data.sDate;
+    searchBody['eDate'] = data.eDate;
   }
   if (typeof param.search !== 'undefined') {
     searchBody['search'] = param.search;
@@ -229,13 +235,23 @@ router.post('/list/update',isAuthenticated,async function(req, res, next) {
     res.status(500).send(e);
   }
 });
+function formatDate(d) {
+  var month = '' + (d.getMonth() + 1),
+  day = '' + d.getDate(),
+  year = d.getFullYear();
+  if (month.length < 2)
+    month = '0' + month;
+  if (day.length < 2)
+    day = '0' + day;
+  return [year, month, day].join('-');
+}
 
 async function getListPageData(param){
   var data = {
     list:[],
     listCount:{total:0},
-    sDate: '',
-    eDate: '',
+    sDate: formatDate(new Date(Date.now() - 1 * 24 * 3600 * 1000)),
+    eDate: formatDate(new Date()),
     page: 1
   };
   var limit = 10;
@@ -255,6 +271,9 @@ async function getListPageData(param){
     searchBody['eDate'] = param.eDate;
     data['sDate'] = param.sDate;
     data['eDate'] = param.eDate;
+  }else{
+    searchBody['sDate'] = data.sDate;
+    searchBody['eDate'] = data.eDate;
   }
   try{
     data['list'] = await marketing.selectMarketingTable(searchBody,searchParam);
