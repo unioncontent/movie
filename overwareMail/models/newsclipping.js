@@ -103,16 +103,15 @@ var newsclipping = {
       try{
         keyword.forEach( function( v, i ){
           if(v.k_main != ''){
-            if((obj.media_title.indexOf(v.k_main) != -1 || obj.media_content.indexOf(v.k_main) != -1)
-            && (obj.media_title.indexOf(v.k_sub) != -1 || obj.media_content.indexOf(v.k_sub) != -1)){
-              console.log(v);
+            if(obj.media_title.indexOf(v.k_main) != -1 && obj.media_title.indexOf(v.k_sub) != -1){
+              // console.log(v);
               obj.type = v.k_type;
               throw arr;
             }
           }
           else {
-            if(obj.media_title.indexOf(v.k_sub) != -1 || obj.media_content.indexOf(v.k_sub) != -1){
-              console.log(v);
+            if(obj.media_title.indexOf(v.k_sub) != -1){
+              // console.log(v);
               obj.type = v.k_type;
               throw arr;
             }

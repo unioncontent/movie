@@ -116,10 +116,10 @@ async function getListPageData(idx,param){
         var length = Object.keys( resultDic ).length;
         await asyncForEach(Object.keys( resultDic ), async (key, idx, arr) => {
           if(key != 'none'){
-            keywordSql += "(media_title like '%"+key+"%' or (media_title regexp '"+resultDic[key].join('|')+"') and media_content like '%"+key+"%' and (media_content regexp '"+resultDic[key].join('|')+"'))";
+            keywordSql += "(media_title like '%"+key+"%' or (media_title regexp '"+resultDic[key].join('|')+"'))";
           }
           else{
-            keywordSql += "(media_title regexp '"+resultDic[key].join('|')+"' or media_content regexp '"+resultDic[key].join('|')+"')";
+            keywordSql += "(media_title regexp '"+resultDic[key].join('|')+"')";
           }
           if(idx != (length-1)){
             keywordSql += " or ";
