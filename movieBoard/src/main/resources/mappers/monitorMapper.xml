@@ -521,6 +521,28 @@
 			order by createDate desc 
 			limit 1;
 		</if>
+		<if test="_parameter == 'dvdprime'.toString()">
+			select *
+			from community_data
+			where community_name='dvdprime' and createDate >=  date_format(now(), '%x-%m-%d')
+			order by createDate desc 
+			limit 1;
+		</if>
+		
+		<if test="_parameter == 'etoland'.toString()">
+			select *
+			from community_data
+			where community_name='etoland' and createDate >=  date_format(now(), '%x-%m-%d')
+			order by createDate desc 
+			limit 1;
+		</if>
+		<if test="_parameter == 'etoland_movie'.toString()">
+			select *
+			from community_data
+			where community_name='etoland_movie' and createDate >=  date_format(now(), '%x-%m-%d')
+			order by createDate desc 
+			limit 1;
+		</if>
 	</select>
 	
 	<select id="portalBMonitor" parameterType="Map" resultType="PortalVO">
