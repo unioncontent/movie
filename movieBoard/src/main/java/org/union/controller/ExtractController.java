@@ -73,6 +73,11 @@ public class ExtractController {
 			cri.setSelectKey(null);
 		}
 		
+		if(cri.getSubSelectKey() == "" || "포함".equals(cri.getSubSelectKey()) ) {
+			logger.info("SubSelectKey is null");
+			cri.setSubSelectKey(null);
+		}
+		
 		if("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate())
 				|| cri.getStartDate() == "" || cri.getEndDate() == ""){
 			cri.setStartDate(null);
@@ -119,6 +124,13 @@ public class ExtractController {
 								userService.viewByName(cri.getCompany()).getUser_idx()));
 					}
 				}
+		// 키워드 선택에 따른 키워드 재추출
+		if(cri.getSelectKey() != null) {
+			if(cri.getSelectKey().isEmpty() == false) {
+				model.addAttribute("subKeywordList", keywordService.getKeyword(cri.getSelectKey()));
+			}
+		}
+		
 		
 		model.addAttribute("extractList", communityService.alllistExtract(cri));
 		

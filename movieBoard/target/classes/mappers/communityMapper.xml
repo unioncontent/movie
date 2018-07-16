@@ -162,7 +162,10 @@
 		</if>
 		<if test="selectKey != null">
 				and keyword in (select keyword from keyword_data where keyword_main = #{selectKey})
-			</if>
+		</if>
+		<if test="subSelectKey != null">
+				and keyword = #{subSelectKey}
+		</if>
 		<if test="startDate == null">
 			and writeDate <![CDATA[>=]]> CURDATE()
 		</if>	

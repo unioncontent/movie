@@ -5,7 +5,7 @@ import java.util.Date;
 public class SearchCriteria extends Criteria {
 
 	
-	private String searchType, keyword, selectKey, company, textType, portal_name, portal_type, hour, url, media_name, sns_name, reporter_name, sns_writer;
+	private String searchType, keyword, selectKey, subSelectKey,company, textType, portal_name, portal_type, hour, url, media_name, sns_name, reporter_name, sns_writer;
 	private Integer total;
 	private String startDate, endDate, createstartDate, createendDate, createminusDate, writeDate;
 	private Date date;
@@ -82,6 +82,16 @@ public class SearchCriteria extends Criteria {
 
 	public void setSelectKey(String selectKey) {
 		this.selectKey = selectKey;
+	}
+	
+	
+	public String getSubSelectKey() {
+		return subSelectKey;
+	}
+
+
+	public void setSubSelectKey(String subSelectKey) {
+		this.subSelectKey = subSelectKey;
 	}
 
 
@@ -224,11 +234,12 @@ public class SearchCriteria extends Criteria {
 	@Override
 	public String toString() {
 		return "SearchCriteria [searchType=" + searchType + ", keyword=" + keyword + ", selectKey=" + selectKey
-				+ ", company=" + company + ", textType=" + textType + ", portal_name=" + portal_name + ", portal_type="
-				+ portal_type + ", hour=" + hour + ", url=" + url + ", media_name=" + media_name + ", sns_name="
-				+ sns_name + ", reporter_name=" + reporter_name + ", sns_writer=" + sns_writer + ", total=" + total
-				+ ", startDate=" + startDate + ", endDate=" + endDate + ", createstartDate=" + createstartDate
-				+ ", createendDate=" + createendDate + ", createminusDate=" + createminusDate + ", writeDate="
-				+ writeDate + ", date=" + date + "]";
+				+ ", subSelectKey=" + subSelectKey + ", company=" + company + ", textType=" + textType
+				+ ", portal_name=" + portal_name + ", portal_type=" + portal_type + ", hour=" + hour + ", url=" + url
+				+ ", media_name=" + media_name + ", sns_name=" + sns_name + ", reporter_name=" + reporter_name
+				+ ", sns_writer=" + sns_writer + ", total=" + total + ", startDate=" + startDate + ", endDate="
+				+ endDate + ", createstartDate=" + createstartDate + ", createendDate=" + createendDate
+				+ ", createminusDate=" + createminusDate + ", writeDate=" + writeDate + ", date=" + date + "]";
 	}
+
 }

@@ -119,7 +119,7 @@
                             	${list1.sns_content}
                             	<input type="hidden" name="title1" value="${list1.sns_subcontent}">
                             	</c:forEach>'</font>
-                            	<font style="color: #9f9f9f; font-size: 13px;">/</font>
+                            	<font style="color: #9f9f9f; font-size: 13px; font-weight: bold;">&nbsp;VS&nbsp;</font>
                             	<font  style="color: #7E81CB; font-size: 13px;">'<c:forEach items="${list2}" var="list1" varStatus="status">
                             	${list1.sns_content}
                             	<input type="hidden" name="title2" value="${list1.sns_subcontent}">
@@ -148,7 +148,7 @@
                             <font style="color: #7cb5ec; font-size: 13px;">'<c:forEach items="${list1}" var="list1" varStatus="status">
                             	${list1.sns_content}
                             	</c:forEach>'</font>
-                            	<font style="color: #9f9f9f; font-size: 13px;">/</font>
+                            	<font style="color: #9f9f9f; font-size: 13px; font-weight: bold;">&nbsp;VS&nbsp;</font>
                             	<font  style="color: #7E81CB; font-size: 13px;">'<c:forEach items="${list2}" var="list1" varStatus="status">
                             	${list1.sns_content}
                             	</c:forEach>'
@@ -176,7 +176,7 @@
                             <font style="color: #7cb5ec; font-size: 13px;">'<c:forEach items="${list1}" var="list1" varStatus="status">
                             	${list1.sns_content}
                             	</c:forEach>'</font>
-                            	<font style="color: #9f9f9f; font-size: 13px;">/</font>
+                            	<font style="color: #9f9f9f; font-size: 13px; font-weight: bold;">&nbsp;VS&nbsp;</font>
                             	<font  style="color: #7E81CB; font-size: 13px;">'<c:forEach items="${list2}" var="list1" varStatus="status">
                             	${list1.sns_content}
                             	</c:forEach>'

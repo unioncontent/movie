@@ -136,6 +136,22 @@
                           </c:forEach>
                           </c:if>
                         </select>
+                        
+                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left" id="subSelectKeyword">
+                          <option>포함</option>
+                          <c:if test="${subKeywordList == null}" >
+                          	<c:forEach items="${subKeywordList}" var = "subkeywordList">
+                          <option value="${subkeywordList.keyword}">${subkeywordList.keyword}</option>
+                          </c:forEach>
+                          </c:if>
+                          <c:if test="${subKeywordList != null}">
+                          	<c:forEach items="${subKeywordList}" var = "subkeywordList">
+                          <option value="${subkeywordList.keyword}">${subkeywordList.keyword}</option>
+                          </c:forEach>
+                          </c:if>
+                        </select>
+                        
+                        
                         <select id= "selectPerPageNum" name="select" class="col-md-1 form-control form-control-inverse m-r-10 m-b-10 p-r-5 f-left select-left">	
                         	<option value="30">리스트</option>
 	                        <option id= "30" >30</option>
@@ -348,7 +364,7 @@
                                       <ul class="pagination float-right">
                                         <c:if test="${pageMaker.prev}">
                                           <li class="page-item">
-                                            <a class="page-link" href="extract${pageMaker.makeSearch(pageMaker.startPage - 1) }" aria-label="Previous">&laquo;
+                                            <a class="page-link" href="extract${pageMaker.makeSearchEx(pageMaker.startPage - 1) }" aria-label="Previous">&laquo;
                                               <span aria-hidden="true"></span>
                                               <span class="sr-only">Previous</span>
                                             </a>
@@ -356,12 +372,12 @@
                                         </c:if>
                                         <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
                                           <li class= "${pageMaker.cri.page == idx? 'active':''} page-item">
-                                            <a class="page-link" href="extract${pageMaker.makeSearch(idx)}">${idx}</a>
+                                            <a class="page-link" href="extract${pageMaker.makeSearchEx(idx)}">${idx}</a>
                                           </li>
                                         </c:forEach>
                                         <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
                                           <li class="page-item">
-                                            <a class="page-link" href="extract${pageMaker.makeSearch(pageMaker.endPage +1) }" aria-label="Next">&raquo;
+                                            <a class="page-link" href="extract${pageMaker.makeSearchEx(pageMaker.endPage +1) }" aria-label="Next">&raquo;
                                               <span aria-hidden="true"></span>
                                               <span class="sr-only">Next</span>
                                             </a>
@@ -561,8 +577,29 @@ $(function() {
 
 			searchList();
 		});
+		
+		
+		var subSelectKeyOption = decodeURI(window.location.href.split("subSelectKey=")[1]).split("&")[0];
+		console.log("subSelectKeyOption: " + subSelectKeyOption);
 
+		var $subkeywordList = $('#subSelectKeyword');
 
+		if(subSelectKeyOption != 'undefined'){
+			for(var i = 0; i < $subkeywordList[0].length; i++ ){
+				if($subkeywordList[0][i].value == subSelectKeyOption){
+					$subkeywordList[0][i].selected = 'selected';
+				}
+			}
+		}
+		$subkeywordList[0][0].disabled = true;
+		
+		// 서브키워드 선택시
+		$subkeywordList.change(function(){
+			console.log("subkeywordList clicked....");
+			console.log($('#subkeywordList option:selected').val());
+
+			searchList();
+		});
 
 	  // 키보드 insertAll
 	  $(function() {
@@ -917,6 +954,7 @@ $(function() {
 						+ $('#selectPerPageNum option:selected').val()
     					+ "&company=" + $("#selectCompany option:selected").val()
 						+ "&selectKey=" + $('#selectKeyword option:selected').val()
+						+ "&subSelectKey=" + $('#subSelectKeyword option:selected').val()
 						+ "&searchType=" + $("#selectSearchType option:selected").val()
 						+ "&keyword=" + $('#keywordInput').val()
     					+ "&startDate=" + makeDateFormat($("#fromDate").val(), 0)

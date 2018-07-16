@@ -118,12 +118,12 @@
                             <font style="color: #7cb5ec; font-size: 13px;"><c:forEach items="${list1}" var="list1" varStatus="status">
                             	${list1.portal_title}
                             	<input type="hidden" name="title1" value="${list1.portal_subtitle}">
-                            	</c:forEach>'</font>
-                            	<font style="color: #9f9f9f; font-size: 13px;">/</font>
+                            	</c:forEach></font>
+                            	<font style="color: #9f9f9f; font-size: 13px; font-weight: bold;">&nbsp;VS&nbsp;</font>
                             	<font  style="color: #7E81CB; font-size: 13px;"><c:forEach items="${list2}" var="list1" varStatus="status">
                             	${list1.portal_title}
                             	<input type="hidden" name="title2" value="${list1.portal_subtitle}">
-                            	</c:forEach>'
+                            	</c:forEach>
                             </font>
                             <font style="color: #9f9f9f; font-size: 13px;">	최근 24시간 그래프</font>
                             <div class="card-header-right">
@@ -147,11 +147,11 @@
                             </h5>
                             <font style="color: #7cb5ec; font-size: 13px;"><c:forEach items="${list1}" var="list1" varStatus="status">
                             	${list1.portal_title}
-                            	</c:forEach>'</font>
-                            	<font style="color: #9f9f9f; font-size: 13px;">/</font>
+                            	</c:forEach></font>
+                            	<font style="color: #9f9f9f; font-size: 13px; font-weight: bold;">&nbsp;VS&nbsp;</font>
                             	<font  style="color: #7E81CB; font-size: 13px;"><c:forEach items="${list2}" var="list1" varStatus="status">
                             	${list1.portal_title}
-                            	</c:forEach>'
+                            	</c:forEach>
                             </font>
                             <font style="color: #9f9f9f; font-size: 13px;">	최근 24시간 그래프</font>
                             <div class="card-header-right">
@@ -175,11 +175,11 @@
                             </h5>
                             <font style="color: #7cb5ec; font-size: 13px;"><c:forEach items="${list1}" var="list1" varStatus="status">
                             	${list1.portal_title}
-                            	</c:forEach>'</font>
-                            	<font style="color: #9f9f9f; font-size: 13px;">/</font>
+                            	</c:forEach></font>
+                            	<font style="color: #9f9f9f; font-size: 13px; font-weight: bold;">&nbsp;VS&nbsp;</font>
                             	<font  style="color: #7E81CB; font-size: 13px;"><c:forEach items="${list2}" var="list1" varStatus="status">
                             	${list1.portal_title}
-                            	</c:forEach>'
+                            	</c:forEach>
                             </font>
                             <font style="color: #9f9f9f; font-size: 13px;">	최근 24시간 그래프</font>
                             <div class="card-header-right">

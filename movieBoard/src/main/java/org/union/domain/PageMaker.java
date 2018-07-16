@@ -120,6 +120,25 @@ public class PageMaker {
 			return uriComponents.toUriString();
 		}
 		
+		public String makeSearchEx(int page){
+			
+			UriComponents uriComponents =
+		            UriComponentsBuilder.newInstance()
+		            .queryParam("page", page)
+		            .queryParam("perPageNum", cri.getPerPageNum())
+		            .queryParam("searchType", ((SearchCriteria)cri).getSearchType())
+		            .queryParam("keyword", ((SearchCriteria)cri).getKeyword())
+		            .queryParam("selectKey", ((SearchCriteria)cri).getSelectKey())
+		            .queryParam("subSelectKey", ((SearchCriteria)cri).getSubSelectKey())
+		            .queryParam("startDate", ((SearchCriteria)cri).getStartDate())
+		            .queryParam("endDate", ((SearchCriteria)cri).getEndDate())
+		            .queryParam("company", ((SearchCriteria)cri).getCompany())
+		            .queryParam("textType", ((SearchCriteria)cri).getTextType())
+		            .build();	            
+			
+			return uriComponents.toUriString();
+		}
+		
 		@Override
 		public String toString() {
 			return "PageMaker [totalCount=" + totalCount + ", startPage="
