@@ -45,7 +45,7 @@
                 <option value="6">보도국</option>
                 <option value="7">박스오피스</option>
               </select>
-              <div class="col-md-3 p-r-0 p-l-0 f-right">
+              <div class="col-md-3 p-r-0 p-l-0 f-right reportrange">
                 <div id="reportrange" class="form-control form-control-default">
                   <i class="glyphicon glyphicon-calendar far fa-calendar-alt"></i>
                   <span></span>
@@ -236,6 +236,13 @@
   </div>
 </div>
 <style type="text/css">
+  /* select box width */
+  #selectNewsType,#selectKeyword{
+    min-width: 100px;
+  }
+  .reportrange{
+    min-width: 207px;
+  }
   .table td, .table th {
     text-align: center;
   }
@@ -446,7 +453,7 @@
   });
   function ajaxGetPageList(param){
     console.log('ajaxGetPageList:',param);
-    $('.preloader3').show();
+    // $('.preloader3').show();
     $.ajax({
       url: '/news/getNextPage',
       type: 'post',
@@ -560,7 +567,7 @@
         }
         html += '</tr>';
         $('#listTable tfoot').eq(0).append(html);
-        $('.preloader3').fadeOut(500);
+        // $('.preloader3').fadeOut(500);
       }
     });
   }

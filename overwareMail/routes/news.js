@@ -108,32 +108,34 @@ async function getListPageData(idx,param){
     data['type'] = param.type;
   }
   try{
-    if(data['type'] == ''){
-      data['list'] = await newsclipping.selectMediaTable(searchBody,searchParam,await newsclipping.selectKeywordMailTable(''));
-      data['listCount'] = await newsclipping.selectMediaTableCount(searchBody,searchParam);
-    }
-    else{
-      const keySetting = async () => {
-        var keywordSql = 'and (';
-        var resultDic = await getKeyDic('1');
-        var length = Object.keys( resultDic ).length;
-        await asyncForEach(Object.keys( resultDic ), async (key, idx, arr) => {
-          if(key != 'none'){
-            keywordSql += "(media_title like '%"+key+"%' or (media_title regexp '"+resultDic[key].join('|')+"'))";
-          }
-          else{
-            keywordSql += "(media_title regexp '"+resultDic[key].join('|')+"')";
-          }
-          if(idx != (length-1)){
-            keywordSql += " or ";
-          }
-        });
-        keywordSql += ")";
-        data['list'] = await newsclipping.selectMediaTable2(searchBody,searchParam,keywordSql);
-        data['listCount'] = await newsclipping.selectMediaTableCount2(searchBody,searchParam,keywordSql);
-      }
-      await keySetting();
-    }
+    data['list'] = await newsclipping.selectMediaTable(searchBody,searchParam);
+    data['listCount'] = await newsclipping.selectMediaTableCount(searchBody,searchParam);
+    // if(data['type'] == ''){
+    //    data['list'] = await newsclipping.selectMediaTable(searchBody,searchParam,await newsclipping.selectKeywordMailTable(''));
+    //    data['listCount'] = await newsclipping.selectMediaTableCount(searchBody,searchParam);
+    // }
+    // else{
+    //   const keySetting = async () => {
+    //     var keywordSql = 'and (';
+    //     var resultDic = await getKeyDic('1');
+    //     var length = Object.keys( resultDic ).length;
+    //     await asyncForEach(Object.keys( resultDic ), async (key, idx, arr) => {
+    //       if(key != 'none'){
+    //         keywordSql += "(media_title like '%"+key+"%' or (media_title regexp '"+resultDic[key].join('|')+"'))";
+    //       }
+    //       else{
+    //         keywordSql += "(media_title regexp '"+resultDic[key].join('|')+"')";
+    //       }
+    //       if(idx != (length-1)){
+    //         keywordSql += " or ";
+    //       }
+    //     });
+    //     keywordSql += ")";
+    //     data['list'] = await newsclipping.selectMediaTable2(searchBody,searchParam,keywordSql);
+    //     data['listCount'] = await newsclipping.selectMediaTableCount2(searchBody,searchParam,keywordSql);
+    //   }
+    //   await keySetting();
+    // }
     data['currentPage'] = currentPage;
   }
   catch(e){

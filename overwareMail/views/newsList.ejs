@@ -36,7 +36,7 @@
                 <option value="6">보도국</option>
                 <option value="7">박스오피스</option>
               </select>
-              <div class="col-md-3 p-r-0 p-l-0 f-right">
+              <div class="col-md-3 p-r-0 p-l-0 f-right reportrange">
                 <div id="reportrange" class="form-control form-control-default">
                   <i class="glyphicon glyphicon-calendar far fa-calendar-alt"></i>
                   <span></span>
@@ -80,9 +80,9 @@
                           <div class="title_nobr"><%= list[i].media_title %></div>
                         </a>
                       </td>
-                      <td><div class="nobr"><%= list[i].media_name %></div></td>
+                      <td><div class="nobr" title="<%=list[i].media_name%>"><%= list[i].media_name %></div></td>
                       <td>
-                        <div class="nobr">
+                        <div class="nobr" title="<%=list[i].reporter_name%>">
                           <% if(list[i].reporter_name == null){ %>
                             <i class="fas fa-minus"></i>
                           <%}else{%>
@@ -317,6 +317,13 @@
   </div>
 </div>
 <style type="text/css">
+  /* select box width */
+  #selectNewsType,#selectKeyword{
+    min-width: 100px;
+  }
+  .reportrange{
+    min-width: 207px;
+  }
   .btn-sm.btn-edit{
     padding-right: 10px;
   }
