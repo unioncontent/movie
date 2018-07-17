@@ -77,6 +77,7 @@ async function getListPageData(idx,param){
     sDate: formatDate(new Date(Date.now() - 1 * 24 * 3600 * 1000)),
     eDate: formatDate(new Date()),
     keyword: '',
+    search: '',
     type: ''
   };
   var limit = 10;
@@ -102,6 +103,10 @@ async function getListPageData(idx,param){
   if (typeof param.keyword !== 'undefined') {
     searchBody['keyword'] = param.keyword;
     data['keyword'] = param.keyword;
+  }
+  if (typeof param.search !== 'undefined') {
+    searchBody['search'] = param.search;
+    data['search'] = param.search;
   }
   if (typeof param.type !== 'undefined') {
     searchBody['type'] = param.type;
@@ -187,6 +192,7 @@ router.post('/list/getNextPage',isAuthenticated,async function(req, res, next) {
     res.status(500).send(e);
   }
 });
+
 router.post('/list/insert',isAuthenticated,async function(req, res, next) {
   try{
     await newsclipping.insert2(req.body);
@@ -220,6 +226,7 @@ async function getListPageData2(idx,param){
     listCount:{total:0},
     sDate: formatDate(new Date(Date.now() - 1 * 24 * 3600 * 1000)),
     eDate: formatDate(new Date()),
+    search: '',
     keyword: '',
     type: '',
     page: 1
@@ -252,6 +259,10 @@ async function getListPageData2(idx,param){
   if (typeof param.keyword !== 'undefined') {
     searchBody['keyword'] = param.keyword;
     data['keyword'] = param.keyword;
+  }
+  if (typeof param.search !== 'undefined') {
+    searchBody['search'] = param.search;
+    data['search'] = param.search;
   }
   try{
     data['list'] = await newsclipping.selectNewsMailTable(searchBody,searchParam);

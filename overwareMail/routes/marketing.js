@@ -195,8 +195,6 @@ router.post('/naver/add',isAuthenticated,async function(req, res, next) {
 // 선택 마케팅 리스트 페이지
 router.get('/list',isAuthenticated,async function(req, res) {
   var data = await getListPageData(req.query);
-  data.sDate = '';
-  data.eDate = '';
   res.render('marketing_list',data);
 });
 
@@ -252,6 +250,7 @@ async function getListPageData(param){
     listCount:{total:0},
     sDate: formatDate(new Date(Date.now() - 1 * 24 * 3600 * 1000)),
     eDate: formatDate(new Date()),
+    search : '',
     page: 1
   };
   var limit = 10;
@@ -265,6 +264,10 @@ async function getListPageData(param){
   if (parseInt(currentPage) > 0) {
     searchParam[0] = (currentPage - 1) * limit
     data['offset'] = searchParam[0];
+  }
+  if (typeof param.search !== 'undefined') {
+    searchBody['search'] = param.search;
+    data['search'] = param.search;
   }
   if (typeof param.sDate !== 'undefined' && typeof param.eDate !== 'undefined') {
     searchBody['sDate'] = param.sDate;
