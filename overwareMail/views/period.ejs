@@ -45,7 +45,7 @@
                 <option value='0'>즉시</option>
                 <option value='1'>예약</option>
               </select>
-              <div class="col-md-3 p-r-0 p-l-0 f-right">
+              <div class="col-md-3 p-r-0 p-l-0 f-right reportrange">
                 <div id="reportrange" class="form-control form-control-default">
                   <i class="glyphicon glyphicon-calendar far fa-calendar-alt"></i>
                   <span></span>
@@ -591,6 +591,13 @@
   </div>
 </div>
 <style type="text/css">
+  /* select box width */
+  #selectMType,#selectType,#selectKeyword{
+    min-width: 100px;
+  }
+  .reportrange{
+    min-width: 207px;
+  }
   .row #smtp-Modal dl{
     font-size: 14px;
   }
