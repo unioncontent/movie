@@ -65,6 +65,9 @@ var marketing = {
     if(('sDate' in body) && ('eDate' in body)){
       sql+=' and createDate between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
     }
+    if('search' in body){
+      sql +=' and (ps_title like \'%'+body.search+'%\' or ps_content like \'%'+body.search+'%\')';
+    }
     sql += ' order by createDate desc limit ?,?';
     return await getResult(sql,param);
   },
@@ -72,6 +75,9 @@ var marketing = {
     var sql = 'SELECT count(*) as total FROM marketing_mail where url is not null';
     if(('sDate' in body) && ('eDate' in body)){
       sql+=' and createDate between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
+    }
+    if('search' in body){
+      sql +=' and (ps_title like \'%'+body.search+'%\' or ps_content like \'%'+body.search+'%\')';
     }
     var count = await getResult(sql,param[0]);
     if(count.length == 0){

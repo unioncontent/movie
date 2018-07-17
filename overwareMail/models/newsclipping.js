@@ -98,6 +98,9 @@ var newsclipping = {
     if('type' in body){
       sql +=' and news_type = \''+body.type+'\'';
     }
+    if('search' in body){
+      sql +=' and media_title like \'%'+body.search+'%\'';
+    }
     sql += ' order by media_idx desc limit ?,?';
 
     var result = await getResult(sql,param);
@@ -139,6 +142,9 @@ var newsclipping = {
     if('type' in body){
       sql +=' and news_type = \''+body.type+'\'';
     }
+    if('search' in body){
+      sql +=' and media_title like \'%'+body.search+'%\'';
+    }
     var count = await getResult(sql,param[0]);
     if(count.length == 0){
       return 0;
@@ -158,6 +164,9 @@ var newsclipping = {
     if('type' in body){
       sql +=' and news_type = \''+body.type+'\'';
     }
+    if('search' in body){
+      sql +=' and media_title like \'%'+body.search+'%\'';
+    }
     sql += ' order by createDate desc limit ?,?';
     return await getResult(sql,param);
   },
@@ -171,6 +180,9 @@ var newsclipping = {
     }
     if('type' in body){
       sql +=' and news_type = \''+body.type+'\'';
+    }
+    if('search' in body){
+      sql +=' and media_title like \'%'+body.search+'%\'';
     }
     var count = await getResult(sql,param[0]);
     if(count.length == 0){

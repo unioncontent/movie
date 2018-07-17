@@ -36,7 +36,13 @@
                 <option value="6">보도국</option>
                 <option value="7">박스오피스</option>
               </select>
-              <div class="col-md-3 p-r-0 p-l-0 f-right reportrange">
+              <div class="col-12 col-md-2 f-right col-sm-9 m-l-10 p-l-0 p-r-0 m-b-10 right-icon-control">
+                <input type="text" class="form-control p-t-10 form-control-default search-text" value="<%= search %>" placeholder="제목검색" id="searchInput">
+                <div class="form-icon" id="searchBtn">
+                  <i class="fas fa-search"></i>
+                </div>
+              </div>
+              <div class="col-md-2 p-r-0 p-l-0 f-right reportrange">
                 <div id="reportrange" class="form-control form-control-default">
                   <i class="glyphicon glyphicon-calendar far fa-calendar-alt"></i>
                   <span></span>
@@ -318,6 +324,9 @@
 </div>
 <style type="text/css">
   /* select box width */
+  #searchInput{
+    font-size: 12px
+  }
   #selectNewsType,#selectKeyword{
     min-width: 100px;
   }
@@ -405,6 +414,20 @@
     else{
       $('#reportrange span').html(moment(new Date(sDateValue)).format('YYYY.MM.DD') + ' - ' + moment(new Date(eDateValue+' 23:59:59')).format('YYYY.MM.DD'));
     }
+  });
+  // 검색시
+  $('#searchInput').on('keyup',function(event){
+    if(event.keyCode == 13){
+      $('#searchBtn').trigger('click');
+    };
+  });
+  $('#searchBtn').on('click',function(){
+    var url = '/news/list?page=1';
+    var search = $("#searchInput").val();
+    if(search != ''){
+      url += '&search='+$.urlPostParam(search);
+    }
+    location.href = url;
   });
   // 대표기사,썸네일,세부기사 클릭시 텍스트 전체 선택
   $(document).on("click",".selectText", function(){
@@ -531,6 +554,10 @@
     if(typeValue != ''){
       param.type = typeValue;
     }
+    var searchValue = $('#searchInput').val();
+    if(searchValue != ''){
+      param.search = searchValue;
+    }
     ajaxGetPageList(param,0);
   });
   // 뉴스 대분류 선택시
@@ -560,6 +587,10 @@
     var typeValue = $('#type').val();
     if(typeValue != ''){
       param.type = typeValue;
+    }
+    var searchValue = $('#searchInput').val();
+    if(searchValue != ''){
+      param.search = searchValue;
     }
     ajaxGetPageList(param,0);
   });
@@ -655,6 +686,10 @@
     if(typeValue != ''){
       param.type = typeValue;
     }
+    var searchValue = $('#searchInput').val();
+    if(searchValue != ''){
+      param.search = searchValue;
+    }
     ajaxGetPageList(param,num);
   });
   function ajaxGetPageList(param){
@@ -671,6 +706,15 @@
         if(data.status != true){
           alert('새로고침 후 다시 시도해주세요.');
           return false;
+        }
+        if(typeof history.pushState == 'function'){
+          var renewURL = location.href;//현재 주소를 가져온다.
+          renewURL = renewURL.replace(/\?page=([0-9]+)/ig,'?page='+data.result.currentPage);//현재 주소 중 page 부분이 있다면 새로 부여될 페이지 번호를 할당한다.
+          if(renewURL.indexOf("?page=") == -1){
+            renewURL += '?page='+data.result.currentPage;
+          }
+          //페이지 갱신 실행!
+          history.pushState(null, null,renewURL);
         }
         $('#listTable tbody').eq(0).empty();
 
@@ -783,6 +827,10 @@
     if(typeValue != ''){
       param.type = typeValue;
     }
+    var searchValue = $('#searchInput').val();
+    if(searchValue != ''){
+      param.search = searchValue;
+    }
     ajaxGetPageList(param);
   }
   // 모달 달력
@@ -821,6 +869,10 @@
     var typeValue = $('#type').val();
     if(typeValue != ''){
       param.type = typeValue;
+    }
+    var searchValue = $('#searchInput').val();
+    if(searchValue != ''){
+      param.search = searchValue;
     }
     ajaxGetPageList(param);
   }
