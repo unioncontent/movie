@@ -12,10 +12,12 @@ var isAuthenticated = function (req, res, next) {
   }
   res.redirect('/login');
 };
+
 function is_number(v) {
   var reg = /^(\s|\d)+$/;
   return reg.test(v);
 }
+
 async function getKeyDic(type){
   var dic = {};
   var keyArr = await newsclipping.selectKeywordMailTable(type);
@@ -40,6 +42,7 @@ async function getKeyDic(type){
   });
   return dic;
 }
+
 // 기사 선택 페이지
 router.get('/',isAuthenticated,async function(req, res) {
   var data = await getListPageData(req.user.user_admin,req.query);

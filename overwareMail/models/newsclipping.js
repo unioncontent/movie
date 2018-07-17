@@ -121,20 +121,6 @@ var newsclipping = {
       catch(e){
         console.log(obj.type);
       }
-      // var k = [].map.call(keyword, function(obj2) {
-      //   if(obj2.k_main != ''){
-      //     if((obj.media_title.indexOf(obj2.k_main) != -1 || obj.media_content.indexOf(obj2.k_main) != -1)
-      //         && (obj.media_title.indexOf(obj2.k_sub) != -1 || obj.media_content.indexOf(obj2.k_sub) != -1)){
-      //       return obj2.k_type;
-      //     }
-      //   }
-      //   else {
-      //       if(obj.media_title.indexOf(obj2.k_sub) != -1 || obj.media_content.indexOf(obj2.k_sub) != -1){
-      //         return obj2.k_type;
-      //       }
-      //   }
-      //   return '0';
-      // });
       return obj;
     });
   },
