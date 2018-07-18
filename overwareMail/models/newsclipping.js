@@ -239,7 +239,7 @@ var newsclipping = {
     }
   },
   selectNewsMailAllTable: async function(body,param){
-    var sql = "SELECT url,media_content,thumbnail,media_idx,DATE_FORMAT(createDate, '%Y-%m-%d %H:%i:%s') AS `createDate`,DATE_FORMAT(writeDate, '%Y.%m.%d') AS `writeDate`,media_title,media_name,reporter_name,keyword,textType,thumbnail,news_type,news_detail FROM news_mail where title_key in (select distinct keyword_main from keyword_data where user_idx=?)";
+    var sql = "SELECT url,media_content,thumbnail,media_idx,DATE_FORMAT(createDate, '%Y-%m-%d %H:%i:%s') AS `createDate`,DATE_FORMAT(writeDate, '%Y.%m.%d') AS `writeDate`,media_title,media_name,reporter_name,keyword,textType,thumbnail,news_type,news_detail FROM news_mail where title_key in (select distinct keyword_main from keyword_data where user_idx=? or user_idx=21)";
     sql+=' and createDate between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
     return await getResult(sql,param);
   },
