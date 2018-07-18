@@ -507,6 +507,15 @@
           alert('새로고침 후 다시 시도해주세요.');
           return false;
         }
+        if(typeof history.pushState == 'function'){
+          var renewURL = location.href;//현재 주소를 가져온다.
+          renewURL = renewURL.replace(/\?page=([0-9]+)/ig,'?page='+data.result.currentPage);//현재 주소 중 page 부분이 있다면 새로 부여될 페이지 번호를 할당한다.
+          if(renewURL.indexOf("?page=") == -1){
+            renewURL += '?page='+data.result.currentPage;
+          }
+          //페이지 갱신 실행!
+          history.pushState(null, null,renewURL);
+        }
         $('#listTable tbody').eq(0).empty();
 
         console.log(data);
