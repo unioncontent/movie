@@ -78,9 +78,9 @@
                       <th><%= listCount - i - offset %></th>
                       <td><%= list[i].writeDate %></td>
                       <td><span id="cnt"><%= list[i].total_cnt %></span>건</td>
-                      <td><%= list[i].view_cnt %>회</td>
-                      <td><%= list[i].reply_cnt %>회</td>
-                      <td><%= list[i].like_cnt %>회</td>
+                      <td><span id="v_cnt"><%= list[i].view_cnt %></span>회</td>
+                      <td><span id="r_cnt"><%= list[i].reply_cnt %></span>회</td>
+                      <td><span id="l_cnt"><%= list[i].like_cnt %></span>회<input type="hidden" id="s_cnt" value="<%= list[i].share_cnt %>"/></td>
                       <td>
                         <a href="<%= list[i].url %>" target="_blank" title="<%= list[i].sns_content %>">
                           <div class="title_nobr"><%= list[i].sns_content %></div>
@@ -275,7 +275,15 @@
         var list = [];
         $('input.news-checkbox[type=checkbox]:checked').each(function(idx,ele){
           var trEle = $(ele).parents('tr');
-          list.push({idx:trEle.find('#idx').val(),cnt:trEle.find('#cnt').text().replace(/[,]/gi,''),title:trEle.find('#title').val()});
+          list.push({
+            idx:trEle.find('#idx').val(),
+            cnt:trEle.find('#cnt').text().replace(/[,]/gi,''),
+            v_cnt:trEle.find('#v_cnt').text().replace(/[,]/gi,''),
+            l_cnt:trEle.find('#l_cnt').text().replace(/[,]/gi,''),
+            r_cnt:trEle.find('#r_cnt').text().replace(/[,]/gi,''),
+            s_cnt:trEle.find('#s_cnt').val().replace(/[,]/gi,''),
+            title:trEle.find('#title').val()
+          });
         });
         $('#checkboxAll').prop('checked', false);
         addMarketing(list);
@@ -376,9 +384,9 @@
             <th>'+numIdx+'</th>\
             <td>'+item.writeDate+'</td>\
             <td><span id="cnt">'+item.total_cnt+'</span>건</td>\
-            <td>'+item.view_cnt+'회</td>\
-            <td>'+item.reply_cnt+'회</td>\
-            <td>'+item.like_cnt+'회</td>\
+            <td><span id="v_cnt">'+item.view_cnt+'</span>회</td>\
+            <td><span id="r_cnt">'+item.reply_cnt+'</span>회</td>\
+            <td><span id="l_cnt">'+item.like_cnt+'</span>회<input type="hidden" id="s_cnt" value="'+item.share_cnt+'"/></td>\
             <td>\
               <a href="'+item.url+'" target="_blank" title="'+item.sns_content+'">\
                 <div class="title_nobr">'+item.sns_content+'</div>\
