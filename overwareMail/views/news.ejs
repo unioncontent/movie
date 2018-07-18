@@ -65,7 +65,7 @@
               </div>
             </div>
             <div class="card-block table-border-style">
-              <div class="preloader3 loader-block" style="display:none;position:absolute;padding-top:20%;width:100%;">
+              <div class="preloader3 loader-block">
                 <div class="circ1 loader-primary"></div>
                 <div class="circ2 loader-primary"></div>
                 <div class="circ3 loader-primary"></div>
@@ -252,7 +252,23 @@
   </div>
 </div>
 <style type="text/css">
+  /* loader */
+  .preloader3{
+    display: none;
+    padding-top:20%;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 100px;
+    width: 500px;
+    margin: auto;
+    max-width: 100%;
+    z-index: 10000;
+  }
   /* select box width */
+  #searchInput {
+    font-size: 12px;
+  }
   #selectNewsType,#selectKeyword,#selectNum{
     min-width: 100px;
   }
@@ -353,16 +369,47 @@
     };
   });
   $('#searchBtn').on('click',function(){
-    var url = '/news?page=1';
-    var search = $("#searchInput").val();
-    if(search != ''){
-      url += '&search='+$.urlPostParam(search);
+    // var url = '/news?page=1';
+    // var search = $("#searchInput").val();
+    // if(search != ''){
+    //   url += '&search='+$.urlPostParam(search);
+    // }
+    // var limitValue = $('#limit').val();
+    // if(limitValue != ''){
+    //   url += '&limit='+$.urlPostParam(limitValue);
+    // }
+    // location.href = url;
+    var param = {
+      page : 1
+    };
+    var inputVal = $("#searchInput").val();
+    if(inputVal != ''){
+      param.search=inputVal;
+      $('#search').val(inputVal);
+    }
+    else{
+      $('#search').val('');
+    }
+    // data input hidden values
+    var sDateValue = $('#sDate').val();
+    var eDateValue = $('#eDate').val();
+    if(sDateValue != '' && eDateValue != ''){
+      param.sDate = sDateValue;
+      param.eDate = eDateValue;
+    }
+    var typeValue = $('#type').val();
+    if(typeValue != ''){
+      param.type = typeValue;
+    }
+    var keywordValue = $('#keyword').val();
+    if(keywordValue != ''){
+      param.keyword = keywordValue;
     }
     var limitValue = $('#limit').val();
     if(limitValue != ''){
-      url += '&limit='+$.urlPostParam(limitValue);
+      param.limit = limitValue;
     }
-    location.href = url;
+    ajaxGetPageList(param,0);
   });
   // 대표기사,썸네일,세부기사 클릭시 텍스트 전체 선택
   $(document).on("click",".selectText", function(){
@@ -409,6 +456,7 @@
     };
     var optionVal = $("#selectNum option:selected").val();
     $('#limit').val(optionVal);
+    param.limit = optionVal;
     // data input hidden values
     var sDateValue = $('#sDate').val();
     var eDateValue = $('#eDate').val();

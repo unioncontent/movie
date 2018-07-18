@@ -440,12 +440,39 @@
     };
   });
   $('#searchBtn').on('click',function(){
-    var url = '/news/list?page=1';
-    var search = $("#searchInput").val();
-    if(search != ''){
-      url += '&search='+$.urlPostParam(search);
+    // var url = '/news/list?page=1';
+    // var search = $("#searchInput").val();
+    // if(search != ''){
+    //   url += '&search='+$.urlPostParam(search);
+    // }
+    // location.href = url;
+    var param = {
+      page : 1
+    };
+    var inputVal = $("#searchInput").val();
+    if(inputVal != ''){
+      param.search=inputVal;
+      $('#search').val(inputVal);
     }
-    location.href = url;
+    else{
+      $('#search').val('');
+    }
+    // data input hidden values
+    var sDateValue = $('#sDate').val();
+    var eDateValue = $('#eDate').val();
+    if(sDateValue != '' && eDateValue != ''){
+      param.sDate = sDateValue;
+      param.eDate = eDateValue;
+    }
+    var typeValue = $('#type').val();
+    if(typeValue != ''){
+      param.type = typeValue;
+    }
+    var keywordValue = $('#keyword').val();
+    if(keywordValue != ''){
+      param.keyword = keywordValue;
+    }
+    ajaxGetPageList(param,0);
   });
   // 대표기사,썸네일,세부기사 클릭시 텍스트 전체 선택
   $(document).on("click",".selectText", function(){
