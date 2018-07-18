@@ -1,3 +1,4 @@
+
 <div class="main-body">
   <div class="page-wrapper">
     <div class="page-header">
@@ -126,7 +127,7 @@
                           <%}%>
                         </div>
                       </td>
-                      <td><div class="nobr" title="<%= list[i].keyword %>"><%= list[i].keyword %></div></td>
+                      <td><div class="key_nobr" title="<%= list[i].keyword %>"><%= list[i].keyword %></div></td>
                       <td>
                         <div class="nobr" title="<%= list[i].textType %>">
                           <% if(list[i].textType == null){ %>
@@ -143,13 +144,13 @@
                         <!-- <input type="number" min="1" max="8" value="1"  id="newsType" class="form-control"> -->
                         <select class="form-control form-control-default p-l-5 select-news" id="newsType">
                           <option value="0" <%=(list[i].type == '0') ? 'selected' : ''%>>-</option>
-                          <option value="1" <%=(list[i].type == '1') ? 'selected' : ''%>>쇼박스영화</option>
-                          <option value="2" <%=(list[i].type == '2') ? 'selected' : ''%>>경쟁영화</option>
-                          <option value="3" <%=(list[i].type == '3') ? 'selected' : ''%>>캐스팅</option>
-                          <option value="4" <%=(list[i].type == '4') ? 'selected' : ''%>>쇼박스기업뉴스</option>
-                          <option value="5" <%=(list[i].type == '5') ? 'selected' : ''%>>영화일반</option>
-                          <option value="6" <%=(list[i].type == '6') ? 'selected' : ''%>>보도국</option>
-                          <option value="7" <%=(list[i].type == '7') ? 'selected' : ''%>>박스오피스</option>
+                          <option value="1" <%=(list[i].type == '1') ? 'selected' : (list[i].title_key == '쇼박스영화') ? 'selected' : ''%>>쇼박스영화</option>
+                          <option value="2" <%=(list[i].type == '2') ? 'selected' : (list[i].title_key == '경쟁영화') ? 'selected' : ''%>>경쟁영화</option>
+                          <option value="3" <%=(list[i].type == '3') ? 'selected' : (list[i].title_key == '캐스팅') ? 'selected' : ''%>>캐스팅</option>
+                          <option value="4" <%=(list[i].type == '4') ? 'selected' : (list[i].title_key == '쇼박스기업뉴스' || list[i].title_key == '오리온') ? 'selected' : ''%>>쇼박스기업뉴스</option>
+                          <option value="5" <%=(list[i].type == '5') ? 'selected' : (list[i].title_key == '영화일반') ? 'selected' : ''%>>영화일반</option>
+                          <option value="6" <%=(list[i].type == '6') ? 'selected' : (list[i].title_key == '보도국') ? 'selected' : ''%>>보도국</option>
+                          <option value="7" <%=(list[i].type == '7') ? 'selected' : (list[i].title_key == '박스오피스') ? 'selected' : ''%>>박스오피스</option>
                         </select>
                       </td>
                       <td>
@@ -256,7 +257,7 @@
   .table td, .table th {
     text-align: center;
   }
-  .title_nobr,.nobr{
+  .title_nobr,.nobr,.key_nobr{
     font-size: 15px;
     padding-left: 3px;
     text-overflow: ellipsis;
@@ -264,9 +265,12 @@
     overflow: hidden;
   }
   .nobr{
-    width: 66px;
+    width: 58px;
   }
-  .nobr>i{
+  .key_nobr{
+    width: 91px;
+  }
+  .nobr>i,.key_nobr>i{
     font-size: 10px;
   }
   .select-news{
@@ -489,7 +493,7 @@
   });
   function ajaxGetPageList(param){
     console.log('ajaxGetPageList:',param);
-    // $('.preloader3').show();
+    $('.preloader3').show();
     $.ajax({
       url: '/news/getNextPage',
       type: 'post',
@@ -527,7 +531,7 @@
           </td>\
           <td><div class="nobr" title="'+item.media_name+'">'+item.media_name+'</div></td>\
           <td><div class="nobr" title="'+item.reporter_name+'">'+((item.reporter_name == null) ? '<i class="fas fa-minus"></i>' : item.reporter_name)+'</div></td>\
-          <td><div class="nobr" title="'+item.keyword+'">'+item.keyword+'</div></td>\
+          <td><div class="key_nobr" title="'+item.keyword+'">'+item.keyword+'</div></td>\
           <td><div class="nobr" title="'+item.textType+'">'+((item.textType == null) ? '<i class="fas fa-minus"></i>' : item.textType)+'</div></td>\
           <td>\
             <input type="text" placeholder="이미지주소(URL)" id="thumbnail" class="form-control selectText">\
@@ -535,13 +539,13 @@
           <td>\
             <select class="form-control form-control-default p-l-5 select-news" id="newsType">\
               <option value="0" '+((item.type == '0') ? 'selected' : '')+'>-</option>\
-              <option value="1" '+((item.type == '1') ? 'selected' : '')+'>쇼박스영화</option>\
-              <option value="2" '+((item.type == '2') ? 'selected' : '')+'>경쟁영화</option>\
-              <option value="3" '+((item.type == '3') ? 'selected' : '')+'>캐스팅</option>\
-              <option value="4" '+((item.type == '4') ? 'selected' : '')+'>쇼박스기업뉴스</option>\
-              <option value="5" '+((item.type == '5') ? 'selected' : '')+'>영화일반</option>\
-              <option value="6" '+((item.type == '6') ? 'selected' : '')+'>보도국</option>\
-              <option value="7" '+((item.type == '7') ? 'selected' : '')+'>박스오피스</option>\
+              <option value="1" '+((item.type == '1') ? 'selected' : (item.title_key == '쇼박스영화') ? 'selected' : '')+'>쇼박스영화</option>\
+              <option value="2" '+((item.type == '2') ? 'selected' : (item.title_key == '경쟁영화') ? 'selected' : '')+'>경쟁영화</option>\
+              <option value="3" '+((item.type == '3') ? 'selected' : (item.title_key == '캐스팅') ? 'selected' : '')+'>캐스팅</option>\
+              <option value="4" '+((item.type == '4') ? 'selected' : (item.title_key == '쇼박스기업뉴스' || item.title_key == '오리온') ? 'selected' : '')+'>쇼박스기업뉴스</option>\
+              <option value="5" '+((item.type == '5') ? 'selected' : (item.title_key == '영화일반') ? 'selected' : '')+'>영화일반</option>\
+              <option value="6" '+((item.type == '6') ? 'selected' : (item.title_key == '보도국') ? 'selected' : '')+'>보도국</option>\
+              <option value="7" '+((item.type == '7') ? 'selected' : (item.title_key == '박스오피스') ? 'selected' : '')+'>박스오피스</option>\
             </select>\
           </td>\
           <td>\
@@ -603,7 +607,7 @@
         }
         html += '</tr>';
         $('#listTable tfoot').eq(0).append(html);
-        // $('.preloader3').fadeOut(500);
+        $('.preloader3').fadeOut(500);
       }
     });
   }

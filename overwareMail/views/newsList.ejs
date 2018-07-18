@@ -96,7 +96,7 @@
                           <%}%>
                         </div>
                       </td>
-                      <td><div class="nobr"><%= list[i].keyword %></div></td>
+                      <td><div class="key_nobr"><%= list[i].keyword %></div></td>
                       <td>
                         <div class="nobr">
                           <% if(list[i].textType == null){ %>
@@ -339,17 +339,20 @@
   .table td, .table th {
     text-align: center;
   }
-  .title_nobr,.nobr{
+  .title_nobr,.nobr,.key_nobr{
     font-size: 15px;
     padding-left: 3px;
     text-overflow: ellipsis;
-    width: 292px;
+    width: 269px;
     overflow: hidden;
   }
   .nobr{
-    width: 59px;
+    width: 58px;
   }
-  .nobr>i{
+  .key_nobr{
+    width: 91px;
+  }
+  .nobr>i,.key_nobr>i{
     font-size: 10px;
   }
   .select-news{
@@ -737,7 +740,7 @@
           </td>\
           <td><div class="nobr">'+item.media_name+'</div></td>';
           html+='<td><div class="nobr">'+((item.reporter_name == null) ? '<i class="fas fa-minus"></i>' : item.reporter_name)+'</div></td>\
-          <td><div class="nobr">'+item.keyword+'</div></td>\
+          <td><div class="key_nobr">'+item.keyword+'</div></td>\
           <td><div class="nobr">'+((item.textType == null) ? '<i class="fas fa-minus"></i>' : item.textType)+'</div></td>\
           <td><input type="text" placeholder="이미지주소(URL)" id="thumbnail" value=\"'+((item.thumbnail == null) ? '' : item.thumbnail)+'\" class="form-control selectText"></td>';
           html+='<td><select class="form-control form-control-default p-l-5 select-news" id="newsType">\

@@ -88,7 +88,8 @@ var newsclipping = {
     }
   },
   selectMediaTable: async function(body,param,keyword){
-    var sql = "SELECT url,media_idx,media_content,news_type as type,DATE_FORMAT(createDate, '%Y-%m-%d %H:%i:%s') AS `createDate`,media_title,media_name,reporter_name,keyword,textType FROM `union`.media_data where title_key in (select distinct keyword_main from keyword_data where user_idx=?)";
+    var sql = "SELECT url,media_idx,title_key,media_content,news_type as type,DATE_FORMAT(createDate, '%Y-%m-%d %H:%i:%s') AS `createDate`,media_title,media_name,reporter_name,keyword,textType\
+    FROM `union`.media_data where title_key in (select distinct keyword_main from keyword_data where user_idx=? or user_idx=21)";
     if(('sDate' in body) && ('eDate' in body)){
       sql+=' and createDate between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
     }
@@ -96,7 +97,29 @@ var newsclipping = {
       sql +=' and title_key = \''+body.keyword+'\'';
     }
     if('type' in body){
-      sql +=' and news_type = \''+body.type+'\'';
+      var typeStr = '';
+      if(body.type == '1'){
+        typeStr = '쇼박스영화';
+      }
+      else if(body.type == '2'){
+        typeStr = '경쟁영화';
+      }
+      else if(body.type == '3'){
+        typeStr = '캐스팅';
+      }
+      else if(body.type == '4'){
+        typeStr = '쇼박스기업뉴스\' or title_key = \'오리온';
+      }
+      else if(body.type == '5'){
+        typeStr = '영화일반';
+      }
+      else if(body.type == '6'){
+        typeStr = '보도국';
+      }
+      else if(body.type == '7'){
+        typeStr = '박스오피스';
+      }
+      sql +=' and (news_type = \''+body.type+'\' or title_key = \''+typeStr+'\')';
     }
     if('search' in body){
       sql +=' and media_title like \'%'+body.search+'%\'';
@@ -132,7 +155,7 @@ var newsclipping = {
     // });
   },
   selectMediaTableCount: async function(body,param){
-    var sql = 'SELECT count(*) as total FROM `union`.media_data where title_key in (select distinct keyword_main from keyword_data where user_idx=?)';
+    var sql = 'SELECT count(*) as total FROM `union`.media_data where title_key in (select distinct keyword_main from keyword_data where user_idx=? or user_idx=21)';
     if(('sDate' in body) && ('eDate' in body)){
       sql+=' and createDate between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
     }
@@ -140,7 +163,29 @@ var newsclipping = {
       sql +=' and title_key = \''+body.keyword+'\'';
     }
     if('type' in body){
-      sql +=' and news_type = \''+body.type+'\'';
+      var typeStr = '';
+      if(body.type == '1'){
+        typeStr = '쇼박스영화';
+      }
+      else if(body.type == '2'){
+        typeStr = '경쟁영화';
+      }
+      else if(body.type == '3'){
+        typeStr = '캐스팅';
+      }
+      else if(body.type == '4'){
+        typeStr = '쇼박스기업뉴스';
+      }
+      else if(body.type == '5'){
+        typeStr = '영화일반';
+      }
+      else if(body.type == '6'){
+        typeStr = '보도국';
+      }
+      else if(body.type == '7'){
+        typeStr = '박스오피스';
+      }
+      sql +=' and (news_type = \''+body.type+'\' or title_key = \''+typeStr+'\')';
     }
     if('search' in body){
       sql +=' and media_title like \'%'+body.search+'%\'';
@@ -154,7 +199,8 @@ var newsclipping = {
     }
   },
   selectNewsMailTable: async function(body,param){
-    var sql = "SELECT url,media_idx,DATE_FORMAT(createDate, '%Y-%m-%d %H:%i:%s') AS `createDate`,media_title,media_name,reporter_name,keyword,textType,thumbnail,news_type,news_detail FROM news_mail where title_key in (select distinct keyword_main from keyword_data where user_idx=?)";
+    var sql = "SELECT url,media_idx,DATE_FORMAT(createDate, '%Y-%m-%d %H:%i:%s') AS `createDate`,media_title,media_name,reporter_name,\
+    keyword,textType,thumbnail,news_type,news_detail FROM news_mail where title_key in (select distinct keyword_main from keyword_data where user_idx=? or user_idx=21)";
     if(('sDate' in body) && ('eDate' in body)){
       sql+=' and createDate between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
     }
@@ -171,7 +217,7 @@ var newsclipping = {
     return await getResult(sql,param);
   },
   selectNewsMailTableCount: async function(body,param){
-    var sql = 'SELECT count(*) as total FROM news_mail where title_key in (select distinct keyword_main from keyword_data where user_idx=?)';
+    var sql = 'SELECT count(*) as total FROM news_mail where title_key in (select distinct keyword_main from keyword_data where user_idx=? or user_idx=21)';
     if(('sDate' in body) && ('eDate' in body)){
       sql+=' and createDate between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
     }
