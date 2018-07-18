@@ -96,7 +96,7 @@
                           <%}%>
                         </div>
                       </td>
-                      <td><div class="key_nobr"><%= list[i].keyword %></div></td>
+                      <td><div class="key_nobr" title="<%=list[i].keyword%>"><%= list[i].keyword %></div></td>
                       <td>
                         <div class="nobr">
                           <% if(list[i].textType == null){ %>
@@ -780,9 +780,9 @@
               <div class="title_nobr">'+item.media_title+'</div>\
             </a>\
           </td>\
-          <td><div class="nobr">'+item.media_name+'</div></td>';
-          html+='<td><div class="nobr">'+((item.reporter_name == null) ? '<i class="fas fa-minus"></i>' : item.reporter_name)+'</div></td>\
-          <td><div class="key_nobr">'+item.keyword+'</div></td>\
+          <td><div class="nobr" title="'+item.media_name+'">'+item.media_name+'</div></td>';
+          html+='<td><div class="nobr" title="'+item.reporter_name+'">'+((item.reporter_name == null) ? '<i class="fas fa-minus"></i>' : item.reporter_name)+'</div></td>\
+          <td><div class="key_nobr" title="'+item.keyword+'">'+item.keyword+'</div></td>\
           <td><div class="nobr">'+((item.textType == null) ? '<i class="fas fa-minus"></i>' : item.textType)+'</div></td>\
           <td><input type="text" placeholder="이미지주소(URL)" id="thumbnail" value=\"'+((item.thumbnail == null) ? '' : item.thumbnail)+'\" class="form-control selectText"></td>';
           html+='<td><select class="form-control form-control-default p-l-5 select-news" id="newsType">\
