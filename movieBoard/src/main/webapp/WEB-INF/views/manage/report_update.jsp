@@ -187,7 +187,8 @@
                                 <input type="text" id="keyword" name="keyword" size="15px" style="border: 0px" value="${Keyword.keyword}" readonly="readonly">
                                 </td>
                                 <td>
-                                <input type="text" class="form-control" id="issue_content" name="issue_content" autocomplete="off" value="${Keyword.issue_content}">
+                                <textarea class="form-control" rows="2" cols="50" id="issue_content" name="issue_content" autocomplete="off" style="min-width: 200px;">${Keyword.issue_content}</textarea>
+                                <%-- <input type="text" class="form-control" id="issue_content" name="issue_content" autocomplete="off" value="${Keyword.issue_content}"> --%>
                                 </td>
                                 <td class="text-center">
   								  <div class="btn-group btn-group-md text-center" style="padding-right: 0;">

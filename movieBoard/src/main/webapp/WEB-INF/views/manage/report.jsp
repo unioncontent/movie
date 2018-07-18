@@ -412,16 +412,16 @@
 											                              <c:forEach items="${issueList}" var = "issueList" varStatus="index">
 											                              <tr>
 											                              <input type="hidden" name="writeDate" value="${issueList.writeDate}">
+											                              <c:if test="${issueList.issue_content != ''}">
 											                              <td align="center" width="112" height="22" style="color: rgb(102, 102, 102); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 12px; font-weight: bold; border-color: rgb(228, 228, 228); border-width: 1px; border-style: solid;" bgcolor="#f7f7f7">
 											                              <div style="width: 150px; overflow: hidden; text-overflow: ellipsis;">
 											                              	${issueList.keyword}
 											                              	</div>
 											                              	</td>
 											                              <td align="left" height="22" style="color: rgb(102, 102, 102); font-family: Gulim,verdana; font-size: 12px; border-color: rgb(228, 228, 228); border-width: 1px; border-style: solid;">
-											                              <div style="width: 400px; overflow: hidden; text-overflow: ellipsis;">
-												                          	&nbsp;${issueList.issue_content}
-												                          	</div>
+											                              <div style="width: 400px; overflow: hidden; text-overflow: ellipsis; white-space: pre-wrap; margin-left: 5px;">${issueList.issue_content}</div>
 												                          </td>
+												                          </c:if>
 												                           </tr>
 												                           </c:forEach>
 												                           </tbody>

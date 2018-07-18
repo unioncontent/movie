@@ -182,14 +182,15 @@
                               	  <input type="hidden" value="${company}" name="company_name">
                               	  <input type="hidden" value="${selectKey}" name="title_key">
                                   <input type="text" id="keyword" name="keyword" size="15px" style="border: 0px" value="${Keyword.keyword}" readonly="readonly">
-                                  <input type="text" class="form-control" id="issue_content" name="issue_content" autocomplete="off" style="min-width: 200px;">
+                                  <textarea class="form-control" rows="3" cols="50" id="issue_content" name="issue_content" autocomplete="off" style="min-width: 200px;"></textarea>
+                                  <!-- <input type="text" class="form-control" id="issue_content" name="issue_content" autocomplete="off" style="min-width: 200px;"> -->
                                   <%-- <input type="hidden" value="${company}" name="writeDate"> --%>
                                   </div>
                               </div>
                               </c:forEach>
                               <div class="row">
                                 <label class="col-sm-2"></label>
-                                <div class="col-sm-12">
+                                <div class="col-sm-12" style="margin-bottom: 20px;">
                                 <c:if test="${selectKey == null}">
                                     <h5><font style="font-weight: bold; color: black;">키워드를 선택해주세요.</font></h5>
                                  </c:if>
