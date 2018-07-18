@@ -76,19 +76,23 @@ async function getListPageData(idx,param){
     listCount:{total:0},
     sDate: formatDate(new Date(Date.now() - 1 * 24 * 3600 * 1000)),
     eDate: formatDate(new Date()),
+    limit: 30,
     keyword: '',
     search: '',
     type: ''
   };
-  var limit = 10;
-  var searchParam = [idx,0,limit];
   var currentPage = 1;
   var searchBody = {};
+  if (typeof param.limit !== 'undefined') {
+    searchBody['limit'] = Number(param.limit);
+    data['limit'] = Number(param.limit);
+  }
+  var searchParam = [idx,0,data.limit];
   if (typeof param.page !== 'undefined') {
     currentPage = param.page;
   }
   if (parseInt(currentPage) > 0) {
-    searchParam[1] = (currentPage - 1) * limit
+    searchParam[1] = (currentPage - 1) * data['limit']
     data['offset'] = searchParam[1];
   }
   if (typeof param.sDate !== 'undefined' && typeof param.eDate !== 'undefined') {

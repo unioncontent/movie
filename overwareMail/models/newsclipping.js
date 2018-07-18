@@ -88,10 +88,10 @@ var newsclipping = {
     }
   },
   selectMediaTable: async function(body,param,keyword){
-    var sql = "SELECT url,media_idx,title_key,media_content,news_type as type,DATE_FORMAT(createDate, '%Y-%m-%d %H:%i:%s') AS `createDate`,media_title,media_name,reporter_name,keyword,textType\
+    var sql = "SELECT url,media_idx,title_key,media_content,news_type as type,DATE_FORMAT(writeDate, '%Y-%m-%d %H:%i:%s') AS `writeDate`,media_title,media_name,reporter_name,keyword,textType\
     FROM `union`.media_data where title_key in (select distinct keyword_main from keyword_data where user_idx=? or user_idx=21)";
     if(('sDate' in body) && ('eDate' in body)){
-      sql+=' and createDate between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
+      sql+=' and writeDate between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
     }
     if('keyword' in body){
       sql +=' and title_key = \''+body.keyword+'\'';
@@ -157,7 +157,7 @@ var newsclipping = {
   selectMediaTableCount: async function(body,param){
     var sql = 'SELECT count(*) as total FROM `union`.media_data where title_key in (select distinct keyword_main from keyword_data where user_idx=? or user_idx=21)';
     if(('sDate' in body) && ('eDate' in body)){
-      sql+=' and createDate between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
+      sql+=' and writeDate between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
     }
     if('keyword' in body){
       sql +=' and title_key = \''+body.keyword+'\'';

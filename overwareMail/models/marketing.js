@@ -16,12 +16,12 @@ var marketing = {
     else{
       sql += '\''+param.title+'\',';
     }
-    sql+=' sns_content, sns_writer, url, uid, ?, view_cnt, like_cnt, reply_cnt, share_cnt,\
+    sql+=' sns_content, sns_writer, url, uid, ?, ?, ?, ?, ?,\
     writeDate, title_key, keyword, keyword_type, textType, thumbnail, now(), now()\
     FROM facebook_videos where sns_idx = ?';
     // 값이 있으면 insert 안되도록
     sql += ' and NOT EXISTS (SELECT * FROM marketing_mail WHERE sns_idx = ?);'
-    return await getResult(sql,[param.cnt,param.idx,param.idx]);
+    return await getResult(sql,[param.cnt,param.v_cnt,param.l_cnt,param.r_cnt,param.s_cnt,param.idx,param.idx]);
   },
   insertPortal: async function(param){
     var sql = 'insert into marketing_mail(portal_idx, ps_name, ps_content,ps_title, ps_writer, url, uid,\
@@ -34,9 +34,9 @@ var marketing = {
       sql += '\''+param.title+'\',';
     }
     sql +=' portal_writer, url, uid,\
-    ?, view_cnt, like_cnt, reply_cnt, share_cnt, writeDate, board_number, title_key, keyword, keyword_type, textType, thumbnail, now(), now()\
+    ?, ?, ?, ?, ?, writeDate, board_number, title_key, keyword, keyword_type, textType, thumbnail, now(), now()\
     FROM naver_videos where portal_idx = ?  and NOT EXISTS (SELECT * FROM marketing_mail WHERE portal_idx = ?);';
-    return await getResult(sql,[param.cnt,param.idx,param.idx]);
+    return await getResult(sql,[param.cnt,param.v_cnt,param.l_cnt,param.r_cnt,param.s_cnt,param.idx,param.idx]);
   },
   insert: async function(table,param){
     var pValue = Object.values(param);
