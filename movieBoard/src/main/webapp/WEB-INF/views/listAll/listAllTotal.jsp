@@ -136,6 +136,13 @@
                           </c:forEach>
                           </c:if>
                         </select>
+                        <select id= "selectPerPageNum" name="select" class="col-md-1 form-control form-control-inverse m-r-10 m-b-10 p-r-5 f-left select-left">	
+	                        <option value="30">리스트</option>
+	                        <option id= "30" >30</option>
+	                        <option id = "60">60</option>
+	                        <option id = "120">120</option>
+	                        <option id = "150">150</option>
+                        </select>
 						</c:if>
 
 						<c:if test="${user.user_name != 'union'}">
@@ -163,6 +170,13 @@
                           </c:forEach>
                           </c:if>
                         </select>
+                        <select id= "selectPerPageNum" name="select" class="col-md-1 form-control form-control-inverse m-r-10 m-b-10 p-r-5 f-left select-left">	
+	                        <option value="30">리스트</option>
+	                        <option id= "30" >30</option>
+	                        <option id = "60">60</option>
+	                        <option id = "120">120</option>
+	                        <option id = "150">150</option>
+                        </select>
 						</c:if>
                       </div>
                       <div class="col-md-5">
@@ -187,12 +201,6 @@
                       <div class="col-lg-12">
                         <div class="card">
                           <div class="card-header">
-                            <select id= "selectPerPageNum" name="select" class="col-sm-1 form-control form-control-inverse m-r-5 m-b-5 m-t-5 p-r-5 f-left list-select" style="height:40px;">
-                                  <option id= "30" >30</option>
-                                  <option id = "60">60</option>
-                                  <option id = "120">120</option>
-                                  <option id = "150">150</option>
-                                </select>
                                 <select id = "selectSearchType" name="select" class="col-sm-1 form-control form-control-inverse m-r-5 m-b-5 m-t-5 f-left search-select" style="height:40px;">
                                   <option id="t" value="t">제목</option>
                                   <option id="c" value="c">게시글</option>
@@ -589,7 +597,21 @@ $(function() {
 			searchList();
 
 		});
+		
+		var ListOption = decodeURI(window.location.href.split("PerPageNum=")[1]).split("&")[0];
 
+		var $selectPerPageNum = $('#selectPerPageNum');
+		
+		$selectPerPageNum[0][0].disabled = true;
+		
+		// 글 수 변경 선택시
+		$selectPerPageNum.change(function(){
+			console.log("selectPerPageNum clicked....");
+			console.log($("#selectPerPageNum option:selected").val());
+
+			searchList();
+
+		});
 
 		var keywordOption = decodeURI(window.location.href.split("selectKey=")[1]).split("&")[0];
 		console.log("keywordOption: " + keywordOption);
@@ -777,7 +799,7 @@ $(function() {
 	  console.log($('#selectSearchType option:selected').val());
 
 	  if($('#keywordInput').val() == ''){
-		alert("검색어를 입력해주세요.");
+		  swal("warning!", "검색어를 입력해주세요.", "warning");
 	  }else{
 		searchList();
 	  }

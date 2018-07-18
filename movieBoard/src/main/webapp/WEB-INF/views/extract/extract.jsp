@@ -808,8 +808,12 @@ $(function() {
 	$('#searchBtn').on("click", function(event){
 	  console.log("searchBtn clicked....");
 	  console.log($('#selectSearchType option:selected').val());
-
-		searchList();
+	  
+	  if($('#keywordInput').val() == ''){
+		  swal("warning!", "검색어를 입력해주세요.", "warning");
+		  }else{
+			searchList();
+		  }
 	});
 
 
