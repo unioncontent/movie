@@ -233,6 +233,7 @@ router.post('/list/update',isAuthenticated,async function(req, res, next) {
     res.status(500).send(e);
   }
 });
+
 function formatDate(d) {
   var month = '' + (d.getMonth() + 1),
   day = '' + d.getDate(),
