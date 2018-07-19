@@ -104,7 +104,7 @@ router.post('/send',isAuthenticated, async function(req, res) {
     var now = dt.format('Y-m-d H:M:S');
     var queryParam = {
       'MSGID':m_idx_a,
-      'CONTENT':mailAllParam.M_body,
+      'CONTENT':mailAllParam.M_body.replace(/(^\s*)|(\s*$)/, ''),
       'STATUS':'1',
       'GENDATE':now
     };
