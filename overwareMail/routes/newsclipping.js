@@ -95,7 +95,7 @@ router.post('/send',isAuthenticated, async function(req, res) {
   var m_idx_a = null;
   // update code
   // await maillink.update([mailAllParam.M_body,'58']);
-  // res.status(500).send('메일 발송에 실패했습니다.');
+  // res.status(500).send(result);
   // return false;
 
   // 메일발송 리스트 insert
@@ -113,6 +113,13 @@ router.post('/send',isAuthenticated, async function(req, res) {
       'STATUS':'1',
       'GENDATE':now
     };
+    try {
+      var minify = require('html-minifier').minify;
+      var result = await minify(mailAllParam.M_body);
+      queryParam['CONTENT'] = result;
+    } catch (e) {
+      queryParam['CONTENT'] = mailAllParam.M_body;
+    }
     await maillink.insert('ML_AUTOMAIL_MESSAGE',queryParam);
 
     var senderInfo = await mailListA.getOneInfo(mailAllParam.M_sender);
