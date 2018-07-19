@@ -99,6 +99,47 @@
                   <!-- page-body start -->
                   <div class="page-body">
                     <div class="row">
+                    <c:if test="${user.user_name == 'union'}">
+                    <div class="col-md-12">
+                        <div class="card">
+                          <div class="card-header">
+                          	<h5><font style="font-weight: bold; color: black;"><i class="icofont icofont-imac"></i>&nbsp;&nbsp;Naver Movie 모니터링</font></h5>
+                            <div class="card-header-right">
+                              <i class="icofont icofont-rounded-down"></i>
+                            </div>
+                          </div>
+                          <div class="card-block table-border-style">
+                                    <div class="table-responsive">
+                                      <table class="table table-bordered table-sm">
+                                <c:forEach items="${nVmonitorList}" var="nVmonitorList" varStatus="index">
+                                  <tr>
+                                    <td>${nVmonitorList.portal_name}</td>
+                                    <td><a href="${nVmonitorList.url}" target="_blank"><div class="monitor-nowrap">${nVmonitorList.portal_title}</div></a></td>
+                                    <td><fmt:formatDate value="${nVmonitorList.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>
+                                    <td>
+                                      <div class="form-radio">
+                                        <!-- radio-success:정상/radio-danger:비정상 -->
+                                        <div class="radio radiofill radio-success  radio-inline">
+                                            <c:if test="${nVmonitorList.checkCondition == true}">
+                                            <label>
+                                                <input type="radio" name="radio1" checked="checked" disabled >
+                                                <i class="helper"></i>정상
+                                            </label>
+                                            </c:if>
+                                            <c:if test="${nVmonitorList.checkCondition == false}">
+                                            <label>
+                                                <input type="radio" name="radio" disabled >
+                                                <i class="helper"></i>비정상
+                                            </label>
+                                            </c:if>
+                                        </div>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                </c:forEach>
+                                </table>
+                          </div></div></div></div>
+                          </c:if>
                     <div class="col-md-12">
                         <div class="card">
                           <div class="card-header">

@@ -7,9 +7,11 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.union.domain.CommunityVO;
 import org.union.domain.ExtractVO;
 import org.union.domain.FvVO;
 import org.union.domain.GraphVO;
+import org.union.domain.MediaVO;
 import org.union.domain.NvVO;
 import org.union.domain.SNSVO;
 import org.union.domain.SearchCriteria;
@@ -501,5 +503,25 @@ public class SNSServiceImpl implements SNSService {
 	public void fvUpdate(FvVO vo) {
 
 		snsDAO.fvUpdate(vo);
+	}
+
+	@Override
+	public List<FvVO> fvCheckList(String sns_writer) {
+		
+		List<FvVO> list = snsDAO.fvMonitor(sns_writer);
+		for (FvVO fvVO : list) {
+			
+			FvVO vo = snsDAO.fvCheckList(fvVO.getSns_writer());
+			
+			if(vo != null) {
+				fvVO.setCheckCondition(true);
+				
+				
+			}else {
+				fvVO.setCheckCondition(false);
+			}
+		}
+		
+		return list;
 	}
 }

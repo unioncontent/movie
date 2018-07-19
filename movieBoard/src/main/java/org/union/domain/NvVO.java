@@ -26,6 +26,8 @@ public class NvVO {
 	private Date updateDate;
 	private Integer total;
 	
+	private boolean checkCondition;
+	
 	public Integer getPortal_idx() {
 		return portal_idx;
 	}
@@ -152,6 +154,12 @@ public class NvVO {
 	public void setTotal(Integer total) {
 		this.total = total;
 	}
+	public boolean isCheckCondition() {
+		return checkCondition;
+	}
+	public void setCheckCondition(boolean checkCondition) {
+		this.checkCondition = checkCondition;
+	}
 	
 	@Override
 	public String toString() {
@@ -161,6 +169,6 @@ public class NvVO {
 				+ share_cnt + ", writeDate=" + writeDate + ", board_number=" + board_number + ", uid=" + uid
 				+ ", title_key=" + title_key + ", keyword=" + keyword + ", keyword_type=" + keyword_type + ", textType="
 				+ textType + ", thumbnail=" + thumbnail + ", createDate=" + createDate + ", updateDate=" + updateDate
-				+ ", total=" + total + "]";
+				+ ", total=" + total + ", checkCondition=" + checkCondition + "]";
 	}
 }

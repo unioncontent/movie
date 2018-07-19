@@ -425,9 +425,18 @@
 
 		});
 		
-		$("#searchBtn").on("click",function(){
-			searchList();
-		});		
+		// 검색 클릭시
+		$('#searchBtn').on("click", function(event){
+		  console.log("searchBtn clicked....");
+		  console.log($('#selectSearchType option:selected').val());
+
+		   if($('#keywordInput').val() == ''){
+			   swal("warning!", "검색어를 입력해주세요.", "warning");
+		  }else{
+			  searchList();
+		  }
+
+	    });	
 
 		// 당일 클릭시
 		$('#toDay').on("click", function(){

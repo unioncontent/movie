@@ -209,11 +209,11 @@
                                   <option id="c" value="c">게시글</option>
                                 </select>
                                 <div class="col-sm-3 input-group input-group-button input-group-inverse p-l-0 p-r-0 m-b-5 m-t-5 f-left btn-select">
-                                   <input onkeyup="if(event.keyCode == 13){$('#searchBtn').trigger('click');};"id="keywordInput" type="text" class="form-control" placeholder="" style="height:40px;">
-                                  <span class="input-group-addon" id="basic-addon1">
-                                    <button id="searchBtn" class=" btn btn-search"><i class="icofont icofont-ui-search"></i></button>
-                                  </span>
-                                </div>
+                               <input onkeyup="if(event.keyCode == 13){$('#searchBtn').trigger('click');};"id="keywordInput" type="text" class="form-control" placeholder="" style="height:40px;">
+	                              <span class="input-group-addon" id="basic-addon1">
+	                                <button id="searchBtn" class="btn btn-search"><i class="icofont icofont-ui-search"></i></button>
+	                              </span>
+	                            </div>
                               <button id = "excel" class="btn btn-warning f-right m-t-5 alert-confirm" ><i class="icofont icofont-download-alt"></i>EXCEL</button>
                           </div>
                           <div class="card-block table-border-style table-responsive">
@@ -363,6 +363,7 @@
   <script type="text/javascript" src="../bower_components/classie/classie.js"></script>
   <!-- sweet alert js -->
   <script type="text/javascript" src="../bower_components/sweetalert/dist/sweetalert.min.js"></script>
+  <script type="text/javascript" src="../assets/pages/sns/script.js"></script>
   <!-- Morris Chart js -->
   <script src="../bower_components/raphael/raphael.min.js"></script>
   <script src="../bower_components/morris.js/morris.js"></script>
@@ -384,6 +385,7 @@
   <script src="../assets/pages/sns/script.js"></script>
   <script src="../assets/pages/picker.js"></script>
 </body>
+</html>
 
 <script type="text/javascript">
 
@@ -473,70 +475,68 @@
 			console.log($('#selectKeyword option:selected').val());
 
 			searchList();
-
-			//searchList();
 		});
 
-// content 길시에 ...으로 변경
-var $content = $(".text-success");
-
-var size = 25;
-
-for (var i =1; i < $content.length; i++){
-	if($content[i].innerText.length >= size){
-		$content[i].textContent = $content[i].innerText.substr(0, size) + '...';
-	}
-}
-
-// 당일 클릭시
-$('#toDay').on("click", function(){
-console.log("toDay clicked....");
-var date = getDate("toDay");
-var startDate = date.startDate;
-var endDate = date.endDate;
-
-$("#fromDate").val(endDate + " - " + endDate)
-console.log($("#fromDate").val());
-searchList(); 
-});
-
-// 전일 클릭시
-$('#yesterDay').on("click", function(){
-console.log("yesterDay clicked....");
-var date = getDate("yesterDay");
-var startDate = date.startDate;
-var endDate = date.endDate;
-
-$("#fromDate").val(startDate + " - " + endDate)
-console.log($("#fromDate").val());
-searchList();
-});
-
-// 7일  클릭시
-$('#week').on("click", function(){
-console.log("week clicked....");
-var date = getDate("week");
-var startDate = date.startDate;
-var endDate = date.endDate;
-
-$("#fromDate").val(startDate + " - " + endDate)
-console.log($("#fromDate").val());
-searchList();
-})
-
-// 30일 클릭시
-$('#month').on("click", function(){
-console.log("month clicked....");
-var date = getDate("month");
-var startDate = date.startDate;
-var endDate = date.endDate;
-
-$("#fromDate").val(startDate + " - " + endDate)
-console.log($("#fromDate").val());
-
-searchList();
-
-})
+		// content 길시에 ...으로 변경
+		var $content = $(".text-success");
+		
+		var size = 25;
+		
+		for (var i =1; i < $content.length; i++){
+			if($content[i].innerText.length >= size){
+				$content[i].textContent = $content[i].innerText.substr(0, size) + '...';
+			}
+		}
+		
+		// 당일 클릭시
+		$('#toDay').on("click", function(){
+		console.log("toDay clicked....");
+		var date = getDate("toDay");
+		var startDate = date.startDate;
+		var endDate = date.endDate;
+		
+		$("#fromDate").val(endDate + " - " + endDate)
+		console.log($("#fromDate").val());
+		searchList(); 
+		});
+		
+		// 전일 클릭시
+		$('#yesterDay').on("click", function(){
+		console.log("yesterDay clicked....");
+		var date = getDate("yesterDay");
+		var startDate = date.startDate;
+		var endDate = date.endDate;
+		
+		$("#fromDate").val(startDate + " - " + endDate)
+		console.log($("#fromDate").val());
+		searchList();
+		});
+		
+		// 7일  클릭시
+		$('#week').on("click", function(){
+		console.log("week clicked....");
+		var date = getDate("week");
+		var startDate = date.startDate;
+		var endDate = date.endDate;
+		
+		$("#fromDate").val(startDate + " - " + endDate)
+		console.log($("#fromDate").val());
+		searchList();
+		})
+		
+		// 30일 클릭시
+		$('#month').on("click", function(){
+		console.log("month clicked....");
+		var date = getDate("month");
+		var startDate = date.startDate;
+		var endDate = date.endDate;
+		
+		$("#fromDate").val(startDate + " - " + endDate)
+		console.log($("#fromDate").val());
+		
+		searchList();
+		
+		})
 
 	//캘린더 클릭시..
 	$('#fromDate').on('apply.daterangepicker', function(ev, picker) {
@@ -679,34 +679,18 @@ searchList();
 	}
 	$selectKeyword[0][0].disabled = true;
 
-	var graphStart = $fromDate.val().split(" - ")[0].replace("/", "-").replace("/", "-");
-	var graphEnd = $fromDate.val().split(" - ")[1].replace("/", "-").replace("/", "-");
-
-	console.log("graphStart: " + graphStart);
-    console.log("graphEnd: " + graphEnd);
-
-    ajaxGraph(graphStart, graphEnd);
-
 	// 검색 클릭시
 	$('#searchBtn').on("click", function(event){
 	  console.log("searchBtn clicked....");
 	  console.log($('#selectSearchType option:selected').val());
 
 	   if($('#keywordInput').val() == ''){
-		  alert("검색어를 입력해주세요.");
+		   swal("warning!", "검색어를 입력해주세요.", "warning");
 	  }else{
 		  searchList();
 	  }
 
     });
-
-
-
-	/* var date = getDate("week");
-	var startDate = date.startDate;
-	var endDate = date.endDate;
-	console.log("startDate: " + startDate);
-	console.log("endDate: " + endDate); */
 
 
 }); // end ready....
@@ -851,5 +835,3 @@ function searchList(event) {
 
 
 </script>
-
-</html>

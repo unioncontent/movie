@@ -1538,4 +1538,26 @@
  		where
  			url = #{url};
  	</update>
+ 	
+ 	<select id="nvCheckList" resultType="NvVO">
+ 		select 
+ 			*
+		from 
+			naver_videos
+		where 
+			createDate >=  date_format(now(), '%x-%m-%d')
+		order by createDate desc 
+		limit 1;
+ 	</select>
+ 	
+ 	<select id="nvCheckList2" resultType="NvVO">
+ 		select 
+ 			*
+		from 
+			naver_videos_detail
+		where 
+			createDate >=  date_format(now(), '%x-%m-%d')
+		order by createDate desc 
+		limit 1;
+ 	</select>
  </mapper>

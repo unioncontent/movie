@@ -3,8 +3,10 @@ package org.union.persistence;
 import java.util.Date;
 import java.util.List;
 
+import org.union.domain.CommunityVO;
 import org.union.domain.FvVO;
 import org.union.domain.GraphVO;
+import org.union.domain.MediaVO;
 import org.union.domain.NvVO;
 import org.union.domain.SNSVO;
 import org.union.domain.SearchCriteria;
@@ -110,4 +112,7 @@ public interface SNSDAO {
 	public Integer shareGetDateCount(SearchCriteria cri);
 	
 	public void fvUpdate(FvVO vo);
+	
+	public FvVO fvCheckList(String sns_writer);
+	public List<FvVO> fvMonitor(String sns_writer);
 }

@@ -25,6 +25,8 @@ public class FvVO {
 	private Date updateDate;
 	private Integer total;
 	
+	private boolean checkCondition;
+	
 	public Integer getSns_idx() {
 		return sns_idx;
 	}
@@ -146,6 +148,12 @@ public class FvVO {
 	public void setTotal(Integer total) {
 		this.total = total;
 	}
+	public boolean isCheckCondition() {
+		return checkCondition;
+	}
+	public void setCheckCondition(boolean checkCondition) {
+		this.checkCondition = checkCondition;
+	}
 	
 	@Override
 	public String toString() {
@@ -154,6 +162,7 @@ public class FvVO {
 				+ view_cnt + ", like_cnt=" + like_cnt + ", reply_cnt=" + reply_cnt + ", share_cnt=" + share_cnt
 				+ ", writeDate=" + writeDate + ", uid=" + uid + ", title_key=" + title_key + ", keyword=" + keyword
 				+ ", keyword_type=" + keyword_type + ", textType=" + textType + ", thumbnail=" + thumbnail
-				+ ", createDate=" + createDate + ", updateDate=" + updateDate + ", total=" + total + "]";
+				+ ", createDate=" + createDate + ", updateDate=" + updateDate + ", total=" + total + ", checkCondition="
+				+ checkCondition + "]";
 	}
 }

@@ -157,4 +157,7 @@ public interface PortalDAO {
 	
 	public void nvUpdate(NvVO vo);
 	public void nvUpdate2(NvVO vo);
+	
+	public List<NvVO> nvCheckList();
+	public List<NvVO> nvCheckList2();
 }

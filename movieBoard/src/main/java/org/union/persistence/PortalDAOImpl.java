@@ -785,4 +785,18 @@ public class PortalDAOImpl implements PortalDAO {
 			e.printStackTrace();
 		}
 	}
+
+
+	@Override
+	public List<NvVO> nvCheckList() {
+
+		return session.selectList(namespace + "nvCheckList");
+	}
+
+
+	@Override
+	public List<NvVO> nvCheckList2() {
+
+		return session.selectList(namespace + "nvCheckList2");
+	}
 }

@@ -204,7 +204,7 @@
                                   <option id = "100">100</option>
                                 </select>
                                 <select id = "selectSearchType" name="select" class="col-sm-1 form-control form-control-inverse m-r-5 m-b-5 m-t-5 f-left search-select" style="height:40px;">
-                                  <option id="t" value="t">제목</option>
+                                  <!-- <option id="t" value="t">제목</option> -->
                                   <option id="c">게시글</option>
                                 </select>
                             <div class="col-sm-3 input-group input-group-button input-group-inverse p-l-0 p-r-0 m-b-5 m-t-5 f-left btn-select">
@@ -688,7 +688,7 @@ searchList();
 	  console.log($('#selectSearchType option:selected').val());
 
 	   if($('#keywordInput').val() == ''){
-		  alert("검색어를 입력해주세요.");
+		   swal("warning!", "검색어를 입력해주세요.", "warning");
 	  }else{
 		  searchList();
 	  }

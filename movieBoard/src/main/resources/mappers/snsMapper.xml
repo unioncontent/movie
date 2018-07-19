@@ -977,4 +977,58 @@
  		where
  			url = #{url};
  	</update>
+ 	
+ 	<select id="fvCheckList" parameterType="String" resultType="FvVO">
+		<if test="_parameter == 'CGV'.toString()">
+			select *
+			from facebook_videos
+			where
+				sns_writer='CGV'
+            and 
+				createDate >=  date_format(now(), '%x-%m-%d')
+			order by createDate desc 
+			limit 1;
+		</if>
+		<if test="_parameter == '롯데시네마'.toString()">
+			select *
+			from facebook_videos
+			where
+				sns_writer='롯데시네마'
+            and 
+				createDate >=  date_format(now(), '%x-%m-%d')
+			order by createDate desc 
+			limit 1;
+		</if>
+		<if test="_parameter == '메가박스'.toString()">
+			select *
+			from facebook_videos
+			where
+				sns_writer='메가박스'
+            and 
+				createDate >=  date_format(now(), '%x-%m-%d')
+			order by createDate desc 
+			limit 1;
+		</if>
+		<if test="_parameter == '방울방울'.toString()">
+			select *
+			from facebook_videos
+			where
+				sns_writer='방울방울'
+            and 
+				createDate >=  date_format(now(), '%x-%m-%d')
+			order by createDate desc 
+			limit 1;
+		</if>
+	</select>
+	
+	<select id="fvMonitor" parameterType="Map" resultType="FvVO">
+		select *
+			from facebook_videos
+			where
+				sns_writer=#{sns_writer}
+            and 
+				createDate >=  date_format(now(), '%x-%m-%d')
+			order by createDate desc 
+			limit 1;
+	</select>
  </mapper>

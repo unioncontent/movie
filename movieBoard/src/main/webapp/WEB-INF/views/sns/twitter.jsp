@@ -481,66 +481,66 @@
 			//searchList();
 		});
 
-//content 길시에 ...으로 변경
-var $content = $(".text-success");
-
-var size = 25;
-
-for (var i =1; i < $content.length; i++){
-	if($content[i].innerText.length >= size){
-		$content[i].textContent = $content[i].innerText.substr(0, size) + '...';
-	}
-}
-
-//당일 클릭시
-$('#toDay').on("click", function(){
-console.log("toDay clicked....");
-var date = getDate("toDay");
-var startDate = date.startDate;
-var endDate = date.endDate;
-
-$("#fromDate").val(endDate + " - " + endDate)
-console.log($("#fromDate").val());
-searchList(); 
-});
-
-//전일 클릭시
-$('#yesterDay').on("click", function(){
-console.log("yesterDay clicked....");
-var date = getDate("yesterDay");
-var startDate = date.startDate;
-var endDate = date.endDate;
-
-$("#fromDate").val(startDate + " - " + endDate)
-console.log($("#fromDate").val());
-searchList();
-});
-
-//7일  클릭시
-$('#week').on("click", function(){
-console.log("week clicked....");
-var date = getDate("week");
-var startDate = date.startDate;
-var endDate = date.endDate;
-
-$("#fromDate").val(startDate + " - " + endDate)
-console.log($("#fromDate").val());
-searchList();
-})
-
-//30일 클릭시
-$('#month').on("click", function(){
-console.log("month clicked....");
-var date = getDate("month");
-var startDate = date.startDate;
-var endDate = date.endDate;
-
-$("#fromDate").val(startDate + " - " + endDate)
-console.log($("#fromDate").val());
-
-searchList();
-
-})
+		//content 길시에 ...으로 변경
+		var $content = $(".text-success");
+		
+		var size = 25;
+		
+		for (var i =1; i < $content.length; i++){
+			if($content[i].innerText.length >= size){
+				$content[i].textContent = $content[i].innerText.substr(0, size) + '...';
+			}
+		}
+		
+		//당일 클릭시
+		$('#toDay').on("click", function(){
+		console.log("toDay clicked....");
+		var date = getDate("toDay");
+		var startDate = date.startDate;
+		var endDate = date.endDate;
+		
+		$("#fromDate").val(endDate + " - " + endDate)
+		console.log($("#fromDate").val());
+		searchList(); 
+		});
+		
+		//전일 클릭시
+		$('#yesterDay').on("click", function(){
+		console.log("yesterDay clicked....");
+		var date = getDate("yesterDay");
+		var startDate = date.startDate;
+		var endDate = date.endDate;
+		
+		$("#fromDate").val(startDate + " - " + endDate)
+		console.log($("#fromDate").val());
+		searchList();
+		});
+		
+		//7일  클릭시
+		$('#week').on("click", function(){
+		console.log("week clicked....");
+		var date = getDate("week");
+		var startDate = date.startDate;
+		var endDate = date.endDate;
+		
+		$("#fromDate").val(startDate + " - " + endDate)
+		console.log($("#fromDate").val());
+		searchList();
+		})
+		
+		//30일 클릭시
+		$('#month').on("click", function(){
+		console.log("month clicked....");
+		var date = getDate("month");
+		var startDate = date.startDate;
+		var endDate = date.endDate;
+		
+		$("#fromDate").val(startDate + " - " + endDate)
+		console.log($("#fromDate").val());
+		
+		searchList();
+		
+		})
 
 	//캘린더 클릭시..
 	$('#fromDate').on('apply.daterangepicker', function(ev, picker) {
@@ -695,7 +695,7 @@ searchList();
 	  console.log($('#selectSearchType option:selected').val());
 
 	   if($('#keywordInput').val() == ''){
-		  alert("검색어를 입력해주세요.");
+		   swal("warning!", "검색어를 입력해주세요.", "warning");
 	  }else{
 		  searchList();
 	  }

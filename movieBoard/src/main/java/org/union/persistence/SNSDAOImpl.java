@@ -484,4 +484,18 @@ public class SNSDAOImpl implements SNSDAO {
 			e.printStackTrace();
 		}
 	}
+
+
+	@Override
+	public FvVO fvCheckList(String sns_writer) {
+
+		return session.selectOne(namespace + "fvCheckList", sns_writer);
+	}
+
+
+	@Override
+	public List<FvVO> fvMonitor(String sns_writer) {
+
+		return session.selectList(namespace + "fvMonitor", sns_writer);
+	}
 }

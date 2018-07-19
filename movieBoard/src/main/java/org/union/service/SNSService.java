@@ -108,4 +108,6 @@ public interface SNSService {
 	public Integer shareGetDateCount(SearchCriteria cri);
 	
 	public void fvUpdate(FvVO vo);
+	
+	public List<FvVO> fvCheckList(String sns_writer);
 }

@@ -728,4 +728,40 @@ public class PortalServiceImpl implements PortalService {
 
 		portalDAO.nvUpdate2(vo);
 	}
+
+	@Override
+	public List<NvVO> nvCheckList() {
+
+		List<NvVO> list = portalDAO.nvCheckList();
+		for (NvVO vo : list) {
+			
+			if(vo != null) {
+				vo.setCheckCondition(true);
+				
+				
+			}else {
+				vo.setCheckCondition(false);
+			}
+		}
+		
+		return list;
+	}
+
+	@Override
+	public List<NvVO> nvCheckList2() {
+
+		List<NvVO> list = portalDAO.nvCheckList2();
+		for (NvVO vo : list) {
+			
+			if(vo != null) {
+				vo.setCheckCondition(true);
+				
+				
+			}else {
+				vo.setCheckCondition(false);
+			}
+		}
+		
+		return list;
+	}
 }

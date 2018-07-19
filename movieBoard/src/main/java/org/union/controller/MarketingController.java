@@ -155,6 +155,7 @@ public class MarketingController {
 		model.addAttribute("fV", snsService.facebookCGV(cri));
 		model.addAttribute("fVList", snsService.facebookCGVList(cri));
 		model.addAttribute("fVallList", snsService.facebookCGVallList(cri));
+		model.addAttribute("fVMonitor", snsService.fvCheckList("CGV"));
 		
 		Integer totalCount = snsService.facebookCGVListTotalCnt(cri);
 		
@@ -467,6 +468,7 @@ public class MarketingController {
 		model.addAttribute("fV", snsService.facebookCGV(cri));
 		model.addAttribute("fVList", snsService.facebookCGVList(cri));
 		model.addAttribute("fVallList", snsService.facebookCGVallList(cri));
+		model.addAttribute("fVMonitor", snsService.fvCheckList("메가박스"));
 		
 		Integer totalCount = snsService.facebookCGVListTotalCnt(cri);
 		
@@ -779,6 +781,7 @@ public class MarketingController {
 		model.addAttribute("fV", snsService.facebookCGV(cri));
 		model.addAttribute("fVList", snsService.facebookCGVList(cri));
 		model.addAttribute("fVallList", snsService.facebookCGVallList(cri));
+		model.addAttribute("fVMonitor", snsService.fvCheckList("롯데시네마"));
 		
 		Integer totalCount = snsService.facebookCGVListTotalCnt(cri);
 		
@@ -1091,6 +1094,7 @@ public class MarketingController {
 		model.addAttribute("fV", snsService.facebookCGV(cri));
 		model.addAttribute("fVList", snsService.facebookCGVList(cri));
 		model.addAttribute("fVallList", snsService.facebookCGVallList(cri));
+		model.addAttribute("fVMonitor", snsService.fvCheckList("방울방울"));
 		
 		Integer totalCount = snsService.facebookCGVListTotalCnt(cri);
 		
@@ -1400,6 +1404,7 @@ public class MarketingController {
 		model.addAttribute("nVList", portalService.naverVideosList(cri));
 		model.addAttribute("nVallList", portalService.naverVideosallList(cri));
 		//model.addAttribute("fVListsearch", snsService.fvlistSearch(sns_content));
+		model.addAttribute("nVmonitorList", portalService.nvCheckList());
 		
 		Integer totalCount = portalService.naverVideosListTotalCnt(cri);
 		
@@ -1641,6 +1646,7 @@ public class MarketingController {
 		model.addAttribute("nVList", portalService.naverVideosList2(cri));
 		model.addAttribute("nVallList", portalService.naverVideosallList2(cri));
 		//model.addAttribute("fVListsearch", snsService.fvlistSearch(sns_content));
+		model.addAttribute("nVmonitorList", portalService.nvCheckList2());
 		
 		Integer totalCount = portalService.naverVideosListTotalCnt2(cri);
 		

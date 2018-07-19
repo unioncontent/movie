@@ -600,7 +600,7 @@
 		  console.log($('#selectSearchType option:selected').val());
 
 		  if($('#keywordInput').val() == ''){
-			alert("검색어를 입력해주세요.");
+			  swal("warning!", "검색어를 입력해주세요.", "warning");
 		  }else{
 			searchList();
 		  }

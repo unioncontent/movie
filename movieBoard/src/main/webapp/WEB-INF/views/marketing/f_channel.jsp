@@ -103,6 +103,47 @@
                   <!-- page-body start -->
                   <div class="page-body" style="float: center">
                     <div class="row">
+                    <c:if test="${user.user_name == 'union'}">
+                    <div class="col-md-12">
+                        <div class="card">
+                          <div class="card-header">
+                          	<h5><font style="font-weight: bold; color: black;"><i class="icofont icofont-imac"></i>&nbsp;&nbsp;CGV 모니터링</font></h5>
+                            <div class="card-header-right">
+                              <i class="icofont icofont-rounded-down"></i>
+                            </div>
+                          </div>
+                          <div class="card-block table-border-style">
+                                    <div class="table-responsive">
+                                      <table class="table table-bordered table-sm">
+                                <c:forEach items="${fVMonitor}" var="fVMonitor" varStatus="index">
+                                  <tr>
+                                    <td>${fVMonitor.sns_writer}</td>
+                                    <td><a href="${fVMonitor.url}" target="_blank"><div class="monitor-nowrap">${fVMonitor.sns_content}</div></a></td>
+                                    <td><fmt:formatDate value="${fVMonitor.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>
+                                    <td>
+                                      <div class="form-radio">
+                                        <!-- radio-success:정상/radio-danger:비정상 -->
+                                        <div class="radio radiofill radio-success  radio-inline">
+                                            <c:if test="${fVMonitor.checkCondition == true}">
+                                            <label>
+                                                <input type="radio" name="radio1" checked="checked" disabled >
+                                                <i class="helper"></i>정상
+                                            </label>
+                                            </c:if>
+                                            <c:if test="${fVMonitor.checkCondition == false}">
+                                            <label>
+                                                <input type="radio" name="radio" disabled >
+                                                <i class="helper"></i>비정상
+                                            </label>
+                                            </c:if>
+                                        </div>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                </c:forEach>
+                                </table>
+                          </div></div></div></div>
+                          </c:if>
                     <div class="col-md-12">
                         <div class="card">
                           <div class="card-header">
