@@ -546,21 +546,18 @@
           $('div[data-type=7]').empty();
           // 생성
           $.each(data.result.issue, function(index, value) {
-            console.log(value);
             var html = '<tr>\
             <td style="text-align:center; color: #ed1252;padding: 17px 0;border: 1px solid #f4f4f4; border-left: 0px; border-top: 0px; text-align: center;">#'+value.keyword+'</td>\
-            <td style="border-bottom: 1px solid #f4f4f4;text-align: left;color: #666;"><div class="text" style="width: 411px;display: inline-block;padding: 10px;white-space: pre-line;word-break: break-all;top: 4px;">'+value.issue_content+'</div></td>\
+            <td style="border-bottom: 1px solid #f4f4f4;text-align: left;color: #666;"><div class="text" style="width: 408px;display: inline-block;padding: 10px;padding-right: 0px;white-space: pre-line;word-break: break-all;top: 4px;">'+value.issue_content+'</div></td>\
             </tr>';
             $('div[data-type=issue] .section-body tbody').append(html);
           });
           $.each(data.result.marketing, function(index, value) {
-            console.log(value);
             var html = '<tr>\
-              <td style="padding: 16px 7px;border-bottom: 1px solid #f4f4f4;">\
+              <td style="padding: 9px 7px 5px 11px;border-bottom: 1px solid #f4f4f4;">\
                 <img alt="'+value.ps_name+'" src="http://showbox.email/images/newsclipping/'+value.ps_name+'_logo.png" style="width: 13px;height: 13px;margin-bottom: 3px;vertical-align: text-bottom;">\
                 <div class="text" style="width:294px;display: inline-block;text-overflow: ellipsis;overflow: hidden;vertical-align: baseline;white-space: nowrap;    top: 4px;">\
                 <a href="'+value.url+'" target="_blank" title="'+value.ps_title+'">'+value.ps_title+'</a></div>\
-                <div class="text" style="width: 365px;text-overflow: ellipsis;overflow: hidden;vertical-align: baseline;white-space: nowrap;top: 0px;" title="'+((value.ps_content == null) ? '' :value.ps_content)+'">'+((value.ps_content == null) ? '' :value.ps_content)+'</div>\
                 <div class="info" style="color: #666;font-size: 11px;">\
                     <span class="date">총검출수 '+value.total_cnt+'</span>\
                     <span class="bar" style="display: inline-block;overflow: hidden;width: 0;height: 11px;margin: -1px 5px 1px 4px;border-left: 1px solid #eaeaea;vertical-align: middle;"></span>\
@@ -571,8 +568,12 @@
                     <span class="date">댓글 '+value.reply_cnt+'</span>\
                 </div>\
               </td>\
-              <td style="padding: 14px 0;border-bottom: 1px solid #f4f4f4;border-left: 1px solid #f4f4f4;text-align: center;color: #666;">'+value.ps_writer+'</td>\
+              <td style="border-bottom: 1px solid #f4f4f4;border-left: 1px solid #f4f4f4;text-align: center;color: #666;">'+value.ps_writer+'</td>\
               <td style="padding: 13px 0;border-bottom: 1px solid #f4f4f4;border-left: 1px solid #f4f4f4;text-align: center;color: #666;">'+value.writeDate+'</td>\
+            </tr><tr>\
+              <td colspan="3" style="border-bottom: 1px solid #d0cdcd;">\
+                <div class="text" style="width: 544px;display: inline-block;padding: 10px;white-space: pre-line;word-break: break-all;top: 4px;">'+((value.ps_content == null) ? '내용없음' :value.ps_content)+'</div>\
+              </td>\
             </tr>';
             $('div[data-type=marketing] .section-body tbody').append(html);
           });
@@ -588,7 +589,7 @@
               $('div[data-type='+value.news_type+'] .section-body tbody').append(html);
             }
             else{
-              var html = '<div class="news" style="padding: 22px 5px 0px 5px">';
+              var html = '<div class="news" style="padding: 12px 5px 0px 5px">';
               if(value.thumbnail != null && value.thumbnail != ''){
                 html += '<img src="'+value.thumbnail+'" alt="" style="display: inherit; float:left;width:80px;height:80px;padding-right: 13px;">';
               }
@@ -611,9 +612,9 @@
                   $('div[data-type='+value.news_type+'] .section-body').append(html);
                 }
                 else{
-                  console.log(value);
-                  console.log($('div[data-type='+value.news_type+']'));
-                  console.log(html);
+                  // console.log(value);
+                  // console.log(html);
+                  // console.log($('div[data-type='+value.news_type+']'));
                   $('div[data-type='+value.news_type+']').append(html);
                 }
               }
@@ -631,12 +632,39 @@
               $('div[data-idx='+index+']').siblings('.relation_lst').append(html);
             });
           });
+          // 데이터 없을 시
+          $.each([ 1,2,3,5,6 ], function( index, value ) {
+            dataNoneSetting(value,'');
+          });
+          dataNoneSetting('issue','other');
+          dataNoneSetting('marketing','other');
+          dataNoneSetting('4','showbox');
         }
       }
     });
 
   }
-
+  // 데이터 없을 시 1
+  function dataNoneSetting(num,type){
+    if(type == ''){
+      if($('div[data-type='+num+'] .section-body div').length == 0){
+        var html = '<p style="text-align: center;margin:  0px;margin-top: 15px;font-size:  12px;font-weight:  bold;color: #666;">해당 데이터 없습니다.</p>';
+        $('div[data-type='+num+'] .section-body').append(html);
+      }
+    }
+    else if(type=='showbox'){
+      if($('div[data-type='+num+'] .section-body tbody tr').length < 2){
+        var html = '<tr><td colspan="3"><p style="text-align: center;margin:  0px;margin-top: 15px;font-size:  12px;font-weight:  bold;color: #666;">해당 데이터 없습니다.</p></td></tr>';
+        $('div[data-type='+num+'] .section-body tbody').append(html);
+      }
+    }
+    else{
+      if($('div[data-type='+num+'] .section-body tbody tr').length < 1){
+        var html = '<tr><td><p style="text-align: center;margin:  0px;margin-top: 15px;font-size:  12px;font-weight:  bold;color: #666;">해당 데이터 없습니다.</p></td></tr>';
+        $('div[data-type='+num+'] .section-body tbody').append(html);
+      }
+    }
+  }
   // 박스오피스
   function boxoffice(){
     var movieDate = $('#datepicker2').val().replace(/[-]/gi,'');
