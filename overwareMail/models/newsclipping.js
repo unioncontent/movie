@@ -248,7 +248,7 @@ var newsclipping = {
     return await getResult(sql);
   },
   selectView: async function(body,param){
-    var sql = 'SELECT * FROM newsclipping_view where n_idx is not null ';
+    var sql = 'SELECT * FROM newsclipping_view where M_idx_A is not null ';
     if(('sDate' in body) && ('eDate' in body)){
       sql+=' and GENDATE between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
     }
@@ -257,7 +257,7 @@ var newsclipping = {
     return await getResult(sql,param);
   },
   selectViewCount: async function(body,param){
-    var sql = 'SELECT count(*) as total FROM (SELECT * from newsclipping_view where n_idx is not null ';
+    var sql = 'SELECT count(*) as total FROM (SELECT * from newsclipping_view where M_idx_A is not null ';
     if(('sDate' in body) && ('eDate' in body)){
       sql+=' and GENDATE between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
     }
@@ -302,7 +302,7 @@ var newsclipping = {
         sql += 'and ((FINALRESULT is not null and FINALRESULT != ?) or (SENDRESULT is not null and SENDRESULT = \'ER\'))';
       }
     }
-    sql+=' group by E_mail';
+    // sql+=' group by E_mail';
     return await getResult(sql,param.arr);
   },
   selectOneMailBodyDate: async function(param){

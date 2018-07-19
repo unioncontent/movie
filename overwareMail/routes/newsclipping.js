@@ -74,7 +74,7 @@ router.post('/send',isAuthenticated, async function(req, res) {
   var mailAllParam = {
     M_sender: req.body['M_sender'],
     M_type: req.body['M_type'],
-    M_body: req.body['M_body'],
+    M_body: req.body['M_body'].replace(/(^\s*)|(\s*$)/, ''),
     M_subject: req.body['M_subject'],
     M_id: req.user.n_idx
   };
@@ -93,6 +93,11 @@ router.post('/send',isAuthenticated, async function(req, res) {
   }
 
   var m_idx_a = null;
+  // update code
+  // await maillink.update([mailAllParam.M_body,'58']);
+  // res.status(500).send('메일 발송에 실패했습니다.');
+  // return false;
+
   // 메일발송 리스트 insert
   var resultInsert = await nMailAll.insert(mailAllParam);
   m_idx_a = resultInsert.insertId;
@@ -104,7 +109,7 @@ router.post('/send',isAuthenticated, async function(req, res) {
     var now = dt.format('Y-m-d H:M:S');
     var queryParam = {
       'MSGID':m_idx_a,
-      'CONTENT':mailAllParam.M_body.replace(/(^\s*)|(\s*$)/, ''),
+      'CONTENT':mailAllParam.M_body,
       'STATUS':'1',
       'GENDATE':now
     };
