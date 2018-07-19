@@ -305,9 +305,9 @@
         data.result.forEach(function(ele,idx){
           var html = '<tr><td><i class="fas fa-check"></i></td>'+
             '<td>'+(idx+1)+'</td>'+
-            '<td>'+ele.E_mail+'</td>'+
-            '<td>'+ele.P_title+'</td>'+
-            '<td>'+ele.P_name+'</td>'+
+            '<td>'+ele.M_email+'</td>'+
+            '<td>'+ele.M_ptitle+'</td>'+
+            '<td>'+ele.M_name+'</td>'+
             '<td>'+((ele.OPENTIME != null) ? ele.OPENTIME:'')+'</td>'+
           '</tr>';
           $('#success-list').append(html);
@@ -355,12 +355,12 @@
             k_msg = settingErrorMsg(code);
           }
           var html = '<tr><td><i class="fas fa-exclamation-triangle"></i></td>'+
-            '<td>'+code+'</td>'+'<td>'+ele.E_mail;
+            '<td>'+code+'</td>'+'<td>'+ele.M_email;
           if(code != '42' && code != '43' && code != '44' && code != '45' && ele.SENDRESULT != 'ER'){
             html+='<label class="label label-warning">재발송가능</label>'
           }
-          html+='</td>'+'<td>'+ele.P_title+'</td>'+
-            '<td>'+ele.P_name+'</td>'+
+          html+='</td>'+'<td>'+ele.M_ptitle+'</td>'+
+            '<td>'+ele.M_name+'</td>'+
             '<td><div class="error_nobr">'+k_msg+'</div></td>'+
           '</tr>';
           $('#error-list').append(html);

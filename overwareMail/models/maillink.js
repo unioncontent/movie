@@ -17,6 +17,10 @@ var mail = {
     var sql = insertSqlSetting(table,Object.keys(param));
     return await getResult(sql,pValue);
   },
+  update: async function(param){
+    var sql = 'update n_mail_all set M_body = ? where n_idx = ?';
+    return await getResult(sql,param);
+  },
   deleteMlAMSG: async function(param){
     var sql = 'delete from union_mail.ml_automail_message where MSGID=?;';
     return await getResult(sql,param);
