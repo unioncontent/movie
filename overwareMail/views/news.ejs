@@ -45,24 +45,24 @@
                 <option value="6">보도국</option>
                 <option value="7">박스오피스</option>
               </select>
-              <select class="form-control col-md-1 form-control-default m-b-10 f-left" id="selectNum">
+              <select class="form-control col-md-1 form-control-default m-r-5 m-b-10 f-left" id="selectNum">
                 <option value="30">30</option>
                 <option value="50">50</option>
                 <option value="100">100</option>
               </select>
               <!-- <button class="btn btn-primary searchBtn">단독</button> -->
               <!-- <button class="btn btn-primary searchBtn">공식</button> -->
-              <div class="col-sm-2 p-t-5 f-left border-checkbox-section">
+              <div class="col-sm-2 p-l-0 p-t-5 m-b-10 f-left border-checkbox-section">
                 <div class="border-checkbox-group border-checkbox-group-default m-r-5">
                   <input class="border-checkbox" type="checkbox" id="searchBtn1" name="search" value="단독">
                   <label class="border-checkbox-label" for="searchBtn1">단독</label>
                 </div>
-                <div class="border-checkbox-group border-checkbox-group-default">
+                <div class="border-checkbox-group border-checkbox-group-default m-r-5" >
                   <input class="border-checkbox" type="checkbox" id="searchBtn2" name="search" value="공식">
                   <label class="border-checkbox-label" for="searchBtn2">공식</label>
                 </div>
               </div>
-              <div class="col-12 col-md-2 f-right col-sm-9 m-l-10 p-l-0 p-r-0 m-b-10 right-icon-control">
+              <div class="col-12 col-md-2 f-right col-sm-9 m-l-10 p-l-0 p-r-0 m-b-10 right-icon-control" style= "min-width: 242px;">
                 <input type="text" class="form-control p-t-10 form-control-default search-text" value="<%= search %>" placeholder="제목검색" id="searchInput">
                 <div class="form-icon" id="searchBtn">
                   <i class="fas fa-search"></i>
@@ -265,6 +265,13 @@
   </div>
 </div>
 <style type="text/css">
+  .border-checkbox-section{
+    min-width: 148px;
+  }
+  .border-checkbox-group-default{
+    max-width:  58px;
+    float:  left;
+  }
   /* loader */
   .preloader3{
     display: none;
