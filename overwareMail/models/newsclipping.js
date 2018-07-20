@@ -124,6 +124,9 @@ var newsclipping = {
     if('search' in body){
       sql +=' and media_title like \'%'+body.search+'%\'';
     }
+    if('search_b' in body){
+      sql +=' and media_title like \'%'+body.search_b+'%\'';
+    }
     sql += ' order by media_idx desc limit ?,?';
 
     var result = await getResult(sql,param);
@@ -189,6 +192,9 @@ var newsclipping = {
     }
     if('search' in body){
       sql +=' and media_title like \'%'+body.search+'%\'';
+    }
+    if('search_b' in body){
+      sql +=' and media_title like \'%'+body.search_b+'%\'';
     }
     var count = await getResult(sql,param[0]);
     if(count.length == 0){

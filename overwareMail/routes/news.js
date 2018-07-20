@@ -79,6 +79,7 @@ async function getListPageData(idx,param){
     limit: 30,
     keyword: '',
     search: '',
+    search2: '',
     type: ''
   };
   var currentPage = 1;
@@ -111,6 +112,10 @@ async function getListPageData(idx,param){
   if (typeof param.search !== 'undefined') {
     searchBody['search'] = param.search;
     data['search'] = param.search;
+  }
+  if(typeof param.search_b !== 'undefined') {
+    searchBody['search_b'] = param.search_b;
+    data['search2'] = param.search_b;
   }
   if (typeof param.type !== 'undefined') {
     searchBody['type'] = param.type;
