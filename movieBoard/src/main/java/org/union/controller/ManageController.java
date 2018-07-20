@@ -749,6 +749,8 @@ public class ManageController {
 		}
 		redirectAttributes.addAttribute("company", company);
 		redirectAttributes.addAttribute("selectKey", selectKey);
+		redirectAttributes.addAttribute("startDate", vo.getWriteDate());
+		redirectAttributes.addAttribute("endDate", vo.getWriteDate());
 		
 		return "redirect:/manage/report";
 	}

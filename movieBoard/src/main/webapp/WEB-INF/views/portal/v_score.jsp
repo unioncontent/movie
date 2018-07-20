@@ -181,7 +181,7 @@
                               <div class="col-md-6 col-xl-3">
                                 <div class="card client-blocks">
                                   <div class="card-block-big card1">
-                                    <h5 class="mt"  style="font-size: 25px;     padding-top: 5px;">
+                                    <h5 class="mt"  style="font-size: 25px; padding-top: 5px;">
                                     <font style="font-weight: bold; color: black;">
                                     	전체건수
                                     </font>

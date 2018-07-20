@@ -35,11 +35,8 @@ import org.union.util.ListUtil;
 @Controller
 @RequestMapping("/extract/*")
 public class ExtractController {
-
 	
 	private static Logger logger = LoggerFactory.getLogger(ExtractController.class);
-	
-	
 	
 	@Autowired
 	private SNSService snsService;
@@ -73,7 +70,7 @@ public class ExtractController {
 			cri.setSelectKey(null);
 		}
 		
-		if(cri.getSubSelectKey() == "" || "포함".equals(cri.getSubSelectKey()) ) {
+		if(cri.getSubSelectKey() == "" || "포함".equals(cri.getSubSelectKey()) || "undefined".equals(cri.getSubSelectKey())) {
 			logger.info("SubSelectKey is null");
 			cri.setSubSelectKey(null);
 		}
@@ -124,6 +121,7 @@ public class ExtractController {
 								userService.viewByName(cri.getCompany()).getUser_idx()));
 					}
 				}
+				
 		// 키워드 선택에 따른 키워드 재추출
 		if(cri.getSelectKey() != null) {
 			if(cri.getSelectKey().isEmpty() == false) {
