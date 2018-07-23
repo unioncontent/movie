@@ -35,6 +35,12 @@
               </div>
             </div>
             <div class="card-block table-border-style">
+              <div class="preloader3 loader-block">
+                <div class="circ1 loader-primary"></div>
+                <div class="circ2 loader-primary"></div>
+                <div class="circ3 loader-primary"></div>
+                <div class="circ4 loader-primary"></div>
+              </div>
               <div class="table-responsive">
                 <table class="table">
                   <thead>
@@ -48,7 +54,8 @@
                         </div>
                       </th>
                       <th width="3%">NO</th>
-                      <th width="5%" style="min-width: 80px;">등록일</th>
+                      <th width="5%" style="min-width: 80px;">등록날짜</th>
+                      <th width="5%" style="min-width: 80px;">보고날짜</th>
                       <th width="5%" style="min-width: 80px;">총검출수</th>
                       <th width="5%" style="min-width: 80px;">조회수</th>
                       <th width="5%" style="min-width: 80px;">댓글수</th>
@@ -70,13 +77,14 @@
                       <td>
                         <div class="border-checkbox-section" style="max-width: 30px;">
                           <div class="border-checkbox-group border-checkbox-group-default">
-                            <input class="border-checkbox news-checkbox" type="checkbox" id="checkbox<%=i%>">
+                            <input class="border-checkbox news-checkbox" type="checkbox" id="checkbox<%=i%>" <%=(list[i].marketing_idx != null) ? 'checked' : ''%>>
                             <label class="border-checkbox-label" for="checkbox<%=i%>"></label>
                           </div>
                         </div>
                       </td>
                       <th><%= listCount - i - offset %></th>
                       <td><%= list[i].writeDate %></td>
+                      <td><input type="text" name="datefilter" class="datepicker form-control" value="<%= list[i].reportDate %>"/></td>
                       <td><span id="cnt"><%= list[i].total_cnt %></span>건</td>
                       <td><span id="v_cnt"><%= list[i].view_cnt %></span>회</td>
                       <td><span id="r_cnt"><%= list[i].reply_cnt %></span>회</td>
@@ -96,7 +104,7 @@
                     var pageCount = Math.ceil(listCount/limit);
                     if(pageCount > 1) {
                     %>
-                      <td colspan="5">
+                      <td colspan="6">
                         <button id="addBtn" class="btn btn-list alert-check p-r-5 p-l-5 m-l-15 m-b-5  f-left m-t-5"><i class="fas fa-angle-down"></i>선택저장</button>
                       </td>
                       <td colspan="4">
@@ -155,7 +163,7 @@
                         </ul>
                       </td>
                     <% } else{ %>
-                      <td colspan="9">
+                      <td colspan="10">
                         <button id="addBtn" class="btn btn-list alert-check p-r-5 p-l-5 m-l-15 m-b-5  f-left m-t-5"><i class="fas fa-angle-down"></i>선택저장</button>
                       </td>
                     <% } %>
@@ -175,6 +183,22 @@
   </div>
 </div>
 <style type="text/css">
+  /* loader */
+  .preloader3{
+    display: none;
+    padding-top:20%;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 100px;
+    width: 500px;
+    margin: auto;
+    max-width: 100%;
+    z-index: 10000;
+  }
+  .datepicker{
+    min-width: 88px;
+  }
   .reportrange{
     min-width: 207px;
   }
@@ -237,6 +261,7 @@
   var sDateValue = $('#sDate').val();
   var eDateValue = $('#eDate').val();
   $(document).ready(function(){
+    settingTableInputDate();
     $('#reportrange').daterangepicker(optionSet1,cb);
 
     if(sDateValue == '' && eDateValue == ''){
@@ -277,6 +302,7 @@
           var trEle = $(ele).parents('tr');
           list.push({
             idx:trEle.find('#idx').val(),
+            date:trEle.find('input[name="datefilter"]').val(),
             cnt:trEle.find('#cnt').text().replace(/[,]/gi,''),
             v_cnt:trEle.find('#v_cnt').text().replace(/[,]/gi,''),
             l_cnt:trEle.find('#l_cnt').text().replace(/[,]/gi,''),
@@ -345,6 +371,7 @@
   });
   function ajaxGetPageList(param){
     console.log('ajaxGetPageList:',param);
+    $('.preloader3').show();
     $.ajax({
       url: '/marketing/facebook/getNextPage',
       type: 'post',
@@ -376,13 +403,14 @@
           <td>\
             <div class="border-checkbox-section" style="max-width: 30px;">\
               <div class="border-checkbox-group border-checkbox-group-default">\
-                <input class="border-checkbox news-checkbox" type="checkbox" id="checkbox'+idx+'">\
+                <input class="border-checkbox news-checkbox" type="checkbox" id="checkbox'+idx+'" '+((item.marketing_idx != null) ? 'checked' : '')+'>\
                 <label class="border-checkbox-label" for="checkbox'+idx+'"></label>\
               </div>\
             </div>\
           </td>\
             <th>'+numIdx+'</th>\
             <td>'+item.writeDate+'</td>\
+            <td><input type="text" name="datefilter" class="datepicker form-control"  value="'+((item.reportDate != null && item.reportDate != '') ? item.reportDate : '')+'"/></td>\
             <td><span id="cnt">'+item.total_cnt+'</span>건</td>\
             <td><span id="v_cnt">'+item.view_cnt+'</span>회</td>\
             <td><span id="r_cnt">'+item.reply_cnt+'</span>회</td>\
@@ -396,12 +424,13 @@
           </tr>';
           $('#listTable tbody').eq(0).append(html);
         });
+        settingTableInputDate();
         var limit = 10;
         var pageCount = Math.ceil(data.result.listCount/limit);
         $('#listTable tfoot').eq(0).empty();
         var html = '<tr>';
         if(pageCount > 1) {
-          html += '<td colspan="5"><button id="addBtn" class="btn btn-list alert-check p-r-5 p-l-5 m-l-15 m-b-5  f-left m-t-5"><i class="fas fa-angle-down"></i>선택저장</button></td>';
+          html += '<td colspan="6"><button id="addBtn" class="btn btn-list alert-check p-r-5 p-l-5 m-l-15 m-b-5  f-left m-t-5"><i class="fas fa-angle-down"></i>선택저장</button></td>';
           html += '<td colspan="4"><ul class="pagination float-right">';
           var pageSize = 5;
           var pRCnt = parseInt(data.result.currentPage / pageSize);
@@ -447,10 +476,11 @@
           html += '</ul></td>';
         }
         else{
-          html += '<td colspan="9"><button id="addBtn" class="btn btn-list alert-check p-r-5 p-l-5 m-l-15 m-b-5  f-left m-t-5"><i class="fas fa-angle-down"></i>선택저장</button></td>';
+          html += '<td colspan="10"><button id="addBtn" class="btn btn-list alert-check p-r-5 p-l-5 m-l-15 m-b-5  f-left m-t-5"><i class="fas fa-angle-down"></i>선택저장</button></td>';
         }
         html += '</tr>';
         $('#listTable tfoot').eq(0).append(html);
+        $('.preloader3').fadeOut(500);
       }
     });
   }
@@ -528,4 +558,21 @@
       firstDay: 1
     }
   };
+  // 일일보고날짜
+  function settingTableInputDate(){
+    $(document).find("input[name=datefilter]").daterangepicker({
+      singleDatePicker: true,
+      showDropdowns: true,
+      locale: {
+        format: 'YYYY-MM-DD',
+        "customRangeLabel": "Custom",
+        "daysOfWeek": [
+          "일", "월", "화", "수", "목", "금", "토"
+        ],
+        "monthNames": [
+          "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"
+        ],
+      }
+    });
+  }
 </script>

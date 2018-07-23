@@ -178,7 +178,6 @@ router.post('/naver/add',isAuthenticated,async function(req, res, next) {
     var list = JSON.parse(req.body.list);
     await asyncForEach(list, async (item, index, array) => {
       var param = item;
-      console.log(item);
       try{
         await marketing.insertPortal(param);
       }
@@ -227,7 +226,7 @@ router.post('/list/delete',isAuthenticated,async function(req, res, next) {
 
 router.post('/list/update',isAuthenticated,async function(req, res, next) {
   try{
-    await marketing.update([req.body.title,req.body.idx,req.body.idx]);
+    await marketing.update([req.body.title,req.body.date,req.body.idx,req.body.idx]);
     res.send({status:true});
   } catch(e){
     res.status(500).send(e);
