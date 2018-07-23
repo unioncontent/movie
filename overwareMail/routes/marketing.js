@@ -101,7 +101,6 @@ router.post('/add',isAuthenticated,async function(req, res, next) {
     var list = JSON.parse(req.body.list);
     await asyncForEach(list, async (item, index, array) => {
       var param = item;
-      console.log(item);
       try{
         await marketing.insertSNS(param);
       }
@@ -208,7 +207,7 @@ router.post('/list/getNextPage',isAuthenticated,async function(req, res, next) {
 
 router.post('/list/insert',isAuthenticated,async function(req, res, next) {
   try{
-    await marketing.insert(req.body);
+    await marketing.insert(req.body.table,req.body);
     res.send({status:true});
   } catch(e){
     res.status(500).send(e);
@@ -217,7 +216,7 @@ router.post('/list/insert',isAuthenticated,async function(req, res, next) {
 
 router.post('/list/delete',isAuthenticated,async function(req, res, next) {
   try{
-    await marketing.delete([req.body.idx,req.body.idx]);
+    await marketing.delete(req.body.table,req.body.idx);
     res.send({status:true});
   } catch(e){
     res.status(500).send(e);
@@ -226,7 +225,7 @@ router.post('/list/delete',isAuthenticated,async function(req, res, next) {
 
 router.post('/list/update',isAuthenticated,async function(req, res, next) {
   try{
-    await marketing.update([req.body.title,req.body.date,req.body.idx,req.body.idx]);
+    await marketing.update(req.body.table,[req.body.title,req.body.date,req.body.idx]);
     res.send({status:true});
   } catch(e){
     res.status(500).send(e);

@@ -7,7 +7,7 @@ const DBpromise = require('../db/db_info.js');
 
 var marketing = {
   insertSNS: async function(param){
-    var sql = 'insert into marketing_mail(sns_idx, ps_name, ps_title, ps_content, ps_writer, url, uid,\
+    var sql = 'insert into marketing_sns_mail(n_idx, ps_name, ps_title, ps_content, ps_writer, url, uid,\
     total_cnt,view_cnt, like_cnt, reply_cnt, share_cnt, writeDate, title_key, keyword, keyword_type, textType, thumbnail, createDate, updateDate, reportDate)\
     SELECT  sns_idx, sns_name, ';
     if(param.title == ''){
@@ -20,11 +20,11 @@ var marketing = {
     writeDate, title_key, keyword, keyword_type, textType, thumbnail, now(), now(),?\
     FROM facebook_videos where sns_idx = ?';
     // 값이 있으면 insert 안되도록
-    sql += ' and NOT EXISTS (SELECT * FROM marketing_mail WHERE sns_idx = ?);'
+    sql += ' and NOT EXISTS (SELECT * FROM marketing_sns_mail WHERE n_idx = ?);'
     return await getResult(sql,[param.cnt,param.v_cnt,param.l_cnt,param.r_cnt,param.s_cnt,param.date,param.idx,param.idx]);
   },
   insertPortal: async function(param){
-    var sql = 'insert into marketing_mail(portal_idx, ps_name, ps_content,ps_title, ps_writer, url, uid,\
+    var sql = 'insert into marketing_portal_mail(n_idx, ps_name, ps_content,ps_title, ps_writer, url, uid,\
     total_cnt,view_cnt, like_cnt, reply_cnt, share_cnt, writeDate,board_number, title_key, keyword, keyword_type, textType, thumbnail, createDate, updateDate, reportDate)\
     SELECT  portal_idx, portal_name, portal_title,';
     if(param.title == ''){
@@ -35,7 +35,7 @@ var marketing = {
     }
     sql +=' portal_writer, url, uid,\
     ?, ?, ?, ?, ?, writeDate, board_number, title_key, keyword, keyword_type, textType, thumbnail, now(), now(),?\
-    FROM naver_videos where portal_idx = ?  and NOT EXISTS (SELECT * FROM marketing_mail WHERE portal_idx = ?);';
+    FROM naver_videos where portal_idx = ?  and NOT EXISTS (SELECT * FROM marketing_portal_mail WHERE n_idx = ?);';
     return await getResult(sql,[param.cnt,param.v_cnt,param.l_cnt,param.r_cnt,param.s_cnt,param.date,param.idx,param.idx]);
   },
   insert: async function(table,param){
@@ -43,26 +43,21 @@ var marketing = {
     var sql = insertSqlSetting(table,Object.keys(param));
     return await getResult(sql,pValue);
   },
-  delete: async function(param){
-    var sql = "delete from marketing_mail where sns_idx=? or portal_idx = ?";
+  delete: async function(table,param){
+    var sql = "delete from "+table+" where n_idx= ?";
     return await getResult(sql,param);
   },
-  update: async function(param){
-    var sql = "update marketing_mail set ps_title=?, reportDate=?";
-    sql+= " where sns_idx=? or portal_idx = ?";
+  update: async function(table,param){
+    var sql = "update "+table+"  set ps_title=?, reportDate=?";
+    sql+= " where n_idx = ?";
     return await getResult(sql,param);
   },
   selectMarketingMailTable: async function(param){
-    var sql = 'SELECT ps_name, ps_title, ps_content, ps_writer, url, FORMAT(view_cnt,0) as view_cnt, FORMAT(like_cnt,0) as like_cnt,  \
-    FORMAT(reply_cnt,0) as reply_cnt, FORMAT(total_cnt,0) as total_cnt, DATE_FORMAT(writeDate, \'%Y-%m-%d\') AS writeDate\
-    FROM marketing_mail where date(reportDate) = \''+param.eDate+'\' order by createDate desc';
+    var sql = 'SELECT  * FROM marketing_mail where date(reportDate) = \''+param.eDate+'\' order by createDate desc';
     return await getResult(sql);
   },
   selectMarketingTable: async function(body,param){
-    var sql = 'SELECT portal_idx, sns_idx, ps_name, ps_title, ps_content, ps_writer, url, \
-    FORMAT(view_cnt,0) as view_cnt, FORMAT(like_cnt,0) as like_cnt, FORMAT(reply_cnt,0) as reply_cnt, FORMAT(total_cnt,0) as total_cnt,\
-    DATE_FORMAT(createDate, \'%Y-%m-%d %H:%i:%s\') AS createDate, DATE_FORMAT(reportDate, \'%Y-%m-%d\') as reportDate\
-    FROM marketing_mail where url is not null';
+    var sql = 'SELECT * FROM marketing_mail where url is not null';
     if(('sDate' in body) && ('eDate' in body)){
       sql+=' and createDate between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
     }
