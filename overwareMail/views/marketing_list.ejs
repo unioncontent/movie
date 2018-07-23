@@ -41,13 +41,14 @@
                     <tr>
                       <th width="5%">NO</th>
                       <th width="10%" style="min-width: 80px;">등록날짜</th>
+                      <th width="10%" style="min-width: 80px;">보고날짜</th>
                       <th width="5%" style="min-width: 80px;">사이트</th>
                       <th width="5%" style="min-width: 80px;">총검출수</th>
                       <th width="5%" style="min-width: 80px;">조회수</th>
                       <th width="5%" style="min-width: 80px;">댓글수</th>
                       <th width="5%" style="min-width: 80px;">좋아요수</th>
-                      <th width="20%" style="min-width:120px">제목</th>
-                      <th width="20%" style="min-width:300px">영화제목</th>
+                      <th width="20%" style="min-width: 120px">제목</th>
+                      <th width="20%" style="min-width: 200px">영화제목</th>
                       <th width="10%" style="min-width: 120px;">관리</th>
                     </tr>
                   </thead>
@@ -63,6 +64,7 @@
                       <input type="hidden" id="idx" value="<%=((list[i].portal_idx == '0')? list[i].sns_idx: list[i].portal_idx)%>" />
                       <th><%= listCount - i - offset %></th>
                       <td><%= list[i].createDate %></td>
+                      <td><input type="text" name="datefilter" class="datepicker form-control" value="<%= list[i].reportDate %>"/></td>
                       <td>
                         <div class="nobr" title="<%=list[i].ps_writer%>"><%=list[i].ps_writer%></div>
                       </td>
@@ -89,7 +91,7 @@
                     var pageCount = Math.ceil(listCount/limit);
                     if(pageCount > 1) {
                     %>
-                      <td colspan="10">
+                      <td colspan="11">
                         <ul class="pagination float-right">
                           <%
                             var pageSize = 5;
@@ -215,6 +217,9 @@
   .card .card-header span:not(.input-group-addon) {
     display: inline;
   }
+  .datepicker{
+    min-width: 102px;
+  }
 </style>
 <script type="text/javascript" src="/js/error.js"></script>
 <!-- sweetalert -->
@@ -232,6 +237,7 @@
   var eDateValue = $('#eDate').val();
   var keywordValue = $('#keyword').val();
   $(document).ready(function(){
+    settingTableInputDate();
     if(keywordValue != ''){
       $("#selectKeyword option[value='"+keywordValue+"']").attr('selected','selected');
     }
@@ -433,6 +439,7 @@
           type: "POST",
           url: "/marketing/list/update",
           data: {
+            'date':trEle.find('input[name="datefilter"]').val(),
             'title' : trEle.find('#title').val(),
             'idx' : trEle.find('#idx').val()
           },
@@ -510,6 +517,7 @@
           <input type="hidden" id="idx" value="'+((item.portal_idx == '0') ? item.sns_idx: item.portal_idx)+'" />\
           <th>'+numIdx+'</th>\
           <td>'+item.createDate+'</td>\
+          <td><input type="text" name="datefilter" class="datepicker form-control"  value="'+((item.reportDate != null && item.reportDate != '') ? item.reportDate : '')+'"/></td>\
           <td><div class="nobr" title ="'+item.ps_writer+'">'+item.ps_writer+'</div></td>\
           <td><span id="cnt">'+item.total_cnt+'</span>건</td>\
           <td>'+item.view_cnt+'회</td>\
@@ -525,12 +533,13 @@
           <button class="btn btn-sm btn-primary btn-edit"><i class="far fa-edit"></i></button></td>';
           $('#listTable tbody').eq(0).append(html);
         });
+        settingTableInputDate();
         var limit = 10;
         var pageCount = Math.ceil(data.result.listCount/limit);
         $('#listTable tfoot').eq(0).empty();
         if(pageCount > 1) {
           var html = '<tr>';
-          html += '<td colspan="10"><ul class="pagination float-right">';
+          html += '<td colspan="11"><ul class="pagination float-right">';
           var pageSize = 5;
           var pRCnt = parseInt(data.result.page / pageSize);
           if(data.result.page % pageSize == 0){
@@ -677,4 +686,21 @@
       firstDay: 1
     }
   };
+  // 일일보고날짜
+  function settingTableInputDate(){
+    $(document).find("input[name=datefilter]").daterangepicker({
+      singleDatePicker: true,
+      showDropdowns: true,
+      locale: {
+        format: 'YYYY-MM-DD',
+        "customRangeLabel": "Custom",
+        "daysOfWeek": [
+          "일", "월", "화", "수", "목", "금", "토"
+        ],
+        "monthNames": [
+          "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"
+        ],
+      }
+    });
+  }
 </script>

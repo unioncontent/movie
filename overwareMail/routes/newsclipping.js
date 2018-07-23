@@ -243,7 +243,7 @@ async function getListPageData(idx,param){
   var data = {
     list:[],
     listCount:{total:0},
-    sDate: formatDate(new Date(Date.now() - 1 * 24 * 3600 * 1000)),
+    sDate: formatDate(new Date(Date.now() - 7 * 24 * 3600 * 1000)),
     eDate: formatDate(new Date())
   };
   var limit = 10;
@@ -281,9 +281,6 @@ async function getListPageData(idx,param){
 // 지난리스트
 router.get('/list',isAuthenticated,async function(req, res) {
   var data = await getListPageData2(req.user.n_idx,req.query);
-  data.page = '';
-  data.sDate = '';
-  data.eDate = '';
   res.render('newsclipping_list',data);
 });
 
@@ -333,8 +330,9 @@ async function getListPageData2(idx,param){
   var data = {
     list:[],
     listCount:{total:0},
-    sDate: formatDate(new Date(Date.now() - 1 * 24 * 3600 * 1000)),
-    eDate: formatDate(new Date())
+    sDate: formatDate(new Date(Date.now() - 7 * 24 * 3600 * 1000)),
+    eDate: formatDate(new Date()),
+    page: 1
   };
   var limit = 10;
   var searchParam = [idx,idx,0,limit];

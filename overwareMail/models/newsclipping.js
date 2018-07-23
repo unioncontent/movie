@@ -250,7 +250,7 @@ var newsclipping = {
     return await getResult(sql,param);
   },
   selectIssueTable: async function(param){
-    var sql = 'SELECT * FROM issue_data where company_name = \'쇼박스\' and  writeDate between \''+param.sDate+' 00:00:00\' and \''+param.eDate+' 23:59:59\'';
+    var sql = 'SELECT * FROM issue_data where (company_name = \'쇼박스\' or title_key in (select distinct keyword_main from keyword_data where user_idx=1 or user_idx=21)) and  Date(writeDate) = \''+param.eDate+'\'';
     return await getResult(sql);
   },
   selectView: async function(body,param){
