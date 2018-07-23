@@ -61,7 +61,8 @@
                       for(var i=0; i < list.length; i++) {
                     %>
                     <tr>
-                      <input type="hidden" id="idx" value="<%=((list[i].portal_idx == '0')? list[i].sns_idx: list[i].portal_idx)%>" />
+                      <input type="hidden" id="idx" value="<%=list[i].n_idx%>" />
+                      <input type="hidden" id="type" value="<%=list[i].m_type%>" />
                       <th><%= listCount - i - offset %></th>
                       <td><%= list[i].createDate %></td>
                       <td><input type="text" name="datefilter" class="datepicker form-control" value="<%= list[i].reportDate %>"/></td>
@@ -405,7 +406,10 @@
         $.ajax({
           type: "POST",
           url: "/marketing/list/delete",
-          data: {'idx' : trEle.find('#idx').val()},
+          data: {
+            'table' : 'marketing_'+trEle.find('#type').val()+'_mail',
+            'idx' : trEle.find('#idx').val()
+          },
           error:function(request,status,error){
             console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
             swal("ERROR!", '새로고침 후 다시 시도해주세요.', "error");
@@ -439,6 +443,7 @@
           type: "POST",
           url: "/marketing/list/update",
           data: {
+            'table' : 'marketing_'+trEle.find('#type').val()+'_mail',
             'date':trEle.find('input[name="datefilter"]').val(),
             'title' : trEle.find('#title').val(),
             'idx' : trEle.find('#idx').val()
@@ -514,7 +519,8 @@
         data.result.list.forEach(function(item,idx){
           var numIdx = Math.ceil(data.result.listCount-(data.result.offset+idx)).toString();
           var html = '<tr>\
-          <input type="hidden" id="idx" value="'+((item.portal_idx == '0') ? item.sns_idx: item.portal_idx)+'" />\
+          <input type="hidden" id="idx" value="'+item.n_idx+'" />\
+          <input type="hidden" id="type" value="'+item.m_type+'" />\
           <th>'+numIdx+'</th>\
           <td>'+item.createDate+'</td>\
           <td><input type="text" name="datefilter" class="datepicker form-control"  value="'+((item.reportDate != null && item.reportDate != '') ? item.reportDate : '')+'"/></td>\

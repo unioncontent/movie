@@ -54,7 +54,7 @@
                         </div>
                       </th>
                       <th width="3%">NO</th>
-                      <th width="5%" style="min-width: 80px;">등록날짜</th>
+                      <th width="5%" style="min-width: 80px;">작성날짜</th>
                       <th width="5%" style="min-width: 80px;">보고날짜</th>
                       <th width="5%" style="min-width: 80px;">총검출수</th>
                       <th width="5%" style="min-width: 80px;">조회수</th>
@@ -301,6 +301,7 @@
           var trEle = $(ele).parents('tr');
           list.push({
             idx:trEle.find('#idx').val(),
+            table:'marketing_portal_mail',
             date:trEle.find('input[name="datefilter"]').val(),
             cnt:trEle.find('#cnt').text().replace(/[,]/gi,''),
             v_cnt:trEle.find('#v_cnt').text().replace(/[,]/gi,''),
