@@ -283,6 +283,12 @@
     if(keywordParams != '' && keywordParams != null){
       param.keyword = keywordParams;
     }
+    var sDateValue = $('#sDate').val();
+    var eDateValue = $('#eDate').val();
+    if(sDateValue != '' && eDateValue != '' ){
+      param.sDate = moment(sDateValue).format('YYYY-MM-DD');
+      param.eDate = moment(eDateValue).format('YYYY-MM-DD');
+    }
     if(searchTypeParams != null && searchParams != null){
       page.searchType=searchTypeParams;
       page.search=searchParams;

@@ -56,13 +56,14 @@
                   <thead>
                     <tr>
                       <th width="5%">NO</th>
-                      <th width="10%" style="min-width: 80px;">등록날짜</th>
                       <th width="20%">제목</th>
                       <th width="5%" style="min-width: 80px;">언론사</th>
                       <th width="5%" style="min-width: 80px;">기자</th>
+                      <th width="10%" style="min-width: 80px;">등록날짜</th>
+                      <th width="10%" style="min-width: 60px;">보고날짜</th>
                       <th width="5%" style="min-width: 80px;">키워드</th>
                       <th width="5%" style="min-width: 50px;">분류글</th>
-                      <th width="20%" style="min-width: 130px;">썸네일</th>
+                      <!-- <th width="20%" style="min-width: 130px;">썸네일</th> -->
                       <th width="10%" style="min-width: 140px;">대분류</th>
                       <th width="10%" style="min-width: 100px;">대표기사</th>
                       <th width="10%" style="min-width: 100px;">세부기사</th>
@@ -80,7 +81,6 @@
                     <tr>
                       <input type="hidden" id="idx" value="<%=list[i].media_idx%>" />
                       <th><%= listCount - i - offset %></th>
-                      <td><%= list[i].createDate %></td>
                       <td>
                         <a href="<%= list[i].url %>" target="_blank" title="<%= list[i].media_title %>">
                           <div class="title_nobr"><%= list[i].media_title %></div>
@@ -96,6 +96,8 @@
                           <%}%>
                         </div>
                       </td>
+                      <td><%= list[i].createDate %></td>
+                      <td><input type="text" name="datefilter" class="datepicker form-control" value="<%= list[i].reportDate %>"/></td>
                       <td><div class="key_nobr" title="<%=list[i].keyword%>"><%= list[i].keyword %></div></td>
                       <td>
                         <div class="nobr">
@@ -106,9 +108,9 @@
                           <%}%>
                         </div>
                       </td>
-                      <td>
+                      <!-- <td>
                         <input type="text" placeholder="이미지주소(URL)" id="thumbnail" value="<%=list[i].thumbnail%>" class="form-control selectText">
-                      </td>
+                      </td> -->
                       <td>
                         <!-- <input type="number" min="1" max="8" id="newsType" value="<%=list[i].news_type%>" class="form-control"> -->
                         <select class="form-control form-control-default p-l-5 select-news" id="newsType">
@@ -418,6 +420,7 @@
   var keywordValue = $('#keyword').val();
   var typeValue = $('#type').val();
   $(document).ready(function(){
+    settingTableInputDate();
     if(keywordValue != ''){
       $("#selectKeyword option[value='"+keywordValue+"']").attr('selected','selected');
     }
@@ -687,7 +690,8 @@
           type: "POST",
           url: "/news/list/update",
           data: {
-            'thumbnail' : trEle.find('#thumbnail').val(),
+            // 'thumbnail' : trEle.find('#thumbnail').val(),
+            'date':trEle.find('input[name="datefilter"]').val(),
             'news_type' : trEle.find('#newsType option:selected').val(),
             'news_detail' : trEle.find('#news_detail').val(),
             'idx' : trEle.find('#idx').val()
@@ -774,7 +778,6 @@
           var html = '<tr>\
           <input type="hidden" id="idx" value="'+item.media_idx+'" />\
           <th>'+numIdx+'</th>\
-          <td>'+item.createDate+'</td>\
           <td>\
             <a href="'+item.url+'" target="_blank" title="'+item.media_title+'">\
               <div class="title_nobr">'+item.media_title+'</div>\
@@ -782,9 +785,10 @@
           </td>\
           <td><div class="nobr" title="'+item.media_name+'">'+item.media_name+'</div></td>';
           html+='<td><div class="nobr" title="'+item.reporter_name+'">'+((item.reporter_name == null) ? '<i class="fas fa-minus"></i>' : item.reporter_name)+'</div></td>\
+          <td>'+item.createDate+'</td>\
+          <td><input type="text" name="datefilter" class="datepicker form-control"  value="'+((item.reportDate != null && item.reportDate != '') ? item.reportDate : '')+'"/></td>\
           <td><div class="key_nobr" title="'+item.keyword+'">'+item.keyword+'</div></td>\
-          <td><div class="nobr">'+((item.textType == null) ? '<i class="fas fa-minus"></i>' : item.textType)+'</div></td>\
-          <td><input type="text" placeholder="이미지주소(URL)" id="thumbnail" value=\"'+((item.thumbnail == null) ? '' : item.thumbnail)+'\" class="form-control selectText"></td>';
+          <td><div class="nobr">'+((item.textType == null) ? '<i class="fas fa-minus"></i>' : item.textType)+'</div></td>';
           html+='<td><select class="form-control form-control-default p-l-5 select-news" id="newsType">\
             <option value="1" '+((item.news_type == '1') ? 'selected' : '')+'>쇼박스영화</option>\
             <option value="2" '+((item.news_type == '2') ? 'selected' : '')+'>경쟁영화</option>\
@@ -798,6 +802,7 @@
           <td><button class="btn btn-sm btn-danger btn-delete"><i class="far fa-trash-alt"></i></button>&nbsp;<button class="btn btn-sm btn-primary btn-edit"><i class="far fa-edit"></i></button></td>';
           $('#listTable tbody').eq(0).append(html);
         });
+        settingTableInputDate();
         var limit = 10;
         var pageCount = Math.ceil(data.result.listCount/limit);
         $('#listTable tfoot').eq(0).empty();
@@ -962,4 +967,21 @@
       firstDay: 1
     }
   };
+  // 일일보고날짜
+  function settingTableInputDate(){
+    $(document).find("input[name=datefilter]").daterangepicker({
+      singleDatePicker: true,
+      showDropdowns: true,
+      locale: {
+        format: 'YYYY-MM-DD',
+        "customRangeLabel": "Custom",
+        "daysOfWeek": [
+          "일", "월", "화", "수", "목", "금", "토"
+        ],
+        "monthNames": [
+          "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"
+        ],
+      }
+    });
+  }
 </script>
