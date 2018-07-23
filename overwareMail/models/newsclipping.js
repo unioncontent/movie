@@ -13,7 +13,7 @@ const DBpromise = require('../db/db_info.js');
 var newsclipping = {
   insert: async function(detail,param){
     var sql = 'insert into news_mail(media_idx, media_name, media_title, media_content, reporter_name, reporter_ID, reporter_email, writeDate, last_WriteDate, last_media_title, \
-    last_media_content, title_key, keyword, keyword_type, url, thumbnail, news_type, textType, media_state, createDate, replynum, updateDate';
+    last_media_content, title_key, keyword, keyword_type, url, reportDate, news_type, textType, media_state, createDate, replynum, updateDate';
     if(detail != ''){
       sql += ',news_detail';
     }
@@ -37,7 +37,7 @@ var newsclipping = {
     return await getResult(sql,param);
   },
   update: async function(detail,param){
-    var sql = "update news_mail set thumbnail=?,news_type=?";
+    var sql = "update news_mail set reportDate=?,news_type=?";
     if(detail != ''){
       sql += ',news_detail=\''+detail+'\'';
     }
@@ -88,10 +88,9 @@ var newsclipping = {
     }
   },
   selectMediaTable: async function(body,param,keyword){
-    var sql = "SELECT url,media_idx,title_key,media_content,news_type as type,DATE_FORMAT(writeDate, '%Y-%m-%d %H:%i:%s') AS `writeDate`,media_title,media_name,reporter_name,keyword,textType\
-    FROM `union`.media_data where title_key in (select distinct keyword_main from keyword_data where user_idx=? or user_idx=21) and media_name!='daum'";
+    var sql = "SELECT * FROM news_view where title_key in (select distinct keyword_main from keyword_data where user_idx=? or user_idx=21) and media_name!='daum'";
     if(('sDate' in body) && ('eDate' in body)){
-      sql+=' and writeDate between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
+      sql+=' and writeDate between \''+body.sDate+'\' and \''+body.eDate+'\'';
     }
     if('keyword' in body){
       sql +=' and title_key = \''+body.keyword+'\'';
@@ -158,9 +157,9 @@ var newsclipping = {
     // });
   },
   selectMediaTableCount: async function(body,param){
-    var sql = 'SELECT count(*) as total FROM `union`.media_data where title_key in (select distinct keyword_main from keyword_data where user_idx=? or user_idx=21) and media_name!=\'daum\'';
+    var sql = 'SELECT count(*) as total FROM news_view where title_key in (select distinct keyword_main from keyword_data where user_idx=? or user_idx=21) and media_name!=\'daum\'';
     if(('sDate' in body) && ('eDate' in body)){
-      sql+=' and writeDate between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
+      sql+=' and writeDate between \''+body.sDate+'\' and \''+body.eDate+'\'';
     }
     if('keyword' in body){
       sql +=' and title_key = \''+body.keyword+'\'';
@@ -205,7 +204,7 @@ var newsclipping = {
     }
   },
   selectNewsMailTable: async function(body,param){
-    var sql = "SELECT url,media_idx,DATE_FORMAT(createDate, '%Y-%m-%d %H:%i:%s') AS `createDate`,media_title,media_name,reporter_name,\
+    var sql = "SELECT url,media_idx,DATE_FORMAT(createDate, '%Y-%m-%d %H:%i:%s') AS createDate,DATE_FORMAT(reportDate, '%Y-%m-%d %H:%i:%s') AS reportDate,media_title,media_name,reporter_name,\
     keyword,textType,thumbnail,news_type,news_detail FROM news_mail where title_key in (select distinct keyword_main from keyword_data where user_idx=? or user_idx=21)";
     if(('sDate' in body) && ('eDate' in body)){
       sql+=' and createDate between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
@@ -245,8 +244,9 @@ var newsclipping = {
     }
   },
   selectNewsMailAllTable: async function(body,param){
-    var sql = "SELECT url,media_content,thumbnail,media_idx,DATE_FORMAT(createDate, '%Y-%m-%d %H:%i:%s') AS `createDate`,DATE_FORMAT(writeDate, '%Y.%m.%d') AS `writeDate`,media_title,media_name,reporter_name,keyword,textType,thumbnail,news_type,news_detail FROM news_mail where title_key in (select distinct keyword_main from keyword_data where user_idx=? or user_idx=21)";
-    sql+=' and writeDate between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
+    var sql = "SELECT url,media_content,thumbnail,media_idx,DATE_FORMAT(createDate, '%Y-%m-%d %H:%i:%s') AS createDate,\
+    DATE_FORMAT(writeDate, '%Y.%m.%d') AS writeDate,media_title,media_name,reporter_name,keyword,textType,thumbnail,news_type,news_detail FROM news_mail where title_key in (select distinct keyword_main from keyword_data where user_idx=? or user_idx=21)";
+    sql+=' and Date(reportDate) = \''+body.eDate+'\'';
     return await getResult(sql,param);
   },
   selectIssueTable: async function(param){
