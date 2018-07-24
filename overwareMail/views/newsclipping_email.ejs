@@ -402,7 +402,7 @@
               // if(value.thumbnail != null && value.thumbnail != ''){
               //   html += '<img src="'+value.thumbnail+'" alt="" style="display: inherit; float:left;width:80px;height:80px;padding-right: 13px;">';
               // }
-              html += '<div class="news-content" style="font-size:12px;width:541px;height:  12px;"><div class="title" style="padding-bottom:5px;float:  left;max-width: 370px;display: inline-block;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;"><a href="'+value.url+'" target="_blank">'+value.media_title+'</a></div><div clacss="info" style="padding-bottom:5px;color: #666;float:  right;"><span class="media-name">'+value.media_name+'</span> <span class="bar" style="display: inline-block;overflow: hidden;width: 0;height: 11px;margin: -1px 5px 1px 4px;border-left: 1px solid #eaeaea;vertical-align: middle;"></span> <span class="date">'+value.writeDate+'</span></div>';
+              html += '<div class="news-content"  data-idx="'+value.media_idx+'" style="font-size:12px;width:541px;height:  12px;"><div class="title" style="padding-bottom:5px;float:  left;max-width: 370px;display: inline-block;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;"><a href="'+value.url+'" target="_blank">'+value.media_title+'</a></div><div clacss="info" style="padding-bottom:5px;color: #666;float:  right;"><span class="media-name">'+value.media_name+'</span> <span class="bar" style="display: inline-block;overflow: hidden;width: 0;height: 11px;margin: -1px 5px 1px 4px;border-left: 1px solid #eaeaea;vertical-align: middle;"></span> <span class="date">'+value.writeDate+'</span></div>';
               html +='</div></div>';
               if(value.news_detail != null && value.news_detail != ''){
                 if(value.news_detail in obj){
@@ -427,8 +427,9 @@
             }
           });
           $.each(obj, function(index, value) {
-            var html ='<ul class="relation_lst"  style="list-style: none;padding:0;margin:0;line-height: 18px;"></ul>';
+            var html ='<ul class="relation_lst"  style="list-style: none;padding:0;margin: 13px;margin-left: 5px;line-height: 18px;position: relative;font-size: 12px;"></ul>';
             $('div[data-idx='+index+']').after(html);
+
             $.each(value, function(i, v) {
               html ='<li> <img src="https://ssl.pstatic.net/sstatic/search/pc/img/bu_news_sublst.gif" style="vertical-align:  text-top;"><a href="'+v.url+'" target="_blank"><div style="display: inline-block;overflow: hidden; max-width: 210px;margin-right: 5px;color: #0000ee;text-overflow: ellipsis;white-space: nowrap;word-wrap: normal;word-break: normal;vertical-align: top;">'+v.media_title+'</div></a><span class="txt_sinfo" style="display: inline-block;overflow: hidden;max-width: 260px;white-space: nowrap;text-overflow: ellipsis;vertical-align: top;"><span class="press" style="color: #666;">'+v.media_name+'</span><span class="bar" style="color: #666;display: inline-block;overflow: hidden;width: 0;height: 11px;margin: -1px 5px 1px 4px;border-left: 1px solid #eaeaea;vertical-align: middle;"></span> '+v.writeDate+' </span> </li>';
               $('div[data-idx='+index+']').siblings('.relation_lst').append(html);
