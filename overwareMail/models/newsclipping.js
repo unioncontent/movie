@@ -55,37 +55,33 @@ var newsclipping = {
     sql += 'order by k_type,k_main';
     return await getResult(sql,param);
   },
-  selectMediaTable2: async function(body,param,keyword){
-    var sql = "SELECT url,media_idx,media_content,DATE_FORMAT(createDate, '%Y-%m-%d %H:%i:%s') AS `createDate`,media_title,media_name,reporter_name,keyword,textType FROM `union`.media_data where title_key in (select distinct keyword_main from keyword_data where user_idx=?) "+keyword;;
+  selectMediaTable2: async function(body,k_list){
+    var sql = "SELECT * FROM news_view where title_key in (select distinct keyword_main from keyword_data where user_idx=1 or user_idx=21) and media_name!='daum'";
     if(('sDate' in body) && ('eDate' in body)){
       sql+=' and createDate between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
     }
-    if('keyword' in body){
-      sql +=' and title_key = \''+body.keyword+'\'';
+    if('search' in body){
+      sql +=' and media_title like \'%'+body.search+'%\'';
     }
-    sql += ' order by media_idx desc limit ?,?';
+    if('search_b' in body){
+      sql +=' and media_title like \'%'+body.search_b+'%\'';
+    }
+    sql += ' order by media_idx';
 
-    var result = await getResult(sql,param);
+    var result = await getResult(sql);
+    var regExp = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi;
     return [].map.call(result, function(obj) {
-      obj.type = body.type;
-      return obj;
-    });
-  },
-  selectMediaTableCount2: async function(body,param,keyword){
-    var sql = 'SELECT count(*) as total FROM `union`.media_data where title_key in (select distinct keyword_main from keyword_data where user_idx=?) '+keyword;
-    if(('sDate' in body) && ('eDate' in body)){
-      sql+=' and createDate between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
-    }
-    if('keyword' in body){
-      sql +=' and title_key = \''+body.keyword+'\'';
-    }
-    var count = await getResult(sql,param[0]);
-    if(count.length == 0){
-      return 0;
-    }
-    else{
-      return count[0]['total'];
-    }
+      obj.count = 0;
+      k_list.forEach( function( v, i ){
+        var title = obj.media_title.replace(regExp, "");
+        if(title.indexOf(v) != -1){
+          obj.count += 1;
+        }
+      });
+      if(obj.count != 0){
+        return obj;
+      }
+    }).filter(function(n){ return n != undefined });
   },
   selectMediaTable: async function(body,param,keyword){
     var sql = "SELECT * FROM news_view where title_key in (select distinct keyword_main from keyword_data where user_idx=? or user_idx=21) and media_name!='daum'";
@@ -204,7 +200,7 @@ var newsclipping = {
     }
   },
   selectNewsMailTable: async function(body,param){
-    var sql = "SELECT url,media_idx,DATE_FORMAT(createDate, '%Y-%m-%d %H:%i:%s') AS createDate,DATE_FORMAT(reportDate, '%Y-%m-%d %H:%i:%s') AS reportDate,media_title,media_name,reporter_name,\
+    var sql = "SELECT url,media_idx,DATE_FORMAT(writeDate, '%Y-%m-%d %H:%i:%s') AS writeDate,DATE_FORMAT(reportDate, '%Y-%m-%d %H:%i:%s') AS reportDate,media_title,media_name,reporter_name,\
     keyword,textType,thumbnail,news_type,news_detail FROM news_mail where title_key in (select distinct keyword_main from keyword_data where user_idx=? or user_idx=21)";
     if(('sDate' in body) && ('eDate' in body)){
       sql+=' and createDate between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
