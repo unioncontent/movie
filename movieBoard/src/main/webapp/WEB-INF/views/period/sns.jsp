@@ -189,16 +189,16 @@
                           <div class="tab-pane fade show active" id="main" role="tabpanel">
                             <div class="row">
                               <!-- top cards start -->
-                              <div class="col-md-6 col-xl-3 main-card">
+                              <div class="col-md-6 col-xl-2 main-card">
                                 <div class="card social-widget-card" style="border-top: 0px;">
                                   <div class="card-block-big bg-inverse">
-                                    <h3><fmt:formatNumber value="${facebookCount + twitterCount + instagramCount}" groupingUsed="true"/></h3>
+                                    <h3><fmt:formatNumber value="${facebookCount + twitterCount + instagramCount + youtubeCount}" groupingUsed="true"/></h3>
                                     <span class="m-t-10">전체검색</span>
                                     <i class="icofont icofont-search"></i>
                                   </div>
                                 </div>
                               </div>
-                              <div class="col-md-6 col-xl-3 main-card">
+                              <div class="col-md-6 col-xl-2 main-card">
                                 <div class="card social-widget-card" style="border-top: 0px;">
                                   <div class="card-block-big bg-facebook">
                                     <h3><fmt:formatNumber value="${facebookCount}" groupingUsed="true"/></h3>
@@ -207,7 +207,7 @@
                                   </div>
                                 </div>
                               </div>
-                              <div class="col-md-6 col-xl-3 main-card">
+                              <div class="col-md-6 col-xl-2 main-card">
                                 <div class="card social-widget-card" style="border-top: 0px;">
                                   <div class="card-block-big bg-twitter">
                                     <h3><fmt:formatNumber value="${twitterCount}" groupingUsed="true"/></h3>
@@ -216,12 +216,21 @@
                                   </div>
                                 </div>
                               </div>
-                              <div class="col-md-6 col-xl-3 main-card">
+                              <div class="col-md-6 col-xl-2 main-card">
                                 <div class="card social-widget-card" style="border-top: 0px;">
                                   <div class="card-block-big bg-instagram">
                                     <h3><fmt:formatNumber value="${instagramCount}" groupingUsed="true"/></h3>
                                     <span class="m-t-10">인스타그램</span>
                                     <i class="icofont icofont-social-instagram"></i>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-md-6 col-xl-2 main-card">
+                                <div class="card social-widget-card" style="border-top: 0px;">
+                                  <div class="card-block-big bg-youtube">
+                                    <h3><fmt:formatNumber value="${youtubeCount}" groupingUsed="true"/></h3>
+                                    <span class="m-t-10">유튜브</span>
+                                    <i class="icofont icofont-youtube-play"></i>
                                   </div>
                                 </div>
                               </div>
@@ -438,7 +447,8 @@
   <script src="../assets/js/demo-12.js"></script>
   <script src="../assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
   <script src="../assets/js/jquery.mousewheel.min.js"></script>
-  <script src="../assets/pages/period/custom-period4.js"></script>
+  <!-- <script src="../assets/pages/period/custom-period4.js"></script> -->
+  <script src="../assets/pages/period/custom-period1.js"></script>
   <script src="../assets/pages/picker.js"></script>
 </body>
 
@@ -699,7 +709,7 @@
 
 			for(var i = 0; i < data.length; i++){
 
-				script4 += '"' + data[i].writeDate + '",';
+				script4 += data[i].youtubeCount + ",";
 
 				if(i == data.length-1){
 					script4 =  script4.substr(0, script4.length-1);
@@ -707,21 +717,38 @@
 	  		
 				}
 			}
+			
+			var script5 = "[";
+
+
+			for(var i = 0; i < data.length; i++){
+
+				script5 += '"' + data[i].writeDate + '",';
+
+				if(i == data.length-1){
+					script5 =  script5.substr(0, script5.length-1);
+					script5 += "]";
+	  		
+				}
+			}
+			
+			
 
 			// to json
 			var jsonScript = JSON.parse(script);
 			var jsonScript2 = JSON.parse(script2);
 			var jsonScript3 = JSON.parse(script3);
 			var jsonScript4 = JSON.parse(script4);
+			var jsonScript5 = JSON.parse(script5);
 
-			areaChart(jsonScript, jsonScript2, jsonScript3, jsonScript4);
+			areaChart(jsonScript, jsonScript2, jsonScript3, jsonScript4, jsonScript5);
 
 	  	 }
 	});
 	}
 
 
-	function areaChart(jsonScript,jsonScript2,jsonScript3,jsonScript4) {
+	function areaChart(jsonScript,jsonScript2,jsonScript3,jsonScript4,jsonScript5) {
 		Highcharts.setOptions({
 			lang: {
 				thousandsSep: ','
@@ -738,7 +765,7 @@
 				text: ''
 			},
 			xAxis: {
-				categories: jsonScript4
+				categories: jsonScript5
 			},
 			yAxis: {
 			    title: {
@@ -781,10 +808,14 @@
 		        name: 'INSTAGRAM',
 		        data: jsonScript3,
 		        color: '#8632fb'
+		    },{
+		        name: 'YOUTUBE',
+		        data: jsonScript4,
+		        color: '#ff0000'
 		    },]
 			});
 		}
-
+	
   // 날짜 계산 함수
   function getDate(type){
   	console.log("TYPE : " + type);

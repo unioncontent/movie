@@ -68,6 +68,10 @@ public interface SNSDAO {
 	
 	public Integer twitterTotalCount(SearchCriteria cri);
 	
+	public List<SNSVO> youtubeList(SearchCriteria cri);
+	
+	public Integer youtubeTotalCount(SearchCriteria cri);
+	
 	public List<SNSVO> getDateCount(SearchCriteria cri);
 	
 	public void updateTextType(SNSVO vo);
@@ -106,10 +110,14 @@ public interface SNSDAO {
 	public Integer graphfacebookCount(SearchCriteria cri);
 	public Integer graphinstaCount(SearchCriteria cri);
 	public Integer graphtwitterCount(SearchCriteria cri);
+	public Integer graphyoutubeCount(SearchCriteria cri);
 	
 	public Integer replyGetDateCount(SearchCriteria cri);
 	public Integer likeGetDateCount(SearchCriteria cri);
 	public Integer shareGetDateCount(SearchCriteria cri);
+	public Integer YviewGetDateCount(SearchCriteria cri);
+	public Integer YreplyGetDateCount(SearchCriteria cri);
+	public Integer YlikeGetDateCount(SearchCriteria cri);
 	
 	public void fvUpdate(FvVO vo);
 	

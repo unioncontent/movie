@@ -13,6 +13,7 @@ public class SNSVO {
 	private Integer like_cnt;
 	private Integer reply_cnt;
 	private Integer share_cnt;
+	private Integer view_cnt;
 	private String writeDate;
 	private String keyword_main;
 	private boolean checkCondition;
@@ -23,6 +24,7 @@ public class SNSVO {
 	public void setKeyword_main(String keyword_main) {
 		this.keyword_main = keyword_main;
 	}
+	private String title_key;
 	private String keyword;
 	private String keyword_type;
 	private String url;
@@ -78,11 +80,23 @@ public class SNSVO {
 	public void setShare_cnt(Integer share_cnt) {
 		this.share_cnt = share_cnt;
 	}
+	public Integer getView_cnt() {
+		return view_cnt;
+	}
+	public void setView_cnt(Integer view_cnt) {
+		this.view_cnt = view_cnt;
+	}
 	public String getWriteDate() {
 		return writeDate;
 	}
 	public void setWriteDate(String writeDate) {
 		this.writeDate = writeDate;
+	}
+	public String getTitle_key() {
+		return title_key;
+	}
+	public void setTitle_key(String title_key) {
+		this.title_key = title_key;
 	}
 	public String getKeyword() {
 		return keyword;
@@ -137,9 +151,9 @@ public class SNSVO {
 	public String toString() {
 		return "SNSVO [sns_idx=" + sns_idx + ", sns_name=" + sns_name + ", sns_title=" + sns_title + ", sns_content="
 				+ sns_content + ", sns_writer=" + sns_writer + ", like_cnt=" + like_cnt + ", reply_cnt=" + reply_cnt
-				+ ", share_cnt=" + share_cnt + ", writeDate=" + writeDate + ", keyword=" + keyword + ", keyword_type="
-				+ keyword_type + ", url=" + url + ", textType=" + textType + ", thumbnail=" + thumbnail
-				+ ", createDate=" + createDate + ", updateDate=" + updateDate + "]";
+				+ ", share_cnt=" + share_cnt + ", view_cnt=" + view_cnt + ", writeDate=" + writeDate + ", keyword_main="
+				+ keyword_main + ", checkCondition=" + checkCondition + ", title_key=" + title_key + ", keyword="
+				+ keyword + ", keyword_type=" + keyword_type + ", url=" + url + ", textType=" + textType
+				+ ", thumbnail=" + thumbnail + ", createDate=" + createDate + ", updateDate=" + updateDate + "]";
 	}
-	
 }

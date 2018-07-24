@@ -29,6 +29,7 @@ import org.union.service.KeywordService;
 import org.union.service.SNSService;
 import org.union.service.UserService;
 import org.union.util.ExcelView;
+import org.union.util.ExcelViewM;
 import org.union.util.ExtractComparator;
 import org.union.util.ListUtil;
 
@@ -294,6 +295,86 @@ public class SNSController {
 		
 	}
 	
+	@GetMapping("/youtube")
+	public void youtubeGET(@ModelAttribute("cri") SearchCriteria cri, Model model) throws Exception{
+		logger.info("youtubeGET called....");
+		
+		if(cri.getKeyword() != null) {
+			if(cri.getKeyword().isEmpty() || cri.getKeyword().equals("undefined")) {
+				cri.setKeyword(null);
+			}
+		}
+		if(cri.getSelectKey() != null) {
+			if(cri.getSelectKey().isEmpty() || cri.getSelectKey().equals("키워드")){
+				cri.setSelectKey(null);
+			}
+		}
+		if(cri.getCompany() != null) {
+			if(cri.getCompany().isEmpty()) {
+				cri.setCompany(null);
+			}
+		}
+		if(cri.getCompany() == null || cri.getCompany().equals("회사")) {
+			logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+			UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
+			
+			if(!vo.getUser_name().equals("union")) {
+			cri.setCompany(vo.getUser_name());
+			
+			}else {
+				cri.setCompany(null);
+			}
+		}
+		if(cri.getTextType() != null) {
+			cri.setTextType(null);
+		}
+		if("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate())
+				|| cri.getStartDate() == "" || cri.getEndDate() == ""){
+			cri.setStartDate(null);
+			cri.setEndDate(null);
+		
+		} 
+		if(cri.getStartDate() != null && cri.getEndDate() != null) {
+			logger.info("not null");
+			logger.info(cri.getStartDate());
+			logger.info(cri.getEndDate());
+			if(cri.getStartDate().indexOf("00:00:00") < 0 && cri.getEndDate().indexOf("23:59:59") < 0){ 
+				cri.setStartDate(cri.getStartDate() + " 00:00:00"); 
+				cri.setEndDate(cri.getEndDate() + " 23:59:59"); 
+			}
+		}
+		
+		
+		// 회사 선택에 따른 키워드 재추출
+		if(cri.getCompany() != null) {
+			if(cri.getCompany().isEmpty() == false) {
+					
+				UserVO userVO  = userService.viewByName(cri.getCompany());
+				logger.info("userVO: " + userVO);
+					logger.info("keywordList: " + keywordService.listByUser(userVO.getUser_idx()));
+					model.addAttribute("modelKeywordList", keywordService.listByUser(
+					userService.viewByName(cri.getCompany()).getUser_idx()));
+			}
+		}
+		
+		logger.info("cri : " + cri);
+		
+		PageMaker pageMaker = new PageMaker();
+		
+		Integer totalCount = snsService.youtubeTotalCount(cri);
+		model.addAttribute("totalCount", totalCount);
+		model.addAttribute("minusCount", cri.getPerPageNum() * (cri.getPage()-1));
+		
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(totalCount);
+		model.addAttribute("pageMaker", pageMaker);
+		logger.info("pageMaker: " + pageMaker);
+		
+		List<SNSVO> list = new ArrayList<SNSVO>();
+		list = snsService.youtubeList(cri);
+		model.addAttribute("youtubeList", list);
+		
+	}
 	
 	/*@PostMapping("/graph")
 	@ResponseBody
@@ -452,6 +533,7 @@ public class SNSController {
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH");
 		SimpleDateFormat sdf2 = new SimpleDateFormat("MM-dd HH:00:00");
+		SimpleDateFormat sdf3 = new SimpleDateFormat("yyyy-MM-dd");
 		
 		String current = sdf.format(new Date());
 		logger.info("current: " + current);
@@ -462,6 +544,32 @@ public class SNSController {
 		List<GraphVO> graphList = new ArrayList<GraphVO>();
 		
 		logger.info("cal.getTime: " + cal.getTime());
+		
+		if(portal_name.equals("youtube")) {
+			
+			for(int i = 0; i < 30; i++) {
+				
+				GraphVO graphData = new GraphVO();
+				
+				cri.setPortal_name(portal_name);
+				String startDate = sdf3.format(cal.getTime());
+				String endDate = sdf3.format(cal.getTime());
+				cri.setStartDate(startDate + " 00:00:00");
+				cri.setEndDate(endDate + " 23:59:59");
+				
+				graphData.setWriteDate(sdf3.format(cal.getTime()));
+				graphData.setLikeCount(snsService.YlikeGetDateCount(cri));
+				graphData.setShareCount(snsService.YviewGetDateCount(cri));
+				graphData.setReplyCount(snsService.YreplyGetDateCount(cri));
+				
+				
+				graphList.add(graphData);
+				
+				cal.add(Calendar.DATE, -1);
+		}// end for
+				
+		}else {
+		
 		for(int i = 0; i < 24; i++) {
 			
 				GraphVO graphData = new GraphVO();
@@ -479,6 +587,7 @@ public class SNSController {
 				
 				cal.add(Calendar.HOUR, -1);
 		}// end for
+		}
 		
 		Collections.reverse(graphList);
 		return graphList;
@@ -486,7 +595,7 @@ public class SNSController {
 	}
 	
 	@GetMapping("/excel")
-	public ModelAndView excelGET(ModelAndView model, ExcelView excelView, SearchCriteria cri) {
+	public ModelAndView excelGET(ModelAndView model, ExcelView excelView, ExcelViewM excelViewM,SearchCriteria cri) {
 		
 		if(cri.getKeyword() != null) {
 			if(cri.getKeyword().isEmpty() || cri.getKeyword().equals("undefined")) {
@@ -540,9 +649,16 @@ public class SNSController {
 		ExtractComparator comparator = new ExtractComparator();
 		Collections.sort(classiList, comparator);
 		
-		model.addObject("part", "sns");
-		model.addObject("snsList", snsService.listAll(cri));
-		model.setView(excelView);
+		if(cri.getPortal_name().equals("youtube")) {
+			model.addObject("part", "sns");
+			model.addObject("snsList", snsService.listAll(cri));
+			model.setView(excelViewM);
+			
+		}else {
+			model.addObject("part", "sns");
+			model.addObject("snsList", snsService.listAll(cri));
+			model.setView(excelView);
+		}
 		
 		return model;
 	}

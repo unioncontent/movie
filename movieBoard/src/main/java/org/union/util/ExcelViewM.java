@@ -46,7 +46,7 @@ public class ExcelViewM extends AbstractXlsView {
 
 	    if(model.get("part") != null) {
 		// 타이틀 설정
-		String[] titleList = { "사이트", "대표 키워드", "키워드", "작성자", "제목","내용","URL","작성날짜", "좋아요", "공유", "댓글"};
+		String[] titleList = { "사이트", "대표 키워드", "키워드", "작성자", "제목","내용","URL","작성날짜", "좋아요", "조회수", "댓글"};
 
 
 		HSSFRow titleRow = sheet.createRow(rowIdx++);
@@ -110,16 +110,10 @@ public class ExcelViewM extends AbstractXlsView {
 		    likeCell.setCellValue(new HSSFRichTextString(vo.getLike_cnt().toString()));
 
 		    HSSFCell shareCell = dataRow.createCell(9);
-		    shareCell.setCellValue(new HSSFRichTextString(vo.getShare_cnt().toString()));
+		    shareCell.setCellValue(new HSSFRichTextString(vo.getView_cnt().toString()));
 
 		    HSSFCell replyCell = dataRow.createCell(10);
 		    replyCell.setCellValue(new HSSFRichTextString(vo.getReply_cnt().toString()));
-		    
-		    HSSFCell reporterCell = dataRow.createCell(11);
-		    reporterCell.setCellValue(new HSSFRichTextString(vo.getReply_cnt().toString()));
-		    
-		    HSSFCell mediaCell = dataRow.createCell(12);
-		    mediaCell.setCellValue(new HSSFRichTextString(vo.getReply_cnt().toString()));
 
 
 		}

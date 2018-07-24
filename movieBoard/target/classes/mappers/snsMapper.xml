@@ -343,6 +343,8 @@
 			sns_data
 		where 
 			url is not null
+		and 
+			keyword != ''
 		<include refid="search_writeDate"></include>
 		order 
 			by updateDate desc
@@ -358,17 +360,33 @@
 			sns_data
 		where
 			url is not null
+		and 
+			keyword != ''
 		<include refid="search_writeDate"></include>
 			
 	</select>
  	
  	<select id="listExcel" resultType="SNSVO">
- 		select * from sns_data where sns_idx > 0
+ 		select 
+ 			* 
+ 		from 
+ 			sns_data 
+ 		where 
+ 			sns_idx > 0
+ 		and 
+			keyword != ''
  		<include refid="search"></include>
  	</select>
  	
  	<select id="listExcelCount" resultType="Integer">
- 		select count(*) from sns_data where sns_idx > 0
+ 		select 
+ 			count(*) 
+ 		from 
+ 			sns_data 
+ 		where 
+ 			sns_idx > 0
+ 		and 
+			keyword != ''
  		<include refid="search"></include>
  	</select>
  	
@@ -379,6 +397,8 @@
 			sns_data
 		where 
 			url is not null
+		and 
+			keyword != ''
 		<include refid="search"></include>
 		and sns_name = #{portal_name}
 	
@@ -495,6 +515,36 @@
  		
  	</select>
  	
+ 	<select id="youtubeList" resultType="SNSVO">
+ 		select 
+			date_format(writeDate, '%x-%m-%d')as writeDate, title_key, keyword, url, sns_title, sns_writer, like_cnt, view_cnt, reply_cnt
+		from 
+			sns_data
+		where 
+			sns_name = 'youtube'
+		and
+			keyword != ''
+		<include refid="search_writeDate"></include>
+		order 
+			by writeDate desc
+		limit  
+			#{startPage}, #{perPageNum}
+ 	
+ 	</select>
+ 	
+ 	<select id="youtubeTotalCount" resultType="Integer">
+ 		select 
+ 			count(*)
+ 		from	
+ 			sns_data
+ 		where
+ 			sns_name = 'youtube'
+ 		and 
+			keyword != ''
+ 		<include refid="search_writeDate"></include>
+ 		
+ 	</select>
+ 	
  	<select id="getDateCount" resultType="SNSVO">
  		select 
  			date_format(createDate, '%x-%m-%d') writeDate, like_cnt, reply_cnt, share_cnt, sns_name
@@ -535,6 +585,45 @@
 		<include refid="search"></include>
 		and
 			writeDate between date_add(date_add(#{writeDate}, interval +1 hour), interval -1 hour) and date_add(#{writeDate}, interval +1 hour)
+ 	
+ 	</select>
+ 	
+ 	<select id="YviewGetDateCount" resultType="Integer">
+ 		select IFNULL(sum(view_cnt), 0)
+		from sns_data
+		where
+			sns_name = #{portal_name}
+		and 
+			keyword != ''
+		<include refid="search"></include>
+		and writeDate <![CDATA[>=]]> #{startDate}
+		and writeDate <![CDATA[<=]]> #{endDate}
+ 	
+ 	</select>
+ 	
+ 	<select id="YreplyGetDateCount" resultType="Integer">
+ 		select IFNULL(sum(reply_cnt), 0)
+		from sns_data
+		where
+			sns_name = #{portal_name}
+		and 
+			keyword != ''
+		<include refid="search"></include>
+		and writeDate <![CDATA[>=]]> #{startDate}
+		and writeDate <![CDATA[<=]]> #{endDate}
+ 	
+ 	</select>
+ 	
+ 	<select id="YlikeGetDateCount" resultType="Integer">
+ 		select IFNULL(sum(like_cnt), 0)
+		from sns_data
+		where
+			sns_name = #{portal_name}
+		and 
+			keyword != ''
+		<include refid="search"></include>
+		and writeDate <![CDATA[>=]]> #{startDate}
+		and writeDate <![CDATA[<=]]> #{endDate}
  	
  	</select>
  	
@@ -963,6 +1052,20 @@
  			sns_data
  		where
  			sns_name = 'twitter'
+ 		and 
+			keyword in (select keyword from keyword_data where keyword_main = #{selectKey})
+		and createDate <![CDATA[>=]]> #{startDate}
+		and createDate <![CDATA[<=]]> #{endDate}
+ 	</select>
+ 	<select id="graphyoutubeCount" resultType="Integer">
+ 		select 
+ 			count(*)
+ 		from	
+ 			sns_data
+ 		where
+ 			sns_name = 'youtube'
+ 		and 
+ 			keyword != ''
  		and 
 			keyword in (select keyword from keyword_data where keyword_main = #{selectKey})
 		and createDate <![CDATA[>=]]> #{startDate}

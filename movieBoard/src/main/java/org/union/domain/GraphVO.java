@@ -11,7 +11,7 @@ public class GraphVO {
 	private Integer likeCount;
 	private Integer shareCount;
 	private Integer replyCount;
-	private Integer facebookCount, instagramCount, twitterCount;
+	private Integer facebookCount, instagramCount, twitterCount, youtubeCount;
 	private Integer type1, type2, type3, type4, type5, type6;
 	private String company, selectKey;
 	private String media;
@@ -99,6 +99,12 @@ public class GraphVO {
 	public void setTwitterCount(Integer twitterCount) {
 		this.twitterCount = twitterCount;
 	}
+	public Integer getYoutubeCount() {
+		return youtubeCount;
+	}
+	public void setYoutubeCount(Integer youtubeCount) {
+		this.youtubeCount = youtubeCount;
+	}
 	public Integer getType1() {
 		return type1;
 	}
@@ -154,8 +160,9 @@ public class GraphVO {
 		return "GraphVO [startDate=" + startDate + ", endDate=" + endDate + ", sns_name=" + sns_name + ", writeDate="
 				+ writeDate + ", writeDate2=" + writeDate2 + ", likeCount=" + likeCount + ", shareCount=" + shareCount
 				+ ", replyCount=" + replyCount + ", facebookCount=" + facebookCount + ", instagramCount="
-				+ instagramCount + ", twitterCount=" + twitterCount + ", type1=" + type1 + ", type2=" + type2
-				+ ", type3=" + type3 + ", type4=" + type4 + ", type5=" + type5 + ", type6=" + type6 + ", company="
-				+ company + ", selectKey=" + selectKey + ", media=" + media + ", media_total=" + media_total + "]";
+				+ instagramCount + ", twitterCount=" + twitterCount + ", youtubeCount=" + youtubeCount + ", type1="
+				+ type1 + ", type2=" + type2 + ", type3=" + type3 + ", type4=" + type4 + ", type5=" + type5 + ", type6="
+				+ type6 + ", company=" + company + ", selectKey=" + selectKey + ", media=" + media + ", media_total="
+				+ media_total + "]";
 	}
 }

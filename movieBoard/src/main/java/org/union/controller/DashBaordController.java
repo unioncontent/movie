@@ -217,6 +217,11 @@ public class DashBaordController {
 		cri.setEndDate(current + " 23:59:59");
 		model.addAttribute("instagramCount", snsService.reportSnsCount(cri));
 		
+		cri.setSns_name("youtube");
+		cri.setStartDate(current + " 00:00:00");
+		cri.setEndDate(current + " 23:59:59");
+		model.addAttribute("youtubeCount", snsService.reportSnsCount(cri));
+		
 	}
 	
 	@GetMapping("/dashBoard_popUp")
@@ -301,6 +306,10 @@ public class DashBaordController {
 		}else if(part.equals("트위터")) {
 			cri.setPortal_name("twitter");
 			model.addAttribute("snsList", snsService.listAll(cri));
+			model.addAttribute("part", part);
+		}else if(part.equals("유튜브")) {
+			cri.setPortal_name("youtube");
+			model.addAttribute("snsList2", snsService.listAll(cri));
 			model.addAttribute("part", part);
 		}else if(part.equals("평점")) {
 			model.addAttribute("scoreList", portalService.getScoreExcelList(cri));

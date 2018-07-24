@@ -237,6 +237,8 @@
                                     <img alt="naver" src="../assets/images/instagram_logo.jpg" style="width: 13px; height: 13px; margin-bottom: 3px;">
                                     / 
                                     <img alt="naver" src="../assets/images/Twitter_logo.png" style="width: 13px; height: 13px; margin-bottom: 3px;">
+                                    /
+                                    <img alt="naver" src="../assets/images/youtube_logo.png" style="width: 18px; height: 18px; margin-bottom: 3px;">
                                      )</th>
                                     <td>
                                     <c:if test="${facebookCount == 0}">
@@ -255,7 +257,13 @@
                                     <fmt:formatNumber value="${twitterCount}" groupingUsed="true"/>건 /
                                     </c:if>
                                     <c:if test="${twitterCount != 0}">
-                                    <a href="javascript:popupOpen5();" ><fmt:formatNumber value="${twitterCount}" groupingUsed="true"/>건 </a>
+                                    <a href="javascript:popupOpen5();" ><fmt:formatNumber value="${twitterCount}" groupingUsed="true"/>건 /</a>
+                                    </c:if>
+                                    <c:if test="${youtubeCount == 0}">
+                                    <fmt:formatNumber value="${youtubeCount}" groupingUsed="true"/>건 
+                                    </c:if>
+                                    <c:if test="${youtubeCount != 0}">
+                                    <a href="javascript:popupOpen5();" ><fmt:formatNumber value="${youtubeCount}" groupingUsed="true"/>건 </a>
                                     </c:if>
                                     </td>
                                   </tr>
@@ -1190,6 +1198,19 @@ function makeDateFormat(date, index){
 	  			window.open(popUrl,"",popOption);
 
 	  		}
+	  function popupOpen10(date){
+			var company = $("#selectCompany option:selected").val();
+			
+			var selectKey = $("#selectKeyword option:selected").val();
+	  		
+			var popUrl = "dashBoard_popUp?part=유튜브&company="+company
+			+"&selectKey="+selectKey;	//팝업창에 출력될 페이지 URL
+
+			var popOption = "width=1500, height=900, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
+		
+				window.open(popUrl,"",popOption);
+		
+			}
 
 //날짜 계산 함수
 function getDate(type){

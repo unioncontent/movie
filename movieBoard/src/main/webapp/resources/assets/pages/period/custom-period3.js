@@ -54,7 +54,7 @@ function linechart(){
  card resize*/
 function cardResize(){
   setTimeout(function(){
-    if($(".tab-pane > .row").width() > 1200){
+    if($(".tab-pane > .row").width() > 1000){
       var card = Math.ceil($(".tab-pane > .row").width()/5)-1;
       $(".main-card").css("min-width",card);
     }

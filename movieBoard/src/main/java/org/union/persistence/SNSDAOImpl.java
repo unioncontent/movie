@@ -466,8 +466,7 @@ public class SNSDAOImpl implements SNSDAO {
 
 		return session.selectOne(namespace + "shareGetDateCount", cri);
 	}
-
-
+	
 	@Override
 	public Integer snsFacebookTotalCount(SearchCriteria cri) {
 
@@ -497,5 +496,46 @@ public class SNSDAOImpl implements SNSDAO {
 	public List<FvVO> fvMonitor(String sns_writer) {
 
 		return session.selectList(namespace + "fvMonitor", sns_writer);
+	}
+
+
+	@Override
+	public List<SNSVO> youtubeList(SearchCriteria cri) {
+
+		return session.selectList(namespace + "youtubeList", cri);
+	}
+
+	@Override
+	public Integer youtubeTotalCount(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "youtubeTotalCount", cri);
+	}
+
+
+	@Override
+	public Integer YviewGetDateCount(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "YviewGetDateCount", cri);
+	}
+
+
+	@Override
+	public Integer YreplyGetDateCount(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "YreplyGetDateCount", cri);
+	}
+
+
+	@Override
+	public Integer YlikeGetDateCount(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "YlikeGetDateCount", cri);
+	}
+
+
+	@Override
+	public Integer graphyoutubeCount(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "graphyoutubeCount", cri);
 	}
 }

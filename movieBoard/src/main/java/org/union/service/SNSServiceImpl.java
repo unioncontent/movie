@@ -490,8 +490,7 @@ public class SNSServiceImpl implements SNSService {
 
 		return snsDAO.shareGetDateCount(cri);
 	}
-
-
+	
 	@Override
 	public Integer snsFacebookTotalCount(SearchCriteria cri) {
 
@@ -524,4 +523,47 @@ public class SNSServiceImpl implements SNSService {
 		
 		return list;
 	}
+
+
+	@Override
+	public List<SNSVO> youtubeList(SearchCriteria cri) {
+
+		return snsDAO.youtubeList(cri);
+	}
+
+
+	@Override
+	public Integer youtubeTotalCount(SearchCriteria cri) {
+
+		return snsDAO.youtubeTotalCount(cri);
+	}
+
+
+	@Override
+	public Integer YviewGetDateCount(SearchCriteria cri) {
+
+		return snsDAO.YviewGetDateCount(cri);
+	}
+
+
+	@Override
+	public Integer YreplyGetDateCount(SearchCriteria cri) {
+
+		return snsDAO.YreplyGetDateCount(cri);
+	}
+
+
+	@Override
+	public Integer YlikeGetDateCount(SearchCriteria cri) {
+
+		return snsDAO.YlikeGetDateCount(cri);
+	}
+
+
+	@Override
+	public Integer graphyoutubeCount(SearchCriteria cri) {
+
+		return snsDAO.graphyoutubeCount(cri);
+	}
+
 }

@@ -176,6 +176,13 @@
               <span class="pcoded-mcaret"></span>
             </a>
           </li>
+          <li class=" ">
+            <a href="../sns/youtube" data-i18n="nav.advance-components.grid-stack">
+              <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+              <span class="pcoded-mtext">유튜브관리</span>
+              <span class="pcoded-mcaret"></span>
+            </a>
+          </li>
         </ul>
       </li>
       <li class="pcoded-hasmenu media">

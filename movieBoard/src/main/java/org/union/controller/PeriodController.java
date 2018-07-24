@@ -723,6 +723,7 @@ public class PeriodController {
 		model.addAttribute("facebookCount",snsService.facebookTotalCount(cri));
 		model.addAttribute("instagramCount", snsService.instaTotalCount(cri));
 		model.addAttribute("twitterCount", snsService.twitterTotalCount(cri));
+		model.addAttribute("youtubeCount", snsService.youtubeTotalCount(cri));
 		
 		model.addAttribute("snsList", snsService.listSearch(cri));
 		
@@ -868,6 +869,7 @@ public class PeriodController {
 				graphVO.setFacebookCount(snsService.graphfacebookCount(cri));
 				graphVO.setInstagramCount(snsService.graphinstaCount(cri));
 				graphVO.setTwitterCount(snsService.graphtwitterCount(cri));
+				graphVO.setYoutubeCount(snsService.graphyoutubeCount(cri));
 				
 				graphList.add(graphVO);
 				
