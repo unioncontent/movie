@@ -111,7 +111,7 @@ async function getListPageData(idx,param){
     data['keyword'] = param.keyword;
   }
   if (typeof param.search !== 'undefined') {
-    searchBody['search'] = param.search;
+    searchBody['search'] = param.search.replace(/'/gi,"''").replace(/[?]/gi,"");
     data['search'] = param.search;
   }
   if(typeof param.search_b !== 'undefined') {
@@ -283,7 +283,7 @@ async function getListPageData2(idx,param){
     data['keyword'] = param.keyword;
   }
   if (typeof param.search !== 'undefined') {
-    searchBody['search'] = param.search;
+    searchBody['search'] = param.search.replace(/'/gi,"''").replace(/[?]/gi,"");
     data['search'] = param.search;
   }
   try{

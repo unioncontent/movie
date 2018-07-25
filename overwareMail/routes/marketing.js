@@ -67,7 +67,7 @@ async function getFacebookListPageData(writer,param){
     searchBody['eDate'] = data.eDate;
   }
   if (typeof param.search !== 'undefined') {
-    searchBody['search'] = param.search;
+    searchBody['search'] = param.search.replace(/'/gi,"''").replace(/[?]/gi,"");
     data['search'] = param.search;
   }
   if (typeof writer !== '') {
@@ -158,7 +158,7 @@ async function getNaverListPageData(param){
     searchBody['eDate'] = data.eDate;
   }
   if (typeof param.search !== 'undefined') {
-    searchBody['search'] = param.search;
+    searchBody['search'] = param.search.replace(/'/gi,"''").replace(/[?]/gi,"");
     data['search'] = param.search;
   }
   try{
@@ -265,7 +265,7 @@ async function getListPageData(param){
     data['offset'] = searchParam[0];
   }
   if (typeof param.search !== 'undefined') {
-    searchBody['search'] = param.search;
+    searchBody['search'] = param.search.replace(/'/gi,"''").replace(/[?]/gi,"");
     data['search'] = param.search;
   }
   if (typeof param.sDate !== 'undefined' && typeof param.eDate !== 'undefined') {
