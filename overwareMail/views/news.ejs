@@ -83,6 +83,11 @@
                 <div class="circ3 loader-primary"></div>
                 <div class="circ4 loader-primary"></div>
               </div>
+              <div class="preloader2 loader-block">
+              <svg id="loader2" viewBox="0 0 100 100">
+                <circle id="circle-loader2" cx="50" cy="50" r="45"></circle>
+              </svg>
+              </div>
               <div class="table-responsive">
                 <table class="table">
                   <thead>
@@ -132,8 +137,11 @@
                       <td><input type="text" name="datefilter" class="datepicker form-control" value="<%= list[i].reportDate %>"/></td>
                       <td>
                         <a href="<%= list[i].url %>" target="_blank" title="<%= list[i].media_title %>">
-                          <div class="title_nobr"><%= list[i].media_title %></div>
+                          <div class="title_nobr" style="display: inline;"><%= list[i].media_title %></div>
                         </a>
+                        <div class="label-main group" style="margin-right:  0px;display: inline;">
+                          <label class="label label-md label-default" style="margin-right:  0px;">그룹핑</label>
+                        </div>
                       </td>
                       <td><div class="media_nobr" title="<%= list[i].media_name %>"><%= list[i].media_name %></div></td>
                       <td>
@@ -252,6 +260,7 @@
                     </tr>
                   </tfoot>
                 </table>
+                <input type="hidden" id="page" value="<%=page%>"/>
                 <input type="hidden" id="sDate" value="<%=sDate%>"/>
                 <input type="hidden" id="eDate" value="<%=eDate%>"/>
                 <input type="hidden" id="keyword" value="<%=keyword%>"/>
@@ -267,7 +276,64 @@
     </div>
   </div>
 </div>
+<!-- Modal start-->
+<div class="modal fade" id="group-Modal" data-backdrop="static" data-keyboard="false" role="dialog">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">기사 그룹핑 리스트</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body" id="modalTable">
+        <div class="card">
+          <div class="card-block table-border-style">
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th width="1%">
+                      <div class="border-checkbox-section" style="max-width: 30px;">
+                        <div class="border-checkbox-group border-checkbox-group-default">
+                          <input class="border-checkbox" type="checkbox" id="checkboxAll2">
+                          <label class="border-checkbox-label" for="checkboxAll2"></label>
+                        </div>
+                      </div>
+                    </th>
+                    <th width="5%">NO</th>
+                    <th width="5%">매칭률</th>
+                    <th width="10%" style="min-width: 60px;">작성날짜</th>
+                    <th width="10%" style="min-width: 60px;">보고날짜</th>
+                    <th width="20%" style="min-width: 58px">제목</th>
+                    <th width="5%" style="min-width: 100px;">언론사</th>
+                    <th width="5%" style="min-width: 80px;">기자</th>
+                    <th width="5%" style="min-width: 80px;">키워드</th>
+                    <th width="5%" style="min-width: 50px;">분류글</th>
+                    <th width="10%" style="min-width: 140px;">대분류</th>
+                    <th width="10%" style="min-width: 100px;">대표기사</th>
+                    <th width="10%" style="min-width: 100px;">세부기사</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+                <tfoot></tfoot>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger waves-effect " data-dismiss="modal">취소</button>
+        <button id="addBtn2" class="btn btn-list alert-check p-r-5 p-l-5 m-l-15 m-b-5  f-left m-t-5"><i class="fas fa-angle-down"></i>선택저장</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal end-->
 <style type="text/css">
+  .table thead th {
+    vertical-align: middle;
+  }
   .datepicker{
     min-width: 88px;
   }
@@ -279,7 +345,7 @@
     float:  left;
   }
   /* loader */
-  .preloader3{
+  .preloader3,.preloader2{
     display: none;
     padding-top:20%;
     position: fixed;
@@ -346,16 +412,23 @@
     vertical-align: middle;
     text-align: center;
   }
-  #addBtn{
+  #addBtn,#addBtn2{
     font-weight: bold;
     color: white;
     height: 40px;
+    padding: 6px 15px;
+    font-size: 14px;
+    height: 36px;
     background-color: #a6a6a6;
     border-color: #a6a6a6;
   }
   /* daterangepicker */
   .card .card-header span:not(.input-group-addon) {
     display: inline;
+  }
+  /* groupo */
+  .label{
+    font-size: 11px;
   }
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/2.1.27/daterangepicker.css" />
@@ -391,6 +464,138 @@
       $('#reportrange span').html(moment(new Date(sDateValue)).format('YYYY.MM.DD') + ' - ' + moment(new Date(eDateValue+' 23:59:59')).format('YYYY.MM.DD'));
     }
   });
+  // 그룹핑 클릭시
+  $(document).on("click",".group",function(){
+    $('.preloader2').show();
+    var g_idx = $(this).parents('tr').find('#idx').val();
+    var title = calByte.cutByteLength( $(this).prev().find('div').text(), 60 );
+    var titleArr_s = title.split(' ');
+    var titleArr = [];
+    var regExp = /[\{\}\[\]\/?.,;:|\‘’“”…)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi;
+    $.each(titleArr_s, function(index, value) {
+      var val = value.replace(regExp, "");
+      if(val.length > 1){
+        titleArr.push(val);
+      }
+    });
+    var param = {
+      'list' : JSON.stringify(titleArr)
+    };
+    var sDateValue = $('#sDate').val();
+    var eDateValue = $('#eDate').val();
+    if(sDateValue != '' && eDateValue != ''){
+      param.sDate = sDateValue;
+      param.eDate = eDateValue;
+    }
+    var searchValue = $('#searchInput').val();
+    if(searchValue != ''){
+      param.search = searchValue;
+    }
+    var search2Value = $('#search2').val();
+    if(search2Value != ''){
+      param.search_b = search2Value;
+    }
+    $.ajax({
+      type: "POST",
+      url: "/news/grouping",
+      data: param,
+      error:function(request,status,error){
+        console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
+        swal("ERROR!", '새로고침 후 다시 시도해주세요.', "error");
+      },
+      success:function(data){
+        console.log(param);
+        data.result.sort(function (a, b) {
+        	return b.count < a.count ? -1 : b.count > a.count ? 1 : 0;
+        });
+        $('#modalTable tbody').eq(0).empty();
+        data.result.forEach(function(item,idx){
+          var numIdx = Math.ceil(data.result.length-idx).toString();
+          var percent = Math.floor(item.count / titleArr.length * 100);
+          var html = '<tr>\
+          <input type="hidden" id="idx" value="'+item.media_idx+'" />\
+          <td>\
+            <div class="border-checkbox-section" style="max-width: 30px;">\
+              <div class="border-checkbox-group border-checkbox-group-default">\
+                <input class="border-checkbox news-checkbox2" type="checkbox" id="checkbox_modal_'+idx+'" '+((item.news_idx != null) ? 'checked' : '')+'>\
+                <label class="border-checkbox-label" for="checkbox_modal_'+idx+'"></label>\
+              </div>\
+            </div>\
+          </td>\
+          <th>'+numIdx+'</th>\
+          <th>'+percent+'%</th>\
+          <td>'+item.writeDate+'</td>\
+          <td><input type="text" name="datefilter" class="datepicker form-control"  value="'+((item.reportDate != null && item.reportDate != '') ? item.reportDate : '')+'"/></td>\
+          <td>\
+            <a href="'+item.url+'" target="_blank" title="'+item.media_title+'">\
+              <div class="title_nobr" style="display: inline;">'+item.media_title+'</div>\
+            </a>\
+          </td>\
+          <td><div class="media_nobr" title="'+item.media_name+'">'+item.media_name+'</div></td>\
+          <td><div class="nobr" title="'+item.reporter_name+'">'+((item.reporter_name == null) ? '<i class="fas fa-minus"></i>' : item.reporter_name)+'</div></td>\
+          <td><div class="key_nobr" title="'+item.keyword+'">'+item.keyword+'</div></td>\
+          <td><div class="nobr" title="'+item.textType+'">'+((item.textType == null) ? '<i class="fas fa-minus"></i>' : item.textType)+'</div></td>\
+          <td>\
+            <select class="form-control form-control-default p-l-5 select-news" id="newsType">\
+              <option value="0" '+((item.type == '0') ? 'selected' : '')+'>-</option>\
+              <option value="1" '+((item.type == '1') ? 'selected' : (item.title_key == '쇼박스영화') ? 'selected' : '')+'>쇼박스영화</option>\
+              <option value="2" '+((item.type == '2') ? 'selected' : (item.title_key == '경쟁영화') ? 'selected' : '')+'>경쟁영화</option>\
+              <option value="3" '+((item.type == '3') ? 'selected' : (item.title_key == '캐스팅') ? 'selected' : '')+'>캐스팅</option>\
+              <option value="4" '+((item.type == '4') ? 'selected' : (item.title_key == '쇼박스기업뉴스' || item.title_key == '오리온') ? 'selected' : '')+'>쇼박스기업뉴스</option>\
+              <option value="5" '+((item.type == '5') ? 'selected' : (item.title_key == '영화일반') ? 'selected' : '')+'>영화일반</option>\
+              <option value="6" '+((item.type == '6') ? 'selected' : (item.title_key == '보도국') ? 'selected' : '')+'>보도국</option>\
+              <option value="7" '+((item.type == '7') ? 'selected' : (item.title_key == '박스오피스') ? 'selected' : '')+'>박스오피스</option>\
+            </select>\
+          </td>\
+          <td>\
+            <input type="text" placeholder="대표기사" id="news_title" value="'+item.media_idx+'" class="form-control selectText">\
+          </td>\
+          <td>\
+            <input type="text" placeholder="세부기사" id="news_detail" class="form-control selectText" value="'+((g_idx != item.media_idx) ? g_idx : '')+'">\
+          </td>';
+          $('#modalTable tbody').eq(0).append(html);
+        });
+        settingTableInputDate();
+        $('.preloader2').fadeOut(500);
+        $("#group-Modal").modal('show');
+      }
+    });
+  });
+  var calByte = {
+  	cutByteLength : function(s, len) {
+  		if (s == null || s.length == 0) {
+  			return 0;
+  		}
+  		var size = 0;
+  		var rIndex = s.length;
+  		for ( var i = 0; i < s.length; i++) {
+  			size += this.charByteSize(s.charAt(i));
+  			if( size == len ) {
+  				rIndex = i + 1;
+  				break;
+  			} else if( size > len ) {
+  				rIndex = i;
+  				break;
+  			}
+  		}
+  		return s.substring(0, rIndex);
+  	},
+  	charByteSize : function(ch) {
+  		if (ch == null || ch.length == 0) {
+  			return 0;
+  		}
+  		var charCode = ch.charCodeAt(0);
+  		if (charCode <= 0x00007F) {
+  			return 1;
+  		} else if (charCode <= 0x0007FF) {
+  			return 2;
+  		} else if (charCode <= 0x00FFFF) {
+  			return 3;
+  		} else {
+  			return 4;
+  		}
+  	}
+  };
   // 라디오버튼처럼 checkvox name값 설정
   $('input[type="checkbox"][name="search"]').on('click',function(){
     //click 이벤트가 발생했는지 체크
@@ -625,31 +830,103 @@
             date:trEle.find('input[name="datefilter"]').val(),
             code:trEle.find('#newsType option:selected').val(),
             detail:trEle.find('#news_detail').val()});
+          });
+          addNews(list);
+        }
+      });
+    });
+    function addNews(arr){
+      $('input[type=checkbox]:checked').prop('checked',false);
+      $.ajax({
+        type: "POST",
+        url: "/news/addNews",
+        data: {'list' : JSON.stringify(arr)},
+        error:function(request,status,error){
+          console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
+          swal("ERROR!", '새로고침 후 다시 시도해주세요.', "error");
+        },
+        success:function(data){
+          if(data.status){
+            swal("SUCCESS!", '선택저장 완료했습니다.', "success")
+            .then(function(value) {
+              reloadPage();
+            });
+          }else{
+            swal("ERROR!", '새로고침 후 다시 시도해주세요.', "error");
+          }
+        }
+      });
+    }
+    function reloadPage(){
+      console.log('reloadPage');
+      var pageValue = ($("#page").val() == '') ? 1 : parseInt($("#page").val());
+      var param = {
+        page : pageValue
+      };
+      var sDateValue = $('#sDate').val();
+      var eDateValue = $('#eDate').val();
+      if(sDateValue != '' && eDateValue != '' ){
+        param.sDate = moment(sDateValue).format('YYYY-MM-DD');
+        param.eDate = moment(eDateValue).format('YYYY-MM-DD');
+      }
+      var keywordValue = $('#keyword').val();
+      if(keywordValue != ''){
+        param.keyword = keywordValue;
+      }
+      var typeValue = $('#type').val();
+      if(typeValue != ''){
+        param.type = typeValue;
+      }
+      var limitValue = $('#limit').val();
+      if(limitValue != ''){
+        param.limit = limitValue;
+      }
+      var searchValue = $('#searchInput').val();
+      if(searchValue != ''){
+        param.search = searchValue;
+      }
+      ajaxGetPageList(param);
+    }
+  // 모달부분처리
+  $('#checkboxAll2').on('click',function(){
+    var checkBool = null;
+    if($(this).is(":checked")){
+      checkBool = true;
+    }else{
+      checkBool = false;
+    }
+    $('.news-checkbox2').prop('checked', checkBool);
+  });
+  $(document).on('click','.news-checkbox2',function(){
+    $('#checkboxAll2').prop('checked', false);
+  });
+  $(document).on('click','#addBtn2',function(){
+    if($('input.news-checkbox2[type=checkbox]:checked').length < 1){
+      swal("ERROR!", '체크박스를 선택해주세요.', "error");
+      return false;
+    }
+    swal({
+      title: "선택저장 처리 하시겠습니까?",
+      icon: "warning",
+      buttons: ["취소", true],
+      dangerMode: true,
+    }).then(function(value) {
+      if (value != null) {
+        var list = [];
+        $('input.news-checkbox2[type=checkbox]:checked').each(function(idx,ele){
+          var trEle = $(ele).parents('tr');
+
+          list.push({
+            idx:trEle.find('#idx').val(),
+            date:trEle.find('input[name="datefilter"]').val(),
+            code:trEle.find('#newsType option:selected').val(),
+            detail:trEle.find('#news_detail').val()});
         });
-        $('#checkboxAll').prop('checked', false);
+        $('#group-Modal').modal('hide');
         addNews(list);
       }
     });
   });
-  function addNews(arr){
-    $('input[type=checkbox]:checked').prop('checked',false);
-    $.ajax({
-      type: "POST",
-      url: "/news/addNews",
-      data: {'list' : JSON.stringify(arr)},
-      error:function(request,status,error){
-        console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
-        swal("ERROR!", '새로고침 후 다시 시도해주세요.', "error");
-      },
-      success:function(data){
-        if(data.status){
-          swal("SUCCESS!", '선택저장 완료했습니다.', "success");
-        }else{
-          swal("ERROR!", '새로고침 후 다시 시도해주세요.', "error");
-        }
-      }
-    });
-  }
   //페이지 이동
   $(document).on('click','.page-link',function(){
     var num = Number($(this).text()) || Number($(this).data().num);
@@ -706,6 +983,7 @@
           renewURL = renewURL.replace(/\?page=([0-9]+)/ig,'?page='+data.result.currentPage);//현재 주소 중 page 부분이 있다면 새로 부여될 페이지 번호를 할당한다.
           if(renewURL.indexOf("?page=") == -1){
             renewURL += '?page='+data.result.currentPage;
+            $('#page').val(data.result.currentPage);
           }
           renewURL = renewURL.replace(/\&limit=([0-9]+)/ig,'&limit='+data.result.limit);//현재 주소 중 page 부분이 있다면 새로 부여될 페이지 번호를 할당한다.
           if(renewURL.indexOf("&limit=") == -1){
@@ -734,8 +1012,11 @@
           <td><input type="text" name="datefilter" class="datepicker form-control"  value="'+((item.reportDate != null && item.reportDate != '') ? item.reportDate : '')+'"/></td>\
           <td>\
             <a href="'+item.url+'" target="_blank" title="'+item.media_title+'">\
-              <div class="title_nobr">'+item.media_title+'</div>\
+              <div class="title_nobr" style="display: inline;">'+item.media_title+'</div>\
             </a>\
+            <div class="label-main group" style="margin-right:  0px;display: inline;">\
+              <label class="label label-md label-default" style="margin-right:  0px;">그룹핑</label>\
+            </div>\
           </td>\
           <td><div class="media_nobr" title="'+item.media_name+'">'+item.media_name+'</div></td>\
           <td><div class="nobr" title="'+item.reporter_name+'">'+((item.reporter_name == null) ? '<i class="fas fa-minus"></i>' : item.reporter_name)+'</div></td>\

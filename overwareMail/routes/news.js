@@ -80,7 +80,8 @@ async function getListPageData(idx,param){
     keyword: '',
     search: '',
     search2: '',
-    type: ''
+    type: '',
+    page: ''
   };
   var currentPage = 1;
   var searchBody = {};
@@ -121,6 +122,7 @@ async function getListPageData(idx,param){
     searchBody['type'] = param.type;
     data['type'] = param.type;
   }
+  data['page'] = currentPage;
   try{
     data['list'] = await newsclipping.selectMediaTable(searchBody,searchParam);
     data['listCount'] = await newsclipping.selectMediaTableCount(searchBody,searchParam);
@@ -172,6 +174,17 @@ router.post('/addNews',isAuthenticated,async function(req, res, next) {
       }
     });
     res.send({status:true});
+  } catch(e){
+    res.status(500).send(e);
+  }
+});
+
+router.post('/grouping',isAuthenticated,async function(req, res, next) {
+  try{
+    var list = JSON.parse(req.body.list);
+    var result = await newsclipping.selectMediaTable2(req.body,list);
+    // console.log(result);
+    res.send({status:true,result:result});
   } catch(e){
     res.status(500).send(e);
   }
