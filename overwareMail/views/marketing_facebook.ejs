@@ -183,6 +183,9 @@
   </div>
 </div>
 <style type="text/css">
+  .table td, .table th {
+    vertical-align: middle;
+  }
   /* loader */
   .preloader3{
     display: none;
@@ -318,7 +321,7 @@
     });
   });
   function addMarketing(arr){
-    $('input[type=checkbox]:checked').prop('checked',false);
+    // $('input[type=checkbox]:checked').prop('checked',false);
     $.ajax({
       type: "POST",
       url: "/marketing/add",

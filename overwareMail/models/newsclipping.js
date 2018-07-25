@@ -200,10 +200,10 @@ var newsclipping = {
     }
   },
   selectNewsMailTable: async function(body,param){
-    var sql = "SELECT url,media_idx,DATE_FORMAT(writeDate, '%Y-%m-%d %H:%i:%s') AS writeDate,DATE_FORMAT(reportDate, '%Y-%m-%d %H:%i:%s') AS reportDate,media_title,media_name,reporter_name,\
+    var sql = "SELECT url,media_idx,DATE_FORMAT(writeDate, '%Y-%m-%d') AS writeDate,DATE_FORMAT(reportDate, '%Y-%m-%d %H:%i:%s') AS reportDate,media_title,media_name,reporter_name,\
     keyword,textType,thumbnail,news_type,news_detail FROM news_mail where title_key in (select distinct keyword_main from keyword_data where user_idx=? or user_idx=21)";
     if(('sDate' in body) && ('eDate' in body)){
-      sql+=' and createDate between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
+      sql+=' and writeDate between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
     }
     if('keyword' in body){
       sql +=' and title_key = \''+body.keyword+'\'';
@@ -214,13 +214,13 @@ var newsclipping = {
     if('search' in body){
       sql +=' and media_title like \'%'+body.search+'%\'';
     }
-    sql += ' order by createDate desc limit ?,?';
+    sql += ' order by writeDate desc limit ?,?';
     return await getResult(sql,param);
   },
   selectNewsMailTableCount: async function(body,param){
     var sql = 'SELECT count(*) as total FROM news_mail where title_key in (select distinct keyword_main from keyword_data where user_idx=? or user_idx=21)';
     if(('sDate' in body) && ('eDate' in body)){
-      sql+=' and createDate between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
+      sql+=' and writeDate between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
     }
     if('keyword' in body){
       sql +=' and title_key = \''+body.keyword+'\'';
