@@ -59,18 +59,18 @@ var marketing = {
   selectMarketingTable: async function(body,param){
     var sql = 'SELECT * FROM marketing_mail where url is not null';
     if(('sDate' in body) && ('eDate' in body)){
-      sql+=' and createDate between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
+      sql+=' and writeDate between \''+body.sDate+'\' and \''+body.eDate+'\'';
     }
     if('search' in body){
       sql +=' and (ps_title like \'%'+body.search+'%\' or ps_content like \'%'+body.search+'%\')';
     }
-    sql += ' order by createDate desc limit ?,?';
+    sql += ' order by writeDate desc limit ?,?';
     return await getResult(sql,param);
   },
   selectMarketingTableCount: async function(body,param){
     var sql = 'SELECT count(*) as total FROM marketing_mail where url is not null';
     if(('sDate' in body) && ('eDate' in body)){
-      sql+=' and createDate between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
+      sql+=' and writeDate between \''+body.sDate+'\' and \''+body.eDate+'\'';
     }
     if('search' in body){
       sql +=' and (ps_title like \'%'+body.search+'%\' or ps_content like \'%'+body.search+'%\')';
@@ -86,7 +86,7 @@ var marketing = {
   selectFacebookTable: async function(body,param){
     var sql = "SELECT * FROM sns_view where url is not null ";
     if(('sDate' in body) && ('eDate' in body)){
-      sql+=' and writeDate between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
+      sql+=' and writeDate between \''+body.sDate+'\' and \''+body.eDate+'\'';
     }
     if('search' in body){
       sql +=' and sns_content like \'%'+body.search+'%\'';
@@ -100,7 +100,7 @@ var marketing = {
   selectFacebookTableCount: async function(body,param){
     var sql = "SELECT count(*) as total FROM sns_view where url is not null ";
     if(('sDate' in body) && ('eDate' in body)){
-      sql+=' and writeDate between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
+      sql+=' and writeDate between \''+body.sDate+'\' and \''+body.eDate+'\'';
     }
     if('search' in body){
       sql +=' and sns_content like \'%'+body.search+'%\'';
@@ -119,7 +119,7 @@ var marketing = {
   selectNaverTable: async function(body,param){
     var sql = "SELECT * FROM portal_view where portal_name like \'naver\'";
     if(('sDate' in body) && ('eDate' in body)){
-      sql+=' and writeDate between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
+      sql+=' and writeDate between \''+body.sDate+'\' and \''+body.eDate+'\'';
     }
     if('search' in body){
       sql +=' and portal_title like \'%'+body.search+'%\'';
@@ -130,7 +130,7 @@ var marketing = {
   selectNaverTableCount: async function(body,param){
     var sql = "SELECT count(*) as total FROM portal_view where portal_name = \'naver\'";
     if(('sDate' in body) && ('eDate' in body)){
-      sql+=' and writeDate between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
+      sql+=' and writeDate between \''+body.sDate+'\' and \''+body.eDate+'\'';
     }
     if('search' in body){
       sql +=' and portal_title like \'%'+body.search+'%\'';
