@@ -203,7 +203,8 @@
                                         <thead>
                                             <tr>
 			                                  <th width="5%">NO</th>
-			                                  <th width="7%">작성날짜</th>
+			                                  <th width="5%">추출일</th>
+			                                  <th width="5%">작성날짜</th>
 			                                  <th width="5%">키워드</th>
 			                                  <th width="15%">제목</th>
 			                                  <th width="5%">글쓴이</th>
@@ -213,10 +214,16 @@
 			                                </tr>
                                         </thead>
                                         <tbody>
-                                          <c:forEach items="${snsList}" var = "snsVO" varStatus="index">
+                                          <c:forEach items="${snsList2}" var = "snsVO" varStatus="index">
                                           <tr>
                                             <th scope="row">${index.count}</th>
-                                            <td>${snsVO.writeDate}</td>
+                                            <td>
+		                                    	<fmt:formatDate value="${snsVO.createDate}" type="DATE" pattern="yyyy-MM-dd HH:mm:ss" />
+		                                    </td>
+                                            <td>
+                                            <fmt:parseDate value="${snsVO.writeDate}" var="noticePostDate" pattern="yyyy-MM-dd"/>
+											<fmt:formatDate value="${noticePostDate}" pattern="yyyy-MM-dd"/>
+                                            </td>
 		                                    <td><div class="keyword-nowrap">${snsVO.keyword}</div></td>
 		                                    <td><div class="title-nowrap"><a href="${snsVO.url}" target="_blank">${snsVO.sns_title}</a></div></td>
 		                                    <td><div class="writer-nowrap">${snsVO.sns_writer}</div></td>

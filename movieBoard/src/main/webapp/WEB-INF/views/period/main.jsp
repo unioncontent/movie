@@ -198,7 +198,7 @@
                               <div class="col-md-6 col-xl-2 main-card">
                                 <div class="card social-widget-card" style="border-top: 0px;">
                                   <div class="card-block-big bg-inverse">
-                                    <h3><fmt:formatNumber value="${portalCount+communityCount+snsCount+mediaCount}" groupingUsed="true"/></h3>
+                                    <h3><fmt:formatNumber value="${portalCount+communityCount+snsCount+mediaCount+youtubeCount}" groupingUsed="true"/></h3>
                                     <span class="m-t-10">전체검색</span>
                                     <i class="icofont icofont-search"></i>
                                   </div>
@@ -225,7 +225,7 @@
                               <div class="col-md-6 col-xl-2 main-card">
                                 <div class="card social-widget-card" style="border-top: 0px;">
                                   <div class="card-block-big bg-twitter">
-                                    <h3><fmt:formatNumber value="${snsCount}" groupingUsed="true"/></h3>
+                                    <h3><fmt:formatNumber value="${snsCount + youtubeCount}" groupingUsed="true"/></h3>
                                     <span class="m-t-10">SNS검색</span>
                                     <i class="icofont icofont-social-twitter"></i>
                                   </div>

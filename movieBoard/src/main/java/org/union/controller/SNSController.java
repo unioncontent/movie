@@ -651,7 +651,7 @@ public class SNSController {
 		
 		if(cri.getPortal_name().equals("youtube")) {
 			model.addObject("part", "sns");
-			model.addObject("snsList", snsService.listAll(cri));
+			model.addObject("snsList", snsService.youtubeListAll(cri));
 			model.setView(excelViewM);
 			
 		}else {

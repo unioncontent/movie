@@ -183,6 +183,10 @@ public class DashBaordController {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		
 		String current = sdf.format(new Date());
+		
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.DATE, -1); // 오늘날짜로부터 -1
+		String current2 = sdf.format(cal.getTime());
 		logger.info("current: " + current);
 		
 		model.addAttribute("headlineList", mediaService.headlineList(cri));
@@ -218,8 +222,8 @@ public class DashBaordController {
 		model.addAttribute("instagramCount", snsService.reportSnsCount(cri));
 		
 		cri.setSns_name("youtube");
-		cri.setStartDate(current + " 00:00:00");
-		cri.setEndDate(current + " 23:59:59");
+		cri.setStartDate(current2 + " 00:00:00");
+		cri.setEndDate(current2 + " 23:59:59");
 		model.addAttribute("youtubeCount", snsService.reportSnsCount(cri));
 		
 	}
@@ -286,6 +290,11 @@ public class DashBaordController {
 		String current = sdf.format(new Date());
 		logger.info("current: " + current);
 		
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.DATE, -1); // 오늘날짜로부터 -1
+		String current2 = sdf.format(cal.getTime());
+		logger.info("current2: " + current2);
+		
 		cri.setStartDate(current + " 00:00:00");
 		cri.setEndDate(current + " 23:59:59");
 		
@@ -308,6 +317,8 @@ public class DashBaordController {
 			model.addAttribute("snsList", snsService.listAll(cri));
 			model.addAttribute("part", part);
 		}else if(part.equals("유튜브")) {
+			cri.setStartDate(current2 + " 00:00:00");
+			cri.setEndDate(current2 + " 23:59:59");
 			cri.setPortal_name("youtube");
 			model.addAttribute("snsList2", snsService.listAll(cri));
 			model.addAttribute("part", part);

@@ -444,7 +444,7 @@
   <script src="../assets/js/demo-12.js"></script>
   <script src="../assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
   <script src="../assets/js/jquery.mousewheel.min.js"></script>
-  <script src="../assets/pages/period/custom-period3.js"></script>
+  <script src="../assets/pages/period/custom-period1.js"></script>
   <script src="../assets/pages/picker.js"></script>
 </body>
 
@@ -856,17 +856,6 @@ var $fromDate = $("#fromDate");
 
   }
   
-  //tab witdh 수정
-  function cardResize(){
-	  setTimeout(function(){
-	    if($(".tab-pane > .row").width() > 1200){
-	      var card = Math.ceil($(".tab-pane > .row").width()/5)-1;
-	      $(".main-card").css("min-width",card -3);
-	    }
-	  }, 400);
-
-	}
-
   function makeDateFormat(date, index){
 		var splitDate = date.split(" - ")[index];
 			if(splitDate != undefined){

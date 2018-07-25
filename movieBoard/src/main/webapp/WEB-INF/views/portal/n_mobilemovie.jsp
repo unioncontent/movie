@@ -330,7 +330,7 @@
 																				</div>
 																			</td>
 																			<td>
-																			<c:if test="${elist.reply_cnt != null}">${elist.reply_cnt}</c:if>
+																			<c:if test="${elist.reply_cnt != null}">${elist.reply_cnt}건</c:if>
                                             								<c:if test="${elist.reply_cnt == null}"><i class="icofont icofont-minus"></i></c:if>
 																			</td>
 																			<td><div class="keyword-nowrap">

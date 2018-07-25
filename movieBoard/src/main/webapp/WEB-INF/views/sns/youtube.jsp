@@ -228,7 +228,8 @@
                               <thead>
                                 <tr>
                                   <th width="3%">NO</th>
-                                  <th width="5%">작성날짜</th>
+                                  <th width="5%">추출일</th>
+                                  <th width="5%">작성일</th>
                                   <th width="3%">대표키워드</th>
                                   <th width="3%">키워드</th>
                                   <th width="15%">제목</th>
@@ -242,6 +243,9 @@
                                 <c:forEach items="${youtubeList}" var="snsVO" varStatus="index">
                                   <tr>
                                     <th scope="row">${totalCount - minusCount - index.count +1}</th>
+                                    <td>
+                                    <fmt:formatDate value="${snsVO.createDate}" type="DATE" pattern="yyyy-MM-dd HH:mm:ss" />
+                                    </td>
                                     <td>${snsVO.writeDate}</td>
                                     <td>${snsVO.title_key}</td>
                                     <td>${snsVO.keyword}</td>
@@ -255,7 +259,7 @@
                               </tbody>
                               <tfoot>
                                 <tr>
-                                  <td colspan="8">
+                                  <td colspan="10">
                                     <ul class="pagination float-right">
                       								<c:if test="${pageMaker.prev}">
                                         <li class="page-item">

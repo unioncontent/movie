@@ -38,8 +38,10 @@ public interface SNSService {
 	public GraphVO instagramSum(SearchCriteria cri); 
 	
 	public List<SNSVO> listSearch(SearchCriteria cri);
+	public List<SNSVO> periodListSearch(SearchCriteria cri);
 	
 	public Integer getSearchCount(SearchCriteria cri);
+	public Integer periodgetSearchCount(SearchCriteria cri);
 	
 	public List<SNSVO> listExcel(SearchCriteria cri);
 	
@@ -50,6 +52,7 @@ public interface SNSService {
 	public Integer getExtractCount(SearchCriteria cri);
 	
 	public List<SNSVO> listAll(SearchCriteria cri);
+	public List<SNSVO> youtubeListAll(SearchCriteria cri);
 	
 	public List<SNSVO> facebookList (SearchCriteria cri);
 	

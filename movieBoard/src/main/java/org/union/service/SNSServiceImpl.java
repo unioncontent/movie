@@ -566,4 +566,31 @@ public class SNSServiceImpl implements SNSService {
 		return snsDAO.graphyoutubeCount(cri);
 	}
 
+
+	@Override
+	public List<SNSVO> youtubeListAll(SearchCriteria cri) {
+
+		List<SNSVO> list = snsDAO.youtubeListAll(cri);
+
+		for (SNSVO snsvo : list) {
+			snsvo.setKeyword_main(keywordDAO.read(snsvo.getKeyword()).getKeyword_main());
+		}
+		
+		return list;
+	}
+
+
+	@Override
+	public List<SNSVO> periodListSearch(SearchCriteria cri) {
+
+		return snsDAO.periodListSearch(cri);
+	}
+
+
+	@Override
+	public Integer periodgetSearchCount(SearchCriteria cri) {
+
+		return snsDAO.periodgetSearchCount(cri);
+	}
+
 }

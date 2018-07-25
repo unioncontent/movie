@@ -263,7 +263,7 @@
                                     <fmt:formatNumber value="${youtubeCount}" groupingUsed="true"/>건 
                                     </c:if>
                                     <c:if test="${youtubeCount != 0}">
-                                    <a href="javascript:popupOpen5();" ><fmt:formatNumber value="${youtubeCount}" groupingUsed="true"/>건 </a>
+                                    <a href="javascript:popupOpen10();" ><fmt:formatNumber value="${youtubeCount}" groupingUsed="true"/>건 </a>
                                     </c:if>
                                     </td>
                                   </tr>
@@ -282,7 +282,7 @@
                                     <th scope="row" style="background-color: #f5f5f5;"><font style="font-weight: bold; color: #e74e02;">합계</font></th>
                                     <td style="background-color: #f5f5f5;">
 										<font style="font-weight: bold; color: #e74e02;">	
-										<fmt:formatNumber value="${mediaTotalcnt + replyTotalcnt + snsTotalcount + scoreTotalcnt}" groupingUsed="true"/>건
+										<fmt:formatNumber value="${mediaTotalcnt + replyTotalcnt + snsTotalcount + scoreTotalcnt + youtubeCount}" groupingUsed="true"/>건
 										</font>
 									</td>
                                   </tr>

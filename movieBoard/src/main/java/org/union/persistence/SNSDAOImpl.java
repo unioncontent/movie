@@ -538,4 +538,25 @@ public class SNSDAOImpl implements SNSDAO {
 
 		return session.selectOne(namespace + "graphyoutubeCount", cri);
 	}
+
+
+	@Override
+	public List<SNSVO> youtubeListAll(SearchCriteria cri) {
+
+		return session.selectList(namespace + "youtubeListAll", cri);
+	}
+
+
+	@Override
+	public List<SNSVO> periodListSearch(SearchCriteria cri) {
+
+		return session.selectList(namespace + "periodListSearch", cri);
+	}
+
+
+	@Override
+	public Integer periodgetSearchCount(SearchCriteria cri) {
+
+		return session.selectOne(namespace + "periodgetSearchCount", cri);
+	}
 }

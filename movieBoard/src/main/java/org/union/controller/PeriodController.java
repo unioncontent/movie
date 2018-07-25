@@ -201,6 +201,8 @@ public class PeriodController {
 		
 		model.addAttribute("mailList", mediaService.mailList(cri));
 		
+		model.addAttribute("youtubeCount", snsService.youtubeTotalCount(cri));
+		
 	}
 
 	@GetMapping("/community")
@@ -725,11 +727,11 @@ public class PeriodController {
 		model.addAttribute("twitterCount", snsService.twitterTotalCount(cri));
 		model.addAttribute("youtubeCount", snsService.youtubeTotalCount(cri));
 		
-		model.addAttribute("snsList", snsService.listSearch(cri));
+		model.addAttribute("snsList", snsService.periodListSearch(cri));
 		
 		PageMaker pageMaker = new PageMaker();
 		
-		Integer totalCount = snsService.getSearchCount(cri);
+		Integer totalCount = snsService.periodgetSearchCount(cri);
 		
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(totalCount);
