@@ -61,7 +61,7 @@ var newsclipping = {
       sql+=' and writeDate between \''+body.sDate+'\' and \''+body.eDate+'\'';
     }
     if('search' in body){
-      sql +=' and media_title like \'%'+body.search+'%\'';
+      sql +=' and media_title like \'%'+body.search.replace(/'/gi,"''").replace(/[?]/gi,"")+'%\'';
     }
     if('search_b' in body){
       sql +=' and media_title like \'%'+body.search_b+'%\'';
