@@ -12,12 +12,12 @@ const DBpromise = require('../db/db_info.js');
 
 var newsclipping = {
   insert: async function(detail,param){
-    var sql = 'insert into news_mail(media_idx, media_name, media_title, media_content, reporter_name, reporter_ID, reporter_email, writeDate, last_WriteDate, last_media_title, \
+    var sql = 'insert into news_mail(me_rank,media_idx, media_name, media_title, media_content, reporter_name, reporter_ID, reporter_email, writeDate, last_WriteDate, last_media_title, \
     last_media_content, title_key, keyword, keyword_type, url, reportDate, news_type, textType, media_state, createDate, replynum, updateDate';
     if(detail != ''){
       sql += ',news_detail';
     }
-    sql += ')SELECT media_idx, media_name, media_title, media_content, reporter_name, reporter_ID, reporter_email, writeDate, last_WriteDate, last_media_title, last_media_content, \
+    sql += ')SELECT ME_rank,media_idx, media_name, media_title, media_content, reporter_name, reporter_ID, reporter_email, writeDate, last_WriteDate, last_media_title, last_media_content, \
     title_key, keyword, keyword_type, url, ?, ?, textType, media_state, now(), replynum, now() ';
     if(detail != ''){
       sql += ',\''+detail+'\' ';
@@ -201,7 +201,7 @@ var newsclipping = {
     }
   },
   selectNewsMailTable: async function(body,param){
-    var sql = "SELECT url,media_idx,DATE_FORMAT(writeDate, '%Y-%m-%d') AS writeDate,DATE_FORMAT(reportDate, '%Y-%m-%d %H:%i:%s') AS reportDate,media_title,media_name,reporter_name,\
+    var sql = "SELECT me_rank,url,media_idx,DATE_FORMAT(writeDate, '%Y-%m-%d') AS writeDate,DATE_FORMAT(reportDate, '%Y-%m-%d %H:%i:%s') AS reportDate,media_title,media_name,reporter_name,\
     keyword,textType,thumbnail,news_type,news_detail FROM news_mail where title_key in (select distinct keyword_main from keyword_data where user_idx=? or user_idx=21)";
     if(('sDate' in body) && ('eDate' in body)){
       sql+=' and writeDate between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
@@ -215,7 +215,7 @@ var newsclipping = {
     if('search' in body){
       sql +=' and media_title like \'%'+body.search+'%\'';
     }
-    sql += ' order by writeDate desc limit ?,?';
+    sql += ' order by media_idx desc limit ?,?';
     return await getResult(sql,param);
   },
   selectNewsMailTableCount: async function(body,param){

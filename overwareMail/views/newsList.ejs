@@ -61,6 +61,7 @@
                       <th width="5%" style="min-width: 80px;">기자</th>
                       <th width="10%" style="min-width: 80px;">작성날짜</th>
                       <th width="10%" style="min-width: 60px;">보고날짜</th>
+                      <th width="5%">순위</th>
                       <th width="5%" style="min-width: 80px;">키워드</th>
                       <th width="5%" style="min-width: 50px;">분류글</th>
                       <!-- <th width="20%" style="min-width: 130px;">썸네일</th> -->
@@ -98,6 +99,15 @@
                       </td>
                       <td><%= list[i].writeDate %></td>
                       <td><input type="text" name="datefilter" class="datepicker form-control" value="<%= list[i].reportDate %>"/></td>
+                      <td>
+                        <div class="rank_nobr">
+                          <% if(list[i].me_rank == null){ %>
+                            <i class="fas fa-minus"></i>
+                          <%}else{%>
+                            <%=list[i].me_rank+'위'%>
+                          <%}%>
+                        </div>
+                      </td>
                       <td><div class="key_nobr" title="<%=list[i].keyword%>"><%= list[i].keyword %></div></td>
                       <td>
                         <div class="nobr">
@@ -145,7 +155,7 @@
                       <td colspan="4">
                         <button id="newsAddBtn" class="btn btn-warning alert-check p-r-5 p-l-5 m-l-15 m-b-5  f-left m-t-5"><i class="fas fa-file-alt"></i>기사입력</button>
                       </td>
-                      <td colspan="8">
+                      <td colspan="9">
                         <ul class="pagination float-right">
                           <%
                             var pageSize = 5;
@@ -201,7 +211,7 @@
                         </ul>
                       </td>
                     <% } else { %>
-                      <td colspan="12">
+                      <td colspan="13">
                         <button id="newsAddBtn" class="btn btn-warning alert-check p-r-5 p-l-5 m-l-15 m-b-5  f-left m-t-5"><i class="fas fa-file-alt"></i>기사입력</button>
                       </td>
                     <% } %>
@@ -359,12 +369,15 @@
   .table input, .table select ,.table tbody div{
     font-size: 12px;
   }
-  .title_nobr,.nobr,.key_nobr{
+  .title_nobr,.nobr,.key_nobr,.rank_nobr{
     font-size: 15px;
     padding-left: 3px;
     text-overflow: ellipsis;
     width: 346px;
     overflow: hidden;
+  }
+  .rank_nobr{
+    width: 50px;
   }
   .nobr{
     width: 60px;
@@ -372,7 +385,7 @@
   .key_nobr{
     width: 102px;
   }
-  .nobr>i,.key_nobr>i{
+  .nobr>i,.key_nobr>i,.rank_nobr>i{
     font-size: 10px;
   }
   .select-news{
@@ -790,6 +803,7 @@
           html+='<td><div class="nobr" title="'+item.reporter_name+'">'+((item.reporter_name == null) ? '<i class="fas fa-minus"></i>' : item.reporter_name)+'</div></td>\
           <td>'+item.writeDate+'</td>\
           <td><input type="text" name="datefilter" class="datepicker form-control"  value="'+((item.reportDate != null && item.reportDate != '') ? item.reportDate : '')+'"/></td>\
+          <td><div class="rank_nobr">'+((item.me_rank == null) ? '<i class="fas fa-minus"></i>' : item.me_rank+'위')+'</div></td>\
           <td><div class="key_nobr" title="'+item.keyword+'">'+item.keyword+'</div></td>\
           <td><div class="nobr">'+((item.textType == null) ? '<i class="fas fa-minus"></i>' : item.textType)+'</div></td>';
           html+='<td><select class="form-control form-control-default p-l-5 select-news" id="newsType">\
@@ -812,7 +826,7 @@
         var html ='<tr>';
         if(pageCount > 1) {
           html += '<td colspan="4"><button id="newsAddBtn" class="btn btn-warning alert-check p-r-5 p-l-5 m-l-15 m-b-5  f-left m-t-5"><i class="fas fa-file-alt"></i>기사입력</button></td>'
-          html += '<td colspan="8"><ul class="pagination float-right">';
+          html += '<td colspan="9"><ul class="pagination float-right">';
           var pageSize = 5;
           var pRCnt = parseInt(data.result.currentPage / pageSize);
           if(data.result.currentPage % pageSize == 0){
@@ -857,7 +871,7 @@
           html += '</ul></td>';
         }
         else {
-          html += '<td colspan="12"><button id="newsAddBtn" class="btn btn-warning alert-check p-r-5 p-l-5 m-l-15 m-b-5  f-left m-t-5"><i class="fas fa-file-alt"></i>기사입력</button></td>'
+          html += '<td colspan="13"><button id="newsAddBtn" class="btn btn-warning alert-check p-r-5 p-l-5 m-l-15 m-b-5  f-left m-t-5"><i class="fas fa-file-alt"></i>기사입력</button></td>'
         }
         html += '</tr>';
         $('#listTable tfoot').eq(0).append(html);
