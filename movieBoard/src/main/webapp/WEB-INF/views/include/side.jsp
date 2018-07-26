@@ -20,8 +20,13 @@
     <div class="">
       <div class="main-menu-header">
         <div class="user-details">
-          <span id="more-details">Union Content</span>
+          <span id="more-details" style="margin-left: 10px;">
+          <img alt="naver" src="../assets/images/union_contents.png" style="width: 136px; height: 60px; display: block; cursor:auto; margin-left: auto; margin-right: auto;">
+          </span>
         </div>
+        <!-- <div class="user-details">
+          <span id="more-details">Union Content</span>
+        </div> -->
       </div>
     </div>
     <ul class="pcoded-item pcoded-left-item">
