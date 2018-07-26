@@ -81,7 +81,8 @@ async function getListPageData(idx,param){
     search: '',
     search2: '',
     type: '',
-    page: ''
+    page: '',
+    rank:false
   };
   var currentPage = 1;
   var searchBody = {};
@@ -109,6 +110,10 @@ async function getListPageData(idx,param){
   if (typeof param.keyword !== 'undefined') {
     searchBody['keyword'] = param.keyword;
     data['keyword'] = param.keyword;
+  }
+  if (typeof param.rank !== 'undefined') {
+    searchBody['rank'] = true;
+    data['rank'] = true;
   }
   if (typeof param.search !== 'undefined') {
     searchBody['search'] = param.search.replace(/'/gi,"''").replace(/[?]/gi,"");
