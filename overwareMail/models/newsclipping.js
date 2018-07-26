@@ -122,7 +122,8 @@ var newsclipping = {
     if('search_b' in body){
       sql +=' and media_title like \'%'+body.search_b+'%\'';
     }
-    sql += ' order by media_idx desc limit ?,?';
+    sql += ' order by '+(('rank' in body)?'-ME_rank desc,':'')+' media_idx desc';
+    sql += ' limit ?,?';
 
     var result = await getResult(sql,param);
     return result;
