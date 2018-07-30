@@ -61,7 +61,7 @@ var newsclipping = {
       sql+=' and writeDate between \''+body.sDate+'\' and \''+body.eDate+'\'';
     }
     if('search' in body){
-      sql +=' and media_title like \'%'+body.search.replace(/'/gi,"''").replace(/[?]/gi,"")+'%\'';
+      sql +=' and (media_title like \'%'+body.search.replace(/'/gi,"''").replace(/[?]/gi,"")+'%\' or media_content like \'%'+body.search.replace(/'/gi,"''").replace(/[?]/gi,"")+'%\')';
     }
     if('search_b' in body){
       sql +=' and media_title like \'%'+body.search_b+'%\'';
@@ -91,6 +91,13 @@ var newsclipping = {
     if('keyword' in body){
       sql +=' and title_key = \''+body.keyword+'\'';
     }
+    if('search' in body){
+      sql +=' and (media_title like \'%'+body.search.replace(/'/gi,"''").replace(/[?]/gi,"")+'%\' or media_content like \'%'+body.search.replace(/'/gi,"''").replace(/[?]/gi,"")+'%\')';
+      // sql +=' and media_title like \'%'+body.search+'%\'';
+    }
+    if('search_b' in body){
+      sql +=' and media_title like \'%'+body.search_b+'%\'';
+    }
     if('type' in body){
       var typeStr = '';
       if(body.type == '1'){
@@ -115,12 +122,6 @@ var newsclipping = {
         typeStr = '박스오피스';
       }
       sql +=' and (news_type = \''+body.type+'\' or title_key = \''+typeStr+'\')';
-    }
-    if('search' in body){
-      sql +=' and media_title like \'%'+body.search+'%\'';
-    }
-    if('search_b' in body){
-      sql +=' and media_title like \'%'+body.search_b+'%\'';
     }
     sql += ' order by '+(('rank' in body)?'-ME_rank desc,':'')+' media_idx desc';
     sql += ' limit ?,?';
@@ -161,6 +162,13 @@ var newsclipping = {
     if('keyword' in body){
       sql +=' and title_key = \''+body.keyword+'\'';
     }
+    if('search' in body){
+      sql +=' and (media_title like \'%'+body.search.replace(/'/gi,"''").replace(/[?]/gi,"")+'%\' or media_content like \'%'+body.search.replace(/'/gi,"''").replace(/[?]/gi,"")+'%\')';
+      // sql +=' and media_title like \'%'+body.search+'%\'';
+    }
+    if('search_b' in body){
+      sql +=' and media_title like \'%'+body.search_b+'%\'';
+    }
     if('type' in body){
       var typeStr = '';
       if(body.type == '1'){
@@ -186,12 +194,6 @@ var newsclipping = {
       }
       sql +=' and (news_type = \''+body.type+'\' or title_key = \''+typeStr+'\')';
     }
-    if('search' in body){
-      sql +=' and media_title like \'%'+body.search+'%\'';
-    }
-    if('search_b' in body){
-      sql +=' and media_title like \'%'+body.search_b+'%\'';
-    }
     var count = await getResult(sql,param[0]);
     if(count.length == 0){
       return 0;
@@ -213,7 +215,8 @@ var newsclipping = {
       sql +=' and news_type = \''+body.type+'\'';
     }
     if('search' in body){
-      sql +=' and media_title like \'%'+body.search+'%\'';
+      sql +=' and (media_title like \'%'+body.search.replace(/'/gi,"''").replace(/[?]/gi,"")+'%\' or media_content like \'%'+body.search.replace(/'/gi,"''").replace(/[?]/gi,"")+'%\')';
+      // sql +=' and media_title like \'%'+body.search+'%\'';
     }
     sql += ' order by media_idx desc limit ?,?';
     return await getResult(sql,param);
@@ -230,7 +233,8 @@ var newsclipping = {
       sql +=' and news_type = \''+body.type+'\'';
     }
     if('search' in body){
-      sql +=' and media_title like \'%'+body.search+'%\'';
+      sql +=' and (media_title like \'%'+body.search.replace(/'/gi,"''").replace(/[?]/gi,"")+'%\' or media_content like \'%'+body.search.replace(/'/gi,"''").replace(/[?]/gi,"")+'%\')';
+      // sql +=' and media_title like \'%'+body.search+'%\'';
     }
     var count = await getResult(sql,param[0]);
     if(count.length == 0){
