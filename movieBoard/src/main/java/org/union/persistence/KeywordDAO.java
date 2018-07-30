@@ -31,7 +31,7 @@ public interface KeywordDAO {
 	
 	public KeywordVO readByKeyword(String keyword);
 	
-	public List<KeywordListVO> listPage();
+	public List<KeywordListVO> listPage(SearchCriteria cri);
 	
 	public void createMain(KeywordListVO vo);
 	

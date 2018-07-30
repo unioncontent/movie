@@ -180,9 +180,16 @@
                               </div>
                             </div>
                           </div>
-                          <div class="card-block">
-                            <div class="table-responsive">
+                          <div class="card-block table-border-style table-responsive">
                               <table class="table table-bordered table-sm">
+                              <c:if test="${empty reporterList}">
+	                                    <tbody>
+	                                     <tr>
+	                                     <td style="vertical-align:middle;" align="center" height="150px"><h5>등록된 기자가 없습니다.</h5></td>
+	                                     </tr>
+	                                     </tbody>
+	                           </c:if>
+	                           <c:if test="${!empty reporterList}">
                                 <thead>
                                   <tr>
                                     <th width="5%">NO</th>
@@ -247,9 +254,9 @@
                                     </td>
                                   </tr>
                                 </tfoot>
+                                </c:if>
                               </table>
                             </div>
-                          </div>
                         </div>
                         <!-- table card end -->
                       </div>

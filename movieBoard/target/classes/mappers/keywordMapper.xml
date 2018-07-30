@@ -51,6 +51,28 @@
 			and textType = #{textType}
 		</if>
 	</sql>
+	
+	<sql id="search_writeDate2">
+		<if test="company != null">
+			and
+			   user_idx in (select 
+						user_idx 
+					from 
+						keyword_data
+					where
+						user_idx = (select 
+										user_idx 
+									from 
+										user_data 
+									where 
+										user_name = #{company}
+									)
+					)
+		</if>
+		<if test="selectKey != null">
+			and keyword_main = #{selectKey}
+		</if>
+	</sql>
 
 	<insert id="create">
 		insert into
@@ -179,9 +201,11 @@
     		count(if(keyword_property = '제외', keyword_property, null)) second,
     		createDate,
     		(select company_name from user_data  b where b.user_idx = a.user_idx) company
-		from keyword_data a 
+		from keyword_data a
+		where
+			keyword_main is not null
+		<include refid="search_writeDate2"></include> 
 		group by keyword_main
-	
 	</select>
 	
 	<insert id="createMain">

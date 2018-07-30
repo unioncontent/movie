@@ -24,7 +24,7 @@ public interface KeywordService {
 	public List<KeywordVO> listAll();
 	public List<KeywordVO> showboxListAll();
 	
-	public List<KeywordListVO> listPage();
+	public List<KeywordListVO> listPage(SearchCriteria cri);
 	
 	public void insertMain(KeywordListVO vo);
 	

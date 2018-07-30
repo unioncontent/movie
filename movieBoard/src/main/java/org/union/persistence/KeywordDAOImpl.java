@@ -111,11 +111,11 @@ public class KeywordDAOImpl implements KeywordDAO {
 	}
 
 	@Override
-	public List<KeywordListVO> listPage() {
+	public List<KeywordListVO> listPage(SearchCriteria cri) {
 
-		return session.selectList(namespace + "listPage");
+		return session.selectList(namespace + "listPage", cri);
 	}
-
+	
 	@Override
 	public void createMain(KeywordListVO vo) {
 

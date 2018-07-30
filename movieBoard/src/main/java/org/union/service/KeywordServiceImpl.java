@@ -126,11 +126,11 @@ public class KeywordServiceImpl implements KeywordService{
 	}
 
 	@Override
-	public List<KeywordListVO> listPage() {
+	public List<KeywordListVO> listPage(SearchCriteria cri) {
 
-		return keywordDAO.listPage();
+		return keywordDAO.listPage(cri);
 	}
-
+	
 	@Override
 	public void insertMain(KeywordListVO vo) {
 

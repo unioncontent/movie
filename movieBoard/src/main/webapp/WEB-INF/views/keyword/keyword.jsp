@@ -93,6 +93,35 @@
                   </div>
                   <!-- Page-body start -->
                   <div class="page-body">
+                  <div class="row">
+                      <!-- data setting start -->
+                      <div class="col-md-7">
+                         <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left" id="selectCompany">
+                          <option>회사</option>
+                          <c:if test="${user.user_type == 1 }">
+                          <c:forEach items="${companyList}" var = "companyList">
+                          <option value="${companyList.user_name}">${companyList.user_name}</option>
+                          </c:forEach>
+                          </c:if>
+                          <c:if test="${user.user_type == 2}">
+                          <option value="${companyList.user_name}">${companyList.user_name}</option>
+                          </c:if>
+                        </select>
+                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left" id="selectKeyword">
+                          <option>키워드</option>
+                          <c:if test="${modelKeywordList == null}" >
+                          	<c:forEach items="${keywordList}" var = "keywordList">
+                          <option value="${keywordList.keyword_main}">${keywordList.keyword_main}</option>
+                          </c:forEach>
+                          </c:if>
+                          <c:if test="${modelKeywordList != null}">
+                          	<c:forEach items="${modelKeywordList}" var = "keywordList">
+                          <option value="${keywordList.keyword_main}">${keywordList.keyword_main}</option>
+                          </c:forEach>
+                          </c:if>
+                        </select>
+                      </div>
+                      </div>
                     <!-- Filtering Foo-table card start -->
                     <div class="card">
                       <div class="card-header">
@@ -275,6 +304,58 @@
 	});
 
 	$(document).ready(function(){
+		
+		var companyOption = decodeURI(window.location.href.split("company=")[1]).split("&")[0];
+		console.log("companyOption: " + companyOption);
+
+		var $selectCompany = $('#selectCompany');
+		
+		if(companyOption != 'undefined'){
+			for(var i = 0; i < $selectCompany[0].length; i++ ){
+
+				if($selectCompany[0].children[i].value == companyOption){
+					$selectCompany[0].children[i].selected = 'selected';
+				}
+			}
+		}
+		$selectCompany[0][0].disabled = true;
+
+
+		// 회사 선택시
+		$selectCompany.change(function(){
+			console.log("selectCompany clicked....");
+			console.log($("#selectCompany option:selected").val());
+
+			searchList();
+
+		});
+
+
+		var keywordOption = decodeURI(window.location.href.split("selectKey=")[1]).split("&")[0];
+		console.log("keywordOption: " + keywordOption);
+		console.log(decodeURI(window.location.href.split("&selectKey=")[1]));
+
+		var $selectKeyword = $('#selectKeyword');
+
+		if(keywordOption != 'undefined'){
+			for(var i = 0; i < $selectKeyword[0].length; i++ ){
+				if($selectKeyword[0][i].value == keywordOption){
+					$selectKeyword[0][i].selected = 'selected';
+				}
+			}
+		}
+		$selectKeyword[0][0].disabled = true;
+
+
+		// 키워드 선택시
+		$selectKeyword.change(function(){
+			console.log("selectKeyword clicked....");
+			console.log($('#selectKeyword option:selected').val());
+
+			searchList();
+
+			//searchList();
+		});
 
 		// 수정 버튼 클릭
 		$(".tabledit-edit-button").on("click", function(event){
@@ -439,8 +520,35 @@
 
 
 		});
+		
+		var selectOption = decodeURI(window.location.href.split("selectKey=")[1]).split("&")[0];
+		console.log("selectOption: " + selectOption);
+
+
+		var $selectKeyword = $('#selectKeyword');
+
+		if(selectOption != 'undefined'){
+			for(var i = 0; i < $selectKeyword[0].length; i++ ){
+				if($selectKeyword[0][i].value == selectOption){
+					$selectKeyword[0][i].selected = 'selected';
+				}
+			}
+		}
+		$selectKeyword[0][0].disabled = true;
 
 	}); // end ready...
+	
+	//list URL 함수
+	function searchList(event) {
+
+		self.location = "keyword"
+					  + "?company="
+					  + $("#selectCompany option:selected").val()
+					  + "&selectKey="
+					  + $('#selectKeyword option:selected').val()
+					  
+	}
+	
 </script>
 
 </html>
