@@ -145,4 +145,31 @@ public class MobileEntDAOImpl implements MobileEntDAO {
 	}
 
 
+	@Override
+	public List<MobileEntVO> showSearchList(SearchCriteria cri) {
+
+		return session.selectList(namespace + "showSearchList", cri);
+	}
+
+
+	@Override
+	public List<MobileEntVO> showSearchAllList(SearchCriteria cri) {
+
+		return session.selectList(namespace + "showSearchAllList", cri);
+	}
+
+
+	@Override
+	public List<MobileEntVO> showMsearchList(SearchCriteria cri) {
+
+		return session.selectList(namespace + "showMsearchList", cri);
+	}
+
+
+	@Override
+	public List<MobileEntVO> showMsearchAllList(SearchCriteria cri) {
+
+		return session.selectList(namespace + "showMsearchAllList", cri);
+	}
+
 }

@@ -291,9 +291,16 @@
 												<!-- Pc table start -->
 												<div class="card">
 													<div class="card-header">
+														<c:if test="${user.user_name == 'union'}">
 														<button id="excel" class="btn btn-warning f-right alert-confirm">
 															<i class="icofont icofont-download-alt"></i>EXCEL
 														</button>
+														</c:if>
+														<c:if test="${user.user_name != 'union'}">
+														<button id="excel" class="btn btn-warning f-right showalert-confirm">
+															<i class="icofont icofont-download-alt"></i>EXCEL
+														</button>
+														</c:if>
 													</div>
 													<div class="card-block table-border-style">
 														<div class="table-responsive">
@@ -319,6 +326,7 @@
 																	</tr>
 																</thead>
 																<tbody>
+																<c:if test="${user.user_name == 'union'}">
 																	<c:forEach items="${mobileList}" var="elist" varStatus="index">
 																		<tr>
 																			<th scope="row">${totalCount -index.count +1 -minusCount}</th>
@@ -347,6 +355,37 @@
 																			</div></td>
 																		</tr>
 																	</c:forEach>
+																</c:if>
+																<c:if test="${user.user_name != 'union'}">
+																	<c:forEach items="${showMsearchList}" var="elist" varStatus="index">
+																		<tr>
+																			<th scope="row">${totalCount -index.count +1 -minusCount}</th>
+																			<td>${elist.writeDate}</td>
+																			<%-- <td>${elist.ME_rank}</td> --%>
+																			<td>
+																				<div class="nobr content">
+																					<a href="${elist.url}" target="_blank"> ${elist.ME_title} </a>
+																				</div>
+																			</td>
+																			<td>
+																			<c:if test="${elist.reply_cnt != null}">${elist.reply_cnt}건</c:if>
+                                            								<c:if test="${elist.reply_cnt == null}"><i class="icofont icofont-minus"></i></c:if>
+																			</td>
+																			<td><div class="keyword-nowrap">
+																			<c:if test="${elist.keyword != null}">${elist.keyword}</c:if>
+                                            								<c:if test="${elist.keyword == null}"><i class="icofont icofont-minus"></i></c:if>
+																			</div></td>
+																			<td><div class="keyword-nowrap">
+																			<c:if test="${elist.reporter_name != null}">${elist.reporter_name}</c:if>
+                                            								<c:if test="${elist.reporter_name == null}"><i class="icofont icofont-minus"></i></c:if>
+																			</div></td>
+																			<td><div class="keyword-nowrap">
+																			<c:if test="${elist.reporter_name != null}">${elist.reporter_media_name}</c:if>
+                                            								<c:if test="${elist.reporter_name == null}"><i class="icofont icofont-minus"></i></c:if>
+																			</div></td>
+																		</tr>
+																	</c:forEach>
+																</c:if>
 																</tbody>
 																<tfoot>
 																	<tr>
@@ -746,6 +785,33 @@
 				  + "&startDate=" + decodeURI(window.location.href.split("startDate=")[1]).split("&")[0].split(" ")[0]
 				  + "&endDate=" +  decodeURI(window.location.href.split("endDate=")[1]).split("&")[0].split(" ")[0]
 				  + "&portal_type=" + "mobileM";
+
+
+		  		swal("Success!", "엑셀출력 되었습니다.", "success");
+
+	        });
+		}); 
+		
+		// show 엑셀 출력
+		//엑셀출력 확인메시지
+		$(document).on("click",".showalert-confirm",function(){
+	    	swal({
+	          title: "엑셀출력 하시겠습니까?",
+	          text: "현재 리스트가 엑셀출력 됩니다.",
+	          type: "warning",
+	          showCancelButton: true,
+	          confirmButtonClass: "btn-danger",
+	          confirmButtonText: "YES",
+	          closeOnConfirm: false
+	        },
+	        function(){//엑셀 출력하겠다고 할 시 진행 함수
+	    		
+	        	self.location = "excel?"+
+				  + "&company=" + $("#selectCompany option:selected").val()
+				  + "&selectKey=" + $('#selectKeyword option:selected').val()
+				  + "&startDate=" + decodeURI(window.location.href.split("startDate=")[1]).split("&")[0].split(" ")[0]
+				  + "&endDate=" +  decodeURI(window.location.href.split("endDate=")[1]).split("&")[0].split(" ")[0]
+				  + "&portal_type=" + "mobileMs";
 
 
 		  		swal("Success!", "엑셀출력 되었습니다.", "success");

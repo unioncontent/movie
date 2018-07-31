@@ -35,4 +35,18 @@ public class NaverMovieServiceImpl implements NaverMovieService{
 		return naverMovieDAO.getSearchCount(cri);
 	}
 
+	@Override
+	public List<NaverMovieVO> showSearchList(SearchCriteria cri) {
+
+		List<NaverMovieVO> list = naverMovieDAO.showSearchList(cri);
+		
+		return list;
+	}
+
+	@Override
+	public List<NaverMovieVO> showSearchAllList(SearchCriteria cri) {
+
+		return naverMovieDAO.showSearchAllList(cri);
+	}
+
 }

@@ -180,9 +180,16 @@
 														<button id="searchBtn" class=" btn btn-search"><i class="icofont icofont-ui-search"></i></button>
 													</span>
 												</div>
+												<c:if test="${user.user_name == 'union'}">
 												<button class="btn btn-warning alert-excel f-right p-r-5 p-l-5 m-r-15 m-t-5 m-b-5">
 													<i class="icofont icofont-download-alt"></i>EXCEL
 												</button>
+												</c:if>
+												<c:if test="${user.user_name != 'union'}">
+												<button class="btn btn-warning showalert-excel f-right p-r-5 p-l-5 m-r-15 m-t-5 m-b-5">
+													<i class="icofont icofont-download-alt"></i>EXCEL
+												</button>
+												</c:if>
 											</div>
 											<div class="card-block table-border-style">
 												<div class="table-responsive">
@@ -205,6 +212,7 @@
 															</tr>
 														</thead>
 														<tbody>
+														<c:if test="${user.user_name == 'union'}">
 															<c:forEach items="${movieList}" var="movieList" varStatus="index">
 																<tr>
 																	<th scope="row">${totalCount -index.count +1 -minusCount}</th>
@@ -216,6 +224,20 @@
 																	<td>${movieList.writer}</td>
 																</tr>
 															</c:forEach>
+														</c:if>
+														<c:if test="${user.user_name != 'union'}">
+															<c:forEach items="${showmovieList}" var="movieList" varStatus="index">
+																<tr>
+																	<th scope="row">${totalCount -index.count +1 -minusCount}</th>
+																	<td>${movieList.writeDate}</td>
+																	<td><a href="${movieList.url}" target="_blank">
+																			<div class="nobr content">${movieList.NM_title}</div>
+																	</a></td>
+																	<td>${movieList.keyword}</td>
+																	<td>${movieList.writer}</td>
+																</tr>
+															</c:forEach>
+														</c:if>
 														</tbody>
 														<tfoot>
 															<tr>
@@ -555,6 +577,32 @@
 			  + "&startDate=" + makeDateFormat($("#fromDate").val(), 0)
 			  + "&endDate=" + makeDateFormat($("#fromDate").val(), 1)
 			  + "&portal_type=" + "movie";
+
+
+	  		swal("Success!", "엑셀출력 되었습니다.", "success");
+
+        });
+	}); 
+	// show엑셀 출력
+	//엑셀출력 확인메시지
+	$(document).on("click",".showalert-excel",function(){
+    	swal({
+          title: "엑셀출력 하시겠습니까?",
+          text: "현재 리스트가 엑셀출력 됩니다.",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonClass: "btn-danger",
+          confirmButtonText: "YES",
+          closeOnConfirm: false
+        },
+        function(){//엑셀 출력하겠다고 할 시 진행 함수
+
+        	self.location = "excel?"+
+			  + "&company=" + $("#selectCompany option:selected").val()
+			  + "&selectKey=" + $('#selectKeyword option:selected').val()
+			  + "&startDate=" + makeDateFormat($("#fromDate").val(), 0)
+			  + "&endDate=" + makeDateFormat($("#fromDate").val(), 1)
+			  + "&portal_type=" + "movies";
 
 
 	  		swal("Success!", "엑셀출력 되었습니다.", "success");

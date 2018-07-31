@@ -15,7 +15,11 @@ public interface MobileEntService {
 	
 	public List<MobileEntVO> searchList(SearchCriteria cri);
 	
+	public List<MobileEntVO> showSearchList(SearchCriteria cri);
+	
 	public List<MobileEntVO> searchAllList(SearchCriteria cri);
+	
+	public List<MobileEntVO> showSearchAllList(SearchCriteria cri);
 	
 	public Integer getSearchCount(SearchCriteria cri);
 	
@@ -26,7 +30,11 @@ public interface MobileEntService {
 	
 	public List<MobileEntVO> MsearchList(SearchCriteria cri);
 	
+	public List<MobileEntVO> showMsearchList(SearchCriteria cri);
+	
 	public List<MobileEntVO> MsearchAllList(SearchCriteria cri);
+	
+	public List<MobileEntVO> showMsearchAllList(SearchCriteria cri);
 	
 	public Integer MgetSearchCount(SearchCriteria cri);
 	

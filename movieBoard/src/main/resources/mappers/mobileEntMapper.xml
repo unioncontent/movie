@@ -119,11 +119,41 @@
 			#{startPage}, #{perPageNum}
 	</select>
 	
+	<select id="showSearchList" resultType="MobileEntVO">
+ 		select
+ 			writeDate, ME_rank, url, ME_title, reply_cnt, reporter_name, reporter_media_name, createDate, ME_type,
+		(select keyword from keyword_data b where b.keyword = a.keyword and b.user_idx = 1 group by keyword)keyword
+ 		from
+ 			mobileent_data a
+ 		where
+ 			url is not null
+ 		and
+ 			ME_type='ent'	
+ 		<include refid="search"></include>
+		order by writeDate desc, ME_rank asc
+		limit  
+			#{startPage}, #{perPageNum}
+	</select>
+	
 	<select id="searchAllList" resultType="MobileEntVO">
  		select
  			*
  		from
  			mobileent_data
+ 		where
+ 			url is not null
+ 		and
+ 			ME_type='ent'	
+ 		<include refid="search"></include>
+ 		order by writeDate desc, ME_rank asc
+	</select>
+	
+	<select id="showSearchAllList" resultType="MobileEntVO">
+ 		select
+ 			writeDate, ME_rank, url, ME_title, reply_cnt, reporter_name, reporter_media_name, createDate, ME_type, title_key,
+		(select keyword from keyword_data b where b.keyword = a.keyword and b.user_idx = 1 group by keyword)keyword
+ 		from
+ 			mobileent_data a
  		where
  			url is not null
  		and
@@ -197,11 +227,41 @@
 			#{startPage}, #{perPageNum}
 	</select>
 	
+	<select id="showMsearchList" resultType="MobileEntVO">
+ 		select
+ 			writeDate, ME_rank, url, ME_title, reply_cnt, reporter_name, reporter_media_name, createDate, ME_type,
+		(select keyword from keyword_data b where b.keyword = a.keyword and b.user_idx = 1 group by keyword)keyword
+ 		from
+ 			mobileent_data a
+ 		where
+ 			url is not null
+ 		and
+ 			ME_type='movie'	
+ 		<include refid="search"></include>
+		order by writeDate desc, ME_rank asc
+		limit  
+			#{startPage}, #{perPageNum}
+	</select>
+	
 	<select id="MsearchAllList" resultType="MobileEntVO">
  		select
  			*
  		from
  			mobileent_data
+ 		where
+ 			url is not null
+ 		and
+ 			ME_type='movie'	
+ 		<include refid="search"></include>
+ 		order by writeDate desc, ME_rank asc
+	</select>
+	
+	<select id="showMsearchAllList" resultType="MobileEntVO">
+ 		select
+ 			writeDate, ME_rank, url, ME_title, reply_cnt, reporter_name, reporter_media_name, createDate, ME_type, title_key,
+		(select keyword from keyword_data b where b.keyword = a.keyword and b.user_idx = 1 group by keyword)keyword
+ 		from
+ 			mobileent_data a
  		where
  			url is not null
  		and

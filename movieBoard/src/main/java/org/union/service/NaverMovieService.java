@@ -8,8 +8,12 @@ import org.union.domain.SearchCriteria;
 public interface NaverMovieService {
 
     public List<NaverMovieVO> searchAllList(SearchCriteria cri);
+    
+    public List<NaverMovieVO> showSearchAllList(SearchCriteria cri);
 
     public List<NaverMovieVO> searchList(SearchCriteria cri);
+    
+    public List<NaverMovieVO> showSearchList(SearchCriteria cri);
 
     public Integer getSearchCount(SearchCriteria cri);
 }

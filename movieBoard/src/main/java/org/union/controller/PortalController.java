@@ -133,6 +133,7 @@ public class PortalController {
 	// 네이버모바일리스트
 	
 	model.addAttribute("mobileList", mobileEntService.searchList(cri));
+	model.addAttribute("showmobileList", mobileEntService.showSearchList(cri));
 	
 	Integer totalCount = mobileEntService.getSearchCount(cri);
 	
@@ -213,6 +214,7 @@ public class PortalController {
 	// 네이버모바일리스트
 	
 	model.addAttribute("mobileList", mobileEntService.MsearchList(cri));
+	model.addAttribute("showMsearchList", mobileEntService.showMsearchList(cri));
 	
 	Integer totalCount = mobileEntService.MgetSearchCount(cri);
 	
@@ -298,9 +300,11 @@ public class PortalController {
 
 	// 네이버영화리스트
 	List<NaverMovieVO> movieList = naverMovieService.searchList(cri);
+	List<NaverMovieVO> movieLists = naverMovieService.showSearchList(cri);
 	Integer totalCount = naverMovieService.getSearchCount(cri);
 	logger.info("totalCountaaa:" + totalCount);
 	model.addAttribute("movieList", movieList);
+	model.addAttribute("showmovieList", movieLists);
 	
 	PageMaker pageMaker = new PageMaker();
 	//cri.setPerPageNum(24);
@@ -1310,11 +1314,20 @@ public class PortalController {
 	if (cri.getPortal_type().equals("movie")) {
 	    model.addObject("list", listUtil.listAddMovieList(classiList, movieService.searchAllList(cri)));
 	}
+	else if (cri.getPortal_type().equals("movies")) {
+	    model.addObject("list", listUtil.listAddMovieList(classiList, movieService.showSearchAllList(cri)));
+	}
 	else if (cri.getPortal_type().equals("mobile")) {
 	    model.addObject("list", listUtil.listAddMobileList(classiList, mobileEntService.searchAllList(cri)));
 	}
+	else if (cri.getPortal_type().equals("mobiles")) {
+	    model.addObject("list", listUtil.listAddMobileList(classiList, mobileEntService.showSearchAllList(cri)));
+	}
 	else if (cri.getPortal_type().equals("mobileM")) {
 	    model.addObject("list", listUtil.listAddMobileList(classiList, mobileEntService.MsearchAllList(cri)));
+	}
+	else if (cri.getPortal_type().equals("mobileMs")) {
+	    model.addObject("list", listUtil.listAddMobileList(classiList, mobileEntService.showMsearchAllList(cri)));
 	}
 	else {
 	    model.addObject("list", listUtil.listAddViralList(classiList, viralService.searchAllList(cri)));

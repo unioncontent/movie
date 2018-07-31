@@ -54,4 +54,18 @@ public class NaverMovieDAOImpl implements NaverMovieDAO {
 		return session.selectOne(namespace + "getSearchCount", cri);
 	}
 
+
+	@Override
+	public List<NaverMovieVO> showSearchList(SearchCriteria cri) {
+
+		return session.selectList(namespace + "showSearchList", cri);
+	}
+
+
+	@Override
+	public List<NaverMovieVO> showSearchAllList(SearchCriteria cri) {
+
+		return session.selectList(namespace + "showSearchAllList", cri);
+	}
+
 }

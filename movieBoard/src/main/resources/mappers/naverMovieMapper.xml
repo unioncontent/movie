@@ -60,6 +60,21 @@
 			#{startPage}, #{perPageNum}
 	</select>
 	
+	<select id="showSearchList" resultType="NaverMovieVO">
+ 		select
+ 			writeDate, url, NM_title, writer,
+		(select keyword from keyword_data b where b.keyword = a.keyword and b.user_idx = 1 group by keyword)keyword
+ 		from
+ 			navermovienews_data a
+ 		where
+ 			url is not null
+ 		<include refid="search"></include>
+		order 
+			by NM_idx desc
+		limit  
+			#{startPage}, #{perPageNum}
+	</select>
+	
 	<select id="searchAllList" resultType="NaverMovieVO">
  		select
  			*
@@ -67,6 +82,19 @@
  			navermovienews_data
 		where 
 			keyword is not null
+ 		<include refid="search"></include>
+		order 
+			by NM_idx desc
+	</select>
+	
+	<select id="showSearchAllList" resultType="NaverMovieVO">
+ 		select
+ 			writeDate, url, NM_title, writer, title_key, NM_idx, createDate, updateDate,
+		(select keyword from keyword_data b where b.keyword = a.keyword and b.user_idx = 1 group by keyword)keyword
+ 		from
+ 			navermovienews_data a
+ 		where
+			url is not null
  		<include refid="search"></include>
 		order 
 			by NM_idx desc

@@ -14,7 +14,11 @@ public interface NaverMovieDAO {
 
 	public List<NaverMovieVO> searchAllList(SearchCriteria cri);
 	
+	public List<NaverMovieVO> showSearchAllList(SearchCriteria cri);
+	
 	public List<NaverMovieVO> searchList(SearchCriteria cri);
+	
+	public List<NaverMovieVO> showSearchList(SearchCriteria cri);
 	
 	public Integer getSearchCount(SearchCriteria cri);
 	

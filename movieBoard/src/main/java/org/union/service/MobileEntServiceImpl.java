@@ -124,4 +124,28 @@ public class MobileEntServiceImpl implements MobileEntService{
 		return mobileEntDAO.MgetMatchCountGraph(cri);
 	}
 
+	@Override
+	public List<MobileEntVO> showSearchList(SearchCriteria cri) {
+
+		return mobileEntDAO.showSearchList(cri);
+	}
+
+	@Override
+	public List<MobileEntVO> showSearchAllList(SearchCriteria cri) {
+
+		return mobileEntDAO.showSearchAllList(cri);
+	}
+
+	@Override
+	public List<MobileEntVO> showMsearchList(SearchCriteria cri) {
+
+		return mobileEntDAO.showMsearchList(cri);
+	}
+
+	@Override
+	public List<MobileEntVO> showMsearchAllList(SearchCriteria cri) {
+
+		return mobileEntDAO.showMsearchAllList(cri);
+	}
+
 }
