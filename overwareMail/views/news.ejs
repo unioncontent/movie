@@ -61,6 +61,10 @@
                   <input class="border-checkbox" type="checkbox" id="searchBtn2" name="search" value="공식">
                   <label class="border-checkbox-label" for="searchBtn2">공식</label>
                 </div>
+                <div class="border-checkbox-group border-checkbox-group-default m-r-5">
+                  <input class="border-checkbox" type="checkbox" id="searchMediaBtn" name="video" value="ture">
+                  <label class="border-checkbox-label" for="searchMediaBtn">영상</label>
+                </div>
                 <div class="border-checkbox-group border-checkbox-group-default m-r-5" style="max-width: 100px;">
                   <input class="border-checkbox" type="checkbox" id="searchRankBtn" name="rank" value="ture">
                   <label class="border-checkbox-label" for="searchRankBtn">순위정렬</label>
@@ -144,6 +148,8 @@
                         <a href="<%= list[i].url %>" target="_blank" title="<%= list[i].media_title %>">
                           <div class="title_nobr"><%= list[i].media_title %></div>
                         </a>
+                        <!-- <i class="far fa-file-video text-muted"></i> -->
+                        <i class="fas fa-video text-muted" style="<%=(list[i].v_state != 2) ? 'visibility: hidden' : ''%>"></i>
                         <div class="label-main group" style="margin-right:  0px;display: inline;">
                           <label class="label label-md label-default" style="margin-right:  0px;">그룹핑</label>
                         </div>
@@ -283,6 +289,7 @@
                 <input type="hidden" id="limit" value="<%=limit%>"/>
                 <input type="hidden" id="type" value="<%=type%>"/>
                 <input type="hidden" id="rank" value="<%=rank%>"/>
+                <input type="hidden" id="video" value="<%=video%>"/>
               </div>
             </div>
           </div>
@@ -353,12 +360,16 @@
   .datepicker{
     min-width: 88px;
   }
-  .checkbox-newsn{
-    min-width: 148px;
+  .checkbox-news{
+    min-width: 300px;
   }
   .border-checkbox-group-default{
     max-width:  58px;
     float:  left;
+  }
+  .fa-video{
+    /* font-size: 16px; */
+    vertical-align: inherit;
   }
   /* loader */
   .preloader3,.preloader2{
@@ -399,6 +410,7 @@
   }
   .title_nobr{
     display: inline-block;
+    vertical-align: middle;
     width: 350px;
     min-width: 350px;
   }
@@ -650,11 +662,21 @@
   $('input[type="checkbox"][name="rank"]').on('click',function(){
     if($(this).prop('checked')){
       $('#rank').val($(this).val());
-      searchNaverBtn($(this).val());
+      searchNaverVideoBtn($(this).val());
     }
     else{
       $('#rank').val('false');
-      searchNaverBtn('false');
+      searchNaverVideoBtn('false');
+    }
+  });
+  $('input[type="checkbox"][name="video"]').on('click',function(){
+    if($(this).prop('checked')){
+      $('#video').val($(this).val());
+      searchNaverVideoBtn($(this).val());
+    }
+    else{
+      $('#video').val('false');
+      searchNaverVideoBtn('false');
     }
   });
   // 단독, 공식 버튼 클릭시
@@ -698,7 +720,7 @@
     ajaxGetPageList(param,0);
   }
   // 랭킹 버튼 클릭시
-  function searchNaverBtn(rank){
+  function searchNaverVideoBtn(rank){
     // var param = {
     //   page : 1
     // };
@@ -1027,7 +1049,7 @@
             <td>\
               <a href="'+item.url+'" target="_blank" title="'+item.media_title+'">\
                 <div class="title_nobr">'+item.media_title+'</div>\
-              </a>\
+              </a><i class="fas fa-video text-muted" style="'+((item.v_state != 2) ? 'visibility: hidden;' : '')+'"></i>\
               <div class="label-main group" style="margin-right:  0px;display: inline;">\
                 <label class="label label-md label-default" style="margin-right:  0px;">그룹핑</label>\
               </div>\
@@ -1350,6 +1372,11 @@
     var search2Value = $('#search2').val();
     if(search2Value != ''){
     param.search_b = search2Value;
+    }
+    // 영상
+    var videoValue = $('#video').val();
+    if(videoValue != ''){
+      param.video = videoValue;
     }
     //순위
     var rankValue = $('#rank').val();

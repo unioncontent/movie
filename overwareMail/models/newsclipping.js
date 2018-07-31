@@ -98,6 +98,10 @@ var newsclipping = {
     if('search_b' in body){
       sql +=' and media_title like \'%'+body.search_b+'%\'';
     }
+    if('video' in body){
+      sql +=' and v_state=2';
+    }
+    // 영상 있는지 체크
     if('type' in body){
       var typeStr = '';
       if(body.type == '1'){
@@ -168,6 +172,9 @@ var newsclipping = {
     }
     if('search_b' in body){
       sql +=' and media_title like \'%'+body.search_b+'%\'';
+    }
+    if('video' in body){
+      sql +=' and v_state=2';
     }
     if('type' in body){
       var typeStr = '';
