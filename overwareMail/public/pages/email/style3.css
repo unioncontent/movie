@@ -1,7 +1,19 @@
 #M_body a{
   font-size: 12px;
-  color: #0000ee;
-  text-decoration: underline;
+  /* color: #0000ee; */
+  /* text-decoration: underline; */
+  text-decoration: none !important;
+  color: black;
+  font-weight: bold;
+}
+.relation_lst li a>div,
+.relation_list li a>div{
+  font-weight: normal;
+  color: black;
+  text-decoration: none !important;
+}
+#msg{
+    display: none;
 }
 #M_body #body-header td{
   border: 1px solid #e3e3e3;
