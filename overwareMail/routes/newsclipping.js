@@ -94,7 +94,7 @@ router.post('/send',isAuthenticated, async function(req, res) {
 
   var m_idx_a = null;
   // update code
-  // await maillink.update([mailAllParam.M_body,'58']);
+  // await maillink.update([mailAllParam.M_body,'104']);
   // res.status(500).send(result);
   // return false;
 
