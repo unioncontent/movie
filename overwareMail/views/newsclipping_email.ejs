@@ -554,7 +554,7 @@
     var bodyStr = o_body;
     var dateStr = $.datepicker.formatDate('yy-mm-dd', new Date($('#datepicker2').val()));
     var msg = '<div style="padding:  15px;text-align:  center;"><a href="http://showbox.email/preview/newsclipping?date='+dateStr+'" target="_blank" style="text-align:  center;font-size:16px;font-family:helvetica, arial, sans-serif;color: #ffffff;border-radius:100px;padding:8px 20px;border: 1px solid #ff8b00;display:inline-block;background:  #ff8b00;font-weight:bold;text-decoration: none;">뉴스클리핑 전체보기</div>';
-    if(getByteLength(bodyStr) > 65535){
+    if(getByteLength(bodyStr+msg) > 65535){
       jQuery.fn.reverse = [].reverse;
       $("#clone").find('.section').reverse().each(function (i) {
         console.log($(this).data('type'));
@@ -563,9 +563,9 @@
           return false;
         }
       });
-      $("#clone").find('.section').last().after(msg);
-      bodyStr = $("#clone").html();
     }
+    $("#clone").find('.section').last().after(msg);
+    bodyStr = $("#clone").html();
     $("#clone").empty();
     return {str:bodyStr,o_str:o_body};
   }
