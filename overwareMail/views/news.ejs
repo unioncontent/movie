@@ -512,7 +512,7 @@
   $(document).on("click",".group",function(){
     $('.preloader2').show();
     var g_idx = $(this).parents('tr').find('#idx').val();
-    var title = calByte.cutByteLength( $(this).prev().find('div').text(), 60 );
+    var title = calByte.cutByteLength( $(this).prev().prev().find('div').text(), 60 );
     var titleArr_s = title.split(' ');
     var titleArr = [];
     var regExp = /[\{\}\[\]\/?.,;:|\‘’“”…)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi;
