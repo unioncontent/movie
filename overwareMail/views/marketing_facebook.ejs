@@ -271,7 +271,7 @@
       $('#reportrange span').html(moment().format('YYYY.MM.DD') + ' - ' + moment().format('YYYY.MM.DD'));
     }
     else{
-      $('#reportrange span').html(moment(new Date(sDateValue)).format('YYYY.MM.DD') + ' - ' + moment(new Date(eDateValue+' 23:59:59')).format('YYYY.MM.DD'));
+      $('#reportrange span').html(moment(new Date(sDateValue)).format('YYYY.MM.DD') + ' - ' + moment(new Date(eDateValue)).format('YYYY.MM.DD'));
     }
   });
   // 리스트 전체 선택시
@@ -540,7 +540,7 @@
   };
   var optionSet1 = {
     startDate: (sDateValue != '') ? moment(new Date(sDateValue)) : moment(),
-    endDate:  (eDateValue != '') ? moment(new Date(eDateValue+' 23:59:59')) : moment(),
+    endDate:  (eDateValue != '') ? moment(new Date(eDateValue)) : moment(),
     dateLimit: {
       days: 60
     },
