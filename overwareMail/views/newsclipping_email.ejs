@@ -110,6 +110,9 @@
           </div>
         </div>
       </div>
+      <div id="clone" style="display:none;">
+
+      </div>
       <!-- Modal start-->
       <div class='modal fade' id='mailList-Modal' role='dialog'>
         <div class='modal-dialog modal-lg' role='document'>
@@ -289,6 +292,12 @@
 <script src="/pages/email/js/modal.js"></script>
 <script src="/pages/email/js/select2.js"></script>
 <script src="/pages/email/js/movie.js"></script>
+<style>
+.news-delete{
+  color: red;
+  margin-left: 5px;
+}
+</style>
 <script type="text/javascript">
   $(document).ready(function() {
     // ie label css
@@ -302,7 +311,43 @@
     $('#date-span a').attr('href', "http://showbox.email/preview/newsclipping?date="+$('#datepicker2').val());
     $('#body-header a').attr('href', "http://showbox.email/preview/newsclipping?date="+$('#datepicker2').val());
   });
-
+  $(document).on('click','.news-delete',function(){
+    var delIdx = $(this).data('idx');
+    var type = $(this).data('type');
+    var str = $(this).data('str');
+    // console.log({idx : delIdx,table : type});
+    swal({
+      title: "기사를 삭제하시겠습니까?",
+      icon: "warning",
+      buttons: ["취소", true],
+      dangerMode: true,
+    }).then(function(value) {
+      if (value != null) {
+        $.ajax({
+          url: '/newsclipping/delete',
+          type: 'post',
+          data : {
+            idx : delIdx,
+            table : type,
+            idxStr : str
+          },
+          datatype : 'json',
+          error:function(request,status,error){
+            console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
+            swal("ERROR!", request.responseText, "error");
+          },
+          success:function(data){
+            if(data.status){
+              swal("SUCCESS!", '삭제했습니다.', "success")
+              .then(function(){
+                getNewsClippingData();
+              });
+            }
+          }
+        });
+      }
+    });
+  });
   $('#datepicker2').on('change',function(){
     getNewsClippingData();
     boxoffice();
@@ -387,7 +432,7 @@
             $('div[data-type=issue] .section-body tbody').append(html);
           });
           $.each(data.result.marketing, function(index, value) {
-            var html = '<tr><td style="padding: 9px 7px 5px 11px;border-bottom: 1px solid #f4f4f4;"><img alt="'+value.ps_name+'" src="http://showbox.email/images/newsclipping/'+value.ps_name+'_logo.png" style="width: 13px;height: 13px;margin-bottom: 3px;margin-right: 5px;vertical-align: text-bottom;"><div class="text" style="width:450px;display: inline-block;text-overflow: ellipsis;overflow: hidden;vertical-align: baseline;white-space: nowrap;    top: 4px;"><a href="'+value.url+'" target="_blank"  style="text-decoration: none !important;color: black;font-weight: bold;">'+value.ps_title+'</a></div><div class="info" style="color: #666;font-size: 11px;"><span class="date">총검출수 '+value.total_cnt+'</span><span class="bar" style="display: inline-block;overflow: hidden;width: 0;height: 11px;margin: -1px 5px 1px 4px;border-left: 1px solid #eaeaea;vertical-align: middle;"></span><span class="date">조회수 '+value.view_cnt+'</span><span class="bar" style="display: inline-block;overflow: hidden;width: 0;height: 11px;margin: -1px 5px 1px 4px;border-left: 1px solid #eaeaea;vertical-align: middle;"></span><span class="date">좋아요 '+value.like_cnt+'</span><span class="bar" style="display: inline-block;overflow: hidden;width: 0;height: 11px;margin: -1px 5px 1px 4px;border-left: 1px solid #eaeaea;vertical-align: middle;"></span><span class="date">댓글 '+value.reply_cnt+'</span></div></td><td style="border-bottom: 1px solid #f4f4f4;border-left: 1px solid #f4f4f4;text-align: center;color: #666;">'+value.ps_writer+'</td><td style="padding: 13px 0;border-bottom: 1px solid #f4f4f4;border-left: 1px solid #f4f4f4;text-align: center;color: #666;">'+value.writeDate+'</td></tr><tr><td colspan="3" style="border-bottom: 1px solid #d0cdcd;"><div class="text" style="width: 700px;display: inline-block;padding: 10px;white-space: pre-line;word-break: break-all;top: 4px;">'+((value.ps_content == null) ? '내용없음' :value.ps_content)+'</div></td></tr>';
+            var html = '<tr><td style="padding: 9px 7px 5px 11px;border-bottom: 1px solid #f4f4f4;"><img alt="'+value.ps_name+'" src="http://showbox.email/images/newsclipping/'+value.ps_name+'_logo.png" style="width: 13px;height: 13px;margin-bottom: 3px;margin-right: 5px;vertical-align: text-bottom;"><div class="text" style="width:450px;display: inline-block;text-overflow: ellipsis;overflow: hidden;vertical-align: baseline;white-space: nowrap;    top: 4px;"><a href="'+value.url+'" target="_blank"  style="text-decoration: none !important;color: black;font-weight: bold;">'+value.ps_title+'</a><i class="fas fa-times news-delete" data-idx="'+value.n_idx+'" data-type="marketing_'+value.m_type+'_mail"  data-str="n_idx"></i></div><div class="info" style="color: #666;font-size: 11px;"><span class="date">총검출수 '+value.total_cnt+'</span><span class="bar" style="display: inline-block;overflow: hidden;width: 0;height: 11px;margin: -1px 5px 1px 4px;border-left: 1px solid #eaeaea;vertical-align: middle;"></span><span class="date">조회수 '+value.view_cnt+'</span><span class="bar" style="display: inline-block;overflow: hidden;width: 0;height: 11px;margin: -1px 5px 1px 4px;border-left: 1px solid #eaeaea;vertical-align: middle;"></span><span class="date">좋아요 '+value.like_cnt+'</span><span class="bar" style="display: inline-block;overflow: hidden;width: 0;height: 11px;margin: -1px 5px 1px 4px;border-left: 1px solid #eaeaea;vertical-align: middle;"></span><span class="date">댓글 '+value.reply_cnt+'</span></div></td><td style="border-bottom: 1px solid #f4f4f4;border-left: 1px solid #f4f4f4;text-align: center;color: #666;">'+value.ps_writer+'</td><td style="padding: 13px 0;border-bottom: 1px solid #f4f4f4;border-left: 1px solid #f4f4f4;text-align: center;color: #666;">'+value.writeDate+'</td></tr><tr><td colspan="3" style="border-bottom: 1px solid #d0cdcd;"><div class="text" style="width: 700px;display: inline-block;padding: 10px;white-space: pre-line;word-break: break-all;top: 4px;">'+((value.ps_content == null) ? '내용없음' :value.ps_content)+'</div></td></tr>';
             $('div[data-type=marketing] .section-body tbody').append(html);
           });
           var obj = new Object();
@@ -395,7 +440,7 @@
             // 4.쇼박스기업뉴스
             if(value.news_type == "4"){
               //  title="'+value.media_title+'"
-              var html = '<tr><td style="padding: 16px 7px;border-bottom: 1px solid #f4f4f4;"><div style="max-width: 538px;display: inline-block;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;"><a style="text-decoration: none !important;color: black;font-weight: bold;" href="'+value.url+'" target="_blank">'+value.media_title+'</a></div></td><td style="padding: 13px 0;border: 1px solid #f4f4f4;text-align: center;color: #666;">'+value.media_name+'</td><td style="padding: 13px 0;border-bottom: 1px solid #f4f4f4;text-align: center;color: #666;">'+value.writeDate+'</td></tr>'
+              var html = '<tr><td style="padding: 16px 7px;border-bottom: 1px solid #f4f4f4;"><div style="max-width: 538px;display: inline-block;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;"><a style="text-decoration: none !important;color: black;font-weight: bold;" href="'+value.url+'" target="_blank">'+value.media_title+'</a><i class="fas fa-times news-delete" data-idx="'+value.media_idx+'" data-type="news_mail" data-str="media_idx"></i></div></td><td style="padding: 13px 0;border: 1px solid #f4f4f4;text-align: center;color: #666;">'+value.media_name+'</td><td style="padding: 13px 0;border-bottom: 1px solid #f4f4f4;text-align: center;color: #666;">'+value.writeDate+'</td></tr>'
               $('div[data-type='+value.news_type+'] .section-body tbody').append(html);
             }
             else{
@@ -403,7 +448,7 @@
               // if(value.thumbnail != null && value.thumbnail != ''){
               //   html += '<img src="'+value.thumbnail+'" alt="" style="display: inherit; float:left;width:80px;height:80px;padding-right: 13px;">';
               // }
-              html += '<div class="news-content"  data-idx="'+value.media_idx+'" style="font-size:12px;width: 743px;height:  12px;"><div class="title" style="float:  left;max-width: 533px;display: inline-block;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;"><a style="text-decoration: none !important;color: black;font-weight: bold;" href="'+value.url+'" target="_blank">'+value.media_title+'</a></div><div clacss="info" style="color: #666;float:  right;"><span class="media-name">'+value.media_name+'</span> <span class="bar" style="display: inline-block;overflow: hidden;width: 0;height: 11px;margin: -1px 5px 1px 4px;border-left: 1px solid #eaeaea;vertical-align: middle;"></span> <span class="date">'+value.writeDate+'</span></div>';
+              html += '<div class="news-content"  data-idx="'+value.media_idx+'" data-type="media" style="font-size:12px;width: 743px;height:  12px;"><div class="title" style="float:  left;max-width: 533px;display: inline-block;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;"><a style="text-decoration: none !important;color: black;font-weight: bold;" href="'+value.url+'" target="_blank">'+value.media_title+'</a></div><div clacss="info" style="color: #666;float:  right;"><span class="media-name">'+value.media_name+'</span> <span class="bar" style="display: inline-block;overflow: hidden;width: 0;height: 11px;margin: -1px 5px 1px 4px;border-left: 1px solid #eaeaea;vertical-align: middle;"></span> <span class="date">'+value.writeDate+'</span><i class="fas fa-times news-delete" data-idx="'+value.media_idx+'"  data-type="news_mail" data-str="media_idx"></i></div>';
               html +='</div></div>';
               if(value.news_detail != null && value.news_detail != ''){
                 if(value.news_detail in obj){
@@ -432,7 +477,7 @@
             $('div[data-idx='+index+']').after(html);
 
             $.each(value, function(i, v) {
-              html ='<li> <img src="https://ssl.pstatic.net/sstatic/search/pc/img/bu_news_sublst.gif" style="vertical-align:  text-top;"><a href="'+v.url+'" target="_blank"><div style="display: inline-block;overflow: hidden;max-width: 492px;text-decoration: none !important;color: black;margin-right: 5px;margin-left: 5px;text-overflow: ellipsis;white-space: nowrap;word-wrap: normal;word-break: normal;vertical-align: top;">'+v.media_title+'</div></a><span class="txt_sinfo" style="display: inline-block;overflow: hidden;max-width: 260px;white-space: nowrap;text-overflow: ellipsis;vertical-align: top;color: #666;"><span class="press">'+v.media_name+'</span><span class="bar" style="display: inline-block;overflow: hidden;width: 0;height: 11px;margin: -1px 5px 1px 4px;border-left: 1px solid #eaeaea;vertical-align: middle;"></span> '+v.writeDate+' </span> </li>';
+              html ='<li> <img src="https://ssl.pstatic.net/sstatic/search/pc/img/bu_news_sublst.gif" style="vertical-align:  text-top;"><a href="'+v.url+'" target="_blank"><div style="display: inline-block;overflow: hidden;max-width: 492px;text-decoration: none !important;color: black;margin-right: 5px;margin-left: 5px;text-overflow: ellipsis;white-space: nowrap;word-wrap: normal;word-break: normal;vertical-align: top;">'+v.media_title+'</div></a><span class="txt_sinfo" style="display: inline-block;overflow: hidden;max-width: 260px;white-space: nowrap;text-overflow: ellipsis;vertical-align: top;color: #666;"><span class="press">'+v.media_name+'</span><span class="bar" style="display: inline-block;overflow: hidden;width: 0;height: 11px;margin: -1px 5px 1px 4px;border-left: 1px solid #eaeaea;vertical-align: middle;"></span> '+v.writeDate+' <i class="fas fa-times news-delete" data-idx="'+v.media_idx+'"  data-type="news_mail" data-str="media_idx"></i></span> </li>';
               $('div[data-idx='+index+']').siblings('.relation_list').append(html);
             });
           });
@@ -497,14 +542,39 @@
       $('#movieList').append(html);
     });
   }
-
+  function getByteLength(s,b,i,c){
+    for(b=i=0;c=s.charCodeAt(i++);b+=c>>11?3:c>>7?2:1);
+    return b;
+  }
+  function settingMailBody(){
+    // 최대 65535
+    $("#M_body").clone().prependTo( "#clone" );
+    $("#clone").find('.news-delete').remove();
+    var o_body = $("#clone").html();
+    var bodyStr = o_body;
+    var dateStr = $.datepicker.formatDate('yy-mm-dd', new Date($('#datepicker2').val()));
+    var msg = '<div style="padding:  15px;text-align:  center;"><a href="http://showbox.email/preview/newsclipping?date='+dateStr+'" target="_blank" style="text-align:  center;font-size:16px;font-family:helvetica, arial, sans-serif;color: #ffffff;border-radius:100px;padding:8px 20px;border: 1px solid #ff8b00;display:inline-block;background:  #ff8b00;font-weight:bold;text-decoration: none;">뉴스클리핑 전체보기</div>';
+    if(getByteLength(bodyStr) > 65535){
+      jQuery.fn.reverse = [].reverse;
+      $("#clone").find('.section').reverse().each(function (i) {
+        console.log($(this).data('type'));
+        $(this).remove();
+        if(getByteLength($("#clone").html()+msg) < 65535){
+          return false;
+        }
+      });
+      $("#clone").find('.section').last().after(msg);
+      bodyStr = $("#clone").html();
+    }
+    $("#clone").empty();
+    return {str:bodyStr,o_str:o_body};
+  }
   // 메일 발송 버튼 클릭시
   $(".sendBtn").on("click",function(){
     var param = {
       'M_sender': $(".sender-select").select2("val"),
       'M_recipi': $(".recipi-select").select2("val"),
       'M_group': $('.group-select').val() || [],
-      'M_body': $("#M_body").parents('.col-sm-10').html(),
       'M_type': $("input:radio[name=M_type]:checked").val()
     };
     var check=true;
@@ -516,9 +586,6 @@
     }
     if($('#datepicker2').val() == ""){
       check = requiredMessage("datepicker2","보고날짜를 선택해주세요.");
-    }
-    if(param["M_body"] == "" || param["M_body"] == "<p><br></p>"){
-      check = requiredMessage("M_body","메일내용 입력해주세요.");
     }
     if(param["M_type"] == "1"){
       var time = $('#timepicker').val();
@@ -558,7 +625,10 @@
       if (value != null) {
         $('span.messages').find('.error').text('');
         var dateStr = $.datepicker.formatDate('yy-mm-dd', new Date($('#datepicker2').val()));
-        param['M_body'] = '<div id="msg" style="width:801px;text-align:center;margin-bottom:10px;"><p style="font-size: 13px; font-weight: bold;">[ 메일 전체내용을 보시려면 <a href="http://showbox.email/preview/newsclipping?date='+dateStr+'" target="_blank" style="font-family:맑은고딕,malgungothic,돋움,dotum;">여기</a>를 눌러 주세요 ]</p></div>'+param['M_body']
+        var bodyDic = settingMailBody();
+        param['M_body'] = bodyDic.str;
+        param['o_body'] = bodyDic.o_str;
+        // param['M_body'] = '<div id="msg" style="width:801px;text-align:center;margin-bottom:10px;"><p style="font-size: 13px; font-weight: bold;">[ 메일 전체내용을 보시려면 <a href="http://showbox.email/preview/newsclipping?date='+dateStr+'" target="_blank" style="font-family:맑은고딕,malgungothic,돋움,dotum;">여기</a>를 눌러 주세요 ]</p></div>'+param['M_body'];
         param['M_subject'] = '['+dateStr+'] 일일 주요 뉴스';
         SendEmails(param);
       }
@@ -573,7 +643,10 @@
       datatype : 'json',
       error:function(request,status,error){
         console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
-        swal("ERROR!", request.responseText, "error");
+        swal("ERROR!", request.responseText, "error")
+        .then(function(){
+          location.reload();
+        });
       },
       success:function(data){
         if(data.status){
@@ -582,7 +655,10 @@
             location.reload();
           });
         }else{
-          swal("ERROR!", '새로고침 후 다시 시도해주세요.', "error");
+          swal("ERROR!", '새로고침 후 다시 시도해주세요.', "error")
+          .then(function(){
+            location.reload();
+          });
         }
       }
     });
