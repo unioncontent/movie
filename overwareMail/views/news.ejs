@@ -20,8 +20,9 @@
         <div class="col-md-12">
           <div class="alert alert-default" style="border-radius:  0; border-width:  2px;  margin-bottom: 1rem;">
           	<ul class="p-l-15 f-12" style="list-style-type: disc; color:  #666;">
-              <li>기사의 썸네일은 넣고자 하는 이미지의 URL 주소를 해당 기사의 박스 칸에 작성하시면 됩니다.</li>
-              <li>썸네일, 대분류, 세부기사 수정 및 선택기사 삭제는 선택기사 리스트 페이지에서 할 수있습니다.</li>
+              <!-- <li>기사의 썸네일은 넣고자 하는 이미지의 URL 주소를 해당 기사의 박스 칸에 작성하시면 됩니다.</li> -->
+              <li>해당 기사의 그룹핑 버튼을 누르면 기사 제목을 기준으로 날짜와 검색어 조건을 적용하여 관련 기사 리스트가 보여집니다.</li>
+              <li>대분류, 세부기사 수정 및 선택기사 삭제는 선택기사 리스트 페이지에서 할 수있습니다.</li>
               <li>대표기사에 있는 번호를 다른 기사의 세부기사 칸에 작성해주시면 기사 그룹핑이 됩니다.</li>
           	</ul>
         	</div>
@@ -504,7 +505,7 @@
       $('#reportrange span').html(moment().format('YYYY.MM.DD') + ' - ' + moment().format('YYYY.MM.DD'));
     }
     else{
-      $('#reportrange span').html(moment(new Date(sDateValue)).format('YYYY.MM.DD') + ' - ' + moment(new Date(eDateValue+' 23:59:59')).format('YYYY.MM.DD'));
+      $('#reportrange span').html(moment(new Date(sDateValue)).format('YYYY.MM.DD') + ' - ' + moment(new Date(eDateValue)).format('YYYY.MM.DD'));
     }
   });
   // 그룹핑 클릭시
@@ -1309,7 +1310,7 @@
   };
   var optionSet1 = {
     startDate: (sDateValue != '') ? moment(new Date(sDateValue)) : moment(),
-    endDate:  (eDateValue != '') ? moment(new Date(eDateValue+' 23:59:59')) : moment(),
+    endDate:  (eDateValue != '') ? moment(new Date(eDateValue)) : moment(),
     dateLimit: {
       days: 60
     },
