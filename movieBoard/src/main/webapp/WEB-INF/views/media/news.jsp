@@ -174,7 +174,14 @@
                                 <thead>
                                   <tr>
                                   <c:if test="${user.user_name == 'union'}">
-                                  	<th width="1%"></th>
+                                  	<th width="1%">
+                                  	<div class="border-checkbox-section">
+			                          <div class="border-checkbox-group border-checkbox-group-default">
+                                  		<input type="checkbox" name="ck" id="checkall" class="border-checkbox news-checkbox">
+                                  		<label class="border-checkbox-label" for="checkall"></label>
+                                  	  </div>
+                                  	</div>
+                                  	</th>
                                   </c:if>
                                     <th width="5%">NO</th>
                                     <th width="10%">등록날짜</th>
@@ -191,12 +198,17 @@
                                     <input type="hidden" value="${mediaList.media_idx}" name="media_idx">
                                     <c:if test="${user.user_name == 'union'}">
                                     <td>
-                                    <c:if test="${mediaList.media_state == 1}">
-                                    <input type="checkbox" name="ck" value="${mediaList.media_idx}" checked="checked">
-                                    </c:if>
-                                    <c:if test="${mediaList.media_state == null || mediaList.media_state == 0}">
-                                    <input type="checkbox" name="ck" value="${mediaList.media_idx}">
-                                    </c:if>
+                                    <div class="border-checkbox-section">
+			                          <div class="border-checkbox-group border-checkbox-group-default">
+			                            <c:if test="${mediaList.media_state == 1}">
+		                                    <input type="checkbox" name="ck" id="checkbox${index.count}" class="border-checkbox news-checkbox" value="${mediaList.media_idx}" checked="checked">
+		                                </c:if>
+		                                <c:if test="${mediaList.media_state == null || mediaList.media_state == 0}">
+		                                    <input type="checkbox" name="ck" id="checkbox${index.count}" class="border-checkbox news-checkbox" value="${mediaList.media_idx}">
+	                                    </c:if>
+			                            <label class="border-checkbox-label" for="checkbox${index.count}"></label>
+			                          </div>
+			                        </div>
                                     </td>
                                     </c:if>
                                     <th width="5%" style="vertical-align:middle;">${totalCount -index.count +1 -minusCount}</th>
@@ -592,7 +604,19 @@
 
 			   searchList();
 		});
-
+		
+		//최상단 체크박스 클릭
+	    $("#checkall").click(function(){
+	        //클릭되었으면
+	        if($("#checkall").prop("checked")){
+	            //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 true로 정의
+	            $("input[name=ck]").prop("checked",true);
+	            //클릭이 안되있으면
+	        }else{
+	            //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 false로 정의
+	            $("input[name=ck]").prop("checked",false);
+	        }
+		 })
 
 		// 검색버튼 클릭시
 		$('#searchBtn').on("click", function(event){

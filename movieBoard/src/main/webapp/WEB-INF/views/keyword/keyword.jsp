@@ -132,6 +132,14 @@
                       <div class="card-block table-border-style">
                         <div class="table-responsive">
                           <table class="table table-bordered table-sm">
+                          <c:if test="${empty mainList}">
+					          <tbody>
+						          <tr>
+						          	<td style="vertical-align:middle;" align="center" height="150px"><h5>등록된 키워드가 없습니다.</h5></td>
+						          </tr>
+					          </tbody>
+				          </c:if>
+				          <c:if test="${!empty mainList}">
                             <thead>
                               <tr>
                                 <th width="1%">NO</th>
@@ -186,6 +194,7 @@
                               </tr>
                               </c:forEach>
                             </tbody>
+                            </c:if>
                           </table>
                         </div>
                       </div>

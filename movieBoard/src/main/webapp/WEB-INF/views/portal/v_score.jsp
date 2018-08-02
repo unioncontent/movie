@@ -337,14 +337,14 @@
                                       </div>
                                       <div class="col-sm-6" style="text-align: center;">
                   						  <h4 class="sub-title"><font style="font-weight: bold; color: black;">분류비율표</font></h4>
-                    					  <h2 class="text-info text-center typography p-t-5 p-b-25 m-b-0">
+                    					  <h3 class="text-info text-center typography p-t-5 p-b-25 m-b-0">
                                           <c:if test="${scoreCount == 1 or scoreCount == 2 or scoreCount == 3}"><strong class="text-danger">경고</strong></c:if>
                                           <c:if test="${scoreCount == 4 or scoreCount == 5}"><strong class="text-warning">주의</strong></c:if>
                                           <c:if test="${scoreCount == 6 or scoreCount == 7}"><strong class="text-info">양호</strong></c:if>
                                           <c:if test="${scoreCount == 8 or scoreCount == 9}"><strong class="text-primary">좋음</strong></c:if>
                                           <c:if test="${scoreCount == 10}"><strong class="text-success">아주좋음</strong></c:if>
                     					  <small style="margin-left: 0;"><font style="font-weight: bold; color: black;">${scoreCount}</font></small>
-                  						  </h2>
+                  						  </h3>
                   						</div>
                                     </div>
                                   </div>
@@ -375,7 +375,14 @@
                                         <thead>
                                           <tr>
                                           	<c:if test="${user.user_name == 'union'}">
-                                          	<th width="1%"></th>
+                                          	<th width="1%">
+                                          	<div class="border-checkbox-section">
+					                          <div class="border-checkbox-group border-checkbox-group-default">
+		                                  		<input type="checkbox" name="ck" id="checkall" class="border-checkbox news-checkbox">
+		                                  		<label class="border-checkbox-label" for="checkall"></label>
+		                                  	  </div>
+		                                  	</div>
+                                          	</th>
                                           	</c:if>
                                             <th>NO</th>
                                             <th>등록일</th>
@@ -391,13 +398,18 @@
                                           	<input type="hidden" value="${score.portal_idx}" name="portal_idx">
                                           	<c:if test="${user.user_name == 'union'}">
                                           	<td>
-                                          	<c:if test="${score.portal_state == 1}">
-		                                    <input type="checkbox" name="ck" value="${score.portal_idx}" checked="checked">
-		                                    </c:if>
-		                                    <c:if test="${score.portal_state == null || score.portal_state == 0}">
-		                                    <input type="checkbox" name="ck" value="${score.portal_idx}">
-		                                    </c:if>
-                                          	</td>
+		                                    <div class="border-checkbox-section">
+					                          <div class="border-checkbox-group border-checkbox-group-default">
+					                            <c:if test="${score.portal_state == 1}">
+				                                    <input type="checkbox" name="ck" id="checkbox${index.count}" class="border-checkbox news-checkbox" value="${score.portal_idx}" checked="checked">
+				                                </c:if>
+				                                <c:if test="${score.portal_state == null || score.portal_state == 0}">
+				                                    <input type="checkbox" name="ck" id="checkbox${index.count}" class="border-checkbox news-checkbox" value="${score.portal_idx}">
+			                                    </c:if>
+					                            <label class="border-checkbox-label" for="checkbox${index.count}"></label>
+					                          </div>
+					                        </div>
+		                                    </td>
                                           	</c:if>
                                             <th>${totalCount - minusCount - index.count + 1}</th>
                                             <td>${score.writeDate}</td>
@@ -695,6 +707,19 @@
 			   searchList();
 
 		});
+		
+		//최상단 체크박스 클릭
+	    $("#checkall").click(function(){
+	        //클릭되었으면
+	        if($("#checkall").prop("checked")){
+	            //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 true로 정의
+	            $("input[name=ck]").prop("checked",true);
+	            //클릭이 안되있으면
+	        }else{
+	            //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 false로 정의
+	            $("input[name=ck]").prop("checked",false);
+	        }
+		 })
 
 		/* var idx = $('input[name=portal_idx]').val(); */
 
