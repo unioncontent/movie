@@ -143,7 +143,7 @@
                         </div>
                       </td>
                       <th><%= listCount - i - offset %></th>
-                      <td><%= list[i].writeDate %></td>
+                      <td><div class="date_nobr"><%= list[i].writeDate %></div></td>
                       <td><input type="text" name="datefilter" class="datepicker form-control" value="<%= list[i].reportDate %>"/></td>
                       <td>
                         <a href="<%= list[i].url %>" target="_blank" title="<%= list[i].media_title %>">
@@ -406,6 +406,10 @@
   .table input, .table select ,.table tbody div{
     font-size: 12px;
   }
+  .date_nobr{
+    width: 63px;
+    white-space: pre-line;
+  }
   .title_nobr,.nobr,.key_nobr,.media_nobr,.rank_nobr{
     text-overflow: ellipsis;
     overflow: hidden;
@@ -569,7 +573,7 @@
           </td>\
           <th>'+numIdx+'</th>\
           <th>'+percent+'%</th>\
-          <td>'+item.writeDate+'</td>\
+          <td><div class="date_nobr">'+item.writeDate+'</div></td>\
           <td><input type="text" name="datefilter" class="datepicker form-control"  value="'+((item.reportDate != null && item.reportDate != '') ? item.reportDate : '')+'"/></td>\
           <td>\
             <a href="'+item.url+'" target="_blank" title="'+item.media_title+'">\
@@ -1046,7 +1050,7 @@
               </div>\
             </td>\
             <th>'+numIdx+'</th>\
-            <td>'+item.writeDate+'</td>\
+            <td><div class="date_nobr">'+item.writeDate+'</div></td>\
             <td><input type="text" name="datefilter" class="datepicker form-control"  value="'+((item.reportDate != null && item.reportDate != '') ? item.reportDate : '')+'"/></td>\
             <td>\
               <a href="'+item.url+'" target="_blank" title="'+item.media_title+'">\

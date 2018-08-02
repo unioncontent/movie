@@ -18,6 +18,14 @@ var isAuthenticated = function (req, res, next) {
   }
   res.redirect('/login');
 };
+router.post('/delete',isAuthenticated, async function(req, res) {
+  var result = await newsclipping.deleteList(req.body);
+  if(!('protocol41' in result)){
+    res.status(500).send('newsclipping delete query 실패');
+    return false;
+  }
+  res.send({status:true});
+});
 
 router.get('/send',isAuthenticated,async function(req, res) {
   var searchParam = [req.user.user_admin,0,10];
@@ -74,7 +82,7 @@ router.post('/send',isAuthenticated, async function(req, res) {
   var mailAllParam = {
     M_sender: req.body['M_sender'],
     M_type: req.body['M_type'],
-    M_body: req.body['M_body'].replace(/(^\s*)|(\s*$)/, ''),
+    M_body: req.body['o_body'].replace(/(^\s*)|(\s*$)/, ''),
     M_subject: req.body['M_subject'],
     M_id: req.user.n_idx
   };
@@ -109,16 +117,16 @@ router.post('/send',isAuthenticated, async function(req, res) {
     var now = dt.format('Y-m-d H:M:S');
     var queryParam = {
       'MSGID':m_idx_a,
-      'CONTENT':mailAllParam.M_body,
+      'CONTENT':req.body['M_body'],
       'STATUS':'1',
       'GENDATE':now
     };
     try {
       var minify = require('html-minifier').minify;
-      var result = await minify(mailAllParam.M_body);
+      var result = await minify(queryParam['CONTENT']);
       queryParam['CONTENT'] = result;
     } catch (e) {
-      queryParam['CONTENT'] = mailAllParam.M_body;
+      console.log(e);
     }
     await maillink.insert('ML_AUTOMAIL_MESSAGE',queryParam);
 

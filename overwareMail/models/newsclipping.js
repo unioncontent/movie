@@ -32,6 +32,13 @@ var newsclipping = {
     var sql = insertSqlSetting(Object.keys(param));
     return await getResult(sql,pValue);
   },
+  deleteList: async function(param){
+    var sql = "delete from "+param.table+" where "+param.idxStr+"=?";
+    if(param.table == "news_data"){
+      sql += " or news_detail="+param.idx;
+    }
+    return await getResult(sql,param.idx);
+  },
   delete: async function(param){
     var sql = "delete from news_mail where media_idx=?";
     return await getResult(sql,param);
@@ -86,7 +93,8 @@ var newsclipping = {
   selectMediaTable: async function(body,param,keyword){
     var sql = "SELECT * FROM news_view where title_key in (select distinct keyword_main from keyword_data where user_idx=? or user_idx=21) and media_name!='daum'";
     if(('sDate' in body) && ('eDate' in body)){
-      sql+=' and writeDate between \''+body.sDate+'\' and \''+body.eDate+'\'';
+      sql+=' and writeDate between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
+      // sql+=' and writeDate between \''+body.sDate+'\' and \''+body.eDate+'\'';
     }
     if('keyword' in body){
       sql +=' and title_key = \''+body.keyword+'\'';
@@ -161,7 +169,8 @@ var newsclipping = {
   selectMediaTableCount: async function(body,param){
     var sql = 'SELECT count(*) as total FROM news_view where title_key in (select distinct keyword_main from keyword_data where user_idx=? or user_idx=21) and media_name!=\'daum\'';
     if(('sDate' in body) && ('eDate' in body)){
-      sql+=' and writeDate between \''+body.sDate+'\' and \''+body.eDate+'\'';
+      sql+=' and writeDate between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
+      // sql+=' and writeDate between \''+body.sDate+'\' and \''+body.eDate+'\'';
     }
     if('keyword' in body){
       sql +=' and title_key = \''+body.keyword+'\'';
