@@ -112,6 +112,13 @@
                           </c:forEach>
                           </c:if>
                         </select>
+                        <select id= "selectPerPageNum" name="select" class="col-md-1 form-control form-control-inverse m-r-10 m-b-10 p-r-5 f-left select-left">	
+	                        <option value="30">리스트</option>
+	                        <option id= "10" >10</option>
+	                        <option id= "30" >30</option>
+	                        <option id = "60">60</option>
+	                        <option id = "120">90</option>
+                        </select>
                       </div>
                       <div class="col-md-5">
                         <!-- date picker start -->
@@ -145,12 +152,6 @@
                       <div class="col-lg-12">
                         <div class="card">
                           <div class="card-header">
-                            <select id= "selectPerPageNum" name="select" class="col-sm-1 form-control form-control-inverse m-r-5 m-b-5 m-t-5 p-r-5 f-left list-select" style="height:40px;">
-                              <option value="10">10</option>
-                              <option value="30">30</option>
-                              <option value="50">50</option>
-                              <option value="100">100</option>
-                            </select>
                             <select id = "selectSearchType" name="select" class="col-sm-1 form-control form-control-inverse m-r-5 m-b-5 m-t-5 f-left search-select" style="height:40px;">
 							  <option id="r" value="r">기자명</option>
                               <option id="m" value="m">언론사명</option>
@@ -171,6 +172,14 @@
                           <div class="card-block table-border-style">
                             		<div class="table-responsive">
                               <table class="table table-bordered table-sm" style="vertical-align:middle;">
+                              <c:if test="${empty mediaList}">
+					          <tbody>
+						          <tr>
+						          	<td style="vertical-align:middle;" align="center" height="150px"><h5>등록된 기사가 없습니다.</h5></td>
+						          </tr>
+					          </tbody>
+					          </c:if>
+					          <c:if test="${!empty mediaList}">
                                 <thead>
                                   <tr>
                                   <c:if test="${user.user_name == 'union'}">
@@ -367,6 +376,7 @@
                                     </td>
                                   </tr>
                                 </tfoot>
+                                </c:if>
                               </table>
                              </div></div></div>
                       </div></div></div></div>
@@ -513,6 +523,21 @@
 		$selectKeyword.change(function(){
 			console.log("selectKeyword clicked....");
 			console.log($('#selectKeyword option:selected').val());
+
+			searchList();
+
+		});
+		
+		var ListOption = decodeURI(window.location.href.split("PerPageNum=")[1]).split("&")[0];
+
+		var $selectPerPageNum = $('#selectPerPageNum');
+		
+		$selectPerPageNum[0][0].disabled = true;
+		
+		// 글 수 변경 선택시
+		$selectPerPageNum.change(function(){
+			console.log("selectPerPageNum clicked....");
+			console.log($("#selectPerPageNum option:selected").val());
 
 			searchList();
 

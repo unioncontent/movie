@@ -305,10 +305,15 @@
                                             <input type="hidden" value="${fV.sns_content}" name="sns_content">
                                             </td>
                                             <td>
+                                            <c:if test="${fV.sns_subcontent eq '광고'}">
+                                            	광고
+                                            </c:if>
+                                            <c:if test="${fV.sns_subcontent ne '광고'}">
                                             <input type="text" value="${fV.sns_subcontent}" name="sns_subcontent" style="vertical-align:middle; max-width:300px; height: 35px; border-color: #dcdcdc; border: 1px solid #dcdcdc;">
                                             <button type="button" class="insertBtn2 btn btn-list waves-effect waves-light alert-confirm1" data-original-title="등록">
 		      								  <span class="icofont icofont-ui-check"></span>
 		    								</button>
+		    								</c:if>
                                             </td>
                                             <td>
                                             <div class="content-nowrap">
