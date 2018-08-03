@@ -65,7 +65,7 @@ var newsclipping = {
   selectMediaTable2: async function(body,k_list){
     var sql = "SELECT * FROM news_view where title_key in (select distinct keyword_main from keyword_data where user_idx=1 or user_idx=21) and media_name!='daum'";
     if(('sDate' in body) && ('eDate' in body)){
-      sql+=' and writeDate between \''+body.sDate+'\' and \''+body.eDate+'\'';
+      sql+=' and writeDate between \''+body.sDate+'  00:00:00\' and \''+body.eDate+' 23:59:59\'';
     }
     if('search' in body){
       sql +=' and (media_title like \'%'+body.search.replace(/'/gi,"''").replace(/[?]/gi,"")+'%\' or media_content like \'%'+body.search.replace(/'/gi,"''").replace(/[?]/gi,"")+'%\')';
