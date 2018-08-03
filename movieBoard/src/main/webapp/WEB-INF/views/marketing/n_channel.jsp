@@ -326,10 +326,15 @@
                                             <input type="hidden" value="${nV.portal_title}" name="portal_title">
                                             </td>
                                             <td>
+                                            <c:if test="${user.user_name == 'union'}">
                                             <input type="text" value="${nV.portal_subtitle}" name="portal_subtitle" style="vertical-align:middle; max-width:300px; height: 35px; border-color: #dcdcdc; border: 1px solid #dcdcdc;">
                                             <button type="button" class="insertBtn2 btn btn-list waves-effect waves-light alert-confirm1" data-original-title="등록">
 		      								  <span class="icofont icofont-ui-check"></span>
 		    								</button>
+		    								</c:if>
+		    								<c:if test="${user.user_name != 'union'}">
+		    								${nV.portal_subtitle}
+		    								</c:if>
                                             </td>
                                             <td>
                                             <div class="content-nowrap">

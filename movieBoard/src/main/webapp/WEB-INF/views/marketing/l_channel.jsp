@@ -305,6 +305,7 @@
                                             <input type="hidden" value="${fV.sns_content}" name="sns_content">
                                             </td>
                                             <td>
+                                            <c:if test="${user.user_name == 'union'}">
                                             <c:if test="${fV.sns_subcontent eq '광고'}">
                                             	광고
                                             </c:if>
@@ -313,6 +314,10 @@
                                             <button type="button" class="insertBtn2 btn btn-list waves-effect waves-light alert-confirm1" data-original-title="등록">
 		      								  <span class="icofont icofont-ui-check"></span>
 		    								</button>
+		    								</c:if>
+		    								</c:if>
+		    								<c:if test="${user.user_name != 'union'}">
+		    								${fV.sns_subcontent}
 		    								</c:if>
                                             </td>
                                             <td>
