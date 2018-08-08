@@ -72,8 +72,13 @@ router.get('/preview',async function(req, res, next) {
   if('page' in req.query){
     data.currentPage = req.query.page;
   }
-  res.render('preview',data);
+  var pageName = 'perview';
+  if('type' in req.query){
+    pageName = 'perview_html';
+  }
+  res.render(pageName,data);
 });
+
 router.get('/preview/newsclipping',async function(req, res, next) {
   var data = {layout: false};
   var queryResult = [];
