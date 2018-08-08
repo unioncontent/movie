@@ -72,9 +72,9 @@ router.get('/preview',async function(req, res, next) {
   if('page' in req.query){
     data.currentPage = req.query.page;
   }
-  var pageName = 'perview';
+  var pageName = 'preview';
   if('type' in req.query){
-    pageName = 'perview_html';
+    pageName = 'preview_html';
   }
   res.render(pageName,data);
 });
