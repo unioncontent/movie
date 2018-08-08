@@ -26,13 +26,13 @@ var mail = {
     return await getResult(sql,param);
   },
   deleteMlAT: async function(param){
-    var sql = 'delete from union_mail.ml_automail_tran where MSGID=?;';
+    var sql = 'delete from union_mail.ml_automail_tran where ETC1=?;';
     return await getResult(sql,param)
     // sql = 'delete from ml_automail_tran_201805 where MSGID=?;';
     // return await getResult(sql,param);
   },
   deleteMlABackUp: async function(table,param){
-    sql = 'delete from union_mail.'+table+' where MSGID=?;';
+    sql = 'delete from union_mail.'+table+' where ETC1=?;';
     return await getResult(sql,param);
   },
   selectResultDetail:async function(param){
@@ -48,7 +48,7 @@ var mail = {
     return await getResult(sql,param.arr);
   },
   selectResult: async function(param){
-    var sql = 'select distinct RSLTMSG from union_mail.ml_automail_tran where MSGID = ?';
+    var sql = 'select distinct RSLTMSG from union_mail.ml_automail_tran where ETC1 = ?';
     var result = await getResult(sql,param);
     var returnVal = false;
     console.log(result);
@@ -59,11 +59,11 @@ var mail = {
     return returnVal;
   },
   selectResult2: async function(param){
-    var sql = 'select * from union_mail.ml_automail_tran where MSGID = ?';
+    var sql = 'select * from union_mail.ml_automail_tran where ETC1 = ?';
     return await getResult(sql,param);
   },
   selectResult3: async function(param){
-    var sql = 'select * from union_mail.ml_automail_tran where MSGID = ? and EMTOADDRESS = ?';
+    var sql = 'select * from union_mail.ml_automail_tran where ETC1 = ? and EMTOADDRESS = ?';
     return await getResult(sql,param);
   }
 }
