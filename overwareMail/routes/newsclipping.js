@@ -115,20 +115,22 @@ router.post('/send',isAuthenticated, async function(req, res) {
   if(m_idx_a){
     var dt = datetime.create();
     var now = dt.format('Y-m-d H:M:S');
-    var queryParam = {
-      'MSGID':m_idx_a,
-      'CONTENT':req.body['M_body'],
-      'STATUS':'1',
-      'GENDATE':now
-    };
-    try {
-      var minify = require('html-minifier').minify;
-      var result = await minify(queryParam['CONTENT']);
-      queryParam['CONTENT'] = result;
-    } catch (e) {
-      console.log(e);
-    }
-    await maillink.insert('ML_AUTOMAIL_MESSAGE',queryParam);
+    var dateStr = dt.format('Y-m-d');
+    // ML_AUTOMAIL_MESSAGE INSERT
+    // var queryParam = {
+    //   'MSGID':m_idx_a,
+    //   'CONTENT':req.body['M_body'],
+    //   'STATUS':'1',
+    //   'GENDATE':now
+    // };
+    // try {
+    //   var minify = require('html-minifier').minify;
+    //   var result = await minify(queryParam['CONTENT']);
+    //   queryParam['CONTENT'] = result;
+    // } catch (e) {
+    //   console.log(e);
+    // }
+    // await maillink.insert('ML_AUTOMAIL_MESSAGE',queryParam);
 
     var senderInfo = await mailListA.getOneInfo(mailAllParam.M_sender);
     var sender = (senderInfo.length > 0) ? senderInfo[0]: [];
@@ -156,17 +158,31 @@ router.post('/send',isAuthenticated, async function(req, res) {
             await nMailDetailB.insert(mailDetailParam);
 
             // 메일 보내기
+            // var param = {
+            //   'AUTOMAILID':'AU-4126512',
+            //   'CHANNEL':'1',
+            //   'EMSUBJECT':mailAllParam.M_subject,
+            //   'EMFROMNAME':sender.M_name,
+            //   'EMFROMADDRESS':sender.M_email,
+            //   'EMTONAME': mailDetailParam.P_name,
+            //   'EMTOADDRESS':mailDetailParam.E_mail,
+            //   'SENDTIME':('end_reserve_time' in req.body) ? mailDetailParam['M_send'] : now,
+            //   'GENDATE':now,
+            //   'MSGID':m_idx_a
+            // };
             var param = {
               'AUTOMAILID':'AU-4126512',
               'CHANNEL':'1',
+              'MSGGENTYPE':'U',
               'EMSUBJECT':mailAllParam.M_subject,
               'EMFROMNAME':sender.M_name,
               'EMFROMADDRESS':sender.M_email,
               'EMTONAME': mailDetailParam.P_name,
               'EMTOADDRESS':mailDetailParam.E_mail,
+              'EMMSGURL':'http://showbox.email/preview/newsclipping/html?date='+dateStr,
               'SENDTIME':('end_reserve_time' in req.body) ? mailDetailParam['M_send'] : now,
               'GENDATE':now,
-              'MSGID':m_idx_a
+              'ETC1':m_idx_a
             };
             console.log(param);
             await maillink.insert('ml_automail_tran',param);
@@ -312,11 +328,11 @@ router.post('/list/delete',isAuthenticated, async function(req, res) {
     res.status(500).send('nMailDetailB delete query 실패');
     return false;
   }
-  result = await maillink.deleteMlAMSG(req.body.idx);
-  if(!('protocol41' in result)){
-    res.status(500).send('ml_automail_message delete query 실패');
-    return false;
-  }
+  // result = await maillink.deleteMlAMSG(req.body.idx);
+  // if(!('protocol41' in result)){
+  //   res.status(500).send('ml_automail_message delete query 실패');
+  //   return false;
+  // }
   result = await maillink.deleteMlAT(req.body.idx);
   if(!('protocol41' in result)){
     res.status(500).send('ml_automail_tran delete query 실패');
