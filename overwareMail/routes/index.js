@@ -100,7 +100,25 @@ router.get('/preview/newsclipping',async function(req, res, next) {
     data.view = '';
     data.status = 'false';
   }
-  res.render('newsclipping_preview2',data);
+  res.render('newsclipping_preview',data);
+});
+
+router.get('/preview/newsclipping/html',async function(req, res, next) {
+  var data = {layout: false};
+  var queryResult = [];
+  if('idx' in req.query){
+    queryResult = await newsclipping.selectOneMailBodyDate(req.query.idx);
+  }
+  else{
+    queryResult = await newsclipping.selectOneMailBodyDate2(req.query.date);
+  }
+  if(queryResult.length > 0){
+    data.view = queryResult[0].M_body;
+  }
+  else{
+    data.view = '';
+  }
+  res.render('newsclipping_html',data);
 });
 
 // 메일 미리보기
