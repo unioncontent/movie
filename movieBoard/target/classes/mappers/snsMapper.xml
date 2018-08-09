@@ -36,7 +36,7 @@
 			
 		</if>
 		<if test="selectKey != null">
-				and keyword in (select keyword from keyword_data where keyword_main = #{selectKey})
+				and keyword in (select keyword from keyword_data where keyword_property = '포함' and keyword_main = #{selectKey})
 			</if>
 		<if test="startDate != null and endDate != null">
 			and writeDate <![CDATA[>=]]> #{startDate}
@@ -77,7 +77,7 @@
 					)
 		</if>
 		<if test="selectKey != null">
-				and keyword in (select keyword from keyword_data where keyword_main = #{selectKey})
+				and keyword in (select keyword from keyword_data where keyword_property = '포함' and keyword_main = #{selectKey})
 			</if>	
 		<if test="startDate == null">
 			and createDate <![CDATA[>=]]> CURDATE()
@@ -123,7 +123,7 @@
 					)
 		</if>
 		<if test="selectKey != null">
-				and keyword in (select keyword from keyword_data where keyword_main = #{selectKey})
+				and keyword in (select keyword from keyword_data where keyword_property = '포함' and keyword_main = #{selectKey})
 			</if>	
 		<if test="startDate == null">
 			and writeDate <![CDATA[>=]]> CURDATE()
@@ -168,7 +168,7 @@
 					)
 		</if>
 		<if test="selectKey != null">
-				and keyword in (select keyword from keyword_data where keyword_main = #{selectKey})
+				and keyword in (select keyword from keyword_data where keyword_property = '포함' and keyword_main = #{selectKey})
 			</if>	
 		<if test="startDate == null">
 			and createDate <![CDATA[>=]]> CURDATE()
@@ -245,7 +245,7 @@
 					)
 		</if>
 		<if test="selectKey != null">
-				and keyword in (select keyword from keyword_data where keyword_main = #{selectKey})
+				and keyword in (select keyword from keyword_data where keyword_property = '포함' and keyword_main = #{selectKey})
 			</if>	
 		<if test="startDate == null">
 			and writeDate <![CDATA[>=]]> date_add(CURDATE(), interval -1 day)  
@@ -1186,7 +1186,7 @@
  		where
  			sns_name = 'facebook'
  		and 
-			keyword in (select keyword from keyword_data where keyword_main = #{selectKey})
+			keyword in (select keyword from keyword_data where keyword_property = '포함' and keyword_main = #{selectKey})
 		and writeDate <![CDATA[>=]]> #{startDate}
 		and writeDate <![CDATA[<=]]> #{endDate}
 
@@ -1199,7 +1199,7 @@
  		where
  			sns_name = 'instagram'
  		and 
-			keyword in (select keyword from keyword_data where keyword_main = #{selectKey})
+			keyword in (select keyword from keyword_data where keyword_property = '포함' and keyword_main = #{selectKey})
 		and createDate <![CDATA[>=]]> #{startDate}
 		and createDate <![CDATA[<=]]> #{endDate}
 
@@ -1212,7 +1212,7 @@
  		where
  			sns_name = 'twitter'
  		and 
-			keyword in (select keyword from keyword_data where keyword_main = #{selectKey})
+			keyword in (select keyword from keyword_data where keyword_property = '포함' and keyword_main = #{selectKey})
 		and createDate <![CDATA[>=]]> #{startDate}
 		and createDate <![CDATA[<=]]> #{endDate}
  	</select>
@@ -1226,7 +1226,7 @@
  		and 
  			keyword != ''
  		and 
-			keyword in (select keyword from keyword_data where keyword_main = #{selectKey})
+			keyword in (select keyword from keyword_data where keyword_property = '포함' and keyword_main = #{selectKey})
 		and createDate <![CDATA[>=]]> #{startDate}
 		and createDate <![CDATA[<=]]> #{endDate}
  	</select>

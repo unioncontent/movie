@@ -25,7 +25,7 @@
 					)
 		</if>
 		<if test="selectKey != null">
-				and keyword in (select keyword from keyword_data where keyword_main = #{selectKey})
+				and keyword in (select keyword from keyword_data where keyword_property = '포함' and keyword_main = #{selectKey})
 		</if>
 		<if test="startDate != null">
 			<if test="endDate != null">
