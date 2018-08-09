@@ -82,7 +82,7 @@ router.post('/send',isAuthenticated, async function(req, res) {
   var mailAllParam = {
     M_sender: req.body['M_sender'],
     M_type: req.body['M_type'],
-    M_body: req.body['o_body'].replace(/(^\s*)|(\s*$)/, ''),
+    M_body: req.body['M_body'].replace(/(^\s*)|(\s*$)/, ''),
     M_subject: req.body['M_subject'],
     M_id: req.user.n_idx
   };
