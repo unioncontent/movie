@@ -115,7 +115,6 @@ router.post('/send',isAuthenticated, async function(req, res) {
   if(m_idx_a){
     var dt = datetime.create();
     var now = dt.format('Y-m-d H:M:S');
-    var dateStr = dt.format('Y-m-d');
     // ML_AUTOMAIL_MESSAGE INSERT
     // var queryParam = {
     //   'MSGID':m_idx_a,
@@ -179,7 +178,7 @@ router.post('/send',isAuthenticated, async function(req, res) {
               'EMFROMADDRESS':sender.M_email,
               'EMTONAME': mailDetailParam.P_name,
               'EMTOADDRESS':mailDetailParam.E_mail,
-              'EMMSGURL':'http://showbox.email/preview/newsclipping/html?date='+dateStr,
+              'EMMSGURL':'http://showbox.email/preview/newsclipping/html?idx='+m_idx_a,
               'SENDTIME':('end_reserve_time' in req.body) ? mailDetailParam['M_send'] : now,
               'GENDATE':now,
               'ETC1':m_idx_a
