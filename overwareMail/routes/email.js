@@ -69,40 +69,34 @@ router.get('/',isAuthenticated, async function(req, res) {
   res.render('email',data);
 });
 
-// router.get('/body',async function(req, res) {
-//   if(!('keyword' in req.query) && !('idx' in req.query)){
-//     res.render('emailBody',{layout: false,veiw: '',pastView: [{keyword:''}],pastCount: 0,msg: '주소에 조건이 없습니다.\n주소를 다시 작성해주세요.',currentPage: 1,keyword: '',idx: ''});
-//     return false;
-//   }
-//   if(!('page' in req.query)){
-//     req.query.page = 1;
-//   }
-//   var viewCode = await mailAllA.selectEmailOneView(req.query.idx);
-//   var sideHtmlStart = '<table width="750" align="center" cellpadding="0" cellspacing="0" style="border: solid 1px #cacaca; padding: 20px;"><tbody><tr><td><table width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td width="642"><img src="http://showbox.email/templates/images/logo/show_logo.png" width="135" height="36" alt="로고"></td><td width="92">NEWS No.';
-//   sideHtmlStart+= ((viewCode.length == 0) ? '' : viewCode[0].M_seq_number)+'</td></tr></tbody></table><table width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td>';
-//   var sideHtmlEnd = '</td></tr></tbody></table></td></tr></tbody></table>';
-//   var pastParam = {keyword:req.query.keyword,page:req.query.page};
-//   var pastNews = await content.selectView(pastParam);
-//   var pastNewsCount = await content.selectViewCount(pastParam);
-//   var data = {
-//     layout: false,
-//     veiw:(viewCode.length == 0) ? '' : sideHtmlStart+viewCode[0].M_body+sideHtmlEnd,
-//     pastView:pastNews,
-//     pastCount: (pastNewsCount.length == 0) ? '':pastNewsCount[0].total,
-//     msg: '',
-//     currentPage: 1,
-//     keyword:req.query.keyword,
-//     idx:req.query.idx
-//   };
-//   if(viewCode.length == 0){
-//     data.msg = '해당 메일이 없습니다.';
-//   }
-//   if('page' in req.query){
-//     data.currentPage = req.query.page;
-//   }
-//   res.render('emailBody',data);
-// });
-
+router.post('/copy',isAuthenticated, async function(req, res) {
+  var htmlMsg = '<table width="750" align="center" cellpadding="0" cellspacing="0" style="padding: 20px;"><tbody><tr><td align="center" style="font-size: 15px; font-weight: bold;" class="fix">[ 메일 본문이 깨져 보이면 <a href=\"http://showbox.email/preview?keyword='+keyword+'&idx='+idx+'\" target=\"_blank\" style=\"font-family: 맑은고딕,malgungothic,돋움,dotum;\">여기</a>를 눌러 주세요 ]</td></tr></tbody></table>';
+  var sideHtmlStart = '<table width="750" align="center" cellpadding="0" cellspacing="0" style="border: solid 1px #cacaca; padding: 20px;"><tbody><tr><td><table width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td width="642"><img src="http://showbox.email/templates/images/logo/show_logo.png" width="135" height="36" alt="로고"></td><td width="92">NEWS No.';
+  sideHtmlStart+= req.body.num+'</td></tr></tbody></table><table width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td>';
+  var sideHtmlEnd = '</td></tr></tbody></table></td></tr></tbody></table>';
+  var pastNews = [];
+  var pastNewsCount = [];
+  if(req.body.M_keyword != ''){
+    var pastParam = {keyword:req.body.M_keyword,page:1};
+    pastNews = await content.selectView(pastParam);
+    pastNewsCount = await content.selectViewCount(pastParam);
+  }
+  var data = {
+    veiw:htmlMsg+sideHtmlStart+req.body.M_body+sideHtmlEnd+htmlMsg,
+    pastView:pastNews,
+    pastCount: (pastNewsCount.length == 0) ? '':pastNewsCount[0].total,
+    msg: '',
+    currentPage: 1,
+    keyword:req.body.M_keyword
+  };
+  if(data.veiw.length == 0){
+    data.msg = '해당 메일이 없습니다.';
+  }
+  if('page' in req.query){
+    data.currentPage = req.query.page;
+  }
+  res.send(data);
+});
 // 메일 관리 페이지
 router.get('/manage',isAuthenticated, async function(req, res) {
   var data = await getListPageData(req.user.n_idx,req.query);
