@@ -385,7 +385,7 @@
                                           	</th>
                                           	</c:if>
                                             <th>NO</th>
-                                            <th>등록일</th>
+                                            <th>작성일</th>
                                             <th>구분</th>
                                             <th>내용</th>
                                             <th>키워드</th>

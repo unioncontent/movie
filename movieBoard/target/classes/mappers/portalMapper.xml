@@ -730,7 +730,7 @@
 			portal_type = 'score'
 		<include refid="search_writeDate"></include>
 		order 
-			by updateDate desc
+			by writeDate desc
 		limit  
 			#{startPage}, #{perPageNum}
  	
