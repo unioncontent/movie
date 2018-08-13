@@ -65,6 +65,8 @@ var index = require('./routes/index');
 app.use('/', index);
 var period = require('./routes/period');
 app.use('/period', period);
+var keyword = require('./routes/keyword');
+app.use('/keyword', keyword);
 var news = require('./routes/news');
 app.use('/news', news);
 var newsclipping = require('./routes/newsclipping');

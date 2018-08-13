@@ -23,7 +23,6 @@
             <div class="card-header">
               <button type="submit" class="btn btn-inverse f-right m-b-0 sendBtn">저장</button>
               <button type="submit" class="btn btn-inverse f-right m-b-0 m-r-5 perivewBtn">미리보기</button>
-              <button type="submit" class="btn btn-inverse f-right m-b-0 m-r-5 copy">서식복사</button>
             </div>
             <div class="card-block">
               <div class="form-group row">
@@ -196,7 +195,6 @@
             <div class="card-bottom">
               <button type="submit" class="btn btn-inverse f-right m-b-0 sendBtn">저장</button>
               <button type="submit" class="btn btn-inverse f-right m-b-0  m-r-5 perivewBtn">미리보기</button>
-              <button type="submit" class="btn btn-inverse f-right m-b-0 m-r-5 copy">서식복사</button>
             </div>
           </div>
         </div>
@@ -522,128 +520,6 @@
       minDate: 0
     });
   });
-  // 서식복사
-  $(".copy").on("click",copyAJAX);
-
-  function copyAJAX(){
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", '/email/copy', false);
-    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-
-    xhr.onreadystatechange = function() {//Call a function when the state changes.
-      if (xhr.readyState === 4) {
-        if (xhr.status === 200) {
-          var data = JSON.parse(this.response)
-          if(data.msg){
-            alert('서식복사에 실패했습니다.');
-            return false;
-          }
-          var html = '<div id="mail">';
-          html +=data.veiw;
-          html +='<table width="750" align="center" cellpadding="0" cellspacing="0" border="0" style="margin-top: 30px;"><tbody><tr><td>[지난 기사보기]<hr><table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-top: 10px;"><col width="78%"><col width="22%"></colgroup><tbody>';
-          for(var i=0; i < data.pastView.length; i++) {
-            var url = 'http://showbox.email/preview?keyword='+data.pastView[i].keyword_idx+'&idx='+data.pastView[i].n_idx;
-            if(data.currentPage != '1'){
-              url += '&page='+data.currentPage
-            }
-            var limit = 5;
-            var numIdx = Math.ceil(data.pastCount-(((data.currentPage - 1) * limit)+i)).toString();
-            if(numIdx != '0'){
-              html+='<tr>\
-              <td style="font-size: small;padding:5px 0 5px;border-bottom:1px dotted #d9d9d9;color:#444;">[No.'+data.pastView[i].M_seq_number+
-              '차]<a style="text-decoration:none; color:black;" href="'+url+'" target="_blank">'+data.pastView[i].M_subject+'</a></td>\
-              <td style="font-size: small;padding:5px 0 5px;border-bottom:1px dotted #d9d9d9;color:#444;">'+data.pastView[i].M_regdate+'</td>\
-              </tr>';
-            }
-          }
-          html+='<tr><td colspan="2" style="text-align: center; font-size: small;padding:10px 0 5px;">';
-          var pages = Math.ceil(data.pastCount / limit);
-          var index=1;
-          for(index;index<=pages;index++){
-            if(data.currentPage == index){
-              html+='<strong><span class="current">'+index+'</span></strong>';
-            } else{
-              html+='<a href="http://showbox.email/preview?keyword='+data.keyword+'&idx='+idx+'&page='+index+'">'+index+'</a>';
-            }
-          }
-          html+='</td></tr></tbody></table></td></tr></tbody></table><table cellpadding="0" cellspacing="0" border="0" width="750" align="center" style="margin-top: 30px;"><tbody><tr><td align="center">Copyright ⓒ unioncontents All rights reserved.</td></tr></tbody></table><p>&nbsp;</p></div>';
-          $("#copyMBody").val(html);
-          copyNow();
-          return false;
-        }
-      }
-      alert('서식복사에 실패했습니다.');
-    }
-    xhr.send('num='+($("#M_seq_number").val() || '')+'&M_keyword='+($("#M_keyword option:selected").val() || '')+'&M_body='+get_tinymce_html_content());
-    // $.ajax({
-    //   type: "POST",
-    //   url: "/email/copy",
-    //   data: {
-    //     num:$("#M_seq_number").val() || '',
-    //     M_keyword:$("#M_keyword option:selected").val() || '',
-    //     M_body:get_tinymce_html_content()
-    //   },
-    //   datatype : 'json',
-    //   error:function(request,status,error){
-    //     console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
-    //     alert('서식복사에 실패했습니다.');
-    //     return false;
-    //   },
-    //   success: function(data) {
-    //     if(data.msg){
-    //       alert('서식복사에 실패했습니다.');
-    //       return false;
-    //     }
-    //     console.log(data);
-    //     var html = '<div id="mail">';
-    //     html +=data.veiw;
-    //     html +='<table width="750" align="center" cellpadding="0" cellspacing="0" border="0" style="margin-top: 30px;"><tbody><tr><td>[지난 기사보기]<hr><table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-top: 10px;"><col width="78%"><col width="22%"></colgroup><tbody>';
-    //     for(var i=0; i < data.pastView.length; i++) {
-    //       var url = 'http://showbox.email/preview?keyword='+data.pastView[i].keyword_idx+'&idx='+data.pastView[i].n_idx;
-    //       if(data.currentPage != '1'){
-    //         url += '&page='+data.currentPage
-    //       }
-    //       var limit = 5;
-    //       var numIdx = Math.ceil(data.pastCount-(((data.currentPage - 1) * limit)+i)).toString();
-    //       if(numIdx != '0'){
-    //         html+='<tr>\
-    //         <td style="font-size: small;padding:5px 0 5px;border-bottom:1px dotted #d9d9d9;color:#444;">[No.'+data.pastView[i].M_seq_number+
-    //         '차]<a style="text-decoration:none; color:black;" href="'+url+'" target="_blank">'+data.pastView[i].M_subject+'</a></td>\
-    //         <td style="font-size: small;padding:5px 0 5px;border-bottom:1px dotted #d9d9d9;color:#444;">'+data.pastView[i].M_regdate+'</td>\
-    //         </tr>';
-    //       }
-    //     }
-    //     html+='<tr><td colspan="2" style="text-align: center; font-size: small;padding:10px 0 5px;">';
-    //     var pages = Math.ceil(data.pastCount / limit);
-    //     var index=1;
-    //     for(index;index<=pages;index++){
-    //       if(data.currentPage == index){
-    //         html+='<strong><span class="current">'+index+'</span></strong>';
-    //       } else{
-    //         html+='<a href="http://showbox.email/preview?keyword='+data.keyword+'&idx='+idx+'&page='+index+'">'+index+'</a>';
-    //       }
-    //     }
-    //     html+='</td></tr></tbody></table></td></tr></tbody></table><table cellpadding="0" cellspacing="0" border="0" width="750" align="center" style="margin-top: 30px;"><tbody><tr><td align="center">Copyright ⓒ unioncontents All rights reserved.</td></tr></tbody></table><p>&nbsp;</p></div>';
-    //     $("#copyMBody").val(html);
-    //     copyNow();
-    //   }
-    // });
-  }
-  function copyNow(){
-    console.log($("#copyMBody").val());
-    var copybox = document.getElementById( "copyMBody" );
-    copybox.select();
-    console.log(copybox);
-    try {
-      var successful = document.execCommand('copy');
-      var msg = successful ? 'successful' : 'unsuccessful';
-      console.log('Cutting text command was ' + msg);
-      alert('서식복사에 성공했습니다.');
-    } catch(e) {
-      alert('서식복사에 실패했습니다.');
-    }
-    $("#copyMBody").val('');
-  }
   // 세션만료 - 로그인
   $("input[type=password]").on('keyup',function(event){
     if(event.keyCode == 13){
