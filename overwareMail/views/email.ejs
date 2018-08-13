@@ -23,6 +23,7 @@
             <div class="card-header">
               <button type="submit" class="btn btn-inverse f-right m-b-0 sendBtn">저장</button>
               <button type="submit" class="btn btn-inverse f-right m-b-0 m-r-5 perivewBtn">미리보기</button>
+              <button type="submit" class="btn btn-inverse f-right m-b-0 m-r-5 copy">서식복사</button>
             </div>
             <div class="card-block">
               <div class="form-group row">
@@ -34,20 +35,20 @@
                   <div class="col-sm-12">
                     <div class="radio radiofill radio-inverse radio-inline">
                       <label>
-                        <input type="radio" value="0" name="M_type" checked>
+                        <input type="radio" value="0" name="M_type">
                         <i class="helper"></i>즉시
                       </label>
                     </div>
                     <div class="radio radiofill radio-inverse radio-inline">
                       <label>
-                        <input type="radio" value="1" name="M_type">
+                        <input type="radio" value="1" name="M_type" checked>
                         <i class="helper"></i>예약
                       </label>
                     </div>
                   </div>
                 </div>
               </div>
-              <div class="form-group row reserveTime" style="display:none;">
+              <div class="form-group row reserveTime">
                 <label class="col-sm-2 col-form-label">* 예약시간</label>
                 <div class="col-sm-5 row">
                   <div class='col-sm-6 input-group p-r-0'>
@@ -56,11 +57,44 @@
                     </span>
                     <input type="text" id="datepicker" class="form-control" />
                   </div>
-                  <div class='col-sm-6 input-group p-r-0' id="date">
-                    <span class="input-group-addon bg-inverse">
-                      <span class="far fa-clock"></span>
-                    </span>
-                    <input type="text" id="timepicker" class="form-control" />
+                  <div class="col-sm-6 input-group p-r-0" id="date">
+                     <select name="time_h" id="time_h" class="form-control form-control-defalut">
+                        <option value="" selected="selected">HH</option>
+                        <option value="00">00</option>
+                        <option value="01">01</option>
+                        <option value="02">02</option>
+                        <option value="03">03</option>
+                        <option value="04">04</option>
+                        <option value="05">05</option>
+                        <option value="06">06</option>
+                        <option value="07">07</option>
+                        <option value="08">08</option>
+                        <option value="09">09</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                        <option value="13">13</option>
+                        <option value="14">14</option>
+                        <option value="15">15</option>
+                        <option value="16">16</option>
+                        <option value="17">17</option>
+                        <option value="18">18</option>
+                        <option value="19">19</option>
+                        <option value="20">20</option>
+                        <option value="21">21</option>
+                        <option value="22">22</option>
+                        <option value="23">23</option>
+                    </select>
+                    <p style="margin: auto 10px;">:</p>
+                    <select name="time_m" id="time_m" class="form-control form-control-defalut">
+                        <option value="" selected="selected">MM</option>
+                        <option value="00">00</option>
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="30">30</option>
+                        <option value="40">40</option>
+                        <option value="50">50</option>
+                    </select>
                   </div>
                   <span class='messages p-l-15'><p class='text-danger error'></p></span>
                 </div>
@@ -162,6 +196,7 @@
             <div class="card-bottom">
               <button type="submit" class="btn btn-inverse f-right m-b-0 sendBtn">저장</button>
               <button type="submit" class="btn btn-inverse f-right m-b-0  m-r-5 perivewBtn">미리보기</button>
+              <button type="submit" class="btn btn-inverse f-right m-b-0 m-r-5 copy">서식복사</button>
             </div>
           </div>
         </div>
@@ -434,6 +469,7 @@
         </div>
       </div>
       <!-- Modal end-->
+      <input id="copyMBody" type="text" value="" style="position:absolute;top:-9999em;">
     </div>
   </div>
 </div>
@@ -449,9 +485,6 @@
 <script src="/pages/email/js/editor.js"></script>
 <!-- alert -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert@2.1.0/dist/sweetalert.min.js"></script>
-<!-- time  -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/wickedpicker@0.4.3/stylesheets/wickedpicker.css">
-<script src="https://cdn.jsdelivr.net/npm/wickedpicker@0.4.3/dist/wickedpicker.min.js"></script>
 <!-- custom -->
 <link rel="stylesheet" href="/pages/email/style.css">
 <script src="/pages/email/js/modal.js"></script>
@@ -475,23 +508,6 @@
       $("#M_subject").val(mailData.M_subject);
       $("#M_seq_number").val(mailData.M_seq_number);
     }
-    // 예약시간
-    var dt = new Date();
-    var options = {
-      now: dt.getHours()+":"+String(Math.ceil(dt.getMinutes() / 10) * 10),
-      twentyFour: true, //Display 24 hour format, defaults to false
-      upArrow: 'wickedpicker__controls__control-up', //The up arrow class selector to use, for custom CSS
-      downArrow: 'wickedpicker__controls__control-down', //The down arrow class selector to use, for custom CSS
-      close: 'wickedpicker__close', //The close class selector to use, for custom CSS
-      hoverState: 'hover-state', //The hover state class to use, for custom CSS
-      title: '10분단위로 설정해주세요.', //The Wickedpicker's title,
-      showSeconds: false, //Whether or not to show seconds, secondsInterval: 1, //Change interval for seconds, defaults to 1  ,
-      minutesInterval: 10, //Change interval for minutes, defaults to 1
-      beforeShow: null, //A function to be called before the Wickedpicker is shown
-      show: null, //A function to be called when the Wickedpicker is shown
-      clearable: false, //Make the picker's input clearable (has clickable "x")
-    };
-    $('#timepicker').wickedpicker(options);
     $('#datepicker').datepicker({
       dateFormat: 'yy-mm-dd',
       prevText: '이전 달',
@@ -503,100 +519,131 @@
       dayNamesMin: ['일','월','화','수','목','금','토'],
       yearSuffix: '년',
       showMonthAfterYear: true,
-      minDate: 0,
-      maxDate: "+7D"
+      minDate: 0
     });
-    // 첨부파일
-    // $('#M_file').filer({
-    //   limit: '5',
-    //   maxSize: '10',
-    //   changeInput: true,
-    //   showThumbs: true,
-    //   uploadFile: {
-    //     url: "/email/send/files",
-    //     data: {},
-    //     type: 'POST',
-    //     enctype: 'multipart/form-data',
-    //     beforeSend: function(){},
-    //     success: function(data, el){
-    //       console.log(data);
-    //       var fileListVal = $('#fileList').val();
-    //       if(fileListVal != "" && fileListVal != ","){
-    //         fileListVal +=',';
-    //       }
-    //       if (fileListVal.indexOf(data.result[1]) == -1) {
-    //         $('#fileList').val(fileListVal+data.result[0]);
-    //       }
-    //
-    //       el.find('.jFiler-item-title').attr('data-value', data.result[0]);
-    //       var parent = el.find(".jFiler-jProgressBar").parent();
-    //       el.find(".jFiler-jProgressBar").fadeOut("slow", function(){
-    //         $("<div class=\"jFiler-item-others text-success\"><i class=\"icon-jfi-check-circle\"></i> Success</div>").hide().appendTo(parent).fadeIn("slow");
-    //       });
-    //     },
-    //     error: function(data, el){
-    //       alert('파일 타입과 파일의 경로를 다시 확인해주세요.');
-    //       var parent = el.find(".jFiler-jProgressBar").parent();
-    //       el.find(".jFiler-jProgressBar").fadeOut("slow", function(){
-    //         $("<div class=\"jFiler-item-others text-error\"><i class=\"icon-jfi-minus-circle\"></i> Error</div>").hide().appendTo(parent).fadeIn("slow");
-    //       });
-    //     },
-    //     statusCode: {},
-    //     onProgress: function(){},
+  });
+  // 서식복사
+  $(".copy").on("click",copyAJAX);
+
+  function copyAJAX(){
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", '/email/copy', false);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+    xhr.onreadystatechange = function() {//Call a function when the state changes.
+      if (xhr.readyState === 4) {
+        if (xhr.status === 200) {
+          var data = JSON.parse(this.response)
+          if(data.msg){
+            alert('서식복사에 실패했습니다.');
+            return false;
+          }
+          var html = '<div id="mail">';
+          html +=data.veiw;
+          html +='<table width="750" align="center" cellpadding="0" cellspacing="0" border="0" style="margin-top: 30px;"><tbody><tr><td>[지난 기사보기]<hr><table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-top: 10px;"><col width="78%"><col width="22%"></colgroup><tbody>';
+          for(var i=0; i < data.pastView.length; i++) {
+            var url = 'http://showbox.email/preview?keyword='+data.pastView[i].keyword_idx+'&idx='+data.pastView[i].n_idx;
+            if(data.currentPage != '1'){
+              url += '&page='+data.currentPage
+            }
+            var limit = 5;
+            var numIdx = Math.ceil(data.pastCount-(((data.currentPage - 1) * limit)+i)).toString();
+            if(numIdx != '0'){
+              html+='<tr>\
+              <td style="font-size: small;padding:5px 0 5px;border-bottom:1px dotted #d9d9d9;color:#444;">[No.'+data.pastView[i].M_seq_number+
+              '차]<a style="text-decoration:none; color:black;" href="'+url+'" target="_blank">'+data.pastView[i].M_subject+'</a></td>\
+              <td style="font-size: small;padding:5px 0 5px;border-bottom:1px dotted #d9d9d9;color:#444;">'+data.pastView[i].M_regdate+'</td>\
+              </tr>';
+            }
+          }
+          html+='<tr><td colspan="2" style="text-align: center; font-size: small;padding:10px 0 5px;">';
+          var pages = Math.ceil(data.pastCount / limit);
+          var index=1;
+          for(index;index<=pages;index++){
+            if(data.currentPage == index){
+              html+='<strong><span class="current">'+index+'</span></strong>';
+            } else{
+              html+='<a href="http://showbox.email/preview?keyword='+data.keyword+'&idx='+idx+'&page='+index+'">'+index+'</a>';
+            }
+          }
+          html+='</td></tr></tbody></table></td></tr></tbody></table><table cellpadding="0" cellspacing="0" border="0" width="750" align="center" style="margin-top: 30px;"><tbody><tr><td align="center">Copyright ⓒ unioncontents All rights reserved.</td></tr></tbody></table><p>&nbsp;</p></div>';
+          $("#copyMBody").val(html);
+          copyNow();
+          return false;
+        }
+      }
+      alert('서식복사에 실패했습니다.');
+    }
+    xhr.send('num='+($("#M_seq_number").val() || '')+'&M_keyword='+($("#M_keyword option:selected").val() || '')+'&M_body='+get_tinymce_html_content());
+    // $.ajax({
+    //   type: "POST",
+    //   url: "/email/copy",
+    //   data: {
+    //     num:$("#M_seq_number").val() || '',
+    //     M_keyword:$("#M_keyword option:selected").val() || '',
+    //     M_body:get_tinymce_html_content()
     //   },
-    //   dragDrop: {
-    //     dragEnter: null,
-    //     dragLeave: null,
-    //     drop: null,
+    //   datatype : 'json',
+    //   error:function(request,status,error){
+    //     console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
+    //     alert('서식복사에 실패했습니다.');
+    //     return false;
     //   },
-    //   addMore: true,
-    //   clipBoardPaste: true,
-    //   excludeName: null,
-    //   beforeShow: function(){return true},
-    //   onSelect: function(){},
-    //   afterShow: function(){},
-    //   onRemove: function(e){
-    //     var removeEle = $(e).find('.jFiler-item-title').data('value');
-    //     $.ajax({
-    //       type: "POST",
-    //       url: "/email/remove/file",
-    //       data: {
-    //         file:removeEle,
-    //       },
-    //       dataType:'json',
-    //       error:function(request,status,error){
-    //         console.log('파일 삭제 에러 code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
-    //         return false;
-    //       },
-    //       success: function(data) {
-    //         console.log('remove result: ',data);
-    //         var fileListVal = $('#fileList').val();
-    //         var fileListArr = fileListVal.split(',');
-    //         var removeIdx = $.inArray(removeEle, fileListArr);
-    //         if (removeIdx != -1) {
-    //           delete fileListArr[removeIdx];
-    //           $('#fileList').val(fileListArr.join());
-    //         }
-    //         return true;
-    //       }
-    //     });
-    //   },
-    //   onEmpty: function(){},
-    //   captions: {
-    //     button: "등록",
-    //     feedback: "첨부할 파일을 선택해주세요.",
-    //     feedback2: "파일이 선택되었습니다.",
-    //     // drop: "Drop file here to Upload",
-    //     removeConfirmation: "이 파일을 제거 하시겠습니까??",
-    //     errors: {
-    //       filesLimit: "{{fi-limit}} 개의 파일만 업로드 할 수 있습니다.",
-    //       // filesType: "Only Images are allowed to be uploaded.",
-    //       filesSize: "{{fi-name}} 이 너무 큽니다! 파일은 최대 {{fi-maxSize}} MB까지 첨부 가능합니다.",
-    //       filesSizeAll: "선택하신 파일이 너무 큽니다! 첨부파일의 전체 합 {{fi-maxSize}} MB까지 첨부 가능합니다."
+    //   success: function(data) {
+    //     if(data.msg){
+    //       alert('서식복사에 실패했습니다.');
+    //       return false;
     //     }
+    //     console.log(data);
+    //     var html = '<div id="mail">';
+    //     html +=data.veiw;
+    //     html +='<table width="750" align="center" cellpadding="0" cellspacing="0" border="0" style="margin-top: 30px;"><tbody><tr><td>[지난 기사보기]<hr><table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-top: 10px;"><col width="78%"><col width="22%"></colgroup><tbody>';
+    //     for(var i=0; i < data.pastView.length; i++) {
+    //       var url = 'http://showbox.email/preview?keyword='+data.pastView[i].keyword_idx+'&idx='+data.pastView[i].n_idx;
+    //       if(data.currentPage != '1'){
+    //         url += '&page='+data.currentPage
+    //       }
+    //       var limit = 5;
+    //       var numIdx = Math.ceil(data.pastCount-(((data.currentPage - 1) * limit)+i)).toString();
+    //       if(numIdx != '0'){
+    //         html+='<tr>\
+    //         <td style="font-size: small;padding:5px 0 5px;border-bottom:1px dotted #d9d9d9;color:#444;">[No.'+data.pastView[i].M_seq_number+
+    //         '차]<a style="text-decoration:none; color:black;" href="'+url+'" target="_blank">'+data.pastView[i].M_subject+'</a></td>\
+    //         <td style="font-size: small;padding:5px 0 5px;border-bottom:1px dotted #d9d9d9;color:#444;">'+data.pastView[i].M_regdate+'</td>\
+    //         </tr>';
+    //       }
+    //     }
+    //     html+='<tr><td colspan="2" style="text-align: center; font-size: small;padding:10px 0 5px;">';
+    //     var pages = Math.ceil(data.pastCount / limit);
+    //     var index=1;
+    //     for(index;index<=pages;index++){
+    //       if(data.currentPage == index){
+    //         html+='<strong><span class="current">'+index+'</span></strong>';
+    //       } else{
+    //         html+='<a href="http://showbox.email/preview?keyword='+data.keyword+'&idx='+idx+'&page='+index+'">'+index+'</a>';
+    //       }
+    //     }
+    //     html+='</td></tr></tbody></table></td></tr></tbody></table><table cellpadding="0" cellspacing="0" border="0" width="750" align="center" style="margin-top: 30px;"><tbody><tr><td align="center">Copyright ⓒ unioncontents All rights reserved.</td></tr></tbody></table><p>&nbsp;</p></div>';
+    //     $("#copyMBody").val(html);
+    //     copyNow();
     //   }
     // });
-  });
+  }
+  function copyNow(){
+    console.log($("#copyMBody").val());
+    var copybox = document.getElementById( "copyMBody" );
+    copybox.select();
+    console.log(copybox);
+    try {
+      var successful = document.execCommand('copy');
+      var msg = successful ? 'successful' : 'unsuccessful';
+      console.log('Cutting text command was ' + msg);
+      alert('서식복사에 성공했습니다.');
+    } catch(e) {
+      alert('서식복사에 실패했습니다.');
+    }
+    $("#copyMBody").val('');
+  }
   // 세션만료 - 로그인
   $("input[type=password]").on('keyup',function(event){
     if(event.keyCode == 13){
@@ -723,23 +770,20 @@
       check = requiredMessage("M_body","메일내용 입력해주세요.");
     }
     if(param["M_type"] == "1"){
-      var time = $('#timepicker').val();
+      var time = $('#time_h').val()+":"+$('#time_m').val();
       var date = $('#datepicker').val();
-      if(time == "" || date == ""){
+      if(time == ":" || date == ""){
         check = requiredMessage("date","예약시간을 설정해주세요.");
       }
-      else if(time.split(' : ')[1] % 10 != 0){
-        check = requiredMessage("date","예약시간은 10분단위로 설정해주세요.");
-      }
       else{
-        var endDate = date+" "+time.replace(' : ',':')+":00";
+        var endDate = date+" "+time+":00";
         var startDateCompare = new Date();
         var endDateCompare = new Date(endDate);
         if(startDateCompare.getTime() >= endDateCompare.getTime()){
           check = requiredMessage("date","현재시간보다 작습니다.");
         }
         else{
-          param['end_reserve_time'] = date+" "+time.replace(' : ',':')+":00";
+          param['end_reserve_time'] = date+" "+time+":00";
         }
       }
     }

@@ -151,6 +151,7 @@ router.post('/preview_mail', isAuthenticated,async function(req, res, next) {
   };
   res.send(true);
 });
+
 router.get('/preview_mail', isAuthenticated,async function(req, res, next) {
   res.render('preview_mail',preview_data);
 });

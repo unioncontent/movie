@@ -12,7 +12,7 @@ tinymce.init({
   plugins: 'print fullpage searchreplace autolink directionality visualblocks visualchars fullscreen image link media code table charmap hr insertdatetime advlist lists textcolor wordcount imagetools contextmenu colorpicker',
   toolbar: 'undo redo | fontselect fontsizeselect spaceline | bold italic forecolor backcolor |  image media fileUpload | alignleft aligncenter alignright alignjustify |  numlist bullist outdent indent | removeformat | help',
   font_formats : '굴림=Gulim;돋움=Dotum;바탕=Batang;궁서=Gungsuh;나눔고딕=nanumgothic;나눔바른고딕=nanumbarungothic;',
-  fontsize_formats: "8px 10px 12px 14px 18px 24px 36px",
+  fontsize_formats: "8px 11px 12px 13px 14px 15px 16px 17px 18px 24px 36px 48px 50px 60px 80px 100px 110px",
   image_advtab: true,
   image_title: true,
   relative_urls : false,
