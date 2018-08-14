@@ -738,18 +738,25 @@
       datatype : 'json',
       error:function(request,status,error){
         console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
-        $('.preloader3').fadeOut(500);
+        if(request.responseText == undefined){
+          $('.preloader3').fadeOut(500);
+          swal("SUCCESS!", '잠시만 기다려주세요. 몇분후 리스트에 적용됩니다.', "success")
+          .then(function(){
+            location.href= '../email/manage';
+          });
+          return false;
+        }
         swal("ERROR!", request.responseText, "error");
       },
       success:function(data){
-        $('.preloader3').fadeOut(500);
         if(data.status == 'sessionTimeOut'){
+          $('.preloader3').fadeOut(500);
           alert('세션이 만료되었습니다. 로그인 후 다시 시도해주세요.');
           $('#login-Modal').modal('show');
           return false;
         }
         if(data.status){
-          swal("SUCCESS!", '저장완료했습니다.', "success")
+          swal("SUCCESS!", '저장완료되었습니다.', "success")
           .then(function(){
             location.href= '../email/manage';
           });
