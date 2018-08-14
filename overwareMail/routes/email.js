@@ -403,6 +403,7 @@ router.post('/save',isAuthenticated, async function(req, res) {
   }
   // 메일발송 리스트 insert
   var resultInsert = await mailAllA.insert(mailAllParam);
+  console.log(resultInsert);
   m_idx_a = resultInsert.insertId;
   // 메일발송 리스트 table에 inser되었는지 체크문
   var insertCheck = false;
@@ -412,7 +413,7 @@ router.post('/save',isAuthenticated, async function(req, res) {
     if(typeof req.body.end_reserve_time !='undefined'){
       try{
         var result = await maillinkInsert({idx:m_idx_a,time:req.body.end_reserve_time,user:req.user});
-        console.log(result);
+        // console.log(result);
         if(result){
           throw new Error('maillink insert 실패');
         }
@@ -447,7 +448,6 @@ router.post('/save',isAuthenticated, async function(req, res) {
               mailDetailParam['M_send'] = req.body.end_reserve_time;
             }
             var resultInsert = await mailDetailB.insert(mailDetailParam);
-            console.log(resultInsert);
           }
           catch(e){
             if(typeof req.body.end_reserve_time !='undefined'){
@@ -458,12 +458,9 @@ router.post('/save',isAuthenticated, async function(req, res) {
                 await maillink.deleteMlABackUp(item.TABLE_NAME,m_idx_a);
               });
             }
-            await mailAllA.delete(m_idx_a);
+            // await mailAllA.delete(m_idx_a);
             insertCheck = true;
           }
-        }
-        else {
-          await mailAllA.delete(m_idx_a);
         }
       }
     });

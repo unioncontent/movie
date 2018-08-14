@@ -12,7 +12,7 @@
   border-bottom: 0px;
 }
 /* loader */
-.loader, .loader-block {
+.file-upload-loader .loader,.file-upload-loader .loader-block {
   display: block;
 }
 /* select test css */
