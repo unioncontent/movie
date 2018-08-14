@@ -471,6 +471,27 @@
     </div>
   </div>
 </div>
+<div class="preloader3 loader-block">
+  <div class="circ1 loader-primary"></div>
+  <div class="circ2 loader-primary"></div>
+  <div class="circ3 loader-primary"></div>
+  <div class="circ4 loader-primary"></div>
+</div>
+<style>
+/* loader */
+.loader-block{
+  display: none;
+  padding-top:22%;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 100px;
+  width: 500px;
+  margin: auto;
+  max-width: 100%;
+  z-index: 10000;
+}
+</style>
 <!-- select2 -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.min.js"></script>
@@ -709,6 +730,7 @@
   });
   // 메일 insert ajax
   function SendEmails(param){
+    $('.preloader3').show();
     $.ajax({
       url: '/email/save',
       type: 'post',
@@ -716,16 +738,21 @@
       datatype : 'json',
       error:function(request,status,error){
         console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
+        $('.preloader3').fadeOut(500);
         swal("ERROR!", request.responseText, "error");
       },
       success:function(data){
+        $('.preloader3').fadeOut(500);
         if(data.status == 'sessionTimeOut'){
           alert('세션이 만료되었습니다. 로그인 후 다시 시도해주세요.');
           $('#login-Modal').modal('show');
           return false;
         }
         if(data.status){
-          location.href= '../email/manage';
+          swal("SUCCESS!", '저장완료했습니다.', "success")
+          .then(function(){
+            location.href= '../email/manage';
+          });
         }
       }
     });
