@@ -81,7 +81,7 @@ var mailListAll = {
     if('searchType' in body){
       switch (body.searchType) {
         case 'c': sql+=' and M_ptitle =\''+body.search+'\''; break;
-        case 'e': sql+=' and M_email like \'%'+body.search+'%\''; break;
+        case 'e': sql+=' and M_email = \''+body.search+'\''; break;
         case 'n': sql+=' and M_name like \'%'+body.search+'%\''; break;
         case 't': sql+=' and M_tel =\''+body.search.replace( /(\s*)/g, "")+'\''; break;
       }
@@ -112,7 +112,7 @@ var mailListAll = {
     if('searchType' in body){
       switch (body.searchType) {
         case 'c': sql+=' and M_ptitle =\''+body.search+'\''; break;
-        case 'e': sql+=' and M_email like \'%'+body.search+'%\''; break;
+        case 'e': sql+=' and M_email = \''+body.search+'\''; break;
         case 'n': sql+=' and M_name like \'%'+body.search+'%\''; break;
         case 't': sql+=' and M_tel =\''+body.search.replace( /(\s*)/g, "")+'\''; break;
       }
@@ -132,7 +132,7 @@ var mailListAll = {
     }
   },
   emailCheck: async function(email,param){
-    var sql = 'select * from m_mail_list_all where M_email like \'%'+email+'%\' ';
+    var sql = 'select * from m_mail_list_all where M_email = \''+email+'\' ';
     if(param.length == 2){
       sql += ' and M_name=? ';
     }
