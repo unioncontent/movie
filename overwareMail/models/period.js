@@ -102,7 +102,7 @@ var period = {
     return result[0];
   },
   get7DayGraph: async function(user){
-    var sql = 'SELECT date_format(M_regdate,\'%Y-%m-%d\') as date,sum(success) as success,sum(fail) as fail\
+    var sql = 'SELECT date_format(M_regdate,\'%Y-%m-%d\') as date,sum(successNum) as success,sum(failNum) as fail\
     FROM period_view\
     where M_regdate BETWEEN date_sub(now(), INTERVAL 7 day) and now()';
     var param = [user.n_idx];
@@ -130,7 +130,7 @@ var period = {
     return await getResult(sql,param);
   },
   getTodaySendCount: async function(user){
-    var sql ='SELECT FORMAT(if(sum(success+fail) is null,0,sum(success+fail)), 0) as total FROM period_view where (M_regdate > CURRENT_DATE() or Date(M_send) = CURRENT_DATE())';
+    var sql ='SELECT FORMAT(if(sum(successNum+failNum) is null,0,sum(successNum+failNum)), 0) as total FROM period_view where (M_regdate > CURRENT_DATE() or Date(M_send) = CURRENT_DATE())';
     var param = [user.n_idx];
     if(user.user_admin == null){
       sql += ' and (  M_id=? or M_id in (select n_idx from m_mail_user where user_admin=?)) ';
@@ -140,11 +140,11 @@ var period = {
       sql += ' and M_id=? ';
     }
     var result = await getResult(sql,param);
-    return (result.length == 0) ? '' : parseInt(result[0]['total']);
+    return (result.length == 0) ? '' : result[0]['total'];
   },
   getSuccessNfailCount: async function(user){
-    sql = 'SELECT FORMAT(sum(if(success is null,0,success)), 0) as success,\
-    FORMAT(sum(if(fail is null,0,fail)), 0) as fail \
+    sql = 'SELECT FORMAT(sum(if(successNum is null,0,successNum)), 0) as success,\
+    FORMAT(sum(if(failNum is null,0,failNum)), 0) as fail \
     FROM period_view where (M_send > CURRENT_DATE() or Date(M_send) = CURRENT_DATE())';
     var param = [user.n_idx];
     if(user.user_admin == null){
@@ -161,7 +161,7 @@ var period = {
     return result[0];
   },
   getTodayNReservationCount: async function(user,M_type){
-    sql = 'SELECT FORMAT(if(sum(sendCount) is null,0,sum(sendCount)), 0) as total FROM period_view where Date(M_send) = CURRENT_DATE() and M_type=?';
+    sql = 'SELECT FORMAT(if(sum(sendCountNum) is null,0,sum(sendCountNum)), 0) as total FROM period_view where Date(M_send) = CURRENT_DATE() and M_type=?';
     var param = [M_type,user.n_idx];
     if(user.user_admin == null){
       sql += 'and (M_id=? or M_id in (select n_idx from m_mail_user where user_admin=?))';
@@ -174,7 +174,7 @@ var period = {
     return (result.length == 0) ? '' : result[0]['total'];
   },
   getWaitingCount: async function(user){
-    var sql = 'SELECT FORMAT(if(sum(sendCount) is null,0,sum(sendCount)), 0) as total\
+    var sql = 'SELECT FORMAT(if(sum(sendCountNum) is null,0,sum(sendCountNum)), 0) as total\
     FROM period_view where M_send > now() and M_type=1 ';
     var param = [user.n_idx];
     if(user.user_admin == null){
