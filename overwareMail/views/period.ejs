@@ -92,7 +92,7 @@
                         </a>
                       </td>
                       <td><%= list[i].M_mail_type %></td>
-                      <td><span class="total"><%= parseInt(list[i].success) + parseInt(list[i].fail) %></span></td>
+                      <td><span class="total"><%= list[i].sendCount %></span></td>
                       <td class="success" data-idx="<%= list[i].n_idx %>"><%= list[i].success %></td>
                       <td class="fail" data-idx="<%= list[i].n_idx %>"><%= list[i].fail %></td>
                       <td>
@@ -1057,7 +1057,7 @@
             <td><div class="num_nobr">'+item.M_seq_number+'차</div></td>\
             <td><a href="http://showbox.email/preview?keyword='+item.M_keyword_idx+'&idx='+item.n_idx+'" target="_blank"><div class="title_nobr">'+item.M_subject+'</div></a></td>\
             <td>'+item.M_mail_type+'</td>\
-            <td><span class="total">'+(parseInt(item.success) + parseInt(item.fail))+'</span></td>\
+            <td><span class="total">'+item.sendCount+'</span></td>\
             <td class="success" data-idx=\"'+item.n_idx+'\">'+item.success+'</td>\
             <td class="fail" data-idx=\"'+item.n_idx+'\">'+item.fail+'</td>';
           html += '<td>'+ ((item.M_type == '0') ? '즉시' : '예약');
