@@ -8,7 +8,7 @@ var mailListA = require('../models/mailListA.js');
 var mailListC = require('../models/mailListC.js');
 var maillink = require('../models/maillink.js');
 var nMailAll = require('../models/nMailAll.js');
-var nMailDetailB = require('../models/nMailDetailB.js');
+// var nMailDetailB = require('../models/nMailDetailB.js');
 
 var isAuthenticated = function (req, res, next) {
   if (req.isAuthenticated()){
@@ -154,7 +154,7 @@ router.post('/send',isAuthenticated, async function(req, res) {
             if('end_reserve_time' in req.body){
               mailDetailParam['M_send'] = req.body.end_reserve_time;
             }
-            await nMailDetailB.insert(mailDetailParam);
+            // await nMailDetailB.insert(mailDetailParam);
 
             // 메일 보내기
             // var param = {
@@ -194,7 +194,7 @@ router.post('/send',isAuthenticated, async function(req, res) {
             await asyncForEach(resultTName, async (item, index, array) => {
               await maillink.deleteMlABackUp(item.TABLE_NAME,m_idx_a);
             });
-            await nMailAll.delete(m_idx_a);
+            // await nMailAll.delete(m_idx_a);
             insertCheck = true;
           }
         }
@@ -322,11 +322,11 @@ router.post('/list/delete',isAuthenticated, async function(req, res) {
     res.status(500).send('nMailAll delete query 실패');
     return false;
   }
-  result = await nMailDetailB.delete(req.body.idx);
-  if(!('protocol41' in result)){
-    res.status(500).send('nMailDetailB delete query 실패');
-    return false;
-  }
+  // result = await nMailDetailB.delete(req.body.idx);
+  // if(!('protocol41' in result)){
+  //   res.status(500).send('nMailDetailB delete query 실패');
+  //   return false;
+  // }
   // result = await maillink.deleteMlAMSG(req.body.idx);
   // if(!('protocol41' in result)){
   //   res.status(500).send('ml_automail_message delete query 실패');
