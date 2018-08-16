@@ -33,9 +33,6 @@ router.get('/', isAuthenticated, async function(req, res, next) {
   if(tNum > 0){
     var sNum = parseInt(data.period.successNfailCount.success.replace(/,/gi,''));
     var fNum = parseInt(data.period.successNfailCount.fail.replace(/,/gi,''));
-    console.log(sNum);
-    console.log(fNum);
-    console.log(tNum);
     if(sNum > 0 )
       data.period.successP = Math.round((sNum / tNum) * 100);
     if(fNum > 0 )

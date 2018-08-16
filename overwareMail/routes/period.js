@@ -23,12 +23,6 @@ router.get('/',isAuthenticated,async function(req, res) {
   var data = await getListPageData(req.user.n_idx,req.query);
   data.klist = await keyword.selectMovieKwdAll(req.user.user_admin,req.user.n_idx) || [];
   data.tlist = await mailType.selectTable(req.user.user_admin,req.user.n_idx) || [];
-
-  data.sDate = '';
-  data.eDate = '';
-  data.keyword = '';
-  data.type = '';
-  data.mType = '';
   res.render('period',data);
 });
 
@@ -64,7 +58,10 @@ async function getListPageData(idx,param){
     list:[],
     listCount:{total:0},
     sDate: '',
-    eDate: ''
+    eDate: '',
+    keyword: '',
+    type: '',
+    mType: ''
   };
   var limit = 20;
   var searchParam = [idx,idx,0,limit];
