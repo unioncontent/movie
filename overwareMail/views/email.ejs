@@ -669,8 +669,8 @@
     if(param["M_type"] == "1"){
       var time = $('#time_h').val()+":"+$('#time_m').val();
       var date = $('#datepicker').val();
-      if(time == ":" || date == ""){
-        check = requiredMessage("date","예약시간을 설정해주세요.");
+      if($('#time_h').val() == "" || $('#time_m').val() == "" || date == ""){
+        check = requiredMessage("date","예약시간을 다시 설정해주세요.");
       }
       else{
         var endDate = date+" "+time+":00";
