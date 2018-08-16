@@ -29,11 +29,17 @@ router.get('/', isAuthenticated, async function(req, res, next) {
       'waitingCount' : await period.getWaitingCount(req.user) || 0,
     }
   };
-  if(data.period.todaySendCount > 0){
-    if(parseInt(data.period.successNfailCount.success) > 0 )
-      data.period.successP = Math.round((parseInt(data.period.successNfailCount.success) / data.period.todaySendCount) * 100);
-    if(parseInt(data.period.successNfailCount.fail) > 0 )
-      data.period.failP = Math.round((parseInt(data.period.successNfailCount.fail) / data.period.todaySendCount) * 100);
+  var tNum = parseInt(data.period.todaySendCount.replace(/,/gi,''));
+  if(tNum > 0){
+    var sNum = parseInt(data.period.successNfailCount.success.replace(/,/gi,''));
+    var fNum = parseInt(data.period.successNfailCount.fail.replace(/,/gi,''));
+    console.log(sNum);
+    console.log(fNum);
+    console.log(tNum);
+    if(sNum > 0 )
+      data.period.successP = Math.round((sNum / tNum) * 100);
+    if(fNum > 0 )
+      data.period.failP = Math.round((fNum / tNum) * 100);
   }
   res.render('index',data);
 });

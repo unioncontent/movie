@@ -110,7 +110,7 @@
                           <div class="title_nobr"><%= list[i].M_subject %></div>
                         </a>
                       </td>
-                      <td><%= parseInt(list[i].success) + parseInt(list[i].fail) %></td>
+                      <td><%= list[i].sendCount %></td>
                       <td class="success" data-idx="<%= list[i].n_idx %>"><%= list[i].success %></td>
                       <td class="fail" data-idx="<%= list[i].n_idx %>"><%= list[i].fail %></td>
                       <td>
@@ -517,6 +517,9 @@
 .error_nobr_more{
   white-space: pre-line;
 }
+.widthMin{
+  min-width: 40px;
+}
 </style>
 <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
@@ -617,7 +620,7 @@ $(document).on('click','.fail',function(){
           k_msg = settingErrorMsg(code);
         }
         var html = '<tr><td><i class="fas fa-exclamation-triangle"></i></td>'+
-          '<td>'+code+'</td>'+'<td>'+ele.EMTOADDRESS;
+          '<td class="widthMin">'+code+'</td>'+'<td>'+ele.EMTOADDRESS;
         if(code != '42' && code != '43' && code != '44' && code != '45' && ele.SENDRESULT != 'ER'){
           html+='<label class="label label-warning">재발송가능</label>'
         }
