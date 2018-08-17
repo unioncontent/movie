@@ -103,13 +103,13 @@ router.get('/preview',async function(req, res, next) {
   var sideHtmlStart = '<table width="750" align="center" cellpadding="0" cellspacing="0" style="border: solid 1px #cacaca; padding: 20px;"><tbody><tr><td><table width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td width="642"><img src="http://showbox.email/templates/images/logo/show_logo.png" width="135" height="36" alt="로고"></td><td width="92">NEWS ';
   var ivt = '0';
   if(viewCode[0].M_seq_number != '0' && viewCode[0].M_invitation  == '0'){
-    sideHtmlStart+= 'No.'+req.body.num;
+    sideHtmlStart+= 'No.'+viewCode[0].M_seq_number;
   }
   else{
     sideHtmlStart+= 'Invitation';
     ivt = '1';
   }
-  sideHtmlStart+= ((viewCode.length == 0) ? '' : viewCode[0].M_seq_number)+'</td></tr></tbody></table><table width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td>';
+  sideHtmlStart+= '</td></tr></tbody></table><table width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td>';
   var sideHtmlEnd = '</td></tr></tbody></table></td></tr></tbody></table>';
   var pastParam = {keyword:req.query.keyword,page:req.query.page,ivt:ivt};
   var pastNews = await content.selectView(pastParam);
