@@ -289,8 +289,12 @@
 <script type="text/javascript">
   $(document).ready(function(){
     var keywordValue = $('#keyword').val();
+    var ivtValue = $('#ivt').val();
     if(keywordValue != ''){
       $("#selectKeyword option[value='"+keywordValue+"']").attr('selected','selected');
+    }
+    if(ivtValue != ''){
+      $("#searchBtn1").attr('checked',true);
     }
     var searchTypeParams = $.urlParam("searchType");
     var searchParams = $.urlParam("search");
