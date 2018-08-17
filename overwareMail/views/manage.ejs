@@ -53,6 +53,12 @@
               </select>
             </div>
             <div class="card-block table-border-style">
+              <div class="preloader3 loader-block">
+                <div class="circ1 loader-primary"></div>
+                <div class="circ2 loader-primary"></div>
+                <div class="circ3 loader-primary"></div>
+                <div class="circ4 loader-primary"></div>
+              </div>
               <div class="table-responsive">
                 <table class="table">
                   <thead>
@@ -224,6 +230,19 @@
   </div>
 </div>
 <style type="text/css">
+  /* loader */
+  .preloader3{
+    display: none;
+    padding-top:20%;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 100px;
+    width: 500px;
+    margin: auto;
+    max-width: 100%;
+    z-index: 10000;
+  }
   #selectKeyword{
     min-width: 100px;
   }
@@ -658,6 +677,7 @@
   });
   function ajaxGetPageList(param){
     console.log('ajaxGetPageList:',param);
+    $('.preloader3').show();
     $.ajax({
       url: '/email/manage/getNextPage',
       type: 'post',
@@ -805,6 +825,7 @@
           html += '</ul></td></tr>';
           $('#listTable tfoot').eq(0).append(html);
         }
+        $('.preloader3').fadeOut(500);
       }
     });
   }
