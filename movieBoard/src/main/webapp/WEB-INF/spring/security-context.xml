@@ -14,6 +14,11 @@
 
 
 	<security:http auto-config="true" use-expressions="false">
+		<security:headers>
+         	<security:frame-options disabled="true" ></security:frame-options>
+         	<security:frame-options policy="SAMEORIGIN" ></security:frame-options>
+    	</security:headers>
+	
 
 		<security:form-login login-page="/"
 			username-parameter="username" 
@@ -42,11 +47,13 @@
 		<security:intercept-url pattern="/extract/extract" access="ROLE_USER" />
 		<security:intercept-url pattern="/classification/classification" access="ROLE_USER" />
 		<security:intercept-url pattern="/listAll/listAll" access="ROLE_USER" />
+		<security:intercept-url pattern="/marketing/**" access="ROLE_USER" />
+	
 		
 
 		<!-- <security:remember-me key="wmoskey"
 			token-validity-seconds="2419200" /> -->
-
+	
 	</security:http>
 	
 	<security:authentication-manager> 
