@@ -73,7 +73,6 @@ router.get('/',isAuthenticated, async function(req, res) {
 router.get('/manage',isAuthenticated, async function(req, res) {
   var data = await getListPageData(req.user.n_idx,req.query);
   data.klist = await keyword.selectMovieKwdAll(req.user.user_admin,req.user.n_idx) || [];
-  data.keyword = '';
   res.render('manage',data);
 });
 
@@ -144,7 +143,7 @@ router.post('/manage/delete',isAuthenticated, async function(req, res) {
   res.send({status:true});
 });
 
-router.post('/menage/getNextPage',isAuthenticated,async function(req, res, next) {
+router.post('/manage/getNextPage',isAuthenticated,async function(req, res, next) {
   try{
     var data = await getListPageData(req.user.n_idx,req.body);
     res.send({status:true,result:data});
@@ -158,7 +157,9 @@ async function getListPageData(idx,param){
   var data = {
     list:[],
     listCount:{total:0},
-    page: 1
+    page: 1,
+    keyword: '',
+    ivt:''
   };
   var limit = 20;
   var searchParam = [idx,idx,0,limit];
@@ -175,6 +176,10 @@ async function getListPageData(idx,param){
   if (typeof param.keyword !== 'undefined') {
     searchBody['keyword'] = param.keyword;
     data['keyword'] = param.keyword;
+  }
+  if (typeof param.ivt !== 'undefined') {
+    searchBody['ivt'] = param.ivt;
+    data['ivt'] = param.ivt;
   }
   if (typeof param.searchType !== 'undefined' && typeof param.search !== 'undefined') {
     searchBody['searchType'] = param.searchType;

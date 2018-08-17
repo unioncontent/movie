@@ -35,6 +35,12 @@
                   <option value='<%=klist[i].keyword_idx%>'><%=klist[i].keyword_main%></option>
                 <%}%>
               </select>
+              <div class="col-sm-3 p-l-5 p-t-5 m-b-10 f-left border-checkbox-section">
+                <div class="border-checkbox-group border-checkbox-group-default m-r-5">
+                  <input class="border-checkbox" type="checkbox" id="searchBtn1" name="search" value="1">
+                  <label class="border-checkbox-label" for="searchBtn1">인비테이션</label>
+                </div>
+              </div>
               <div class="col-12 col-md-3 f-right col-sm-9 m-l-10 p-l-0 p-r-0  m-b-10 right-icon-control">
                 <input type="text" class="p-t-10 form-control form-control-default search-text" id="keywordInput">
                 <div class="form-icon" id="searchBtn">
@@ -100,7 +106,7 @@
                         </a>
                       </td>
                       <td><%= list[i].M_sender %></td>
-                      <td><div class="num_nobr"><%= list[i].M_seq_number %>차</div></td>
+                      <td><div class="num_nobr"><%= ((list[i].M_invitation == '0')?(list[i].M_seq_number+'차'):'-') %></div></td>
                       <td><%= recipiStr %></td>
                       <td><div class="group-nobr" title="<%= groupStr %>"><%= groupStr %></div></td>
                       <td><div class="date-nobr"><%= list[i].M_regdate %></div></td>
@@ -192,6 +198,7 @@
         </div>
       </div>
       <input type="hidden" id="page" value="<%=page%>"/>
+      <input type="hidden" id="ivt" value="<%=ivt%>"/>
       <input type="hidden" id="keyword" value="<%=keyword%>"/>
       <!-- Modal start-->
       <div class='modal fade' id='previewMail-Modal' role='dialog'>
@@ -285,13 +292,6 @@
     if(keywordValue != ''){
       $("#selectKeyword option[value='"+keywordValue+"']").attr('selected','selected');
     }
-    // var url = new URL(window.location.href);
-    // var searchTypeParams = url.searchParams.get("searchType");
-    // var searchParams = url.searchParams.get("search");
-    // if(searchTypeParams != null && searchParams != null){
-    //   $("#selectSearchType").val(searchTypeParams).prop("selected", true);
-    //   $("#keywordInput").val(searchParams);
-    // }
     var searchTypeParams = $.urlParam("searchType");
     var searchParams = $.urlParam("search");
     var keywordParams = $.urlParam("keyword");
@@ -303,6 +303,40 @@
       $("#selectKeyword option[value='"+keywordParams+"']").attr('selected','selected');
     }
   });
+  $('input[type="checkbox"][name="search"]').on('click',function(){
+    //click 이벤트가 발생했는지 체크
+    if($(this).prop('checked')){
+      // checkbox전체를 checked 해제후 click한 요소만 true지정
+      $('input[type="checkbox"][name="search"]').prop('checked',false);
+      $(this).prop('checked',true);
+      $('#ivt').val($(this).val());
+      searchStrBtn($(this).val());
+    }
+    else{
+      $('#ivt').val('');
+      searchStrBtn('');
+    }
+  });
+  function searchStrBtn(search){
+    var param = {
+      page : 1
+    };
+    var ivtValue = $('#ivt').val();
+    if(ivtValue != ''){
+      param.ivt = ivtValue;
+    }
+    if($.urlParam("searchType") != '' && $.urlParam("searchType") != null){
+      param.searchType = $.urlParam("searchType");
+    }
+    if($.urlParam("search") != '' && $.urlParam("search") != null){
+      param.search = $.urlParam("search");
+    }
+    if($('#keyword').val() != ''){
+      param.keyword=optionVal;
+    }
+    // data input hidden values
+    ajaxGetPageList(param);
+  }
   // 삭제버튼 클릭시
   $(document).on('click','.btn-delete',function(){
     var removeParam = $(this).data('idx');
@@ -541,8 +575,12 @@
     var searchTypeParams = $.urlParam("searchType");
     var searchParams = $.urlParam("search");
     var keywordParams = $.urlParam("keyword");
+    var ivtParams = $.urlParam("ivt");
     if(keywordParams != '' && keywordParams != null){
       param.keyword = keywordParams;
+    }
+    if(ivtParams != '' && ivtParams != null){
+      param.ivt = ivtParams;
     }
     if(searchTypeParams != null && searchParams != null){
       page.searchType=searchTypeParams;
@@ -563,21 +601,17 @@
     else{
       $('#keyword').val('');
     }
-    // var href = new URL(window.location.href);
-    // if(href.searchParams.get("searchType") != '' && href.searchParams.get("searchType") != null){
-    //   param.searchType = href.searchParams.get("searchType");
-    // }
-    // if(href.searchParams.get("search") != '' && href.searchParams.get("search") != null){
-    //   param.search = href.searchParams.get("search");
-    // }
     if($.urlParam("searchType") != '' && $.urlParam("searchType") != null){
       param.searchType = $.urlParam("searchType");
     }
     if($.urlParam("search") != '' && $.urlParam("search") != null){
       param.search = $.urlParam("search");
     }
+    if($.urlParam("ivt") != '' && $.urlParam("ivt") != null){
+      param.ivt = $.urlParam("ivt");
+    }
     // data input hidden values
-    ajaxGetPageList(param,0);
+    ajaxGetPageList(param);
   });
   // 검색시
   $('#keywordInput').on('keyup',function(event){
@@ -592,14 +626,6 @@
     if(searchType == 'n'){
       search = search.replace(/[^0-9]/g,'');
     }
-    // var href = new URL(window.location.href);
-    // var keywordParams = href.searchParams.get("keyword");
-    // if(searchType != '' && search != ''){
-    //   url += '&searchType='+searchType+'&search='+search;
-    // }
-    // if(keywordParams != null && keywordParams != ''){
-    //   url += '&keyword='+keywordParams;
-    // }
     var keywordParams = $.urlParam("keyword");
     if(searchType != '' && search != ''){
       url += '&searchType='+searchType+'&search='+search;
@@ -615,20 +641,6 @@
     var param = {
       page : Number($(this).data().value)
     };
-    // var keywordValue = $('#keyword').val();
-    // if(keywordValue != ''){
-    //   param.keyword = keywordValue;
-    // }
-    // var href = new URL(window.location.href);
-    // if(href.searchParams.get("keyword") != '' && href.searchParams.get("keyword") != null){
-    //   param.keyword = href.searchParams.get("keyword");
-    // }
-    // if(href.searchParams.get("searchType") != '' && href.searchParams.get("searchType") != null){
-    //   param.searchType = href.searchParams.get("searchType");
-    // }
-    // if(href.searchParams.get("search") != '' && href.searchParams.get("search") != null){
-    //   param.search = href.searchParams.get("search");
-    // }
     if($.urlParam("keyword") != '' && $.urlParam("keyword") != null){
       param.keyword = $.urlParam("keyword");
     }
@@ -638,12 +650,12 @@
     if($.urlParam("search") != '' && $.urlParam("search") != null){
       param.search = $.urlParam("search");
     }
-    ajaxGetPageList(param,num);
+    ajaxGetPageList(param);
   });
   function ajaxGetPageList(param){
     console.log('ajaxGetPageList:',param);
     $.ajax({
-      url: '/email/menage/getNextPage',
+      url: '/email/manage/getNextPage',
       type: 'post',
       data: param,
       error: function(request,status,error){
@@ -658,6 +670,7 @@
         }
         $("#page").val(data.result.currentPage);
         $("#keyword").val(param.keyword);
+        $("#ivt").val(param.ivt);
         if(typeof history.pushState == 'function'){
           //현재 주소를 가져온다.
           var renewURL = location.href;
@@ -675,6 +688,16 @@
           }
           else{
             renewURL = renewURL.replace(/&keyword=([0-9]+)/ig,'');
+          }
+          if('ivt' in param){
+            console.log(renewURL);
+            renewURL = renewURL.replace(/&ivt=([0-9]+)/ig,'&ivt='+param.ivt);
+            if(renewURL.indexOf("&ivt=") == -1){
+              renewURL += '&ivt='+param.ivt;
+            }
+          }
+          else{
+            renewURL = renewURL.replace(/&ivt=([0-9]+)/ig,'');
           }
           //페이지 갱신 실행!
           history.pushState(null, null,renewURL);
@@ -709,7 +732,7 @@
               <div class="title_nobr">'+item.M_subject+'</div>\
             </a></td>\
             <td>'+item.M_sender+'</td>\
-            <td><div class="num_nobr">'+item.M_seq_number+'차</div></td>\
+            <td><div class="num_nobr">'+((item.M_invitation == '0')?(item.M_seq_number+'차'):'-')+'</div></td>\
             <td>'+recipiStr+'</td>\
             <td><div class="group-nobr" title="'+groupStr+'">'+groupStr+'</div></td>\
             <td><div class="date-nobr">'+item.M_regdate+'</div></td>\

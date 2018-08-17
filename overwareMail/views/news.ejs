@@ -689,82 +689,12 @@
   function searchStrBtn(search){
     $('#search2').val(search);
     var param = settingParams(1);
-
-    // var param = {
-    //   page : 1
-    // };
-    // if(search != ''){
-    //   param.search_b = search;
-    // }
-    // // data input hidden values
-    // var sDateValue = $('#sDate').val();
-    // var eDateValue = $('#eDate').val();
-    // if(sDateValue != '' && eDateValue != ''){
-    //   param.sDate = sDateValue;
-    //   param.eDate = eDateValue;
-    // }
-    // var rankValue = $('#rank').val();
-    // if(rankValue != ''){
-    //   param.rank = rankValue;
-    // }
-    // var searchValue = $('#searchInput').val();
-    // if(searchValue != ''){
-    //   param.search = searchValue;
-    // }
-    // var typeValue = $('#type').val();
-    // if(typeValue != ''){
-    //   param.type = typeValue;
-    // }
-    // var keywordValue = $('#keyword').val();
-    // if(keywordValue != ''){
-    //   param.keyword = keywordValue;
-    // }
-    // var limitValue = $('#limit').val();
-    // if(limitValue != ''){
-    //   param.limit = limitValue;
-    // }
-    ajaxGetPageList(param,0);
+    ajaxGetPageList(param);
   }
   // 랭킹 버튼 클릭시
   function searchNaverVideoBtn(rank){
-    // var param = {
-    //   page : 1
-    // };
-    // if(rank != ''){
-    //   param.rank = true;
-    // }
     var param = settingParams(1);
-    // var search2Value = $('#search2').val();
-    // if(search2Value != ''){
-    //   param.search_b = search2Value;
-    // }
-    // var sDateValue = $('#sDate').val();
-    // var eDateValue = $('#eDate').val();
-    // if(sDateValue != '' && eDateValue != ''){
-    //   param.sDate = sDateValue;
-    //   param.eDate = eDateValue;
-    // }
-    // var rankValue = $('#rank').val();
-    // if(rankValue != ''){
-    //   param.rank = rankValue;
-    // }
-    // var searchValue = $('#searchInput').val();
-    // if(searchValue != ''){
-    //   param.search = searchValue;
-    // }
-    // var typeValue = $('#type').val();
-    // if(typeValue != ''){
-    //   param.type = typeValue;
-    // }
-    // var keywordValue = $('#keyword').val();
-    // if(keywordValue != ''){
-    //   param.keyword = keywordValue;
-    // }
-    // var limitValue = $('#limit').val();
-    // if(limitValue != ''){
-    //   param.limit = limitValue;
-    // }
-    ajaxGetPageList(param,0);
+    ajaxGetPageList(param);
   }
   // 검색시
   $('#searchInput').on('keyup',function(event){
@@ -773,19 +703,6 @@
     };
   });
   $('#searchBtn').on('click',function(){
-    // var url = '/news?page=1';
-    // var search = $("#searchInput").val();
-    // if(search != ''){
-    //   url += '&search='+$.urlPostParam(search);
-    // }
-    // var limitValue = $('#limit').val();
-    // if(limitValue != ''){
-    //   url += '&limit='+$.urlPostParam(limitValue);
-    // }
-    // location.href = url;
-    // var param = {
-    //   page : 1
-    // };
     var inputVal = $("#searchInput").val();
     if(inputVal != ''){
       // param.search=inputVal;
@@ -795,30 +712,7 @@
       $('#search').val('');
     }
     var param = settingParams(1);
-    // data input hidden values
-    // var sDateValue = $('#sDate').val();
-    // var eDateValue = $('#eDate').val();
-    // if(sDateValue != '' && eDateValue != ''){
-    //   param.sDate = sDateValue;
-    //   param.eDate = eDateValue;
-    // }
-    // var rankValue = $('#rank').val();
-    // if(rankValue != ''){
-    //   param.rank = rankValue;
-    // }
-    // var typeValue = $('#type').val();
-    // if(typeValue != ''){
-    //   param.type = typeValue;
-    // }
-    // var keywordValue = $('#keyword').val();
-    // if(keywordValue != ''){
-    //   param.keyword = keywordValue;
-    // }
-    // var limitValue = $('#limit').val();
-    // if(limitValue != ''){
-    //   param.limit = limitValue;
-    // }
-    ajaxGetPageList(param,0);
+    ajaxGetPageList(param);
   });
   // 키워드 선택시
   $('#selectKeyword').on('change',function(){
@@ -830,78 +724,14 @@
       $('#keyword').val('');
     }
     var param = settingParams(1);
-    // var param = {
-    //   page : 1
-    // };
-    // var optionVal = $("#selectKeyword option:selected").val();
-    // if(optionVal != '키워드'){
-    //   param.keyword=optionVal;
-    //   $('#keyword').val(optionVal);
-    // }
-    // else{
-    //   $('#keyword').val('');
-    // }
-    // // data input hidden values
-    // var sDateValue = $('#sDate').val();
-    // var eDateValue = $('#eDate').val();
-    // if(sDateValue != '' && eDateValue != ''){
-    //   param.sDate = sDateValue;
-    //   param.eDate = eDateValue;
-    // }
-    // var rankValue = $('#rank').val();
-    // if(rankValue != ''){
-    //   param.rank = rankValue;
-    // }
-    // var typeValue = $('#type').val();
-    // if(typeValue != ''){
-    //   param.type = typeValue;
-    // }
-    // var searchValue = $('#searchInput').val();
-    // if(searchValue != ''){
-    //   param.search = searchValue;
-    // }
-    // var limitValue = $('#limit').val();
-    // if(limitValue != ''){
-    //   param.limit = limitValue;
-    // }
-    ajaxGetPageList(param,0);
+    ajaxGetPageList(param);
   });
   // 페이지 행 선택시
   $('#selectNum').on('change',function(){
     var optionVal = $("#selectNum option:selected").val();
     $('#limit').val(optionVal);
     var param = settingParams(1);
-
-    // var param = {
-    //   page : 1
-    // };
-    // var optionVal = $("#selectNum option:selected").val();
-    // $('#limit').val(optionVal);
-    // param.limit = optionVal;
-    // // data input hidden values
-    // var sDateValue = $('#sDate').val();
-    // var eDateValue = $('#eDate').val();
-    // var keywordValue = $('#keyword').val();
-    // if(sDateValue != '' && eDateValue != ''){
-    //   param.sDate = sDateValue;
-    //   param.eDate = eDateValue;
-    // }
-    // var rankValue = $('#rank').val();
-    // if(rankValue != ''){
-    //   param.rank = rankValue;
-    // }
-    // if(keywordValue != ''){
-    //   param.keyword = keywordValue;
-    // }
-    // var typeValue = $('#type').val();
-    // if(typeValue != ''){
-    //   param.type = typeValue;
-    // }
-    // var searchValue = $('#searchInput').val();
-    // if(searchValue != ''){
-    //   param.search = searchValue;
-    // }
-    ajaxGetPageList(param,0);
+    ajaxGetPageList(param);
   });
   // 뉴스 대분류 선택시
   $('#selectNewsType').on('change',function(){
@@ -913,42 +743,7 @@
       $('#type').val('');
     }
     var param = settingParams(1);
-
-    // var param = {
-    //   page : 1
-    // };
-    // var optionVal = $("#selectNewsType option:selected").val();
-    // if(optionVal != '0'){
-    //   param.type=optionVal;
-    //   $('#type').val(optionVal);
-    // }
-    // else{
-    //   $('#type').val('');
-    // }
-    // // data input hidden values
-    // var sDateValue = $('#sDate').val();
-    // var eDateValue = $('#eDate').val();
-    // var keywordValue = $('#keyword').val();
-    // if(sDateValue != '' && eDateValue != ''){
-    //   param.sDate = sDateValue;
-    //   param.eDate = eDateValue;
-    // }
-    // var rankValue = $('#rank').val();
-    // if(rankValue != ''){
-    //   param.rank = rankValue;
-    // }
-    // if(keywordValue != ''){
-    //   param.keyword = keywordValue;
-    // }
-    // var searchValue = $('#searchInput').val();
-    // if(searchValue != ''){
-    //   param.search = searchValue;
-    // }
-    // var limitValue = $('#limit').val();
-    // if(limitValue != ''){
-    //   param.limit = limitValue;
-    // }
-    ajaxGetPageList(param,0);
+    ajaxGetPageList(param);
   });
   // 뉴스 전체 선택시
   $('#checkboxAll').on('click',function(){
@@ -965,47 +760,11 @@
   });
   //페이지 이동
   $(document).on('click','.page-link',function(){
-    var num = Number($(this).text()) || Number($(this).data().num);
-    var param = settingParams(Number($(this).data().value));
-
     // var num = Number($(this).text()) || Number($(this).data().num);
-    // var param = {
-    //   page : Number($(this).data().value)
-    // };
-    // // data input hidden values
-    // var sDateValue = $('#sDate').val();
-    // var eDateValue = $('#eDate').val();
-    // if(sDateValue != '' && eDateValue != '' ){
-    //   param.sDate = moment(sDateValue).format('YYYY-MM-DD');
-    //   param.eDate = moment(eDateValue).format('YYYY-MM-DD');
-    // }
-    // var rankValue = $('#rank').val();
-    // if(rankValue != ''){
-    //   param.rank = rankValue;
-    // }
-    // var keywordValue = $('#keyword').val();
-    // if(keywordValue != ''){
-    //   param.keyword = keywordValue;
-    // }
-    // var typeValue = $('#type').val();
-    // if(typeValue != ''){
-    //   param.type = typeValue;
-    // }
-    // var limitValue = $('#limit').val();
-    // if(limitValue != ''){
-    //   param.limit = limitValue;
-    // }
-    // var searchValue = $('#searchInput').val();
-    // if(searchValue != ''){
-    //   param.search = searchValue;
-    // }
-    ajaxGetPageList(param,num);
+    var param = settingParams(Number($(this).data().value));
+    ajaxGetPageList(param);
   });
   function ajaxGetPageList(param){
-    // var search2Value = $('#search2').val();
-    // if(search2Value != ''){
-    //   param.search_b = search2Value;
-    // }
     console.log('ajaxGetPageList:',param);
     $('.preloader3').show();
     $.ajax({
@@ -1148,33 +907,9 @@
     var dateArr = $("#reportrange span").text().split(' - ');
     var start = moment(new Date(dateArr[0].replace(/[.]/gi,'-')));
     var end = moment(new Date(dateArr[1].replace(/[.]/gi,'-')));
-    // var param = {
-    //   page : 1,
-    //   sDate : ,
-    //   eDate : end.format('YYYY-MM-DD')
-    // };
     $('#sDate').val(start.format('YYYY-MM-DD'));
     $('#eDate').val(end.format('YYYY-MM-DD'));
     var param = settingParams(1);
-
-
-    // data input hidden values
-    // var keywordValue = $('#keyword').val();
-    // if(keywordValue != ''){
-    //   param.keyword = keywordValue;
-    // }
-    // var typeValue = $('#type').val();
-    // if(typeValue != ''){
-    //   param.type = typeValue;
-    // }
-    // var searchValue = $('#searchInput').val();
-    // if(searchValue != ''){
-    //   param.search = searchValue;
-    // }
-    // var limitValue = $('#limit').val();
-    // if(limitValue != ''){
-    //   param.limit = limitValue;
-    // }
     ajaxGetPageList(param);
   }
   $(document).on('click','.applyBtn',searchDate);
@@ -1232,33 +967,6 @@
       console.log('reloadPage');
       var pageValue = ($("#page").val() == '') ? 1 : parseInt($("#page").val());
       var param = settingParams(pageValue);
-
-      // var pageValue = ($("#page").val() == '') ? 1 : parseInt($("#page").val());
-      // var param = {
-      //   page : pageValue
-      // };
-      // var sDateValue = $('#sDate').val();
-      // var eDateValue = $('#eDate').val();
-      // if(sDateValue != '' && eDateValue != '' ){
-      //   param.sDate = moment(sDateValue).format('YYYY-MM-DD');
-      //   param.eDate = moment(eDateValue).format('YYYY-MM-DD');
-      // }
-      // var keywordValue = $('#keyword').val();
-      // if(keywordValue != ''){
-      //   param.keyword = keywordValue;
-      // }
-      // var typeValue = $('#type').val();
-      // if(typeValue != ''){
-      //   param.type = typeValue;
-      // }
-      // var limitValue = $('#limit').val();
-      // if(limitValue != ''){
-      //   param.limit = limitValue;
-      // }
-      // var searchValue = $('#searchInput').val();
-      // if(searchValue != ''){
-      //   param.search = searchValue;
-      // }
       ajaxGetPageList(param);
     }
   // 모달부분처리
@@ -1377,7 +1085,7 @@
     // 단독, 공식
     var search2Value = $('#search2').val();
     if(search2Value != ''){
-    param.search_b = search2Value;
+      param.search_b = search2Value;
     }
     // 영상
     var videoValue = $('#video').val();

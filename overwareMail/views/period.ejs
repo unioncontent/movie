@@ -45,6 +45,12 @@
                 <option value='0'>즉시</option>
                 <option value='1'>예약</option>
               </select>
+              <div class="col-sm-3 p-l-5 p-t-5 m-b-10 f-left border-checkbox-section">
+                <div class="border-checkbox-group border-checkbox-group-default m-r-5">
+                  <input class="border-checkbox" type="checkbox" id="searchBtn1" name="search" value="1">
+                  <label class="border-checkbox-label" for="searchBtn1">인비테이션</label>
+                </div>
+              </div>
               <div class="col-md-3 p-r-0 p-l-0 f-right reportrange">
                 <div id="reportrange" class="form-control form-control-default">
                   <i class="glyphicon glyphicon-calendar far fa-calendar-alt"></i>
@@ -85,7 +91,7 @@
                       <th><%= listCount - i - offset %></th>
                       <td><%= list[i].M_regdate %></td>
                       <td><div class="kwd_nobr"><%= list[i].M_keyword %></div></td>
-                      <td><div class="num_nobr"><%= list[i].M_seq_number %>차</div></td>
+                      <td><div class="num_nobr"><%= ((list[i].M_invitation == '0')?(list[i].M_seq_number+'차'):'-') %></div></td>
                       <td>
                         <a href="http://showbox.email/preview?keyword=<%= list[i].M_keyword_idx %>&idx=<%= list[i].n_idx %>" target="_blank">
                           <div class="title_nobr"><%= list[i].M_subject %></div>
@@ -180,26 +186,7 @@
       <input type="hidden" id="keyword" value="<%=keyword%>"/>
       <input type="hidden" id="type" value="<%=type%>"/>
       <input type="hidden" id="mType" value="<%=mType%>"/>
-      <!-- Modal start-->
-      <div class='modal fade' id='previewMail-Modal' role='dialog'>
-        <div class='modal-dialog modal-lg modal-lg-1' role='document'>
-          <div class='modal-content'>
-            <div class='modal-header'>
-              <h5 class="modal-title"><span id="date"></span>메일내용</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">×</span>
-              </button>
-            </div>
-            <div class='modal-body'>
-              <div class='col-sm-12' id="mailBody"></div>
-            </div>
-            <div class="modal-footer">
-              <button class="btn btn-secondary mobtn" data-dismiss='modal' aria-label='Close' type="button">취소</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- Modal end-->
+      <input type="hidden" id="ivt" value="<%=ivt%>"/>
       <!-- Modal start-->
       <div class='modal fade' id='period-Modal' role='dialog'>
         <div class='modal-dialog' role='document'>
@@ -211,33 +198,6 @@
               </button>
             </div>
             <div class='modal-body'>
-              <!-- <div class="card">
-                <div class="card-header">
-                  <h5>메일 발송 : <span id="total">0</span>건 (성공: <span id="success">0</span>건 / 실패: <span id="fail">0</span>건)</h5>
-                </div>
-                <div class="card-block table-border-style">
-                  <table class="table matrics-table">
-                    <tbody>
-                      <tr class="text-center">
-                        <td width="50%"><strong>언론사</strong></td>
-                        <td id="media"></td>
-                      </tr>
-                      <tr class="text-center">
-                        <td><strong>기자</strong></td>
-                        <td id="reporter"></td>
-                      </tr>
-                      <tr class="text-center">
-                        <td><strong>기사글</strong></td>
-                        <td id="newsCount"></td>
-                      </tr>
-                      <tr class="text-center">
-                        <td><strong>댓글</strong></td>
-                        <td id="replyCount"></td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div> -->
               <div class="blog-single">
                 <p class="qutoe-text" style="margin-top:  0px;">발송현황</p>
               </div>
@@ -325,9 +285,6 @@
                   </tbody>
                 </table>
               </div>
-              <!-- <ul>
-                <li><i class="fas fa-exclamation-triangle"></i></li>
-              </ul> -->
             </div>
             <div class="modal-footer">
               <button class="btn btn-secondary mobtn" data-dismiss='modal' aria-label='Close' type="button">취소</button>
@@ -357,231 +314,15 @@
                       <th>회사</th>
                       <th>이름</th>
                       <th>오류</th>
-                      <!-- <span class="text-muted smtpMsg"><i class="fas fa-question-circle"></i></span> -->
                     </tr>
                   </thead>
                   <tbody id="error-list" class="text-danger">
                   </tbody>
                 </table>
               </div>
-              <!-- <ul>
-                <li><i class="fas fa-exclamation-triangle"></i></li>
-              </ul> -->
             </div>
             <div class="modal-footer">
               <button class="btn btn-secondary mobtn" data-dismiss='modal' aria-label='Close' type="button">취소</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- Modal end-->
-      <!-- Modal start-->
-      <div class='modal fade' id='smtp-Modal' role='dialog'>
-        <div class='modal-dialog' role='document'>
-          <div class='modal-content'>
-            <div class='modal-header'>
-              <h5 class="modal-title text-center">오류 코드 도움말</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">×</span>
-              </button>
-            </div>
-            <div class='modal-body'>
-              <ul class="nav nav-tabs  tabs" role="tablist">
-                <li class="nav-item">
-                  <a class="nav-link active" data-toggle="tab" href="#err400" role="tab">400 에러</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" data-toggle="tab" href="#err500" role="tab">500 에러</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" data-toggle="tab" href="#errNaver" role="tab">네이버메일 에러</a>
-                </li>
-              </ul>
-              <div class="tab-content tabs card-block">
-                <div class="tab-pane active" id="err400" role="tabpanel">
-                  <p class="m-0">
-                    <dl>
-                      <dt>1. 421 Server too busy</dt>
-                      <dd>수신 측 서버의 일시 장애로 연결이 안되는 현상으로 이는 수신 측 서버의 SMTP 세션이 Full 이거나 수신 측 서버의 트래픽으로 인해 새로운 SMTP 연결을 만들지 못하는 경우 발생할 수 있습니다. 잠시 후 다시 시도해 보거나 오류가 계속 될 경우 수신 측 관리자에게 문의 하시기 바랍니다.</dd>
-                      <dt>2. 421-Microsoft ESMTP MAIL Service, Version: 5.0.2195.5600 ready at Service not available, closing transmission channel</dt>
-                      <dd>수신 측 서버인 Microsoft ESMTP 서비스가 정상적으로 동작하지 않아 메일을 송신하지 못하는 오류입니다. 시 후 다시 시도해 보거나 오류가 계속 될 경우 수신 측 관리자에게 문의 하시기 바랍니다.</dd>
-                      <dt>3. 421 4.3.1 ILLEGAL FROM &lt;xxx@xxx.com&gt; Sorry. Your IP has problems. This Connection will be closed. Please mail to mailsysop@hanmir.com (by using another e-mail server). Thank you.</dt>
-                      <dd>송신 측의 아이피 주소 또는 메일주소가 잘못 되어 송신이 제한된 오류입니다. 안내되어진 메일주소로 문의 메일을 보내시기 바랍니다.</dd>
-                      <dt>4. 421 4.3.2 Your IP(xxx.xxx.xxx.xxx) is filtered and this connection will be closed. You must register your IP to spammaster@hanafos.com By SpaceLee, the Lord of mail server</dt>
-                      <dd>송신 측의 아이피 주소가 하나포스닷컴에 스팸 메일러로 등록이 되어 송신이 제한된 오류입니다. 안내되어진 메일주소로 문의 메일을 보내시기 바랍니다.</dd>
-                      <dt>5. 421 4.3.2 Your IP(xxx.xxx.xxx.xxx) is filtered and this connection will be closed. You must register your IP to http://realip.naver.com.</dt>
-                      <dd>송신 측의 아이피 주소가 네이버닷컴에 스팸 메일러로 등돌이 되어 송신이 제한된 오류입니다. 네이트닷컴의 스팸 정책을 참고하시기 바랍니다.</dd>
-                      <dt>6. 441 4.4.1 No answer from host</dt>
-                      <dd>수신 측의 메일서버로부터 응답을 받지 못해 연결이 실패된 오류입니다. 잠시 후 다시 시도해 보거나 오류가 계속 될 경우 수신 측 관리자에게 문의 하시기 바랍니다.</dd>
-                      <dt>7. 441 4.4.1 temporay dns failed &lt;Hanmail.net&gt;</dt>
-                      <dd>한메일닷넷의 메일서버로 연결하던 도중 한메일의 스팸정책에 위배되어 발생한 오류입니다. 다음의 연락처로 연락해 보시기 바랍니다. 1544-0580 내선번호 2</dd>
-                      <dt>8. 450 &lt;xxx@xxx.xxx&gt; : Recipient address rejected: Greylisted for 300 seconds (see http://isg.ee.ethz.ch/tools/postgrey/help)</dt>
-                      <dd>송신 측의 메일주소가 수신측에서 참조하고 있는 Graylisting 시스템에 등록되어 메일발송이 지연되고 있는 오류입니다.</dd>
-                      <dt>9. 451 4.4.0 DNS resolving error</dt>
-                      <dd>수신 측 서버의 도메인을 찾지 못해 발생한 오류입니다. 현재 메일서버가 참조하고 있는 DNS 서버가 정상적으로 동작하는지 확인해 보시기 바랍니다. 또한 다른 ISP 업체들의 DNS를 참조하여 메일을 송신해 보시기 바랍니다.</dd>
-                      <dt>10. 451 4.3.0 Other or undefined mail system status</dt>
-                      <dd>수신 측 메일 시스템의 프로토콜이 틀리거나 연결된 서버가 SMTP 서버가 아닐경우 발생하는 오류입니다.</dd>
-                      <dt>11. 451 4.3.0 Temporary system failure. Please try again later</dt>
-                      <dd>수신 측 서버의 일시적인 장애로 인하여 메일을 수신하지 못하는 오류입니다.</dd>
-                      <dt>12. 451 4.4.2 Bad connection (io timeout)</dt>
-                      <dd>수신 측 서버의 응답시간 초과로 인하여 연결이 끊어져 발생한 오류입니다. 잠시 후 다시 시도해 보거나 오류가 계속 될 경우 수신 측 관리자에게 문의 하시기 바랍니다.</dd>
-                      <dt>13. 451 Relay Server Not Ready</dt>
-                      <dd>수신 측 서버의 릴레이 기능이 정상적으로 동작하지 않아 발생한 오류입니다. 잠시 후 다시 시도해 보거나 오류가 계속 될 경우 수신 측 관리자에게 문의 하시기 바랍니다.</dd>
-                      <dt>14. 452 sorry, your recipient address is not in my local list</dt>
-                      <dd>수신자의 메일주소가 수신 측의 메일서버에 존재하는 계정이 아니어서 발생한 오류입니다. 수신자의 메일주소를 올바르게 표기하였는지 확인해 보시기 바랍니다. 또한, 해당 주소가 실제 수신 측에 존재하는 계정인지 확인해 보시기 바랍니다.</dd>
-                      <dt>15. 452 4.4.5 Requested mail action aborted: exceeded storage allocation</dt>
-                      <dd>수신 측 메일서버의 저장공간 부족으로 인하여 발생한 오류입니다. 수신 측 관리자에게 문의 하시기 바랍니다.</dd>
-                      <dt>16. 452 4.4.5 Disk write / Insufficient disk space error occurred</dt>
-                      <dd>수신 측 메일서버의 저장공간 부족으로 인하여 발생한 오류입니다. 수신 측 관리자에게 문의 하시기 바랍니다.</dd>
-                      <dt>17. 452 4.4.5 Insufficient disk space; try again later</dt>
-                      <dd>수신 측 메일서버의 저장공간 부족으로 인하여 발생한 오류입니다. 수신 측 관리자에게 문의 하시기 바랍니다.</dd>
-                      <dt>18. 452 4.4.5 MailBox or MessageQuota exceed for &lt;E-mail Address&gt;</dt>
-                      <dd>수신자 메일 사서함의 공간부족으로 인하여 발생한 오류입니다. 수신 측 관리자에게 문의 하시기 바랍니다.</dd>
-                      <dd>
-                        <span class="text-center text-muted">출처: <a class="text-muted" href="http://sangchul.kr/583 ">http://sangchul.kr/583 [변군이글루]</a></span>
-                      </dd>
-                    </dl>
-                  </p>
-                </div>
-                <div class="tab-pane" id="err500" role="tabpanel">
-                  <p class="m-0">
-                    <dl>
-                      <dt>1. 5XX you must be spam</dt>
-                      <dd>송신 측의 메일서버의 도메인 또는 IP 주소 또는 송신자의 메일주소가 수신 측의 메일서버에 스패머로 등록되어 발생한 오류입니다. 수신 측 관리자에게 문의 하여 스팸 리스트에서 삭제하시기 바랍니다.</dd>
-                      <dt>2. 5XX Your envelope sender is enlisted as spammer</dt>
-                      <dd>송신자의 메일주소가 수신 측의 메일서버에 스패머로 등록되어 발생한 오류입니다. 수신 측 관리자에게 문의 하여 스팸 리스트에서 삭제하시기 바랍니다.</dd>
-                      <dt>3. 500 Syntax error, command unrecognized</dt>
-                      <dd>SMTP 명령어 중 일부 누락 또는 일부 잘못된 명령어로 인하여 발생한 오류입니다.</dd>
-                      <dt>4. 500 File Sending Error</dt>
-                      <dd>메일 메시지 전송도중 네트웍 장애등의 이유로 전송에 실패하여 발생한 오류입니다.</dd>
-                      <dt>5. 501 Denied domain name</dt>
-                      <dd>송신 측의 도메인이 수신 측의 서버에서 거부되어 발생한 오류입니다.</dd>
-                      <dt>6. 501 Bad sender address expression</dt>
-                      <dd>송신자 또는 수신자의 메일주소가 정상적이지 않아 발생한 오류입니다. 송신자의 메일주소가 정확한지 확인해 보시기 바랍니다.</dd>
-                      <dt>7. 501 Argument missing</dt>
-                      <dd>SMTP 명령어 중 일부 누락 또는 일부 잘못된 명령어로 인하여 발생한 오류입니다.</dd>
-                      <dt>8. 501 5.1.8 Sender domain must exist &lt;xxx.com&gt;</dt>
-                      <dd>수신 측 xxx.com 도메인이 존재하지 않아 발생한 오류입니다. 수신자 메일수조 중 도메인 부분이 정확하게 적혀있는 지 확인하시기 바랍니다. 주소가 정확한 경우 수신 측 관리자에게 문의하여 실제 도메인이 해당 메일서버에 등록되어 있는지 확인하시기 바랍니다.</dd>
-                      <dt>9. 503 Bad sequence of commands</dt>
-                      <dd>SMTP 명령어 중 일부 누락 또는 일부 잘못된 명령어로 인하여 발생한 오류입니다.</dd>
-                      <dt>10. 504 You are registered as spammer</dt>
-                      <dd>송신 측의 메일서버의 도메인 또는 IP 주소 또는 송신자의 메일주소가 수신 측의 메일서버에 스패머로 등록되어 발생한 오류입니다. 수신 측 관리자에게 문의 하여 스팸 리스트에서 삭제하시기 바랍니다.</dd>
-                      <dt>11. 504 We do not accept mail from spammers. if you have questions,please Email</dt>
-                      <dd>송신 측의 메일서버의 도메인 또는 IP 주소 또는 송신자의 메일주소가 수신 측의 메일서버에 스패머로 등록되어 발생한 오류입니다. 수신 측 관리자에게 문의 하여 스팸 리스트에서 삭제하시기 바랍니다.</dd>
-                      <dt>12. 511 sorry, no mailbox here by that name (#5.1.1 - chkuser)</dt>
-                      <dd>수신자의 메일주소가 수신 측의 메일서버에 존재하지 않는 계정인 경우 발생하는 오류입니다. 수신자의 메일 주소가 정확한지 확인해 보시기 바랍니다. 또한 수신자의 계정이 실제 존재하는지 사용가능한 상태인지 수신 측 관리자에게 문의하시기 바랍니다.</dd>
-                      <dt>13. 550 No inbox for &lt;E-mail Address&gt;</dt>
-                      <dd>수신자의 메일주소가 실제 존재하지 않는 계정이거나 사용 중지된 계정상태로 인하여 발생한 오류입니다. 수신자의 메일 주소가 정확한지 확인해 보시기 바랍니다. 또한 수신자의 계정이 실제 존재하는지 사용가능한 상태인지 수신 측 관리자에게 문의하시기 바랍니다.</dd>
-                      <dt>14. 550 User unknown</dt>
-                      <dd>수신자의 메일주소가 실제 존재하지 않는 계정이거나 사용 중지된 계정상태로 인하여 발생한 오류입니다. 수신자의 메일 주소가 정확한지 확인해 보시기 바랍니다. 또한 수신자의 계정이 실제 존재하는지 사용가능한 상태인지 수신 측 관리자에게 문의하시기 바랍니다.</dd>
-                      <dt>15. 550 Requested action not taken: mailbox unavailable</dt>
-                      <dd>수신자의 메일주소가 실제 존재하지 않는 계정이거나 사용 중지된 계정상태로 인하여 발생한 오류입니다. 수신자의 메일 주소가 정확한지 확인해 보시기 바랍니다. 또한 수신자의 계정이 실제 존재하는지 사용가능한 상태인지 수신 측 관리자에게 문의하시기 바랍니다.</dd>
-                      <dt>16. 550 5.1.1 Suspended mailbox</dt>
-                      <dd>수신자의 메일주소가 실제 존재하지 않는 계정이거나 사용 중지된 계정상태로 인하여 발생한 오류입니다. 수신자의 메일 주소가 정확한지 확인해 보시기 바랍니다. 또한 수신자의 계정이 실제 존재하는지 사용가능한 상태인지 수신 측 관리자에게 문의하시기 바랍니다.</dd>
-                      <dt>17. 550 5.1.1 No such user &lt;E-mail Address&gt;</dt>
-                      <dd>수신자의 메일주소가 실제 존재하지 않는 계정이거나 사용 중지된 계정상태로 인하여 발생한 오류입니다. 수신자의 메일 주소가 정확한지 확인해 보시기 바랍니다. 또한 수신자의 계정이 실제 존재하는지 사용가능한 상태인지 수신 측 관리자에게 문의하시기 바랍니다.</dd>
-                      <dt>18. 550 Invalid recipient</dt>
-                      <dd>수신자의 메일주소가 실제 존재하지 않는 계정이거나 사용 중지된 계정상태로 인하여 발생한 오류입니다. 수신자의 메일 주소가 정확한지 확인해 보시기 바랍니다. 또한 수신자의 계정이 실제 존재하는지 사용가능한 상태인지 수신 측 관리자에게 문의하시기 바랍니다.</dd>
-                      <dt>19. 550 5.0.0 Access denied</dt>
-                      <dd>수신 측 메일서버로의 접속이 거부되어 발생한 오류입니다. 수신 측 메일서버에 송신 측의 메일서버가 거부되어 있는지 확인해 보시기 바랍니다.</dd>
-                      <dt>20. 553 sorry, that domain isn't in my list of allowed rcpt hosts</dt>
-                      <dd>수신 측의 도메인주소가 수신 측 메일서버에 존재하지 않아 발생한 오류입니다. 수신자의 메일 주소가 정확한지 확인해 보시기 바랍니다. 또한 수신 측의 도메인 주소가 수신 측 메일서버에 존재하는지 확인해 보시기 바랍니다.</dd>
-                      <dt>21. 550 Relay rejected for &lt;E-Mail Address&gt;</dt>
-                      <dd>수신 측의 메일서버에서 해당 E-Mail Address 로 릴레이를 거부하여 발생한 오류입니다. 수신 측 관리자에게 문의하시기 바랍니다.</dd>
-                      <dt>22. 550 relaying to &lt;E-Mail Address&gt; prohibited by administrator</dt>
-                      <dd>수신 측의 메일서버에서 해당 E-Mail Address 로 릴레이를 거부하여 발생한 오류입니다. 수신 측 관리자에게 문의하시기 바랍니다.</dd>
-                      <dt>23. 553 Too many recipients</dt>
-                      <dd>수신 측 메일서버에서 허용한 동시 수신 메일 수를 초과하여 발생한 오류입니다. 수신 측 메일서버에서 허용한 수 이하로 메일을 송신해 보시기 바랍니다.</dd>
-                      <dt>24. 553 sorry, your envelope sender is in my badmailfrom list.</dt>
-                      <dd>송신 측의 메일서버의 도메인 또는 IP 주소 또는 송신자의 메일주소가 수신 측의 메일서버에 스패머로 등록되어 발생한 오류입니다. 수신 측 관리자에게 문의 하여 스팸 리스트에서 삭제하시기 바랍니다.</dd>
-                      <dt>25. 553 sorry, your envelope sender is enlisted as spammer</dt>
-                      <dd>송신 측의 메일서버의 도메인 또는 IP 주소 또는 송신자의 메일주소가 수신 측의 메일서버에 스패머로 등록되어 발생한 오류입니다. 수신 측 관리자에게 문의 하여 스팸 리스트에서 삭제하시기 바랍니다.</dd>
-                      <dt>26. 550 5.0.0 Your message may contain the Klez.worm! See http://securityresponse.symantec.com/avcenter/venc/data/w32.klez.removal.tool.html</dt>
-                      <dd>송신한 메일 메시지 않에 Klez worm 바이러스가 포함되어 수신 측 메일서버에서 거부된 오류입니다. 클라이언트 및 서버의 상태를 점검해 보시기 바랍니다. 또한 첨부 파일이 있을 경우 첨부 파일에 바이러스가 포함되지 않았는지 확인해 보신 후 재 전송하시기 바랍니다.</dd>
-                      <dt>27. 553 5.0.0 Your message may contain the Win32.Klez worm!!- If you have questions,please email</dt>
-                      <dd>송신한 메일 메시지 안에 Win32.Klez worm 바이러스가 포함되어 수신 측 메일서버에서 거부된 오류입니다. 클라이언트 및 서버의 상태를 점검해 보시기 바랍니다. 또한 첨부 파일이 있을 경우 첨부 파일에 바이러스가 포함되지 않았는지 확인해 보신 후 재 전송하시기 바랍니다.</dd>
-                      <dt>28. 553 5.5.4 Host name (xxx.com) is not match with your ip(xxx.xxx.xxx.xxx), maybe it's bogus. Visit http://antispam.hanmail.net</dt>
-                      <dd>수신 측의 메일서버에서 송신 도메인 xxx.com 에 대하여 DNS Lookup 한 결과 송신된 IP 주소인 xxx.xxx.xxx.xxx 와 일치 하지 않아 송신이 거부된 오류 입니다. 송신 측 도메인에 대한 호스트(A) 레코드 생성 후 이를 송신 측 메일서버의 아이피 주소와 일치시켜 주시기 바랍니다.</dd>
-                      <dt>29. 553 5.5.4 &lt;xxx&gt; ... Domain name required for sender address &lt;xxx&gt;</dt>
-                      <dd>송신 측의 메일주소가 ID@Domain_Name 형식이 아닌 잘못된 형식으로 송신을 시도하여 발생한 오류 입니다. 송신자의 메일주소가 올바른지 확인해 보시기 바랍니다.</dd>
-                      <dt>30. 554 5.3.4 Too big mail sent. Max allowed mail size is xxxxxxxxx bytes</dt>
-                      <dd>수신 측 메일서버에서 허용한 메일 사이즈보다 큰 메일을 송신하여 발생한 오류입니다. 송신 메일의 사이즈를 점검하여 허용 사이즈 이하로 재 전송해 보시기 바랍니다.</dd>
-                      <dt>31. 554 5.3.0 Mail have traversed Too many hops. Reject it</dt>
-                      <dd>수신 측 메일서버에서 허용한 동시 수신 메일 수를 초과하여 발생한 오류입니다. 수신 측 메일서버에서 허용한 수 이하로 메일을 송신해 보시기 바랍니다.</dd>
-                      <dt>32. 554 delivery error: dd Sorry, your message to &lt;E-Mail Address&gt; cannot be delivered. This account is over quota</dt>
-                      <dd>수신자의 메일사서함 용량이 초과되어 메일을 수신하지 못하는 오류 입니다. 수신 측 관리자에게 문의 하시기 바랍니다.</dd>
-                      <dt>33. 554 5.1.0 Sender Denied</dt>
-                      <dd>송신 측의 메일주소가 거부되어 발생한 오류입니다. 수신 측 관리자에게 문의 하시기 바랍니다.</dd>
-                      <dt>34. 554 5.5.0 Your message was rejected. Please refer to http://antispam.nate.com/554-550.html [Reject Option]</dt>
-                      <dd>네이트 닷컴의 스팸 정책에 위배되어 메일을 송신하지 못한 오류입니다. 네이트 닷컴의 스팸 정책을 확인해 보시기 바랍니다.</dd>
-                      <dt>35. 554 delivery error: dd This user doesn't have a yahoo.com account (E-Mail Address) [-5] - mta114.mail.sc5.yahoo.com</dt>
-                      <dd>수신자의 메일주소가 야후닷컴에 실재 존재하지 않은 계정인 경우 발생하는 오류입니다. 수신자의 메일주소를 정확하게 입력하였는지 확인해 보시기 바랍니다.</dd>
-                      <dt>36. 550 5.7.1 &lt;E-Mail Address&gt;. Relaying denied. IP name lookup failed &lt;IP Address&gt;</dt>
-                      <dd>송신자의 메일주소가 DNS IP Name Lookup 에 실패하여 릴레이가 거부된 오류입니다. 송신 측 DNS 서버의 정방향 조회 영역에 송신 측 메일서버 IP Address 와 일치하는 메일교환기(MX) 레코드 값이 정확하게 설정되어 있는지 확인해보시기 바랍니다. 또한, 송신 측 DNS 서버의 역방향 조회 영역에 송신 측 메일서버 IP Address에 대하여 포인터가 올바르게 구성되어 있는지 확인해 보시기 바랍니다.</dd>
-                      <dt>37. 550 5.5.0 VIRUS detected from your mail. Cure & Try again. Found by virus scan engine.</dt>
-                      <dd>송신한 메일 메시지 안에 바이러스가 포함되어 수신 측에서 거부된 오류입니다. 클라이언트 및 서버의 상태를 점검해 보시기 바랍니다. 또한 첨부 파일이 있을 경우 첨부 파일에 바이러스가 포함되지 않았는지 확인해 보신 후 재 전송하시기 바랍니다.</dd>
-                      <dt>38. 550 Denied by policy: Sender is listed on DNS-based RBL</dt>
-                      <dd>송신 측의 메일서버의 도메인 또는 IP 주소 또는 송신자의 메일주소가 RBL (Real time Black List) 에 포함되어 수신 측의 메일서버에서 거부되어 발생한 오류입니다. 송신 측의 도메인 또는 아이피 주소가 등록되어 있는 RBL을 확인하여 리스트에서 제거하시기 바랍니다. 리스트에서 제거하는 방법은 RBL 사이트 마다 다르며 해당 사이트의 지시를 따르시기 바랍니다.</dd>
-                      <dt>39. 550 Mail sender unuses allowed IP. SMTP Proxy Server close ...</dt>
-                      <dd>송신 측의 IP Address 가 수신 측의 메일서버에서 거부되어 발생한 오류입니다. 수신 측 관리자에게 문의하여 송신 측의 IP가 거부되어 있는지 확인하신 후 삭제하시기 바랍니다.</dd>
-                      <dt>40. 553 5.5.3 &lt;E-Mail Address&gt;... Invalid</dt>
-                      <dd>송신자 또는 수신자의 메일주소가 잘못되어 발생한 오류입니다. 송신자 또는 수신자의 메일주소가 올바른지 확인해 보시기 바랍니다.</dd>
-                      <dt>41. 557 you must be virus</dt>
-                      <dd>송신자의 메일이 바이러스로 인식되어 수신 측에서 거부된 오류입니다. 클라이언트 및 서버의 상태를 점검해 보시기 바랍니다. 또한 첨부 파일이 있을 경우 첨부 파일에 바이러스가 포함되지 않았는지 확인해 보신 후 재 전송하시기 바랍니다.</dd>
-                      <dd>
-                        <span class="text-center text-muted">출처: <a class="text-muted" href="http://sangchul.kr/583 ">http://sangchul.kr/583 [변군이글루]</a></span>
-                      </dd>
-                    </dl>
-                  </p>
-                </div>
-                <div class="tab-pane" id="errNaver" role="tabpanel">
-                  <p class="m-0">
-                    <dl>
-              				<dt>1. 421 4.3.2 Too many concurrent connection. This connection will be closed</dt>
-              				<dd>
-              					네이버 메일 수신 서버가 허용하는 수 이상의 동시 접속을 시도하였습니다. 다른 발신자의 발송을 방해하는 행위입니다. 의도적으로 네이버 메일 서비스의 품질을 저해하는 발송 시도는 스팸메일로 간주합니다.
-              				</dd>
-              				<dt>2. 421 4.3.2 Your IP(발신 IP 주소) is filtered and this connection will be closed</dt>
-              				<dd>
-              					짧은 시간 동안에 허용하는 수 이상의 메일 발송을 시도하였습니다. 대량 메일을 안전하게 보내려면 발송 IP 주소를 <a href="http://www.kisarbl.or.kr/" target="_blank">KISA WHITE DOMAIN</a>에 등록하십시오.
-              				</dd>
-              				<dt>3. 421 4.3.2 Your IP(발신 IP 주소) is filtered by RBL. Cause(RBL 정보). And this connection will be closed</dt>
-              				<dd>
-              					발송 서버의 IP 주소가 RBL(3'rd Party Real time Blocking List)에 스팸 IP 주소로 등록되어 있습니다. 서둘러 원인을 해결하고 RBL에서 제거하지 않으면 네이버 메일 뿐만 아니라 다른 메일 서비스에서도 메일 발송이 제한될 수 있습니다. 대량 메일을 안전하게 보내려면 발송 IP 주소를 <a href="http://www.kisarbl.or.kr/" target="_blank">KISA WHITE DOMAIN</a>에 등록하십시오.
-              				</dd>
-              				<dt>4. 421 4.3.2 Your ip blocked from this server</dt>
-              				<dd>
-              					발송 서버의 IP 주소로부터 오랫동안 대량의 스팸메일이 발송되어 차단되었습니다. 먼저 스팸메일 발송 여부를 확인하고 문제를 해결해 주시기 바랍니다. 대량 메일을 안전하게 보내려면 발송 IP 주소를 <a href="http://www.kisarbl.or.kr/" target="_blank">KISA WHITE DOMAIN</a>에 등록하십시오.
-              				</dd>
-              				<dt>5. 452 4.5.3 Too many recipients. We allow maximum 수신 주소 개수 제한 recipients</dt>
-              				<dd>
-              					하나의 메일에 허용하는 수 이상의 수신 주소를 지정하여 차단되었습니다.
-              				</dd>
-              				<dt>6. 421 4.3.2 You sent too many commands. Total 35 commands in 1 session are allowed.</dt>
-              				<dd>
-              					한 번의 접속으로 허용하는 수 이상의 수신자를 지정하거나 명령을 수행하여 차단되었습니다.
-              				</dd>
-              				<dt>7. 550, 5.3.2 Rejected by mailbox host. REPLY:(550 mailbox is inactive!! (#5.2.1))<br>
-              				<span style="margin-left:15px;">또는 550 5.1.1 Suspended(Inactive) user 수신주소</span></dt>
-              				<dd>
-              					수신 주소가 휴면 상태입니다. 휴면 상태인 수신 주소로 반복하여 발송을 시도한 경우 스팸메일로 판단될 수 있습니다.
-              				</dd>
-              				<dt>8. 550 5.1.1 No such user 수신주소</dt>
-              				<dd>
-              					존재하지 않는 메일 주소입니다. 존재하지 않는 메일 주소로 반복하여 발송을 시도한 경우 스팸메일로 판단될 수 있습니다.
-              				</dd>
-              				<dt>9. 550 Your mail is classified as SPAM and REJECTED</dt>
-              				<dd>
-              					발송 메일이 네이버 메일 스팸 정책에 따라 스팸메일로 판단되어 거부되었습니다.
-              				</dd>
-              				<dt>10. 421 4.3.0 Too long idle time. You are disconnected</dt>
-              				<dd>
-              					접속 후 오랜 시간 응답하지 않아 접속을 종료합니다.
-              				</dd>
-            				</dl>
-                  </p>
-                </div>
-              </div>
             </div>
           </div>
         </div>
@@ -682,13 +423,6 @@
 <!-- sweetalert -->
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sweetalert@2.1.0/dist/sweetalert.min.js"></script>
 <script type="text/javascript">
-  // 도메일 연결되서 url변경 불가
-  // var url_string = window.location.href;
-  // var url = new URL(url_string);
-  // var sDateParams = url.searchParams.get("sDate");
-  // var eDateParams = url.searchParams.get("eDate");
-  // var keywordParams = url.searchParams.get("keyword");
-
   // data input hidden values
   var sDateValue = $('#sDate').val();
   var eDateValue = $('#eDate').val();
@@ -748,9 +482,6 @@
     });
   });
   // 실패 클릭시
-  // $(document).on('click','.smtpMsg',function(){
-  //   $('#smtp-Modal').modal('show');
-  // });
   $(document).on('click','.error_nobr',function(){
     $(this).toggleClass('error_nobr_more');
   });
@@ -865,158 +596,70 @@
 
   // 메일타입 선택시
   $('#selectType').on('change',function(){
-    var param = {
-      page : 1
-    };
     var optionVal = $("#selectType option:selected").val();
     if(optionVal != '메일타입'){
-      param.type=optionVal;
       $('#type').val(optionVal);
     }
     else{
       $('#type').val('');
     }
-    // data input hidden values
-    var sDateValue = $('#sDate').val();
-    var eDateValue = $('#eDate').val();
-    var keywordValue = $('#keyword').val();
-    var mTypeValue = $('#mType').val();
-    if(keywordValue != ''){
-      param.keyword = keywordValue;
-    }
-    if(mTypeValue != ''){
-      param.mType = mTypeValue;
-    }
-    if(sDateValue != '' && eDateValue != ''){
-      param.sDate = sDateValue;
-      param.eDate = eDateValue;
-    }
-    ajaxGetPageList(param,0);
+    var param = settingParams(1);
+    ajaxGetPageList(param);
   });
   // 발송타입 선택시
   $('#selectMType').on('change',function(){
-    var param = {
-      page : 1
-    };
     var optionVal = $("#selectMType option:selected").val();
     if(optionVal != '발송타입'){
-      param.mType=optionVal;
       $('#mType').val(optionVal);
     }
     else{
       $('#mType').val('');
     }
-    // data input hidden values
-    var sDateValue = $('#sDate').val();
-    var eDateValue = $('#eDate').val();
-    var keywordValue = $('#keyword').val();
-    var typeValue = $('#type').val();
-    if(keywordValue != ''){
-      param.keyword = keywordValue;
-    }
-    if(typeValue != ''){
-      param.type = typeValue;
-    }
-    if(sDateValue != '' && eDateValue != ''){
-      param.sDate = sDateValue;
-      param.eDate = eDateValue;
-    }
+    var param = settingParams(1);
     ajaxGetPageList(param,0);
   });
   // 키워드 선택시
   $('#selectKeyword').on('change',function(){
-    var param = {
-      page : 1
-    };
     var optionVal = $("#selectKeyword option:selected").val();
     if(optionVal != '키워드'){
-      param.keyword=optionVal;
       $('#keyword').val(optionVal);
     }
     else{
       $('#keyword').val('');
     }
-    // data input hidden values
-    var sDateValue = $('#sDate').val();
-    var eDateValue = $('#eDate').val();
-    var typeValue = $('#type').val();
-    var mTypeValue = $('#mType').val();
-    if(typeValue != ''){
-      param.type = typeValue;
-    }
-    if(mTypeValue != ''){
-      param.mType = mTypeValue;
-    }
-    if(sDateValue != '' && eDateValue != ''){
-      param.sDate = sDateValue;
-      param.eDate = eDateValue;
-    }
-    // var url = new URL(window.location.href);
-    // var sDateParams = url.searchParams.get("sDate");
-    // var eDateParams = url.searchParams.get("eDate");
-    // if(sDateParams != null && eDateParams != null){
-    //   param.sDate = sDateParams;
-    //   param.eDate = eDateParams;
-    // }
-    // if(typeof(history.pushState) == 'function'){
-    //   var renewURL = location.href;
-    //   if(renewURL.indexOf("?page=") == -1){
-    //     renewURL += '?page=1';
-    //   }
-    //   else{
-    //     renewURL = renewURL.replace(/\?page=([0-9]+)/ig,'?page=1');
-    //   }
-    //   if(renewURL.indexOf("&keyword=") == -1){
-    //     renewURL += '&keyword='+param.keyword;
-    //   }
-    //   else{
-    //     if(param.keyword != undefined){
-    //       renewURL = renewURL.replace(/\&keyword=([0-9]+)/ig,'&keyword='+param.keyword);
-    //     }
-    //     else{
-    //       renewURL = renewURL.replace(/\&keyword=([0-9]+)/ig,'');
-    //     }
-    //   }
-    //   //페이지 갱신 실행!
-    //   history.pushState(null, null,renewURL);
-    // }
+    var param = settingParams(1);
     ajaxGetPageList(param,0);
   });
+  // 인비테이션 선택시
+  $('input[type="checkbox"][name="search"]').on('click',function(){
+    //click 이벤트가 발생했는지 체크
+    if($(this).prop('checked')){
+      // checkbox전체를 checked 해제후 click한 요소만 true지정
+      $('input[type="checkbox"][name="search"]').prop('checked',false);
+      $(this).prop('checked',true);
+      $('#ivt').val($(this).val());
+      searchStrBtn($(this).val());
+    }
+    else{
+      $('#ivt').val('');
+      searchStrBtn('');
+    }
+  });
+  function searchStrBtn(search){
+    if(search != ''){
+      $('#ivt').val(search);
+    }
+    else{
+      $('#ivt').val('');
+    }
+    var param = settingParams(1);
+    ajaxGetPageList(param);
+  }
+
   //페이지 이동
   $(document).on('click','.page-link',function(){
-    var num = Number($(this).text()) || Number($(this).data().num);
-    var param = {
-      page : Number($(this).data().value)
-    };
-    // data input hidden values
-    var sDateValue = $('#sDate').val();
-    var eDateValue = $('#eDate').val();
-    var keywordValue = $('#keyword').val();
-    var typeValue = $('#type').val();
-    var mTypeValue = $('#mType').val();
-    if(sDateValue != '' && eDateValue != '' ){
-      param.sDate = moment(sDateValue).format('YYYY-MM-DD');
-      param.eDate = moment(eDateValue).format('YYYY-MM-DD');
-    }
-    if(keywordValue != ''){
-      param.keyword = keywordValue;
-    }
-    if(typeValue != ''){
-      param.type = typeValue;
-    }
-    if(mTypeValue != ''){
-      param.mType = mTypeValue;
-    }
-    // var href = new URL(window.location.href);
-    // if(href.searchParams.get("sDate") != null && href.searchParams.get("eDate") != null ){
-    //   param.sDate = moment(href.searchParams.get("sDate")).format('YYYY-MM-DD');
-    //   param.eDate = moment(href.searchParams.get("eDate")).format('YYYY-MM-DD');
-    // }
-    // var keywordParams = href.searchParams.get("keyword");
-    // if(keywordParams != null){
-    //   param.keyword = keywordParams;
-    // }
-    ajaxGetPageList(param,num);
+    var param = settingParams(Number($(this).data().value));
+    ajaxGetPageList(param);
   });
   function ajaxGetPageList(param){
     console.log('ajaxGetPageList:',param);
@@ -1033,19 +676,7 @@
           alert('새로고침 후 다시 시도해주세요.');
           return false;
         }
-        // if(typeof(history.pushState) == 'function'){
-        //   //현재 주소를 가져온다.
-        //   var renewURL = location.href;
-        //   //현재 주소 중 page 부분이 있다면 새로 부여될 페이지 번호를 할당한다.
-        //   renewURL = renewURL.replace(/\?page=([0-9]+)/ig,'?page='+data.result.currentPage);
-        //   if(renewURL.indexOf("?page=") == -1){
-        //     renewURL += '?page='+data.result.currentPage;
-        //   }
-        //   //페이지 갱신 실행!
-        //   history.pushState(null, null,renewURL);
-        // }
         $('#listTable tbody').eq(0).empty();
-
         data.result.list.forEach(function(item,idx){
           var numIdx = Math.ceil(data.result.listCount-(data.result.offset+idx)).toString();
           var html = '<tr>\
@@ -1054,7 +685,7 @@
             <th>'+numIdx+'</th>\
             <td>'+item.M_regdate+'</td>\
             <td><div class="kwd_nobr">'+item.M_keyword+'</div></td>\
-            <td><div class="num_nobr">'+item.M_seq_number+'차</div></td>\
+            <td><div class="num_nobr">'+((item.M_invitation == '0')?(item.M_seq_number+'차'):'-')+'</div></td>\
             <td><a href="http://showbox.email/preview?keyword='+item.M_keyword_idx+'&idx='+item.n_idx+'" target="_blank"><div class="title_nobr">'+item.M_subject+'</div></a></td>\
             <td>'+item.M_mail_type+'</td>\
             <td><span class="total">'+item.sendCount+'</span></td>\
@@ -1127,50 +758,9 @@
     var dateArr = $("#reportrange span").text().split(' - ');
     var start = moment(new Date(dateArr[0].replace(/[.]/gi,'-')));
     var end = moment(new Date(dateArr[1].replace(/[.]/gi,'-')));
-    var param = {
-      page : 1,
-      sDate : start.format('YYYY-MM-DD'),
-      eDate : end.format('YYYY-MM-DD')
-    };
-    $('#sDate').val(param.sDate);
-    $('#eDate').val(param.eDate);
-    // var url = new URL(window.location.href);
-    // var keywordParams = url.searchParams.get("keyword");
-    // if(keywordParams != null){
-    //   param.keyword = keywordParams;
-    // }
-    // if(typeof(history.pushState) == 'function'){
-    //   var renewURL = location.href;
-    //   if(renewURL.indexOf("?page=") == -1){
-    //     renewURL += '?page=1';
-    //   }
-    //   else{
-    //     renewURL = renewURL.replace(/\?page=([0-9]+)/ig,'?page=1');
-    //   }
-    //   if(renewURL.indexOf("&sDate=") == -1 && renewURL.indexOf("&eDate=") == -1){
-    //     renewURL += '&sDate='+param.sDate+'&eDate='+param.eDate;
-    //   }
-    //   else{
-    //     renewURL = renewURL.replace(/\&sDate=(\d{4}-\d{2}-\d{2})/ig,'&sDate='+param.sDate);
-    //     renewURL = renewURL.replace(/\&eDate=(\d{4}-\d{2}-\d{2})/ig,'&eDate='+param.eDate);
-    //   }
-    //   //페이지 갱신 실행!
-    //   history.pushState(null, null,renewURL);
-    // }
-
-    // data input hidden values
-    var keywordValue = $('#keyword').val();
-    if(keywordValue != ''){
-      param.keyword = keywordValue;
-    }
-    var typeValue = $('#type').val();
-    if(typeValue != ''){
-      param.type = typeValue;
-    }
-    var mTypeValue = $('#mType').val();
-    if(mTypeValue != ''){
-      param.mType = mTypeValue;
-    }
+    $('#sDate').val(start.format('YYYY-MM-DD'));
+    $('#eDate').val(end.format('YYYY-MM-DD'));
+    var param = settingParams(1);
     ajaxGetPageList(param);
   }
   $(document).on('click','.applyBtn',searchDate);
@@ -1210,4 +800,38 @@
       firstDay: 1
     }
   };
+  // 리스트 조건 세팅
+  function settingParams(num){
+    var param = {
+      page : num
+    };
+    // 키워드
+    var keywordValue = $('#keyword').val();
+    if(keywordValue != ''){
+      param.keyword = keywordValue;
+    }
+    // 메일타입
+    var typeValue = $('#type').val();
+    if(typeValue != ''){
+      param.type = typeValue;
+    }
+    // 발송타입
+    var mTypeValue = $('#mType').val();
+    if(mTypeValue != ''){
+      param.mType = mTypeValue;
+    }
+    // 인비테이션
+    var ivtValue = $('#ivt').val();
+    if(ivtValue != ''){
+      param.ivt = ivtValue;
+    }
+    // 날짜
+    var sDateValue = $('#sDate').val();
+    var eDateValue = $('#eDate').val();
+    if(sDateValue != '' && eDateValue != ''){
+    param.sDate = sDateValue;
+    param.eDate = eDateValue;
+    }
+    return param;
+  }
 </script>

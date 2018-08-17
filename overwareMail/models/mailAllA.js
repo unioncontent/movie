@@ -17,6 +17,9 @@ var mailAllA = {
         case 't': sql+=' and M_subject like \'%'+body.search+'%\''; break;
       }
     }
+    if('ivt' in body){
+      sql +=' and M_invitation= '+body.ivt;
+    }
     sql += ' and (  M_id = ? or M_id in (select n_idx from m_mail_user where user_admin=?)) ';
     sql += ' order by n_idx desc limit ?,?';
     return await getResult(sql,param);
@@ -25,6 +28,9 @@ var mailAllA = {
     var sql = 'SELECT count(*) as total FROM mail_write_view where n_idx is not null ';
     if('keyword' in body){
       sql +=' and M_keyword_idx = '+body.keyword;
+    }
+    if('ivt' in body){
+      sql +=' and M_invitation= '+body.ivt;
     }
     if('searchType' in body){
       switch (body.searchType) {
