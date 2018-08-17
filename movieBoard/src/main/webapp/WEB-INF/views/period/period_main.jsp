@@ -126,7 +126,7 @@
                       <!-- data setting start -->
                       <div class="layer">
 					  <span class="content">
-					  <img src="http://overware.iptime.org:8080/classification/show?name=/union_logo/overware_logo.png" alt="Theme-Logo" style="width: 250px; height: 45px;">
+					  <img src="http://180.210.5.160:8080/classification/show?name=/union_logo/overware_logo.png" alt="Theme-Logo" style="width: 250px; height: 45px;">
 					  <div style="height: 5px"></div>
 					  <font style="font-family:color: rgb(102, 102, 102); gulim,verdana; font-size: 20px; font-weight: bold;">
 					  먼저 키워드를 선택 후<br>
