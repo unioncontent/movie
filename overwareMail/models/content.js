@@ -10,7 +10,12 @@ var content = {
       sql += 'and n_idx=? ';
       values.push(param.idx);
     }
-    sql += 'order by M_seq_number desc ';
+    if(values[1] == '0'){
+      sql += 'order by M_seq_number desc ';
+    }
+    else{
+      sql += 'order by n_idx desc ';
+    }
     if('page' in param){
       if(parseInt(param.page) > -1){
         param.page = (param.page-1) * 5;
@@ -27,7 +32,6 @@ var content = {
       sql += 'and n_idx=? ';
       values.push(param.idx);
     }
-    sql += 'order by n_idx';
     return await getResult(sql,values);
   }
 }
