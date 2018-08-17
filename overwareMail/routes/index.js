@@ -41,47 +41,6 @@ router.get('/', isAuthenticated, async function(req, res, next) {
   res.render('index',data);
 });
 
-// 메일 발송 후 메일 내용 확인 페이지
-router.get('/preview',async function(req, res, next) {
-  console.log('req.query:',req.query);
-  console.log(!('keyword' in req.query) && !('idx' in req.query));
-  if(!('keyword' in req.query) && !('idx' in req.query)){
-    res.render('preview',{layout: false,veiw: '',pastView: [{keyword:''}],pastCount: 0,msg: '주소에 조건이 없습니다.\n주소를 다시 작성해주세요.',currentPage: 1,keyword: '',idx: ''});
-    return false;
-  }
-  if(!('page' in req.query)){
-    req.query.page = 1;
-  }
-  var viewCode = await mailAllA.selectEmailOneView(req.query.idx);
-  var sideHtmlStart = '<table width="750" align="center" cellpadding="0" cellspacing="0" style="border: solid 1px #cacaca; padding: 20px;"><tbody><tr><td><table width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td width="642"><img src="http://showbox.email/templates/images/logo/show_logo.png" width="135" height="36" alt="로고"></td><td width="92">NEWS No.';
-  sideHtmlStart+= ((viewCode.length == 0) ? '' : viewCode[0].M_seq_number)+'</td></tr></tbody></table><table width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td>';
-  var sideHtmlEnd = '</td></tr></tbody></table></td></tr></tbody></table>';
-  var pastParam = {keyword:req.query.keyword,page:req.query.page};
-  var pastNews = await content.selectView(pastParam);
-  var pastNewsCount = await content.selectViewCount(pastParam);
-  var data = {
-    layout: false,
-    veiw:(viewCode.length == 0) ? '' : sideHtmlStart+viewCode[0].M_body+sideHtmlEnd,
-    pastView:pastNews,
-    pastCount: (pastNewsCount.length == 0) ? '':pastNewsCount[0].total,
-    msg: '',
-    currentPage: 1,
-    keyword:req.query.keyword,
-    idx:req.query.idx
-  };
-  if(viewCode.length == 0){
-    data.msg = '해당 메일이 없습니다.';
-  }
-  if('page' in req.query){
-    data.currentPage = req.query.page;
-  }
-  var pageName = 'preview';
-  if('type' in req.query){
-    pageName = 'preview_html';
-  }
-  res.render(pageName,data);
-});
-
 router.get('/preview/newsclipping',async function(req, res, next) {
   var data = {layout: false};
   var queryResult = [];
@@ -129,16 +88,73 @@ router.get('/preview/newsclipping/html',async function(req, res, next) {
   res.render('newsclipping_html',data);
 });
 
+// 메일 발송 후 메일 내용 확인 페이지
+router.get('/preview',async function(req, res, next) {
+  console.log('req.query:',req.query);
+  console.log(!('keyword' in req.query) && !('idx' in req.query));
+  if(!('keyword' in req.query) && !('idx' in req.query)){
+    res.render('preview',{layout: false,veiw: '',pastView: [{keyword:''}],pastCount: 0,msg: '주소에 조건이 없습니다.\n주소를 다시 작성해주세요.',currentPage: 1,keyword: '',idx: ''});
+    return false;
+  }
+  if(!('page' in req.query)){
+    req.query.page = 1;
+  }
+  var viewCode = await mailAllA.selectEmailOneView(req.query.idx);
+  var sideHtmlStart = '<table width="750" align="center" cellpadding="0" cellspacing="0" style="border: solid 1px #cacaca; padding: 20px;"><tbody><tr><td><table width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td width="642"><img src="http://showbox.email/templates/images/logo/show_logo.png" width="135" height="36" alt="로고"></td><td width="92">NEWS No.';
+  var ivt = '0';
+  if(viewCode[0].M_seq_number != '0' && viewCode[0].M_invitation  == '0'){
+    sideHtmlStart+= 'No.'+req.body.num;
+  }
+  else{
+    sideHtmlStart+= 'Invitation';
+    ivt = '1';
+  }
+  sideHtmlStart+= ((viewCode.length == 0) ? '' : viewCode[0].M_seq_number)+'</td></tr></tbody></table><table width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td>';
+  var sideHtmlEnd = '</td></tr></tbody></table></td></tr></tbody></table>';
+  var pastParam = {keyword:req.query.keyword,page:req.query.page,ivt:ivt};
+  var pastNews = await content.selectView(pastParam);
+  var pastNewsCount = await content.selectViewCount(pastParam);
+  var data = {
+    layout: false,
+    veiw:(viewCode.length == 0) ? '' : sideHtmlStart+viewCode[0].M_body+sideHtmlEnd,
+    pastView:pastNews,
+    pastCount: (pastNewsCount.length == 0) ? '':pastNewsCount[0].total,
+    msg: '',
+    currentPage: 1,
+    keyword:req.query.keyword,
+    idx:req.query.idx
+  };
+  if(viewCode.length == 0){
+    data.msg = '해당 메일이 없습니다.';
+  }
+  if('page' in req.query){
+    data.currentPage = req.query.page;
+  }
+  var pageName = 'preview';
+  if('type' in req.query){
+    pageName = 'preview_html';
+  }
+  res.render(pageName,data);
+});
+
 // 메일 미리보기
 var preview_data = {};
 router.post('/preview_mail', isAuthenticated,async function(req, res, next) {
-  var sideHtmlStart = '<table width="750" align="center" cellpadding="0" cellspacing="0" style="border: solid 1px #cacaca; padding: 20px;"><tbody><tr><td><table width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td width="642"><img src="http://showbox.email/templates/images/logo/show_logo.png" width="135" height="36" alt="로고"></td><td width="92">NEWS No.';
-  sideHtmlStart+= req.body.num+'</td></tr></tbody></table><table width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td>';
+  var sideHtmlStart = '<table width="750" align="center" cellpadding="0" cellspacing="0" style="border: solid 1px #cacaca; padding: 20px;"><tbody><tr><td><table width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td width="642"><img src="http://showbox.email/templates/images/logo/show_logo.png" width="135" height="36" alt="로고"></td><td width="92">NEWS ';
+  var ivt = '0';
+  if(req.body.num != '' && req.body.ivt == '0'){
+    sideHtmlStart+= 'No.'+req.body.num;
+  }
+  else{
+    sideHtmlStart+= 'Invitation';
+    ivt = '1';
+  }
+  sideHtmlStart+= '</td></tr></tbody></table><table width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td>';
   var sideHtmlEnd = '</td></tr></tbody></table></td></tr></tbody></table>';
   var pastNews = [];
   var pastNewsCount = [];
   if(req.body.M_keyword != ''){
-    var pastParam = {keyword:req.body.M_keyword,page:1};
+    var pastParam = {keyword:req.body.M_keyword,page:1,ivt:ivt};
     pastNews = await content.selectView(pastParam);
     pastNewsCount = await content.selectViewCount(pastParam);
   }

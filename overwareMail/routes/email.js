@@ -363,6 +363,7 @@ router.post('/save',isAuthenticated, async function(req, res) {
   // 이메일발송 결과 DB 저장
   var mailAllParam = {
     M_seq_number:req.body['M_seq_number'],
+    M_invitation:req.body['M_invitation'],
     M_sender: req.body['M_sender'],
     M_keyword: req.body['M_keyword'],
     M_type: req.body['M_type'],
