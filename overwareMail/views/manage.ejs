@@ -355,7 +355,7 @@
       param.search = $.urlParam("search");
     }
     if($('#keyword').val() != ''){
-      param.keyword=optionVal;
+      param.keyword=$('#keyword').val();
     }
     // data input hidden values
     ajaxGetPageList(param);
@@ -644,17 +644,21 @@
   });
   $('#searchBtn').on('click',function(){
     var url = '/email/manage?page=1';
+    var keywordParams = $.urlParam("keyword");
+    var ivtParams = $.urlParam("ivt");
     var searchType = $("#selectSearchType option:selected").val();
     var search = $("#keywordInput").val();
     if(searchType == 'n'){
       search = search.replace(/[^0-9]/g,'');
     }
-    var keywordParams = $.urlParam("keyword");
     if(searchType != '' && search != ''){
       url += '&searchType='+searchType+'&search='+search;
     }
     if(keywordParams != null && keywordParams != ''){
       url += '&keyword='+keywordParams;
+    }
+    if(ivtParams != null && ivtParams != ''){
+      url += '&ivt='+ivtParams;
     }
     location.href = url;
   });
