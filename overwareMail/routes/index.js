@@ -142,7 +142,7 @@ var preview_data = {};
 router.post('/preview_mail', isAuthenticated,async function(req, res, next) {
   var sideHtmlStart = '<table width="750" align="center" cellpadding="0" cellspacing="0" style="border: solid 1px #cacaca; padding: 20px;"><tbody><tr><td><table width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td width="642"><img src="http://showbox.email/templates/images/logo/show_logo.png" width="135" height="36" alt="로고"></td><td width="92">NEWS ';
   var ivt = '0';
-  if(req.body.num != '' && req.body.ivt == '0'){
+  if(req.body.num != '' && req.body.ivt == ''){
     sideHtmlStart+= 'No.'+req.body.num;
   }
   else{
