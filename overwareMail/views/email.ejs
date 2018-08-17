@@ -633,11 +633,13 @@
     if(param["M_recipi"] == ""){
       check = requiredMessage("M_recipi","받는사람을 선택해주세요.");
     }
-    if(!($.isNumeric(param["M_seq_number"]))){
-      check = requiredMessage("M_seq_number","발송차수는 숫자만 입력가능합니다.");
-    }
-    if(param["M_seq_number"] == "" && param["M_invitation"] == '0'){
-      check = requiredMessage("M_seq_number","발송차수를 입력해주세요.");
+    if(param["M_invitation"] == '0'){
+      if(!($.isNumeric(param["M_seq_number"])) ){
+        check = requiredMessage("M_seq_number","발송차수는 숫자만 입력가능합니다.");
+      }
+      if(param["M_seq_number"] == ""){
+        check = requiredMessage("M_seq_number","발송차수를 입력해주세요.");
+      }
     }
     if(param["M_keyword"] == 0){
       check = requiredMessage("M_keyword","키워드를 선택해주세요.");
