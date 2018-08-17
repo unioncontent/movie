@@ -204,6 +204,13 @@
               </button>
             </div>
             <div class='modal-body'>
+              <div class="modal-loader" id="loader_p">
+                <div class="loader-block">
+                  <svg id="loader2" viewBox="0 0 100 100">
+                    <circle id="circle-loader2" cx="50" cy="50" r="45"></circle>
+                  </svg>
+                </div>
+              </div>
               <div class="blog-single">
                 <p class="qutoe-text" style="margin-top:  0px;">발송현황</p>
               </div>
@@ -211,15 +218,15 @@
                 <tbody>
                   <tr style="border-top: 2px solid  #a5a5a5;">
                     <td width="40%"><strong>총 발송건</strong></td>
-                    <td><span id="total">0</span>건</td>
+                    <td><span id="total" class="modal-num">0</span>건</td>
                   </tr>
                   <tr>
                     <td><strong>발송 성공건</strong></td>
-                    <td><span id="success">0</span>건</td>
+                    <td><span id="success" class="modal-num">0</span>건</td>
                   </tr>
                   <tr>
                     <td><strong>발송 실패건</strong></td>
-                    <td><span id="fail">0</span>건</td>
+                    <td><span id="fail" class="modal-num">0</span>건</td>
                   </tr>
                   <tr>
                     <td><strong>발송 날짜</strong></td>
@@ -247,10 +254,10 @@
                     </thead>
                     <tbody>
                       <tr>
-                      	<td><span id="media">0</span>건</td>
-                      	<td><span id="reporter">0</span>건</td>
-                      	<td><span id="newsCount">0</span>건</td>
-                      	<td><span id="replyCount">0</span>건</td>
+                      	<td><span id="media" class="modal-num">0</span>건</td>
+                      	<td><span id="reporter" class="modal-num">0</span>건</td>
+                      	<td><span id="newsCount" class="modal-num">0</span>건</td>
+                      	<td><span id="replyCount" class="modal-num">0</span>건</td>
                       </tr>
                     </tbody>
                   </table>
@@ -275,6 +282,13 @@
               </button>
             </div>
             <div class='modal-body'>
+              <div class="modal-loader" id="loader_s">
+                <div class="loader-block">
+                  <svg id="loader2" viewBox="0 0 100 100">
+                    <circle id="circle-loader2" cx="50" cy="50" r="45"></circle>
+                  </svg>
+                </div>
+              </div>
               <div class="table-responsive">
                 <table class="table table-sm">
                   <thead>
@@ -310,6 +324,13 @@
               </button>
             </div>
             <div class='modal-body'>
+              <div class="modal-loader" id="loader_f">
+                <div class="loader-block">
+                  <svg id="loader2" viewBox="0 0 100 100">
+                    <circle id="circle-loader2" cx="50" cy="50" r="45"></circle>
+                  </svg>
+                </div>
+              </div>
               <div class="table-responsive">
                 <table class="table table-sm">
                   <thead>
@@ -350,6 +371,15 @@
     margin: auto;
     max-width: 100%;
     z-index: 10000;
+  }
+  .modal-loader{
+    position:  absolute;
+    margin: auto 0;
+    width:  100%;
+    padding-top: 17%;
+  }
+  #loader_p,#loader_s,#loader_f{
+    display: none;
   }
   /* select box width */
   #selectMType,#selectType,#selectKeyword{
@@ -434,6 +464,9 @@
   .kwd_nobr{
     width: 112px;
   }
+  .widthMin{
+    min-width: 40px;
+  }
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/2.1.27/daterangepicker.css" />
 <script type="text/javascript" src="/js/error.js"></script>
@@ -469,10 +502,13 @@
   });
   // 성공 클릭시
   $(document).on('click','.success',function(){
+    $('#success-list').empty();
+    $('#success-Modal').modal('show');
     var clickParam = $(this).data('idx');
     if($(this).text() == '0'){
       return false;
     }
+    $('#loader_s').show();
     $.ajax({
       url: '/period/result',
       type: 'post',
@@ -483,9 +519,9 @@
       datatype : 'json',
       error:function(request,status,error){
         console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
+        $('#loader_s').fadeOut(500);
       },
       success:function(data){
-        $('#success-list').empty();
         data.result.forEach(function(ele,idx){
           var html = '<tr><td><i class="fas fa-check"></i></td>'+
             '<td>'+(idx+1)+'</td>'+
@@ -496,7 +532,7 @@
           '</tr>';
           $('#success-list').append(html);
         });
-        $('#success-Modal').modal('show');
+        $('#loader_s').fadeOut(500);
       }
     });
   });
@@ -505,10 +541,13 @@
     $(this).toggleClass('error_nobr_more');
   });
   $(document).on('click','.fail',function(){
+    $('#error-list').empty();
+    $('#error-Modal').modal('show');
     var clickFParam = $(this).data('idx');
     if($(this).text() == '0'){
       return false;
     }
+    $('#loader_f').show();
     $.ajax({
       url: '/period/result',
       type: 'post',
@@ -519,9 +558,9 @@
       datatype : 'json',
       error:function(request,status,error){
         console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
+        $('#loader_f').fadeOut(500);
       },
       success:function(data){
-        $('#error-list').empty();
         data.result.forEach(function(ele,idx){
           // var o_msg = ele.M_result_msg.replace('send mail Error: ','');
           // var k_msg = settingErrorMsg(o_msg);
@@ -539,9 +578,9 @@
             k_msg = settingErrorMsg(code);
           }
           var html = '<tr><td><i class="fas fa-exclamation-triangle"></i></td>'+
-            '<td>'+code+'</td>'+'<td>'+ele.EMTOADDRESS;
+            '<td  class="widthMin">'+code+'</td>'+'<td>'+ele.EMTOADDRESS;
           if(code != '42' && code != '43' && code != '44' && code != '45' && ele.SENDRESULT != 'ER'){
-            html+='<label class="label label-warning">재발송가능</label>'
+            html+=' <label class="label label-warning">재발송가능</label>'
           }
           html+='</td>'+'<td>'+ele.M_ptitle+'</td>'+
             '<td>'+ele.EMTONAME+'</td>'+
@@ -549,19 +588,17 @@
           '</tr>';
           $('#error-list').append(html);
         });
-        $('#error-Modal').modal('show');
+        $('#loader_f').fadeOut(500);
       }
     });
   });
   // 통계보고서 보기버튼 클릭시
   $(document).on("click",".btn-period",function(){
     //  표 초기화
-    $('#media').text(0);
-    $('#reporter').text(0);
-    $('#newsCount').text(0);
-    $('#replyCount').text(0);
+    $('.modal-num').text(0);
     $('#date1').text('');
     $('#date2').text('');
+    $("#period-Modal").modal('show');
     var trEle = $(this).parents('tr');
     var tdEles = trEle.find('td');
     var inputEle = trEle.find('input[type=hidden]');
@@ -575,21 +612,21 @@
       };
       ajaxGetPeriod(param,tdEles,inputEle);
     }
-    else{
-      $("#period-Modal").modal('show');
-    }
   });
   function ajaxGetPeriod(param,tag,input){
+    $('#loader_p').show();
     $.ajax({
       url: '/period/getPeriod',
       type: 'post',
       data: param,
       error: function(request,status,error){
         console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
+        $('#loader_p').fadeOut(500);
         alert('새로고침 후 다시 시도해주세요.');
       },
       success: function(data){
         console.log(data);
+        $('#loader_p').fadeOut(500);
         if(data.status){
           $('#media').text(data.result.media);
           $('#reporter').text(data.result.reporter);
@@ -605,7 +642,6 @@
             $('#date1').text(sendDate);
             $('#date2').text(sendDate);
           }
-          $("#period-Modal").modal('show');
         } else{
           alert('새로고침 후 다시 시도해주세요.');
         }
