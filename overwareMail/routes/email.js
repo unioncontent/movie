@@ -719,7 +719,7 @@ async function maillinkInsert(req){
     return ['AU-4126512','1','U',mailData.M_subject,sender[0],sender[1],item[0],
     item[1],'http://showbox.email/preview?type=html&keyword='+mailData.M_keyword+'&idx='+mailData.n_idx,(('time' in req) ? req.time : now),now,mailData.n_idx];
   });
-  await maillink.testInsert(values);
+  await maillink.insert(values);
   // await asyncForEach(recipients, async (item, index, array) => {
   //   var param = {
   //     'AUTOMAILID':'AU-4126512',
