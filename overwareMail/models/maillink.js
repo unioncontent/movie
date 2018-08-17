@@ -12,7 +12,7 @@ var mail = {
     AND table_name LIKE \'ml_automail_tran_%\';';
     return await getResult(sql);
   },
-  insert: async function(table,param){
+  insert: async function(values){
     var sql = 'INSERT INTO union_mail.ml_automail_tran ( AUTOMAILID, CHANNEL, MSGGENTYPE, EMSUBJECT, EMFROMNAME, EMFROMADDRESS, EMTONAME, EMTOADDRESS, EMMSGURL, SENDTIME, GENDATE, ETC1 ) VALUES ?';
     Promise.all(values).then(async function(v) {
       return await getResult(sql,[v]);
