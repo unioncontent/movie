@@ -157,18 +157,6 @@ router.post('/send',isAuthenticated, async function(req, res) {
             // await nMailDetailB.insert(mailDetailParam);
 
             // 메일 보내기
-            // var param = {
-            //   'AUTOMAILID':'AU-4126512',
-            //   'CHANNEL':'1',
-            //   'EMSUBJECT':mailAllParam.M_subject,
-            //   'EMFROMNAME':sender.M_name,
-            //   'EMFROMADDRESS':sender.M_email,
-            //   'EMTONAME': mailDetailParam.P_name,
-            //   'EMTOADDRESS':mailDetailParam.E_mail,
-            //   'SENDTIME':('end_reserve_time' in req.body) ? mailDetailParam['M_send'] : now,
-            //   'GENDATE':now,
-            //   'MSGID':m_idx_a
-            // };
             var param = {
               'AUTOMAILID':'AU-4126512',
               'CHANNEL':'1',
@@ -183,9 +171,8 @@ router.post('/send',isAuthenticated, async function(req, res) {
               'GENDATE':now,
               'ETC1':m_idx_a
             };
-            console.log(param);
-            await maillink.insert('ml_automail_tran',param);
-
+            // console.log(param);
+            await maillink.insert2('ml_automail_tran',param);
           }
           catch(e){
             await maillink.deleteMlAMSG(m_idx_a);

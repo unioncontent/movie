@@ -20,9 +20,11 @@ var mail = {
       console.error('Promise.all error', err);
       return;
     });
-    // var pValue = Object.values(param);
-    // var sql = insertSqlSetting(table,Object.keys(param));
-    // return await getResult(sql,pValue);
+  },
+  insert2: async function(table,param){
+    var pValue = Object.values(param);
+    var sql = insertSqlSetting(table,Object.keys(param));
+    return await getResult(sql,pValue);
   },
   update: async function(param){
     var sql = 'update n_mail_all set M_body = ? where n_idx = ?';
