@@ -276,7 +276,7 @@ var newsclipping = {
       sql+=' and GENDATE between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
     }
     sql += ' and (  M_id = ? or M_id in (select n_idx from m_mail_user where user_admin=?)) ';
-    sql += ' group by M_idx_A order by n_idx desc limit ?,?';
+    sql += ' group by M_idx_A order by M_idx_A desc limit ?,?';
     return await getResult(sql,param);
   },
   selectViewCount: async function(body,param){
