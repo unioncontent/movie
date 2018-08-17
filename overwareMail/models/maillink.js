@@ -57,23 +57,13 @@ var mail = {
     return await getResult(sql,param.arr);
   },
   selectResult: async function(param){
-    var sql = 'select distinct RSLTMSG from union_mail.ml_automail_tran where ETC1 = ?';
+    var sql = 'select distinct RSLTMSG from mail_send_backup where MSGID = ?';
     var result = await getResult(sql,param);
     var returnVal = false;
-    console.log(result);
-    console.log(result.length);
     if(result.length == 1){
       returnVal = true;
     }
     return returnVal;
-  },
-  selectResult2: async function(param){
-    var sql = 'select * from union_mail.ml_automail_tran where ETC1 = ?';
-    return await getResult(sql,param);
-  },
-  selectResult3: async function(param){
-    var sql = 'select * from union_mail.ml_automail_tran where ETC1 = ? and EMTOADDRESS = ?';
-    return await getResult(sql,param);
   }
 }
 

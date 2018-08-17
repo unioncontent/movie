@@ -11,7 +11,7 @@ var content = {
       values.push(param.idx);
     }
     if(values[1] == '0'){
-      sql += 'order by M_seq_number desc ';
+      sql += 'order by M_seq_number desc,n_idx desc ';
     }
     else{
       sql += 'order by n_idx desc ';
