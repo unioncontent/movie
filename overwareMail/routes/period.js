@@ -61,7 +61,8 @@ async function getListPageData(idx,param){
     eDate: '',
     keyword: '',
     type: '',
-    mType: ''
+    mType: '',
+    ivt:''
   };
   var limit = 20;
   var searchParam = [idx,idx,0,limit];
@@ -83,6 +84,10 @@ async function getListPageData(idx,param){
   if (typeof param.keyword !== 'undefined') {
     searchBody['keyword'] = param.keyword;
     data['keyword'] = param.keyword;
+  }
+  if (typeof param.ivt !== 'undefined') {
+    searchBody['ivt'] = param.ivt;
+    data['ivt'] = param.ivt;
   }
   if (typeof param.type !== 'undefined') {
     searchBody['type'] = param.type;

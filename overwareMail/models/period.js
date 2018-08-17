@@ -15,6 +15,9 @@ var period = {
     if('keyword' in body){
       sql +=' and M_keyword_idx = '+body.keyword;
     }
+    if('ivt' in body){
+      sql +=' and M_invitation = '+body.ivt;
+    }
     if('type' in body){
       sql +=' and M_mail_type = \''+body.type+'\'';
     }
@@ -32,6 +35,9 @@ var period = {
     }
     if('keyword' in body){
       sql +=' and M_keyword_idx = '+body.keyword;
+    }
+    if('ivt' in body){
+      sql +=' and M_invitation = '+body.ivt;
     }
     if('type' in body){
       sql +=' and M_mail_type = \''+body.type+'\'';
