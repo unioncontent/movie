@@ -725,15 +725,15 @@
       datatype : 'json',
       error:function(request,status,error){
         console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
-        if(request.responseText == undefined){
-          $('.preloader3').fadeOut(500);
-          swal("SUCCESS!", '잠시만 기다려주세요. 몇분후 리스트에 적용됩니다.', "success")
-          .then(function(){
-            location.href= '../email/manage';
-          });
-          return false;
-        }
-        swal("ERROR!", request.responseText, "error");
+        // if(request.responseText == undefined){
+        //   $('.preloader3').fadeOut(500);
+        //   swal("SUCCESS!", '잠시만 기다려주세요. 몇분후 리스트에 적용됩니다.', "success")
+        //   .then(function(){
+        //     location.href= '../email/manage';
+        //   });
+        //   return false;
+        // }
+        swal("ERROR!", ((request.responseText == undefined)?'메일 저장에 실패했습니다.':request.responseText), "error");
       },
       success:function(data){
         if(data.status == 'sessionTimeOut'){
