@@ -13,9 +13,16 @@ var mail = {
     return await getResult(sql);
   },
   insert: async function(table,param){
-    var pValue = Object.values(param);
-    var sql = insertSqlSetting(table,Object.keys(param));
-    return await getResult(sql,pValue);
+    var sql = 'INSERT INTO union_mail.ml_automail_tran ( AUTOMAILID, CHANNEL, MSGGENTYPE, EMSUBJECT, EMFROMNAME, EMFROMADDRESS, EMTONAME, EMTOADDRESS, EMMSGURL, SENDTIME, GENDATE, ETC1 ) VALUES ?';
+    Promise.all(values).then(async function(v) {
+      return await getResult(sql,[v]);
+    }).catch(function(err){
+      console.error('Promise.all error', err);
+      return;
+    });
+    // var pValue = Object.values(param);
+    // var sql = insertSqlSetting(table,Object.keys(param));
+    // return await getResult(sql,pValue);
   },
   update: async function(param){
     var sql = 'update n_mail_all set M_body = ? where n_idx = ?';

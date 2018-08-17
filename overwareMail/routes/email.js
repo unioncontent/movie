@@ -704,48 +704,40 @@ async function maillinkInsert(req){
     }
     console.log(req.user);
     var groupArr = await mailListC.getOneEmail2(req.user.n_idx,mailData.M_group);
-    console.log('groupArr:',groupArr);
+    // console.log('groupArr:',groupArr);
     var groupArr2 = groupArr.concat(recipiArr);
-    console.log('groupArr2:',groupArr2);
+    // console.log('groupArr2:',groupArr2);
     var uniqArray = Array.from(new Set(groupArr2));
-    console.log('uniqArray:',uniqArray);
+    // console.log('uniqArray:',uniqArray);
     recipients = await mailListA.getOneEmail2(uniqArray);
   }
   else{
     recipients = await mailListA.getOneEmail2(recipiArr);
   }
-  console.log('recipient:',recipients);
-  await asyncForEach(recipients, async (item, index, array) => {
-    // var param = {
-    //   'AUTOMAILID':'AU-4126512',
-    //   'CHANNEL':'1',
-    //   'EMSUBJECT':mailData.M_subject,
-    //   'EMFROMNAME':sender[0],
-    //   'EMFROMADDRESS':sender[1],
-    //   'EMTONAME':item[0],
-    //   'EMTOADDRESS':item[1],
-    //   'SENDTIME':('time' in req) ? req.time : now,
-    //   'GENDATE':now,
-    //   // 'MODDATE':now,
-    //   'MSGID':mailData.n_idx
-    // };
-    var param = {
-      'AUTOMAILID':'AU-4126512',
-      'CHANNEL':'1',
-      'MSGGENTYPE':'U',
-      'EMSUBJECT':mailData.M_subject,
-      'EMFROMNAME':sender[0],
-      'EMFROMADDRESS':sender[1],
-      'EMTONAME':item[0],
-      'EMTOADDRESS':item[1],
-      'EMMSGURL':'http://showbox.email/preview?type=html&keyword='+mailData.M_keyword+'&idx='+mailData.n_idx,
-      'SENDTIME':('time' in req) ? req.time : now,
-      'GENDATE':now,
-      'ETC1':mailData.n_idx
-    };
-    console.log(index+'번');
-    await maillink.insert('ml_automail_tran',param);
+  // console.log('recipient:',recipients);
+  var values = [].map.call(recipients,async function(item) {
+    return ['AU-4126512','1','U',mailData.M_subject,sender[0],sender[1],item[0],
+    item[1],'http://showbox.email/preview?type=html&keyword='+mailData.M_keyword+'&idx='+mailData.n_idx,(('time' in req) ? req.time : now),now,mailData.n_idx];
   });
+  await maillink.testInsert(values);
+  // await asyncForEach(recipients, async (item, index, array) => {
+  //   var param = {
+  //     'AUTOMAILID':'AU-4126512',
+  //     'CHANNEL':'1',
+  //     'MSGGENTYPE':'U',
+  //     'EMSUBJECT':mailData.M_subject,
+  //     'EMFROMNAME':sender[0],
+  //     'EMFROMADDRESS':sender[1],
+  //     'EMTONAME':item[0],
+  //     'EMTOADDRESS':item[1],
+  //     'EMMSGURL':'http://showbox.email/preview?type=html&keyword='+mailData.M_keyword+'&idx='+mailData.n_idx,
+  //     'SENDTIME':('time' in req) ? req.time : now,
+  //     'GENDATE':now,
+  //     'ETC1':mailData.n_idx
+  //   };
+  //   console.log(index+'번');
+  //   await maillink.insert('ml_automail_tran',param);
+  // });
 }
 
 function getFiles (dir, files_){
