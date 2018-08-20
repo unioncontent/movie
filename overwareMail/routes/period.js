@@ -11,9 +11,7 @@ var mailDetailB = require('../models/mailDetailB.js');
 
 var isAuthenticated = function (req, res, next) {
   if (req.isAuthenticated()){
-    if(req.user.user_admin == null){
-      return next();
-    }
+    return next();
   }
   res.redirect('/login');
 };

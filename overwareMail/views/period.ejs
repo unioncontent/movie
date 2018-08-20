@@ -273,7 +273,7 @@
       <!-- Modal end-->
       <!-- Modal start-->
       <div class='modal fade' id='success-Modal' role='dialog'>
-        <div class='modal-dialog  modal-lg' role='document'>
+        <div class='modal-dialog  modal-lg modal-lg-1' role='document'>
           <div class='modal-content'>
             <div class='modal-header'>
               <h5 class="modal-title">성공 상세보기</h5>
@@ -315,7 +315,7 @@
       <!-- Modal end-->
       <!-- Modal start-->
       <div class='modal fade' id='error-Modal' role='dialog'>
-        <div class='modal-dialog modal-lg' role='document'>
+        <div class='modal-dialog modal-lg modal-lg-1' role='document'>
           <div class='modal-content'>
             <div class='modal-header'>
               <h5 class="modal-title">실패 상세보기</h5>
@@ -359,6 +359,9 @@
   </div>
 </div>
 <style type="text/css">
+  .modal-lg-1 {
+    max-width: 1016px;
+  }
   /* loader */
   .preloader3{
     display: none;
@@ -432,9 +435,6 @@
     white-space: inherit;
     white-space: pre-line;
 
-  }
-  .modal-lg-1 {
-      max-width: 1016px;
   }
   /* mail preview css end */
   .table-period td,.table-period th{

@@ -129,30 +129,8 @@
         </div>
       </div>
       <!-- Modal start-->
-      <div class='modal fade' id='previewMail-Modal' role='dialog'>
-        <div class='modal-dialog modal-lg modal-lg-1' role='document'>
-          <div class='modal-content'>
-            <div class='modal-header'>
-              <h5 class="modal-title"><span id="date"></span>메일내용</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">×</span>
-              </button>
-            </div>
-            <div class='modal-body'>
-              <div class='col-sm-12' id="mailBody"></div>
-            </div>
-            <div class="modal-footer">
-              <!-- <button type="button" class="btn btn-warning  waves-effect waves-light copy-btn">복사</button> -->
-              <button class="btn btn-secondary mobtn" data-dismiss='modal' aria-label='Close' type="button">취소</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <input id="clip_target" type="text" value="" style="position:absolute;top:-9999em;"/>
-      <!-- Modal end-->
-      <!-- Modal start-->
       <div class='modal fade' id='success-Modal' role='dialog'>
-        <div class='modal-dialog  modal-lg' role='document'>
+        <div class='modal-dialog  modal-lg modal-lg-1' role='document'>
           <div class='modal-content'>
             <div class='modal-header'>
               <h5 class="modal-title">성공 상세보기</h5>
@@ -197,7 +175,7 @@
       <!-- Modal end-->
       <!-- Modal start-->
       <div class='modal fade' id='error-Modal' role='dialog'>
-        <div class='modal-dialog modal-lg' role='document'>
+        <div class='modal-dialog modal-lg modal-lg-1' role='document'>
           <div class='modal-content'>
             <div class='modal-header'>
               <h5 class="modal-title">실패 상세보기</h5>
@@ -342,21 +320,6 @@ $(window).resize(function(){
 
 $(document).ready(function(){
   areaChart();
-});
-// 모달 복사 버튼 클릭시
-$('.copy-btn').on('click',function(){
-  var text = $("#mailBody").html();
-  $('#clip_target').val(text);
-  $("#clip_target").select();
-
-  try {
-    var successful = document.execCommand('copy');
-    if(successful) alert('복사 되었습니다.');
-    else alert('다시 시도해주세요.');
-  } catch (err) {
-    alert('이 브라우저는 지원하지 않습니다.');
-  }
-
 });
 // 성공 클릭시
 $(document).on('click','.success',function(){
