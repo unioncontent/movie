@@ -13,7 +13,7 @@ public class MailVO {
 	private String fail;
 	private String M_mail_type;
 	private Integer M_seq_number;
-	private Integer sendCount;
+	private String sendCount;
 	private String M_sender;
 	private String M_group;
 	private String M_recipi;
@@ -79,10 +79,10 @@ public class MailVO {
 	public void setM_seq_number(Integer m_seq_number) {
 		M_seq_number = m_seq_number;
 	}
-	public Integer getSendCount() {
+	public String getSendCount() {
 		return sendCount;
 	}
-	public void setSendCount(Integer sendCount) {
+	public void setSendCount(String sendCount) {
 		this.sendCount = sendCount;
 	}
 	public String getM_sender() {

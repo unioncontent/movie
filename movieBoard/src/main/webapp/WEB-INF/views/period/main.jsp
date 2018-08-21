@@ -304,13 +304,13 @@
                                             </a>
                                             </td>
                                             <td>
-                                            <fmt:formatNumber value="${mvo.sendCount}" pattern="#,##0" />회
+                                            ${mvo.sendCount}회
                                             </td>
                                             <td>
-                                            <fmt:formatNumber value="${mvo.success}" pattern="#,##0" />회
+                                            ${mvo.success}회
                                             </td>
                                             <td>
-                                            <fmt:formatNumber value="${mvo.fail}" pattern="#,##0" />회                    
+                                            ${mvo.fail}회                    
                                             </td>
                                             <td>
                                             <a href="javascript:popupOpen('<fmt:formatDate value="${mvo.m_regdate}" type="DATE" pattern="yyyy-MM-dd" />');" >${mvo.total}건</a>      
