@@ -53,7 +53,6 @@ var mail = {
         sql += 'and ((FINALRESULT is not null and FINALRESULT != ?) or (SENDRESULT is not null and SENDRESULT = \'ER\'))';
       }
     }
-    sql+=' group by EMTOADDRESS';
     return await getResult(sql,param.arr);
   },
   selectResult: async function(param){
