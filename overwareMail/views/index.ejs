@@ -89,7 +89,7 @@
                 <table class="table table-cp">
                   <thead>
                     <tr>
-                      <th style="min-width: 200px;">작성일</th>
+                      <th style="min-width: 200px;">발송일</th>
                       <th style="min-width: 70px;">키워드</th>
                       <th style="min-width: 80px;">발송차수</th>
                       <th style="min-width: 400px;">제목</th>
@@ -102,7 +102,7 @@
                   <tbody>
                     <%for(var i=0; i < list.length; i++) {%>
                     <tr>
-                      <th><%= list[i].M_regdate %></th>
+                      <th><%= list[i].M_send %></th>
                       <td><div class="kwd_nobr"><%= list[i].M_keyword %></div></td>
                       <td><div class="num_nobr"><%= ((list[i].M_invitation == '0')?(list[i].M_seq_number+'차'):'-') %></div></td>
                       <td>

@@ -108,9 +108,9 @@ var period = {
     return result[0];
   },
   get7DayGraph: async function(user){
-    var sql = 'SELECT date_format(M_regdate,\'%Y-%m-%d\') as date,sum(successNum) as success,sum(failNum) as fail\
+    var sql = 'SELECT date_format(M_send,\'%Y-%m-%d\') as date,sum(successNum) as success,sum(failNum) as fail\
     FROM period_view\
-    where M_regdate BETWEEN date_sub(now(), INTERVAL 7 day) and now()';
+    where M_send BETWEEN date_sub(now(), INTERVAL 7 day) and now()';
     var param = [user.n_idx];
     if(user.user_admin == null){
       sql += ' and (  M_id=? or M_id in (select n_idx from m_mail_user where user_admin=?)) ';
@@ -119,11 +119,11 @@ var period = {
     else{
       sql += ' and M_id=? ';
     }
-    sql +='group by date(M_regdate)';
+    sql +='group by date(M_send)';
     return await getResult(sql,param);
   },
   getYesterday: async function(user){
-    var sql = 'SELECT * FROM period_view where (M_regdate BETWEEN date_sub(now(), INTERVAL 1 day) and now() or Date(M_send) = CURRENT_DATE()) ';
+    var sql = 'SELECT * FROM period_view where (M_send BETWEEN date_sub(now(), INTERVAL 1 day) and now() or Date(M_send) = CURRENT_DATE()) ';
     var param = [user.n_idx];
     if(user.user_admin == null){
       sql += ' and (  M_id=? or M_id in (select n_idx from m_mail_user where user_admin=?)) ';
