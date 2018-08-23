@@ -846,6 +846,12 @@ var storageImage = multer.diskStorage({
     await cb(null, path); // cb 콜백함수를 통해 전송된 파일 저장 디렉토리 설정
   },
   filename: function (req, file, cb) {
+    var date = datetime.create();
+    var today = date.format('Ymd');
+    var time = date.format('HMS');
+    if (fs.existsSync('public/uploads/image/'+today+'/'+file.originalname)) {
+      file.originalname = time+'_'+file.originalname;
+    }
     cb(null, file.originalname); // cb 콜백함수를 통해 전송된 파일 이름 설정
   }
 });
@@ -873,8 +879,14 @@ var storageFile = multer.diskStorage({
   },
   filename: function (req, file, cb) {
     // cb(null, new Buffer(file.originalname,'ascii').toString('hex'))
-    var fileNameArr = file.originalname.split('.');
+    // var fileNameArr = file.originalname.split('.');
     // cb(null, new Buffer(fileNameArr[0],'ascii').toString('hex')+"."+fileNameArr[fileNameArr.length-1])
+    var date = datetime.create();
+    var today = date.format('Ymd');
+    var time = date.format('HMS');
+    if (fs.existsSync('public/uploads/files/'+today+'/'+file.originalname)) {
+      file.originalname = time+'_'+file.originalname;
+    }
     cb(null, file.originalname)
   }
 });
