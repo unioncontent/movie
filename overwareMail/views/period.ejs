@@ -80,6 +80,7 @@
                       <th width="5%" style="min-width:58px">성공</th>
                       <th width="5%" style="min-width:58px">실패</th>
                       <th width="5%" style="min-width:81px">발송타입</th>
+                      <th width="5%" style="min-width:81px">엑셀</th>
                       <th width="5%" style="min-width:96px">통계보고서</th>
                     </tr>
                   </thead>
@@ -113,6 +114,7 @@
                         <label class="badge badge-danger m-b-0">대기</label>
                         <%}%>
                       </td>
+                      <td><button class="btn btn-warning btn-excel" data-idx="<%= list[i].n_idx %>"><i class="fas fa-file-excel"></i></button></td>
                       <td><button class="btn btn-inverse btn-period" data-idx="<%= list[i].n_idx %>"><i class="fas fa-chart-bar"></i></button></td>
                     </tr>
                     <% } %>
@@ -359,6 +361,15 @@
   </div>
 </div>
 <style type="text/css">
+  .btn-excel{
+    background: #02723b;
+    border-color:#02723b;
+  }
+  .btn-excel:hover {
+    color: #fff;
+    background-color: #00a052;
+    border-color: #00a052;
+  }
   .modal-lg-1 {
     max-width: 1016px;
   }
@@ -499,6 +510,23 @@
     else{
       $('#reportrange span').html(moment(new Date(sDateValue)).format('YYYY.MM.DD') + ' - ' + moment(new Date(eDateValue)).format('YYYY.MM.DD'));
     }
+  });
+  // 발송실적
+  $('.btn-excel').on("click",function(){
+    var idx= $(this).data('idx');
+    swal({
+      title: "발송실적 출력하시겠습니까?",
+      icon: "warning",
+      buttons: ["취소", true],
+      dangerMode: true,
+    })
+    .then((value) =>{
+      console.log(value);
+      if(value != null){
+        var link = '/excel?idx='+idx;
+        location.href = link;
+      }
+    });
   });
   // 성공 클릭시
   $(document).on('click','.success',function(){
@@ -752,7 +780,8 @@
             html += '<label class="badge badge-danger m-b-0">대기</label>'
           }
           html += '</td>';
-          html += '<td><button class="btn btn-inverse btn-period"  data-idx="'+item.n_idx+'"><i class="fas fa-chart-bar"></i></button></td>\
+          html += '<td><button class="btn btn-inverse btn-period" data-idx="'+item.n_idx+'"><i class="fas fa-chart-bar"></i></button></td>\
+          <td><button class="btn btn-warning btn-excel" data-idx="'+item.n_idx+'"><i class="fas fa-file-excel"></i></button></td>\
           </tr>'
           $('#listTable tbody').eq(0).append(html);
         });

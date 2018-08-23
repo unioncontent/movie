@@ -80,6 +80,8 @@ var list = require('./routes/list');
 app.use('/list', list);
 var user = require('./routes/user');
 app.use('/user', user);
+var excel = require('./routes/excel');
+app.use('/excel', excel);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
