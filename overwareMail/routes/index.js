@@ -175,6 +175,51 @@ router.get('/preview_mail', isAuthenticated,async function(req, res, next) {
   res.render('preview_mail',preview_data);
 });
 
+// 메일 test
+router.get('/preview_test',async function(req, res, next) {
+  console.log('req.query:',req.query);
+  console.log(!('keyword' in req.query) && !('idx' in req.query));
+  if(!('keyword' in req.query) && !('idx' in req.query)){
+    res.render('preview_mail',{layout: false,veiw: '',pastView: [{keyword:''}],pastCount: 0,msg: '주소에 조건이 없습니다.\n주소를 다시 작성해주세요.',currentPage: 1,keyword: '',idx: ''});
+    return false;
+  }
+  if(!('page' in req.query)){
+    req.query.page = 1;
+  }
+  var viewCode = await maillink.selectEmailOneView(req.query.idx);
+  var sideHtmlStart = '<table width="750" align="center" cellpadding="0" cellspacing="0" style="border: solid 1px #cacaca; padding: 20px;"><tbody><tr><td><table width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td width="642"><img src="http://showbox.email/templates/images/logo/show_logo.png" width="135" height="36" alt="로고"></td><td width="92">NEWS ';
+  var ivt = '0';
+  if(viewCode[0].M_seq_number != '0' && viewCode[0].M_invitation  == '0'){
+    sideHtmlStart+= 'No.'+viewCode[0].M_seq_number;
+  }
+  else{
+    sideHtmlStart+= 'Invitation';
+    ivt = '1';
+  }
+  sideHtmlStart+= '</td></tr></tbody></table><table width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td>';
+  var sideHtmlEnd = '</td></tr></tbody></table></td></tr></tbody></table>';
+  var pastParam = {keyword:req.query.keyword,page:req.query.page,ivt:ivt};
+  var pastNews = await content.selectView(pastParam);
+  var pastNewsCount = await content.selectViewCount(pastParam);
+  var data = {
+    layout: false,
+    veiw:(viewCode.length == 0) ? '' : sideHtmlStart+viewCode[0].M_body+sideHtmlEnd,
+    pastView:pastNews,
+    pastCount: (pastNewsCount.length == 0) ? '':pastNewsCount[0].total,
+    msg: '',
+    currentPage: 1,
+    keyword:req.query.keyword,
+    idx:req.query.idx
+  };
+  if(viewCode.length == 0){
+    data.msg = '해당 메일이 없습니다.';
+  }
+  if('page' in req.query){
+    data.currentPage = req.query.page;
+  }
+  res.render('preview_html',data);
+});
+
 // 대시보드 최근 발송 현황 그래프
 router.post('/7DayGraph',isAuthenticated, async function(req, res, next) {
   var data = await period.get7DayGraph(req.user);
