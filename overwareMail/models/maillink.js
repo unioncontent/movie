@@ -56,6 +56,10 @@ var mail = {
     sql = 'delete from union_mail.'+table+' where ETC1=?;';
     return await getResult(sql,param);
   },
+  deleteMlABackUpTest: async function(table,param){
+    sql = 'delete from union_mail.'+table+' where SEQ=?';
+    return await getResult(sql,param);
+  },
   selectResultDetail:async function(param){
     var sql = 'SELECT * FROM mail_send_result where n_idx=? ';
     if('M_result' in param){
