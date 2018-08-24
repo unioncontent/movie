@@ -716,7 +716,7 @@
     if(param["M_type"] == "1"){
       var time = $('#time_h').val()+":"+$('#time_m').val();
       var date = $('#datepicker').val();
-      if($('#time_h').val() != "" || $('#time_m').val() != "" || date != ""){
+      if($('#time_h').val() != "" && $('#time_m').val() != "" && date != ""){
         var endDate = date+" "+time+":00";
         var startDateCompare = new Date();
         var endDateCompare = new Date(endDate);
