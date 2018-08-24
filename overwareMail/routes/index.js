@@ -4,6 +4,7 @@ var bcrypt = require('bcrypt-nodejs');
 var LocalStrategy = require('passport-local').Strategy;
 var router = express.Router();
 // DB module
+var maillink = require('../models/maillink.js');
 var newsclipping = require('../models/newsclipping.js');
 var nMailAll = require('../models/nMailAll.js');
 var content = require('../models/content.js');
