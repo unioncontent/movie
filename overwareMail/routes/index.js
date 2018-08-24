@@ -101,6 +101,10 @@ router.get('/preview',async function(req, res, next) {
     req.query.page = 1;
   }
   var viewCode = await mailAllA.selectEmailOneView(req.query.idx);
+  if(!('M_seq_number' in viewCode[0])){
+    res.render('preview',{layout: false,veiw: '',pastView: [{keyword:''}],pastCount: 0,msg: '해당 메일이 없습니다.',currentPage: 1,keyword: '',idx: ''});
+    return false;
+  }
   var sideHtmlStart = '<table width="750" align="center" cellpadding="0" cellspacing="0" style="border: solid 1px #cacaca; padding: 20px;"><tbody><tr><td><table width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td width="642"><img src="http://showbox.email/templates/images/logo/show_logo.png" width="135" height="36" alt="로고"></td><td width="92">NEWS ';
   var ivt = '0';
   if(viewCode[0].M_seq_number != '0' && viewCode[0].M_invitation  == '0'){
