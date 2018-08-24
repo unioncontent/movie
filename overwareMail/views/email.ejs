@@ -173,6 +173,15 @@
                   <span class='messages'><p class='text-danger error'></p></span>
                 </div>
               </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label">발송 테스트</label>
+                <div class="col-sm-5">
+                  <input type="text" id="email1" class="form-control f-left col-sm-4"><p class="m-l-5 f-left m-r-5">@</p><input type="text" id="email2" class="form-control f-left col-sm-4">
+                  <div class="col-sm-1 f-left">
+                  	<button type="button" class="btn btn-inverse btn-test">발송</button>
+                  </div>
+                </div>
+              </div>
             </div>
             <div class="card-bottom">
               <button type="submit" class="btn btn-inverse f-right m-b-0 sendBtn">저장</button>
@@ -574,6 +583,49 @@
   $('input[name=M_type]').on('change',function(){
     $('.reserveTime').toggle();
   });
+  // 메일 테스트 발송 버튼 클릭시
+  $(".btn-test").on("click",function(){
+    var sender = $(".sender-select").select2("val");
+    if(sender == null){
+      alert("보내는 사람를 선택해주세요.");
+      return false;
+    }
+    if($("#email1").val() == "" || $("#email2").val() == ""){
+      alert("받는 사람의 이메일 주소를 정확히 입력해주세요.");
+      return false;
+    }
+
+    var num = '';
+    if($("#M_seq_number").val() != ""){
+      num = Number($("#M_seq_number").val());
+    }
+    var param = {
+      'M_keyword': $("#M_keyword option:selected").val() || '',
+      'M_seq_number': num,
+      'M_invitation': $("#invitation").is(":checked") ? '1' : '0',
+      'M_body': get_tinymce_html_content(),
+      'M_subject': $("#M_subject").val(),
+      'M_email': $("#email1").val()+'@'+$("#email2").val(),
+      'M_sender': sender
+    };
+    $.ajax({
+      url: '/email/test',
+      type: 'post',
+      data : param,
+      datatype : 'json',
+      error:function(request,status,error){
+        console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
+        alert('테스트메일 발송에 실패했습니다.');
+      },
+      success:function(data){
+        if(data){
+          console.log(data);
+          alert('테스트메일 발송에 성공했습니다.');
+        }
+      }
+    });
+  });
+
   // 메일 미리보기 버튼 클릭시
   $(".perivewBtn").on("click",function(){
     var num = '';

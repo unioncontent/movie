@@ -336,6 +336,43 @@ router.post('/send2',isAuthenticated, async function(req, res) {
     }
   },5000);
 });
+
+// 메일 작성 중 테스트 발송
+router.post('/test',isAuthenticated, async function(req, res) {
+  try{
+    var mailAllParam = {
+      M_email:req.body['M_email'],
+      M_seq_number:req.body['M_seq_number'],
+      M_invitation:req.body['M_invitation'],
+      M_body: req.body['M_body'],
+      M_subject: req.body['M_subject'],
+      M_keyword: req.body['M_keyword']
+    };
+    var resultInsert = await maillink.insert2('ml_mail_test',mailAllParam);
+    var idx = resultInsert.insertId;
+    if(idx == undefined){
+      throw new Error('ml_mail_test insert 실패');
+    }
+    var mailSender = await mailListA.getOneEmail2(req.body.M_sender);
+    var sender = (mailSender.length > 0) ? mailSender[0]: [];
+
+    var dt = datetime.create();
+    var now = dt.format('Y-m-d H:M:S');
+    var values = ['AU-4126512','1','U','[테스트 발송]'+mailAllParam.M_subject,sender[0],sender[1],'테스트 메일 수신자',
+    mailAllParam.M_email,'http://showbox.email/preview_test?keyword='+mailAllParam.M_keyword+'&idx='+idx,now,now,idx];
+    var result = await maillink.insertTest(values);
+    if(!('insertId' in result)){
+      throw new Error('maillink insert 실패');
+    }
+  }
+  catch(e){
+    console.log(e);
+    res.status(500).send('메일 저장에 실패했습니다. 다시 시도해주세요.');
+    return false;
+  }
+  res.send({status:true});
+});
+
 // 메일 작성 완료 로직
 router.post('/save',isAuthenticated, async function(req, res) {
   console.log('mail save req.body: ',req.body);
@@ -483,6 +520,7 @@ router.post('/save',isAuthenticated, async function(req, res) {
 
   res.send({status:true});
 });
+
 // 메일 다시보내기 로직
 router.post('/resend',isAuthenticated, async function(req, res) {
   var result = await maillinkInsert({idx:req.body.idx,type:'resend',user:req.user});
@@ -719,6 +757,7 @@ async function maillinkInsert(req){
     return ['AU-4126512','1','U',mailData.M_subject,sender[0],sender[1],item[0],
     item[1],'http://showbox.email/preview?type=html&keyword='+mailData.M_keyword+'&idx='+mailData.n_idx,(('time' in req) ? req.time : now),now,mailData.n_idx];
   });
+
   await maillink.insert(values);
   // await asyncForEach(recipients, async (item, index, array) => {
   //   var param = {
@@ -824,6 +863,7 @@ async function mkdirsFun (directory) {
     console.error(err)
   }
 }
+
 // 메일 첨부파일 삭제시
 router.post('/remove/file',function (req, res) {
   try {
