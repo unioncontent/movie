@@ -65,7 +65,9 @@ var mail = {
     return returnVal;
   },
   selectResultDetail2: async function(param){
-    var sql = 'select a.MSGID,m.M_type,k.keyword_main as M_keyword_str,m.M_mail_type,m.M_invitation,m.M_seq_number,m.M_subject,l.M_ptitle,a.EMTONAME,a.EMTOADDRESS,a.SENDTIME,a.FINALRESULT,a.GENDATE,a.OPENTIME\
+    // ,l.M_ptitle
+    // left join m_mail_list_all as l on a.EMTOADDRESS = l.M_email
+    var sql = 'select a.MSGID,m.M_type,k.keyword_main as M_keyword_str,m.M_mail_type,m.M_invitation,m.M_seq_number,m.M_subject,a.EMTONAME,a.EMTOADDRESS,a.SENDTIME,a.FINALRESULT,a.GENDATE,a.OPENTIME\
     from (SELECT * FROM `union`.mail_send_backup where MSGID=? and ';
     if(param[1] == 13){
       sql +='((FINALRESULT=13) or (FINALRESULT is null and PROCESSYN = \'Y\'))';
@@ -76,9 +78,7 @@ var mail = {
     sql +=') as a left join m_mail_all_a as m\
     on a.MSGID = m.n_idx\
     left join m_keyword_data as k\
-    on m.M_keyword = k.keyword_idx\
-    left join m_mail_list_all as l\
-    on a.EMTOADDRESS = l.M_email';
+    on m.M_keyword = k.keyword_idx';
     return await getResult(sql,param[0]);
   }
 }
