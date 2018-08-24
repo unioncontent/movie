@@ -116,8 +116,8 @@
                       <td><%= recipiStr %></td>
                       <td><div class="group-nobr" title="<%= groupStr %>"><%= groupStr %></div></td>
                       <td><div class="date-nobr"><%= list[i].M_regdate %></div></td>
-                      <td><div class="date-nobr"><%= (list[i].M_type != 1) ?'-': list[i].M_send %></div></td>
-                      <td><div class="date-nobr"><%= ((list[i].M_send == null) || (list[i].M_type == 1 &&list[i].success ==0 &&list[i].fail==0)) ?'-': list[i].M_send %></div></td>
+                      <td><div class="date-nobr"><%= ((list[i].M_type != 1) ||  (list[i].M_type == 1 && list[i].M_send == null)) ?'-': list[i].M_send %></div></td>
+                      <td><div class="date-nobr"><%= ((list[i].M_send == null) || (list[i].M_type == 1 && list[i].success ==0 && list[i].fail==0)) ?'-': list[i].M_send %></div></td>
                       <td>
                         <%if(list[i].M_send == null  || (list[i].M_type == 1 &&list[i].success ==0 &&list[i].fail==0)){%>
                           <button class="btn btn-sm btn-inverse btn-send" data-idx="<%= list[i].n_idx %>">보내기</button>
@@ -764,8 +764,8 @@
             <td>'+recipiStr+'</td>\
             <td><div class="group-nobr" title="'+groupStr+'">'+groupStr+'</div></td>\
             <td><div class="date-nobr">'+item.M_regdate+'</div></td>\
-            <td><div class="date-nobr">'+((item.M_type != 1) ?'-': item.M_send)+'</div></td>\
-            <td><div class="date-nobr">'+(((item.M_send == null) || (item.M_type == 1 &&item.success ==0 &&item.fail==0)) ? '-': item.M_send)+'</div></td>\
+            <td><div class="date-nobr">'+(((item.M_type != 1) || (item.M_type == 1 && item.M_send == null)) ?'-': item.M_send)+'</div></td>\
+            <td><div class="date-nobr">'+(((item.M_send == null) || (item.M_type == 1 && item.success == 0 && item.fail == 0)) ? '-': item.M_send)+'</div></td>\
             <td>';
             if(item.M_send == null || (item.M_type == 1 &&item.success ==0 &&item.fail==0)){
               html += '<button class="btn btn-sm btn-inverse btn-send" data-idx="'+item.n_idx+'">보내기</button> ';
