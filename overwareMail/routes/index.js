@@ -101,6 +101,10 @@ router.get('/preview',async function(req, res, next) {
     req.query.page = 1;
   }
   var viewCode = await mailAllA.selectEmailOneView(req.query.idx);
+  if(viewCode.length == 0){
+    res.render('preview',{layout: false,veiw: '',pastView: [{keyword:''}],pastCount: 0,msg: '해당 메일이 없습니다.',currentPage: 1,keyword: '',idx: ''});
+    return false;
+  }
   if(!('M_seq_number' in viewCode[0])){
     res.render('preview',{layout: false,veiw: '',pastView: [{keyword:''}],pastCount: 0,msg: '해당 메일이 없습니다.',currentPage: 1,keyword: '',idx: ''});
     return false;
@@ -129,9 +133,7 @@ router.get('/preview',async function(req, res, next) {
     keyword:req.query.keyword,
     idx:req.query.idx
   };
-  if(viewCode.length == 0){
-    data.msg = '해당 메일이 없습니다.';
-  }
+
   if('page' in req.query){
     data.currentPage = req.query.page;
   }
