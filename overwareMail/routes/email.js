@@ -358,7 +358,7 @@ router.post('/test',isAuthenticated, async function(req, res) {
 
     var dt = datetime.create();
     var now = dt.format('Y-m-d H:M:S');
-    var values = ['AU-4126512','1','U','[테스트 발송]'+mailAllParam.M_subject,sender[0],sender[1],'테스트 메일 수신자',
+    var values = ['AU-4126512','1','U','[테스트 발송]  '+mailAllParam.M_subject,sender[0],sender[1],'테스트 메일 수신자',
     mailAllParam.M_email,'http://showbox.email/preview_test?keyword='+mailAllParam.M_keyword+'&idx='+idx,now,now,idx];
     var result = await maillink.insertTest(values);
     if(!('insertId' in result)){
