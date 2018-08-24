@@ -21,6 +21,10 @@ var mail = {
       return;
     });
   },
+  insertTest: async function(values){
+    var sql = 'INSERT INTO union_mail.ml_automail_tran ( AUTOMAILID, CHANNEL, MSGGENTYPE, EMSUBJECT, EMFROMNAME, EMFROMADDRESS, EMTONAME, EMTOADDRESS, EMMSGURL, SENDTIME, GENDATE, ETC1 ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+    return await getResult(sql,values);
+  },
   insert2: async function(table,param){
     var pValue = Object.values(param);
     var sql = insertSqlSetting(table,Object.keys(param));
@@ -30,9 +34,17 @@ var mail = {
     var sql = 'update n_mail_all set M_body = ? where n_idx = ?';
     return await getResult(sql,param);
   },
+  deleteTest: async function(param){
+    var sql = 'delete from union_mail.ml_mail_test where n_idx=?;';
+    return await getResult(sql,param);
+  },
   deleteMlAMSG: async function(param){
     var sql = 'delete from union_mail.ml_automail_message where MSGID=?;';
     return await getResult(sql,param);
+  },
+  deleteMlATI: async function(param){
+    var sql = 'delete from union_mail.ml_automail_tran where SEQ=?;';
+    return await getResult(sql,param)
   },
   deleteMlAT: async function(param){
     var sql = 'delete from union_mail.ml_automail_tran where ETC1=?;';
@@ -80,6 +92,10 @@ var mail = {
     left join m_keyword_data as k\
     on m.M_keyword = k.keyword_idx';
     return await getResult(sql,param[0]);
+  },
+  selectEmailOneView:async function(idx){
+    var sql = 'SELECT * FROM union_mail.ml_mail_test where n_idx=?';
+    return await getResult(sql,idx);
   }
 }
 
