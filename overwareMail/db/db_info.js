@@ -3,7 +3,8 @@ const mysql = require('mysql');
 class Database {
   constructor() {
     this.db = {
-      host     : '180.210.5.160',
+      // host     : '180.210.5.160',
+      host     : '61.103.16.83',
       user     : 'soas',
       password : 'qwer1234',
       database : 'union'
