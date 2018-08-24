@@ -119,13 +119,12 @@ router.get('/',async function(req, res) {
     ws2.cell(row,9).string(settingErrorMsg(item.FINALRESULT));
   });
   var filename = 'showboxEmail_result_'+MSGIDStr+'.xlsx';
-  console.log(filename);
-  wb.write(filename,function(err,stats){
+  var filepath = aDir+filename;
+  wb.write(filepath,function(err,stats){
     if(err){
       console.log(err);
     }
     else{
-      var filepath = aDir+filename;
       res.setHeader("Content-Type", "application/x-msdownload");
       res.setHeader("Content-Disposition", "attachment; filename=" + filename);
 
