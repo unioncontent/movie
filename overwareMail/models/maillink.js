@@ -61,15 +61,28 @@ var mail = {
     return await getResult(sql,param);
   },
   selectResultDetail:async function(param){
-    var sql = 'SELECT * FROM mail_send_result where n_idx=? ';
+    // var sql = 'SELECT * FROM mail_send_result where n_idx=? ';
+    // if('M_result' in param){
+    //   if(param.M_result == 'success'){
+    //     sql += 'and (FINALRESULT=? or (SENDRESULT = \'OK\' and FINALRESULT is null))';
+    //   }else{
+    //     sql += 'and ((FINALRESULT is not null and FINALRESULT != ?) or (SENDRESULT is not null and SENDRESULT = \'ER\'))';
+    //   }
+    // }
+    var sql = 'select * from (select STRAIGHT_JOIN b.SEQ,b.MSGID,b.EMSUBJECT,l.M_ptitle, b.EMTONAME, b.EMTOADDRESS, b.PROCESSYN, b.SENDRESULT, b.FINALRESULT, b.RSLTMSG,\
+    DATE_FORMAT(b.SENDTIME, \'%Y-%m-%d %H:%i:%s\') as SENDTIME, DATE_FORMAT(b.GENDATE, \'%Y-%m-%d %H:%i:%s\') as GENDATE, DATE_FORMAT(b.OPENTIME, \'%Y-%m-%d %H:%i:%s\') as OPENTIME\
+    from (select * from `union`.mail_send_backup where MSGID=?';
     if('M_result' in param){
       if(param.M_result == 'success'){
-        sql += 'and (FINALRESULT=? or (SENDRESULT = \'OK\' and FINALRESULT is null))';
+        sql += ' and (FINALRESULT = 13 or (FINALRESULT is null and SENDRESULT =\'OK\'))';
       }else{
-        sql += 'and ((FINALRESULT is not null and FINALRESULT != ?) or (SENDRESULT is not null and SENDRESULT = \'ER\'))';
+        sql += ' and (FINALRESULT != 13 or (SENDRESULT is not null and SENDRESULT =\'ER\'))';
       }
     }
-    return await getResult(sql,param.arr);
+    sql += ') as b left join m_mail_list_all as l\
+    on b.EMTONAME = l.M_name\
+    group by b.SEQ order by null) as j order by j.EMTONAME asc'
+    return await getResult(sql,param.arr[0]);
   },
   selectResult: async function(param){
     var sql = 'select distinct RSLTMSG from mail_send_backup where MSGID = ?';
