@@ -105,7 +105,7 @@
                     %>
                     <tr>
                       <th><%= listCount - i - offset %></th>
-                      <td><div class="kwd_nobr"><%= list[i].keyword %></div></td>
+                      <td><div class="kwd_nobr"><%= list[i].M_keyword %></div></td>
                       <td>
                         <a href="http://showbox.email/preview?keyword=<%= list[i].M_keyword_idx %>&idx=<%= list[i].n_idx %>" target="_blank">
                           <div class="title_nobr"><%= list[i].M_subject %></div>
@@ -755,7 +755,7 @@
           }
           var html = '<tr>\
             <th>'+numIdx+'</th>\
-            <td><div class="kwd_nobr">'+item.keyword+'</div></td>\
+            <td><div class="kwd_nobr">'+item.M_keyword+'</div></td>\
             <td><a href="http://showbox.email/preview?keyword='+item.M_keyword_idx+'&idx='+item.n_idx+'" target="_blank">\
               <div class="title_nobr">'+item.M_subject+'</div>\
             </a></td>\
