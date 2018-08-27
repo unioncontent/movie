@@ -755,7 +755,7 @@ async function maillinkInsert(req){
   // console.log('recipient:',recipients);
   var values = [].map.call(recipients,async function(item) {
     return ['AU-4126512','1','U',mailData.M_subject,sender[0],sender[1],item[0],
-    item[1],'http://showbox.email/preview?type=html&keyword='+mailData.M_keyword+'&idx='+mailData.n_idx,(('time' in req) ? req.time : now),now,mailData.n_idx];
+    item[1],'http://showbox.email/preview?type=html&keyword='+mailData.M_keyword+'&idx='+mailData.n_idx,(('time' in req) ? req.time : now),(('time' in req) ? req.time : now),mailData.n_idx];
   });
 
   await maillink.insert(values);
