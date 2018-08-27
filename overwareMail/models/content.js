@@ -4,7 +4,7 @@ const DBpromise = require('../db/db_info.js');
 */
 var content = {
   selectView: async function(param){
-    var sql = 'SELECT M_invitation,keyword_idx, keyword,M_seq_number, n_idx, M_subject, m_body,date_format(M_regdate, \'%Y-%m-%d %H:%i:%s\') as M_regdate FROM content_view where keyword_idx = ? and M_invitation = ? ';
+    var sql = 'SELECT M_invitation,keyword_idx, keyword,M_seq_number, n_idx, M_subject, m_body,date_format(M_send, \'%Y-%m-%d %H:%i:%s\') as M_send FROM content_view where keyword_idx = ? and M_invitation = ? ';
     var values = [param.keyword,param.ivt];
     if('idx' in param){
       sql += 'and n_idx=? ';
