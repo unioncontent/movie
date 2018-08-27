@@ -3,7 +3,7 @@ var fs = require('fs-extra');
 var request = require('request');
 var datetime = require('node-datetime');
 var urlencode = require('urlencode');
-var Iconv = require('iconv').Iconv;
+// var Iconv = require('iconv').Iconv;
 var router = express.Router();
 // DB module
 var maillink = require('../models/maillink.js');
