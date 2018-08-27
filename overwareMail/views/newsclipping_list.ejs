@@ -81,7 +81,7 @@
                       <td><%= list[i].M_sender %></td>
                       <td><%= recipiStr %></td>
                       <td><div class="group-nobr" title="<%= groupStr %>"><%= groupStr %></div></td>
-                      <td><div class="date-nobr"><%= list[i].GENDATE %></div></td>
+                      <td><div class="date-nobr"><%= list[i].M_regdate %></div></td>
                       <td>
                         <div class="date-nobr"><%if(list[i].M_type != 1){%><i class="fas fa-minus"></i><%}else{%><%=list[i].SENDTIME%><%}%></div>
                       </td>
@@ -360,7 +360,7 @@
             <td>'+item.M_sender+'</td>\
             <td>'+recipiStr+'</td>\
             <td><div class="group-nobr" title="'+groupStr+'">'+groupStr+'</div></td>\
-            <td><div class="date-nobr">'+item.GENDATE+'</div></td>\
+            <td><div class="date-nobr">'+item.M_regdate+'</div></td>\
             <td><div class="date-nobr">'+((item.M_type != 1) ?'<i class="fas fa-minus"></i>': item.SENDTIME)+'</div></td>\
             <td><div class="date-nobr">'+((item.M_type == 1 && item.success ==0 && item.fail==0) ? '<i class="fas fa-minus"></i>': item.SENDTIME)+'</div></td>\
             <td>';

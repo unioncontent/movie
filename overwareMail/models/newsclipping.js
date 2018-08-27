@@ -273,7 +273,7 @@ var newsclipping = {
   selectView: async function(body,param){
     var sql = 'SELECT * FROM newsclipping_view where M_idx_A is not null ';
     if(('sDate' in body) && ('eDate' in body)){
-      sql+=' and GENDATE between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
+      sql+=' and M_regdate between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
     }
     sql += ' and (  M_id = ? or M_id in (select n_idx from m_mail_user where user_admin=?)) ';
     sql += ' group by M_idx_A order by M_idx_A desc limit ?,?';
@@ -282,7 +282,7 @@ var newsclipping = {
   selectViewCount: async function(body,param){
     var sql = 'SELECT count(*) as total FROM (SELECT * from newsclipping_view where M_idx_A is not null ';
     if(('sDate' in body) && ('eDate' in body)){
-      sql+=' and GENDATE between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
+      sql+=' and M_regdate between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
     }
     sql += ' and (  M_id = ? or M_id in (select n_idx from m_mail_user where user_admin=?)) group by M_idx_A) a';
     var count = await getResult(sql,param);
@@ -296,7 +296,7 @@ var newsclipping = {
   selectListView: async function(body,param){
     var sql = 'SELECT * FROM newsclipping_list_view where n_idx is not null ';
     if(('sDate' in body) && ('eDate' in body)){
-      sql+=' and GENDATE between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
+      sql+=' and M_regdate between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
     }
     sql += ' and (  M_id = ? or M_id in (select n_idx from m_mail_user where user_admin=?)) ';
     sql += ' order by n_idx desc limit ?,?';
@@ -305,7 +305,7 @@ var newsclipping = {
   selectListViewCount: async function(body,param){
     var sql = 'SELECT count(*) as total FROM  newsclipping_list_view where n_idx is not null ';
     if(('sDate' in body) && ('eDate' in body)){
-      sql+=' and GENDATE between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
+      sql+=' and M_regdate between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
     }
     sql += ' and (  M_id = ? or M_id in (select n_idx from m_mail_user where user_admin=?))';
     var count = await getResult(sql,param);

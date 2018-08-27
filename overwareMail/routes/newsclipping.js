@@ -168,7 +168,7 @@ router.post('/send',isAuthenticated, async function(req, res) {
               'EMTOADDRESS':mailDetailParam.E_mail,
               'EMMSGURL':'http://showbox.email/preview/newsclipping/html?idx='+m_idx_a,
               'SENDTIME':('end_reserve_time' in req.body) ? mailDetailParam['M_send'] : now,
-              'GENDATE':now,
+              'GENDATE':('end_reserve_time' in req.body) ? mailDetailParam['M_send'] : now,
               'ETC1':m_idx_a
             };
             // console.log(param);
