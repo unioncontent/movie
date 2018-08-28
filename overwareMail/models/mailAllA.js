@@ -20,7 +20,7 @@ var mailAllA = {
       sql +=' and M_invitation= '+body.ivt;
     }
     sql += ' and (  M_id = ? or M_id in (select n_idx from m_mail_user where user_admin=?)) ';
-    sql += ' order by n_idx desc limit ?,?';
+    sql += ' order by M_regdate desc limit ?,?';
     return await getResult(sql,param);
   },
   selectEmailViewCount:async function(body,param){
