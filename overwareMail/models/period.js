@@ -25,7 +25,7 @@ var period = {
       sql +=' and M_type = '+body.mType;
     }
     sql += ' and (  M_id = ? or M_id in (select n_idx from m_mail_user where user_admin=?)) ';
-    sql += ' order by n_idx desc limit ?,?';
+    sql += ' order by M_regdate desc limit ?,?';
     return await getResult(sql,param);
   },
   selectViewCount: async function(body,param){
@@ -132,7 +132,7 @@ var period = {
     else{
       sql += ' and M_id=? ';
     }
-    sql +='order by n_idx desc';
+    sql +='order by M_send desc';
     return await getResult(sql,param);
   },
   getTodaySendCount: async function(user){
