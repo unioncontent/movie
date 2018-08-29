@@ -147,7 +147,6 @@
                           </c:if>
                         </select>
 						</c:if>
-						
 						<c:if test="${user.user_name != 'union'}">
                          <select style="display: none;" name="select" class="form-control form-control-inverse" id="selectCompany">
                           <option>회사</option>

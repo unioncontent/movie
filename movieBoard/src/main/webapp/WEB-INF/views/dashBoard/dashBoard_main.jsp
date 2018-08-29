@@ -153,11 +153,11 @@
                           <option>회사</option>
                           <c:if test="${user.user_type == 1 }">
                           <c:forEach items="${companyList}" var = "companyList">
-                          <option value="${companyList.user_name}">${companyList.user_name}</option>
+                          	<option value="${companyList.user_name}">${companyList.user_name}</option>
                           </c:forEach>
                           </c:if>
                           <c:if test="${user.user_type == 2}">
-                          <option value="${companyList.user_name}">${companyList.user_name}</option>
+                          	<option value="${companyList.user_name}">${companyList.user_name}</option>
                           </c:if>
                         </select>
 						</c:if>

@@ -669,7 +669,6 @@
 								                                                <c:if test="${facebookCount + instagramCount + twitterCount == 0}">
 								                                                0%
 								                                                </c:if>
-
 								                                                </td>
 								                                                </c:forEach>
 								                                                </c:forEach>
