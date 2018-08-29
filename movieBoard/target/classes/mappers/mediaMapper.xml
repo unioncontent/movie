@@ -1393,7 +1393,7 @@
 			from 
 				media_data 
             where 
-				title_key = a.M_keyword
+				keyword in (select keyword from keyword_data where keyword_property = '포함' and keyword_main = a.M_keyword)
 			and
 				textType != '삭제글' 
             and
@@ -1407,20 +1407,19 @@
 			by a.M_regdate desc limit 5;
 	</select>
 	
-	<select id="mailCountAll" resultType="Integer">
+	<select id="mailCountAll" parameterType="String" resultType="Integer">
 		select 
- 			count(*)
+ 			successNum
  		from 
  			period_view
  		where 
 			M_keyword is not null
 		and 
-			success = '1'
-		and 
 			M_keyword in (select keyword from keyword_data where keyword_property = '포함' and keyword_main = #{selectKey})
 		and M_regdate <![CDATA[>=]]> #{startDate}
 		and M_regdate <![CDATA[<=]]> #{endDate}
-	
+		order by M_regdate desc
+        limit 1;
 	</select>
 	
 	<select id="mediaMatchList" resultType="MediaVO">
@@ -1784,8 +1783,6 @@
 		from
 			media_data
 		where
-			url is not null
-		and
 			texttype!='삭제글'
 		<include refid="search5"></include>
 		order 

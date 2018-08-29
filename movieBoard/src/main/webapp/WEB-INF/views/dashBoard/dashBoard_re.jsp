@@ -406,7 +406,7 @@
 					                          ${mvo.m_subject}
 					                        </a>
                                             </td>
-                                            <td>
+                                            <%-- <td>
                                             <fmt:formatNumber value="${mvo.sendCount}" pattern="#,##0" />회
                                             </td>
                                             <td>
@@ -414,6 +414,15 @@
                                             </td>
                                             <td>
                                             <fmt:formatNumber value="${mvo.fail}" pattern="#,##0" />회
+                                            </td> --%>
+                                            <td>
+                                            ${mvo.sendCount}회
+                                            </td>
+                                            <td>
+                                            ${mvo.success}회
+                                            </td>
+                                            <td>
+                                            ${mvo.fail}회
                                             </td>
                                             <td>
                                             <a href="javascript:popupOpen9('<fmt:formatDate value="${mvo.m_regdate}" type="DATE" pattern="yyyy-MM-dd" />');" >${mvo.total}건</a>

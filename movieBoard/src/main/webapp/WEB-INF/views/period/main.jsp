@@ -310,7 +310,7 @@
                                             ${mvo.success}회
                                             </td>
                                             <td>
-                                            ${mvo.fail}회                    
+                                            ${mvo.fail}회
                                             </td>
                                             <td>
                                             <a href="javascript:popupOpen('<fmt:formatDate value="${mvo.m_regdate}" type="DATE" pattern="yyyy-MM-dd" />');" >${mvo.total}건</a>      

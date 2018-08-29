@@ -937,8 +937,14 @@ public class PeriodController {
 				cri.setStartDate(startDate + " 00:00:00");
 				cri.setEndDate(endDate + " 23:59:59");	
 				
+				Integer mailCount = mediaService.mailCountAll(cri);
+				
+				if(mailCount == null){
+					mailCount = 0;
+				}
+				
 				graphVO.setWriteDate(sdf.format(cal.getTime()));
-				graphVO.setType1(mediaService.mailCountAll(cri));
+				graphVO.setType1(mailCount);
 				
 				graphList.add(graphVO);
 				

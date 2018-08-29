@@ -346,6 +346,7 @@
                                               <th width="20">내용</th>
                                               <th width="5">키워드</th>
                                               <th width="10">작성날짜</th>
+                                              <th>분류글</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -366,6 +367,7 @@
                                             </td>
                                             <td>${mediaVO.keyword}</td>
                                             <td>${mediaVO.writeDate}</td>
+                                            <td>${mediaVO.textType}</td>
                                           </tr>
                                           </c:forEach>
                                         </tbody>
