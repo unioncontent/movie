@@ -54,7 +54,7 @@ public class UploadController {
 		String fileName = file.getOriginalFilename();
 		String uploadName = uid + "_" + fileName;
 
-		FileOutputStream fos = new FileOutputStream("C:\\img\\" + uploadName);
+		FileOutputStream fos = new FileOutputStream("D:\\img\\" + uploadName);
 		
 		IOUtils.copy(file.getInputStream(), fos);
 		model.addAttribute("uploadName", uploadName);
@@ -67,7 +67,7 @@ public class UploadController {
 	@GetMapping(value = "classification/show", produces = {"image/jpg", "image/jpeg" })
 	public @ResponseBody byte[] show(String name) throws Exception {
 
-		InputStream in = new FileInputStream("C:\\img\\" + name);
+		InputStream in = new FileInputStream("D:\\img\\" + name);
 		// OutputStream out = new ByteArrayOutputStream();
 
 		return IOUtils.toByteArray(in);
