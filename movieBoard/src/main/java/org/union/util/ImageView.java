@@ -82,7 +82,7 @@ public class ImageView extends AbstractView{
 	 
 	    private void downloadFile2(List<File> downloadFiles , HttpServletRequest request, HttpServletResponse response) throws Exception {
         
-	    	String path = "C:\\img";
+	    	String path = "D:\\img";
 	        
 	        System.out.println(downloadFiles);
 	        
@@ -117,7 +117,7 @@ public class ImageView extends AbstractView{
 	                 
 	                //zip에 넣을 다음 entry 를 가져온다.
 	                //zos.putNextEntry( new ZipEntry(downloadFiles.get(i).getPath()));
-	                zos.putNextEntry( new ZipEntry(downloadFiles.get(i).getPath().replace("C:\\img\\", "")));
+	                zos.putNextEntry( new ZipEntry(downloadFiles.get(i).getPath().replace("D:\\img\\", "")));
 	                
 	                //압출레벨을 설정한다.
 	                //기본값은 8이라고 한다. 최대는 9이다.
@@ -146,13 +146,13 @@ public class ImageView extends AbstractView{
 	            zos.flush();
 	            zos.close();
 	            
-	            /*String fileName = "C:\\img\\image.zip";
+	            /*String fileName = "D:\\img\\image.zip";
 	            
 	            response.setContentType("application/zip");
                 response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\";");*/
 
                 OutputStream out = response.getOutputStream();
-		        FileInputStream in = new FileInputStream(new File("C:\\img\\image.zip"));
+		        FileInputStream in = new FileInputStream(new File("D:\\img\\image.zip"));
 		        
 	           
 		        byte[] arBytes = new byte[length];
