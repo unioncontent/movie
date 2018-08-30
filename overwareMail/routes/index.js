@@ -102,7 +102,7 @@ router.get('/preview',async function(req, res, next) {
     msg: '',
     currentPage:'',
     keyword:'',
-    idx:''
+    idx:req.query.idx
   };
   var pageName = 'preview';
   if('type' in req.query){
@@ -121,6 +121,7 @@ router.get('/preview',async function(req, res, next) {
     viewCode = await mailAllA.selectEmailHtmlView(req.query.idx);
   }
   else{
+    console.log('selectEmailOneView');
     viewCode = await mailAllA.selectEmailOneView(req.query.idx);
   }
   if(viewCode.length == 0){
@@ -151,8 +152,8 @@ router.get('/preview',async function(req, res, next) {
     var pastNewsCount = await content.selectViewCount(pastParam);
     data = {
       layout: false,
+      veiw:(viewCode.length == 0) ? '' : sideHtmlStart+viewCode[0].M_body+sideHtmlEnd,
       pastView:pastNews,
-      view:(viewCode.length == 0) ? '' : sideHtmlStart+viewCode[0].M_body+sideHtmlEnd,
       pastCount: (pastNewsCount.length == 0) ? '':pastNewsCount[0].total,
       msg: '',
       currentPage: 1,

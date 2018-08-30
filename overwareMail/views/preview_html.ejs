@@ -1,4 +1,12 @@
 <div id="mail">
+  <% if(view == '') %>
+    <table width="750" align="center" cellpadding="0" cellspacing="0" style="padding: 20px;">
+      <tbody>
+        <tr>
+          <td align="center" style="font-size: 15px; font-weight: bold;" class="fix">[ 메일 본문이 안보인다면 <a href="http://showbox.email/preview?keyword=5&idx=<%=idx%>" target="_blank" style="font-family: 맑은고딕,malgungothic,돋움,dotum;">여기</a>를 눌러 주세요 ]</td>
+        </tr>
+      </tbody>
+    </table>
+  <% } %>
   <%-veiw%>
-  <p>&nbsp;</p>
 </div>
