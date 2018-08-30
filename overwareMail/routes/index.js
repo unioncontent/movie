@@ -21,26 +21,35 @@ var isAuthenticated = function (req, res, next) {
 // 대시보드
 router.get('/', isAuthenticated, async function(req, res, next) {
   var data = {
-    list:await period.getYesterday(req.user),
-    period:{
-      'todaySendCount' : await period.getTodaySendCount(req.user),
-      'successNfailCount' : await period.getSuccessNfailCount(req.user),
-      'todayCount' : await period.getTodayNReservationCount(req.user,'0') || 0,
-      'reservationCount' : await period.getTodayNReservationCount(req.user,'1') || 0,
-      'waitingCount' : await period.getWaitingCount(req.user) || 0,
-    }
+    list:await period.getYesterday(req.user)
   };
-  var tNum = parseInt(data.period.todaySendCount.replace(/,/gi,''));
-  if(tNum > 0){
-    var sNum = parseInt(data.period.successNfailCount.success.replace(/,/gi,''));
-    var fNum = parseInt(data.period.successNfailCount.fail.replace(/,/gi,''));
-    console.log(sNum,fNum);
-    if(sNum > 0 )
-      data.period.successP = ((sNum / tNum) * 100).toFixed(2);
-    if(fNum > 0 )
-      data.period.failP = ((fNum / tNum) * 100).toFixed(2);
-  }
   res.render('index',data);
+});
+
+router.post('/statistics',isAuthenticated, async function(req, res, next) {
+  var data = {
+    'todaySendCount' : await period.getTodaySendCount(req.user),
+    'successNfailCount' : await period.getSuccessNfailCount(req.user),
+    'todayCount' : await period.getTodayNReservationCount(req.user,'0') || 0,
+    'reservationCount' : await period.getTodayNReservationCount(req.user,'1') || 0,
+    'waitingCount' : await period.getWaitingCount(req.user) || 0,
+  };
+  var tNum = parseInt(data.todaySendCount.replace(/,/gi,''));
+  if(tNum > 0){
+    var sNum = parseInt(data.successNfailCount.success.replace(/,/gi,''));
+    var fNum = parseInt(data.successNfailCount.fail.replace(/,/gi,''));
+    if(sNum > 0 )
+      data.successP = ((sNum / tNum) * 100).toFixed(2);
+    if(fNum > 0 )
+      data.failP = ((fNum / tNum) * 100).toFixed(2);
+  }
+  res.send(data);
+});
+
+// 대시보드 최근 발송 현황 그래프
+router.post('/7DayGraph',isAuthenticated, async function(req, res, next) {
+  var data = await period.get7DayGraph(req.user);
+  res.send(data);
 });
 
 router.get('/preview/newsclipping',async function(req, res, next) {
@@ -254,11 +263,6 @@ router.get('/preview_test',async function(req, res, next) {
   res.render('preview',data);
 });
 
-// 대시보드 최근 발송 현황 그래프
-router.post('/7DayGraph',isAuthenticated, async function(req, res, next) {
-  var data = await period.get7DayGraph(req.user);
-  res.send(data);
-});
 
 // 로그인 & 로그아웃 구현
 router.get('/login', function(req, res, next) {
