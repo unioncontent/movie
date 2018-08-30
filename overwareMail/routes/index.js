@@ -96,7 +96,7 @@ router.get('/preview',async function(req, res, next) {
   // console.log(!('keyword' in req.query) && !('idx' in req.query));
   var data = {
     layout: false,
-    veiw: '',
+    view: '',
     pastView: [{keyword:''}],
     pastCount: 0,
     msg: '',
@@ -152,7 +152,7 @@ router.get('/preview',async function(req, res, next) {
     var pastNewsCount = await content.selectViewCount(pastParam);
     data = {
       layout: false,
-      veiw:(viewCode.length == 0) ? '' : sideHtmlStart+viewCode[0].M_body+sideHtmlEnd,
+      view:(viewCode.length == 0) ? '' : sideHtmlStart+viewCode[0].M_body+sideHtmlEnd,
       pastView:pastNews,
       pastCount: (pastNewsCount.length == 0) ? '':pastNewsCount[0].total,
       msg: '',
@@ -165,8 +165,9 @@ router.get('/preview',async function(req, res, next) {
     }
   }
   else{
-    data.veiw = viewCode[0].M_body_his;
+    data.view = viewCode[0].M_body_his;
   }
+  console.log(Object.keys(data));
   res.render(pageName,data);
 });
 
@@ -194,7 +195,7 @@ router.post('/preview_mail', isAuthenticated,async function(req, res, next) {
   console.log('/preview_mail:',sideHtmlStart);
   preview_data = {
     layout: false,
-    veiw:sideHtmlStart+req.body.M_body+sideHtmlEnd,
+    view:sideHtmlStart+req.body.M_body+sideHtmlEnd,
     pastView:pastNews,
     pastCount: (pastNewsCount.length == 0) ? '':pastNewsCount[0].total,
     msg: '',
@@ -213,7 +214,7 @@ router.get('/preview_test',async function(req, res, next) {
   console.log('req.query:',req.query);
   console.log(!('keyword' in req.query) && !('idx' in req.query));
   if(!('keyword' in req.query) && !('idx' in req.query)){
-    res.render('preview_mail',{layout: false,veiw: '',pastView: [{keyword:''}],pastCount: 0,msg: '주소에 조건이 없습니다.\n주소를 다시 작성해주세요.',currentPage: 1,keyword: '',idx: ''});
+    res.render('preview_mail',{layout: false,view: '',pastView: [{keyword:''}],pastCount: 0,msg: '주소에 조건이 없습니다.\n주소를 다시 작성해주세요.',currentPage: 1,keyword: '',idx: ''});
     return false;
   }
   if(!('page' in req.query)){
@@ -236,7 +237,7 @@ router.get('/preview_test',async function(req, res, next) {
   var pastNewsCount = await content.selectViewCount(pastParam);
   var data = {
     layout: false,
-    veiw:(viewCode.length == 0) ? '' : sideHtmlStart+viewCode[0].M_body+sideHtmlEnd,
+    view:(viewCode.length == 0) ? '' : sideHtmlStart+viewCode[0].M_body+sideHtmlEnd,
     pastView:pastNews,
     pastCount: (pastNewsCount.length == 0) ? '':pastNewsCount[0].total,
     msg: '',
