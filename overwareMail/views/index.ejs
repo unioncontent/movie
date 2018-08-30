@@ -20,52 +20,51 @@
         <div class="col-lg-3">
           <div class="card">
             <div class="card-block">
-              <div class="card social-widget-card m-b-5">
+              <div class="modal-loader col-lg-11" id="loader_c">
+                <div class="loader-block">
+                  <svg id="loader2" viewBox="0 0 100 100">
+                    <circle id="circle-loader2" cx="50" cy="50" r="45"></circle>
+                  </svg>
+                </div>
+              </div>
+              <div class="card social-widget-card m-b-5" id="c1">
                 <div class="card-block bg-info text-center">
-                  <h1 class="text-left"><%=period.todaySendCount%></h1>
+                  <h1 class="text-left" id="sendCount">0</h1>
                   <h6 class="text-left m-t-10">당일발송</h6>
               	  <i class="far fa-paper-plane"></i>
                 </div>
               </div>
-              <table class="table matrics-table m-b-0">
+              <table class="table matrics-table m-b-0" id="c2">
                 <tbody>
                   <tr>
                     <td>
                       <strong>발송성공</strong>
                     </td>
-                    <td class="txt-danger"><%=period.successNfailCount.success %>
-                      <% if(period.successNfailCount.success != 0){%>
-                      (<%=period.successP%>%)
-                      <%}%>
-                    </td>
+                    <td class="txt-danger" id="success">0</td>
                   </tr>
                   <tr>
                     <td>
                       <strong>발송실패</strong>
                     </td>
-                    <td class="txt-primary"><%=period.successNfailCount.fail %>
-                      <% if(period.successNfailCount.fail != 0){%>
-                      (<%=period.failP%>%)
-                      <%}%>
-                    </td>
+                    <td class="txt-primary" id="fail">0</td>
                   </tr>
                   <tr>
                     <td>
                       <strong>즉시발송</strong>
                     </td>
-                    <td class="txt-primary"><%=period.todayCount%></td>
+                    <td class="txt-primary" id="todayCount">0</td>
                   </tr>
                   <tr>
                     <td>
                       <strong>예약발송</strong>
                     </td>
-                    <td class="txt-primary"><%=period.reservationCount%></td>
+                    <td class="txt-primary" id="reservationCount">0</td>
                   </tr>
                   <tr>
                     <td>
                       <strong>예약발송대기</strong>
                     </td>
-                    <td class="txt-success"><%=period.waitingCount%></td>
+                    <td class="txt-success" id="waitingCount">0</td>
                   </tr>
                 </tbody>
               </table>
@@ -226,89 +225,97 @@
 <!-- morris -->
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
 <style type="text/css">
-.modal-loader{
-  position:  absolute;
-  margin: auto 0;
-  width:  100%;
-  padding-top: 17%;
-}
-#loader_p,#loader_s,#loader_f{
-  display: none;
-}
-.pcoded[theme-layout=vertical][vertical-layout=wide] .pcoded-container{
-  padding-bottom: 0px;
-}
-.row dl{
-  font-size: 14px;
-}
-#error-Modal .modal-body,
-#success-Modal .modal-body{
-  padding: 0;
-}
-.tab-content{
-  overflow: auto;
-  max-height: 457px;
-}
-.table-cp td,.table-cp th{
-  text-align: center;
-}
-.table.table-sm td, .table.table-sm th {
-  padding: .3rem;
-}
-/* mail preview css start */
-#mailBody{
-  overflow: auto;
-}
-#mailBody{
-  overflow: auto;
-  padding: 0;
-  max-height: 700px;
-}
-#mailBody a:hover {
-  color: #3399cc;
-  text-decoration: none;
-}
-#mailBody table{
-  border-collapse: separate;
-}
-#mailBody td,th{
-  white-space: inherit;
-  white-space: pre-line;
-}
-.modal-lg-1 {
-    max-width: 1016px;
-}
-/* mail preview css end */
-.title_nobr,.kwd_nobr,.error_nobr,.num_nobr{
-  font-size: 15px;
-  padding-left: 3px;
-  margin: 0px auto;
-  text-overflow: ellipsis;
-  width: 500px;
-  overflow: hidden;
-}
-.title_nobr:hover,
-.fail:hover,
-.success:hover{
-  cursor:pointer;
-  font-weight: bold;
-}
-.num_nobr{
-  width: 58px;
-}
-.kwd_nobr{
-  width: 100px;
-}
-.error_nobr{
-  width: 250px;
-  margin: 0px;
-}
-.error_nobr_more{
-  white-space: pre-line;
-}
-.widthMin{
-  min-width: 40px;
-}
+  #c1,#c2{
+    visibility: hidden;
+  }
+  /* loader */
+  .modal-loader{
+    position:  absolute;
+    margin: auto 0;
+    width:  100%;
+    padding-top: 17%;
+  }
+  #loader_c {
+    position: absolute;
+    padding-top: 32%;
+  }
+  #loader_p,#loader_s,#loader_f{
+    display: none;
+  }
+  .pcoded[theme-layout=vertical][vertical-layout=wide] .pcoded-container{
+    padding-bottom: 0px;
+  }
+  .row dl{
+    font-size: 14px;
+  }
+  #error-Modal .modal-body,
+  #success-Modal .modal-body{
+    padding: 0;
+  }
+  .tab-content{
+    overflow: auto;
+    max-height: 457px;
+  }
+  .table-cp td,.table-cp th{
+    text-align: center;
+  }
+  .table.table-sm td, .table.table-sm th {
+    padding: .3rem;
+  }
+  /* mail preview css start */
+  #mailBody{
+    overflow: auto;
+  }
+  #mailBody{
+    overflow: auto;
+    padding: 0;
+    max-height: 700px;
+  }
+  #mailBody a:hover {
+    color: #3399cc;
+    text-decoration: none;
+  }
+  #mailBody table{
+    border-collapse: separate;
+  }
+  #mailBody td,th{
+    white-space: inherit;
+    white-space: pre-line;
+  }
+  .modal-lg-1 {
+      max-width: 1016px;
+  }
+  /* mail preview css end */
+  .title_nobr,.kwd_nobr,.error_nobr,.num_nobr{
+    font-size: 15px;
+    padding-left: 3px;
+    margin: 0px auto;
+    text-overflow: ellipsis;
+    width: 500px;
+    overflow: hidden;
+  }
+  .title_nobr:hover,
+  .fail:hover,
+  .success:hover{
+    cursor:pointer;
+    font-weight: bold;
+  }
+  .num_nobr{
+    width: 58px;
+  }
+  .kwd_nobr{
+    width: 100px;
+  }
+  .error_nobr{
+    width: 250px;
+    margin: 0px;
+  }
+  .error_nobr_more{
+    white-space: pre-line;
+  }
+  .widthMin{
+    min-width: 40px;
+  }
 </style>
 <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
@@ -319,8 +326,35 @@ $(window).resize(function(){
 });
 
 $(document).ready(function(){
+  settingCard();
   areaChart();
 });
+// 통계
+function settingCard(){
+  $.ajax({
+    url: '/statistics',
+    type: 'post',
+    datatype : 'json',
+    error:function(request,status,error){
+      console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
+    },
+    success:function(data){
+      $('#loader_c').show();
+      if(data){
+        $('#sendCount').text(data.todaySendCount);
+        $('#success').text(data.successNfailCount.success+' ('+data.successP+'%)');
+        $('#fail').text(data.successNfailCount.fail+' ('+data.failP+'%)');
+        $('#todayCount').text(data.todayCount);
+        $('#reservationCount').text(data.reservationCount);
+        $('#waitingCount').text(data.waitingCount);
+        $('#loader_c').fadeOut(500);
+        $('#c1').css('visibility', 'visible');
+        $('#c2').css('visibility', 'visible');
+      }
+    }
+  });
+}
+
 // 성공 클릭시
 $(document).on('click','.success',function(){
   $('#success-list').empty();
