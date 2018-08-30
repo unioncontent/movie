@@ -213,13 +213,14 @@ router.get('/preview_test',async function(req, res, next) {
   console.log('req.query:',req.query);
   console.log(!('keyword' in req.query) && !('idx' in req.query));
   if(!('keyword' in req.query) && !('idx' in req.query)){
-    res.render('preview_mail',{layout: false,view: '',pastView: [{keyword:''}],pastCount: 0,msg: '주소에 조건이 없습니다.\n주소를 다시 작성해주세요.',currentPage: 1,keyword: '',idx: ''});
+    res.render('preview',{layout: false,view: '',pastView: [{keyword:''}],pastCount: 0,msg: '주소에 조건이 없습니다.\n주소를 다시 작성해주세요.',currentPage: 1,keyword: '',idx: ''});
     return false;
   }
   if(!('page' in req.query)){
     req.query.page = 1;
   }
   var viewCode = await maillink.selectEmailOneView(req.query.idx);
+  var htmlMsg = '<table width="750" align="center" cellpadding="0" cellspacing="0" style="padding: 20px;"><tbody><tr><td align="center" style="font-size: 15px; font-weight: bold;" class="fix">[ 메일 본문이 깨져 보이면 <a href=\"http://showbox.email/preview?keyword='+req.query.keyword+'&idx='+req.query.idx+'\" target=\"_blank\" style=\"font-family: 맑은고딕,malgungothic,돋움,dotum;\">여기</a>를 눌러 주세요 ]</td></tr></tbody></table>';
   var sideHtmlStart = '<table width="750" align="center" cellpadding="0" cellspacing="0" style="border: solid 1px #cacaca; padding: 20px;"><tbody><tr><td><table width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td width="642"><img src="http://showbox.email/templates/images/logo/show_logo.png" width="135" height="36" alt="로고"></td><td width="92">NEWS ';
   var ivt = '0';
   if(viewCode[0].M_seq_number != '0' && viewCode[0].M_invitation  == '0'){
@@ -236,7 +237,7 @@ router.get('/preview_test',async function(req, res, next) {
   var pastNewsCount = await content.selectViewCount(pastParam);
   var data = {
     layout: false,
-    view:(viewCode.length == 0) ? '' : sideHtmlStart+viewCode[0].M_body+sideHtmlEnd,
+    view:(viewCode.length == 0) ? '' : htmlMsg+sideHtmlStart+viewCode[0].M_body+sideHtmlEnd+htmlMsg,
     pastView:pastNews,
     pastCount: (pastNewsCount.length == 0) ? '':pastNewsCount[0].total,
     msg: '',
@@ -250,7 +251,7 @@ router.get('/preview_test',async function(req, res, next) {
   if('page' in req.query){
     data.currentPage = req.query.page;
   }
-  res.render('preview_html',data);
+  res.render('preview',data);
 });
 
 // 대시보드 최근 발송 현황 그래프
