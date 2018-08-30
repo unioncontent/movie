@@ -166,6 +166,13 @@ public class ListUtil {
 				vo.setKeyword_main(addList.get(i).getTitle_key());
 				vo.setKeyword(addList.get(i).getKeyword());
 				vo.setTitle(addList.get(i).getME_title());
+				vo.setME_rank(addList.get(i).getME_rank());
+				if(addList.get(i).getReply_cnt() == null) {
+					int reply_cnt = 0;
+					vo.setReply_cnt(Integer.toString(reply_cnt));
+				}else {
+					vo.setReply_cnt(Integer.toString(addList.get(i).getReply_cnt()));
+				}
 				vo.setReporter_name(addList.get(i).getReporter_name());
 				vo.setReporter_media_name(addList.get(i).getReporter_media_name());
 				vo.setWriteDate(addList.get(i).getWriteDate());
@@ -173,6 +180,7 @@ public class ListUtil {
 				
 				list.add(vo);
 			}
+			
 			
 		} catch (Exception e) {
 			e.printStackTrace();

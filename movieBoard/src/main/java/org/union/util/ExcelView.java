@@ -141,6 +141,11 @@ public class ExcelView extends AbstractXlsView {
 			titleList.add("내용");
 		    titleList.add("작성자");
 		    titleList.add("분류");
+		}else if (model.get("type").equals("mobile")) {
+			titleList.add("순위");
+		    titleList.add("댓글수");
+		}else if (model.get("type").equals("mobileM")) {
+		    titleList.add("댓글수");
 		}
 		titleList.add("URL");
 		titleList.add("작성날짜");
@@ -230,7 +235,19 @@ public class ExcelView extends AbstractXlsView {
 			cellIdx += 1;
 			HSSFCell classiCell = dataRow.createCell(cellIdx);
 			classiCell.setCellValue(new HSSFRichTextString(vo.getTextType()));
-			} 
+			}
+		    else if (model.get("type").equals("mobile")) {
+				cellIdx += 1;
+				HSSFCell rankCell = dataRow.createCell(cellIdx);
+				rankCell.setCellValue(new HSSFRichTextString(vo.getME_rank()));
+				cellIdx += 1;
+				HSSFCell replyCell = dataRow.createCell(cellIdx);
+				replyCell.setCellValue(new HSSFRichTextString(vo.getReply_cnt()));
+			}else if (model.get("type").equals("mobileM")) {
+				cellIdx += 1;
+				HSSFCell replyCell = dataRow.createCell(cellIdx);
+				replyCell.setCellValue(new HSSFRichTextString(vo.getReply_cnt()));
+			}
 		    cellIdx += 1;
 		    HSSFCell dateCell = dataRow.createCell(cellIdx);
 		    dateCell.setCellValue(new HSSFRichTextString(vo.getUrl()));
