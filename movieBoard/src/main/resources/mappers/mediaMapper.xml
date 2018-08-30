@@ -1387,7 +1387,7 @@
 	
 	<select id="mailList" resultType="MailVO">
 		select 
-			a.n_idx,a.M_regdate,a.M_subject, a.sendCount,a.success,a.fail,a.M_keyword_idx,
+			a.n_idx,a.M_send,a.M_subject, a.sendCount,a.success,a.fail,a.M_keyword_idx,
             (select 
 				count(*) 
 			from 
@@ -1397,14 +1397,14 @@
 			and
 				textType != '삭제글' 
             and
-				updateDate <![CDATA[>=]]> DATE_FORMAT(a.M_regdate,'%Y-%m-%d 00:00:00')
+				updateDate <![CDATA[>=]]> DATE_FORMAT(a.M_send,'%Y-%m-%d 00:00:00')
 			and
-				updateDate <![CDATA[<=]]> DATE_FORMAT(a.M_regdate,'%Y-%m-%d 23:59:00'))as total from period_view a
+				updateDate <![CDATA[<=]]> DATE_FORMAT(a.M_send,'%Y-%m-%d 23:59:00'))as total from period_view a
 		where 
 			a.M_subject is not null
 		<include refid="search_mail"></include> 
 		order 
-			by a.M_regdate desc limit 5;
+			by a.M_send desc limit 5;
 	</select>
 	
 	<select id="mailCountAll" parameterType="String" resultType="Integer">
@@ -1416,9 +1416,9 @@
 			M_keyword is not null
 		and 
 			M_keyword in (select keyword from keyword_data where keyword_property = '포함' and keyword_main = #{selectKey})
-		and M_regdate <![CDATA[>=]]> #{startDate}
-		and M_regdate <![CDATA[<=]]> #{endDate}
-		order by M_regdate desc
+		and M_send <![CDATA[>=]]> #{startDate}
+		and M_send <![CDATA[<=]]> #{endDate}
+		order by M_send desc
         limit 1;
 	</select>
 	

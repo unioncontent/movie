@@ -296,7 +296,7 @@
                                         <c:forEach items="${mailList}" var="mvo" varStatus="index">
                                           <tr>
                                             <th>
-                                            <fmt:formatDate value="${mvo.m_regdate}" type="DATE" pattern="yyyy-MM-dd HH:mm:ss" />
+                                            <fmt:formatDate value="${mvo.m_send}" type="DATE" pattern="yyyy-MM-dd HH:mm:ss" />
                                             </th>
                                             <td>
                                             <a href="http://showbox.email/preview?keyword=${mvo.m_keyword_idx}&amp;idx=${mvo.n_idx}" target="_blank">
@@ -313,7 +313,7 @@
                                             ${mvo.fail}회
                                             </td>
                                             <td>
-                                            <a href="javascript:popupOpen('<fmt:formatDate value="${mvo.m_regdate}" type="DATE" pattern="yyyy-MM-dd" />');" >${mvo.total}건</a>      
+                                            <a href="javascript:popupOpen('<fmt:formatDate value="${mvo.m_send}" type="DATE" pattern="yyyy-MM-dd" />');" >${mvo.total}건</a>      
                                             </td>
                                           </tr>
                                         </c:forEach>
