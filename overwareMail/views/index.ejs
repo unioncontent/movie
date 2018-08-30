@@ -111,8 +111,8 @@
                         </a>
                       </td>
                       <td><%= list[i].sendCount %></td>
-                      <td class="success" data-idx="<%= list[i].n_idx %>"><%= list[i].success %></td>
-                      <td class="fail" data-idx="<%= list[i].n_idx %>"><%= list[i].fail %></td>
+                      <td data-idx="<%= list[i].n_idx %>"><%= list[i].success %></td>
+                      <td data-idx="<%= list[i].n_idx %>"><%= list[i].fail %></td>
                       <td>
                         <%=(list[i].M_type == '0') ? '즉시' : '예약'%>
                         <% if((new Date().getTime() < new Date(list[i].M_send).getTime()) && parseInt(list[i].success) == 0 && parseInt(list[i].fail) == 0){ %>
