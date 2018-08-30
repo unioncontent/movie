@@ -180,8 +180,7 @@ var period = {
     return (result.length == 0) ? '' : result[0]['total'];
   },
   getWaitingCount: async function(user){
-    var sql = 'SELECT FORMAT(if(sum(sendCountNum) is null,0,sum(sendCountNum)), 0) as total\
-    FROM period_view where M_send > now() and M_type=1 ';
+    var sql = 'SELECT FORMAT(count(*),0) as total FROM union_mail.ml_automail_tran where SENDTIME > now() and ETC1 in (SELECT n_idx FROM m_mail_all_a where M_type=1 ';
     var param = [user.n_idx];
     if(user.user_admin == null){
       sql += 'and (M_id=? or M_id in (select n_idx from m_mail_user where user_admin=?))';
@@ -190,6 +189,7 @@ var period = {
     else{
       sql += ' and M_id=? ';
     }
+    sql += ')';
     var result = await getResult(sql,param);
     return (result.length == 0) ? '' : result[0]['total'];
   }
