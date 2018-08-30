@@ -167,7 +167,6 @@ router.get('/preview',async function(req, res, next) {
   else{
     data.view = viewCode[0].M_body_his;
   }
-  console.log(Object.keys(data));
   res.render(pageName,data);
 });
 
