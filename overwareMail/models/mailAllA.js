@@ -50,6 +50,10 @@ var mailAllA = {
     var sql = 'SELECT * FROM period_view where n_idx=?';
     return await getResult(sql,idx);
   },
+  selectEmailHtmlView:async function(idx){
+    var sql = 'SELECT M_body_his FROM m_mail_all_a where n_idx=?';
+    return await getResult(sql,idx);
+  },
   insert: async function(param){
     var pValue = Object.values(param);
     var sql = insertSqlSetting(Object.keys(param));
@@ -58,6 +62,10 @@ var mailAllA = {
   delete: async function(n_idx){
     var sql = 'delete from m_mail_all_a where n_idx=?';
     return await getResult(sql,[n_idx]);
+  },
+  updateMailBodyHis:async function(param){
+    var sql = 'update m_mail_all_a set M_body_his=? where n_idx=?';
+    return await getResult(sql,param);
   },
   updateMtype:async function(param){
     var sql = 'update m_mail_all_a set M_type=? where n_idx=?';

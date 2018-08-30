@@ -92,55 +92,79 @@ router.get('/preview/newsclipping/html',async function(req, res, next) {
 
 // 메일 발송 후 메일 내용 확인 페이지
 router.get('/preview',async function(req, res, next) {
-  console.log('req.query:',req.query);
-  console.log(!('keyword' in req.query) && !('idx' in req.query));
-  if(!('keyword' in req.query) && !('idx' in req.query)){
-    res.render('preview',{layout: false,veiw: '',pastView: [{keyword:''}],pastCount: 0,msg: '주소에 조건이 없습니다.\n주소를 다시 작성해주세요.',currentPage: 1,keyword: '',idx: ''});
-    return false;
+  // console.log('req.query:',req.query);
+  // console.log(!('keyword' in req.query) && !('idx' in req.query));
+  var data = {
+    layout: false,
+    veiw: '',
+    pastView: [{keyword:''}],
+    pastCount: 0,
+    msg: '',
+    currentPage:'',
+    keyword:'',
+    idx:''
+  };
+  var pageName = 'preview';
+  if('type' in req.query){
+    pageName = 'preview_html';
   }
   if(!('page' in req.query)){
     req.query.page = 1;
   }
-  var viewCode = await mailAllA.selectEmailOneView(req.query.idx);
-  if(viewCode.length == 0){
-    res.render('preview',{layout: false,veiw: '',pastView: [{keyword:''}],pastCount: 0,msg: '해당 메일이 없습니다.',currentPage: 1,keyword: '',idx: ''});
+  if(!('keyword' in req.query) && !('idx' in req.query)){
+    data.msg = '주소에 조건이 없습니다.\n주소를 다시 작성해주세요.';
+    res.render(pageName,data);
     return false;
   }
-  if(!('M_seq_number' in viewCode[0])){
-    res.render('preview',{layout: false,veiw: '',pastView: [{keyword:''}],pastCount: 0,msg: '해당 메일이 없습니다.',currentPage: 1,keyword: '',idx: ''});
-    return false;
-  }
-  var sideHtmlStart = '<table width="750" align="center" cellpadding="0" cellspacing="0" style="border: solid 1px #cacaca; padding: 20px;"><tbody><tr><td><table width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td width="642"><img src="http://showbox.email/templates/images/logo/show_logo.png" width="135" height="36" alt="로고"></td><td width="92">NEWS ';
-  var ivt = '0';
-  if(viewCode[0].M_seq_number != '0' && viewCode[0].M_invitation  == '0'){
-    sideHtmlStart+= 'No.'+viewCode[0].M_seq_number;
+  var viewCode = null;
+  if('type' in req.query){
+    viewCode = await mailAllA.selectEmailHtmlView(req.query.idx);
   }
   else{
-    sideHtmlStart+= 'Invitation';
-    ivt = '1';
+    viewCode = await mailAllA.selectEmailOneView(req.query.idx);
   }
-  sideHtmlStart+= '</td></tr></tbody></table><table width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td>';
-  var sideHtmlEnd = '</td></tr></tbody></table></td></tr></tbody></table>';
-  var pastParam = {keyword:req.query.keyword,page:req.query.page,ivt:ivt};
-  var pastNews = await content.selectView(pastParam);
-  var pastNewsCount = await content.selectViewCount(pastParam);
-  var data = {
-    layout: false,
-    veiw:(viewCode.length == 0) ? '' : sideHtmlStart+viewCode[0].M_body+sideHtmlEnd,
-    pastView:pastNews,
-    pastCount: (pastNewsCount.length == 0) ? '':pastNewsCount[0].total,
-    msg: '',
-    currentPage: 1,
-    keyword:req.query.keyword,
-    idx:req.query.idx
-  };
+  if(viewCode.length == 0){
+    data.msg = '해당 메일이 없습니다..';
+    res.render(pageName,data);
+    return false;
+  }
 
-  if('page' in req.query){
-    data.currentPage = req.query.page;
+  if(pageName == 'preview'){
+    if(!('M_seq_number' in viewCode[0])){
+      data.msg = '해당 메일이 없습니다..';
+      res.render('preview',data);
+      return false;
+    }
+    var ivt = '0';
+    var sideHtmlStart = '<table width="750" align="center" cellpadding="0" cellspacing="0" style="border: solid 1px #cacaca; padding: 20px;"><tbody><tr><td><table width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td width="642"><img src="http://showbox.email/templates/images/logo/show_logo.png" width="135" height="36" alt="로고"></td><td width="92">NEWS ';
+    if(viewCode[0].M_seq_number != '0' && viewCode[0].M_invitation  == '0'){
+      sideHtmlStart+= 'No.'+viewCode[0].M_seq_number;
+    }
+    else{
+      sideHtmlStart+= 'Invitation';
+      ivt = '1';
+    }
+    sideHtmlStart+= '</td></tr></tbody></table><table width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td>';
+    var sideHtmlEnd = '</td></tr></tbody></table></td></tr></tbody></table>';
+    var pastParam = {keyword:req.query.keyword,page:req.query.page,ivt:ivt};
+    var pastNews = await content.selectView(pastParam);
+    var pastNewsCount = await content.selectViewCount(pastParam);
+    data = {
+      layout: false,
+      pastView:pastNews,
+      view:(viewCode.length == 0) ? '' : sideHtmlStart+viewCode[0].M_body+sideHtmlEnd,
+      pastCount: (pastNewsCount.length == 0) ? '':pastNewsCount[0].total,
+      msg: '',
+      currentPage: 1,
+      keyword:req.query.keyword,
+      idx:req.query.idx
+    };
+    if('page' in req.query){
+      data.currentPage = req.query.page;
+    }
   }
-  var pageName = 'preview';
-  if('type' in req.query){
-    pageName = 'preview_html';
+  else{
+    data.veiw = viewCode[0].M_body_his;
   }
   res.render(pageName,data);
 });
