@@ -34,10 +34,11 @@ router.get('/', isAuthenticated, async function(req, res, next) {
   if(tNum > 0){
     var sNum = parseInt(data.period.successNfailCount.success.replace(/,/gi,''));
     var fNum = parseInt(data.period.successNfailCount.fail.replace(/,/gi,''));
+    console.log(sNum,fNum);
     if(sNum > 0 )
-      data.period.successP = Math.round((sNum / tNum) * 100);
+      data.period.successP = ((sNum / tNum) * 100).toFixed(2);
     if(fNum > 0 )
-      data.period.failP = Math.round((fNum / tNum) * 100);
+      data.period.failP = ((fNum / tNum) * 100).toFixed(2);
   }
   res.render('index',data);
 });
