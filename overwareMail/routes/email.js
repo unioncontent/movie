@@ -445,9 +445,12 @@ router.post('/save',isAuthenticated, async function(req, res) {
     }
   }
   // 메일발송 리스트 insert
+
   var resultInsert = await mailAllA.insert(mailAllParam);
-  console.log(resultInsert);
   m_idx_a = resultInsert.insertId;
+  var m_body_his= await settingMailBody(mailAllParam.M_body,mailAllParam.M_keyword,m_idx_a,mailAllParam.M_seq_number,mailAllParam.M_invitation),
+  resultInsert = await mailAllA.updateMailBodyHis([m_body_his,m_idx_a]);
+  console.log(resultInsert);
   // 메일발송 리스트 table에 inser되었는지 체크문
   var insertCheck = false;
   // 메일발송 상세정보 insert
@@ -661,22 +664,28 @@ router.post('/resend',isAuthenticated, async function(req, res) {
 //   res.send('true');
 // });
 
-async function settingMailBody(bodyHtml,keyword,idx,num){
+async function settingMailBody(bodyHtml,keyword,idx,num,ivt){
   // 메일이 안보이면 텍스트 추가
-  var sideHtmlStart = '<table width="750" align="center" cellpadding="0" cellspacing="0" style="border: solid 1px #cacaca; padding: 20px;"><tbody><tr><td><table width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td width="642"><img src="http://showbox.email/templates/images/logo/show_logo.png" width="135" height="36" alt="로고"></td><td width="92">NEWS No.';
-  sideHtmlStart+= num+'</td></tr></tbody></table><table width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td>';
+  var sideHtmlStart = '<table width="750" align="center" cellpadding="0" cellspacing="0" style="border: solid 1px #cacaca; padding: 20px;"><tbody><tr><td><table width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td width="642"><img src="http://showbox.email/templates/images/logo/show_logo.png" width="135" height="36" alt="로고"></td><td width="92">NEWS ';
+  if(num != '0' && ivt  == '0'){
+    sideHtmlStart+= 'No.'+num;
+  }
+  else{
+    sideHtmlStart+= 'Invitation';
+  }
+  sideHtmlStart+= '</td></tr></tbody></table><table width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td>';
   var sideHtmlEnd = '</td></tr></tbody></table></td></tr></tbody></table>';
-  var pastParam = {'keyword':keyword,'page':1};
+  var pastParam = {keyword:keyword,page:1,ivt:ivt};
   var pastView = await content.selectView(pastParam);
   var pastCount = await content.selectViewCount(pastParam);
   pastCount = (pastCount.length == 0) ? '':pastCount[0].total;
   var htmlMsg = '<table width="750" align="center" cellpadding="0" cellspacing="0" style="padding: 20px;"><tbody><tr><td align="center" style="font-size: 15px; font-weight: bold;" class="fix">[ 메일 본문이 깨져 보이면 <a href=\"http://showbox.email/preview?keyword='+keyword+'&idx='+idx+'\" target=\"_blank\" style=\"font-family: 맑은고딕,malgungothic,돋움,dotum;\">여기</a>를 눌러 주세요 ]</td></tr></tbody></table>';
-  var html = '<table width="750" align="center" cellpadding="0" cellspacing="0" border="0" style="margin-top: 30px;"><tbody><tr><td>[지난 기사보기]<hr><table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-top: 10px;"><colgroup><col width="78%"><col width="22%"></colgroup><tbody>';
+  var html = '<table width="750" align="center" cellpadding="0" cellspacing="0" border="0" style="margin-top: 30px;"><tbody><tr><td>[지난 기사보기]<hr><table cellpadding="0" cellspacing="0" border="0" width="100%"><colgroup><col width="80%"><col width="20%"></colgroup><tbody>';
 
   for(var i=0; i < pastView.length; i++) {
     var url = 'http://showbox.email/preview?keyword='+pastView[i].keyword_idx+'&idx='+pastView[i].n_idx;
-    html +='<tr><td style=\"font-size: small;padding:5px 0 5px;border-bottom:1px dotted #d9d9d9;color:#444;\">[No.'+pastView[i].M_seq_number+'차]<a style=\"text-decoration:none; color:black;\" href=\"'+url+'\" target=\"_blank\"> '+pastView[i].M_subject+'</a>';
-    html +='</td><td style=\"font-size: small;padding:5px 0 5px;border-bottom:1px dotted #d9d9d9;color:#444;\">'+pastView[i].M_regdate+'</td></tr>'
+    html +='<tr><td style=\"font-size: small;padding:5px 5px 5px 0px;border-bottom:1px dotted #d9d9d9;color:#444;\">['+((ivt == '0')?('No.'+pastView[i].M_seq_number+'차'):'Invitation')+']<a style=\"text-decoration:none; color:black;\" href=\"'+url+'\" target=\"_blank\"> '+pastView[i].M_subject+'</a>';
+    html +='</td><td style=\"font-size: small;padding:5px 0 5px;border-bottom:1px dotted #d9d9d9;color:#444;\">'+pastView[i].M_send+'</td></tr>'
   }
   html +='<tr><td colspan="2" style="text-align: center; font-size: small;padding:10px 0 5px;">';
   var limit = 5;
