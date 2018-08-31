@@ -28,11 +28,13 @@ router.get('/', isAuthenticated, async function(req, res, next) {
 
 router.post('/statistics',isAuthenticated, async function(req, res, next) {
   var data = {
-    'todaySendCount' : await period.getTodaySendCount(req.user),
-    'successNfailCount' : await period.getSuccessNfailCount(req.user),
-    'todayCount' : await period.getTodayNReservationCount(req.user,'0') || 0,
-    'reservationCount' : await period.getTodayNReservationCount(req.user,'1') || 0,
-    'waitingCount' : await period.getWaitingCount(req.user) || 0,
+    todaySendCount : await period.getTodaySendCount(req.user),
+    successNfailCount : await period.getSuccessNfailCount(req.user),
+    todayCount : await period.getTodayNReservationCount(req.user,'0') || 0,
+    reservationCount : await period.getTodayNReservationCount(req.user,'1') || 0,
+    waitingCount : await period.getWaitingCount(req.user) || 0,
+    successP : 0,
+    failP : 0
   };
   var tNum = parseInt(data.todaySendCount.replace(/,/gi,''));
   if(tNum > 0){
