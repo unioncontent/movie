@@ -132,7 +132,6 @@ router.get('/preview',async function(req, res, next) {
     viewCode = await mailAllA.selectEmailHtmlView(req.query.idx);
   }
   else{
-    console.log('selectEmailOneView');
     viewCode = await mailAllA.selectEmailOneView(req.query.idx);
   }
   if(viewCode.length == 0){

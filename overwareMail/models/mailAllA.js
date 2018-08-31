@@ -47,7 +47,7 @@ var mailAllA = {
     }
   },
   selectEmailOneView:async function(idx){
-    var sql = 'SELECT * FROM period_view where n_idx=?';
+    var sql = 'SELECT * FROM m_mail_all_a where n_idx=?';
     return await getResult(sql,idx);
   },
   selectEmailHtmlView:async function(idx){
