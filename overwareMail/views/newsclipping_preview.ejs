@@ -43,6 +43,7 @@
           if(idxArr[index] == $('#idx').val()){
             html+=' selected';
           }
+
           html += '>'+value.replace(/[-]/gi,'.')+' ('+getInputDayLabel(value)+')</option>';
           $('#date-select').append(html);
         });

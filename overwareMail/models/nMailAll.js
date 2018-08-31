@@ -23,7 +23,7 @@ var nMailAll = {
     else{
       return {
         M_subject: [].map.call(result, function(obj) {
-          var arr = obj.M_subject.split(']');
+          var arr = obj.M_subject.replace('[베타버전]','').split(']');
           return arr[0].replace('[','');
         }),
         n_idx:[].map.call(result, function(obj) {return obj.n_idx;})

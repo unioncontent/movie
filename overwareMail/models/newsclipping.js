@@ -329,11 +329,19 @@ var newsclipping = {
     return await getResult(sql,param.arr);
   },
   selectOneMailBodyDate: async function(param){
-    var sql = "SELECT DATE_FORMAT(SENDTIME, '%Y-%m-%d') AS SENDTIME,M_body,MSGID as n_idx FROM newsclipping_view where MSGID=? group by M_body order by SENDTIME desc,MSGID desc";
+    // var sql = "SELECT DATE_FORMAT(SENDTIME, '%Y-%m-%d') AS SENDTIME,M_body,MSGID as n_idx FROM newsclipping_view where MSGID=? group by M_body order by SENDTIME desc,MSGID desc";
+    var sql = "SELECT DATE_FORMAT(b.SENDTIME, '%Y-%m-%d') AS SENDTIME,a.M_body,a.n_idx FROM `union`.n_mail_all as a\
+    left join `union`.mail_send_backup as b\
+    on a.n_idx = b.MSGID\
+    where a.n_idx=? group by a.M_body order by b.SENDTIME desc,a.n_idx desc;"
     return await getResult(sql,param);
   },
   selectOneMailBodyDate2: async function(param){
-    var sql = "SELECT DATE_FORMAT(SENDTIME, '%Y-%m-%d') AS SENDTIME,M_body,MSGID as n_idx FROM newsclipping_view where M_subject like '%"+param+"%' group by M_body order by SENDTIME desc,MSGID desc";
+    // var sql = "SELECT DATE_FORMAT(SENDTIME, '%Y-%m-%d') AS SENDTIME,M_body,MSGID as n_idx FROM newsclipping_view where M_subject like '%"+param+"%' group by M_body order by SENDTIME desc,MSGID desc";
+    var sql = "SELECT a.M_subject,DATE_FORMAT(b.SENDTIME, '%Y-%m-%d') AS SENDTIME,a.M_body,a.n_idx FROM `union`.n_mail_all as a\
+    left join `union`.mail_send_backup as b\
+    on a.n_idx = b.MSGID\
+    where a.M_subject like '%"+param+"%' group by a.M_body order by b.SENDTIME desc,a.n_idx desc;"
     return await getResult(sql);
   }
 }
