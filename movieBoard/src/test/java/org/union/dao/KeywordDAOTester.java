@@ -1,6 +1,8 @@
 package org.union.dao;
 
 
+import java.sql.SQLException;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,7 +29,7 @@ public class KeywordDAOTester {
 
 	
 	@Test
-	public void testCreate() {
+	public void testCreate() throws SQLException {
 		
 		vo.setUser_idx(2);
 		vo.setKeyword("키워드");
@@ -38,14 +40,14 @@ public class KeywordDAOTester {
 
 	
 	@Test
-	public void testRead() {
+	public void testRead() throws SQLException {
 		
 		dao.read("현빈");
 	}
 
 
 	@Test
-	public void testUpdate() {
+	public void testUpdate() throws SQLException {
 		
 		vo.setUser_idx(2);
 		vo.setKeyword("uu키워드");

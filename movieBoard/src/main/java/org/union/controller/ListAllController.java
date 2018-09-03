@@ -1,5 +1,6 @@
 package org.union.controller;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -61,7 +62,7 @@ public class ListAllController {
 	
 	
 	@GetMapping("/listAll")
-	public void listAllGET(@ModelAttribute("cri") SearchCriteria cri, Model model) {
+	public void listAllGET(@ModelAttribute("cri") SearchCriteria cri, Model model) throws SQLException {
 		logger.info("listAllGET called....");
 		
 		if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
@@ -142,7 +143,7 @@ public class ListAllController {
 	}
 	
 	@GetMapping("/listAllTotal")
-	public void listAllTtotalGET(@ModelAttribute("cri") SearchCriteria cri, Model model) {
+	public void listAllTtotalGET(@ModelAttribute("cri") SearchCriteria cri, Model model) throws SQLException {
 		
 		logger.info("listAllTtotalGET called....");
 		
@@ -223,7 +224,7 @@ public class ListAllController {
 	
 	@ResponseBody
 	@GetMapping("/excel")
-	public ModelAndView excelGET(@ModelAttribute("cri") ModelAndView model, ExcelView excelView, SearchCriteria cri) {
+	public ModelAndView excelGET(@ModelAttribute("cri") ModelAndView model, ExcelView excelView, SearchCriteria cri) throws SQLException {
 		
 		if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
 			logger.info("keyword is null");
@@ -295,7 +296,7 @@ public class ListAllController {
 	
 	@ResponseBody
 	@PostMapping("insert")
-	public String insertPOST(Integer idx, String table, String textType) {
+	public String insertPOST(Integer idx, String table, String textType) throws SQLException {
 		logger.info("insertPOST called....");
 		
 		logger.info("idx: " + idx);
@@ -342,7 +343,7 @@ public class ListAllController {
 	
 	@ResponseBody
 	@PostMapping("/remove")
-	public String removePOST(Integer idx, String table) {
+	public String removePOST(Integer idx, String table) throws SQLException {
 		logger.info("removePOST called....");
 		
 		logger.info("idx: " + idx);

@@ -1,5 +1,6 @@
 package org.union.controller;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -57,7 +58,7 @@ public class ExtractController {
 	private UserService userService;
 	
 	@GetMapping("/extract")
-	public void extractGET(@ModelAttribute("cri") SearchCriteria cri, Model model) {
+	public void extractGET(@ModelAttribute("cri") SearchCriteria cri, Model model) throws SQLException {
 		logger.info("extractGET called....");
 		
 		if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
@@ -271,7 +272,7 @@ public class ExtractController {
 	
 	@ResponseBody
 	@PostMapping("insert")
-	public String insertPOST(Integer idx, String table, String textType) {
+	public String insertPOST(Integer idx, String table, String textType) throws SQLException {
 		logger.info("insertPOST called....");
 		
 		logger.info("idx: " + idx);
@@ -318,7 +319,7 @@ public class ExtractController {
 	
 	@ResponseBody
 	@PostMapping("/remove")
-	public String removePOST(Integer idx, String table) {
+	public String removePOST(Integer idx, String table) throws SQLException {
 		logger.info("removePOST called....");
 		
 		logger.info("idx: " + idx);

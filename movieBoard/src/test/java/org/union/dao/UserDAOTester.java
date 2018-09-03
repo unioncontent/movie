@@ -1,6 +1,8 @@
 package org.union.dao;
 
 
+import java.sql.SQLException;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,7 +28,7 @@ public class UserDAOTester {
 	
 
 	@Test
-	public void testCreate() {
+	public void testCreate() throws SQLException {
 		
 		vo.setUser_type(1);
 		vo.setUser_ID("ID");
@@ -44,14 +46,14 @@ public class UserDAOTester {
 	
 	
 	@Test
-	public void testRead() {
+	public void testRead() throws SQLException {
 		
 		dao.read(7);
 	}
 
 	
 	@Test
-	public void testUpdate() {
+	public void testUpdate() throws SQLException {
 		
 		vo.setUser_type(1);
 		vo.setUser_ID("ID");
@@ -70,7 +72,7 @@ public class UserDAOTester {
 	
 	
 	@Test
-	public void testDelete() {
+	public void testDelete() throws SQLException {
 		
 		dao.delete(1);
 	}

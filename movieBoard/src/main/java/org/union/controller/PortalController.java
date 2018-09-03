@@ -1,5 +1,6 @@
 package org.union.controller;
 
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -74,7 +75,7 @@ public class PortalController {
     private static Logger logger = LoggerFactory.getLogger(PortalController.class);
 
     @GetMapping("/naver_mobile")
-    public void naverMobileGET(@ModelAttribute("cri") SearchCriteria cri, Model model) throws ParseException {
+    public void naverMobileGET(@ModelAttribute("cri") SearchCriteria cri, Model model) throws ParseException, SQLException {
 	logger.info("naverGET called....");
 		
 	if(cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey()) ) {
@@ -150,7 +151,7 @@ public class PortalController {
     }
     
     @GetMapping("/n_mobilemovie")
-    public void n_mobilemovieGET(@ModelAttribute("cri") SearchCriteria cri, Model model) throws ParseException {
+    public void n_mobilemovieGET(@ModelAttribute("cri") SearchCriteria cri, Model model) throws ParseException, SQLException {
 	logger.info("n_mobilemovieGET called....");
 	
 	if(cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey()) ) {
@@ -232,7 +233,7 @@ public class PortalController {
     }
 
     @GetMapping("/naver_movie")
-    public void naverMovieGET(@ModelAttribute("cri") SearchCriteria cri, Model model) throws ParseException {
+    public void naverMovieGET(@ModelAttribute("cri") SearchCriteria cri, Model model) throws ParseException, SQLException {
 	logger.info("naverGET called....");
 
 	Date curDate = new Date(); 
@@ -319,7 +320,7 @@ public class PortalController {
     
     @ResponseBody
     @PostMapping("/graph")
-    public List<GraphVO> graph_rePOST(Model model, String success, @ModelAttribute("cri") SearchCriteria cri,String part, String company, String selectKey) {
+    public List<GraphVO> graph_rePOST(Model model, String success, @ModelAttribute("cri") SearchCriteria cri,String part, String company, String selectKey) throws SQLException {
 		logger.info("graph_rePOST called....");
 		
 		if (cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey())) {
@@ -413,7 +414,7 @@ public class PortalController {
     
 	/*@ResponseBody
     @PostMapping("/graph")
-    public List<GraphVO> graphPOST(String startDate, String endDate, String company, String selectKey) throws ParseException {
+    public List<GraphVO> graphPOST(String startDate, String endDate, String company, String selectKey) throws ParseException, SQLException {
 	logger.info("graphPOST called....");
 
 	if(company.equals("회사") || company.equals("undefined") || company.equals("")) {
@@ -477,7 +478,7 @@ public class PortalController {
 	
 	@ResponseBody
     @PostMapping("/Mgraph")
-    public List<GraphVO> MgraphPOST(String startDate, String endDate, String company, String selectKey) throws ParseException {
+    public List<GraphVO> MgraphPOST(String startDate, String endDate, String company, String selectKey) throws ParseException, SQLException {
 	logger.info("MgraphPOST called....");
 
 	if(company.equals("회사") || company.equals("undefined") || company.equals("")) {
@@ -566,7 +567,7 @@ public class PortalController {
     }
 
     @GetMapping("/viral")
-    public void viralGET(@ModelAttribute("cri") SearchCriteria cri, Model model) {
+    public void viralGET(@ModelAttribute("cri") SearchCriteria cri, Model model) throws SQLException {
 	logger.info("viralGET called....");
 
 	cri.setKeyword(null);
@@ -674,7 +675,7 @@ public class PortalController {
     }
 
     @GetMapping("/v_blog")
-    public void v_blogGET(@ModelAttribute("cri") SearchCriteria cri, Model model) {
+    public void v_blogGET(@ModelAttribute("cri") SearchCriteria cri, Model model) throws SQLException {
 	logger.info("v_blogGET called....");
 
 	if("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate())
@@ -789,7 +790,7 @@ public class PortalController {
     }
 
     @GetMapping("/v_cafe")
-    public void v_cafeGET(@ModelAttribute("cri") SearchCriteria cri, Model model) {
+    public void v_cafeGET(@ModelAttribute("cri") SearchCriteria cri, Model model) throws SQLException {
 	logger.info("v_cafeGET called....");
 
 	if("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate())
@@ -899,8 +900,7 @@ public class PortalController {
     }
 
     @GetMapping("/v_kin")
-    public void v_kinGET(@ModelAttribute("cri") SearchCriteria cri, Model model) {
-	logger.info("v_kinGET called....");
+    public void v_kinGET(@ModelAttribute("cri") SearchCriteria cri, Model model) throws SQLException {
 
 	if("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate())
 		|| cri.getStartDate() == "" || cri.getEndDate() == ""){
@@ -1009,7 +1009,7 @@ public class PortalController {
     }
 
     @GetMapping("/v_web")
-    public void v_webGET(@ModelAttribute("cri") SearchCriteria cri, Model model) {
+    public void v_webGET(@ModelAttribute("cri") SearchCriteria cri, Model model) throws SQLException {
 	logger.info("v_webGET called....");
 
 	if("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate())
@@ -1119,7 +1119,7 @@ public class PortalController {
     }
 
     @GetMapping("/v_score")
-    public void v_scoreGET(@ModelAttribute("cri") SearchCriteria cri, Model model) {
+    public void v_scoreGET(@ModelAttribute("cri") SearchCriteria cri, Model model) throws SQLException {
 	logger.info("v_scoreGET called....");
 
 	cri.setKeyword(null);
@@ -1214,7 +1214,7 @@ public class PortalController {
     
     @ResponseBody
 	@PostMapping("/checkList")
-	public String checkList(Integer idx) {
+	public String checkList(Integer idx) throws SQLException {
 		logger.info("checkListPOST called....");
 		logger.info("checkidx: " + idx);
 		
@@ -1226,7 +1226,7 @@ public class PortalController {
     
     @ResponseBody
 	@PostMapping("uncheckList")
-	public String uncheckList(Integer idx) {
+	public String uncheckList(Integer idx) throws SQLException {
 		logger.info("uncheckListPOST called....");
 		logger.info("checkidx: " + idx);
 		
@@ -1238,7 +1238,7 @@ public class PortalController {
 
     @ResponseBody
     @PostMapping("/historyGraph")
-    public List<GraphVO> historyGraphPOST(String url){
+    public List<GraphVO> historyGraphPOST(String url) throws SQLException {
 	logger.info("historyGraphPOST called....");
 
 	List<GraphVO> list=  viralService.getHistoryRank(url);
@@ -1248,7 +1248,7 @@ public class PortalController {
 
     @ResponseBody
     @GetMapping("/excel")
-    public ModelAndView excelGET(@ModelAttribute("cri") ModelAndView model, ExcelView excelView, SearchCriteria cri, String hour) {
+    public ModelAndView excelGET(@ModelAttribute("cri") ModelAndView model, ExcelView excelView, SearchCriteria cri, String hour) throws SQLException {
 	logger.info("excelGET called....");
 
 	if (cri.getCompany() != null) {
@@ -1341,7 +1341,7 @@ public class PortalController {
     
     @ResponseBody
 	@GetMapping("/excelOk")
-	public ModelAndView scoreExcelGET(ModelAndView model, ExcelView excelView, SearchCriteria cri) {
+	public ModelAndView scoreExcelGET(ModelAndView model, ExcelView excelView, SearchCriteria cri) throws SQLException {
 		
     	logger.info("excelGET called....");
 

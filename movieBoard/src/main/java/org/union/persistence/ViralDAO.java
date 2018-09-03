@@ -1,5 +1,6 @@
 package org.union.persistence;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.union.domain.GraphVO;
@@ -9,27 +10,27 @@ import org.union.domain.ViralVO;
 public interface ViralDAO {
 
 	
-	public void create(ViralVO vo);
+	public void create(ViralVO vo) throws SQLException;
 	
-	public ViralVO read(Integer biral_idx);
+	public ViralVO read(Integer biral_idx) throws SQLException;
 	
-	public void update(ViralVO vo);
+	public void update(ViralVO vo) throws SQLException;
 	
-	public void delete(Integer biral_idx);
+	public void delete(Integer biral_idx) throws SQLException;
 	
-	public List<ViralVO> searchInList(SearchCriteria cri);
+	public List<ViralVO> searchInList(SearchCriteria cri) throws SQLException;
 	
-	public List<ViralVO> searchOutList(SearchCriteria cri);
+	public List<ViralVO> searchOutList(SearchCriteria cri) throws SQLException;
 	
-	public List<ViralVO> searchAllList(SearchCriteria cri);
+	public List<ViralVO> searchAllList(SearchCriteria cri) throws SQLException;
 	
-	public Integer getSearchInCount(SearchCriteria cri);
+	public Integer getSearchInCount(SearchCriteria cri) throws SQLException;
 	
-	public Integer getSearchOutCount(SearchCriteria cri);
+	public Integer getSearchOutCount(SearchCriteria cri) throws SQLException;
 	
-	public List<ViralVO> historyPage(SearchCriteria cri);
+	public List<ViralVO> historyPage(SearchCriteria cri) throws SQLException;
 	
-	public Integer getHistoryCount(SearchCriteria cri);
+	public Integer getHistoryCount(SearchCriteria cri) throws SQLException;
 	
-	public List<GraphVO> getHistoryRank (String url);
+	public List<GraphVO> getHistoryRank (String url) throws SQLException;
 }

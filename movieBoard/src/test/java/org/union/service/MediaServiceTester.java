@@ -1,5 +1,6 @@
 package org.union.service;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -33,7 +34,7 @@ public class MediaServiceTester {
 	
 
 	@Test
-	public void test() {
+	public void test() throws SQLException {
 		List<PeriodMediaVO> periodList = new ArrayList<PeriodMediaVO>();
 
 		List<ReporterVO> reporterList = reporterDAO.listAll();

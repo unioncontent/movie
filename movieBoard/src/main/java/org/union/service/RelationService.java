@@ -1,7 +1,9 @@
 package org.union.service;
 
+import java.sql.SQLException;
+
 public interface RelationService {
 	
-	public Integer todayCount();
+	public Integer todayCount() throws SQLException;
 
 }

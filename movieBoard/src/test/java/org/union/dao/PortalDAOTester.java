@@ -1,6 +1,7 @@
 package org.union.dao;
 
 
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -31,7 +32,7 @@ public class PortalDAOTester {
 
 	
 	@Test
-	public void testCreate() throws ParseException {
+	public void testCreate() throws ParseException, SQLException {
 		
 		vo.setPortal_type("카페");
 		vo.setPortal_name("네이버");
@@ -51,14 +52,14 @@ public class PortalDAOTester {
 
 	
 	@Test
-	public void testRead() {
+	public void testRead() throws SQLException {
 		
 		dao.read(1);
 	}
 	
 	
 	@Test
-	public void testUpdate() {
+	public void testUpdate() throws SQLException {
 		
 		vo.setPortal_type("카페");
 		vo.setPortal_name("네이버");
@@ -73,7 +74,7 @@ public class PortalDAOTester {
 	
 	
 	@Test
-	public void testDelete() {
+	public void testDelete() throws SQLException {
 		
 		dao.delete(1);
 	}

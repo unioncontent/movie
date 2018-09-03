@@ -1,6 +1,8 @@
 package org.union.dao;
 
 
+import java.sql.SQLException;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,7 +29,7 @@ public class RelationDAOTester {
 
 	
 	@Test
-	public void testCreate() {
+	public void testCreate() throws SQLException {
 		
 		vo.setRelation_keyword("강철비");
 		vo.setRelation_word("곽도원");
@@ -37,14 +39,14 @@ public class RelationDAOTester {
 
 	
 	@Test
-	public void testRead() {
+	public void testRead() throws SQLException {
 		
 		dao.read(1);
 	}
 	
 	
 	@Test
-	public void testUpdate() {
+	public void testUpdate() throws SQLException {
 		
 		vo.setRelation_keyword("업데이트강철비");
 		vo.setRelation_word("곽도원");
@@ -56,7 +58,7 @@ public class RelationDAOTester {
 	
 	
 	@Test
-	public void testDelete() {
+	public void testDelete() throws SQLException {
 		
 		dao.delete(1);
 	}

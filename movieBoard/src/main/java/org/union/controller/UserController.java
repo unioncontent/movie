@@ -1,6 +1,8 @@
 package org.union.controller;
 
 
+import java.sql.SQLException;
+
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -30,7 +32,7 @@ public class UserController {
 	private KeywordService keywordService;
 	
 	@GetMapping("/loginSuccess")
-	public String loginSuccess(HttpSession session) {
+	public String loginSuccess(HttpSession session) throws SQLException {
 			
 		logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
 		UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());

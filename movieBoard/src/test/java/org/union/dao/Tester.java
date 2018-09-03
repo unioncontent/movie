@@ -1,5 +1,7 @@
 package org.union.dao;
 
+import java.sql.SQLException;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,7 +33,7 @@ public class Tester {
 	
 
 	@Test
-	public void test() {
+	public void test() throws SQLException {
 		
 		cri.setSelectKey("신과함께");
 		cri.setStartDate("2017-11-14 00:00:00");
@@ -42,7 +44,7 @@ public class Tester {
 	
 	
 	@Test
-	public void portal() {
+	public void portal() throws SQLException {
 		cri.setSelectKey("강철비");
 		cri.setStartDate("2017-12-14 00:00:00");
 		cri.setEndDate("2017-12-14 23:59:59");

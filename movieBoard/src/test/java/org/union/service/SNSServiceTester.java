@@ -1,5 +1,6 @@
 package org.union.service;
 
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +34,7 @@ public class SNSServiceTester {
 	}
 
 	@Test
-	public void test() {
+	public void test() throws SQLException {
 
 		cri.setPage(1);
 		cri.setPerPageNum(100);

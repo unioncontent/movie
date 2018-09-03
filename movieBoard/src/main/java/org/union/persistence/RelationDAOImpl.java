@@ -1,5 +1,9 @@
 package org.union.persistence;
 
+import java.sql.SQLException;
+
+import javax.annotation.Resource;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -10,16 +14,21 @@ public class RelationDAOImpl implements RelationDAO {
 
 	
 	@Autowired
-	private SqlSession session;
+	@Resource(name="oneSqlSession")
+	private SqlSession session1;
+	
+	@Autowired
+	@Resource(name="twoSqlSession")
+	private SqlSession session2;
 	
 	private static final String namespace = "org.union.mappers.RelationMapper.";
 	
 	
 	@Override
-	public void create(RelationVO vo) {
+	public void create(RelationVO vo) throws SQLException {
 		try {
-			session.insert(namespace + "create", vo);
-			
+			session1.insert(namespace + "create", vo);
+			session2.insert(namespace + "create", vo);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -27,17 +36,17 @@ public class RelationDAOImpl implements RelationDAO {
 
 	
 	@Override
-	public RelationVO read(Integer relation_idx) {
+	public RelationVO read(Integer relation_idx) throws SQLException {
 
-		return session.selectOne(namespace + "read", relation_idx);
+		return session1.selectOne(namespace + "read", relation_idx);
 	}
 
 	
 	@Override
-	public void update(RelationVO vo) {
+	public void update(RelationVO vo) throws SQLException {
 		try {
-			session.update(namespace + "update", vo);
-			
+			session1.update(namespace + "update", vo);
+			session2.update(namespace + "update", vo);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -45,10 +54,10 @@ public class RelationDAOImpl implements RelationDAO {
 
 	
 	@Override
-	public void delete(Integer relation_idx) {
+	public void delete(Integer relation_idx) throws SQLException {
 		try {
-			session.delete(namespace + "delete", relation_idx);
-			
+			session1.delete(namespace + "delete", relation_idx);
+			session2.delete(namespace + "delete", relation_idx);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -56,9 +65,9 @@ public class RelationDAOImpl implements RelationDAO {
 
 
 	@Override
-	public Integer todayCount() {
+	public Integer todayCount() throws SQLException {
 
-		return session.selectOne(namespace + "todayCount");
+		return session1.selectOne(namespace + "todayCount");
 	}
 
 }

@@ -1,5 +1,6 @@
 package org.union.service;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,25 +17,25 @@ public class ReporterServiceImpl implements ReporterService {
 	private ReporterDAO reporterDAO;
 	
 	@Override
-	public void insert(ReporterVO vo) {
+	public void insert(ReporterVO vo) throws SQLException {
 
 		reporterDAO.create(vo);
 	}
 
 	@Override
-	public List<ReporterVO> listSearch(SearchCriteria cri) {
+	public List<ReporterVO> listSearch(SearchCriteria cri) throws SQLException {
 
 		return reporterDAO.listSearch(cri);
 	}
 
 	@Override
-	public Integer getSearchCount(SearchCriteria cri) {
+	public Integer getSearchCount(SearchCriteria cri) throws SQLException {
 
 		return reporterDAO.getSearchCount(cri);
 	}
 
 	@Override
-	public ReporterVO readByName(String reporter_name) {
+	public ReporterVO readByName(String reporter_name) throws SQLException {
 
 		return reporterDAO.readByName(reporter_name);
 	}

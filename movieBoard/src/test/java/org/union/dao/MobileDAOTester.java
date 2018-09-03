@@ -1,5 +1,6 @@
 package org.union.dao;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -32,7 +33,7 @@ public class MobileDAOTester {
     }
 
     @Test
-    public void test() {
+    public void test() throws SQLException {
 	SearchCriteria cri = new SearchCriteria();
 	cri.setCompany(null);
 	cri.setSelectKey(null);

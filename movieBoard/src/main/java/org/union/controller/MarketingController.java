@@ -1,5 +1,6 @@
 package org.union.controller;
 
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -95,7 +96,7 @@ public class MarketingController {
     private static Logger logger = LoggerFactory.getLogger(PortalController.class);
 	
 	@GetMapping("/f_channel")
-    public void f_channelGET(@ModelAttribute("cri") SearchCriteria cri, Model model, String sns_content) throws ParseException {
+    public void f_channelGET(@ModelAttribute("cri") SearchCriteria cri, Model model, String sns_content) throws ParseException, SQLException, SQLException {
     	logger.info("f_channelGET called....");
     	
     	if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
@@ -175,7 +176,7 @@ public class MarketingController {
     }
 	
 	@GetMapping("/f_list")
-    public void f_listGET(@ModelAttribute("cri") SearchCriteria cri, Model model, String url) throws ParseException {
+    public void f_listGET(@ModelAttribute("cri") SearchCriteria cri, Model model, String url) throws ParseException, SQLException {
     	logger.info("f_list called....");
     	if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
 			logger.info("keyword is null");
@@ -256,7 +257,7 @@ public class MarketingController {
     }
 	
 	@GetMapping("/f_listall")
-    public void f_listallGET(@ModelAttribute("cri") SearchCriteria cri, Model model, String url, String createstartDate, String createendDate) throws ParseException {
+    public void f_listallGET(@ModelAttribute("cri") SearchCriteria cri, Model model, String url, String createstartDate, String createendDate) throws ParseException, SQLException {
     	logger.info("f_listall called....");
     	if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
 			logger.info("keyword is null");
@@ -343,7 +344,7 @@ public class MarketingController {
     }
 	
 	@GetMapping("/f_graph")
-    public void f_graphGET(@ModelAttribute("cri") SearchCriteria cri,SearchFv fv, Model model, String url, String url2) throws ParseException {
+    public void f_graphGET(@ModelAttribute("cri") SearchCriteria cri,SearchFv fv, Model model, String url, String url2) throws ParseException, SQLException {
     	logger.info("f_graph called....");
     	if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
 			logger.info("keyword is null");
@@ -408,7 +409,7 @@ public class MarketingController {
     }
 	
 	@GetMapping("/m_channel")
-    public void m_channelGET(@ModelAttribute("cri") SearchCriteria cri, Model model, String sns_content) throws ParseException {
+    public void m_channelGET(@ModelAttribute("cri") SearchCriteria cri, Model model, String sns_content) throws ParseException, SQLException {
     	logger.info("m_channelGET called....");
     	
     	if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
@@ -488,7 +489,7 @@ public class MarketingController {
     }
 	
 	@GetMapping("/m_list")
-    public void m_listGET(@ModelAttribute("cri") SearchCriteria cri, Model model, String url) throws ParseException {
+    public void m_listGET(@ModelAttribute("cri") SearchCriteria cri, Model model, String url) throws ParseException, SQLException {
     	logger.info("m_list called....");
     	if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
 			logger.info("keyword is null");
@@ -569,7 +570,7 @@ public class MarketingController {
     }
 	
 	@GetMapping("/m_listall")
-    public void m_listallGET(@ModelAttribute("cri") SearchCriteria cri, Model model, String url, String createstartDate, String createendDate) throws ParseException {
+    public void m_listallGET(@ModelAttribute("cri") SearchCriteria cri, Model model, String url, String createstartDate, String createendDate) throws ParseException, SQLException {
     	logger.info("m_listall called....");
     	if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
 			logger.info("keyword is null");
@@ -656,7 +657,7 @@ public class MarketingController {
     }
 	
 	@GetMapping("/m_graph")
-    public void m_graphGET(@ModelAttribute("cri") SearchCriteria cri,SearchFv fv, Model model, String url, String url2) throws ParseException {
+    public void m_graphGET(@ModelAttribute("cri") SearchCriteria cri,SearchFv fv, Model model, String url, String url2) throws ParseException, SQLException {
     	logger.info("m_graph called....");
     	if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
 			logger.info("keyword is null");
@@ -721,7 +722,7 @@ public class MarketingController {
     }
 	
 	@GetMapping("/l_channel")
-    public void l_channelGET(@ModelAttribute("cri") SearchCriteria cri, Model model, String sns_content) throws ParseException {
+    public void l_channelGET(@ModelAttribute("cri") SearchCriteria cri, Model model, String sns_content) throws ParseException, SQLException {
     	logger.info("l_channelGET called....");
     	
     	if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
@@ -801,7 +802,7 @@ public class MarketingController {
     }
 	
 	@GetMapping("/l_list")
-    public void l_listGET(@ModelAttribute("cri") SearchCriteria cri, Model model, String url) throws ParseException {
+    public void l_listGET(@ModelAttribute("cri") SearchCriteria cri, Model model, String url) throws ParseException, SQLException {
     	logger.info("l_list called....");
     	if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
 			logger.info("keyword is null");
@@ -882,7 +883,7 @@ public class MarketingController {
     }
 	
 	@GetMapping("/l_listall")
-    public void l_listallGET(@ModelAttribute("cri") SearchCriteria cri, Model model, String url, String createstartDate, String createendDate) throws ParseException {
+    public void l_listallGET(@ModelAttribute("cri") SearchCriteria cri, Model model, String url, String createstartDate, String createendDate) throws ParseException, SQLException {
     	logger.info("l_listall called....");
     	if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
 			logger.info("keyword is null");
@@ -969,7 +970,7 @@ public class MarketingController {
     }
 	
 	@GetMapping("/l_graph")
-    public void l_graphGET(@ModelAttribute("cri") SearchCriteria cri,SearchFv fv, Model model, String url, String url2) throws ParseException {
+    public void l_graphGET(@ModelAttribute("cri") SearchCriteria cri,SearchFv fv, Model model, String url, String url2) throws ParseException, SQLException {
     	logger.info("l_graph called....");
     	if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
 			logger.info("keyword is null");
@@ -1034,7 +1035,7 @@ public class MarketingController {
     }
 	
 	@GetMapping("/b_channel")
-    public void b_channelGET(@ModelAttribute("cri") SearchCriteria cri, Model model, String sns_content) throws ParseException {
+    public void b_channelGET(@ModelAttribute("cri") SearchCriteria cri, Model model, String sns_content) throws ParseException, SQLException {
     	logger.info("b_channelGET called....");
     	
     	if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
@@ -1114,7 +1115,7 @@ public class MarketingController {
     }
 	
 	@GetMapping("/b_list")
-    public void b_listGET(@ModelAttribute("cri") SearchCriteria cri, Model model, String url) throws ParseException {
+    public void b_listGET(@ModelAttribute("cri") SearchCriteria cri, Model model, String url) throws ParseException, SQLException {
     	logger.info("b_list called....");
     	if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
 			logger.info("keyword is null");
@@ -1195,7 +1196,7 @@ public class MarketingController {
     }
 	
 	@GetMapping("/b_listall")
-    public void b_listallGET(@ModelAttribute("cri") SearchCriteria cri, Model model, String url, String createstartDate, String createendDate) throws ParseException {
+    public void b_listallGET(@ModelAttribute("cri") SearchCriteria cri, Model model, String url, String createstartDate, String createendDate) throws ParseException, SQLException {
     	logger.info("b_listall called....");
     	if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
 			logger.info("keyword is null");
@@ -1282,7 +1283,7 @@ public class MarketingController {
     }
 	
 	@GetMapping("/b_graph")
-    public void b_graphGET(@ModelAttribute("cri") SearchCriteria cri,SearchFv fv, Model model, String url, String url2) throws ParseException {
+    public void b_graphGET(@ModelAttribute("cri") SearchCriteria cri,SearchFv fv, Model model, String url, String url2) throws ParseException, SQLException {
     	logger.info("b_graph called....");
     	if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
 			logger.info("keyword is null");
@@ -1347,7 +1348,7 @@ public class MarketingController {
     }
 	
 	@GetMapping("/n_channel")
-    public void n_channelGET(@ModelAttribute("cri") SearchCriteria cri, Model model, String sns_content) throws ParseException {
+    public void n_channelGET(@ModelAttribute("cri") SearchCriteria cri, Model model, String sns_content) throws ParseException, SQLException {
     	logger.info("n_channelGET called....");
     	
     	if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
@@ -1424,7 +1425,7 @@ public class MarketingController {
     }
 	
 	@GetMapping("/n_list")
-    public void n_listGET(@ModelAttribute("cri") SearchCriteria cri, Model model, String url, String startDate, String endDate) throws ParseException {
+    public void n_listGET(@ModelAttribute("cri") SearchCriteria cri, Model model, String url, String startDate, String endDate) throws ParseException, SQLException {
     	logger.info("n_list called....");
     	if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
 			logger.info("keyword is null");
@@ -1506,7 +1507,7 @@ public class MarketingController {
     }
 	
 	@GetMapping("/n_listall")
-    public void n_listallGET(@ModelAttribute("cri") SearchCriteria cri, Model model, String url, String createstartDate, String createendDate) throws ParseException {
+    public void n_listallGET(@ModelAttribute("cri") SearchCriteria cri, Model model, String url, String createstartDate, String createendDate) throws ParseException, SQLException {
     	logger.info("n_listall called....");
     	if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
 			logger.info("keyword is null");
@@ -1589,7 +1590,7 @@ public class MarketingController {
     }
 	
 	@GetMapping("/n_channel2")
-    public void n_channelGET2(@ModelAttribute("cri") SearchCriteria cri, Model model, String sns_content) throws ParseException {
+    public void n_channelGET2(@ModelAttribute("cri") SearchCriteria cri, Model model, String sns_content) throws ParseException, SQLException {
     	logger.info("n_channelGET called....");
     	
     	if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
@@ -1666,7 +1667,7 @@ public class MarketingController {
     }
 	
 	@GetMapping("/n_list2")
-    public void n_listGET2(@ModelAttribute("cri") SearchCriteria cri, Model model, String url, String content, String startDate, String endDate) throws ParseException {
+    public void n_listGET2(@ModelAttribute("cri") SearchCriteria cri, Model model, String url, String content, String startDate, String endDate) throws ParseException, SQLException {
     	logger.info("f_list called....");
     	if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
 			logger.info("keyword is null");
@@ -1749,7 +1750,7 @@ public class MarketingController {
     }
 	
 	@GetMapping("/n_listall2")
-    public void n_listallGET2(@ModelAttribute("cri") SearchCriteria cri, Model model, String url, String content, String createstartDate, String createendDate) throws ParseException {
+    public void n_listallGET2(@ModelAttribute("cri") SearchCriteria cri, Model model, String url, String content, String createstartDate, String createendDate) throws ParseException, SQLException {
     	logger.info("n_listall called....");
     	if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
 			logger.info("keyword is null");
@@ -1833,7 +1834,7 @@ public class MarketingController {
     }
 	
 	@GetMapping("/n_graph")
-    public void n_graphGET(@ModelAttribute("cri") SearchCriteria cri,SearchFv fv, Model model, String url, String url2) throws ParseException {
+    public void n_graphGET(@ModelAttribute("cri") SearchCriteria cri,SearchFv fv, Model model, String url, String url2) throws ParseException, SQLException {
     	logger.info("n_graph called....");
     	if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
 			logger.info("keyword is null");
@@ -1896,7 +1897,7 @@ public class MarketingController {
     }
 	
 	@GetMapping("/n_graph2")
-    public void n_graphGET2(@ModelAttribute("cri") SearchCriteria cri,SearchFv fv, Model model, String url, String url2) throws ParseException {
+    public void n_graphGET2(@ModelAttribute("cri") SearchCriteria cri,SearchFv fv, Model model, String url, String url2) throws ParseException, SQLException {
     	logger.info("n_graph called....");
     	if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
 			logger.info("keyword is null");
@@ -1960,7 +1961,7 @@ public class MarketingController {
 	
 	@ResponseBody
 	@GetMapping("/f_update")
-	public String fvUpdate(String sns_subcontent, String url) {
+	public String fvUpdate(String sns_subcontent, String url) throws SQLException {
 		logger.info("fvUpdate called....");
 		
 		logger.info("url: " + url);
@@ -1978,7 +1979,7 @@ public class MarketingController {
 	
 	@ResponseBody
 	@GetMapping("/n_update")
-	public String nvUpdate(String portal_subtitle, String url) {
+	public String nvUpdate(String portal_subtitle, String url) throws SQLException {
 		logger.info("nvUpdate called....");
 		
 		logger.info("url: " + url);
@@ -1996,7 +1997,7 @@ public class MarketingController {
 	
 	@ResponseBody
 	@GetMapping("/n_update2")
-	public String nvUpdate2(String portal_subtitle, String url) {
+	public String nvUpdate2(String portal_subtitle, String url) throws SQLException {
 		logger.info("nvUpdate2 called....");
 		
 		logger.info("url: " + url);
@@ -2014,7 +2015,7 @@ public class MarketingController {
 	
 	@ResponseBody
 	@PostMapping("/graph")
-	public List<GraphVO> graphPOST(Model model, String success, String url, SearchFv fv, String Mcreate) throws ParseException {
+	public List<GraphVO> graphPOST(Model model, String success, String url, SearchFv fv, String Mcreate) throws ParseException, SQLException {
 		logger.info("graphPOST called....");
 		
 		String current2 = Mcreate;
@@ -2061,7 +2062,7 @@ public class MarketingController {
 	
 	@ResponseBody
 	@PostMapping("/allgraph")
-	public List<GraphVO> allgraphPOST(Model model, String success, String url, SearchFv fv, String Mcreate) throws ParseException {
+	public List<GraphVO> allgraphPOST(Model model, String success, String url, SearchFv fv, String Mcreate) throws ParseException, SQLException {
 		logger.info("allgraphPOST called....");
 		
 		String current2 = Mcreate;
@@ -2108,7 +2109,7 @@ public class MarketingController {
 	
 	@ResponseBody
 	@PostMapping("/graphOne")
-	public List<GraphVO> graphOne(Model model, String success, String url, String url2,SearchFv fv,SearchNv nv, String Mcreate, String Mcreate2) throws ParseException {
+	public List<GraphVO> graphOne(Model model, String success, String url, String url2,SearchFv fv,SearchNv nv, String Mcreate, String Mcreate2) throws ParseException, SQLException {
 		logger.info("graphOnePOST called....");
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("HH");
@@ -2181,7 +2182,7 @@ public class MarketingController {
 	
 	@ResponseBody
 	@PostMapping("/graphTwo")
-	public List<GraphVO> graphTwo(Model model, String success, String url, String url2,SearchFv fv,SearchNv nv, String Mcreate, String Mcreate2) throws ParseException {
+	public List<GraphVO> graphTwo(Model model, String success, String url, String url2,SearchFv fv,SearchNv nv, String Mcreate, String Mcreate2) throws ParseException, SQLException {
 		logger.info("graphTwoPOST called....");
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH");
@@ -2255,7 +2256,7 @@ public class MarketingController {
 	
 	@ResponseBody
 	@PostMapping("/ngraph")
-	public List<GraphVO> NgraphPOST(Model model, String success, String url, SearchFv fv, String Mcreate) throws ParseException {
+	public List<GraphVO> NgraphPOST(Model model, String success, String url, SearchFv fv, String Mcreate) throws ParseException, SQLException {
 		logger.info("graphPOST called....");
 		
 		String current2 = Mcreate;
@@ -2300,7 +2301,7 @@ public class MarketingController {
 	
 	@ResponseBody
 	@PostMapping("/nallgraph")
-	public List<GraphVO> NallgraphPOST(Model model, String success, String url, SearchFv fv, String Mcreate) throws ParseException {
+	public List<GraphVO> NallgraphPOST(Model model, String success, String url, SearchFv fv, String Mcreate) throws ParseException, SQLException {
 		logger.info("nallgraphPOST called....");
 		
 		String current2 = Mcreate;
@@ -2345,7 +2346,7 @@ public class MarketingController {
 	
 	@ResponseBody
 	@PostMapping("/ngraph2")
-	public List<GraphVO> NgraphPOST2(Model model, String success, String url, SearchFv fv, String Mcreate) throws ParseException {
+	public List<GraphVO> NgraphPOST2(Model model, String success, String url, SearchFv fv, String Mcreate) throws ParseException, SQLException {
 		logger.info("graphPOST called....");
 		
 		String current2 = Mcreate;
@@ -2390,7 +2391,7 @@ public class MarketingController {
 	
 	@ResponseBody
 	@PostMapping("/nallgraph2")
-	public List<GraphVO> NallgraphPOST2(Model model, String success, String url, SearchFv fv, String Mcreate) throws ParseException {
+	public List<GraphVO> NallgraphPOST2(Model model, String success, String url, SearchFv fv, String Mcreate) throws ParseException, SQLException {
 		logger.info("nallgraphPOST called....");
 		
 		String current2 = Mcreate;
@@ -2435,7 +2436,7 @@ public class MarketingController {
 	
 	@ResponseBody
 	@PostMapping("/graphTwo2")
-	public List<GraphVO> graphTwo2(Model model, String success, String url, String url2,SearchFv fv,SearchNv nv, String Mcreate, String Mcreate2) throws ParseException {
+	public List<GraphVO> graphTwo2(Model model, String success, String url, String url2,SearchFv fv,SearchNv nv, String Mcreate, String Mcreate2) throws ParseException, SQLException {
 		logger.info("graphTwoPOST called....");
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH");
@@ -2510,7 +2511,7 @@ public class MarketingController {
 	
 	@ResponseBody
 	@GetMapping("/excel")
-	public ModelAndView nListlGET(ModelAndView model, ExcelViewM excelView, SearchCriteria cri,String url) {
+	public ModelAndView nListlGET(ModelAndView model, ExcelViewM excelView, SearchCriteria cri,String url) throws SQLException {
 		
 		if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
 			logger.info("keyword is null");
@@ -2576,7 +2577,7 @@ public class MarketingController {
 	}
 	@ResponseBody
 	@GetMapping("/excelOk")
-	public ModelAndView fListlGET(ModelAndView model, ExcelViewM excelView, SearchCriteria cri,String url) {
+	public ModelAndView fListlGET(ModelAndView model, ExcelViewM excelView, SearchCriteria cri,String url) throws SQLException {
 		
 		if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
 			logger.info("keyword is null");
@@ -2642,7 +2643,7 @@ public class MarketingController {
 	
 	@ResponseBody
 	@GetMapping("/excelupfOk")
-	public ModelAndView fListlfupGET(ModelAndView model, ExcelViewM excelView, SearchCriteria cri,String url,String startDate, String endDate) {
+	public ModelAndView fListlfupGET(ModelAndView model, ExcelViewM excelView, SearchCriteria cri,String url,String startDate, String endDate) throws SQLException {
 		
 		if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
 			logger.info("keyword is null");
@@ -2708,7 +2709,7 @@ public class MarketingController {
 	
 	@ResponseBody
 	@GetMapping("/excelupnOk")
-	public ModelAndView fListlnupGET(ModelAndView model, ExcelViewM excelView, SearchCriteria cri,String url,String startDate, String endDate) {
+	public ModelAndView fListlnupGET(ModelAndView model, ExcelViewM excelView, SearchCriteria cri,String url,String startDate, String endDate) throws SQLException {
 		
 		if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
 			logger.info("keyword is null");
@@ -2774,7 +2775,7 @@ public class MarketingController {
 	
 	@ResponseBody
 	@GetMapping("/excel2")
-	public ModelAndView nListlGET2(ModelAndView model, ExcelViewM excelView, SearchCriteria cri,String url) {
+	public ModelAndView nListlGET2(ModelAndView model, ExcelViewM excelView, SearchCriteria cri,String url) throws SQLException {
 		
 		if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
 			logger.info("keyword is null");
@@ -2841,7 +2842,7 @@ public class MarketingController {
 	
 	@ResponseBody
 	@GetMapping("/excelupnOk2")
-	public ModelAndView fListlnupGET2(ModelAndView model, ExcelViewM excelView, SearchCriteria cri,String url,String startDate, String endDate) {
+	public ModelAndView fListlnupGET2(ModelAndView model, ExcelViewM excelView, SearchCriteria cri,String url,String startDate, String endDate) throws SQLException {
 		
 		if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
 			logger.info("keyword is null");

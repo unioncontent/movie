@@ -1,5 +1,6 @@
 package org.union.service;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,14 +22,14 @@ public class MonitorServiceImpl implements MonitorService {
 	
 	
 	@Override
-	public void insert(MonitorVO vo) {
+	public void insert(MonitorVO vo) throws SQLException {
 
 		monitorDAO.create(vo);
 	}
 
 
 	@Override
-	public List<MonitorVO> pageAll() {
+	public List<MonitorVO> pageAll() throws SQLException {
 
 		List<MonitorVO> list = monitorDAO.pageAll();
 		
@@ -52,7 +53,7 @@ public class MonitorServiceImpl implements MonitorService {
 
 
 	@Override
-	public List<PortalVO> portalBMonitor() {
+	public List<PortalVO> portalBMonitor() throws SQLException {
 
 		List<PortalVO> list = monitorDAO.portalBMonitor();
 		for (PortalVO portalVO : list) {
@@ -74,7 +75,7 @@ public class MonitorServiceImpl implements MonitorService {
 
 
 	@Override
-	public List<PortalVO> portalCMonitor() {
+	public List<PortalVO> portalCMonitor() throws SQLException {
 		List<PortalVO> list = monitorDAO.portalCMonitor();
 		for (PortalVO portalVO : list) {
 			
@@ -95,7 +96,7 @@ public class MonitorServiceImpl implements MonitorService {
 
 
 	@Override
-	public List<PortalVO> portalWMonitor() {
+	public List<PortalVO> portalWMonitor() throws SQLException {
 		List<PortalVO> list = monitorDAO.portalWMonitor();
 		for (PortalVO portalVO : list) {
 			
@@ -115,7 +116,7 @@ public class MonitorServiceImpl implements MonitorService {
 	}
 	
 	@Override
-	public List<PortalVO> portalBMonitor2() {
+	public List<PortalVO> portalBMonitor2() throws SQLException {
 
 		List<PortalVO> list = monitorDAO.portalBMonitor2();
 		for (PortalVO portalVO : list) {
@@ -137,7 +138,7 @@ public class MonitorServiceImpl implements MonitorService {
 
 
 	@Override
-	public List<PortalVO> portalCMonitor2() {
+	public List<PortalVO> portalCMonitor2() throws SQLException {
 		List<PortalVO> list = monitorDAO.portalCMonitor2();
 		for (PortalVO portalVO : list) {
 			
@@ -158,7 +159,7 @@ public class MonitorServiceImpl implements MonitorService {
 
 
 	@Override
-	public List<PortalVO> portalWMonitor2() {
+	public List<PortalVO> portalWMonitor2() throws SQLException {
 		List<PortalVO> list = monitorDAO.portalWMonitor2();
 		for (PortalVO portalVO : list) {
 			
@@ -179,7 +180,7 @@ public class MonitorServiceImpl implements MonitorService {
 
 
 	@Override
-	public List<SNSVO> snsMonitorf() {
+	public List<SNSVO> snsMonitorf() throws SQLException {
 		List<SNSVO> list = monitorDAO.snsMonitorf();
 		for (SNSVO snsVO : list) {
 			
@@ -200,7 +201,7 @@ public class MonitorServiceImpl implements MonitorService {
 
 
 	@Override
-	public List<SNSVO> snsMonitori() {
+	public List<SNSVO> snsMonitori() throws SQLException {
 		List<SNSVO> list = monitorDAO.snsMonitori();
 		for (SNSVO snsVO : list) {
 			
@@ -221,7 +222,7 @@ public class MonitorServiceImpl implements MonitorService {
 
 
 	@Override
-	public List<SNSVO> snsMonitort() {
+	public List<SNSVO> snsMonitort() throws SQLException {
 		List<SNSVO> list = monitorDAO.snsMonitort();
 		for (SNSVO snsVO : list) {
 			
@@ -242,7 +243,7 @@ public class MonitorServiceImpl implements MonitorService {
 
 
 	@Override
-	public List<MediaVO> mediaMonitor(String media) {
+	public List<MediaVO> mediaMonitor(String media) throws SQLException {
 		
 		List<MediaVO> list = monitorDAO.mediaMonitor(media);
 		for (MediaVO mediaVO : list) {
@@ -264,7 +265,7 @@ public class MonitorServiceImpl implements MonitorService {
 
 
 	@Override
-	public List<CommunityVO> communityMonitor(String community) {
+	public List<CommunityVO> communityMonitor(String community) throws SQLException {
 		
 		List<CommunityVO> list = monitorDAO.communityMonitor(community);
 		for (CommunityVO communityVO : list) {

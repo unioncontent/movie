@@ -1,7 +1,10 @@
 package org.union.persistence;
 
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
+
+import javax.annotation.Resource;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,16 +18,23 @@ import org.union.domain.TextTypeVO;
 public class CommunityDAOImpl implements CommunityDAO {
 
 	@Autowired
-	private SqlSession session;
+	@Resource(name="oneSqlSession")
+	private SqlSession session1;
+	
+	@Autowired
+	@Resource(name="twoSqlSession")
+	private SqlSession session2;
+	
 	
 	private static final String namespace = "org.union.mapper.CommunityMapper.";
 	
 	
 	@Override
-	public void create(CommunityVO vo) {
+	public void create(CommunityVO vo) throws SQLException {
 		
 		try {
-			session.insert(namespace + "create", vo);
+			session1.insert(namespace + "create", vo);
+			session2.insert(namespace + "create", vo);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -34,17 +44,31 @@ public class CommunityDAOImpl implements CommunityDAO {
 	
 
 	@Override
-	public CommunityVO read(Integer community_idx) {
+	public CommunityVO read(Integer community_idx) throws SQLException {
 		
-		return session.selectOne(namespace + "read", community_idx);
+		return session1.selectOne(namespace + "read", community_idx);
 	}
 	
 
 	@Override
-	public void update(CommunityVO vo) {
+	public void update(CommunityVO vo) throws SQLException {
 		
 		try {
-			session.update(namespace + "update", vo);
+			session1.update(namespace + "update", vo);
+			session2.update(namespace + "update", vo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+
+	@Override
+	public void delete(Integer community_idx) throws SQLException {
+		
+		try {
+			session1.delete(namespace + "delete", community_idx);
+			session2.delete(namespace + "delete", community_idx);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -52,77 +76,65 @@ public class CommunityDAOImpl implements CommunityDAO {
 
 	}
 	
+	@Override
+	public List<CommunityVO> listExtract(SearchCriteria cri) throws SQLException {
+
+		return session1.selectList(namespace + "listExtract", cri);
+	}
+
+	
+	@Override
+	public Integer getExtractCount(SearchCriteria cri) throws SQLException {
+
+		return session1.selectOne(namespace + "getExtractCount", cri);
+	}
+
+
 
 	@Override
-	public void delete(Integer community_idx) {
-		
+	public List<CommunityVO> listSearch(SearchCriteria cri) throws SQLException {
+
+		return session1.selectList(namespace + "listSearch", cri); 
+	}
+
+	
+	@Override
+	public Integer getSearchCount(SearchCriteria cri) throws SQLException {
+
+		return session1.selectOne(namespace + "getSearchCount", cri);
+	}
+	
+	@Override
+	public Integer getSearchCount2(SearchCriteria cri) throws SQLException {
+
+		return session1.selectOne(namespace + "getSearchCount2", cri);
+	}
+	
+	@Override
+	public List<CommunityVO> wlistSearch(SearchCriteria cri) throws SQLException {
+
+		return session1.selectList(namespace + "wlistSearch", cri); 
+	}
+
+	
+	@Override
+	public Integer wgetSearchCount(SearchCriteria cri) throws SQLException {
+
+		return session1.selectOne(namespace + "wgetSearchCount", cri);
+	}
+	
+	@Override
+	public List<CommunityVO> listAll(SearchCriteria cri) throws SQLException {
+
+		return session1.selectList(namespace + "listAll", cri);
+	}
+	
+
+	@Override
+	public void updateTextType(CommunityVO vo) throws SQLException {
 		try {
-			session.delete(namespace + "delete", community_idx);
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-	}
-	
-	@Override
-	public List<CommunityVO> listExtract(SearchCriteria cri) {
-
-		return session.selectList(namespace + "listExtract", cri);
-	}
-
-	
-	@Override
-	public Integer getExtractCount(SearchCriteria cri) {
-
-		return session.selectOne(namespace + "getExtractCount", cri);
-	}
-
-
-
-	@Override
-	public List<CommunityVO> listSearch(SearchCriteria cri) {
-
-		return session.selectList(namespace + "listSearch", cri); 
-	}
-
-	
-	@Override
-	public Integer getSearchCount(SearchCriteria cri) {
-
-		return session.selectOne(namespace + "getSearchCount", cri);
-	}
-	
-	@Override
-	public Integer getSearchCount2(SearchCriteria cri) {
-
-		return session.selectOne(namespace + "getSearchCount2", cri);
-	}
-	
-	@Override
-	public List<CommunityVO> wlistSearch(SearchCriteria cri) {
-
-		return session.selectList(namespace + "wlistSearch", cri); 
-	}
-
-	
-	@Override
-	public Integer wgetSearchCount(SearchCriteria cri) {
-
-		return session.selectOne(namespace + "wgetSearchCount", cri);
-	}
-	
-	@Override
-	public List<CommunityVO> listAll(SearchCriteria cri) {
-
-		return session.selectList(namespace + "listAll", cri);
-	}
-	
-
-	@Override
-	public void updateTextType(CommunityVO vo) {
-		try {
-			session.update(namespace + "updateTextType", vo);
+			session1.update(namespace + "updateTextType", vo);
+			session2.update(namespace + "updateTextType", vo);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -130,9 +142,10 @@ public class CommunityDAOImpl implements CommunityDAO {
 
 
 	@Override
-	public void updateThumbnail(CommunityVO vo) {
+	public void updateThumbnail(CommunityVO vo) throws SQLException {
 		try {
-			session.update(namespace + "updateThumbnail", vo);
+			session1.update(namespace + "updateThumbnail", vo);
+			session2.update(namespace + "updateThumbnail", vo);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -140,186 +153,186 @@ public class CommunityDAOImpl implements CommunityDAO {
 
 
 	@Override
-	public List<CommunityVO> listComplete(SearchCriteria cri) {
+	public List<CommunityVO> listComplete(SearchCriteria cri) throws SQLException {
 
-		return session.selectList(namespace + "listComplete", cri);
+		return session1.selectList(namespace + "listComplete", cri);
 	}
 
 
 	@Override
-	public Integer getCompleteCount(SearchCriteria cri) {
+	public Integer getCompleteCount(SearchCriteria cri) throws SQLException {
 
-		return session.selectOne(namespace + "getCompleteCount", cri);
+		return session1.selectOne(namespace + "getCompleteCount", cri);
 	}
 
 
 	@Override
-	public TextTypeVO textTypeCount(SearchCriteria cri) {
+	public TextTypeVO textTypeCount(SearchCriteria cri) throws SQLException {
 
-		return session.selectOne(namespace + "textTypeCount" ,cri);
+		return session1.selectOne(namespace + "textTypeCount" ,cri);
 	}
 
 
 	@Override
-	public Integer countAll(Date date) {
+	public Integer countAll(Date date) throws SQLException {
 
-		return session.selectOne(namespace  +"countAll", date);
+		return session1.selectOne(namespace  +"countAll", date);
 	}
 
 	@Override
-	public Integer showboxCountAll(Date date) {
+	public Integer showboxCountAll(Date date) throws SQLException {
 
-		return session.selectOne(namespace  +"showboxCountAll", date);
+		return session1.selectOne(namespace  +"showboxCountAll", date);
 	}
 
 	@Override
-	public List<CommunityVO> allPageList(SearchCriteria cri) {
+	public List<CommunityVO> allPageList(SearchCriteria cri) throws SQLException {
 
-		return session.selectList(namespace + "allPageList", cri);
-	}
-	
-	@Override
-	public List<CommunityVO> TotalAllPageList(SearchCriteria cri) {
-
-		return session.selectList(namespace + "TotalAllPageList", cri);
-	}
-
-
-	@Override
-	public Integer allPageCount(SearchCriteria cri) {
-
-		return session.selectOne(namespace + "allPageCount", cri);
+		return session1.selectList(namespace + "allPageList", cri);
 	}
 	
 	@Override
-	public Integer TotalAllPageCount(SearchCriteria cri) {
+	public List<CommunityVO> TotalAllPageList(SearchCriteria cri) throws SQLException {
 
-		return session.selectOne(namespace + "TotalAllPageCount", cri);
-	}
-
-	@Override
-	public List<CommunityVO> wPageSearch(SearchCriteria cri) {
-
-		return session.selectList(namespace + "wPageSearch", cri);
+		return session1.selectList(namespace + "TotalAllPageList", cri);
 	}
 
 
 	@Override
-	public List<CommunityVO> allPage(SearchCriteria cri) {
+	public Integer allPageCount(SearchCriteria cri) throws SQLException {
 
-		return session.selectList(namespace + "allPage", cri);
+		return session1.selectOne(namespace + "allPageCount", cri);
+	}
+	
+	@Override
+	public Integer TotalAllPageCount(SearchCriteria cri) throws SQLException {
+
+		return session1.selectOne(namespace + "TotalAllPageCount", cri);
+	}
+
+	@Override
+	public List<CommunityVO> wPageSearch(SearchCriteria cri) throws SQLException {
+
+		return session1.selectList(namespace + "wPageSearch", cri);
 	}
 
 
 	@Override
-	public List<TextTypeDateVO> textTypeCount2(SearchCriteria cri) {
+	public List<CommunityVO> allPage(SearchCriteria cri) throws SQLException {
 
-		return session.selectList(namespace + "textTypeCount2", cri);
+		return session1.selectList(namespace + "allPage", cri);
 	}
 
 
 	@Override
-	public Integer communityTextcnt(SearchCriteria cri) {
+	public List<TextTypeDateVO> textTypeCount2(SearchCriteria cri) throws SQLException {
 
-		return session.selectOne(namespace + "communityTextcnt", cri);
+		return session1.selectList(namespace + "textTypeCount2", cri);
 	}
 
 
 	@Override
-	public Integer communityTextcnt2(SearchCriteria cri) {
+	public Integer communityTextcnt(SearchCriteria cri) throws SQLException {
 
-		return session.selectOne(namespace + "communityTextcnt2", cri);
+		return session1.selectOne(namespace + "communityTextcnt", cri);
 	}
 
 
 	@Override
-	public Integer graphSearchCount(SearchCriteria cri) {
+	public Integer communityTextcnt2(SearchCriteria cri) throws SQLException {
 
-		return session.selectOne(namespace + "graphSearchCount", cri);
+		return session1.selectOne(namespace + "communityTextcnt2", cri);
 	}
 
 
 	@Override
-	public List<CommunityVO> totalAllPageex(SearchCriteria cri) {
+	public Integer graphSearchCount(SearchCriteria cri) throws SQLException {
 
-		return session.selectList(namespace + "totalAllPageex", cri);
+		return session1.selectOne(namespace + "graphSearchCount", cri);
 	}
 
 
 	@Override
-	public List<CommunityVO> dashListAll(SearchCriteria cri) {
+	public List<CommunityVO> totalAllPageex(SearchCriteria cri) throws SQLException {
 
-		return session.selectList(namespace + "dashListAll", cri);
+		return session1.selectList(namespace + "totalAllPageex", cri);
 	}
 
 
 	@Override
-	public Integer periodWgetSearchCount(SearchCriteria cri) {
+	public List<CommunityVO> dashListAll(SearchCriteria cri) throws SQLException {
 
-		return session.selectOne(namespace + "periodWgetSearchCount", cri);
+		return session1.selectList(namespace + "dashListAll", cri);
 	}
 
 
 	@Override
-	public List<CommunityVO> alllistExtract(SearchCriteria cri) {
+	public Integer periodWgetSearchCount(SearchCriteria cri) throws SQLException {
 
-		return session.selectList(namespace + "alllistExtract", cri);
+		return session1.selectOne(namespace + "periodWgetSearchCount", cri);
 	}
 
 
 	@Override
-	public Integer allgetExtractCount(SearchCriteria cri) {
+	public List<CommunityVO> alllistExtract(SearchCriteria cri) throws SQLException {
 
-		return session.selectOne(namespace + "allgetExtractCount", cri);
+		return session1.selectList(namespace + "alllistExtract", cri);
 	}
 
 
 	@Override
-	public List<CommunityVO> alllistSearch(SearchCriteria cri) {
+	public Integer allgetExtractCount(SearchCriteria cri) throws SQLException {
 
-		return session.selectList(namespace + "alllistSearch", cri);
+		return session1.selectOne(namespace + "allgetExtractCount", cri);
 	}
 
 
 	@Override
-	public Integer allgetSearchCount(SearchCriteria cri) {
+	public List<CommunityVO> alllistSearch(SearchCriteria cri) throws SQLException {
 
-		return session.selectOne(namespace + "allgetSearchCount", cri);
+		return session1.selectList(namespace + "alllistSearch", cri);
 	}
 
 
 	@Override
-	public List<CommunityVO> allPageallList(SearchCriteria cri) {
+	public Integer allgetSearchCount(SearchCriteria cri) throws SQLException {
 
-		return session.selectList(namespace + "allPageallList", cri);
+		return session1.selectOne(namespace + "allgetSearchCount", cri);
 	}
 
 
 	@Override
-	public Integer allPageallCount(SearchCriteria cri) {
+	public List<CommunityVO> allPageallList(SearchCriteria cri) throws SQLException {
 
-		return session.selectOne(namespace + "allPageallCount", cri);
+		return session1.selectList(namespace + "allPageallList", cri);
 	}
 
 
 	@Override
-	public List<CommunityVO> totalallPageallList(SearchCriteria cri) {
+	public Integer allPageallCount(SearchCriteria cri) throws SQLException {
 
-		return session.selectList(namespace + "totalallPageallList", cri);
+		return session1.selectOne(namespace + "allPageallCount", cri);
 	}
 
 
 	@Override
-	public Integer totalallPageallCount(SearchCriteria cri) {
+	public List<CommunityVO> totalallPageallList(SearchCriteria cri) throws SQLException {
 
-		return session.selectOne(namespace + "totalallPageallCount", cri);
+		return session1.selectList(namespace + "totalallPageallList", cri);
 	}
 
 
 	@Override
-	public List<CommunityVO> listAllEx(SearchCriteria cri) {
+	public Integer totalallPageallCount(SearchCriteria cri) throws SQLException {
 
-		return session.selectList(namespace + "listAllEx", cri);
+		return session1.selectOne(namespace + "totalallPageallCount", cri);
+	}
+
+
+	@Override
+	public List<CommunityVO> listAllEx(SearchCriteria cri) throws SQLException {
+
+		return session1.selectList(namespace + "listAllEx", cri);
 	}
 
 }

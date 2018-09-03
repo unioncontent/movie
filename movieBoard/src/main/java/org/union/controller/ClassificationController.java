@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -73,7 +74,7 @@ public class ClassificationController {
 	
 
 	@GetMapping("/classification")
-	public void classificationGET(@ModelAttribute("cri") SearchCriteria cri, Model model) {
+	public void classificationGET(@ModelAttribute("cri") SearchCriteria cri, Model model) throws SQLException {
 		logger.info("classificationGET called....");
 
 		if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
@@ -275,7 +276,7 @@ public class ClassificationController {
 	
 	@ResponseBody
 	@GetMapping("/excel")
-	public ModelAndView excelGET(@ModelAttribute("cri") ModelAndView model, ExcelView excelView, SearchCriteria cri) {
+	public ModelAndView excelGET(@ModelAttribute("cri") ModelAndView model, ExcelView excelView, SearchCriteria cri) throws SQLException {
 		
 		if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
 			logger.info("keyword is null");
@@ -430,7 +431,7 @@ public class ClassificationController {
 	
 	@ResponseBody
 	@PostMapping("modify")
-	public String modifyPOST(Integer idx, String table, String textType) {
+	public String modifyPOST(Integer idx, String table, String textType) throws SQLException {
 		logger.info("insertPOST called....");
 		
 		logger.info("idx: " + idx);
@@ -477,7 +478,7 @@ public class ClassificationController {
 	
 	@ResponseBody
 	@PostMapping("/remove")
-	public String removePOST(Integer idx, String table) {
+	public String removePOST(Integer idx, String table) throws SQLException {
 		logger.info("removePOST called....");
 		
 		logger.info("idx: " + idx);
@@ -508,7 +509,7 @@ public class ClassificationController {
     private View imageView;
 
 	@GetMapping("/imageDownload")
-    public ModelAndView sample(SearchCriteria cri) {
+    public ModelAndView sample(SearchCriteria cri) throws SQLException {
 		
 		if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
 			logger.info("keyword is null");

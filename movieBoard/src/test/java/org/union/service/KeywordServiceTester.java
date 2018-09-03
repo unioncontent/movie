@@ -2,6 +2,8 @@ package org.union.service;
 
 import static org.junit.Assert.fail;
 
+import java.sql.SQLException;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,7 +25,7 @@ public class KeywordServiceTester {
 	}
 
 	@Test
-	public void test() {
+	public void test() throws SQLException {
 
 		keywordService.view("현빈");
 	}

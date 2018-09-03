@@ -1,5 +1,6 @@
 package org.union.controller;
 
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -70,7 +71,7 @@ public class PeriodController {
 	private ReporterService reporterService;	
 	
 	@GetMapping("/period_main")
-	public void period_mainGET(@ModelAttribute("cri") SearchCriteria cri, Model model) {
+	public void period_mainGET(@ModelAttribute("cri") SearchCriteria cri, Model model) throws SQLException {
 		logger.info("period_main called....");
 		
 		cri.setKeyword(null);
@@ -128,7 +129,7 @@ public class PeriodController {
 	}
 	
 	@GetMapping("/main")
-	public void mainGET(@ModelAttribute("cri") SearchCriteria cri, Model model) {
+	public void mainGET(@ModelAttribute("cri") SearchCriteria cri, Model model) throws SQLException {
 		logger.info("mainGET called....");
 		
 		cri.setKeyword(null);
@@ -206,7 +207,7 @@ public class PeriodController {
 	}
 
 	@GetMapping("/community")
-	public void communityGET(@ModelAttribute("cri") SearchCriteria cri, Model model) {
+	public void communityGET(@ModelAttribute("cri") SearchCriteria cri, Model model) throws SQLException {
 		logger.info("communityGET called....");
 		
 		cri.setKeyword(null);
@@ -289,7 +290,7 @@ public class PeriodController {
 	}
 
 	@GetMapping("/portal")
-	public void portalGET(@ModelAttribute("cri") SearchCriteria cri, Model model) {
+	public void portalGET(@ModelAttribute("cri") SearchCriteria cri, Model model) throws SQLException {
 		logger.info("portalGET called....");
 		
 		cri.setKeyword(null);
@@ -377,7 +378,7 @@ public class PeriodController {
 	}
 
 	@GetMapping("/media")
-	public void mediaGET(@ModelAttribute("cri") SearchCriteria cri, Model model, String pressName, String textType) {
+	public void mediaGET(@ModelAttribute("cri") SearchCriteria cri, Model model, String pressName, String textType) throws SQLException {
 		  logger.info("mediaGET called....");
 		  
 		  cri.setTextType(null);
@@ -500,7 +501,7 @@ public class PeriodController {
 	}
 	
 	@GetMapping("/media_backup")
-	public void media_backup(@ModelAttribute("cri") SearchCriteria cri, Model model, String pressName, String textType) {
+	public void media_backup(@ModelAttribute("cri") SearchCriteria cri, Model model, String pressName, String textType) throws SQLException {
 		logger.info("media_backup called....");
 		  
 		  cri.setTextType(null);
@@ -613,7 +614,7 @@ public class PeriodController {
 
 	@ResponseBody
 	@PostMapping("/getTextType")
-	public List<TextTypeVO> getTextType(String url, String part, String keyword){
+	public List<TextTypeVO> getTextType(String url, String part, String keyword) throws SQLException {
 		logger.info("getTextType called....");
 
 		SearchCriteria cri  = new SearchCriteria();
@@ -668,7 +669,7 @@ public class PeriodController {
 	}
 	
 	@GetMapping("/sns")
-	public void snsGET(@ModelAttribute("cri") SearchCriteria cri, Model model) {
+	public void snsGET(@ModelAttribute("cri") SearchCriteria cri, Model model) throws SQLException {
 		logger.info("snsGET called....");
 		
 		cri.setKeyword(null);
@@ -745,7 +746,7 @@ public class PeriodController {
 	}
 	
 	@GetMapping("/period_popUp")
-	public void dashBoard_popupGET(@ModelAttribute("cri") SearchCriteria cri, Model model, String part, String company, String selectKey, String emailDate) {
+	public void dashBoard_popupGET(@ModelAttribute("cri") SearchCriteria cri, Model model, String part, String company, String selectKey, String emailDate) throws SQLException {
 		logger.info("dashBoard_popup called....");
 		
 		cri.setKeyword(null);
@@ -822,7 +823,7 @@ public class PeriodController {
 	
 	@ResponseBody
 	@PostMapping("/graph_re")
-	public List<GraphVO> graph_rePOST(@ModelAttribute("cri") SearchCriteria cri,Model model, String success, String company, String selectKey, String part) throws ParseException {
+	public List<GraphVO> graph_rePOST(@ModelAttribute("cri") SearchCriteria cri,Model model, String success, String company, String selectKey, String part) throws ParseException, SQLException {
 		logger.info("graph_rePOST called....");
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -960,7 +961,7 @@ public class PeriodController {
 	
 	@ResponseBody
 	@GetMapping("/excel")
-	public ModelAndView excelGET(ModelAndView model, ExcelView excelView, SearchCriteria cri, String part) {
+	public ModelAndView excelGET(ModelAndView model, ExcelView excelView, SearchCriteria cri, String part) throws SQLException {
 		
 		if(cri.getCompany() == null || cri.getCompany().equals("회사")) {
 			logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());

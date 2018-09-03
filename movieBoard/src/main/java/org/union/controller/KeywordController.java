@@ -1,5 +1,6 @@
 package org.union.controller;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -36,7 +37,7 @@ public class KeywordController {
 	private static Logger logger = LoggerFactory.getLogger(KeywordController.class);
 	
 	@GetMapping("/keyword")
-	public void keywordGET(@ModelAttribute("cri") SearchCriteria cri, Model model) {
+	public void keywordGET(@ModelAttribute("cri") SearchCriteria cri, Model model) throws SQLException {
 		logger.info("keywordGET called....");
 		
 		if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
@@ -93,7 +94,7 @@ public class KeywordController {
 	}
 	
 	@GetMapping("/swearword")
-	public void swearwordGET(Model model) {
+	public void swearwordGET(Model model) throws SQLException {
 		logger.info("swearwordGET called....");
 		
 		model.addAttribute("swearwordList", keywordService.swearwordList());
@@ -101,19 +102,19 @@ public class KeywordController {
 	
 	
 	@GetMapping("/create")
-	public void createGET(Model model) {
+	public void createGET(Model model) throws SQLException {
 		logger.info("createGET called....");
 		
 		model.addAttribute("companyList", userService.listAll());
 	}
 	
 	@GetMapping("/swearwordCreate")
-	public void swearwordCreate() {
+	public void swearwordCreate() throws SQLException {
 		
 	}
 	
 	@GetMapping("/swearwordCreateOk")
-	public String swearwordCreateGET(SwearwordVO vo) {
+	public String swearwordCreateGET(SwearwordVO vo) throws SQLException {
 		logger.info("createGET called....");
 		
 		keywordService.swearwordCreate(vo);
@@ -124,7 +125,7 @@ public class KeywordController {
 	
 	@ResponseBody
 	@PostMapping("/checkMain")
-	public Integer checkMainPOST(String keyword_main) {
+	public Integer checkMainPOST(String keyword_main) throws SQLException {
 		logger.info("checkMainPOST called....");
 		
 		logger.info("keywordMain: " + keyword_main);
@@ -134,7 +135,7 @@ public class KeywordController {
 	
 	@ResponseBody
 	@PostMapping("/checkSwearword")
-	public Integer checkSwearwordPOST(String swearword) {
+	public Integer checkSwearwordPOST(String swearword) throws SQLException {
 		logger.info("checkSwearwordPOST called....");
 		
 		logger.info("swearword: " + swearword);
@@ -145,7 +146,7 @@ public class KeywordController {
 	
 	@ResponseBody
 	@PostMapping("/insertMain")
-	public String insertMainPOST(KeywordListVO vo) {
+	public String insertMainPOST(KeywordListVO vo) throws SQLException {
 		logger.info("insertMainPOST called....");
 		
 		logger.info("vo: " + vo);
@@ -158,7 +159,7 @@ public class KeywordController {
 	
 	@ResponseBody
 	@PostMapping("/removeMain")
-	public String removeMain(String keyword_main) {
+	public String removeMain(String keyword_main) throws SQLException {
 		logger.info("removeMain called....");
 		
 		keywordService.removeMain(keyword_main);
@@ -167,7 +168,7 @@ public class KeywordController {
 	}
 	
 	@GetMapping("/modify")
-	public void modifyGET(@ModelAttribute("keyword_main") String keyword_main, Model model) {
+	public void modifyGET(@ModelAttribute("keyword_main") String keyword_main, Model model) throws SQLException {
 		logger.info("keywordGET called....");
 		
 		logger.info("keyword_main: " + keyword_main);
@@ -191,7 +192,7 @@ public class KeywordController {
 	
 	@ResponseBody
 	@PostMapping("/insertKeyword")
-	public void insertKeywordPOST(KeywordVO vo) {
+	public void insertKeywordPOST(KeywordVO vo) throws SQLException {
 		logger.info("insertKeywordPOST called....");
 		
 		logger.info("keywordVO: " + vo);
@@ -202,7 +203,7 @@ public class KeywordController {
 	
 	@ResponseBody
 	@PostMapping("/removeKeyword")
-	public void removeKeywordPOST(String keyword) {
+	public void removeKeywordPOST(String keyword) throws SQLException {
 		logger.info("removeKeywordPOST called....");
 		
 		logger.info("keyword: " + keyword);
@@ -213,7 +214,7 @@ public class KeywordController {
 	
 	@ResponseBody
 	@PostMapping("swearwordRemove")
-	public String swearwordRemovePOST(String swearword) {
+	public String swearwordRemovePOST(String swearword) throws SQLException {
 		logger.info("swearwordRemovePOST called....");
 		logger.info("swearword: " + swearword);
 		
@@ -224,7 +225,7 @@ public class KeywordController {
 	
 	@ResponseBody
 	@PostMapping("updateOn")
-	public String keywordStateUpdateOn(String keyword_main) {
+	public String keywordStateUpdateOn(String keyword_main) throws SQLException {
 		logger.info("keywordStateUpdate called....");
 		
 		logger.info("keyword_main: " + keyword_main);
@@ -237,7 +238,7 @@ public class KeywordController {
 	
 	@ResponseBody
 	@PostMapping("updateOff")
-	public String keywordStateUpdateOff(String keyword_main) {
+	public String keywordStateUpdateOff(String keyword_main) throws SQLException {
 		logger.info("keywordStateUpdate called....");
 		
 		logger.info("keyword_main: " + keyword_main);

@@ -1,5 +1,6 @@
 package org.union.service;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,13 +17,13 @@ public class NaverMovieServiceImpl implements NaverMovieService{
 	private NaverMovieDAO naverMovieDAO;
 	
 	@Override
-	public List<NaverMovieVO> searchAllList(SearchCriteria cri) {
+	public List<NaverMovieVO> searchAllList(SearchCriteria cri) throws SQLException {
 
 		return naverMovieDAO.searchAllList(cri);
 	}
 	
 	@Override
-	public List<NaverMovieVO> searchList(SearchCriteria cri) {
+	public List<NaverMovieVO> searchList(SearchCriteria cri) throws SQLException {
 
 		List<NaverMovieVO> list = naverMovieDAO.searchList(cri);
 		
@@ -30,13 +31,13 @@ public class NaverMovieServiceImpl implements NaverMovieService{
 	}
 
 	@Override
-	public Integer getSearchCount(SearchCriteria cri) {
+	public Integer getSearchCount(SearchCriteria cri) throws SQLException {
 
 		return naverMovieDAO.getSearchCount(cri);
 	}
 
 	@Override
-	public List<NaverMovieVO> showSearchList(SearchCriteria cri) {
+	public List<NaverMovieVO> showSearchList(SearchCriteria cri) throws SQLException {
 
 		List<NaverMovieVO> list = naverMovieDAO.showSearchList(cri);
 		
@@ -44,7 +45,7 @@ public class NaverMovieServiceImpl implements NaverMovieService{
 	}
 
 	@Override
-	public List<NaverMovieVO> showSearchAllList(SearchCriteria cri) {
+	public List<NaverMovieVO> showSearchAllList(SearchCriteria cri) throws SQLException {
 
 		return naverMovieDAO.showSearchAllList(cri);
 	}

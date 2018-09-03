@@ -1,5 +1,6 @@
 package org.union.dao;
 
+import java.sql.SQLException;
 import java.util.Date;
 
 import org.junit.Before;
@@ -31,7 +32,7 @@ public class CommunityDAOTester {
 
 
 	@Test
-	public void testCreate() {
+	public void testCreate() throws SQLException {
 		
 		
 		
@@ -50,13 +51,13 @@ public class CommunityDAOTester {
 	
 	
 	@Test
-	public void testRead() {
+	public void testRead() throws SQLException {
 		
 		dao.read(3);
 	}
 	
 	@Test
-	public void testUpdate() {
+	public void testUpdate() throws SQLException {
 		
 		vo.setCommunity_name("100100100디씨");
 		/*vo.setCommunity_title("u강철비 본사람");
@@ -74,14 +75,14 @@ public class CommunityDAOTester {
 	
 	
 	@Test
-	public void testDelete() {
+	public void testDelete() throws SQLException {
 		
 		dao.delete(1);
 	}
 	
 	
 	@Test
-	public void testListExtract() {
+	public void testListExtract() throws SQLException {
 		
 		svo.setPage(2);
 		svo.setPerPageNum(30);
@@ -92,7 +93,7 @@ public class CommunityDAOTester {
 	
 	
 	@Test
-	public void testGetExtractCount() {
+	public void testGetExtractCount() throws SQLException {
 		svo.setPage(2);
 		svo.setPerPageNum(30);
 		
@@ -101,7 +102,7 @@ public class CommunityDAOTester {
 	
 	
 	@Test
-	public void testListSearch() {
+	public void testListSearch() throws SQLException {
 		
 		svo.setKeyword("title");
 		
@@ -110,7 +111,7 @@ public class CommunityDAOTester {
 	
 	
 	@Test
-	public void testListAll() {
+	public void testListAll() throws SQLException {
 		
 		svo.setSearchType("t");
 		svo.setKeyword("나나");
@@ -119,7 +120,7 @@ public class CommunityDAOTester {
 	
 	
 	@Test
-	public void testUpdateTextType() {
+	public void testUpdateTextType() throws SQLException {
 		
 		vo.setCommunity_idx(3);
 		vo.setTextType("호감");
@@ -129,7 +130,7 @@ public class CommunityDAOTester {
 	
 	
 	@Test
-	public void testUpdateThumbnail() {
+	public void testUpdateThumbnail() throws SQLException {
 		
 		vo.setCommunity_idx(3);
 		vo.setThumbnail("1234132131231TESTTEST");

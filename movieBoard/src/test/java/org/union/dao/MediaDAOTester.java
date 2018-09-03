@@ -1,5 +1,6 @@
 package org.union.dao;
 
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.Date;
 
@@ -32,7 +33,7 @@ public class MediaDAOTester {
 
 	
 	@Test
-	public void testCreate() throws ParseException {
+	public void testCreate() throws ParseException, SQLException{
 		
 		vo.setMedia_name("유니온스포츠");
 		vo.setMedia_title("강철비 흥행하나 기사");
@@ -46,14 +47,14 @@ public class MediaDAOTester {
 	
 	
 	@Test
-	public void testRead() {
+	public void testRead() throws SQLException {
 		
 		dao.read(1);
 	}
 	
 	
 	@Test
-	public void testUpdate() {
+	public void testUpdate() throws SQLException {
 		
 		vo.setMedia_name("유uuuu니온스포츠");
 		vo.setMedia_title("강철비 흥행하나 기사");
@@ -68,7 +69,7 @@ public class MediaDAOTester {
 
 	
 	@Test
-	public void testDelete() {
+	public void testDelete() throws SQLException {
 		
 		dao.delete(1);
 	}

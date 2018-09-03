@@ -1,6 +1,8 @@
 package org.union.dao;
 
 
+import java.sql.SQLException;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,7 +30,7 @@ public class ReporterDAOTester {
 
 	
 	@Test
-	public void testCreate() {
+	public void testCreate() throws SQLException {
 		
 		vo.setReporter_media_name("조선");
 		vo.setReporter_name("이상화");
@@ -42,14 +44,14 @@ public class ReporterDAOTester {
 
 	
 	@Test
-	public void testRead() {
+	public void testRead() throws SQLException {
 		
 		dao.read(1);
 	}
 	
 	
 	@Test
-	public void testUpdate() {
+	public void testUpdate() throws SQLException {
 		
 		vo.setReporter_media_name("업데이트조선");
 		vo.setReporter_name("이상화");
@@ -64,7 +66,7 @@ public class ReporterDAOTester {
 	
 	
 	@Test
-	public void testDelete() {
+	public void testDelete() throws SQLException {
 		
 		dao.delete(1);
 	}

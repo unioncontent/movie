@@ -1,5 +1,6 @@
 package org.union.dao;
 
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -34,7 +35,7 @@ public class SNSDAOTester {
 
 	
 	@Test
-	public void testCreate() {
+	public void testCreate() throws SQLException {
 		
 		for(int i = 0; i < 50; i++) {
 		vo.setSns_name("facebook");
@@ -54,7 +55,7 @@ public class SNSDAOTester {
 
 	
 	@Test
-	public void testRead() {
+	public void testRead() throws SQLException {
 		
 		vo = dao.read(1);
 		
@@ -66,7 +67,7 @@ public class SNSDAOTester {
 	}
 	
 	@Test
-	public void testGetDateCount() throws ParseException {
+	public void testGetDateCount() throws ParseException, SQLException {
 		
 		String startDate = "2017-10-22 00:00:00";
 		String endDate = "2017-10-25 23:59:59";
@@ -84,7 +85,7 @@ public class SNSDAOTester {
 	}
 	
 	@Test
-	public void testUpdate() {
+	public void testUpdate() throws SQLException {
 		
 		vo.setSns_name("UUUUUUUUUname");
 		vo.setSns_title("title");
@@ -103,7 +104,7 @@ public class SNSDAOTester {
 	
 	
 	@Test
-	public void testDelete() {
+	public void testDelete() throws SQLException {
 		
 		dao.delete(1);
 		
@@ -111,7 +112,7 @@ public class SNSDAOTester {
 	
 	
 	@Test
-	public void listSearch() {
+	public void listSearch() throws SQLException {
 		
 		cri.setPage(2);
 		cri.setSearchType("t");
@@ -126,7 +127,7 @@ public class SNSDAOTester {
 	}
 	
 	@Test
-	public void facebookTotalCount() {
+	public void facebookTotalCount() throws SQLException {
 		
 		cri.setKeyword("강철비");
 		cri.setSearchType("t");
@@ -135,7 +136,7 @@ public class SNSDAOTester {
 	}
 	
 	@Test
-	public void instaList() {
+	public void instaList() throws SQLException {
 		
 		cri.setPage(1);
 		cri.setSearchType("t");
@@ -150,7 +151,7 @@ public class SNSDAOTester {
 	}
 	
 	@Test
-	public void instaTotalCount() {
+	public void instaTotalCount() throws SQLException {
 		
 		cri.setKeyword("강철비");
 		cri.setSearchType("t");
@@ -160,7 +161,7 @@ public class SNSDAOTester {
 	
 	
 	@Test
-	public void twitterList() {
+	public void twitterList() throws SQLException {
 		
 		cri.setPage(2);
 		cri.setSearchType("t");
@@ -175,7 +176,7 @@ public class SNSDAOTester {
 	}
 	
 	@Test
-	public void twitterTotalCount() {
+	public void twitterTotalCount() throws SQLException {
 		
 		cri.setKeyword("강철비");
 		cri.setSearchType("t");

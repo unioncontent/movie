@@ -1,5 +1,6 @@
 package org.union.persistence;
 
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
@@ -17,142 +18,142 @@ import org.union.domain.TextTypeVO;
 
 public interface MediaDAO {
 
-	public void create(MediaVO vo);
-	public void replyAdd(NewsVO vo);
+	public void create(MediaVO vo) throws SQLException;
+	public void replyAdd(NewsVO vo) throws SQLException;
 	
-	public MediaVO read(Integer media_idx);
+	public MediaVO read(Integer media_idx) throws SQLException;
 	
-	public void update(MediaVO vo);
+	public void update(MediaVO vo) throws SQLException;
 	
-	public void delete(Integer media_idx);
+	public void delete(Integer media_idx) throws SQLException;
 	
-	public void checkList(Integer media_idx);
-	public void checkDelete(Integer media_idx);
-	public void headlineUpdate(Integer media_idx);
-	public void headlineUpdate2(Integer media_idx);
+	public void checkList(Integer media_idx) throws SQLException;
+	public void checkDelete(Integer media_idx) throws SQLException;
+	public void headlineUpdate(Integer media_idx) throws SQLException;
+	public void headlineUpdate2(Integer media_idx) throws SQLException;
 	
-	public void newsDelete(Integer news_idx);
-	public void replyDelete(Integer reply_idx);
+	public void newsDelete(Integer news_idx) throws SQLException;
+	public void replyDelete(Integer reply_idx) throws SQLException;
 	
-	public List<ReplyVO> replyTotalList(Integer news_idx);
+	public List<ReplyVO> replyTotalList(Integer news_idx) throws SQLException;
 	
-	public TextTypeVO periodTextTypeCount(SearchCriteria cri);
+	public TextTypeVO periodTextTypeCount(SearchCriteria cri) throws SQLException;
 	
-	public List<MediaVO> allPageList(SearchCriteria cri);
-	public List<MediaVO> TotalAllPageList(SearchCriteria cri);
-	public Integer allPageCount(SearchCriteria cri);
-	public Integer TotalAllPageCount(SearchCriteria cri);
-	public Integer newsAllPageCount(SearchCriteria cri);
-	public Integer replyAllPageCount(SearchCriteria cri);
+	public List<MediaVO> allPageList(SearchCriteria cri) throws SQLException;
+	public List<MediaVO> TotalAllPageList(SearchCriteria cri) throws SQLException;
+	public Integer allPageCount(SearchCriteria cri) throws SQLException;
+	public Integer TotalAllPageCount(SearchCriteria cri) throws SQLException;
+	public Integer newsAllPageCount(SearchCriteria cri) throws SQLException;
+	public Integer replyAllPageCount(SearchCriteria cri) throws SQLException;
 	
-	public List<MediaVO> allPage(SearchCriteria cri);
-	public List<MediaVO> newsExcel(SearchCriteria cri);
-	public List<MediaVO> totalAllPageex(SearchCriteria cri);
-	public List<ReplyVO> replyAllPage(SearchCriteria cri);
+	public List<MediaVO> allPage(SearchCriteria cri) throws SQLException;
+	public List<MediaVO> newsExcel(SearchCriteria cri) throws SQLException;
+	public List<MediaVO> totalAllPageex(SearchCriteria cri) throws SQLException;
+	public List<ReplyVO> replyAllPage(SearchCriteria cri) throws SQLException;
 	
-	public GraphVO yesterdayCount();
-	public GraphVO showboxYesterdayCount();
+	public GraphVO yesterdayCount() throws SQLException;
+	public GraphVO showboxYesterdayCount() throws SQLException;
 	
-	public TextTypeVO naverMediaCount(SearchCriteria cri);
-	public TextTypeVO daumMediaCount(SearchCriteria cri);
-	public TextTypeVO totalMediaCount(SearchCriteria cri);
+	public TextTypeVO naverMediaCount(SearchCriteria cri) throws SQLException;
+	public TextTypeVO daumMediaCount(SearchCriteria cri) throws SQLException;
+	public TextTypeVO totalMediaCount(SearchCriteria cri) throws SQLException;
 	
-	public List<MediaVO> listExtract(SearchCriteria cri);
+	public List<MediaVO> listExtract(SearchCriteria cri) throws SQLException;
 	
-	public Integer getExtractCount(SearchCriteria cri);
+	public Integer getExtractCount(SearchCriteria cri) throws SQLException;
 	
-	public List<MediaVO> listSearch(SearchCriteria cri);
-	public List<MediaVO> textTypelistSearch(SearchCriteria cri);
-	public List<MediaVO> textTypelistSearch2(SearchCriteria cri);
-	public List<MediaVO> textTypelistSearch3(SearchCriteria cri);
-	public List<MediaVO> textTypelistSearch4(SearchCriteria cri);
+	public List<MediaVO> listSearch(SearchCriteria cri) throws SQLException;
+	public List<MediaVO> textTypelistSearch(SearchCriteria cri) throws SQLException;
+	public List<MediaVO> textTypelistSearch2(SearchCriteria cri) throws SQLException;
+	public List<MediaVO> textTypelistSearch3(SearchCriteria cri) throws SQLException;
+	public List<MediaVO> textTypelistSearch4(SearchCriteria cri) throws SQLException;
 	
-	public Integer getSearchCount(SearchCriteria cri);
+	public Integer getSearchCount(SearchCriteria cri) throws SQLException;
 	
-	public List<MediaVO> mediaListData(SearchCriteria cri);
-	public List<MediaVO> wlistSearch(SearchCriteria cri);
-	public List<MediaVO> wlistSearch2(SearchCriteria cri);
-	public List<MediaVO> wPageSearch(SearchCriteria cri);
-	public Integer wgetSearchCount(SearchCriteria cri);
-	
-	
-	public List<MediaVO> listAll(SearchCriteria cri);
-	public List<MediaVO> listAllEx(SearchCriteria cri);
-	public List<MediaVO> dashListAll(SearchCriteria cri);
-	
-	public List<MediaVO> searchAll(SearchCriteria cri);
-	
-	public Integer getTotalCount(SearchCriteria cri);
-	public Integer getMatchCount(SearchCriteria cri);
-	
-	public Integer mediaGetTotalCount(SearchCriteria cri);
-	
-	public Integer reporterGetTotalCount(SearchCriteria cri);
-	
-	public Integer mediaGetSearchCount(SearchCriteria cri);
-	
-	public Integer reporterGetSearchCount(SearchCriteria cri);
-	
-	public void updateTextType (MediaVO vo);
-	public void newsUpdateTextType (NewsVO vo);
-	public void newsUpdateState (NewsVO vo);
-	public void replyUpdateTextType (ReplyVO vo);
-	
-	public void updateThumbnail (MediaVO vo);
-	
-	public TextTypeVO getMediaPortalCount(SearchCriteria cri);
-	public TextTypeVO getMediaTextTypeTotalCount(SearchCriteria cri);
-	public TextTypeVO getMediaTextTypeSearchCount(SearchCriteria cri);
-	
-	public TextTypeVO getPressPortalCount(SearchCriteria cri);
-	public TextTypeVO getPressTextTypeTotalCount(SearchCriteria cri);
-	public TextTypeVO getPressTextTypeSearchCount(SearchCriteria cri);
+	public List<MediaVO> mediaListData(SearchCriteria cri) throws SQLException;
+	public List<MediaVO> wlistSearch(SearchCriteria cri) throws SQLException;
+	public List<MediaVO> wlistSearch2(SearchCriteria cri) throws SQLException;
+	public List<MediaVO> wPageSearch(SearchCriteria cri) throws SQLException;
+	public Integer wgetSearchCount(SearchCriteria cri) throws SQLException;
 	
 	
-	public List<MediaVO> reporterGetTextTypeCount(SearchCriteria cri, String reporter,String textType);
+	public List<MediaVO> listAll(SearchCriteria cri) throws SQLException;
+	public List<MediaVO> listAllEx(SearchCriteria cri) throws SQLException;
+	public List<MediaVO> dashListAll(SearchCriteria cri) throws SQLException;
 	
-	public List<NewsVO> newsList(SearchCriteria cri);
+	public List<MediaVO> searchAll(SearchCriteria cri) throws SQLException;
 	
-	public List<ReplyVO> replyList(SearchCriteria cri);
+	public Integer getTotalCount(SearchCriteria cri) throws SQLException;
+	public Integer getMatchCount(SearchCriteria cri) throws SQLException;
 	
-	public List<MediaVO> mediaCnt(SearchCriteria cri);
-	public List<TextTypeDateVO> textTypeCount2(SearchCriteria cri);
-	public Integer checkUrl(String url);
-	public Integer mTotalCnt(SearchCriteria cri);
-	public Integer graphmTotalCnt(SearchCriteria cri);
+	public Integer mediaGetTotalCount(SearchCriteria cri) throws SQLException;
 	
-	public List<MediaVO> headlineList(SearchCriteria cri);
-	public Integer mediaTotalcnt(SearchCriteria cri);
-	public Integer replyTotalcnt(SearchCriteria cri);
+	public Integer reporterGetTotalCount(SearchCriteria cri) throws SQLException;
 	
-	public Integer mediaTextcnt(SearchCriteria cri);
-	public Integer mediaTextcnt2(SearchCriteria cri);
-	public Integer mediaCountAll(SearchCriteria cri);
-	public List<MailVO> mailList(SearchCriteria cri);
-	public Integer mailCountAll(SearchCriteria cri);
+	public Integer mediaGetSearchCount(SearchCriteria cri) throws SQLException;
 	
-	public List<MediaVO> mediaMatchList(SearchCriteria cri);
-	public Integer mediaMatchCount(SearchCriteria cri);
-	public List<MediaVO> mediaMatchList2(SearchCriteria cri);
-	public Integer mediaMatchCount2(SearchCriteria cri);
-	public Integer mediaMatchCount3(SearchCriteria cri);
-	public Integer mediaMatchCount4(SearchCriteria cri);
-	public List<MediaVO> mediaTotalMatchList(SearchCriteria cri);
-	public List<MediaVO> mediaDataList(SearchCriteria cri);
-	public List<MediaVO> mediaMatchDataList(SearchCriteria cri);
+	public Integer reporterGetSearchCount(SearchCriteria cri) throws SQLException;
 	
-	public List<MediaVO> reporterMatchList(SearchCriteria cri);
-	public Integer reporterMatchCount(SearchCriteria cri);
-	public List<MediaVO> reporterMatchList2(SearchCriteria cri);
-	public Integer reporterMatchCount2(SearchCriteria cri);
-	public Integer reporterMatchCount3(SearchCriteria cri);
-	public Integer reporterMatchCount4(SearchCriteria cri);
-	public List<MediaVO> reporterTotalMatchList(SearchCriteria cri);
-	public List<MediaVO> reporterDataList(SearchCriteria cri);
-	public List<MediaVO> reporterMatchDataList(SearchCriteria cri);
+	public void updateTextType (MediaVO vo) throws SQLException;
+	public void newsUpdateTextType (NewsVO vo) throws SQLException;
+	public void newsUpdateState (NewsVO vo) throws SQLException;
+	public void replyUpdateTextType (ReplyVO vo) throws SQLException;
 	
-	public List<MediaVO> mediaMatchallList(SearchCriteria cri);
-	public List<MediaVO> reporterMatchallList(SearchCriteria cri);
-	public List<MediaVO> mailMatch(SearchCriteria cri);
-	public List<MediaVO> dashMediaMatch(SearchCriteria cri);
+	public void updateThumbnail (MediaVO vo) throws SQLException;
+	
+	public TextTypeVO getMediaPortalCount(SearchCriteria cri) throws SQLException;
+	public TextTypeVO getMediaTextTypeTotalCount(SearchCriteria cri) throws SQLException;
+	public TextTypeVO getMediaTextTypeSearchCount(SearchCriteria cri) throws SQLException;
+	
+	public TextTypeVO getPressPortalCount(SearchCriteria cri) throws SQLException;
+	public TextTypeVO getPressTextTypeTotalCount(SearchCriteria cri) throws SQLException;
+	public TextTypeVO getPressTextTypeSearchCount(SearchCriteria cri) throws SQLException;
+	
+	
+	public List<MediaVO> reporterGetTextTypeCount(SearchCriteria cri, String reporter,String textType) throws SQLException;
+	
+	public List<NewsVO> newsList(SearchCriteria cri) throws SQLException;
+	
+	public List<ReplyVO> replyList(SearchCriteria cri) throws SQLException;
+	
+	public List<MediaVO> mediaCnt(SearchCriteria cri) throws SQLException;
+	public List<TextTypeDateVO> textTypeCount2(SearchCriteria cri) throws SQLException;
+	public Integer checkUrl(String url) throws SQLException;
+	public Integer mTotalCnt(SearchCriteria cri) throws SQLException;
+	public Integer graphmTotalCnt(SearchCriteria cri) throws SQLException;
+	
+	public List<MediaVO> headlineList(SearchCriteria cri) throws SQLException;
+	public Integer mediaTotalcnt(SearchCriteria cri) throws SQLException;
+	public Integer replyTotalcnt(SearchCriteria cri) throws SQLException;
+	
+	public Integer mediaTextcnt(SearchCriteria cri) throws SQLException;
+	public Integer mediaTextcnt2(SearchCriteria cri) throws SQLException;
+	public Integer mediaCountAll(SearchCriteria cri) throws SQLException;
+	public List<MailVO> mailList(SearchCriteria cri) throws SQLException;
+	public Integer mailCountAll(SearchCriteria cri) throws SQLException;
+	
+	public List<MediaVO> mediaMatchList(SearchCriteria cri) throws SQLException;
+	public Integer mediaMatchCount(SearchCriteria cri) throws SQLException;
+	public List<MediaVO> mediaMatchList2(SearchCriteria cri) throws SQLException;
+	public Integer mediaMatchCount2(SearchCriteria cri) throws SQLException;
+	public Integer mediaMatchCount3(SearchCriteria cri) throws SQLException;
+	public Integer mediaMatchCount4(SearchCriteria cri) throws SQLException;
+	public List<MediaVO> mediaTotalMatchList(SearchCriteria cri) throws SQLException;
+	public List<MediaVO> mediaDataList(SearchCriteria cri) throws SQLException;
+	public List<MediaVO> mediaMatchDataList(SearchCriteria cri) throws SQLException;
+	
+	public List<MediaVO> reporterMatchList(SearchCriteria cri) throws SQLException;
+	public Integer reporterMatchCount(SearchCriteria cri) throws SQLException;
+	public List<MediaVO> reporterMatchList2(SearchCriteria cri) throws SQLException;
+	public Integer reporterMatchCount2(SearchCriteria cri) throws SQLException;
+	public Integer reporterMatchCount3(SearchCriteria cri) throws SQLException;
+	public Integer reporterMatchCount4(SearchCriteria cri) throws SQLException;
+	public List<MediaVO> reporterTotalMatchList(SearchCriteria cri) throws SQLException;
+	public List<MediaVO> reporterDataList(SearchCriteria cri) throws SQLException;
+	public List<MediaVO> reporterMatchDataList(SearchCriteria cri) throws SQLException;
+	
+	public List<MediaVO> mediaMatchallList(SearchCriteria cri) throws SQLException;
+	public List<MediaVO> reporterMatchallList(SearchCriteria cri) throws SQLException;
+	public List<MediaVO> mailMatch(SearchCriteria cri) throws SQLException;
+	public List<MediaVO> dashMediaMatch(SearchCriteria cri) throws SQLException;
 }

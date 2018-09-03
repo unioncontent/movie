@@ -1,5 +1,6 @@
 package org.union.service;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,19 +16,19 @@ public class CalendarServiceImpl implements CalendarService{
 	private CalendarDAO calendarDAO;
 
 	@Override
-	public void insert(CalendarVO vo) {
+	public void insert(CalendarVO vo) throws SQLException {
 
 		calendarDAO.create(vo);
 	}
 
 	@Override
-	public void remove(String title) {
+	public void remove(String title) throws SQLException {
 
 		calendarDAO.delete(title);
 	}
 
 	@Override
-	public List<CalendarVO> listDate() {
+	public List<CalendarVO> listDate() throws SQLException {
 
 		return calendarDAO.listDate();
 	}

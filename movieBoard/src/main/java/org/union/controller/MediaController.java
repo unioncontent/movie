@@ -2,6 +2,7 @@ package org.union.controller;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -71,7 +72,7 @@ public class MediaController {
 	
 	
 	@GetMapping("/news")
-	public void newsGET(@ModelAttribute("cri") SearchCriteria cri, Model model) throws ParseException {
+	public void newsGET(@ModelAttribute("cri") SearchCriteria cri, Model model) throws ParseException, SQLException {
 		logger.info("newsGET called....");
 		logger.info("first cri: " + cri);
 		cri.setCompany(null);
@@ -162,7 +163,7 @@ public class MediaController {
 	
 	
 	@GetMapping("/replyAddOk")
-	public String replyAddOk(NewsVO vo) {
+	public String replyAddOk(NewsVO vo) throws SQLException {
 		
 		mediaService.replyAdd(vo);
 		return "redirect:/media/replyAdd";
@@ -595,7 +596,7 @@ public class MediaController {
 	
 	@ResponseBody
 	@PostMapping("/newsInsert")
-	public void newsInsertPOST(Integer idx, String textType) {
+	public void newsInsertPOST(Integer idx, String textType) throws SQLException {
 		logger.info("newsInsert called....");
 		
 		logger.info("idx: " + idx);
@@ -611,7 +612,7 @@ public class MediaController {
 	
 	@ResponseBody
 	@GetMapping("/excel")
-	public ModelAndView excelGET(ModelAndView mav, ExcelView excelView, SearchCriteria cri, Model model) {
+	public ModelAndView excelGET(ModelAndView mav, ExcelView excelView, SearchCriteria cri, Model model) throws SQLException {
 		
 		if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
 			logger.info("keyword is null");
@@ -675,7 +676,7 @@ public class MediaController {
 	
 	@ResponseBody
 	@GetMapping("/excelOk")
-	public ModelAndView ReplyexcelGET(ModelAndView model, ExcelView excelView, SearchCriteria cri) {
+	public ModelAndView ReplyexcelGET(ModelAndView model, ExcelView excelView, SearchCriteria cri) throws SQLException {
 		
 		if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
 			logger.info("keyword is null");
@@ -742,7 +743,7 @@ public class MediaController {
 	
 	@ResponseBody
 	@GetMapping("/excel_match")
-	public ModelAndView excel_matchGET(ModelAndView model, Match_Excel excelView, SearchCriteria cri, String part) {
+	public ModelAndView excel_matchGET(ModelAndView model, Match_Excel excelView, SearchCriteria cri, String part) throws SQLException {
 		
 		if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
 			logger.info("keyword is null");
@@ -812,7 +813,7 @@ public class MediaController {
 	
 	
 	@GetMapping("/press")
-	public void pressGET(@ModelAttribute("cri") SearchCriteria cri, Model model) {
+	public void pressGET(@ModelAttribute("cri") SearchCriteria cri, Model model) throws SQLException {
 		logger.info("pressGET called....");
 		
 		logger.info("cri: " + cri);
@@ -840,7 +841,7 @@ public class MediaController {
 	}
 	
 	@PostMapping("/pressInsert")
-	public String pressInsertPOST(ReporterVO reporterVO) {
+	public String pressInsertPOST(ReporterVO reporterVO) throws SQLException {
 		logger.info("pressInsertPOST called....");
 		
 		logger.info("reporterVO: " + reporterVO);
@@ -852,7 +853,7 @@ public class MediaController {
 	
 	@ResponseBody
 	@PostMapping("modify")
-	public String modifyPOST(Integer idx, String textType) {
+	public String modifyPOST(Integer idx, String textType) throws SQLException {
 		logger.info("insertPOST called....");
 		
 		logger.info("idx: " + idx);
@@ -874,7 +875,7 @@ public class MediaController {
 	
 	@ResponseBody
 	@PostMapping("insert")
-	public String insertPOST(Integer idx, String textType) {
+	public String insertPOST(Integer idx, String textType) throws SQLException {
 		logger.info("insertPOST called....");
 		
 		logger.info("idx: " + idx);
@@ -892,7 +893,7 @@ public class MediaController {
 	
 	@ResponseBody
 	@PostMapping("/remove")
-	public String removePOST(Integer idx) {
+	public String removePOST(Integer idx) throws SQLException {
 		logger.info("removePOST called....");
 		logger.info("idx: " + idx);
 		
@@ -904,7 +905,7 @@ public class MediaController {
 	
 	@ResponseBody
 	@PostMapping("checkList")
-	public String checkList(Integer idx) {
+	public String checkList(Integer idx) throws SQLException {
 		logger.info("checkListPOST called....");
 		logger.info("checkidx: " + idx);
 		
@@ -916,7 +917,7 @@ public class MediaController {
 	
 	@ResponseBody
 	@PostMapping("uncheckList")
-	public String uncheckList(Integer idx) {
+	public String uncheckList(Integer idx) throws SQLException {
 		logger.info("uncheckListPOST called....");
 		logger.info("checkidx: " + idx);
 		
@@ -928,7 +929,7 @@ public class MediaController {
 	
 	@ResponseBody
 	@PostMapping("update")
-	public String newsUpdate(Integer idx, Integer state) {
+	public String newsUpdate(Integer idx, Integer state) throws SQLException {
 		logger.info("newsUpdate called....");
 		
 		logger.info("idx: " + idx);
@@ -946,7 +947,7 @@ public class MediaController {
 	
 	@ResponseBody
 	@PostMapping("allUpdate")
-	public String updatePOST(Integer idx, Integer state) {
+	public String updatePOST(Integer idx, Integer state) throws SQLException {
 		logger.info("updatePOST called....");
 		
 		logger.info("idx: " + idx);
@@ -965,7 +966,7 @@ public class MediaController {
 	
 	@ResponseBody
 	@PostMapping("/checkUrl")
-	public Integer checkUrlPOST(String url) {
+	public Integer checkUrlPOST(String url) throws SQLException {
 		logger.info("checkUrlPOST called....");
 		
 		logger.info("url: " + url);
@@ -975,7 +976,7 @@ public class MediaController {
 	
 	@ResponseBody
 	@PostMapping("/graphMatch")
-	public List<GraphVO> graphMatch(Model model, String success, @ModelAttribute("cri") SearchCriteria cri, String company, String selectKey, String startDate, String endDate, String part) throws ParseException {
+	public List<GraphVO> graphMatch(Model model, String success, @ModelAttribute("cri") SearchCriteria cri, String company, String selectKey, String startDate, String endDate, String part) throws ParseException, SQLException {
 		logger.info("graphMatchPOST called....");
 		
 		if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
@@ -1089,7 +1090,7 @@ public class MediaController {
 	}
 	@ResponseBody
 	@PostMapping("/graphMatch2")
-	public List<GraphVO> graphMatch2(Model model, String success, @ModelAttribute("cri") SearchCriteria cri, String company, String selectKey, String startDate, String endDate, String part) throws ParseException {
+	public List<GraphVO> graphMatch2(Model model, String success, @ModelAttribute("cri") SearchCriteria cri, String company, String selectKey, String startDate, String endDate, String part) throws ParseException, SQLException {
 		logger.info("graphMatch2POST called....");
 		
 		if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {

@@ -1,5 +1,6 @@
 package org.union.controller;
 
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -66,7 +67,7 @@ public class DashBaordController {
 	private static Logger logger = LoggerFactory.getLogger(DashBaordController.class);
 	
 	@GetMapping("/dashBoard_main")
-	public void dashBoard_mainGET(@ModelAttribute("cri") SearchCriteria cri, Model model) {
+	public void dashBoard_mainGET(@ModelAttribute("cri") SearchCriteria cri, Model model) throws SQLException {
 		logger.info("dashBoard_main called....");
 		
 		cri.setKeyword(null);
@@ -124,7 +125,7 @@ public class DashBaordController {
 	}
 	
 	@GetMapping("/dashBoard_re")
-	public void dashBoard_re_mainGET(@ModelAttribute("cri") SearchCriteria cri, Model model) {
+	public void dashBoard_re_mainGET(@ModelAttribute("cri") SearchCriteria cri, Model model) throws SQLException {
 		logger.info("dashBoard_re called....");
 		
 		cri.setKeyword(null);
@@ -229,7 +230,7 @@ public class DashBaordController {
 	}
 	
 	@GetMapping("/dashBoard_popUp")
-	public void dashBoard_popupGET(@ModelAttribute("cri") SearchCriteria cri, Model model, String part, String company, String selectKey, String emailDate) {
+	public void dashBoard_popupGET(@ModelAttribute("cri") SearchCriteria cri, Model model, String part, String company, String selectKey, String emailDate) throws SQLException {
 		logger.info("dashBoard_popup called....");
 		
 		cri.setKeyword(null);
@@ -436,7 +437,7 @@ public class DashBaordController {
 	}*/
 	
 	@GetMapping("/showDashBoard")
-	public void showDashBoardGET(@ModelAttribute("cri") SearchCriteria cri, Model model) {
+	public void showDashBoardGET(@ModelAttribute("cri") SearchCriteria cri, Model model) throws SQLException {
 		logger.info("showDashBoardGET called....");
 		
 		if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
@@ -506,7 +507,7 @@ public class DashBaordController {
 	
 	@ResponseBody
 	@PostMapping("/graph")
-	public List<GraphVO> graphPOST(Model model, String success) {
+	public List<GraphVO> graphPOST(Model model, String success) throws SQLException {
 		logger.info("graphPOST called....");
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH");
@@ -543,7 +544,7 @@ public class DashBaordController {
 	
 	@ResponseBody
 	@PostMapping("/showGraph")
-	public List<GraphVO> showGraphPOST(Model model, String success) {
+	public List<GraphVO> showGraphPOST(Model model, String success) throws SQLException {
 		logger.info("showgraphPOST called....");
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH");
@@ -580,7 +581,7 @@ public class DashBaordController {
 	
 	@ResponseBody
 	@PostMapping("/graph_re")
-	public List<GraphVO> graph_rePOST(Model model, String success, @ModelAttribute("cri") SearchCriteria cri, String selectKey) {
+	public List<GraphVO> graph_rePOST(Model model, String success, @ModelAttribute("cri") SearchCriteria cri, String selectKey) throws SQLException {
 		logger.info("graph_rePOST called....");
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH");
@@ -619,7 +620,7 @@ public class DashBaordController {
 	
 	@ResponseBody
 	@PostMapping("listDate")
-	public List<CalendarVO> listDatePOST(String date){
+	public List<CalendarVO> listDatePOST(String date) throws SQLException{
 		logger.info("listDatePost called....");
 		
 		List<CalendarVO> calList = calendarService.listDate();
@@ -627,35 +628,14 @@ public class DashBaordController {
 		
 		logger.info("calList: " + calList);
 		
-		/*for(int i = 0; i < calList.size(); i++) {
-			
-			if(resultList.size() > 0) {
-				for(int j = 0; j < resultList.size(); j++) {
-					if(resultList.get(j).getCalendar_date().equals(calList.get(i).getCalendar_date())) {
-						resultList.get(j).setCalendar_title(resultList.get(j).getCalendar_title() + "\n"
-															+ calList.get(i).getCalendar_title());
-						
-						calList.remove(i);
-					}else {
-						resultList.add(calList.get(i));
-						
-					}
-				}
-				
-			}else {
-				resultList.add(calList.get(i));
-				
-			}
-		}
 		
-		logger.info("resultList: " + resultList);*/
 		
 		return calList;
 	}
 	
 	@ResponseBody
 	@PostMapping("insert")
-	public String insertPOST(String title, String date) {
+	public String insertPOST(String title, String date) throws SQLException {
 		logger.info("insertPOST called....");
 		
 		date = date.replaceAll("/", "-");
@@ -675,7 +655,7 @@ public class DashBaordController {
 	
 	@ResponseBody
 	@PostMapping("delete")
-	public String deletePOST(String title) {
+	public String deletePOST(String title) throws SQLException {
 		logger.info("deletePOST called....");
 		
 		calendarService.remove(title);

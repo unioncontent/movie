@@ -1,5 +1,7 @@
 package org.union.controller;
 
+import java.sql.SQLException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +40,7 @@ public class ExtractController2 {
 	private UserService userService;
 	
 	@RequestMapping("/extract")
-	public void getExtract(@ModelAttribute("scritera") SearchCriteria scriteria,Model model) {
+	public void getExtract(@ModelAttribute("scritera") SearchCriteria scriteria,Model model) throws SQLException {
 		logger.info("-----------getExtract 호출--------------");
 		// 1. 검색옵션에서 회사이름을 선택했을때
 		if(scriteria.getCompany()!=null) {

@@ -1,5 +1,6 @@
 package org.union.dao;
 
+import java.sql.SQLException;
 import java.util.Date;
 
 import org.junit.Before;
@@ -30,7 +31,7 @@ public class NaverMovieDAOTester {
 
 
     @Test
-    public void test() {
+    public void test() throws SQLException {
 	SearchCriteria cri = new SearchCriteria();
 	cri.setCompany(null);
 	cri.setSelectKey(null);

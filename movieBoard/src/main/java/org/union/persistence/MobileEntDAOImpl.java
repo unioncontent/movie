@@ -1,6 +1,9 @@
 package org.union.persistence;
 
+import java.sql.SQLException;
 import java.util.List;
+
+import javax.annotation.Resource;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,167 +12,173 @@ import org.union.domain.MobileEntVO;
 import org.union.domain.SearchCriteria;
 
 @Repository
-public class MobileEntDAOImpl implements MobileEntDAO {
+public class MobileEntDAOImpl implements MobileEntDAO{
+	
 	@Autowired
-	private SqlSession session;
+	@Resource(name="oneSqlSession")
+	private SqlSession session1;
+	
+	@Autowired
+	@Resource(name="twoSqlSession")
+	private SqlSession session2;
 	
 	private static final String namespace = "org.union.mappers.MobileEntMapper.";
 		
 	@Override
-	public Integer getTypeOfMovieCount(SearchCriteria cri) {
+	public Integer getTypeOfMovieCount(SearchCriteria cri)  throws SQLException {
 
-		return session.selectOne(namespace + "getTypeOfMovieCount", cri);
+		return session1.selectOne(namespace + "getTypeOfMovieCount", cri);
 	}
 
 
 	@Override
-	public Integer getTypeOfActorCount(SearchCriteria cri) {
+	public Integer getTypeOfActorCount(SearchCriteria cri)  throws SQLException {
 
-		return session.selectOne(namespace + "getTypeOfActorCount", cri);
-	}
-	
-	@Override
-	public MobileEntVO read(Integer NM_idx) {
-
-		return session.selectOne(namespace + "read", NM_idx);
-	}
-
-	@Override
-	public List<MobileEntVO> searchList(SearchCriteria cri) {
-
-		return session.selectList(namespace + "searchList", cri);
+		return session1.selectOne(namespace + "getTypeOfActorCount", cri);
 	}
 	
 	@Override
-	public List<MobileEntVO> searchAllList(SearchCriteria cri) {
+	public MobileEntVO read(Integer NM_idx)  throws SQLException {
 
-		return session.selectList(namespace + "searchAllList", cri);
+		return session1.selectOne(namespace + "read", NM_idx);
+	}
+
+	@Override
+	public List<MobileEntVO> searchList(SearchCriteria cri)  throws SQLException {
+
+		return session1.selectList(namespace + "searchList", cri);
+	}
+	
+	@Override
+	public List<MobileEntVO> searchAllList(SearchCriteria cri)  throws SQLException {
+
+		return session1.selectList(namespace + "searchAllList", cri);
 	}
 
 
 	@Override
-	public Integer getSearchCount(SearchCriteria cri) {
+	public Integer getSearchCount(SearchCriteria cri)  throws SQLException {
 	    
-		return session.selectOne(namespace + "getSearchCount", cri);
+		return session1.selectOne(namespace + "getSearchCount", cri);
 	}
 
 
 	@Override
-	public Integer MgetTypeOfMovieCount(SearchCriteria cri) {
+	public Integer MgetTypeOfMovieCount(SearchCriteria cri)  throws SQLException {
 
-		return session.selectOne(namespace + "MgetTypeOfMovieCount", cri);
+		return session1.selectOne(namespace + "MgetTypeOfMovieCount", cri);
 	}
 
 
 	@Override
-	public Integer MgetTypeOfActorCount(SearchCriteria cri) {
+	public Integer MgetTypeOfActorCount(SearchCriteria cri)  throws SQLException {
 
-		return session.selectOne(namespace + "MgetTypeOfActorCount", cri);
+		return session1.selectOne(namespace + "MgetTypeOfActorCount", cri);
 	}
 
 
 	@Override
-	public List<MobileEntVO> MsearchList(SearchCriteria cri) {
+	public List<MobileEntVO> MsearchList(SearchCriteria cri)  throws SQLException {
 
-		return session.selectList(namespace + "MsearchList", cri);
+		return session1.selectList(namespace + "MsearchList", cri);
 	}
 
 
 	@Override
-	public List<MobileEntVO> MsearchAllList(SearchCriteria cri) {
+	public List<MobileEntVO> MsearchAllList(SearchCriteria cri)  throws SQLException {
 
-		return session.selectList(namespace + "MsearchAllList", cri);
+		return session1.selectList(namespace + "MsearchAllList", cri);
 	}
 
 
 	@Override
-	public Integer MgetSearchCount(SearchCriteria cri) {
+	public Integer MgetSearchCount(SearchCriteria cri)  throws SQLException {
 		 
-		return session.selectOne(namespace + "MgetSearchCount", cri);
+		return session1.selectOne(namespace + "MgetSearchCount", cri);
 	}
 
 
 	@Override
-	public Integer getMatchCount(SearchCriteria cri) {
+	public Integer getMatchCount(SearchCriteria cri)  throws SQLException {
 
-		return session.selectOne(namespace + "getMatchCount", cri);
+		return session1.selectOne(namespace + "getMatchCount", cri);
 	}
 
 
 	@Override
-	public Integer MgetMatchCount(SearchCriteria cri) {
+	public Integer MgetMatchCount(SearchCriteria cri)  throws SQLException {
 
-		return session.selectOne(namespace + "MgetMatchCount", cri);
+		return session1.selectOne(namespace + "MgetMatchCount", cri);
 	}
 
 
 	@Override
-	public Integer getTypeOfMovieCountGraph(SearchCriteria cri) {
+	public Integer getTypeOfMovieCountGraph(SearchCriteria cri)  throws SQLException {
 
-		return session.selectOne(namespace + "getTypeOfMovieCountGraph", cri);
+		return session1.selectOne(namespace + "getTypeOfMovieCountGraph", cri);
 	}
 
 
 	@Override
-	public Integer getTypeOfActorCountGraph(SearchCriteria cri) {
+	public Integer getTypeOfActorCountGraph(SearchCriteria cri)  throws SQLException {
 
-		return session.selectOne(namespace + "getTypeOfActorCountGraph", cri);
+		return session1.selectOne(namespace + "getTypeOfActorCountGraph", cri);
 	}
 
 
 	@Override
-	public Integer getMatchCountGraph(SearchCriteria cri) {
+	public Integer getMatchCountGraph(SearchCriteria cri)  throws SQLException {
 
-		return session.selectOne(namespace + "getMatchCountGraph", cri);
+		return session1.selectOne(namespace + "getMatchCountGraph", cri);
 	}
 
 
 	@Override
-	public Integer MgetTypeOfMovieCountGraph(SearchCriteria cri) {
+	public Integer MgetTypeOfMovieCountGraph(SearchCriteria cri)  throws SQLException {
 
-		return session.selectOne(namespace + "MgetTypeOfMovieCountGraph", cri);
+		return session1.selectOne(namespace + "MgetTypeOfMovieCountGraph", cri);
 	}
 
 
 	@Override
-	public Integer MgetTypeOfActorCountGraph(SearchCriteria cri) {
+	public Integer MgetTypeOfActorCountGraph(SearchCriteria cri)  throws SQLException {
 
-		return session.selectOne(namespace + "MgetTypeOfActorCountGraph", cri);
+		return session1.selectOne(namespace + "MgetTypeOfActorCountGraph", cri);
 	}
 
 
 	@Override
-	public Integer MgetMatchCountGraph(SearchCriteria cri) {
+	public Integer MgetMatchCountGraph(SearchCriteria cri)  throws SQLException {
 
-		return session.selectOne(namespace + "MgetMatchCountGraph", cri);
+		return session1.selectOne(namespace + "MgetMatchCountGraph", cri);
 	}
 
 
 	@Override
-	public List<MobileEntVO> showSearchList(SearchCriteria cri) {
+	public List<MobileEntVO> showSearchList(SearchCriteria cri)  throws SQLException {
 
-		return session.selectList(namespace + "showSearchList", cri);
+		return session1.selectList(namespace + "showSearchList", cri);
 	}
 
 
 	@Override
-	public List<MobileEntVO> showSearchAllList(SearchCriteria cri) {
+	public List<MobileEntVO> showSearchAllList(SearchCriteria cri)  throws SQLException {
 
-		return session.selectList(namespace + "showSearchAllList", cri);
+		return session1.selectList(namespace + "showSearchAllList", cri);
 	}
 
 
 	@Override
-	public List<MobileEntVO> showMsearchList(SearchCriteria cri) {
+	public List<MobileEntVO> showMsearchList(SearchCriteria cri)  throws SQLException {
 
-		return session.selectList(namespace + "showMsearchList", cri);
+		return session1.selectList(namespace + "showMsearchList", cri);
 	}
 
 
 	@Override
-	public List<MobileEntVO> showMsearchAllList(SearchCriteria cri) {
+	public List<MobileEntVO> showMsearchAllList(SearchCriteria cri)  throws SQLException {
 
-		return session.selectList(namespace + "showMsearchAllList", cri);
+		return session1.selectList(namespace + "showMsearchAllList", cri);
 	}
 
 }

@@ -1,5 +1,6 @@
 package org.union.controller;
 
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -500,7 +501,7 @@ public class SNSController {
 	
 	@ResponseBody
 	@PostMapping("/graph")
-	public List<GraphVO> graphPOST(Model model, String success, @ModelAttribute("cri") SearchCriteria cri,String portal_name, String company, String selectKey) {
+	public List<GraphVO> graphPOST(Model model, String success, @ModelAttribute("cri") SearchCriteria cri,String portal_name, String company, String selectKey) throws SQLException {
 		logger.info("grpahPOST called....");
 		
 		if (cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey())) {
@@ -595,7 +596,7 @@ public class SNSController {
 	}
 	
 	@GetMapping("/excel")
-	public ModelAndView excelGET(ModelAndView model, ExcelView excelView, ExcelViewM excelViewM,SearchCriteria cri) {
+	public ModelAndView excelGET(ModelAndView model, ExcelView excelView, ExcelViewM excelViewM,SearchCriteria cri) throws SQLException {
 		
 		if(cri.getKeyword() != null) {
 			if(cri.getKeyword().isEmpty() || cri.getKeyword().equals("undefined")) {

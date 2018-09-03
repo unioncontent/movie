@@ -3,6 +3,7 @@ package org.union.controller;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -75,7 +76,7 @@ public class ManageController {
 	private ReporterService reporterService;
 
 	@GetMapping("/company")
-	public void companyGET(Model model) {
+	public void companyGET(Model model) throws SQLException {
 		logger.info("companyGET called....");
 		
 		List<UserVO> userVO = userService.listAll();
@@ -85,7 +86,7 @@ public class ManageController {
 	
 	
 	@PostMapping("/companyInsert")
-	public String companyInsertGET(UserVO userVO) {
+	public String companyInsertGET(UserVO userVO) throws SQLException {
 		logger.info("companyInsertPOST called....");
 	
 		logger.info("UserVO: " + userVO);
@@ -100,7 +101,7 @@ public class ManageController {
 	
 	@ResponseBody
 	@PostMapping("/idCheck")
-	public String idCheckGET(String user_ID) {
+	public String idCheckGET(String user_ID) throws SQLException {
 		logger.info("idCheckGET called....");
 		
 		logger.info("user_ID: " + user_ID);
@@ -120,7 +121,7 @@ public class ManageController {
 	
 	
 	@GetMapping("/monitor")
-	public void monitorGET(Model model) {
+	public void monitorGET(Model model) throws SQLException {
 		logger.info("monitorGET called....");
 		
 		model.addAttribute("monitorList", monitorService.pageAll());
@@ -179,7 +180,7 @@ public class ManageController {
 	}
 	
 	@PostMapping("/reportbackup")
-	public ModelAndView reportbackup(String startDate, String endDate) {
+	public ModelAndView reportbackup(String startDate, String endDate) throws SQLException {
 		
 		ModelAndView mav=new ModelAndView();
 		mav.addObject("date", startDate);
@@ -189,7 +190,7 @@ public class ManageController {
 	}
 	
 	@GetMapping("/reportbackup")
-	public void reportGet(@ModelAttribute("cri") SearchCriteria cri, Model model, String startDate, String endDate, String company, String selectKey) throws Exception{
+	public void reportGet(@ModelAttribute("cri") SearchCriteria cri, Model model, String startDate, String endDate, String company, String selectKey) throws Exception, SQLException {
 		logger.info("reportGET called....");
 		
 		cri.setKeyword(null);
@@ -275,7 +276,7 @@ public class ManageController {
 	
 	@ResponseBody
 	@PostMapping("/getTextType")
-	public List<TextTypeVO> getTextType(String url, String part, String keyword){
+	public List<TextTypeVO> getTextType(String url, String part, String keyword) throws SQLException {
 		logger.info("getTextType called....");
 
 		SearchCriteria cri  = new SearchCriteria();
@@ -757,7 +758,7 @@ public class ManageController {
 	
 	@ResponseBody
 	@PostMapping("/issueUpdate")
-	public String issueUpdate(Integer issue_idx, String issue_content) {
+	public String issueUpdate(Integer issue_idx, String issue_content) throws SQLException {
 		logger.info("issueUpdatePOST called....");
 		
 		logger.info("issue_idx: " + issue_idx);
@@ -775,7 +776,7 @@ public class ManageController {
 	
 	@ResponseBody
 	@PostMapping("/issueDelete")
-	public String issueDelete(Integer issue_idx) {
+	public String issueDelete(Integer issue_idx) throws SQLException {
 		logger.info("issueUpdatePOST called....");
 		
 		logger.info("issue_idx: " + issue_idx);

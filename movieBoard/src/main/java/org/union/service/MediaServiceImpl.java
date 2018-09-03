@@ -1,5 +1,6 @@
 package org.union.service;
 
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -26,7 +27,7 @@ import org.union.persistence.MediaDAO;
 import org.union.persistence.ReporterDAO;
 
 @Service
-public class MediaServiceImpl implements MediaService {
+public class MediaServiceImpl implements MediaService  {
 
 	@Autowired
 	MediaDAO mediaDAO;
@@ -39,42 +40,42 @@ public class MediaServiceImpl implements MediaService {
 	
 	
 	@Override
-	public void regist(MediaVO vo) {
+	public void regist(MediaVO vo)  throws SQLException {
 
 		mediaDAO.create(vo);
 	}
 	
 	@Override
-	public void replyAdd(NewsVO vo) {
+	public void replyAdd(NewsVO vo)  throws SQLException {
 
 		try {
 			mediaDAO.replyAdd(vo);
-		} catch (Exception e) {
+		} catch (Exception e)  {
 			e.printStackTrace();
 		}
 	}
 
 	@Override
-	public MediaVO view(Integer media_idx) {
+	public MediaVO view(Integer media_idx)  throws SQLException {
 
 		return mediaDAO.read(media_idx);
 	}
 
 	@Override
-	public void modify(MediaVO vo) {
+	public void modify(MediaVO vo)  throws SQLException {
 
 		mediaDAO.update(vo);
 	}
 
 	@Override
-	public void remove(Integer media_idx) {
+	public void remove(Integer media_idx)  throws SQLException {
 
 		mediaDAO.delete(media_idx);
 		
 	}
 	
 	@Override
-	public void checkList(Integer media_idx) {
+	public void checkList(Integer media_idx)  throws SQLException {
 
 		mediaDAO.checkList(media_idx);
 		
@@ -82,21 +83,21 @@ public class MediaServiceImpl implements MediaService {
 
 
 	@Override
-	public void newsRemove(Integer media_idx) {
+	public void newsRemove(Integer media_idx)  throws SQLException {
 
 		mediaDAO.newsDelete(media_idx);
 		
 	}
 	
 	@Override
-	public void replyRemove(Integer reply_idx) {
+	public void replyRemove(Integer reply_idx)  throws SQLException {
 
 		mediaDAO.replyDelete(reply_idx);
 		
 	}
 	
 	@Override
-	public List<ExtractVO> listExtract(SearchCriteria cri) {
+	public List<ExtractVO> listExtract(SearchCriteria cri)  throws SQLException {
 
 		try {
 			List<MediaVO> mediaList = mediaDAO.listExtract(cri);
@@ -124,14 +125,14 @@ public class MediaServiceImpl implements MediaService {
 			
 			return extractList;
 			
-		} catch (Exception e) {
+		} catch (Exception e)  {
 			e.printStackTrace();
 			return null;
 		}
 	}
 	
 	@Override
-	public Integer getExtractCount(SearchCriteria cri) {
+	public Integer getExtractCount(SearchCriteria cri)  throws SQLException {
 
 		return mediaDAO.getExtractCount(cri);
 	}
@@ -139,7 +140,7 @@ public class MediaServiceImpl implements MediaService {
 	
 	
 	@Override
-	public List<MediaVO> listSearch(SearchCriteria vo) {
+	public List<MediaVO> listSearch(SearchCriteria vo)  throws SQLException {
 
 		List<MediaVO> list = mediaDAO.listSearch(vo);
 		
@@ -148,7 +149,7 @@ public class MediaServiceImpl implements MediaService {
 				
 				try {
 					mediaVO.setKeyword_main(keywordDAO.read(mediaVO.getKeyword()).getKeyword_main());
-				} catch (Exception e) {
+				} catch (Exception e)  {
 					e.printStackTrace();
 				}
 				
@@ -159,13 +160,13 @@ public class MediaServiceImpl implements MediaService {
 	}
 	
 	@Override
-	public Integer getSearchCount(SearchCriteria cri) {
+	public Integer getSearchCount(SearchCriteria cri)  throws SQLException {
 
 		return mediaDAO.getSearchCount(cri);
 	}
 
 	@Override
-	public List<MediaVO> wlistSearch(SearchCriteria vo) {
+	public List<MediaVO> wlistSearch(SearchCriteria vo)  throws SQLException {
 
 		List<MediaVO> list = mediaDAO.wlistSearch(vo);
 		
@@ -174,7 +175,7 @@ public class MediaServiceImpl implements MediaService {
 				
 				try {
 					mediaVO.setKeyword_main(keywordDAO.read(mediaVO.getKeyword()).getKeyword_main());
-				} catch (Exception e) {
+				} catch (Exception e)  {
 					e.printStackTrace();
 				}
 				
@@ -185,16 +186,16 @@ public class MediaServiceImpl implements MediaService {
 	}
 	
 	@Override
-	public List<MediaVO> wlistSearch2(SearchCriteria vo) {
+	public List<MediaVO> wlistSearch2(SearchCriteria vo)  throws SQLException {
 		
 		List<MediaVO> list = mediaDAO.wlistSearch2(vo);
 		
-		for (MediaVO mediaVO : list) {
+		for (MediaVO mediaVO : list)  {
 			if(mediaVO.getKeyword() != null && !mediaVO.getKeyword().equals("press")) {
 				
 				try {
 					mediaVO.setKeyword_main(keywordDAO.read(mediaVO.getKeyword()).getKeyword_main());
-				} catch (Exception e) {
+				} catch (Exception e)  {
 					e.printStackTrace();
 				}
 				
@@ -205,7 +206,7 @@ public class MediaServiceImpl implements MediaService {
 	}
 	
 	@Override
-	public Integer wgetSearchCount(SearchCriteria cri) {
+	public Integer wgetSearchCount(SearchCriteria cri)  throws SQLException {
 
 		return mediaDAO.wgetSearchCount(cri);
 	}
@@ -213,14 +214,14 @@ public class MediaServiceImpl implements MediaService {
 	
 	
 	@Override
-	public List<PeriodMediaVO> periodMedia(SearchCriteria criteria) {
+	public List<PeriodMediaVO> periodMedia(SearchCriteria criteria)  throws SQLException {
 
 		List<PeriodMediaVO> periodList = new ArrayList<PeriodMediaVO>();
 
 		List<ReporterVO> reporterList = reporterDAO.listChecked();
 
 		
-		for (int i = 0; i < reporterList.size(); i++) {
+		for (int i = 0; i < reporterList.size(); i++)  {
 			PeriodMediaVO vo = new PeriodMediaVO();
 
 			criteria.setKeyword(reporterList.get(i).getReporter_media_name());
@@ -230,11 +231,11 @@ public class MediaServiceImpl implements MediaService {
 			if(criteria.getCompany() == null && criteria.getSelectKey() == null) {
 				vo.setSearchCount(0);
 			
-			}else {
+			}else  {
 				vo.setSearchCount(searchCount);
 			}
 			
-			if(vo.getSearchCount() != 0 && vo.getAllCount() != 0) {
+			if(vo.getSearchCount() != 0 && vo.getAllCount() != 0)  {
 				vo.setMatchPercent(Math.ceil(((double)vo.getSearchCount()/(double)vo.getAllCount())*100));
 				
 			}else {
@@ -248,11 +249,11 @@ public class MediaServiceImpl implements MediaService {
 
 		}
 
-		/*for(int i = 0; i < periodList.size(); i++) {
-			for(int j = 0; j < periodList.size(); j++) {
-				if(i == j) {
+		/*for(int i = 0; i < periodList.size(); i++)  throws SQLException {
+			for(int j = 0; j < periodList.size(); j++)  throws SQLException {
+				if(i == j)  throws SQLException {
 					
-				}else if(periodList.get(i).getMedia().equals(periodList.get(j).getMedia())) {
+				}else if(periodList.get(i).getMedia().equals(periodList.get(j).getMedia()))  throws SQLException {
 					int calcCount = periodList.get(i).getAllCount() + periodList.get(j).getAllCount();
 					periodList.get(i).setAllCount(calcCount);
 					periodList.remove(j);
@@ -271,7 +272,7 @@ public class MediaServiceImpl implements MediaService {
 	
 	
 	@Override
-	public List<PeriodMediaVO> periodReporter(SearchCriteria criteria) {
+	public List<PeriodMediaVO> periodReporter(SearchCriteria criteria)  throws SQLException {
 
 		List<PeriodMediaVO> periodList = new ArrayList<PeriodMediaVO>();
 
@@ -291,7 +292,7 @@ public class MediaServiceImpl implements MediaService {
 				vo.setSearchCount(searchCount);
 			}
 			
-			if(vo.getSearchCount() != 0 && vo.getAllCount() != 0) {
+			if(vo.getSearchCount() != 0 && vo.getAllCount() != 0)  {
 				vo.setMatchPercent(Math.ceil(((double)vo.getSearchCount()/(double)vo.getAllCount())*100));
 				
 			}else {
@@ -315,50 +316,50 @@ public class MediaServiceImpl implements MediaService {
 	
 	
 	@Override
-	public Integer mediaGetTotalCount(SearchCriteria criteria) {
+	public Integer mediaGetTotalCount(SearchCriteria criteria)  throws SQLException {
 
 		return mediaDAO.mediaGetTotalCount(criteria);
 		
 	}
 
 	@Override
-	public Integer reporterGetTotalCount(SearchCriteria criteria) {
+	public Integer reporterGetTotalCount(SearchCriteria criteria)  throws SQLException {
 
 		return mediaDAO.reporterGetTotalCount(criteria);
 	}
 
 	@Override
-	public void modifyType(MediaVO vo) {
+	public void modifyType(MediaVO vo)  throws SQLException {
 
 		mediaDAO.updateTextType(vo);
 	}
 	
 	@Override
-	public void newsUpdateTextType(NewsVO vo) {
+	public void newsUpdateTextType(NewsVO vo)  throws SQLException {
 		
 		mediaDAO.newsUpdateTextType(vo);
 	}
 	
 	@Override
-	public void newsUpdateState(NewsVO vo) {
+	public void newsUpdateState(NewsVO vo)  throws SQLException {
 		
 		mediaDAO.newsUpdateState(vo);
 	}
 	
 	@Override
-	public void replyUpdateTextType(ReplyVO vo) {
+	public void replyUpdateTextType(ReplyVO vo)  throws SQLException {
 		
 		mediaDAO.replyUpdateTextType(vo);
 	}
 
 	@Override
-	public void modifyThumbnail(MediaVO vo) {
+	public void modifyThumbnail(MediaVO vo)  throws SQLException {
 
 		mediaDAO.updateThumbnail(vo);
 	}
 
 	@Override
-	public List<MediaVO> listAll(SearchCriteria cri) {
+	public List<MediaVO> listAll(SearchCriteria cri)  throws SQLException {
 
 		List<MediaVO> list = mediaDAO.listAll(cri);
 		
@@ -370,37 +371,37 @@ public class MediaServiceImpl implements MediaService {
 	}
 
 	@Override
-	public TextTypeVO naverMediaCount(SearchCriteria cri) {
+	public TextTypeVO naverMediaCount(SearchCriteria cri)  throws SQLException {
 
 		return mediaDAO.naverMediaCount(cri);
 	}
 
 	@Override
-	public TextTypeVO daumMediaCount(SearchCriteria cri) {
+	public TextTypeVO daumMediaCount(SearchCriteria cri)  throws SQLException {
 
 		return mediaDAO.daumMediaCount(cri);
 	}
 	
 	@Override
-	public TextTypeVO totalMediaCount(SearchCriteria cri) {
+	public TextTypeVO totalMediaCount(SearchCriteria cri)  throws SQLException {
 
 		return mediaDAO.totalMediaCount(cri);
 	}
 
 	@Override
-	public GraphVO yesterdayCount() {
+	public GraphVO yesterdayCount()  throws SQLException {
 
 		return mediaDAO.yesterdayCount();
 	}
 	
 	@Override
-	public GraphVO showboxYesterdayCount() {
+	public GraphVO showboxYesterdayCount()  throws SQLException {
 
 		return mediaDAO.showboxYesterdayCount();
 	}
 
 	@Override
-	public List<MediaVO> allPageList(SearchCriteria cri) {
+	public List<MediaVO> allPageList(SearchCriteria cri)  throws SQLException {
 
 		List<MediaVO> list = mediaDAO.allPageList(cri);
 		
@@ -408,7 +409,7 @@ public class MediaServiceImpl implements MediaService {
 	}
 	
 	@Override
-	public List<MediaVO> TotalAllPageList(SearchCriteria cri) {
+	public List<MediaVO> TotalAllPageList(SearchCriteria cri)  throws SQLException {
 
 		List<MediaVO> list = mediaDAO.TotalAllPageList(cri);
 		
@@ -416,7 +417,7 @@ public class MediaServiceImpl implements MediaService {
 	}
 	
 	@Override
-	public List<NewsVO> newsList(SearchCriteria cri) {
+	public List<NewsVO> newsList(SearchCriteria cri)  throws SQLException {
 		
 		List<NewsVO> list = mediaDAO.newsList(cri);
 		
@@ -424,7 +425,7 @@ public class MediaServiceImpl implements MediaService {
 	}
 	
 	@Override
-	public List<ReplyVO> replyList(SearchCriteria cri) {
+	public List<ReplyVO> replyList(SearchCriteria cri)  throws SQLException {
 		
 		List<ReplyVO> list = mediaDAO.replyList(cri);
 		
@@ -432,7 +433,7 @@ public class MediaServiceImpl implements MediaService {
 	}
 	
 	@Override
-	public List<ReplyVO> replyTotalList(Integer news_idx) {
+	public List<ReplyVO> replyTotalList(Integer news_idx)  throws SQLException {
 
 		List<ReplyVO> list = mediaDAO.replyTotalList(news_idx);
 		
@@ -440,31 +441,31 @@ public class MediaServiceImpl implements MediaService {
 	}
 	
 	@Override
-	public Integer allPageCount(SearchCriteria cri) {
+	public Integer allPageCount(SearchCriteria cri)  throws SQLException {
 
 		return mediaDAO.allPageCount(cri);
 	}
 	
 	@Override
-	public Integer newsAllPageCount(SearchCriteria cri) {
+	public Integer newsAllPageCount(SearchCriteria cri)  throws SQLException {
 
 		return mediaDAO.newsAllPageCount(cri);
 	}
 	
 	@Override
-	public Integer replyAllPageCount(SearchCriteria cri) {
+	public Integer replyAllPageCount(SearchCriteria cri)  throws SQLException {
 
 		return mediaDAO.replyAllPageCount(cri);
 	}
 	
 	@Override
-	public Integer TotalAllPageCount(SearchCriteria cri) {
+	public Integer TotalAllPageCount(SearchCriteria cri)  throws SQLException {
 
 		return mediaDAO.TotalAllPageCount(cri);
 	}
 
 	@Override
-	public List<MediaVO> allPage(SearchCriteria cri) {
+	public List<MediaVO> allPage(SearchCriteria cri)  throws SQLException {
 
 		List<MediaVO> list=  mediaDAO.allPage(cri);
 		
@@ -476,7 +477,7 @@ public class MediaServiceImpl implements MediaService {
 	}
 	
 	@Override
-	public List<ReplyVO> replyAllPage(SearchCriteria cri) {
+	public List<ReplyVO> replyAllPage(SearchCriteria cri)  throws SQLException {
 
 		List<ReplyVO> list=  mediaDAO.replyAllPage(cri);
 			
@@ -484,358 +485,358 @@ public class MediaServiceImpl implements MediaService {
 	}
 
 	@Override
-	public Integer getTotalCount(SearchCriteria cri) {
+	public Integer getTotalCount(SearchCriteria cri)  throws SQLException {
 
 		return mediaDAO.getTotalCount(cri);
 	}
 
 	@Override
-	public Integer getMatchCount(SearchCriteria cri) {
+	public Integer getMatchCount(SearchCriteria cri)  throws SQLException {
 
 		return mediaDAO.getMatchCount(cri);
 	}
 
 	@Override
-	public TextTypeVO periodTextTypeCount(SearchCriteria cri) {
+	public TextTypeVO periodTextTypeCount(SearchCriteria cri)  throws SQLException {
 
 		return mediaDAO.periodTextTypeCount(cri);
 	}
 
 	@Override
-	public TextTypeVO getMediaPortalCount(SearchCriteria cri) {
+	public TextTypeVO getMediaPortalCount(SearchCriteria cri)  throws SQLException {
 
 		return mediaDAO.getMediaPortalCount(cri);
 	}
 
 	@Override
-	public TextTypeVO getMediaTextTypeTotalCount(SearchCriteria cri) {
+	public TextTypeVO getMediaTextTypeTotalCount(SearchCriteria cri)  throws SQLException {
 
 		return mediaDAO.getMediaTextTypeTotalCount(cri);
 	}
 
 	@Override
-	public TextTypeVO getMediaTextTypeSearchCount(SearchCriteria cri) {
+	public TextTypeVO getMediaTextTypeSearchCount(SearchCriteria cri)  throws SQLException {
 
 		return mediaDAO.getMediaTextTypeSearchCount(cri);
 	}
 
 	@Override
-	public TextTypeVO getPressPortalCount(SearchCriteria cri) {
+	public TextTypeVO getPressPortalCount(SearchCriteria cri)  throws SQLException {
 
 		return mediaDAO.getPressPortalCount(cri);
 	}
 
 	@Override
-	public TextTypeVO getPressTextTypeTotalCount(SearchCriteria cri) {
+	public TextTypeVO getPressTextTypeTotalCount(SearchCriteria cri)  throws SQLException {
 
 		return mediaDAO.getPressTextTypeTotalCount(cri);
 	}
 
 	@Override
-	public TextTypeVO getPressTextTypeSearchCount(SearchCriteria cri) {
+	public TextTypeVO getPressTextTypeSearchCount(SearchCriteria cri)  throws SQLException {
 
 		return mediaDAO.getPressTextTypeSearchCount(cri);
 	}
 
 	@Override
-	public List<MediaVO> wPageSearch(SearchCriteria cri) {
+	public List<MediaVO> wPageSearch(SearchCriteria cri)  throws SQLException {
 
 		return mediaDAO.wPageSearch(cri);
 	}
 	
 	@Override
-	public List<MediaVO> textTypelistSearch(SearchCriteria cri) {
+	public List<MediaVO> textTypelistSearch(SearchCriteria cri)  throws SQLException {
 
 		List<MediaVO> list = mediaDAO.textTypelistSearch(cri);
 		return list;
 	}
 
 	@Override
-	public List<MediaVO> textTypelistSearch2(SearchCriteria cri) {
+	public List<MediaVO> textTypelistSearch2(SearchCriteria cri)  throws SQLException {
 
 		List<MediaVO> list = mediaDAO.textTypelistSearch2(cri);
 		return list;
 	}
 
 	@Override
-	public List<MediaVO> textTypelistSearch3(SearchCriteria cri) {
+	public List<MediaVO> textTypelistSearch3(SearchCriteria cri)  throws SQLException {
 
 		List<MediaVO> list = mediaDAO.textTypelistSearch3(cri);
 		return list;
 	}
 
 	@Override
-	public List<MediaVO> textTypelistSearch4(SearchCriteria cri) {
+	public List<MediaVO> textTypelistSearch4(SearchCriteria cri)  throws SQLException {
 
 		List<MediaVO> list = mediaDAO.textTypelistSearch4(cri);
 		return list;
 	}
 
 	@Override
-	public List<MediaVO> reporterGetTextTypeCount(SearchCriteria cri, String reporter, String textType) {
+	public List<MediaVO> reporterGetTextTypeCount(SearchCriteria cri, String reporter, String textType)  throws SQLException {
 		
 		List<MediaVO> list = mediaDAO.reporterGetTextTypeCount(cri, reporter, textType);
 		return list;
 	}
 
 	@Override
-	public List<MediaVO> mediaCnt(SearchCriteria cri) {
+	public List<MediaVO> mediaCnt(SearchCriteria cri)  throws SQLException {
 		
 		return mediaDAO.mediaCnt(cri);
 	}
 
 	@Override
-	public List<TextTypeDateVO> textTypeCount2(SearchCriteria cri) {
+	public List<TextTypeDateVO> textTypeCount2(SearchCriteria cri)  throws SQLException {
 
 		return mediaDAO.textTypeCount2(cri);
 	}
 
 	@Override
-	public Integer checkUrl(String url) {
+	public Integer checkUrl(String url)  throws SQLException {
 
 		return mediaDAO.checkUrl(url);
 	}
 
 	@Override
-	public Integer mTotalCnt(SearchCriteria cri) {
+	public Integer mTotalCnt(SearchCriteria cri)  throws SQLException {
 
 		return mediaDAO.mTotalCnt(cri);
 	}
 
 	@Override
-	public List<MediaVO> headlineList(SearchCriteria cri) {
+	public List<MediaVO> headlineList(SearchCriteria cri)  throws SQLException {
 
 		return mediaDAO.headlineList(cri);
 	}
 
 	@Override
-	public Integer mediaTotalcnt(SearchCriteria cri) {
+	public Integer mediaTotalcnt(SearchCriteria cri)  throws SQLException {
 
 		return mediaDAO.mediaTotalcnt(cri);
 	}
 
 	@Override
-	public Integer replyTotalcnt(SearchCriteria cri) {
+	public Integer replyTotalcnt(SearchCriteria cri)  throws SQLException {
 
 		return mediaDAO.replyTotalcnt(cri);
 	}
 
 	@Override
-	public Integer mediaTextcnt(SearchCriteria cri) {
+	public Integer mediaTextcnt(SearchCriteria cri)  throws SQLException {
 
 		return mediaDAO.replyTotalcnt(cri);
 	}
 
 	@Override
-	public Integer mediaTextcnt2(SearchCriteria cri) {
+	public Integer mediaTextcnt2(SearchCriteria cri)  throws SQLException {
 
 		return mediaDAO.mediaTextcnt2(cri);
 	}
 
 	@Override
-	public Integer mediaCountAll(SearchCriteria cri) {
+	public Integer mediaCountAll(SearchCriteria cri)  throws SQLException {
 
 		return mediaDAO.mediaCountAll(cri);
 	}
 
 	@Override
-	public void headlineUpdate(Integer media_idx) {
+	public void headlineUpdate(Integer media_idx)  throws SQLException {
 
 		mediaDAO.headlineUpdate(media_idx);
 		
 	}
 
 	@Override
-	public void headlineUpdate2(Integer media_idx) {
+	public void headlineUpdate2(Integer media_idx)  throws SQLException {
 
 		mediaDAO.headlineUpdate2(media_idx);
 		
 	}
 
 	@Override
-	public List<MailVO> mailList(SearchCriteria cri) {
+	public List<MailVO> mailList(SearchCriteria cri)  throws SQLException {
 
 		return mediaDAO.mailList(cri);
 		
 	}
 
 	@Override
-	public Integer mailCountAll(SearchCriteria cri) {
+	public Integer mailCountAll(SearchCriteria cri)  throws SQLException {
 
 		return mediaDAO.mailCountAll(cri);
 	}
 
 	@Override
-	public List<MediaVO> mediaMatchList(SearchCriteria cri) {
+	public List<MediaVO> mediaMatchList(SearchCriteria cri)  throws SQLException {
 
 		return mediaDAO.mediaMatchList(cri);
 	}
 
 	@Override
-	public Integer mediaMatchCount(SearchCriteria cri) {
+	public Integer mediaMatchCount(SearchCriteria cri)  throws SQLException {
 
 		return mediaDAO.mediaMatchCount(cri);
 	}
 
 	@Override
-	public List<MediaVO> mediaMatchList2(SearchCriteria cri) {
+	public List<MediaVO> mediaMatchList2(SearchCriteria cri)  throws SQLException {
 
 		return mediaDAO.mediaMatchList2(cri);
 	}
 
 	@Override
-	public Integer mediaMatchCount2(SearchCriteria cri) {
+	public Integer mediaMatchCount2(SearchCriteria cri)  throws SQLException {
 
 		return mediaDAO.mediaMatchCount2(cri);
 	}
 	
 	@Override
-	public Integer mediaMatchCount3(SearchCriteria cri) {
+	public Integer mediaMatchCount3(SearchCriteria cri)  throws SQLException {
 
 		return mediaDAO.mediaMatchCount3(cri);
 	}
 
 	@Override
-	public List<MediaVO> mediaTotalMatchList(SearchCriteria cri) {
+	public List<MediaVO> mediaTotalMatchList(SearchCriteria cri)  throws SQLException {
 
 		return mediaDAO.mediaTotalMatchList(cri);
 	}
 
 	@Override
-	public List<MediaVO> reporterMatchList(SearchCriteria cri) {
+	public List<MediaVO> reporterMatchList(SearchCriteria cri)  throws SQLException {
 
 		return mediaDAO.reporterMatchList(cri);
 	}
 
 	@Override
-	public Integer reporterMatchCount(SearchCriteria cri) {
+	public Integer reporterMatchCount(SearchCriteria cri)  throws SQLException {
 
 		return mediaDAO.reporterMatchCount(cri);
 	}
 
 	@Override
-	public List<MediaVO> reporterMatchList2(SearchCriteria cri) {
+	public List<MediaVO> reporterMatchList2(SearchCriteria cri)  throws SQLException {
 
 		return mediaDAO.reporterMatchList2(cri);
 	}
 
 	@Override
-	public Integer reporterMatchCount2(SearchCriteria cri) {
+	public Integer reporterMatchCount2(SearchCriteria cri)  throws SQLException {
 
 		return mediaDAO.reporterMatchCount2(cri);
 	}
 
 	@Override
-	public Integer reporterMatchCount3(SearchCriteria cri) {
+	public Integer reporterMatchCount3(SearchCriteria cri)  throws SQLException {
 
 		return mediaDAO.reporterMatchCount3(cri);
 	}
 
 	@Override
-	public List<MediaVO> reporterTotalMatchList(SearchCriteria cri) {
+	public List<MediaVO> reporterTotalMatchList(SearchCriteria cri)  throws SQLException {
 
 		return mediaDAO.reporterTotalMatchList(cri);
 	}
 
 	@Override
-	public List<MediaVO> mediaMatchallList(SearchCriteria cri) {
+	public List<MediaVO> mediaMatchallList(SearchCriteria cri)  throws SQLException {
 
 		return mediaDAO.mediaMatchallList(cri);
 	}
 
 	@Override
-	public List<MediaVO> reporterMatchallList(SearchCriteria cri) {
+	public List<MediaVO> reporterMatchallList(SearchCriteria cri)  throws SQLException {
 
 		return mediaDAO.reporterMatchallList(cri);
 	}
 
 	@Override
-	public List<MediaVO> mediaDataList(SearchCriteria cri) {
+	public List<MediaVO> mediaDataList(SearchCriteria cri)  throws SQLException {
 
 		return mediaDAO.mediaDataList(cri);
 	}
 
 	@Override
-	public List<MediaVO> mediaMatchDataList(SearchCriteria cri) {
+	public List<MediaVO> mediaMatchDataList(SearchCriteria cri)  throws SQLException {
 
 		return mediaDAO.mediaMatchDataList(cri);
 	}
 
 	@Override
-	public List<MediaVO> reporterDataList(SearchCriteria cri) {
+	public List<MediaVO> reporterDataList(SearchCriteria cri)  throws SQLException {
 
 		return mediaDAO.reporterDataList(cri);
 	}
 
 	@Override
-	public List<MediaVO> reporterMatchDataList(SearchCriteria cri) {
+	public List<MediaVO> reporterMatchDataList(SearchCriteria cri)  throws SQLException {
 
 		return mediaDAO.reporterMatchDataList(cri);
 	}
 
 	@Override
-	public Integer mediaMatchCount4(SearchCriteria cri) {
+	public Integer mediaMatchCount4(SearchCriteria cri)  throws SQLException {
 
 		return mediaDAO.mediaMatchCount4(cri);
 	}
 
 	@Override
-	public Integer reporterMatchCount4(SearchCriteria cri) {
+	public Integer reporterMatchCount4(SearchCriteria cri)  throws SQLException {
 
 		return mediaDAO.reporterMatchCount4(cri);
 	}
 
 	@Override
-	public void checkDelete(Integer media_idx) {
+	public void checkDelete(Integer media_idx)  throws SQLException {
 
 		mediaDAO.checkDelete(media_idx);
 		
 	}
 
 	@Override
-	public List<MediaVO> totalAllPageex(SearchCriteria cri) {
+	public List<MediaVO> totalAllPageex(SearchCriteria cri)  throws SQLException {
 
 		return mediaDAO.totalAllPageex(cri);
 	}
 
 	@Override
-	public List<MediaVO> mailMatch(SearchCriteria cri) {
+	public List<MediaVO> mailMatch(SearchCriteria cri)  throws SQLException {
 
 		return mediaDAO.mailMatch(cri);
 	}
 
 	@Override
-	public List<MediaVO> mediaListData(SearchCriteria cri) {
+	public List<MediaVO> mediaListData(SearchCriteria cri)  throws SQLException {
 
 		return mediaDAO.mediaListData(cri);
 	}
 
 	@Override
-	public Integer graphmTotalCnt(SearchCriteria cri) {
+	public Integer graphmTotalCnt(SearchCriteria cri)  throws SQLException {
 
 		return mediaDAO.graphmTotalCnt(cri);
 	}
 
 	@Override
-	public List<MediaVO> dashListAll(SearchCriteria cri) {
+	public List<MediaVO> dashListAll(SearchCriteria cri)  throws SQLException {
 
 		return mediaDAO.dashListAll(cri);
 	}
 
 	@Override
-	public List<MediaVO> newsExcel(SearchCriteria cri) {
+	public List<MediaVO> newsExcel(SearchCriteria cri)  throws SQLException {
 
 		return mediaDAO.newsExcel(cri);
 	}
 
 	@Override
-	public List<MediaVO> dashMediaMatch(SearchCriteria cri) {
+	public List<MediaVO> dashMediaMatch(SearchCriteria cri)  throws SQLException {
 
 		return mediaDAO.dashMediaMatch(cri);
 	}
 
 	@Override
-	public List<MediaVO> listAllEx(SearchCriteria cri) {
+	public List<MediaVO> listAllEx(SearchCriteria cri)  throws SQLException {
 
 		return mediaDAO.listAllEx(cri);
 	}

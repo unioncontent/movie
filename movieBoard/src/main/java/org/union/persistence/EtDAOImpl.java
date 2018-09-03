@@ -1,6 +1,10 @@
 package org.union.persistence;
 
 
+import java.sql.SQLException;
+
+import javax.annotation.Resource;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -12,33 +16,38 @@ public class EtDAOImpl implements EtDAO{
 
 	
 	@Autowired
-	private SqlSession session;
+	@Resource(name="oneSqlSession")
+	private SqlSession session1;
+	
+	@Autowired
+	@Resource(name="twoSqlSession")
+	private SqlSession session2;
 	
 	private final static String namespace  = "org.union.mappers.EtMapper.";
 	
 
 	@Override
-	public Integer getSearchCount1(SearchCriteria cri) {
+	public Integer getSearchCount1(SearchCriteria cri) throws SQLException {
 
-		return session.selectOne(namespace + "getSearchCount1", cri);
+		return session1.selectOne(namespace + "getSearchCount1", cri);
 	}
 
 	@Override
-	public Integer getSearchCount2(SearchCriteria cri) {
+	public Integer getSearchCount2(SearchCriteria cri) throws SQLException {
 
-		return session.selectOne(namespace + "getSearchCount2", cri);
+		return session1.selectOne(namespace + "getSearchCount2", cri);
 	}
 
 	@Override
-	public Integer getSearchCount3(SearchCriteria cri) {
+	public Integer getSearchCount3(SearchCriteria cri) throws SQLException {
 
-		return session.selectOne(namespace + "getSearchCount3", cri);
+		return session1.selectOne(namespace + "getSearchCount3", cri);
 	}
 
 	@Override
-	public Integer getSearchCountAll(SearchCriteria cri) {
+	public Integer getSearchCountAll(SearchCriteria cri) throws SQLException {
 
-		return session.selectOne(namespace + "getSearchCountAll", cri);
+		return session1.selectOne(namespace + "getSearchCountAll", cri);
 	}
 
 

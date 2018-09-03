@@ -1,6 +1,9 @@
 package org.union.persistence;
 
+import java.sql.SQLException;
 import java.util.List;
+
+import javax.annotation.Resource;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,16 +16,21 @@ public class NaverMovieDAOImpl implements NaverMovieDAO {
 
 	
 	@Autowired
-	private SqlSession session;
+	@Resource(name="oneSqlSession")
+	private SqlSession session1;
+	
+	@Autowired
+	@Resource(name="twoSqlSession")
+	private SqlSession session2;
 	
 	private static final String namespace = "org.union.mappers.NaverMovieMapper.";
 	
 	
 	@Override
-	public void create(NaverMovieVO vo) {
+	public void create(NaverMovieVO vo) throws SQLException {
 		try {
-			session.insert(namespace + "create", vo);
-		
+			session1.insert(namespace + "create", vo);
+			session2.insert(namespace + "create", vo);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -30,42 +38,42 @@ public class NaverMovieDAOImpl implements NaverMovieDAO {
 
 	
 	@Override
-	public NaverMovieVO read(Integer NM_idx) {
+	public NaverMovieVO read(Integer NM_idx) throws SQLException {
 
-		return session.selectOne(namespace + "read", NM_idx);
+		return session1.selectOne(namespace + "read", NM_idx);
 	}
 
 	@Override
-	public List<NaverMovieVO> searchAllList(SearchCriteria cri) {
+	public List<NaverMovieVO> searchAllList(SearchCriteria cri) throws SQLException {
 
-		return session.selectList(namespace + "searchAllList", cri);
+		return session1.selectList(namespace + "searchAllList", cri);
 	}
 	
 	@Override
-	public List<NaverMovieVO> searchList(SearchCriteria cri) {
+	public List<NaverMovieVO> searchList(SearchCriteria cri) throws SQLException {
 
-		return session.selectList(namespace + "searchList", cri);
+		return session1.selectList(namespace + "searchList", cri);
 	}
 
 
 	@Override
-	public Integer getSearchCount(SearchCriteria cri) {
+	public Integer getSearchCount(SearchCriteria cri) throws SQLException {
 
-		return session.selectOne(namespace + "getSearchCount", cri);
+		return session1.selectOne(namespace + "getSearchCount", cri);
 	}
 
 
 	@Override
-	public List<NaverMovieVO> showSearchList(SearchCriteria cri) {
+	public List<NaverMovieVO> showSearchList(SearchCriteria cri) throws SQLException {
 
-		return session.selectList(namespace + "showSearchList", cri);
+		return session1.selectList(namespace + "showSearchList", cri);
 	}
 
 
 	@Override
-	public List<NaverMovieVO> showSearchAllList(SearchCriteria cri) {
+	public List<NaverMovieVO> showSearchAllList(SearchCriteria cri) throws SQLException {
 
-		return session.selectList(namespace + "showSearchAllList", cri);
+		return session1.selectList(namespace + "showSearchAllList", cri);
 	}
 
 }
