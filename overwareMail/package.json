@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "supervisor ./bin/www"
+    "start": "forever ./bin/www"
   },
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
@@ -18,7 +18,6 @@
     "express": "~4.15.5",
     "express-ejs-layouts": "^2.4.0",
     "express-session": "^1.15.6",
-    "forever": "^0.15.3",
     "fs-extra": "^5.0.0",
     "html-minifier": "^3.5.19",
     "iconv-lite": "^0.4.19",
