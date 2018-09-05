@@ -269,8 +269,8 @@
 			and writeDate <![CDATA[>=]]> CURDATE()
 		</if>	
 		<if test="startDate != null and endDate != null">
-			and updateDate <![CDATA[>=]]> #{startDate}
-			and updateDate <![CDATA[<=]]> #{endDate}
+			and createDate <![CDATA[>=]]> #{startDate}
+			and createDate <![CDATA[<=]]> #{endDate}
 		</if>
 		<if test="textType != null">
 			and textType = #{textType}
@@ -1397,9 +1397,9 @@
 			and
 				textType != '삭제글' 
             and
-				updateDate <![CDATA[>=]]> DATE_FORMAT(a.M_send,'%Y-%m-%d 00:00:00')
+				createDate <![CDATA[>=]]> DATE_FORMAT(a.M_send,'%Y-%m-%d 00:00:00')
 			and
-				updateDate <![CDATA[<=]]> DATE_FORMAT(a.M_send,'%Y-%m-%d 23:59:00'))as total from period_view a
+				createDate <![CDATA[<=]]> DATE_FORMAT(a.M_send,'%Y-%m-%d 23:59:00'))as total from period_view a
 		where 
 			a.M_subject is not null
 		<include refid="search_mail"></include> 
