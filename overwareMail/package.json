@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "forever ./bin/www"
+    "start": "forever start -l c:/overware_log/overware.log -a --minUptime 500 --spinSleepTime 200 ./bin/www"
   },
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",

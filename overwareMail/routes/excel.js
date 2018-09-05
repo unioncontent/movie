@@ -1,9 +1,9 @@
 var express = require('express');
-var router = express.Router();
 var fs = require('fs');
 var moment = require('moment');
 var xl = require('excel4node');
-
+var datetime = require('node-datetime');
+var router = express.Router();
 // DB module
 var maillink = require('../models/maillink.js');
 
@@ -42,23 +42,23 @@ router.get('/',async function(req, res) {
     }
   });
   ws.column(3).setWidth(60);
-  ws.column(5).setWidth(30);
-  ws.column(6).setWidth(20);
+  ws.column(6).setWidth(30);
   ws.column(7).setWidth(20);
   ws.column(8).setWidth(20);
+  ws.column(9).setWidth(20);
   ws.cell(1,1).string('NO').style(tStyle);
   // ws.cell(1,2).string('발송타입').style(tStyle);
   ws.cell(1,2).string('키워드').style(tStyle);
   // ws.cell(1,4).string('메일타입').style(tStyle);
   // ws.cell(1,5).string('차수').style(tStyle);
   ws.cell(1,3).string('제목').style(tStyle);
-  // ws.cell(1,7).string('회사').style(tStyle);
-  ws.cell(1,4).string('성명').style(tStyle);
-  ws.cell(1,5).string('이메일').style(tStyle);
-  ws.cell(1,6).string('발송날짜').style(tStyle);
-  ws.cell(1,7).string('작성날짜').style(tStyle);
-  ws.cell(1,8).string('개봉날짜').style(tStyle);
-  ws.cell(1,9).string('발송결과').style(tStyle);
+  ws.cell(1,4).string('회사').style(tStyle);
+  ws.cell(1,5).string('성명').style(tStyle);
+  ws.cell(1,6).string('이메일').style(tStyle);
+  ws.cell(1,7).string('발송날짜').style(tStyle);
+  ws.cell(1,8).string('작성날짜').style(tStyle);
+  ws.cell(1,9).string('개봉날짜').style(tStyle);
+  ws.cell(1,10).string('발송결과').style(tStyle);
   var row = 0;
   var MSGIDStr;
   await asyncForEach(sucess, async (item, index, array) => {
@@ -73,34 +73,34 @@ router.get('/',async function(req, res) {
     // ws.cell(row,4).string(item.M_mail_type);
     // ws.cell(row,5).string(((item.M_invitation == '0')?(item.M_seq_number+'차'):'인비테이션'));
     ws.cell(row,3).string(item.M_subject);
-    // ws.cell(row,7).string(item.M_ptitle);
-    ws.cell(row,4).string(item.EMTONAME);
-    ws.cell(row,5).string(item.EMTOADDRESS);
-    ws.cell(row,6).string(moment(item.SENDTIME).format('YYYY-MM-DD HH:mm:ss'));
-    ws.cell(row,7).string(moment(item.GENDATE).format('YYYY-MM-DD HH:mm:ss'));
-    ws.cell(row,8).string(openDate);
-    ws.cell(row,9).string('성공');
+    ws.cell(row,4).string(item.M_ptitle);
+    ws.cell(row,5).string(item.EMTONAME);
+    ws.cell(row,6).string(item.EMTOADDRESS);
+    ws.cell(row,7).string(moment(item.SENDTIME).format('YYYY-MM-DD HH:mm:ss'));
+    ws.cell(row,8).string(moment(item.GENDATE).format('YYYY-MM-DD HH:mm:ss'));
+    ws.cell(row,9).string(openDate);
+    ws.cell(row,10).string('성공');
   });
 
   var ws2 = wb.addWorksheet('실패');
   ws2.column(3).setWidth(60);
-  ws2.column(5).setWidth(30);
-  ws2.column(6).setWidth(20);
+  ws2.column(6).setWidth(30);
   ws2.column(7).setWidth(20);
-  ws2.column(9).setWidth(30);
+  ws2.column(8).setWidth(20);
+  ws2.column(10).setWidth(30);
   ws2.cell(1,1).string('NO').style(tStyle);
   // ws2.cell(1,2).string('발송타입').style(tStyle);
   ws2.cell(1,2).string('키워드').style(tStyle);
   // ws2.cell(1,4).string('메일타입').style(tStyle);
   // ws2.cell(1,5).string('차수').style(tStyle);
   ws2.cell(1,3).string('제목').style(tStyle);
-  // ws2.cell(1,7).string('회사').style(tStyle);
-  ws2.cell(1,4).string('성명').style(tStyle);
-  ws2.cell(1,5).string('이메일').style(tStyle);
-  ws2.cell(1,6).string('발송날짜').style(tStyle);
-  ws2.cell(1,7).string('작성날짜').style(tStyle);
-  ws2.cell(1,8).string('발송결과').style(tStyle);
-  ws2.cell(1,9).string('오류내용').style(tStyle);
+  ws2.cell(1,4).string('회사').style(tStyle);
+  ws2.cell(1,5).string('성명').style(tStyle);
+  ws2.cell(1,6).string('이메일').style(tStyle);
+  ws2.cell(1,7).string('발송날짜').style(tStyle);
+  ws2.cell(1,8).string('작성날짜').style(tStyle);
+  ws2.cell(1,9).string('발송결과').style(tStyle);
+  ws2.cell(1,10).string('오류내용').style(tStyle);
   row = 0;
   await asyncForEach(fail, async (item, index, array) => {
     row = index+2;
@@ -110,15 +110,17 @@ router.get('/',async function(req, res) {
     // ws2.cell(row,4).string(item.M_mail_type);
     // ws2.cell(row,5).string(((item.M_invitation == '0')?(item.M_seq_number+'차'):'인비테이션'));
     ws2.cell(row,3).string(item.M_subject);
-    // ws2.cell(row,7).string(item.M_ptitle);
-    ws2.cell(row,4).string(item.EMTONAME);
-    ws2.cell(row,5).string(item.EMTOADDRESS);
-    ws2.cell(row,6).string(moment(item.SENDTIME).format('YYYY-MM-DD HH:mm:ss'));
-    ws2.cell(row,7).string(moment(item.GENDATE).format('YYYY-MM-DD HH:mm:ss'));
-    ws2.cell(row,8).string('실패');
-    ws2.cell(row,9).string(settingErrorMsg(item.FINALRESULT));
+    ws2.cell(row,4).string(item.M_ptitle);
+    ws2.cell(row,5).string(item.EMTONAME);
+    ws2.cell(row,6).string(item.EMTOADDRESS);
+    ws2.cell(row,7).string(moment(item.SENDTIME).format('YYYY-MM-DD HH:mm:ss'));
+    ws2.cell(row,8).string(moment(item.GENDATE).format('YYYY-MM-DD HH:mm:ss'));
+    ws2.cell(row,9).string('실패');
+    ws2.cell(row,10).string(settingErrorMsg(item.FINALRESULT));
   });
-  var filename = 'showboxEmail_result_'+MSGIDStr+'.xlsx';
+  var date = datetime.create();
+  var today = date.format('YmdHM');
+  var filename = 'showboxEmail_result_'+today+'.xlsx';
   var filepath = aDir+filename;
   wb.write(filepath,function(err,stats){
     if(err){
