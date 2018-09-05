@@ -179,7 +179,7 @@ router.post('/addNews',isAuthenticated,async function(req, res, next) {
       var param = item;
       console.log(item);
       try{
-        await newsclipping.insert(param.detail,[param.date,param.code,param.idx,param.idx]);
+        await newsclipping.insert(param.detail,[param.mName,param.date,param.code,param.idx,param.idx]);
       }
       catch(err){
         console.log(err);

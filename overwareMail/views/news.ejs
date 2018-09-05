@@ -155,7 +155,8 @@
                           <label class="label label-md label-default" style="margin-right:  0px;">그룹핑</label>
                         </div>
                       </td>
-                      <td><div class="media_nobr" title="<%= list[i].media_name %>"><%= list[i].media_name %></div></td>
+                      <!-- <td><div class="media_nobr" title="<%= list[i].media_name %>"><%= list[i].media_name %></div></td> -->
+                      <td><input type="text" placeholder="<%=list[i].media_name%>" id="media_name" value="<%=list[i].media_name%>" class="form-control selectText"></td>
                       <td>
                         <div class="nobr" title="<%= list[i].reporter_name %>">
                           <% if(list[i].reporter_name == null){ %>
@@ -355,6 +356,9 @@
 </div>
 <!-- Modal end-->
 <style type="text/css">
+  input#media_name {
+      min-width: 91px;
+  }
   .table thead th {
     vertical-align: middle;
   }
@@ -819,7 +823,7 @@
                 <label class="label label-md label-default" style="margin-right:  0px;">그룹핑</label>\
               </div>\
             </td>\
-            <td><div class="media_nobr" title="'+item.media_name+'">'+item.media_name+'</div></td>\
+            <td><input type="text" placeholder="'+item.media_name+'" id="media_name" value="'+item.media_name+'" class="form-control selectText"></td>\
             <td><div class="nobr" title="'+item.reporter_name+'">'+((item.reporter_name == null) ? '<i class="fas fa-minus"></i>' : item.reporter_name)+'</div></td>\
             <td><div class="rank_nobr">'+((item.ME_rank == null) ? '<i class="fas fa-minus"></i>' : item.ME_rank+'위')+'</div></td>\
             <td><div class="key_nobr" title="'+item.keyword+'">'+item.keyword+'</div></td>\
@@ -933,6 +937,7 @@
           list.push({
             idx:trEle.find('#idx').val(),
             // thumbnail:trEle.find('#thumbnail').val(),
+            mName:trEle.find('#media_name').val(),
             date:trEle.find('input[name="datefilter"]').val(),
             code:trEle.find('#newsType option:selected').val(),
             detail:trEle.find('#news_detail').val()});
@@ -1000,7 +1005,7 @@
 
           list.push({
             idx:trEle.find('#idx').val(),
-            date:trEle.find('input[name="datefilter"]').val(),
+            date:trEle.find('#media_name').val(),
             code:trEle.find('#newsType option:selected').val(),
             detail:trEle.find('#news_detail').val()});
         });

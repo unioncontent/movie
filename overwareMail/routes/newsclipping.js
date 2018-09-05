@@ -40,6 +40,19 @@ router.get('/send',isAuthenticated,async function(req, res) {
   res.render('newsclipping_email',data);
 });
 
+router.get('/send2',isAuthenticated,async function(req, res) {
+  var searchParam = [req.user.user_admin,0,10];
+  var data = {
+    mailList : await mailListA.selectView({},searchParam),
+    mailListCount : await mailListA.selectViewCount({},searchParam),
+    mailListPageNum : 1,
+    groupList : await mailListC.selectView({},searchParam),
+    groupListCount : await mailListC.selectViewCount({},searchParam),
+    groupListPageNum : 1
+  };
+  res.render('newsclipping_email2',data);
+});
+
 router.post('/getData',async function(req, res) {
   if(!('user' in req)){
     req.user = {user_admin:'1'};
