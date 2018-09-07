@@ -187,9 +187,11 @@
 				and sns_content like concat('%', #{keyword}, '%')
 			</if>
 		</if>
-		<!-- <if test="startDate == null">
-			and createDate <![CDATA[>=]]> CURDATE()
-		</if> -->	
+		<if test="startDate == null">
+			and
+        writeDate between date_add(curdate(), interval -1 month)
+        and curdate()+1
+		</if>	
 		<if test="startDate != null">
 			and writeDate <![CDATA[>=]]> #{startDate}
 			<if test="endDate != null">
@@ -1007,6 +1009,42 @@
 		where a.rownum = b.rownum) f;  
  	</select>
  	
+ 	<!-- facebook_graph 테이블 사용시
+ 	<select id="fvlistViewCnt" resultType="Integer">
+ 		select
+			view_cnt
+		from
+			facebook_graph
+		where
+			url = #{url} 
+		and 
+			createDate >= #{date} 
+		order by createDate asc limit 1
+ 	</select>
+ 	
+ 	<select id="fvlistReply_cnt" resultType="Integer">
+ 		select
+			reply_cnt
+		from
+			facebook_graph
+		where
+			url = #{url} 
+		and 
+			createDate >= #{date} 
+		order by createDate asc limit 1 
+ 	</select>
+ 	
+ 	<select id="fvlistlike_cnt" resultType="Integer">
+ 		select
+			like_cnt
+		from
+			facebook_graph
+		where
+			url = #{url} 
+		and 
+			createDate >= #{date} 
+		order by createDate asc limit 1
+ 	</select> -->
  	
  	<select id="fvlistPlus" resultType="FvVO">
  		select 
@@ -1143,16 +1181,6 @@
 		order by createDate asc 
 			limit 1;
  	</select>
- 	<!-- <select id="fvlistGraph" resultType="FvVO">
- 		select 0 as 'view_cnt', 0 as 'reply_cnt', 0 as 'like_cnt' from dual 
-        	union all
- 		select 
- 			view_cnt, reply_cnt, like_cnt 
- 		from 
- 			facebook_videos 
- 		where 
- 			url = #{url2};
- 	</select> -->
  	
  	<select id="fvlistGraph" resultType="FvVO">
  		select 0 as 'view_cnt', 0 as 'reply_cnt', 0 as 'like_cnt' from dual 
@@ -1164,6 +1192,16 @@
  		where 
  			url = #{url};
  	</select>
+ 	
+ 	<!-- facebook_graph 테이블 사용시
+ 	<select id="fvlistGraph" resultType="FvVO">
+ 		select 
+ 			view_cnt, reply_cnt, like_cnt 
+ 		from 
+ 			facebook_graph 
+ 		where 
+ 			url = #{url};
+ 	</select> -->
  	
  	<select id="snsTotalcount" resultType="Integer">
 		select

@@ -179,10 +179,12 @@
 			<if test="searchType != null">
 				and portal_title like concat('%', #{keyword}, '%')
 			</if>
-		</if>
-		<!-- <if test="startDate == null">
-			and createDate <![CDATA[>=]]> CURDATE()
-		</if> -->	
+		</if>	
+		<if test="startDate == null">
+			and
+        writeDate between date_add(curdate(), interval -1 month)
+        and curdate()+1
+		</if>	
 		<if test="startDate != null">
 			and writeDate <![CDATA[>=]]> #{startDate}
 			<if test="endDate != null">
@@ -1074,6 +1076,46 @@
 	where a.rownum = b.rownum) f;
  	</select>
  	
+ 	<!-- naver_graph 테이블 사용시 
+ 	<select id="nvlistViewCnt" resultType="Integer">
+	 	select
+			view_cnt
+		from
+			naver_graph
+		where
+			url = #{url} 
+		and 
+			createDate >= #{date} 
+		order by createDate asc 
+		limit 1;
+ 	</select>
+ 	
+ 	<select id="nvlistReply_cnt" resultType="Integer">
+	 	select
+			reply_cnt
+		from
+			naver_graph
+		where
+			url = #{url} 
+		and 
+			createDate >= #{date} 
+		order by createDate asc 
+		limit 1;
+ 	</select>
+ 	
+ 	<select id="nvlistlike_cnt" resultType="Integer">
+	 	select
+			like_cnt
+		from
+			naver_graph
+		where
+			url = #{url} 
+		and 
+			createDate >= #{date} 
+		order by createDate asc 
+		limit 1;
+ 	</select> -->
+ 	
  	<select id="nvlistPlus" resultType="NvVO">
  		select 
  			*
@@ -1184,6 +1226,16 @@
  		where 
  			url = #{url}
  	</select>
+ 	
+ 	<!-- naver_graph 테이블 사용시
+ 	<select id="nvlistGraph" resultType="NvVO">
+ 		select 
+ 			view_cnt, reply_cnt, like_cnt 
+ 		from 
+ 			naver_graph 
+ 		where 
+ 			url = #{url}
+ 	</select> -->
  	
  	<select id="scoreTotalcnt" resultType="Integer">
 		select

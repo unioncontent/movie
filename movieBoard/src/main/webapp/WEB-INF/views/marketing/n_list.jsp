@@ -465,10 +465,11 @@ $(document).ready(function(){
 			
 			var script2 = "[";
 
-	
+
 			for(var i = 0; i < data.length; i++){
 
-				script2 += '"' + data[i].writeDate + '",';
+				script2 += data[i].type2 + ",";
+
 
 				if(i == data.length-1){
 					script2 =  script2.substr(0, script2.length-1);
@@ -476,110 +477,45 @@ $(document).ready(function(){
 				}
 			}
 			
-			console.log(script);
-			console.log(script2);
-
-			// to json
-			var jsonScript = JSON.parse(script);
-			var jsonScript2 = JSON.parse(script2);
-
-			areaChart1(jsonScript, jsonScript2);
-
-	  	 }
-	});
-
-	$.ajax({
-
-	      type : "POST",
-		  url : "ngraph",
-	 	  dataType : "json",
-	 	  data : {success : 'success', url: url, Mcreate: Mcreate},
-	  	  success : function(data){
-
-	  		  console.log(data);
-	  		var script = "[";
+			var script3 = "[";
 
 
 			for(var i = 0; i < data.length; i++){
 
-				script += data[i].type2 + ",";
+				script3 += data[i].type3 + ",";
 
 
 				if(i == data.length-1){
-					script =  script.substr(0, script.length-1);
-					script += "]";
+					script3 =  script3.substr(0, script3.length-1);
+					script3 += "]";
 				}
 			}
 			
-			var script2 = "[";
+			var script4 = "[";
 
 	
 			for(var i = 0; i < data.length; i++){
 
-				script2 += '"' + data[i].writeDate + '",';
+				script4 += '"' + data[i].writeDate + '",';
 
 				if(i == data.length-1){
-					script2 =  script2.substr(0, script2.length-1);
-					script2 += "]";
-	  		
-				}
-			}
-			console.log(script);
-			console.log(script2);
-
-			// to json
-			var jsonScript = JSON.parse(script);
-			var jsonScript2 = JSON.parse(script2);
-
-			areaChart2(jsonScript, jsonScript2);
-
-	  	 }
-	});
-
-	$.ajax({
-
-	      type : "POST",
-		  url : "ngraph",
-	 	  dataType : "json",
-	 	  data : {success : 'success', url: url, Mcreate: Mcreate},
-	  	  success : function(data){
-
-	  		  console.log(data);
-	  		var script = "[";
-
-
-			for(var i = 0; i < data.length; i++){
-
-				script += data[i].type3 + ",";
-
-
-				if(i == data.length-1){
-					script =  script.substr(0, script.length-1);
-					script += "]";
+					script4 =  script4.substr(0, script4.length-1);
+					script4 += "]";
 				}
 			}
 			
-			var script2 = "[";
-
-	
-			for(var i = 0; i < data.length; i++){
-
-				script2 += '"' + data[i].writeDate + '",';
-
-				if(i == data.length-1){
-					script2 =  script2.substr(0, script2.length-1);
-					script2 += "]";
-	  		
-				}
-			}
 			console.log(script);
 			console.log(script2);
+			console.log(script3);
+			console.log(script4);
 
 			// to json
 			var jsonScript = JSON.parse(script);
 			var jsonScript2 = JSON.parse(script2);
+			var jsonScript3 = JSON.parse(script3);
+			var jsonScript4 = JSON.parse(script4);
 
-			areaChart3(jsonScript, jsonScript2);
+			areaChart1(jsonScript, jsonScript2, jsonScript3, jsonScript4);
 
 	  	 }
 	});
@@ -679,199 +615,195 @@ $(document).ready(function(){
 
 }); // end ready...
 
-function areaChart1(jsonScript,jsonScript2) {
-		Highcharts.setOptions({
-			lang: {
-				thousandsSep: ','
-			}
-		});
-		Highcharts.chart('container', {
-
-		    title: {
-		         text: ''
-		    },
-		    subtitle: {
-		        text: ''
-		    },
-		    yAxis: {
-		        title: {
-		            text: ''
-		        }
-		    },
-		    legend: {
-		        layout: 'vertical',
-		        align: 'right',
-		        verticalAlign: 'middle'
-		    },
-		  	xAxis: {
-		  	 categories: jsonScript2
-		    },
-		    plotOptions: {
-		        series: {
-		            allowPointSelect: true
-		        }
-		    },
-		    series: [{
-		        name: '조회수',
-		        data: jsonScript
-		    }],
-		  	credits: {
-		    	enabled : false
-		    },
-		  	exporting: {
-		        sourceWidth: 1200,
-		        sourceHeight: 330,
-		        // scale: 2 (default)
-		        chartOptions: {
-		            subtitle: null
-		        }
-		    },
-		    responsive: {
-		        rules: [{
-		            condition: {
-		                maxWidth: 500
-		            },
-		            chartOptions: {
-		                legend: {
-		                    layout: 'horizontal',
-		                    align: 'center',
-		                    verticalAlign: 'bottom'
-		                }
-		            }
-		        }]
-		    }
-		});
+function areaChart1(jsonScript, jsonScript2, jsonScript3, jsonScript4) {
+	Highcharts.setOptions({
+		lang: {
+			thousandsSep: ','
 		}
+	});
+	Highcharts.chart('container', {
+
+	    title: {
+	         text: ''
+	    },
+	    subtitle: {
+	        text: ''
+	    },
+	    yAxis: {
+	        title: {
+	            text: ''
+	        }
+	    },
+	    legend: {
+	        layout: 'vertical',
+	        align: 'right',
+	        verticalAlign: 'middle'
+	    },
+	  	xAxis: {
+	  	 categories: jsonScript4
+	    },
+	    plotOptions: {
+	        series: {
+	            allowPointSelect: true
+	        }
+	    },
+	    series: [{
+	        name: '조회수',
+	        data: jsonScript
+	    }],
+	  	credits: {
+	    	enabled : false
+	    },
+	  	exporting: {
+	        sourceWidth: 1200,
+	        sourceHeight: 330,
+	        // scale: 2 (default)
+	        chartOptions: {
+	            subtitle: null
+	        }
+	    },
+	    responsive: {
+	        rules: [{
+	            condition: {
+	                maxWidth: 500
+	            },
+	            chartOptions: {
+	                legend: {
+	                    layout: 'horizontal',
+	                    align: 'center',
+	                    verticalAlign: 'bottom'
+	                }
+	            }
+	        }]
+	    }
+	});
 	
-	function areaChart2(jsonScript,jsonScript2) {
-		Highcharts.setOptions({
-			lang: {
-				thousandsSep: ','
-			}
-		});
-		Highcharts.chart('container2', {
-
-		    title: {
-		         text: ''
-		    },
-		    subtitle: {
-		        text: ''
-		    },
-		    yAxis: {
-		        title: {
-		            text: ''
-		        }
-		    },
-		    legend: {
-		        layout: 'vertical',
-		        align: 'right',
-		        verticalAlign: 'middle'
-		    },
-		  	xAxis: {
-		  	 categories: jsonScript2
-		    },
-		    plotOptions: {
-		        series: {
-		            allowPointSelect: true
-		        }
-		    },
-		    series: [{
-		        name: '댓글수',
-		      	data: jsonScript,
-		        color : '#7E81CB'
-		    }],
-		  	credits: {
-		    	enabled : false
-		    },
-		  	exporting: {
-		        sourceWidth: 1200,
-		        sourceHeight: 330,
-		        // scale: 2 (default)
-		        chartOptions: {
-		            subtitle: null
-		        }
-		    },
-		    responsive: {
-		        rules: [{
-		            condition: {
-		                maxWidth: 500
-		            },
-		            chartOptions: {
-		                legend: {
-		                    layout: 'horizontal',
-		                    align: 'center',
-		                    verticalAlign: 'bottom'
-		                }
-		            }
-		        }]
-		    }
-		});
+	Highcharts.setOptions({
+		lang: {
+			thousandsSep: ','
 		}
+	});
+	Highcharts.chart('container2', {
+
+	    title: {
+	         text: ''
+	    },
+	    subtitle: {
+	        text: ''
+	    },
+	    yAxis: {
+	        title: {
+	            text: ''
+	        }
+	    },
+	    legend: {
+	        layout: 'vertical',
+	        align: 'right',
+	        verticalAlign: 'middle'
+	    },
+	  	xAxis: {
+	  	 categories: jsonScript4
+	    },
+	    plotOptions: {
+	        series: {
+	            allowPointSelect: true
+	        }
+	    },
+	    series: [{
+	        name: '댓글수',
+	      	data: jsonScript2,
+	        color : '#7E81CB'
+	    }],
+	  	credits: {
+	    	enabled : false
+	    },
+	  	exporting: {
+	        sourceWidth: 1200,
+	        sourceHeight: 330,
+	        // scale: 2 (default)
+	        chartOptions: {
+	            subtitle: null
+	        }
+	    },
+	    responsive: {
+	        rules: [{
+	            condition: {
+	                maxWidth: 500
+	            },
+	            chartOptions: {
+	                legend: {
+	                    layout: 'horizontal',
+	                    align: 'center',
+	                    verticalAlign: 'bottom'
+	                }
+	            }
+	        }]
+	    }
+	});
 	
-	function areaChart3(jsonScript,jsonScript2) {
-		Highcharts.setOptions({
-			lang: {
-				thousandsSep: ','
-			}
-		});
-		Highcharts.chart('container3', {
-
-		    title: {
-		         text: ''
-		    },
-		    subtitle: {
-		        text: ''
-		    },
-		    yAxis: {
-		        title: {
-		            text: ''
-		        }
-		    },
-		    legend: {
-		        layout: 'vertical',
-		        align: 'right',
-		        verticalAlign: 'middle'
-		    },
-		  	xAxis: {
-		  	 categories: jsonScript2
-		    },
-		    plotOptions: {
-		        series: {
-		            allowPointSelect: true
-		        }
-		    },
-		    series: [{
-		        name: '좋아요',
-		      	data: jsonScript,
-		        color : '#fb9678'
-		    }],
-		  	credits: {
-		    	enabled : false
-		    },
-		  	exporting: {
-		        sourceWidth: 1200,
-		        sourceHeight: 330,
-		        // scale: 2 (default)
-		        chartOptions: {
-		            subtitle: null
-		        }
-		    },
-		    responsive: {
-		        rules: [{
-		            condition: {
-		                maxWidth: 500
-		            },
-		            chartOptions: {
-		                legend: {
-		                    layout: 'horizontal',
-		                    align: 'center',
-		                    verticalAlign: 'bottom'
-		                }
-		            }
-		        }]
-		    }
-		});
+	Highcharts.setOptions({
+		lang: {
+			thousandsSep: ','
 		}
+	});
+	Highcharts.chart('container3', {
+
+	    title: {
+	         text: ''
+	    },
+	    subtitle: {
+	        text: ''
+	    },
+	    yAxis: {
+	        title: {
+	            text: ''
+	        }
+	    },
+	    legend: {
+	        layout: 'vertical',
+	        align: 'right',
+	        verticalAlign: 'middle'
+	    },
+	  	xAxis: {
+	  	 categories: jsonScript4
+	    },
+	    plotOptions: {
+	        series: {
+	            allowPointSelect: true
+	        }
+	    },
+	    series: [{
+	        name: '좋아요',
+	      	data: jsonScript3,
+	        color : '#fb9678'
+	    }],
+	  	credits: {
+	    	enabled : false
+	    },
+	  	exporting: {
+	        sourceWidth: 1200,
+	        sourceHeight: 330,
+	        // scale: 2 (default)
+	        chartOptions: {
+	            subtitle: null
+	        }
+	    },
+	    responsive: {
+	        rules: [{
+	            condition: {
+	                maxWidth: 500
+	            },
+	            chartOptions: {
+	                legend: {
+	                    layout: 'horizontal',
+	                    align: 'center',
+	                    verticalAlign: 'bottom'
+	                }
+	            }
+	        }]
+	    }
+	});
+	}
 
 	  			/* function areaChart(jsonScript) {
 		  			$("#morris-extra-line").empty();

@@ -141,10 +141,10 @@ public class ExcelView extends AbstractXlsView {
 			titleList.add("내용");
 		    titleList.add("작성자");
 		    titleList.add("분류");
-		}else if (model.get("type").equals("mobile")) {
+		}else if (model.get("type").equals("mobile") || model.get("type").equals("mobiles")) {
 			titleList.add("순위");
 		    titleList.add("댓글수");
-		}else if (model.get("type").equals("mobileM")) {
+		}else if (model.get("type").equals("mobileM") || model.get("type").equals("mobileMs")) {
 		    titleList.add("댓글수");
 		}
 		titleList.add("URL");
@@ -236,14 +236,14 @@ public class ExcelView extends AbstractXlsView {
 			HSSFCell classiCell = dataRow.createCell(cellIdx);
 			classiCell.setCellValue(new HSSFRichTextString(vo.getTextType()));
 			}
-		    else if (model.get("type").equals("mobile")) {
+		    else if (model.get("type").equals("mobile") || model.get("type").equals("mobiles")) {
 				cellIdx += 1;
 				HSSFCell rankCell = dataRow.createCell(cellIdx);
 				rankCell.setCellValue(new HSSFRichTextString(vo.getME_rank()));
 				cellIdx += 1;
 				HSSFCell replyCell = dataRow.createCell(cellIdx);
 				replyCell.setCellValue(new HSSFRichTextString(vo.getReply_cnt()));
-			}else if (model.get("type").equals("mobileM")) {
+			}else if (model.get("type").equals("mobileM") || model.get("type").equals("mobileMs")) {
 				cellIdx += 1;
 				HSSFCell replyCell = dataRow.createCell(cellIdx);
 				replyCell.setCellValue(new HSSFRichTextString(vo.getReply_cnt()));

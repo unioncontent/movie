@@ -451,10 +451,11 @@ $(document).ready(function(){
 			
 			var script2 = "[";
 
-	
+
 			for(var i = 0; i < data.length; i++){
 
-				script2 += '"' + data[i].writeDate + '",';
+				script2 += data[i].type2 + ",";
+
 
 				if(i == data.length-1){
 					script2 =  script2.substr(0, script2.length-1);
@@ -462,110 +463,45 @@ $(document).ready(function(){
 				}
 			}
 			
-			console.log(script);
-			console.log(script2);
-
-			// to json
-			var jsonScript = JSON.parse(script);
-			var jsonScript2 = JSON.parse(script2);
-
-			areaChart1(jsonScript, jsonScript2);
-
-	  	 }
-	});
-	
-	$.ajax({
-		
-	      type : "POST",
-		  url : "allgraph",
-	 	  dataType : "json",
-	 	  data : {success : 'success', url: url, Mcreate: Mcreate},
-	  	  success : function(data){
-
-	  		  console.log(data);
-	  		var script = "[";
+			var script3 = "[";
 
 
 			for(var i = 0; i < data.length; i++){
 
-				script += data[i].type2 + ",";
+				script3 += data[i].type3 + ",";
 
 
 				if(i == data.length-1){
-					script =  script.substr(0, script.length-1);
-					script += "]";
+					script3 =  script3.substr(0, script3.length-1);
+					script3 += "]";
 				}
 			}
 			
-			var script2 = "[";
+			var script4 = "[";
 
 	
 			for(var i = 0; i < data.length; i++){
 
-				script2 += '"' + data[i].writeDate + '",';
+				script4 += '"' + data[i].writeDate + '",';
 
 				if(i == data.length-1){
-					script2 =  script2.substr(0, script2.length-1);
-					script2 += "]";
-	  		
-				}
-			}
-			console.log(script);
-			console.log(script2);
-
-			// to json
-			var jsonScript = JSON.parse(script);
-			var jsonScript2 = JSON.parse(script2);
-
-			areaChart2(jsonScript, jsonScript2);
-
-	  	 }
-	});
-	
-	$.ajax({
-		
-	      type : "POST",
-		  url : "allgraph",
-	 	  dataType : "json",
-	 	  data : {success : 'success', url: url, Mcreate: Mcreate},
-	  	  success : function(data){
-
-	  		  console.log(data);
-	  		var script = "[";
-
-
-			for(var i = 0; i < data.length; i++){
-
-				script += data[i].type3 + ",";
-
-
-				if(i == data.length-1){
-					script =  script.substr(0, script.length-1);
-					script += "]";
+					script4 =  script4.substr(0, script4.length-1);
+					script4 += "]";
 				}
 			}
 			
-			var script2 = "[";
-
-	
-			for(var i = 0; i < data.length; i++){
-
-				script2 += '"' + data[i].writeDate + '",';
-
-				if(i == data.length-1){
-					script2 =  script2.substr(0, script2.length-1);
-					script2 += "]";
-	  		
-				}
-			}
 			console.log(script);
 			console.log(script2);
+			console.log(script3);
+			console.log(script4);
 
 			// to json
 			var jsonScript = JSON.parse(script);
 			var jsonScript2 = JSON.parse(script2);
+			var jsonScript3 = JSON.parse(script3);
+			var jsonScript4 = JSON.parse(script4);
 
-			areaChart3(jsonScript, jsonScript2);
+			areaChart1(jsonScript, jsonScript2, jsonScript3, jsonScript4);
 
 	  	 }
 	});
@@ -608,7 +544,7 @@ $(document).ready(function(){
 	
 }); // end ready...
 
-function areaChart1(jsonScript,jsonScript2) {
+function areaChart1(jsonScript, jsonScript2, jsonScript3, jsonScript4) {
 	Highcharts.setOptions({
 		lang: {
 			thousandsSep: ','
@@ -633,7 +569,7 @@ function areaChart1(jsonScript,jsonScript2) {
 	        verticalAlign: 'middle'
 	    },
 	  	xAxis: {
-	  	 categories: jsonScript2
+	  	 categories: jsonScript4
 	    },
 	    plotOptions: {
 	        series: {
@@ -670,9 +606,7 @@ function areaChart1(jsonScript,jsonScript2) {
 	        }]
 	    }
 	});
-	}
-
-function areaChart2(jsonScript,jsonScript2) {
+	
 	Highcharts.setOptions({
 		lang: {
 			thousandsSep: ','
@@ -697,7 +631,7 @@ function areaChart2(jsonScript,jsonScript2) {
 	        verticalAlign: 'middle'
 	    },
 	  	xAxis: {
-	  	 categories: jsonScript2
+	  	 categories: jsonScript4
 	    },
 	    plotOptions: {
 	        series: {
@@ -706,7 +640,7 @@ function areaChart2(jsonScript,jsonScript2) {
 	    },
 	    series: [{
 	        name: '댓글수',
-	      	data: jsonScript,
+	      	data: jsonScript2,
 	        color : '#7E81CB'
 	    }],
 	  	credits: {
@@ -735,9 +669,7 @@ function areaChart2(jsonScript,jsonScript2) {
 	        }]
 	    }
 	});
-	}
-
-function areaChart3(jsonScript,jsonScript2) {
+	
 	Highcharts.setOptions({
 		lang: {
 			thousandsSep: ','
@@ -762,7 +694,7 @@ function areaChart3(jsonScript,jsonScript2) {
 	        verticalAlign: 'middle'
 	    },
 	  	xAxis: {
-	  	 categories: jsonScript2
+	  	 categories: jsonScript4
 	    },
 	    plotOptions: {
 	        series: {
@@ -771,7 +703,7 @@ function areaChart3(jsonScript,jsonScript2) {
 	    },
 	    series: [{
 	        name: '좋아요',
-	      	data: jsonScript,
+	      	data: jsonScript3,
 	        color : '#fb9678'
 	    }],
 	  	credits: {
