@@ -17,6 +17,8 @@ import org.union.domain.UserVO;
 import org.union.service.KeywordService;
 import org.union.service.UserService;
 
+import com.mysql.cj.api.Session;
+
 @Controller
 @RequestMapping("/login")
 public class UserController {
@@ -63,14 +65,16 @@ public class UserController {
 		
 		}*/
 		
-		return "redirect:../dashBoard/dashBoard_main";
+		return "redirect:/dashBoard/dashBoard_main";
 	}
 	
 	@GetMapping("/logout")
-	public String logout() {
+	public String logout(HttpSession session) {
 		logger.info("logout...");
 		
-		return "redirect:../logoutAction";
+		session.invalidate();
+		
+		return "redirect:/logoutAction";
 	}
 	
 	@GetMapping("/login")

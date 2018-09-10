@@ -1409,7 +1409,7 @@
 	
 	<select id="mailCountAll" parameterType="String" resultType="Integer">
 		select 
- 			successNum
+ 			sum(successNum)
  		from 
  			period_view
  		where 
@@ -1418,8 +1418,7 @@
 			M_keyword in (select keyword from keyword_data where keyword_property = '포함' and keyword_main = #{selectKey})
 		and M_send <![CDATA[>=]]> #{startDate}
 		and M_send <![CDATA[<=]]> #{endDate}
-		order by M_send desc
-        limit 1;
+		order by M_send desc;
 	</select>
 	
 	<select id="mediaMatchList" resultType="MediaVO">
