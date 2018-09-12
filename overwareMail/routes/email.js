@@ -761,10 +761,21 @@ async function maillinkInsert(req){
   else{
     recipients = await mailListA.getOneEmail2(recipiArr);
   }
-  // console.log('recipient:',recipients);
-  var values = [].map.call(recipients,async function(item) {
+  // console.log('recipient = ',recipients.length);
+  var moment = require('moment');
+  var am = 1;
+  var time = (('time' in req) ? req.time : now);
+  var sendDate = time;
+  var values = [].map.call(recipients,async function(item,index) {
+    // console.log('index = ',index+1);
+    // if( index > 1 && ( index % 2 ) == 0 ){
+    if( index > 1 && ( index % 1000 ) == 0 ){
+      sendDate = moment(time).add(am, 'minutes').format("YYYY-MM-DD HH:mm:ss");
+      am += 1;
+      // console.log(sendDate);
+    }
     return ['AU-4126512','1','U',mailData.M_subject,sender[0],sender[1],item[0],
-    item[1],'http://showbox.email/preview?type=html&keyword='+mailData.M_keyword+'&idx='+mailData.n_idx,(('time' in req) ? req.time : now),(('time' in req) ? req.time : now),mailData.n_idx];
+    item[1],'http://showbox.email/preview?type=html&keyword='+mailData.M_keyword+'&idx='+mailData.n_idx,sendDate,(('time' in req) ? req.time : now),mailData.n_idx];
   });
 
   await maillink.insert(values);
