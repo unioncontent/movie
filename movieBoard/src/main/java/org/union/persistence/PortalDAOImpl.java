@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import org.union.domain.CommunityVO;
 import org.union.domain.FvVO;
 import org.union.domain.GraphVO;
+import org.union.domain.NavertalkVO;
 import org.union.domain.NvVO;
 import org.union.domain.PortalVO;
 import org.union.domain.ScoreVO;
@@ -806,5 +807,19 @@ public class PortalDAOImpl implements PortalDAO {
 	public List<NvVO> nvCheckList2() throws SQLException {
 
 		return session1.selectList(namespace + "nvCheckList2");
+	}
+
+
+	@Override
+	public List<NavertalkVO> naverTalkList(SearchCriteria cri) throws SQLException {
+
+		return session1.selectList(namespace + "naverTalkList", cri);
+	}
+
+
+	@Override
+	public Integer naverTalkcount(SearchCriteria cri) throws SQLException {
+
+		return session1.selectOne(namespace + "naverTalkcount", cri);
 	}
 }

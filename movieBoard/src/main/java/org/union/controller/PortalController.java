@@ -25,9 +25,11 @@ import org.springframework.web.servlet.ModelAndView;
 import org.union.domain.ExtractVO;
 import org.union.domain.GraphVO;
 import org.union.domain.NaverMovieVO;
+import org.union.domain.NavertalkVO;
 import org.union.domain.NvVO;
 import org.union.domain.MobileEntVO;
 import org.union.domain.PageMaker;
+import org.union.domain.PageMakerFv;
 import org.union.domain.SearchCriteria;
 import org.union.domain.UserVO;
 import org.union.service.EtService;
@@ -313,6 +315,86 @@ public class PortalController {
 	pageMaker.setTotalCount(totalCount);
 
 	model.addAttribute("pageMaker", pageMaker);
+	model.addAttribute("totalCount", totalCount);
+	model.addAttribute("minusCount", cri.getPerPageNum() * (cri.getPage()-1));
+
+    }
+    
+    @GetMapping("/naverTalk")
+    public void naverTalkGET(@ModelAttribute("cri") SearchCriteria cri, Model model) throws ParseException, SQLException {
+	logger.info("naverTalkGET called....");
+
+	Date curDate = new Date(); 
+	SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd"); //요청시간을 Date로 parsing 후 time가져오기
+	String strDate = dateFormat.format(curDate);
+
+	if (cri.getKeyword() == "" || "undefined".equals(cri.getKeyword())) {
+	    logger.info("keyword is null");
+	    cri.setKeyword(null);
+
+	}
+	if(cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey()) ) {
+		logger.info("selectKey is null");
+		cri.setSelectKey(null);
+	}
+	if("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate())
+			|| cri.getStartDate() == "" || cri.getEndDate() == ""){
+		cri.setStartDate(null);
+		cri.setEndDate(null);
+	
+	} 
+	if(cri.getStartDate() != null && cri.getEndDate() != null) {
+		if(cri.getStartDate().indexOf("00:00:00") < 0 && cri.getEndDate().indexOf("23:59:59") < 0){ 
+			cri.setStartDate(cri.getStartDate() + " 00:00:00"); 
+			cri.setEndDate(cri.getEndDate() + " 23:59:59"); 
+		}
+	}
+	
+	if (cri.getCompany() != null) {
+	    if (cri.getCompany().isEmpty()) {
+		cri.setCompany(null);
+	    }
+	}
+	if(cri.getCompany() == null || cri.getCompany().equals("회사")) {
+		logger.info(SecurityContextHolder.getContext().getAuthentication().getName().toString());
+		UserVO vo = userService.viewById(SecurityContextHolder.getContext().getAuthentication().getName());
+		
+		if(!vo.getUser_name().equals("union")) {
+		cri.setCompany(vo.getUser_name());
+		
+		}else {
+			cri.setCompany(null);
+		}
+	}
+
+	// 회사 선택에 따른 키워드 재추출
+		if (cri.getCompany() != null) {	
+			if (cri.getCompany().isEmpty() == false) {
+
+			UserVO userVO = userService.viewByName(cri.getCompany());
+			logger.info("userVO: " + userVO);
+			logger.info("keywordList: " + keywordService.listByUser(userVO.getUser_idx()));
+			model.addAttribute("modelKeywordList",
+			keywordService.listByUser(userService.viewByName(cri.getCompany()).getUser_idx()));
+			}
+		}
+	
+	logger.info("cri: " + cri);
+	
+	model.addAttribute("naverTalkList", portalService.naverTalkList(cri));
+	
+	Integer totalCount = portalService.naverTalkcount(cri);
+	
+	logger.info("totalCount: " + totalCount);
+	
+	PageMakerFv pageMakerFv = new PageMakerFv();
+	
+	pageMakerFv.setCri(cri);
+	pageMakerFv.setTotalCount(portalService.naverTalkcount(cri));
+	
+	logger.info("pageMaker: " + pageMakerFv);
+	
+	model.addAttribute("pageMaker", pageMakerFv);
 	model.addAttribute("totalCount", totalCount);
 	model.addAttribute("minusCount", cri.getPerPageNum() * (cri.getPage()-1));
 

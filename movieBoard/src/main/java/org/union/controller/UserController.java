@@ -65,7 +65,7 @@ public class UserController {
 		
 		}*/
 		
-		return "redirect:/dashBoard/dashBoard_main";
+		return "redirect:../dashBoard/dashBoard_main";
 	}
 	
 	@GetMapping("/logout")
@@ -74,7 +74,7 @@ public class UserController {
 		
 		session.invalidate();
 		
-		return "redirect:/logoutAction";
+		return "redirect:../logoutAction";
 	}
 	
 	@GetMapping("/login")

@@ -7,6 +7,7 @@ import java.util.List;
 import org.union.domain.CommunityVO;
 import org.union.domain.FvVO;
 import org.union.domain.GraphVO;
+import org.union.domain.NavertalkVO;
 import org.union.domain.NvVO;
 import org.union.domain.PortalVO;
 import org.union.domain.ScoreVO;
@@ -161,4 +162,7 @@ public interface PortalDAO {
 	
 	public List<NvVO> nvCheckList() throws SQLException;
 	public List<NvVO> nvCheckList2() throws SQLException;
+	
+	public List<NavertalkVO> naverTalkList(SearchCriteria cri) throws SQLException;
+	public Integer naverTalkcount(SearchCriteria cri) throws SQLException;
 }

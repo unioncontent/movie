@@ -94,6 +94,47 @@
 			and textType = #{textType}
 		</if>
 	</sql>
+	
+	<sql id="search3">
+ 		<if test="keyword != null">
+			<if test="searchType != null">
+				<if test="searchType == 't'.toString()">
+					and writer like concat('%', #{keyword}, '%')
+				</if>
+				<if test="searchType == 'c'.toString()">
+					and portal_content like concat('%', #{keyword}, '%')
+				</if>
+			</if>
+		</if>
+		<if test="company != null">
+			and
+			   keyword in (select 
+						keyword 
+					from 
+						keyword_data
+					where
+						user_idx = (select 
+										user_idx 
+									from 
+										user_data 
+									where 
+										user_name = #{company} 
+									and 
+										keyword_property = '포함'
+									)
+					)
+		</if>
+		<if test="selectKey != null">
+				and keyword in (select keyword from keyword_data where keyword_property = '포함' and keyword_main = #{selectKey})
+			</if>
+		<if test="startDate == null">
+			and writeDate <![CDATA[>=]]> CURDATE()
+		</if>	
+		<if test="startDate != null and endDate != null">
+			and updateDate <![CDATA[>=]]> #{startDate}
+			and updateDate <![CDATA[<=]]> #{endDate}
+		</if>
+	</sql>
  
  	<sql id="search_writeDate">
  		<if test="keyword != null">
@@ -1612,4 +1653,28 @@
 		order by createDate desc 
 		limit 1;
  	</select>
+ 	
+ 	<select id="naverTalkList" resultType="NavertalkVO">
+ 		select 
+ 			*
+		from 
+			navertalk_data
+		where
+			url is not null
+		<include refid="search3"></include>
+		order 
+			by writeDate desc
+		limit  
+			#{startPage}, #{perPageNum}
+ 	</select>
+ 	
+ 	<select id="naverTalkcount" resultType="Integer">
+		select
+			count(*)
+		from 
+			navertalk_data
+		where
+			url is not null
+		<include refid="search3"></include>
+	</select>
  </mapper>

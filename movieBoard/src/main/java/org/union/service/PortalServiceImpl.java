@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.union.domain.CommunityVO;
 import org.union.domain.ExtractVO;
 import org.union.domain.GraphVO;
+import org.union.domain.NavertalkVO;
 import org.union.domain.NvVO;
 import org.union.domain.PortalVO;
 import org.union.domain.ScoreVO;
@@ -764,5 +765,17 @@ public class PortalServiceImpl implements PortalService {
 		}
 		
 		return list;
+	}
+
+	@Override
+	public List<NavertalkVO> naverTalkList(SearchCriteria cri) throws SQLException {
+
+		return portalDAO.naverTalkList(cri);
+	}
+
+	@Override
+	public Integer naverTalkcount(SearchCriteria cri) throws SQLException {
+
+		return portalDAO.naverTalkcount(cri);
 	}
 }
