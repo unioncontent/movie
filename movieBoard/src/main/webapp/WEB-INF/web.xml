@@ -71,7 +71,7 @@
 	
 	<error-page>
         <error-code>404</error-code>
-        <location>/dashBoard/dashBoard</location>
+        <location>/dashBoard/dashBoard_main</location>
  	</error-page> 
 	
 	<error-page>

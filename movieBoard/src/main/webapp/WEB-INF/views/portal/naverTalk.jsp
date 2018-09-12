@@ -204,12 +204,12 @@
 				                                    <c:if test="${!empty naverTalkList}">
 														<thead>
 															<tr>
-																<th>NO</th>
-																<th>등록날짜</th>
-																<th>글쓴이</th>
-																<th>내용</th>
-																<th>키워드</th>
-																<th>신고</th>
+																<th width="1%">NO</th>
+																<th width="1%">등록날짜</th>
+																<th width="1%">글쓴이</th>
+																<th width="30%">내용</th>
+																<th width="1%">키워드</th>
+																<th width="1%">신고</th>
 															</tr>
 														</thead>
 														<tbody>
@@ -218,7 +218,7 @@
 																	<th scope="row">${totalCount -index.count +1 -minusCount}</th>
 																	<td>${naverTalkList.writeDate}</td>
 																	<td>${naverTalkList.writer}</td>
-																	<td>${naverTalkList.portal_content}</td>
+																	<td><div class="nobr content">${naverTalkList.portal_content}</div></td>
 																	<td>${naverTalkList.keyword}</td>
 																	<td>
 																		<a href="${naverTalkList.url}" target="_blank">
