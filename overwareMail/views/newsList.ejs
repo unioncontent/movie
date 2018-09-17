@@ -845,27 +845,9 @@
     var dateArr = $("#reportrange span").text().split(' - ');
     var start = moment(new Date(dateArr[0].replace(/[.]/gi,'-')));
     var end = moment(new Date(dateArr[1].replace(/[.]/gi,'-')));
-    var param = {
-      page : 1,
-      sDate : start.format('YYYY-MM-DD'),
-      eDate : end.format('YYYY-MM-DD')
-    };
-    $('#sDate').val(param.sDate);
-    $('#eDate').val(param.eDate);
-
-    // data input hidden values
-    var keywordValue = $('#keyword').val();
-    if(keywordValue != ''){
-      param.keyword = keywordValue;
-    }
-    var typeValue = $('#type').val();
-    if(typeValue != ''){
-      param.type = typeValue;
-    }
-    var searchValue = $('#searchInput').val();
-    if(searchValue != ''){
-      param.search = searchValue;
-    }
+    $('#sDate').val(start.format('YYYY-MM-DD'));
+    $('#eDate').val(end.format('YYYY-MM-DD'));
+    var param = settingParams(1);
     ajaxGetPageList(param);
   }
   $(document).on('click','.applyBtn',searchDate);
