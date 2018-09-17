@@ -61,6 +61,10 @@ var keyword = {
     }
     var sql = 'select * from m_keyword_data where user_idx=?';
     return await getResult(sql,param);
+  },
+  selectKwd_o: async function(){
+    var sql = 'select * from keyword_data where user_idx=1 and keyword_property = \'포함\' group by keyword_main';
+    return await getResult(sql);
   }
 }
 

@@ -43,6 +43,13 @@ var newsclipping = {
     var sql = "delete from news_mail where media_idx=?";
     return await getResult(sql,param);
   },
+  updateGroup: async function(param){
+    var sql = "update news_mail set news_detail=? where ";
+    var arr = [].map.call(param.idxs, function(obj) { return 'media_idx=?'; });
+    sql += arr.join(' or ');
+    param.idxs.unshift(param.midx);
+    return await getResult(sql,param.idxs);
+  },
   update: async function(detail,param){
     var sql = "update news_mail set reportDate=?,news_type=?";
     if(detail != ''){
