@@ -46,7 +46,9 @@ async function getKeyDic(type){
 // 기사 선택 페이지
 router.get('/',isAuthenticated,async function(req, res) {
   var data = await getListPageData(req.user.user_admin,req.query);
-  data.klist = await keyword.selectMovieKwdAll(req.user.user_admin,req.user.n_idx) || [];
+  // data.klist = await keyword.selectMovieKwdAll(req.user.user_admin,req.user.n_idx) || [];
+  data.klist = await keyword.selectKwd_o() || [];
+  
   res.render('news',data);
 });
 
@@ -214,7 +216,8 @@ async function asyncForEach(array, callback) {
 // 선택 기사 리스트 페이지
 router.get('/list',isAuthenticated,async function(req, res) {
   var data = await getListPageData2(req.user.user_admin,req.query);
-  data.klist = await keyword.selectMovieKwdAll(req.user.user_admin,req.user.n_idx) || [];
+  // data.klist = await keyword.selectMovieKwdAll(req.user.user_admin,req.user.n_idx) || [];
+  data.klist = await keyword.selectKwd_o() || [];
   res.render('newsList',data);
 });
 
@@ -223,6 +226,7 @@ router.post('/list/getNextPage',isAuthenticated,async function(req, res, next) {
     var data = await getListPageData2(req.user.user_admin,req.body);
     res.send({status:true,result:data});
   } catch(e){
+    console.log('ERROR : ',e);
     res.status(500).send(e);
   }
 });
@@ -232,6 +236,7 @@ router.post('/list/insert',isAuthenticated,async function(req, res, next) {
     await newsclipping.insert2(req.body);
     res.send({status:true});
   } catch(e){
+    console.log('ERROR : ',e);
     res.status(500).send(e);
   }
 });
@@ -241,6 +246,7 @@ router.post('/list/delete',isAuthenticated,async function(req, res, next) {
     await newsclipping.delete(req.body.idx);
     res.send({status:true});
   } catch(e){
+    console.log('ERROR : ',e);
     res.status(500).send(e);
   }
 });
@@ -250,6 +256,7 @@ router.post('/list/update',isAuthenticated,async function(req, res, next) {
     await newsclipping.update(req.body.news_detail,[req.body.date,req.body.news_type,req.body.idx]);
     res.send({status:true});
   } catch(e){
+    console.log('ERROR : ',e);
     res.status(500).send(e);
   }
 });
@@ -260,21 +267,25 @@ async function getListPageData2(idx,param){
     listCount:{total:0},
     sDate: formatDate(new Date(Date.now() - 1 * 24 * 3600 * 1000)),
     eDate: formatDate(new Date()),
+    limit: 30,
     search: '',
     keyword: '',
     type: '',
     page: 1
   };
-  var limit = 10;
-  var searchParam = [idx,0,limit];
   var currentPage = 1;
   var searchBody = {};
+  if (typeof param.limit !== 'undefined') {
+    searchBody['limit'] = Number(param.limit);
+    data['limit'] = Number(param.limit);
+  }
+  var searchParam = [idx,0,data.limit];
   if (typeof param.page !== 'undefined') {
     currentPage = param.page;
     data['page'] = currentPage;
   }
   if (parseInt(currentPage) > 0) {
-    searchParam[1] = (currentPage - 1) * limit
+    searchParam[1] = (currentPage - 1) * data.limit
     data['offset'] = searchParam[1];
   }
   if (typeof param.type !== 'undefined') {
@@ -304,7 +315,7 @@ async function getListPageData2(idx,param){
     data['currentPage'] = currentPage;
   }
   catch(e){
-    console.log('e');
+    console.log('Error:',e);
   }
   return data;
 }

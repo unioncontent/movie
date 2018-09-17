@@ -18,6 +18,17 @@ var isAuthenticated = function (req, res, next) {
   }
   res.redirect('/login');
 };
+
+router.post('/grouping',isAuthenticated, async function(req, res) {
+  console.log(req.body);
+  var result = await newsclipping.updateGroup(req.body);
+  if(!('protocol41' in result)){
+    res.status(500).send('그룹핑 실패! 개발자에게 문의해주세요.');
+    return false;
+  }
+  res.send({status:true});
+});
+
 router.post('/delete',isAuthenticated, async function(req, res) {
   var result = await newsclipping.deleteList(req.body);
   if(!('protocol41' in result)){
@@ -90,7 +101,7 @@ router.post('/send',isAuthenticated, async function(req, res) {
       groupsIdx = await mailListC.getIdx2(groupList,mid);
     }
   }
-
+  console.log(req.body);
   // 메일 info 세팅
   var mailAllParam = {
     M_sender: req.body['M_sender'],
