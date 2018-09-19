@@ -2052,7 +2052,6 @@ public class MarketingController {
 			graphList.add(graphVO);
 			
 			cal.add(Calendar.HOUR, +1);
-					
 		}
 	
 		logger.info("graphList: " + graphList);

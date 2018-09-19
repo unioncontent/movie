@@ -40,11 +40,8 @@ public class HomeController {
 
 			return model;
 
-		}	
+		}
 
-	
-	
-	
 	/*@GetMapping("/login")
 	public void loginGET(HttpSession session) throws Exception {
 		logger.info("loginGET called....");

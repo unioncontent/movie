@@ -499,6 +499,8 @@
 			portal_data
 		where
 			textType is not null
+		and
+			portal_type != 'score'
 		<include refid="allsearch"></include>
         ) x 
         <include refid="keywordSearch"></include>
@@ -538,6 +540,8 @@
 			portal_data
 		where
 			textType is not null
+		and
+			portal_type != 'score'
 		<include refid="allsearch"></include>
         ) x
         <include refid="keywordSearch"></include>
