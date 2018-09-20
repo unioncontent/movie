@@ -394,7 +394,7 @@
 		// 해당 페이지 active 추가
 		var url = location.href;
 
-		var domain = url.split("8080/")[1].split("/")[0];
+		var domain = url.split("/")[1].split("/")[0];
 
 		var li = window.document.getElementsByClassName(domain)[0];
 		
