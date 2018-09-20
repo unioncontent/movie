@@ -55,12 +55,13 @@
                         <form class="md-float-material" action="<c:url value= 'loginAction'/>" method="post" id="loginForm">
                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                             <div class="text-center">
-                                <img src="../assets/images/auth/logo.png" alt="logo.png">
+                                <!-- <img src="../assets/images/auth/logo.png" alt="logo.png"> -->
                             </div>
                             <div class="auth-box">
                                 <div class="row m-b-20">
                                     <div class="col-md-12">
-                                        <h3 class="text-left txt-primary">Sign In</h3>
+                                        <!-- <h3 class="text-left txt-primary">Sign In</h3> -->
+                                        <img src="../assets/images/overware_logo.png" alt="logo.png" style="width: 250px; height: 45px;">
                                     </div>
                                 </div>
                                 <hr/>
