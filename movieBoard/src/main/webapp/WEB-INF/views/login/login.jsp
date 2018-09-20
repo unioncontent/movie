@@ -79,7 +79,7 @@
                                       onclick="login();" >Sign in</button>
                                     </div>
                                 </div>
-                                <hr />
+                                <hr/>
                                 <div class="row">
                                   <div class="col-md-10">
                                     <a id="link" href="http://unionc.co.kr/unionc/ow/index.html" target="_blank"><p class="text-inverse text-left m-b-0">© Union Contents.</p></a>

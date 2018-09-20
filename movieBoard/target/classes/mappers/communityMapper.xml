@@ -839,6 +839,8 @@
 			portal_data
 		where
 			url is not null
+		and
+			portal_type != 'score'
 		<include refid="allsearch"></include>
         ) x 
         <include refid="keywordSearch"></include>
@@ -878,6 +880,8 @@
 			portal_data
 		where
 			url is not null
+		and
+			portal_type != 'score'
 		<include refid="allsearch"></include>
         ) x
         <include refid="keywordSearch"></include>
@@ -913,6 +917,8 @@
 			portal_data
 		where
 			url is not null
+		and
+			portal_type != 'score'
 		<include refid="allsearch"></include>
 		
 		UNION ALL
@@ -943,6 +949,8 @@
 			portal_data_history
 		where
 			url is not null
+		and
+			portal_type != 'score'
 		<include refid="allsearch"></include>
 		
         ) x 
@@ -983,6 +991,8 @@
 			portal_data
 		where
 			url is not null
+		and
+			portal_type != 'score'
 		<include refid="allsearch"></include>
 		
 		UNION ALL
@@ -1013,6 +1023,8 @@
 			portal_data_history
 		where
 			url is not null
+		and
+			portal_type != 'score'
 		<include refid="allsearch"></include>
         ) x
         <include refid="keywordSearch"></include>
