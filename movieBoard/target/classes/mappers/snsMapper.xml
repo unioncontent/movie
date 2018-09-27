@@ -685,7 +685,7 @@
 			sns_name = 'youtube'
 		and
 			keyword != ''
-		<include refid="search"></include>
+		<include refid="search2"></include>
 		order 
 			by createDate desc
 		limit  
