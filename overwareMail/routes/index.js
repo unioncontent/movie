@@ -149,6 +149,7 @@ router.get('/preview',async function(req, res, next) {
     }
     var sideHtmlStart = '<table width="750" align="center" cellpadding="0" cellspacing="0" style="border: solid 1px #cacaca; padding: 20px;"><tbody><tr><td>';
     // showbox logo , new number
+    console.log(viewCode[0].M_invitation);
     var topObj = settingTophtml(viewCode[0].M_template,viewCode[0].M_seq_number,viewCode[0].M_invitation);
     sideHtmlStart += topObj.html;
     sideHtmlStart += '<table width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td>';
@@ -320,13 +321,14 @@ passport.deserializeUser(function (user, done) {
 });
 
 function settingTophtml(M_template,num,ivtVal){
+  console.log(M_template,num,ivtVal);
   var Obj = {
     html : '',
     ivt : '0'
   };
   if(M_template == '0'){
     Obj.html = '<table width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td width="642"><img src="http://showbox.email/templates/images/logo/show_logo.png" width="135" height="36" alt="로고"></td><td width="92"><p style="font-size:  12px;">NEWS ';
-    if(num != '' && ivtVal == ''){
+    if(num != '' && ivtVal == 0){
       Obj.html += 'No.'+num;
     }
     else{
