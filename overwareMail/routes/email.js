@@ -692,8 +692,8 @@ async function settingMailBody(bodyHtml,keyword,template,idx,num,ivt){
     resultHtml += '<table width="750" align="center" cellpadding="0" cellspacing="0" border="0" style="margin-top: 30px;"><tbody><tr><td>[지난 기사보기]<hr><table cellpadding="0" cellspacing="0" border="0" width="100%"><colgroup><col width="80%"><col width="20%"></colgroup><tbody>';
     for(var i=0; i < pastView.length; i++) {
       var url = 'http://showbox.email/preview?keyword='+pastView[i].keyword_idx+'&idx='+pastView[i].n_idx;
-      html +='<tr><td style=\"font-size: small;padding:5px 5px 5px 0px;border-bottom:1px dotted #d9d9d9;color:#444;\">['+((ivt == '0')?('No.'+pastView[i].M_seq_number+'차'):'Invitation')+']<a style=\"text-decoration:none; color:black;\" href=\"'+url+'\" target=\"_blank\"> '+pastView[i].M_subject+'</a>';
-      html +='</td><td style=\"font-size: small;padding:5px 0 5px;border-bottom:1px dotted #d9d9d9;color:#444;\">'+pastView[i].M_send+'</td></tr>'
+      resultHtml +='<tr><td style=\"font-size: small;padding:5px 5px 5px 0px;border-bottom:1px dotted #d9d9d9;color:#444;\">['+((ivt == '0')?('No.'+pastView[i].M_seq_number+'차'):'Invitation')+']<a style=\"text-decoration:none; color:black;\" href=\"'+url+'\" target=\"_blank\"> '+pastView[i].M_subject+'</a>';
+      resultHtml +='</td><td style=\"font-size: small;padding:5px 0 5px;border-bottom:1px dotted #d9d9d9;color:#444;\">'+pastView[i].M_send+'</td></tr>'
     }
     resultHtml +='<tr><td colspan="2" style="text-align: center; font-size: small;padding:10px 0 5px;">';
     var limit = 5;
@@ -702,9 +702,9 @@ async function settingMailBody(bodyHtml,keyword,template,idx,num,ivt){
     for(index;index<=pages;index++){
       //http://showbox.email
       if(1 == index){
-        html +='<strong><span class="current">'+index+'</span></strong>';
+        resultHtml +='<strong><span class="current">'+index+'</span></strong>';
       } else{
-        html +='<a href=\"http://showbox.email/preview?keyword='+keyword+'&idx='+idx+'&page='+index+'\">'+index+'</a>';
+        resultHtml +='<a href=\"http://showbox.email/preview?keyword='+keyword+'&idx='+idx+'&page='+index+'\">'+index+'</a>';
       }
     }
     resultHtml += '</td></tr></tbody></table></td></tr></tbody></table><table cellpadding="0" cellspacing="0" border="0" width="750" align="center" style="margin-top: 30px;"><tbody><tr><td align="center">Copyright ⓒ unioncontents All rights reserved.</td></tr></tbody></table><p>&nbsp;</p>'
