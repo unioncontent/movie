@@ -112,7 +112,7 @@
                         </a>
                       </td>
                       <td><%= list[i].M_sender %></td>
-                      <td><div class="num_nobr"><%= ((list[i].M_invitation == '0')?(list[i].M_seq_number+'차'):'-') %></div></td>
+                      <td><div class="num_nobr"><%= ((list[i].M_invitation == '0' && list[i].M_seq_number != '')?(list[i].M_seq_number+'차'):'-') %></div></td>
                       <td><%= recipiStr %></td>
                       <td><div class="group-nobr" title="<%= groupStr %>"><%= groupStr %></div></td>
                       <td><div class="date-nobr"><%= list[i].M_regdate %></div></td>
@@ -760,7 +760,7 @@
               <div class="title_nobr">'+item.M_subject+'</div>\
             </a></td>\
             <td>'+item.M_sender+'</td>\
-            <td><div class="num_nobr">'+((item.M_invitation == '0')?(item.M_seq_number+'차'):'-')+'</div></td>\
+            <td><div class="num_nobr">'+((item.M_invitation == '0' && item.M_seq_number != '')?(item.M_seq_number+'차'):'-')+'</div></td>\
             <td>'+recipiStr+'</td>\
             <td><div class="group-nobr" title="'+groupStr+'">'+groupStr+'</div></td>\
             <td><div class="date-nobr">'+item.M_regdate+'</div></td>\
