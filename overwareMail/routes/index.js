@@ -7,7 +7,6 @@ var router = express.Router();
 var maillink = require('../models/maillink.js');
 var newsclipping = require('../models/newsclipping.js');
 var nMailAll = require('../models/nMailAll.js');
-var content = require('../models/content.js');
 var period = require('../models/period.js');
 var user = require('../models/user.js');
 var mailAllA = require('../models/mailAllA.js');
@@ -54,6 +53,7 @@ router.post('/7DayGraph',isAuthenticated, async function(req, res, next) {
   res.send(data);
 });
 
+// 뉴스클리핑
 router.get('/preview/newsclipping',async function(req, res, next) {
   var data = {layout: false};
   var queryResult = [];
@@ -108,6 +108,7 @@ router.get('/preview',async function(req, res, next) {
   var data = {
     layout: false,
     view: '',
+    type: '0',
     pastView: [{keyword:''}],
     pastCount: 0,
     msg: '',
@@ -146,29 +147,25 @@ router.get('/preview',async function(req, res, next) {
       res.render('preview',data);
       return false;
     }
-    var ivt = '0';
-    var sideHtmlStart = '<table width="750" align="center" cellpadding="0" cellspacing="0" style="border: solid 1px #cacaca; padding: 20px;"><tbody><tr><td><table width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td width="642"><img src="http://showbox.email/templates/images/logo/show_logo.png" width="135" height="36" alt="로고"></td><td width="92"><p style="font-size:  12px;">NEWS ';
-    if(viewCode[0].M_seq_number != '0' && viewCode[0].M_invitation  == '0'){
-      sideHtmlStart+= 'No.'+viewCode[0].M_seq_number;
-    }
-    else{
-      sideHtmlStart+= 'Invitation';
-      ivt = '1';
-    }
-    sideHtmlStart+= '</p></td></tr></tbody></table><table width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td>';
+    var sideHtmlStart = '<table width="750" align="center" cellpadding="0" cellspacing="0" style="border: solid 1px #cacaca; padding: 20px;"><tbody><tr><td>';
+    // showbox logo , new number
+    var topObj = settingTophtml(viewCode[0].M_template,viewCode[0].M_seq_number,viewCode[0].M_invitation);
+    sideHtmlStart += topObj.html;
+    sideHtmlStart += '<table width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td>';
     var sideHtmlEnd = '</td></tr></tbody></table></td></tr></tbody></table>';
-    var pastParam = {keyword:req.query.keyword,page:req.query.page,ivt:ivt};
-    var pastNews = await content.selectView(pastParam);
-    var pastNewsCount = await content.selectViewCount(pastParam);
+    // last mail list
+    var pastParam = {keyword:req.query.keyword,page:req.query.page,ivt:topObj.ivt};
+    var pastVal = await settingPastList(viewCode[0].M_template,pastParam);
     data = {
       layout: false,
-      view:(viewCode.length == 0) ? '' : sideHtmlStart+viewCode[0].M_body+sideHtmlEnd,
-      pastView:pastNews,
-      pastCount: (pastNewsCount.length == 0) ? '':pastNewsCount[0].total,
+      view: (viewCode.length == 0) ? '' : sideHtmlStart+viewCode[0].M_body+sideHtmlEnd,
+      type: viewCode[0].M_template,
+      pastView: pastVal.pastNews,
+      pastCount: (pastVal.pastNewsCount.length == 0) ? '':pastVal.pastNewsCount[0].total,
       msg: '',
       currentPage: 1,
-      keyword:req.query.keyword,
-      idx:req.query.idx
+      keyword: req.query.keyword,
+      idx: req.query.idx
     };
     if('page' in req.query){
       data.currentPage = req.query.page;
@@ -182,31 +179,24 @@ router.get('/preview',async function(req, res, next) {
 
 // 메일 미리보기
 var preview_data = {};
-router.post('/preview_mail', isAuthenticated,async function(req, res, next) {
-  var sideHtmlStart = '<table width="750" align="center" cellpadding="0" cellspacing="0" style="border: solid 1px #cacaca; padding: 20px;"><tbody><tr><td><table width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td width="642"><img src="http://showbox.email/templates/images/logo/show_logo.png" width="135" height="36" alt="로고"></td><td width="92"><p style="font-size:  12px;">NEWS ';
-  var ivt = '0';
-  if(req.body.num != '' && req.body.ivt == ''){
-    sideHtmlStart+= 'No.'+req.body.num;
-  }
-  else{
-    sideHtmlStart+= 'Invitation';
-    ivt = '1';
-  }
-  sideHtmlStart+= '</p></td></tr></tbody></table><table width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td>';
+router.post('/preview_mail', isAuthenticated ,async function(req, res, next) {
+  var sideHtmlStart = '<table width="750" align="center" cellpadding="0" cellspacing="0" style="border: solid 1px #cacaca; padding: 20px;"><tbody><tr><td>';
+  // showbox logo , new number
+  var topObj = settingTophtml(req.body.M_template,req.body.num,req.body.ivt);
+  sideHtmlStart += topObj.html;
+  // mail content
+  sideHtmlStart += '<table width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td>';
   var sideHtmlEnd = '</td></tr></tbody></table></td></tr></tbody></table>';
-  var pastNews = [];
-  var pastNewsCount = [];
-  if(req.body.M_keyword != ''){
-    var pastParam = {keyword:req.body.M_keyword,page:1,ivt:ivt};
-    pastNews = await content.selectView(pastParam);
-    pastNewsCount = await content.selectViewCount(pastParam);
-  }
-  console.log('/preview_mail:',sideHtmlStart);
+  // last mail list
+  var pastParam = {keyword:req.body.M_keyword,page:1,ivt:topObj.ivt};
+  var pastVal = await settingPastList(req.body.M_template,pastParam);
+
   preview_data = {
     layout: false,
+    type: req.body.M_template,
     view:sideHtmlStart+req.body.M_body+sideHtmlEnd,
-    pastView:pastNews,
-    pastCount: (pastNewsCount.length == 0) ? '':pastNewsCount[0].total,
+    pastView:pastVal.pastNews,
+    pastCount: (pastVal.pastNewsCount.length == 0) ? '':pastVal.pastNewsCount[0].total,
     msg: '',
     currentPage: 1,
     keyword:req.body.M_keyword
@@ -231,25 +221,22 @@ router.get('/preview_test',async function(req, res, next) {
   }
   var viewCode = await maillink.selectEmailOneView(req.query.idx);
   var htmlMsg = '<table width="750" align="center" cellpadding="0" cellspacing="0" style="padding: 20px;"><tbody><tr><td align="center" style="font-size: 15px; font-weight: bold;" class="fix">[ 메일 본문이 깨져 보이면 <a href=\"http://showbox.email/preview?keyword='+req.query.keyword+'&idx='+req.query.idx+'\" target=\"_blank\" style=\"font-family: 맑은고딕,malgungothic,돋움,dotum;\">여기</a>를 눌러 주세요 ]</td></tr></tbody></table>';
-  var sideHtmlStart = '<table width="750" align="center" cellpadding="0" cellspacing="0" style="border: solid 1px #cacaca; padding: 20px;"><tbody><tr><td><table width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td width="642"><img src="http://showbox.email/templates/images/logo/show_logo.png" width="135" height="36" alt="로고"></td><td width="92"><p style="font-size:  12px;">NEWS ';
-  var ivt = '0';
-  if(viewCode[0].M_seq_number != '0' && viewCode[0].M_invitation  == '0'){
-    sideHtmlStart+= 'No.'+viewCode[0].M_seq_number;
-  }
-  else{
-    sideHtmlStart+= 'Invitation';
-    ivt = '1';
-  }
-  sideHtmlStart+= '</p></td></tr></tbody></table><table width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td>';
+  var sideHtmlStart = '<table width="750" align="center" cellpadding="0" cellspacing="0" style="border: solid 1px #cacaca; padding: 20px;"><tbody><tr><td>';
+  // showbox logo , new number
+  var topObj = settingTophtml(viewCode[0].M_template,viewCode[0].M_seq_number,viewCode[0].M_invitation);
+  sideHtmlStart += topObj.html;
+  sideHtmlStart += '<table width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td>';
   var sideHtmlEnd = '</td></tr></tbody></table></td></tr></tbody></table>';
-  var pastParam = {keyword:req.query.keyword,page:req.query.page,ivt:ivt};
-  var pastNews = await content.selectView(pastParam);
-  var pastNewsCount = await content.selectViewCount(pastParam);
+  // last mail list
+  var pastParam = {keyword:req.query.keyword,page:req.query.page,ivt:topObj.ivt};
+  var pastVal = await settingPastList(viewCode[0].M_template,pastParam);
+
   var data = {
     layout: false,
     view:(viewCode.length == 0) ? '' : htmlMsg+sideHtmlStart+viewCode[0].M_body+sideHtmlEnd+htmlMsg,
-    pastView:pastNews,
-    pastCount: (pastNewsCount.length == 0) ? '':pastNewsCount[0].total,
+    type: viewCode[0].M_template,
+    pastView:pastVal.pastNews,
+    pastCount: (pastVal.pastNewsCount.length == 0) ? '':pastVal.pastNewsCount[0].total,
     msg: '',
     currentPage: 1,
     keyword:req.query.keyword,
@@ -263,7 +250,6 @@ router.get('/preview_test',async function(req, res, next) {
   }
   res.render('preview',data);
 });
-
 
 // 로그인 & 로그아웃 구현
 router.get('/login', function(req, res, next) {
@@ -332,5 +318,38 @@ passport.deserializeUser(function (user, done) {
   // 페이지 이동 시마다 세션 로그인 값 호출
   done(null, user);
 });
+
+function settingTophtml(M_template,num,ivtVal){
+  var Obj = {
+    html : '',
+    ivt : '0'
+  };
+  if(M_template == '0'){
+    Obj.html = '<table width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td width="642"><img src="http://showbox.email/templates/images/logo/show_logo.png" width="135" height="36" alt="로고"></td><td width="92"><p style="font-size:  12px;">NEWS ';
+    if(num != '' && ivtVal == ''){
+      Obj.html += 'No.'+num;
+    }
+    else{
+      Obj.html += 'Invitation';
+      Obj.ivt = '1';
+    }
+    Obj.html += '</p></td></tr></tbody></table>';
+  }
+  return Obj;
+}
+
+async function settingPastList(template,pastParam){
+  console.log(template,pastParam);
+  var Obj = {
+    pastNews : [],
+    pastNewsCount : []
+  };
+  if(template == '0'){
+    var content = require('../models/content.js');
+    Obj.pastNews = await content.selectView(pastParam);
+    Obj.pastNewsCount = await content.selectViewCount(pastParam);
+  }
+  return Obj;
+}
 
 module.exports = router;

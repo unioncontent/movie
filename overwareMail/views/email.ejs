@@ -160,6 +160,25 @@
                 </div>
               </div>
               <div class="form-group row">
+                <label class="col-sm-2 col-form-label">* 메일타입</label>
+                <div id="type" class="form-radio">
+                  <div class="col-sm-12">
+                    <div class="radio radiofill radio-inverse radio-inline">
+                      <label>
+                        <input type="radio" value="1" name="M_template">
+                        <i class="helper"></i>일반메일
+                      </label>
+                    </div>
+                    <div class="radio radiofill radio-inverse radio-inline">
+                      <label>
+                        <input type="radio" value="0" name="M_template" checked>
+                        <i class="helper"></i>영화메일
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row">
                 <label class="col-sm-2 col-form-label">* 메일제목</label>
                 <div class="col-sm-10">
                   <input id="M_subject" type="text" class="form-control">
@@ -518,6 +537,7 @@
       pushEle($('.sender-select'),param);
       var mailData = JSON.parse($("#mailData").val());
       $("#M_keyword option[value='"+mailData.M_keyword+"']").attr('selected','selected');
+      $("input[name='M_template'][value='"+mailData.M_template+"']").attr('checked','checked');
       $("#M_mail_type option[value='"+mailData.M_mail_type+"']").attr('selected','selected');
       $("#M_subject").val(mailData.M_subject);
       $("#M_seq_number").val(mailData.M_seq_number);
@@ -602,6 +622,7 @@
     var param = {
       'M_keyword': $("#M_keyword option:selected").val() || '',
       'M_seq_number': num,
+      'M_template':$("input:radio[name=M_template]:checked").val(),
       'M_invitation': $("#invitation").is(":checked") ? '1' : '0',
       'M_body': get_tinymce_html_content(),
       'M_subject': $("#M_subject").val(),
@@ -635,6 +656,7 @@
     var param = {
       'M_keyword': $("#M_keyword option:selected").val() || '',
       'num': num,
+      'M_template':$("input:radio[name=M_template]:checked").val(),
       'ivt': $("#invitation").is(":checked") ? 'Invitation' : '',
       'M_body': get_tinymce_html_content(),
     };
@@ -676,6 +698,7 @@
     }
     var param = {
       'M_seq_number': num,
+      'M_template':$("input:radio[name=M_template]:checked").val(),
       'M_invitation': $("#invitation").is(":checked") ? '1' : '0',
       'M_sender': $(".sender-select").select2("val"),
       'M_recipi': $(".recipi-select").select2("val"),
