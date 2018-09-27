@@ -98,7 +98,7 @@
                       <th><%= listCount - i - offset %></th>
                       <td><%= list[i].M_regdate %></td>
                       <td><div class="kwd_nobr"><%= list[i].M_keyword %></div></td>
-                      <td><div class="num_nobr"><%= ((list[i].M_invitation == '0')?(list[i].M_seq_number+'차'):'-') %></div></td>
+                      <td><div class="num_nobr"><%= ((list[i].M_invitation == '0' && list[i].M_seq_number != '')?(list[i].M_seq_number+'차'):'-') %></div></td>
                       <td>
                         <a href="http://showbox.email/preview?keyword=<%= list[i].M_keyword_idx %>&idx=<%= list[i].n_idx %>" target="_blank">
                           <div class="title_nobr"><%= list[i].M_subject %></div>
@@ -769,7 +769,7 @@
             <th>'+numIdx+'</th>\
             <td>'+item.M_regdate+'</td>\
             <td><div class="kwd_nobr">'+item.M_keyword+'</div></td>\
-            <td><div class="num_nobr">'+((item.M_invitation == '0')?(item.M_seq_number+'차'):'-')+'</div></td>\
+            <td><div class="num_nobr">'+((item.M_invitation == '0' && item.M_seq_number != '')?(item.M_seq_number+'차'):'-')+'</div></td>\
             <td><a href="http://showbox.email/preview?keyword='+item.M_keyword_idx+'&idx='+item.n_idx+'" target="_blank"><div class="title_nobr">'+item.M_subject+'</div></a></td>\
             <td>'+item.M_mail_type+'</td>\
             <td><span class="total">'+item.sendCount+'</span></td>\

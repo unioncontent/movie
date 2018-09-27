@@ -129,6 +129,25 @@
                 </div>
               </div>
               <div class="form-group row">
+                <label class="col-sm-2 col-form-label">* 메일타입</label>
+                <div id="type" class="form-radio">
+                  <div class="col-sm-12">
+                    <div class="radio radiofill radio-inverse radio-inline">
+                      <label>
+                        <input type="radio" value="1" name="M_template">
+                        <i class="helper"></i>일반메일
+                      </label>
+                    </div>
+                    <div class="radio radiofill radio-inverse radio-inline">
+                      <label>
+                        <input type="radio" value="0" name="M_template" checked>
+                        <i class="helper"></i>영화메일
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row seqNumber">
                 <label class="col-sm-2 col-form-label">* 발송차수</label>
                 <div class="col-sm-3">
                   <input type="text" id="M_seq_number" class="form-control">
@@ -157,25 +176,6 @@
                     <% } %>
                   </select>
                   <span class='messages'><p class='text-danger error'></p></span>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-2 col-form-label">* 메일타입</label>
-                <div id="type" class="form-radio">
-                  <div class="col-sm-12">
-                    <div class="radio radiofill radio-inverse radio-inline">
-                      <label>
-                        <input type="radio" value="1" name="M_template">
-                        <i class="helper"></i>일반메일
-                      </label>
-                    </div>
-                    <div class="radio radiofill radio-inverse radio-inline">
-                      <label>
-                        <input type="radio" value="0" name="M_template" checked>
-                        <i class="helper"></i>영화메일
-                      </label>
-                    </div>
-                  </div>
                 </div>
               </div>
               <div class="form-group row">
@@ -603,6 +603,10 @@
   $('input[name=M_type]').on('change',function(){
     $('.reserveTime').toggle();
   });
+  // 메일타입 변경시
+  $('input[name=M_template]').on('change',function(){
+    $('.seqNumber').toggle();
+  });
   // 메일 테스트 발송 버튼 클릭시
   $(".btn-test").on("click",function(){
     var sender = $(".sender-select").select2("val");
@@ -716,7 +720,7 @@
     if(param["M_recipi"] == ""){
       check = requiredMessage("M_recipi","받는사람을 선택해주세요.");
     }
-    if(param["M_invitation"] == '0'){
+    if(param["M_invitation"] == '0' && param["M_template"] == "0"){
       if(!($.isNumeric(param["M_seq_number"])) ){
         check = requiredMessage("M_seq_number","발송차수는 숫자만 입력가능합니다.");
       }

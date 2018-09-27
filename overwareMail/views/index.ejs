@@ -103,7 +103,7 @@
                     <tr>
                       <th><%= list[i].M_send %></th>
                       <td><div class="kwd_nobr"><%= list[i].M_keyword %></div></td>
-                      <td><div class="num_nobr"><%= ((list[i].M_invitation == '0')?(list[i].M_seq_number+'차'):'-') %></div></td>
+                      <td><div class="num_nobr"><%= ((list[i].M_invitation == '0' && list[i].M_seq_number != '')?(list[i].M_seq_number+'차'):'-') %></div></td>
                       <td>
                         <a href="http://showbox.email/preview?keyword=<%= list[i].M_keyword_idx %>&idx=<%= list[i].n_idx %>" target="_blank">
                           <div class="title_nobr"><%= list[i].M_subject %></div>
