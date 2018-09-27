@@ -950,7 +950,6 @@ public class PeriodController {
 				graphList.add(graphVO);
 				
 				cal.add(Calendar.DATE, -1);
-				
 			}
 		}
 		

@@ -237,13 +237,12 @@
                                         <c:if test="${!empty scoreList}">
                                         <thead>
                                             <tr>
-                                          	<th width="1%"></th>
                                             <th>NO</th>
                                             <th>등록일</th>
                                             <th>구분</th>
                                             <th>내용</th>
                                             <th>키워드</th>
-                                            <th>점수</th>
+                                            <th>평점</th>
                                           </tr>
                                         </thead>
                                         <tbody>
