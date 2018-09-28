@@ -154,6 +154,10 @@ var mailListC = {
     }
     return await getResult(sql,param);
   },
+  update: async function(param){
+    var sql = 'update m_mail_list_c set M_email=? where M_idx_a=?;';
+    return await getResult(sql,[param.M_email,param.n_idx]);
+  },
   selectViewCount: async function(body,param){
     var sql = 'select count(*) as total from (SELECT * FROM mail_list_group_view where';
     if (typeof body.search !== 'undefined') {
