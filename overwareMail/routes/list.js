@@ -69,7 +69,8 @@ router.post('/update',isAuthenticated,async function(req, res) {
     console.log('params:',req.body);
     var changeCheck = req.body.rChange;
     delete req.body.rChange;
-    var updateMail = await mailListA.update(req.body);
+    await mailListA.update(req.body);
+    await mailListC.update(req.body);
     var reporterCheck = await user.reporterCheck([req.body.o_email,req.body.o_name,req.body.M_ptitle]);
     if(req.body.M_reporter != 1){
       await user.deleteReporter(req.body.o_email,req.body.M_name);
