@@ -973,7 +973,7 @@
 			by createDate asc
  	</select>
  	
- 	<select id="fvlistViewCnt" resultType="Integer">
+ 	<!-- <select id="fvlistViewCnt" resultType="Integer">
  		select
 			f.view_cnt as view_cnt
 		from
@@ -1007,9 +1007,9 @@
 			(select @RNUM:=@RNUM+1 AS ROWNUM, like_cnt from (SELECT @RNUM:=0) R,(SELECT IFNULL(SUM(like_cnt), 0)as like_cnt FROM facebook_videos WHERE like_cnt !=1 and url = #{url} and createDate between date_add(#{date}, interval -1 hour) and #{date} order by createDate desc limit 1)c) a,
 	        (select @RNUM1:=@RNUM1+1 AS ROWNUM, like_cnt from (SELECT @RNUM1:=0) R,(select * from facebook_videos where url = #{url} and createDate >= #{date} order by createDate asc limit 1)d) b
 		where a.rownum = b.rownum) f;  
- 	</select>
+ 	</select> -->
  	
- 	<!-- facebook_graph 테이블 사용시
+ 	<!-- facebook_graph 테이블 사용시 -->
  	<select id="fvlistViewCnt" resultType="Integer">
  		select
 			view_cnt
@@ -1044,7 +1044,7 @@
 		and 
 			createDate >= #{date} 
 		order by createDate asc limit 1
- 	</select> -->
+ 	</select>
  	
  	<select id="fvlistPlus" resultType="FvVO">
  		select 
@@ -1182,7 +1182,7 @@
 			limit 1;
  	</select>
  	
- 	<select id="fvlistGraph" resultType="FvVO">
+ 	<!-- <select id="fvlistGraph" resultType="FvVO">
  		select 0 as 'view_cnt', 0 as 'reply_cnt', 0 as 'like_cnt' from dual 
         	union all
  		select 
@@ -1191,9 +1191,9 @@
  			facebook_videos 
  		where 
  			url = #{url};
- 	</select>
+ 	</select> -->
  	
- 	<!-- facebook_graph 테이블 사용시
+ 	<!-- facebook_graph 테이블 사용시-->
  	<select id="fvlistGraph" resultType="FvVO">
  		select 
  			view_cnt, reply_cnt, like_cnt 
@@ -1201,7 +1201,7 @@
  			facebook_graph 
  		where 
  			url = #{url};
- 	</select> -->
+ 	</select> 
  	
  	<select id="snsTotalcount" resultType="Integer">
 		select
