@@ -268,7 +268,7 @@ public class ExcelView extends AbstractXlsView {
 		    if(vo.getThumbnail() != null) {
 		    cellIdx += 1;
 		    HSSFCell imgCell = dataRow.createCell(cellIdx);
-		    imgCell.setCellValue(new HSSFRichTextString("http://overware.iptime.org:8080/classification/show?name="+vo.getThumbnail()));
+		    imgCell.setCellValue(new HSSFRichTextString("http://overware.co.kr/classification/show?name="+vo.getThumbnail()));
 		    }else {
 		    	cellIdx += 1;
 			    HSSFCell imgCell = dataRow.createCell(cellIdx);

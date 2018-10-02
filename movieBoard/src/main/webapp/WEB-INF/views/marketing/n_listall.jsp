@@ -125,7 +125,7 @@
                           </div>
                           <div class="card-block">
                             <!-- <div id="morris-extra-area" style="height:300px;"></div> -->
-                            <div id="container" style="height:350px;"></div>
+                            <div id="container" style="height:300px;"></div>
                           </div>
                         </div>
                       </div>
@@ -147,7 +147,7 @@
                             </div>
                           </div>
                           <div class="card-block">
-                            <div id="container2" style="height:350px;"></div>
+                            <div id="container2" style="height:300px;"></div>
                           </div>
                         </div>
                       </div>
@@ -170,7 +170,7 @@
                           </div>
                           <div class="card-block">
                             <!-- <div id="morris-extra-area" style="height:300px;"></div> -->
-                            <div id="container3" style="height:350px;"></div>
+                            <div id="container3" style="height:300px;"></div>
                           </div>
                         </div>
                       </div>
