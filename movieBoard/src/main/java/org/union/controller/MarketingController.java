@@ -2105,7 +2105,7 @@ public class MarketingController {
 		return graphList;
 	}
 	
-	@ResponseBody
+	/*@ResponseBody
 	@PostMapping("/graphOne")
 	public List<GraphVO> graphOne(Model model, String success, String url, String url2,SearchFv fv,SearchNv nv, String Mcreate, String Mcreate2) throws ParseException, SQLException {
 		logger.info("graphOnePOST called....");
@@ -2212,10 +2212,10 @@ public class MarketingController {
 		}
 		logger.info("graphList: " + graphList);
 		return graphList;
-	}
+	}*/
 	
 	// facebook_graph 테이블 사용시
-	/*@ResponseBody
+	@ResponseBody
 	@PostMapping("/graphOne")
 	public List<GraphVO> graphOne(Model model, String success, String url, String url2,SearchFv fv,SearchNv nv, String Mcreate, String Mcreate2) throws ParseException, SQLException {
 		logger.info("graphOnePOST called....");
@@ -2322,118 +2322,8 @@ public class MarketingController {
 		}
 		logger.info("graphList: " + graphList);
 		return graphList;
-	}*/	
-	
-	@ResponseBody
-	@PostMapping("/graphTwo")
-	public List<GraphVO> graphTwo(Model model, String success, String url, String url2,SearchFv fv,SearchNv nv, String Mcreate, String Mcreate2) throws ParseException, SQLException {
-		logger.info("graphTwoPOST called....");
-		
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH");
-		
-		Date current = new Date();
-		logger.info("current: " + current);
-		
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(current);
-		
-		logger.info("cal.getTime: " + cal.getTime());
-		
-		List<NvVO> viewList = new ArrayList<NvVO>();
-		for(int i = 0; i < 24; i++) {
-			
-			NvVO nvVO = new NvVO();
-			fv.setUrl(url);
-			
-			int view = 0;
-			int reply = 0;
-			int like = 0;
-			
-			if(i < portalService.nvlistGraph(fv).size()-1) {
-				if(portalService.nvlistGraph(fv).get(i).getView_cnt() != null) {
-					view = portalService.nvlistGraph(fv).get(i+1).getView_cnt() - portalService.nvlistGraph(fv).get(i).getView_cnt();
-					reply = portalService.nvlistGraph(fv).get(i+1).getReply_cnt() - portalService.nvlistGraph(fv).get(i).getReply_cnt();
-					like = portalService.nvlistGraph(fv).get(i+1).getLike_cnt() - portalService.nvlistGraph(fv).get(i).getLike_cnt();
-	
-					nvVO.setView_cnt(view);
-					nvVO.setReply_cnt(reply);
-					nvVO.setLike_cnt(like);
-
-				}else{
-					nvVO.setView_cnt(view);
-					nvVO.setReply_cnt(reply);
-					nvVO.setLike_cnt(like);
-				}
-				
-			} else {
-				nvVO.setView_cnt(view);
-				nvVO.setReply_cnt(reply);
-				nvVO.setLike_cnt(like);
-				
-			}
-			
-			viewList.add(nvVO);
-		}
-		
-		
-		
-		List<NvVO> viewList2 = new ArrayList<NvVO>();
-		for(int i = 0; i < 24; i++) {
-			
-			NvVO nvVO2 = new NvVO();
-			fv.setUrl(url2);
-			
-			int view = 0;
-			int reply = 0;
-			int like = 0;
-			
-			if(i < portalService.nvlistGraph(fv).size()-1) {
-				if(portalService.nvlistGraph(fv).get(i).getView_cnt() != null) {
-					view = portalService.nvlistGraph(fv).get(i+1).getView_cnt() - portalService.nvlistGraph(fv).get(i).getView_cnt();
-					reply = portalService.nvlistGraph(fv).get(i+1).getReply_cnt() - portalService.nvlistGraph(fv).get(i).getReply_cnt();
-					like = portalService.nvlistGraph(fv).get(i+1).getLike_cnt() - portalService.nvlistGraph(fv).get(i).getLike_cnt();
-	
-					nvVO2.setView_cnt(view);
-					nvVO2.setReply_cnt(reply);
-					nvVO2.setLike_cnt(like);
-
-				}else{
-					nvVO2.setView_cnt(view);
-					nvVO2.setReply_cnt(reply);
-					nvVO2.setLike_cnt(like);
-				}
-				
-			} else {
-				nvVO2.setView_cnt(view);
-				nvVO2.setReply_cnt(reply);
-				nvVO2.setLike_cnt(like);
-				
-			}
-			
-			viewList2.add(nvVO2);
-		}
-		
-		
-		List<GraphVO> graphList = new ArrayList<GraphVO>();
-		for(int i = 0; i < 24; i++) {
-			GraphVO graphVO = new GraphVO();
-			
-			graphVO.setWriteDate(sdf.format(cal.getTime()) + ":00");
-			graphVO.setType1(viewList.get(i).getView_cnt());
-			graphVO.setType2(viewList2.get(i).getView_cnt());
-			graphVO.setType3(viewList.get(i).getReply_cnt());
-			graphVO.setType4(viewList2.get(i).getReply_cnt());
-			graphVO.setType5(viewList.get(i).getLike_cnt());
-			graphVO.setType6(viewList2.get(i).getLike_cnt());
-			
-			graphList.add(graphVO);
-			
-			cal.add(Calendar.HOUR, -1);
-		}
-		return graphList;
 	}
 	
-	// naver_graph 테이블 사용시
 	/*@ResponseBody
 	@PostMapping("/graphTwo")
 	public List<GraphVO> graphTwo(Model model, String success, String url, String url2,SearchFv fv,SearchNv nv, String Mcreate, String Mcreate2) throws ParseException, SQLException {
@@ -2459,11 +2349,11 @@ public class MarketingController {
 			int reply = 0;
 			int like = 0;
 			
-			if(i < portalService.nvlistGraph(fv).size()) {
+			if(i < portalService.nvlistGraph(fv).size()-1) {
 				if(portalService.nvlistGraph(fv).get(i).getView_cnt() != null) {
-					view = portalService.nvlistGraph(fv).get(i).getView_cnt();
-					reply = portalService.nvlistGraph(fv).get(i).getReply_cnt();
-					like = portalService.nvlistGraph(fv).get(i).getLike_cnt();
+					view = portalService.nvlistGraph(fv).get(i+1).getView_cnt() - portalService.nvlistGraph(fv).get(i).getView_cnt();
+					reply = portalService.nvlistGraph(fv).get(i+1).getReply_cnt() - portalService.nvlistGraph(fv).get(i).getReply_cnt();
+					like = portalService.nvlistGraph(fv).get(i+1).getLike_cnt() - portalService.nvlistGraph(fv).get(i).getLike_cnt();
 	
 					nvVO.setView_cnt(view);
 					nvVO.setReply_cnt(reply);
@@ -2497,11 +2387,11 @@ public class MarketingController {
 			int reply = 0;
 			int like = 0;
 			
-			if(i < portalService.nvlistGraph(fv).size()) {
+			if(i < portalService.nvlistGraph(fv).size()-1) {
 				if(portalService.nvlistGraph(fv).get(i).getView_cnt() != null) {
-					view = portalService.nvlistGraph(fv).get(i).getView_cnt();
-					reply = portalService.nvlistGraph(fv).get(i).getReply_cnt();
-					like = portalService.nvlistGraph(fv).get(i).getLike_cnt();
+					view = portalService.nvlistGraph(fv).get(i+1).getView_cnt() - portalService.nvlistGraph(fv).get(i).getView_cnt();
+					reply = portalService.nvlistGraph(fv).get(i+1).getReply_cnt() - portalService.nvlistGraph(fv).get(i).getReply_cnt();
+					like = portalService.nvlistGraph(fv).get(i+1).getLike_cnt() - portalService.nvlistGraph(fv).get(i).getLike_cnt();
 	
 					nvVO2.setView_cnt(view);
 					nvVO2.setReply_cnt(reply);
@@ -2542,6 +2432,116 @@ public class MarketingController {
 		}
 		return graphList;
 	}*/
+	
+	// naver_graph 테이블 사용시
+	@ResponseBody
+	@PostMapping("/graphTwo")
+	public List<GraphVO> graphTwo(Model model, String success, String url, String url2,SearchFv fv,SearchNv nv, String Mcreate, String Mcreate2) throws ParseException, SQLException {
+		logger.info("graphTwoPOST called....");
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH");
+		
+		Date current = new Date();
+		logger.info("current: " + current);
+		
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(current);
+		
+		logger.info("cal.getTime: " + cal.getTime());
+		
+		List<NvVO> viewList = new ArrayList<NvVO>();
+		for(int i = 0; i < 24; i++) {
+			
+			NvVO nvVO = new NvVO();
+			fv.setUrl(url);
+			
+			int view = 0;
+			int reply = 0;
+			int like = 0;
+			
+			if(i < portalService.nvlistGraph(fv).size()) {
+				if(portalService.nvlistGraph(fv).get(i).getView_cnt() != null) {
+					view = portalService.nvlistGraph(fv).get(i).getView_cnt();
+					reply = portalService.nvlistGraph(fv).get(i).getReply_cnt();
+					like = portalService.nvlistGraph(fv).get(i).getLike_cnt();
+	
+					nvVO.setView_cnt(view);
+					nvVO.setReply_cnt(reply);
+					nvVO.setLike_cnt(like);
+
+				}else{
+					nvVO.setView_cnt(view);
+					nvVO.setReply_cnt(reply);
+					nvVO.setLike_cnt(like);
+				}
+				
+			} else {
+				nvVO.setView_cnt(view);
+				nvVO.setReply_cnt(reply);
+				nvVO.setLike_cnt(like);
+				
+			}
+			
+			viewList.add(nvVO);
+		}
+		
+		
+		
+		List<NvVO> viewList2 = new ArrayList<NvVO>();
+		for(int i = 0; i < 24; i++) {
+			
+			NvVO nvVO2 = new NvVO();
+			fv.setUrl(url2);
+			
+			int view = 0;
+			int reply = 0;
+			int like = 0;
+			
+			if(i < portalService.nvlistGraph(fv).size()) {
+				if(portalService.nvlistGraph(fv).get(i).getView_cnt() != null) {
+					view = portalService.nvlistGraph(fv).get(i).getView_cnt();
+					reply = portalService.nvlistGraph(fv).get(i).getReply_cnt();
+					like = portalService.nvlistGraph(fv).get(i).getLike_cnt();
+	
+					nvVO2.setView_cnt(view);
+					nvVO2.setReply_cnt(reply);
+					nvVO2.setLike_cnt(like);
+
+				}else{
+					nvVO2.setView_cnt(view);
+					nvVO2.setReply_cnt(reply);
+					nvVO2.setLike_cnt(like);
+				}
+				
+			} else {
+				nvVO2.setView_cnt(view);
+				nvVO2.setReply_cnt(reply);
+				nvVO2.setLike_cnt(like);
+				
+			}
+			
+			viewList2.add(nvVO2);
+		}
+		
+		
+		List<GraphVO> graphList = new ArrayList<GraphVO>();
+		for(int i = 0; i < 24; i++) {
+			GraphVO graphVO = new GraphVO();
+			
+			graphVO.setWriteDate(sdf.format(cal.getTime()) + ":00");
+			graphVO.setType1(viewList.get(i).getView_cnt());
+			graphVO.setType2(viewList2.get(i).getView_cnt());
+			graphVO.setType3(viewList.get(i).getReply_cnt());
+			graphVO.setType4(viewList2.get(i).getReply_cnt());
+			graphVO.setType5(viewList.get(i).getLike_cnt());
+			graphVO.setType6(viewList2.get(i).getLike_cnt());
+			
+			graphList.add(graphVO);
+			
+			cal.add(Calendar.HOUR, -1);
+		}
+		return graphList;
+	}
 	
 	@ResponseBody
 	@PostMapping("/ngraph")
