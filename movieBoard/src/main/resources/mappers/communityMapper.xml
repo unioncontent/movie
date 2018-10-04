@@ -668,7 +668,7 @@
 			community_data
 		where
 			url is not null
-		<include refid="search"></include>
+		<include refid="allsearch"></include>
 		order 
 			by updateDate desc
 	</select>
@@ -679,7 +679,7 @@
 			community_data_history
 		where
 			url is not null
-		<include refid="search"></include>
+		<include refid="allsearch"></include>
 		order 
 			by updateDate desc
 	</select>

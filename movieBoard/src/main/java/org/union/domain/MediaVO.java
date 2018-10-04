@@ -16,6 +16,7 @@ public class MediaVO {
 	private String last_writeDate;
 	private Date last_media_title;
 	private Date last_media_content;
+	private String news_type;
 	private String title_key;
 	public String getKeyword_main() {
 		return title_key;
@@ -27,7 +28,11 @@ public class MediaVO {
 	private String keyword_type;
 	private String url;
 	private String textType;
+	private Integer ME_rank;
+	private Integer uid;
 	private Integer media_state;
+	private Integer replynum;
+	private Integer v_state;
 	private String thumbnail;
 	private Date createDate;
 	private Date updateDate;
@@ -36,12 +41,6 @@ public class MediaVO {
 	private Integer match_total;
 	private Integer match_total2;
 	
-	public String getTitle_key() {
-		return title_key;
-	}
-	public void setTitle_key(String title_key) {
-		this.title_key = title_key;
-	}
 	public Integer getMedia_idx() {
 		return media_idx;
 	}
@@ -108,6 +107,18 @@ public class MediaVO {
 	public void setLast_media_content(Date last_media_content) {
 		this.last_media_content = last_media_content;
 	}
+	public String getNews_type() {
+		return news_type;
+	}
+	public void setNews_type(String news_type) {
+		this.news_type = news_type;
+	}
+	public String getTitle_key() {
+		return title_key;
+	}
+	public void setTitle_key(String title_key) {
+		this.title_key = title_key;
+	}
 	public String getKeyword() {
 		return keyword;
 	}
@@ -132,11 +143,35 @@ public class MediaVO {
 	public void setTextType(String textType) {
 		this.textType = textType;
 	}
+	public Integer getME_rank() {
+		return ME_rank;
+	}
+	public void setME_rank(Integer mE_rank) {
+		ME_rank = mE_rank;
+	}
+	public Integer getUid() {
+		return uid;
+	}
+	public void setUid(Integer uid) {
+		this.uid = uid;
+	}
 	public Integer getMedia_state() {
 		return media_state;
 	}
 	public void setMedia_state(Integer media_state) {
 		this.media_state = media_state;
+	}
+	public Integer getReplynum() {
+		return replynum;
+	}
+	public void setReplynum(Integer replynum) {
+		this.replynum = replynum;
+	}
+	public Integer getV_state() {
+		return v_state;
+	}
+	public void setV_state(Integer v_state) {
+		this.v_state = v_state;
 	}
 	public String getThumbnail() {
 		return thumbnail;
@@ -180,17 +215,18 @@ public class MediaVO {
 	public void setMatch_total2(Integer match_total2) {
 		this.match_total2 = match_total2;
 	}
+	
 	@Override
 	public String toString() {
 		return "MediaVO [media_idx=" + media_idx + ", media_name=" + media_name + ", media_title=" + media_title
 				+ ", media_content=" + media_content + ", reporter_name=" + reporter_name + ", reporter_ID="
 				+ reporter_ID + ", reporter_email=" + reporter_email + ", writeDate=" + writeDate + ", last_writeDate="
 				+ last_writeDate + ", last_media_title=" + last_media_title + ", last_media_content="
-				+ last_media_content + ", title_key=" + title_key + ", keyword=" + keyword + ", keyword_type="
-				+ keyword_type + ", url=" + url + ", textType=" + textType + ", media_state=" + media_state
+				+ last_media_content + ", news_type=" + news_type + ", title_key=" + title_key + ", keyword=" + keyword
+				+ ", keyword_type=" + keyword_type + ", url=" + url + ", textType=" + textType + ", ME_rank=" + ME_rank
+				+ ", uid=" + uid + ", media_state=" + media_state + ", replynum=" + replynum + ", v_state=" + v_state
 				+ ", thumbnail=" + thumbnail + ", createDate=" + createDate + ", updateDate=" + updateDate
 				+ ", checkCondition=" + checkCondition + ", total=" + total + ", match_total=" + match_total
 				+ ", match_total2=" + match_total2 + "]";
 	}
-
 }
