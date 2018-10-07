@@ -34,6 +34,10 @@ var mail = {
     var sql = 'update n_mail_all set M_body = ? where n_idx = ?';
     return await getResult(sql,param);
   },
+  updateURL: async function(){
+    var sql = 'update union_mail.ml_automail_tran set EMMSGURL = concat(EMMSGURL,\'&num=\',SEQ) where EMMSGURL not like \'%&num=%\'';
+    return await getResult(sql);
+  },
   deleteTest: async function(param){
     var sql = 'delete from union_mail.ml_mail_test where n_idx=?;';
     return await getResult(sql,param);
