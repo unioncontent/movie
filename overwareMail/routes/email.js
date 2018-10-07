@@ -788,6 +788,8 @@ async function maillinkInsert(req){
   });
 
   await maillink.insert(values);
+  await maillink.updateURL();
+  
   // await asyncForEach(recipients, async (item, index, array) => {
   //   var param = {
   //     'AUTOMAILID':'AU-4126512',
