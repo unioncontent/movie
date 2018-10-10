@@ -54,6 +54,13 @@ var mailAllA = {
     var sql = 'SELECT M_body_his FROM m_mail_all_a where n_idx=?';
     return await getResult(sql,idx);
   },
+  selectPastMailBody:async function(param){
+    var sql = 'SELECT M_body FROM `union`.m_mail_all_a where M_keyword = ? and M_invitation = ? and M_template = ?\
+    and M_senddate is not null and (M_id in (SELECT n_idx FROM `union`.m_mail_user where user_admin = 1) or M_id = ?) order by n_idx desc limit 1;';
+    var result = await getResult(sql,param);
+
+    return (result.length != 0)?result[0].M_body:'';
+  },
   insert: async function(param){
     var pValue = Object.values(param);
     var sql = insertSqlSetting(Object.keys(param));
@@ -69,6 +76,10 @@ var mailAllA = {
   },
   updateMtype:async function(param){
     var sql = 'update m_mail_all_a set M_type=? where n_idx=?';
+    return await getResult(sql,param);
+  },
+  updateSendDate: async function(param){
+    var sql = 'update m_mail_all_a set M_senddate = ? where n_idx = ?';
     return await getResult(sql,param);
   },
   updateId: async function(param){

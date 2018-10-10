@@ -88,6 +88,22 @@ var mailListC = {
     // var result = await getResult(sql);
     // return [].map.call(result, function(obj) { return [obj.M_name,obj.M_email]; });
   },
+  getOneEmail3:async function(param){
+    var sql = 'select n_idx,M_group_title,count(*) as total from m_mail_list_c where M_group_title in (select M_group_title from m_mail_list_c ';
+    if(typeof param == 'object'){
+      sql += 'where n_idx ='+param[0];
+      for(var i = 1; i < param.length; i++){
+        sql += ' or';
+        sql += ' n_idx ='+param[i];
+      }
+    }
+    else if(typeof param == 'string'){
+      sql += 'where n_idx ='+param;
+    }
+    sql += ') group by M_group_title';
+    var result = await getResult(sql);
+    return [].map.call(result, function(obj) { return [obj.M_group_title,obj.M_group_title+'&lt; '+obj.total+'명 &gt;']});
+  },
   getIdx : async function(param,idx){
     var sql = 'select M_idx_a from m_mail_list_c where M_ID=? ';
     if(typeof param == 'object'){

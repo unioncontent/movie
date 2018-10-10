@@ -50,8 +50,8 @@ router.get('/',isAuthenticated, async function(req, res) {
     type: '',
     mailData: [],
     mailSender:[],
-    // mailRecipi:[],
-    // mailGroup:[]
+    mailRecipi:[],
+    mailGroup:[]
   };
   if('type' in req.query){
     data.type = req.query.type;
@@ -60,10 +60,12 @@ router.get('/',isAuthenticated, async function(req, res) {
       data.mailData = result[0];
       data.mailSender = await mailListA.getOneInfo(data.mailData.M_sender);
       data.mailSender = (data.mailSender.length > 0) ? data.mailSender[0]: [];
-      // data.mailRecipi = await mailListA.getOneInfo(data.mailData.M_recipi);
-      // data.mailRecipi = (data.mailRecipi.length > 0) ? data.mailRecipi[0]: [];
-      // data.mailGroup = await mailListC.getOneData(data.mailData.M_group);
-      // data.mailGroup = (data.mailGroup.length > 0) ? data.mailGroup[0]: [];
+      data.mailRecipi = await mailListA.getOneEmail3(data.mailData.M_recipi.split(','));
+      data.mailRecipi = (data.mailRecipi.length > 0) ? data.mailRecipi: [];
+      if(data.mailData.M_group != null){
+        data.mailGroup = await mailListC.getOneEmail3(data.mailData.M_group.split(','));
+        data.mailGroup = (data.mailGroup.length > 0) ? data.mailGroup: [];
+      }
     }
   }
   res.render('email',data);
@@ -295,6 +297,18 @@ router.get('/searchAll',isAuthenticated, async function(req, res) {
   res.send({status:true,result:data});
 });
 
+// 메일 내용 불러오기
+router.post('/getEmailContent',isAuthenticated, async function(req, res) {
+  var param = [req.body.M_keyword,req.body.M_invitation,req.body.M_template,req.user.n_idx];
+  var result = await mailAllA.selectPastMailBody(param);
+  if(result == ''){
+    res.status(500).send('불러오기 실패');
+    return false;
+  }
+
+  res.send(result);
+});
+
 async function asyncForEach(array, callback) {
   for (var index = 0; index < array.length; index++) {
    var done = await callback(array[index], index, array);
@@ -413,7 +427,7 @@ router.post('/save',isAuthenticated, async function(req, res) {
     M_mail_type: req.body['M_mail_type'],
     M_body: req.body['M_body'],
     M_subject: req.body['M_subject'],
-    M_id: req.user.n_idx
+    M_id: req.user.n_idx,
   };
 
   // 메일 받는 사람
@@ -428,12 +442,8 @@ router.post('/save',isAuthenticated, async function(req, res) {
       mailAllParam['M_group'] = groupsIdx.join(',');
     }
   }
-  console.log('groupsIdx:',groupsIdx.join(','));
-  if( 'M_file_d' in req.body ){
-    if(req.body['M_file_d'] != ""){
-      mailAllParam['M_file'] = req.body['M_file_d'];
-      mailAllParam['M_file_name'] = req.body['M_fileName'];
-    }
+  if(typeof req.body.end_reserve_time !='undefined'){
+    mailAllParam['M_senddate'] = req.body['end_reserve_time'];
   }
   var m_idx_a = null;
   if('type' in req.body){
@@ -456,10 +466,9 @@ router.post('/save',isAuthenticated, async function(req, res) {
   var insertCheck = false;
   // 메일발송 상세정보 insert
   if(m_idx_a){
-    /* 추가 */
-    if(typeof req.body.end_reserve_time !='undefined'){
+    if('M_senddate' in mailAllParam){
       try{
-        var result = await maillinkInsert({idx:m_idx_a,time:req.body.end_reserve_time,user:req.user});
+        var result = await maillinkInsert({idx:m_idx_a,time:mailAllParam.M_senddate,user:req.user});
         // console.log(result);
         if(result){
           throw new Error('maillink insert 실패');
@@ -775,6 +784,7 @@ async function maillinkInsert(req){
   var am = 1;
   var time = (('time' in req) ? req.time : now);
   var sendDate = time;
+  await mailAllA.updateSendDate([sendDate,mailData.n_idx]);
   var values = [].map.call(recipients,async function(item,index) {
     // console.log('index = ',index+1);
     // if( index > 1 && ( index % 2 ) == 0 ){
@@ -789,7 +799,7 @@ async function maillinkInsert(req){
 
   await maillink.insert(values);
   await maillink.updateURL();
-  
+
   // await asyncForEach(recipients, async (item, index, array) => {
   //   var param = {
   //     'AUTOMAILID':'AU-4126512',
