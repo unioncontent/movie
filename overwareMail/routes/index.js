@@ -103,7 +103,7 @@ router.get('/preview/newsclipping/html',async function(req, res, next) {
 
 // 메일 발송 후 메일 내용 확인 페이지
 router.get('/preview',async function(req, res, next) {
-  // console.log('req.query:',req.query);
+  console.log('req.query:',req.query);
   // console.log(!('keyword' in req.query) && !('idx' in req.query));
   var data = {
     layout: false,
@@ -129,52 +129,54 @@ router.get('/preview',async function(req, res, next) {
     return false;
   }
   var viewCode = null;
-  if('type' in req.query){
-    viewCode = await mailAllA.selectEmailHtmlView(req.query.idx);
-  }
-  else{
-    viewCode = await mailAllA.selectEmailOneView(req.query.idx);
-  }
+  viewCode = await mailAllA.selectEmailOneView(req.query.idx);
+
+  // if('type' in req.query){
+  //   viewCode = await mailAllA.selectEmailHtmlView(req.query.idx);
+  // }
+  // else{
+  //   viewCode = await mailAllA.selectEmailOneView(req.query.idx);
+  // }
   if(viewCode.length == 0){
-    data.msg = '해당 메일이 없습니다..';
+    data.msg = '해당 메일이 없습니다.';
     res.render(pageName,data);
     return false;
   }
 
-  if(pageName == 'preview'){
-    if(!('M_seq_number' in viewCode[0])){
-      data.msg = '해당 메일이 없습니다..';
-      res.render('preview',data);
-      return false;
-    }
-    var sideHtmlStart = '<table width="750" align="center" cellpadding="0" cellspacing="0" style="border: solid 1px #cacaca; padding: 20px;"><tbody><tr><td>';
-    // showbox logo , new number
-    console.log(viewCode[0].M_invitation);
-    var topObj = settingTophtml(viewCode[0].M_template,viewCode[0].M_seq_number,viewCode[0].M_invitation);
-    sideHtmlStart += topObj.html;
-    sideHtmlStart += '<table width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td>';
-    var sideHtmlEnd = '</td></tr></tbody></table></td></tr></tbody></table>';
-    // last mail list
-    var pastParam = {keyword:req.query.keyword,page:req.query.page,ivt:topObj.ivt};
-    var pastVal = await settingPastList(viewCode[0].M_template,pastParam);
-    data = {
-      layout: false,
-      view: (viewCode.length == 0) ? '' : sideHtmlStart+viewCode[0].M_body+sideHtmlEnd,
-      type: viewCode[0].M_template,
-      pastView: pastVal.pastNews,
-      pastCount: (pastVal.pastNewsCount.length == 0) ? '':pastVal.pastNewsCount[0].total,
-      msg: '',
-      currentPage: 1,
-      keyword: req.query.keyword,
-      idx: req.query.idx
-    };
-    if('page' in req.query){
-      data.currentPage = req.query.page;
-    }
+  // if(pageName == 'preview'){
+  if(!('M_seq_number' in viewCode[0])){
+    data.msg = '해당 메일이 없습니다..';
+    res.render('preview',data);
+    return false;
   }
-  else{
-    data.view = viewCode[0].M_body_his;
+  var sideHtmlStart = '<table width="750" align="center" cellpadding="0" cellspacing="0" style="border: solid 1px #cacaca; padding: 20px;"><tbody><tr><td>';
+  // showbox logo , new number
+  console.log(viewCode[0].M_invitation);
+  var topObj = settingTophtml(viewCode[0].M_template,viewCode[0].M_seq_number,viewCode[0].M_invitation);
+  sideHtmlStart += topObj.html;
+  sideHtmlStart += '<table width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td>';
+  var sideHtmlEnd = '</td></tr></tbody></table></td></tr></tbody></table>';
+  // last mail list
+  var pastParam = {keyword:req.query.keyword,page:req.query.page,ivt:topObj.ivt};
+  var pastVal = await settingPastList(viewCode[0].M_template,pastParam);
+  data = {
+    layout: false,
+    view: (viewCode.length == 0) ? '' : sideHtmlStart+viewCode[0].M_body+sideHtmlEnd,
+    type: viewCode[0].M_template,
+    pastView: pastVal.pastNews,
+    pastCount: (pastVal.pastNewsCount.length == 0) ? '':pastVal.pastNewsCount[0].total,
+    msg: '',
+    currentPage: 1,
+    keyword: req.query.keyword,
+    idx: req.query.idx
+  };
+  if('page' in req.query){
+    data.currentPage = req.query.page;
   }
+  // }
+  // else{
+  //   data.view = viewCode[0].M_body_his;
+  // }
   res.render(pageName,data);
 });
 
