@@ -29,6 +29,8 @@
                 <input type="hidden" id="mailType" value="<%=type%>" />
                 <input type="hidden" id="mailData" value="<%=JSON.stringify(mailData)%>" />
                 <input type="hidden" id="mailSender" value="<%=mailSender.n_idx+'|'+mailSender.M_name+'&lt;'+mailSender.M_email+'&gt;'%>" />
+                <input type="hidden" id="mailRecipi" value="<%=JSON.stringify(mailRecipi)%>" />
+                <input type="hidden" id="mailGroup" value="<%=JSON.stringify(mailGroup)%>" />
                 <label class="col-sm-2 col-form-label">* 발송형태</label>
                 <div id="type" class="form-radio">
                   <div class="col-sm-12">
@@ -144,6 +146,7 @@
                         <i class="helper"></i>영화메일
                       </label>
                     </div>
+                    <button type="button" class="btn btn-inverse templateBtn">메일불러오기</button>
                   </div>
                 </div>
               </div>
@@ -506,6 +509,8 @@
   z-index: 10000;
 }
 </style>
+<!-- moment -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
 <!-- select2 -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.min.js"></script>
@@ -524,6 +529,20 @@
 <script src="/pages/email/js/select2.js"></script>
 <script type="text/javascript">
   $(document).ready(function() {
+    var $datepicker = $('#datepicker');
+    $datepicker.datepicker({
+      dateFormat: 'yy-mm-dd',
+      prevText: '이전 달',
+      nextText: '다음 달',
+      monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+      monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+      dayNames: ['일','월','화','수','목','금','토'],
+      dayNamesShort: ['일','월','화','수','목','금','토'],
+      dayNamesMin: ['일','월','화','수','목','금','토'],
+      yearSuffix: '년',
+      showMonthAfterYear: true,
+      minDate: 0
+    });
     // ie label css
     $('.modal label').css('line-height','16px');
     $('.select2-search__field').css('line-height','16px')
@@ -537,24 +556,45 @@
       pushEle($('.sender-select'),param);
       var mailData = JSON.parse($("#mailData").val());
       $("#M_keyword option[value='"+mailData.M_keyword+"']").attr('selected','selected');
+      $("input[name='M_type'][value='"+mailData.M_type+"']").attr('checked','checked');
+      if(mailData.M_type == '1'){
+        $datepicker.datepicker('setDate', new Date(moment(mailData.M_senddate).format('YYYY-MM-DD')));
+        $("#time_h option[value='"+moment(mailData.M_senddate).format('HH')+"']").attr('selected','selected');
+        $("#time_m option[value='"+moment(mailData.M_senddate).format('mm')+"']").attr('selected','selected');
+      }
+      else{
+        $('.reserveTime').toggle();
+      }
+
       $("input[name='M_template'][value='"+mailData.M_template+"']").attr('checked','checked');
+      if(mailData.M_template == '1'){
+        $('.seqNumber').toggle();
+      }
+      var mailRecipi = JSON.parse($("#mailRecipi").val());
+      var mailGroup = JSON.parse($("#mailGroup").val());
+      mailRecipi.forEach(function(item,idx){
+        var param = {
+          id:item[0],
+          text:item[1]
+        };
+        pushEle($('.recipi-select'),param);
+      });
+      mailGroup.forEach(function(item,idx){
+        var param = {
+          id:item[0],
+          text:item[1]
+        };
+        pushEle($('.group-select'),param);
+      });
+
       $("#M_mail_type option[value='"+mailData.M_mail_type+"']").attr('selected','selected');
+      if(mailData.M_invitation == '1'){
+        $('#invitation').prop("checked", true);
+        $('#invitation').trigger("change");
+      }
       $("#M_subject").val(mailData.M_subject);
       $("#M_seq_number").val(mailData.M_seq_number);
     }
-    $('#datepicker').datepicker({
-      dateFormat: 'yy-mm-dd',
-      prevText: '이전 달',
-      nextText: '다음 달',
-      monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
-      monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
-      dayNames: ['일','월','화','수','목','금','토'],
-      dayNamesShort: ['일','월','화','수','목','금','토'],
-      dayNamesMin: ['일','월','화','수','목','금','토'],
-      yearSuffix: '년',
-      showMonthAfterYear: true,
-      minDate: 0
-    });
   });
   // 세션만료 - 로그인
   $("input[type=password]").on('keyup',function(event){
@@ -694,10 +734,53 @@
       $("#M_seq_number").attr("disabled",false);
     }
   });
+  // 메일불러오기
+  $('.templateBtn').on('click',function(){
+    var param = {
+      M_template : ($("input:radio[name=M_template]:checked").val() == '1') ? '일반메일' : '영화메일',
+      M_invitation : $("#invitation").is(":checked") ? '1' : '0',
+      M_keyword : [$("#M_keyword option:selected").val(),$("#M_keyword option:selected").text()]
+    };
+    if(param.M_template == '영화메일' && param.M_invitation == '0' && $('#M_seq_number').val() == ''){
+      alert('영화메일의 정보(발송차수 또는 인비테이션)을 기재해주세요.');
+      return false;
+    }
+    if(param.M_keyword[1] == '선택'){
+      alert('키워드를 선택해주세요.');
+      return false;
+    }
+    swal({
+      title: "메일내용을 불러올까요?",
+      text: "키워드 [ "+param.M_keyword[1]+" ] "+param.M_template+" 타입의\n마지막 메일 내용을 불러옵니다.",
+      icon: "warning",
+      buttons: ["취소", true],
+      dangerMode: true
+    })
+    .then(function(value) {
+      if (value != null) {
+        param.M_template = (param.M_template == '일반메일') ? '1':'0';
+        param.M_keyword = param.M_keyword[0];
+
+        $.ajax({
+          url: '/email/getEmailContent',
+          type: 'post',
+          data : param,
+          datatype : 'json',
+          error:function(request,status,error){
+            console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
+            swal("ERROR!", '마지막 메일이 없습니다.', "error");
+          },
+          success:function(data){
+            tinyMCE.activeEditor.setContent(data, {format : 'raw'});
+          }
+        });
+      }
+    });
+  });
   // 메일 저장 버튼 클릭시
   $(".sendBtn").on("click",function(){
     var num = '';
-    if($("#M_seq_number").val() != ""){
+    if($("#M_seq_number").val() != "" && $("input:radio[name=M_template]:checked").val() == '0'){
       num = Number($("#M_seq_number").val());
     }
     var param = {
