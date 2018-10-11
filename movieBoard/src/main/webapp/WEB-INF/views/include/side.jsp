@@ -105,7 +105,7 @@
               <span class="pcoded-mcaret"></span>
             </a>
           </li>
-          <c:if test="${user.user_name == 'union'}">
+          <%-- <c:if test="${user.user_name == 'union'}">
           <li class="">
             <a href="../marketing/n_channel2" data-i18n="nav.advance-components.draggable">
               <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
@@ -113,7 +113,7 @@
               <span class="pcoded-mcaret"></span>
             </a>
           </li>
-          </c:if>
+          </c:if> --%>
         </ul>
       </li>
       <li class="pcoded-hasmenu portal">
