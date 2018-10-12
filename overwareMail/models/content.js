@@ -4,7 +4,7 @@ const DBpromise = require('../db/db_info.js');
 */
 var content = {
   selectView: async function(param){
-    var sql = 'SELECT * FROM content_view where keyword_idx = ? and M_invitation = ? and M_template =\'0\' ';
+    var sql = 'SELECT * FROM manage_view where M_keyword_idx = ? and M_invitation = ? and M_template =\'0\' and ((M_type=0 and M_send is not null) or (M_type=1 and M_send < now())) ';
     var values = [param.keyword,param.ivt];
     if('idx' in param){
       sql += 'and n_idx=? ';
@@ -26,7 +26,7 @@ var content = {
     return await getResult(sql,values);
   },
   selectViewCount: async function(param){
-    var sql = 'SELECT count(*) as total FROM content_view where keyword_idx = ? and M_invitation = ? and M_template =\'0\' ';
+    var sql = 'SELECT count(*) as total FROM manage_view where M_keyword_idx = ? and M_invitation = ? and M_template =\'0\' and ((M_type=0 and M_send is not null) or (M_type=1 and M_send < now())) ';
     var values = [param.keyword,param.ivt];
     if('idx' in param){
       sql += 'and n_idx=? ';

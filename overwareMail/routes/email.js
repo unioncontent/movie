@@ -78,6 +78,12 @@ router.get('/manage',isAuthenticated, async function(req, res) {
   res.render('manage',data);
 });
 
+router.get('/manageHis',isAuthenticated, async function(req, res) {
+  var data = await getListPageData(req.user.n_idx,req.query);
+  data.klist = await keyword.selectMovieKwdAll(req.user.user_admin,req.user.n_idx) || [];
+  res.render('manage_his',data);
+});
+
 router.post('/manage/updateMtype',isAuthenticated, async function(req, res) {
   console.log('/manage/updateMtype',req.body);
   // var result = await maillink.deleteMlAMSG(req.body.idx);
@@ -156,17 +162,24 @@ router.post('/manage/getNextPage',isAuthenticated,async function(req, res, next)
 
 async function getListPageData(idx,param){
   console.log('getListPageData:',param);
+  var dt = datetime.create();
+  var end = dt.format('Y-m-d');
+  dt.offsetInDays(-7);
+  var start = dt.format('Y-m-d');
+
   var data = {
     list:[],
     listCount:{total:0},
     page: 1,
     keyword: '',
-    ivt:''
+    ivt:'',
+    sDate:start,
+    eDate:end
   };
   var limit = 20;
   var searchParam = [idx,idx,0,limit];
   var currentPage = 1;
-  var searchBody = {};
+  var searchBody = {sDate:start,eDate:end};
   if (typeof param.page !== 'undefined') {
     currentPage = param.page;
     data['page'] = currentPage;
@@ -174,6 +187,14 @@ async function getListPageData(idx,param){
   if (parseInt(currentPage) > 0) {
     searchParam[2] = (currentPage - 1) * limit
     data['offset'] = searchParam[2];
+  }
+  if (typeof param.sDate !== 'undefined') {
+    if (typeof param.eDate !== 'undefined') {
+      searchBody['sDate'] = param.sDate;
+      searchBody['eDate'] = param.eDate;
+      data['sDate'] = param.sDate;
+      data['eDate'] = param.eDate;
+    }
   }
   if (typeof param.keyword !== 'undefined') {
     searchBody['keyword'] = param.keyword;
@@ -427,7 +448,7 @@ router.post('/save',isAuthenticated, async function(req, res) {
     M_mail_type: req.body['M_mail_type'],
     M_body: req.body['M_body'],
     M_subject: req.body['M_subject'],
-    M_id: req.user.n_idx,
+    M_id: req.user.n_idx
   };
 
   // 메일 받는 사람

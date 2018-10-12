@@ -6,7 +6,7 @@ const DBpromise = require('../db/db_info.js');
 
 var mailAllA = {
   selectEmailView:async function(body,param){
-    var sql = 'SELECT * FROM period_view where n_idx is not null ';
+    var sql = 'SELECT * FROM manage_view where n_idx is not null ';
     if('keyword' in body){
       sql +=' and M_keyword_idx = '+body.keyword;
     }
@@ -18,13 +18,16 @@ var mailAllA = {
     }
     if('ivt' in body){
       sql +=' and M_invitation= '+body.ivt;
+    }
+    if(('sDate' in body) && ('eDate' in body)){
+      sql+=' and M_regdate between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
     }
     sql += ' and (  M_id = ? or M_id in (select n_idx from m_mail_user where user_admin=?)) ';
     sql += ' order by M_regdate desc limit ?,?';
     return await getResult(sql,param);
   },
   selectEmailViewCount:async function(body,param){
-    var sql = 'SELECT count(*) as total FROM period_view where n_idx is not null ';
+    var sql = 'SELECT count(*) as total FROM manage_view where n_idx is not null ';
     if('keyword' in body){
       sql +=' and M_keyword_idx = '+body.keyword;
     }
@@ -36,6 +39,9 @@ var mailAllA = {
         case 'n': sql+=' and M_seq_number ='+body.search; break;
         case 't': sql+=' and M_subject like \'%'+body.search+'%\''; break;
       }
+    }
+    if(('sDate' in body) && ('eDate' in body)){
+      sql+=' and M_regdate between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
     }
     sql += ' and (  M_id = ? or M_id in (select n_idx from m_mail_user where user_admin=?))';
     var count = await getResult(sql,param);
