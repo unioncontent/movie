@@ -16,7 +16,7 @@ var period = {
     // call dashboard(-7,25);
   },
   call_stats: async function(param){
-    var sql = 'call union_mail.stats(?,?,?,?,?,?,?,?,?)';
+    var sql = 'call union_mail.stats(?,?,?,?,?,?,?,?,?,0)';
     return await getResult(sql,param);
     // call dashboard(-1,25);
     // call dashboard(-7,25);
