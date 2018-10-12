@@ -241,8 +241,9 @@
                                   </div>
                                 </div>
                               <!-- top cards end -->
+                              
                               <!-- Morris chart start -->
-		                      <div class="col-lg-12">
+		                      <!-- <div class="col-lg-12">
 		                        <div class="card">
 		                          <div class="card-header">
 		                            <h5><font style="font-weight: bold; color: black;">
@@ -255,12 +256,13 @@
 		                            </div>
 		                          </div>
 		                          <div class="card-block">
-		                            <!-- <div id="morris-extra-area" style="height:300px;"></div> -->
+		                            <div id="morris-extra-area" style="height:300px;"></div>
 		                            <div id="container" style="height:350px;"></div>
 				                	</div>
 		                        </div>
-		                      </div>
+		                      </div> -->
 		                      <!-- Morris chart end -->
+		                      
 		                      <!-- List start -->
                               <div class="col-md-12">
                                 <div class="card">
@@ -289,7 +291,7 @@
                                               <th width="3%">발송건</th>
                                               <th width="3%">성공건</th>
                                               <th width="3%">실패건</th>
-                                              <th width="5%">기사매칭건</th>
+                                              <!-- <th width="5%">기사매칭건</th> -->
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -312,9 +314,9 @@
                                             <td>
                                             ${mvo.fail}회
                                             </td>
-                                            <td>
+                                            <%-- <td>
                                             <a href="javascript:popupOpen('<fmt:formatDate value="${mvo.m_send}" type="DATE" pattern="yyyy-MM-dd" />');" >${mvo.total}건</a>      
-                                            </td>
+                                            </td> --%>
                                           </tr>
                                         </c:forEach>
                                         </tbody>
@@ -584,7 +586,7 @@
 	 
 	})
 	
-	$.ajax({
+	/* $.ajax({
 			
 	      type : "POST",
 		  url : "graph_re",
@@ -630,8 +632,8 @@
 			areaChart1(jsonScript, jsonScript2);
 
 	  	 }
-	});
-
+	});*/
+ 
 	// 캘린더 클릭시
 	$('#fromDate').on('apply.daterangepicker', function(ev, picker) {	
 		   var startDate = picker.startDate.format('YYYY-MM-DD');
@@ -646,7 +648,7 @@
 	
   }); // end ready...
   
-  function areaChart1(jsonScript,jsonScript2) {
+  /* function areaChart1(jsonScript,jsonScript2) {
 	  Highcharts.setOptions({
 			lang: {
 				thousandsSep: ','
@@ -708,7 +710,7 @@
 		        }]
 		    }
 		});
-		}
+		} */
 
   function popupOpen(date){
 		var company = $("#selectCompany option:selected").val();

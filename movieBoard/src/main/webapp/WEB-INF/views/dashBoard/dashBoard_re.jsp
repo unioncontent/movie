@@ -392,7 +392,7 @@
                                               <th width="3%">발송건</th>
                                               <th width="3%">성공건</th>
                                               <th width="3%">실패건</th>
-                                              <th width="5%">기사매칭건</th>
+                                              <!-- <th width="5%">기사매칭건</th> -->
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -424,14 +424,14 @@
                                             <td>
                                             ${mvo.fail}회
                                             </td>
-                                            <td>
+                                            <%-- <td>
                                             <c:if test="${mvo.total == 0}">
                                             ${mvo.total}건
                                             </c:if>
                                             <c:if test="${mvo.total != 0}">
                                             <a href="javascript:popupOpen9('<fmt:formatDate value="${mvo.m_send}" type="DATE" pattern="yyyy-MM-dd" />');" >${mvo.total}건</a>
                                             </c:if>
-                                            </td>
+                                            </td> --%>
                                           </tr>
                                         </c:forEach>
                                         </tbody>

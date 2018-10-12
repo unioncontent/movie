@@ -478,7 +478,7 @@
 		from 
 			community_data
 		where
-			textType is not null
+			textType!='삭제글'
 		<include refid="allsearch"></include>
         
         UNION ALL
@@ -488,7 +488,7 @@
 		from 
 			media_data
 		where
-			textType is not null
+			textType!='삭제글'
 		<include refid="allsearch"></include>
         
         UNION ALL
@@ -519,7 +519,7 @@
 		from 
 			community_data
 		where
-			textType is not null
+			textType!='삭제글'
 		<include refid="allsearch"></include>
         
         UNION ALL
@@ -529,7 +529,7 @@
 		from 
 			media_data
 		where
-			textType is not null
+			textType!='삭제글'
 		<include refid="allsearch"></include>
         
         UNION ALL
@@ -721,7 +721,7 @@
 			community_data
 		where 
 			textType!='삭제글'
-		<include refid="search"></include>
+		<include refid="allsearch"></include>
 	</select>
 	
 	<select id="dashListAll" resultType="CommunityVO">

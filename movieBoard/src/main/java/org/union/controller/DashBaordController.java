@@ -125,7 +125,7 @@ public class DashBaordController {
 	}
 	
 	@GetMapping("/dashBoard_re")
-	public void dashBoard_re_mainGET(@ModelAttribute("cri") SearchCriteria cri, Model model) throws SQLException {
+	public void dashBoard_re_mainGET(@ModelAttribute("cri") SearchCriteria cri, Model model, String selectKey) throws SQLException {
 		logger.info("dashBoard_re called....");
 		
 		cri.setKeyword(null);
@@ -196,7 +196,6 @@ public class DashBaordController {
 		model.addAttribute("replyTotalcnt", mediaService.replyTotalcnt(cri));
 		model.addAttribute("snsTotalcount", snsService.snsTotalcount(cri));
 		model.addAttribute("scoreTotalcnt", portalService.scoreTotalcnt(cri));
-		model.addAttribute("mailList", mediaService.mailList(cri));
 		
 		cri.setStartDate(current + " 00:00:00");
 		cri.setEndDate(current + " 23:59:59");
@@ -226,6 +225,30 @@ public class DashBaordController {
 		cri.setStartDate(current2 + " 00:00:00");
 		cri.setEndDate(current2 + " 23:59:59");
 		model.addAttribute("youtubeCount", snsService.reportSnsCount(cri));
+		
+		if(selectKey.equals("마약왕")) {
+			cri.setSelectKey("1");
+		}else if(selectKey.equals("미성년")) {
+			cri.setSelectKey("2");
+		}else if(selectKey.equals("뺑반")) {
+			cri.setSelectKey("3");
+		}else if(selectKey.equals("성난황소")) {
+			cri.setSelectKey("4");
+		}else if(selectKey.equals("암수살인")) {
+			cri.setSelectKey("5");
+		}else if(selectKey.equals("전투")) {
+			cri.setSelectKey("6");
+		}else if(selectKey.equals("돈")) {
+			cri.setSelectKey("7");
+		}else if(selectKey.equals("패키지")) {
+			cri.setSelectKey("8");
+		}else {
+			cri.setSelectKey("0");
+		}
+		
+		logger.info("메일 셀렉키: " + cri.getSelectKey());
+		
+		model.addAttribute("mailList", mediaService.mailList(cri));
 		
 	}
 	

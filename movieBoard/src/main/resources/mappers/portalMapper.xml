@@ -872,7 +872,7 @@
 		where 
 			textType!='삭제글'
 		and score is null
-		<include refid="search"></include>
+		<include refid="searchEx"></include>
  	</select>
  	
  	<select id="dashListAll" resultType="PortalVO">

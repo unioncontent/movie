@@ -1251,8 +1251,8 @@
  			sns_name = 'twitter'
  		and 
 			keyword in (select keyword from keyword_data where keyword_property = '포함' and keyword_main = #{selectKey})
-		and createDate <![CDATA[>=]]> #{startDate}
-		and createDate <![CDATA[<=]]> #{endDate}
+		and writeDate <![CDATA[>=]]> #{startDate}
+		and writeDate <![CDATA[<=]]> #{endDate}
  	</select>
  	<select id="graphyoutubeCount" resultType="Integer">
  		select 
