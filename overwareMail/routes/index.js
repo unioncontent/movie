@@ -19,19 +19,24 @@ var isAuthenticated = function (req, res, next) {
 
 // 대시보드
 router.get('/', isAuthenticated, async function(req, res, next) {
+  // var result = await period.call_dashbord([-1,req.user.n_idx]);
+  // console.log(result);
   var data = {
-    list:await period.getYesterday(req.user)
+    list:await period.call_dashbord([-1,req.user.n_idx])//await period.getYesterday(req.user)
   };
+  // console.log(data.list);
   res.render('index',data);
 });
 
 router.post('/statistics',isAuthenticated, async function(req, res, next) {
+  var result = await period.call_dashbord([0,req.user.n_idx]);
+  console.log('statistics:',result);
   var data = {
-    todaySendCount : await period.getTodaySendCount(req.user),
-    successNfailCount : await period.getSuccessNfailCount(req.user),
-    todayCount : await period.getTodayNReservationCount(req.user,'0') || 0,
-    reservationCount : await period.getTodayNReservationCount(req.user,'1') || 0,
-    waitingCount : await period.getWaitingCount(req.user) || 0,
+    todaySendCount : result[0].sendCount,
+    successNfailCount : {success:result[0].success,fail:result[0].fail},
+    todayCount : result[0].nCount || 0,
+    reservationCount : result[0].wtCount || 0,
+    waitingCount : result[0].wCount || 0,
     successP : 0,
     failP : 0
   };
@@ -49,7 +54,7 @@ router.post('/statistics',isAuthenticated, async function(req, res, next) {
 
 // 대시보드 최근 발송 현황 그래프
 router.post('/7DayGraph',isAuthenticated, async function(req, res, next) {
-  var data = await period.get7DayGraph(req.user);
+  var data = await period.call_dashbord([-7,req.user.n_idx]);
   res.send(data);
 });
 

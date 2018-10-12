@@ -21,9 +21,8 @@
         <div class="col-md-12">
           <div class="alert alert-default" style="border-radius:  0; border-width:  2px;  margin-bottom: 1rem;">
           	<ul class="p-l-15 f-12" style="list-style-type: disc; color:  #666;">
-              <li>7일간의 데이터이며 리스트를 더 보고 싶으시면 전체보기 버튼을 눌러주세요.</li>
-            	<li>대량발송은 보내기 버튼을 클릭 후 시간 소요 될 수 있으므로 보내기 버튼을 여러 번 클릭하거나 새로 고침 하는 경우 메일이 중복발송이 되거나 메일이 발송 중 중단이 될 수 있으므로 주의하시기 바랍니다.</li>
-              <li>메일 수정 시, 예약 설정된 메일은 예약이 취소되므로 주의하시기 바랍니다.</li>
+              	<li>대량발송은 보내기 버튼을 클릭 후 시간 소요 될 수 있으므로 보내기 버튼을 여러 번 클릭하거나 새로 고침 하는 경우 메일이 중복발송이 되거나 메일이 발송 중 중단이 될 수 있으므로 주의하시기 바랍니다.</li>
+                <li>메일 수정 시, 예약 설정된 메일은 예약이 취소되므로 주의하시기 바랍니다.</li>
           	</ul>
         	</div>
         </div>
@@ -91,8 +90,6 @@
                         (currentPage - 1) * limit;
                       }
                       for(var i=0; i < list.length; i++) {
-                        var send = new Date(list[i].M_send);
-                        var now = new Date();
                         var recipiArr = list[i].M_recipi_idx.split(',');
                         var recipiStr = '';
                         if(recipiArr.length > 1){
@@ -126,16 +123,16 @@
                       <td><%= recipiStr %></td>
                       <td><div class="group-nobr" title="<%= groupStr %>"><%= groupStr %></div></td>
                       <td><div class="date-nobr"><%= list[i].M_regdate %></div></td>
-                      <td><div class="date-nobr"><%= ((list[i].M_type != 1) || (list[i].M_type == 1 && list[i].M_send == null)) ?'-': list[i].M_send %></div></td>
-                      <td><div class="date-nobr"><%= ((list[i].M_send == null) || (list[i].M_type == 1 && (send > now))) ?'-': list[i].M_send %></div></td>
+                      <td><div class="date-nobr"><%= ((list[i].M_type != 1) ||  (list[i].M_type == 1 && list[i].M_send == null)) ?'-': list[i].M_send %></div></td>
+                      <td><div class="date-nobr"><%= ((list[i].M_send == null) || (list[i].M_type == 1 && list[i].success ==0 && list[i].fail==0)) ?'-': list[i].M_send %></div></td>
                       <td>
-                        <%if((list[i].M_send == null) || (send > now)){%>
+                        <%if(list[i].M_send == null  || (list[i].M_type == 1 &&list[i].success ==0 &&list[i].fail==0)){%>
                           <button class="btn btn-sm btn-inverse btn-send" data-idx="<%= list[i].n_idx %>">보내기</button>
                         <%}else{%>
                           <button class="btn btn-sm btn-inverse btn-resend" data-idx="<%= list[i].n_idx %>">재발송</button>
                         <%}%>
                         <button class="btn btn-sm btn-inverse btn-delete" data-idx="<%= list[i].n_idx %>">삭제</button>
-                        <%if(list[i].M_send == null || (send > now)){%>
+                        <%if(list[i].M_send == null || (list[i].M_type == 1 &&list[i].success ==0 &&list[i].fail==0)){%>
                           <button class="btn btn-sm btn-inverse btn-edit" data-idx="<%= list[i].n_idx %>">수정</button>
                         <%}%>
                         <button class="btn btn-sm btn-inverse btn-rewrite" data-idx="<%= list[i].n_idx %>">재작성</button>
@@ -337,7 +334,7 @@
     }
   });
   function searchStrBtn(search){
-    var param = settingParams(1);
+    var param = settingParams(1,true);
     ajaxGetPageList(param);
   }
   // 삭제버튼 클릭시
@@ -394,8 +391,8 @@
       if (value == null) {
         return false;
       }
-      if(tdEles.eq(7).text() == '-'){
-        location.href='../email?type=edit&idx='+idxVal;
+      if(tdEles.eq(8).text() == '-'){
+        location.href='../email?type=edit&idx='+$(this).data('idx');
       }
       else{
         $.ajax({
@@ -439,7 +436,7 @@
       if (value == null) {
         return false;
       }
-      if(tdEles.eq(7).text() == '-'){
+      if(tdEles.eq(8).text() == '-'){
         sendMail(idxVal);
       }
       else{
@@ -701,13 +698,48 @@
   }
   //날짜 선택 시
   $(document).on('click','.applyBtn',searchFun);
+  //날짜 설정
+  var cb = function(start, end, label) {
+    console.log('FUNC: cb',start.toISOString(), end.toISOString(), label);
+    $('#reportrange span').html(moment(new Date(start.toISOString())).format('YYYY.MM.DD') + ' - ' + moment(new Date(end.toISOString())).format('YYYY.MM.DD'));
+    searchFun();
+  }
+  var ranges = {
+    '당일': [moment(), moment()],
+    '전일': [moment().subtract(1, 'days'), moment()],
+    '최근 7일': [moment().subtract(6, 'days'), moment()],
+    '최근 30일': [moment().subtract(29, 'days'), moment()]
+  };
+  var sDateParams = $.urlParam("sDate");
+  var eDateParams = $.urlParam("eDate");
+  var optionSet1 = {
+    startDate: (sDateParams != '' && sDateParams != null) ? moment(new Date(sDateParams)) : moment().subtract(7,'d').format('YYYY.MM.DD'),
+    endDate:  (eDateParams != '' && eDateParams != null) ? moment(new Date(eDateParams)) : moment().format('YYYY.MM.DD'),
+    showDropdowns: true,
+    showRangeInputsOnCustomRangeOnly: false,
+    ranges: ranges,
+    opens: 'left',
+    buttonClasses: ['btn'],
+    applyClass: 'btn-small btn-primary',
+    cancelClass: 'btn-small',
+    format: 'YYYY.MM.DD',
+    separator: ' to ',
+    locale: {
+      applyLabel: '확인',
+      cancelLabel: '취소',
+      customRangeLabel: '직접선택',
+      daysOfWeek: ['일', '월', '화', '수', '목', '금', '토'],
+      monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+      firstDay: 1
+    }
+  };
   function reloadPage(){
     console.log('reloadPage');
     var param = settingParams(1);
     ajaxGetPageList(param);
   }
   function searchFun(){
-    var param = settingParams(1);
+    var param = settingParams(1,true);
     ajaxGetPageList(param);
   }
   // 리스트 조건 세팅
@@ -728,41 +760,9 @@
     if(search){
       $('#searchInput').val(search);
     }
-    //날짜 설정
     var sDate = $.urlParam("sDate");
     var eDate = $.urlParam("eDate");
-    var cb = function(start, end, label) {
-      console.log('FUNC: cb',start.toISOString(), end.toISOString(), label);
-      $('#reportrange span').html(moment(new Date(start.toISOString())).format('YYYY.MM.DD') + ' - ' + moment(new Date(end.toISOString())).format('YYYY.MM.DD'));
-      searchFun();
-    }
-    var ranges = {
-      '당일': [moment(), moment()],
-      '전일': [moment().subtract(1, 'days'), moment()],
-      '최근 7일': [moment().subtract(6, 'days'), moment()],
-      '최근 30일': [moment().subtract(29, 'days'), moment()]
-    };
-    var optionSet1 = {
-      startDate: (sDate != '' && sDate != null) ? moment(new Date(sDate)) : moment().subtract(7,'d'),
-      endDate:  (eDate != '' && eDate != null) ? moment(new Date(eDate)) : moment(),
-      showDropdowns: true,
-      showRangeInputsOnCustomRangeOnly: false,
-      ranges: ranges,
-      opens: 'left',
-      buttonClasses: ['btn'],
-      applyClass: 'btn-small btn-primary',
-      cancelClass: 'btn-small',
-      format: 'YYYY.MM.DD',
-      separator: ' to ',
-      locale: {
-        applyLabel: '확인',
-        cancelLabel: '취소',
-        customRangeLabel: '직접선택',
-        daysOfWeek: ['일', '월', '화', '수', '목', '금', '토'],
-        monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-        firstDay: 1
-      }
-    };
+    console.log(sDate,eDate);
     $('#reportrange').daterangepicker(optionSet1,cb);
     if((sDate != '' && eDate != '') && (sDate != null && eDate != null)){
       $('#reportrange span').html(moment(new Date(sDate)).format('YYYY.MM.DD') + ' - ' + moment(new Date(eDate)).format('YYYY.MM.DD'));
@@ -771,7 +771,7 @@
       $('#reportrange span').html(moment().subtract(7,'d').format('YYYY.MM.DD') + ' - ' + moment().format('YYYY.MM.DD'));
     }
   }
-  function settingParams(num){
+  function settingParams(num,date_c){
     var renewURL = window.location.origin+window.location.pathname;
     var param = {};
     if(Number.isInteger(num)){
@@ -783,7 +783,7 @@
     }
     // 키워드
     var keywordValue = $('#selectKeyword option:selected').val();
-    if(keywordValue != '' && keywordValue != '키워드'){
+    if(keywordValue != ''){
       param.keyword = keywordValue;
       if(typeof history.pushState == 'function' && Number.isInteger(num)){
         renewURL += '&keyword='+param.keyword;
@@ -811,16 +811,18 @@
       }
     }
     //날짜검색
-    var dateArr = $("#reportrange span").text().split(' - ');
-    if(dateArr.length > 1){
-      var start = moment(new Date(dateArr[0]));
-      var end = moment(new Date(dateArr[1]));
-      param.sDate = start.format('YYYY-MM-DD');
-      param.eDate = end.format('YYYY-MM-DD');
-      if(typeof history.pushState == 'function' && Number.isInteger(num)){
-        renewURL += '&sDate='+param.sDate;
-        renewURL += '&eDate='+param.eDate;
-        history.pushState(null, null,renewURL);
+    if(date_c){
+      var dateArr = $("#reportrange span").text().split(' - ');
+      if(dateArr.length > 1){
+        var start = moment(new Date(dateArr[0]));
+        var end = moment(new Date(dateArr[1]));
+        param.sDate = start.format('YYYY-MM-DD');
+        param.eDate = end.format('YYYY-MM-DD');
+        if(typeof history.pushState == 'function' && Number.isInteger(num)){
+          renewURL += '&sDate='+param.sDate;
+          renewURL += '&eDate='+param.eDate;
+          history.pushState(null, null,renewURL);
+        }
       }
     }
     return param;

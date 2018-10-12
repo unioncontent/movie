@@ -20,7 +20,7 @@
         <div class="col-md-12">
           <div class="alert alert-default" style="border-radius:  0; border-width:  2px;  margin-bottom: 1rem;">
           	<ul class="p-l-15 f-12" style="list-style-type: disc; color:  #666;">
-              	<li>발송되지 않은 메일은 발송 건수, 성공, 실패 건이 모두 0으로 보입니다.</li>
+              	<li>발송되지 않은 메일은 리스트에 표시되지 않습니다.</li>
                 <li>통계보고서의 통계는 수신자 중 기자로 등록된 수신자의 메일 발송 후 48시간 동안 작성된 기사건과 댓글 수가 보입니다.</li>
           	</ul>
         	</div>
@@ -125,7 +125,7 @@
                     if(pageCount > 1) {
                     %>
                     <tr>
-                      <td colspan="11">
+                      <td colspan="12">
                         <ul class="pagination float-right">
                           <%
                             var pageSize = 5;
@@ -479,8 +479,8 @@
     min-width: 40px;
   }
 </style>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/2.1.27/daterangepicker.css" />
 <script type="text/javascript" src="/js/error.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/2.1.27/daterangepicker.css" />
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/2.1.27/moment.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/2.1.27/daterangepicker.js"></script>
 <!-- sweetalert -->
@@ -780,8 +780,8 @@
             html += '<label class="badge badge-danger m-b-0">대기</label>'
           }
           html += '</td>';
-          html += '<td><button class="btn btn-inverse btn-period" data-idx="'+item.n_idx+'"><i class="fas fa-chart-bar"></i></button></td>\
-          <td><button class="btn btn-warning btn-excel" data-idx="'+item.n_idx+'"><i class="fas fa-file-excel"></i></button></td>\
+          html += '<td><button class="btn btn-warning btn-excel" data-idx="'+item.n_idx+'"><i class="fas fa-file-excel"></i></button></td>\
+          <td><button class="btn btn-inverse btn-period" data-idx="'+item.n_idx+'"><i class="fas fa-chart-bar"></i></button></td>\
           </tr>'
           $('#listTable tbody').eq(0).append(html);
         });
@@ -789,7 +789,7 @@
         var pageCount = Math.ceil(data.result.listCount/limit);
         $('#listTable tfoot').eq(0).empty();
         if(pageCount > 1) {
-          var html = '<tr><td colspan="11"><ul class="pagination float-right">';
+          var html = '<tr><td colspan="12"><ul class="pagination float-right">';
           var pageSize = 5;
           var pRCnt = parseInt(data.result.currentPage / pageSize);
           if(data.result.currentPage % pageSize == 0){
@@ -912,8 +912,8 @@
     var sDateValue = $('#sDate').val();
     var eDateValue = $('#eDate').val();
     if(sDateValue != '' && eDateValue != ''){
-    param.sDate = sDateValue;
-    param.eDate = eDateValue;
+      param.sDate = sDateValue;
+      param.eDate = eDateValue;
     }
     return param;
   }

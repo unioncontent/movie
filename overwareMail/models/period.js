@@ -6,7 +6,21 @@ const DBpromise = require('../db/db_info.js');
  통계 기사수 뷰 - period_reply_view
 */
 
+
 var period = {
+  call_dashbord: async function(param){
+    var sql = 'call union_mail.dashboard(?,?)';
+    var result = await getResult(sql,param);
+    return (result.length > 0)? result[0]:[];
+    // call dashboard(-1,25);
+    // call dashboard(-7,25);
+  },
+  call_stats: async function(param){
+    var sql = 'call union_mail.stats(?,?,?,?,?,?,?,?,?)';
+    return await getResult(sql,param);
+    // call dashboard(-1,25);
+    // call dashboard(-7,25);
+  },
   selectView: async function(body,param){
     var sql = 'SELECT * FROM period_view where n_idx is not null ';
     if(('sDate' in body) && ('eDate' in body)){

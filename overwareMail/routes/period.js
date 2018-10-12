@@ -52,6 +52,12 @@ router.post('/getNextPage',isAuthenticated,async function(req, res, next) {
 
 async function getListPageData(idx,param){
   console.log('getListPageData:',param);
+  var datetime = require('node-datetime');
+  var dt = datetime.create();
+  var end = dt.format('Y-m-d');
+  dt.offsetInDays(-7);
+  var start = dt.format('Y-m-d');
+
   var data = {
     list:[],
     listCount:{total:0},
@@ -60,44 +66,61 @@ async function getListPageData(idx,param){
     keyword: '',
     type: '',
     mType: '',
-    ivt:''
+    ivt:'',
+    sDate:start,
+    eDate:end
   };
   var limit = 20;
-  var searchParam = [idx,idx,0,limit];
+  var searchParam = ['','','','','','',idx,0,limit];
+  // var searchParam = [idx,idx,0,limit];
   var currentPage = 1;
   var searchBody = {};
   if (typeof param.page !== 'undefined') {
     currentPage = param.page;
   }
   if (parseInt(currentPage) > 0) {
-    searchParam[2] = (currentPage - 1) * limit
-    data['offset'] = searchParam[2];
+    searchParam[7] = (currentPage - 1) * limit
+    data['offset'] = searchParam[7];
+    // searchParam[2] = (currentPage - 1) * limit
+    // data['offset'] = searchParam[2];
   }
   if (typeof param.sDate !== 'undefined' && typeof param.eDate !== 'undefined') {
-    searchBody['sDate'] = param.sDate;
-    searchBody['eDate'] = param.eDate;
+    // searchBody['sDate'] = param.sDate;
+    // searchBody['eDate'] = param.eDate;
+    searchParam[0] = param.sDate;
+    searchParam[1] = param.eDate;
     data['sDate'] = param.sDate;
     data['eDate'] = param.eDate;
+  } else{
+    searchParam[0] = data.sDate;
+    searchParam[1] = data.eDate;
   }
   if (typeof param.keyword !== 'undefined') {
-    searchBody['keyword'] = param.keyword;
+    // searchBody['keyword'] = param.keyword;
+    searchParam[2] = param.keyword;
     data['keyword'] = param.keyword;
   }
   if (typeof param.ivt !== 'undefined') {
-    searchBody['ivt'] = param.ivt;
+    // searchBody['ivt'] = param.ivt;
+    searchParam[3] = param.ivt;
     data['ivt'] = param.ivt;
   }
   if (typeof param.type !== 'undefined') {
-    searchBody['type'] = param.type;
+    // searchBody['type'] = param.type;
+    searchParam[4] = param.type;
     data['type'] = param.type;
   }
   if (typeof param.mType !== 'undefined') {
-    searchBody['mType'] = param.mType;
+    // searchBody['mType'] = param.mType;
+    searchParam[5] = param.mType;
     data['mType'] = param.mType;
   }
   try{
-    data['list'] = await period.selectView(searchBody,searchParam);
-    data['listCount'] = await period.selectViewCount(searchBody,searchParam);
+    // data['list'] = await period.selectView(searchBody,searchParam);
+    // data['listCount'] = await period.selectViewCount(searchBody,searchParam);
+    var result = await period.call_stats(searchParam);
+    data['list'] = (result.length > 0)? result[0]:[];
+    data['listCount'] = (result.length > 0)? result[1][0].total:0;
     data['currentPage'] = currentPage;
   }
   catch(e){

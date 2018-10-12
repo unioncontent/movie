@@ -40,13 +40,13 @@
                     <td>
                       <strong>발송성공</strong>
                     </td>
-                    <td class="txt-danger" id="success">0</td>
+                    <td class="txt-danger" id="success">0 (0%)</td>
                   </tr>
                   <tr>
                     <td>
                       <strong>발송실패</strong>
                     </td>
-                    <td class="txt-primary" id="fail">0</td>
+                    <td class="txt-primary" id="fail">0 (0%)</td>
                   </tr>
                   <tr>
                     <td>
@@ -87,7 +87,11 @@
               <div class="table-responsive">
                 <table class="table table-cp">
                   <thead>
-                    <tr>
+                    <%if(list.length == 0){%>
+                      <tr style="display: none;">
+                    <%}else{%>
+                      <tr>
+                    <%}%>
                       <th style="min-width: 200px;">발송일</th>
                       <th style="min-width: 70px;">키워드</th>
                       <th style="min-width: 80px;">발송차수</th>
@@ -99,9 +103,21 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <%for(var i=0; i < list.length; i++) {%>
+                    <%
+                    for(var i=0; i < list.length; i++) {
+                      var sendDate = new Date(list[i].M_send);
+                      var sendStr = sendDate.getFullYear()+'-'+(sendDate.getMonth() + 1) +'-'+sendDate.getDate();
+                      var nowDate = new Date();
+                      var nowStr = nowDate.getFullYear()+'-'+(nowDate.getMonth() + 1) +'-'+nowDate.getDate();
+                    %>
                     <tr>
-                      <th><%= list[i].M_send %></th>
+                      <td>
+                        <% if(sendStr == nowStr){ %>
+                          <span class="f-w-600"><%= list[i].M_send %> <span class="pcoded-badge label label-warning">NEW</span></span>
+                        <% } else {%>
+                          <span class="f-w-600"><%= list[i].M_send %></span>
+                        <%}%>
+                      </td>
                       <td><div class="kwd_nobr"><%= list[i].M_keyword %></div></td>
                       <td><div class="num_nobr"><%= ((list[i].M_invitation == '0' && list[i].M_seq_number != '')?(list[i].M_seq_number+'차'):'-') %></div></td>
                       <td>
@@ -120,6 +136,11 @@
                       </td>
                     </tr>
                     <% } %>
+                    <%if(list.length == 0){%>
+                      <tr>
+                        <td colspan="8" style="vertical-align:middle;text-align:center;height: 83px;"><h5>발송된 메일이 없습니다.</h5></td>
+                      </tr>
+                    <%}%>
                   </tbody>
                 </table>
               </div>
@@ -326,8 +347,10 @@ $(window).resize(function(){
 });
 
 $(document).ready(function(){
-  settingCard();
   areaChart();
+  settingCard();
+  // $('#c1').css('visibility', 'visible');
+  // $('#c2').css('visibility', 'visible');
 });
 // 통계
 function settingCard(){
@@ -492,8 +515,8 @@ function areaChart(){
           data.forEach(function(item,idx){
             for(var i=0; i<8 ; i++){
               if(arr[i]['date'] == item.date){
-                arr[i]['success'] = item.success;
-                arr[i]['fail'] = item.fail;
+                arr[i]['success'] = parseInt(item.success.replace(/[,]/gi,''));
+                arr[i]['fail'] = parseInt(item.fail.replace(/[,]/gi,''));
               }
             }
           });
