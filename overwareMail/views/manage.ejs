@@ -618,6 +618,8 @@
               groupStr = ((item.M_group == null) ? '(삭제된그룹)':item.M_group);
             }
           }
+          var send_o = new Date(item.M_send);
+          var now_o = new Date();
           var html = '<tr>\
             <th>'+numIdx+'</th>\
             <td><div class="kwd_nobr">'+item.M_keyword+'</div></td>\
@@ -630,16 +632,16 @@
             <td><div class="group-nobr" title="'+groupStr+'">'+groupStr+'</div></td>\
             <td><div class="date-nobr">'+item.M_regdate+'</div></td>\
             <td><div class="date-nobr">'+(((item.M_type != 1) || (item.M_type == 1 && item.M_send == null)) ?'-': item.M_send)+'</div></td>\
-            <td><div class="date-nobr">'+(((item.M_send == null) || (item.M_type == 1 && item.success == 0 && item.fail == 0)) ? '-': item.M_send)+'</div></td>\
+            <td><div class="date-nobr">'+(((item.M_send == null) || (item.M_type == 1 && (send_o > now_o))) ? '-': item.M_send)+'</div></td>\
             <td>';
-            if(item.M_send == null || (item.M_type == 1 &&item.success ==0 &&item.fail==0)){
+            if(item.M_send == null || (item.M_type == 1 && (send_o > now_o))){
               html += '<button class="btn btn-sm btn-inverse btn-send" data-idx="'+item.n_idx+'">보내기</button> ';
             }
             else{
               html += '<button class="btn btn-sm btn-inverse btn-resend" data-idx="'+item.n_idx+'">재발송</button> ';
             }
             html += '<button class="btn btn-sm btn-inverse btn-delete" data-idx="'+item.n_idx+'">삭제</button> ';
-            if(item.M_send == null || (item.M_type == 1 &&item.success ==0 &&item.fail==0)){
+            if(item.M_send == null || (item.M_type == 1 && (send_o > now_o))){
               html += '<button class="btn btn-sm btn-inverse btn-edit" data-idx="'+item.n_idx+'">수정</button> ';
             }
             html += '<button class="btn btn-sm btn-inverse btn-rewrite" data-idx="'+item.n_idx+'">재작성</button></td></tr>';
