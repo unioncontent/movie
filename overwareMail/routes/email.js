@@ -722,7 +722,7 @@ async function settingMailBody(bodyHtml,keyword,template,idx,num,ivt){
     pastCount = (pastCount.length == 0) ? '':pastCount[0].total;
     resultHtml += '<table width="750" align="center" cellpadding="0" cellspacing="0" border="0" style="margin-top: 30px;"><tbody><tr><td>[지난 기사보기]<hr><table cellpadding="0" cellspacing="0" border="0" width="100%"><colgroup><col width="80%"><col width="20%"></colgroup><tbody>';
     for(var i=0; i < pastView.length; i++) {
-      var url = 'http://showbox.email/preview?keyword='+pastView[i].keyword_idx+'&idx='+pastView[i].n_idx;
+      var url = 'http://showbox.email/preview?keyword='+pastView[i].M_keyword_idx+'&idx='+pastView[i].n_idx;
       resultHtml +='<tr><td style=\"font-size: small;padding:5px 5px 5px 0px;border-bottom:1px dotted #d9d9d9;color:#444;\">['+((ivt == '0')?('No.'+pastView[i].M_seq_number+'차'):'Invitation')+']<a style=\"text-decoration:none; color:black;\" href=\"'+url+'\" target=\"_blank\"> '+pastView[i].M_subject+'</a>';
       resultHtml +='</td><td style=\"font-size: small;padding:5px 0 5px;border-bottom:1px dotted #d9d9d9;color:#444;\">'+pastView[i].M_send+'</td></tr>'
     }
