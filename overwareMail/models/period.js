@@ -21,6 +21,17 @@ var period = {
     // call dashboard(-1,25);
     // call dashboard(-7,25);
   },
+  call_mail_detail: async function(param){
+    var sql = 'call mail_detail(?, ?, ?, ?)';
+    var result = await getResult(sql,param);
+    if(param[0] == 1){
+      return (result.length > 0)? result[0][0]:{media_c:0,reporter_c:0};
+    }
+    else{
+      return (result.length > 0)? ((result[0][0].c == null) ? 0:result[0][0].c) :0;
+    }
+    // call mail_detail(2, 755, '암수살인', '2018-10-06');
+  },
   selectView: async function(body,param){
     var sql = 'SELECT * FROM period_view where n_idx is not null ';
     if(('sDate' in body) && ('eDate' in body)){
