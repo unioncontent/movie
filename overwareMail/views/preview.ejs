@@ -44,7 +44,7 @@
             <tbody>
               <%
                 for(var i=0; i < pastView.length; i++) {
-                  var url = 'http://showbox.email/preview?keyword='+pastView[i].keyword_idx+'&idx='+pastView[i].n_idx;
+                  var url = 'http://showbox.email/preview?keyword='+pastView[i].M_keyword_idx+'&idx='+pastView[i].n_idx;
                   if(currentPage != '1'){
                     url += '&page='+currentPage
                   }
