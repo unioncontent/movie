@@ -643,6 +643,15 @@
   });
   function ajaxGetPeriod(param,tag,input){
     $('#loader_p').show();
+    $('#total').text(tag.eq(5).text());
+    $('#success').text(tag.eq(6).text());
+    $('#fail').text(tag.eq(7).text());
+    var sendDate = input.eq(1).val().slice(0,16);
+    $('#date1').text(sendDate);
+    if(tag.eq(8).text().trim().indexOf("예약") != -1){
+      $('#date1').text(sendDate);
+      $('#date2').text(sendDate);
+    }
     $.ajax({
       url: '/period/getPeriod',
       type: 'post',
@@ -660,16 +669,6 @@
           $('#reporter').text(data.result.reporter);
           $('#newsCount').text(data.result.newsCount);
           $('#replyCount').text(data.result.replyCount);
-
-          $('#total').text(tag.eq(5).text());
-          $('#success').text(tag.eq(6).text());
-          $('#fail').text(tag.eq(7).text());
-          var sendDate = input.eq(1).val().slice(0,16);
-          $('#date1').text(sendDate);
-          if(tag.eq(8).text().trim().indexOf("예약") != -1){
-            $('#date1').text(sendDate);
-            $('#date2').text(sendDate);
-          }
         } else{
           alert('새로고침 후 다시 시도해주세요.');
         }

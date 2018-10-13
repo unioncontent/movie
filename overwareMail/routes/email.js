@@ -351,7 +351,7 @@ async function asyncFileRemove(dateF,fileArr){
 }
 
 // 메일 링크 로직
-router.post('/send2',isAuthenticated, async function(req, res) {
+router.post('/send',isAuthenticated, async function(req, res) {
   // 메일 보내기
   var result = await maillinkInsert({idx:req.body.idx,user:req.user});
   if(result){
@@ -359,17 +359,18 @@ router.post('/send2',isAuthenticated, async function(req, res) {
     return false;
   }
   // 메일 결과
-  setTimeout(async () =>{
-    console.log('메일 send result');
-    var result = await maillink.selectResult([req.body.idx]);
-    if(result){
-      // await mailDetailB.updateSendDateResult(req.body.idx);
-      res.send({status:true});
-    }
-    else{
-      res.status(500).send('메일 발송에 실패했습니다.');
-    }
-  },5000);
+  res.send({status:true});
+  // setTimeout(async () =>{
+  //   console.log('메일 send result');
+  //   var result = await maillink.selectResult([req.body.idx]);
+  //   if(result){
+  //     // await mailDetailB.updateSendDateResult(req.body.idx);
+  //     res.send({status:true});
+  //   }
+  //   else{
+  //     res.status(500).send('메일 발송에 실패했습니다.');
+  //   }
+  // },5000);
 });
 
 // 메일 작성 중 테스트 발송

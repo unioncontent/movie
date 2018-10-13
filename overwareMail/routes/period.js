@@ -27,12 +27,19 @@ router.get('/',isAuthenticated,async function(req, res) {
 router.post('/getPeriod',isAuthenticated,async function(req, res, next) {
   try{
     console.log('getPeriod:',req.body);
-    var mediaNReporterCount = await period.getPeriodMediaNReporterCount(req.body);
+    // var mediaNReporterCount = await period.getPeriodMediaNReporterCount(req.body);
+    // var data = {
+    //   media:mediaNReporterCount.media_c,
+    //   reporter:mediaNReporterCount.reporter_c,
+    //   newsCount:await period.getNewsCount(req.body),
+    //   replyCount:await period.getReplyCount(req.body)
+    // };
+    var mediaNReporterCount = await period.call_mail_detail([1,req.body.M_idx_A,req.body.keyword,req.body.sDate]);
     var data = {
       media:mediaNReporterCount.media_c,
       reporter:mediaNReporterCount.reporter_c,
-      newsCount:await period.getNewsCount(req.body),
-      replyCount:await period.getReplyCount(req.body)
+      newsCount:await period.call_mail_detail([2,req.body.M_idx_A,req.body.keyword,req.body.sDate]),
+      replyCount:await period.call_mail_detail([3,req.body.M_idx_A,req.body.keyword,req.body.sDate])
     };
     console.log(data);
     res.send({status:true,result:data});
