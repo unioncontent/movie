@@ -81,7 +81,11 @@ var mailAllA = {
     return await getResult(sql,param);
   },
   updateMtype:async function(param){
-    var sql = 'update m_mail_all_a set M_type=? where n_idx=?';
+    var sql = 'update m_mail_all_a set M_type=?';
+    if(param[0] == '0'){
+      sql += ', M_senddate=null ';
+    }
+    sql += 'where n_idx=?';
     return await getResult(sql,param);
   },
   updateSendDate: async function(param){
