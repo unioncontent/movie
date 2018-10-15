@@ -212,9 +212,9 @@ public class PeriodController {
 			cri.setSelectKey("4");
 		}else if(selectKey.equals("암수살인")) {
 			cri.setSelectKey("5");
-		}else if(selectKey.equals("전투")) {
+		}else if(selectKey.equals("영화 전투")) {
 			cri.setSelectKey("6");
-		}else if(selectKey.equals("돈")) {
+		}else if(selectKey.equals("영화돈")) {
 			cri.setSelectKey("7");
 		}else if(selectKey.equals("패키지")) {
 			cri.setSelectKey("8");

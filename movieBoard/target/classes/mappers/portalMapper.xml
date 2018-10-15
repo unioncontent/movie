@@ -1346,6 +1346,8 @@
 			portal_data 
 		where 
 			textType = '나쁜글'
+		and 
+			score is null
 		<include refid="search_writeDate"></include> 
 		and 
 			createDate >= curdate();

@@ -407,13 +407,16 @@
 					                        </a>
                                             </td>
                                             <%-- <td>
-                                            <fmt:formatNumber value="${mvo.sendCount}" pattern="#,##0" />회
+                                            <fmt:parseNumber value="${mvo.sendCount}" var="sendCount"/>
+											<fmt:formatNumber value="${sendCount}" pattern="#,##0"/>회
                                             </td>
                                             <td>
-                                            <fmt:formatNumber value="${mvo.success}" pattern="#,##0" />회
+                                            <fmt:parseNumber value="${mvo.success}" var="success"/>
+											<fmt:formatNumber value="${success}" pattern="#,##0"/>회
                                             </td>
                                             <td>
-                                            <fmt:formatNumber value="${mvo.fail}" pattern="#,##0" />회
+                                            <fmt:parseNumber value="${mvo.fail}" var="fail"/>
+											<fmt:formatNumber value="${fail}" pattern="#,##0"/>회
                                             </td> --%>
                                             <td>
                                             ${mvo.sendCount}회
