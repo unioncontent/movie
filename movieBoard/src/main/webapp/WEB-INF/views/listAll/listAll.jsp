@@ -136,6 +136,14 @@
                           </c:forEach>
                           </c:if>
                         </select>
+                        <select id = "selectTextType" name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left">
+                          <option>분류</option>
+                          <option value="좋은글">좋은글</option>
+                          <option value="나쁜글">나쁜글</option>
+                          <option value="관심글">관심글</option>
+                          <option value="기타글">기타글</option>
+                          <option value="삭제글">삭제글</option>
+                        </select>
                         <select id= "selectPerPageNum" name="select" class="col-md-1 form-control form-control-inverse m-r-10 m-b-10 p-r-5 f-left select-left">	
 	                        <option value="30">리스트</option>
 	                        <option id= "30" >30</option>
@@ -169,6 +177,14 @@
                           <option value="${keywordList.keyword_main}">${keywordList.keyword_main}</option>
                           </c:forEach>
                           </c:if>
+                        </select>
+                        <select id = "selectTextType" name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left">
+                          <option>분류</option>
+                          <option value="좋은글">좋은글</option>
+                          <option value="나쁜글">나쁜글</option>
+                          <option value="관심글">관심글</option>
+                          <option value="기타글">기타글</option>
+                          <option value="삭제글">삭제글</option>
                         </select>
                         <select id= "selectPerPageNum" name="select" class="col-md-1 form-control form-control-inverse m-r-10 m-b-10 p-r-5 f-left select-left">	
 	                        <option value="30">리스트</option>
@@ -641,6 +657,29 @@ $(function() {
 
 			//searchList();
 		});
+		
+		var textOption = decodeURI(window.location.href.split("textType=")[1]).split("&")[0];
+		console.log("textOption: " + textOption);
+
+		var $selectTextType = $('#selectTextType');
+
+		if(selectTextType != 'undefined'){
+			for(var i = 0; i < $selectTextType[0].length; i++ ){
+				if($selectTextType[0][i].value == textOption){
+					$selectTextType[0][i].selected = 'selected';
+				}
+			}
+		}
+		$selectTextType[0][0].disabled = true;
+
+
+		// 분류 선택시
+		$selectTextType.change(function(){
+			console.log("selectTextType clicked....");
+			console.log($('#selectTextType option:selected').val());
+
+			searchList();
+		});
 
 
 	  // 일괄처리버튼 클릭시
@@ -969,6 +1008,7 @@ $(function() {
 						+ $('#selectPerPageNum option:selected').val()
     					+ "&company=" + $("#selectCompany option:selected").val()
 						+ "&selectKey=" + $('#selectKeyword option:selected').val()
+						+ "&textType=" + $("#selectTextType option:selected").val()
 						+ "&searchType=" + $("#selectSearchType option:selected").val()
 						+ "&keyword=" + $('#keywordInput').val()
     					+ "&startDate=" + makeDateFormat($("#fromDate").val(), 0)
@@ -982,6 +1022,7 @@ function show(event) {
 		+ $('#selectPerPageNum option:selected').val()
 		+ "&company=" + $("#selectCompany option:selected").val()
 		+ "&selectKey=" + $('#selectKeyword option:selected').val()
+		+ "&textType=" + $("#selectTextType option:selected").val()
 		+ "&searchType=" + $("#selectSearchType option:selected").val()
 		+ "&keyword=" + $('#keywordInput').val()
 		+ "&startDate=" + makeDateFormat($("#fromDate").val(), 0)

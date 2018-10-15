@@ -158,8 +158,8 @@
                           <option value="좋은글">좋은글</option>
                           <option value="나쁜글">나쁜글</option>
                           <option value="관심글">관심글</option>
-                          <option value="기타글">기타</option>
-                          <option value="삭제글">삭제</option>
+                          <option value="기타글">기타글</option>
+                          <option value="삭제글">삭제글</option>
                         </select>
                         
                         <select id= "selectPerPageNum" name="select" class="col-md-1 form-control form-control-inverse m-r-10 m-b-10 p-r-5 f-left select-left">	
@@ -201,8 +201,8 @@
                           <option value="좋은글">좋은글</option>
                           <option value="나쁜글">나쁜글</option>
                           <option value="관심글">관심글</option>
-                          <option value="기타글">기타</option>
-                          <option value="삭제글">삭제</option>
+                          <option value="기타글">기타글</option>
+                          <option value="삭제글">삭제글</option>
                         </select>
                         
                         <select id= "selectPerPageNum" name="select" class="col-md-1 form-control form-control-inverse m-r-10 m-b-10 p-r-5 f-left select-left">	

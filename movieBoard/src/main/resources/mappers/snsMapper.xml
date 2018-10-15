@@ -872,6 +872,8 @@
 		from facebook_videos
         where
 			sns_writer = #{sns_writer}
+		and
+			sns_subcontent != '광고'
         <include refid="search_writeDate3"></include>
         group by writeDate
         order by writeDate desc
@@ -885,6 +887,8 @@
 		from facebook_videos
         where
 			sns_writer = #{sns_writer}
+		and
+			sns_subcontent != '광고'
         group by url
         order by writeDate desc
  	</select>
@@ -897,6 +901,8 @@
 		from facebook_videos
         where
 			sns_writer = #{sns_writer}
+		and
+			sns_subcontent != '광고'
         <include refid="search_writeDate3"></include>
         group by writeDate) as total
 	</select>

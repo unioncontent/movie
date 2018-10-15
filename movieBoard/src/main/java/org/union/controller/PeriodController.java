@@ -383,7 +383,6 @@ public class PeriodController {
 		model.addAttribute("minusCount", cri.getPerPageNum() * (cri.getPage()-1));
 		
 		logger.info("pageMaker: " + pageMaker);
-		logger.info("aaaaatotalCount: " + totalCount);
 		model.addAttribute("pageMaker", pageMaker);
 		
 		model.addAttribute("naver1", portalService.naverTextTypeCountb(cri));
