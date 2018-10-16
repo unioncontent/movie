@@ -873,7 +873,7 @@
         where
 			sns_writer = #{sns_writer}
 		and
-			sns_subcontent != '광고'
+			(sns_subcontent is null or sns_subcontent != '광고')
         <include refid="search_writeDate3"></include>
         group by writeDate
         order by writeDate desc
@@ -888,7 +888,7 @@
         where
 			sns_writer = #{sns_writer}
 		and
-			sns_subcontent != '광고'
+			(sns_subcontent is null or sns_subcontent != '광고')
         group by url
         order by writeDate desc
  	</select>
@@ -902,7 +902,7 @@
         where
 			sns_writer = #{sns_writer}
 		and
-			sns_subcontent != '광고'
+			(sns_subcontent is null or sns_subcontent != '광고')
         <include refid="search_writeDate3"></include>
         group by writeDate) as total
 	</select>
