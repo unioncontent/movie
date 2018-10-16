@@ -21,6 +21,12 @@
         <div class="col-md-12">
           <div class="card">
             <div class="card-header">
+              <div class="col-sm-1 f-left p-l-0" id="mail_t">
+                 <select id="mail_t" class="form-control form-control-defalut">
+                    <option value="maillink">모듈1</option>
+                    <option value="mymailer">모듈2</option>
+                </select>
+              </div>
               <button type="submit" class="btn btn-inverse f-right m-b-0 sendBtn">저장</button>
               <button type="submit" class="btn btn-inverse f-right m-b-0 m-r-5 perivewBtn">미리보기</button>
             </div>
@@ -491,23 +497,23 @@
   <div class="circ4 loader-primary"></div>
 </div>
 <style>
-.i_check{
-  margin-bottom: 0;
-  margin-top: .3rem;
-}
-/* loader */
-.loader-block{
-  display: none;
-  padding-top:22%;
-  position: fixed;
-  left: 0;
-  right: 0;
-  top: 100px;
-  width: 500px;
-  margin: auto;
-  max-width: 100%;
-  z-index: 10000;
-}
+  .i_check{
+    margin-bottom: 0;
+    margin-top: .3rem;
+  }
+  /* loader */
+  .loader-block{
+    display: none;
+    padding-top:22%;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 100px;
+    width: 500px;
+    margin: auto;
+    max-width: 100%;
+    z-index: 10000;
+  }
 </style>
 <!-- moment -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
@@ -666,6 +672,7 @@
     var param = {
       'M_keyword': $("#M_keyword option:selected").val() || '',
       'M_seq_number': num,
+      'M_module':$("#mail_t option:selected").val(),
       'M_template':$("input:radio[name=M_template]:checked").val(),
       'M_invitation': $("#invitation").is(":checked") ? '1' : '0',
       'M_body': get_tinymce_html_content(),
@@ -785,6 +792,7 @@
     }
     var param = {
       'M_seq_number': num,
+      'M_module':$("#mail_t option:selected").val(),
       'M_template':$("input:radio[name=M_template]:checked").val(),
       'M_invitation': $("#invitation").is(":checked") ? '1' : '0',
       'M_sender': $(".sender-select").select2("val"),
@@ -850,27 +858,6 @@
     .then(function(value) {
       if (value != null) {
         var now = $.datepicker.formatDate('yymmdd', new Date());
-        // var fileListArr = $("#fileList").val().split(',');
-        // var fileListStr = "";
-        // var fileNameStr = "";
-        // var fileDBListStr = "";
-        // $.each(fileListArr, function(index, value) {
-        //   if(value != "" && value != 'undefined'){
-        //     fileDBListStr += value;
-        //     var now = $.datepicker.formatDate('yymmdd', new Date());
-        //     fileListStr += 'http://mail.overware.co.kr/uploads/files/'+now+'/'+value;
-        //     fileNameStr += $.trim($('.jFiler-items-list').find('[data-value=\"'+value+'\"]').attr('title'));
-        //     if(fileListArr.length-1 != index){
-        //       fileListStr += '|';
-        //       fileDBListStr += '|';
-        //       fileNameStr += '|';
-        //     }
-        //   }
-        // });
-
-        // param['M_file'] = fileListStr;
-        // param['M_fileName'] = fileNameStr;
-        // param['M_file_d'] = fileDBListStr;
         $('span.messages').find('.error').text('');
         if($('#mailType').val()!=''){
           param.type = $('#mailType').val();
@@ -892,14 +879,6 @@
       datatype : 'json',
       error:function(request,status,error){
         console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
-        // if(request.responseText == undefined){
-        //   $('.preloader3').fadeOut(500);
-        //   swal("SUCCESS!", '잠시만 기다려주세요. 몇분후 리스트에 적용됩니다.', "success")
-        //   .then(function(){
-        //     location.href= '../email/manage';
-        //   });
-        //   return false;
-        // }
         swal("ERROR!", ((request.responseText == undefined)?'메일 저장에 실패했습니다.':request.responseText), "error");
       },
       success:function(data){
