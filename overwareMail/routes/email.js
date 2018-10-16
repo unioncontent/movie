@@ -1,4 +1,4 @@
-var express = require('express');
+﻿var express = require('express');
 var fs = require('fs-extra');
 var request = require('request');
 var datetime = require('node-datetime');
@@ -487,7 +487,11 @@ router.post('/save',isAuthenticated, async function(req, res) {
   if(m_idx_a){
     if('M_senddate' in mailAllParam){
       try{
-        var result = await mailInsert({idx:m_idx_a,time:mailAllParam.M_senddate,user:req.user});
+        var mParam = {idx:m_idx_a,time:mailAllParam.M_senddate,user:req.user};
+        if('type' in req.body){
+          mParam.type = req.body.type;
+        }
+        var result = await maillinkInsert(mParam);
         // console.log(result);
         if(result){
           throw new Error('maillink insert 실패');
@@ -595,7 +599,7 @@ async function mailInsert(req){
   var mailData = result[0];
 
   if('type' in req){
-    if(req.type == 'resend'){
+    if(req.type == 'resend' || req.type == 'edit'){
       // 재발송 하기 전 메일 모듈 데이터 삭제
       if(mailData.M_module == 1){
         await maillink.deleteMlAT(mailData.n_idx);
