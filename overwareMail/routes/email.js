@@ -84,64 +84,51 @@ router.get('/manageHis',isAuthenticated, async function(req, res) {
 });
 
 router.post('/manage/updateMtype',isAuthenticated, async function(req, res) {
-  console.log('/manage/updateMtype',req.body);
-  // var result = await maillink.deleteMlAMSG(req.body.idx);
-  // if(!('protocol41' in result)){
-  //   res.status(500).send('ml_automail_message delete query 실패');
-  //   return false;
-  // }
-  result = await maillink.deleteMlAT(req.body.idx);
-  if(!('protocol41' in result)){
-    res.status(500).send('ml_automail_tran delete query 실패');
-    return false;
-  }
-  result = await maillink.selectMailTableName();
-  await asyncForEach(result, async (item, index, array) => {
-    var result2 = await maillink.deleteMlABackUp(item.TABLE_NAME,req.body.idx);
-    if(!('protocol41' in result2)){
-      res.status(500).send('ml_automail_tran backup delete query 실패');
-      return false;
-    }
-  });
-  result = await mailAllA.updateMtype([req.body.type,req.body.idx]);
+  console.log('/manage/updateMtype : ',req.body);
+  var result = await mailAllA.updateMtype([req.body.type,req.body.idx]);
   if(!('protocol41' in result)){
     res.status(500).send('mailAllA delete query 실패');
     return false;
   }
-  // if(req.body.type == '0'){
-  //   result = await mailDetailB.resetMSend([req.body.idx]);
-  //   if(!('protocol41' in result)){
-  //     res.status(500).send('mailDetailB delete query 실패');
-  //     return false;
-  //   }
-  // }
+  if(req.body.module == 1){
+    result = await maillink.deleteMlAT(req.body.idx);
+    if(!('protocol41' in result)){
+      res.status(500).send('ml_automail_tran delete query 실패');
+      return false;
+    }
+    var resultTName = await maillink.selectMailTableName();
+    await asyncForEach(resultTName, async (item, index, array) => {
+      var result2 = await maillink.deleteMlABackUp(item.TABLE_NAME,req.body.idx);
+      if(!('protocol41' in result2)){
+        res.status(500).send('ml_automail_tran backup delete query 실패');
+        return false;
+      }
+    });
+  }
+  else if(req.body.module == 2){
+    result = await mymailer.deleteSendTable(req.body.mid);
+    if(!('protocol41' in result)){
+      res.status(500).send('deleteSendTable delete query 실패');
+      return false;
+    }
+    result = await mymailer.deleteInfoTable(req.body.mid);
+    if(!('protocol41' in result)){
+      res.status(500).send('deleteInfoTable delete query 실패');
+      return false;
+    }
+    result = await mymailer.deleteBackupTable(req.body.mid);
+    if(!('protocol41' in result)){
+      res.status(500).send('ml_automail_tran delete query 실패');
+      return false;
+    }
+  }
+
   res.send({status:true});
 });
 
 router.post('/manage/delete',isAuthenticated, async function(req, res) {
-  var result = await mailAllA.delete(req.body.idx);
-  if(!('protocol41' in result)){
-    res.status(500).send('mailAllA delete query 실패');
-    return false;
-  }
+  var result;
   if(req.body.module == '1'){
-    result = await mail.deleteSendTable(req.body.mid);
-    if(!('protocol41' in result)){
-      res.status(500).send('customer_data delete query 실패');
-      return false;
-    }
-    result = await mail.deleteInfoTable(req.body.mid);
-    if(!('protocol41' in result)){
-      res.status(500).send('customer_info delete query 실패');
-      return false;
-    }
-    result = await mail.deleteBackupTable(req.body.mid);
-    if(!('protocol41' in result)){
-      res.status(500).send('customer_info delete query 실패');
-      return false;
-    }
-  }
-  else if(req.body.module == '2'){
     result = await maillink.deleteMlAT(req.body.idx);
     if(!('protocol41' in result)){
       res.status(500).send('ml_automail_tran delete query 실패');
@@ -155,6 +142,28 @@ router.post('/manage/delete',isAuthenticated, async function(req, res) {
         return false;
       }
     });
+  }
+  else if(req.body.module == '2'){
+    result = await mymailer.deleteSendTable(req.body.mid);
+    if(!('protocol41' in result)){
+      res.status(500).send('customer_data delete query 실패');
+      return false;
+    }
+    result = await mymailer.deleteInfoTable(req.body.mid);
+    if(!('protocol41' in result)){
+      res.status(500).send('customer_info delete query 실패');
+      return false;
+    }
+    result = await mymailer.deleteBackupTable(req.body.mid);
+    if(!('protocol41' in result)){
+      res.status(500).send('customer_info delete query 실패');
+      return false;
+    }
+  }
+  result = await mailAllA.delete(req.body.idx);
+  if(!('protocol41' in result)){
+    res.status(500).send('mailAllA delete query 실패');
+    return false;
   }
   res.send({status:true});
 });
@@ -227,6 +236,7 @@ async function getListPageData(idx,param){
   return data;
 }
 
+// 메일 주소록 페이징
 router.post('/getModalListPage',isAuthenticated, async function(req, res) {
   console.log('getModalListPage');
   var data = {
@@ -268,6 +278,7 @@ router.post('/getModalListPage',isAuthenticated, async function(req, res) {
   res.send({status:true,result:data});
 });
 
+// 메일 그룹 주소록 검색
 router.get('/searchGroup',isAuthenticated, async function(req, res) {
   if(req.query.session == false){
     return res.send({status:false});
@@ -286,12 +297,7 @@ router.get('/searchGroup',isAuthenticated, async function(req, res) {
   };
   res.send({status:true,result:data});
 });
-
 router.post('/searchAll',isAuthenticated, async function(req, res) {
-  // req.user = {
-  //   n_idx: 1,
-  //   user_admin: null
-  // };
   var param = [req.user.n_idx,0,10];
   if(req.user.user_admin != null){
     param[0] = req.user.user_admin;
@@ -306,7 +312,6 @@ router.post('/searchAll',isAuthenticated, async function(req, res) {
   };
   res.send({status:true,result:data});
 });
-
 router.get('/searchAll',isAuthenticated, async function(req, res) {
   if(req.query.session == false){
     return res.send({status:false});
@@ -373,6 +378,7 @@ router.post('/send',isAuthenticated, async function(req, res) {
 // 메일 작성 중 테스트 발송
 router.post('/test',isAuthenticated, async function(req, res) {
   try{
+    console.log( '/test req :',req);
     var mailAllParam = {
       M_email:req.body['M_email'],
       M_seq_number:req.body['M_seq_number'],
@@ -391,11 +397,52 @@ router.post('/test',isAuthenticated, async function(req, res) {
 
     var dt = datetime.create();
     var now = dt.format('Y-m-d H:M:S');
-    var values = ['AU-4126512','1','U','[테스트 발송]  '+mailAllParam.M_subject,sender[0],sender[1],'테스트 메일 수신자',
-    mailAllParam.M_email,'http://showbox.email/preview_test?keyword='+mailAllParam.M_keyword+'&idx='+idx,now,now,idx];
-    var result = await maillink.insertTest(values);
-    if(!('insertId' in result)){
-      throw new Error('maillink insert 실패');
+    if(req.body.module == '1'){
+      var values = ['AU-4126512','1','U','[테스트 발송]  '+mailAllParam.M_subject,sender[0],sender[1],'테스트 메일 수신자',
+      mailAllParam.M_email,'http://showbox.email/preview_test?keyword='+mailAllParam.M_keyword+'&idx='+idx,now,now,idx];
+      var result = await maillink.insertTest(values);
+      if(!('insertId' in result)){
+        throw new Error('maillink insert 실패');
+      }
+    }
+    else if(req.body.module == '2'){
+      var param_i = {
+      user_id:'test',
+      title:'[테스트 발송]  '+mailAllParam.M_subject,
+      content: await settingMailBody(mailAllParam.M_body,mailAllParam.M_keyword,mailAllParam.M_template,'0',mailAllParam.M_seq_number,mailAllParam.M_invitation),
+      sender:sender[1],
+      sender_alias:sender[0],
+      receiver_alias:'[$name]',
+      send_time:now,
+      file_name:'',
+      file_contents:'',
+      wasRead:'O',
+      wasSend:'X',
+      wasComplete:'X',
+      needRetry:'X',
+      retryCount:'0',
+      regist_date:now,
+      linkYN:'Y',
+      total_count:'0'
+      };
+      var result1 = await mail.insert('customer_info',param_i);
+      if(!('insertId' in result1)){
+        throw new Error('mail insert 실패');
+      }
+      var param_d = {
+        id:result1.insertId,
+        email:req.body['M_email'],
+        first:'테스트 메일 수신자',
+        regist_date:now
+      };
+      var result = await mail.insert('customer_data',param_d);
+      if(!('insertId' in result)){
+        throw new Error('mail insert 실패');
+      }
+      result = await mail.updateSendInfo(['X','X','X',result1.insertId]);
+      if(result==[]){
+        throw new Error('mail insert 실패');
+      }
     }
   }
   catch(e){
@@ -487,11 +534,14 @@ router.post('/save',isAuthenticated, async function(req, res) {
   if(m_idx_a){
     if('M_senddate' in mailAllParam){
       try{
-        var mParam = {idx:m_idx_a,time:mailAllParam.M_senddate,user:req.user};
+        var mParam = {idx:m_idx_a,time:mailAllParam.M_senddate,user:req.user,origin:req.body.o_module};
         if('type' in req.body){
           mParam.type = req.body.type;
         }
-        var result = await maillinkInsert(mParam);
+        if('M_a_id' in req.body){
+          mParam.M_a_id = req.body.M_a_id;
+        }
+        var result = await mailInsert(mParam);
         // console.log(result);
         if(result){
           throw new Error('maillink insert 실패');
@@ -598,20 +648,22 @@ async function mailInsert(req){
   if(result.length == 0) return true;
   var mailData = result[0];
 
+  console.log('req : ',req);
   if('type' in req){
     if(req.type == 'resend' || req.type == 'edit'){
       // 재발송 하기 전 메일 모듈 데이터 삭제
-      if(mailData.M_module == 1){
+      if(mailData.M_module == 1 || req.origin == 1){
         await maillink.deleteMlAT(mailData.n_idx);
         var resultTName = await maillink.selectMailTableName();
         await asyncForEach(resultTName, async (item, index, array) => {
           await maillink.deleteMlABackUp(item.TABLE_NAME,mailData.n_idx);
         });
       }
-      else if(mailData.M_module == 2){
-        await mymailer.deleteSendTable(mailData.M_a_id);
-        await mymailer.deleteInfoTable(mailData.M_a_id);
-        await mymailer.deleteBackupTable(mailData.M_a_id);
+      if(mailData.M_module == 2 || 'M_a_id' in req || req.origin == 2){
+        var mid = ('M_a_id' in req) ? req.M_a_id : mailData.M_a_id;
+        await mymailer.deleteSendTable(mid);
+        await mymailer.deleteInfoTable(mid);
+        await mymailer.deleteBackupTable(mid);
       }
     }
   }
@@ -683,14 +735,12 @@ async function mailInsert(req){
       await mymailer.deleteInfoTable(mailId);
       throw new Error('insertMailSendUserError');
     }
-    if('time' in req){
-      result = await mymailer.updateSendInfo(['X','X','X',mailId]);
-      console.log('update결과:',result);
-      if(!('changedRows' in result)){
-        await mymailer.deleteInfoTable(mailId);
-        await mymailer.deleteSendTable(mailId);
-        throw new Error('updateSendInfoError');
-      }
+    result = await mymailer.updateSendInfo(['X','X','X',mailId]);
+    console.log('update결과:',result);
+    if(!('changedRows' in result)){
+      await mymailer.deleteInfoTable(mailId);
+      await mymailer.deleteSendTable(mailId);
+      throw new Error('updateSendInfoError');
     }
   }
 

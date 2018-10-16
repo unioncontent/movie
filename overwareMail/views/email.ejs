@@ -21,10 +21,10 @@
         <div class="col-md-12">
           <div class="card">
             <div class="card-header">
-              <div class="col-sm-1 f-left p-l-0" id="mail_t">
+              <div class="col-sm-1 f-left p-l-0" id="mail_t_div">
                  <select id="mail_t" class="form-control form-control-defalut">
-                    <option value="maillink">모듈1</option>
-                    <option value="mymailer">모듈2</option>
+                    <option value="2">모듈1</option>
+                    <option value="1">모듈2</option>
                 </select>
               </div>
               <button type="submit" class="btn btn-inverse f-right m-b-0 sendBtn">저장</button>
@@ -593,12 +593,15 @@
         pushEle($('.group-select'),param);
       });
 
+      $("#mail_t option[value='"+mailData.M_module+"']").attr('selected','selected');
       $("#M_mail_type option[value='"+mailData.M_mail_type+"']").attr('selected','selected');
       if(mailData.M_invitation == '1'){
         $('#invitation').prop("checked", true);
         $('#invitation').trigger("change");
       }
       $("#M_subject").val(mailData.M_subject);
+      $("#mail_t_div").data('mid',mailData.M_a_id);
+      $("#mail_t_div").data('origin',mailData.M_module);
       $("#M_seq_number").val(mailData.M_seq_number);
     }
   });
@@ -802,7 +805,8 @@
       'M_mail_type': $("#M_mail_type option:selected").val(),
       'M_body': get_tinymce_html_content(),
       'M_subject': $("#M_subject").val(),
-      'M_type': $("input:radio[name=M_type]:checked").val()
+      'M_type': $("input:radio[name=M_type]:checked").val(),
+      'o_module': $("#mail_t_div").data('origin')
     };
     var check=true;
     if(param["M_sender"] == null){
@@ -861,10 +865,14 @@
         $('span.messages').find('.error').text('');
         if($('#mailType').val()!=''){
           param.type = $('#mailType').val();
+          if(param.type == 'edit'){
+            if($("#mail_t_div").data('mid') != '') param["M_a_id"] = $("#mail_t_div").data('mid');
+          }
           var mailData = JSON.parse($("#mailData").val());
           param.idx = mailData.n_idx;
           param.Mid = mailData.M_id;
         }
+        console.log('param:',param);
         SendEmails(param);
       }
     });
