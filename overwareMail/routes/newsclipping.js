@@ -8,7 +8,6 @@ var mailListA = require('../models/mailListA.js');
 var mailListC = require('../models/mailListC.js');
 var maillink = require('../models/maillink.js');
 var nMailAll = require('../models/nMailAll.js');
-// var nMailDetailB = require('../models/nMailDetailB.js');
 
 var isAuthenticated = function (req, res, next) {
   if (req.isAuthenticated()){

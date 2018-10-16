@@ -7,7 +7,6 @@ var maillink = require('../models/maillink.js');
 var period = require('../models/period.js');
 var keyword = require('../models/keyword.js');
 var mailType = require('../models/mailType.js');
-var mailDetailB = require('../models/mailDetailB.js');
 
 var isAuthenticated = function (req, res, next) {
   if (req.isAuthenticated()){

@@ -61,8 +61,8 @@ var mailAllA = {
     return await getResult(sql,idx);
   },
   selectPastMailBody:async function(param){
-    var sql = 'SELECT M_body FROM `union`.m_mail_all_a where M_keyword = ? and M_invitation = ? and M_template = ?\
-    and M_senddate is not null and (M_id in (SELECT n_idx FROM `union`.m_mail_user where user_admin = 1) or M_id = ?) order by n_idx desc limit 1;';
+    var sql = 'SELECT M_body FROM m_mail_all_a where M_keyword = ? and M_invitation = ? and M_template = ?\
+    and M_senddate is not null and (M_id in (SELECT n_idx FROM m_mail_user where user_admin = 1) or M_id = ?) order by n_idx desc limit 1;';
     var result = await getResult(sql,param);
 
     return (result.length != 0)?result[0].M_body:'';
@@ -94,22 +94,6 @@ var mailAllA = {
   },
   updateId: async function(param){
     var sql = 'update m_mail_all_a set M_a_id=? where n_idx=?';
-    return await getResult(sql,param);
-  },
-  updateResult:async function(param){
-    var sql = 'update m_mail_all_a set M_success=? ,M_failed=? where n_idx=?';
-    return await getResult(sql,param);
-  },
-  updateResult2: async function(param){
-    var sql = 'update m_mail_all_a set M_success=0,M_failed=? where n_idx=?';
-    return await getResult(sql,param);
-  },
-  selectfile: async function(param){
-    var sql = 'SELECT M_file,DATE_FORMAT(M_regdate, \'%Y%m%d\') as dateFile FROM m_mail_all_a where n_idx=?';
-    return await getResult(sql,param);
-  },
-  getEmailData: async function(param){
-    var sql = 'SELECT * FROM m_mail_all_a where n_idx=?';
     return await getResult(sql,param);
   }
 }
