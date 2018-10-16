@@ -22,7 +22,6 @@
           <div class="alert alert-default" style="border-radius:  0; border-width:  2px;  margin-bottom: 1rem;">
           	<ul class="p-l-15 f-12" style="list-style-type: disc; color:  #666;">
             	<li>대량발송은 보내기 버튼을 클릭 후 시간 소요 될 수 있으므로 보내기 버튼을 여러 번 클릭하거나 새로 고침 하는 경우 메일이 중복발송이 되거나 메일이 발송 중 중단이 될 수 있으므로 주의하시기 바랍니다.</li>
-              <li>메일 수정 시, 예약 설정된 메일은 예약이 취소되므로 주의하시기 바랍니다.</li>
           	</ul>
         	</div>
         </div>
@@ -392,7 +391,6 @@
     var idxVal = $(this).data('idx');
     swal({
       title: '수정하시겠습니까?',
-      text: '예약발송이 설정된 경우 예약 발송은 취소됩니다.',
       icon: "warning",
       buttons: ["취소", true],
       dangerMode: true,
@@ -401,31 +399,7 @@
       if (value == null) {
         return false;
       }
-      if(tdEles.eq(7).text() == '-'){
-        location.href='../email?type=edit&idx='+idxVal;
-      }
-      else{
-        $.ajax({
-          url: '/email/manage/updateMtype',
-          type: 'post',
-          data : {
-            type:'0',
-            idx:idxVal
-          },
-          datatype : 'json',
-          error:function(request,status,error){
-            console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
-            swal("ERROR!","새로고침 후 다시 시도해주세요.", "error");
-          },
-          success:function(data){
-            if(data.status){
-              location.href='../email?type=edit&idx='+idxVal;
-            }else{
-              swal("ERROR!", '새로고침 후 다시 시도해주세요.', "error");
-            }
-          }
-        });
-      }
+      location.href='../email?type=edit&idx='+idxVal;
     });
   });
   // 메일전송버튼 클릭시
