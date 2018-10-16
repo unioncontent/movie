@@ -490,7 +490,11 @@ router.post('/save',isAuthenticated, async function(req, res) {
   if(m_idx_a){
     if('M_senddate' in mailAllParam){
       try{
-        var result = await maillinkInsert({idx:m_idx_a,time:mailAllParam.M_senddate,user:req.user});
+        var mParam = {idx:m_idx_a,time:mailAllParam.M_senddate,user:req.user};
+        if('type' in req.body){
+          mParam.type = req.body.type;
+        }
+        var result = await maillinkInsert(mParam);
         // console.log(result);
         if(result){
           throw new Error('maillink insert 실패');
@@ -755,7 +759,7 @@ async function maillinkInsert(req){
   var mailData = result[0];
 
   if('type' in req){
-    if(req.type == 'resend'){
+    if(req.type == 'resend' || req.type == 'edit'){
       // 0. 재발송 하기전 데이터 삭제
       // await maillink.deleteMlAMSG(mailData.n_idx);
       await maillink.deleteMlAT(mailData.n_idx);
