@@ -357,7 +357,7 @@
       $.ajax({
         url: '/email/manage/delete',
         type: 'post',
-        data : {id:mIdVal,idx:idxVal,module:moduleVal},
+        data : {mid:mIdVal,idx:idxVal,module:moduleVal},
         datatype : 'json',
         error:function(request,status,error){
           console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
@@ -379,16 +379,14 @@
   // 수정버튼 클릭시
   $(document).on('click','.btn-edit',function(){
     var tdEles = $(this).parents('tr').find('td');
-
-      var thisTd = $(this).parents('td');
-      var moduleVal = thisTd.data('module');
-      var idxVal = thisTd.data('idx');
-      var mIdVal = thisTd.data('mid');
+    var thisTd = $(this).parents('td');
+    var moduleVal = thisTd.data('module');
+    var idxVal = thisTd.data('idx');
+    var mIdVal = thisTd.data('mid');
     if(tdEles.eq(8).text() != '-'){
       swal("ERROR!", '발송된 메일은 수정하실 수 없습니다.', "error");
       return false;
     }
-    var idxVal = $(this).data('idx');
     swal({
       title: '수정하시겠습니까?',
       icon: "warning",
@@ -407,6 +405,8 @@
     var tdEles = $(this).parents('tr').find('td');
     var thisTd = $(this).parents('td');
     var idxVal = thisTd.data('idx');
+    var midVal = thisTd.data('mid');
+    var moduleVal = thisTd.data('module');
     swal({
       title: '메일을 보내시겠습니까?',
       text: '예약발송이 설정된 경우 예약 발송은 취소됩니다.',
@@ -428,7 +428,7 @@
         $.ajax({
           url: '/email/manage/updateMtype',
           type: 'post',
-          data : {type:'0',idx:idxVal},
+          data : {type:'0',mid:midVal,idx:idxVal,module:moduleVal},
           datatype : 'json',
           error:function(request,status,error){
             console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
@@ -452,11 +452,7 @@
     swal({
       title: '재발송 하시겠습니까?',
       icon: "warning",
-      // buttons: ["취소", true],
-      button: {
-        text: "보내기",
-        closeModal: false,
-      }
+      buttons: ["취소", true],
     })
     .then(function(value) {
       if (value == null) {
@@ -534,7 +530,8 @@
   }
   // 메일 재전송버튼 클릭시
   $(document).on('click','.btn-rewrite',function(){
-    var idxParam = $(this).data('idx');
+    var thisTd = $(this).parents('td');
+    var idxVal = thisTd.data('idx');
     swal({
       title: '이번 회차를 바탕으로 재작성 하시겠습니까?',
       icon: "warning",
@@ -545,7 +542,7 @@
       if (value == null) {
         return false;
       }
-      location.href='../email?type=rewrite&idx='+idxParam;
+      location.href='../email?type=rewrite&idx='+idxVal;
     });
   });
   // 키워드 선택시

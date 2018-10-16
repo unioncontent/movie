@@ -47,9 +47,9 @@ var mymailer = {
     return await getResult(sql,param);
   },
   deleteBackupTable: async function(param){
-    var sql = "delete from customer_info_back where id=?";
+    var sql = "delete from union_mail.customer_info_back where id=?";
     var result = await getResult(sql,param,'maillink');
-    sql = "delete from customer_data_back where id=?";
+    sql = "delete from union_mail.customer_data_back where id=?";
     result = await getResult(sql,param,'maillink');
     return result;
   },
@@ -72,9 +72,10 @@ function insertSqlSetting(table,keys){
 async function getResult(sql,param,dbName) {
   var db;
   if(dbName) db = new DBpromise();
-  else  db = new DBpromise("mymailer");
+  else db = new DBpromise("mymailer");
   try{
-    console.log(sql,param);
+    console.log(sql);
+    console.log(param);
     return await db.query(sql,param);
   } catch(e){
     console.log("DB Error:",e);
