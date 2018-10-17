@@ -12,8 +12,15 @@ var user = {
     return await getResult(sql,pValue);
   },
   update: async function(param){
+    var sql = 'update m_mail_user set user_name=?,user_pw=?,company_name=?';
+    if(param.keyword == "0"){
+      sql += ',user_keyword = null';
+      delete param.keyword;
+    } else {
+      sql += ',user_keyword = ?';
+    }
     var pValue = Object.values(param);
-    var sql = 'update m_mail_user set user_name=?,user_pw=?,company_name=? where n_idx=?';
+    sql +=' where n_idx=?';
     return await getResult(sql,pValue);
   },
   delete: async function(param){
@@ -25,7 +32,7 @@ var user = {
     return await getResult(sql,param);
   },
   selectTable: async function(body,param){
-    var sql = 'select n_idx, user_type, user_admin, user_id, user_pw, user_name, company_name, date_format(createDate, \'%Y-%m-%d %H:%i:%s\') as createDate ';
+    var sql = 'select n_idx, user_keyword, user_type, user_admin, user_id, user_pw, user_name, company_name, date_format(createDate, \'%Y-%m-%d %H:%i:%s\') as createDate ';
     sql += ' from m_mail_user';
     sql += ' where n_idx = ? or user_admin= ?';
     sql += ' order by n_idx desc limit ?,?';

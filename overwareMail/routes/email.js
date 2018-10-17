@@ -72,13 +72,13 @@ router.get('/',isAuthenticated, async function(req, res) {
 
 // 메일 관리 페이지
 router.get('/manage',isAuthenticated, async function(req, res) {
-  var data = await getListPageData(req.user.n_idx,req.query);
+  var data = await getListPageData(req.user,req.query);
   data.klist = await keyword.selectMovieKwdAll(req.user.user_admin,req.user.n_idx) || [];
   res.render('manage',data);
 });
 
 router.get('/manageHis',isAuthenticated, async function(req, res) {
-  var data = await getListPageData(req.user.n_idx,req.query);
+  var data = await getListPageData(req.user,req.query);
   data.klist = await keyword.selectMovieKwdAll(req.user.user_admin,req.user.n_idx) || [];
   res.render('manage_his',data);
 });
@@ -170,14 +170,14 @@ router.post('/manage/delete',isAuthenticated, async function(req, res) {
 
 router.post('/manage/getNextPage',isAuthenticated,async function(req, res, next) {
   try{
-    var data = await getListPageData(req.user.n_idx,req.body);
+    var data = await getListPageData(req.user,req.body);
     res.send({status:true,result:data});
   } catch(e){
     res.status(500).send(e);
   }
 });
 
-async function getListPageData(idx,param){
+async function getListPageData(user,param){
   console.log('getListPageData:',param);
   var dt = datetime.create();
   var end = dt.format('Y-m-d');
@@ -194,9 +194,12 @@ async function getListPageData(idx,param){
     eDate:end
   };
   var limit = 20;
-  var searchParam = [idx,idx,0,limit];
+  var searchParam = [user.n_idx,user.n_idx,0,limit];
   var currentPage = 1;
   var searchBody = {sDate:start,eDate:end};
+  if (user.user_admin != null && user.user_keyword != null){
+    searchBody.user_keyword = user.user_keyword;
+  }
   if (typeof param.page !== 'undefined') {
     currentPage = param.page;
     data['page'] = currentPage;
@@ -333,13 +336,45 @@ router.get('/searchAll',isAuthenticated, async function(req, res) {
 
 // 메일 내용 불러오기
 router.post('/getEmailContent',isAuthenticated, async function(req, res) {
-  var param = [req.body.M_keyword,req.body.M_invitation,req.body.M_template,req.user.n_idx];
-  var result = await mailAllA.selectPastMailBody(param);
-  if(result == ''){
+  var result = await mailAllA.selectEmailOneView([req.body.idx]);
+  if(result.length == 0){
     res.status(500).send('불러오기 실패');
     return false;
   }
+  res.send(result[0].M_body);
+});
 
+// 메일 리스트 불러오기
+router.post('/getEmailContentList',isAuthenticated, async function(req, res) {
+  var result = {
+    list:[],
+    listCount:0,
+    currentPage: 1
+  };
+  var limit = 10;
+  var userAdminId = (req.user.user_admin == null)?req.user.n_idx:req.user.user_admin;
+  var userId = req.user.n_idx;
+  var searchParam = [
+    req.body.M_keyword,
+    req.body.M_invitation,
+    req.body.M_template,
+    userAdminId,
+    userAdminId,
+    userId,
+    parseInt(req.body.page),
+    limit
+  ];
+  var currentPage = 1;
+  if (typeof req.body.page !== 'undefined') {
+    currentPage = req.body.page;
+    result['currentPage'] = currentPage;
+  }
+  if (parseInt(currentPage) > 0) {
+    searchParam[6] = (currentPage - 1) * limit
+    result['offset'] = searchParam[6];
+  }
+  result['list']=await mailAllA.selectMailList(searchParam);
+  result['listCount']=await mailAllA.selectMailListCount(searchParam);
   res.send(result);
 });
 

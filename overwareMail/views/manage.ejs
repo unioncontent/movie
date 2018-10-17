@@ -261,10 +261,14 @@
     min-width: 207px;
   }
   .table td, .table th{
+    font-size: 13px;
     vertical-align: middle;
   }
   .mailHtml{
     display: none;
+  }
+  .btn-sm{
+    padding: 8px 11px 8px 12px;
   }
   #mailBody{
     overflow: auto;
@@ -278,13 +282,16 @@
   #mailBody td,th{
     white-space: inherit;
     white-space: pre-line;
-
   }
-  .title_nobr,.kwd_nobr,.num_nobr{
-    font-size: 15px;
+  .title_nobr{
+    font-size: 13px;
+    padding-left: 3px;
+    width: 395px;
+    white-space: pre-line;
+  }
+  .kwd_nobr,.num_nobr{
     padding-left: 3px;
     text-overflow: ellipsis;
-    width: 300px;
     overflow: hidden;
   }
   .date-nobr{
@@ -292,7 +299,6 @@
     word-wrap: break-word;
     white-space: initial;
     white-space: pre-line;
-
   }
   .title_nobr:hover{
     cursor:default;
@@ -307,7 +313,7 @@
     white-space: initial;
   }
   .kwd_nobr{
-    width: 112px;
+    width: 86px;
   }
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/2.1.27/daterangepicker.css" />

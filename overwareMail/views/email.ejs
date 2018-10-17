@@ -1,4 +1,4 @@
-<div class="main-body">
+﻿<div class="main-body">
   <div class="page-wrapper">
     <div class="page-header">
       <div class="page-header-title">
@@ -431,7 +431,6 @@
               </button>
             </div>
             <div class='modal-body'>
-              <!-- <p class="text-muted">※ 본문에 링크할 자료 버튼을 삽입합니다.</p> -->
               <div class="col-md-12">
                 <div class="alert alert-default" style="border-radius:  0; border-width:  2px;  margin-bottom: 2rem;">
                 	<ul class="p-l-15 f-12" style="list-style-type: disc; color:  #666;">
@@ -480,7 +479,43 @@
             </div>
             <div class="modal-footer">
               <button class="btn btn-secondary mobtn" data-dismiss='modal' aria-label='Close' type="button">취소</button>
-              <button type="button" class="btn btn-primary mobtn" id="btn-file-upload">업로드</button>
+              <button type="button" class="btn btn-inverse mobtn" id="btn-file-upload">업로드</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Modal end-->
+      <!-- Modal start-->
+      <div class='modal fade' id='mailLoad-Modal' role='dialog'>
+        <div class='modal-dialog modal-lg' role='document'>
+          <div class='modal-content'>
+            <div class='modal-header'>
+              <h5 class="modal-title">메일불러오기</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div class='modal-body'>
+              <div class='card'>
+                <div class="card-block table-border-style">
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th width="5%">NO</th>
+                          <th width="25%">제목</th>
+                          <th width="10%"></th>
+                        </tr>
+                      </thead>
+                      <tbody></tbody>
+                      <tfoot></tfoot>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-secondary" data-dismiss='modal' aria-label='Close' type="button">취소</button>
             </div>
           </div>
         </div>
@@ -497,23 +532,28 @@
   <div class="circ4 loader-primary"></div>
 </div>
 <style>
-  .i_check{
-    margin-bottom: 0;
-    margin-top: .3rem;
-  }
-  /* loader */
-  .loader-block{
-    display: none;
-    padding-top:22%;
-    position: fixed;
-    left: 0;
-    right: 0;
-    top: 100px;
-    width: 500px;
-    margin: auto;
-    max-width: 100%;
-    z-index: 10000;
-  }
+.i_check{
+  margin-bottom: 0;
+  margin-top: .3rem;
+}
+/* loader */
+.loader-block{
+  display: none;
+  padding-top:22%;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 100px;
+  width: 500px;
+  margin: auto;
+  max-width: 100%;
+  z-index: 10000;
+}
+/* modal */
+.m-subject{
+  white-space: pre-line;
+  width: 500px;
+}
 </style>
 <!-- moment -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
@@ -521,9 +561,6 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/i18n/ko.js"></script>
-<!-- filer -->
-<!-- <link rel="stylesheet" type="text/css" href="/css/jquery.filer.css">
-<script src="/js/jquery.filer.min.js"></script> -->
 <!-- editor -->
 <script src='/plugin/tinymce/js/tinymce/tinymce.min.js'></script>
 <script src="/pages/email/js/editor.js"></script>
@@ -746,39 +783,28 @@
   });
   // 메일불러오기
   $('.templateBtn').on('click',function(){
-    var param = {
-      M_template : ($("input:radio[name=M_template]:checked").val() == '1') ? '일반메일' : '영화메일',
-      M_invitation : $("#invitation").is(":checked") ? '1' : '0',
-      M_keyword : [$("#M_keyword option:selected").val(),$("#M_keyword option:selected").text()]
-    };
-    if(param.M_template == '영화메일' && param.M_invitation == '0' && $('#M_seq_number').val() == ''){
-      alert('영화메일의 정보(발송차수 또는 인비테이션)을 기재해주세요.');
-      return false;
-    }
-    if(param.M_keyword[1] == '선택'){
-      alert('키워드를 선택해주세요.');
-      return false;
-    }
+    CallMailList(1,'btn');
+  });
+  // 지난 메일 선택시
+  $(document).on('click','.btn-selected',function(){
+    $('#mailLoad-Modal').modal('hide');
+    var idxVal = $(this).data('idx');
     swal({
-      title: "메일내용을 불러올까요?",
-      text: "키워드 [ "+param.M_keyword[1]+" ] "+param.M_template+" 타입의\n마지막 메일 내용을 불러옵니다.",
+      title: "해당 메일의 내용을 불러올까요?",
       icon: "warning",
       buttons: ["취소", true],
       dangerMode: true
     })
     .then(function(value) {
       if (value != null) {
-        param.M_template = (param.M_template == '일반메일') ? '1':'0';
-        param.M_keyword = param.M_keyword[0];
-
         $.ajax({
           url: '/email/getEmailContent',
           type: 'post',
-          data : param,
+          data : {idx:idxVal},
           datatype : 'json',
           error:function(request,status,error){
             console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
-            swal("ERROR!", '마지막 메일이 없습니다.', "error");
+            swal("ERROR!", '메일 불러오기를 실패했습니다.', "error");
           },
           success:function(data){
             tinyMCE.activeEditor.setContent(data, {format : 'raw'});
@@ -787,6 +813,104 @@
       }
     });
   });
+  $(document).on('click','#mailLoad-Modal .page-link',function(){
+    CallMailList(Number($(this).data().value));
+  });
+  function CallMailList(num,type){
+    var param = {
+      M_template : $("input:radio[name=M_template]:checked").val(),
+      M_invitation : $("#invitation").is(":checked") ? '1' : '0',
+      M_keyword : [$("#M_keyword option:selected").val(),$("#M_keyword option:selected").text()],
+      page : num
+    };
+    if(param.M_keyword[1] == '선택'){
+      alert('키워드를 선택해주세요.');
+      return false;
+    }
+    if(type == 'btn'){
+      $('#mailLoad-Modal').modal('show');
+    }
+    param.M_keyword = param.M_keyword[0];
+    ajaxGetMailPageList(param);
+  }
+  // 메일 검색 모달 리스트 ajax
+  function ajaxGetMailPageList(param){
+    console.log('ajaxGetMailPageList:',param);
+    $.ajax({
+      url: '/email/getEmailContentList',
+      type: 'post',
+      data: param,
+      error: function(request,status,error){
+        console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
+        alert('메일 불러오기에 실패했습니다.');
+      },
+      success: function(data){
+        $('#mailLoad-Modal tbody').empty();
+        $('#mailLoad-Modal tfoot').empty();
+        if(data.listCount == 0){
+          alert('해당 키워드의 발송된 메일이 없습니다.');
+          return false;
+        }
+        var limit = 10;
+        var pageCount = Math.ceil(data.listCount/limit);
+        data.list.forEach(function(item,idx){
+          var numIdx = Math.ceil(data.listCount-(data.offset+idx)).toString();
+          var html = '<tr>\
+            <th>'+numIdx+'</th>\
+            <td><div class="m-subject"><a target="_blank" href="http://showbox.email/preview?keyword='+item.M_keyword+'&idx='+item.n_idx+'">'+item.M_subject+'</a></div></td>\
+            <td><button type="submit" data-idx="'+item.n_idx+'" class="btn-selected btn btn-primary m-b-0">선택</button></td>\
+          </tr>'
+          $('#mailLoad-Modal tbody').append(html);
+        });
+        if(pageCount > 1) {
+          var html = '<tr><td colspan="8"><ul class="pagination float-right">';
+          var pageSize = 5;
+          var pRCnt = parseInt(data.currentPage / pageSize);
+          if(data.currentPage % pageSize == 0){
+            pRCnt = parseInt(data.currentPage / pageSize) - 1;
+          }
+          if(data.currentPage > 5) {
+            html += '<li class="page-item"><a class="page-link" data-value="1" aria-label="Previous">\
+                <i class="ti-angle-double-left f-12"></i>\
+                <span aria-hidden="true"></span>\
+                <span class="sr-only">Previous</span>\
+              </a></li>\
+              <li class="page-item"><a class="page-link" data-value=\"'+(pRCnt * pageSize)+'"\ aria-label="Previous">\
+                <i class="ti-angle-left f-12"></i>\
+                <span aria-hidden="true"></span>\
+                <span class="sr-only">Previous</span>\
+              </a></li>';
+          }
+
+          for(var index=pRCnt * pageSize + 1;index<(pRCnt + 1)*pageSize + 1;index++){
+            var active = (data.currentPage == index) ? "active" : "";
+            html += '<li class=\"'+active+' page-item">\
+              <a class="page-link" data-value=\"'+index+'"\ >'+index+'</a></li>'
+
+            if(index == pageCount) {
+              break;
+            }
+          }
+          if((pRCnt + 1) * pageSize < pageCount) {
+            html += '<li class="page-item">\
+                  <a class="page-link" data-value=\"'+((pRCnt + 1)*pageSize+1)+'"\ aria-label="Next">\
+                    <i class="ti-angle-right f-12"></i>\
+                    <span aria-hidden="true"></span>\
+                    <span class="sr-only">Next</span>\
+                  </a></li>\
+                  <li class="page-item">\
+                  <a class="page-link" data-value=\"'+pageCount+'"\ aria-label="Next">\
+                    <i class="ti-angle-double-right f-12"></i>\
+                    <span aria-hidden="true"></span>\
+                    <span class="sr-only">Next</span>\
+                  </a></li>';
+          }
+          html += '</ul></td></tr>';
+          $('#mailLoad-Modal tfoot').append(html);
+        }
+      }
+    });
+  }
   // 메일 저장 버튼 클릭시
   $(".sendBtn").on("click",function(){
     var num = '';
