@@ -835,13 +835,14 @@
         alert('메일 불러오기에 실패했습니다.');
       },
       success: function(data){
+        $('#mailLoad-Modal tbody').empty();
+        $('#mailLoad-Modal tfoot').empty();
         if(data.listCount == 0){
           alert('해당 키워드의 발송된 메일이 없습니다.');
           return false;
         }
         var limit = 10;
         var pageCount = Math.ceil(data.listCount/limit);
-        $('#mailLoad-Modal tbody').empty();
         data.list.forEach(function(item,idx){
           var numIdx = Math.ceil(data.listCount-(data.offset+idx)).toString();
           var html = '<tr>\
@@ -851,7 +852,6 @@
           </tr>'
           $('#mailLoad-Modal tbody').append(html);
         });
-        $('#mailLoad-Modal tfoot').empty();
         if(pageCount > 1) {
           var html = '<tr><td colspan="8"><ul class="pagination float-right">';
           var pageSize = 5;
