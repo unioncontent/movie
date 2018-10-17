@@ -125,16 +125,6 @@ router.post('/manage/delete',isAuthenticated, async function(req, res) {
     res.status(500).send('mailAllA delete query 실패');
     return false;
   }
-  // result = await mailDetailB.delete(req.body.idx);
-  // if(!('protocol41' in result)){
-  //   res.status(500).send('mailDetailB delete query 실패');
-  //   return false;
-  // }
-  // result = await maillink.deleteMlAMSG(req.body.idx);
-  // if(!('protocol41' in result)){
-  //   res.status(500).send('ml_automail_message delete query 실패');
-  //   return false;
-  // }
   result = await maillink.deleteMlAT(req.body.idx);
   if(!('protocol41' in result)){
     res.status(500).send('ml_automail_tran delete query 실패');
@@ -280,10 +270,6 @@ router.get('/searchGroup',isAuthenticated, async function(req, res) {
 });
 
 router.post('/searchAll',isAuthenticated, async function(req, res) {
-  // req.user = {
-  //   n_idx: 1,
-  //   user_admin: null
-  // };
   var param = [req.user.n_idx,0,10];
   if(req.user.user_admin != null){
     param[0] = req.user.user_admin;
@@ -320,13 +306,45 @@ router.get('/searchAll',isAuthenticated, async function(req, res) {
 
 // 메일 내용 불러오기
 router.post('/getEmailContent',isAuthenticated, async function(req, res) {
-  var param = [req.body.M_keyword,req.body.M_invitation,req.body.M_template,req.user.n_idx];
-  var result = await mailAllA.selectPastMailBody(param);
-  if(result == ''){
+  var result = await mailAllA.selectEmailOneView([req.body.idx]);
+  if(result.length == 0){
     res.status(500).send('불러오기 실패');
     return false;
   }
+  res.send(result[0].M_body);
+});
 
+// 메일 리스트 불러오기
+router.post('/getEmailContentList',isAuthenticated, async function(req, res) {
+  var result = {
+    list:[],
+    listCount:0,
+    currentPage: 1
+  };
+  var limit = 10;
+  var userAdminId = (req.user.user_admin == null)?req.user.n_idx:req.user.user_admin;
+  var userId = req.user.n_idx;
+  var searchParam = [
+    req.body.M_keyword,
+    req.body.M_invitation,
+    req.body.M_template,
+    userAdminId,
+    userAdminId,
+    userId,
+    parseInt(req.body.page),
+    limit
+  ];
+  var currentPage = 1;
+  if (typeof req.body.page !== 'undefined') {
+    currentPage = req.body.page;
+    result['currentPage'] = currentPage;
+  }
+  if (parseInt(currentPage) > 0) {
+    searchParam[6] = (currentPage - 1) * limit
+    result['offset'] = searchParam[6];
+  }
+  result['list']=await mailAllA.selectMailList(searchParam);
+  result['listCount']=await mailAllA.selectMailListCount(searchParam);
   res.send(result);
 });
 

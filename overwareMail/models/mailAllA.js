@@ -5,6 +5,22 @@ const DBpromise = require('../db/db_info.js');
 */
 
 var mailAllA = {
+  selectMailList:async function(param){
+    var sql = 'SELECT M_subject,M_keyword,n_idx FROM `union`.m_mail_all_a where M_keyword = ? and M_invitation = ? and M_template = ?\
+    and M_senddate is not null and M_id in (SELECT n_idx FROM `union`.m_mail_user where user_admin = ?  or n_idx = ? or n_idx = ?) order by M_regdate desc limit ?,?';
+    return await getResult(sql,param);
+  },
+  selectMailListCount:async function(param){
+    var sql = 'SELECT count(*) as total FROM `union`.m_mail_all_a where M_keyword = ? and M_invitation = ? and M_template = ?\
+    and M_senddate is not null and M_id in (SELECT n_idx FROM `union`.m_mail_user where user_admin = ?  or n_idx = ? or n_idx = ?)';
+    var count = await getResult(sql,param);
+    if(count.length == 0){
+      return 0;
+    }
+    else{
+      return count[0]['total'];
+    }
+  },
   selectEmailView:async function(body,param){
     var sql = 'SELECT * FROM manage_view where n_idx is not null ';
     if('keyword' in body){
