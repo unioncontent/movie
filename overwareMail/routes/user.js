@@ -4,6 +4,7 @@ var router = express.Router();
 var user = require('../models/user.js');
 var mailListA = require('../models/mailListA.js');
 var mailListC = require('../models/mailListC.js');
+var keyword = require('../models/keyword.js');
 
 var isAuthenticated = function (req, res, next) {
   if (req.isAuthenticated()){
@@ -16,16 +17,18 @@ var isAuthenticated = function (req, res, next) {
 
 router.get('/',isAuthenticated,async function(req, res) {
   var data = await getListPageData(req.user.n_idx,req.query);
+  data.keywordList = await keyword.selectMovieKwd(req.user.user_admin,req.user.n_idx);
   res.render('user',data);
 });
 
-router.get('/add',isAuthenticated,function(req, res, next) {
-  res.render('userAdd');
+router.get('/add',isAuthenticated,async function(req, res, next) {
+  res.render('userAdd',{keywordList : await keyword.selectMovieKwd(req.user.user_admin,req.user.n_idx)});
 });
 
 router.post('/getNextPage',isAuthenticated,async function(req, res) {
   try{
     var data = await getListPageData(req.user.n_idx,req.body);
+    data.keywordList = await keyword.selectMovieKwd(req.user.user_admin,req.user.n_idx);
     res.send({status:true,list:data});
   }
   catch(e){
@@ -98,14 +101,9 @@ router.post('/add/idCheck',isAuthenticated,async function(req, res){
 
 router.post('/add',isAuthenticated,async function(req, res) {
   try{
-    var param = {
-      user_type:2,
-      user_admin:req.user.n_idx,
-      user_id:req.body.id,
-      user_pw:req.body.pw,
-      user_name:req.body.name,
-      company_name:req.body.company
-    };
+    var param = req.body;
+    param.user_type = 2;
+    param.user_admin = req.user.n_idx;
     await user.insert('m_mail_user',param);
     res.send({status:true});
   }

@@ -73,13 +73,13 @@ router.get('/',isAuthenticated, async function(req, res) {
 
 // 메일 관리 페이지
 router.get('/manage',isAuthenticated, async function(req, res) {
-  var data = await getListPageData(req.user.n_idx,req.query);
+  var data = await getListPageData(req.user,req.query);
   data.klist = await keyword.selectMovieKwdAll(req.user.user_admin,req.user.n_idx) || [];
   res.render('manage',data);
 });
 
 router.get('/manageHis',isAuthenticated, async function(req, res) {
-  var data = await getListPageData(req.user.n_idx,req.query);
+  var data = await getListPageData(req.user,req.query);
   data.klist = await keyword.selectMovieKwdAll(req.user.user_admin,req.user.n_idx) || [];
   res.render('manage_his',data);
 });
@@ -143,14 +143,14 @@ router.post('/manage/delete',isAuthenticated, async function(req, res) {
 
 router.post('/manage/getNextPage',isAuthenticated,async function(req, res, next) {
   try{
-    var data = await getListPageData(req.user.n_idx,req.body);
+    var data = await getListPageData(req.user,req.body);
     res.send({status:true,result:data});
   } catch(e){
     res.status(500).send(e);
   }
 });
 
-async function getListPageData(idx,param){
+async function getListPageData(user,param){
   console.log('getListPageData:',param);
   var dt = datetime.create();
   var end = dt.format('Y-m-d');
@@ -167,9 +167,12 @@ async function getListPageData(idx,param){
     eDate:end
   };
   var limit = 20;
-  var searchParam = [idx,idx,0,limit];
+  var searchParam = [user.n_idx,user.n_idx,0,limit];
   var currentPage = 1;
   var searchBody = {sDate:start,eDate:end};
+  if (user.user_admin != null && user.user_keyword != null){
+    searchBody.user_keyword = user.user_keyword;
+  }
   if (typeof param.page !== 'undefined') {
     currentPage = param.page;
     data['page'] = currentPage;
