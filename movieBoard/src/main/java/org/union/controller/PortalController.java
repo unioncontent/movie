@@ -1201,7 +1201,7 @@ public class PortalController {
     }
 
     @GetMapping("/v_score")
-    public void v_scoreGET(@ModelAttribute("cri") SearchCriteria cri, Model model) throws SQLException {
+    public void v_scoreGET(@ModelAttribute("cri") SearchCriteria cri, Model model, String selectKey) throws SQLException {
 	logger.info("v_scoreGET called....");
 
 	cri.setKeyword(null);
@@ -1292,6 +1292,8 @@ public class PortalController {
 	model.addAttribute("textType", portalService.getScoreTextType(cri));
 
 	model.addAttribute("scoreCount", portalService.getOnlyScore(cri));
+	model.addAttribute("selectKey", selectKey);
+	
     }
     
     @ResponseBody

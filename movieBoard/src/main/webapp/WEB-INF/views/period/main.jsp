@@ -262,7 +262,6 @@
 		                        </div>
 		                      </div> -->
 		                      <!-- Morris chart end -->
-		                      
 		                      <!-- List start -->
                               <div class="col-md-12">
                                 <div class="card">
@@ -297,7 +296,7 @@
                                         <tbody>
                                         <c:forEach items="${mailList}" var="mvo" varStatus="index">
                                           <tr>
-                                            <th>
+                                            <th style="height: 50px;">
                                             <fmt:formatDate value="${mvo.m_send}" type="DATE" pattern="yyyy-MM-dd HH:mm:ss" />
                                             </th>
                                             <td>

@@ -359,12 +359,25 @@
                                       <c:if test="${user.user_name == 'union'}">
                                       <button id="alert-check" class="btn btn-list alert-check f-right p-r-5 p-l-5 m-l-15 m-b-10"><i class="icofont icofont-ui-check"></i>등록</button>
                                       </c:if>
+                                      <a href="https://movie.naver.com/movie/search/result.nhn?query=${selectKey}&section=all&ie=utf8" target="_blank">
+                                      <button class="btn btn-list f-right p-r-5 p-l-5 m-l-15 m-b-10">
+                                      <i class="icofont icofont-search"></i>검색
+                                      </button>
+                                      </a>
                                     </div>
                                   </div>
                                   <div class="card-block table-border-style">
                                     <div class="table-responsive">
                                       <table class="table table-bordered table-sm">
-                                      <c:if test="${empty scoreList}">
+                                      <c:if test="${empty selectKey || '키워드' eq selectKey}">
+	                                    <tbody>
+	                                     <tr>
+	                                     <td style="vertical-align:middle;" align="center" height="150px"><h5>키워드를 선택해주세요.</h5></td>
+	                                     </tr>
+	                                     </tbody>
+	                                  </c:if>
+	                                  <c:if test="${!empty selectKey && '키워드' ne selectKey}">
+	                                    <c:if test="${empty scoreList}">
 	                                    <tbody>
 	                                     <tr>
 	                                     <td style="vertical-align:middle;" align="center" height="150px"><h5>등록된 평점이 없습니다.</h5></td>
@@ -414,7 +427,8 @@
                                             <th>${totalCount - minusCount - index.count + 1}</th>
                                             <td>${score.writeDate}</td>
                                             <td>${score.portal_name}</td>
-                                            <td><a class = 'title_score' href="${score.url}">${score.portal_title}</a></td>
+                                            <%-- <td><a class = 'title_score' href="${score.url}">${score.portal_title}</a></td> --%>
+                                            <td><div class = 'title_score'>${score.portal_title}</div></td>
                                             <td>${score.keyword}</td>
                                             <td>${score.score}</td>
                                           </tr>
@@ -427,36 +441,35 @@
 		                                    </c:if>
 		                                  <c:if test="${user.user_name == 'union'}">
 		                                    <td colspan="7">
-		                                    </c:if>
-                                               <ul class="pagination float-right">
-        					                              <c:if test="${pageMaker.prev}">
-        					                                <li class="page-item">
-        					                                  <a class="page-link" href="v_score${pageMaker.makeSearch(pageMaker.startPage - 1) }" aria-label="Previous">&laquo;
-        					                                    <span aria-hidden="true"></span>
-        					                                    <span class="sr-only">Previous</span>
-        					                                  </a>
-        					                                </li>
-        					                              </c:if>
-
-        					                              <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
-        					                                <li class= "${pageMaker.cri.page == idx? 'active':''} page-item">
-        					                                  <a class="page-link" href="v_score${pageMaker.makeSearch(idx)}">${idx}</a>
-        					                                </li>
-        					                              </c:forEach>
-
-        					                              <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-        					                                <li class="page-item">
-        					                                  <a class="page-link" href="v_score${pageMaker.makeSearch(pageMaker.endPage +1) }" aria-label="Next">&raquo;
-        					                                    <span aria-hidden="true"></span>
-        					                                    <span class="sr-only">Next</span>
-        					                                  </a>
-        					                                </li>
-        					                              </c:if>
-        					                            </ul>
-                                            </td>
-                                          </tr>
+		                                  </c:if>
+                                          <ul class="pagination float-right">
+        					              <c:if test="${pageMaker.prev}">
+        					              	<li class="page-item">
+        					                	<a class="page-link" href="v_score${pageMaker.makeSearch(pageMaker.startPage - 1) }" aria-label="Previous">&laquo;
+        					                    <span aria-hidden="true"></span>
+        					                    <span class="sr-only">Previous</span>
+        					                    </a>
+        					                </li>
+        					              </c:if>
+        					              <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
+	        					          	<li class= "${pageMaker.cri.page == idx? 'active':''} page-item">
+	        					            	<a class="page-link" href="v_score${pageMaker.makeSearch(idx)}">${idx}</a>
+	        					            </li>
+        					              </c:forEach>
+        					              <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+	        					          	<li class="page-item">
+		        					        	<a class="page-link" href="v_score${pageMaker.makeSearch(pageMaker.endPage +1) }" aria-label="Next">&raquo;
+		        					            <span aria-hidden="true"></span>
+		        					            <span class="sr-only">Next</span>
+		        					            </a>
+	        					            </li>
+        					               </c:if>
+        					               </ul>
+                                           </td>
+                                        </tr>
                                         </tfoot>
                                         </c:if>
+	                                    </c:if>
                                       </table>
                                     </div>
                                   </div>
