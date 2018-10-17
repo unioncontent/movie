@@ -778,4 +778,16 @@ public class PortalServiceImpl implements PortalService {
 
 		return portalDAO.naverTalkcount(cri);
 	}
+
+	@Override
+	public void deleteTextInsert(Integer portal_idx) throws SQLException {
+		portalDAO.deleteTextInsert(portal_idx);
+		
+	}
+
+	@Override
+	public void deleteTextDelete(Integer portal_idx) throws SQLException {
+		portalDAO.deleteTextDelete(portal_idx);
+		
+	}
 }

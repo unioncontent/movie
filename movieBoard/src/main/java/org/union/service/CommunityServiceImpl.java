@@ -317,5 +317,15 @@ public class CommunityServiceImpl implements CommunityService {
 		return communityDAO.listAllEx(cri);
 	}
 
-	
+	@Override
+	public void deleteTextInsert(Integer community_idx) throws SQLException {
+		communityDAO.deleteTextInsert(community_idx);
+		
+	}
+
+	@Override
+	public void deleteTextDelete(Integer community_idx) throws SQLException {
+		communityDAO.deleteTextDelete(community_idx);
+		
+	}
 }

@@ -156,4 +156,7 @@ public interface MediaService {
 	public List<MediaVO> reporterMatchallList(SearchCriteria cri) throws SQLException;
 	public List<MediaVO> mailMatch(SearchCriteria cri) throws SQLException;
 	public List<MediaVO> dashMediaMatch(SearchCriteria cri) throws SQLException;
+	
+	public void deleteTextInsert(Integer media_idx) throws SQLException;
+	public void deleteTextDelete(Integer media_idx) throws SQLException;
 }

@@ -822,4 +822,27 @@ public class PortalDAOImpl implements PortalDAO {
 
 		return session1.selectOne(namespace + "naverTalkcount", cri);
 	}
+
+
+	@Override
+	public void deleteTextInsert(Integer portal_idx) throws SQLException {
+		try {
+			session1.insert(namespace + "deleteTextInsert", portal_idx);
+			session2.insert(namespace + "deleteTextInsert", portal_idx);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+
+	@Override
+	public void deleteTextDelete(Integer portal_idx) throws SQLException {
+		try {
+			session1.delete(namespace + "deleteTextDelete", portal_idx);
+			session2.delete(namespace + "deleteTextDelete", portal_idx);
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		}
+	}
 }

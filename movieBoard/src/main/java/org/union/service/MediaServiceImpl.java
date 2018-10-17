@@ -840,4 +840,16 @@ public class MediaServiceImpl implements MediaService  {
 
 		return mediaDAO.listAllEx(cri);
 	}
+
+	@Override
+	public void deleteTextInsert(Integer media_idx) throws SQLException {
+		mediaDAO.deleteTextInsert(media_idx);
+		
+	}
+
+	@Override
+	public void deleteTextDelete(Integer media_idx) throws SQLException {
+		mediaDAO.deleteTextDelete(media_idx);
+		
+	}
 }

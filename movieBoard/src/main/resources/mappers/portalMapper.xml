@@ -1714,4 +1714,15 @@
 			url is not null
 		<include refid="search3"></include>
 	</select>
+	
+	<insert id="deleteTextInsert">
+ 		INSERT INTO portal_data_history SELECT * FROM portal_data where portal_idx = #{portal_idx}
+ 	</insert>
+ 	
+ 	<delete id="deleteTextDelete">
+ 		delete from
+ 			portal_data
+ 		where
+ 			portal_idx = #{portal_idx}
+ 	</delete>
  </mapper>

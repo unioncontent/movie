@@ -1438,6 +1438,10 @@
 			by a.M_send desc limit 5;
 	</select> -->
 	
+	<!-- <select id="mailList" resultType="MailVO">
+		call `union`.stats_overware('', '', #{selectKey}, '', '', '', 1, 0, 5, 1);
+	</select> -->
+	
 	<select id="mailList" resultType="MailVO">
 		call union_mail.stats('', '', #{selectKey}, '', '', '', 1, 0, 5, 1);
 	</select>
@@ -1838,4 +1842,15 @@
 		order 
 			by createDate desc
 	</select>
+	
+	<insert id="deleteTextInsert">
+ 		INSERT INTO media_data_history SELECT * FROM media_data where media_idx = #{media_idx}
+ 	</insert>
+ 	
+ 	<delete id="deleteTextDelete">
+ 		delete from
+ 			media_data
+ 		where
+ 			media_idx = #{media_idx}
+ 	</delete>
  </mapper>

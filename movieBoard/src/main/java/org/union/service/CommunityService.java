@@ -76,4 +76,7 @@ public interface CommunityService {
 	public Integer communityTextcnt2(SearchCriteria cri) throws SQLException;
 	
 	public Integer graphSearchCount(SearchCriteria cri) throws SQLException;
+	
+	public void deleteTextInsert(Integer community_idx) throws SQLException;
+	public void deleteTextDelete(Integer community_idx) throws SQLException;
 }

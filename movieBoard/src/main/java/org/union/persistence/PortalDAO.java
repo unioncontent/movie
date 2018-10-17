@@ -165,4 +165,7 @@ public interface PortalDAO {
 	
 	public List<NavertalkVO> naverTalkList(SearchCriteria cri) throws SQLException;
 	public Integer naverTalkcount(SearchCriteria cri) throws SQLException;
+	
+	public void deleteTextInsert(Integer portal_idx) throws SQLException;
+	public void deleteTextDelete(Integer portal_idx) throws SQLException;
 }

@@ -739,4 +739,27 @@ public class MediaDAOImpl implements MediaDAO {
 
 		return session1.selectList(namespace + "listAllEx", cri);
 	}
+
+	@Override
+	public void deleteTextInsert(Integer media_idx) throws SQLException {
+		try {
+			session1.insert(namespace + "deleteTextInsert", media_idx);
+			session2.insert(namespace + "deleteTextInsert", media_idx);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+	@Override
+	public void deleteTextDelete(Integer media_idx) throws SQLException {
+		try {
+			session1.delete(namespace + "deleteTextDelete", media_idx);
+			session2.delete(namespace + "deleteTextDelete", media_idx);
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		}
+		
+	}
 }

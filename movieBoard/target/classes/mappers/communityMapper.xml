@@ -1029,5 +1029,15 @@
         ) x
         <include refid="keywordSearch"></include>
 	</select>
-
+	
+	<insert id="deleteTextInsert">
+ 		INSERT INTO community_data_history SELECT * FROM community_data where community_idx = #{community_idx}
+ 	</insert>
+ 	
+ 	<delete id="deleteTextDelete">
+ 		delete from
+ 			community_data
+ 		where
+ 			community_idx = #{community_idx}
+ 	</delete>
 </mapper>
