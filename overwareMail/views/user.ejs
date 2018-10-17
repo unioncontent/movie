@@ -32,6 +32,7 @@
                       <th width="10%">비밀번호</th>
                       <th width="10%">회사</th>
                       <th width="10%">이름</th>
+                      <th width="10%">키워드</th>
                       <th width="15%">등록일</th>
                       <th width="15%">관리</th>
                     </tr>
@@ -51,6 +52,17 @@
                       <td><span class="vStr"><%=list[i].user_pw%></span><input type="text" class="vInput form-control"  id="pw" value="<%=list[i].user_pw%>"><input type="hidden" id="o_pw" value="<%=list[i].user_pw%>"></td>
                       <td><span class="vStr"><%=list[i].company_name%></span><input type="text" class="vInput form-control" id="company" value="<%=list[i].company_name%>"><input type="hidden" id="o_company" value="<%=list[i].company_name%>"></td>
                       <td><span class="vStr"><%=list[i].user_name%></span><input type="text" class="vInput form-control" id="name" value="<%=list[i].user_name%>"><input type="hidden" id="o_name" value="<%=list[i].user_name%>"></td>
+                      <td>
+                        <% if(list[i].user_admin != null) { %>
+                        <select id="user_keyword" name="select" class="col-sm-10 form-control form-control-defalut">
+                          <option value="0" <%=(list[i].user_keyword == null)? 'seleted':'disabled'%>>선택안함</option>
+                          <% for(var j=0; j < keywordList.length; j++) { %>
+                            <option value="<%=keywordList[j].keyword_idx%>" <%=(keywordList[j].keyword_idx == list[i].user_keyword)?'selected':'disabled'%>><%=keywordList[j].keyword_main%></option>
+                          <% } %>
+                        </select>
+                        <input type="hidden" id="o_keyword" value="<%=list[i].user_keyword%>">
+                        <% } %>
+                      </td>
                       <td><%=list[i].createDate%></td>
                       <td>
                         <button type="button" class="btn-delete btn btn-danger">
@@ -142,23 +154,19 @@
     display: none;
     min-width: 100px;
   }
+  .table td, .table th {
+    vertical-align: middle;
+  }
 </style>
 <!-- alert -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert@2.1.0/dist/sweetalert.min.js"></script>
 <script type="text/javascript">
-  $(document).ready(function(){
-    // var searchTypeValue = $("#searchType").val();
-    // var searchValue = $("#search").val();
-    // if(searchTypeValue != '' && searchValue != ''){
-    //   $("#selectSearchType").val(searchTypeValue).prop("selected", true);
-    //   $("#keywordInput").val(searchValue);
-    // }
-  });
   // 수정버튼 클릭시
   $(document).on('click','.btn-edit',function(){
     var trEle = $(this).parents('tr');
     if($(this).find('span').hasClass('fa-edit')){
       $(this).find('span').removeClass('far fa-edit').addClass('fas fa-check');
+      trEle.find("#user_keyword option").not(":selected").prop("disabled", "");
 
       trEle.find('.vStr').hide();
       trEle.find('.vInput').show();
@@ -175,7 +183,10 @@
       if(trEle.find("#company").val() != trEle.find("#o_company").val() && trEle.find("#company").val() == ""){
         check = requiredMessage("company","회사를 입력해주세요.");
       }
-      if(trEle.find("#name").val() == trEle.find("#o_name").val() && trEle.find("#pw").val() == trEle.find("#o_pw").val() && trEle.find("#company").val() == trEle.find("#o_company").val()){
+      if(trEle.find("#name").val() == trEle.find("#o_name").val()
+      && trEle.find("#pw").val() == trEle.find("#o_pw").val()
+      && trEle.find("#company").val() == trEle.find("#o_company").val()
+      && trEle.find("#user_keyword option:selected").val() == trEle.find("#o_keyword").val()){
         swal("ERROR!", "변경사항이 없습니다.", "error");
         $(this).find('span').removeClass('fas fa-check').addClass('far fa-edit');
 
@@ -196,6 +207,7 @@
               'name': trEle.find('#name').val(),
               'pw': trEle.find('#pw').val(),
               'company':trEle.find('#company').val(),
+              'keyword': trEle.find('#user_keyword option:selected').val(),
               'idx': trEle.find('#idx').val()
             };
             updateMail(param,tag,trEle);
@@ -371,38 +383,24 @@
           return false;
         }
         $("#page").val(data.list.currentPage);
-
-        // if(typeof history.pushState == 'function'){
-        //   //현재 주소를 가져온다.
-        //   var renewURL = location.href;
-        //   //현재 주소 중 page 부분이 있다면 새로 부여될 페이지 번호를 할당한다.
-        //   renewURL = renewURL.replace(/\?page=([0-9]+)/ig,'?page='+data.list.currentPage);
-        //   if(renewURL.indexOf("?page=") == -1){
-        //     renewURL += '?page='+data.list.currentPage;
-        //   }
-        //   //페이지 갱신 실행!
-        //   history.pushState(null, null,renewURL);
-        // }
         $('#listTable tbody').empty();
         data.list.list.forEach(function(item,idx){
           var numIdx = Math.ceil(data.list.listCount -(data.list.offset+idx)).toString();
-          var html = '<tr>\
-            <input type="hidden" id="idx" value="'+item.n_idx+'" />\
+          var html = '<tr><input type="hidden" id="idx" value="'+item.n_idx+'" />\
             <th>'+numIdx+'</th>\
             <td>'+item.user_id+'</td>\
             <td><span class="vStr">'+item.user_pw+'</span><input type="text" class="vInput form-control" id="pw" value="'+item.user_pw+'"><input type="hidden" id="o_pw" value="'+item.user_pw+'"></td>\
             <td><span class="vStr">'+item.company_name+'</span><input type="text" class="vInput form-control" id="company" value="'+item.company_name+'"><input type="hidden" id="o_company" value="'+item.company_name+'"></td>\
             <td><span class="vStr">'+item.user_name+'</span><input type="text" class="vInput form-control" id="name" value="'+item.user_name+'"><input type="hidden" id="o_name" value="'+item.user_name+'"></td>\
-            <td>'+item.createDate+'</td>\
-            <td>\
-              <button type="button" class="btn-delete btn btn-danger">\
-                <span class="far fa-trash-alt"></span>\
-              </button>\
-              <button type="button" class="btn-edit btn btn-primary" style="padding-right:15px;">\
-                <span class="far fa-edit"></span>\
-              </button>\
-            </td>\
-          </tr>'
+            <td>';
+          if(item.user_admin != null) {
+            html +='<select id="user_keyword" name="select" class="col-sm-10 form-control form-control-defalut"><option value="0" '+((item.user_keyword == null)? 'seleted':'disabled')+'>선택안함</option>';
+            for(var j=0; j < data.list.keywordList.length; j++) {
+              html += '<option value="'+data.list.keywordList[j].keyword_idx+'" '+((data.list.keywordList[j].keyword_idx == item.user_keyword)?'selected':'disabled')+'>'+data.list.keywordList[j].keyword_main+'</option>'
+            }
+            html += '</select><input type="hidden" id="o_keyword" value="'+item.user_keyword+'">';
+          }
+          html += '</td><td>'+item.createDate+'</td><td><button type="button" class="btn-delete btn btn-danger"><span class="far fa-trash-alt"></span></button> <button type="button" class="btn-edit btn btn-primary" style="padding-right:15px;"><span class="far fa-edit"></span></button></td></tr>';
           $('#listTable tbody').append(html);
         });
         var limit = 20;

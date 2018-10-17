@@ -38,8 +38,11 @@ var mailAllA = {
     if(('sDate' in body) && ('eDate' in body)){
       sql+=' and M_regdate between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
     }
-    sql += ' and (  M_id = ? or M_id in (select n_idx from m_mail_user where user_admin=?)) ';
-    sql += ' order by M_regdate desc limit ?,?';
+    sql += ' and (  M_id = ? or M_id in (select n_idx from m_mail_user where user_admin=?) ';
+    if('user_keyword' in body){
+      sql += 'or M_keyword_idx = '+body.user_keyword;
+    }
+    sql += ' ) order by M_regdate desc limit ?,?';
     return await getResult(sql,param);
   },
   selectEmailViewCount:async function(body,param){
@@ -59,7 +62,11 @@ var mailAllA = {
     if(('sDate' in body) && ('eDate' in body)){
       sql+=' and M_regdate between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
     }
-    sql += ' and (  M_id = ? or M_id in (select n_idx from m_mail_user where user_admin=?))';
+    sql += ' and (  M_id = ? or M_id in (select n_idx from m_mail_user where user_admin=?) ';
+    if('user_keyword' in body){
+      sql += 'or M_keyword_idx = '+body.user_keyword;
+    }
+    sql += ' ) ';
     var count = await getResult(sql,param);
     if(count.length == 0){
       return 0;
