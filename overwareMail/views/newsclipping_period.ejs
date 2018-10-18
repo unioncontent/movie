@@ -52,7 +52,7 @@
                     %>
                     <tr>
                       <th><%= listCount - i - offset %></th>
-                      <td><%= list[i].GENDATE %></td>
+                      <td><%= list[i].M_regdate %></td>
                       <td>
                         <a href="http://showbox.email/preview/newsclipping?idx=<%= list[i].MSGID %>" target="_blank">
                           <div class="title_nobr"><%= list[i].M_subject %></div>
@@ -406,7 +406,7 @@
           var numIdx = Math.ceil(data.result.listCount-(data.result.offset+idx)).toString();
           var html = '<tr>\
             <th>'+numIdx+'</th>\
-            <td>'+item.GENDATE+'</td>\
+            <td>'+item.M_regdate+'</td>\
             <td><a href="http://showbox.email/preview/newsclipping?idx='+item.MSGID+'" target="_blank"><div class="title_nobr">'+item.M_subject+'</div></a></td>\
             <td><span class="total">'+(parseInt(item.success) + parseInt(item.fail))+'</span></td>\
             <td class="success" data-idx=\"'+item.MSGID+'\">'+item.success+'</td>\
