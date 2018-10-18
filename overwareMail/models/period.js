@@ -6,10 +6,18 @@ const DBpromise = require('../db/db_info.js');
  통계 기사수 뷰 - period_reply_view
 */
 
+const userWhere = "and ( a.M_id=? or a.M_id in (select n_idx from `union`.m_mail_user where user_admin=?) or a.M_keyword in (select user_keyword from `union`.m_mail_user where n_idx=?))";
 
 var period = {
   call_dashbord: async function(param){
-    var sql = 'call union_mail.dashboard(?,?)';
+    var sql = 'call union_mail.dashboard3(?,?)';
+    var result = await getResult(sql,param);
+    return (result.length > 0)? result[0]:[];
+    // call dashboard(-1,25);
+    // call dashboard(-7,25);
+  },
+  call_dashbord2: async function(param){
+    var sql = 'call union_mail.dashboard2(?,?)';
     var result = await getResult(sql,param);
     return (result.length > 0)? result[0]:[];
     // call dashboard(-1,25);
@@ -31,6 +39,22 @@ var period = {
       return (result.length > 0)? ((result[0][0].c == null) ? 0:result[0][0].c) :0;
     }
     // call mail_detail(2, 755, '암수살인', '2018-10-06');
+  },
+  selectReservationView: async function(param){
+    var sql = "select a.M_type, a.n_idx, a.M_subject, a.M_keyword as M_keyword_idx, k.keyword_main AS M_keyword,a.M_seq_number, a.M_invitation, a.M_template,date_format(a.M_senddate,'%Y-%m-%d  %H:%i:%s') as M_send, '0' as sendCount, '0' as success, '0' as fail from `union`.m_mail_all_a as a left join `union`.m_keyword_data as k ON a.M_keyword = k.keyword_idx\
+    where a.M_type = \'1\' and DATE(a.M_senddate) = current_date() and a.M_senddate > now() and a.M_module = ? "+userWhere;
+    return await getResult(sql,param);
+  },
+  selectReservationCount: async function(param){
+    var sql = "select count(*) as total from `union`.m_mail_all_a as a left join `union`.m_keyword_data as k ON a.M_keyword = k.keyword_idx\
+    where a.M_type = \'1\' and a.M_senddate > now() and a.M_module = ? "+userWhere;
+    var count = await getResult(sql,param);
+    if(count.length == 0){
+      return 0;
+    }
+    else{
+      return count[0]['total'];
+    }
   },
   selectView: async function(body,param){
     var sql = 'SELECT * FROM period_view where n_idx is not null ';
@@ -222,7 +246,8 @@ var period = {
 
 async function getResult(sql,param) {
   var db = new DBpromise();
-  console.log(sql,param);
+  console.log(sql);
+  console.log(param);
   try{
     return await db.query(sql,param);
   } catch(e){

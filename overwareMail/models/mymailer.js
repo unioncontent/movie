@@ -1,6 +1,10 @@
 const DBpromise = require("../db/db_info.js");
 
 var mymailer = {
+  selectSendCheckMail:async function(param){
+    var sql = 'SELECT * FROM customer_info where id = ? and wasRead = \'O\' and wasSend = \'X\' and wasComplete = \'X\' and real_id is null';
+    return await getResult(sql,param);
+  },
   selectResultDetail:async function(param){
     var sql = 'SELECT d.id,a.send_success,a.status,a.email as EMTOADDRESS,d.first as EMTONAME,d.thirteenth as M_ptitle,d.real_id,d.title as M_subject,\
     a.read_time as OPENTIME,a.send_time as SENDTIME,d.regist_date as GENDATE,d.eighth as M_keyword_str,f.error_code, f.contents\
@@ -50,6 +54,8 @@ var mymailer = {
     var sql = "delete from union_mail.customer_info_back where id=?";
     var result = await getResult(sql,param,'maillink');
     sql = "delete from union_mail.customer_data_back where id=?";
+    result = await getResult(sql,param,'maillink');
+    sql = "delete from union_mail.mymailer_statistics where id=?";
     result = await getResult(sql,param,'maillink');
     return result;
   },

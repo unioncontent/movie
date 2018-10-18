@@ -104,6 +104,16 @@
                   </thead>
                   <tbody>
                     <%
+                    function numberWithCommas(x) {
+                        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    }
+                    var list = list.concat(list2.concat(wlist));
+                    list.sort(function(a,b){
+                     var c = new Date(a.M_send);
+                     var d = new Date(b.M_send);
+                     return d-c;
+                    });
+
                     for(var i=0; i < list.length; i++) {
                       var sendDate = new Date(list[i].M_send);
                       var sendStr = sendDate.getFullYear()+'-'+(sendDate.getMonth() + 1) +'-'+sendDate.getDate();
@@ -125,12 +135,12 @@
                           <div class="title_nobr"><%= list[i].M_subject %></div>
                         </a>
                       </td>
-                      <td><%= list[i].sendCount %></td>
-                      <td data-idx="<%= list[i].n_idx %>"><%= list[i].success %></td>
-                      <td data-idx="<%= list[i].n_idx %>"><%= list[i].fail %></td>
+                      <td><%= numberWithCommas(list[i].sendCount) %></td>
+                      <td data-idx="<%= list[i].n_idx %>"><%= numberWithCommas(list[i].success) %></td>
+                      <td data-idx="<%= list[i].n_idx %>"><%= numberWithCommas(list[i].fail) %></td>
                       <td>
                         <%=(list[i].M_type == '0') ? '즉시' : '예약'%>
-                        <% if((new Date().getTime() < new Date(list[i].M_send).getTime()) && parseInt(list[i].success) == 0 && parseInt(list[i].fail) == 0){ %>
+                        <% if((new Date().getTime() < new Date(list[i].M_send).getTime()) && list[i].success == 0 && list[i].fail == 0){ %>
                         <label class="badge badge-danger m-b-0">대기</label>
                         <%}%>
                       </td>
@@ -364,18 +374,22 @@ function settingCard(){
     success:function(data){
       $('#loader_c').show();
       if(data){
-        $('#sendCount').text(data.todaySendCount);
-        $('#success').text(data.successNfailCount.success+' ('+data.successP+'%)');
-        $('#fail').text(data.successNfailCount.fail+' ('+data.failP+'%)');
-        $('#todayCount').text(data.todayCount);
-        $('#reservationCount').text(data.reservationCount);
-        $('#waitingCount').text(data.waitingCount);
+        $('#sendCount').text(numberWithCommas(data.todaySendCount));
+        $('#success').text(numberWithCommas(data.successNfailCount.success)+' ('+data.successP+'%)');
+        $('#fail').text(numberWithCommas(data.successNfailCount.fail)+' ('+data.failP+'%)');
+        $('#todayCount').text(numberWithCommas(data.todayCount));
+        $('#reservationCount').text(numberWithCommas(data.reservationCount));
+        $('#waitingCount').text(numberWithCommas(data.waitingCount));
         $('#loader_c').fadeOut(500);
         $('#c1').css('visibility', 'visible');
         $('#c2').css('visibility', 'visible');
       }
     }
   });
+}
+
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
 // 성공 클릭시
@@ -509,14 +523,23 @@ function areaChart(){
         arr.push({'date':date_sub(dateToYYYYMMDD(date), 1),'success':'0','fail':'0'});
         date.setDate(date.getDate()-1);
       }
-      console.log(arr);
 
-      if(data){
-          data.forEach(function(item,idx){
+      if(data.maillink.length > 0){
+          data.maillink.forEach(function(item,idx){
             for(var i=0; i<8 ; i++){
               if(arr[i]['date'] == item.date){
-                arr[i]['success'] = parseInt(item.success.replace(/[,]/gi,''));
-                arr[i]['fail'] = parseInt(item.fail.replace(/[,]/gi,''));
+                arr[i]['success'] = parseInt(item.success);
+                arr[i]['fail'] = parseInt(item.fail);
+              }
+            }
+          });
+      }
+      if(data.mymailer.length > 0){
+          data.mymailer.forEach(function(item,idx){
+            for(var i=0; i<8 ; i++){
+              if(arr[i]['date'] == item.date){
+                arr[i]['success'] += parseInt(item.success);
+                arr[i]['fail'] += parseInt(item.fail);
               }
             }
           });

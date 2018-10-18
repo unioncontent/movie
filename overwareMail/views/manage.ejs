@@ -347,41 +347,76 @@
   // 삭제버튼 클릭시
   $(document).on('click','.btn-delete',function(){
     var thisTd = $(this).parents('td');
+    var tdEles = $(this).parents('tr').find('td');
     var moduleVal = thisTd.data('module');
     var idxVal = thisTd.data('idx');
     var mIdVal = thisTd.data('mid');
-    swal({
-      title: "삭제하시겠습니까?",
-      icon: "warning",
-      buttons: ["취소", true],
-      dangerMode: true,
-    })
-    .then(function(value) {
-      if (value == null) {
-        return false;
-      }
+
+    if(moduleVal == '2' && tdEles.eq(7).text() != '-' && tdEles.eq(8).text() == '-'){
       $.ajax({
-        url: '/email/manage/delete',
+        url: '/email/manage/checkMail',
         type: 'post',
-        data : {mid:mIdVal,idx:idxVal,module:moduleVal},
+        data : {mid:mIdVal},
         datatype : 'json',
         error:function(request,status,error){
           console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
-          swal("ERROR!","삭제 실패했습니다. 다시 시도해주세요.", "error");
+          swal("ERROR!","다시 시도해주세요.", "error");
         },
         success:function(data){
-          if(data.status){
-            swal("SUCCESS!", '삭제 되었습니다.', "success")
-            .then(function(value) {
-              reloadPage();
-            });
-          }else{
-            swal("ERROR!", '새로고침 후 다시 시도해주세요.', "error");
-          }
+          console.log(data);
+          var msg = (data.status == 112) ? "예약메일이 발송 진행 중이기 때문에 예약취소는 불가합니다. 그래도 ":"";
+          swal({
+            title: msg+"삭제하시겠습니까?",
+            icon: "warning",
+            buttons: ["취소", true],
+            dangerMode: true,
+          })
+          .then(function(value) {
+            if (value == null) {
+              return false;
+            }
+            deleteAjax({mid:mIdVal,idx:idxVal,module:moduleVal});
+          });
+          return false;
         }
       });
-    });
+    } else{
+      swal({
+        title: "삭제하시겠습니까?",
+        icon: "warning",
+        buttons: ["취소", true],
+        dangerMode: true,
+      })
+      .then(function(value) {
+        if (value == null) {
+          return false;
+        }
+        deleteAjax({mid:mIdVal,idx:idxVal,module:moduleVal});
+      });
+    }
   });
+  function deleteAjax(param){
+    $.ajax({
+      url: '/email/manage/delete',
+      type: 'post',
+      data : param,
+      datatype : 'json',
+      error:function(request,status,error){
+        console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
+        swal("ERROR!","삭제 실패했습니다. 다시 시도해주세요.", "error");
+      },
+      success:function(data){
+        if(data.status){
+          swal("SUCCESS!", '삭제 되었습니다.', "success")
+          .then(function(value) {
+            reloadPage();
+          });
+        }else{
+          swal("ERROR!", '새로고침 후 다시 시도해주세요.', "error");
+        }
+      }
+    });
+  }
   // 수정버튼 클릭시
   $(document).on('click','.btn-edit',function(){
     var tdEles = $(this).parents('tr').find('td');
@@ -393,6 +428,30 @@
       swal("ERROR!", '발송된 메일은 수정하실 수 없습니다.', "error");
       return false;
     }
+    if(tdEles.eq(7).text() != '-'){
+      $.ajax({
+        url: '/email/manage/checkMail',
+        type: 'post',
+        data : {mid:mIdVal},
+        datatype : 'json',
+        error:function(request,status,error){
+          console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
+          swal("ERROR!","다시 시도해주세요.", "error");
+        },
+        success:function(data){
+          if(data.status == 112){
+            swal("ERROR!","예약메일이 발송 진행 중이기 때문에 메일 수정할 수 없습니다.", "error");
+            return false;
+          }
+          editModal(idxVal);
+        }
+      });
+    }
+    else{
+      editModal(idxVal);
+    }
+  });
+  function editModal(idxVal){
     swal({
       title: '수정하시겠습니까?',
       icon: "warning",
@@ -405,7 +464,7 @@
       }
       location.href='../email?type=edit&idx='+idxVal;
     });
-  });
+  }
   // 메일전송버튼 클릭시
   $(document).on('click','.btn-send',function(){
     var tdEles = $(this).parents('tr').find('td');
@@ -417,11 +476,7 @@
       title: '메일을 보내시겠습니까?',
       text: '예약발송이 설정된 경우 예약 발송은 취소됩니다.',
       icon: "warning",
-      // buttons: ["취소", true],
-      button: {
-        text: "보내기",
-        closeModal: false,
-      }
+      buttons: ["취소", "보내기"]
     })
     .then(function(value) {
       if (value == null) {
@@ -438,6 +493,10 @@
           datatype : 'json',
           error:function(request,status,error){
             console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
+            if(request.responseText == '112'){
+              swal("ERROR!","예약메일이 발송 진행 중이기 때문에 메일을 보낼 수 없습니다.", "error");
+              return false;
+            }
             swal("ERROR!","다시 시도해주세요.", "error");
           },
           success:function(data){
@@ -454,24 +513,27 @@
   $(document).on('click','.btn-resend',function(){
     var tdEles = $(this).parents('tr').find('td');
     var thisTd = $(this).parents('td');
+    var moduleVal = thisTd.data('module');
     var idxVal = thisTd.data('idx');
+    var midVal = thisTd.data('mid');
     swal({
       title: '재발송 하시겠습니까?',
       icon: "warning",
-      buttons: ["취소", true],
+      buttons: ["취소", "보내기"]
     })
     .then(function(value) {
       if (value == null) {
         return false;
       }
-      if(tdEles.eq(6).text() == '-'){
+      if(tdEles.eq(7).text() == '-'){
         sendMail(idxVal);
       }
       else{
+        console.log('재발송 updateMtype');
         $.ajax({
           url: '/email/manage/updateMtype',
           type: 'post',
-          data : {type:'0',idx:idxVal},
+          data : {type:'0',mid:midVal,idx:idxVal,module:moduleVal,mtype:'resend'},
           datatype : 'json',
           error:function(request,status,error){
             console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
@@ -534,7 +596,7 @@
       }
     });
   }
-  // 메일 재전송버튼 클릭시
+  // 메일 재작성버튼 클릭시
   $(document).on('click','.btn-rewrite',function(){
     var thisTd = $(this).parents('td');
     var idxVal = thisTd.data('idx');
