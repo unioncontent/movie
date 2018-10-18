@@ -281,15 +281,10 @@ async function getListPageData(idx,param){
   };
   var limit = 10;
   // var searchParam = [idx,idx,0,limit];
-  var searchParam = [data.sDate,data.eDate,0,limit];
   var currentPage = 1;
   var searchBody = {};
   if (typeof param.page !== 'undefined') {
     currentPage = param.page;
-  }
-  if (parseInt(currentPage) > 0) {
-    searchParam[2] = (currentPage - 1) * limit
-    data['offset'] = searchParam[2];
   }
   if (typeof param.sDate !== 'undefined' && typeof param.eDate !== 'undefined') {
     searchBody['sDate'] = param.sDate;
@@ -299,6 +294,11 @@ async function getListPageData(idx,param){
   }else{
     searchBody['sDate'] = data.sDate;
     searchBody['eDate'] = data.eDate;
+  }
+  var searchParam = [data.sDate,data.eDate,0,limit];
+  if (parseInt(currentPage) > 0) {
+    searchParam[2] = (currentPage - 1) * limit
+    data['offset'] = searchParam[2];
   }
   try{
     var result = await newsclipping.call_newsclipping_period(searchParam);
