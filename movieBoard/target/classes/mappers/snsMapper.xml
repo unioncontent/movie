@@ -261,11 +261,6 @@
 	</sql>
 	
 	<sql id="allsearch">
- 		<if test="keyword != null">
-			<if test="searchType != null">
-				and sns_content like concat('%', #{keyword}, '%')
-			</if>
-		</if>
 		<if test="startDate != null">
 			and writeDate <![CDATA[>=]]> #{startDate}
 			<if test="endDate != null">
@@ -277,7 +272,7 @@
 	<sql id="keywordSearch">
  		<if test="keyword != null">
 			<if test="searchType != null">
-				and sns_content like concat('%', #{keyword}, '%')
+				where sns_content like concat('%', #{keyword}, '%')
 			</if>
 		</if>
 	</sql>
