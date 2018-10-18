@@ -82,15 +82,18 @@ router.get('/manageHis',isAuthenticated, async function(req, res) {
   data.klist = await keyword.selectMovieKwdAll(req.user.user_admin,req.user.n_idx) || [];
   res.render('manage_his',data);
 });
-
+router.post('/manage/checkMail',isAuthenticated, async function(req, res) {
+  var data = {status:'true'};
+  var result = await mymailer.selectSendCheckMail(req.body.mid);
+  if(result.length == 0){
+    data.status = 112;
+  }
+  res.send(data);
+});
 router.post('/manage/updateMtype',isAuthenticated, async function(req, res) {
   console.log('/manage/updateMtype : ',req.body);
-  var result = await mailAllA.updateMtype([req.body.type,req.body.idx]);
-  if(!('protocol41' in result)){
-    res.status(500).send('mailAllA delete query 실패');
-    return false;
-  }
-  if(req.body.module == 1){
+  var result,check;
+  if(req.body.module == '1'){
     result = await maillink.deleteMlAT(req.body.idx);
     if(!('protocol41' in result)){
       res.status(500).send('ml_automail_tran delete query 실패');
@@ -104,8 +107,14 @@ router.post('/manage/updateMtype',isAuthenticated, async function(req, res) {
         return false;
       }
     });
+    check = true;
   }
-  else if(req.body.module == 2){
+  else if(req.body.module == '2'){
+    result = await mymailer.selectSendCheckMail(req.body.mid);
+    if(result.length == 0 && !('mtype' in req.body)){
+      res.status(500).send('112');
+      return false;
+    }
     result = await mymailer.deleteSendTable(req.body.mid);
     if(!('protocol41' in result)){
       res.status(500).send('deleteSendTable delete query 실패');
@@ -121,8 +130,16 @@ router.post('/manage/updateMtype',isAuthenticated, async function(req, res) {
       res.status(500).send('ml_automail_tran delete query 실패');
       return false;
     }
+    check = true;
   }
 
+  if(check){
+    result = await mailAllA.updateMtype([req.body.type,req.body.idx]);
+    if(!('protocol41' in result)){
+      res.status(500).send('mailAllA delete query 실패');
+      return false;
+    }
+  }
   res.send({status:true});
 });
 
@@ -422,17 +439,17 @@ router.post('/test',isAuthenticated, async function(req, res) {
       M_subject: req.body['M_subject'],
       M_keyword: req.body['M_keyword']
     };
-    var resultInsert = await maillink.insert2('ml_mail_test',mailAllParam);
-    var idx = resultInsert.insertId;
-    if(idx == undefined){
-      throw new Error('ml_mail_test insert 실패');
-    }
     var mailSender = await mailListA.getOneEmail2(req.body.M_sender);
     var sender = (mailSender.length > 0) ? mailSender[0]: [];
 
     var dt = datetime.create();
     var now = dt.format('Y-m-d H:M:S');
     if(req.body.module == '1'){
+      var resultInsert = await maillink.insert2('ml_mail_test',mailAllParam);
+      var idx = resultInsert.insertId;
+      if(idx == undefined){
+        throw new Error('ml_mail_test insert 실패');
+      }
       var values = ['AU-4126512','1','U','[테스트 발송]  '+mailAllParam.M_subject,sender[0],sender[1],'테스트 메일 수신자',
       mailAllParam.M_email,'http://showbox.email/preview_test?keyword='+mailAllParam.M_keyword+'&idx='+idx,now,now,idx];
       var result = await maillink.insertTest(values);
@@ -770,12 +787,13 @@ async function mailInsert(req){
       await mymailer.deleteInfoTable(mailId);
       throw new Error('insertMailSendUserError');
     }
-    result = await mymailer.updateSendInfo(['X','X','X',mailId]);
-    console.log('update결과:',result);
-    if(!('changedRows' in result)){
-      await mymailer.deleteInfoTable(mailId);
-      await mymailer.deleteSendTable(mailId);
-      throw new Error('updateSendInfoError');
+    if(mailData.M_type == '0'){
+      result = await mymailer.updateSendInfo(['X','X','X',mailId]);
+      if(!('changedRows' in result)){
+        await mymailer.deleteInfoTable(mailId);
+        await mymailer.deleteSendTable(mailId);
+        throw new Error('updateSendInfoError');
+      }
     }
   }
 

@@ -19,18 +19,18 @@ var isAuthenticated = function (req, res, next) {
 
 // 대시보드
 router.get('/', isAuthenticated, async function(req, res, next) {
-  // var result = await period.call_dashbord([-1,req.user.n_idx]);
-  // console.log(result);
   var data = {
-    list:await period.call_dashbord([-1,req.user.n_idx])//await period.getYesterday(req.user)
+    list:await period.call_dashbord2([-1,req.user.n_idx]),
+    list2:await period.call_dashbord([-1,req.user.n_idx]),
+    wlist:await period.selectReservationView([2,req.user.n_idx,req.user.n_idx,req.user.n_idx])
   };
-  // console.log(data.list);
+  console.log('data:',data);
   res.render('index',data);
 });
 
 router.post('/statistics',isAuthenticated, async function(req, res, next) {
-  var result = await period.call_dashbord([0,req.user.n_idx]);
-  console.log('statistics:',result);
+  var result = await period.call_dashbord2([0,req.user.n_idx]);
+  console.log('statistics1:',result);
   var data = {
     todaySendCount : result[0].sendCount,
     successNfailCount : {success:result[0].success,fail:result[0].fail},
@@ -40,10 +40,19 @@ router.post('/statistics',isAuthenticated, async function(req, res, next) {
     successP : 0,
     failP : 0
   };
-  var tNum = parseInt(data.todaySendCount.replace(/,/gi,''));
+  result = await period.call_dashbord([0,req.user.n_idx]);
+  console.log('statistics2:',result);
+  data.todaySendCount += result[0].sendCount;
+  data.todayCount += result[0].nCount;
+  data.successNfailCount.success += result[0].success;
+  data.successNfailCount.fail += result[0].fail;
+  data.reservationCount += result[0].wtCount;
+  data.waitingCount += await period.selectReservationCount([2,req.user.n_idx,req.user.n_idx,req.user.n_idx]);;
+
+  var tNum = parseInt(data.todaySendCount);
   if(tNum > 0){
-    var sNum = parseInt(data.successNfailCount.success.replace(/,/gi,''));
-    var fNum = parseInt(data.successNfailCount.fail.replace(/,/gi,''));
+    var sNum = parseInt(data.successNfailCount.success);
+    var fNum = parseInt(data.successNfailCount.fail);
     if(sNum > 0 )
       data.successP = ((sNum / tNum) * 100).toFixed(2);
     if(fNum > 0 )
@@ -55,7 +64,9 @@ router.post('/statistics',isAuthenticated, async function(req, res, next) {
 // 대시보드 최근 발송 현황 그래프
 router.post('/7DayGraph',isAuthenticated, async function(req, res, next) {
   var data = await period.call_dashbord([-7,req.user.n_idx]);
-  res.send(data);
+  var data2 = await period.call_dashbord2([-7,req.user.n_idx]);
+
+  res.send({mymailer : data2, maillink: data});
 });
 
 // 뉴스클리핑
