@@ -11,6 +11,10 @@ const DBpromise = require('../db/db_info.js');
 */
 
 var newsclipping = {
+  call_newsclipping_period: async function(param){
+    var sql = 'call union_mail.newsclipping_period(?,?,?,?)';
+    return await getResult(sql,param);
+  },
   insert: async function(detail,param){
     var sql = 'insert into news_mail(me_rank,media_idx, media_name, media_title, media_content, reporter_name, reporter_ID, reporter_email, writeDate, last_WriteDate, last_media_title, \
     last_media_content, title_key, keyword, keyword_type, url, reportDate, news_type, textType, media_state, createDate, replynum, updateDate';

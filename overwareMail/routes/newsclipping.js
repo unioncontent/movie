@@ -8,7 +8,6 @@ var mailListA = require('../models/mailListA.js');
 var mailListC = require('../models/mailListC.js');
 var maillink = require('../models/maillink.js');
 var nMailAll = require('../models/nMailAll.js');
-// var nMailDetailB = require('../models/nMailDetailB.js');
 
 var isAuthenticated = function (req, res, next) {
   if (req.isAuthenticated()){
@@ -281,7 +280,8 @@ async function getListPageData(idx,param){
     eDate: formatDate(new Date())
   };
   var limit = 10;
-  var searchParam = [idx,idx,0,limit];
+  // var searchParam = [idx,idx,0,limit];
+  var searchParam = [data.sDate,data.eDate,0,limit];
   var currentPage = 1;
   var searchBody = {};
   if (typeof param.page !== 'undefined') {
@@ -299,11 +299,11 @@ async function getListPageData(idx,param){
   }else{
     searchBody['sDate'] = data.sDate;
     searchBody['eDate'] = data.eDate;
-
   }
   try{
-    data['list'] = await newsclipping.selectView(searchBody,searchParam);
-    data['listCount'] = await newsclipping.selectViewCount(searchBody,searchParam);
+    var result = await newsclipping.call_newsclipping_period(searchParam);
+    data['list'] = (result.length > 0)? result[0]:[];
+    data['listCount'] = (result.length > 0)? result[1][0].total:0;
     data['currentPage'] = currentPage;
   }
   catch(e){
