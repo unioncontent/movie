@@ -256,8 +256,9 @@
                                       <input type="text" class="datepicker-here form-control col-sm-1 f-left" data-language="en" id="startdate" placeholder="Date" style="max-width:130px;"><div size="3" class="f-left m-l-5 m-r-5"><b>~</b></div>
     	                              	<input type="text" class="datepicker-here form-control col-sm-1 f-left m-b-10" data-language="en" id="enddate" placeholder="Date" style="max-width:130px;">
                                     </div>
+                                    <button class="btn btn-list f-right p-r-5 p-l-5 m-l-3 m-b-5 m-t-5"  style="float: left; margin-top: 10px;" type="button" onclick="show()"><i class="icofont icofont-ui-note"></i>전체목록</button>
                                     <c:if test="${user.user_name == 'union'}">
-                                    <button type="button" class="tabledit-update-button btn btn-primary waves-effect waves-light alert-confirm1" style="float: left; margin-left: 5px; margin-top: 10px;" data-toggle="tooltip" data-placement="top" data-original-title="일괄등록">
+                                    <button type="button" class="tabledit-update-button btn btn-primary waves-effect waves-light alert-confirm1" style="float: left; margin-left: 15px; margin-top: 10px;" data-toggle="tooltip" data-placement="top" data-original-title="일괄등록">
       									일괄등록
     								</button>
     								</c:if>
@@ -672,6 +673,18 @@
 
 	function pageReload() {
 		location.reload();
+	}
+	
+	function show(event) {
+		
+		var makeQeury = '${pageMaker.makeQuery(1)}'.slice(0,-2);
+		
+		location.href = "f_channelAll"
+						+ makeQeury + '10'
+						+ "&snsName=" + '방울방울'
+						+ "&keyword=" + $('#keywordInput').val()
+						+ "&startDate=" + makeDateFormat($("#startdate").val(), 0)
+			 			+ "&endDate=" +  makeDateFormat($("#enddate").val(), 0);
 	}
 
 	// 날짜 계산 함수

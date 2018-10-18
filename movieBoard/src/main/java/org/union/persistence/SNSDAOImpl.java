@@ -568,4 +568,116 @@ public class SNSDAOImpl implements SNSDAO {
 
 		return session1.selectOne(namespace + "periodgetSearchCount", cri);
 	}
+
+
+	@Override
+	public List<FvVO> facebookCGVListAll(SearchCriteria cri) throws SQLException {
+
+		return session1.selectList(namespace + "facebookCGVListAll", cri);
+	}
+
+
+	@Override
+	public Integer facebookCGVListAllTotalCnt(SearchCriteria cri) throws SQLException {
+
+		return session1.selectOne(namespace + "facebookCGVListAllTotalCnt", cri);
+	}
+
+
+	@Override
+	public List<FvVO> facebookCGVallListAll(SearchCriteria cri) throws SQLException {
+
+		return session1.selectList(namespace + "facebookCGVallListAll", cri);
+	}
+
+
+	@Override
+	public List<FvVO> fvlistSearchAll(SearchCriteria cri) throws SQLException {
+
+		return session1.selectList(namespace + "fvlistSearchAll", cri);
+	}
+
+
+	@Override
+	public Integer fvlistSearchTotalCntAll(SearchCriteria cri) throws SQLException {
+
+		return session1.selectOne(namespace + "fvlistSearchTotalCntAll", cri);
+	}
+
+
+	@Override
+	public List<FvVO> fvlistOneAll(SearchCriteria cri) throws SQLException {
+
+		return session1.selectList(namespace + "fvlistOneAll", cri);
+	}
+
+
+	@Override
+	public List<FvVO> fvlistSearchTimeAll(SearchCriteria cri) throws SQLException {
+
+		return session1.selectList(namespace + "fvlistSearchTimeAll", cri);
+	}
+
+
+	@Override
+	public List<FvVO> fvSearchlistSearchTimeAll(SearchCriteria cri) throws SQLException {
+
+		return session1.selectList(namespace + "fvSearchlistSearchTimeAll", cri);
+	}
+
+
+	@Override
+	public List<FvVO> fvlistSearchListAll(SearchCriteria cri) throws SQLException {
+
+		return session1.selectList(namespace + "fvlistSearchListAll", cri);
+	}
+
+
+	@Override
+	public List<FvVO> fvlistMinusAll(SearchCriteria cri) throws SQLException {
+
+		return session1.selectList(namespace + "fvlistMinusAll", cri);
+	}
+
+
+	@Override
+	public Integer fvlistSearchListTotalCntAll(SearchCriteria cri) throws SQLException {
+
+		return session1.selectOne(namespace + "fvlistSearchListTotalCntAll", cri);
+	}
+
+
+	@Override
+	public List<FvVO> fvlistSearchExAll(SearchCriteria cri) throws SQLException {
+
+		return session1.selectList(namespace + "fvlistSearchExAll", cri);
+	}
+
+
+	@Override
+	public List<FvVO> fvlistPlusAll(SearchCriteria cri) throws SQLException {
+
+		return session1.selectList(namespace + "fvlistPlusAll", cri);
+	}
+
+
+	@Override
+	public List<FvVO> fvlistlimtAll(SearchCriteria cri) throws SQLException {
+
+		return session1.selectList(namespace + "fvlistlimtAll", cri);
+	}
+
+
+	@Override
+	public List<FvVO> fvlistMinus2All(SearchCriteria cri) throws SQLException {
+
+		return session1.selectList(namespace + "fvlistMinus2All", cri);
+	}
+
+
+	@Override
+	public List<FvVO> fvlistTwoAll(SearchFv fv) throws SQLException {
+
+		return session1.selectList(namespace + "fvlistTwoAll", fv);
+	}
 }

@@ -17,7 +17,7 @@
       <![endif]-->
   <!-- Meta -->
   <meta charset="utf-8">
-   <meta name="_csrf" content="${_csrf.token}" />
+  <meta name="_csrf" content="${_csrf.token}" />
   <!-- default header name is X-CSRF-TOKEN -->
   <meta name="_csrf_header" content="${_csrf.headerName}"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
@@ -80,7 +80,7 @@
                 <div class="page-wrapper">
                   <div class="page-header">
                     <div class="page-header-title">
-                      <h4>Facebook MEGABOX</h4>
+                      <h4>Facebook ${fName}</h4>
                     </div>
                     <div class="page-header-breadcrumb">
                       <ul class="breadcrumb-title">
@@ -90,11 +90,11 @@
                           </a>
                         </li>
                         <li class="breadcrumb-item"><a href="#!">마케팅 채널관리</a></li>
-                        <li class="breadcrumb-item"><a href="../marketing/m_channel">Facebook MEGABOX</a></li>
+                        <li class="breadcrumb-item"><a href="#!">Facebook ${fName}</a></li>
                       </ul>
                     </div>
                   </div>
-                  <!-- page-body start -->
+                   <!-- page-body start -->
                   <div class="page-body">
                     <div class="row">
                       <!-- data setting start -->
@@ -115,12 +115,12 @@
                             	<i class="icofont icofont-chart-line m-r-5"></i>
                             	조회수 데이터
                             	</font>
-                            </h5><c:forEach items="${title}" var="list1" varStatus="status">
+                            </h5>
+                            <c:forEach items="${title}" var="list1" varStatus="status">
                             <font style="color: #9f9f9f; font-size: 13px;">
                             '${list1.sns_content}' 최근 48시간 그래프
                             </font>
                             </c:forEach>
-
                             <div class="card-header-right">
                               <i class="icofont icofont-rounded-down"></i>
                             </div>
@@ -146,7 +146,6 @@
                             '${list1.sns_content}' 최근 48시간 그래프
                             </font>
                             </c:forEach>
-
                             <div class="card-header-right">
                               <i class="icofont icofont-rounded-down"></i>
                             </div>
@@ -172,7 +171,6 @@
                             '${list1.sns_content}' 최근 48시간 그래프
                             </font>
                             </c:forEach>
-
                             <div class="card-header-right">
                               <i class="icofont icofont-rounded-down"></i>
                             </div>
@@ -191,7 +189,7 @@
                                     <!-- <h5>facebook CGV</h5> -->
                                     <button class="btn btn-warning alert-excelup f-right" style="margin-left: 8px;margin-bottom: 10px; "><i class="icofont icofont-file-excel"></i>증가데이터</button>
                                     <button class="btn btn-warning alert-excel f-right" style="margin-left: 8px;margin-bottom: 10px; "><i class="icofont icofont-file-excel"></i>전체데이터</button>
-                                    <!-- <button class="btn btn-info f-right alert-confirm" onclick = "location.href='http://overware.iptime.org:8080/marketing/m_channel'"><i class="icofont icofont-ui-note"></i>목록으로</button> -->
+                                    <!-- <button class="btn btn-info f-right alert-confirm" onclick = "location.href='http://overware.iptime.org:8080/marketing/f_channel'"><i class="icofont icofont-ui-note"></i>목록으로</button> -->
                                     <button class="btn btn-list f-right alert-confirm" style="margin-left: 8px;margin-bottom: 10px; " onclick = "history.back(-1);"><i class="icofont icofont-ui-note"></i>목록으로</button>
                                   <div class="col-sm-3 input-group input-group-button input-group-inverse p-l-0 p-r-0 m-b-10 f-left btn-select">
                                     <input type='text' class='datepicker-here form-control m-r-10 m-b-10 f-left' data-language='en' id='startdate' style="width: 50px" placeholder="Date"/>
@@ -254,6 +252,7 @@
                                             <div class="content-nowrap">
                                             <a href='${list.url}' target="_blank">${list.sns_content}</a>
                                             </div>
+                                            <input type="hidden" id="snsname" value="${snsName}"> 
                                             </td>
                                             <td>
                                             <button type="button" class="list-button btn btn-list waves-effect waves-light" style="margin-right: 5px;" data-toggle="tooltip" data-placement="top" data-original-title="리스트">
@@ -269,7 +268,7 @@
                                               <%-- <ul class="pagination float-right">
                                                 <c:if test="${pageMaker.prev}">
                                               		<li class="page-item">
-                                                		  <a class="page-link" href="m_list${pageMaker.makeSearch(pageMaker.startPage - 1) }" aria-label="Previous">&laquo;
+                                                		  <a class="page-link" href="all_list${pageMaker.makeSearch(pageMaker.startPage - 1) }" aria-label="Previous">&laquo;
                                                   		<span aria-hidden="true"></span>
                                                   		<span class="sr-only">Previous</span>
                                                 		  </a>
@@ -277,12 +276,12 @@
                                         	      </c:if>
                                           		  <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
                                               		<li class= "${pageMaker.cri.page == idx? 'active':''} page-item">
-                                                		  <a class="page-link" href="m_list${pageMaker.makeSearch(idx)}">${idx}</a>
+                                                		  <a class="page-link" href="all_list${pageMaker.makeSearch(idx)}">${idx}</a>
                                               		</li>
                                           		  </c:forEach>
                                           		  <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
                                               		<li class="page-item">
-                                              		  <a class="page-link" href="m_list${pageMaker.makeSearch(pageMaker.endPage +1) }" aria-label="Next">&raquo;
+                                              		  <a class="page-link" href="all_list${pageMaker.makeSearch(pageMaker.endPage +1) }" aria-label="Next">&raquo;
                                                 		<span aria-hidden="true"></span>
                                                 		<span class="sr-only">Next</span>
                                               		  </a>
@@ -448,7 +447,7 @@ $(document).ready(function(){
 	console.log("url:" + url);
 	var Mcreate = $('input[name=createDate]').val();
 	console.log("Mcreate:" + Mcreate);
-
+	
 	$.ajax({
 
 	      type : "POST",
@@ -457,9 +456,8 @@ $(document).ready(function(){
 	 	  data : {success : 'success', url: url, Mcreate: Mcreate},
 	  	  success : function(data){
 
-	  		  console.log(data);
+	  		if (data[0].type1 != null) {
 	  		var script = "[";
-
 
 			for(var i = 0; i < data.length; i++){
 
@@ -526,8 +524,27 @@ $(document).ready(function(){
 
 			areaChart1(jsonScript, jsonScript2, jsonScript3, jsonScript4);
 
+	  	 }else{
+	  		 
+		  		loading.hide();
+		  		
+		  		var obj = document.createElement("div");
+		  		var obj2 = document.createElement("div");
+		  		var obj3 = document.createElement("div");
+		  		var morrisbar = document.getElementById("container");
+		  		var morrisbar2 = document.getElementById("container2");
+		  		var morrisbar3 = document.getElementById("container3");
+		  		obj.innerHTML="<table align='center' height='300px'><tr><td style='vertical-align:middle;' align='center' height='150px'><h5>등록된 데이터가 없습니다.</h5></td></tr></table>";
+		  		obj2.innerHTML="<table align='center' height='300px'><tr><td style='vertical-align:middle;' align='center' height='150px'><h5>등록된 데이터가 없습니다.</h5></td></tr></table>";
+		  		obj3.innerHTML="<table align='center' height='300px'><tr><td style='vertical-align:middle;' align='center' height='150px'><h5>등록된 데이터가 없습니다.</h5></td></tr></table>";
+		  		morrisbar.prepend(obj);
+		  		morrisbar2.prepend(obj2);
+		  		morrisbar3.prepend(obj3);
+	  		 }
 	  	 }
 	});
+
+	
 
 	var url = $('input[name=url]').val();
 	//엑셀출력 확인메시지
@@ -546,7 +563,8 @@ $(document).ready(function(){
     	  self.location = "excelOk?"
 			    		+ "url="
 						+ url
-						+ "&section=mega"
+						+ "&section="
+						+ "all"
 						+ "&startDate=" + decodeURI(window.location.href.split("startDate=")[1]).split("&")[0].split(" ")[0]
 			 			+ "&endDate=" +  decodeURI(window.location.href.split("endDate=")[1]).split("&")[0].split(" ")[0];
 
@@ -573,7 +591,8 @@ $(document).ready(function(){
     	  self.location = "excelupfOk?"
 	    		+ "url="
 				+ url
-				+ "&section=mega"
+				+ "&section="
+				+ "all"
 				+ "&startDate=" + decodeURI(window.location.href.split("startDate=")[1]).split("&")[0].split(" ")[0]
 	 			+ "&endDate=" +  decodeURI(window.location.href.split("endDate=")[1]).split("&")[0].split(" ")[0];
 
@@ -617,10 +636,12 @@ $(document).ready(function(){
 		var content = td2.children[0].value;
 		var createstartDate = td3.children[0].value;
 		var createendDate = td3.children[0].value;
+		
+		var snsName = $('#snsname').val();
 
 		console.log("url:" + url, "content:" + content, "createstartDate:" + createstartDate, "createendDate:" + createendDate);
 
-		self.location = "m_listall?url=" + url + "&createstartDate=" + createstartDate + "&createendDate=" + createendDate;
+		self.location = "all_listall?url=" + url + "&createstartDate=" + createstartDate + "&createendDate=" + createendDate + "&snsName=" + snsName;
 
 	});
 
@@ -859,16 +880,21 @@ function areaChart1(jsonScript, jsonScript2, jsonScript3, jsonScript4) {
 	  	//list URL 함수
 	  	var url = $('input[name=url]').val();
 	  	var content = $('input[name=content]').val();
+	  	var snsName = $('#snsname').val();
 
 	  	  function searchList(event) {
 
-	  	  	self.location = "m_list?"
+	  	  	self.location = "all_list?"
 	  	  				  + "url="
 	  	  				  + url
+	  	  				  + "&snsName=" + snsName
+	  	  				  + "&selectTime="
+						  + $('#selectTime option:selected').val()
 	    				  + "&startDate=" + makeDateFormat($("#startdate").val(), 0)
 	  	 			      + "&endDate=" +  makeDateFormat($("#enddate").val(), 0)
 					  	  + "&content="
 						  + content;
+					  	  
 	  	  }
 	  	function makeDateFormat(date, index){
 			var splitDate = date.split(" - ")[index];

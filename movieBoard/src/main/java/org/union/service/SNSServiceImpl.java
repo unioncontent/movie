@@ -594,4 +594,116 @@ public class SNSServiceImpl implements SNSService{
 		return snsDAO.periodgetSearchCount(cri);
 	}
 
+
+	@Override
+	public List<FvVO> facebookCGVListAll(SearchCriteria cri) throws SQLException {
+
+		return snsDAO.facebookCGVListAll(cri);
+	}
+
+
+	@Override
+	public Integer facebookCGVListAllTotalCnt(SearchCriteria cri) throws SQLException {
+
+		return snsDAO.facebookCGVListAllTotalCnt(cri);
+	}
+
+
+	@Override
+	public List<FvVO> facebookCGVallListAll(SearchCriteria cri) throws SQLException {
+
+		return snsDAO.facebookCGVallListAll(cri);
+	}
+
+
+	@Override
+	public List<FvVO> fvlistSearchAll(SearchCriteria cri) throws SQLException {
+
+		return snsDAO.fvlistSearchAll(cri);
+	}
+
+
+	@Override
+	public Integer fvlistSearchTotalCntAll(SearchCriteria cri) throws SQLException {
+
+		return snsDAO.fvlistSearchTotalCntAll(cri);
+	}
+
+
+	@Override
+	public List<FvVO> fvlistOneAll(SearchCriteria cri) throws SQLException {
+
+		return snsDAO.fvlistOneAll(cri);
+	}
+
+
+	@Override
+	public List<FvVO> fvlistSearchTimeAll(SearchCriteria cri) throws SQLException {
+
+		return snsDAO.fvlistSearchTimeAll(cri);
+	}
+
+
+	@Override
+	public List<FvVO> fvSearchlistSearchTimeAll(SearchCriteria cri) throws SQLException {
+
+		return snsDAO.fvSearchlistSearchTimeAll(cri);
+	}
+
+
+	@Override
+	public List<FvVO> fvlistSearchListAll(SearchCriteria cri) throws SQLException {
+
+		return snsDAO.fvlistSearchListAll(cri);
+	}
+
+
+	@Override
+	public List<FvVO> fvlistMinusAll(SearchCriteria cri) throws SQLException {
+
+		return snsDAO.fvlistMinusAll(cri);
+	}
+
+
+	@Override
+	public Integer fvlistSearchListTotalCntAll(SearchCriteria cri) throws SQLException {
+
+		return snsDAO.fvlistSearchListTotalCntAll(cri);
+	}
+
+
+	@Override
+	public List<FvVO> fvlistSearchExAll(SearchCriteria cri) throws SQLException {
+
+		return snsDAO.fvlistSearchExAll(cri);
+	}
+
+
+	@Override
+	public List<FvVO> fvlistPlusAll(SearchCriteria cri) throws SQLException {
+
+		return snsDAO.fvlistPlusAll(cri);
+	}
+
+
+	@Override
+	public List<FvVO> fvlistlimtAll(SearchCriteria cri) throws SQLException {
+
+		return snsDAO.fvlistlimtAll(cri);
+	}
+
+
+	@Override
+	public List<FvVO> fvlistMinus2All(SearchCriteria cri) throws SQLException {
+
+		return snsDAO.fvlistMinus2All(cri);
+	}
+
+
+	@Override
+	public List<FvVO> fvlistTwoAll(SearchFv fv) throws SQLException {
+
+		return snsDAO.fvlistTwoAll(fv);
+	}
+
 }

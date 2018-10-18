@@ -86,7 +86,7 @@
                 <div class="page-wrapper">
                   <div class="page-header">
                     <div class="page-header-title">
-                      <h4>Facebook LOTTE CINEMA</h4>
+                      <h4>Facebook ${fName}</h4>
                     </div>
                     <div class="page-header-breadcrumb">
                       <ul class="breadcrumb-title">
@@ -96,7 +96,7 @@
                           </a>
                         </li>
                         <li class="breadcrumb-item"><a href="#!">마케팅 채널관리</a></li>
-                        <li class="breadcrumb-item"><a href="../marketing/l_channel">Facebook LOTTE CINEMA</a></li>
+                        <li class="breadcrumb-item"><a href="#!">Facebook ${fName}</a></li>
                       </ul>
                     </div>
                   </div>
@@ -107,7 +107,8 @@
                     <div class="col-md-12">
                         <div class="card">
                           <div class="card-header">
-                          	<h5><font style="font-weight: bold; color: black;"><i class="icofont icofont-imac"></i>&nbsp;&nbsp;Lotte Cinema 모니터링</font></h5>
+                          <c:if test=""></c:if>
+                          	<h5><font style="font-weight: bold; color: black;"><i class="icofont icofont-imac"></i>&nbsp;&nbsp;${fName} 모니터링</font></h5>
                             <div class="card-header-right">
                               <i class="icofont icofont-rounded-down"></i>
                             </div>
@@ -256,7 +257,7 @@
                                       <input type="text" class="datepicker-here form-control col-sm-1 f-left" data-language="en" id="startdate" placeholder="Date" style="max-width:130px;"><div size="3" class="f-left m-l-5 m-r-5"><b>~</b></div>
     	                              	<input type="text" class="datepicker-here form-control col-sm-1 f-left m-b-10" data-language="en" id="enddate" placeholder="Date" style="max-width:130px;">
                                     </div>
-                                    <button class="btn btn-list f-right p-r-5 p-l-5 m-l-3 m-b-5 m-t-5"  style="float: left; margin-top: 10px;" type="button" onclick="show()"><i class="icofont icofont-ui-note"></i>전체목록</button>
+                                    <button class="btn btn-list f-right p-r-5 p-l-5 m-l-3 m-b-5 m-t-5"  style="float: left; margin-top: 10px;" type="button" onclick="show('${url}')"><i class="icofont icofont-ui-note"></i>최근목록</button>
                                     <c:if test="${user.user_name == 'union'}">
                                     <button type="button" class="tabledit-update-button btn btn-primary waves-effect waves-light alert-confirm1" style="float: left; margin-left: 15px; margin-top: 10px;" data-toggle="tooltip" data-placement="top" data-original-title="일괄등록">
       									일괄등록
@@ -322,6 +323,7 @@
                                             <td>
                                             <div class="content-nowrap">
                                             <a href='${fV.url}' target="_blank">${fV.sns_content}</a>
+                                            <input type="hidden" id="snsname" value="${snsName}"> 
                                             </div>
                                             </td>
                                             <td>
@@ -338,7 +340,7 @@
                                                <ul class="pagination float-right">
 	        					                   <c:if test="${pageMaker.prev}">
 		        					                   <li class="page-item">
-			        					                   <a class="page-link" href="l_channel${pageMaker.makeSearch(pageMaker.startPage - 1) }" aria-label="Previous">&laquo;
+			        					                   <a class="page-link" href="f_channelAll${pageMaker.makeSearch(pageMaker.startPage - 1) }&snsName=${snsName}" aria-label="Previous">&laquo;
 				        					               <span aria-hidden="true"></span>
 				        					               <span class="sr-only">Previous</span>
 			        					                   </a>
@@ -346,12 +348,12 @@
 	        					                   </c:if>
         					                   <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
 	        					                   <li class= "${pageMaker.cri.page == idx? 'active':''} page-item">
-	        					                   	<a class="page-link" href="l_channel${pageMaker.makeSearch(idx)}">${idx}</a>
+	        					                   	<a class="page-link" href="f_channelAll${pageMaker.makeSearch(idx)}&snsName=${snsName}">${idx}</a>
 	        					                   </li>
         					                   </c:forEach>
         					                   <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
 	        					                   <li class="page-item">
-		        					                   <a class="page-link" href="l_channel${pageMaker.makeSearch(pageMaker.endPage +1) }" aria-label="Next">&raquo;
+		        					                   <a class="page-link" href="f_channelAll${pageMaker.makeSearch(pageMaker.endPage +1) }&snsName=${snsName}" aria-label="Next">&raquo;
 			        					               <span aria-hidden="true"></span>
 			        					               <span class="sr-only">Next</span>
 		        					                   </a>
@@ -560,11 +562,12 @@
 		$(".twin-button").on("click", function(event){
 			var url = $("#e1 option:selected").val()
 			var url2 = $("#e2 option:selected").val()
+			var snsName = $('#snsname').val();
 
 			console.log("url:" + url);
 			console.log("url2:" + url2);
 
-			self.location = "l_graph?url=" + url + "&url2=" + url2;
+			self.location = "all_graph?url=" + url + "&url2=" + url2 + "&snsName=" + snsName;
 
 		});
 
@@ -589,10 +592,12 @@
 
 			var url = td1.children[0].value;
 			var content = td2.children[0].value;
+			
+			var snsName = $('#snsname').val();
 
 			console.log("url:" + url, "content:" + content);
 
-			self.location = "l_list?url=" + url;
+			self.location = "all_list?url=" + url + "&snsName=" + snsName;
 
 		});
 
@@ -608,6 +613,7 @@
 
 		$('#e1').select2({ width: '100%', height: '45%' });
 		$('#e2').select2({ width: '100%', height: '45%' });
+		
 		// 수정 버튼 클릭
 		$(document).on("click",".tabledit-update-button",function(event){
 			swal({
@@ -661,11 +667,13 @@
 	function searchList() {
 
 		var makeQeury = '${pageMaker.makeQuery(1)}'.slice(0,-2);
+		var snsName = $('#snsname').val();
 
 		console.log(makeQeury);
 
-    	self.location = "l_channel"
+    	self.location = "f_channelAll"
     						+ makeQeury + '10'
+    						+ "&snsName=" + snsName
     						+ "&keyword=" + $('#keywordInput').val()
     						+ "&startDate=" + makeDateFormat($("#startdate").val(), 0)
 				 			+ "&endDate=" +  makeDateFormat($("#enddate").val(), 0);
@@ -675,16 +683,11 @@
 		location.reload();
 	}
 	
-	function show(event) {
+	function show(url) {
 		
-		var makeQeury = '${pageMaker.makeQuery(1)}'.slice(0,-2);
+		console.log(url);
 		
-		location.href = "f_channelAll"
-						+ makeQeury + '10'
-						+ "&snsName=" + '롯데시네마'
-						+ "&keyword=" + $('#keywordInput').val()
-						+ "&startDate=" + makeDateFormat($("#startdate").val(), 0)
-			 			+ "&endDate=" +  makeDateFormat($("#enddate").val(), 0);
+		location.href = url;
 	}
 
 	// 날짜 계산 함수

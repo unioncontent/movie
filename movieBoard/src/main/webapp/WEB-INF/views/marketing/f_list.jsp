@@ -546,6 +546,7 @@ $(document).ready(function(){
     	  self.location = "excelOk?"
 			    		+ "url="
 						+ url
+						+ "&section=cgv"
 						+ "&startDate=" + decodeURI(window.location.href.split("startDate=")[1]).split("&")[0].split(" ")[0]
 			 			+ "&endDate=" +  decodeURI(window.location.href.split("endDate=")[1]).split("&")[0].split(" ")[0];
 
@@ -572,6 +573,7 @@ $(document).ready(function(){
     	  self.location = "excelupfOk?"
 	    		+ "url="
 				+ url
+				+ "&section=cgv"
 				+ "&startDate=" + decodeURI(window.location.href.split("startDate=")[1]).split("&")[0].split(" ")[0]
 	 			+ "&endDate=" +  decodeURI(window.location.href.split("endDate=")[1]).split("&")[0].split(" ")[0];
 

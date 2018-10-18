@@ -260,6 +260,28 @@
 		</if>
 	</sql>
 	
+	<sql id="allsearch">
+ 		<if test="keyword != null">
+			<if test="searchType != null">
+				and sns_content like concat('%', #{keyword}, '%')
+			</if>
+		</if>
+		<if test="startDate != null">
+			and writeDate <![CDATA[>=]]> #{startDate}
+			<if test="endDate != null">
+				and writeDate <![CDATA[<=]]> #{endDate}
+			</if>
+		</if>
+	</sql>
+	
+	<sql id="keywordSearch">
+ 		<if test="keyword != null">
+			<if test="searchType != null">
+				and sns_content like concat('%', #{keyword}, '%')
+			</if>
+		</if>
+	</sql>
+	
  	<insert id="create">
  		insert into
  			sns_data(sns_name, sns_title, sns_content, sns_writer, like_cnt, reply_cnt, share_cnt, writeDate, keyword, keyword_type, url, textType, thumbnail)
@@ -881,6 +903,38 @@
 			#{startPage}, #{perPageNum}
  	</select>
  	
+ 	<select id="facebookCGVListAll" resultType="FvVO">
+ 		select 
+			*
+		from
+		(select 
+		DATE_FORMAT(writeDate,'%Y-%m-%d') writeDate, sns_content, sns_subcontent, url, max(view_cnt)as view_cnt, max(like_cnt)as like_cnt, max(reply_cnt)as reply_cnt,count(*) as total
+		from facebook_videos
+        where
+			sns_writer = #{sns_writer}
+		and
+			(sns_subcontent is null or sns_subcontent != '광고')
+        <include refid="allsearch"></include>
+        group by writeDate
+        
+        UNION ALL
+        
+        select 
+		DATE_FORMAT(writeDate,'%Y-%m-%d') writeDate, sns_content, sns_subcontent, url, max(view_cnt)as view_cnt, max(like_cnt)as like_cnt, max(reply_cnt)as reply_cnt,count(*) as total
+		from facebook_videos_history
+        where
+			sns_writer = #{sns_writer}
+		and
+			(sns_subcontent is null or sns_subcontent != '광고')
+        <include refid="allsearch"></include>
+        group by writeDate
+        ) x
+        <include refid="keywordSearch"></include>
+        order by writeDate desc
+        limit  
+			#{startPage}, #{perPageNum}
+ 	</select>
+ 	
  	<select id="facebookCGVallList" resultType="FvVO">
  		select 
 		DATE_FORMAT(writeDate,'%Y-%m-%d') writeDate, sns_content, url, max(view_cnt)as view_cnt, max(like_cnt)as like_cnt, max(reply_cnt)as reply_cnt,count(*) as total
@@ -891,6 +945,33 @@
 			(sns_subcontent is null or sns_subcontent != '광고')
         group by url
         order by writeDate desc
+ 	</select>
+ 	
+ 	<select id="facebookCGVallListAll" resultType="FvVO">
+ 		select 
+			*
+		from
+		(select 
+		DATE_FORMAT(writeDate,'%Y-%m-%d') writeDate, sns_content, url, max(view_cnt)as view_cnt, max(like_cnt)as like_cnt, max(reply_cnt)as reply_cnt,count(*) as total
+		from facebook_videos
+        where
+			sns_writer = #{sns_writer}
+		and
+			(sns_subcontent is null or sns_subcontent != '광고')
+        group by url
+        
+        UNION ALL
+        
+        select 
+		DATE_FORMAT(writeDate,'%Y-%m-%d') writeDate, sns_content, url, max(view_cnt)as view_cnt, max(like_cnt)as like_cnt, max(reply_cnt)as reply_cnt,count(*) as total
+		from facebook_videos_history
+        where
+			sns_writer = #{sns_writer}
+		and
+			(sns_subcontent is null or sns_subcontent != '광고')
+        group by url) x
+        order by writeDate desc
+        
  	</select>
  	
  	<select id="facebookCGVListTotalCnt" resultType="Integer">
@@ -907,6 +988,32 @@
         group by writeDate) as total
 	</select>
 	
+	<select id="facebookCGVListAllTotalCnt" resultType="Integer">
+		select 
+			count(*)
+		from
+		(select DATE_FORMAT(writeDate,'%Y-%m-%d') writeDate, sns_content
+		from facebook_videos
+        where
+			sns_writer = #{sns_writer}
+		and
+			(sns_subcontent is null or sns_subcontent != '광고')
+        <include refid="allsearch"></include>
+        group by writeDate
+        
+        UNION ALL
+        
+        select DATE_FORMAT(writeDate,'%Y-%m-%d') writeDate, sns_content
+		from facebook_videos_history
+        where
+			sns_writer = #{sns_writer}
+		and
+			(sns_subcontent is null or sns_subcontent != '광고')
+        <include refid="allsearch"></include>
+        group by writeDate) x
+        <include refid="keywordSearch"></include>
+	</select>
+	
  	<select id="fvlistSearch" resultType="FvVO">
  		select 
  			DATE_FORMAT(createDate,'%Y-%m-%d') createDate, sns_content, url, max(view_cnt)as view_cnt, max(like_cnt)as like_cnt, max(reply_cnt)as reply_cnt,count(*) as total 
@@ -917,6 +1024,35 @@
  		<include refid="search_writeDate4"></include>	
 		group 
 			by DATE_FORMAT(createDate,'%Y-%m-%d')
+		order 
+			by createDate desc
+ 	</select>
+ 	
+ 	<select id="fvlistSearchAll" resultType="FvVO">
+ 		select 
+			*
+		from
+		(select 
+ 			DATE_FORMAT(createDate,'%Y-%m-%d') createDate, sns_content, url, max(view_cnt)as view_cnt, max(like_cnt)as like_cnt, max(reply_cnt)as reply_cnt,count(*) as total 
+ 		from 
+ 			facebook_videos 
+ 		where 
+ 			url = #{url}
+ 		<include refid="search_writeDate4"></include>	
+		group 
+			by DATE_FORMAT(createDate,'%Y-%m-%d')
+		
+		UNION ALL
+		
+		select 
+ 			DATE_FORMAT(createDate,'%Y-%m-%d') createDate, sns_content, url, max(view_cnt)as view_cnt, max(like_cnt)as like_cnt, max(reply_cnt)as reply_cnt,count(*) as total 
+ 		from 
+ 			facebook_videos_history 
+ 		where 
+ 			url = #{url}
+ 		<include refid="search_writeDate4"></include>	
+		group 
+			by DATE_FORMAT(createDate,'%Y-%m-%d')) x
 		order 
 			by createDate desc
  	</select>
@@ -937,6 +1073,31 @@
 			by createDate desc) as total;
  	</select>
  	
+ 	<select id="fvlistSearchTotalCntAll" resultType="Integer">
+ 		select 
+			count(*)
+		from
+		(select 
+ 			DATE_FORMAT(createDate,'%Y-%m-%d') createDate, sns_content, url, max(view_cnt)as view_cnt, max(like_cnt)as like_cnt, max(reply_cnt)as reply_cnt,count(*) as total 
+ 		from 
+ 			facebook_videos 
+ 		where 
+ 			url = #{url}
+ 		<include refid="search_writeDate4"></include>
+ 		group by DATE_FORMAT(createDate,'%Y-%m-%d')
+ 		
+ 		UNION ALL
+ 		
+ 		select 
+ 			DATE_FORMAT(createDate,'%Y-%m-%d') createDate, sns_content, url, max(view_cnt)as view_cnt, max(like_cnt)as like_cnt, max(reply_cnt)as reply_cnt,count(*) as total 
+ 		from 
+ 			facebook_videos_history 
+ 		where 
+ 			url = #{url}
+ 		<include refid="search_writeDate4"></include>
+ 		group by DATE_FORMAT(createDate,'%Y-%m-%d')) x;
+ 	</select>
+ 	
  	<select id="fvlistSearchList" resultType="FvVO">
  		select 
  			* 
@@ -948,6 +1109,37 @@
  			createDate <![CDATA[>=]]> #{createstartDate}
 		and 
 			createDate <![CDATA[<=]]> #{createendDate}	
+		order 
+			by createDate desc
+ 	</select>
+ 	
+ 	<select id="fvlistSearchListAll" resultType="FvVO">
+ 		select 
+			*
+		from
+		(select 
+ 			* 
+ 		from 
+ 			facebook_videos 
+ 		where 
+ 			url = #{url}
+ 		and 
+ 			createDate <![CDATA[>=]]> #{createstartDate}
+		and 
+			createDate <![CDATA[<=]]> #{createendDate}
+		
+		UNION ALL
+		
+		select 
+ 			* 
+ 		from 
+ 			facebook_videos_history 
+ 		where 
+ 			url = #{url}
+ 		and 
+ 			createDate <![CDATA[>=]]> #{createstartDate}
+		and 
+			createDate <![CDATA[<=]]> #{createendDate}) x
 		order 
 			by createDate desc
  	</select>
@@ -967,6 +1159,36 @@
 			by createDate desc
  	</select>
  	
+ 	<select id="fvlistSearchListTotalCntAll" resultType="Integer">
+ 		select 
+			count(*)
+		from
+		(select 
+ 			*
+ 		from 
+ 			facebook_videos 
+ 		where 
+ 			url = #{url}
+ 		and 
+ 			createDate <![CDATA[>=]]> #{createstartDate}
+		and 
+			createDate <![CDATA[<=]]> #{createendDate}
+			
+		UNION ALL
+		
+		select 
+ 			*
+ 		from 
+ 			facebook_videos_history 
+ 		where 
+ 			url = #{url}
+ 		and 
+ 			createDate <![CDATA[>=]]> #{createstartDate}
+		and 
+			createDate <![CDATA[<=]]> #{createendDate}
+ 		) x;
+ 	</select>
+ 	
  	<select id="fvlistSearchEx" resultType="FvVO">
  		select 
  			* 
@@ -975,6 +1197,31 @@
  		where 
  			url = #{url}
  		<include refid="search_writeDate4"></include>	
+		order 
+			by createDate asc
+ 	</select>
+ 	
+ 	<select id="fvlistSearchExAll" resultType="FvVO">
+ 		select 
+			*
+		from
+		(select 
+ 			* 
+ 		from 
+ 			facebook_videos 
+ 		where 
+ 			url = #{url}
+ 		<include refid="search_writeDate4"></include>
+ 		
+ 		UNION ALL
+ 		
+ 		select 
+ 			* 
+ 		from 
+ 			facebook_videos_history 
+ 		where 
+ 			url = #{url}
+ 		<include refid="search_writeDate4"></include>) x
 		order 
 			by createDate asc
  	</select>
@@ -1085,6 +1332,76 @@
 			by createDate asc
  	</select>
  	
+ 	<select id="fvlistPlusAll" resultType="FvVO">
+ 		select 
+			*
+		from
+		(select 
+ 			*
+		from 
+			facebook_videos 
+		where  
+			url = #{url}
+		<include refid="search_writeDate4"></include>
+		
+		UNION ALL
+		
+		select 
+ 			*
+		from 
+			facebook_videos_history 
+		where  
+			url = #{url}
+		<include refid="search_writeDate4"></include>) x
+		order 
+			by createDate asc
+ 	</select>
+ 	
+ 	<select id="fvlistlimtAll" resultType="FvVO">
+ 		select 
+			*
+		from
+		(select 
+ 			* 
+ 		from 
+ 			facebook_videos 
+ 		where url = #{url}
+ 		
+ 		UNION ALL
+ 		
+ 		select 
+ 			* 
+ 		from 
+ 			facebook_videos_history 
+ 		where url = #{url}) x
+ 		order by createDate asc limit 1;
+ 	</select>
+ 	
+ 	<select id="fvlistMinus2All" resultType="FvVO">
+ 		select 
+			*
+		from
+		(select 
+ 			*
+		from 
+			facebook_videos 
+		where 
+			url = #{url}
+		<include refid="search_writeDate5"></include>
+		
+		UNION ALL
+		
+		select 
+ 			*
+		from 
+			facebook_videos_history 
+		where 
+			url = #{url}
+		<include refid="search_writeDate5"></include>) x
+		order 
+			by createDate asc
+ 	</select>
+ 	
  	<select id="fvlistMinus" resultType="FvVO">
  		select 
  			view_cnt, reply_cnt, like_cnt
@@ -1104,6 +1421,48 @@
 		order 
 			by createDate desc
  	</select>
+ 	
+ 	<select id="fvlistMinusAll" resultType="FvVO">
+ 		select 
+			view_cnt, reply_cnt, like_cnt
+		from
+		(select 
+ 			*
+		from 
+			facebook_videos 
+		where 
+			view_cnt != (select view_cnt from facebook_videos where url =#{url} and 
+ 			createDate <![CDATA[>=]]> date_add(#{createminusDate}, interval -1 day)
+		and 
+			createDate <![CDATA[<=]]> #{createendDate} order by createDate desc limit 1) 
+		and 
+			url = #{url}
+		and 
+ 			createDate <![CDATA[>=]]> date_add(#{createminusDate}, interval -1 day)
+		and 
+			createDate <![CDATA[<=]]> #{createendDate}
+			
+		UNION ALL
+		
+		select 
+ 			*
+		from 
+			facebook_videos_history 
+		where 
+			view_cnt != (select view_cnt from facebook_videos_history where url =#{url} and 
+ 			createDate <![CDATA[>=]]> date_add(#{createminusDate}, interval -1 day)
+		and 
+			createDate <![CDATA[<=]]> #{createendDate} order by createDate desc limit 1) 
+		and 
+			url = #{url}
+		and 
+ 			createDate <![CDATA[>=]]> date_add(#{createminusDate}, interval -1 day)
+		and 
+			createDate <![CDATA[<=]]> #{createendDate}) x
+		order 
+			by createDate desc
+ 	</select>
+ 	
 	<select id="fvlistSearchTime" resultType="FvVO">
  		select 
  			*
@@ -1114,6 +1473,30 @@
  		order by createDate asc 
  		limit 1
  	</select>
+ 	
+ 	<select id="fvlistSearchTimeAll" resultType="FvVO">
+ 		select 
+			*
+		from
+		(select 
+ 			*
+ 		from 
+ 			facebook_videos
+ 		where
+ 			url = #{url}
+ 		
+ 		UNION ALL
+ 		
+ 		select 
+ 			*
+ 		from 
+ 			facebook_videos_history
+ 		where
+ 			url = #{url}) x
+ 		order by createDate asc 
+ 		limit 1
+ 	</select>
+ 	
  	<select id="fvSearchlistSearchTime" resultType="FvVO">
  		select 
  			*
@@ -1125,6 +1508,38 @@
  			createDate <![CDATA[>=]]> #{createstartDate}
 		and 
 			createDate <![CDATA[<=]]> #{createendDate}
+ 		order by createDate asc 
+ 		limit 1
+ 	</select>
+ 	
+ 	<select id="fvSearchlistSearchTimeAll" resultType="FvVO">
+ 		select 
+			*
+		from
+		(select 
+ 			*
+ 		from 
+ 			facebook_videos
+ 		where
+ 			url = #{url}
+ 		and 
+ 			createDate <![CDATA[>=]]> #{createstartDate}
+		and 
+			createDate <![CDATA[<=]]> #{createendDate}
+		
+		UNION ALL
+		
+		select 
+ 			*
+ 		from 
+ 			facebook_videos_history
+ 		where
+ 			url = #{url}
+ 		and 
+ 			createDate <![CDATA[>=]]> #{createstartDate}
+		and 
+			createDate <![CDATA[<=]]> #{createendDate}) x
+		
  		order by createDate asc 
  		limit 1
  	</select>
@@ -1177,6 +1592,30 @@
 		order by createDate asc 
 			limit 1;
  	</select>
+ 	
+ 	<select id="fvlistOneAll" resultType="FvVO">
+ 		select 
+			*
+		from
+		(select 
+ 			createDate, sns_content, url, sns_subcontent
+ 		from 
+ 			facebook_videos 
+ 		where 
+ 			url = #{url}
+ 		
+ 		UNION ALL
+ 		
+ 		select 
+ 			createDate, sns_content, url, sns_subcontent
+ 		from 
+ 			facebook_videos_history 
+ 		where 
+ 			url = #{url}) x
+		order by createDate asc 
+			limit 1;
+ 	</select>
+ 	
  	<select id="fvlistTwo" resultType="FvVO">
  		select 
  			createDate, sns_content, url, sns_subcontent
@@ -1184,6 +1623,29 @@
  			facebook_videos 
  		where 
  			url = #{url}
+		order by createDate asc 
+			limit 1;
+ 	</select>
+ 	
+ 	<select id="fvlistTwoAll" resultType="FvVO">
+ 		select 
+			*
+		from
+		(select 
+ 			createDate, sns_content, url, sns_subcontent
+ 		from 
+ 			facebook_videos 
+ 		where 
+ 			url = #{url}
+ 		
+ 		UNION ALL
+ 		
+ 		select 
+ 			createDate, sns_content, url, sns_subcontent
+ 		from 
+ 			facebook_videos_history 
+ 		where 
+ 			url = #{url}) x
 		order by createDate asc 
 			limit 1;
  	</select>
