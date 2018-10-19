@@ -34,6 +34,7 @@ public class MediaVO {
 	private Integer replynum;
 	private Integer v_state;
 	private String thumbnail;
+	private String media_subname;
 	private Date createDate;
 	private Date updateDate;
 	private boolean checkCondition;
@@ -179,6 +180,12 @@ public class MediaVO {
 	public void setThumbnail(String thumbnail) {
 		this.thumbnail = thumbnail;
 	}
+	public String getMedia_subname() {
+		return media_subname;
+	}
+	public void setMedia_subname(String media_subname) {
+		this.media_subname = media_subname;
+	}
 	public Date getCreateDate() {
 		return createDate;
 	}
@@ -225,8 +232,8 @@ public class MediaVO {
 				+ last_media_content + ", news_type=" + news_type + ", title_key=" + title_key + ", keyword=" + keyword
 				+ ", keyword_type=" + keyword_type + ", url=" + url + ", textType=" + textType + ", ME_rank=" + ME_rank
 				+ ", uid=" + uid + ", media_state=" + media_state + ", replynum=" + replynum + ", v_state=" + v_state
-				+ ", thumbnail=" + thumbnail + ", createDate=" + createDate + ", updateDate=" + updateDate
-				+ ", checkCondition=" + checkCondition + ", total=" + total + ", match_total=" + match_total
-				+ ", match_total2=" + match_total2 + "]";
+				+ ", thumbnail=" + thumbnail + ", media_subname=" + media_subname + ", createDate=" + createDate
+				+ ", updateDate=" + updateDate + ", checkCondition=" + checkCondition + ", total=" + total
+				+ ", match_total=" + match_total + ", match_total2=" + match_total2 + "]";
 	}
 }

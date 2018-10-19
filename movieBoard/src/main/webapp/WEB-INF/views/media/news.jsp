@@ -195,6 +195,7 @@
                                     <th width="5%">NO</th>
                                     <th width="10%">등록날짜</th>
                                     <th width="40%">제목</th>
+                                    <th width="5%">출처</th>
                                     <th width="5%">언론사</th>
                                     <th width="5%">기자</th>
                                     <th width="5%">키워드</th>
@@ -223,6 +224,10 @@
                                     <th width="5%" style="vertical-align:middle;">${totalCount -index.count +1 -minusCount}</th>
                                     <td width="10%">${mediaList.writeDate}</td>
                                     <td width="40%" class="text-success"><a href="${mediaList.url}" target="_blank">${mediaList.media_title}</a></td>
+                                    <td width="5%">
+                                    <c:if test="${mediaList.media_subname != null}">${mediaList.media_subname}</c:if>
+                                    <c:if test="${mediaList.media_subname == null}"><i class="icofont icofont-minus"></i></c:if>
+                                    </td>
                                     <td width="5%">${mediaList.media_name}</td>
                                     <td width="5%" style="text-align: center;">
                                     <c:if test="${mediaList.reporter_name != null}">${mediaList.reporter_name}</c:if>
@@ -343,10 +348,10 @@
                                 <tfoot>
                                   <tr>
                                   <c:if test="${user.user_name != 'union'}">
-                                    <td colspan="7">
+                                    <td colspan="8">
                                   </c:if>
                                   <c:if test="${user.user_name == 'union'}">
-                                    <td colspan="8">
+                                    <td colspan="9">
                                   </c:if> 
                                       <ul class="pagination float-right">
                                        <c:if test="${pageMaker.prev}">
