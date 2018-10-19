@@ -40,7 +40,7 @@
                 <option value="all">사이트</option>
                 <option value="naver">네이버</option>
                 <option value="daum">다음</option>
-                <option value="other">기타</option>
+                <option value="out">기타</option>
               </select>
               <select class="form-control col-md-1 form-control-default m-r-5 m-b-10 f-left" id="selectNum">
                 <option value="30">30</option>
@@ -88,13 +88,6 @@
                         (currentPage - 1) * limit;
                       }
                       for(var i=0; i < list.length; i++) {
-                        var siteName = '';
-                        var urlStr = list[i].url.replace('http://','').replace('https://','').split('/')[0];
-                        if(urlStr.indexOf('.naver.') != -1){
-                          siteName = 'naver';
-                        } else if(urlStr.indexOf('.daum.') != -1){
-                          siteName = 'daum';
-                        }
                     %>
                     <tr>
                       <input type="hidden" id="idx" value="<%=list[i].media_idx%>" />
@@ -102,8 +95,8 @@
                       <td>
                         <a href="<%= list[i].url %>" target="_blank" title="<%= list[i].media_title %>">
                           <div class="title_nobr">
-                            <% if (siteName != ''){%>
-                              <img alt="<%=siteName%>" src="http://showbox.email/images/newsclipping/<%=siteName%>_logo.png" class="site-logo">
+                            <% if (list[i].media_subname != 'out' && list[i].media_subname != null){%>
+                              <img alt="<%=list[i].media_subname%>" src="http://showbox.email/images/newsclipping/<%=list[i].media_subname%>_logo.png" class="site-logo">
                             <% } %>
                             <%= list[i].media_title %>
                           </div>

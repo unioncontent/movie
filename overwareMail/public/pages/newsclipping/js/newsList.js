@@ -297,20 +297,13 @@ function ajaxGetPageList(param){
       $("#limit").val(param.limit);
 
       data.result.list.forEach(function(item,idx){
-        var siteName = '';
-        var urlStr = item.url.replace('http://','').replace('https://','').split('/')[0];
-        if(urlStr.indexOf('.naver.') != -1){
-          siteName = 'naver';
-        } else if(urlStr.indexOf('.daum.') != -1){
-          siteName = 'daum';
-        }
         var numIdx = Math.ceil(data.result.listCount-(data.result.offset+idx)).toString();
         var html = '<tr>\
         <input type="hidden" id="idx" value="'+item.media_idx+'" />\
         <th>'+numIdx+'</th>\
         <td><a href="'+item.url+'" target="_blank" title="'+item.media_title+'"><div class="title_nobr">';
-        if (siteName != ''){
-          html +='<img alt="'+siteName+'" src="http://showbox.email/images/newsclipping/'+siteName+'_logo.png" class="site-logo">';
+        if (item.media_subname != 'out' && item.media_subname != null){
+          html +='<img alt="'+item.media_subname+'" src="http://showbox.email/images/newsclipping/'+item.media_subname+'_logo.png" class="site-logo">';
         }
         html +=item.media_title+'</div></a></td><td><div class="nobr" title="'+item.media_name+'">'+item.media_name+'</div></td>';
         html+='<td><div class="nobr" title="'+item.reporter_name+'">'+((item.reporter_name == null) ? '<i class="fas fa-minus"></i>' : item.reporter_name)+'</div></td>\

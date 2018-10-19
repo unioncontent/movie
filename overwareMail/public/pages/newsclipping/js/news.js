@@ -72,13 +72,6 @@ $(document).on("click",".group",function(){
       });
       $('#modalTable tbody').eq(0).empty();
       data.result.forEach(function(item,idx){
-        var siteName = '';
-        var urlStr = item.url.replace('http://','').replace('https://','').split('/')[0];
-        if(urlStr.indexOf('.naver.') != -1){
-          siteName = 'naver';
-        } else if(urlStr.indexOf('.daum.') != -1){
-          siteName = 'daum';
-        }
         var numIdx = Math.ceil(data.result.length-idx).toString();
         var percent = Math.floor(item.count / titleArr.length * 100);
         var html = '<tr>\
@@ -96,8 +89,8 @@ $(document).on("click",".group",function(){
         <td><div class="date_nobr">'+item.writeDate+'</div></td>\
         <td><input type="text" name="datefilter" class="datepicker form-control"  value="'+((item.reportDate != null && item.reportDate != '') ? item.reportDate : '')+'"/></td>\
         <td><a href="'+item.url+'" target="_blank" title="'+item.media_title+'"><div class="title_nobr">';
-        if (siteName != ''){
-          html +='<img alt="'+siteName+'" src="http://showbox.email/images/newsclipping/'+siteName+'_logo.png" class="site-logo">';
+        if (item.media_subname != 'out'){
+          html +='<img alt="'+item.media_subname+'" src="http://showbox.email/images/newsclipping/'+item.media_subname+'_logo.png" class="site-logo">';
         }
         html +=item.media_title+'</div></a></td>\
         <td><input type="text" placeholder="'+item.media_name+'" id="media_name" value="'+item.media_name+'" class="form-control selectText"></td>\
@@ -330,13 +323,6 @@ function ajaxGetPageList(param){
 
       console.log('data:',data);
       data.result.list.forEach(function(item,idx){
-        var siteName = '';
-        var urlStr = item.url.replace('http://','').replace('https://','').split('/')[0];
-        if(urlStr.indexOf('.naver.') != -1){
-          siteName = 'naver';
-        } else if(urlStr.indexOf('.daum.') != -1){
-          siteName = 'daum';
-        }
         var numIdx = Math.ceil(data.result.listCount-(data.result.offset+idx)).toString();
         var html = '<tr>\
           <input type="hidden" id="idx" value="'+item.media_idx+'" />\
@@ -352,8 +338,8 @@ function ajaxGetPageList(param){
           <td><div class="date_nobr">'+item.writeDate+'</div></td>\
           <td><input type="text" name="datefilter" class="datepicker form-control"  value="'+((item.reportDate != null && item.reportDate != '') ? item.reportDate : '')+'"/></td>\
           <td><a href="'+item.url+'" target="_blank" title="'+item.media_title+'"><div class="title_nobr">';
-          if (siteName != ''){
-            html +='<img alt="'+siteName+'" src="http://showbox.email/images/newsclipping/'+siteName+'_logo.png" class="site-logo">';
+          if (item.media_subname != 'out'){
+            html +='<img alt="'+item.media_subname+'" src="http://showbox.email/images/newsclipping/'+item.media_subname+'_logo.png" class="site-logo">';
           }
           html += item.media_title+'</div></a><i class="fas fa-video text-muted" style="'+((item.v_state != 2) ? 'visibility: hidden;' : '')+'"></i>\
             <div class="label-main group" style="margin-right:  0px;display: inline;">\
