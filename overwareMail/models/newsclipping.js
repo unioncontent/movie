@@ -31,6 +31,10 @@ var newsclipping = {
     sql += ' and NOT EXISTS (SELECT * FROM news_mail WHERE media_idx = ?);'
     return await getResult(sql,param);
   },
+  insertReporter: async function(param){
+    var sql = 'INSERT INTO `union`.reporter_data (reporter_media_name,reporter_name) SELECT ?,? FROM DUAL WHERE NOT EXISTS (SELECT * FROM `union`.reporter_data WHERE reporter_media_name=? and reporter_name=?); ';
+    return await getResult(sql,param);
+  },
   insert2: async function(param){
     var pValue = Object.values(param);
     var sql = insertSqlSetting(Object.keys(param));
