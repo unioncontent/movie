@@ -15,14 +15,20 @@ var newsclipping = {
     var sql = 'call union_mail.newsclipping_period(?,?,?,?)';
     return await getResult(sql,param);
   },
+  call_newsclipping_period_result: async function(param){
+    var sql = 'call union_mail.newsclipping_period_result(?, ?)';
+    // call union_mail.newsclipping_period_result('success', '225');
+    var result = await getResult(sql,param);
+    return (result.length > 0)?result[0]:result;
+  },
   insert: async function(detail,param){
     var sql = 'insert into news_mail(me_rank,media_idx, media_name, media_title, media_content, reporter_name, reporter_ID, reporter_email, writeDate, last_WriteDate, last_media_title, \
-    last_media_content, title_key, keyword, keyword_type, url, reportDate, news_type, textType, media_state, createDate, replynum, updateDate';
+    last_media_content, title_key, keyword, keyword_type, url, reportDate, news_type, textType, media_state, createDate, replynum, media_subname, updateDate';
     if(detail != ''){
       sql += ',news_detail';
     }
     sql += ')SELECT ME_rank,media_idx, ?, media_title, media_content, ?, reporter_ID, reporter_email, writeDate, last_WriteDate, last_media_title, last_media_content, \
-    title_key, keyword, keyword_type, url, ?, ?, textType, media_state, now(), replynum, now() ';
+    title_key, keyword, keyword_type, url, ?, ?, textType, media_state, now(), replynum, media_subname, now() ';
     if(detail != ''){
       sql += ',\''+detail+'\' ';
     }
@@ -42,7 +48,7 @@ var newsclipping = {
   },
   deleteList: async function(param){
     var sql = "delete from "+param.table+" where "+param.idxStr+"=?";
-    if(param.table == "news_data"){
+    if(param.table == "news_mail"){
       sql += " or news_detail="+param.idx;
     }
     return await getResult(sql,param.idx);
@@ -115,8 +121,9 @@ var newsclipping = {
       sql +=' and title_key = \''+body.keyword+'\'';
     }
     if('site' in body){
-      if(body.site == 'other') sql +=' and (substring_index(url,\'/\',3) not like \'%.naver.%\' and substring_index(url,\'/\',3) not like \'%.daum.%\') ';
-      else sql +=' and substring_index(url,\'/\',3) like \'%.'+body.site+'.%\' ';
+      // if(body.site == 'other') sql +=' and (substring_index(url,\'/\',3) not like \'%.naver.%\' and substring_index(url,\'/\',3) not like \'%.daum.%\') ';
+      // else sql +=' and substring_index(url,\'/\',3) like \'%.'+body.site+'.%\' ';
+      sql +=' and media_subname = \''+body.site+'\' ';
     }
     if('search' in body){
       sql +=' and (media_title like \'%'+body.search.replace(/'/gi,"''").replace(/[?]/gi,"")+'%\' or media_content like \'%'+body.search.replace(/'/gi,"''").replace(/[?]/gi,"")+'%\')';
@@ -195,8 +202,9 @@ var newsclipping = {
       sql +=' and title_key = \''+body.keyword+'\'';
     }
     if('site' in body){
-      if(body.site == 'other') sql +=' and (substring_index(url,\'/\',3) not like \'%.naver.%\' and substring_index(url,\'/\',3) not like \'%.daum.%\') ';
-      else sql +=' and substring_index(url,\'/\',3) like \'%.'+body.site+'.%\' ';
+      // if(body.site == 'other') sql +=' and (substring_index(url,\'/\',3) not like \'%.naver.%\' and substring_index(url,\'/\',3) not like \'%.daum.%\') ';
+      // else sql +=' and substring_index(url,\'/\',3) like \'%.'+body.site+'.%\' ';
+      sql +=' and media_subname = \''+body.site+'\' ';
     }
     if('search' in body){
       sql +=' and (media_title like \'%'+body.search.replace(/'/gi,"''").replace(/[?]/gi,"")+'%\' or media_content like \'%'+body.search.replace(/'/gi,"''").replace(/[?]/gi,"")+'%\')';
@@ -244,7 +252,7 @@ var newsclipping = {
   },
   selectNewsMailTable: async function(body,param){
     var sql = "SELECT me_rank,url,media_idx,DATE_FORMAT(writeDate, '%Y-%m-%d') AS writeDate,DATE_FORMAT(reportDate, '%Y-%m-%d %H:%i:%s') AS reportDate,media_title,media_name,reporter_name,\
-    keyword,textType,thumbnail,news_type,news_detail FROM news_mail where title_key in (select distinct keyword_main from keyword_data where user_idx=? or user_idx=21)";
+    keyword,textType,thumbnail,news_type,news_detail,media_subname FROM news_mail where title_key in (select distinct keyword_main from keyword_data where user_idx=? or user_idx=21)";
     if(('sDate' in body) && ('eDate' in body)){
       sql+=' and writeDate between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
     }
@@ -252,8 +260,9 @@ var newsclipping = {
       sql +=' and title_key = \''+body.keyword+'\'';
     }
     if('site' in body){
-      if(body.site == 'other') sql +=' and (substring_index(url,\'/\',3) not like \'%.naver.%\' and substring_index(url,\'/\',3) not like \'%.daum.%\') ';
-      else sql +=' and substring_index(url,\'/\',3) like \'%.'+body.site+'.%\' ';
+      // if(body.site == 'other') sql +=' and (substring_index(url,\'/\',3) not like \'%.naver.%\' and substring_index(url,\'/\',3) not like \'%.daum.%\') ';
+      // else sql +=' and substring_index(url,\'/\',3) like \'%.'+body.site+'.%\' ';
+      sql +=' and media_subname = \''+body.site+'\' ';
     }
     if('type' in body){
       sql +=' and news_type = \''+body.type+'\'';
@@ -274,8 +283,9 @@ var newsclipping = {
       sql +=' and title_key = \''+body.keyword+'\'';
     }
     if('site' in body){
-      if(body.site == 'other') sql +=' and (substring_index(url,\'/\',3) not like \'%.naver.%\' and substring_index(url,\'/\',3) not like \'%.daum.%\') ';
-      else sql +=' and substring_index(url,\'/\',3) like \'%.'+body.site+'.%\' ';
+      // if(body.site == 'other') sql +=' and (substring_index(url,\'/\',3) not like \'%.naver.%\' and substring_index(url,\'/\',3) not like \'%.daum.%\') ';
+      // else sql +=' and substring_index(url,\'/\',3) like \'%.'+body.site+'.%\' ';
+      sql +=' and media_subname = \''+body.site+'\' ';
     }
     if('type' in body){
       sql +=' and news_type = \''+body.type+'\'';
@@ -294,7 +304,8 @@ var newsclipping = {
   },
   selectNewsMailAllTable: async function(body,param){
     var sql = "SELECT url,media_content,thumbnail,media_idx,DATE_FORMAT(createDate, '%Y-%m-%d %H:%i:%s') AS createDate,\
-    DATE_FORMAT(writeDate, '%Y.%m.%d') AS writeDate,DATE_FORMAT(writeDate, '%Y-%m-%d %H:%i:%s') AS writeDateStr,media_title,media_name,reporter_name,keyword,textType,thumbnail,news_type,news_detail FROM news_mail where title_key in (select distinct keyword_main from keyword_data where user_idx=? or user_idx=21)";
+    DATE_FORMAT(writeDate, '%Y.%m.%d') AS writeDate,media_subname,DATE_FORMAT(writeDate, '%Y-%m-%d %H:%i:%s') AS writeDateStr,media_title,media_name,reporter_name,keyword,textType,thumbnail,news_type,replynum,news_detail \
+    FROM news_mail where title_key in (select distinct keyword_main from keyword_data where user_idx=? or user_idx=21)";
     sql+=' and Date(reportDate) = \''+body.eDate+'\'';
     return await getResult(sql,param);
   },
@@ -302,28 +313,23 @@ var newsclipping = {
     var sql = 'SELECT * FROM issue_data where (company_name = \'쇼박스\' or title_key in (select distinct keyword_main from keyword_data where user_idx=1 or user_idx=21)) and  Date(writeDate) = \''+param.eDate+'\'';
     return await getResult(sql);
   },
-  selectView: async function(body,param){
-    var sql = 'SELECT * FROM newsclipping_view where M_idx_A is not null ';
-    if(('sDate' in body) && ('eDate' in body)){
-      sql+=' and M_regdate between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
-    }
-    sql += ' and (  M_id = ? or M_id in (select n_idx from m_mail_user where user_admin=?)) ';
-    sql += ' group by M_idx_A order by M_idx_A desc limit ?,?';
+  selectOneMailBodyDate: async function(param){
+    // var sql = "SELECT DATE_FORMAT(SENDTIME, '%Y-%m-%d') AS SENDTIME,M_body,MSGID as n_idx FROM newsclipping_view where MSGID=? group by M_body order by SENDTIME desc,MSGID desc";
+    // var sql = "SELECT DATE_FORMAT(b.SENDTIME, '%Y-%m-%d') AS SENDTIME,a.M_body,a.n_idx FROM `union`.n_mail_all as a\
+    // left join `union`.mail_send_backup as b\
+    // on a.n_idx = b.MSGID\
+    // where a.n_idx=? group by a.M_body order by b.SENDTIME desc,a.n_idx desc;"
+    var sql = "SELECT DATE_FORMAT(M_senddate, '%Y-%m-%d') AS SENDTIME,M_body,n_idx FROM `union`.n_mail_all where n_idx=? group by M_body order by M_senddate desc,n_idx desc;"
     return await getResult(sql,param);
   },
-  selectViewCount: async function(body,param){
-    var sql = 'SELECT count(*) as total FROM (SELECT * from newsclipping_view where M_idx_A is not null ';
-    if(('sDate' in body) && ('eDate' in body)){
-      sql+=' and M_regdate between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
-    }
-    sql += ' and (  M_id = ? or M_id in (select n_idx from m_mail_user where user_admin=?)) group by M_idx_A) a';
-    var count = await getResult(sql,param);
-    if(count.length == 0){
-      return 0;
-    }
-    else{
-      return count[0]['total'];
-    }
+  selectOneMailBodyDate2: async function(param){
+    // var sql = "SELECT DATE_FORMAT(SENDTIME, '%Y-%m-%d') AS SENDTIME,M_body,MSGID as n_idx FROM newsclipping_view where M_subject like '%"+param+"%' group by M_body order by SENDTIME desc,MSGID desc";
+    // var sql = "SELECT a.M_subject,DATE_FORMAT(b.SENDTIME, '%Y-%m-%d') AS SENDTIME,a.M_body,a.n_idx FROM `union`.n_mail_all as a\
+    // left join `union`.mail_send_backup as b\
+    // on a.n_idx = b.MSGID\
+    // where a.M_subject like '%"+param+"%' group by a.M_body order by b.SENDTIME desc,a.n_idx desc;"
+    var sql = "SELECT M_subject,DATE_FORMAT(M_senddate, '%Y-%m-%d') AS SENDTIME,M_body,n_idx FROM `union`.n_mail_all as a where M_subject like '%"+param+"%' group by M_body order by M_senddate desc,n_idx desc;"
+    return await getResult(sql);
   },
   selectListView: async function(body,param){
     var sql = 'SELECT * FROM newsclipping_list_view where n_idx is not null ';
@@ -347,34 +353,6 @@ var newsclipping = {
     else{
       return count[0]['total'];
     }
-  },
-  selectResultDetail:async function(param){
-    var sql = 'SELECT * FROM newsclipping_view where MSGID=? ';
-    if('M_result' in param){
-      if(param.M_result == 'success'){
-        sql += 'and (FINALRESULT=? or (SENDRESULT = \'OK\' and FINALRESULT is null))';
-      }else{
-        sql += 'and ((FINALRESULT is not null and FINALRESULT != ?) or (SENDRESULT is not null and SENDRESULT = \'ER\'))';
-      }
-    }
-    // sql+=' group by E_mail';
-    return await getResult(sql,param.arr);
-  },
-  selectOneMailBodyDate: async function(param){
-    // var sql = "SELECT DATE_FORMAT(SENDTIME, '%Y-%m-%d') AS SENDTIME,M_body,MSGID as n_idx FROM newsclipping_view where MSGID=? group by M_body order by SENDTIME desc,MSGID desc";
-    var sql = "SELECT DATE_FORMAT(b.SENDTIME, '%Y-%m-%d') AS SENDTIME,a.M_body,a.n_idx FROM `union`.n_mail_all as a\
-    left join `union`.mail_send_backup as b\
-    on a.n_idx = b.MSGID\
-    where a.n_idx=? group by a.M_body order by b.SENDTIME desc,a.n_idx desc;"
-    return await getResult(sql,param);
-  },
-  selectOneMailBodyDate2: async function(param){
-    // var sql = "SELECT DATE_FORMAT(SENDTIME, '%Y-%m-%d') AS SENDTIME,M_body,MSGID as n_idx FROM newsclipping_view where M_subject like '%"+param+"%' group by M_body order by SENDTIME desc,MSGID desc";
-    var sql = "SELECT a.M_subject,DATE_FORMAT(b.SENDTIME, '%Y-%m-%d') AS SENDTIME,a.M_body,a.n_idx FROM `union`.n_mail_all as a\
-    left join `union`.mail_send_backup as b\
-    on a.n_idx = b.MSGID\
-    where a.M_subject like '%"+param+"%' group by a.M_body order by b.SENDTIME desc,a.n_idx desc;"
-    return await getResult(sql);
   }
 }
 
@@ -401,3 +379,65 @@ async function getResult(sql,param) {
 }
 
 module.exports = newsclipping;
+
+
+/*
+selectView: async function(body,param){
+  var sql = 'SELECT * FROM newsclipping_view where M_idx_A is not null ';
+  if(('sDate' in body) && ('eDate' in body)){
+    sql+=' and M_regdate between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
+  }
+  sql += ' and (  M_id = ? or M_id in (select n_idx from m_mail_user where user_admin=?)) ';
+  sql += ' group by M_idx_A order by M_idx_A desc limit ?,?';
+  return await getResult(sql,param);
+},
+selectViewCount: async function(body,param){
+  var sql = 'SELECT count(*) as total FROM (SELECT * from newsclipping_view where M_idx_A is not null ';
+  if(('sDate' in body) && ('eDate' in body)){
+    sql+=' and M_regdate between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
+  }
+  sql += ' and (  M_id = ? or M_id in (select n_idx from m_mail_user where user_admin=?)) group by M_idx_A) a';
+  var count = await getResult(sql,param);
+  if(count.length == 0){
+    return 0;
+  }
+  else{
+    return count[0]['total'];
+  }
+},
+selectListView: async function(body,param){
+  var sql = 'SELECT * FROM newsclipping_list_view where n_idx is not null ';
+  if(('sDate' in body) && ('eDate' in body)){
+    sql+=' and M_regdate between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
+  }
+  sql += ' and (  M_id = ? or M_id in (select n_idx from m_mail_user where user_admin=?)) ';
+  sql += ' order by n_idx desc limit ?,?';
+  return await getResult(sql,param);
+},
+selectListViewCount: async function(body,param){
+  var sql = 'SELECT count(*) as total FROM  newsclipping_list_view where n_idx is not null ';
+  if(('sDate' in body) && ('eDate' in body)){
+    sql+=' and M_regdate between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
+  }
+  sql += ' and (  M_id = ? or M_id in (select n_idx from m_mail_user where user_admin=?))';
+  var count = await getResult(sql,param);
+  if(count.length == 0){
+    return 0;
+  }
+  else{
+    return count[0]['total'];
+  }
+},
+selectResultDetail:async function(param){
+  var sql = 'SELECT * FROM newsclipping_view where MSGID=? ';
+  if('M_result' in param){
+    if(param.M_result == 'success'){
+      sql += 'and (FINALRESULT=? or (SENDRESULT = \'OK\' and FINALRESULT is null))';
+    }else{
+      sql += 'and ((FINALRESULT is not null and FINALRESULT != ?) or (SENDRESULT is not null and SENDRESULT = \'ER\'))';
+    }
+  }
+  // sql+=' group by E_mail';
+  return await getResult(sql,param.arr);
+},
+*/

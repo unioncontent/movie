@@ -1,0 +1,54 @@
+/* loader */
+.preloader3{
+  display: none;
+  padding-top:20%;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 100px;
+  width: 500px;
+  margin: auto;
+  max-width: 100%;
+  z-index: 10000;
+}
+.reportrange{
+  min-width: 207px;
+}
+.fa-minus{
+  font-size: 10px;
+}
+.table.table-sm td, .table.table-sm th {
+  padding: .6rem .5rem;
+}
+.card .card-header span:not(.input-group-addon){
+  display: inline;
+}
+.table td, .table th{
+  vertical-align: middle;
+  text-align: center;
+}
+.title_nobr,.group-nobr,.num_nobr{
+  font-size: 15px;
+  margin:0px auto;
+  padding-left: 3px;
+  text-overflow: ellipsis;
+  width: 300px;
+  overflow: hidden;
+}
+.date-nobr{
+  width: 90px;
+  margin:0px auto;
+  word-wrap: break-word;
+  white-space: initial;
+  white-space: pre-line;
+}
+.title_nobr:hover{
+  cursor:default;
+  font-weight: bold;
+}
+.num_nobr{
+  width: 60px;
+}
+.group-nobr{
+  width: 119px;
+}
