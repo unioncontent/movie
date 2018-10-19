@@ -182,6 +182,7 @@ router.post('/addNews',isAuthenticated,async function(req, res, next) {
       console.log(item);
       try{
         await newsclipping.insert(param.detail,[param.mName,param.rName,param.date,param.code,param.idx,param.idx]);
+        await newsclipping.insertReporter([param.mName,param.rName,param.mName,param.rName]);
       }
       catch(err){
         console.log(err);
