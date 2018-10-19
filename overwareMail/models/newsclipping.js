@@ -78,7 +78,7 @@ var newsclipping = {
     return await getResult(sql,param);
   },
   selectMediaTable2: async function(body,k_list){
-    var sql = "SELECT * FROM news_view where title_key in (select distinct keyword_main from keyword_data where user_idx=1 or user_idx=21) and media_name!='daum'";
+    var sql = "SELECT * FROM news_view where title_key in (select distinct keyword_main from keyword_data where user_idx=1 or user_idx=21)";
     if(('sDate' in body) && ('eDate' in body)){
       sql+=' and writeDate between \''+body.sDate+'  00:00:00\' and \''+body.eDate+' 23:59:59\'';
     }
@@ -106,13 +106,17 @@ var newsclipping = {
     }).filter(function(n){ return n != undefined });
   },
   selectMediaTable: async function(body,param,keyword){
-    var sql = "SELECT * FROM news_view where title_key in (select distinct keyword_main from keyword_data where user_idx=? or user_idx=21) and media_name!='daum'";
+    var sql = "SELECT * FROM news_view where title_key in (select distinct keyword_main from keyword_data where user_idx=? or user_idx=21) ";
     if(('sDate' in body) && ('eDate' in body)){
-      sql+=' and writeDate between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
+      sql+=' and writeDate between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\' ';
       // sql+=' and writeDate between \''+body.sDate+'\' and \''+body.eDate+'\'';
     }
     if('keyword' in body){
       sql +=' and title_key = \''+body.keyword+'\'';
+    }
+    if('site' in body){
+      if(body.site == 'other') sql +=' and (substring_index(url,\'/\',3) not like \'%.naver.%\' and substring_index(url,\'/\',3) not like \'%.daum.%\') ';
+      else sql +=' and substring_index(url,\'/\',3) like \'%.'+body.site+'.%\' ';
     }
     if('search' in body){
       sql +=' and (media_title like \'%'+body.search.replace(/'/gi,"''").replace(/[?]/gi,"")+'%\' or media_content like \'%'+body.search.replace(/'/gi,"''").replace(/[?]/gi,"")+'%\')';
@@ -182,13 +186,17 @@ var newsclipping = {
     // });
   },
   selectMediaTableCount: async function(body,param){
-    var sql = 'SELECT count(*) as total FROM news_view where title_key in (select distinct keyword_main from keyword_data where user_idx=? or user_idx=21) and media_name!=\'daum\'';
+    var sql = 'SELECT count(*) as total FROM news_view where title_key in (select distinct keyword_main from keyword_data where user_idx=? or user_idx=21)';
     if(('sDate' in body) && ('eDate' in body)){
-      sql+=' and writeDate between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
+      sql+=' and writeDate between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\' ';
       // sql+=' and writeDate between \''+body.sDate+'\' and \''+body.eDate+'\'';
     }
     if('keyword' in body){
       sql +=' and title_key = \''+body.keyword+'\'';
+    }
+    if('site' in body){
+      if(body.site == 'other') sql +=' and (substring_index(url,\'/\',3) not like \'%.naver.%\' and substring_index(url,\'/\',3) not like \'%.daum.%\') ';
+      else sql +=' and substring_index(url,\'/\',3) like \'%.'+body.site+'.%\' ';
     }
     if('search' in body){
       sql +=' and (media_title like \'%'+body.search.replace(/'/gi,"''").replace(/[?]/gi,"")+'%\' or media_content like \'%'+body.search.replace(/'/gi,"''").replace(/[?]/gi,"")+'%\')';
@@ -200,6 +208,7 @@ var newsclipping = {
     if('video' in body){
       sql +=' and v_state=2';
     }
+    // 영상 있는지 체크
     if('type' in body){
       var typeStr = '';
       if(body.type == '1'){
@@ -212,7 +221,7 @@ var newsclipping = {
         typeStr = '캐스팅';
       }
       else if(body.type == '4'){
-        typeStr = '쇼박스기업뉴스';
+        typeStr = '쇼박스기업뉴스\' or title_key = \'오리온';
       }
       else if(body.type == '5'){
         typeStr = '영화일반';
@@ -242,6 +251,10 @@ var newsclipping = {
     if('keyword' in body){
       sql +=' and title_key = \''+body.keyword+'\'';
     }
+    if('site' in body){
+      if(body.site == 'other') sql +=' and (substring_index(url,\'/\',3) not like \'%.naver.%\' and substring_index(url,\'/\',3) not like \'%.daum.%\') ';
+      else sql +=' and substring_index(url,\'/\',3) like \'%.'+body.site+'.%\' ';
+    }
     if('type' in body){
       sql +=' and news_type = \''+body.type+'\'';
     }
@@ -259,6 +272,10 @@ var newsclipping = {
     }
     if('keyword' in body){
       sql +=' and title_key = \''+body.keyword+'\'';
+    }
+    if('site' in body){
+      if(body.site == 'other') sql +=' and (substring_index(url,\'/\',3) not like \'%.naver.%\' and substring_index(url,\'/\',3) not like \'%.daum.%\') ';
+      else sql +=' and substring_index(url,\'/\',3) like \'%.'+body.site+'.%\' ';
     }
     if('type' in body){
       sql +=' and news_type = \''+body.type+'\'';
