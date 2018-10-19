@@ -1,0 +1,134 @@
+.site-logo{
+  width:16px;
+  height: 16px;
+  /* margin-bottom:3px; */
+  margin-right: 5px;
+  vertical-align:text-bottom;
+}
+input#media_name,input#reporter_name {
+    min-width: 91px;
+}
+.table thead th {
+  vertical-align: middle;
+}
+.datepicker{
+  min-width: 88px;
+}
+/* .checkbox-news{
+  min-width: 207px;
+  max-width: 267px;
+} */
+.border-checkbox-group-default{
+  max-width:  59px;
+  float:  left;
+}
+.fa-video{
+  /* font-size: 16px; */
+  vertical-align: inherit;
+}
+/* loader */
+.preloader3,.preloader2{
+  display: none;
+  padding-top:20%;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 100px;
+  width: 500px;
+  margin: auto;
+  max-width: 100%;
+  z-index: 10000;
+}
+/* select box width */
+#searchInput {
+  font-size: 12px;
+}
+#selectNewsType,#selectKeyword,#selectNum,#selectSite{
+  min-width: 100px;
+}
+.reportrange{
+  min-width: 207px;
+}
+.table{
+  font-size: 12px;
+}
+.table td, .table th {
+  text-align: center;
+  vertical-align: middle;
+}
+.table input, .table select ,.table tbody div{
+  font-size: 12px;
+}
+.date_nobr{
+  width: 63px;
+  white-space: pre-line;
+}
+.title_nobr,.nobr,.key_nobr,.media_nobr,.rank_nobr{
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.title_nobr{
+  display: inline-block;
+  vertical-align: middle;
+  width: 350px;
+  min-width: 350px;
+}
+.rank_nobr{
+  width: 50px;
+  min-width: 50px;
+}
+.media_nobr{
+  width: 88px;
+  min-width: 88px;
+}
+.nobr{
+  width: 60px;
+  min-width: 60px;
+}
+.key_nobr{
+  width: 102px;
+  min-width: 102px;
+}
+.nobr>i,.key_nobr>i,.rank_nobr>i{
+  font-size: 10px;
+}
+.select-news{
+  font-size: 12px;
+  max-height: 35px;
+  line-height: 16px;
+}
+.title_nobr:hover{
+  cursor:pointer;
+  font-weight: bold;
+}
+.border-checkbox-section .border-checkbox-group .border-checkbox-label{
+  margin: 0px;
+}
+#listTable .table thead th{
+  vertical-align: middle;
+  text-align: center;
+}
+#addBtn,#addBtn2{
+  font-weight: bold;
+  color: white;
+  height: 40px;
+  padding: 6px 15px;
+  font-size: 14px;
+  height: 36px;
+  background-color: #a6a6a6;
+  border-color: #a6a6a6;
+}
+/* daterangepicker */
+.card .card-header span:not(.input-group-addon) {
+  display: inline;
+}
+/* groupo */
+.label{
+  font-size: 11px;
+}
+/* modal */
+@media (min-width: 992px){
+  .modal-lg {
+      max-width: 1601px;
+  }
+}
