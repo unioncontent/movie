@@ -48,7 +48,7 @@ router.get('/',isAuthenticated,async function(req, res) {
   var data = await getListPageData(req.user.user_admin,req.query);
   // data.klist = await keyword.selectMovieKwdAll(req.user.user_admin,req.user.n_idx) || [];
   data.klist = await keyword.selectKwd_o() || [];
-  
+
   res.render('news',data);
 });
 
@@ -181,7 +181,7 @@ router.post('/addNews',isAuthenticated,async function(req, res, next) {
       var param = item;
       console.log(item);
       try{
-        await newsclipping.insert(param.detail,[param.mName,param.date,param.code,param.idx,param.idx]);
+        await newsclipping.insert(param.detail,[param.mName,param.rName,param.date,param.code,param.idx,param.idx]);
       }
       catch(err){
         console.log(err);

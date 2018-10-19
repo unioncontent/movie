@@ -21,7 +21,7 @@ var newsclipping = {
     if(detail != ''){
       sql += ',news_detail';
     }
-    sql += ')SELECT ME_rank,media_idx, ?, media_title, media_content, reporter_name, reporter_ID, reporter_email, writeDate, last_WriteDate, last_media_title, last_media_content, \
+    sql += ')SELECT ME_rank,media_idx, ?, media_title, media_content, ?, reporter_ID, reporter_email, writeDate, last_WriteDate, last_media_title, last_media_content, \
     title_key, keyword, keyword_type, url, ?, ?, textType, media_state, now(), replynum, now() ';
     if(detail != ''){
       sql += ',\''+detail+'\' ';
