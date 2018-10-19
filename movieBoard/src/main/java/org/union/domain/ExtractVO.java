@@ -3,7 +3,7 @@ package org.union.domain;
 public class ExtractVO {
 
 	
-	private String domain, domainType, company,keyword_main, keyword, title, content, writeDate,writer,
+	private String domain, domainType, company,keyword_main, keyword, title, content, writeDate,writer,media_subname,
 				createDate, url, textType, thumbnail, view_cnt, reply_cnt, like_cnt, reporter_name, reporter_media_name, writer_IP, ME_rank;
 	private Integer sns_idx, community_idx, media_idx, portal_idx, reply_idx, mreply_cnt;
 	
@@ -60,6 +60,12 @@ public class ExtractVO {
 	}
 	public void setWriter(String writer) {
 		this.writer = writer;
+	}
+	public String getMedia_subname() {
+		return media_subname;
+	}
+	public void setMedia_subname(String media_subname) {
+		this.media_subname = media_subname;
 	}
 	public String getCreateDate() {
 		return createDate;
@@ -169,11 +175,11 @@ public class ExtractVO {
 	public String toString() {
 		return "ExtractVO [domain=" + domain + ", domainType=" + domainType + ", company=" + company + ", keyword_main="
 				+ keyword_main + ", keyword=" + keyword + ", title=" + title + ", content=" + content + ", writeDate="
-				+ writeDate + ", writer=" + writer + ", createDate=" + createDate + ", url=" + url + ", textType="
-				+ textType + ", thumbnail=" + thumbnail + ", view_cnt=" + view_cnt + ", reply_cnt=" + reply_cnt
-				+ ", like_cnt=" + like_cnt + ", reporter_name=" + reporter_name + ", reporter_media_name="
-				+ reporter_media_name + ", writer_IP=" + writer_IP + ", ME_rank=" + ME_rank + ", sns_idx=" + sns_idx
-				+ ", community_idx=" + community_idx + ", media_idx=" + media_idx + ", portal_idx=" + portal_idx
-				+ ", reply_idx=" + reply_idx + ", mreply_cnt=" + mreply_cnt + "]";
+				+ writeDate + ", writer=" + writer + ", media_subname=" + media_subname + ", createDate=" + createDate
+				+ ", url=" + url + ", textType=" + textType + ", thumbnail=" + thumbnail + ", view_cnt=" + view_cnt
+				+ ", reply_cnt=" + reply_cnt + ", like_cnt=" + like_cnt + ", reporter_name=" + reporter_name
+				+ ", reporter_media_name=" + reporter_media_name + ", writer_IP=" + writer_IP + ", ME_rank=" + ME_rank
+				+ ", sns_idx=" + sns_idx + ", community_idx=" + community_idx + ", media_idx=" + media_idx
+				+ ", portal_idx=" + portal_idx + ", reply_idx=" + reply_idx + ", mreply_cnt=" + mreply_cnt + "]";
 	}
 }

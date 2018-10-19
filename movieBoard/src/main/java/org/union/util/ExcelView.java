@@ -130,6 +130,7 @@ public class ExcelView extends AbstractXlsView {
 		titleList.add("제목");
 		if (model.get("type") == null) {
 		    titleList.add("내용");
+		    titleList.add("출처");
 		    titleList.add("작성자");
 		    titleList.add("작성자IP");
 		    
@@ -207,6 +208,9 @@ public class ExcelView extends AbstractXlsView {
 
 			    }
 			}
+			cellIdx += 1;
+			HSSFCell subNameCell = dataRow.createCell(cellIdx);
+			subNameCell.setCellValue(new HSSFRichTextString(vo.getMedia_subname()));
 			cellIdx += 1;
 			HSSFCell titleCell = dataRow.createCell(cellIdx);
 			titleCell.setCellValue(new HSSFRichTextString(vo.getWriter()));

@@ -208,6 +208,7 @@ public class ListUtil {
 				vo.setTextType(addList.get(i).getTextType());
 				vo.setWriter(addList.get(i).getReporter_name());
 				vo.setThumbnail(addList.get(i).getThumbnail());
+				vo.setMedia_subname(addList.get(i).getMedia_subname());
 				
 				list.add(vo);
 			}
