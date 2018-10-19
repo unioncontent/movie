@@ -437,10 +437,22 @@
           });
           var obj = new Object();
           $.each(data.result.news, function(index, value) {
+            var siteName = '';
+            var siteLogoHtml = '';
+            var urlStr = value.url.replace('http://','').replace('https://','').split('/')[0];
+            if(urlStr.indexOf('.naver.') != -1){
+              siteName = 'naver';
+            } else if(urlStr.indexOf('.daum.') != -1){
+              siteName = 'daum';
+            }
+            if (siteName != ''){
+              siteLogoHtml ='<img alt="'+siteName+'" style="width: 15px;height: 15px;margin-right: 2px;vertical-align:text-bottom;" src="http://showbox.email/images/newsclipping/'+siteName+'_logo.png" class="site-logo">';
+            }
+
             // 4.쇼박스기업뉴스
             if(value.news_type == "4"){
               //  title="'+value.media_title+'"
-              var html = '<tr><td style="padding: 10px 0px 5px 7px;border-bottom: 1px solid #f4f4f4;"><div style="max-width: 538px;display: inline-block;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;"><a style="text-decoration:none !important;color:black;font-weight:bold;" href="'+value.url+'" target="_blank">'+value.media_title+'</a><i class="fas fa-times news-delete" data-idx="'+value.media_idx+'" data-type="news_mail" data-str="media_idx"></i></div></td><td style="padding:10px 0;border:1px solid #f4f4f4;border-top:0;text-align:center;color:#666;">'+value.media_name+'</td><td style="padding: 10px 0;border-bottom:1px solid #f4f4f4;text-align:center;color:#666;">'+value.writeDate+'</td></tr>'
+              var html = '<tr><td style="padding: 10px 0px 5px 7px;border-bottom: 1px solid #f4f4f4;"><div style="max-width: 538px;display: inline-block;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;"><a style="text-decoration:none !important;color:black;font-weight:bold;" href="'+value.url+'" target="_blank">'+siteLogoHtml+value.media_title+'</a><i class="fas fa-times news-delete" data-idx="'+value.media_idx+'" data-type="news_mail" data-str="media_idx"></i></div></td><td style="padding:10px 0;border:1px solid #f4f4f4;border-top:0;text-align:center;color:#666;">'+value.media_name+'</td><td style="padding: 10px 0;border-bottom:1px solid #f4f4f4;text-align:center;color:#666;">'+value.writeDate+'</td></tr>'
               $('div[data-type='+value.news_type+'] .section-body tbody').append(html);
             }
             else{
@@ -448,7 +460,7 @@
               // if(value.thumbnail != null && value.thumbnail != ''){
               //   html += '<img src="'+value.thumbnail+'" style="display: inherit; float:left;width:80px;height:80px;padding-right: 13px;">';
               // }
-              html += '<div class="news-content" data-idx="'+value.media_idx+'" data-type="media" style="font-size:12px;width:743px;height:12px;"><div class="title" style="float:left;max-width:533px;display:inline-block;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;"><a style="text-decoration:none !important;color:black;font-weight:bold;" href="'+value.url+'" target="_blank">'+value.media_title+'</a></div><div clacss="info" style="color:#666;float:right;"><span class="media-name">'+value.media_name+'</span><span class="bar" style="display:inline-block;overflow:hidden;width:0;height:11px;margin:-1px 5px 1px 4px;border-left:1px solid #eaeaea;vertical-align: middle;"></span><span class="date">'+value.writeDate+'</span><i class="fas fa-times news-delete" data-idx="'+value.media_idx+'" data-type="news_mail" data-str="media_idx"></i></div>';
+              html += '<div class="news-content" data-idx="'+value.media_idx+'" data-type="media" style="font-size:12px;width:743px;height:12px;"><div class="title" style="float:left;max-width:533px;display:inline-block;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;"><a style="text-decoration:none !important;color:black;font-weight:bold;" href="'+value.url+'" target="_blank">'+siteLogoHtml+value.media_title+'</a></div><div clacss="info" style="color:#666;float:right;"><span class="media-name">'+value.media_name+'</span><span class="bar" style="display:inline-block;overflow:hidden;width:0;height:11px;margin:-1px 5px 1px 4px;border-left:1px solid #eaeaea;vertical-align: middle;"></span><span class="date">'+value.writeDate+'</span><i class="fas fa-times news-delete" data-idx="'+value.media_idx+'" data-type="news_mail" data-str="media_idx"></i></div>';
               html +='</div></div>';
               if(value.news_detail != null && value.news_detail != ''){
                 if(value.news_detail in obj){
@@ -473,11 +485,27 @@
             }
           });
           $.each(obj, function(index, value) {
-            var html ='<ul class="relation_list" style="list-style:none;padding:0;margin:13px;margin-bottom:0px;margin-left:10px;line-height:18px;position:relative;font-size:12px;"></ul>';
+            var html ='<ul class="relation_list" style="max-width: 718px;list-style:none;padding:0;margin:13px;margin-bottom:0px;margin-left:10px;line-height:18px;position:relative;font-size:12px;"></ul>';
             $('div[data-idx='+index+']').after(html);
+            var sortList = value.sort(function(a,b){
+              var c = new Date(a.writeDateStr);
+              var d = new Date(b.writeDateStr);
+              return d-c;
+            });
             html ='<li><img src="https://ssl.pstatic.net/sstatic/search/pc/img/bu_news_sublst.gif" style="vertical-align:  text-top;">';
-            $.each(value, function(i, v) {
-              html +='<span style="margin-left:5px;"><a href="'+v.url+'" target="_blank"><div style="display:inline-block;overflow:hidden;max-width:492px;text-decoration:none !important;color:black;text-overflow:ellipsis;white-space:nowrap;word-wrap:normal;word-break:normal;vertical-align:top;">['+v.media_name+']</div></a><i class="fas fa-times news-delete" data-idx="'+v.media_idx+'"  data-type="news_mail" data-str="media_idx"></i></span>';
+            $.each(sortList, function(i, v) {
+              var siteName_s = '';
+              var siteLogoHtml_s = '';
+              var urlStr_s = v.url.replace('http://','').replace('https://','').split('/')[0];
+              if(urlStr_s.indexOf('.naver.') != -1){
+                siteName_s = 'naver';
+              } else if(urlStr_s.indexOf('.daum.') != -1){
+                siteName_s = 'daum';
+              }
+              if (siteName_s != ''){
+                siteLogoHtml_s ='<img alt="'+siteName_s+'" style="width: 15px;height: 15px;margin-right: 2px;vertical-align:text-bottom;" src="http://showbox.email/images/newsclipping/'+siteName_s+'_logo.png" class="site-logo">';
+              }
+              html +='<span style="margin-left:5px;"><a href="'+v.url+'" target="_blank"><div style="display:inline-block;overflow:hidden;max-width:492px;text-decoration:none !important;color:black;text-overflow:ellipsis;white-space:nowrap;word-wrap:normal;word-break:normal;vertical-align:top;">['+siteLogoHtml_s+v.media_name+']</div></a><i class="fas fa-times news-delete" data-idx="'+v.media_idx+'"  data-type="news_mail" data-str="media_idx"></i></span>';
             });
             html += '</li>';
             $('div[data-idx='+index+']').siblings('.relation_list').append(html);
