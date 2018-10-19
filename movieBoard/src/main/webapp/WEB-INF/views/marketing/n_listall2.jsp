@@ -410,12 +410,13 @@ $(document).ready(function(){
 	$.ajax({
 
 	      type : "POST",
-		  url : "nallgraph2",
+		  url : "nallgraph",
 	 	  dataType : "json",
 	 	  data : {success : 'success', url: url, Mcreate: Mcreate},
 	  	  success : function(data){
 
-	  		  console.log(data);
+	  		console.log(data);
+	  		if (data[0].type1 != null) {
 	  		var script = "[";
 
 
@@ -484,6 +485,23 @@ $(document).ready(function(){
 
 			areaChart1(jsonScript, jsonScript2, jsonScript3, jsonScript4);
 
+	  	 }else{
+	  		 
+		  		loading.hide();
+		  		
+		  		var obj = document.createElement("div");
+		  		var obj2 = document.createElement("div");
+		  		var obj3 = document.createElement("div");
+		  		var morrisbar = document.getElementById("container");
+		  		var morrisbar2 = document.getElementById("container2");
+		  		var morrisbar3 = document.getElementById("container3");
+		  		obj.innerHTML="<table align='center' height='300px'><tr><td style='vertical-align:middle;' align='center' height='150px'><h5>등록된 데이터가 없습니다.</h5></td></tr></table>";
+		  		obj2.innerHTML="<table align='center' height='300px'><tr><td style='vertical-align:middle;' align='center' height='150px'><h5>등록된 데이터가 없습니다.</h5></td></tr></table>";
+		  		obj3.innerHTML="<table align='center' height='300px'><tr><td style='vertical-align:middle;' align='center' height='150px'><h5>등록된 데이터가 없습니다.</h5></td></tr></table>";
+		  		morrisbar.prepend(obj);
+		  		morrisbar2.prepend(obj2);
+		  		morrisbar3.prepend(obj3);
+	  		 }
 	  	 }
 	});
 

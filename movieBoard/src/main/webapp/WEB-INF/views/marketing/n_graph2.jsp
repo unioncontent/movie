@@ -382,12 +382,13 @@ $(document).ready(function(){
 	$.ajax({ 
 		
 	      type : "POST",
-		  url : "graphTwo2",
+		  url : "graphTwo",
 	 	  dataType : "json",
 	 	  data : {success : 'success', url: url, url2: url2, Mcreate: Mcreate, Mcreate2: Mcreate2},
 	  	  success : function(data){
 
 	  		console.log(data);
+	  		if (data[0].type1 != 0) {
 	  		var script = "[";
 
 	  		for(var i = 0; i < data.length; i++){
@@ -423,24 +424,29 @@ $(document).ready(function(){
 
 			areaChart(jsonScript, jsonScript2);
 
-	  	 	},
-		  	error : function(request,status,error){
-		  		swal("warning!", "총 검출수가 24건이 아닙니다.", "warning");
-		  		window.setTimeout("pageReload()", 1000);
+	  	 	}else{
+	  		 
+		  		loading.hide();
 		  		
-		       }
+		  		var obj = document.createElement("div");
+		  		var morrisbar = document.getElementById("container");
+		  		obj.innerHTML="<table align='center' height='300px'><tr><td style='vertical-align:middle;' align='center' height='150px'><h5>등록된 데이터가 없습니다.</h5></td></tr></table>";
+		  		morrisbar.prepend(obj);
+	  		 }
+	  	 }
 	  	 
 	});
 	
 	$.ajax({
 		
 	      type : "POST",
-		  url : "graphTwo2",
+		  url : "graphTwo",
 	 	  dataType : "json",
 	 	  data : {success : 'success', url: url, url2: url2, Mcreate: Mcreate, Mcreate2: Mcreate2},
 	 	  success : function(data){
 
 		  		console.log(data);
+		  		if (data[0].type1 != 0) {
 		  		var script = "[";
 
 		  		for(var i = 0; i < data.length; i++){
@@ -475,18 +481,28 @@ $(document).ready(function(){
 
 				areaChart2(jsonScript, jsonScript2);
 
+		  	 }else{
+		  		 
+			  		loading.hide();
+			  		
+			  		var obj2 = document.createElement("div");
+			  		var morrisbar2 = document.getElementById("container2");
+			  		obj2.innerHTML="<table align='center' height='300px'><tr><td style='vertical-align:middle;' align='center' height='150px'><h5>등록된 데이터가 없습니다.</h5></td></tr></table>";
+			  		morrisbar2.prepend(obj2);
+		  		 }
 		  	 }
 	});
 	
 	$.ajax({
 		
 	      type : "POST",
-		  url : "graphTwo2",
+		  url : "graphTwo",
 	 	  dataType : "json",
 	 	  data : {success : 'success', url: url, url2: url2, Mcreate: Mcreate, Mcreate2: Mcreate2},
 	 	 success : function(data){
 
 		  		console.log(data);
+		  		if (data[0].type1 != 0) {
 		  		var script = "[";
 
 		  		for(var i = 0; i < data.length; i++){
@@ -521,6 +537,15 @@ $(document).ready(function(){
 
 				areaChart3(jsonScript, jsonScript2);
 
+		  	 }else{
+		  		 
+			  		loading.hide();
+			  		
+			  		var obj3 = document.createElement("div");
+			  		var morrisbar3 = document.getElementById("container3");
+			  		obj3.innerHTML="<table align='center' height='300px'><tr><td style='vertical-align:middle;' align='center' height='150px'><h5>등록된 데이터가 없습니다.</h5></td></tr></table>";
+			  		morrisbar3.prepend(obj3);
+		  		 }
 		  	 }
 	});
 	

@@ -2090,9 +2090,9 @@ public class MarketingController {
 		model.addAttribute("list1", portalService.nvlistSearchList2(cri));
 		model.addAttribute("list2", portalService.nvlistMinus3(cri));
 		model.addAttribute("creatDate", portalService.nvlistSearchTime2(cri));
+		model.addAttribute("title", portalService.nvlistOne2(cri));
 		
 		logger.info("url: " + url);
-		model.addAttribute("content", content);
 		
 		Integer totalCount = portalService.nvlistSearchTotalCnt2(cri);
 		
@@ -2100,7 +2100,6 @@ public class MarketingController {
 		
 		PageMakerFv pageMakerFv = new PageMakerFv();
 		
-		cri.setPortal_name(content);
 		pageMakerFv.setCri(cri);
 		pageMakerFv.setTotalCount(portalService.nvlistSearchTotalCnt2(cri));
 		
@@ -2174,9 +2173,9 @@ public class MarketingController {
 		model.addAttribute("list1", portalService.nvlistSearchList2(cri));
 		model.addAttribute("list2", portalService.nvlistMinus3(cri));
 		model.addAttribute("creatDate", portalService.nvSearchlistSearchTime2(cri));
+		model.addAttribute("title", portalService.nvlistOne2(cri));
 		
 		logger.info("url: " + url);
-		model.addAttribute("content", content);
 		
 		Integer totalCount = portalService.nvlistSearchListTotalCnt2(cri);
 		
@@ -2184,7 +2183,6 @@ public class MarketingController {
 		
 		PageMakerFv pageMakerFv = new PageMakerFv();
 		
-		cri.setPortal_name(content);
 		pageMakerFv.setCri(cri);
 		pageMakerFv.setTotalCount(portalService.nvlistSearchListTotalCnt2(cri));
 		
