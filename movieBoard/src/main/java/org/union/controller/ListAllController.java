@@ -417,6 +417,7 @@ public class ListAllController {
 		
 		logger.info("idx: " + idx);
 		logger.info("table: " + table);
+		logger.info("table   ["+table+"]     ");
 		
 		if("sns".equals(table)) {
 			logger.info("sns");

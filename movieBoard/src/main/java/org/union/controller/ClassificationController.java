@@ -452,7 +452,13 @@ public class ClassificationController {
 			vo.setMedia_idx(idx);
 			vo.setTextType(textType);
 			
-			mediaService.modifyType(vo);
+			if(vo.getTextType().equals("삭제글")) {
+				mediaService.modifyType(vo);
+				mediaService.deleteTextInsert(vo.getMedia_idx());
+				mediaService.deleteTextDelete(vo.getMedia_idx());
+			}else {
+				mediaService.modifyType(vo);
+			}
 			
 		}else if ("portal".equals(table)) {
 			logger.info("portal");
@@ -460,16 +466,28 @@ public class ClassificationController {
 			vo.setPortal_idx(idx);
 			vo.setTextType(textType);
 			
-			portalService.modifyType(vo);
+			if(vo.getTextType().equals("삭제글")) {
+				portalService.modifyType(vo);
+				portalService.deleteTextInsert(vo.getPortal_idx());
+				portalService.deleteTextDelete(vo.getPortal_idx());
+			}else {
+				portalService.modifyType(vo);
+			}
 			
 		}else if ("community".equals(table)) {
 			logger.info("community");
 			CommunityVO vo = new CommunityVO();
 			vo.setCommunity_idx(idx);
 			vo.setTextType(textType);
-
-			communityService.modifyType(vo);
-		
+			
+			if(vo.getTextType().equals("삭제글")) {
+				communityService.modifyType(vo);
+				communityService.deleteTextInsert(vo.getCommunity_idx());
+				communityService.deleteTextDelete(vo.getCommunity_idx());
+			}else {
+				communityService.modifyType(vo);
+			}
+			
 		}
 		
 		return "success";

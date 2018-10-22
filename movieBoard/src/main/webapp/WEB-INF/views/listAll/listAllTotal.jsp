@@ -712,7 +712,7 @@ $(function() {
 						console.log(tr.children);
 
 						if(tr.children[2] != null){
-							var table = tr.children[2].innerText;
+							var table = tr.children[2].innerText.trim();
 						}
 
 						console.log(idx);
@@ -731,9 +731,11 @@ $(function() {
 
 						swal("Delete!", "삭제처리가 완료되었습니다.", "success");
 
-						location.reload();
+						window.setTimeout("pageReload()", 3000);
 					});
 	  });
+	  
+	  
 
 
 	  //즉시처리 버튼 클릭시
@@ -753,7 +755,7 @@ $(function() {
 
 						swal("Success!", "즉시처리가 완료되었습니다.", "success");
 
-						location.reload();
+						window.setTimeout("pageReload()", 3000);
 					});
 	  });
 
@@ -875,6 +877,9 @@ $(function() {
 
   }); // end ready...
 
+  function pageReload() {
+	  location.reload();
+  }
 
 	function insertType(event) {
 
@@ -893,7 +898,7 @@ $(function() {
 		}
 
 		if (tr.children[2] != 'undefined') {
-			var table = tr.children[2].innerText;
+			var table = tr.children[2].innerText.trim();
 			console.log(table);
 		} else {
 			calcInsertData(event);
@@ -952,7 +957,7 @@ $(function() {
 
 			for(var i = 0; i < tr.length; i++){
 				var idx = tr[i].children[0].value;
-				var table = tr[i].children[2].innerText;
+				var table = tr[i].children[2].innerText.trim();
 				var arr = tr[i].children[7].children[0].children;
 
 
