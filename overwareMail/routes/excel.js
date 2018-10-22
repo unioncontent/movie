@@ -6,12 +6,23 @@ var datetime = require('node-datetime');
 var router = express.Router();
 // DB module
 var maillink = require('../models/maillink.js');
+var period = require('../models/period.js');
 
 const aDir = 'C:/overware/overwareMail/';
 
 router.get('/',async function(req, res) {
-  var sucess = await maillink.selectResultDetail2([req.query.idx,13]);
-  var fail = await maillink.selectResultDetail2([req.query.idx,0]);
+  var sucess = [];
+  var fail = [];
+  if(req.query.module == '1'){
+    sucess = await maillink.selectResultDetail2([req.query.idx,13]);
+    fail = await maillink.selectResultDetail2([req.query.idx,0]);
+  }
+  else if(req.query.module == '2'){
+    sucess = await period.call_excel([parseInt(req.query.idx),'']);
+    fail = await period.call_excel([parseInt(req.query.idx),'1']);
+  }
+  console.log(sucess);
+  console.log(fail);
   var wb = new xl.Workbook({
     defaultFont: {
       size: 12,
@@ -116,7 +127,15 @@ router.get('/',async function(req, res) {
     ws2.cell(row,7).string(moment(item.SENDTIME).format('YYYY-MM-DD HH:mm:ss'));
     ws2.cell(row,8).string(moment(item.GENDATE).format('YYYY-MM-DD HH:mm:ss'));
     ws2.cell(row,9).string('실패');
-    ws2.cell(row,10).string(settingErrorMsg(item.FINALRESULT));
+    if(req.query.module == '1'){
+      ws2.cell(row,10).string(settingErrorMsg(item.FINALRESULT));
+    }
+    else if(req.query.module == '2'){
+      ws2.cell(row,10).string(item.FINALRESULT);
+      if(item.send_success == 'X' && (item.FINALRESULT == '' || item.FINALRESULT == null)){
+        ws2.cell(row,10).string('기타 알수 없는 영구적인 오류');
+      }
+    }
   });
   var date = datetime.create();
   var today = date.format('YmdHM');

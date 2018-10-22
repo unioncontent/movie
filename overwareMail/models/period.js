@@ -20,14 +20,14 @@ var period = {
     var sql = 'call union_mail.dashboard2(?,?)';
     var result = await getResult(sql,param);
     return (result.length > 0)? result[0]:[];
-    // call dashboard(-1,25);
-    // call dashboard(-7,25);
   },
   call_stats: async function(param){
     var sql = 'call union_mail.stats(?,?,?,?,?,?,?,?,?,0)';
     return await getResult(sql,param);
-    // call dashboard(-1,25);
-    // call dashboard(-7,25);
+  },
+  call_stats2: async function(param){
+    var sql = 'call union_mail.stats_m(?,?,?,?,?,?,?,?,?,0)';
+    return await getResult(sql,param);
   },
   call_mail_detail: async function(param){
     var sql = 'call mail_detail(?, ?, ?, ?)';
@@ -39,6 +39,12 @@ var period = {
       return (result.length > 0)? ((result[0][0].c == null) ? 0:result[0][0].c) :0;
     }
     // call mail_detail(2, 755, '암수살인', '2018-10-06');
+  },
+  call_excel: async function(param){
+    var sql = 'call union_mail.excel(?,?)';
+    // call union_mail.excel(85, '1');
+    var result = await getResult(sql,param);
+    return (result.length > 0)? result[0]:[];
   },
   selectReservationView: async function(param){
     var sql = "select a.M_type, a.n_idx, a.M_subject, a.M_keyword as M_keyword_idx, k.keyword_main AS M_keyword,a.M_seq_number, a.M_invitation, a.M_template,date_format(a.M_senddate,'%Y-%m-%d  %H:%i:%s') as M_send, '0' as sendCount, '0' as success, '0' as fail from `union`.m_mail_all_a as a left join `union`.m_keyword_data as k ON a.M_keyword = k.keyword_idx\

@@ -89,7 +89,10 @@
                   <thead>
                     <%
                     function numberWithCommas(x) {
-                        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                      if(x == null){
+                        return 0;
+                      }
+                      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                     }
 
                     var list = list.concat(list2.concat(wlist));
@@ -541,8 +544,8 @@ function areaChart(){
           data.mymailer.forEach(function(item,idx){
             for(var i=0; i<8 ; i++){
               if(arr[i]['date'] == item.date){
-                arr[i]['success'] += parseInt(item.success);
-                arr[i]['fail'] += parseInt(item.fail);
+                arr[i]['success'] += parseInt((item.success == null) ? 0:item.success);
+                arr[i]['fail'] += parseInt((item.fail == null) ? 0:item.fail);
               }
             }
           });

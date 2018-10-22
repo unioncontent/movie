@@ -73,6 +73,7 @@ async function getListPageData(idx,param){
     type: '',
     mType: '',
     ivt:'',
+    module:'2',
     sDate:start,
     eDate:end
   };
@@ -121,10 +122,18 @@ async function getListPageData(idx,param){
     searchParam[5] = param.mType;
     data['mType'] = param.mType;
   }
+  if (typeof param.module !== 'undefined') {
+    data['module'] = param.module;
+  }
   try{
     // data['list'] = await period.selectView(searchBody,searchParam);
     // data['listCount'] = await period.selectViewCount(searchBody,searchParam);
-    var result = await period.call_stats(searchParam);
+    var result = [];
+    if(data.module == '1'){
+      result = await period.call_stats(searchParam);
+    } else{
+      result = await period.call_stats2(searchParam);
+    }
     data['list'] = (result.length > 0)? result[0]:[];
     data['listCount'] = (result.length > 0)? result[1][0].total:0;
     data['currentPage'] = currentPage;

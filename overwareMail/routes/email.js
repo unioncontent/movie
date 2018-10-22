@@ -779,7 +779,25 @@ async function mailInsert(req){
       throw new Error('updateResultError');
     }
     var values = [].map.call(recipients,async function(item,index) {
-      return [mailId,mailData.n_idx,item[1],item[0],req.user.n_idx,req.user.user_admin,mailData.keyword,mailData.M_seq_number,mailData.M_invitation,mailData.M_template,mailData.M_type,sender[2],mailData.M_group_title,mailData.M_mail_type,mailData.keyword_idx,mailData.M_group_idx,mailData.M_recipi,item[2],now];
+      return [mailId,
+        mailData.n_idx,
+        item[1],
+        item[0],
+        req.user.n_idx,
+        req.user.user_admin,
+        mailData.M_keyword,
+        mailData.M_seq_number,
+        mailData.M_invitation,
+        mailData.M_template,
+        mailData.M_type,
+        sender[2],
+        mailData.M_group_title,
+        mailData.M_mail_type,
+        mailData.keyword_idx,
+        mailData.M_group_idx,
+        mailData.M_recipi,
+        item[2],
+        now];
     });
     result = await mymailer.insertMailSendUser(values);
     console.log('insert결과:',result);
