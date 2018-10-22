@@ -2011,7 +2011,7 @@ public class MarketingController {
 		model.addAttribute("nVList", portalService.naverVideosList2(cri));
 		model.addAttribute("nVallList", portalService.naverVideosallList2(cri));
 		//model.addAttribute("fVListsearch", snsService.fvlistSearch(sns_content));
-		model.addAttribute("nVmonitorList", portalService.nvCheckList2());
+		model.addAttribute("nVmonitorList", portalService.nvCheckList());
 		
 		Integer totalCount = portalService.naverVideosListTotalCnt2(cri);
 		

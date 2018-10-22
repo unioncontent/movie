@@ -313,6 +313,7 @@
                                               <th width="5%">NO</th>
                                               <th width="10%">등록날짜</th>
                                               <th width="10%">언론사</th>
+                                              <th width="5%">출처</th>
                                               <th width="10%">기자</th>
                                               <th width="30%">제목</th>
                                               <th width="10%">키워드</th>
@@ -328,6 +329,10 @@
                                             <%-- <fmt:formatDate value="${mediaVO.writeDate}" pattern="yyyy-MM-dd kk:mm:ss"/> --%>
                                             </td>
                                             <td>${List.media_name}</td>
+                                            <td width="5%">
+		                                    <c:if test="${List.media_subname != null}">${List.media_subname}</c:if>
+		                                    <c:if test="${List.media_subname == null}"><i class="icofont icofont-minus"></i></c:if>
+		                                    </td>
                                             <td>
                                             <c:if test="${List.reporter_name != null}">${List.reporter_name}</c:if>
                                             <c:if test="${List.reporter_name == null}"><i class="icofont icofont-minus"></i></c:if>
@@ -340,7 +345,7 @@
                                         </tbody>
                                         <tfoot>
                                           <tr>
-                                            <td colspan="7">
+                                            <td colspan="8">
                                               <ul class="pagination float-right">
                                                 <c:if test="${pageMaker.prev}">
                                               		<li class="page-item">
