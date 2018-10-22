@@ -1,0 +1,117 @@
+.btn-excel{
+  background: #02723b;
+  border-color:#02723b;
+}
+.btn-excel:hover {
+  color: #fff;
+  background-color: #00a052;
+  border-color: #00a052;
+}
+.modal-lg-1 {
+  max-width: 1016px;
+}
+/* loader */
+.preloader3{
+  display: none;
+  padding-top:20%;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 100px;
+  width: 500px;
+  margin: auto;
+  max-width: 100%;
+  z-index: 10000;
+}
+.modal-loader{
+  position:  absolute;
+  margin: auto 0;
+  width:  100%;
+  padding-top: 17%;
+}
+#loader_p,#loader_s,#loader_f{
+  display: none;
+}
+/* select box width */
+#selectMType,#selectType,#selectKeyword,#selectModule{
+  min-width: 100px;
+}
+.reportrange{
+  min-width: 207px;
+}
+.row #smtp-Modal dl{
+  font-size: 14px;
+}
+.table.table-sm td, .table.table-sm th {
+  padding: .3rem;
+}
+#error-Modal .modal-body,
+#success-Modal .modal-body{
+  padding: 0;
+}
+.tab-content{
+  overflow: auto;
+  max-height: 457px;
+}
+.card .card-header span:not(.input-group-addon){
+  display: inline;
+}
+.table td, .table th{
+  vertical-align: middle;
+}
+.btn i {
+  margin-right: 0px;
+}
+
+/* mail preview css start */
+#mailBody{
+  overflow: auto;
+}
+#mailBody{
+  overflow: auto;
+  padding: 0;
+  max-height: 700px;
+}
+#mailBody a:hover {
+  color: #3399cc;
+  text-decoration: none;
+}
+#mailBody table{
+  border-collapse: separate;
+}
+#mailBody td,th{
+  white-space: inherit;
+  white-space: pre-line;
+
+}
+/* mail preview css end */
+.table-period td,.table-period th{
+  text-align: center;
+}
+.title_nobr,.kwd_nobr,.error_nobr,.num_nobr{
+  font-size: 15px;
+  padding-left: 3px;
+  text-overflow: ellipsis;
+  width: 400px;
+  overflow: hidden;
+}
+.num_nobr{
+  width: 50px;
+}
+.error_nobr{
+  width: 250px;
+  margin: 0px;
+}
+.error_nobr_more{
+  white-space: pre-line;
+}
+.title_nobr:hover,.fail:hover,.success:hover{
+  cursor:pointer;
+  font-weight: bold;
+}
+.kwd_nobr{
+  width: 112px;
+}
+.widthMin{
+  min-width: 40px;
+}

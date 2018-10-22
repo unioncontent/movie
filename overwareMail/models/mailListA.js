@@ -43,7 +43,7 @@ var mailListAll = {
     return [].map.call(result, function(obj) { return obj.M_email.replace('\r',''); });
   },
   getOneEmail2 : async function(param){
-    var sql = 'select M_name,M_email from m_mail_list_all ';
+    var sql = 'select M_name,M_email,M_ptitle from m_mail_list_all ';
     if(typeof param == 'object'){
       sql += 'where n_idx ='+param[0];
       for(var i = 1; i < param.length; i++){
