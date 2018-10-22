@@ -48,7 +48,7 @@ router.get('/',isAuthenticated,async function(req, res) {
   var data = await getListPageData(req.user.user_admin,req.query);
   // data.klist = await keyword.selectMovieKwdAll(req.user.user_admin,req.user.n_idx) || [];
   data.klist = await keyword.selectKwd_o() || [];
-  
+
   res.render('news',data);
 });
 
@@ -75,7 +75,7 @@ function formatDate(d) {
 async function getListPageData(idx,param){
   var data = {
     list:[],
-    listCount:{total:0},
+    listCount:0,
     sDate: formatDate(new Date(Date.now() - 1 * 24 * 3600 * 1000)),
     eDate: formatDate(new Date()),
     limit: 30,
@@ -83,6 +83,7 @@ async function getListPageData(idx,param){
     search: '',
     search2: '',
     type: '',
+    site: '',
     page: '',
     rank:false,
     video:false
@@ -113,6 +114,10 @@ async function getListPageData(idx,param){
   if (typeof param.keyword !== 'undefined') {
     searchBody['keyword'] = param.keyword;
     data['keyword'] = param.keyword;
+  }
+  if (typeof param.site !== 'undefined') {
+    searchBody['site'] = param.site;
+    data['site'] = param.site;
   }
   if (typeof param.rank !== 'undefined') {
     if(param.rank == 'ture')
@@ -181,7 +186,10 @@ router.post('/addNews',isAuthenticated,async function(req, res, next) {
       var param = item;
       console.log(item);
       try{
-        await newsclipping.insert(param.detail,[param.mName,param.date,param.code,param.idx,param.idx]);
+        await newsclipping.insert(param.detail,[param.mName,param.rName,param.date,param.code,param.idx,param.idx]);
+        if(param.mName != '' && param.rName != ''){
+          await newsclipping.insertReporter([param.mName,param.rName,param.mName,param.rName]);
+        }
       }
       catch(err){
         console.log(err);
@@ -264,13 +272,14 @@ router.post('/list/update',isAuthenticated,async function(req, res, next) {
 async function getListPageData2(idx,param){
   var data = {
     list:[],
-    listCount:{total:0},
+    listCount:0,
     sDate: formatDate(new Date(Date.now() - 1 * 24 * 3600 * 1000)),
     eDate: formatDate(new Date()),
     limit: 30,
     search: '',
     keyword: '',
     type: '',
+    site: '',
     page: 1
   };
   var currentPage = 1;
@@ -291,6 +300,10 @@ async function getListPageData2(idx,param){
   if (typeof param.type !== 'undefined') {
     searchBody['type'] = param.type;
     data['type'] = param.type;
+  }
+  if (typeof param.site !== 'undefined') {
+    searchBody['site'] = param.site;
+    data['site'] = param.site;
   }
   if (typeof param.sDate !== 'undefined' && typeof param.eDate !== 'undefined') {
     searchBody['sDate'] = param.sDate;

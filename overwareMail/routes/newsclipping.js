@@ -122,63 +122,47 @@ router.post('/send',isAuthenticated, async function(req, res) {
       mailAllParam['M_group'] = groupsIdx.join(',');
     }
   }
-
+  var dt = datetime.create();
+  var now = dt.format('Y-m-d H:M:S');
+  // 발송시각
+  if(typeof req.body.end_reserve_time !='undefined'){
+    mailAllParam['M_senddate'] = req.body['end_reserve_time'];
+  } else{
+    mailAllParam['M_senddate'] = now;
+  }
   var m_idx_a = null;
   // update code
   // await maillink.update([mailAllParam.M_body,'104']);
   // res.status(500).send(result);
   // return false;
-
   // 메일발송 리스트 insert
   var resultInsert = await nMailAll.insert(mailAllParam);
   m_idx_a = resultInsert.insertId;
+
   // 메일발송 리스트 table에 inser되었는지 체크
   var insertCheck = false;
   // 메일발송 상세정보 insert
   if(m_idx_a){
-    var dt = datetime.create();
-    var now = dt.format('Y-m-d H:M:S');
-    // ML_AUTOMAIL_MESSAGE INSERT
-    // var queryParam = {
-    //   'MSGID':m_idx_a,
-    //   'CONTENT':req.body['M_body'],
-    //   'STATUS':'1',
-    //   'GENDATE':now
-    // };
-    // try {
-    //   var minify = require('html-minifier').minify;
-    //   var result = await minify(queryParam['CONTENT']);
-    //   queryParam['CONTENT'] = result;
-    // } catch (e) {
-    //   console.log(e);
-    // }
-    // await maillink.insert('ML_AUTOMAIL_MESSAGE',queryParam);
-
     var senderInfo = await mailListA.getOneInfo(mailAllParam.M_sender);
     var sender = (senderInfo.length > 0) ? senderInfo[0]: [];
     var recipiArr = JSON.parse('['+mailAllParam.M_recipi+']');
     var recipiNgroup = recipiArr.concat(groups2allIdx);
     recipiNgroup = recipiNgroup.slice().sort(function(a,b){return a - b}).reduce(function(a,b){if (a.slice(-1)[0] != b) a.push(b);return a;},[]);
-    // console.log(groups2allIdx);
-    // console.log(recipiArr);
-    // console.log(recipiNgroup);
     await asyncForEach(recipiNgroup, async (item, index, array) => {
       if(insertCheck == false){
         // 보내는 사람 email 확인
         var recipiInfo = await mailListA.getOneInfo(item);
         if(recipiInfo.length != 0){
-          var mailDetailParam = {
-            M_idx_A : m_idx_a,
-            E_mail : recipiInfo[0].M_email,
-            P_title : recipiInfo[0].M_ptitle,
-            P_name : recipiInfo[0].M_name
-          };
           try{
+            var mailDetailParam = {
+              M_idx_A : m_idx_a,
+              E_mail : recipiInfo[0].M_email,
+              P_title : recipiInfo[0].M_ptitle,
+              P_name : recipiInfo[0].M_name
+            };
             if('end_reserve_time' in req.body){
               mailDetailParam['M_send'] = req.body.end_reserve_time;
             }
-            // await nMailDetailB.insert(mailDetailParam);
-
             // 메일 보내기
             var param = {
               'AUTOMAILID':'AU-4126512',
@@ -220,17 +204,7 @@ router.post('/send',isAuthenticated, async function(req, res) {
     return false;
   }
 
-  // 메일 결과
-  setTimeout(async () =>{
-    console.log('메일 send result');
-    var result = await maillink.selectResult([m_idx_a]);
-    if(result){
-      res.send({status:true});
-    }
-    else{
-      res.status(500).send('메일 발송에 실패했습니다.');
-    }
-  },5000);
+  res.send({status:true});
 });
 
 async function asyncForEach(array, callback) {
@@ -249,7 +223,7 @@ router.get('/period',isAuthenticated,async function(req, res) {
 });
 
 router.post('/period/result',isAuthenticated,async function(req, res, next) {
-  var data = await newsclipping.selectResultDetail(req.body);
+  var data = await newsclipping.call_newsclipping_period_result(Object.values(req.body));
   res.send({status:true,result:data});
 });
 
@@ -280,15 +254,11 @@ async function getListPageData(idx,param){
     eDate: formatDate(new Date())
   };
   var limit = 10;
-  var searchParam = [idx,idx,0,limit];
+  // var searchParam = [idx,idx,0,limit];
   var currentPage = 1;
   var searchBody = {};
   if (typeof param.page !== 'undefined') {
     currentPage = param.page;
-  }
-  if (parseInt(currentPage) > 0) {
-    searchParam[2] = (currentPage - 1) * limit
-    data['offset'] = searchParam[2];
   }
   if (typeof param.sDate !== 'undefined' && typeof param.eDate !== 'undefined') {
     searchBody['sDate'] = param.sDate;
@@ -298,11 +268,16 @@ async function getListPageData(idx,param){
   }else{
     searchBody['sDate'] = data.sDate;
     searchBody['eDate'] = data.eDate;
-
+  }
+  var searchParam = [data.sDate,data.eDate,0,limit];
+  if (parseInt(currentPage) > 0) {
+    searchParam[2] = (currentPage - 1) * limit
+    data['offset'] = searchParam[2];
   }
   try{
-    data['list'] = await newsclipping.selectView(searchBody,searchParam);
-    data['listCount'] = await newsclipping.selectViewCount(searchBody,searchParam);
+    var result = await newsclipping.call_newsclipping_period(searchParam);
+    data['list'] = (result.length > 0)? result[0]:[];
+    data['listCount'] = (result.length > 0)? result[1][0].total:0;
     data['currentPage'] = currentPage;
   }
   catch(e){
