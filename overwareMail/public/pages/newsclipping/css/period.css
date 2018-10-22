@@ -1,0 +1,63 @@
+/* loader */
+.preloader3{
+  display: none;
+  padding-top:20%;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 100px;
+  width: 500px;
+  margin: auto;
+  max-width: 100%;
+  z-index: 10000;
+}
+/* loader */
+.modal-loader{
+  position:  absolute;
+  margin: auto 0;
+  width:  100%;
+  padding-top: 17%;
+}
+#loader_s,#loader_f{
+  position: absolute;
+  padding-top: 32%;
+  display: none;
+}
+.reportrange{
+  min-width: 207px;
+}
+.table.table-sm td, .table.table-sm th {
+  padding: .3rem;
+}
+.card .card-header span:not(.input-group-addon){
+  display: inline;
+}
+.table td, .table th{
+  vertical-align: middle;
+  text-align: center;
+}
+.btn i {
+  margin-right: 0px;
+}
+.title_nobr,.kwd_nobr,.error_nobr,.num_nobr{
+  font-size: 15px;
+  margin: 0px auto;
+  padding-left: 3px;
+  text-overflow: ellipsis;
+  width: 400px;
+  overflow: hidden;
+}
+.num_nobr{
+  width: 50px;
+}
+.error_nobr{
+  width: 250px;
+  margin: 0px;
+}
+.error_nobr_more{
+  white-space: pre-line;
+}
+.title_nobr:hover,.fail:hover,.success:hover{
+  cursor:pointer;
+  font-weight: bold;
+}

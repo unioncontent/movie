@@ -1,0 +1,33 @@
+.news-delete{
+  color: red;
+  margin-left: 5px;
+}
+.groupBtn{
+  padding: 5px 14px 5px 16px;
+  position:  relative;
+  bottom: 4px;
+}
+.checkboxs input[type="checkbox"] + label {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid #bcbcbc;
+  cursor: pointer;
+  margin-bottom: 0px;
+  margin-right: 5px;
+}
+.checkboxs input[type="checkbox"]:checked + label:after {
+  content: '\2714';
+  font-size: 12px;
+  display: block;
+  clear: both;
+  height: 10px;
+  line-height: 17px;
+  color: gray;
+}
+.checkboxs input[type="checkbox"] {
+  display: none;
+}
+ul.relation_list {
+  left: 35px;
+}

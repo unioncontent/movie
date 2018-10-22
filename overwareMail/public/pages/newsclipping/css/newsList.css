@@ -1,0 +1,86 @@
+.site-logo{
+  width:16px;
+  height: 16px;
+  /* margin-bottom:3px; */
+  margin-right: 5px;
+  vertical-align:text-bottom;
+}
+.datepicker{
+  min-width: 88px;
+}
+/* select box width */
+.btn-sm {
+  padding: 6px 7px 6px 12px;
+  font-size: 12px;
+}
+#searchInput{
+  font-size: 12px
+}
+#selectNewsType,#selectKeyword,#selectNum{
+  min-width: 100px;
+}
+.reportrange{
+  min-width: 207px;
+}
+.btn-sm.btn-edit{
+  padding-right: 10px;
+}
+.table{
+  font-size: 12px;
+}
+.table td, .table th {
+  text-align: center;
+  vertical-align: middle;
+}
+.table input, .table select ,.table tbody div{
+  font-size: 12px;
+}
+.title_nobr,.nobr,.key_nobr,.rank_nobr{
+  font-size: 15px;
+  padding-left: 3px;
+  text-overflow: ellipsis;
+  width: 346px;
+  overflow: hidden;
+}
+.rank_nobr{
+  width: 50px;
+}
+.nobr{
+  width: 60px;
+}
+.key_nobr{
+  width: 102px;
+}
+.nobr>i,.key_nobr>i,.rank_nobr>i{
+  font-size: 10px;
+}
+.select-news{
+  font-size: 12px;
+  max-height: 35px;
+  line-height: 16px;
+}
+.title_nobr:hover{
+  cursor:pointer;
+  font-weight: bold;
+}
+.border-checkbox-section .border-checkbox-group .border-checkbox-label{
+  margin: 0px;
+}
+#listTable .table thead th{
+  vertical-align: middle;
+  text-align: center;
+}
+#addBtn{
+  font-weight: bold;
+  color: white;
+  height: 36px;
+  background-color: #a6a6a6;
+  border-color: #a6a6a6;
+}
+#newsAddBtn{
+  font-weight: bold;
+}
+/* daterangepicker */
+.card .card-header span:not(.input-group-addon) {
+  display: inline;
+}
