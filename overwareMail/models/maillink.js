@@ -15,7 +15,9 @@ var mail = {
   insert: async function(values){
     var sql = 'INSERT INTO union_mail.ml_automail_tran ( AUTOMAILID, CHANNEL, MSGGENTYPE, EMSUBJECT, EMFROMNAME, EMFROMADDRESS, EMTONAME, EMTOADDRESS, EMMSGURL, SENDTIME, GENDATE, ETC1 ) VALUES ?';
     Promise.all(values).then(async function(v) {
-      return await getResult(sql,[v]);
+      await getResult(sql,[v]);
+      sql2 = 'update union_mail.ml_automail_tran set EMMSGURL = concat(EMMSGURL,\'&num=\',SEQ) where EMMSGURL not like \'%&num=%\'';
+      return await getResult(sql2);
     }).catch(function(err){
       console.error('Promise.all error', err);
       return;
