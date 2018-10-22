@@ -36,18 +36,18 @@ router.post('/statistics',isAuthenticated, async function(req, res, next) {
     successNfailCount : {success:result[0].success,fail:result[0].fail},
     todayCount : result[0].nCount || 0,
     reservationCount : result[0].wtCount || 0,
-    waitingCount : result[0].wCount || 0,
+    waitingCount : await period.selectReservationCount([2,req.user.n_idx,req.user.n_idx,req.user.n_idx]),
     successP : 0,
     failP : 0
   };
   result = await period.call_dashbord([0,req.user.n_idx]);
   console.log('statistics2:',result);
-  data.todaySendCount += result[0].sendCount;
-  data.todayCount += result[0].nCount;
-  data.successNfailCount.success += result[0].success;
-  data.successNfailCount.fail += result[0].fail;
-  data.reservationCount += result[0].wtCount;
-  data.waitingCount += await period.selectReservationCount([2,req.user.n_idx,req.user.n_idx,req.user.n_idx]);;
+  data.todaySendCount += result[0].sendCount || 0;
+  data.todayCount += result[0].nCount || 0;
+  data.successNfailCount.success += result[0].success || 0;
+  data.successNfailCount.fail += result[0].fail || 0;
+  data.reservationCount += result[0].wtCount || 0;
+  data.waitingCount += result[0].wCount || 0;
 
   var tNum = parseInt(data.todaySendCount);
   if(tNum > 0){
