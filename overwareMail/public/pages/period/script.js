@@ -151,6 +151,7 @@ $(document).on("click",".btn-period",function(){
   if(inputEle.eq(1).val() != ''){
     var param = {
       M_idx_A:idxParam,
+      M_module:inputEle.eq(2).val(),
       keyword:tdEles.eq(1).text(),
       sDate:tdEles.eq(0).text(),
       eDate:tdEles.eq(0).text()

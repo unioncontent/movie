@@ -33,12 +33,12 @@ router.post('/getPeriod',isAuthenticated,async function(req, res, next) {
     //   newsCount:await period.getNewsCount(req.body),
     //   replyCount:await period.getReplyCount(req.body)
     // };
-    var mediaNReporterCount = await period.call_mail_detail([1,req.body.M_idx_A,req.body.keyword,req.body.sDate]);
+    var mediaNReporterCount = await period.call_mail_detail(req.body.M_module,[1,req.body.M_idx_A,req.body.keyword,req.body.sDate]);
     var data = {
       media:mediaNReporterCount.media_c,
       reporter:mediaNReporterCount.reporter_c,
-      newsCount:await period.call_mail_detail([2,req.body.M_idx_A,req.body.keyword,req.body.sDate]),
-      replyCount:await period.call_mail_detail([3,req.body.M_idx_A,req.body.keyword,req.body.sDate])
+      newsCount:await period.call_mail_detail(req.body.M_module,[2,req.body.M_idx_A,req.body.keyword,req.body.sDate]),
+      replyCount:await period.call_mail_detail(req.body.M_module,[3,req.body.M_idx_A,req.body.keyword,req.body.sDate])
     };
     console.log(data);
     res.send({status:true,result:data});
@@ -129,9 +129,10 @@ async function getListPageData(idx,param){
     // data['list'] = await period.selectView(searchBody,searchParam);
     // data['listCount'] = await period.selectViewCount(searchBody,searchParam);
     var result = [];
+    console.log(data.module);
     if(data.module == '1'){
       result = await period.call_stats(searchParam);
-    } else{
+    } else if(data.module == '2'){
       result = await period.call_stats2(searchParam);
     }
     data['list'] = (result.length > 0)? result[0]:[];
