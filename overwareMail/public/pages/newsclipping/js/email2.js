@@ -141,7 +141,7 @@ function getNewsClippingData(){
             siteLogoHtml ='<img alt="'+value.media_subname+'" style="width: 15px;height: 15px;margin-right: 2px;vertical-align:text-bottom;" src="http://showbox.email/images/newsclipping/'+value.media_subname+'_logo.png" class="site-logo">';
           }
 
-          var replyHtml = '<label style="display: inline-block;border-radius: 10px;padding: 2px 6px;font-size: 84%;font-weight: 700;line-height: 1;color: #fff;text-align: center;white-space: nowrap;vertical-align: baseline;background-color: #bdc3c7;margin-left: .5rem;">'+((value.replynum == null)? '0':value.replynum)+'</label>';
+          var replyHtml = '<label class="replyLabel" style="display: inline-block;border-radius: 10px;padding: 2px 6px;font-size: 84%;font-weight: 700;line-height: 1;color: #fff;text-align: center;white-space: nowrap;vertical-align: baseline;background-color: #bdc3c7;margin-left: .5rem;">'+((value.replynum == null)? '0':value.replynum)+'</label>';
           // 4.쇼박스기업뉴스
           if(value.news_type == "4"){
             //  title="'+value.media_title+'"
@@ -191,7 +191,7 @@ function getNewsClippingData(){
             if (v.media_subname != 'out' && v.media_subname != null){
               siteLogoHtml_s ='<img alt="'+v.media_subname+'" style="width: 15px;height: 15px;margin-right: 2px;vertical-align:text-bottom;" src="http://showbox.email/images/newsclipping/'+v.media_subname+'_logo.png" class="site-logo">';
             }
-            var replyHtml = '<label style="display: inline-block;border-radius: 10px;padding: 2px 6px;font-size: 84%;font-weight: 700;line-height: 1;color: #fff;text-align: center;white-space: nowrap;vertical-align: baseline;background-color: #bdc3c7;margin-left: .5rem;">'+((v.replynum == null)?'0':v.replynum)+'</label>';
+            var replyHtml = '<label class="replyLabel" style="display: inline-block;border-radius: 10px;padding: 2px 6px;font-size: 84%;font-weight: 700;line-height: 1;color: #fff;text-align: center;white-space: nowrap;vertical-align: baseline;background-color: #bdc3c7;margin-left: .5rem;">'+((v.replynum == null)?'0':v.replynum)+'</label>';
             html +='<span style="margin-left:5px;"><a href="'+v.url+'" target="_blank"><div style="display:inline-block;overflow:hidden;max-width:492px;text-decoration:none !important;color:black;text-overflow:ellipsis;white-space:nowrap;word-wrap:normal;word-break:normal;vertical-align:top;">['+siteLogoHtml_s+v.media_name+replyHtml+']</div></a><i class="fas fa-times news-delete" data-idx="'+v.media_idx+'"  data-type="news_mail" data-str="media_idx"></i></span>';
           });
           html += '</li>';
@@ -274,25 +274,28 @@ function getByteLength(s,b,i,c){
 function settingMailBody(){
   // 최대 65535
   $("#M_body").clone().prependTo( "#clone" );
-  $("#clone").find('.news-delete').remove();
-  var o_body = $("#clone").html();
-  var bodyStr = o_body;
-  var dateStr = $.datepicker.formatDate('yy-mm-dd', new Date($('#datepicker2').val()));
-  var msg = '<div style="padding:34px 0;text-align:center;"><a href="http://showbox.email/preview/newsclipping?date='+dateStr+'" target="_blank" style="text-align:center;font-size:16px;font-family:helvetica;color:#ffffff;border-radius:100px;padding:8px 20px;border: 1px solid #ff8b00;display:inline-block;background:  #ff8b00;font-weight:bold;text-decoration: none;">뉴스클리핑 전체보기</div>';
-  if(getByteLength(bodyStr+msg) > 65535){
-    jQuery.fn.reverse = [].reverse;
-    $("#clone").find('.section').reverse().each(function (i) {
-      console.log(getByteLength($("#clone").html()+msg));
-      $(this).remove();
-      if(getByteLength($("#clone").html()+msg) < 65535){
-        return false;
-      }
-    });
-  }
-  $("#clone").find('.section').last().after(msg);
-  bodyStr = $("#clone").html();
+  // 댓글수 메일 발송시 안보이도록
+  $("#clone").find('.replyLabel').remove();
+  // $("#clone").find('.news-delete').remove();
+  // var o_body = $("#clone").html();
+  // var bodyStr = o_body;
+  // var dateStr = $.datepicker.formatDate('yy-mm-dd', new Date($('#datepicker2').val()));
+  // var msg = '<div style="padding:34px 0;text-align:center;"><a href="http://showbox.email/preview/newsclipping?date='+dateStr+'" target="_blank" style="text-align:center;font-size:16px;font-family:helvetica;color:#ffffff;border-radius:100px;padding:8px 20px;border: 1px solid #ff8b00;display:inline-block;background:  #ff8b00;font-weight:bold;text-decoration: none;">뉴스클리핑 전체보기</div>';
+  // if(getByteLength(bodyStr+msg) > 65535){
+  //   jQuery.fn.reverse = [].reverse;
+  //   $("#clone").find('.section').reverse().each(function (i) {
+  //     console.log(getByteLength($("#clone").html()+msg));
+  //     $(this).remove();
+  //     if(getByteLength($("#clone").html()+msg) < 65535){
+  //       return false;
+  //     }
+  //   });
+  // }
+  // $("#clone").find('.section').last().after(msg);
+  var bodyStr = $("#clone").html();
   $("#clone").empty();
-  return {str:bodyStr,o_str:o_body};
+  return bodyStr;
+  // return {str:bodyStr,o_str:o_body};
 }
 // 메일 발송 버튼 클릭시
 $(".sendBtn").on("click",function(){
@@ -300,7 +303,7 @@ $(".sendBtn").on("click",function(){
     'M_sender': $(".sender-select").select2("val"),
     'M_recipi': $(".recipi-select").select2("val"),
     'M_group': $('.group-select').val() || [],
-    'M_body':$("#M_body").parents(".col-sm-10").html(),
+    'M_body':settingMailBody(),
     'M_type': $("input:radio[name=M_type]:checked").val()
   };
   var check=true;
