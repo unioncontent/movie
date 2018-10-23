@@ -203,7 +203,7 @@ function getNewsClippingData(){
           if (value.media_subname != 'out' && value.media_subname != null){
             siteLogoHtml ='<img alt="'+value.media_subname+'" style="width: 15px;height: 15px;margin-right: 2px;vertical-align:text-bottom;" src="http://showbox.email/images/newsclipping/'+value.media_subname+'_logo.png" class="site-logo">';
           }
-          var replyHtml = '<label style="display: inline-block;border-radius: 10px;padding: 2px 6px;font-size: 84%;font-weight: 700;line-height: 1;color: #fff;text-align: center;white-space: nowrap;vertical-align: baseline;background-color: #bdc3c7;margin-left: .5rem;">'+((value.replynum == null)? '0':value.replynum)+'</label>';
+          var replyHtml = '<label class="replyLabel" style="display: inline-block;border-radius: 10px;padding: 2px 6px;font-size: 84%;font-weight: 700;line-height: 1;color: #fff;text-align: center;white-space: nowrap;vertical-align: baseline;background-color: #bdc3c7;margin-left: .5rem;">'+((value.replynum == null)? '0':value.replynum)+'</label>';
 
           // 4.쇼박스기업뉴스
           if(value.news_type == "4"){
@@ -263,7 +263,7 @@ function getNewsClippingData(){
             if (v.media_subname != 'out' && v.media_subname != null){
               siteLogoHtml_s ='<img alt="'+v.media_subname+'" style="width: 15px;height: 15px;margin-right: 2px;vertical-align:text-bottom;" src="http://showbox.email/images/newsclipping/'+v.media_subname+'_logo.png" class="site-logo">';
             }
-            var replyHtml = '<label style="display: inline-block;border-radius: 10px;padding: 2px 6px;font-size: 84%;font-weight: 700;line-height: 1;color: #fff;text-align: center;white-space: nowrap;vertical-align: baseline;background-color: #bdc3c7;margin-left: .5rem;">'+((v.replynum == null)?'0':v.replynum)+'</label>';
+            var replyHtml = '<label class="replyLabel" style="display: inline-block;border-radius: 10px;padding: 2px 6px;font-size: 84%;font-weight: 700;line-height: 1;color: #fff;text-align: center;white-space: nowrap;vertical-align: baseline;background-color: #bdc3c7;margin-left: .5rem;">'+((v.replynum == null)?'0':v.replynum)+'</label>';
             html ='<li> <img src="https://ssl.pstatic.net/sstatic/search/pc/img/bu_news_sublst.gif" style="vertical-align:  text-top;"><a href="'+v.url+'" target="_blank"><div style="display: inline-block;overflow: hidden;max-width: 492px;text-decoration: none !important;color: black;margin-right: 5px;margin-left: 5px;text-overflow: ellipsis;white-space: nowrap;word-wrap: normal;word-break: normal;vertical-align: top;">'+siteLogoHtml_s+v.media_title+replyHtml+'</div></a><span class="txt_sinfo" style="display: inline-block;overflow: hidden;max-width: 260px;white-space: nowrap;text-overflow: ellipsis;vertical-align: top;color: #666;"><span class="press">'+v.media_name+'</span><span class="bar" style="display: inline-block;overflow: hidden;width: 0;height: 11px;margin: -1px 5px 1px 4px;border-left: 1px solid #eaeaea;vertical-align: middle;"></span> '+v.writeDate+' <i class="fas fa-times news-delete" data-idx="'+v.media_idx+'"  data-type="news_mail" data-str="media_idx"></i></span> </li>';
             $('div[data-idx='+index+']').siblings('.relation_list').append(html);
           });
@@ -339,6 +339,8 @@ function settingMailBody(){
   $("#clone").find('.news-delete').remove();
   $("#clone").find('.groupBtn').remove();
   $("#clone").find('.checkboxs').remove();
+  // 댓글수 메일 발송시 안보이도록
+  $("#clone").find('.replyLabel').remove();
   // var o_body = $("#clone").html();
   // var bodyStr = o_body;
   // var dateStr = $.datepicker.formatDate('yy-mm-dd', new Date($('#datepicker2').val()));
