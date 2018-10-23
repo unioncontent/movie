@@ -290,6 +290,9 @@
 			and updateDate <![CDATA[>=]]> #{startDate}
 			and updateDate <![CDATA[<=]]> #{endDate}
 		</if>
+		<if test="textType != null">
+			and textType = #{textType}
+		</if>
 	</sql>
 	
 	<sql id="allsearch">
