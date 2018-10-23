@@ -430,9 +430,10 @@ router.post('/send',isAuthenticated, async function(req, res) {
 // 메일 작성 중 테스트 발송
 router.post('/test',isAuthenticated, async function(req, res) {
   try{
-    console.log( '/test req :',req);
+    console.log( '/test req :',req.body);
     var mailAllParam = {
       M_email:req.body['M_email'],
+      M_template:req.body['M_template'],
       M_seq_number:req.body['M_seq_number'],
       M_invitation:req.body['M_invitation'],
       M_body: req.body['M_body'],
@@ -444,7 +445,7 @@ router.post('/test',isAuthenticated, async function(req, res) {
 
     var dt = datetime.create();
     var now = dt.format('Y-m-d H:M:S');
-    if(req.body.module == '1'){
+    if(req.body.M_module == '1'){
       var resultInsert = await maillink.insert2('ml_mail_test',mailAllParam);
       var idx = resultInsert.insertId;
       if(idx == undefined){
@@ -457,7 +458,7 @@ router.post('/test',isAuthenticated, async function(req, res) {
         throw new Error('maillink insert 실패');
       }
     }
-    else if(req.body.module == '2'){
+    else if(req.body.M_module == '2'){
       var param_i = {
       user_id:'test',
       title:'[테스트 발송]  '+mailAllParam.M_subject,
@@ -477,7 +478,7 @@ router.post('/test',isAuthenticated, async function(req, res) {
       linkYN:'Y',
       total_count:'0'
       };
-      var result1 = await mail.insert('customer_info',param_i);
+      var result1 = await mymailer.insert('customer_info',param_i);
       if(!('insertId' in result1)){
         throw new Error('mail insert 실패');
       }
@@ -487,11 +488,11 @@ router.post('/test',isAuthenticated, async function(req, res) {
         first:'테스트 메일 수신자',
         regist_date:now
       };
-      var result = await mail.insert('customer_data',param_d);
+      var result = await mymailer.insert('customer_data',param_d);
       if(!('insertId' in result)){
         throw new Error('mail insert 실패');
       }
-      result = await mail.updateSendInfo(['X','X','X',result1.insertId]);
+      result = await mymailer.updateSendInfo(['X','X','X',result1.insertId]);
       if(result==[]){
         throw new Error('mail insert 실패');
       }
@@ -645,6 +646,7 @@ router.post('/resend',isAuthenticated, async function(req, res) {
 });
 
 async function settingMailBody(bodyHtml,keyword,template,idx,num,ivt){
+  console.log('settingMailBody('+bodyHtml+','+keyword+','+template+','+idx+','+num+','+ivt+')');
   var sideHtmlStart = '<table width="750" align="center" cellpadding="0" cellspacing="0" style="border: solid 1px #cacaca; padding: 20px;"><tbody><tr><td>';
   if(template == '0'){
     sideHtmlStart += '<table width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td width="642"><img src="http://showbox.email/templates/images/logo/show_logo.png" width="135" height="36" alt="로고"></td><td width="92"><p style="font-size:  12px;">NEWS ';
@@ -791,10 +793,8 @@ async function mailInsert(req){
         mailData.M_template,
         mailData.M_type,
         sender[2],
-        mailData.M_group_title,
         mailData.M_mail_type,
-        mailData.keyword_idx,
-        mailData.M_group_idx,
+        mailData.M_group.join(),
         mailData.M_recipi,
         item[2],
         now];

@@ -55,7 +55,7 @@ var mailListAll = {
       sql += 'where n_idx ='+param;
     }
     var result = await getResult(sql,[]);
-    return [].map.call(result, function(obj) { return [obj.M_name,obj.M_email.replace('\r','')]; });
+    return [].map.call(result, function(obj) { return [obj.M_name,obj.M_email.replace('\r',''),obj.M_ptitle]; });
   },
   getOneEmail3 : async function(param){
     var sql = 'select n_idx,M_name,M_email from m_mail_list_all ';

@@ -29,8 +29,22 @@ var period = {
     var sql = 'call union_mail.stats_m(?,?,?,?,?,?,?,?,?,0)';
     return await getResult(sql,param);
   },
-  call_mail_detail: async function(param){
+  call_mail_detail: async function(type,param){
     var sql = 'call mail_detail(?, ?, ?, ?)';
+    if(type == '2'){
+      sql = 'call mymailer_detail(?, ?, ?, ?)';
+    }
+    var result = await getResult(sql,param);
+    if(param[0] == 1){
+      return (result.length > 0)? result[0][0]:{media_c:0,reporter_c:0};
+    }
+    else{
+      return (result.length > 0)? ((result[0][0].c == null) ? 0:result[0][0].c) :0;
+    }
+    // call mail_detail(2, 755, '암수살인', '2018-10-06');
+  },
+  call_mymailer_detail: async function(param){
+    var sql = 'call mymailer_detail(?, ?, ?, ?)';
     var result = await getResult(sql,param);
     if(param[0] == 1){
       return (result.length > 0)? result[0][0]:{media_c:0,reporter_c:0};
@@ -51,10 +65,23 @@ var period = {
     where a.M_type = \'1\' and DATE(a.M_senddate) = current_date() and a.M_senddate > now() and a.M_module = ? "+userWhere;
     return await getResult(sql,param);
   },
-  selectReservationCount: async function(param){
-    var sql = "select count(*) as total from `union`.m_mail_all_a as a left join `union`.m_keyword_data as k ON a.M_keyword = k.keyword_idx\
-    where a.M_type = \'1\' and a.M_senddate > now() and a.M_module = ? "+userWhere;
-    var count = await getResult(sql,param);
+  selectReservationCount: async function(admin,n_idx){
+    var sql = "select concat('d.sixth=''',GROUP_CONCAT(distinct n_idx SEPARATOR ''' or d.sixth='''),'''') as userStr from `union`.m_mail_user where user_admin=? or n_idx=?";
+    var userResult = await getResult(sql,[admin,n_idx]);
+    sql = "select concat('d.eighth=''',GROUP_CONCAT(distinct user_keyword SEPARATOR ''' or d.eighth='''),'''') as keywordStr from `union`.m_mail_user where n_idx=?";
+    var keywordResult  = await getResult(sql,n_idx);
+    sql = "SELECT count(*) as total FROM tm001.customer_data as d left join tm001.customer_info as i on d.id = i.id where d.twelfth = '1' and i.send_time > now() ";
+    console.log('result : ',userResult,keywordResult);
+    if(userResult.length > 0){
+      sql += ' and (('+userResult[0].userStr+') ';
+      if(keywordResult.length > 0){
+        if(keywordResult[0].keywordStr != '' && keywordResult[0].keywordStr != null){
+          sql += ' or ('+keywordResult[0].keywordStr+') ';
+        }
+      }
+      sql +=' )'
+    }
+    var count = await getResult(sql,[],'mymailer');
     if(count.length == 0){
       return 0;
     }
@@ -250,13 +277,16 @@ var period = {
   }
 }
 
-async function getResult(sql,param) {
-  var db = new DBpromise();
-  console.log(sql);
-  console.log(param);
+async function getResult(sql,param,dbName) {
+  var db;
+  if(dbName) db = new DBpromise(dbName);
+  else db = new DBpromise();
   try{
+    console.log(sql);
+    console.log(param);
     return await db.query(sql,param);
   } catch(e){
+    console.log("DB Error:",e);
     return [];
   } finally{
     db.close();

@@ -21,7 +21,7 @@
         <div class="col-md-12">
           <div class="alert alert-default" style="border-radius:  0; border-width:  2px;  margin-bottom: 1rem;">
           	<ul class="p-l-15 f-12" style="list-style-type: disc; color:  #666;">
-            	<li>대량발송은 보내기 버튼을 클릭 후 시간 소요 될 수 있으므로 보내기 버튼을 여러 번 클릭하거나 새로 고침 하는 경우 메일이 중복발송이 되거나 메일이 발송 중 중단이 될 수 있으므로 주의하시기 바랍니다.</li>
+              <li>모듈2 예약메일은 발송시간 3분 전부터 발송대기 상태가 되므로 보내기, 수정, 발송취소가 불가합니다.</li>
           	</ul>
         	</div>
         </div>
@@ -364,9 +364,10 @@
         },
         success:function(data){
           console.log(data);
-          var msg = (data.status == 112) ? "예약메일이 발송 진행 중이기 때문에 예약취소는 불가합니다. 그래도 ":"";
+          var msg = (data.status == 112) ? "예약메일의 상태가 발송대기 중이므로 삭제해도 예약발송취소는 불가합니다.":"";
           swal({
-            title: msg+"삭제하시겠습니까?",
+            title: "삭제하시겠습니까?",
+            text:msg,
             icon: "warning",
             buttons: ["취소", true],
             dangerMode: true,
@@ -440,7 +441,7 @@
         },
         success:function(data){
           if(data.status == 112){
-            swal("ERROR!","예약메일이 발송 진행 중이기 때문에 메일 수정할 수 없습니다.", "error");
+            swal("ERROR!","예약메일의 상태가 발송대기 중이므로 메일 수정할 수 없습니다.", "error");
             return false;
           }
           editModal(idxVal);
@@ -494,7 +495,7 @@
           error:function(request,status,error){
             console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
             if(request.responseText == '112'){
-              swal("ERROR!","예약메일이 발송 진행 중이기 때문에 메일을 보낼 수 없습니다.", "error");
+              swal("ERROR!","예약메일의 상태가 발송대기 중이므로 메일을 보낼 수 없습니다.", "error");
               return false;
             }
             swal("ERROR!","다시 시도해주세요.", "error");

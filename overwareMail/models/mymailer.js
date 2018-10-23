@@ -17,7 +17,7 @@ var mymailer = {
     return await getResult(sql,param[1]);
   },
   insertMailSendUser: async function(values){
-    var sql = "INSERT INTO customer_data (id,second, email, first, sixth, seventh, eighth, ninth, tenth, eleventh, twelfth, thirteenth, fourteenth,fifteenth,sixteenth,seventeenth,eighteenth,nineteenth,regist_date) VALUES ?";
+    var sql = "INSERT INTO customer_data (id,second, email, first, sixth, seventh, eighth, ninth, tenth, eleventh, twelfth, thirteenth, fifteenth,seventeenth,eighteenth,nineteenth,regist_date) VALUES ?";
     Promise.all(values).then(async function(v) {
       return await getResult(sql,[v]);
     }).catch(function(err){

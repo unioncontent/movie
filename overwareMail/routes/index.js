@@ -36,7 +36,7 @@ router.post('/statistics',isAuthenticated, async function(req, res, next) {
     successNfailCount : {success:result[0].success,fail:result[0].fail},
     todayCount : result[0].nCount || 0,
     reservationCount : result[0].wtCount || 0,
-    waitingCount : await period.selectReservationCount([2,req.user.n_idx,req.user.n_idx,req.user.n_idx]),
+    waitingCount : await period.selectReservationCount(req.user.user_admin,req.user.n_idx),
     successP : 0,
     failP : 0
   };
