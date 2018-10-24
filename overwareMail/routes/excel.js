@@ -18,8 +18,8 @@ router.get('/',async function(req, res) {
     fail = await maillink.selectResultDetail2([req.query.idx,0]);
   }
   else if(req.query.module == '2'){
-    sucess = await period.call_excel([parseInt(req.query.idx),'']);
-    fail = await period.call_excel([parseInt(req.query.idx),'1']);
+    sucess = await period.call_mymailer_detail_result([parseInt(req.query.idx),'']);
+    fail = await period.call_mymailer_detail_result([parseInt(req.query.idx),'1']);
   }
   console.log(sucess);
   console.log(fail);

@@ -54,9 +54,9 @@ var period = {
     }
     // call mail_detail(2, 755, '암수살인', '2018-10-06');
   },
-  call_excel: async function(param){
-    var sql = 'call union_mail.excel(?,?)';
-    // call union_mail.excel(85, '1');
+  call_mymailer_detail_result: async function(param){
+    var sql = 'call union_mail.mymailer_detail_result(?,?)';
+    // call union_mail.mymailer_detail_result(85, '1');
     var result = await getResult(sql,param);
     return (result.length > 0)? result[0]:[];
   },

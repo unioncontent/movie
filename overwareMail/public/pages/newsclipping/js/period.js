@@ -1,6 +1,7 @@
 // data input hidden values
 var sDateValue = $('#sDate').val();
 var eDateValue = $('#eDate').val();
+var moduleValue = $('#module').val();
 $(document).ready(function(){
   $('#reportrange').daterangepicker(optionSet1,cb);
 
@@ -10,12 +11,19 @@ $(document).ready(function(){
   else{
     $('#reportrange span').html(moment(new Date(sDateValue)).format('YYYY.MM.DD') + ' - ' + moment(new Date(eDateValue)).format('YYYY.MM.DD'));
   }
+  if(moduleValue != ''){
+    $("#selectModule option[value='"+moduleValue+"']").attr('selected','selected');
+  }
 });
 // 성공 클릭시
 $(document).on('click','.success',function(){
   $('#success-list').empty();
   $('#success-Modal').modal('show');
-  var clickParam = $(this).data('idx');
+  var param = {
+    type : 'success',
+    idx :$(this).data('idx'),
+    module:$(this).data('module')
+  };
   if($(this).text() == '0'){
     return false;
   }
@@ -23,23 +31,19 @@ $(document).on('click','.success',function(){
   $.ajax({
     url: '/newsclipping/period/result',
     type: 'post',
-    data: {type : 'success', idx :clickParam},
+    data: param,
     datatype : 'json',
     error:function(request,status,error){
       console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
     },
     success:function(data){
       console.log(data);
-      data.result.forEach(function(ele,idx){
-        var html = '<tr><td><i class="fas fa-check"></i></td>'+
-          '<td>'+(idx+1)+'</td>'+
-          '<td>'+ele.M_email+'</td>'+
-          '<td>'+((ele.M_ptitle != null) ? ele.M_ptitle:'')+'</td>'+
-          '<td>'+ele.M_name+'</td>'+
-          '<td>'+((ele.OPENTIME != null) ? ele.OPENTIME:'')+'</td>'+
-        '</tr>';
-        $('#success-list').append(html);
-      });
+      if( param.module == '1'){
+        module2Result(param.type,data.result);
+      }
+      else if( param.module == '2'){
+        module1Result(param.type,data.result);
+      }
       $('#loader_s').fadeOut(500);
     }
   });
@@ -51,7 +55,11 @@ $(document).on('click','.error_nobr',function(){
 $(document).on('click','.fail',function(){
   $('#error-list').empty();
   $('#error-Modal').modal('show');
-  var clickFParam = $(this).data('idx');
+  var param = {
+    type : 'fail',
+    idx :$(this).data('idx'),
+    module:$(this).data('module')
+  };
   if($(this).text() == '0'){
     return false;
   }
@@ -59,58 +67,87 @@ $(document).on('click','.fail',function(){
   $.ajax({
     url: '/newsclipping/period/result',
     type: 'post',
-    data: {type : 'fail', idx :clickParam},
+    data: param,
     datatype : 'json',
     error:function(request,status,error){
       console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
     },
     success:function(data){
-      data.result.forEach(function(ele,idx){
-        // var o_msg = ele.M_result_msg.replace('send mail Error: ','');
-        // var k_msg = settingErrorMsg(o_msg);
-        var code = ele.FINALRESULT;
-        var k_msg = '';
-        if(code == null && ele.RSLTMSG != 'ER'){
-          var errMsgArr = ele.RSLTMSG.split(']');
-          code = errMsgArr[0].replace('[','');
-          k_msg = errMsgArr[1];
-          if(k_msg.indexOf('Master Content Not Found') != -1){
-            k_msg = '지원되지 않는 미디어 유형';
-          }
-        }
-        else{
-          k_msg = settingErrorMsg(code);
-        }
-        var html = '<tr><td><i class="fas fa-exclamation-triangle"></i></td>'+
-          '<td>'+code+'</td>'+'<td>'+ele.M_email;
-        if(code != '42' && code != '43' && code != '44' && code != '45' && ele.SENDRESULT != 'ER'){
-          html+='<label class="label label-warning">재발송가능</label>'
-        }
-        html+='</td>'+'<td>'+((ele.M_ptitle != null) ? ele.M_ptitle:'')+'</td>'+
-          '<td>'+ele.M_name+'</td>'+
-          '<td><div class="error_nobr">'+k_msg+'</div></td>'+
-        '</tr>';
-        $('#error-list').append(html);
-      });
+      if( param.module == '1'){
+        module2Result(param.type,data.result);
+      }
+      else if( param.module == '2'){
+        module1Result(param.type,data.result);
+      }
       $('#loader_f').fadeOut(500);
     }
   });
 });
+function module2Result(type,result){
+  result.forEach(function(ele,idx){
+    if(type == 'success'){
+      var html = '<tr><td><i class="fas fa-check"></i></td>'+
+      '<td>'+(idx+1)+'</td>'+
+      '<td>'+ele.M_email+'</td>'+
+      '<td>'+((ele.M_ptitle != null) ? ele.M_ptitle:'')+'</td>'+
+      '<td>'+ele.M_name+'</td>'+
+      '<td>'+((ele.OPENTIME != null) ? ele.OPENTIME:'')+'</td>'+
+      '</tr>';
+      $('#success-list').append(html);
+    } else{
+      var code = ele.FINALRESULT;
+      var k_msg = '';
+      if(code == null && ele.RSLTMSG != 'ER'){
+        var errMsgArr = ele.RSLTMSG.split(']');
+        code = errMsgArr[0].replace('[','');
+        k_msg = errMsgArr[1];
+        if(k_msg.indexOf('Master Content Not Found') != -1){
+          k_msg = '지원되지 않는 미디어 유형';
+        }
+      }
+      else{ k_msg = settingErrorMsg(code); }
 
+      var html = '<tr><td><i class="fas fa-exclamation-triangle"></i></td><td>'+ele.M_email;
+      if(code != '42' && code != '43' && code != '44' && code != '45' && ele.SENDRESULT != 'ER'){
+        html+='<label class="label label-warning">재발송가능</label>';
+      }
+      html+='</td><td>'+((ele.M_ptitle != null) ? ele.M_ptitle:'')+'</td><td>'+ele.M_name+'</td><td><div class="error_nobr">'+k_msg+'</div></td></tr>';
+      $('#error-list').append(html);
+    }
+  });
+}
+function module1Result(type,result){
+  result.forEach(function(ele,idx){
+    if(type == 'success'){
+      var html = '<tr><td><i class="fas fa-check"></i></td>'+
+      '<td>'+(idx+1)+'</td>'+
+      '<td>'+ele.EMTOADDRESS+'</td>'+
+      '<td>'+((ele.M_ptitle != null) ? ele.M_ptitle:'')+'</td>'+
+      '<td>'+ele.EMTONAME+'</td>'+
+      '<td>'+((ele.OPENTIME != null) ? ele.OPENTIME:'')+'</td>'+
+      '</tr>';
+      $('#success-list').append(html);
+    } else{
+      var msg = ele.FINALRESULT;
+      if(ele.send_success == 'X' && (ele.FINALRESULT == '' || ele.FINALRESULT == null)){
+        msg = '기타 알수 없는 영구적인 오류';
+      }
+      var html = '<tr><td><i class="fas fa-exclamation-triangle"></i></td><td>'+ele.EMTOADDRESS+'</td><td>'+((ele.M_ptitle != null) ? ele.M_ptitle:'')+'</td><td>'+ele.EMTONAME+'</td><td><div class="error_nobr">'+msg+'</div></td></tr>';
+      $('#error-list').append(html);
+    }
+  });
+}
+// 메일모듈 선택시
+$('#selectModule').on('change',function(){
+  var optionVal = $("#selectModule option:selected").val();
+  $('#module').val(optionVal);
+  var param = settingParams(1);
+  ajaxGetPageList(param);
+});
 //페이지 이동
 $(document).on('click','.page-link',function(){
-  var num = Number($(this).text()) || Number($(this).data().num);
-  var param = {
-    page : Number($(this).data().value)
-  };
-  // data input hidden values
-  var sDateValue = $('#sDate').val();
-  var eDateValue = $('#eDate').val();
-  if(sDateValue != '' && eDateValue != '' ){
-    param.sDate = moment(sDateValue).format('YYYY-MM-DD');
-    param.eDate = moment(eDateValue).format('YYYY-MM-DD');
-  }
-  ajaxGetPageList(param,num);
+  var param = settingParams(Number($(this).data().value));
+  ajaxGetPageList(param);
 });
 function ajaxGetPageList(param){
   console.log('ajaxGetPageList:',param);
@@ -137,8 +174,8 @@ function ajaxGetPageList(param){
           <td>'+item.M_regdate+'</td>\
           <td><a href="http://showbox.email/preview/newsclipping?idx='+item.n_idx+'" target="_blank"><div class="title_nobr">'+item.M_subject+'</div></a></td>\
           <td><span class="total">'+(parseInt(item.success) + parseInt(item.fail))+'</span></td>\
-          <td class="success" data-idx=\"'+item.n_idx+'\">'+item.success+'</td>\
-          <td class="fail" data-idx=\"'+item.n_idx+'\">'+item.fail+'</td>';
+          <td class="success" data-idx=\"'+item.n_idx+'\"" data-module=\"'+item.M_module+'\">'+item.success+'</td>\
+          <td class="fail" data-idx=\"'+item.n_idx+'\" data-module=\"'+item.M_module+'\">'+item.fail+'</td>';
         html += '<td>'+ ((item.M_type == '0') ? '즉시' : '예약');
         if(item.M_type == '1' &&(new Date().getTime() < new Date(item.SENDTIME).getTime()) && parseInt(item.success) == 0 && parseInt(item.fail) ==0){
           html += '<label class="badge badge-danger m-b-0">대기</label>'
@@ -205,36 +242,9 @@ function searchDate(){
   var dateArr = $("#reportrange span").text().split(' - ');
   var start = moment(new Date(dateArr[0].replace(/[.]/gi,'-')));
   var end = moment(new Date(dateArr[1].replace(/[.]/gi,'-')));
-  var param = {
-    page : 1,
-    sDate : start.format('YYYY-MM-DD'),
-    eDate : end.format('YYYY-MM-DD')
-  };
-  $('#sDate').val(param.sDate);
-  $('#eDate').val(param.eDate);
-  // var url = new URL(window.location.href);
-  // var keywordParams = url.searchParams.get("keyword");
-  // if(keywordParams != null){
-  //   param.keyword = keywordParams;
-  // }
-  // if(typeof(history.pushState) == 'function'){
-  //   var renewURL = location.href;
-  //   if(renewURL.indexOf("?page=") == -1){
-  //     renewURL += '?page=1';
-  //   }
-  //   else{
-  //     renewURL = renewURL.replace(/\?page=([0-9]+)/ig,'?page=1');
-  //   }
-  //   if(renewURL.indexOf("&sDate=") == -1 && renewURL.indexOf("&eDate=") == -1){
-  //     renewURL += '&sDate='+param.sDate+'&eDate='+param.eDate;
-  //   }
-  //   else{
-  //     renewURL = renewURL.replace(/\&sDate=(\d{4}-\d{2}-\d{2})/ig,'&sDate='+param.sDate);
-  //     renewURL = renewURL.replace(/\&eDate=(\d{4}-\d{2}-\d{2})/ig,'&eDate='+param.eDate);
-  //   }
-  //   //페이지 갱신 실행!
-  //   history.pushState(null, null,renewURL);
-  // }
+  $('#sDate').val(start.format('YYYY-MM-DD'));
+  $('#eDate').val( end.format('YYYY-MM-DD'));
+  var param = settingParams(1);
   ajaxGetPageList(param);
 }
 $(document).on('click','.applyBtn',searchDate);
@@ -271,3 +281,23 @@ var optionSet1 = {
     firstDay: 1
   }
 };
+
+// 리스트 조건 세팅
+function settingParams(num){
+  var param = {
+    page : num
+  };
+  // 메일모듈
+  var moduleValue = $('#module').val();
+  if(moduleValue != ''){
+    param.module = moduleValue;
+  }
+  // 날짜
+  var sDateValue = $('#sDate').val();
+  var eDateValue = $('#eDate').val();
+  if(sDateValue != '' && eDateValue != ''){
+    param.sDate = sDateValue;
+    param.eDate = eDateValue;
+  }
+  return param;
+}
