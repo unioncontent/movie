@@ -11,12 +11,16 @@ const DBpromise = require('../db/db_info.js');
 */
 
 var newsclipping = {
-  call_newsclipping_period: async function(param){
-    var sql = 'call union_mail.newsclipping_period(?,?,?,?)';
+  call_newsclipping_period: async function(type,param){
+    var sql = 'call union_mail.newsclipping_period';
+    if(type == '2'){
+      sql+= '_m';
+    }
+    sql += '(?,?,?,?)';
     return await getResult(sql,param);
   },
   call_newsclipping_period_result: async function(param){
-    var sql = 'call union_mail.newsclipping_period_result(?, ?)';
+    var sql = 'call union_mail.newsclipping_period_result(?,?)';
     // call union_mail.newsclipping_period_result('success', '225');
     var result = await getResult(sql,param);
     return (result.length > 0)?result[0]:result;

@@ -302,6 +302,7 @@ $(".sendBtn").on("click",function(){
   var param = {
     'M_sender': $(".sender-select").select2("val"),
     'M_recipi': $(".recipi-select").select2("val"),
+    'M_module':$("#mail_t option:selected").val(),
     'M_group': $('.group-select').val() || [],
     'M_body':settingMailBody(),
     'M_type': $("input:radio[name=M_type]:checked").val()

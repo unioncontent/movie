@@ -20,6 +20,10 @@
         <div class="col-md-12">
           <div class="card">
             <div class="card-header">
+              <select name="select" class="col-md-1 form-control form-control-default m-b-10 m-r-5 p-r-5 f-left" id="selectModule">
+                <option value='2'>모듈1</option>
+                <option value='1'>모듈2</option>
+              </select>
               <div class="col-md-3 p-r-0 p-l-0 f-right reportrange">
                 <div id="reportrange" class="form-control form-control-default">
                   <i class="glyphicon glyphicon-calendar far fa-calendar-alt"></i>
@@ -65,8 +69,8 @@
                         </a>
                       </td>
                       <td><span class="total"><%= parseInt(list[i].success) + parseInt(list[i].fail) %></span></td>
-                      <td class="success" data-idx="<%= list[i].n_idx %>"><%= list[i].success %></td>
-                      <td class="fail" data-idx="<%= list[i].n_idx %>"><%= list[i].fail %></td>
+                      <td class="success" data-idx="<%= list[i].n_idx %>" data-module="<%= list[i].M_module %>"><%= list[i].success %></td>
+                      <td class="fail" data-idx="<%= list[i].n_idx %>" data-module="<%= list[i].M_module %>"><%= list[i].fail %></td>
                       <td>
                         <%=(list[i].M_type == '0') ? '즉시' : '예약'%>
                         <% if(list[i].M_type == '1' && (new Date().getTime() < new Date(list[i].SENDTIME).getTime())){ %>
@@ -148,6 +152,7 @@
       </div>
       <input type="hidden" id="sDate" value="<%=sDate%>"/>
       <input type="hidden" id="eDate" value="<%=eDate%>"/>
+      <input type="hidden" id="module" value="<%=module%>"/>
       <!-- Modal start-->
       <div class='modal fade' id='success-Modal' role='dialog'>
         <div class='modal-dialog  modal-lg' role='document'>
@@ -216,7 +221,6 @@
                   <thead>
                     <tr class="text-capitalize">
                       <th></th>
-                      <th>코드</th>
                       <th>이메일</th>
                       <th>회사</th>
                       <th>이름</th>

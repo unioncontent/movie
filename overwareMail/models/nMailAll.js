@@ -31,6 +31,14 @@ var nMailAll = {
 
     }
     return ;
+  },
+  updateSendDate: async function(param){
+    var sql = 'update n_mail_all set M_senddate = ? where n_idx = ?';
+    return await getResult(sql,param);
+  },
+  updateId: async function(param){
+    var sql = 'update n_mail_all set M_a_id=? where n_idx=?';
+    return await getResult(sql,param);
   }
 }
 

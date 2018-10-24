@@ -13,39 +13,77 @@ $(document).ready(function(){
 });
 // 삭제버튼 클릭시
 $(document).on('click','.btn-delete',function(){
-  var removeParam = $(this).data('idx');
-  swal({
-    title: "삭제하시겠습니까?",
-    icon: "warning",
-    buttons: ["취소", true],
-    dangerMode: true,
-  })
-  .then(function(value) {
-    if (value == null) {
-      return false;
-    }
+  var tdEles = $(this).parents('tr').find('td');
+  var moduleVal = $(this).data('module');
+  var idxVal = $(this).data('idx');
+  var mIdVal = $(this).data('mid');
+  if(moduleVal == '2' && tdEles.eq(5).find('.fa-minus').length == 0 && tdEles.eq(6).find('.fa-minus').length == 1){
     $.ajax({
-      url: '/newsclipping/list/delete',
+      url: '/newsclipping/list/checkMail',
       type: 'post',
-      data : {idx:removeParam},
+      data : {mid:mIdVal},
       datatype : 'json',
       error:function(request,status,error){
         console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
-        swal("ERROR!","삭제 실패했습니다. 다시 시도해주세요.", "error");
+        swal("ERROR!","다시 시도해주세요.", "error");
       },
       success:function(data){
-        if(data.status){
-          swal("SUCCESS!", '삭제 되었습니다.', "success")
-          .then(function(value) {
-            reloadPage();
-          });
-        }else{
-          swal("ERROR!", '새로고침 후 다시 시도해주세요.', "error");
-        }
+        console.log(data);
+        var msg = (data.status == 112) ? "예약메일의 상태가 발송대기 중이므로\n삭제해도 예약발송취소는 불가합니다.":"";
+        swal({
+          title: "삭제하시겠습니까?",
+          text: msg,
+          icon: "warning",
+          buttons: ["취소", true],
+          dangerMode: true,
+        })
+        .then(function(value) {
+          if (value == null) {
+            return false;
+          }
+          deleteAjax({mid:mIdVal,idx:idxVal,module:moduleVal});
+        });
+        return false;
       }
     });
-  });
+  } else{
+    swal({
+      title: "삭제하시겠습니까?",
+      icon: "warning",
+      buttons: ["취소", true],
+      dangerMode: true,
+    })
+    .then(function(value) {
+      if (value == null) {
+        return false;
+      }
+      deleteAjax({mid:mIdVal,idx:idxVal,module:moduleVal});
+    });
+  }
 });
+function deleteAjax(param){
+  $.ajax({
+    url: '/newsclipping/list/delete',
+    type: 'post',
+    data : param,
+    datatype : 'json',
+    error:function(request,status,error){
+      console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
+      swal("ERROR!","삭제 실패했습니다. 다시 시도해주세요.", "error");
+    },
+    success:function(data){
+      if(data.status){
+        swal("SUCCESS!", '삭제 되었습니다.', "success")
+        .then(function(value) {
+          reloadPage();
+        });
+      }else{
+        swal("ERROR!", '새로고침 후 다시 시도해주세요.', "error");
+      }
+    }
+  });
+}
+
 function reloadPage(){
   console.log('reloadPage');
   var pageValue = ($("#page").val() == '') ? 1 : parseInt($("#page").val());
@@ -144,7 +182,7 @@ function ajaxGetPageList(param){
           <td><div class="date-nobr">'+((item.M_type != 1) ?'<i class="fas fa-minus"></i>': item.SENDTIME)+'</div></td>\
           <td><div class="date-nobr">'+((item.M_type == 1 && new Date().getTime() < new Date(item.SENDTIME).getTime()) ? '<i class="fas fa-minus"></i>': item.SENDTIME)+'</div></td>\
           <td>';
-          html += '<button class="btn btn-sm btn-inverse btn-delete" data-idx="'+item.n_idx+'">삭제</button> ';
+          html += '<button class="btn btn-sm btn-inverse btn-delete" data-idx="'+item.n_idx+'" data-mid="'+item.M_a_id+'"  data-module="'+item.module+'">삭제</button> ';
         $('#listTable tbody').eq(0).append(html);
       });
       var limit = 10;
