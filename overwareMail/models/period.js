@@ -67,7 +67,7 @@ var period = {
   },
   selectReservationCount: async function(admin,n_idx){
     var sql = "select concat('d.sixth=''',GROUP_CONCAT(distinct n_idx SEPARATOR ''' or d.sixth='''),'''') as userStr from `union`.m_mail_user where user_admin=? or n_idx=?";
-    var userResult = await getResult(sql,[admin,n_idx]);
+    var userResult = await getResult(sql,[((admin==null)?n_idx:admin),n_idx]);
     sql = "select concat('d.eighth=''',GROUP_CONCAT(distinct user_keyword SEPARATOR ''' or d.eighth='''),'''') as keywordStr from `union`.m_mail_user where n_idx=?";
     var keywordResult  = await getResult(sql,n_idx);
     sql = "SELECT count(*) as total FROM tm001.customer_data as d left join tm001.customer_info as i on d.id = i.id where d.twelfth = '1' and i.send_time > now() ";

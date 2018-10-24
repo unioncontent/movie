@@ -736,7 +736,6 @@ async function mailInsert(req){
     if(mailData.M_group.indexOf(',') != -1){
       mailData.M_group = mailData.M_group.split(',');
     }
-    console.log(req.user);
     var groupArr = await mailListC.getOneEmail2(req.user.n_idx,mailData.M_group);
     // console.log('groupArr:',groupArr);
     var groupArr2 = groupArr.concat(recipiArr);
@@ -780,6 +779,11 @@ async function mailInsert(req){
       await mymailer.deleteInfoTable(mailId);
       throw new Error('updateResultError');
     }
+    console.log('typeof mailData.M_group:',typeof mailData.M_group);
+    if(typeof mailData.M_group == 'object'){
+      mailData.M_group = mailData.M_group.join();
+      console.log('typeof mailData.M_group:',typeof mailData.M_group);
+    }
     var values = [].map.call(recipients,async function(item,index) {
       return [mailId,
         mailData.n_idx,
@@ -794,13 +798,12 @@ async function mailInsert(req){
         mailData.M_type,
         sender[2],
         mailData.M_mail_type,
-        mailData.M_group.join(),
+        mailData.M_group,
         mailData.M_recipi,
         item[2],
         now];
     });
     result = await mymailer.insertMailSendUser(values);
-    console.log('insert결과:',result);
     if(result != undefined){
       await mymailer.deleteInfoTable(mailId);
       throw new Error('insertMailSendUserError');
