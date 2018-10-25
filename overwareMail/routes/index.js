@@ -31,12 +31,13 @@ router.get('/', isAuthenticated, async function(req, res, next) {
 router.post('/statistics',isAuthenticated, async function(req, res, next) {
   var result = await period.call_dashbord2([0,req.user.n_idx]);
   console.log('statistics1:',result);
+  var maillinkWaitCnt = await period.selectReservationCount(req.user.user_admin,req.user.n_idx);
   var data = {
     todaySendCount : result[0].sendCount,
     successNfailCount : {success:result[0].success,fail:result[0].fail},
     todayCount : result[0].nCount || 0,
-    reservationCount : result[0].wtCount || 0,
-    waitingCount : await period.selectReservationCount(req.user.user_admin,req.user.n_idx),
+    reservationCount : (result[0].wtCount || 0)+maillinkWaitCnt,
+    waitingCount : maillinkWaitCnt,
     successP : 0,
     failP : 0
   };
