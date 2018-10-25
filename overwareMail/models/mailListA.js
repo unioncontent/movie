@@ -54,6 +54,7 @@ var mailListAll = {
     else if(typeof param == 'string'){
       sql += 'where n_idx ='+param;
     }
+    sql += ' group by M_email';
     var result = await getResult(sql,[]);
     return [].map.call(result, function(obj) { return [obj.M_name,obj.M_email.replace('\r',''),obj.M_ptitle]; });
   },
