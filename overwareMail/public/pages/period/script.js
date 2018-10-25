@@ -28,7 +28,7 @@ $(document).ready(function(){
   }
 });
 // 발송실적
-$('.btn-excel').on("click",function(){
+$(document).on("click",'.btn-excel',function(){
   var idx= $(this).data('idx');
   var module= $(this).data('module');
   swal({

@@ -737,17 +737,18 @@ async function mailInsert(req){
       mailData.M_group = mailData.M_group.split(',');
     }
     var groupArr = await mailListC.getOneEmail2(req.user.n_idx,mailData.M_group);
-    // console.log('groupArr:',groupArr);
     var groupArr2 = groupArr.concat(recipiArr);
-    // console.log('groupArr2:',groupArr2);
     var uniqArray = Array.from(new Set(groupArr2));
+    // console.log('groupArr:',groupArr);
+    // console.log('groupArr2:',groupArr2);
     // console.log('uniqArray:',uniqArray);
     recipients = await mailListA.getOneEmail2(uniqArray);
   }
   else{
     recipients = await mailListA.getOneEmail2(recipiArr);
   }
-  // console.log('recipient = ',recipients.length);
+  console.log('recipient = ',recipients);
+  console.log('recipient.length = ',recipients.length);
   var moment = require('moment');
   var am = 1;
   var time = (('time' in req) ? req.time : now);
