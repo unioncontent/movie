@@ -112,12 +112,17 @@
                           </c:forEach>
                           </c:if>
                         </select>
-                        <select id= "selectPerPageNum" name="select" class="col-md-1 form-control form-control-inverse m-r-10 m-b-10 p-r-5 f-left select-left">	
+                        <select id= "selectPerPageNum" name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left">	
 	                        <option value="30">리스트</option>
 	                        <option id= "10" >10</option>
 	                        <option id= "30" >30</option>
 	                        <option id = "60">60</option>
 	                        <option id = "120">90</option>
+                        </select>
+                        <select id= "selectMediaMain" name="select" class="col-md-1 form-control form-control-inverse m-r-10 m-b-10 p-r-5 f-left select-left">	
+	                        <option value="0">매체</option>
+	                        <option value= "1" >주요</option>
+	                        <option value= "0" >전체</option>
                         </select>
                       </div>
                       <div class="col-md-5">
@@ -223,7 +228,15 @@
                                     </c:if>
                                     <th width="5%" style="vertical-align:middle;">${totalCount -index.count +1 -minusCount}</th>
                                     <td width="10%">${mediaList.writeDate}</td>
-                                    <td width="40%" class="text-success"><a href="${mediaList.url}" target="_blank">${mediaList.media_title}</a></td>
+                                    <td width="40%" class="text-success">
+                                    	<%-- <c:if test="${mediaList.media_main == 1}">
+		                                    <i class="icofont icofont-tick-mark"></i>&nbsp;
+	                                    </c:if> --%>
+	                                    <c:if test="${mediaList.media_main == 1}">
+		                                    <i class="icofont icofont-favourite"></i>&nbsp;
+	                                    </c:if>
+                                    	<a href="${mediaList.url}" target="_blank">${mediaList.media_title}</a>
+                                    </td>
                                     <td width="5%">
                                     <c:if test="${mediaList.media_subname != null}">${mediaList.media_subname}</c:if>
                                     <c:if test="${mediaList.media_subname == null}"><i class="icofont icofont-minus"></i></c:if>
@@ -547,6 +560,29 @@
 			searchList();
 
 		});
+		
+		var mediaMainOption = decodeURI(window.location.href.split("mediaMain=")[1]).split("&")[0];
+		
+		var $selectMediaMain = $('#selectMediaMain');
+
+		if(mediaMainOption != 'undefined'){
+			for(var i = 0; i < $selectMediaMain[0].length; i++ ){
+				if($selectMediaMain[0][i].value == mediaMainOption){
+					$selectMediaMain[0][i].selected = 'selected';
+				}
+			}
+		}
+		$selectMediaMain[0][0].disabled = true;
+
+
+		// 미디아메인 선택시
+		$selectMediaMain.change(function(){
+			console.log("selectMediaMain clicked....");
+			console.log($('#selectMediaMain option:selected').val());
+
+			searchList();
+
+		});
 
 
 	  // 일괄처리버튼 클릭시
@@ -699,6 +735,8 @@
 	        	self.location = "excel?"+ "searchType=" + decodeURI(window.location.href.split("&searchType=")[1]).split("&")[0]
 					 	+ "&keyword=" + decodeURI(window.location.href.split("&keyword=")[1]).split("&")[0]
 			        	+ "&selectKey=" + $('#selectKeyword option:selected').val()
+			        	+ "&searchType=" + $("#selectSearchType option:selected").val()
+			        	+ "&mediaMain=" + $('#selectMediaMain option:selected').val()
 						+ "&startDate=" + makeDateFormat($("#fromDate").val(), 0)
 						+ "&endDate=" +  makeDateFormat($("#fromDate").val(), 1)
 
@@ -865,6 +903,7 @@
 							+ $('#selectPerPageNum option:selected').val()
 							+ "&selectKey=" + $('#selectKeyword option:selected').val()
 							+ "&searchType=" + $("#selectSearchType option:selected").val()
+							+ "&mediaMain=" + $('#selectMediaMain option:selected').val()
 							+ "&keyword=" + $('#keywordInput').val()
 	    					+ "&startDate=" + makeDateFormat($("#fromDate").val(), 0)
 	    					+ "&endDate=" +  makeDateFormat($("#fromDate").val(), 1)

@@ -852,4 +852,10 @@ public class MediaServiceImpl implements MediaService  {
 		mediaDAO.deleteTextDelete(media_idx);
 		
 	}
+
+	@Override
+	public List<MediaVO> mediaMainlistSearch(SearchCriteria cri) throws SQLException {
+
+		return mediaDAO.mediaMainlistSearch(cri);
+	}
 }

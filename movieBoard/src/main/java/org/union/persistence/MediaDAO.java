@@ -71,6 +71,7 @@ public interface MediaDAO {
 	public Integer getSearchCount(SearchCriteria cri) throws SQLException;
 	
 	public List<MediaVO> mediaListData(SearchCriteria cri) throws SQLException;
+	public List<MediaVO> mediaMainlistSearch(SearchCriteria cri) throws SQLException;
 	public List<MediaVO> wlistSearch(SearchCriteria cri) throws SQLException;
 	public List<MediaVO> wlistSearch2(SearchCriteria cri) throws SQLException;
 	public List<MediaVO> wPageSearch(SearchCriteria cri) throws SQLException;

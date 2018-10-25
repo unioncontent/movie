@@ -76,6 +76,7 @@ public interface MediaService {
 	public Integer getSearchCount(SearchCriteria cri) throws SQLException;
 
 	public List<MediaVO> mediaListData(SearchCriteria cri) throws SQLException;
+	public List<MediaVO> mediaMainlistSearch(SearchCriteria cri) throws SQLException;
 	public List<MediaVO> wlistSearch(SearchCriteria criteria) throws SQLException;
 	public List<MediaVO> wlistSearch2(SearchCriteria criteria) throws SQLException;
 	public List<MediaVO> wPageSearch(SearchCriteria criteria) throws SQLException;

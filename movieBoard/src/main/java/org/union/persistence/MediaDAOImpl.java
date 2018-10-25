@@ -762,4 +762,10 @@ public class MediaDAOImpl implements MediaDAO {
 		}
 		
 	}
+
+	@Override
+	public List<MediaVO> mediaMainlistSearch(SearchCriteria cri) throws SQLException {
+
+		return session1.selectList(namespace + "mediaMainlistSearch", cri);
+	}
 }

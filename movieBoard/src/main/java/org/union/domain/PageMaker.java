@@ -100,6 +100,7 @@ public class PageMaker {
 		            .queryParam("endDate", ((SearchCriteria)cri).getEndDate())
 		            .queryParam("company", ((SearchCriteria)cri).getCompany())
 		            .queryParam("textType", ((SearchCriteria)cri).getTextType())
+		            .queryParam("mediaMain", ((SearchCriteria)cri).getMediaMain())
 		            .build();	            
 			
 			return uriComponents.toUriString();

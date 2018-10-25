@@ -287,7 +287,8 @@
                                     <h5 class="card-header-text m-b-10 m-t-10"><font style="font-weight: bold; color: black;">검출데이터</font></h5>
                                     <table class="padd m-t-10"><tr><td>
                                     <div class="btn-group f-right p-r-0 ">
-                                   	 	<button type="button" class="btn btn-modal m-b-5" data-toggle="modal" data-target="#textType1">좋은글</button>
+                                    	<button type="button" class="btn btn-modal m-b-5" data-toggle="modal" data-target="#mediaMain">주요매체</button>
+                                   	 	<button type="button" class="btn btn-modal m-b-5" data-toggle="modal" data-target="#textType1" style="margin-left: 2px">좋은글</button>
                                    	 	<button type="button" class="btn btn-modal m-b-5" data-toggle="modal" data-target="#textType2" style="margin-left: 2px">나쁜글</button>
                                    	 	<button type="button" class="btn btn-modal m-b-5" data-toggle="modal" data-target="#textType3" style="margin-left: 2px">관심글</button>
                                    	 	<button type="button" class="btn btn-modal" data-toggle="modal" data-target="#textType4" style="margin-left: 2px">기타글</button>
@@ -337,7 +338,12 @@
                                             <c:if test="${List.reporter_name != null}">${List.reporter_name}</c:if>
                                             <c:if test="${List.reporter_name == null}"><i class="icofont icofont-minus"></i></c:if>
                                             </td>
-                                            <td><a href='${List.url}' target="_blank">${List.media_title}</a></td>
+                                            <td>
+	                                            <c:if test="${List.media_main == 1}">
+			                                    	<i class="icofont icofont-favourite" style="color: #2ecc71 !important"></i>&nbsp;
+		                                    	</c:if>
+                                            	<a href='${List.url}' target="_blank">${List.media_title}</a>
+                                            </td>
                                             <td>${List.keyword}</td>
                                             <td>${List.textType}</td>
                                           </tr>
@@ -389,6 +395,71 @@
                         <!-- tab-content end -->
                       </div>
                       <!-- textType Modal start-->
+                      <div class="modal fade" id="mediaMain" tabindex="-1" role="dialog">
+                        <div class="modal-dialog modal-lg" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title">주요매체</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true"><i class="icofont icofont-close-line"></i></span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              <div class="col-lg-12">
+                                    <!-- list satart -->
+                                      <c:if test="${empty mediaMain}">
+                                         	<h5 align="center">등록된 게시글이 없습니다.</h5>
+                                     </c:if>
+                                     <c:if test="${!empty mediaMain}">
+                                       <div class="table-responsive">
+                                         <table class="table tabc" align="center">
+                                          <thead>
+                                              <tr align="center">
+                                                <th width="5%">NO</th>
+                                                <th width="20%">등록날짜</th>
+                                                <th width="25%">언론사</th>
+                                                <th width="50%">제목</th>
+                                                <th width="25%">키워드</th>
+                                                <th width="25%">여론현황</th>
+                                              </tr>
+                                          </thead>
+                                          <tbody>
+                                            <c:forEach items="${mediaMain}" var = "mediaVO" varStatus="index">
+                                            <tr>
+                                              <th scope="row" style="font-size: 12px;">${index.count}</th>
+                                              <td style="font-size: 12px;">
+	                                              <fmt:parseDate value="${mediaVO.writeDate}" var="noticePostDate" pattern="yyyy-MM-dd HH:mm:ss"/>
+												  <fmt:formatDate value="${noticePostDate}" pattern="yyyy-MM-dd"/>
+                                              </td>
+                                              <td style="font-size: 12px;">${mediaVO.media_name}</td>
+                                              <td>
+	                                              <a href='${mediaVO.url}' target="_blank" style="font-size: 12px;">
+		                                              <div class="content-nowrap">
+			                                              <i class="icofont icofont-favourite" style="color: #2ecc71 !important"></i>
+			                                              <b>${mediaVO.media_title}</b>
+		                                              </div>
+	                                              </a>
+                                              </td>
+                                              <td style="font-size: 12px;">${mediaVO.keyword}</td>
+                                              <td style="font-size: 12px;">${mediaVO.textType}</td>
+                                            </tr>
+                                            </c:forEach>
+                                          </tbody>
+                                        </table>
+                                      </div>
+                                      </c:if>
+                                  <!-- list end -->
+                              </div>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">Close</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- textType Modal end-->
+                      
+                      <!-- textType Modal start-->
                       <div class="modal fade" id="textType1" tabindex="-1" role="dialog">
                         <div class="modal-dialog modal-lg" role="document">
                           <div class="modal-content">
@@ -422,10 +493,15 @@
                                             <tr>
                                               <th scope="row">${index.count}</th>
                                               <td>
-                                              <fmt:formatDate value="${mediaVO.updateDate}" pattern="yyyy-MM-dd"/>
+                                              	<fmt:parseDate value="${mediaVO.writeDate}" var="noticePostDate" pattern="yyyy-MM-dd HH:mm:ss"/>
+										      	<fmt:formatDate value="${noticePostDate}" pattern="yyyy-MM-dd"/>
                                               </td>
                                               <td>${mediaVO.media_name}</td>
-                                              <td><a href='${mediaVO.url}' target="_blank" style="font-size: 12px;"><b>${mediaVO.media_title}</b></a></td>
+                                              <td>
+	                                              <a href='${mediaVO.url}' target="_blank" style="font-size: 12px;">
+		                                              <div class="content-nowrap"><b>${mediaVO.media_title}</b></div>
+	                                              </a>
+                                              </td>
                                               <td>${mediaVO.keyword}</td>
                                               <td>${mediaVO.textType}</td>
                                             </tr>
@@ -479,10 +555,15 @@
                                             <tr>
                                               <th scope="row">${index.count}</th>
                                               <td>
-                                              <fmt:formatDate value="${mediaVO.updateDate}" pattern="yyyy-MM-dd"/>
+                                              	<fmt:parseDate value="${mediaVO.writeDate}" var="noticePostDate" pattern="yyyy-MM-dd HH:mm:ss"/>
+												<fmt:formatDate value="${noticePostDate}" pattern="yyyy-MM-dd"/>
                                               </td>
                                               <td>${mediaVO.media_name}</td>
-                                              <td><a href='${mediaVO.url}' target="_blank" style="font-size: 12px;"><b>${mediaVO.media_title}</b></a></td>
+                                              <td>
+	                                              <a href='${mediaVO.url}' target="_blank" style="font-size: 12px;">
+		                                              <div class="content-nowrap"><b>${mediaVO.media_title}</b></div>
+	                                              </a>
+                                              </td>
                                               <td>${mediaVO.keyword}</td>
                                               <td>${mediaVO.textType}</td>
                                             </tr>
@@ -535,10 +616,15 @@
                                             <tr>
                                               <th scope="row">${index.count}</th>
                                               <td>
-                                              <fmt:formatDate value="${mediaVO.updateDate}" pattern="yyyy-MM-dd"/>
+                                              	<fmt:parseDate value="${mediaVO.writeDate}" var="noticePostDate" pattern="yyyy-MM-dd HH:mm:ss"/>
+												<fmt:formatDate value="${noticePostDate}" pattern="yyyy-MM-dd"/>
                                               </td>
                                               <td>${mediaVO.media_name}</td>
-                                              <td><a href='${mediaVO.url}' target="_blank" style="font-size: 12px;"><div class="content-nowrap"><b>${mediaVO.media_title}</b></div></a></td>
+                                              <td>
+	                                              <a href='${mediaVO.url}' target="_blank" style="font-size: 12px;">
+		                                              <div class="content-nowrap"><b>${mediaVO.media_title}</b></div>
+	                                              </a>
+                                              </td>
                                               <td>${mediaVO.keyword}</td>
                                               <td>${mediaVO.textType}</td>
                                             </tr>
@@ -591,10 +677,15 @@
                                             <tr>
                                               <th scope="row">${index.count}</th>
                                               <td>
-                                              <fmt:formatDate value="${mediaVO.updateDate}" pattern="yyyy-MM-dd"/>
+                                              	<fmt:parseDate value="${mediaVO.writeDate}" var="noticePostDate" pattern="yyyy-MM-dd HH:mm:ss"/>
+												<fmt:formatDate value="${noticePostDate}" pattern="yyyy-MM-dd"/>
                                               </td>
                                               <td>${mediaVO.media_name}</td>
-                                              <td><a href='${mediaVO.url}' target="_blank" style="font-size: 12px;"><b>${mediaVO.media_title}</b></a></td>
+                                              <td>
+	                                              <a href='${mediaVO.url}' target="_blank" style="font-size: 12px;">
+		                                              <div class="content-nowrap"><b>${mediaVO.media_title}</b></div>
+	                                              </a>
+                                              </td>
                                               <td>${mediaVO.keyword}</td>
                                               <td>${mediaVO.textType}</td>
                                             </tr>

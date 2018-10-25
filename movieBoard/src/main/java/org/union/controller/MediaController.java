@@ -88,6 +88,11 @@ public class MediaController {
 			cri.setSelectKey(null);
 		}
 		
+		if(cri.getMediaMain() == "" || "매체".equals(cri.getMediaMain()) ) {
+			logger.info("MediaMain is null");
+			cri.setMediaMain(null);
+		}
+		
 		if("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate())
 				|| cri.getStartDate() == "" || cri.getEndDate() == ""){
 			cri.setStartDate(null);

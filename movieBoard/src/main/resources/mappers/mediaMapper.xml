@@ -80,6 +80,9 @@
 		<if test="textType != null">
 			and textType = #{textType}
 		</if>
+		<if test="mediaMain == 1">
+			and media_main = 1
+		</if>
 	</sql>
 	
 	<sql id="search2">
@@ -131,6 +134,9 @@
 		</if>
 		<if test="textType != null">
 			and textType = #{textType}
+		</if>
+		<if test="mediaMain == 1">
+			and media_main = 1
 		</if>
 	</sql>
 	
@@ -839,6 +845,20 @@
 			#{startPage}, #{perPageNum}
  	</select>
  	
+ 	<select id="mediaMainlistSearch" resultType="MediaVO">
+ 		select 
+			*
+		from 
+			media_data
+		where
+			textType != '삭제글'
+		and 
+			media_main = 1
+		<include refid="search_writeDate"></include>
+		order 
+			by writeDate desc
+ 	</select>
+ 	
  	<select id="textTypelistSearch" parameterType="Map" resultType="MediaVO">
  		select 
 			*
@@ -848,9 +868,9 @@
 			textType is not null
 		and 
 			textType='좋은글'
-		<include refid="search"></include>
+		<include refid="search_writeDate"></include>
 		order 
-			by updateDate desc
+			by writeDate desc
  	</select>
  	<select id="textTypelistSearch2" parameterType="Map" resultType="MediaVO">
  		select 
@@ -861,9 +881,9 @@
 			textType is not null
 		and 
 			textType='나쁜글'
-		<include refid="search"></include>
+		<include refid="search_writeDate"></include>
 		order 
-			by updateDate desc
+			by writeDate desc
  	</select>
  	<select id="textTypelistSearch3" parameterType="Map" resultType="MediaVO">
  		select 
@@ -874,9 +894,9 @@
 			textType is not null
 		and 
 			textType='관심글'
-		<include refid="search"></include>
+		<include refid="search_writeDate"></include>
 		order 
-			by updateDate desc
+			by writeDate desc
  	</select>
  	<select id="textTypelistSearch4" parameterType="Map" resultType="MediaVO">
  		select 
@@ -887,9 +907,9 @@
 			textType is not null
 		and 
 			textType='기타글'
-		<include refid="search"></include>
+		<include refid="search_writeDate"></include>
 		order 
-			by updateDate desc
+			by writeDate desc
  	</select>
  	
  	<select id = "getSearchCount" resultType="Integer">

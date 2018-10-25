@@ -456,34 +456,7 @@ public class PeriodController {
 			}
 			
 			logger.info("cri: " + cri);
-		
-//		  List<PeriodMediaVO> mediaList = mediaService.periodMedia(cri);
-//		  List<PeriodMediaVO> reporterList = mediaService.periodReporter(cri);
-//		  
-//		  ListUtil listUtil = new ListUtil();
-//		  
-//		  PeriodComparator comparator = new PeriodComparator();
-//		  Collections.sort(mediaList, comparator);
-//		  Collections.sort(reporterList, comparator);
-//		  
-//		  model.addAttribute("mediaCount", mediaList.size());
-//		  model.addAttribute("pressCount", reporterList.size());
-//		  
-//		  
-//		  if(cri.getSelectKey() == null && cri.getCompany() == null) {
-//			  model.addAttribute("matchCount", 0);
-//		  
-//		  }else {
-//			  model.addAttribute("matchCount", mediaService.getMatchCount(cri));
-//		  }
-//		  
-//		  
-//		  mediaList = mediaList.subList(0, 20);
-//		  reporterList = reporterList.subList(0, 20);
-//		  
-//		  model.addAttribute("pressList", reporterList);
-//		  model.addAttribute("mediaList", mediaList);
-		  
+			
 		  // 리스트
 		  String keyword=  cri.getKeyword();
 		  cri.setKeyword(null);
@@ -492,6 +465,7 @@ public class PeriodController {
 		  model.addAttribute("textTypelistSearch2", mediaService.textTypelistSearch2(cri));
 		  model.addAttribute("textTypelistSearch3", mediaService.textTypelistSearch3(cri));
 		  model.addAttribute("textTypelistSearch4", mediaService.textTypelistSearch4(cri));
+		  model.addAttribute("mediaMain", mediaService.mediaMainlistSearch(cri));
 		  model.addAttribute("mediaList", mediaService.mediaListData(cri));
 		  
 		  /*logger.info("reporter: " + pressName);
