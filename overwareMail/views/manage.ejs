@@ -559,7 +559,8 @@
       datatype : 'json',
       error:function(request,status,error){
         console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
-        swal("ERROR!","메일발송을 실패 하였습니다.\n 다시 시도해주세요.", "error");
+        swal("ERROR!","메일발송을 실패 하였습니다.", "error");
+        reloadPage();
       },
       success:function(data){
         if(data.status){
@@ -575,7 +576,7 @@
   }
   function resendMail(idx){
     $.ajax({
-      url: '/email/resend',//send
+      url: '/email/send',//send
       type: 'post',
       data : {
         'idx':idx
@@ -583,7 +584,8 @@
       datatype : 'json',
       error:function(request,status,error){
         console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
-        swal("ERROR!","재발송 실패 하였습니다.\n 다시 시도해주세요.", "error");
+        swal("ERROR!","재발송 실패 하였습니다.", "error");
+        reloadPage();
       },
       success:function(data){
         if(data.status){
