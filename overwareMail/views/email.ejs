@@ -1012,6 +1012,7 @@
       error:function(request,status,error){
         console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
         swal("ERROR!", ((request.responseText == undefined)?'메일 저장에 실패했습니다.':request.responseText), "error");
+        $('.preloader3').fadeOut(500);
       },
       success:function(data){
         if(data.status == 'sessionTimeOut'){

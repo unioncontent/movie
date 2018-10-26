@@ -132,7 +132,7 @@ router.get('/',async function(req, res) {
     }
     else if(req.query.module == '2'){
       ws2.cell(row,10).string(item.FINALRESULT);
-      if(item.send_success == 'X' && (item.FINALRESULT == '' || item.FINALRESULT == null)){
+      if(item.send_success == 'X' && (item.FINALRESULT == '' || item.FINALRESULT == null || item.FINALRESULT == '()')){
         ws2.cell(row,10).string('기타 알수 없는 영구적인 오류');
       }
     }

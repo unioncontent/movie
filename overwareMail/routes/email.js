@@ -416,11 +416,34 @@ async function asyncFileRemove(dateF,fileArr){
 }
 
 // 메일 링크 로직
+// router.post('/send',isAuthenticated, async function(req, res) {
+//   // 메일 보내기
+//   var result = await mailInsert({idx:req.body.idx,user:req.user});
+//   if(result){
+//     res.status(500).send('메일 발송에 실패했습니다.');
+//     return false;
+//   }
+//   // 메일 결과
+//   res.send({status:true});
+// });
+
+// 메일 다시보내기 로직
 router.post('/send',isAuthenticated, async function(req, res) {
-  // 메일 보내기
-  var result = await mailInsert({idx:req.body.idx,user:req.user});
-  if(result){
+  try {
+    var result = await mailInsert({idx:req.body.idx,type:'resend',user:req.user});
+    if(result){
+      throw new Error('mailInsert Error');
+    }
+  } catch (e) {
     res.status(500).send('메일 발송에 실패했습니다.');
+    await mailAllA.updateMtype(['0',req.body.idx]);
+    if(req.body.M_module == '1'){
+      await maillink.deleteMlAT(req.body.idx);
+      var resultTName = await maillink.selectMailTableName();
+      await asyncForEach(resultTName, async (item, index, array) => {
+        await maillink.deleteMlABackUp(item.TABLE_NAME,req.body.idx);
+      });
+    }
     return false;
   }
   // 메일 결과
@@ -500,7 +523,7 @@ router.post('/test',isAuthenticated, async function(req, res) {
   }
   catch(e){
     console.log(e);
-    res.status(500).send('메일 저장에 실패했습니다. 다시 시도해주세요.');
+    res.status(500).send('메일 저장에 실패했습니다.');
     return false;
   }
   res.send({status:true});
@@ -603,11 +626,14 @@ router.post('/save',isAuthenticated, async function(req, res) {
       catch(e){
         console.log('mailInsert ERROR:',e);
         insertCheck = true;
-        await maillink.deleteMlAT(m_idx_a);
-        var resultTName = await maillink.selectMailTableName();
-        await asyncForEach(resultTName, async (item, index, array) => {
-          await maillink.deleteMlABackUp(item.TABLE_NAME,m_idx_a);
-        });
+        await mailAllA.updateMtype(['0',m_idx_a]);
+        if(mailAllParam.M_module == '1'){
+          await maillink.deleteMlAT(m_idx_a);
+          var resultTName = await maillink.selectMailTableName();
+          await asyncForEach(resultTName, async (item, index, array) => {
+            await maillink.deleteMlABackUp(item.TABLE_NAME,m_idx_a);
+          });
+        }
       }
     }
   }
@@ -617,32 +643,11 @@ router.post('/save',isAuthenticated, async function(req, res) {
 
   // 메일 발송(insert Error시)
   if(insertCheck){
-    res.status(500).send('메일 저장에 실패했습니다. 다시 시도해주세요.');
+    res.status(500).send('메일 저장에 실패했습니다.');
     return false;
   }
 
   res.send({status:true});
-});
-
-// 메일 다시보내기 로직
-router.post('/resend',isAuthenticated, async function(req, res) {
-  var result = await mailInsert({idx:req.body.idx,type:'resend',user:req.user});
-  if(result){
-    res.status(500).send('메일 발송에 실패했습니다.');
-    return false;
-  }
-  // 메일 결과
-  res.send({status:true});
-  // setTimeout(async () =>{
-  //   console.log('메일 send result');
-  //   result = await maillink.selectResult([req.body.idx]);
-  //   if(result){
-  //     res.send({status:true});
-  //   }
-  //   else{
-  //     res.status(500).send('메일 발송에 실패했습니다.');
-  //   }
-  // },5000);
 });
 
 async function settingMailBody(bodyHtml,keyword,template,idx,num,ivt){
@@ -769,56 +774,56 @@ async function mailInsert(req){
     await maillink.updateURL();
   }
   else if(mailData.M_module == 2){
-    var param_i = {user_id:'show',title:mailData.M_subject,content:mailData.M_body_his,sender:sender[1],sender_alias:sender[0],receiver_alias:'[$name]',send_time:(('time' in req) ? req.time : now),file_name:'',file_contents:'',wasRead:'O',wasSend:'X',wasComplete:'X',needRetry:'X',retryCount:'0',regist_date:now,linkYN:'Y',total_count:'0'};
-    result = await mymailer.insert('customer_info',param_i);
-    if(!('insertId' in result)){
-      throw new Error('insertMailInfoError');
-    }
-    var mailId = result.insertId;
-    result = await mailAllA.updateId([mailId,mailData.n_idx]);
-    if(!('insertId' in result)){
-      await mymailer.deleteInfoTable(mailId);
-      throw new Error('updateResultError');
-    }
-    console.log('typeof mailData.M_group:',typeof mailData.M_group);
-    if(typeof mailData.M_group == 'object'){
-      mailData.M_group = mailData.M_group.join();
-      console.log('typeof mailData.M_group:',typeof mailData.M_group);
-    }
-    var values = [].map.call(recipients,async function(item,index) {
-      return [mailId,
-        mailData.n_idx,
-        item[1],
-        item[0],
-        req.user.n_idx,
-        req.user.user_admin,
-        mailData.M_keyword,
-        mailData.M_seq_number,
-        mailData.M_invitation,
-        mailData.M_template,
-        mailData.M_type,
-        sender[2],
-        mailData.M_mail_type,
-        mailData.M_group,
-        mailData.M_recipi,
-        item[2],
-        now];
-    });
-    result = await mymailer.insertMailSendUser(values);
-    if(result != undefined){
-      await mymailer.deleteInfoTable(mailId);
-      throw new Error('insertMailSendUserError');
-    }
-    if(mailData.M_type == '0'){
-      result = await mymailer.updateSendInfo(['X','X','X',mailId]);
-      if(!('changedRows' in result)){
-        await mymailer.deleteInfoTable(mailId);
-        await mymailer.deleteSendTable(mailId);
-        throw new Error('updateSendInfoError');
+    var mailId;
+    try {
+      var param_i = {user_id:'show',title:mailData.M_subject,content:mailData.M_body_his,sender:sender[1],sender_alias:sender[0],receiver_alias:'[$name]',send_time:(('time' in req) ? req.time : now),file_name:'',file_contents:'',wasRead:'O',wasSend:'X',wasComplete:'X',needRetry:'X',retryCount:'0',regist_date:now,linkYN:'Y',total_count:'0'};
+      result = await mymailer.insert('customer_info',param_i);
+      mailId = result.insertId;
+      if(!('insertId' in result)){
+        throw new Error('insertMailInfoError');
       }
+      result = await mailAllA.updateId([mailId,mailData.n_idx]);
+      if(!('insertId' in result)){
+        throw new Error('updateResultError');
+      }
+      if(typeof mailData.M_group == 'object' && mailData.M_group != null){
+        mailData.M_group = mailData.M_group.join();
+      }
+      var values = [].map.call(recipients,async function(item,index) {
+        return [mailId,
+          mailData.n_idx,
+          item[1],
+          item[0],
+          req.user.n_idx,
+          req.user.user_admin,
+          mailData.M_keyword,
+          mailData.M_seq_number,
+          mailData.M_invitation,
+          mailData.M_template,
+          mailData.M_type,
+          sender[2],
+          mailData.M_mail_type,
+          mailData.M_group,
+          mailData.M_recipi,
+          item[2],
+          now];
+        });
+        result = await mymailer.insertMailSendUser(values);
+        if(result != undefined){
+          throw new Error('insertMailSendUserError');
+        }
+        if(mailData.M_type == '0'){
+          result = await mymailer.updateSendInfo(['X','X','X',mailId]);
+          if(!('changedRows' in result)){
+            throw new Error('updateSendInfoError');
+          }
+        }
+    } catch (e) {
+      await mymailer.deleteInfoTable(mailId);
+      await mymailer.deleteSendTable(mailId);
+      throw new Error('module2');
     }
   }
-
 }
 
 function getFiles (dir, files_){
