@@ -274,7 +274,8 @@ function getByteLength(s,b,i,c){
 function settingMailBody(){
   // 최대 65535
   $("#M_body").clone().prependTo( "#clone" );
-  // 댓글수 메일 발송시 안보이도록
+  // 댓글수,사이트이미지 메일 발송시 안보이도록
+  $("#clone").find('.site-logo').remove();
   $("#clone").find('.replyLabel').remove();
   // $("#clone").find('.news-delete').remove();
   // var o_body = $("#clone").html();

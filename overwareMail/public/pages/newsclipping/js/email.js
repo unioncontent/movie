@@ -339,7 +339,8 @@ function settingMailBody(){
   $("#clone").find('.news-delete').remove();
   $("#clone").find('.groupBtn').remove();
   $("#clone").find('.checkboxs').remove();
-  // 댓글수 메일 발송시 안보이도록
+  // 댓글수,사이트이미지 메일 발송시 안보이도록
+  $("#clone").find('.site-logo').remove();
   $("#clone").find('.replyLabel').remove();
   // var o_body = $("#clone").html();
   // var bodyStr = o_body;
