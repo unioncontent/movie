@@ -76,6 +76,10 @@
                   <input class="border-checkbox" type="checkbox" id="searchRankBtn" name="rank" value="ture">
                   <label class="border-checkbox-label" for="searchRankBtn">순위</label>
                 </div>
+                <div class="border-checkbox-group border-checkbox-group-default m-r-5">
+                  <input class="border-checkbox" type="checkbox" id="searchdelBtn" name="del" value="ture">
+                  <label class="border-checkbox-label" for="searchdelBtn">제외</label>
+                </div>
               </div>
               <div class="col-12 col-md-2 f-right col-sm-9 m-l-10 p-l-0 p-r-0 m-b-10 right-icon-control" style= "min-width: 207px;">
                 <input type="text" class="form-control p-t-10 form-control-default search-text" value="<%= search %>" placeholder="제목/내용 검색" id="searchInput">
@@ -154,7 +158,7 @@
                       <td>
                         <a href="<%= list[i].url %>" target="_blank" title="<%= list[i].media_title %>">
                           <div class="title_nobr">
-                            <% if (list[i].media_subname != 'out'){%>
+                            <% if (list[i].media_subname != 'out' && list[i].media_subname != null){%>
                               <img alt="<%=list[i].media_subname%>" src="http://showbox.email/images/newsclipping/<%=list[i].media_subname%>_logo.png" class="site-logo">
                             <% } %>
                             <%= list[i].media_title %>
@@ -295,6 +299,7 @@
                 <input type="hidden" id="type" value="<%=type%>"/>
                 <input type="hidden" id="site" value="<%=site%>"/>
                 <input type="hidden" id="rank" value="<%=rank%>"/>
+                <input type="hidden" id="del" value="<%=del%>"/>
                 <input type="hidden" id="video" value="<%=video%>"/>
               </div>
             </div>

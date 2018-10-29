@@ -86,7 +86,8 @@ async function getListPageData(idx,param){
     site: '',
     page: '',
     rank:false,
-    video:false
+    video:false,
+    del:false
   };
   var currentPage = 1;
   var searchBody = {};
@@ -128,6 +129,11 @@ async function getListPageData(idx,param){
     if(param.video == 'ture')
       searchBody['video'] = param.video;
     data['video'] = param.video ;
+  }
+  if (typeof param.del !== 'undefined') {
+    if(param.del == 'ture')
+      searchBody['del'] = param.del;
+    data['del'] = param.del ;
   }
   if (typeof param.search !== 'undefined') {
     searchBody['search'] = param.search.replace(/'/gi,"''").replace(/[?]/gi,"");

@@ -39,6 +39,15 @@ router.post('/delete',isAuthenticated, async function(req, res) {
   res.send({status:true});
 });
 
+router.post('/cancel',isAuthenticated, async function(req, res) {
+  var result = await newsclipping.cancelUpdate(req.body);
+  if(!('protocol41' in result)){
+    res.status(500).send('newsclipping cancel query 실패');
+    return false;
+  }
+  res.send({status:true});
+});
+
 router.get('/send',isAuthenticated,async function(req, res) {
   var searchParam = [req.user.user_admin,0,10];
   var data = {

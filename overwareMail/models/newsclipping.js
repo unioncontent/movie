@@ -57,6 +57,10 @@ var newsclipping = {
     }
     return await getResult(sql,param.idx);
   },
+  cancelUpdate: async function(param){
+    var sql = "update "+param.table+" set news_detail = null where news_detail=?";
+    return await getResult(sql,param.idx);
+  },
   delete: async function(param){
     var sql = "delete from news_mail where media_idx=?";
     return await getResult(sql,param);
@@ -135,6 +139,9 @@ var newsclipping = {
     }
     if('search_b' in body){
       sql +=' and media_title like \'%'+body.search_b+'%\'';
+    }
+    if('del' in body){
+      sql +=' and (media_title not like \'%영상%\' and media_title not like \'%포토%\' and media_title not like \'%사진%\')';
     }
     if('video' in body){
       sql +=' and v_state=2';
@@ -216,6 +223,9 @@ var newsclipping = {
     }
     if('search_b' in body){
       sql +=' and media_title like \'%'+body.search_b+'%\'';
+    }
+    if('del' in body){
+      sql +=' and (media_title not like \'%영상%\' and media_title not like \'%포토%\' and media_title not like \'%사진%\')';
     }
     if('video' in body){
       sql +=' and v_state=2';
