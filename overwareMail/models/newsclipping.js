@@ -132,6 +132,9 @@ var newsclipping = {
     if('search_b' in body){
       sql +=' and media_title like \'%'+body.search_b+'%\'';
     }
+    if('del' in body){
+      sql +=' and (media_title not like \'%영상%\' and media_title not like \'%포토%\')';
+    }
     if('video' in body){
       sql +=' and v_state=2';
     }
@@ -212,6 +215,9 @@ var newsclipping = {
     }
     if('search_b' in body){
       sql +=' and media_title like \'%'+body.search_b+'%\'';
+    }
+    if('del' in body){
+      sql +=' and (media_title not like \'%영상%\' and media_title not like \'%포토%\')';
     }
     if('video' in body){
       sql +=' and v_state=2';

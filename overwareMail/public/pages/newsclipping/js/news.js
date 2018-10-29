@@ -198,13 +198,23 @@ $('input[type="checkbox"][name="video"]').on('click',function(){
     searchNaverVideoBtn('false');
   }
 });
+$('input[type="checkbox"][name="del"]').on('click',function(){
+  if($(this).prop('checked')){
+    $('#del').val($(this).val());
+    searchNaverVideoBtn($(this).val());
+  }
+  else{
+    $('#del').val('false');
+    searchNaverVideoBtn('false');
+  }
+});
 // 단독, 공식 버튼 클릭시
 function searchStrBtn(search){
   $('#search2').val(search);
   var param = settingParams(1);
   ajaxGetPageList(param);
 }
-// 랭킹 버튼 클릭시
+// 랭킹,비디오,제외 버튼 클릭시
 function searchNaverVideoBtn(rank){
   var param = settingParams(1);
   ajaxGetPageList(param);
@@ -338,7 +348,7 @@ function ajaxGetPageList(param){
           <td><div class="date_nobr">'+item.writeDate+'</div></td>\
           <td><input type="text" name="datefilter" class="datepicker form-control"  value="'+((item.reportDate != null && item.reportDate != '') ? item.reportDate : '')+'"/></td>\
           <td><a href="'+item.url+'" target="_blank" title="'+item.media_title+'"><div class="title_nobr">';
-          if (item.media_subname != 'out'){
+          if (item.media_subname != 'out' && item.media_subname != null){
             html +='<img alt="'+item.media_subname+'" src="http://showbox.email/images/newsclipping/'+item.media_subname+'_logo.png" class="site-logo">';
           }
           html += item.media_title+'</div></a><i class="fas fa-video text-muted" style="'+((item.v_state != 2) ? 'visibility: hidden;' : '')+'"></i>\
@@ -632,6 +642,11 @@ function settingParams(num){
   var rankValue = $('#rank').val();
   if(rankValue != '' && rankValue != 'false'){
     param.rank = rankValue;
+  }
+  //제외
+  var delValue = $('#del').val();
+  if(delValue != '' && delValue != 'false'){
+    param.del = delValue;
   }
   //날짜
   var sDateValue = $('#sDate').val();
