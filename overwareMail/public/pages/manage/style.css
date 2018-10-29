@@ -1,0 +1,81 @@
+
+  /* loader */
+  .preloader3{
+    display: none;
+    padding-top:20%;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 100px;
+    width: 500px;
+    margin: auto;
+    max-width: 100%;
+    z-index: 10000;
+  }
+  #selectKeyword{
+    min-width: 100px;
+  }
+  .table.table-sm td, .table.table-sm th {
+    padding: .6rem .5rem;
+  }
+  .card .card-header span:not(.input-group-addon){
+    display: inline;
+  }
+  .reportrange{
+    min-width: 207px;
+  }
+  .table td, .table th{
+    font-size: 13px;
+    vertical-align: middle;
+  }
+  .mailHtml{
+    display: none;
+  }
+  .btn-sm{
+    padding: 8px 11px 8px 12px;
+  }
+  #mailBody{
+    overflow: auto;
+    padding: 0;
+    max-height: 700px;
+  }
+  #mailBody a:hover {
+    color: #3399cc;
+    text-decoration: none;
+  }
+  #mailBody td,th{
+    white-space: inherit;
+    white-space: pre-line;
+  }
+  .title_nobr{
+    font-size: 13px;
+    padding-left: 3px;
+    width: 395px;
+    white-space: pre-line;
+  }
+  .kwd_nobr,.num_nobr{
+    padding-left: 3px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+  .date-nobr{
+    width: 90px;
+    word-wrap: break-word;
+    white-space: initial;
+    white-space: pre-line;
+  }
+  .title_nobr:hover{
+    cursor:default;
+    font-weight: bold;
+  }
+  .num_nobr{
+    width: 60px;
+  }
+  .group-nobr{
+    width: 104px;
+    word-break: break-all;
+    white-space: initial;
+  }
+  .kwd_nobr{
+    width: 86px;
+  }
