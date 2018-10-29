@@ -15,7 +15,7 @@ var nMailAll = {
     return await getResult(sql,[n_idx]);
   },
   selectSendMailDate:async function(n_idx){
-    var sql = 'SELECT distinct M_subject,n_idx FROM n_mail_all order by M_subject desc,n_idx desc';
+    var sql = 'SELECT M_subject,max(n_idx) as n_idx FROM n_mail_all group by M_subject order by M_subject desc,n_idx desc';
     var result = await getResult(sql);
     if(result.length == 0){
       return [];
