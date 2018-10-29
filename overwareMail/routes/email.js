@@ -430,7 +430,11 @@ async function asyncFileRemove(dateF,fileArr){
 // 메일 다시보내기 로직
 router.post('/send',isAuthenticated, async function(req, res) {
   try {
-    var result = await mailInsert({idx:req.body.idx,type:'resend',user:req.user});
+    var iparam = {idx:req.body.idx,user:req.user};
+    if('sType' in req.body){
+      iparam.type = 'resend';
+    }
+    var result = await mailInsert(iparam);
     if(result){
       throw new Error('mailInsert Error');
     }

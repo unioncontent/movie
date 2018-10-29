@@ -107,7 +107,7 @@ if(tdEles.eq(8).text() != '-'){
   swal("ERROR!", '발송된 메일은 수정하실 수 없습니다.', "error");
   return false;
 }
-if(typeVal != '0'){
+if(moduleVal == '2' && typeVal != '0'){
   $.ajax({
     url: '/email/manage/checkMail',
     type: 'post',
@@ -252,7 +252,7 @@ function resendMail(idx){
 $.ajax({
   url: '/email/send',//send
   type: 'post',
-  data : {'idx':idx},
+  data : {'idx':idx,'sType':'resend'},
   datatype : 'json',
   error:function(request,status,error){
     console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
