@@ -53,6 +53,10 @@ var newsclipping = {
     }
     return await getResult(sql,param.idx);
   },
+  cancelUpdate: async function(param){
+    var sql = "update "+param.table+" set news_detail = null where news_detail=?";
+    return await getResult(sql,param.idx);
+  },
   delete: async function(param){
     var sql = "delete from news_mail where media_idx=?";
     return await getResult(sql,param);
