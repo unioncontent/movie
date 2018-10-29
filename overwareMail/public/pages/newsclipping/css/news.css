@@ -64,8 +64,9 @@ input#media_name,input#reporter_name {
   white-space: pre-line;
 }
 .title_nobr,.nobr,.key_nobr,.media_nobr,.rank_nobr{
-  text-overflow: ellipsis;
-  overflow: hidden;
+  /* text-overflow: ellipsis;
+  overflow: hidden; */
+  white-space: initial;
 }
 .title_nobr{
   display: inline-block;
