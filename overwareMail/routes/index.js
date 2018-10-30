@@ -21,8 +21,8 @@ var isAuthenticated = function (req, res, next) {
 router.get('/', isAuthenticated, async function(req, res, next) {
   var data = {
     list:await period.call_dashbord2([-1,req.user.n_idx]),
-    list2:await period.call_dashbord([-1,req.user.n_idx]),
-    wlist:await period.selectReservationView([2,req.user.n_idx,req.user.n_idx,req.user.n_idx])
+    list2:await period.call_dashbord([-1,req.user.n_idx])
+    // ,wlist:await period.selectReservationView([2,req.user.n_idx,req.user.n_idx,req.user.n_idx])
   };
   console.log('data:',data);
   res.render('index',data);
