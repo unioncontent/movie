@@ -95,7 +95,7 @@
                       return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                     }
 
-                    var list = list.concat(list2.concat(wlist));
+                    var list = list.concat(list2);//.concat(wlist)
                     list.sort(function(a,b){
                      var c = new Date(a.M_send);
                      var d = new Date(b.M_send);

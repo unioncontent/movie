@@ -62,7 +62,7 @@ var period = {
   },
   selectReservationView: async function(param){
     var sql = "select a.M_type, a.n_idx, a.M_subject, a.M_keyword as M_keyword_idx, k.keyword_main AS M_keyword,a.M_seq_number, a.M_invitation, a.M_template,date_format(a.M_senddate,'%Y-%m-%d  %H:%i:%s') as M_send, '0' as sendCount, '0' as success, '0' as fail from `union`.m_mail_all_a as a left join `union`.m_keyword_data as k ON a.M_keyword = k.keyword_idx\
-    where a.M_type = \'1\' and DATE(a.M_senddate) = current_date() and a.M_senddate > now() and a.M_module = ? "+userWhere;
+    where a.M_type = \'1\' and (DATE(a.M_senddate) > current_date() and a.M_senddate > now()) and a.M_module = ? "+userWhere;
     return await getResult(sql,param);
   },
   selectReservationCount: async function(admin,n_idx){
@@ -70,7 +70,8 @@ var period = {
     var userResult = await getResult(sql,[((admin==null)?n_idx:admin),n_idx]);
     sql = "select concat('d.eighth=''',GROUP_CONCAT(distinct user_keyword SEPARATOR ''' or d.eighth='''),'''') as keywordStr from `union`.m_mail_user where n_idx=?";
     var keywordResult  = await getResult(sql,n_idx);
-    sql = "SELECT count(*) as total FROM tm001.customer_data as d left join tm001.customer_info as i on d.id = i.id where d.twelfth = '1' and i.send_time > now() ";
+    sql = "SELECT count(*) as total FROM tm001.customer_data as d left join tm001.customer_info as i on d.id = i.id where d.twelfth = '1' and (i.send_time > now() and DATE(i.regist_date) = current_date()) ";
+    // sql = "SELECT count(*) as total FROM tm001.customer_data as d left join tm001.customer_info as i on d.id = i.id where d.twelfth = '1' and (i.send_time > now() and DATE(i.regist_date) > current_date()) ";
     console.log('result : ',userResult,keywordResult);
     if(userResult.length > 0){
       sql += ' and (('+userResult[0].userStr+') ';
