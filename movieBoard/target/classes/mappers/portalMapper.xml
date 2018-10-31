@@ -224,7 +224,7 @@
 		<if test="startDate == null">
 			and
         writeDate between date_add(curdate(), interval -1 month)
-        and curdate()+1
+        and curdate()
 		</if>	
 		<if test="startDate != null">
 			and writeDate <![CDATA[>=]]> #{startDate}
