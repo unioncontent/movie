@@ -5,7 +5,7 @@ import java.util.Date;
 public class SearchCriteria extends Criteria {
 
 	
-	private String searchType, keyword, selectKey, subSelectKey,company, textType, portal_name, portal_type, hour, url, media_name, sns_name, reporter_name, sns_writer, mediaMain;
+	private String searchType, keyword, selectKey, subSelectKey,company, textType, portal_name, portal_type, hour, url, media_name, sns_name, reporter_name, sns_writer, mediaMain, mediaState;
 	private Integer total;
 	private String startDate, endDate, createstartDate, createendDate, createminusDate, writeDate;
 	private Date date;
@@ -72,6 +72,14 @@ public class SearchCriteria extends Criteria {
 	
 	public void setMediaMain(String mediaMain) {
 		this.mediaMain = mediaMain;
+	}
+	
+	public String getMediaState() {
+		return mediaState;
+	}
+
+	public void setMediaState(String mediaState) {
+		this.mediaState = mediaState;
 	}
 
 
@@ -246,10 +254,10 @@ public class SearchCriteria extends Criteria {
 				+ ", subSelectKey=" + subSelectKey + ", company=" + company + ", textType=" + textType
 				+ ", portal_name=" + portal_name + ", portal_type=" + portal_type + ", hour=" + hour + ", url=" + url
 				+ ", media_name=" + media_name + ", sns_name=" + sns_name + ", reporter_name=" + reporter_name
-				+ ", sns_writer=" + sns_writer + ", mediaMain=" + mediaMain + ", total=" + total + ", startDate="
-				+ startDate + ", endDate=" + endDate + ", createstartDate=" + createstartDate + ", createendDate="
-				+ createendDate + ", createminusDate=" + createminusDate + ", writeDate=" + writeDate + ", date=" + date
-				+ "]";
+				+ ", sns_writer=" + sns_writer + ", mediaMain=" + mediaMain + ", mediaState=" + mediaState + ", total="
+				+ total + ", startDate=" + startDate + ", endDate=" + endDate + ", createstartDate=" + createstartDate
+				+ ", createendDate=" + createendDate + ", createminusDate=" + createminusDate + ", writeDate="
+				+ writeDate + ", date=" + date + "]";
 	}
 
 }

@@ -132,6 +132,18 @@
                           </c:forEach>
                           </c:if>
                         </select>
+                        <select id= "selectMediaMain" name="select" class="col-md-1 form-control form-control-inverse m-r-10 m-b-10 p-r-5 f-left select-left">	
+	                        <option>타입</option>
+	                        <option value= "A" >A</option>
+	                        <option value= "B" >B</option>
+	                        <option value= "" >전체</option>
+                        </select>
+                        <select id= "selectState" name="select" class="col-md-1 form-control form-control-inverse m-r-10 m-b-10 p-r-5 f-left select-left">	
+	                        <option>상태</option>
+	                        <option value= "1" >ON</option>
+	                        <option value= "2" >OFF</option>
+	                        <option value= "" >전체</option>
+                        </select>
 						</c:if>
 
 						<c:if test="${user.user_name != 'union'}">
@@ -158,6 +170,18 @@
                           <option value="${keywordList.keyword_main}">${keywordList.keyword_main}</option>
                           </c:forEach>
                           </c:if>
+                        </select>
+                        <select id= "selectMediaMain" name="select" class="col-md-1 form-control form-control-inverse m-r-10 m-b-10 p-r-5 f-left select-left">	
+	                        <option>타입</option>
+	                        <option value= "A" >A</option>
+	                        <option value= "B" >B</option>
+	                        <option value= "" >전체</option>
+                        </select>
+                        <select id= "selectState" name="select" class="col-md-1 form-control form-control-inverse m-r-10 m-b-10 p-r-5 f-left select-left">	
+	                        <option>상태</option>
+	                        <option value= "1" >ON</option>
+	                        <option value= "2" >OFF</option>
+	                        <option value= "" >전체</option>
                         </select>
 						</c:if>
                       </div>
@@ -535,6 +559,52 @@ $(document).ready(function(){
 			//searchList();
 		});
 		
+		var mediaMainOption = decodeURI(window.location.href.split("mediaMain=")[1]).split("&")[0];
+		
+		var $selectMediaMain = $('#selectMediaMain');
+
+		if(mediaMainOption != 'undefined'){
+			for(var i = 0; i < $selectMediaMain[0].length; i++ ){
+				if($selectMediaMain[0][i].value == mediaMainOption){
+					$selectMediaMain[0][i].selected = 'selected';
+				}
+			}
+		}
+		$selectMediaMain[0][0].disabled = true;
+
+
+		// 미디아메인 선택시
+		$selectMediaMain.change(function(){
+			console.log("selectMediaMain clicked....");
+			console.log($('#selectMediaMain option:selected').val());
+
+			searchList();
+
+		});
+		
+		var mediaStateOption = decodeURI(window.location.href.split("mediaState=")[1]).split("&")[0];
+		
+		var $selectMediaState = $('#selectState');
+
+		if(mediaStateOption != 'undefined'){
+			for(var i = 0; i < $selectMediaState[0].length; i++ ){
+				if($selectMediaState[0][i].value == mediaStateOption){
+					$selectMediaState[0][i].selected = 'selected';
+				}
+			}
+		}
+		$selectMediaState[0][0].disabled = true;
+
+
+		// 미디아상태 선택시
+		$selectMediaState.change(function(){
+			console.log("selectMediaState clicked....");
+			console.log($('#selectState option:selected').val());
+
+			searchList();
+
+		});
+		
 		// allBtn 클릭시
 		  $(".radiosBtn").on("click", function(event){
 			  console.log(event);
@@ -752,6 +822,7 @@ $(document).ready(function(){
 		 	  + "&keyword=" + decodeURI(window.location.href.split("&keyword=")[1]).split("&")[0]
       	  	  + "&company=" + $("#selectCompany option:selected").val()
 	          + "&selectKey=" + $('#selectKeyword option:selected').val()
+	          + "&mediaMain=" + $('#selectMediaMain option:selected').val()
     		  + "&startDate=" + makeDateFormat($("#fromDate").val(), 0)
     		  + "&endDate=" +  makeDateFormat($("#fromDate").val(), 1);
 
@@ -935,6 +1006,8 @@ function makeDateFormat(date, index){
 	  				  + $("#selectCompany option:selected").val()
 	  				  + "&selectKey="
 	  				  + $('#selectKeyword option:selected').val()
+	  				  + "&mediaMain=" + $('#selectMediaMain option:selected').val()
+	  				  + "&mediaState=" + $('#selectState option:selected').val()
 	  				  + "&startDate=" + makeDateFormat($("#fromDate").val(), 0)
 	  				  + "&endDate=" +  makeDateFormat($("#fromDate").val(), 1);
 	  }

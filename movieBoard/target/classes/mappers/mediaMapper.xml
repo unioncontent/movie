@@ -349,6 +349,12 @@
 		<if test="textType != null">
 			and textType = #{textType}
 		</if>
+		<if test="mediaMain != null">
+			and news_type = #{mediaMain}
+		</if>
+		<if test="mediaState != null">
+			and news_state = #{mediaState}
+		</if>
 	</sql>
 	<sql id="search_writeDate3">
 		<if test="keyword != null">

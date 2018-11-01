@@ -190,7 +190,15 @@ public class MediaController {
 			cri.setStartDate(null);
 			cri.setEndDate(null);
 		
-		} 
+		}
+		if(cri.getMediaMain() == "" || "타입".equals(cri.getMediaMain()) ) {
+			logger.info("MediaMain is null");
+			cri.setMediaMain(null);
+		}
+		if(cri.getMediaState() == "" || "상태".equals(cri.getMediaState()) ) {
+			logger.info("MediaState is null");
+			cri.setMediaState(null);;
+		}
 		if(cri.getStartDate() != null && cri.getEndDate() != null) {
 			logger.info("not null");
 			logger.info(cri.getStartDate());

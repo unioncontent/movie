@@ -101,6 +101,7 @@ public class PageMaker {
 		            .queryParam("company", ((SearchCriteria)cri).getCompany())
 		            .queryParam("textType", ((SearchCriteria)cri).getTextType())
 		            .queryParam("mediaMain", ((SearchCriteria)cri).getMediaMain())
+		            .queryParam("mediaState", ((SearchCriteria)cri).getMediaState())
 		            .build();	            
 			
 			return uriComponents.toUriString();
