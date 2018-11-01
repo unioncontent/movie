@@ -184,7 +184,7 @@ public class SNSServiceImpl implements SNSService{
 		List<SNSVO> list = snsDAO.listAll(cri);
 
 		for (SNSVO snsvo : list) {
-			snsvo.setKeyword_main(keywordDAO.read(snsvo.getKeyword()).getKeyword_main());
+			snsvo.setKeyword_main(snsvo.getTitle_key());
 		}
 		
 		return list;
@@ -574,7 +574,7 @@ public class SNSServiceImpl implements SNSService{
 		List<SNSVO> list = snsDAO.youtubeListAll(cri);
 
 		for (SNSVO snsvo : list) {
-			snsvo.setKeyword_main(keywordDAO.read(snsvo.getKeyword()).getKeyword_main());
+			snsvo.setKeyword_main(snsvo.getTitle_key());
 		}
 		
 		return list;

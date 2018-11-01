@@ -561,7 +561,10 @@
 		and 
 			keyword != ''
 		<include refid="search"></include>
-		and sns_name = #{portal_name}
+		and 
+			sns_name = #{portal_name}
+		order 
+			by writeDate asc
 	
 	</select>
 	
@@ -578,7 +581,7 @@
 		and 
 			sns_name = #{portal_name}
 		order 
-			by createDate desc
+			by writeDate asc
 	</select>
  	
  	<select id="facebookSum" resultType="GraphVO">
