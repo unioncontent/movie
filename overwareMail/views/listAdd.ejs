@@ -95,6 +95,18 @@
                   <span class='messages'><p class='text-danger error'></p></span>
                 </div>
               </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label">그룹</label>
+                <div class="col-sm-5">
+                  <div class="form-control f-left file-list">
+                    <ul id="uploadGroupList"></ul>
+                    <input id="group" type="hidden">
+                  </div>
+                </div>
+                <div class="col-sm-1 btn-check">
+                  <button class="btn-group btn btn-inverse m-b-0">선택하기</button>
+                </div>
+              </div>
               <div class="row">
                 <label class="col-sm-2"></label>
                 <div class="col-sm-10">
@@ -139,11 +151,94 @@
           </div>
         </div>
       </div>
+      <!-- Modal start-->
+      <div class='modal fade' id='group-Modal' data-backdrop="static" data-keyboard="false" role='dialog'>
+        <div class='modal-dialog  modal-lg' role='document'>
+          <div class='modal-content'>
+            <div class='modal-header'>
+              <h5 class="modal-title">그룹 선택</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div class='modal-body'>
+              <div class='card'>
+                <div class="card-header">
+                  <div class="f-right col-sm-3 p-l-0 p-r-0 right-icon-control">
+                    <input type="text" class="form-control form-control-default search-text" id="groupInput" placeholder="그룹명 검색">
+                    <div class="form-icon" id="searchGroupBtn">
+                      <i class="fas fa-search"></i>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-block table-border-style">
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th width="1%">
+                            <div class="border-checkbox-section" style="max-width: 30px;">
+                              <div class="border-checkbox-group border-checkbox-group-default">
+                                <input class="border-checkbox" type="checkbox" id="all">
+                                <label class="border-checkbox-label" for="all"></label>
+                              </div>
+                            </div>
+                          </th>
+                          <th width="5%">NO</th>
+                          <th width="25%">그룹명</th>
+                          <th width="10%">전체리스트</th>
+                        </tr>
+                      </thead>
+                      <tbody></tbody>
+                      <tfoot></tfoot>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-inverse btn-iGroup">선택</button>
+              <button class="btn btn-secondary mobtn" data-dismiss='modal' aria-label='Close' type="button">취소</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Modal end-->
     </div>
   </div>
 </div>
 <!-- alert -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert@2.1.0/dist/sweetalert.min.js"></script>
+<!-- custom -->
+<style type="text/css">
+  #group-Modal .border-checkbox-section .border-checkbox-group .border-checkbox-label{
+    margin: 0;
+  }
+  .table td, .table th{
+    vertical-align: middle;
+  }
+  #group-Modal .table thead th{
+    vertical-align: top;
+  }
+  /* 파일 업로드 */
+.file-name{
+  width: 259px;
+  overflow:hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+}
+.file-list{
+  min-height: 36px;
+}
+#uploadFileList li{
+  width: 100%;
+  display: flow-root;
+}
+input.upload {
+  display:none;
+  position: relative;
+}
+</style>
 <script type="text/javascript">
   // 중복 체크
   $("#emailCheckBtn").on("click",function(){
@@ -322,6 +417,14 @@
         if($('#tel').val() != ""){
           param['M_tel']=$('#tel').val().replace(/[^0-9]/gi,"");
         }
+        if($('#uploadGroupList li').length > 0){
+          var list = [];
+          $('#uploadGroupList li').each(function(idx,ele){
+            var trEle = $(ele).parents('tr');
+            list.push($(ele).text());
+          });
+          param.group = list.join(',');
+        }
         insertMail(param);
       }
     });
@@ -356,4 +459,156 @@
     });
 
   }
+  // 모달 처리
+  // 검색시
+  // 모달 등록 그룹 검색 클릭시
+  $('.btn-group').on('click',function(){
+    var param = {
+      page : 1,
+    };
+    $('#groupInput').val('');
+    ajaxGetMailPageList(param);
+    $('#group-Modal').modal('show');
+  });
+  // 그룹 검색 모달 전체선택시
+  $('#all').on('click',function(){
+    $('input[type=checkbox]').prop("checked",$('#all').is(":checked"));
+  });
+  // 그룹 검색 모달 체크박스 선택시
+  $(document).on('click','input[type=checkbox]:not(#all)',function(){
+    $('#all').prop("checked",false);
+  });
+  // 그룹 검색 모달 이메일 검색시
+  $('#groupInput').on('keyup',function(event){
+    if(event.keyCode == 13){
+      $('#searchGroupBtn').trigger('click');
+    };
+  });
+  $('#searchGroupBtn').on('click',function(){
+    var param = {
+      page : 1
+    };
+    if($('#groupInput').val() != ''){
+      param.search = $('#groupInput').val();
+    }
+    $('#all').prop("checked",false);
+    ajaxGetMailPageList(param);
+  });
+  // 모달 페이지 이동
+  $(document).on('click','#group-Modal .page-link',function(){
+    var param = {
+      page : Number($(this).data().value)
+    };
+    if($('#groupInput').val() != ''){
+      param.search = $('#groupInput').val();
+    }
+    ajaxGetMailPageList(param);
+  });
+  // 그룹 검색 모달 리스트 ajax
+  function ajaxGetMailPageList(param){
+    console.log('ajaxGetMailPageList:',param);
+    $.ajax({
+      url: '/list/getNextGroupPage',
+      type: 'post',
+      data: param,
+      error: function(request,status,error){
+        console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
+        alert('새로 고침해주세요.');
+      },
+      success: function(data){
+        if(data.status != true){
+          alert('새로 고침해주세요.');
+          return false;
+        }
+        var limit = 20;
+        var pageCount = Math.ceil(data.list.groupListCount/limit);
+        $('#group-Modal tbody').empty();
+        $('#all').prop("checked",false);
+        console.log(data.list.groupList);
+        data.list.groupList.forEach(function(item,idx){
+          var numIdx = Math.ceil(data.list.groupListCount-(data.list.offset+idx)).toString();
+          var html = '<tr>\
+            <input type="hidden" id="idx" value="'+item.n_idx+'" />\
+            <td>\
+              <div class="border-checkbox-section" style="max-width: 30px;">\
+                <div class="border-checkbox-group border-checkbox-group-default">\
+                  <input class="border-checkbox" type="checkbox" id="checkbox'+idx+'">\
+                  <label class="border-checkbox-label" for="checkbox'+idx+'"></label>\
+                </div>\
+              </div>\
+            </td>\
+            <th>'+numIdx+'</th>\
+            <td id="title">'+item.M_group_title+'</td>\
+            <td>'+item.groupCount+'</td>\
+          </tr>'
+          $('#group-Modal tbody').append(html);
+        });
+        $('#group-Modal tfoot').empty();
+        if(pageCount > 1) {
+          var html = '<tr><td colspan="3"><ul class="pagination float-right">';
+          var pageSize = 5;
+          var pRCnt = parseInt(data.list.currentPage / pageSize);
+          if(data.list.currentPage % pageSize == 0){
+            pRCnt = parseInt(data.list.currentPage / pageSize) - 1;
+          }
+          if(data.list.currentPage > 5) {
+            html += '<li class="page-item"><a class="page-link" data-value="1" aria-label="Previous">\
+                <i class="ti-angle-double-left f-12"></i>\
+                <span aria-hidden="true"></span>\
+                <span class="sr-only">Previous</span>\
+              </a></li>\
+              <li class="page-item"><a class="page-link" data-value=\"'+(pRCnt * pageSize)+'"\ aria-label="Previous">\
+                <i class="ti-angle-left f-12"></i>\
+                <span aria-hidden="true"></span>\
+                <span class="sr-only">Previous</span>\
+              </a></li>';
+          }
+
+          for(var index=pRCnt * pageSize + 1;index<(pRCnt + 1)*pageSize + 1;index++){
+            var active = (data.list.currentPage == index) ? "active" : "";
+            html += '<li class=\"'+active+' page-item">\
+              <a class="page-link" data-value=\"'+index+'"\ >'+index+'</a></li>'
+
+            if(index == pageCount) {
+              break;
+            }
+          }
+          if((pRCnt + 1) * pageSize < pageCount) {
+            html += '<li class="page-item">\
+                  <a class="page-link" data-value=\"'+((pRCnt + 1)*pageSize+1)+'"\ aria-label="Next">\
+                    <i class="ti-angle-right f-12"></i>\
+                    <span aria-hidden="true"></span>\
+                    <span class="sr-only">Next</span>\
+                  </a></li>\
+                  <li class="page-item">\
+                  <a class="page-link" data-value=\"'+pageCount+'"\ aria-label="Next">\
+                    <i class="ti-angle-double-right f-12"></i>\
+                    <span aria-hidden="true"></span>\
+                    <span class="sr-only">Next</span>\
+                  </a></li>';
+          }
+          html += '</ul></td></tr>';
+          $('#group-Modal tfoot').append(html);
+        }
+      }
+    });
+  }
+  // 그룹추가시
+  $('.btn-iGroup').on('click',function(){
+    var list = [];
+    $('input[type=checkbox]:not(#all):checked').each(function(idx,ele){
+      var trEle = $(ele).parents('tr');
+      $('.file-name:contains("'+trEle.find('#title').text()+'")').parents('li').remove();
+      var html = '<li><span class="f-left file-name">'+trEle.find('#title').text()+'</span><i class="fas fa-times f-right text-danger group-del"></i></li>';
+      $('#uploadGroupList').append(html);
+    });
+    // list.push({title:trEle.find('#title').text(),idx:trEle.find('#idx').val()});
+    $('input[type=checkbox]:not(#all):checked').prop("checked",false);
+    $('#group-Modal').modal('hide');
+  });
+  // 그룹 취소
+  $(document).on('click','.group-del',function(){
+    var tag= $(this).parents('li');
+    $(tag).remove();
+  });
 </script>
