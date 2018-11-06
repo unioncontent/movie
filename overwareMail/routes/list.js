@@ -269,15 +269,26 @@ router.get('/add',isAuthenticated,function(req, res, next) {
 
 router.post('/add',isAuthenticated,async function(req, res) {
   try{
+    var group = [];
+    if('group' in req.body){
+      group = req.body.group.split(',');
+      delete req.body.group;
+    }
+
     req.body.M_id = req.user.n_idx;
     var insertMail = await mailListA.insert("m_mail_list_all",req.body);
     // console.log('insertMail:',insertMail);
     var mail = await mailListA.getViewOneInfo(insertMail.insertId);
     // console.log('mail:',mail);
+
     if(mail.length == 0){
       res.status(500).send('다시 시도해주세요.');
       return false;
     }
+    if(group.length > 0){
+      await mailListC.insertMuti(group,mail);
+    }
+
     if(mail[0].M_reporter == 1){
       var reporterCheck = await user.reporterCheck([mail[0].M_email,mail[0].M_name,mail[0].M_ptitle]);
       if(reporterCheck.length == 0){

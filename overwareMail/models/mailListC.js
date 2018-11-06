@@ -6,6 +6,13 @@ const DBpromise = require('../db/db_info.js');
 */
 
 var mailListC = {
+  insertMuti:async function(list,mail){
+    var sql = 'insert into m_mail_list_c(M_id, M_group_title, M_idx_a, M_email) values';
+    sql += list.map(function(val) {
+      return '('+mail[0].M_id+',\''+val+'\','+mail[0].n_idx+',\''+mail[0].M_email+'\')';
+    }).join(',');
+    return await getResult(sql);
+  },
   insert: async function(param){
     var pValue = Object.values(param);
     var sql = insertSqlSetting(Object.keys(param));
