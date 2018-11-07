@@ -206,6 +206,7 @@
 			keyword_main is not null
 		<include refid="search_writeDate2"></include> 
 		group by keyword_main
+		order by createDate desc
 	</select>
 	
 	<insert id="createMain">
