@@ -139,8 +139,8 @@ $(".btn-test").on("click",function(){
   var param = {
     'M_keyword': $("#M_keyword option:selected").val() || '',
     'M_seq_number': num,
-    'M_module':'2',
-    // 'M_module':$("#mail_t option:selected").val(),
+    // 'M_module':'1',
+    'M_module':$("#mail_t option:selected").val(),
     'M_template':$("input:radio[name=M_template]:checked").val(),
     'M_invitation': $("#invitation").is(":checked") ? '1' : '0',
     'M_body': get_tinymce_html_content(),
@@ -347,8 +347,8 @@ $(".sendBtn").on("click",function(){
   }
   var param = {
     'M_seq_number': num,
-    'M_module':'2',
-    // 'M_module':$("#mail_t option:selected").val(),
+    // 'M_module':'1',
+    'M_module':$("#mail_t option:selected").val(),
     'M_template':$("input:radio[name=M_template]:checked").val(),
     'M_invitation': $("#invitation").is(":checked") ? '1' : '0',
     'M_sender': $(".sender-select").select2("val"),

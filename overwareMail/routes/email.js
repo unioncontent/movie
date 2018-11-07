@@ -67,7 +67,12 @@ router.get('/',isAuthenticated, async function(req, res) {
       }
     }
   }
-  res.render('email',data);
+
+  var ejsName = 'email';
+  if('m' in req.query){
+    ejsName += '2';
+  }
+  res.render(ejsName,data);
 });
 
 // 메일 관리 페이지
