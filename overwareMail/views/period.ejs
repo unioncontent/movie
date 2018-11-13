@@ -118,6 +118,8 @@
                         <%=(list[i].M_type == '0') ? '즉시' : '예약'%>
                         <% if((new Date().getTime() < new Date(list[i].M_send).getTime())){ %>
                         <label class="badge badge-danger m-b-0">대기</label>
+                        <%} else if(list[i].sendCount == '0' && list[i].success == '0' && list[i].fail == '0' && (new Date().getTime() > new Date(list[i].M_send).getTime())){ %>
+                        <label class="badge badge-warning m-b-0">발송중</label>
                         <%}%>
                       </td>
                       <td><button class="btn btn-warning btn-excel" data-idx="<%= list[i].n_idx %>" data-module="<%= list[i].M_module %>"><i class="fas fa-file-excel"></i></button></td>
