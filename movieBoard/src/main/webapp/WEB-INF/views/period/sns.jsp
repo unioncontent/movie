@@ -279,7 +279,7 @@
                                         <thead>
                                             <tr>
                                               <th width="5%">NO</th>
-                                              <th width="10%">등록날짜</th>
+                                              <th width="10%">작성날짜</th>
                                               <th width="10%">플랫폼</th>
                                               <th width="10%">키워드</th>
                                               <th width="30%">제목</th>
@@ -293,7 +293,7 @@
                                           <tr>
                                             <th scope="row">${totalCount -index.count +1 -minusCount}</th>
                                             <td>
-                                              <fmt:formatDate value="${snsList.updateDate}" pattern="yyyy-MM-dd kk:mm:ss"/>
+                                              ${snsList.writeDate}
                                             </td>
                                             <td>${snsList.sns_name}</td>
                                             <td>${snsList.keyword}</td>

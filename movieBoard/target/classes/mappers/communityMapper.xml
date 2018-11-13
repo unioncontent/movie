@@ -453,7 +453,7 @@
 			textType != '삭제글'
 		<include refid="search_writeDate2"></include>
 		order 
-			by createdate desc
+			by writeDate desc
 		limit  
 			#{startPage}, #{perPageNum}
 	

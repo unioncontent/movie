@@ -312,7 +312,7 @@
                                         <thead>
                                             <tr>
                                               <th width="5%">NO</th>
-                                              <th width="10%">등록날짜</th>
+                                              <th width="10%">작성날짜</th>
                                               <th width="10%">언론사</th>
                                               <th width="5%">출처</th>
                                               <th width="10%">기자</th>

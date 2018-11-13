@@ -453,9 +453,6 @@
 	<select id="periodListSearch" resultType="SNSVO">
 		select 
 			*
-		from
-		(select 
-			*
 		from 
 			sns_data
 		where 
@@ -463,25 +460,10 @@
 		and 
 			keyword != ''
 		<include refid="search_writeDate"></include>
-		
-		UNION ALL
-		
-		select 
-			*
-		from 
-			sns_data
-		where 
-			url is not null
-		and 
-			keyword != ''
-		and
-			sns_name ='youtube'
-		<include refid="search_writeDate7"></include>) as x
 		order 
-			by updateDate desc
+			by writeDate desc
 		limit  
 			#{startPage}, #{perPageNum}
-	
 	</select>
 	
 	<select id = "getSearchCount" resultType="Integer">
@@ -500,31 +482,13 @@
 	<select id = "periodgetSearchCount" resultType="Integer">
 		select 
 			count(*)
-		from
-		(select 
-			*
 		from 
 			sns_data
 		where 
 			url is not null
 		and 
 			keyword != ''
-		<include refid="search_writeDate"></include>
-		
-		UNION ALL
-		
-		select 
-			*
-		from 
-			sns_data
-		where 
-			url is not null
-		and 
-			keyword != ''
-		and
-			sns_name ='youtube'
-		<include refid="search_writeDate7"></include>) as x
-			
+		<include refid="search_writeDate"></include>		
 	</select>
  	
  	<select id="listExcel" resultType="SNSVO">
@@ -537,6 +501,7 @@
  		and 
 			keyword != ''
  		<include refid="search"></include>
+ 		order by writeDate desc
  	</select>
  	
  	<select id="listExcelCount" resultType="Integer">
@@ -721,7 +686,7 @@
  			sns_name = 'youtube'
  		and 
 			keyword != ''
- 		<include refid="search2"></include>
+ 		<include refid="search_writeDate"></include>
  		
  	</select>
  	
@@ -1730,8 +1695,8 @@
  			keyword != ''
  		and 
 			keyword in (select keyword from keyword_data where keyword_property = '포함' and keyword_main = #{selectKey})
-		and createDate <![CDATA[>=]]> #{startDate}
-		and createDate <![CDATA[<=]]> #{endDate}
+		and writeDate <![CDATA[>=]]> #{startDate}
+		and writeDate <![CDATA[<=]]> #{endDate}
  	</select>
 
 	<update id="fvUpdate">

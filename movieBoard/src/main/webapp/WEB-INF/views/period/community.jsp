@@ -280,7 +280,7 @@
                                         <thead>
                                             <tr>
                                               <th width="5%">NO</th>
-                                              <th width="10%">등록날짜</th>
+                                              <th width="10%">작성날짜</th>
                                               <th width="10%">플랫폼</th>
                                               <th width="10%">키워드</th>
                                               <th width="40%">제목</th>
@@ -292,7 +292,8 @@
                                           <tr>
                                             <th scope="row">${totalCount -index.count +1 -minusCount}</th>
                                             <td>
-                                            <fmt:formatDate value="${communityList.updateDate}" pattern="yyyy-MM-dd kk:mm:ss"/>
+                                            <%-- <fmt:formatDate value="${communityList.updateDate}" pattern="yyyy-MM-dd kk:mm:ss"/> --%>
+                                            ${communityList.writeDate}
                                             </td>
                                             <td>${communityList.community_name}</td>
                                             <td>${communityList.keyword}</td>
