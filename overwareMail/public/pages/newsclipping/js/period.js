@@ -180,6 +180,9 @@ function ajaxGetPageList(param){
         if(item.M_type == '1' &&(new Date().getTime() < new Date(item.SENDTIME).getTime()) && parseInt(item.success) == 0 && parseInt(item.fail) ==0){
           html += '<label class="badge badge-danger m-b-0">대기</label>'
         }
+        if(item.sendCount == '0' && item.success == '0' && item.fail == '0' && (new Date().getTime() > new Date(item.SENDTIME).getTime())){
+          html += '<label class="badge badge-warning m-b-0">발송중</label>'
+        }
         html += '</td></tr>';
         $('#listTable tbody').eq(0).append(html);
       });
