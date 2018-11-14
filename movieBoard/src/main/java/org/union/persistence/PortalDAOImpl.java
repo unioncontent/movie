@@ -828,7 +828,6 @@ public class PortalDAOImpl implements PortalDAO {
 	public void deleteTextInsert(Integer portal_idx) throws SQLException {
 		try {
 			session1.insert(namespace + "deleteTextInsert", portal_idx);
-			session2.insert(namespace + "deleteTextInsert", portal_idx);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -839,7 +838,6 @@ public class PortalDAOImpl implements PortalDAO {
 	public void deleteTextDelete(Integer portal_idx) throws SQLException {
 		try {
 			session1.delete(namespace + "deleteTextDelete", portal_idx);
-			session2.delete(namespace + "deleteTextDelete", portal_idx);
 		} catch (Exception e) {
 			e.printStackTrace();
 			

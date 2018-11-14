@@ -340,7 +340,6 @@ public class CommunityDAOImpl implements CommunityDAO {
 	public void deleteTextInsert(Integer community_idx) throws SQLException {
 		try {
 			session1.insert(namespace + "deleteTextInsert", community_idx);
-			session2.insert(namespace + "deleteTextInsert", community_idx);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -352,7 +351,6 @@ public class CommunityDAOImpl implements CommunityDAO {
 	public void deleteTextDelete(Integer community_idx) throws SQLException {
 		try {
 			session1.delete(namespace + "deleteTextDelete", community_idx);
-			session2.delete(namespace + "deleteTextDelete", community_idx);
 		} catch (Exception e) {
 			e.printStackTrace();
 			

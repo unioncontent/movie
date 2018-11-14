@@ -744,7 +744,6 @@ public class MediaDAOImpl implements MediaDAO {
 	public void deleteTextInsert(Integer media_idx) throws SQLException {
 		try {
 			session1.insert(namespace + "deleteTextInsert", media_idx);
-			session2.insert(namespace + "deleteTextInsert", media_idx);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -755,7 +754,6 @@ public class MediaDAOImpl implements MediaDAO {
 	public void deleteTextDelete(Integer media_idx) throws SQLException {
 		try {
 			session1.delete(namespace + "deleteTextDelete", media_idx);
-			session2.delete(namespace + "deleteTextDelete", media_idx);
 		} catch (Exception e) {
 			e.printStackTrace();
 			
