@@ -139,7 +139,7 @@ $(".btn-test").on("click",function(){
   var param = {
     'M_keyword': $("#M_keyword option:selected").val() || '',
     'M_seq_number': num,
-    'M_module':'2',
+    'M_module':'1',
     // 'M_module':$("#mail_t option:selected").val(),
     'M_template':$("input:radio[name=M_template]:checked").val(),
     'M_invitation': $("#invitation").is(":checked") ? '1' : '0',
@@ -347,7 +347,7 @@ $(".sendBtn").on("click",function(){
   }
   var param = {
     'M_seq_number': num,
-    'M_module':'2',
+    'M_module':'1',
     // 'M_module':$("#mail_t option:selected").val(),
     'M_template':$("input:radio[name=M_template]:checked").val(),
     'M_invitation': $("#invitation").is(":checked") ? '1' : '0',
