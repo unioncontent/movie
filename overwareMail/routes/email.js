@@ -785,6 +785,7 @@ async function mailInsert(req){
   else if(mailData.M_module == 2){
     var mailId;
     try {
+      sender[1] = (sender[0] != '(주)쇼박스')?sender[1]:'press@showbox.email';
       var param_i = {user_id:'show',title:mailData.M_subject,content:mailData.M_body_his,sender:sender[1],sender_alias:sender[0],receiver_alias:'[$name]',send_time:(('time' in req) ? req.time : now),file_name:'',file_contents:'',wasRead:'O',wasSend:'X',wasComplete:'X',needRetry:'X',retryCount:'0',regist_date:now,linkYN:'Y',total_count:'0'};
       result = await mymailer.insert('customer_info',param_i);
       mailId = result.insertId;
