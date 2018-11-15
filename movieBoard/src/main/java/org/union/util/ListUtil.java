@@ -295,6 +295,7 @@ public class ListUtil {
 				vo.setReply_cnt(Integer.toString(addList.get(i).getReply_cnt()));
 				vo.setLike_cnt(Integer.toString(addList.get(i).getLike_cnt()));
 				vo.setWriteDate(addList.get(i).getWriteDate());
+				vo.setUpdateDate(date.format(addList.get(i).getUpdateDate()));
 				vo.setCreateDate(date2.format(addList.get(i).getUpdateDate()));
 				
 				list.add(vo);
@@ -324,6 +325,7 @@ public class ListUtil {
 		            vo.setReply_cnt(Integer.toString(addList.get(i).getReply_cnt()));
 		            vo.setLike_cnt(Integer.toString(addList.get(i).getLike_cnt()));
 		            vo.setWriteDate(addList.get(i).getWriteDate());
+		            vo.setUpdateDate(date.format(addList.get(i).getUpdateDate()));
 		            vo.setCreateDate(date2.format(addList.get(i).getUpdateDate()));
 		            
 		            list.add(vo);

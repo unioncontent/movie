@@ -135,6 +135,7 @@ public class ExcelViewM extends AbstractXlsView {
 		    titleList.add("URL");
 		    titleList.add("작성날짜");
 			titleList.add("추출날짜");
+			titleList.add("검출날짜");
 		}else if (model.get("type").equals("videosUp")) {
 			titleList.add("제목");
 			titleList.add("작성날짜");
@@ -227,6 +228,9 @@ public class ExcelViewM extends AbstractXlsView {
 			    
 			    HSSFCell createCell = dataRow.createCell(8);
 			    createCell.setCellValue(new HSSFRichTextString(vo.getCreateDate()));
+			    
+			    HSSFCell updateCell = dataRow.createCell(9);
+			    updateCell.setCellValue(new HSSFRichTextString(vo.getUpdateDate()));
 		    	
 		    }else if (model.get("type").equals("videosUp")) {
 		    	
