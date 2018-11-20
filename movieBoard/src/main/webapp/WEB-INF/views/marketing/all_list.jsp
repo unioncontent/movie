@@ -447,13 +447,14 @@ $(document).ready(function(){
 	console.log("url:" + url);
 	var Mcreate = $('input[name=createDate]').val();
 	console.log("Mcreate:" + Mcreate);
+	var ftable = "all";
 	
 	$.ajax({
 
 	      type : "POST",
 		  url : "graph",
 	 	  dataType : "json",
-	 	  data : {success : 'success', url: url, Mcreate: Mcreate},
+	 	  data : {success : 'success', url: url, Mcreate: Mcreate, ftable: ftable},
 	  	  success : function(data){
 
 	  		if (data[0].type1 != null) {

@@ -377,6 +377,7 @@ $(document).ready(function(){
 	console.log("Mcreate:" + Mcreate);
 	var Mcreate2 = $('input[name=createDate2]').val();
 	console.log("Mcreate:2" + Mcreate2);
+	var ftable = "all";
 	/* var dt = new Date();
 	var time = dt.getHours();*/
 	$.ajax({ 
@@ -384,7 +385,7 @@ $(document).ready(function(){
 	      type : "POST",
 		  url : "graphTwo",
 	 	  dataType : "json",
-	 	  data : {success : 'success', url: url, url2: url2, Mcreate: Mcreate, Mcreate2: Mcreate2},
+	 	  data : {success : 'success', url: url, url2: url2, Mcreate: Mcreate, Mcreate2: Mcreate2, ftable: ftable},
 	  	  success : function(data){
 
 	  		console.log(data);
@@ -442,7 +443,7 @@ $(document).ready(function(){
 	      type : "POST",
 		  url : "graphTwo",
 	 	  dataType : "json",
-	 	  data : {success : 'success', url: url, url2: url2, Mcreate: Mcreate, Mcreate2: Mcreate2},
+	 	  data : {success : 'success', url: url, url2: url2, Mcreate: Mcreate, Mcreate2: Mcreate2, ftable: ftable},
 	 	  success : function(data){
 
 		  		console.log(data);
@@ -498,7 +499,7 @@ $(document).ready(function(){
 	      type : "POST",
 		  url : "graphTwo",
 	 	  dataType : "json",
-	 	  data : {success : 'success', url: url, url2: url2, Mcreate: Mcreate, Mcreate2: Mcreate2},
+	 	  data : {success : 'success', url: url, url2: url2, Mcreate: Mcreate, Mcreate2: Mcreate2, ftable: ftable},
 	 	 success : function(data){
 
 		  		console.log(data);

@@ -2399,6 +2399,7 @@ public class MarketingController {
 		logger.info("cal.getTime: " + cal.getTime());
 		logger.info("graphUrl: " + url);
 		logger.info("graphCreate: " + Mcreate);
+		logger.info("fv: " + fv);
 
 		for(int i = 0; i < 48; i++) {
 			GraphVO graphVO = new GraphVO();

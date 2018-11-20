@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class SearchFv {
 	
-	private String url, createDate;
+	private String url, createDate, ftable;
 	private Date date;
 	
 	public String getUrl() {
@@ -12,6 +12,12 @@ public class SearchFv {
 	}
 	public void setUrl(String url) {
 		this.url = url;
+	}
+	public String getFtable() {
+		return ftable;
+	}
+	public void setFtable(String ftable) {
+		this.ftable = ftable;
 	}
 	public Date getDate() {
 		return date;
@@ -25,8 +31,9 @@ public class SearchFv {
 	public void setCreateDate(String createDate) {
 		this.createDate = createDate;
 	}
+	
 	@Override
 	public String toString() {
-		return "SearchFv [url=" + url + ", createDate=" + createDate + ", date=" + date + "]";
+		return "SearchFv [url=" + url + ", createDate=" + createDate + ", ftable=" + ftable + ", date=" + date + "]";
 	}
 }

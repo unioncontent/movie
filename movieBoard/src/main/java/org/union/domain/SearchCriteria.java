@@ -81,8 +81,7 @@ public class SearchCriteria extends Criteria {
 	public void setMediaState(String mediaState) {
 		this.mediaState = mediaState;
 	}
-
-
+	
 	public Integer getTotal() {
 		return total;
 	}
@@ -259,5 +258,4 @@ public class SearchCriteria extends Criteria {
 				+ ", createendDate=" + createendDate + ", createminusDate=" + createminusDate + ", writeDate="
 				+ writeDate + ", date=" + date + "]";
 	}
-
 }

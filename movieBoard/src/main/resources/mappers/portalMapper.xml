@@ -319,6 +319,15 @@
 			</if>
 		</if>	
 	</sql>
+	
+	<sql id="naverGraph">
+		<if test="ftable == null">
+			naver_graph
+		</if>
+ 		<if test="ftable != null">
+			naver_graph_history
+		</if>
+	</sql>
  
  	<insert id="create">
  		insert into
@@ -1217,7 +1226,7 @@
 	 	select
 			view_cnt
 		from
-			naver_graph
+		<include refid="naverGraph"></include>
 		where
 			url = #{url} 
 		and 
@@ -1230,7 +1239,7 @@
 	 	select
 			reply_cnt
 		from
-			naver_graph
+		<include refid="naverGraph"></include>
 		where
 			url = #{url} 
 		and 
@@ -1243,7 +1252,7 @@
 	 	select
 			like_cnt
 		from
-			naver_graph
+		<include refid="naverGraph"></include>
 		where
 			url = #{url} 
 		and 
