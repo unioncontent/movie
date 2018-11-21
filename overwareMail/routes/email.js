@@ -116,24 +116,22 @@ router.post('/manage/updateMtype',isAuthenticated, async function(req, res) {
   }
   else if(req.body.module == '2'){
     result = await mymailer.selectSendCheckMail(req.body.mid);
-    if(result.length == 0 && !('mtype' in req.body)){
-      res.status(500).send('112');
-      return false;
-    }
-    result = await mymailer.deleteSendTable(req.body.mid);
-    if(!('protocol41' in result)){
-      res.status(500).send('deleteSendTable delete query 실패');
-      return false;
-    }
-    result = await mymailer.deleteInfoTable(req.body.mid);
-    if(!('protocol41' in result)){
-      res.status(500).send('deleteInfoTable delete query 실패');
-      return false;
-    }
-    result = await mymailer.deleteBackupTable(req.body.mid);
-    if(!('protocol41' in result)){
-      res.status(500).send('ml_automail_tran delete query 실패');
-      return false;
+    if(result.length != 0){
+      result = await mymailer.deleteSendTable(req.body.mid);
+      if(!('protocol41' in result)){
+        res.status(500).send('deleteSendTable delete query 실패');
+        return false;
+      }
+      result = await mymailer.deleteInfoTable(req.body.mid);
+      if(!('protocol41' in result)){
+        res.status(500).send('deleteInfoTable delete query 실패');
+        return false;
+      }
+      result = await mymailer.deleteBackupTable(req.body.mid);
+      if(!('protocol41' in result)){
+        res.status(500).send('ml_automail_tran delete query 실패');
+        return false;
+      }
     }
     check = true;
   }
@@ -660,7 +658,7 @@ router.post('/save',isAuthenticated, async function(req, res) {
 });
 
 async function settingMailBody(bodyHtml,keyword,template,idx,num,ivt){
-  console.log('settingMailBody('+bodyHtml+','+keyword+','+template+','+idx+','+num+','+ivt+')');
+  // console.log('settingMailBody('+bodyHtml+','+keyword+','+template+','+idx+','+num+','+ivt+')');
   var sideHtmlStart = '<table width="750" align="center" cellpadding="0" cellspacing="0" style="border: solid 1px #cacaca; padding: 20px;"><tbody><tr><td>';
   if(template == '0'){
     sideHtmlStart += '<table width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td width="642"><img src="http://showbox.email/templates/images/logo/show_logo.png" width="135" height="36" alt="로고"></td><td width="92"><p style="font-size:  12px;">NEWS ';
@@ -745,7 +743,7 @@ async function mailInsert(req){
   var recipients = [];
   // 메일 받는 그룹 가져오기
   var groups = [];
-  console.log('check:',mailData.M_group != null);
+  // console.log('check:',mailData.M_group != null);
   if(mailData.M_group != null){
     if(mailData.M_group.indexOf(',') != -1){
       mailData.M_group = mailData.M_group.split(',');
@@ -761,8 +759,8 @@ async function mailInsert(req){
   else{
     recipients = await mailListA.getOneEmail2(recipiArr);
   }
-  console.log('recipient = ',recipients);
-  console.log('recipient.length = ',recipients.length);
+  // console.log('recipient = ',recipients);
+  // console.log('recipient.length = ',recipients.length);
   var moment = require('moment');
   var am = 1;
   var time = (('time' in req) ? req.time : now);
