@@ -276,12 +276,61 @@
 		</if>
 	</sql>
 	
-	<sql id="facebookGraph">
+	<sql id="facebookAllGraph">
 		<if test="ftable == null">
-			facebook_graph
+				facebook_graph 
+	 		where 
+	 			url = #{url};
 		</if>
  		<if test="ftable != null">
-			facebook_graph_history
+			(select 
+	 			view_cnt, reply_cnt, like_cnt
+	 		from 
+				facebook_graph
+	 		where 
+	 			url = #{url}
+			
+	        UNION ALL
+	        
+	        select 
+	 			view_cnt, reply_cnt, like_cnt
+	 		from 
+				facebook_graph_history
+	 		where 
+	 			url = #{url}) x ;
+		</if>
+	</sql>
+	
+	<sql id="facebookGraph">
+		<if test="ftable == null">
+				facebook_graph
+			where
+				url = #{url} 
+			and 
+				createDate >= #{date} 
+			order by createDate asc limit 1
+		</if>
+ 		<if test="ftable != null">
+			(select
+				view_cnt, reply_cnt, like_cnt, createDate
+			from
+				facebook_graph
+			where
+				url = #{url} 
+			and 
+				createDate >= #{date}
+			
+	        UNION ALL
+	        
+	        select
+				view_cnt, reply_cnt, like_cnt, createDate
+			from
+				facebook_graph_history
+			where
+				url = #{url} 
+			and 
+				createDate >= #{date}) x 
+			order by createDate asc limit 1;
 		</if>
 	</sql>
 	
@@ -1239,11 +1288,6 @@
 			view_cnt
 		from
 		<include refid="facebookGraph"></include>
-		where
-			url = #{url} 
-		and 
-			createDate >= #{date} 
-		order by createDate asc limit 1
  	</select>
  	
  	<select id="fvlistReply_cnt" resultType="Integer">
@@ -1251,11 +1295,6 @@
 			reply_cnt
 		from
 		<include refid="facebookGraph"></include>
-		where
-			url = #{url} 
-		and 
-			createDate >= #{date} 
-		order by createDate asc limit 1 
  	</select>
  	
  	<select id="fvlistlike_cnt" resultType="Integer">
@@ -1263,11 +1302,6 @@
 			like_cnt
 		from
 		<include refid="facebookGraph"></include>
-		where
-			url = #{url} 
-		and 
-			createDate >= #{date} 
-		order by createDate asc limit 1
  	</select>
  	
  	<select id="fvlistPlus" resultType="FvVO">
@@ -1637,9 +1671,7 @@
  		select 
  			view_cnt, reply_cnt, like_cnt 
  		from 
- 		<include refid="facebookGraph"></include>
- 		where 
- 			url = #{url};
+ 		<include refid="facebookAllGraph"></include>
  	</select> 
  	
  	<select id="snsTotalcount" resultType="Integer">

@@ -320,12 +320,61 @@
 		</if>	
 	</sql>
 	
-	<sql id="naverGraph">
+	<sql id="naverAllGraph">
 		<if test="ftable == null">
-			naver_graph
+				naver_graph
+			where 
+	 			url = #{url};
 		</if>
  		<if test="ftable != null">
-			naver_graph_history
+			(select 
+	 			view_cnt, reply_cnt, like_cnt
+	 		from 
+				naver_graph
+	 		where 
+	 			url = #{url}
+			
+	        UNION ALL
+	        
+	        select 
+	 			view_cnt, reply_cnt, like_cnt
+	 		from 
+				naver_graph_history
+	 		where 
+	 			url = #{url}) x ;
+		</if>
+	</sql>
+	
+	<sql id="naverGraph">
+		<if test="ftable == null">
+				naver_graph
+			where
+				url = #{url} 
+			and 
+				createDate >= #{date} 
+			order by createDate asc limit 1
+		</if>
+ 		<if test="ftable != null">
+			(select
+				view_cnt, reply_cnt, like_cnt, createDate
+			from
+				naver_graph
+			where
+				url = #{url} 
+			and 
+				createDate >= #{date}
+			
+	        UNION ALL
+	        
+	        select
+				view_cnt, reply_cnt, like_cnt, createDate
+			from
+				naver_graph_history
+			where
+				url = #{url} 
+			and 
+				createDate >= #{date}) x 
+			order by createDate asc limit 1;
 		</if>
 	</sql>
  
@@ -1227,12 +1276,6 @@
 			view_cnt
 		from
 		<include refid="naverGraph"></include>
-		where
-			url = #{url} 
-		and 
-			createDate >= #{date} 
-		order by createDate asc 
-		limit 1;
  	</select>
  	
  	<select id="nvlistReply_cnt" resultType="Integer">
@@ -1240,12 +1283,6 @@
 			reply_cnt
 		from
 		<include refid="naverGraph"></include>
-		where
-			url = #{url} 
-		and 
-			createDate >= #{date} 
-		order by createDate asc 
-		limit 1;
  	</select>
  	
  	<select id="nvlistlike_cnt" resultType="Integer">
@@ -1253,12 +1290,6 @@
 			like_cnt
 		from
 		<include refid="naverGraph"></include>
-		where
-			url = #{url} 
-		and 
-			createDate >= #{date} 
-		order by createDate asc 
-		limit 1;
  	</select>
  	
  	<select id="nvlistPlus" resultType="NvVO">
@@ -1375,11 +1406,9 @@
  	<!-- naver_graph 테이블 사용시 -->
  	<select id="nvlistGraph" resultType="NvVO">
  		select 
- 			view_cnt, reply_cnt, like_cnt 
- 		from 
- 			naver_graph 
- 		where 
- 			url = #{url}
+ 			view_cnt, reply_cnt, like_cnt
+ 		from  
+ 		<include refid="naverAllGraph"></include>
  	</select>
  	
  	<select id="scoreTotalcnt" resultType="Integer">
