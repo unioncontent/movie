@@ -760,7 +760,9 @@ $(document).ready(function(){
       
       function(){//엑셀 출력하겠다고 할 시 진행 함수
 
-    	  self.location = "excelOk?"+
+    	  self.location = "excelOk?"
+    	  + "&searchType=" + $("#selectSearchType option:selected").val()
+    	  + "&keyword=" + decodeURI(window.location.href.split("keyword=")[1]).split("&")[0]
 		  + "&company=" + $("#selectCompany option:selected").val()
 		  + "&selectKey=" + $('#selectKeyword option:selected').val()
 		  + "&startDate=" + decodeURI(window.location.href.split("startDate=")[1]).split("&")[0]

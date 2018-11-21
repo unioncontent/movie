@@ -681,7 +681,7 @@
 		
 	</select>
 	
-	<select id="replyAllPage" resultType="ReplyVO">
+	<!-- <select id="replyAllPage" resultType="ReplyVO">
 		select 
 			a.*,(select url from news_data where news_idx = a.news_idx)as url,(select media_title from news_data where news_idx = a.news_idx)as media_title  
 		from 
@@ -689,6 +689,18 @@
 		where 
 			reply_comm_num is not null
 		<include refid="search3"></include>
+		order 
+			by updateDate desc
+	</select> -->
+	
+	<select id="replyAllPage" resultType="ReplyVO">
+		select a.*,b.url,b.media_title,b.company_name
+			from reply_data a
+		join news_data b
+			on a.news_idx = b.news_idx
+		where 
+			reply_comm_num is not null
+		<include refid="search_writeDate3"></include>
 		order 
 			by updateDate desc
 	</select>
