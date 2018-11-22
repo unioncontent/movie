@@ -173,7 +173,7 @@
 											<div class="card-header">
 												<select id="selectSearchType" name="select" class="col-sm-1 form-control form-control-inverse m-r-5 m-t-5 m-b-5 f-left search-select" style="height:40px;">
 													<option id="t" value="t">제목</option>
-													<option id="c" value="c">게시글</option>
+													<!-- <option id="c" value="c">게시글</option> -->
 												</select>
 												<div class="col-sm-3 input-group input-group-button input-group-inverse p-l-0 p-r-0  m-r-5 m-t-5 m-b-5 f-left btn-select">
 													<input onkeyup="if(event.keyCode == 13){$('#searchBtn').trigger('click');};" id="keywordInput" type="text" class="form-control" placeholder="" style="height:40px;"> <span class="input-group-addon" id="basic-addon1">
@@ -532,6 +532,20 @@
 
 			   searchList();
 		});
+		
+		var keywordInput = decodeURI(window.location.href.split("&keyword=")[1]).split("&")[0]
+		console.log(keywordInput);
+		if(keywordInput == "undefined"){
+			keywordInput = "";
+		}
+		$('#keywordInput').val(keywordInput);
+		
+		var selectSearchType = decodeURI(window.location.href.split("&searchType=")[1]).split("&")[0]
+		console.log(selectSearchType);
+		if(selectSearchType == "undefined"){
+			selectSearchType = "t";
+		}
+		$('#selectSearchType').val(selectSearchType);
 
 	}); // end ready...
 
@@ -549,7 +563,9 @@
 
     function searchList(event) {
     	
-		self.location = "naver_movie?"
+    	var makeQeury = '${pageMaker.makeQuery(1)}'.slice(0,-2);
+    	
+		self.location = "naver_movie" + makeQeury + "10"
     					+ "&company=" + $("#selectCompany option:selected").val()
 						+ "&selectKey=" + $('#selectKeyword option:selected').val()
 						+ "&searchType=" + $("#selectSearchType option:selected").val()
@@ -573,6 +589,8 @@
 
         	self.location = "excel?"+
 			  + "&company=" + $("#selectCompany option:selected").val()
+			  + "searchType=" + decodeURI(window.location.href.split("&searchType=")[1]).split("&")[0]
+			  + "&keyword=" + decodeURI(window.location.href.split("&keyword=")[1]).split("&")[0]
 			  + "&selectKey=" + $('#selectKeyword option:selected').val()
 			  + "&startDate=" + makeDateFormat($("#fromDate").val(), 0)
 			  + "&endDate=" + makeDateFormat($("#fromDate").val(), 1)
@@ -599,6 +617,8 @@
 
         	self.location = "excel?"+
 			  + "&company=" + $("#selectCompany option:selected").val()
+			  + "searchType=" + decodeURI(window.location.href.split("&searchType=")[1]).split("&")[0]
+			  + "&keyword=" + decodeURI(window.location.href.split("&keyword=")[1]).split("&")[0]
 			  + "&selectKey=" + $('#selectKeyword option:selected').val()
 			  + "&startDate=" + makeDateFormat($("#fromDate").val(), 0)
 			  + "&endDate=" + makeDateFormat($("#fromDate").val(), 1)

@@ -678,6 +678,23 @@
 
 		});
 		
+		var keywordInput = decodeURI(window.location.href.split("&keyword=")[1]).split("&")[0]
+		console.log(keywordInput);
+		if(keywordInput == "undefined"){
+			keywordInput = "";
+		}
+		$('#keywordInput').val(keywordInput);
+		
+		
+		var startdate = decodeURI(window.location.href.split("&startDate=")[1]).split("&")[0]
+		var enddate = decodeURI(window.location.href.split("&endDate=")[1]).split("&")[0]
+		if(startdate == "undefined" || enddate  == "undefined"){
+			startdate = null;
+			enddate = null;
+		}
+		$('#startdate').val(startdate);
+		$('#enddate').val(enddate);
+		
 }); // end ready...
 
 

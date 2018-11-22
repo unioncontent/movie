@@ -158,9 +158,9 @@
                         <div class="card">
                           <div class="card-header">
                             <select id = "selectSearchType" name="select" class="col-sm-1 form-control form-control-inverse m-r-5 m-b-5 m-t-5 f-left search-select" style="height:40px;">
+                              <option id="t" value="t">제목</option>
 							  <option id="r" value="r">기자명</option>
                               <option id="m" value="m">언론사명</option>
-                              <option id="t" value="t">제목</option>
                             </select>
                             <div class="col-sm-2 input-group input-group-button input-group-inverse p-l-0 p-r-0 m-r-5 m-b-5 m-t-5 f-left btn-select">
                                <input onkeyup="if(event.keyCode == 13){$('#searchBtn').trigger('click');};"id="keywordInput" type="text" class="form-control" placeholder="" style="height:40px;">
@@ -508,7 +508,7 @@
 
 
 	$(document).ready(function(){
-
+		
 		var startDateOption = decodeURI(window.location.href.split("startDate=")[1]).split("&")[0].split(" ")[0];
 		var endDateOption = decodeURI(window.location.href.split("endDate=")[1]).split("&")[0].split(" ")[0];
 		console.log("startDateOption: " + startDateOption);
@@ -689,7 +689,7 @@
 		$('#searchBtn').on("click", function(event){
 		  console.log("searchBtn clicked....");
 		  console.log($('#selectSearchType option:selected').val());
-
+			
 		  if($('#keywordInput').val() == ''){
 			  swal("warning!", "검색어를 입력해주세요.", "warning");
 		  }else{
@@ -747,6 +747,20 @@
 
 	        });
 		});
+		
+		var keywordInput = decodeURI(window.location.href.split("&keyword=")[1]).split("&")[0]
+		console.log(keywordInput);
+		if(keywordInput == "undefined"){
+			keywordInput = "";
+		}
+		$('#keywordInput').val(keywordInput);
+		
+		var selectSearchType = decodeURI(window.location.href.split("&searchType=")[1]).split("&")[0]
+		console.log(selectSearchType);
+		if(selectSearchType == "undefined"){
+			selectSearchType = "t";
+		}
+		$('#selectSearchType').val(selectSearchType);
 
 	}); // end ready...
 	

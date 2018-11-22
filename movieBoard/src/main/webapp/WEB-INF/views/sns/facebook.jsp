@@ -691,7 +691,20 @@
 	  }
 
     });
+	
+	var keywordInput = decodeURI(window.location.href.split("&keyword=")[1]).split("&")[0]
+	console.log(keywordInput);
+	if(keywordInput == "undefined"){
+		keywordInput = "";
+	}
+	$('#keywordInput').val(keywordInput);
 
+	var selectSearchType = decodeURI(window.location.href.split("&searchType=")[1]).split("&")[0]
+	console.log(selectSearchType);
+	if(selectSearchType == "undefined"){
+		selectSearchType = "t";
+	}
+	$('#selectSearchType').val(selectSearchType);
 
 }); // end ready....
 

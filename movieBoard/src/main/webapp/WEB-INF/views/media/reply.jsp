@@ -212,7 +212,7 @@
                                   <option id="c" value="c">댓글 내용</option>
                                 </select>
                                 <div class="col-sm-3 input-group input-group-button input-group-inverse p-l-0 p-r-0 m-r-5 m-b-5 m-t-5 f-left btn-select">
-                                   <input onkeyup="if(event.keyCode == 13){$('#searchBtn').trigger('click');};"id="keywordInput" type="text" class="form-control" placeholder="키워드를 선택 후 검색해주세요." style="height:40px;">
+                                   <input onkeyup="if(event.keyCode == 13){$('#searchBtn').trigger('click');};"id="keywordInput" type="text" class="form-control" style="height:40px;">
                                   <span class="input-group-addon" id="basic-addon1">
                                     <button id="searchBtn" class=" btn btn-search"><i class="icofont icofont-ui-search"></i></button>
                                   </span>
@@ -785,7 +785,20 @@ $(document).ready(function(){
 		searchList();
 	  }
 	});
-
+	
+	var keywordInput = decodeURI(window.location.href.split("&keyword=")[1]).split("&")[0]
+	console.log(keywordInput);
+	if(keywordInput == "undefined"){
+		keywordInput = "";
+	}
+	$('#keywordInput').val(keywordInput);
+	
+	var selectSearchType = decodeURI(window.location.href.split("&searchType=")[1]).split("&")[0]
+	console.log(selectSearchType);
+	if(selectSearchType == "undefined"){
+		selectSearchType = "t";
+	}
+	$('#selectSearchType').val(selectSearchType);
 
 }); // end ready...
 

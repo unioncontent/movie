@@ -261,6 +261,16 @@
 	</sql>
 	
 	<sql id="searchEx">
+		<if test="keyword != null">
+			<if test="searchType != null">
+				<if test="searchType == 't'.toString()">
+					and portal_title like concat('%', #{keyword}, '%')
+				</if>
+				<if test="searchType == 'c'.toString()">
+					and portal_content like concat('%', #{keyword}, '%')
+				</if>
+			</if>
+		</if>
 		<if test="company != null">
 			and
 			   keyword in (select 
