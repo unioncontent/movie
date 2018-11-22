@@ -979,7 +979,7 @@
 		where 
 			textType!='삭제글'
 		and score is null
-		<include refid="search2"></include>
+		<include refid="search"></include>
 		and
 			createDate >= curdate();
  	</select>

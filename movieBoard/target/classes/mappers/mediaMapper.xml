@@ -1074,7 +1074,7 @@
 			media_data
 		where 
 			textType!='삭제글'
-		<include refid="search5"></include>
+		<include refid="search"></include>
 		and
 			createDate >= curdate();
  	</select>
@@ -1420,7 +1420,7 @@
 			url is not null
 		and
 			texttype!='삭제글'
-		<include refid="search_writeDate"></include>
+		<include refid="search4"></include>
 		and
 			createDate >= curdate();
 	</select>
