@@ -610,7 +610,7 @@ router.post('/save',isAuthenticated, async function(req, res) {
   m_idx_a = resultInsert.insertId;
   var m_body_his= await settingMailBody(mailAllParam.M_body,mailAllParam.M_keyword,mailAllParam.M_template,m_idx_a,mailAllParam.M_seq_number,mailAllParam.M_invitation),
   resultInsert = await mailAllA.updateMailBodyHis([m_body_his,m_idx_a]);
-  console.log(resultInsert);
+  // console.log('resultInsert:',resultInsert);
   // 메일발송 리스트 table에 inser되었는지 체크문
   var insertCheck = false;
   // 메일발송 상세정보 insert
@@ -709,30 +709,45 @@ async function mailInsert(req){
   console.log('-mailInsert-');
   var dt = datetime.create();
   var now = dt.format('Y-m-d H:M:S');
+  // 보내는 메일이 예약된 메일인지 다시 홗인
   // 보낼 메일 data 가져오기
   var result = await mailAllA.selectEmailOneView(req.idx);
   if(result.length == 0) return true;
   var mailData = result[0];
 
   console.log('req : ',req);
-  if('type' in req){
-    if(req.type == 'resend' || req.type == 'edit'){
-      // 재발송 하기 전 메일 모듈 데이터 삭제
-      if(mailData.M_module == 1 || req.origin == 1){
-        await maillink.deleteMlAT(mailData.n_idx);
-        var resultTName = await maillink.selectMailTableName();
-        await asyncForEach(resultTName, async (item, index, array) => {
-          await maillink.deleteMlABackUp(item.TABLE_NAME,mailData.n_idx);
-        });
-      }
-      if(mailData.M_module == 2 || 'M_a_id' in req || req.origin == 2){
-        var mid = ('M_a_id' in req) ? req.M_a_id : mailData.M_a_id;
-        await mymailer.deleteSendTable(mid);
-        await mymailer.deleteInfoTable(mid);
-        await mymailer.deleteBackupTable(mid);
-      }
-    }
+  // 재발송 하기 전 메일 모듈 데이터 삭제
+  if(mailData.M_module == 1 || req.origin == 1){
+    await maillink.deleteMlAT(mailData.n_idx);
+    var resultTName = await maillink.selectMailTableName();
+    await asyncForEach(resultTName, async (item, index, array) => {
+      await maillink.deleteMlABackUp(item.TABLE_NAME,mailData.n_idx);
+    });
   }
+  if((mailData.M_module == 2 || req.origin == 2) && ('M_a_id' in req || mailData.M_a_id != '' || mailData.M_a_id != null)){
+    var mid = (req['M_a_id'] == '') ? mailData.M_a_id : req.M_a_id;
+    await mymailer.deleteSendTable(mid);
+    await mymailer.deleteInfoTable(mid);
+    await mymailer.deleteBackupTable(mid);
+  }
+  // if('type' in req){
+  //   if(req.type == 'resend' || req.type == 'edit'){
+  //     // 재발송 하기 전 메일 모듈 데이터 삭제
+  //     if(mailData.M_module == 1 || req.origin == 1){
+  //       await maillink.deleteMlAT(mailData.n_idx);
+  //       var resultTName = await maillink.selectMailTableName();
+  //       await asyncForEach(resultTName, async (item, index, array) => {
+  //         await maillink.deleteMlABackUp(item.TABLE_NAME,mailData.n_idx);
+  //       });
+  //     }
+  //     if(mailData.M_module == 2 || 'M_a_id' in req || mailData.M_a_id != '' || mailData.M_a_id != null || req.origin == 2){
+  //       var mid = (req['M_a_id'] == '') ? mailData.M_a_id : req.M_a_id;
+  //       await mymailer.deleteSendTable(mid);
+  //       await mymailer.deleteInfoTable(mid);
+  //       await mymailer.deleteBackupTable(mid);
+  //     }
+  //   }
+  // }
 
   // 메일 보내는 사람 가져오기
   var mailSender = await mailListA.getOneEmail2(mailData.M_sender);
