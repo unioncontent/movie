@@ -5,6 +5,15 @@ var mymailer = {
     var sql = 'SELECT * FROM customer_info where id = ? and wasRead = \'O\' and wasSend = \'X\' and wasComplete = \'X\' and real_id is null';
     return await getResult(sql,param);
   },
+  selectMailId:async function(param){
+    var sql = 'SELECT * FROM customer_data where second = ? group by second';
+    var result = await getResult(sql,param);
+    var id = '';
+    if(result.length > 0){
+      id = result[0].id;
+    }
+    return id;
+  },
   selectResultDetail:async function(param){
     var sql = 'SELECT d.id,a.send_success,a.status,a.email as EMTOADDRESS,d.first as EMTONAME,d.thirteenth as M_ptitle,d.real_id,d.title as M_subject,\
     a.read_time as OPENTIME,a.send_time as SENDTIME,d.regist_date as GENDATE,d.eighth as M_keyword_str,f.error_code, f.contents\
