@@ -3,7 +3,6 @@ package org.union.domain;
 import java.util.Date;
 
 public class UserVO {
-
 	
 	private Integer user_idx;
 	private Integer user_type; // 1 = 관리자, 2 = CP
@@ -19,7 +18,6 @@ public class UserVO {
 	private String thumbnail;
 	private Date createDate;
 	private Date updateDAte;
-	
 	
 	public Integer getUser_idx() {
 		return user_idx;
@@ -106,7 +104,6 @@ public class UserVO {
 		this.updateDAte = updateDAte;
 	}
 	
-	
 	@Override
 	public String toString() {
 		return "UserVO [user_idx=" + user_idx + ", user_type=" + user_type + ", user_ID=" + user_ID + ", user_PW="
@@ -115,5 +112,4 @@ public class UserVO {
 				+ ", company_licensee=" + company_licensee + ", company_location=" + company_location + ", thumbnail="
 				+ thumbnail + ", createDate=" + createDate + ", updateDAte=" + updateDAte + "]";
 	}
-	
 }

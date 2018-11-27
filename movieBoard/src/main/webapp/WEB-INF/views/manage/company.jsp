@@ -103,7 +103,7 @@
                                 </div>
                             </div>
                             <div class="card-block">
-                                <form action="/manage/companyInsert" method="post">
+                                <form>
                                   <input type="hidden" name="_csrf" value="${_csrf.token}"/>
     							  <input type="hidden" name="_csrf_header" value="${_csrf.headerName}"/>
                                   <div class="form-group row">
@@ -137,7 +137,7 @@
                                       <div class="col-sm-1 btn-check">
                                         <button id="idCheck" type="button" class="btn btn-md btn-inverse alert-prompt" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'alert-prompt']);">
                                           <i class="icofont icofont-user-alt-3"></i>
-                                          중복체크
+                                          	중복체크
                                         </button>
                                       </div>
                                   </div>
@@ -156,7 +156,7 @@
                                       </div>
                                   </div>
                                   <div class="form-group row">
-                                      <label class="col-sm-2 col-form-label">* 주소</label>
+                                      <label class="col-sm-2 col-form-label">주소</label>
                                       <div class="col-sm-5">
                                           <input type="text" class="form-control" id="location">
                                           <span class="messages"><p class="text-danger error"></p></span>
@@ -165,26 +165,26 @@
                                   <div class="form-group row">
                                       <label class="col-sm-2 col-form-label">e-mail</label>
                                       <div class="col-sm-5">
-                                          <input name = "user_email" type="email" class="form-control">
+                                          <input name = "user_email" type="email" class="form-control" id="email">
                                       </div>
                                   </div>
                                   <div class="form-group row">
-                                      <label class="col-sm-2 col-form-label">* 연락처 (- 없이 입력해주세요)</label>
+                                      <label class="col-sm-2 col-form-label">* 연락처 ( - 없이 입력해주세요.)</label>
                                       <div class="col-sm-5">
                                           <input name = "user_phoneNum" type="text" class="form-control mob_no" data-mask="9999-999-999" id="phone">
                                           <span class="phoneNumber"><p class="text-danger error"></p></span>
                                       </div>
                                   </div>
-                                  <div class="form-group row">
+                                  <!-- <div class="form-group row">
                                       <label class="col-sm-2 col-form-label">회사로고</label>
                                       <div class="col-sm-5">
                                           <input name = "thumbnail" type="image" class="form-control">
                                       </div>
-                                  </div>
+                                  </div> -->
                                   <div class="row">
                                       <label class="col-sm-2"></label>
                                       <div class="col-sm-5">
-                                          <button id = "insertBtn" type="submit" class="btn btn-primary m-b-0">등록</button>
+                                          <button id = "insertBtn" type="button" class="btn btn-primary m-b-0">등록</button>
                                       </div>
                                     </div>
                                 </form>
@@ -210,13 +210,13 @@
                                       <th width="5%">담당자</th>
                                       <th width="10%">이메일</th>
                                       <th width="10%">주소</th>
-                                      <th width="5%">로고</th>
+                                      <!-- <th width="5%">로고</th> -->
                                     </tr>
                                   </thead>
                                   <tbody>
-                                  	<c:forEach items="${userList}" var="userVO">
+                                  	<c:forEach items="${userList}" var="userVO" varStatus="index">
                                   	  <tr>
-                                      <th scope="row">${userVO.user_idx}</th>
+                                      <th scope="row">${index.count}</th>
                                       <td>${userVO.company_name}</td>
                                       <td>${userVO.user_ID}</td>
                                       <td>${userVO.user_PW}</td>
@@ -229,8 +229,8 @@
                                       <td>
                                       ${userVO.company_location}
                                       </td>
-                                      <td>
-                                    </td>
+                                      <!-- <td>
+                                    </td> -->
                                     </tr>
                                   	</c:forEach>
                                   </tbody>
@@ -338,15 +338,7 @@
 
 
 	$(document).ready(function(){
-		var company_name = $("#company").val();
-		console.log("company_name: " + company_name);
-
-		var user_ID = $("#id").val();
-		console.log("user_ID: " + user_ID);
-
-		var user_PW = $("#pw").val();
-
-		var company_licensee = $("#licensee").val();
+		
 
 
 		/* $("#idCheck").on("click", function(){
@@ -357,6 +349,36 @@
 
 
 		}); // end idCheck click... */
+		
+		$("#insertBtn").on("click", function(){
+			
+		var company_name = $("#company").val();
+
+		var user_ID = $("#id").val();
+
+		var user_PW = $("#pw").val();
+
+		var company_licensee = $("#licensee").val();
+		
+		var location = $("#location").val();
+		
+		var email = $("#email").val();
+		
+		var phone = $("#phone").val();
+			
+		  $.ajax({
+
+				type : "POST",
+			  	url : "companyInsert",
+		 	  	dataType : "text",
+		 	  	data : {user_ID : user_ID, user_PW : user_PW,
+		 	  		company_licensee : company_licensee, company_location : location, user_email : email, company_name : company_name, user_phoneNum : phone},
+		  		success : function(msg){
+		  			console.log(msg);
+		  			self.location = msg;
+		  		}
+		  });
+	  });
 
 	}); // end ready...
 

@@ -84,7 +84,7 @@ public class ManageController {
 		model.addAttribute("userList", userVO);
 	}
 	
-	
+	@ResponseBody
 	@PostMapping("/companyInsert")
 	public String companyInsertGET(UserVO userVO) throws SQLException {
 		logger.info("companyInsertPOST called....");
@@ -96,7 +96,7 @@ public class ManageController {
 		
 		userService.insert(userVO);
 		
-		return "redirect:/manage/company";
+		return "company";
 	}
 	
 	@ResponseBody

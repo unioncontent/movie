@@ -8,9 +8,9 @@
  
  	<insert id="create">
  		insert into
- 			user_data(user_type, user_ID, user_PW, user_name, user_phoneNum, user_email, company_name, company_type, company_licensee, company_location, thumbnail)
+ 			user_data(user_type, user_ID, user_PW, user_name, user_phoneNum, user_email, company_name, company_licensee, company_location)
  		values
- 			(#{user_type}, #{user_ID}, #{user_PW}, #{user_name}, #{user_phoneNum}, #{user_email}, #{company_name}, #{company_type}, #{company_licensee}, #{company_location}, #{thumbnail})
+ 			(#{user_type}, #{user_ID}, #{user_PW}, #{user_name}, #{user_phoneNum}, #{user_email}, #{company_name}, #{company_licensee}, #{company_location})
  	
  	</insert>
  

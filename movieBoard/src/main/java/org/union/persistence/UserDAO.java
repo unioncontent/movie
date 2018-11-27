@@ -24,6 +24,4 @@ public interface UserDAO {
 	
 	public UserVO login(UserVO vo) throws SQLException;
 	
-	
-	
 }
