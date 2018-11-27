@@ -201,7 +201,7 @@ public class MediaDAOImpl implements MediaDAO {
 	public void updateTextType(MediaVO vo) throws SQLException {
 		try {
 			session1.update(namespace + "updateTextType", vo);
-			session2.update(namespace + "updateTextType", vo);
+			/*session2.update(namespace + "updateTextType", vo);*/
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

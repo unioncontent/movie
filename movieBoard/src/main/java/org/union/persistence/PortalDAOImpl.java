@@ -125,7 +125,7 @@ public class PortalDAOImpl implements PortalDAO {
 	public void updateTextType(PortalVO vo) throws SQLException {
 		try {
 			session1.update(namespace + "updateTextType", vo);
-			session2.update(namespace + "updateTextType", vo);
+			/*session2.update(namespace + "updateTextType", vo);*/
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
