@@ -8,6 +8,7 @@ $(document).ready(function () {
 			type: "input",
 			showCancelButton: true,
 			closeOnConfirm: false,
+			inputValue:$("#id").val(),
 			inputPlaceholder: "아이디 입력"
 		}, function (inputValue) {
 			/*if (inputValue === false){
@@ -58,7 +59,7 @@ $(document).ready(function () {
 	};
 
   // 거래처 등록 필수 입력 체크
-  $("button[type='submit']").on("click",function(){
+  $("#insertBtn").on("click",function(){
     var check=true;
     //비밀번호가 입력되었는데 아이디가 없는 경우
     if($("#pw").val() != "" && $("#id").val() == ""){
