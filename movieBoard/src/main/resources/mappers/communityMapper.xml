@@ -451,7 +451,7 @@
         ) x 
         <include refid="keywordSearch"></include>
         order 
-			by writeDate desc
+			by createDate desc
 		limit
 			#{startPage}, #{perPageNum}
 	</select>
