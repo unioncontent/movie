@@ -113,3 +113,12 @@ function requiredMessage(target,msg){
   $("#"+target).addClass("form-control-danger");
   return false;
 }
+
+function AddNum(obj) {
+    var n = obj.value;
+    var reg = /(\d{3})(\d{4})/;
+    n += '';
+    while (reg.test(n))
+       n = n.replace(reg, '$1' + '-' + '$2' + '-');
+    obj.value = n;
+ }
