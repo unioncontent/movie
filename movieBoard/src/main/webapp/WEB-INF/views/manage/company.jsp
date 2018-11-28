@@ -169,9 +169,9 @@
                                       </div>
                                   </div>
                                   <div class="form-group row">
-                                      <label class="col-sm-2 col-form-label">* 연락처 ( - 없이 입력해주세요.)</label>
+                                      <label class="col-sm-2 col-form-label">* 연락처</label>
                                       <div class="col-sm-5">
-                                          <input name = "user_phoneNum" type="text" class="form-control mob_no" data-mask="9999-999-999" id="phone">
+                                          <input name = "user_phoneNum" type="text" class="form-control mob_no" data-mask="9999-999-999" id="phone" onkeyup="AddNum(this)">
                                           <span class="phoneNumber"><p class="text-danger error"></p></span>
                                       </div>
                                   </div>
@@ -365,7 +365,9 @@
 		var email = $("#email").val();
 		
 		var phone = $("#phone").val();
-			
+		var phoneArray = phone.split("-");
+		var phone = phoneArray[0]+phoneArray[1]+phoneArray[2];
+		
 		  $.ajax({
 
 				type : "POST",
