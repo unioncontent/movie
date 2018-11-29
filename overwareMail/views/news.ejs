@@ -112,8 +112,8 @@
                   <thead>
                     <tr>
                       <th width="1%">
-                        <div class="border-checkbox-section" style="max-width: 30px;">
-                          <div class="border-checkbox-group border-checkbox-group-default">
+                        <div class="border-checkbox-section">
+                          <div class="border-checkbox-group border-checkbox-group-default"  style="max-height: 25px;">
                             <input class="border-checkbox" type="checkbox" id="checkboxAll">
                             <label class="border-checkbox-label" for="checkboxAll"></label>
                           </div>
@@ -144,8 +144,8 @@
                     <tr>
                       <input type="hidden" id="idx" value="<%=list[i].media_idx%>" />
                       <td>
-                        <div class="border-checkbox-section" style="max-width: 30px;">
-                          <div class="border-checkbox-group border-checkbox-group-default">
+                        <div class="border-checkbox-section">
+                          <div class="border-checkbox-group border-checkbox-group-default"  style="max-height: 25px;">
                             <input type="hidden" name="a" value="<%= list[i].news_idx %>">
                             <input class="border-checkbox news-checkbox" type="checkbox" id="checkbox<%=i%>" <%=(list[i].news_idx != null) ? 'checked' : ''%>>
                             <label class="border-checkbox-label" for="checkbox<%=i%>"></label>
@@ -161,7 +161,7 @@
                             <% if (list[i].media_subname != 'out' && list[i].media_subname != null){%>
                               <img alt="<%=list[i].media_subname%>" src="http://showbox.email/images/newsclipping/<%=list[i].media_subname%>_logo.png" class="site-logo">
                             <% } %>
-                            <%= list[i].media_title %>
+                            <%- list[i].media_title %>
                           </div>
                         </a>
                         <!-- <i class="far fa-file-video text-muted"></i> -->
@@ -327,8 +327,8 @@
                 <thead>
                   <tr>
                     <th width="1%">
-                      <div class="border-checkbox-section" style="max-width: 30px;">
-                        <div class="border-checkbox-group border-checkbox-group-default">
+                      <div class="border-checkbox-section">
+                        <div class="border-checkbox-group border-checkbox-group-default" style="max-height: 25px;">
                           <input class="border-checkbox" type="checkbox" id="checkboxAll2">
                           <label class="border-checkbox-label" for="checkboxAll2"></label>
                         </div>

@@ -50,6 +50,7 @@ $(document).on("click","#newsAddBtn",function(){
   $('#m_news_type').find('option:first').prop('selected', 'selected');
   $('#m_media_content').val('');
   $('#news-Modal input').val('');
+  $('#m_writeDateTime').val('00:00:00');
 
   $("#news-Modal").modal('show');
 });
@@ -82,17 +83,9 @@ $('#submit').on("click",function(){
   if(!datetime_pattern.test(param.writeDate)){
     alert('작성일을 다시 입력해주세요');
   }
-  // 키워드
-  else if(param.keyword == '키워드'){
-    alert('키워드를 선택해주세요');
-  }
   // 제목
   else if(param.media_title == ''){
     alert('제목을 입력해주세요');
-  }
-  // 내용
-  else if(param.media_content == ''){
-    alert('내용을 입력해주세요');
   }
   // 언론사
   else if(param.media_name == ''){
@@ -306,11 +299,11 @@ function ajaxGetPageList(param){
           html +='<img alt="'+item.media_subname+'" src="http://showbox.email/images/newsclipping/'+item.media_subname+'_logo.png" class="site-logo">';
         }
         html +=item.media_title+'</div></a></td><td><div class="nobr" title="'+item.media_name+'">'+item.media_name+'</div></td>';
-        html+='<td><div class="nobr" title="'+item.reporter_name+'">'+((item.reporter_name == null) ? '<i class="fas fa-minus"></i>' : item.reporter_name)+'</div></td>\
+        html+='<td><div class="nobr" title="'+item.reporter_name+'">'+((item.reporter_name == null||item.reporter_name == '') ? '<i class="fas fa-minus"></i>' : item.reporter_name)+'</div></td>\
         <td>'+item.writeDate+'</td>\
         <td><input type="text" name="datefilter" class="datepicker form-control"  value="'+((item.reportDate != null && item.reportDate != '') ? item.reportDate : '')+'"/></td>\
-        <td><div class="rank_nobr">'+((item.me_rank == null) ? '<i class="fas fa-minus"></i>' : item.me_rank+'위')+'</div></td>\
-        <td><div class="key_nobr" title="'+item.keyword+'">'+item.keyword+'</div></td>\
+        <td><div class="rank_nobr">'+((item.me_rank == null||item.me_rank == '') ? '<i class="fas fa-minus"></i>' : item.me_rank+'위')+'</div></td>\
+        <td><div class="key_nobr" title="'+item.keyword+'">'+((item.keyword == null||item.keyword == '') ? '<i class="fas fa-minus"></i>' : item.keyword)+'</div></td>\
         <td><div class="nobr">'+((item.textType == null) ? '<i class="fas fa-minus"></i>' : item.textType)+'</div></td>';
         html+='<td><select class="form-control form-control-default p-l-5 select-news" id="newsType">\
           <option value="1" '+((item.news_type == '1') ? 'selected' : '')+'>쇼박스영화</option>\

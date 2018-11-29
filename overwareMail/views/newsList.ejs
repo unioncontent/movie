@@ -98,14 +98,14 @@
                             <% if (list[i].media_subname != 'out' && list[i].media_subname != null){%>
                               <img alt="<%=list[i].media_subname%>" src="http://showbox.email/images/newsclipping/<%=list[i].media_subname%>_logo.png" class="site-logo">
                             <% } %>
-                            <%= list[i].media_title %>
+                            <%- list[i].media_title %>
                           </div>
                         </a>
                       </td>
                       <td><div class="nobr" title="<%=list[i].media_name%>"><%= list[i].media_name %></div></td>
                       <td>
                         <div class="nobr" title="<%=list[i].reporter_name%>">
-                          <% if(list[i].reporter_name == null){ %>
+                          <% if(list[i].reporter_name == null || list[i].reporter_name == ''){ %>
                             <i class="fas fa-minus"></i>
                           <%}else{%>
                             <%=list[i].reporter_name%>
@@ -116,14 +116,22 @@
                       <td><input type="text" name="datefilter" class="datepicker form-control" value="<%= list[i].reportDate %>"/></td>
                       <td>
                         <div class="rank_nobr">
-                          <% if(list[i].me_rank == null){ %>
+                          <% if(list[i].me_rank == null || list[i].me_rank == ''){ %>
                             <i class="fas fa-minus"></i>
                           <%}else{%>
                             <%=list[i].me_rank+'위'%>
                           <%}%>
                         </div>
                       </td>
-                      <td><div class="key_nobr" title="<%=list[i].keyword%>"><%= list[i].keyword %></div></td>
+                      <td>
+                        <div class="key_nobr" title="<%=list[i].keyword%>">
+                          <% if(list[i].keyword == null || list[i].keyword == ''){ %>
+                            <i class="fas fa-minus"></i>
+                          <%}else{%>
+                            <%= list[i].keyword %>
+                          <%}%>
+                        </div>
+                      </td>
                       <td>
                         <div class="nobr">
                           <% if(list[i].textType == null){ %>
@@ -257,27 +265,27 @@
             </div>
             <div class="modal-body">
               <div class="form-group row">
-                <label class="col-sm-2 col-form-label">작성일</label>
+                <label class="col-sm-2 col-form-label">*작성일</label>
                 <div class="col-sm-5">
                   <input type="text" id="m_writeDate" placeholder="YYYY-MM-DD" class="form-control">
                 </div>
                 <div class="col-sm-5">
-                  <input type="text" id="m_writeDateTime" placeholder="HH:MM:SS" class="form-control">
+                  <input type="text" id="m_writeDateTime" placeholder="HH:MM:SS" value="00:00:00" class="form-control">
                 </div>
               </div>
               <div class="form-group row">
                 <label class="col-sm-2 col-form-label">키워드</label>
                 <div class="col-sm-10">
                   <select class="form-control form-control-default" id="m_keyword">
-                    <option>키워드</option>
+                    <option value=''>키워드</option>
                     <%for(var i=0; i < klist.length; i++) {%>
-                      <option value='<%=klist[i].M_keyword%>'><%=klist[i].M_keyword%></option>
+                      <option value='<%=klist[i].keyword_main%>'><%=klist[i].keyword_main%></option>
                       <%}%>
                   </select>
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-sm-2 col-form-label">분류</label>
+                <label class="col-sm-2 col-form-label">*분류</label>
                 <div class="col-sm-10">
                   <select class="form-control form-control-default" id="m_text_type">
                     <option value="좋은글">좋은글</option>
@@ -288,7 +296,7 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-sm-2 col-form-label">제목</label>
+                <label class="col-sm-2 col-form-label">*제목</label>
                 <div class="col-sm-10">
                   <input type="text" id="m_media_title" placeholder="제목" class="form-control">
                 </div>
@@ -300,19 +308,19 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-sm-2 col-form-label">언론사</label>
+                <label class="col-sm-2 col-form-label">*언론사</label>
                 <div class="col-sm-10">
                   <input type="text" id="m_media_name" placeholder="언론사" class="form-control">
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-sm-2 col-form-label">기자</label>
+                <label class="col-sm-2 col-form-label">*기자</label>
                 <div class="col-sm-10">
                   <input type="text" id="m_reporter_name" placeholder="기자" class="form-control">
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-sm-2 col-form-label">URL</label>
+                <label class="col-sm-2 col-form-label">*URL</label>
                 <div class="col-sm-10">
                   <input type="text" id="m_url" placeholder="URL" class="form-control">
                 </div>
@@ -324,7 +332,7 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-sm-2 col-form-label">기사분류</label>
+                <label class="col-sm-2 col-form-label">*기사분류</label>
                 <div class="col-sm-10">
                   <select class="form-control form-control-default" id="m_news_type">
                     <option value="1">쇼박스 영화</option>

@@ -1,35 +1,49 @@
-.site-logo{
-  width:16px;
+.table td, .table th {
+  padding: 0.5rem;
+}
+
+.site-logo {
+  width: 16px;
   height: 16px;
   /* margin-bottom:3px; */
   margin-right: 5px;
-  vertical-align:text-bottom;
+  vertical-align: text-bottom;
 }
-input#media_name,input#reporter_name {
-    min-width: 91px;
+
+input#media_name, input#reporter_name {
+  min-width: 74px;
 }
+
 .table thead th {
   vertical-align: middle;
 }
-.datepicker{
+
+.datepicker {
   min-width: 88px;
 }
+
 /* .checkbox-news{
   min-width: 207px;
   max-width: 267px;
 } */
-.border-checkbox-group-default{
-  max-width:  59px;
-  float:  left;
+.border-checkbox-group-default {
+  max-width: 59px;
+  float: left;
 }
-.fa-video{
+
+.border-checkbox-section .border-checkbox-group .border-checkbox-label {
+  padding-left: 25px;
+}
+
+.fa-video {
   /* font-size: 16px; */
   vertical-align: inherit;
 }
+
 /* loader */
-.preloader3,.preloader2{
+.preloader3, .preloader2 {
   display: none;
-  padding-top:20%;
+  padding-top: 20%;
   position: fixed;
   left: 0;
   right: 0;
@@ -39,77 +53,100 @@ input#media_name,input#reporter_name {
   max-width: 100%;
   z-index: 10000;
 }
+
 /* select box width */
 #searchInput {
   font-size: 12px;
 }
-#selectNewsType,#selectKeyword,#selectNum,#selectSite{
+
+#selectNewsType, #selectKeyword, #selectNum, #selectSite {
   min-width: 100px;
 }
-.reportrange{
+
+.reportrange {
   min-width: 207px;
 }
-.table{
+
+.table {
   font-size: 12px;
 }
+
 .table td, .table th {
   text-align: center;
   vertical-align: middle;
 }
-.table input, .table select ,.table tbody div{
+
+.table input, .table select, .table tbody div {
   font-size: 12px;
+  margin: 0px auto;
 }
-.date_nobr{
+
+.date_nobr {
   width: 63px;
   white-space: pre-line;
 }
-.title_nobr,.nobr,.key_nobr,.media_nobr,.rank_nobr{
+
+.title_nobr, .nobr, .key_nobr, .media_nobr, .rank_nobr {
   /* text-overflow: ellipsis;
   overflow: hidden; */
   white-space: initial;
 }
-.title_nobr{
+
+.title_nobr {
+  text-align: left;
   display: inline-block;
   vertical-align: middle;
   width: 350px;
   min-width: 350px;
 }
-.rank_nobr{
+
+.rank_nobr {
   width: 50px;
   min-width: 50px;
 }
-.media_nobr{
+
+.media_nobr {
   width: 88px;
   min-width: 88px;
 }
-.nobr{
+
+.nobr {
   width: 60px;
   min-width: 60px;
 }
-.key_nobr{
-  width: 102px;
-  min-width: 102px;
+
+.key_nobr {
+  width: 63px;
+  min-width: 63px;
 }
-.nobr>i,.key_nobr>i,.rank_nobr>i{
+
+.nobr>i, .key_nobr>i, .rank_nobr>i {
   font-size: 10px;
 }
-.select-news{
+
+.select-news {
+  min-width: 105px;
+  max-width: 105px;
   font-size: 12px;
   max-height: 35px;
   line-height: 16px;
 }
-.title_nobr:hover{
-  cursor:pointer;
+
+.title_nobr:hover {
+  cursor: pointer;
   font-weight: bold;
 }
-.border-checkbox-section .border-checkbox-group .border-checkbox-label{
+
+.border-checkbox-section .border-checkbox-group .border-checkbox-label {
   margin: 0px;
 }
-#listTable .table thead th{
+
+#listTable .table thead th {
   vertical-align: middle;
   text-align: center;
 }
-#addBtn,#addBtn2{
+
+#addBtn, #addBtn2 {
   font-weight: bold;
   color: white;
   height: 40px;
@@ -119,17 +156,20 @@ input#media_name,input#reporter_name {
   background-color: #a6a6a6;
   border-color: #a6a6a6;
 }
+
 /* daterangepicker */
 .card .card-header span:not(.input-group-addon) {
   display: inline;
 }
+
 /* groupo */
-.label{
+.label {
   font-size: 11px;
 }
+
 /* modal */
-@media (min-width: 992px){
+@media (min-width: 992px) {
   .modal-lg {
-      max-width: 1601px;
+    max-width: 1601px;
   }
 }

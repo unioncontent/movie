@@ -23,7 +23,7 @@
   min-width: 207px;
 }
 .btn-sm.btn-edit{
-  padding-right: 10px;
+  padding-right: 4px;
 }
 .table{
   font-size: 12px;
@@ -38,9 +38,13 @@
 .title_nobr,.nobr,.key_nobr,.rank_nobr{
   font-size: 15px;
   padding-left: 3px;
-  text-overflow: ellipsis;
   width: 346px;
-  overflow: hidden;
+  white-space: initial;
+  /* text-overflow: ellipsis;
+  overflow: hidden; */
+}
+.title_nobr{
+  text-align: left;
 }
 .rank_nobr{
   width: 50px;
