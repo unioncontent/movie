@@ -77,8 +77,8 @@ $(document).on("click",".group",function(){
         var html = '<tr>\
         <input type="hidden" id="idx" value="'+item.media_idx+'" />\
         <td>\
-          <div class="border-checkbox-section" style="max-width: 30px;">\
-            <div class="border-checkbox-group border-checkbox-group-default">\
+          <div class="border-checkbox-section">\
+            <div class="border-checkbox-group border-checkbox-group-default style="max-height: 25px;">\
               <input class="border-checkbox news-checkbox2" type="checkbox" id="checkbox_modal_'+idx+'" '+((item.news_idx != null) ? 'checked' : '')+'>\
               <label class="border-checkbox-label" for="checkbox_modal_'+idx+'"></label>\
             </div>\
@@ -337,8 +337,8 @@ function ajaxGetPageList(param){
         var html = '<tr>\
           <input type="hidden" id="idx" value="'+item.media_idx+'" />\
           <td>\
-            <div class="border-checkbox-section" style="max-width: 30px;">\
-              <div class="border-checkbox-group border-checkbox-group-default">\
+            <div class="border-checkbox-section">\
+              <div class="border-checkbox-group border-checkbox-group-default"  style="max-height: 25px;">\
                 <input class="border-checkbox news-checkbox" type="checkbox" id="checkbox'+idx+'" '+((item.news_idx != null) ? 'checked' : '')+'>\
                 <label class="border-checkbox-label" for="checkbox'+idx+'"></label>\
               </div>\
