@@ -121,16 +121,9 @@
                                       </div>
                                   </div>
                                   <div class="form-group row">
-                                      <label class="col-sm-2 col-form-label">* 회사명</label>
-                                      <div class="col-sm-5">
-                                          <input name = "company_name" type="text" class="form-control" id="company">
-                                          <span class="messages"><p class="text-danger error"></p></span>
-                                      </div>
-                                  </div>
-                                  <div class="form-group row">
                                       <label class="col-sm-2 col-form-label">* 아이디</label>
                                       <div class="col-sm-5">
-                                        <input name = "user_ID" type="text" class="form-control" id="id">
+                                        <input name = "user_ID" type="text" class="form-control" id="id" value="아이디를 입력 해 주세요." onFocus="clearText(this)">
                                         <input type="hidden" id="idCheck"/>
                                         <span class="messages"><p class="text-danger error"></p></span>
                                       </div>
@@ -144,7 +137,14 @@
                                   <div class="form-group row">
                                       <label class="col-sm-2 col-form-label">* 비밀번호</label>
                                       <div class="col-sm-5">
-                                          <input name = "user_PW" type="password" class="form-control" id="pw">
+                                          <input name = "user_PW" type="password" class="form-control" id="pw" value="비밀번호를 입력 해 주세요." onFocus="clearText(this)">
+                                          <span class="messages"><p class="text-danger error"></p></span>
+                                      </div>
+                                  </div>
+                                  <div class="form-group row">
+                                      <label class="col-sm-2 col-form-label">* 회사명</label>
+                                      <div class="col-sm-5">
+                                          <input name = "company_name" type="text" class="form-control" id="company">
                                           <span class="messages"><p class="text-danger error"></p></span>
                                       </div>
                                   </div>
@@ -156,9 +156,9 @@
                                       </div>
                                   </div>
                                   <div class="form-group row">
-                                      <label class="col-sm-2 col-form-label">주소</label>
+                                      <label class="col-sm-2 col-form-label">* 연락처</label>
                                       <div class="col-sm-5">
-                                          <input type="text" class="form-control" id="location">
+                                          <input name = "user_phoneNum" type="text" class="form-control mob_no" id="phone" onkeyup="AddNum(this)">
                                           <span class="messages"><p class="text-danger error"></p></span>
                                       </div>
                                   </div>
@@ -169,12 +169,13 @@
                                       </div>
                                   </div>
                                   <div class="form-group row">
-                                      <label class="col-sm-2 col-form-label">* 연락처</label>
+                                      <label class="col-sm-2 col-form-label">주소</label>
                                       <div class="col-sm-5">
-                                          <input name = "user_phoneNum" type="text" class="form-control mob_no" data-mask="9999-999-999" id="phone" onkeyup="AddNum(this)">
-                                          <span class="phoneNumber"><p class="text-danger error"></p></span>
+                                          <input type="text" class="form-control" id="location">
+                                          <span class="messages"><p class="text-danger error"></p></span>
                                       </div>
                                   </div>
+                                  
                                   <!-- <div class="form-group row">
                                       <label class="col-sm-2 col-form-label">회사로고</label>
                                       <div class="col-sm-5">

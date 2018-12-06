@@ -97,6 +97,7 @@ $(document).ready(function () {
     }
     return check;
   });
+  
   $("input, select").on("focus",function(){
     $(this).removeClass("form-control-danger");
     $(this).siblings().children("p").text("");
@@ -122,3 +123,8 @@ function AddNum(obj) {
        n = n.replace(reg, '$1' + '-' + '$2' + '-');
     obj.value = n;
  }
+
+function clearText(y){ 
+	if (y.defaultValue==y.value) 
+	y.value = "" 
+}
