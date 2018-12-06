@@ -267,7 +267,7 @@ router.post('/list/delete',isAuthenticated,async function(req, res, next) {
 
 router.post('/list/update',isAuthenticated,async function(req, res, next) {
   try{
-    await newsclipping.update(req.body.news_detail,[req.body.date,req.body.news_type,req.body.idx]);
+    await newsclipping.update(req.body.news_detail,[req.body.date,req.body.news_type,req.body.idx,req.body.idx]);
     res.send({status:true});
   } catch(e){
     console.log('ERROR : ',e);
