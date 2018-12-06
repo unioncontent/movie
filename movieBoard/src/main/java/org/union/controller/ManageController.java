@@ -176,6 +176,7 @@ public class ManageController {
 		model.addAttribute("communityList35", monitorService.communityMonitor("dvdprime"));
 		model.addAttribute("communityList36", monitorService.communityMonitor("etoland"));
 		model.addAttribute("communityList37", monitorService.communityMonitor("etoland_movie"));
+		model.addAttribute("communityList38", monitorService.communityMonitor("syreop"));
 	}
 	
 	@PostMapping("/reportbackup")

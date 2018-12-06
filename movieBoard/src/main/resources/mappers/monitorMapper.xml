@@ -543,6 +543,13 @@
 			order by createDate desc 
 			limit 1;
 		</if>
+		<if test="_parameter == 'syreop'.toString()">
+			select *
+			from community_data
+			where community_name='syreop' and createDate >=  date_format(now(), '%x-%m-%d')
+			order by createDate desc 
+			limit 1;
+		</if>
 	</select>
 	
 	<select id="portalBMonitor" parameterType="Map" resultType="PortalVO">

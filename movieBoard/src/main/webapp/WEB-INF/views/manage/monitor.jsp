@@ -1521,6 +1521,35 @@
                                     </td>
                                   </tr>
                                 </c:forEach>
+                                <c:forEach items="${communityList38}" var="communityList" varStatus="index">
+                                  <tr>
+                                    <th scope="row">49</th>
+                                    <td>community</td>
+                                    <td>${communityList.community_name}</td>
+                                    <td></td>
+                                    <td><a href="${communityList.url}" target="_blank"><div class="title-nowrap">${communityList.community_title}</div></a></td>
+                                    <td><fmt:formatDate value="${communityList.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>
+                                    <td>
+                                      <div class="form-radio">
+                                        <!-- radio-success:정상/radio-danger:비정상 -->
+                                        <div class="radio radiofill radio-success  radio-inline">
+                                            <c:if test="${communityList.checkCondition == true}">
+                                            <label>
+                                                <input type="radio" name="radio49" checked="checked" disabled >
+                                                <i class="helper"></i>정상
+                                            </label>
+                                            </c:if>
+                                            <c:if test="${communityList.checkCondition == false}">
+                                            <label>
+                                                <input type="radio" name="radio" disabled >
+                                                <i class="helper"></i>비정상
+                                            </label>
+                                            </c:if>
+                                        </div>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                </c:forEach>
                                 </tbody>
                               </table>
                             </div>
