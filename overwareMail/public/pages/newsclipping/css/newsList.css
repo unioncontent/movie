@@ -16,7 +16,7 @@
 #searchInput{
   font-size: 12px
 }
-#selectNewsType,#selectKeyword,#selectNum{
+#media_page,#selectNewsType,#selectKeyword,#selectNum{
   min-width: 100px;
 }
 .reportrange{
@@ -38,7 +38,7 @@
 .title_nobr,.nobr,.key_nobr,.rank_nobr{
   font-size: 15px;
   padding-left: 3px;
-  width: 346px;
+  width: 282px;
   white-space: initial;
   /* text-overflow: ellipsis;
   overflow: hidden; */

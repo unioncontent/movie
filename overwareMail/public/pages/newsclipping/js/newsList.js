@@ -97,11 +97,15 @@ $('#submit').on("click",function(){
   }
   else{
     var reporter_name = $('#m_reporter_name').val();
+    var media_page = $('#m_media_page').val();
     var thumbnail = $('#m_thumbnail').val();
     var news_type = $('#m_news_type option:selected').val();
     var news_detail = $('#m_news_detail').val();
     if(reporter_name != ''){
       param['reporter_name'] = reporter_name;
+    }
+    if(media_page != ''){
+      param['media_page'] = media_page;
     }
     if(thumbnail != ''){
       param['thumbnail'] = thumbnail;
@@ -225,6 +229,7 @@ $(document).on('click','.btn-edit',function(){
         data: {
           // 'thumbnail' : trEle.find('#thumbnail').val(),
           'date':trEle.find('input[name="datefilter"]').val(),
+          'page':trEle.find('#media_page').val(),
           'news_type' : trEle.find('#newsType option:selected').val(),
           'news_detail' : trEle.find('#news_detail').val(),
           'idx' : trEle.find('#idx').val()
@@ -300,6 +305,7 @@ function ajaxGetPageList(param){
         }
         html +=item.media_title+'</div></a></td><td><div class="nobr" title="'+item.media_name+'">'+item.media_name+'</div></td>';
         html+='<td><div class="nobr" title="'+item.reporter_name+'">'+((item.reporter_name == null||item.reporter_name == '') ? '<i class="fas fa-minus"></i>' : item.reporter_name)+'</div></td>\
+        <td><input type="text" id="media_page" class="form-control selectText" placeholder="'+((item.media_page == null||item.media_page == '')?'':item.media_page)+'" value="'+((item.media_page == null||item.media_page == '')?'':item.media_page)+'"></td>\
         <td>'+item.writeDate+'</td>\
         <td><input type="text" name="datefilter" class="datepicker form-control"  value="'+((item.reportDate != null && item.reportDate != '') ? item.reportDate : '')+'"/></td>\
         <td><div class="rank_nobr">'+((item.me_rank == null||item.me_rank == '') ? '<i class="fas fa-minus"></i>' : item.me_rank+'위')+'</div></td>\
@@ -324,7 +330,7 @@ function ajaxGetPageList(param){
       $('#listTable tfoot').eq(0).empty();
       var html ='<tr>';
       if(pageCount > 1) {
-        html += '<td colspan="4"><button id="newsAddBtn" class="btn btn-warning alert-check p-r-5 p-l-5 m-l-15 m-b-5  f-left m-t-5"><i class="fas fa-file-alt"></i>기사입력</button></td>'
+        html += '<td colspan="5"><button id="newsAddBtn" class="btn btn-warning alert-check p-r-5 p-l-5 m-l-15 m-b-5  f-left m-t-5"><i class="fas fa-file-alt"></i>기사입력</button></td>'
         html += '<td colspan="9"><ul class="pagination float-right">';
         var pageSize = 5;
         var pRCnt = parseInt(data.result.currentPage / pageSize);
@@ -370,7 +376,7 @@ function ajaxGetPageList(param){
         html += '</ul></td>';
       }
       else {
-        html += '<td colspan="13"><button id="newsAddBtn" class="btn btn-warning alert-check p-r-5 p-l-5 m-l-15 m-b-5  f-left m-t-5"><i class="fas fa-file-alt"></i>기사입력</button></td>'
+        html += '<td colspan="14"><button id="newsAddBtn" class="btn btn-warning alert-check p-r-5 p-l-5 m-l-15 m-b-5  f-left m-t-5"><i class="fas fa-file-alt"></i>기사입력</button></td>'
       }
       html += '</tr>';
       $('#listTable tfoot').eq(0).append(html);

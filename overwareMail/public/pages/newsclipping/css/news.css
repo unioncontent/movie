@@ -96,8 +96,8 @@ input#media_name, input#reporter_name {
   text-align: left;
   display: inline-block;
   vertical-align: middle;
-  width: 350px;
-  min-width: 350px;
+  width: 300px;
+  min-width: 300px;
 }
 
 .rank_nobr {
