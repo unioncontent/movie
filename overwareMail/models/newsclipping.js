@@ -81,6 +81,8 @@ var newsclipping = {
       sql += ',news_detail=NULL';
     }
     sql+= " where media_idx=?";
+    await getResult(sql,param);
+    sql = "update news_mail set reportDate=?,news_type=? where news_detail=?";
     return await getResult(sql,param);
   },
   selectKeywordMailTable: async function(param){
