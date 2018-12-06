@@ -192,7 +192,7 @@ router.post('/addNews',isAuthenticated,async function(req, res, next) {
       var param = item;
       console.log(item);
       try{
-        await newsclipping.insert(param.detail,[param.mName,param.rName,param.date,param.code,param.idx,param.idx]);
+        await newsclipping.insert(param.detail,param.mPage,[param.mName,param.rName,param.date,param.code,param.idx,param.idx]);
         if(param.mName != '' && param.rName != ''){
           await newsclipping.insertReporter([param.mName,param.rName,param.mName,param.rName]);
         }
@@ -267,7 +267,7 @@ router.post('/list/delete',isAuthenticated,async function(req, res, next) {
 
 router.post('/list/update',isAuthenticated,async function(req, res, next) {
   try{
-    await newsclipping.update(req.body.news_detail,[req.body.date,req.body.news_type,req.body.idx,req.body.idx]);
+    await newsclipping.update(req.body.news_detail,req.body.page,[req.body.date,req.body.news_type,req.body.idx,req.body.idx]);
     res.send({status:true});
   } catch(e){
     console.log('ERROR : ',e);

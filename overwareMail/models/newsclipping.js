@@ -25,16 +25,22 @@ var newsclipping = {
     var result = await getResult(sql,param);
     return (result.length > 0)?result[0]:result;
   },
-  insert: async function(detail,param){
+  insert: async function(detail,page,param){
     var sql = 'insert into news_mail(me_rank,media_idx, media_name, media_title, media_content, reporter_name, reporter_ID, reporter_email, writeDate, last_WriteDate, last_media_title, \
     last_media_content, title_key, keyword, keyword_type, url, reportDate, news_type, textType, media_state, createDate, replynum, media_subname, updateDate';
     if(detail != ''){
       sql += ',news_detail';
     }
+    if(page != ''){
+      sql += ',media_page';
+    }
     sql += ')SELECT ME_rank,media_idx, ?, media_title, media_content, ?, reporter_ID, reporter_email, writeDate, last_WriteDate, last_media_title, last_media_content, \
     title_key, keyword, keyword_type, url, ?, ?, textType, media_state, now(), replynum, media_subname, now() ';
     if(detail != ''){
       sql += ',\''+detail+'\' ';
+    }
+    if(page != ''){
+      sql += ',\''+page+'\' ';
     }
     sql += 'FROM `union`.media_data where media_idx = ?';
     // 값이 있으면 insert 안되도록
@@ -72,13 +78,19 @@ var newsclipping = {
     param.idxs.unshift(param.midx);
     return await getResult(sql,param.idxs);
   },
-  update: async function(detail,param){
+  update: async function(detail,page,param){
     var sql = "update news_mail set reportDate=?,news_type=?";
     if(detail != ''){
       sql += ',news_detail=\''+detail+'\'';
     }
     else{
       sql += ',news_detail=NULL';
+    }
+    if(page != ''){
+      sql += ',media_page=\''+page+'\'';
+    }
+    else{
+      sql += ',media_page=NULL';
     }
     sql+= " where media_idx=?";
     await getResult(sql,param);
@@ -267,7 +279,7 @@ var newsclipping = {
     }
   },
   selectNewsMailTable: async function(body,param){
-    var sql = "SELECT me_rank,url,media_idx,DATE_FORMAT(writeDate, '%Y-%m-%d') AS writeDate,DATE_FORMAT(reportDate, '%Y-%m-%d %H:%i:%s') AS reportDate,media_title,media_name,reporter_name,\
+    var sql = "SELECT me_rank,url,media_page,media_idx,DATE_FORMAT(writeDate, '%Y-%m-%d') AS writeDate,DATE_FORMAT(reportDate, '%Y-%m-%d %H:%i:%s') AS reportDate,media_title,media_name,reporter_name,\
     keyword,textType,thumbnail,news_type,news_detail,media_subname FROM news_mail where title_key in (select distinct keyword_main from keyword_data where user_idx=? or user_idx=21)";
     if(('sDate' in body) && ('eDate' in body)){
       sql+=' and writeDate between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';

@@ -32,7 +32,7 @@ $(document).ready(function(){
 $(document).on("click",".group",function(){
   $('.preloader2').show();
   var g_idx = $(this).parents('tr').find('#idx').val();
-  var title = calByte.cutByteLength( $(this).prev().prev().find('div').text(), 60 );
+  var title = calByte.cutByteLength($.trim($(this).prev().prev().find('div').text()), 60 );
   var titleArr_s = title.split(' ');
   var titleArr = [];
   var regExp = /[\{\}\[\]\/?.,;:|\‘’“”…)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi;
@@ -67,6 +67,7 @@ $(document).on("click",".group",function(){
     },
     success:function(data){
       console.log(param);
+      console.log(data);
       data.result.sort(function (a, b) {
         return b.count < a.count ? -1 : b.count > a.count ? 1 : 0;
       });
@@ -95,6 +96,7 @@ $(document).on("click",".group",function(){
         html +=item.media_title+'</div></a></td>\
         <td><input type="text" placeholder="'+item.media_name+'" id="media_name" value="'+item.media_name+'" class="form-control selectText"></td>\
         <td><input type="text" placeholder="'+((item.reporter_name == null)?'':item.reporter_name)+'" id="reporter_name" value="'+((item.reporter_name == null)?'':item.reporter_name)+'" class="form-control selectText"></td>\
+        <td><input type="text" id="media_page" class="form-control selectText"  placeholder="'+((item.media_page == null||item.media_page == '')?'':item.media_page)+'" value="'+((item.media_page == null||item.media_page == '')?'':item.media_page)+'"></td>\
         <td><div class="rank_nobr">'+((item.ME_rank == null) ? '<i class="fas fa-minus"></i>' : item.ME_rank+'위')+'</div></td>\
         <td><div class="key_nobr" title="'+item.keyword+'">'+item.keyword+'</div></td>\
         <td><div class="nobr" title="'+item.textType+'">'+((item.textType == null) ? '<i class="fas fa-minus"></i>' : item.textType)+'</div></td>\
@@ -358,6 +360,7 @@ function ajaxGetPageList(param){
           </td>\
           <td><input type="text" placeholder="'+item.media_name+'" id="media_name" value="'+item.media_name+'" class="form-control selectText"></td>\
           <td><input type="text" placeholder="'+((item.reporter_name == null)?'':item.reporter_name)+'" id="reporter_name" value="'+((item.reporter_name == null)?'':item.reporter_name)+'" class="form-control selectText"></td>\
+          <td><input type="text" id="media_page" class="form-control selectText"  placeholder="'+((item.media_page == null||item.media_page == '')?'':item.media_page)+'" value="'+((item.media_page == null||item.media_page == '')?'':item.media_page)+'"></td>\
           <td><div class="rank_nobr">'+((item.ME_rank == null) ? '<i class="fas fa-minus"></i>' : item.ME_rank+'위')+'</div></td>\
           <td><div class="key_nobr" title="'+item.keyword+'">'+item.keyword+'</div></td>\
           <td><div class="nobr" title="'+item.textType+'">'+((item.textType == null) ? '<i class="fas fa-minus"></i>' : item.textType)+'</div></td>\
@@ -387,7 +390,7 @@ function ajaxGetPageList(param){
       $('#listTable tfoot').eq(0).empty();
       var html = '<tr>';
       if(pageCount > 1) {
-        html += '<td colspan="5"><button id="addBtn" class="btn btn-list alert-check p-r-5 p-l-5 m-l-15 m-b-5  f-left m-t-5"><i class="fas fa-angle-down"></i>선택저장</button></td>';
+        html += '<td colspan="6"><button id="addBtn" class="btn btn-list alert-check p-r-5 p-l-5 m-l-15 m-b-5  f-left m-t-5"><i class="fas fa-angle-down"></i>선택저장</button></td>';
         html += '<td colspan="8"><ul class="pagination float-right">';
         var pageSize = 5;
         var pRCnt = parseInt(data.result.currentPage / pageSize);
@@ -431,7 +434,7 @@ function ajaxGetPageList(param){
           html += '</ul></td>';
         }
         else{
-          html += '<td colspan="13"><button id="addBtn" class="btn btn-list alert-check p-r-5 p-l-5 m-l-15 m-b-5  f-left m-t-5"><i class="fas fa-angle-down"></i>선택저장</button></td>';
+          html += '<td colspan="14"><button id="addBtn" class="btn btn-list alert-check p-r-5 p-l-5 m-l-15 m-b-5  f-left m-t-5"><i class="fas fa-angle-down"></i>선택저장</button></td>';
         }
         html += '</tr>';
         $('#listTable tfoot').eq(0).append(html);
@@ -472,6 +475,7 @@ $(document).on('click','#addBtn',function(){
           idx:trEle.find('#idx').val(),
           // thumbnail:trEle.find('#thumbnail').val(),
           mName:trEle.find('#media_name').val(),
+          mPage:trEle.find('#media_page').val(),
           rName:trEle.find('#reporter_name').val(),
           date:trEle.find('input[name="datefilter"]').val(),
           code:trEle.find('#newsType option:selected').val(),
@@ -541,6 +545,7 @@ $(document).on('click','#addBtn2',function(){
         list.push({
           idx:trEle.find('#idx').val(),
           mName:trEle.find('#media_name').val(),
+          mPage:trEle.find('#media_page').val(),
           rName:trEle.find('#reporter_name').val(),
           date:trEle.find('input[name="datefilter"]').val(),
           code:trEle.find('#newsType option:selected').val(),
