@@ -149,11 +149,13 @@ function getNewsClippingData(){
             $('div[data-type='+value.news_type+'] .section-body tbody').append(html);
           }
           else{
-            var html = '<div class="news" style="padding:12px 5px 0px 5px">';
+            // var html = '<div class="news" style="padding:12px 5px 0px 5px">';
+            var html = '<div class="news" style="padding:0px 5px 0px 5px">';
             // if(value.thumbnail != null && value.thumbnail != ''){
             //   html += '<img src="'+value.thumbnail+'" style="display: inherit; float:left;width:80px;height:80px;padding-right: 13px;">';
             // }
-            html += '<div class="news-content" data-idx="'+value.media_idx+'" data-type="media" style="font-size:12px;width:743px;height:12px;"><div class="title" style="float:left;max-width:533px;display:inline-block;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;"><a style="text-decoration:none !important;color:black;font-weight:bold;" href="'+value.url+'" target="_blank">'+siteLogoHtml+value.media_title+replyHtml+'</a></div><div clacss="info" style="color:#666;float:right;"><span class="media-name">'+value.media_name+'</span><span class="bar" style="display:inline-block;overflow:hidden;width:0;height:11px;margin:-1px 5px 1px 4px;border-left:1px solid #eaeaea;vertical-align: middle;"></span><span class="date">'+value.writeDate+'</span><i class="fas fa-times news-delete" data-idx="'+value.media_idx+'" data-type="news_mail" data-str="media_idx"></i></div>';
+            html += '<div class="news-content" data-idx="'+value.media_idx+'" data-type="media" style="font-size:12px;width:743px;display: inline-block;"><div class="title" style="float:left;max-width: 596px;display:inline-block;white-space: initial;"><a style="text-decoration:none !important;color:black;font-weight:bold;" href="'+value.url+'" target="_blank">'+siteLogoHtml+value.media_title+replyHtml+'</a></div><div clacss="info" style="color:#666;float:right;"><span class="media-name">'+value.media_name+'</span><span class="bar" style="display:inline-block;overflow:hidden;width:0;height:11px;margin:-1px 5px 1px 4px;border-left:1px solid #eaeaea;vertical-align: middle;"></span><span class="date">'+value.writeDate+'</span><i class="fas fa-times news-delete" data-idx="'+value.media_idx+'" data-type="news_mail" data-str="media_idx"></i></div>';
+            // html += '<div class="news-content" data-idx="'+value.media_idx+'" data-type="media" style="font-size:12px;width:743px;height:12px;"><div class="title" style="float:left;max-width:533px;display:inline-block;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;"><a style="text-decoration:none !important;color:black;font-weight:bold;" href="'+value.url+'" target="_blank">'+siteLogoHtml+value.media_title+replyHtml+'</a></div><div clacss="info" style="color:#666;float:right;"><span class="media-name">'+value.media_name+'</span><span class="bar" style="display:inline-block;overflow:hidden;width:0;height:11px;margin:-1px 5px 1px 4px;border-left:1px solid #eaeaea;vertical-align: middle;"></span><span class="date">'+value.writeDate+'</span><i class="fas fa-times news-delete" data-idx="'+value.media_idx+'" data-type="news_mail" data-str="media_idx"></i></div>';
             html +='</div></div>';
             if(value.news_detail != null && value.news_detail != ''){
               if(value.news_detail in obj){
@@ -178,7 +180,8 @@ function getNewsClippingData(){
           }
         });
         $.each(obj, function(index, value) {
-          var html ='<ul class="relation_list" style="max-width: 718px;list-style:none;padding:0;margin:13px;margin-bottom:0px;margin-left:10px;line-height:18px;position:relative;font-size:12px;"></ul>';
+          var html ='<ul class="relation_list" style="max-width: 718px;list-style:none;padding:0;margin: 0;margin-bottom:0px;margin-left:10px;line-height:18px;position:relative;font-size:12px;"></ul>';
+          // var html ='<ul class="relation_list" style="max-width: 718px;list-style:none;padding:0;margin:13px;margin-bottom:0px;margin-left:10px;line-height:18px;position:relative;font-size:12px;"></ul>';
           $('div[data-idx='+index+']').after(html);
           var sortList = value.sort(function(a,b){
             var c = new Date(a.writeDateStr);
