@@ -16,8 +16,11 @@
 #searchInput{
   font-size: 12px
 }
-#media_page,#selectNewsType,#selectKeyword,#selectNum{
+#selectNewsType,#selectKeyword,#selectNum{
   min-width: 100px;
+}
+#media_page{
+  min-width: 88px;
 }
 .reportrange{
   min-width: 207px;
