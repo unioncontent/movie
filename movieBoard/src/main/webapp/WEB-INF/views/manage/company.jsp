@@ -369,6 +369,8 @@
 		var phoneArray = phone.split("-");
 		var phone = phoneArray[0]+phoneArray[1]+phoneArray[2];
 		
+		console.log("에러시작1");
+		
 		  $.ajax({
 
 				type : "POST",

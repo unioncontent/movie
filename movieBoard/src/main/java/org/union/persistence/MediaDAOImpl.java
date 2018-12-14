@@ -201,7 +201,17 @@ public class MediaDAOImpl implements MediaDAO {
 	public void updateTextType(MediaVO vo) throws SQLException {
 		try {
 			session1.update(namespace + "updateTextType", vo);
-			session2.update(namespace + "updateTextType", vo);
+			/*session2.update(namespace + "updateTextType", vo);*/
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Override
+	public void updateThumbnail(MediaVO vo) throws SQLException {
+		try {
+			session1.update(namespace + "updateThumbnail", vo);
+			/*session2.update(namespace + "updateThumbnail", vo);*/
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -236,19 +246,8 @@ public class MediaDAOImpl implements MediaDAO {
 			e.printStackTrace();
 		}
 	}
-
-
-	@Override
-	public void updateThumbnail(MediaVO vo) throws SQLException {
-		try {
-			session1.update(namespace + "updateThumbnail", vo);
-			session2.update(namespace + "updateThumbnail", vo);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-
+	
+	
 	@Override
 	public Integer mediaGetSearchCount(SearchCriteria cri) throws SQLException {
 

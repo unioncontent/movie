@@ -200,7 +200,7 @@
                                   </c:if>
                                     <th width="5%">NO</th>
                                     <th width="10%">등록날짜</th>
-                                    <th width="40%">제목</th>
+                                    <th width="50%">제목</th>
                                     <th width="5%">출처</th>
                                     <th width="5%">언론사</th>
                                     <th width="5%">기자</th>
@@ -229,7 +229,8 @@
                                     </c:if>
                                     <th width="5%" style="vertical-align:middle;">${totalCount -index.count +1 -minusCount}</th>
                                     <td width="10%">${mediaList.writeDate}</td>
-                                    <td width="40%" class="text-success">
+                                    <td width="50%">
+                                    <!-- <td width="40%" class="text-success"> -->
                                     	<%-- <c:if test="${mediaList.media_main == 1}">
 		                                    <i class="icofont icofont-tick-mark"></i>&nbsp;
 	                                    </c:if> --%>

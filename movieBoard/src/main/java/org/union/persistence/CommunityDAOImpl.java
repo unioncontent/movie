@@ -134,7 +134,7 @@ public class CommunityDAOImpl implements CommunityDAO {
 	public void updateTextType(CommunityVO vo) throws SQLException {
 		try {
 			session1.update(namespace + "updateTextType", vo);
-			session2.update(namespace + "updateTextType", vo);
+			/*session2.update(namespace + "updateTextType", vo);*/
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -145,7 +145,7 @@ public class CommunityDAOImpl implements CommunityDAO {
 	public void updateThumbnail(CommunityVO vo) throws SQLException {
 		try {
 			session1.update(namespace + "updateThumbnail", vo);
-			session2.update(namespace + "updateThumbnail", vo);
+			/*session2.update(namespace + "updateThumbnail", vo);*/
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
