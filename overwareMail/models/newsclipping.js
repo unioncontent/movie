@@ -116,7 +116,7 @@ var newsclipping = {
     if('search_b' in body){
       sql +=' and media_title like \'%'+body.search_b+'%\'';
     }
-    sql += ' order by media_idx';
+    sql += ' order by writeDate';
 
     var result = await getResult(sql);
     var regExp = /[\{\}\[\]\/?.,;:|\‘’“”…)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi;
@@ -186,7 +186,7 @@ var newsclipping = {
       }
       sql +=' and (news_type = \''+body.type+'\' or title_key = \''+typeStr+'\')';
     }
-    sql += ' order by '+(('rank' in body)?'-ME_rank desc,':'')+' media_idx desc';
+    sql += ' order by '+(('rank' in body)?'-ME_rank desc,':'')+' writeDate desc';
     sql += ' limit ?,?';
 
     var result = await getResult(sql,param);
