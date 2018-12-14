@@ -331,7 +331,7 @@ var newsclipping = {
     }
   },
   selectNewsMailAllTable: async function(body,param){
-    var sql = "SELECT url,media_content,thumbnail,media_idx,DATE_FORMAT(createDate, '%Y-%m-%d %H:%i:%s') AS createDate,\
+    var sql = "SELECT url,media_page,media_content,thumbnail,media_idx,DATE_FORMAT(createDate, '%Y-%m-%d %H:%i:%s') AS createDate,\
     DATE_FORMAT(writeDate, '%Y.%m.%d') AS writeDate,media_subname,DATE_FORMAT(writeDate, '%Y-%m-%d %H:%i:%s') AS writeDateStr,media_title,media_name,reporter_name,keyword,textType,thumbnail,news_type,replynum,news_detail \
     FROM news_mail where title_key in (select distinct keyword_main from keyword_data where user_idx=? or user_idx=21)";
     sql+=' and Date(reportDate) = \''+body.eDate+'\'';
