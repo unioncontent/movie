@@ -299,7 +299,7 @@ function ajaxGetPageList(param){
         var html = '<tr>\
         <input type="hidden" id="idx" value="'+item.media_idx+'" />\
         <th>'+numIdx+'</th>\
-        <td><a href="'+item.url+'" target="_blank" title="'+item.media_title+'"><div class="title_nobr">';
+        <td><a onclick="window.open(\''+item.url+'\',\'new\',\'width=#,height=#\')" title="'+item.media_title+'"><div class="title_nobr">';
         if (item.media_subname != 'out' && item.media_subname != null){
           html +='<img alt="'+item.media_subname+'" src="http://showbox.email/images/newsclipping/'+item.media_subname+'_logo.png" class="site-logo">';
         }

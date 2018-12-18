@@ -94,7 +94,7 @@
                       <input type="hidden" id="idx" value="<%=list[i].media_idx%>" />
                       <th><%= listCount - i - offset %></th>
                       <td>
-                        <a href="<%= list[i].url %>" target="_blank" title="<%= list[i].media_title %>">
+                        <a onclick="window.open('<%= list[i].url %>','new','width=#,height=#')" title="<%= list[i].media_title %>">
                           <div class="title_nobr">
                             <% if (list[i].media_subname != 'out' && list[i].media_subname != null){%>
                               <img alt="<%=list[i].media_subname%>" src="http://showbox.email/images/newsclipping/<%=list[i].media_subname%>_logo.png" class="site-logo">

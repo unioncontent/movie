@@ -89,7 +89,7 @@ $(document).on("click",".group",function(){
         <th>'+percent+'%</th>\
         <td><div class="date_nobr">'+item.writeDate+'</div></td>\
         <td><input type="text" name="datefilter" class="datepicker form-control"  value="'+((item.reportDate != null && item.reportDate != '') ? item.reportDate : '')+'"/></td>\
-        <td><a href="'+item.url+'" target="_blank" title="'+item.media_title+'"><div class="title_nobr">';
+        <td><a onclick="window.open(\''+item.url+'\',\'new\',\'width=#,height=#\')" title="'+item.media_title+'"><div class="title_nobr">';
         if (item.media_subname != 'out'){
           html +='<img alt="'+item.media_subname+'" src="http://showbox.email/images/newsclipping/'+item.media_subname+'_logo.png" class="site-logo">';
         }
@@ -349,7 +349,7 @@ function ajaxGetPageList(param){
           <th>'+numIdx+'</th>\
           <td><div class="date_nobr">'+item.writeDate+'</div></td>\
           <td><input type="text" name="datefilter" class="datepicker form-control"  value="'+((item.reportDate != null && item.reportDate != '') ? item.reportDate : '')+'"/></td>\
-          <td><a href="'+item.url+'" target="_blank" title="'+item.media_title+'"><div class="title_nobr">';
+          <td><a onclick="window.open(\''+item.url+'\',\'new\',\'width=#,height=#\')" title="'+item.media_title+'"><div class="title_nobr">';
           if (item.media_subname != 'out' && item.media_subname != null){
             html +='<img alt="'+item.media_subname+'" src="http://showbox.email/images/newsclipping/'+item.media_subname+'_logo.png" class="site-logo">';
           }
