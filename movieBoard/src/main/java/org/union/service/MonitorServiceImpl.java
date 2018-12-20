@@ -248,7 +248,7 @@ public class MonitorServiceImpl implements MonitorService {
 		List<MediaVO> list = monitorDAO.mediaMonitor(media);
 		for (MediaVO mediaVO : list) {
 			
-			MediaVO vo = monitorDAO.checkLast4(mediaVO.getMedia_name());
+			MediaVO vo = monitorDAO.checkLast4(mediaVO.getMedia_subname());
 			
 			
 			if(vo != null) {

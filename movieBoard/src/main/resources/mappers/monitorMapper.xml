@@ -130,7 +130,7 @@
 		<if test="_parameter == 'daum'.toString()">
 			select *
 			from media_data
-			where media_name='daum' and createDate >=  date_format(now(), '%x-%m-%d')
+			where media_subname='daum' and createDate >=  date_format(now(), '%x-%m-%d')
 			order by createDate desc 
 			limit 1;
 		</if>
@@ -620,9 +620,9 @@
 	
 	<select id="mediaMonitor" parameterType="Map" resultType="MediaVO">
 		select 
-		media_name, url, media_title, createDate
+		media_subname, url, media_title, createDate
 		from media_data
-		where media_name=#{media}
+		where media_subname=#{media}
 		order by createDate Desc
         limit 1;
 	</select>

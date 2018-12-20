@@ -385,7 +385,7 @@
                                   <tr>
                                     <th scope="row">10</th>
                                     <td>Media</td>
-                                    <td>${mediaListA.media_name}</td>
+                                    <td>${mediaListA.media_subname}</td>
                                     <td>네이버</td>
                                     <td><a href="${mediaListA.url}" target="_blank"><div class="title-nowrap">${mediaListA.media_title}</div></a></td>
                                     <td><fmt:formatDate value="${mediaListA.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>
@@ -414,7 +414,7 @@
                                   <tr>
                                     <th scope="row">11</th>
                                     <td>Media</td>
-                                    <td>${mediaListA.media_name}</td>
+                                    <td>${mediaListA.media_subname}</td>
                                     <td>다음</td>
                                     <td><a href="${mediaListA.url}" target="_blank"><div class="title-nowrap">${mediaListA.media_title}</div></a></td>
                                     <td><fmt:formatDate value="${mediaListA.createDate}" type="DATE" pattern="yyyy/MM/dd HH:mm:ss" /></td>

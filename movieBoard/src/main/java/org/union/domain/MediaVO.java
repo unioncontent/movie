@@ -36,6 +36,7 @@ public class MediaVO {
 	private String thumbnail;
 	private String media_subname;
 	private Integer media_main;
+	private Integer media_check;
 	private Date createDate;
 	private Date updateDate;
 	private boolean checkCondition;
@@ -187,6 +188,12 @@ public class MediaVO {
 	public void setMedia_main(Integer media_main) {
 		this.media_main = media_main;
 	}
+	public Integer getMedia_check() {
+		return media_check;
+	}
+	public void setMedia_check(Integer media_check) {
+		this.media_check = media_check;
+	}
 	public String getMedia_subname() {
 		return media_subname;
 	}
@@ -229,7 +236,6 @@ public class MediaVO {
 	public void setMatch_total2(Integer match_total2) {
 		this.match_total2 = match_total2;
 	}
-	
 	@Override
 	public String toString() {
 		return "MediaVO [media_idx=" + media_idx + ", media_name=" + media_name + ", media_title=" + media_title
@@ -240,7 +246,8 @@ public class MediaVO {
 				+ ", keyword_type=" + keyword_type + ", url=" + url + ", textType=" + textType + ", ME_rank=" + ME_rank
 				+ ", uid=" + uid + ", media_state=" + media_state + ", replynum=" + replynum + ", v_state=" + v_state
 				+ ", thumbnail=" + thumbnail + ", media_subname=" + media_subname + ", media_main=" + media_main
-				+ ", createDate=" + createDate + ", updateDate=" + updateDate + ", checkCondition=" + checkCondition
-				+ ", total=" + total + ", match_total=" + match_total + ", match_total2=" + match_total2 + "]";
+				+ ", media_check=" + media_check + ", createDate=" + createDate + ", updateDate=" + updateDate
+				+ ", checkCondition=" + checkCondition + ", total=" + total + ", match_total=" + match_total
+				+ ", match_total2=" + match_total2 + "]";
 	}
 }
