@@ -235,7 +235,7 @@
 		                                    <i class="icofont icofont-tick-mark"></i>&nbsp;
 	                                    </c:if> --%>
 	                                    <c:if test="${mediaList.media_main == 1}">
-		                                    <i class="icofont icofont-favourite"></i>&nbsp;
+		                                    <i class="icofont icofont-favourite" style="color: #2ecc71 !important"></i>&nbsp;
 	                                    </c:if>
                                     	<a href="${mediaList.url}" target="_blank">${mediaList.media_title}</a>
                                     </td>
