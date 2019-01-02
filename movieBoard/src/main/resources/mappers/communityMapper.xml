@@ -30,12 +30,12 @@
 									where 
 										user_name = #{company} 
 									and 
-										keyword_property = '포함'
+										keyword_property in ('포함','포함0')
 									)
 					)
 		</if>
 		<if test="selectKey != null">
-				and keyword in (select keyword from keyword_data where keyword_property = '포함' and keyword_main = #{selectKey})
+				and keyword in (select keyword from keyword_data where keyword_property in ('포함','포함0') and keyword_main = #{selectKey})
 			</if>
 		<if test="startDate == null">
 			and createDate <![CDATA[>=]]> CURDATE()
@@ -76,12 +76,12 @@
 									where 
 										user_name = #{company} 
 									and 
-										keyword_property = '포함'
+										keyword_property in ('포함','포함0')
 									)
 					)
 		</if>
 		<if test="selectKey != null">
-				and keyword in (select keyword from keyword_data where keyword_property = '포함' and keyword_main = #{selectKey})
+				and keyword in (select keyword from keyword_data where keyword_property in ('포함','포함0') and keyword_main = #{selectKey})
 		</if>
 		<if test="startDate == null">
 			and updateDate <![CDATA[>=]]> CURDATE()
@@ -122,12 +122,12 @@
 									where 
 										user_name = #{company} 
 									and 
-										keyword_property = '포함'
+										keyword_property in ('포함','포함0')
 									)
 					)
 		</if>
 		<if test="selectKey != null">
-				and keyword in (select keyword from keyword_data where keyword_property = '포함' and keyword_main = #{selectKey})
+				and keyword in (select keyword from keyword_data where keyword_property in ('포함','포함0') and keyword_main = #{selectKey})
 			</if>
 		<if test="startDate == null">
 			and writeDate <![CDATA[>=]]> CURDATE()
@@ -156,12 +156,12 @@
 									where 
 										user_name = #{company} 
 									and 
-										keyword_property = '포함'
+										keyword_property in ('포함','포함0')
 									)
 					)
 		</if>
 		<if test="selectKey != null">
-				and keyword in (select keyword from keyword_data where keyword_property = '포함' and keyword_main = #{selectKey})
+				and keyword in (select keyword from keyword_data where keyword_property in ('포함','포함0') and keyword_main = #{selectKey})
 		</if>
 		<if test="subSelectKey != null">
 				and keyword = #{subSelectKey}
@@ -203,12 +203,12 @@
 									where 
 										user_name = #{company} 
 									and 
-										keyword_property = '포함'
+										keyword_property in ('포함','포함0')
 									)
 					)
 		</if>
 		<if test="selectKey != null">
-				and keyword in (select keyword from keyword_data where keyword_property = '포함' and keyword_main = #{selectKey})
+				and keyword in (select keyword from keyword_data where keyword_property in ('포함','포함0') and keyword_main = #{selectKey})
 		</if>
 		<if test="subSelectKey != null">
 				and keyword = #{subSelectKey}
@@ -263,12 +263,12 @@
 									where 
 										user_name = #{company} 
 									and 
-										keyword_property = '포함'
+										keyword_property in ('포함','포함0')
 									)
 					)
 		</if>
 		<if test="selectKey != null">
-				and keyword in (select keyword from keyword_data where keyword_property = '포함' and keyword_main = #{selectKey})
+				and keyword in (select keyword from keyword_data where keyword_property in ('포함','포함0') and keyword_main = #{selectKey})
 			</if>
 		<if test="startDate != null">
 			and writeDate <![CDATA[>]]> #{startDate}
@@ -295,12 +295,12 @@
 									where 
 										user_name = #{company} 
 									and 
-										keyword_property = '포함'
+										keyword_property in ('포함','포함0')
 									)
 					)
 		</if>
 		<if test="selectKey != null">
-				and keyword in (select keyword from keyword_data where keyword_property = '포함' and keyword_main = #{selectKey})
+				and keyword in (select keyword from keyword_data where keyword_property in ('포함','포함0') and keyword_main = #{selectKey})
 			</if>	
 		<if test="startDate == null">
 			and writeDate <![CDATA[>=]]> CURDATE()
@@ -848,7 +848,7 @@
 		where
 			textType is not null
 		and 
-			keyword in (select keyword from keyword_data where keyword_property = '포함' and keyword_main = #{selectKey})
+			keyword in (select keyword from keyword_data where keyword_property in ('포함','포함0') and keyword_main = #{selectKey})
 		and writeDate <![CDATA[>=]]> #{startDate}
 		and writeDate <![CDATA[<=]]> #{endDate}
 		and 

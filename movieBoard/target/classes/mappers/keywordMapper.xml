@@ -28,12 +28,12 @@
 									where 
 										user_name = #{company} 
 									and 
-										keyword_property = '포함'
+										keyword_property in ('포함','포함0')
 									)
 					)
 		</if>
 		<if test="selectKey != null">
-				and keyword in (select keyword from keyword_data where keyword_property = '포함' and keyword_main = #{selectKey})
+				and keyword in (select keyword from keyword_data where keyword_property in ('포함','포함0') and keyword_main = #{selectKey})
 		</if>
 		<if test="writeDate != null">
 			and writeDate = #{writeDate}
@@ -146,7 +146,7 @@
 		where
 			user_idx = #{user_idx}
 		and
-			keyword_property = '포함'
+			keyword_property in ('포함','포함0')
 	
 	</select>
 	
@@ -178,7 +178,7 @@
 		from
 			keyword_data
 		where
-			keyword_property = '포함'
+			keyword_property in ('포함','포함0')
 		order by user_idx
 	
 	</select>
@@ -189,7 +189,7 @@
 		from
 			keyword_data
 		where
-			keyword_property = '포함'
+			keyword_property in ('포함','포함0')
 		and keyword in (select keyword from keyword_data where user_idx = any(select user_idx from user_data where user_name = '쇼박스') )	
 		order by user_idx
 	</select>
@@ -206,6 +206,7 @@
 			keyword_main is not null
 		<include refid="search_writeDate2"></include> 
 		group by keyword_main
+		order by createDate desc
 	</select>
 	
 	<insert id="createMain">
