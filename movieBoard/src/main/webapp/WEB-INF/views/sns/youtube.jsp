@@ -559,9 +559,9 @@ searchList();
 		   searchList();
 	});
 	
+	// 오늘날짜
 	var today = new Date();
 	var dd = today.getDate();
-	var dd2 = today.getDate()-1;
 	var mm = today.getMonth()+1; //January is 0!
 	var yyyy = today.getFullYear();
 		
@@ -569,20 +569,34 @@ searchList();
 		dd='0'+dd
 	}
 
-	if(dd2<10) {
-		dd2='0'+dd2
-	} 
-
 	if(mm<10) {
 		mm='0'+mm
 	} 
 		
 	var today = yyyy+'-'+mm+'-'+dd;
-	var yesterday = yyyy+'-'+mm+'-'+dd2;
 		
 	var today = today.toString();
-	var yesterday = yesterday.toString();
+	
+	// 어제날짜
+	var nowDate = new Date();
+	var yester = nowDate.getTime() - (1* 24 * 60 * 60 * 1000);
+	nowDate.setTime(yester);
+	
+	var ydd = nowDate.getDate();
+	var ymm = nowDate.getMonth()+1; //January is 0!
+	var yyyyy = nowDate.getFullYear();
+	
+	if(ydd<10) {
+		ydd='0'+ydd
+	}
 
+	if(ymm<10) {
+		ymm='0'+ymm
+	} 
+	
+	var yesterday = yyyyy+'-'+ymm+'-'+ydd;
+	
+	var yesterday = yesterday.toString();
 
 	// 엑셀 출력시
 	$(document).on("click","#excel",function(){
