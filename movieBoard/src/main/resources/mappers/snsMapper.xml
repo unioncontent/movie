@@ -334,6 +334,52 @@
 		</if>
 	</sql>
 	
+	<sql id="ty_writeDate">
+ 		<if test="keyword != null">
+			<if test="searchType != null">
+				<if test="searchType == 't'.toString()">
+					and sns_title like concat('%', #{keyword}, '%')
+				</if>
+				<if test="searchType == 'c'.toString()">
+					and sns_content like concat('%', #{keyword}, '%')
+				</if>
+			</if>
+		</if>
+		<if test="company != null">
+			and
+			   keyword in (select 
+						keyword 
+					from 
+						keyword_data
+					where
+						user_idx = (select 
+										user_idx 
+									from 
+										user_data 
+									where 
+										user_name = #{company} 
+									and 
+										keyword_property in ('포함','포함0')
+									)
+					)
+		</if>
+		<if test="selectKey != null">
+				and keyword in (select keyword from keyword_data where keyword_property in ('포함','포함0') and keyword_main = #{selectKey})
+			</if>	
+		<if test="startDate == null">
+			and writeDate between date_add(curdate(), interval -1 DAY)  and curdate()+1
+		</if>	
+		<if test="startDate != null">
+			and writeDate <![CDATA[>=]]> #{startDate}
+			<if test="endDate != null">
+				and writeDate <![CDATA[<]]> #{endDate}
+			</if>
+		</if>
+		<if test="textType != null">
+			and textType = #{textType}
+		</if>
+	</sql>
+	
  	<insert id="create">
  		insert into
  			sns_data(sns_name, sns_title, sns_content, sns_writer, like_cnt, reply_cnt, share_cnt, writeDate, keyword, keyword_type, url, textType, thumbnail)
@@ -698,7 +744,7 @@
 			sns_data
 		where 
 			sns_name = 'twitter'
-		<include refid="search_writeDate"></include>
+		<include refid="ty_writeDate"></include>
 		order 
 			by writeDate desc
 		limit  
@@ -714,7 +760,7 @@
  		where
  			sns_name = 'twitter'
  		
- 		<include refid="search_writeDate"></include>
+ 		<include refid="ty_writeDate"></include>
  		
  	</select>
  	
@@ -727,7 +773,7 @@
 			sns_name = 'youtube'
 		and
 			keyword != ''
-		<include refid="search_writeDate"></include>
+		<include refid="ty_writeDate"></include>
 		order 
 			by writeDate desc
 		limit  
@@ -744,7 +790,7 @@
  			sns_name = 'youtube'
  		and 
 			keyword != ''
- 		<include refid="search_writeDate"></include>
+ 		<include refid="ty_writeDate"></include>
  		
  	</select>
  	

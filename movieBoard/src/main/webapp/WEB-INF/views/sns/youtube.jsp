@@ -179,9 +179,10 @@
                             <h5 class="card-header-text">
                             <font style="font-weight: bold; color: black;">
                               <img alt="naver" src="../assets/images/youtube_logo.png" style="width: 30px; height: 30px;">
-                              유튜브 그래프
+                             	 유튜브 그래프
                               </font>
                             </h5>
+                           		 작성날짜는 하루 전날로 표기됩니다.
                             <div class="card-header-right">
                               <i class="icofont icofont-rounded-down"></i>
                             </div>
@@ -229,7 +230,7 @@
                                 <tr>
                                   <th width="3%">NO</th>
                                   <!-- <th width="5%">추출일</th> -->
-                                  <th width="5%">작성일</th>
+                                  <th width="5%">작성날짜</th>
                                   <th width="3%">대표키워드</th>
                                   <th width="3%">키워드</th>
                                   <th width="15%">제목</th>

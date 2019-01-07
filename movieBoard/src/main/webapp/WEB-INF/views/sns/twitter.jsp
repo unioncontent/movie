@@ -180,9 +180,10 @@
                             <h5 class="card-header-text">
                             <font style="font-weight: bold; color: black;">
                               <img alt="naver" src="../assets/images/Twitter_logo.png" style="width: 20px; height: 20px;">
-                              트위터 그래프
+                              	트위터 그래프
                               </font>
                             </h5>
+                            	작성날짜는 하루 전날로 표기됩니다.
                             <div class="card-header-right">
                               <i class="icofont icofont-rounded-down"></i>
                               <i class="icofont icofont-refresh"></i>
