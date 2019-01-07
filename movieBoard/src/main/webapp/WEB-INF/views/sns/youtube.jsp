@@ -558,6 +558,30 @@ searchList();
 
 		   searchList();
 	});
+	
+	var today = new Date();
+	var dd = today.getDate();
+	var dd2 = today.getDate()-1;
+	var mm = today.getMonth()+1; //January is 0!
+	var yyyy = today.getFullYear();
+		
+	if(dd<10) {
+		dd='0'+dd
+	}
+
+	if(dd2<10) {
+		dd2='0'+dd2
+	} 
+
+	if(mm<10) {
+		mm='0'+mm
+	} 
+		
+	var today = yyyy+'-'+mm+'-'+dd;
+	var yesterday = yyyy+'-'+mm+'-'+dd2;
+		
+	var today = today.toString();
+	var yesterday = yesterday.toString();
 
 
 	// 엑셀 출력시
@@ -574,17 +598,29 @@ searchList();
 	        function(){//엑셀 출력하겠다고 할 시 진행 함수
 
 	        	console.log("엑셀출력한다?");
-
-	        	self.location = "excel?"
-	        		  +"searchType=" + decodeURI(window.location.href.split("&searchType=")[1]).split("&")[0]
-			 		  + "&keyword=" + decodeURI(window.location.href.split("&keyword=")[1]).split("&")[0]
-					  + "&selectKey="
-					  + $('#selectKeyword option:selected').val()
-					  + "&company="
-					  + $("#selectCompany option:selected").val()
-					  + "&startDate=" + makeDateFormat($("#fromDate").val(), 0)
-					  + "&endDate=" +  makeDateFormat($("#fromDate").val(), 1)
-					  + "&portal_name=youtube";
+	        	if(makeDateFormat($("#fromDate").val(), 0) == today){
+		        	self.location = "excel?"
+		        		  +"searchType=" + decodeURI(window.location.href.split("&searchType=")[1]).split("&")[0]
+				 		  + "&keyword=" + decodeURI(window.location.href.split("&keyword=")[1]).split("&")[0]
+						  + "&selectKey="
+						  + $('#selectKeyword option:selected').val()
+						  + "&company="
+						  + $("#selectCompany option:selected").val()
+						  + "&startDate=" + yesterday
+						  + "&endDate=" +  today
+						  + "&portal_name=youtube";
+	        	}else{
+	        		self.location = "excel?"
+		        		  +"searchType=" + decodeURI(window.location.href.split("&searchType=")[1]).split("&")[0]
+				 		  + "&keyword=" + decodeURI(window.location.href.split("&keyword=")[1]).split("&")[0]
+						  + "&selectKey="
+						  + $('#selectKeyword option:selected').val()
+						  + "&company="
+						  + $("#selectCompany option:selected").val()
+						  + "&startDate=" + makeDateFormat($("#fromDate").val(), 0)
+						  + "&endDate=" +  makeDateFormat($("#fromDate").val(), 1)
+						  + "&portal_name=youtube";
+	        	}
 
 		  		swal("Success!", "엑셀출력 되었습니다.", "success");
 
