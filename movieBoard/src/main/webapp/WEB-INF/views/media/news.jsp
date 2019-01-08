@@ -99,7 +99,8 @@
                   <div class="page-body">
                     <div class="row">
                       <div class="col-md-7">
-                        <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 m-l-0 f-left select-left" id="selectKeyword">
+                      <c:if test="${user.user_name == 'union'}">
+                      	<select name="select" class="col-md-1 form-control form-control-inverse m-b-10 m-l-0 f-left select-left" id="selectKeyword">
                           <option>키워드</option>
                           <c:if test="${modelKeywordList == null}" >
                           	<c:forEach items="${keywordList}" var = "keywordList">
@@ -124,6 +125,41 @@
 	                        <option value= "1" >주요</option>
 	                        <option value= "0" >전체</option>
                         </select>
+                      </c:if>
+                      
+                      <c:if test="${user.user_name != 'union'}">
+                      	<select name="select" class="col-md-1 form-control form-control-inverse m-b-10 m-l-0 f-left select-left" id="selectKeyword">
+                          <option>키워드</option>
+                          <c:if test="${modelKeywordList == null}" >
+                          	<c:forEach items="${keywordList}" var = "keywordList">
+                          <option value="${keywordList.keyword_main}">${keywordList.keyword_main}</option>
+                          </c:forEach>
+                          </c:if>
+                          <c:if test="${modelKeywordList != null}">
+                          	<c:forEach items="${modelKeywordList}" var = "keywordList">
+                          	<%-- ${keywordList.keyword_main} --%>
+                          		<c:if test="${'포함' eq keywordList.keyword_property}">
+	                          		<option value="${keywordList.keyword_main}">${keywordList.keyword_main}</option>
+	                          	</c:if>
+	                          	<c:if test="${'포함0' eq keywordList.keyword_property}">
+	                          		<option value="${keywordList.keyword_main}" style="display: none;">${keywordList.keyword_main}</option>
+	                          	</c:if>
+                          </c:forEach>
+                          </c:if>
+                        </select>
+                        <select id= "selectPerPageNum" name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left">	
+	                        <option value="30">리스트</option>
+	                        <option id= "10" >10</option>
+	                        <option id= "30" >30</option>
+	                        <option id = "60">60</option>
+	                        <option id = "120">90</option>
+                        </select>
+                        <select id= "selectMediaMain" name="select" class="col-md-1 form-control form-control-inverse m-r-10 m-b-10 p-r-5 f-left select-left">	
+	                        <option value="0">매체</option>
+	                        <option value= "1" >주요</option>
+	                        <option value= "0" >전체</option>
+                        </select>
+                      </c:if>
                       </div>
                       <div class="col-md-5">
                         <!-- date picker start -->

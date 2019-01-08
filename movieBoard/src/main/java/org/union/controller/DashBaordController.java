@@ -244,6 +244,8 @@ public class DashBaordController {
 			cri.setSelectKey("8");
 		}else if(selectKey.equals("남산의부장들")) {
 			cri.setSelectKey("12");
+		}else if(selectKey.equals("퍼펙트맨")) {
+			cri.setSelectKey("13");
 		}else {
 			cri.setSelectKey("0");
 		}

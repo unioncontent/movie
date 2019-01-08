@@ -140,7 +140,7 @@
 	
 	<select id="listByUser" resultType="KeywordVO">
 		select distinct
-			keyword_main
+			keyword_main, keyword_property
 		from
 			keyword_data
 		where

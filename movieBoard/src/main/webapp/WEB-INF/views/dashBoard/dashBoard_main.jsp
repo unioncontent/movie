@@ -164,14 +164,20 @@
 					  <br>
 					 <select name="select" class="form-control form-control-inverse" style="width: 250px;" id="selectKeyword">
                           <option>키워드</option>
-                          <c:if test="${modelKeywordList == null}">
+                          <c:if test="${modelKeywordList == null}" >
                           	<c:forEach items="${keywordList}" var = "keywordList">
                           <option value="${keywordList.keyword_main}">${keywordList.keyword_main}</option>
                           </c:forEach>
                           </c:if>
                           <c:if test="${modelKeywordList != null}">
                           	<c:forEach items="${modelKeywordList}" var = "keywordList">
-                          <option value="${keywordList.keyword_main}">${keywordList.keyword_main}</option>
+                          	<%-- ${keywordList.keyword_main} --%>
+                          		<c:if test="${'포함' eq keywordList.keyword_property}">
+	                          		<option value="${keywordList.keyword_main}">${keywordList.keyword_main}</option>
+	                          	</c:if>
+	                          	<c:if test="${'포함0' eq keywordList.keyword_property}">
+	                          		<option value="${keywordList.keyword_main}" style="display: none;">${keywordList.keyword_main}</option>
+	                          	</c:if>
                           </c:forEach>
                           </c:if>
                         </select> 
