@@ -127,7 +127,14 @@
                           <option>키워드</option>
                           <c:if test="${modelKeywordList == null}" >
                           	<c:forEach items="${keywordList}" var = "keywordList">
-	                          <option value="${keywordList.keyword_main}">${keywordList.keyword_main}</option>
+	                          <option value="${keywordList.keyword_main}">
+	                          	<c:if test="${'포함0' eq keywordList.keyword_property}">
+	                          		${keywordList.keyword_main}(x)
+	                          	</c:if>
+	                          	<c:if test="${'포함' eq keywordList.keyword_property}">
+	                          		${keywordList.keyword_main}
+	                          	</c:if>
+	                          </option>
                           	</c:forEach>
                           </c:if>
                           <c:if test="${modelKeywordList != null}">

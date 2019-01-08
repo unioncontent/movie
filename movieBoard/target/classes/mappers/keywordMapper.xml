@@ -147,6 +147,7 @@
 			user_idx = #{user_idx}
 		and
 			keyword_property in ('포함','포함0')
+		order by keyword_property asc,user_idx asc
 	
 	</select>
 	
@@ -174,24 +175,24 @@
 
 	<select id="listAll" resultType="KeywordVO">
 		select distinct
-			keyword_main, user_idx
+			keyword_main, user_idx, keyword_property
 		from
 			keyword_data
 		where
 			keyword_property in ('포함','포함0')
-		order by user_idx
+		order by keyword_property asc,user_idx asc
 	
 	</select>
 	
 	<select id="showboxListAll" resultType="KeywordVO">
 		select distinct
-			keyword_main, user_idx
+			keyword_main, user_idx, keyword_property
 		from
 			keyword_data
 		where
 			keyword_property in ('포함','포함0')
 		and keyword in (select keyword from keyword_data where user_idx = any(select user_idx from user_data where user_name = '쇼박스') )	
-		order by user_idx
+		order by keyword_property asc,user_idx asc
 	</select>
 	
 	<select id="listPage" resultType="KeywordListVO">
