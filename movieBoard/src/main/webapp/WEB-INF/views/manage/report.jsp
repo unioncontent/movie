@@ -360,7 +360,7 @@
 									                                    <td align="center" style="color: rgb(102, 102, 102); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 12px; font-weight: bold;"><fmt:formatNumber value="${portalCount+communityCount+snsCount+mediaCount}" pattern="#,##0" /> 건</td></tr></tbody></table>
 									                                    </tr>
 									                                    <tr>
-									                                    <td height="15"></td></tr><tr><td align="left" style="color: rgb(153, 153, 153); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 11px;">
+									                                    <td height="10"></td></tr><tr><td align="left" style="color: rgb(153, 153, 153); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 11px;">
 									  									</td>
 									  									</tr>
 									  									<tr>
@@ -435,7 +435,7 @@
 												                           </tr>
 												                           <!-- 키워드별 이슈 end -->
 									  									<tr>
-									  									<td height="20"> </td>
+									  									<td height="30"> </td>
 									  									</tr>
 									  									<tr>
 									  									<td align="left">
@@ -497,10 +497,10 @@
 									  									</td>
 									  									</tr>
 									  									<tr>
-												                        <td align="center" height="20" style="color: rgb(78, 78, 78); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 12px; font-weight: bold;"></td>
+												                        <td align="center" height="10" style="color: rgb(78, 78, 78); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 12px; font-weight: bold;"></td>
 												                        </tr>
 												                        <tr>
-												                        <td align="center" height="47" style="border: 0px; border-image: none;">
+												                        <td align="center" height="10" style="border: 0px; border-image: none;">
 												                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
 											                              <tbody>
 											                              <c:forEach items="${scoreList}" var = "scoreList" varStatus="index">
@@ -528,7 +528,7 @@
 									                                    <tbody>
 									                                    <!-- 평점현황 end -->
 											                            <tr>
-									                              		<td height="25"></td>
+									                              		<td height="10"></td>
 									                              		</tr>
 									                              		<tr>
 									                              		<td align="left">
