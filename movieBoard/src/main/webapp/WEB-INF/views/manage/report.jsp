@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 
@@ -301,14 +302,18 @@
 									                              <td height="1" bgcolor="#e4e4e4"></td>
 									                              </tr>
 									                              <tr>
-									                              <td align="center" style="color: rgb(57, 130, 199); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 12px; font-weight: bold; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid; text-align: center;" bgcolor="#eff7ff">키워드</td>
+									                              <td align="center" style="width: 80px; color: rgb(57, 130, 199); letter-spacing: -1px; font-family: Gulim,verdana; font-size: 12px; font-weight: bold; border-right-color: rgb(228, 228, 228); border-right-width: 1px; border-right-style: solid; text-align: center;" bgcolor="#eff7ff">키워드</td>
 									                              <td> </td>
 									                              <td align="left" style="padding: 10px 10px 10px 0px; color: rgb(102, 102, 102); line-height: 18px; letter-spacing: -1px; font-family: Gulim,verdana; font-size: 12px;">
 									                              <c:if test="${getKeyword != null}">
+									                              	<%-- ${getKeywordSize}개 / --%>
 										                          	<c:forEach items="${getKeyword}" var = "getKeyword" varStatus="status">
 										                          	&nbsp;${getKeyword.keyword}
 										                          	<c:if test="${!status.last}">
 										                            ,
+											                        <c:if test="${getKeywordSize gt 9}">
+												                    	<c:if test="${status.count == 9}"><br></c:if>
+											                        </c:if>
 										                            </c:if>
 										                          </c:forEach>
 										                          </c:if>

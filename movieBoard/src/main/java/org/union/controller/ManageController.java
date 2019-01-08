@@ -612,6 +612,7 @@ public class ManageController {
 		logger.info("cri: " + cri);
 		
 		model.addAttribute("getKeyword", keywordService.getKeyword(selectKey));
+		model.addAttribute("getKeywordSize", keywordService.getKeyword(selectKey).size());
 		
 		model.addAttribute("portalCount", portalService.wgetSearchCount(cri));
 		model.addAttribute("communityCount", communityService.wgetSearchCount(cri));
