@@ -492,6 +492,7 @@ function settingMailBody(){
   $("#M_body").clone().prependTo( "#clone" );
   $("#clone").find('.news-delete').remove();
   $("#clone").find('.groupBtn').remove();
+  $("#clone").find('.delBtn').remove();
   $("#clone").find('.checkboxs').remove();
   // 댓글수,사이트이미지 메일 발송시 안보이도록
   $("#clone").find('.site-logo').remove();
