@@ -23,8 +23,43 @@ $(document).ready(function() {
   $('#date-span a').attr('href', "http://showbox.email/preview/newsclipping?date="+$('#datepicker2').val());
   $('#body-header a').attr('href', "http://showbox.email/preview/newsclipping?date="+$('#datepicker2').val());
 });
+// 대표기사 선택 삭제
+$('.delBtn').on('click',function(){
+  swal({
+    title: "선택한 대표 기사를 삭제하시겠습니까?",
+    icon: "warning",
+    buttons: ["취소", true],
+    dangerMode: true,
+  }).then(function(value) {
+    if (value != null) {
+      $('.checkboxs input[type="checkbox"]:checked').each(function(idx,ele){
+        if(ele.className == 'main-news'){
+          var midx = $(ele).val();
+          $.ajax({
+            url: '/newsclipping/delete',
+            type: 'post',
+            data : {idx : midx,table : 'news_mail',idxStr : 'media_idx'},
+            datatype : 'json',
+            error:function(request,status,error){
+              console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
+              swal("ERROR!", request.responseText, "error");
+            },
+            success:function(data){
+              console.log(data.status);
+              getNewsClippingData();
+            }
+          });
+        }
+      });
+    }
+  });
+});
 // grouping
 $('.groupBtn').on('click',function(){
+  if($('input.main-news:checked').length > 1){
+    alert('대표기사는 하나만 선택 가능합니다.');
+    return false;
+  }
   swal({
     title: "해당 기사를 그룹핑하시겠습니까?",
     icon: "warning",
@@ -63,11 +98,6 @@ $('.groupBtn').on('click',function(){
 // checkbox event
 $(document).on('click','.checkboxs input[type="checkbox"]',function(){
   console.log('click',this);
-  if($('input.main-news:checked').length > 1){
-    $(this).prop('checked',false);
-    alert('대표기사는 하나만 선택 가능합니다.');
-    return false;
-  }
   if(this.className == 'sub-news'){
     var midx = $(this).prevAll("input[type=checkbox]").val();
     if($('ul.relation_list[data-midx='+midx+']').length > 0){
@@ -395,9 +425,8 @@ function contextMenu(type){
               swal("ERROR!", request.responseText, "error");
             },
             success:function(data){
-              if(data.status){
-                getNewsClippingData();
-              }
+              console.log(data.status);
+              getNewsClippingData();
             }
           });
         });
