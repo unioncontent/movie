@@ -1352,6 +1352,12 @@ public class PortalController {
 			cri.setCompany(null);
 		}
 	}
+	
+	if (cri.getKeyword() == "" || "undefined".equals(cri.getKeyword())) {
+	    logger.info("keyword is null");
+	    cri.setKeyword(null);
+
+	}
 
 	if(cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey()) ) {
 		logger.info("selectKey is null");
@@ -1396,10 +1402,10 @@ public class PortalController {
 	ListUtil listUtil = new ListUtil();
 
 	if (cri.getPortal_type().equals("movie")) {
-	    model.addObject("list", listUtil.listAddMovieList(classiList, movieService.searchAllList(cri)));
+	    model.addObject("list", listUtil.listAddMovieList(classiList, naverMovieService.searchAllList(cri)));
 	}
 	else if (cri.getPortal_type().equals("movies")) {
-	    model.addObject("list", listUtil.listAddMovieList(classiList, movieService.showSearchAllList(cri)));
+	    model.addObject("list", listUtil.listAddMovieList(classiList, naverMovieService.showSearchAllList(cri)));
 	}
 	else if (cri.getPortal_type().equals("mobile")) {
 	    model.addObject("list", listUtil.listAddMobileList(classiList, mobileEntService.searchAllList(cri)));
