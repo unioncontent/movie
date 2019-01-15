@@ -26,23 +26,22 @@ var newsclipping = {
     return (result.length > 0)?result[0]:result;
   },
   insert: async function(detail,page,param){
-    var sql = 'insert into news_mail(me_rank,media_idx, media_name, media_title, media_content, reporter_name, reporter_ID, reporter_email, writeDate, last_WriteDate, last_media_title, \
-    last_media_content, title_key, keyword, keyword_type, url, reportDate, news_type, textType, media_state, createDate, replynum, media_subname, updateDate';
+    var sql = 'insert into news_mail(me_rank,media_idx, media_name, media_title, media_content, reporter_name, reporter_ID, reporter_email, writeDate, last_media_title,     last_media_content, title_key, keyword, keyword_type, url, reportDate, news_type, textType, createDate, replynum, media_subname, updateDate';
     if(detail != ''){
       sql += ',news_detail';
     }
     if(page != ''){
       sql += ',media_page';
     }
-    sql += ')SELECT ME_rank,media_idx, ?, media_title, media_content, ?, reporter_ID, reporter_email, writeDate, last_WriteDate, last_media_title, last_media_content, \
-    title_key, keyword, keyword_type, url, ?, ?, textType, media_state, now(), replynum, media_subname, now() ';
+    sql += ') SELECT ME_rank,media_idx, ?, media_title, media_content, ?, reporter_ID, reporter_email, writeDate, last_media_title, last_media_content, \
+    title_key, keyword, keyword_type, url, ?, ?, textType, now(), replynum, media_subname, now() ';
     if(detail != ''){
       sql += ',\''+detail+'\' ';
     }
     if(page != ''){
       sql += ',\''+page+'\' ';
     }
-    sql += 'FROM `union`.media_data where media_idx = ?';
+    sql += 'FROM `union`.news_view where media_idx = ?';
     // 값이 있으면 insert 안되도록
     sql += ' and NOT EXISTS (SELECT * FROM news_mail WHERE media_idx = ?);'
     return await getResult(sql,param);
@@ -299,7 +298,7 @@ var newsclipping = {
       sql +=' and (media_title like \'%'+body.search.replace(/'/gi,"''").replace(/[?]/gi,"")+'%\' or media_content like \'%'+body.search.replace(/'/gi,"''").replace(/[?]/gi,"")+'%\')';
       // sql +=' and media_title like \'%'+body.search+'%\'';
     }
-    sql += ' order by media_idx desc limit ?,?';
+    sql += ' order by updateDate desc limit ?,?';
     return await getResult(sql,param);
   },
   selectNewsMailTableCount: async function(body,param){
@@ -331,10 +330,18 @@ var newsclipping = {
     }
   },
   selectNewsMailAllTable: async function(body,param){
-    var sql = "SELECT url,media_page,media_content,thumbnail,media_idx,DATE_FORMAT(createDate, '%Y-%m-%d %H:%i:%s') AS createDate,\
-    DATE_FORMAT(writeDate, '%Y.%m.%d') AS writeDate,media_subname,DATE_FORMAT(writeDate, '%Y-%m-%d %H:%i:%s') AS writeDateStr,media_title,media_name,reporter_name,keyword,textType,thumbnail,news_type,replynum,news_detail \
-    FROM news_mail where title_key in (select distinct keyword_main from keyword_data where user_idx=? or user_idx=21)";
-    sql+=' and Date(reportDate) = \''+body.eDate+'\'';
+    var sql = "select * from (";
+    var sql_sub = "SELECT url,media_page,media_content,me_rank,media_idx,DATE_FORMAT(createDate, '%Y-%m-%d %H:%i:%s') AS createDate,\
+    DATE_FORMAT(writeDate, '%Y.%m.%d') AS writeDate,media_subname,DATE_FORMAT(writeDate, '%Y-%m-%d %H:%i:%s') AS writeDateStr,media_title,media_name,reporter_name,textType,thumbnail,news_type,replynum,news_detail \
+    ,if(title_key = '캐스팅' or title_key = '오리온' or title_key = '영화일반' or title_key = '쇼박스기업뉴스' or title_key = '보도국' or title_key = '박스오피스' or title_key = '경쟁영화',keyword,title_key) as keyword FROM news_mail\
+    where title_key in (select distinct keyword_main from keyword_data where user_idx=? or user_idx=21)";
+    sql_sub+=' and Date(reportDate) = \''+body.eDate+'\'';
+    sql += sql_sub+') as a order by a.keyword asc,a.writeDateStr desc';
+    console.log(param);
+    // var sql = "SELECT url,media_page,media_content,thumbnail,media_idx,DATE_FORMAT(createDate, '%Y-%m-%d %H:%i:%s') AS createDate,\
+    // DATE_FORMAT(writeDate, '%Y.%m.%d') AS writeDate,media_subname,DATE_FORMAT(writeDate, '%Y-%m-%d %H:%i:%s') AS writeDateStr,media_title,media_name,reporter_name,keyword,textType,thumbnail,news_type,replynum,news_detail \
+    // FROM news_mail where title_key in (select distinct keyword_main from keyword_data where user_idx=? or user_idx=21)";
+    // sql+=' and Date(reportDate) = \''+body.eDate+'\'';
     return await getResult(sql,param);
   },
   selectIssueTable: async function(param){
@@ -395,7 +402,8 @@ function insertSqlSetting(keys){
 
 async function getResult(sql,param) {
   var db = new DBpromise();
-  console.log(sql,param);
+  console.log('sql:',sql);
+  console.log('param:',param);
   try{
     return await db.query(sql,param);
   } catch(e){

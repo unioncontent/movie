@@ -1,4 +1,17 @@
 $(document).ready(function() {
+  // contextMenu
+  $.contextMenu({
+    selector: '.context-menu-one',
+    callback: function(key, options) {
+        contextMenu(key);
+    },
+    items: {
+      "delete": {name: "기사삭제", icon: "delete"},
+      "quit": {name: "선택취소", icon: function(){
+          return 'context-menu-icon context-menu-icon-quit';
+      }}
+    }
+  });
   // ie label css
   $('.modal label').css('line-height','16px');
   $('.select2-search__field').css('line-height','16px');
@@ -229,7 +242,8 @@ function getNewsClippingData(){
           if (value.media_subname != 'out' && value.media_subname != null){
             siteLogoHtml ='<img alt="'+value.media_subname+'" style="width: 15px;height: 15px;margin-right: 2px;vertical-align:text-bottom;" src="http://showbox.email/images/newsclipping/'+value.media_subname+'_logo.png" class="site-logo">';
           }
-          var replyHtml = '<label class="replyLabel" style="display: inline-block;border-radius: 10px;padding: 2px 6px;font-size: 84%;font-weight: 700;line-height: 1;color: #fff;text-align: center;white-space: nowrap;vertical-align: baseline;background-color: #bdc3c7;margin-left: .5rem;margin-bottom: 0;">'+(($.isNumeric(value.replynum) == false)? '0':value.replynum)+'</label>';
+          // var replyHtml = '<label class="replyLabel" style="display: inline-block;border-radius: 10px;padding: 2px 6px;font-size: 84%;font-weight: 700;line-height: 1;color: #fff;text-align: center;white-space: nowrap;vertical-align: baseline;background-color: #bdc3c7;margin-left: .5rem;margin-bottom: 0;">'+(($.isNumeric(value.replynum) == false)? '0':value.replynum)+'</label>';
+          var rankHtml = '<label class="rankLabel" style="display: inline-block;border-radius: 10px;padding: 2px 6px;font-size: 84%;font-weight: 700;line-height: 1;color: #fff;text-align: center;white-space: nowrap;vertical-align: baseline;background-color: #bdc3c7;margin-left: .5rem;margin-bottom: 0;">'+(($.isNumeric(value.me_rank) == false)? '0':value.me_rank)+'</label>';
           var pageHtml = '';
           if(value.media_page != null && value.media_page != ''){
             // pageHtml = '<div clacss="info" style="color:#666;font-weight: normal;float:right;"><span class="bar" style="display:inline-block;overflow:hidden;width:0;height:11px;margin:-1px 5px 1px 4px;border-left:1px solid #eaeaea;vertical-align: middle;"></span><span class="page">'+value.media_page+'</span></div>';
@@ -243,7 +257,13 @@ function getNewsClippingData(){
             if(value.media_page != null && value.media_page != ''){
               pageHtml = '<div clacss="info" style="color:#666;font-weight: normal;float:right;margin: 0 0 0 5px;"><span class="bar" style="display:inline-block;overflow:hidden;width:0;height:11px;margin:-1px 5px 1px 4px;border-left:1px solid #eaeaea;vertical-align: middle;"></span><span class="page">'+value.media_page+'</span></div>';
             }
-            var html = '<tr><td style="padding: 10px 0px 5px 7px;border-bottom: 1px solid #f4f4f4;"><div style="max-width: 538px;display: inline-block;text-overflow:ellipsis;white-space: initial;"><a style="text-decoration:none !important;color:black;font-weight:bold;" href="'+value.url+'" target="_blank">'+siteLogoHtml+value.media_title+replyHtml+'</a><i class="fas fa-times news-delete" data-idx="'+value.media_idx+'" data-type="news_mail" data-str="media_idx"></i></div></td><td style="padding: 10px 5px;border:1px solid #f4f4f4;border-top:0;text-align:center;color:#666;">'+value.media_name+pageHtml+'</td><td style="padding: 10px 0;border-bottom:1px solid #f4f4f4;text-align:center;color:#666;">'+value.writeDate+'</td></tr>'
+            var html = '<tr><td style="padding: 10px 0px 5px 7px;border-bottom: 1px solid #f4f4f4;"><div style="max-width: 538px;display: inline-block;text-overflow:ellipsis;white-space: initial;"><a style="text-decoration:none !important;color:black;font-weight:bold;" href="'+value.url+'" target="_blank">'+siteLogoHtml+value.media_title;
+            if($.isNumeric(value.me_rank)){
+              console.log(value.me_rank);
+              html += rankHtml;
+            }
+            // html += replyHtml;
+            html += '</a><i class="fas fa-times news-delete" data-idx="'+value.media_idx+'" data-type="news_mail" data-str="media_idx"></i></div></td><td style="padding: 10px 5px;border:1px solid #f4f4f4;border-top:0;text-align:center;color:#666;">'+value.media_name+pageHtml+'</td><td style="padding: 10px 0;border-bottom:1px solid #f4f4f4;text-align:center;color:#666;">'+value.writeDate+'</td></tr>'
             $('div[data-type='+value.news_type+'] .section-body tbody').append(html);
           }
           else{
@@ -253,7 +273,13 @@ function getNewsClippingData(){
             //   html += '<img src="'+value.thumbnail+'" style="display: inherit; float:left;width:80px;height:80px;padding-right: 13px;">';
             // }
             // html += '<div class="news-content" data-idx="'+value.media_idx+'" data-type="media" style="font-size:12px;width:743px;height:12px;"><div class="title" style="float:left;max-width:533px;display:inline-block;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;"><a style="text-decoration:none !important;color:black;font-weight:bold;" href="'+value.url+'" target="_blank">'+siteLogoHtml+value.media_title+replyHtml+'</a></div><div clacss="info" style="color:#666;float:right;"><span class="media-name">'+value.media_name+'</span><span class="bar" style="display:inline-block;overflow:hidden;width:0;height:11px;margin:-1px 5px 1px 4px;border-left:1px solid #eaeaea;vertical-align: middle;"></span><span class="date">'+value.writeDate+'</span><i class="fas fa-times news-delete" data-idx="'+value.media_idx+'" data-type="news_mail" data-str="media_idx"></i></div>';
-            html += '<div class="news-content" data-idx="'+value.media_idx+'" data-type="media" style="font-size:12px;width: 700px;display: inline-block;"><div class="title" style="float:left;max-width:533px;display:inline-block;white-space: inherit;"><a style="text-decoration:none !important;color:black;font-weight:bold;" href="'+value.url+'" target="_blank">'+siteLogoHtml+value.media_title+replyHtml+'</a></div><div clacss="info" style="color:#666;float:right;"><span class="media-name">'+value.media_name+'</span>'+pageHtml+'<span class="bar" style="display:inline-block;overflow:hidden;width:0;height:11px;margin:-1px 5px 1px 4px;border-left:1px solid #eaeaea;vertical-align: middle;"></span><span class="date">'+value.writeDate+'</span><i class="fas fa-times news-delete" data-idx="'+value.media_idx+'" data-type="news_mail" data-str="media_idx"></i></div>';
+            html += '<div class="news-content" data-idx="'+value.media_idx+'" data-type="media" style="font-size:12px;width: 700px;display: inline-block;"><div class="title" style="float:left;max-width:533px;display:inline-block;white-space: inherit;"><a style="text-decoration:none !important;color:black;font-weight:bold;" href="'+value.url+'" target="_blank">'+siteLogoHtml+value.media_title;
+            if($.isNumeric(value.me_rank)){
+              console.log(value.me_rank);
+              html += rankHtml;
+            }
+            // replyHtml;
+            html += '</a></div><div clacss="info" style="color:#666;float:right;"><span class="media-name">'+value.media_name+'</span>'+pageHtml+'<span class="bar" style="display:inline-block;overflow:hidden;width:0;height:11px;margin:-1px 5px 1px 4px;border-left:1px solid #eaeaea;vertical-align: middle;"></span><span class="date">'+value.writeDate+'</span><i class="fas fa-times news-delete" data-idx="'+value.media_idx+'" data-type="news_mail" data-str="media_idx"></i></div>';
             html +='</div></div>';
             if(value.news_detail != null && value.news_detail != ''){
               if(value.news_detail in obj){
@@ -289,28 +315,41 @@ function getNewsClippingData(){
         // });
         $.each(obj, function(index, value) {
           // var html ='<ul class="relation_list" data-midx="'+index+'" style="list-style: none;padding:0;margin: 13px;margin-bottom:  0px;margin-left: 10px;line-height: 18px;position: relative;font-size: 12px;"></ul>';
-          var html ='<ul class="relation_list" data-midx="'+index+'" style="list-style: none;padding:0;margin: 0;margin-bottom:  0px;margin-left: 10px;line-height: 18px;position: relative;font-size: 12px;"></ul>';
+          var html ='<ul class="relation_list selectable context-menu-one" id="selectable'+index+'" data-midx="'+index+'" style="list-style: none;padding:0;margin: 0;margin-bottom:  0px;margin-left: 10px;line-height: 18px;position: relative;font-size: 12px;"></ul>';
           $('div[data-idx='+index+']').after(html);
           var sortList = value.sort(function(a,b){
             var c = new Date(a.writeDateStr);
             var d = new Date(b.writeDateStr);
             return d-c;
           });
+
           $.each(sortList, function(i, v) {
             var siteLogoHtml_s = '';
             if (v.media_subname != 'out' && v.media_subname != null){
               siteLogoHtml_s ='<img alt="'+v.media_subname+'" style="width: 15px;height: 15px;margin-right: 2px;vertical-align:text-bottom;" src="http://showbox.email/images/newsclipping/'+v.media_subname+'_logo.png" class="site-logo">';
             }
-            var replyHtml = '<label class="replyLabel" style="display: inline-block;border-radius: 10px;padding: 2px 6px;font-size: 84%;font-weight: 700;line-height: 1;color: #fff;text-align: center;white-space: nowrap;vertical-align: baseline;background-color: #bdc3c7;margin-left: .5rem;margin-bottom: 0;">'+(($.isNumeric(value.replynum) == false)?'0':v.replynum)+'</label>';
+            // var replyHtml = '<label class="replyLabel" style="display: inline-block;border-radius: 10px;padding: 2px 6px;font-size: 84%;font-weight: 700;line-height: 1;color: #fff;text-align: center;white-space: nowrap;vertical-align: baseline;background-color: #bdc3c7;margin-left: .5rem;margin-bottom: 0;">'+(($.isNumeric(value.replynum) == false)?'0':v.replynum)+'</label>';
+            var rankHtml = '<label class="rankLabel" style="display: inline-block;border-radius: 10px;padding: 2px 6px;font-size: 84%;font-weight: 700;line-height: 1;color: #fff;text-align: center;white-space: nowrap;vertical-align: baseline;background-color: #bdc3c7;margin-left: .5rem;margin-bottom: 0;">'+(($.isNumeric(v.me_rank) == false)?'0':v.me_rank)+'</label>';
             var pageHtml = '';
             if(v.media_page != null && v.media_page != ''){
               // pageHtml = '<div clacss="info" style="color:#666;font-weight: normal;float:right;"><span class="bar" style="display:inline-block;overflow:hidden;width:0;height:11px;margin:-1px 5px 1px 4px;border-left:1px solid #eaeaea;vertical-align: middle;"></span><span class="page">'+v.media_page+'</span><span class="bar" style="display:inline-block;overflow:hidden;width:0;height:11px;margin:-1px 5px 1px 4px;border-left:1px solid #eaeaea;vertical-align: middle;"></span></div>'
               pageHtml = '<span class="bar" style="display:inline-block;overflow:hidden;width:0;height:11px;margin:-1px 5px 1px 4px;border-left:1px solid #eaeaea;vertical-align: middle;"></span><span class="page">'+v.media_page+'</span>';
             }
 
-            html ='<li> <img src="https://ssl.pstatic.net/sstatic/search/pc/img/bu_news_sublst.gif" style="vertical-align:  text-top;"><a href="'+v.url+'" target="_blank"><div style="display: inline-block;max-width: 492px;text-decoration: none !important;color: black;margin-right: 5px;margin-left: 5px;white-space: inherit;vertical-align: top;">'+siteLogoHtml_s+v.media_title+replyHtml+'</div></a><span class="txt_sinfo" style="display: inline-block;overflow: hidden;max-width: 260px;white-space: nowrap;text-overflow: ellipsis;vertical-align: top;color: #666;"><span class="press">'+v.media_name+'</span>'+pageHtml+'<span class="bar" style="display: inline-block;overflow: hidden;width: 0;height: 11px;margin: -1px 5px 1px 4px;border-left: 1px solid #eaeaea;vertical-align: middle;"></span> '+v.writeDate+' <i class="fas fa-times news-delete" data-idx="'+v.media_idx+'"  data-type="news_mail" data-str="media_idx"></i></span> </li>';
+            html ='<li> <img src="https://ssl.pstatic.net/sstatic/search/pc/img/bu_news_sublst.gif" style="vertical-align:  text-top;"><a href="'+v.url+'" target="_blank"><div style="display: inline-block;max-width: 492px;text-decoration: none !important;color: black;margin-right: 5px;margin-left: 5px;white-space: inherit;vertical-align: top;">'+siteLogoHtml_s+v.media_title;
+            if($.isNumeric(v.me_rank)){
+              // html += replyHtml;
+              html += rankHtml;
+            }
+            html +='</div></a><span class="txt_sinfo" style="display: inline-block;overflow: hidden;max-width: 260px;white-space: nowrap;text-overflow: ellipsis;vertical-align: top;color: #666;"><span class="press">'+v.media_name+'</span>'+pageHtml+'<span class="bar" style="display: inline-block;overflow: hidden;width: 0;height: 11px;margin: -1px 5px 1px 4px;border-left: 1px solid #eaeaea;vertical-align: middle;"></span> '+v.writeDate+' <i class="fas fa-times news-delete" data-idx="'+v.media_idx+'"  data-type="news_mail" data-str="media_idx"></i></span> </li>';
             // html ='<li> <img src="https://ssl.pstatic.net/sstatic/search/pc/img/bu_news_sublst.gif" style="vertical-align:  text-top;"><a href="'+v.url+'" target="_blank"><div style="display: inline-block;overflow: hidden;max-width: 492px;text-decoration: none !important;color: black;margin-right: 5px;margin-left: 5px;text-overflow: ellipsis;white-space: nowrap;word-wrap: normal;word-break: normal;vertical-align: top;">'+siteLogoHtml_s+v.media_title+replyHtml+'</div></a><span class="txt_sinfo" style="display: inline-block;overflow: hidden;max-width: 260px;white-space: nowrap;text-overflow: ellipsis;vertical-align: top;color: #666;"><span class="press">'+v.media_name+'</span>'+pageHtml+'<span class="bar" style="display: inline-block;overflow: hidden;width: 0;height: 11px;margin: -1px 5px 1px 4px;border-left: 1px solid #eaeaea;vertical-align: middle;"></span> '+v.writeDate+' <i class="fas fa-times news-delete" data-idx="'+v.media_idx+'"  data-type="news_mail" data-str="media_idx"></i></span> </li>';
             $('div[data-idx='+index+']').siblings('.relation_list').append(html);
+          });
+
+          // selectable
+          $( "#selectable"+index ).selectable({
+            filter : "li",
+            cancel : 'a,.news-delete'
           });
         });
         // 데이터 없을 시
@@ -320,10 +359,51 @@ function getNewsClippingData(){
         dataNoneSetting('issue','other');
         dataNoneSetting('marketing','other');
         dataNoneSetting('4','showbox');
+
       }
     }
   });
+}
 
+// context-menu
+function contextMenu(type){
+  if(type == 'quit'){
+    console.log('clicked : ', this);
+    $(".ui-selected").removeClass("ui-selected");
+  }
+  else if(type == 'delete'){
+    swal({
+      title: "해당 기사를 삭제하시겠습니까?",
+      icon: "warning",
+      buttons: ["취소", true],
+      dangerMode: true,
+    }).then(function(value) {
+      console.log(value);
+      if (value != null) {
+        $.each( $('.ui-selected'), function( key, ele ) {
+          var delIdx = $(ele).find('.news-delete').data('idx');
+          var type = $(ele).find('.news-delete').data('type');
+          var str = $(ele).find('.news-delete').data('str');
+          console.log({idx : delIdx,table : type,idxStr : str});
+          $.ajax({
+            url: '/newsclipping/delete',
+            type: 'post',
+            data : {idx : delIdx,table : type,idxStr : str},
+            datatype : 'json',
+            error:function(request,status,error){
+              console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
+              swal("ERROR!", request.responseText, "error");
+            },
+            success:function(data){
+              if(data.status){
+                getNewsClippingData();
+              }
+            }
+          });
+        });
+      }
+    });
+  }
 }
 // 데이터 없을 시 1
 function dataNoneSetting(num,type){

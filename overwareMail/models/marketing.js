@@ -53,7 +53,7 @@ var marketing = {
     return await getResult(sql,param);
   },
   selectMarketingMailTable: async function(param){
-    var sql = 'SELECT  * FROM marketing_mail where date(reportDate) = \''+param.eDate+'\' order by createDate desc';
+    var sql = 'SELECT  * FROM marketing_mail where date(reportDate) = \''+param.eDate+'\' order by ps_name,ps_writer,createDate desc';
     return await getResult(sql);
   },
   selectMarketingTable: async function(body,param){
