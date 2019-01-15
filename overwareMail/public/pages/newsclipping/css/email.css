@@ -2,10 +2,13 @@
   color: red;
   margin-left: 5px;
 }
-.groupBtn{
+.groupBtn,.delBtn{
   padding: 5px 14px 5px 16px;
   position:  relative;
   bottom: 4px;
+}
+.delBtn{
+  margin-left: 5px;
 }
 .checkboxs input[type="checkbox"] + label {
   display: inline-block;
