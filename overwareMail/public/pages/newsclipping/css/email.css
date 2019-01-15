@@ -31,3 +31,8 @@
 ul.relation_list {
   left: 35px;
 }
+/* selectable */
+.selectable .ui-selecting { background: rgba(254, 202, 64, 0.5); }
+.selectable .ui-selected { background: rgba(255, 152, 0, 0.5); color: white; }
+.selectable { list-style-type: none; margin: 0; padding: 0; }
+.selectable li { padding-left: 0.4em; height: 18px; }
