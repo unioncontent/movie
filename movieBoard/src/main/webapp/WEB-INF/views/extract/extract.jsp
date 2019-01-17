@@ -521,8 +521,9 @@ $(function() {
 });
 
   $(document).ready(function(){
-
-
+	  
+	  	var textSearch = "";
+	  	
 	  	var startDateOption = decodeURI(window.location.href.split("startDate=")[1]).split("&")[0].split(" ")[0];
 		var endDateOption = decodeURI(window.location.href.split("endDate=")[1]).split("&")[0].split(" ")[0];
 		console.log("startDateOption: " + startDateOption);
@@ -554,8 +555,9 @@ $(function() {
 		$selectCompany.change(function(){
 			console.log("selectCompany clicked....");
 			console.log($("#selectCompany option:selected").val());
-
-			searchList();
+			
+			var textSearch = "ok";
+			searchList(textSearch);;
 
 		});
 		
@@ -570,7 +572,7 @@ $(function() {
 			console.log("selectPerPageNum clicked....");
 			console.log($("#selectPerPageNum option:selected").val());
 
-			searchList();
+			searchList(textSearch);;
 
 		});
 
@@ -594,8 +596,9 @@ $(function() {
 		$selectKeyword.change(function(){
 			console.log("selectKeyword clicked....");
 			console.log($('#selectKeyword option:selected').val());
-
-			searchList();
+			
+			var textSearch = "ok";
+			searchList(textSearch);;
 		});
 		
 		
@@ -618,7 +621,7 @@ $(function() {
 			console.log("subkeywordList clicked....");
 			console.log($('#subkeywordList option:selected').val());
 
-			searchList();
+			searchList(textSearch);;
 		});
 
 	  // 키보드 insertAll
@@ -759,7 +762,7 @@ $(function() {
 
 		  $("#fromDate").val(endDate + " - " + endDate)
 		  console.log($("#fromDate").val());
-		  searchList();
+		  searchList(textSearch);;
 		});
 
 		// 전일 클릭시
@@ -771,7 +774,7 @@ $(function() {
 
 		  $("#fromDate").val(startDate + " - " + endDate)
 		  console.log($("#fromDate").val());
-		  searchList();
+		  searchList(textSearch);;
 		});
 
 		// 7일  클릭시
@@ -783,7 +786,7 @@ $(function() {
 
 		  $("#fromDate").val(startDate + " - " + endDate)
 		  console.log($("#fromDate").val());
-		  searchList();
+		  searchList(textSearch);;
 		})
 
 		// 30일 클릭시
@@ -796,7 +799,7 @@ $(function() {
 		  $("#fromDate").val(startDate + " - " + endDate)
 		  console.log($("#fromDate").val());
 
-		  searchList();
+		  searchList(textSearch);;
 
 		})
 
@@ -820,7 +823,7 @@ $(function() {
 		   console.log("startDate: " + startDate);
 		   console.log("endDate: " + endDate);
 
-		   searchList();
+		   searchList(textSearch);;
 	});
 
 
@@ -832,7 +835,7 @@ $(function() {
 	  if($('#keywordInput').val() == ''){
 		  swal("warning!", "검색어를 입력해주세요.", "warning");
 		  }else{
-			searchList();
+			searchList(textSearch);;
 		  }
 	});
 	
@@ -981,20 +984,34 @@ $(function() {
 	}
 	makeDateFormat($("#fromDate").val());
 
-  function searchList(event) {
+  function searchList(textSearch) {
+	  
+	  	console.log("textSearch: "+textSearch);
 
 		var makeQeury = '${pageMaker.makeQuery(1)}'.slice(0, -2);
 		console.log("makeQeury: " + makeQeury);
 		
-		self.location = "extract" + makeQeury
-						+ $('#selectPerPageNum option:selected').val()
-    					+ "&company=" + $("#selectCompany option:selected").val()
-						+ "&selectKey=" + $('#selectKeyword option:selected').val()
-						+ "&subSelectKey=" + $('#subSelectKeyword option:selected').val()
-						+ "&searchType=" + $("#selectSearchType option:selected").val()
-						+ "&keyword=" + $('#keywordInput').val()
-    					+ "&startDate=" + makeDateFormat($("#fromDate").val(), 0)
-    					+ "&endDate=" +  makeDateFormat($("#fromDate").val(), 1)
+		if(textSearch == "ok"){
+			self.location = "extract" + makeQeury
+							+ $('#selectPerPageNum option:selected').val()
+	    					+ "&company=" + $("#selectCompany option:selected").val()
+							+ "&selectKey=" + $('#selectKeyword option:selected').val()
+							+ "&subSelectKey=" + $('#subSelectKeyword option:selected').val()
+							+ "&searchType=" + $("#selectSearchType option:selected").val()
+							+ "&keyword=" + ""
+	    					+ "&startDate=" + makeDateFormat($("#fromDate").val(), 0)
+	    					+ "&endDate=" +  makeDateFormat($("#fromDate").val(), 1)
+		}else{
+			self.location = "extract" + makeQeury
+							+ $('#selectPerPageNum option:selected').val()
+							+ "&company=" + $("#selectCompany option:selected").val()
+							+ "&selectKey=" + $('#selectKeyword option:selected').val()
+							+ "&subSelectKey=" + $('#subSelectKeyword option:selected').val()
+							+ "&searchType=" + $("#selectSearchType option:selected").val()
+							+ "&keyword=" + $('#keywordInput').val()
+							+ "&startDate=" + makeDateFormat($("#fromDate").val(), 0)
+							+ "&endDate=" +  makeDateFormat($("#fromDate").val(), 1)
+		}
 	}
 
 //날짜 계산 함수
