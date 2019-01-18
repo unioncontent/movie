@@ -24,7 +24,7 @@
         <i class="ti-more"></i>
       </a>
     </div>
-    <div class="navbar-container container-fluid">
+    <div class="navbar-container container-fluid" style="padding-right: 0px;">
       <div>
         <ul class="nav-left">
           <li>
@@ -35,7 +35,7 @@
 
         <ul class="nav-right">
           <li class="user-profile header-notification">
-            <a href="#!">
+            <a href="#!" style="text-decoration:none">
                 <img src="../assets/images/user.png" alt="User-Profile-Image">
                 <span>${user.user_name}</span>
                 <i class="ti-angle-down"></i>
@@ -47,7 +47,7 @@
               	  <%-- <button type = 'submit' id = "logoutBtn">
                   <i class="ti-layout-sidebar-left"></i> Logout
                   </button> --%>
-                  <a onclick='$("#logoutForm").submit();'>
+                  <a onclick='$("#logoutForm").submit();' style="cursor:pointer;">
                     <i class="ti-layout-sidebar-left"></i> Logout
                   </a>
                 </form>
