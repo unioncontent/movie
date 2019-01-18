@@ -8,7 +8,18 @@
 <style>
 .pcoded .pcoded-header[header-theme="theme4"] {
     background: linear-gradient(-350deg,#00a0e8,#8fc320);
+    
 }
+#hli{
+	transition: all 0.5s;
+}
+#hli:hover{
+  position: relative;
+  text-decoration: none;
+  color: #8fc320;
+  margin-left: 5px;
+  transition: all 0.5s;
+ }
 </style>
 
 <nav class="navbar header-navbar pcoded-header" header-theme="theme4">
@@ -40,14 +51,14 @@
                 <span>${user.user_name}</span>
                 <i class="ti-angle-down"></i>
             </a>
-            <ul class="show-notification profile-notification">
+            <ul class="show-notification profile-notification" style="width: 200px;">
               <li>
                 <form id='logoutForm' action="../logoutAction" method="post">
                 	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
               	  <%-- <button type = 'submit' id = "logoutBtn">
                   <i class="ti-layout-sidebar-left"></i> Logout
                   </button> --%>
-                  <a onclick='$("#logoutForm").submit();' style="cursor:pointer;">
+                  <a id="hli" onclick='$("#logoutForm").submit();' style="cursor:pointer;">
                     <i class="ti-layout-sidebar-left"></i> Logout
                   </a>
                 </form>
