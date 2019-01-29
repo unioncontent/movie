@@ -654,7 +654,7 @@
 				
 				swal("Success!", "등록처리가 완료되었습니다.", "success");
 				
-				window.setTimeout("pageReload()", 2000);
+				window.setTimeout("pageReload()", 3000);
 				/* location.reload(); */
 			});
 

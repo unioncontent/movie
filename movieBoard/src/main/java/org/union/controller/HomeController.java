@@ -25,7 +25,6 @@ public class HomeController {
 			ModelAndView model = new ModelAndView();
 
 			if (error != null) {
-
 				model.addObject("error", "Invalid username and password!");
 
 			}

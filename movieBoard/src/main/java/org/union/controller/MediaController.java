@@ -330,7 +330,6 @@ public class MediaController {
 		
 		model.addAttribute("replyList", mediaService.replyList(cri));
 		
-		
 		SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		
 		Integer totalCount = mediaService.replyAllPageCount(cri);

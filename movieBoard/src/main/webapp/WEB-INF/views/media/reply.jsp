@@ -252,13 +252,11 @@
 	                                    <c:if test="${!empty replyList}">
                                         <thead>
                                             <tr>
-                                              <th width="5%">NO</th>
-                                              <th width="5%">회사</th>
-                                              <th width="5%">키워드</th>
-                                              <th width="10%">기사명 / URL</th>
-                                              <th width="3%">댓글 작성자</th>
-                                              <th width="5%">댓글 내용</th>
-                                              <th width="10%">추출일/작성일</th>
+                                              <th width="1%">NO</th>
+                                              <th width="1%">회사</th>
+                                              <th width="3%">키워드</th>
+                                              <th width="50%" colspan="3">작성일 / 기사명 / 댓글내용</th>
+                                              <th width="3%">작성자</th>
                                               <th width="3%">분류글</th>
                                               <c:if test="${user.user_name == 'union'}">
                                               <th width="5%">분류변경</th>
@@ -281,24 +279,20 @@
                                             <td>
                                             	${ReplyVO.keyword}
                                             </td>
-                                            <td>
+                                            <td colspan="3">
                                             	<div class="url-nowrap">
-                                            	${ReplyVO.media_title} /<br/><a href='${ReplyVO.url}' target="_blank">${ReplyVO.url}</a>
+                                            	<font color="#8fc320" style="float: left;">${ReplyVO.writeDate}</font><a href='${ReplyVO.url}' target="_blank" style="float: left; margin-left: 10px;"><b>${ReplyVO.media_title}</b></a><br/>
+                                            	<div style="float: left; text-align: left;">${ReplyVO.reply_content}</div>
                                             	</div>
                                             </td>
                                             <td>
                                             	${ReplyVO.reply_writer}
                                             </td>
-                                            <td>
-                                            	<div class="url-nowrap">
-                                            	${ReplyVO.reply_content}
-                                            	</div>
-                                            </td>
-                                            <td>
+                                            <%-- <td>
                                             	<fmt:formatDate value="${ReplyVO.createDate}" type="DATE" pattern="yyyy-MM-dd HH:mm:ss" />
                                             	/<br>
                                             	${ReplyVO.writeDate}
-                                            </td>
+                                            </td> --%>
                                             <td>
                                             	<c:if test="${empty ReplyVO.textType}">
 			                                         	<i class="icofont icofont-minus"></i>
@@ -673,8 +667,8 @@ $(document).ready(function(){
 						insertType(event);
 
 						swal("Success!", "즉시처리가 완료되었습니다.", "success");
-
-						location.reload();
+						window.setTimeout("pageReload()", 3000);
+						/* location.reload(); */
 					});
 	  });
 
@@ -808,6 +802,9 @@ $(document).ready(function(){
 
 }); // end ready...
 
+	function pageReload() {
+		location.reload();
+	}
 
 	function insertType(event) {
 
@@ -825,8 +822,8 @@ $(document).ready(function(){
 			console.log(idx);
 		}
 
-		if (tr.children[9].children[0].children != 'undefined') {
-			var arr = tr.children[9].children[0].children;
+		if (tr.children[7].children[0].children != 'undefined') {
+			var arr = tr.children[7].children[0].children;
 			console.log(arr);
 		} else {
 			clacInsertData(event);
@@ -877,7 +874,7 @@ $(document).ready(function(){
 
 				for(var i = 0; i < tr.length; i++){
 					var idx = tr[i].children[0].value;
-					var arr = tr[i].children[9].children[0].children;
+					var arr = tr[i].children[7].children[0].children;
 
 
 					for (var l = 0; l < arr.length; l++) {
@@ -908,8 +905,8 @@ $(document).ready(function(){
 
 
 				swal("Success!", "일괄처리가 완료되었습니다.", "success");
-
-				location.reload();
+				window.setTimeout("pageReload()", 3000);
+				/* location.reload(); */
 			});
 	  }
 

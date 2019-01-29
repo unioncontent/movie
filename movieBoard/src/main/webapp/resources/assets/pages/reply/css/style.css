@@ -23,14 +23,14 @@
 .writer-nowrap{
   width: 127px;
   margin:0 auto;
-  overflow: hidden;
+  overflow: visible;
   text-overflow: ellipsis;
 }
 .url-nowrap,.keyword-nowrap{
-  width: 200px;
-  margin:0 auto;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  width: 100%;
+  margin: 0 auto;
+  white-space: pre-line;
+  float: left;
 }
  
 .detail .card-header{
