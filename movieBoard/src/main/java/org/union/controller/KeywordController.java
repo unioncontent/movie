@@ -230,8 +230,8 @@ public class KeywordController {
 		
 		logger.info("keyword_main: " + keyword_main);
 		
-		
 		keywordService.stateUpdateOn(keyword_main);
+		keywordService.searchUpdateOn(keyword_main);
 		
 		return "success";
 	}
@@ -245,6 +245,26 @@ public class KeywordController {
 		
 		
 		keywordService.stateUpdateOff(keyword_main);
+		keywordService.searchUpdateOff(keyword_main);
+		
+		return "success";
+	}
+	
+	@ResponseBody
+	@PostMapping("updateSearch")
+	public String updateSearch(String keyword_main, String key) throws SQLException {
+		logger.info("updateSearch called....");
+		
+		logger.info("keyword_main: " + keyword_main);
+		logger.info("key: " + key);
+		
+		if("on".equals(key)) {
+			keywordService.searchUpdateOn(keyword_main);
+			
+		}else if("off".equals(key)) {
+			keywordService.searchUpdateOff(keyword_main);
+			
+		}
 		
 		return "success";
 	}

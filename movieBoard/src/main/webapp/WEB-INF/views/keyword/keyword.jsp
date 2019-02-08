@@ -146,8 +146,8 @@
                                 <th width="3%">등록일</th>
                                 <th width="3%">회사명</th>
                                 <th width="3%">키워드</th>
-                                <th width="1%">검색어</th>
-                                <th width="1%">제외검색어</th>
+                                <th width="1%">검색어/제외검색어</th>
+                                <th width="1%">SNS검색</th>
                                 <th width="2%">상태변경</th>
                                 <th width="4%"></th>
                               </tr>
@@ -159,27 +159,39 @@
                                 <td>${keyword.createDate}</td>
                                 <td>${keyword.company}</td>
                                 <td>${keyword.keyword_main}</td>
-                                <td>${keyword.first}</td>
-                                <td>${keyword.second }</td>
+                                <td><b><font color="#1abc9c">${keyword.first}</font> / <font color="#e74c3c">${keyword.second}</font></b></td>
                                 <td>
-	                            <div class="state${index.count}">
-	                            	<c:if test="${keyword.first == 0}">
-	                                <button class="tabledit-button btn btn-default waves-effect waves-light alert-confirm2" data-toggle="tooltip" data-placement="top" data-original-title="상태변경">
-    								On
-    								</button>
-    								<button class="tabledit-button btn btn-info waves-effect waves-light alert-confirm3" data-toggle="tooltip" data-placement="top" data-original-title="상태변경">
-    								Off
-    								</button>
-	                                </c:if>
-	                                <c:if test="${keyword.first != 0}">
-	                                <button class="tabledit-button btn btn-info waves-effect waves-light alert-confirm2" data-toggle="tooltip" data-placement="top" data-original-title="상태변경">
-    								On
-    								</button>
-    								<button class="tabledit-button btn btn-default waves-effect waves-light alert-confirm3" data-toggle="tooltip" data-placement="top" data-original-title="상태변경">
-    								Off
-    								</button>
-	                                </c:if>
-			                    </div>
+	                                <div class="state${index.count}">
+		                            	<c:if test="${keyword.keyword_state == 0 and keyword.first == 0}">
+		                                <button class="tabledit-button btn btn-default waves-effect waves-light alert-search3" data-toggle="tooltip" data-placement="top" data-original-title="상태변경">
+	    								Off
+	    								</button>
+		                                </c:if>
+		                                <c:if test="${keyword.keyword_state != 0 and keyword.first != 0}">
+		                                <button class="tabledit-button btn btn-info waves-effect waves-light alert-search2" data-toggle="tooltip" data-placement="top" data-original-title="상태변경">
+	    								On
+	    								</button>
+	    								</c:if>
+	    								<c:if test="${keyword.keyword_state == 0 and keyword.first != 0}">
+	    								<button class="tabledit-button btn btn-default waves-effect waves-light alert-search1" data-toggle="tooltip" data-placement="top" data-original-title="상태변경">
+	    								Off
+	    								</button>
+		                                </c:if>
+				                    </div>
+                                </td>
+                                <td>
+		                            <div class="state${index.count}">
+		                            	<c:if test="${keyword.first == 0}">
+		                                <button class="tabledit-button btn btn-default waves-effect waves-light alert-confirm2" data-toggle="tooltip" data-placement="top" data-original-title="상태변경">
+	    								Off
+	    								</button>
+		                                </c:if>
+		                                <c:if test="${keyword.first != 0}">
+		                                <button class="tabledit-button btn btn-info waves-effect waves-light alert-confirm3" data-toggle="tooltip" data-placement="top" data-original-title="상태변경">
+	    								On
+	    								</button>
+		                                </c:if>
+				                    </div>
 	                            </td>
                                 <td class="text-center">
   								  <div class="btn-group btn-group-md text-center" style="min-width: 115px; padding-right: 0;">
@@ -430,7 +442,7 @@
 
 						swal("Update!", "상태변경 처리가 완료되었습니다.", "success");
 
-						location.reload();
+						window.setTimeout("pageReload()", 2000);
 					});
 	  			});
 
@@ -476,9 +488,115 @@
 
 						swal("Update!", "상태변경 처리가 완료되었습니다.", "success");
 
-						location.reload();
+						window.setTimeout("pageReload()", 2000);
 					});
 	  			});
+		
+		// sns 버튼 클릭시On
+		  $(document).on("click",".alert-search1",function(event){
+			  var keyon = "on";
+			  var div = event.target.parentNode;
+
+				if(div.type == 'button'){
+					console.log("button click...");
+					div = div.parentNode;
+				}
+
+				var tr = div.parentNode.parentNode;
+				console.log(tr);
+
+				var td = tr.children[3];
+				console.log(td);
+
+				var keyword_main = td.childNodes[0];
+				console.log("keyword_main:"+keyword_main.data);
+
+			  swal({
+					title: "검색On 처리 하시겠습니까?",
+					text: "바로 상태변경 됩니다.",
+					type: "warning",
+					showCancelButton: true,
+					confirmButtonClass: "btn-state",
+					confirmButtonText: "YES",
+					closeOnConfirm: false
+				},
+					function(){
+
+						$.ajax({
+							type : "POST",
+							url : "updateSearch",
+							data: {keyword_main: keyword_main.data, key: keyon},
+							dataType: "json",
+							success: function(data){
+							console.log(data);
+							}
+
+						});
+
+						swal("Update!", "상태변경 처리가 완료되었습니다.", "success");
+
+						window.setTimeout("pageReload()", 2000);
+					});
+	  			});
+
+		// sns 버튼 클릭시Off
+		  $(document).on("click",".alert-search2",function(event){
+			  var keyoff = "off";
+			  var div = event.target.parentNode;
+
+				if(div.type == 'button'){
+					console.log("button click...");
+					div = div.parentNode;
+				}
+
+				var tr = div.parentNode.parentNode;
+				console.log(tr);
+
+				var td = tr.children[3];
+				console.log(td);
+
+				var keyword_main = td.childNodes[0];
+				console.log("keyword_main:"+keyword_main.data);
+
+			  swal({
+					title: "검색Off 처리 하시겠습니까?",
+					text: "바로 상태변경 됩니다.",
+					type: "warning",
+					showCancelButton: true,
+					confirmButtonClass: "btn-state",
+					confirmButtonText: "YES",
+					closeOnConfirm: false
+				},
+					function(){
+
+						$.ajax({
+							type : "POST",
+							url : "updateSearch",
+							data: {keyword_main: keyword_main.data, key: keyoff},
+							dataType: "json",
+							success: function(data){
+							console.log(data);
+							}
+
+						});
+
+						swal("Update!", "상태변경 처리가 완료되었습니다.", "success");
+
+						window.setTimeout("pageReload()", 2000);
+					});
+	  			});
+		
+		  $(document).on("click",".alert-search3",function(event){
+			  swal({
+					title: "상태를 먼저 변경하세요.",
+					text: "",
+					type: "warning",
+					showCancelButton: true,
+					confirmButtonClass: "btn-state",
+					confirmButtonText: "YES",
+					closeOnConfirm: false
+				});
+		  });
 
 		// 삭제 버튼 클릭
 		$(".tabledit-delete-button").on("click", function(event){
@@ -546,6 +664,10 @@
 		$selectKeyword[0][0].disabled = true;
 
 	}); // end ready...
+	
+	function pageReload() {
+		  location.reload();
+	  }
 	
 	//list URL 함수
 	function searchList(event) {

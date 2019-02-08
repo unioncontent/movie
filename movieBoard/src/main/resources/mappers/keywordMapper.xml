@@ -111,7 +111,6 @@
 			set keyword_property='포함'
 		where
 			keyword_main = #{keyword_main} and keyword_property='포함0';
-	
 	</update>
 	
 	<update id="stateUpdateOff">
@@ -119,7 +118,20 @@
 			set keyword_property='포함0'
 		where
 			keyword_main = #{keyword_main} and keyword_property='포함';
+	</update>
 	
+	<update id="searchUpdateOn">
+		update keyword_data 
+			set keyword_state='1'
+		where
+			keyword_main = #{keyword_main};
+	</update>
+	
+	<update id="searchUpdateOff">
+		update keyword_data 
+			set keyword_state='0'
+		where
+			keyword_main = #{keyword_main};
 	</update>
 
 	<delete id="delete">
@@ -201,7 +213,8 @@
     		count(if(keyword_property = '포함', keyword_property, null)) first,
     		count(if(keyword_property = '제외', keyword_property, null)) second,
     		createDate,
-    		(select company_name from user_data  b where b.user_idx = a.user_idx) company
+    		(select company_name from user_data  b where b.user_idx = a.user_idx) company,
+    		a.keyword_state
 		from keyword_data a
 		where
 			keyword_main is not null

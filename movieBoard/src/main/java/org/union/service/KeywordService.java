@@ -48,6 +48,9 @@ public interface KeywordService {
 	public void stateUpdateOn(String keyword_main) throws SQLException;
 	public void stateUpdateOff(String keyword_main) throws SQLException;
 	
+	public void searchUpdateOn(String keyword_main) throws SQLException;
+	public void searchUpdateOff(String keyword_main) throws SQLException;
+	
 	public List<KeywordVO> keywordGetList(SearchCriteria cri) throws SQLException;
 	public void createIssue(IssueVO vo) throws SQLException;
 	public void issueUpdate(IssueVO vo) throws SQLException;

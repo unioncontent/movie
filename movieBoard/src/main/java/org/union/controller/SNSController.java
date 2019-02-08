@@ -548,7 +548,7 @@ public class SNSController {
 		
 		if(portal_name.equals("youtube")) {
 			
-			for(int i = 0; i < 30; i++) {
+			for(int i = 0; i < 8; i++) {
 				
 				GraphVO graphData = new GraphVO();
 				

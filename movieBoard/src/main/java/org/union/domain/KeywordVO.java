@@ -14,7 +14,7 @@ public class KeywordVO {
 	private String keyword_property; // 제외 or 포함
 	private Date createDate;
 	private Date updateDate;
-	
+	private String keyword_state;
 	
 	public Integer getKeyword_idx() {
 		return keyword_idx;
@@ -70,11 +70,17 @@ public class KeywordVO {
 	public void setUpdateDate(Date updateDate) {
 		this.updateDate = updateDate;
 	}
+	public String getKeyword_state() {
+		return keyword_state;
+	}
+	public void setKeyword_state(String keyword_state) {
+		this.keyword_state = keyword_state;
+	}
 	@Override
 	public String toString() {
 		return "KeywordVO [keyword_idx=" + keyword_idx + ", user_idx=" + user_idx + ", company_name=" + company_name
 				+ ", keyword=" + keyword + ", keyword_main=" + keyword_main + ", keyword_type=" + keyword_type
 				+ ", keyword_property=" + keyword_property + ", createDate=" + createDate + ", updateDate=" + updateDate
-				+ "]";
+				+ ", keyword_state=" + keyword_state + "]";
 	}
 }

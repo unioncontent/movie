@@ -21,6 +21,9 @@ public interface KeywordDAO {
 	public void stateUpdateOn(String keyword_main) throws SQLException;
 	public void stateUpdateOff(String keyword_main) throws SQLException;
 	
+	public void searchUpdateOn(String keyword_main) throws SQLException;
+	public void searchUpdateOff(String keyword_main) throws SQLException;
+	
 	public void delete(String keyword) throws SQLException;
 	
 	public List<KeywordVO> listByUser(Integer user_idx) throws SQLException;

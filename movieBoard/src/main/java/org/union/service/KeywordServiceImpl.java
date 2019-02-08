@@ -244,4 +244,16 @@ public class KeywordServiceImpl implements KeywordService{
 
 		keywordDAO.issueDelete(issue_idx);
 	}
+
+	@Override
+	public void searchUpdateOn(String keyword_main) throws SQLException {
+		keywordDAO.searchUpdateOn(keyword_main);
+		
+	}
+
+	@Override
+	public void searchUpdateOff(String keyword_main) throws SQLException {
+		keywordDAO.searchUpdateOff(keyword_main);
+		
+	}
 }

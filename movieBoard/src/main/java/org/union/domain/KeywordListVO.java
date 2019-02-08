@@ -8,6 +8,8 @@ public class KeywordListVO {
 	private Integer first, second;
 	
 	private String createDate;
+	
+	private String keyword_state;
 
 	public String getKeyword_main() {
 		return keyword_main;
@@ -48,11 +50,18 @@ public class KeywordListVO {
 	public void setCreateDate(String createDate) {
 		this.createDate = createDate;
 	}
+	
+	public String getKeyword_state() {
+		return keyword_state;
+	}
+
+	public void setKeyword_state(String keyword_state) {
+		this.keyword_state = keyword_state;
+	}
 
 	@Override
 	public String toString() {
 		return "KeywordListVO [keyword_main=" + keyword_main + ", company=" + company + ", first=" + first + ", second="
-				+ second + ", createDate=" + createDate + "]";
+				+ second + ", createDate=" + createDate + ", keyword_state=" + keyword_state + "]";
 	}
-	
 }

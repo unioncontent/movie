@@ -241,4 +241,22 @@ public class KeywordDAOImpl implements KeywordDAO {
 		
 	}
 
+	@Override
+	public void searchUpdateOn(String keyword_main) throws SQLException {
+		try {
+			session1.update(namespace + "searchUpdateOn", keyword_main);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void searchUpdateOff(String keyword_main) throws SQLException {
+		try {
+			session1.update(namespace + "searchUpdateOff", keyword_main);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 }
