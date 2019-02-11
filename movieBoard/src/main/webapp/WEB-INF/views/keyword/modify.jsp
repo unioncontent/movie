@@ -127,6 +127,7 @@
                                       <th>제외검색어</th>
                                       <th>영화구분</th>
                                       <th>작업</th>
+                                      <th>SNS검색</th>
                                     </tr>
                                   </thead>
                                   <tbody>
@@ -162,7 +163,11 @@
                                           </div>
                                         </div>
                                       </td>
-                                      <td><button class="btn btn-success btn-sm" id="insertKeywordBtn"><i class="icofont icofont-plus" style="margin-right:0"></i></button></td>
+                                      <td>
+                                      	<button class="btn btn-success btn-sm" id="insertKeywordBtn"><i class="icofont icofont-plus" style="margin-right:0"></i></button>
+                                      </td>
+                                      <td>
+                                      </td>
                                     </tr>
                                     <c:forEach items="${keywordList}" var="keyword" varStatus="index">
                                     <tr>
@@ -170,7 +175,23 @@
                                       <td ><c:if test="${keyword.keyword_property == '포함'}">${keyword.keyword}</c:if></td>
                                       <td><c:if test="${keyword.keyword_property == '제외'}">${keyword.keyword}</c:if></td>
                                       <td>${keyword.keyword_type}</td>
-                                      <td><button class="remove_keyword btn btn-danger btn-sm"><i class="icofont icofont-garbage" style="margin-right:0"></i></button></td>
+                                      <td>
+                                      	<button class="remove_keyword btn btn-danger btn-sm"><i class="icofont icofont-garbage" style="margin-right:0"></i></button>
+                                      </td>
+                                      <td>
+                                      	<input type="hidden" id="searchMain" value="${keyword_main}">
+                                      	<input type="hidden" id="searchkeyword" value="${keyword.keyword}">
+                                      	<c:if test="${keyword.keyword_state != 0}">
+		                                <button class="tabledit-button btn btn-info waves-effect waves-light alert-search2" data-toggle="tooltip" data-placement="top" data-original-title="상태변경">
+	    								On
+	    								</button>
+	    								</c:if>
+	    								<c:if test="${keyword.keyword_state == 0}">
+	    								<button class="tabledit-button btn btn-default waves-effect waves-light alert-search1" data-toggle="tooltip" data-placement="top" data-original-title="상태변경">
+	    								Off
+	    								</button>
+		                                </c:if>
+                                      </td>
                                     </tr>
                                     </c:forEach>
                                   </tbody>
@@ -364,9 +385,132 @@
 
 			setTimeout(function(){ location.reload(); }, 1000);
 		});
+		
+		// sns 버튼 클릭시On
+		  $(document).on("click",".alert-search1",function(event){
+			  var keyon = "on";
+			  var div = event.target.parentNode;
+
+				console.log(div);
+				console.log(div.type);
+
+				if(div.type == 'submit'){
+					console.log("button click...");
+					div = div.parentNode;
+				}
+
+				var tr = div.parentNode;
+				console.log(tr.children);
+
+				var td = tr.children[1];
+				console.log(td);
+
+				var keyword_main = td.childNodes[0];
+
+
+				if(keyword_main == undefined){
+					td = tr.children[2];
+					console.log(td);
+
+					keyword_main = td.childNodes[0];
+
+				}
+
+				console.log(keyword_main.data);
+
+			  swal({
+					title: "검색On 처리 하시겠습니까?",
+					text: "바로 상태변경 됩니다.",
+					type: "warning",
+					showCancelButton: true,
+					confirmButtonClass: "btn-state",
+					confirmButtonText: "YES",
+					closeOnConfirm: false
+				},
+					function(){
+
+						$.ajax({
+							type : "POST",
+							url : "updateKeySearch",
+							data: {keyword_main : '${keyword_main}', keyword: keyword_main.data, key: keyon},
+							dataType: "json",
+							success: function(data){
+							console.log(data);
+							}
+
+						});
+
+						swal("Update!", "상태변경 처리가 완료되었습니다.", "success");
+
+						window.setTimeout("pageReload()", 2000);
+					});
+	  			});
+
+		// sns 버튼 클릭시Off
+		  $(document).on("click",".alert-search2",function(event){
+			  var keyoff = "off";
+			  var div = event.target.parentNode;
+
+				console.log(div);
+				console.log(div.type);
+
+				if(div.type == 'submit'){
+					console.log("button click...");
+					div = div.parentNode;
+				}
+
+				var tr = div.parentNode;
+				console.log(tr.children);
+
+				var td = tr.children[1];
+				console.log(td);
+
+				var keyword_main = td.childNodes[0];
+
+
+				if(keyword_main == undefined){
+					td = tr.children[2];
+					console.log(td);
+
+					keyword_main = td.childNodes[0];
+
+				}
+
+				console.log(keyword_main.data);
+
+			  swal({
+					title: "검색Off 처리 하시겠습니까?",
+					text: "바로 상태변경 됩니다.",
+					type: "warning",
+					showCancelButton: true,
+					confirmButtonClass: "btn-state",
+					confirmButtonText: "YES",
+					closeOnConfirm: false
+				},
+					function(){
+
+						$.ajax({
+							type : "POST",
+							url : "updateKeySearch",
+							data: {keyword_main : '${keyword_main}', keyword: keyword_main.data, key: keyoff},
+							dataType: "json",
+							success: function(data){
+							console.log(data);
+							}
+
+						});
+
+						swal("Update!", "상태변경 처리가 완료되었습니다.", "success");
+
+						window.setTimeout("pageReload()", 2000);
+					});
+	  			});
 
 	});// end ready...
-
+	
+	function pageReload() {
+		  location.reload();
+	}
 
 	function getType(){
 

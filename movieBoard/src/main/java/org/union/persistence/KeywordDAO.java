@@ -23,6 +23,9 @@ public interface KeywordDAO {
 	
 	public void searchUpdateOn(String keyword_main) throws SQLException;
 	public void searchUpdateOff(String keyword_main) throws SQLException;
+
+	public void searchKeyUpdateOn(String keyword_main, String keyword) throws SQLException;
+	public void searchKeyUpdateOff(String keyword_main, String keyword) throws SQLException;
 	
 	public void delete(String keyword) throws SQLException;
 	

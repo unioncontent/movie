@@ -133,6 +133,24 @@
 		where
 			keyword_main = #{keyword_main};
 	</update>
+	
+	<update id="searchKeyUpdateOn">
+		update keyword_data 
+			set keyword_state='1'
+		where
+			keyword_main = #{keyword_main}
+		and
+			keyword = #{keyword};
+	</update>
+	
+	<update id="searchKeyUpdateOff">
+		update keyword_data 
+			set keyword_state='0'
+		where
+			keyword_main = #{keyword_main}
+		and
+			keyword = #{keyword};
+	</update>
 
 	<delete id="delete">
 		delete from

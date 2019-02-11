@@ -1,6 +1,7 @@
 package org.union.persistence;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -254,6 +255,32 @@ public class KeywordDAOImpl implements KeywordDAO {
 	public void searchUpdateOff(String keyword_main) throws SQLException {
 		try {
 			session1.update(namespace + "searchUpdateOff", keyword_main);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void searchKeyUpdateOn(String keyword_main, String keyword) throws SQLException {
+		Map data = new HashMap();
+		data.put("keyword_main", keyword_main);
+		data.put("keyword", keyword);
+		
+		try {
+			session1.update(namespace + "searchKeyUpdateOn", data);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void searchKeyUpdateOff(String keyword_main, String keyword) throws SQLException {
+		Map data = new HashMap();
+		data.put("keyword_main", keyword_main);
+		data.put("keyword", keyword);
+		
+		try {
+			session1.update(namespace + "searchKeyUpdateOff", data);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

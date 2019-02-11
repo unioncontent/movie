@@ -256,4 +256,16 @@ public class KeywordServiceImpl implements KeywordService{
 		keywordDAO.searchUpdateOff(keyword_main);
 		
 	}
+
+	@Override
+	public void searchKeyUpdateOn(String keyword_main, String keyword) throws SQLException {
+		keywordDAO.searchKeyUpdateOn(keyword_main, keyword);
+		
+	}
+
+	@Override
+	public void searchKeyUpdateOff(String keyword_main, String keyword) throws SQLException {
+		keywordDAO.searchKeyUpdateOff(keyword_main, keyword);
+		
+	}
 }
