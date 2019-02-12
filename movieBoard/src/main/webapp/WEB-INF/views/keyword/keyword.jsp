@@ -587,7 +587,7 @@
 	  			});
 		
 		  $(document).on("click",".alert-search3",function(event){
-			  swal({
+			  /* swal({
 					title: "상태를 먼저 변경하세요.",
 					text: "",
 					type: "warning",
@@ -595,7 +595,8 @@
 					confirmButtonClass: "btn-state",
 					confirmButtonText: "YES",
 					closeOnConfirm: false
-				});
+				}); */
+			  swal("상태를 먼저 변경하세요.", "", "warning");
 		  });
 
 		// 삭제 버튼 클릭

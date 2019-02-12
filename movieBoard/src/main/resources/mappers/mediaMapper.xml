@@ -631,7 +631,7 @@
 			url is not null
 		<include refid="search2"></include>
 		order 
-			by createDate desc
+			by updateDate desc
 		limit  
 		#{startPage}, #{perPageNum}
 		
@@ -674,7 +674,7 @@
 			url is not null
 		<include refid="search"></include>
 		order 
-			by updateDate desc
+			by createDate desc
 		
 	</select>
 	
