@@ -254,10 +254,10 @@ input.upload {
     .then(function(value) {
       console.log(value);
       var regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-      value = value.replace(/ /gi, "");
+      value = value.replace(/ /gi, "").replace(/,/gi, ".");
       if (value != null) {
         if (value.match(regExp) == null) {
-          swal("ERROR!", "이메일을 다시 입력해주세요.", "error");
+          swal("ERROR!", "유효한 이메일인지 다시 확인해주세요.", "error");
           return false;
         }
         $.ajax({
