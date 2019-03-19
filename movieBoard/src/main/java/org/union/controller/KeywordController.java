@@ -179,6 +179,7 @@ public class KeywordController {
 		
 		model.addAttribute("keyword_main", keyword_main);
 		model.addAttribute("company_name", userService.view(list.get(0).getUser_idx()).getCompany_name());
+		model.addAttribute("user_name", userService.view(list.get(0).getUser_idx()).getUser_name());
 		
 		for(int i = 0 ; i < list.size(); i ++) {
 			if(list.get(i).getKeyword() == null) {

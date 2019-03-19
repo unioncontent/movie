@@ -52,6 +52,7 @@
   <link rel="stylesheet" type="text/css" href="../assets/css/jquery.mCustomScrollbar.css">
 </head>
 
+
 <body>
   <!-- Pre-loader start -->
   <div class="theme-loader">
@@ -194,6 +195,9 @@
                                       </td>
                                     </tr>
                                     </c:forEach>
+                                    <tr>
+	                                	<th colspan="6"><a href="../keyword/keyword?company=${user_name}"><font style="font-weight: 400">목록으로</font></a></th>
+                                    </tr>
                                   </tbody>
                                 </table>
                               </div>
