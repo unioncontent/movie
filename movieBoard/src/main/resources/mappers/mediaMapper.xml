@@ -1494,7 +1494,7 @@
 	</select> -->
 	
 	<select id="mailList" resultType="MailVO">
-		call union_mail.stats('', '', #{selectKey}, '', '', '', 1, 0, 5, 1);
+		call union_mail.stats_m('', '', #{selectKey}, '', '', '', 1, 0, 5, 1);
 	</select>
 	
 	<select id="mailCountAll" parameterType="String" resultType="Integer">
