@@ -14,7 +14,6 @@ public class MailVO {
 	private String M_sender;
 	private Integer M_recipi_idx;
 	private String M_recipi;
-	private Integer M_group_idx;
 	private String M_group;
 	private Integer M_seq_number;
 	private Integer M_invitation;
@@ -94,12 +93,6 @@ public class MailVO {
 	}
 	public void setM_recipi(String m_recipi) {
 		M_recipi = m_recipi;
-	}
-	public Integer getM_group_idx() {
-		return M_group_idx;
-	}
-	public void setM_group_idx(Integer m_group_idx) {
-		M_group_idx = m_group_idx;
 	}
 	public String getM_group() {
 		return M_group;
@@ -221,18 +214,16 @@ public class MailVO {
 	public void setTotal(Integer total) {
 		this.total = total;
 	}
-	
 	@Override
 	public String toString() {
 		return "MailVO [n_idx=" + n_idx + ", MSGID=" + MSGID + ", M_id=" + M_id + ", M_subject=" + M_subject + ", SEQ="
 				+ SEQ + ", M_body=" + M_body + ", M_sender_idx=" + M_sender_idx + ", M_sender=" + M_sender
-				+ ", M_recipi_idx=" + M_recipi_idx + ", M_recipi=" + M_recipi + ", M_group_idx=" + M_group_idx
-				+ ", M_group=" + M_group + ", M_seq_number=" + M_seq_number + ", M_invitation=" + M_invitation
-				+ ", FINALRESULT=" + FINALRESULT + ", M_type=" + M_type + ", M_mail_type=" + M_mail_type
-				+ ", M_keyword_idx=" + M_keyword_idx + ", M_keyword=" + M_keyword + ", successNum=" + successNum
-				+ ", failNum=" + failNum + ", sendCountNum=" + sendCountNum + ", PROCESSYN=" + PROCESSYN
-				+ ", SENDRESULT=" + SENDRESULT + ", RSLTMSG=" + RSLTMSG + ", sendCount=" + sendCount + ", success="
-				+ success + ", fail=" + fail + ", M_send=" + M_send + ", M_regdate=" + M_regdate + ", total=" + total
-				+ "]";
+				+ ", M_recipi_idx=" + M_recipi_idx + ", M_recipi=" + M_recipi + ", M_group=" + M_group
+				+ ", M_seq_number=" + M_seq_number + ", M_invitation=" + M_invitation + ", FINALRESULT=" + FINALRESULT
+				+ ", M_type=" + M_type + ", M_mail_type=" + M_mail_type + ", M_keyword_idx=" + M_keyword_idx
+				+ ", M_keyword=" + M_keyword + ", successNum=" + successNum + ", failNum=" + failNum + ", sendCountNum="
+				+ sendCountNum + ", PROCESSYN=" + PROCESSYN + ", SENDRESULT=" + SENDRESULT + ", RSLTMSG=" + RSLTMSG
+				+ ", sendCount=" + sendCount + ", success=" + success + ", fail=" + fail + ", M_send=" + M_send
+				+ ", M_regdate=" + M_regdate + ", total=" + total + "]";
 	}
 }
