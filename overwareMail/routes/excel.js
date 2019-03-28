@@ -1,3 +1,4 @@
+const logger = require('../winston/config_f.js');
 var express = require('express');
 var fs = require('fs');
 var moment = require('moment');
@@ -21,8 +22,8 @@ router.get('/',async function(req, res) {
     sucess = await period.call_mymailer_detail_result([parseInt(req.query.idx),'']);
     fail = await period.call_mymailer_detail_result([parseInt(req.query.idx),'1']);
   }
-  console.log(sucess);
-  console.log(fail);
+  logger.info(sucess);
+  logger.info(fail);
   var wb = new xl.Workbook({
     defaultFont: {
       size: 12,
@@ -143,7 +144,7 @@ router.get('/',async function(req, res) {
   var filepath = aDir+filename;
   wb.write(filepath,function(err,stats){
     if(err){
-      console.log(err);
+      logger.error(err);
     }
     else{
       res.setHeader("Content-Type", "application/x-msdownload");
@@ -151,8 +152,8 @@ router.get('/',async function(req, res) {
 
       var filestream = fs.createReadStream(filepath);
       fs.unlink(filepath,function(err){
-        if(err) return console.log(err);
-        console.log('file deleted successfully');
+        if(err) return logger.error(err);
+        logger.info('file deleted successfully');
       });
       filestream.pipe(res);
     }

@@ -63,7 +63,7 @@ async function getListPageData(idx,param){
     data['currentPage'] = currentPage;
   }
   catch(e){
-    console.log('e');
+    logger.error(e);
   }
   return data;
 }

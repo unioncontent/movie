@@ -10,7 +10,9 @@ var expressLayouts = require('express-ejs-layouts');
 var session = require('express-session');
 var passport = require('passport');
 var  flash = require('connect-flash');
-
+const logger = require('morgan');
+const winston = require('./winston/config');
+app.use(logger('dev', { stream: winston.stream}));
 var app = express();
 
 // view engine setup

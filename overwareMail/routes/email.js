@@ -1,3 +1,4 @@
+const logger = require('../winston/config_f.js');
 ﻿var express = require('express');
 var fs = require('fs-extra');
 var request = require('request');
@@ -96,7 +97,7 @@ router.post('/manage/checkMail',isAuthenticated, async function(req, res) {
   res.send(data);
 });
 router.post('/manage/updateMtype',isAuthenticated, async function(req, res) {
-  console.log('/manage/updateMtype : ',req.body);
+  logger.info('/manage/updateMtype : ',req.body);
   var result,check;
   if(req.body.module == '1'){
     result = await maillink.deleteMlAT(req.body.idx);
@@ -116,7 +117,7 @@ router.post('/manage/updateMtype',isAuthenticated, async function(req, res) {
   }
   else if(req.body.module == '2'){
     if(req.body.mid == ''){
-      console.log('- updateMtype id 없어서 가져옴 -');
+      logger.info('- updateMtype id 없어서 가져옴 -');
       req.body.mid = await mymailer.selectMailId(req.body.idx);
     }
     result = await mymailer.selectSendCheckMail(req.body.mid);
@@ -202,7 +203,7 @@ router.post('/manage/getNextPage',isAuthenticated,async function(req, res, next)
 });
 
 async function getListPageData(user,param){
-  console.log('getListPageData:',param);
+  logger.info('getListPageData:',param);
   var dt = datetime.create();
   var end = dt.format('Y-m-d');
   dt.offsetInDays(-7);
@@ -258,14 +259,14 @@ async function getListPageData(user,param){
     data['currentPage'] = currentPage;
   }
   catch(e){
-    console.log(e);
+    logger.error(e);
   }
   return data;
 }
 
 // 메일 주소록 페이징
 router.post('/getModalListPage',isAuthenticated, async function(req, res) {
-  console.log('getModalListPage');
+  logger.info('getModalListPage');
   var data = {
     group : [],
     groupTotal : [],
@@ -283,7 +284,7 @@ router.post('/getModalListPage',isAuthenticated, async function(req, res) {
   if (typeof req.body.page === 'undefined' && typeof req.body.type === 'undefined') {
     req.body.type = '';
   }
-  console.log(req.body);
+  logger.info(req.body);
   if(req.body.type == 'group'){
     groupParam[1] = parseInt(req.body.page);
     data.groupPage = Math.ceil(parseInt(req.body.page) / 10)+1;
@@ -412,13 +413,13 @@ async function asyncForEach(array, callback) {
 }
 
 async function asyncFileRemove(dateF,fileArr){
-  console.log('asyncFileRemove');
+  logger.info('asyncFileRemove');
   await asyncForEach(fileArr, async (item, index, array) => {
     var removePath = ___dirname.replace('\\routes','') +"/public/uploads/files/"+dateF+"/"+item;
     fs.removeSync(removePath.replace(/ /gi, ""));
-    console.log('remove file:',removePath.replace(/ /gi, ""));
-    console.log(getFiles(removePath));
-    console.log('--------------------');
+    logger.info('remove file:',removePath.replace(/ /gi, ""));
+    logger.info(getFiles(removePath));
+    logger.info('--------------------');
   });
 }
 
@@ -464,7 +465,7 @@ router.post('/send',isAuthenticated, async function(req, res) {
 // 메일 작성 중 테스트 발송
 router.post('/test',isAuthenticated, async function(req, res) {
   try{
-    console.log( '/test req :',req.body);
+    logger.info('/test req :',{M_email:req.body['M_email'],M_template:req.body['M_template'],M_seq_number:req.body['M_seq_number'],M_invitation:req.body['M_invitation'],M_subject: req.body['M_subject'],M_keyword: req.body['M_keyword']});
     var mailAllParam = {
       M_email:req.body['M_email'],
       M_template:req.body['M_template'],
@@ -533,7 +534,7 @@ router.post('/test',isAuthenticated, async function(req, res) {
     }
   }
   catch(e){
-    console.log(e);
+    logger.error(e);
     res.status(500).send('메일 저장에 실패했습니다.');
     return false;
   }
@@ -542,7 +543,7 @@ router.post('/test',isAuthenticated, async function(req, res) {
 
 // 메일 작성 완료 로직
 router.post('/save',isAuthenticated, async function(req, res) {
-  console.log('mail save req.body: ',req.body);
+  logger.info('mail save req.body: ',{M_recipi:req.body['M_recipi'],M_group:req.body['M_group'],M_module:req.body['M_module'],M_seq_number:req.body['M_seq_number'],M_invitation:req.body['M_invitation'],M_template:req.body['M_template'],M_sender: req.body['M_sender'],M_keyword: req.body['M_keyword'],M_type: req.body['M_type'],M_mail_type: req.body['M_mail_type'],M_subject: req.body['M_subject']});
   // 이메일 발송
   var recipiList = req.body['M_recipi'];
   var groupList = req.body['M_group'];
@@ -614,7 +615,7 @@ router.post('/save',isAuthenticated, async function(req, res) {
   m_idx_a = resultInsert.insertId;
   var m_body_his= await settingMailBody(mailAllParam.M_body,mailAllParam.M_keyword,mailAllParam.M_template,m_idx_a,mailAllParam.M_seq_number,mailAllParam.M_invitation),
   resultInsert = await mailAllA.updateMailBodyHis([m_body_his,m_idx_a]);
-  // console.log('resultInsert:',resultInsert);
+  // logger.info('resultInsert:',resultInsert);
   // 메일발송 리스트 table에 inser되었는지 체크문
   var insertCheck = false;
   // 메일발송 상세정보 insert
@@ -629,13 +630,13 @@ router.post('/save',isAuthenticated, async function(req, res) {
           mParam.M_a_id = req.body.M_a_id;
         }
         var result = await mailInsert(mParam);
-        // console.log(result);
+        // logger.info(result);
         if(result){
           throw new Error('maillink insert 실패');
         }
       }
       catch(e){
-        console.log('mailInsert ERROR:',e);
+        logger.error('mailInsert ERROR:',e);
         insertCheck = true;
         await mailAllA.updateMtype(['0',m_idx_a]);
         if(mailAllParam.M_module == '1'){
@@ -662,7 +663,7 @@ router.post('/save',isAuthenticated, async function(req, res) {
 });
 
 async function settingMailBody(bodyHtml,keyword,template,idx,num,ivt){
-  // console.log('settingMailBody('+bodyHtml+','+keyword+','+template+','+idx+','+num+','+ivt+')');
+  // logger.info('settingMailBody('+bodyHtml+','+keyword+','+template+','+idx+','+num+','+ivt+')');
   var sideHtmlStart = '<table width="750" align="center" cellpadding="0" cellspacing="0" style="border: solid 1px #cacaca; padding: 20px;"><tbody><tr><td>';
   if(template == '0'){
     sideHtmlStart += '<table width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td width="642"><img src="http://showbox.email/templates/images/logo/show_logo.png" width="135" height="36" alt="로고"></td><td width="92"><p style="font-size:  12px;">NEWS ';
@@ -710,7 +711,7 @@ async function settingMailBody(bodyHtml,keyword,template,idx,num,ivt){
 }
 
 async function mailInsert(req){
-  console.log('-mailInsert-');
+  logger.info('-mailInsert-');
   var dt = datetime.create();
   var now = dt.format('Y-m-d H:M:S');
   // 보내는 메일이 예약된 메일인지 다시 홗인
@@ -719,7 +720,7 @@ async function mailInsert(req){
   if(result.length == 0) return true;
   var mailData = result[0];
 
-  console.log('req : ',req);
+  logger.info('req : ',req);
   // 재발송 하기 전 메일 모듈 데이터 삭제
   if(mailData.M_module == 1 || req.origin == 1){
     await maillink.deleteMlAT(mailData.n_idx);
@@ -751,12 +752,12 @@ async function mailInsert(req){
   var mailSender = await mailListA.getOneEmail2(mailData.M_sender);
   var sender = (mailSender.length > 0) ? mailSender[0]: [];
   // 메일 받는 사람 가져오기
-  console.log('mailSender:',mailSender);
+  logger.info('mailSender:',mailSender);
   var recipiArr = mailData.M_recipi.split(',');
   var recipients = [];
   // 메일 받는 그룹 가져오기
   var groups = [];
-  // console.log('check:',mailData.M_group != null);
+  // logger.info('check:',mailData.M_group != null);
   if(mailData.M_group != null){
     if(mailData.M_group.indexOf(',') != -1){
       mailData.M_group = mailData.M_group.split(',');
@@ -764,16 +765,16 @@ async function mailInsert(req){
     var groupArr = await mailListC.getOneEmail2(req.user.n_idx,mailData.M_group);
     var groupArr2 = groupArr.concat(recipiArr);
     var uniqArray = Array.from(new Set(groupArr2));
-    // console.log('groupArr:',groupArr);
-    // console.log('groupArr2:',groupArr2);
-    // console.log('uniqArray:',uniqArray);
+    // logger.info('groupArr:',groupArr);
+    // logger.info('groupArr2:',groupArr2);
+    // logger.info('uniqArray:',uniqArray);
     recipients = await mailListA.getOneEmail2(uniqArray);
   }
   else{
     recipients = await mailListA.getOneEmail2(recipiArr);
   }
-  // console.log('recipient = ',recipients);
-  // console.log('recipient.length = ',recipients.length);
+  // logger.info('recipient = ',recipients);
+  // logger.info('recipient.length = ',recipients.length);
   var moment = require('moment');
   var am = 1;
   var time = (('time' in req) ? req.time : now);
@@ -867,7 +868,7 @@ async function mkdirsFun (directory) {
   try {
     await fs.ensureDir(directory)
     return directory;
-    console.log('success!')
+    logger.info('success!')
   } catch (err) {
     console.error(err)
   }
@@ -906,13 +907,13 @@ var storageImage = multer.diskStorage({
 });
 var uploadImage = multer({ storage: storageImage });
 router.post('/send/img',uploadImage.single('file'),function(req, res) {
-  console.log('/send/img:',req.file.path);
+  logger.info('/send/img:',req.file.path);
   if (!req.file) {
-    console.log("No file passed");
+    logger.info("No file passed");
     return res.status(500).send("No file passed");
   }
-  console.log('filelist:',getFiles(req.file.destination));
-  console.log(req.file);
+  logger.info('filelist:',getFiles(req.file.destination));
+  logger.info(req.file);
 
   var result = req.file.destination.replace('public/','')+'/'+req.file.originalname;
   res.send({location:'http://showbox.email/'+result});
@@ -941,13 +942,13 @@ var storageFile = multer.diskStorage({
 });
 var uploadFile = multer({ storage: storageFile });
 router.post('/send/file',uploadFile.single('file'),function(req, res) {
-  console.log('/send/file:',req.file);
+  logger.info('/send/file:',req.file);
   if (!req.file) {
-    console.log("No file passed");
+    logger.info("No file passed");
     return res.status(500).send("No file passed");
   }
   if(req.file.originalname.indexOf('.exe') != -1){
-    console.log('exe Error:',req.file.path);
+    logger.info('exe Error:',req.file.path);
     fs.removeSync(req.file.path);
     return res.status(500).send("exe는 업로드 불가합니다.");
   }

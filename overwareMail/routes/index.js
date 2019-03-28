@@ -24,13 +24,13 @@ router.get('/', isAuthenticated, async function(req, res, next) {
     list2:await period.call_dashbord([-1,req.user.n_idx])
     // ,wlist:await period.selectReservationView([2,req.user.n_idx,req.user.n_idx,req.user.n_idx])
   };
-  console.log('data:',data);
+  logger.info('data:',data);
   res.render('index',data);
 });
 
 router.post('/statistics',isAuthenticated, async function(req, res, next) {
   var result = await period.call_dashbord2([0,req.user.n_idx]);
-  console.log('statistics1:',result);
+  logger.info('statistics1:',result);
   var maillinkWaitCnt = await period.selectReservationCount(req.user.user_admin,req.user.n_idx);
   var data = {
     todaySendCount : result[0].sendCount,
@@ -42,7 +42,7 @@ router.post('/statistics',isAuthenticated, async function(req, res, next) {
     failP : 0
   };
   result = await period.call_dashbord([0,req.user.n_idx]);
-  console.log('statistics2:',result);
+  logger.info('statistics2:',result);
   data.todaySendCount += result[0].sendCount || 0;
   data.todayCount += result[0].nCount || 0;
   data.successNfailCount.success += result[0].success || 0;
@@ -120,8 +120,8 @@ router.get('/preview/newsclipping/html',async function(req, res, next) {
 
 // 메일 발송 후 메일 내용 확인 페이지
 router.get('/preview',async function(req, res, next) {
-  console.log('req.query:',req.query);
-  // console.log(!('keyword' in req.query) && !('idx' in req.query));
+  logger.info('req.query:',req.query);
+  // logger.info(!('keyword' in req.query) && !('idx' in req.query));
   var data = {
     layout: false,
     view: '',
@@ -168,7 +168,7 @@ router.get('/preview',async function(req, res, next) {
     }
     var sideHtmlStart = '<table width="750" align="center" cellpadding="0" cellspacing="0" style="border: solid 1px #cacaca; padding: 20px;"><tbody><tr><td>';
     // showbox logo , new number
-    console.log(viewCode[0].M_invitation);
+    logger.info(viewCode[0].M_invitation);
     var topObj = settingTophtml(viewCode[0].M_template,viewCode[0].M_seq_number,viewCode[0].M_invitation);
     sideHtmlStart += topObj.html;
     sideHtmlStart += '<table width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td>';
@@ -230,8 +230,8 @@ router.get('/preview_mail', isAuthenticated,async function(req, res, next) {
 
 // 메일 test
 router.get('/preview_test',async function(req, res, next) {
-  console.log('req.query:',req.query);
-  console.log(!('keyword' in req.query) && !('idx' in req.query));
+  logger.info('req.query:',req.query);
+  logger.info(!('keyword' in req.query) && !('idx' in req.query));
   if(!('keyword' in req.query) && !('idx' in req.query)){
     res.render('preview',{layout: false,view: '',pastView: [{keyword:''}],pastCount: 0,msg: '주소에 조건이 없습니다.\n주소를 다시 작성해주세요.',currentPage: 1,keyword: '',idx: ''});
     return false;
@@ -340,7 +340,7 @@ passport.deserializeUser(function (user, done) {
 });
 
 function settingTophtml(M_template,num,ivtVal){
-  console.log(M_template,num,ivtVal);
+  logger.info(M_template,num,ivtVal);
   var Obj = {
     html : '',
     ivt : '0'
@@ -360,7 +360,7 @@ function settingTophtml(M_template,num,ivtVal){
 }
 
 async function settingPastList(template,pastParam){
-  console.log(template,pastParam);
+  logger.info(template,pastParam);
   var Obj = {
     pastNews : [],
     pastNewsCount : []

@@ -180,7 +180,7 @@ async function getListPageData(idx,param){
     data['currentPage'] = currentPage;
   }
   catch(e){
-    console.log('e');
+    logger.error('e');
   }
   return data;
 }
@@ -190,7 +190,7 @@ router.post('/addNews',isAuthenticated,async function(req, res, next) {
     var list = JSON.parse(req.body.list);
     await asyncForEach(list, async (item, index, array) => {
       var param = item;
-      console.log(item);
+      logger.info(item);
       try{
         await newsclipping.insert(param.detail,param.mPage,[param.mName,param.rName,param.date,param.code,param.idx,param.idx]);
         if(param.mName != '' && param.rName != ''){
@@ -198,7 +198,7 @@ router.post('/addNews',isAuthenticated,async function(req, res, next) {
         }
       }
       catch(err){
-        console.log(err);
+        logger.info(err);
       }
     });
     res.send({status:true});
@@ -211,7 +211,7 @@ router.post('/grouping',isAuthenticated,async function(req, res, next) {
   try{
     var list = JSON.parse(req.body.list);
     var result = await newsclipping.selectMediaTable2(req.body,list);
-    // console.log(result);
+    // logger.info(result);
     res.send({status:true,result:result});
   } catch(e){
     res.status(500).send(e);
@@ -240,7 +240,7 @@ router.post('/list/getNextPage',isAuthenticated,async function(req, res, next) {
     var data = await getListPageData2(req.user.user_admin,req.body);
     res.send({status:true,result:data});
   } catch(e){
-    console.log('ERROR : ',e);
+    logger.error('ERROR : ',e);
     res.status(500).send(e);
   }
 });
@@ -250,7 +250,7 @@ router.post('/list/insert',isAuthenticated,async function(req, res, next) {
     await newsclipping.insert2(req.body);
     res.send({status:true});
   } catch(e){
-    console.log('ERROR : ',e);
+    logger.error('ERROR : ',e);
     res.status(500).send(e);
   }
 });
@@ -260,7 +260,7 @@ router.post('/list/delete',isAuthenticated,async function(req, res, next) {
     await newsclipping.delete(req.body.idx);
     res.send({status:true});
   } catch(e){
-    console.log('ERROR : ',e);
+    logger.error('ERROR : ',e);
     res.status(500).send(e);
   }
 });
@@ -270,7 +270,7 @@ router.post('/list/update',isAuthenticated,async function(req, res, next) {
     await newsclipping.update(req.body.news_detail,req.body.page,[req.body.date,req.body.news_type,req.body.idx,req.body.idx]);
     res.send({status:true});
   } catch(e){
-    console.log('ERROR : ',e);
+    logger.error('ERROR : ',e);
     res.status(500).send(e);
   }
 });
@@ -334,7 +334,7 @@ async function getListPageData2(idx,param){
     data['currentPage'] = currentPage;
   }
   catch(e){
-    console.log('Error:',e);
+    logger.error('Error:',e);
   }
   return data;
 }
