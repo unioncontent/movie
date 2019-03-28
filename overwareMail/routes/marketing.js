@@ -91,7 +91,7 @@ async function getFacebookListPageData(writer,param){
     data['currentPage'] = currentPage;
   }
   catch(e){
-    console.log('e');
+    logger.error('e');
   }
   return data;
 }
@@ -105,7 +105,7 @@ router.post('/add',isAuthenticated,async function(req, res, next) {
         await marketing.insertSNS(param);
       }
       catch(err){
-        console.log(err);
+        logger.info(err);
       }
     });
     res.send({status:true});
@@ -167,7 +167,7 @@ async function getNaverListPageData(param){
     data['currentPage'] = currentPage;
   }
   catch(e){
-    console.log('e');
+    logger.error(e);
   }
   return data;
 }
@@ -181,7 +181,7 @@ router.post('/naver/add',isAuthenticated,async function(req, res, next) {
         await marketing.insertPortal(param);
       }
       catch(err){
-        console.log(err);
+        logger.info(err);
       }
     });
     res.send({status:true});
@@ -282,7 +282,7 @@ async function getListPageData(param){
     data['listCount'] = await marketing.selectMarketingTableCount(searchBody,searchParam);
   }
   catch(e){
-    console.log('e');
+    logger.error(e);
   }
   return data;
 }

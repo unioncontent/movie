@@ -59,14 +59,14 @@ async function getListPageData(idx,param){
     data['currentPage'] = currentPage;
   }
   catch(e){
-    console.log('e');
+    logger.error(e);
   }
   return data;
 }
 
 router.post('/update',isAuthenticated,async function(req, res) {
   try{
-    console.log('params:',req.body);
+    logger.info('params:',req.body);
     var changeCheck = req.body.rChange;
     delete req.body.rChange;
     await mailListA.update(req.body);
@@ -134,7 +134,7 @@ router.post('/addGroup',isAuthenticated,async function(req, res) {
         }
       }
       catch(err){
-        console.log(err);
+        logger.info(err);
       }
     });
     res.send({status:true});
@@ -257,7 +257,7 @@ async function getGroupListPageData(idx,param,type){
     }
   }
   catch(e){
-    console.log('e');
+    logger.error(e);
   }
   return data;
 }
@@ -277,9 +277,9 @@ router.post('/add',isAuthenticated,async function(req, res) {
 
     req.body.M_id = req.user.n_idx;
     var insertMail = await mailListA.insert("m_mail_list_all",req.body);
-    // console.log('insertMail:',insertMail);
+    // logger.info('insertMail:',insertMail);
     var mail = await mailListA.getViewOneInfo(insertMail.insertId);
-    // console.log('mail:',mail);
+    // logger.info('mail:',mail);
 
     if(mail.length == 0){
       res.status(500).send('다시 시도해주세요.');
@@ -302,7 +302,7 @@ router.post('/add',isAuthenticated,async function(req, res) {
           createDate:now,
           updateDate:now
         };
-        // console.log('reporterParam:',reporterParam);
+        // logger.info('reporterParam:',reporterParam);
         var reporterID = await user.getNextReporterID();
         reporterParam['reporter_ID']='P'+reporterID;
         reporterParam['reporter_memo']=mail[0].user_id;

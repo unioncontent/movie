@@ -1,4 +1,5 @@
 overwareMail/bin/
+overwareMail/logs/
 overwareMail/node_modules/
 overwareMail/public/uploads/
 overwareMail/package.json

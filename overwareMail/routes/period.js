@@ -25,7 +25,7 @@ router.get('/',isAuthenticated,async function(req, res) {
 
 router.post('/getPeriod',isAuthenticated,async function(req, res, next) {
   try{
-    console.log('getPeriod:',req.body);
+    logger.info('getPeriod:',req.body);
     // var mediaNReporterCount = await period.getPeriodMediaNReporterCount(req.body);
     // var data = {
     //   media:mediaNReporterCount.media_c,
@@ -40,7 +40,7 @@ router.post('/getPeriod',isAuthenticated,async function(req, res, next) {
       newsCount:await period.call_mail_detail(req.body.M_module,[2,req.body.M_idx_A,req.body.keyword,req.body.sDate]),
       replyCount:await period.call_mail_detail(req.body.M_module,[3,req.body.M_idx_A,req.body.keyword,req.body.sDate])
     };
-    console.log(data);
+    logger.info(data);
     res.send({status:true,result:data});
   } catch(e){
     res.status(500).send(e);
@@ -57,7 +57,7 @@ router.post('/getNextPage',isAuthenticated,async function(req, res, next) {
 });
 
 async function getListPageData(idx,param){
-  console.log('getListPageData:',param);
+  logger.info('getListPageData:',param);
   var datetime = require('node-datetime');
   var dt = datetime.create();
   var end = dt.format('Y-m-d');
@@ -129,7 +129,7 @@ async function getListPageData(idx,param){
     // data['list'] = await period.selectView(searchBody,searchParam);
     // data['listCount'] = await period.selectViewCount(searchBody,searchParam);
     var result = [];
-    console.log(data.module);
+    logger.info(data.module);
     if(data.module == '1'){
       result = await period.call_stats(searchParam);
     } else if(data.module == '2'){
@@ -140,7 +140,7 @@ async function getListPageData(idx,param){
     data['currentPage'] = currentPage;
   }
   catch(e){
-    console.log(e);
+    logger.error(e);
   }
   return data;
 }
@@ -159,7 +159,7 @@ router.get('/removeDir/:date',isAuthenticated,async function(req, res) {
 });
 // 첨부파일 다운로드
 router.get('/download/:date/:fileName',async function(req, res) {
-  // console.log('/download/:date/:fileName = ',req.params);
+  // logger.info('/download/:date/:fileName = ',req.params);
   var filePath = __dirname.replace('\\routes','') +'/public/uploads/files/'+req.params.date;
   var fs = require('fs');
   var fileListLength = fs.readdirSync(filePath).length;

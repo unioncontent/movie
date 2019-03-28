@@ -21,7 +21,7 @@ var isAuthenticated = function (req, res, next) {
 };
 
 router.post('/grouping',isAuthenticated, async function(req, res) {
-  console.log(req.body);
+  logger.info(req.body);
   var result = await newsclipping.updateGroup(req.body);
   if(!('protocol41' in result)){
     res.status(500).send('그룹핑 실패! 개발자에게 문의해주세요.');
@@ -111,7 +111,7 @@ router.post('/getData',async function(req, res) {
 //       groupsIdx = await mailListC.getIdx2(groupList,mid);
 //     }
 //   }
-//   console.log(req.body);
+//   logger.info(req.body);
 //   // 메일 info 세팅
 //   var mailAllParam = {
 //     M_sender: req.body['M_sender'],
@@ -191,7 +191,7 @@ router.post('/getData',async function(req, res) {
 //               'GENDATE':('end_reserve_time' in req.body) ? mailDetailParam['M_send'] : now,
 //               'ETC1':m_idx_a
 //             };
-//             // console.log(param);
+//             // logger.info(param);
 //             await maillink.insert2('ml_automail_tran',param);
 //           }
 //           catch(e){
@@ -245,7 +245,7 @@ router.post('/send',isAuthenticated, async function(req, res) {
       groupsIdx = await mailListC.getIdx2(groupList,mid);
     }
   }
-  console.log(req.body);
+  logger.info(req.body);
   // 메일 info 세팅
   var mailAllParam = {
     M_sender: req.body['M_sender'],
@@ -365,7 +365,7 @@ router.post('/send',isAuthenticated, async function(req, res) {
           now];
       });
       result = await mymailer.insertMailSendUser(values);
-      console.log('insert결과:',result);
+      logger.info('insert결과:',result);
       if(result != undefined){
         await mymailer.deleteInfoTable(mailId);
         insertCheck = true;
@@ -411,7 +411,7 @@ router.get('/period',isAuthenticated,async function(req, res) {
 
 router.post('/period/result',isAuthenticated,async function(req, res, next) {
   var data = [];
-  console.log('/period/result : ',req.body);
+  logger.info('/period/result : ',req.body);
   if(req.body.module == '1'){
     delete req.body.module;
     data = await newsclipping.call_newsclipping_period_result(Object.values(req.body));
@@ -441,7 +441,7 @@ function formatDate(d) {
   return [year, month, day].join('-');
 }
 async function getListPageData(idx,param){
-  console.log('getListPageData:',param);
+  logger.info('getListPageData:',param);
   var data = {
     list:[],
     listCount:{total:0},
@@ -480,7 +480,7 @@ async function getListPageData(idx,param){
     data['currentPage'] = currentPage;
   }
   catch(e){
-    console.log(e);
+    logger.error(e);
   }
   return data;
 }
@@ -552,7 +552,7 @@ router.post('/list/delete',isAuthenticated, async function(req, res) {
 });
 
 async function getListPageData2(idx,param){
-  console.log('getListPageData:',param);
+  logger.info('getListPageData:',param);
   var data = {
     list:[],
     listCount:{total:0},
@@ -587,7 +587,7 @@ async function getListPageData2(idx,param){
     data['currentPage'] = currentPage;
   }
   catch(e){
-    console.log(e);
+    logger.info(e);
   }
   return data;
 }
