@@ -296,9 +296,9 @@
                                     <c:if test="${user.user_name == 'union'}">
                                       <td>
                                       	<div class="state${index.count}">
-				                            <input type="radio" id="state1${index.count}" name="state${index.count}" value="1" checked>
+				                            <input type="radio" id="state1${index.count}" name="state${index.count}" value="A" checked>
 				                            <label for="state1${index.count}">A</label>
-				                            <input type="radio" id="state2${index.count}" name="state${index.count}" value="2">
+				                            <input type="radio" id="state2${index.count}" name="state${index.count}" value="B">
 				                            <label for="state2${index.count}">B</label>
 			                            </div>
                                       </td>
@@ -841,7 +841,7 @@
 			console.log(idx);
 		}
 		
-		if (tr.children[9].children[0].children != 'undefined') {
+		if (tr.children[10].children[0].children != 'undefined') {
 			var arr = tr.children[10].children[0].children;
 		} else {
 			clacInsertData(event);
