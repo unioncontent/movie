@@ -47,7 +47,7 @@
   <!-- Style.css -->
   <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
   <link rel="stylesheet" type="text/css" href="../assets/pages/news/css/style.css">
-  <link rel="stylesheet" type="text/css" href="../assets/pages/division/css/style.css">
+  <link rel="stylesheet" type="text/css" href="../assets/pages/sns/css/style.css">
   <link rel="stylesheet" type="text/css" href="../assets/css/picker.css">
   <!--color css-->
   <link rel="stylesheet" type="text/css" href="../assets/css/color/color-1.css" id="color" />
@@ -234,14 +234,18 @@
                                   	</div>
                                   	</th>
                                   </c:if>
-                                    <th width="5%">NO</th>
-                                    <th width="10%">등록날짜</th>
-                                    <th width="50%">제목</th>
-                                    <th width="5%">출처</th>
-                                    <th width="5%">언론사</th>
-                                    <th width="5%">기자</th>
-                                    <th width="5%">키워드</th>
-                                    <th width="5%">분류글</th>
+                                    <th width="1">NO</th>
+                                    <th width="5">등록날짜</th>
+                                    <th width="25">제목</th>
+                                    <th width="1%">출처</th>
+                                    <th width="1%">언론사</th>
+                                    <th width="1%">기자</th>
+                                    <th width="1%">키워드</th>
+                                    <th width="1%">분류글</th>
+                                    <c:if test="${user.user_name == 'union'}">
+	                                    <th width="1%">타입선택</th>
+	                                    <th width="1%">등록처리</th>
+	                                </c:if>
                                   </tr>
                                 </thead>
                                 <tbody>
@@ -286,113 +290,29 @@
                                     </td>
                                     <td width="5%">${mediaList.keyword}</td>
                                    	<td width="5%" style="text-align: center;">
-                                   	<c:if test="${mediaList.textType != null}">${mediaList.textType}</c:if>
-                                    <c:if test="${mediaList.textType == null}"><i class="icofont icofont-minus"></i></c:if>
-                                   	<%-- <div class="radios${index.count}">
-                                        <c:choose>
-                                        	<c:when test="${mediaList.textType eq '좋은글'}">
-                                        	<input type="radio" id="radio1${index.count}" name="radios${index.count}" checked>
-                                        	<label for="radio1${index.count}">좋은글</label>
-                                        	<input type="radio" id="radio2${index.count}" name="radios${index.count}">
-                                        	<label for="radio2${index.count}">나쁜글</label>
-                                        	<input type="radio" id="radio3${index.count}" name="radios${index.count}">
-                                        	<label for="radio3${index.count}">관심글</label><br>
-                                        	<input type="radio" id="radio4${index.count}" name="radios${index.count}">
-                                        	<label for="radio4${index.count}">기타글</label>
-                                        	<input type="radio" id="radio5${index.count}" name="radios${index.count}">
-                                        	<label for="radio5${index.count}">삭제글</label>
-                                        	<input type="radio" id="radio6${index.count}" name="radios${index.count}">
-                                        	<label for="radio6${index.count}">미분류</label>
-                                        	</c:when>
-                                        </c:choose>
-
-                                        <c:choose>
-                                        	<c:when test="${mediaList.textType eq '나쁜글'}">
-                                        	<input type="radio" id="radio1${index.count}" name="radios${index.count}">
-                                        	<label for="radio1${index.count}">좋은글</label>
-                                        	<input type="radio" id="radio2${index.count}" name="radios${index.count}" checked>
-                                        	<label for="radio2${index.count}">나쁜글</label>
-                                        	<input type="radio" id="radio3${index.count}" name="radios${index.count}">
-                                        	<label for="radio3${index.count}">관심글</label><br>
-                                        	<input type="radio" id="radio4${index.count}" name="radios${index.count}">
-                                        	<label for="radio4${index.count}">기타글</label>
-                                        	<input type="radio" id="radio5${index.count}" name="radios${index.count}">
-                                        	<label for="radio5${index.count}">삭제글</label>
-                                        	<input type="radio" id="radio6${index.count}" name="radios${index.count}">
-                                        	<label for="radio6${index.count}">미분류</label>
-                                        	</c:when>
-                                        </c:choose>
-
-                                        <c:choose>
-                                        	<c:when test="${mediaList.textType eq '관심글'}">
-                                        	<input type="radio" id="radio1${index.count}" name="radios${index.count}">
-                                        	<label for="radio1${index.count}">좋은글</label>
-                                        	<input type="radio" id="radio2${index.count}" name="radios${index.count}">
-                                        	<label for="radio2${index.count}">나쁜글</label>
-                                        	<input type="radio" id="radio3${index.count}" name="radios${index.count}" checked>
-                                        	<label for="radio3${index.count}">관심글</label><br>
-                                        	<input type="radio" id="radio4${index.count}" name="radios${index.count}">
-                                        	<label for="radio4${index.count}">기타글</label>
-                                        	<input type="radio" id="radio5${index.count}" name="radios${index.count}">
-                                        	<label for="radio5${index.count}">삭제글</label>
-                                        	<input type="radio" id="radio6${index.count}" name="radios${index.count}">
-                                        	<label for="radio6${index.count}">미분류</label>
-                                        	</c:when>
-                                        </c:choose>
-
-                                        <c:choose>
-                                        	<c:when test="${mediaList.textType eq '기타글'}">
-                                        	<input type="radio" id="radio1${index.count}" name="radios${index.count}">
-                                        	<label for="radio1${index.count}">좋은글</label>
-                                        	<input type="radio" id="radio2${index.count}" name="radios${index.count}">
-                                        	<label for="radio2${index.count}">나쁜글</label>
-                                        	<input type="radio" id="radio3${index.count}" name="radios${index.count}">
-                                        	<label for="radio3${index.count}">관심글</label><br>
-                                        	<input type="radio" id="radio4${index.count}" name="radios${index.count}" checked>
-                                        	<label for="radio4${index.count}">기타글</label>
-                                        	<input type="radio" id="radio5${index.count}" name="radios${index.count}">
-                                        	<label for="radio5${index.count}">삭제글</label>
-                                        	<input type="radio" id="radio6${index.count}" name="radios${index.count}">
-                                        	<label for="radio6${index.count}">미분류</label>
-                                        	</c:when>
-                                        </c:choose>
-
-                                        <c:choose>
-                                        	<c:when test="${mediaList.textType eq '삭제글'}">
-                                        	<input type="radio" id="radio1${index.count}" name="radios${index.count}">
-                                        	<label for="radio1${index.count}">좋은글</label>
-                                        	<input type="radio" id="radio2${index.count}" name="radios${index.count}">
-                                        	<label for="radio2${index.count}">나쁜글</label>
-                                        	<input type="radio" id="radio3${index.count}" name="radios${index.count}">
-                                        	<label for="radio3${index.count}">관심글</label><br>
-                                        	<input type="radio" id="radio4${index.count}" name="radios${index.count}">
-                                        	<label for="radio4${index.count}">기타글</label>
-                                        	<input type="radio" id="radio5${index.count}" name="radios${index.count}" checked>
-                                        	<label for="radio5${index.count}">삭제글</label>
-                    											<input type="radio" id="radio6${index.count}" name="radios${index.count}">
-                                        	<label for="radio6${index.count}">미분류</label>
-                                        	</c:when>
-                                        </c:choose>
-
-
-                                        <c:choose>
-                                        	<c:when test="${mediaList.textType eq null}">
-                                        	<input type="radio" id="radio1${index.count}" name="radios${index.count}">
-                                        	<label for="radio1${index.count}">좋은글</label>
-                                        	<input type="radio" id="radio2${index.count}" name="radios${index.count}">
-                                        	<label for="radio2${index.count}">나쁜글</label>
-                                        	<input type="radio" id="radio3${index.count}" name="radios${index.count}">
-                                        	<label for="radio3${index.count}">관심글</label><br>
-                                        	<input type="radio" id="radio4${index.count}" name="radios${index.count}">
-                                        	<label for="radio4${index.count}">기타글</label>
-                                        	<input type="radio" id="radio5${index.count}" name="radios${index.count}">
-                                        	<label for="radio5${index.count}">삭제글</label>
-                    											<input type="radio" id="radio6${index.count}" name="radios${index.count}" checked>
-                                        	<label for="radio6${index.count}">미분류</label>
-                                        	</c:when>
-                                        </c:choose>
-
-                                      </div> --%></td>
+	                                   	<c:if test="${mediaList.textType != null}">${mediaList.textType}</c:if>
+	                                    <c:if test="${mediaList.textType == null}"><i class="icofont icofont-minus"></i></c:if>
+                                    </td>
+                                    <c:if test="${user.user_name == 'union'}">
+                                      <td>
+                                      	<div class="state${index.count}">
+				                            <input type="radio" id="state1${index.count}" name="state${index.count}" value="1" checked>
+				                            <label for="state1${index.count}">A</label>
+				                            <input type="radio" id="state2${index.count}" name="state${index.count}" value="2">
+				                            <label for="state2${index.count}">B</label>
+			                            </div>
+                                      </td>
+                                      <c:if test="${mediaList.last_media_title != null}">
+                                      <td>
+                                      	등록
+                                      </td>
+                                      </c:if>
+                                      <c:if test="${mediaList.last_media_title == null}">
+                                      <td>
+                                      	<button class="btn btn-list btn-sm addButton" data-toggle="tooltip" data-placement="top" data-original-title="등록처리"><i class="icofont icofont-plus" style="margin-right:0"></i></button>
+                                      </td>
+                                      </c:if>
+                                     </c:if>
                                   </tr>
                                   </c:forEach>
                                 </tbody>
@@ -402,7 +322,7 @@
                                     <td colspan="8">
                                   </c:if>
                                   <c:if test="${user.user_name == 'union'}">
-                                    <td colspan="9">
+                                    <td colspan="11">
                                   </c:if> 
                                       <ul class="pagination float-right">
                                        <c:if test="${pageMaker.prev}">
@@ -629,6 +549,28 @@
 		insertAll();
 	  });
 	  
+	  
+	//즉시처리 버튼 클릭시
+	  $(document).on("click",".addButton",function(event){
+			swal({
+						title: "등록처리 하시겠습니까?",
+						text: "선택된 기사로 등록처리 됩니다.",
+						type: "warning",
+						showCancelButton: true,
+						confirmButtonClass: "btn-danger",
+						confirmButtonText: "YES",
+						closeOnConfirm: false
+					},
+					function(){
+
+						insertType(event);
+
+						swal("Success!", "즉시처리가 완료되었습니다.", "success");
+						
+						window.setTimeout("pageReload()", 2000);
+					});
+	  });
+	  
 	/* // 등록처리버튼 클릭시
 	  $(document).on("click","#alert-check",function(){
 		  console.log("checkList click...");
@@ -801,6 +743,10 @@
 
 	}); // end ready...
 	
+	function pageReload() {
+		  location.reload();
+	}
+	
 	function checkList(event) {
 		  
 		
@@ -877,6 +823,57 @@
 			  				 console.log($(e).val())
 			  }
 			  			  }); */
+			  			// 등록 버튼 클릭
+			  			
+	function insertType(event) {
+
+		var parent = event.target.parentNode;
+		if(parent.type == 'submit'){
+			console.log("button click...");
+			parent = parent.parentNode;
+		}
+
+		var tr = parent.parentNode;
+		console.log(tr);
+
+		if (tr.children[0].value != 'undefined') {
+			var idx = tr.children[0].value;
+			console.log(idx);
+		}
+		
+		if (tr.children[9].children[0].children != 'undefined') {
+			var arr = tr.children[10].children[0].children;
+		} else {
+			clacInsertData(event);
+		}
+
+		for (var i = 0; i < arr.length; i++) {
+			if (arr[i].type == "radio") {
+				if (arr[i].checked) {
+					var textType = arr[i + 1].innerText;
+					console.log(textType);
+
+					 $.ajax({
+						type : "POST",
+						url : "newModify",
+						data : {
+							idx : idx,
+							textType : textType
+						},
+						dataType : "json",
+						success : function(data) {
+							console.log(data);
+						}
+
+					});
+
+					break;
+				}
+			}
+
+		}
+	}
+			
 			  
 	function insertAll(){
 		  swal({

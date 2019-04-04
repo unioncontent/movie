@@ -562,6 +562,22 @@
  		values
  			(#{company_name}, #{media_name}, #{media_title}, #{reporter_name}, #{writeDate}, #{title_key}, #{keyword}, #{url}, #{news_type}, #{news_state}, sysdate(), sysdate());
  	</insert>
+ 	
+ 	<insert id="newsAdd">
+ 		INSERT INTO news_data(company_name, media_name, media_title, reporter_name, writeDate, title_key, keyword, url, news_type, news_state) select 
+		b.company_name, a.media_name, a.media_title, a.reporter_name, a.writeDate, a.title_key, a.keyword, a.url, #{textType} as news_type, '1' as news_state
+	FROM 
+		(select media_idx, media_name, media_title, reporter_name, writeDate, title_key, keyword, url from media_data where media_idx = #{news_idx}) as a
+	left join
+		(select
+			d.company_name as company_name, c.keyword as keyword
+		FROM 
+			(select user_idx, keyword from keyword_data) as c
+		left join
+			(select company_name, user_idx from user_data) as d
+		on c.user_idx = d.user_idx) as b
+	on a.keyword = b.keyword;
+ 	</insert>
  
  	<select id="read" resultType="MediaVO">
  		select
@@ -589,6 +605,16 @@
  			keyword_type = #{keyword_type},
  			url = #{url},
  			updateDate = now()
+ 		where
+ 			media_idx = #{media_idx}
+ 		
+ 	</update>
+ 	
+ 	<update id="newsCheck">
+ 		update 
+ 			media_data
+ 		set
+ 			last_media_title = '1'
  		where
  			media_idx = #{media_idx}
  		

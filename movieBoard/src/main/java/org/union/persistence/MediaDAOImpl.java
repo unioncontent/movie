@@ -62,6 +62,16 @@ public class MediaDAOImpl implements MediaDAO {
 	}
 	
 	@Override
+	public void newsAdd(NewsVO vo) throws SQLException {
+		try {
+			session1.insert(namespace + "newsAdd", vo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	@Override
 	public List<NewsVO> newsList(SearchCriteria cri) throws SQLException {
 		
 		return session1.selectList(namespace + "newsList", cri);
@@ -85,6 +95,15 @@ public class MediaDAOImpl implements MediaDAO {
 		try {
 			session1.update(namespace + "update", vo);
 			session2.update(namespace + "update", vo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Override
+	public void newsCheck(Integer media_idx) throws SQLException {
+		try {
+			session1.update(namespace + "newsCheck", media_idx);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -765,4 +784,5 @@ public class MediaDAOImpl implements MediaDAO {
 
 		return session1.selectList(namespace + "mediaMainlistSearch", cri);
 	}
+
 }

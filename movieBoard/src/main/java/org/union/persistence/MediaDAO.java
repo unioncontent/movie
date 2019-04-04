@@ -20,10 +20,12 @@ public interface MediaDAO {
 
 	public void create(MediaVO vo) throws SQLException;
 	public void replyAdd(NewsVO vo) throws SQLException;
+	public void newsAdd(NewsVO vo) throws SQLException;
 	
 	public MediaVO read(Integer media_idx) throws SQLException;
 	
 	public void update(MediaVO vo) throws SQLException;
+	public void newsCheck(Integer media_idx) throws SQLException;
 	
 	public void delete(Integer media_idx) throws SQLException;
 	

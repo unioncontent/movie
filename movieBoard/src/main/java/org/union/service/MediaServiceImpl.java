@@ -47,9 +47,17 @@ public class MediaServiceImpl implements MediaService  {
 	
 	@Override
 	public void replyAdd(NewsVO vo)  throws SQLException {
-
 		try {
 			mediaDAO.replyAdd(vo);
+		} catch (Exception e)  {
+			e.printStackTrace();
+		}
+	}
+	
+	@Override
+	public void newsAdd(NewsVO vo) throws SQLException {
+		try {
+			mediaDAO.newsAdd(vo);
 		} catch (Exception e)  {
 			e.printStackTrace();
 		}
@@ -65,6 +73,11 @@ public class MediaServiceImpl implements MediaService  {
 	public void modify(MediaVO vo)  throws SQLException {
 
 		mediaDAO.update(vo);
+	}
+	
+	@Override
+	public void newsCheck(Integer media_idx) throws SQLException {
+		mediaDAO.newsCheck(media_idx);
 	}
 
 	@Override
@@ -858,4 +871,5 @@ public class MediaServiceImpl implements MediaService  {
 
 		return mediaDAO.mediaMainlistSearch(cri);
 	}
+	
 }

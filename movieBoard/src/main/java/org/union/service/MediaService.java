@@ -21,6 +21,9 @@ public interface MediaService {
 
 	public void regist(MediaVO vo) throws SQLException;
 	public void replyAdd(NewsVO vo) throws SQLException;
+	public void newsAdd(NewsVO vo) throws SQLException;
+	
+	public void newsCheck(Integer media_idx) throws SQLException;
 	
 	public List<NewsVO> newsList(SearchCriteria cri) throws SQLException;
 	

@@ -886,6 +886,26 @@ public class MediaController {
 	}
 	
 	@ResponseBody
+	@PostMapping("newModify")
+	public String newModifyPOST(Integer idx, String textType) throws SQLException {
+		logger.info("insertPOST called....");
+		
+		logger.info("idx: " + idx);
+		logger.info("type: " + textType );
+		
+		
+		NewsVO nvo = new NewsVO();
+		nvo.setTextType(textType);
+		nvo.setNews_idx(idx);
+			
+		mediaService.newsAdd(nvo);
+		mediaService.newsCheck(idx);
+		
+		
+		return "success";
+	}
+	
+	@ResponseBody
 	@PostMapping("insert")
 	public String insertPOST(Integer idx, String textType) throws SQLException {
 		logger.info("insertPOST called....");
