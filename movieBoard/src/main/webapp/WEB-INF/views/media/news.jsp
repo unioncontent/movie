@@ -296,10 +296,18 @@
                                     <c:if test="${user.user_name == 'union'}">
                                       <td>
                                       	<div class="state${index.count}">
-				                            <input type="radio" id="state1${index.count}" name="state${index.count}" value="A" checked>
-				                            <label for="state1${index.count}">A</label>
-				                            <input type="radio" id="state2${index.count}" name="state${index.count}" value="B">
-				                            <label for="state2${index.count}">B</label>
+                                      		<c:if test="${mediaList.last_media_title == null || mediaList.last_media_title ne '2'}">
+                                      			<input type="radio" id="state1${index.count}" name="state${index.count}" value="A" checked>
+					                            <label for="state1${index.count}">A</label>
+					                            <input type="radio" id="state2${index.count}" name="state${index.count}" value="B">
+					                            <label for="state2${index.count}">B</label>
+                                      		</c:if>
+                                      		<c:if test="${mediaList.last_media_title eq '2'}">
+                                      			<input type="radio" id="state1${index.count}" name="state${index.count}" value="A">
+					                            <label for="state1${index.count}">A</label>
+					                            <input type="radio" id="state2${index.count}" name="state${index.count}" value="B" checked>
+					                            <label for="state2${index.count}">B</label>
+                                      		</c:if>
 			                            </div>
                                       </td>
                                       <c:if test="${mediaList.last_media_title != null}">
@@ -851,7 +859,6 @@
 			if (arr[i].type == "radio") {
 				if (arr[i].checked) {
 					var textType = arr[i + 1].innerText;
-					console.log(textType);
 
 					 $.ajax({
 						type : "POST",

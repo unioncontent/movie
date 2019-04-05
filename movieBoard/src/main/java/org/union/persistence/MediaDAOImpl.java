@@ -99,15 +99,6 @@ public class MediaDAOImpl implements MediaDAO {
 			e.printStackTrace();
 		}
 	}
-	
-	@Override
-	public void newsCheck(Integer media_idx) throws SQLException {
-		try {
-			session1.update(namespace + "newsCheck", media_idx);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 
 	
 	@Override
@@ -264,6 +255,20 @@ public class MediaDAOImpl implements MediaDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	@Override
+	public void newsCheck(String media_type, Integer media_idx) throws SQLException {
+		Map data = new HashMap();
+		data.put("media_type", media_type);
+		data.put("media_idx", media_idx);
+		
+		try {
+			session1.update(namespace + "newsCheck", data);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 	
 	
@@ -784,5 +789,4 @@ public class MediaDAOImpl implements MediaDAO {
 
 		return session1.selectList(namespace + "mediaMainlistSearch", cri);
 	}
-
 }

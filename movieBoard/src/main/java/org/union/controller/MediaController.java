@@ -899,8 +899,11 @@ public class MediaController {
 		nvo.setNews_idx(idx);
 			
 		mediaService.newsAdd(nvo);
-		mediaService.newsCheck(idx);
-		
+		if("A".equals(textType)) {
+			mediaService.newsCheck("1", idx);
+		}else {
+			mediaService.newsCheck("2", idx);
+		}
 		
 		return "success";
 	}

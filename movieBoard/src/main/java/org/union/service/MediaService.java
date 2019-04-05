@@ -23,7 +23,7 @@ public interface MediaService {
 	public void replyAdd(NewsVO vo) throws SQLException;
 	public void newsAdd(NewsVO vo) throws SQLException;
 	
-	public void newsCheck(Integer media_idx) throws SQLException;
+	public void newsCheck(String media_type, Integer media_idx) throws SQLException;
 	
 	public List<NewsVO> newsList(SearchCriteria cri) throws SQLException;
 	

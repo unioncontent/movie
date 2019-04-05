@@ -25,7 +25,7 @@ public interface MediaDAO {
 	public MediaVO read(Integer media_idx) throws SQLException;
 	
 	public void update(MediaVO vo) throws SQLException;
-	public void newsCheck(Integer media_idx) throws SQLException;
+	public void newsCheck(String media_type, Integer media_idx) throws SQLException;
 	
 	public void delete(Integer media_idx) throws SQLException;
 	

@@ -76,8 +76,8 @@ public class MediaServiceImpl implements MediaService  {
 	}
 	
 	@Override
-	public void newsCheck(Integer media_idx) throws SQLException {
-		mediaDAO.newsCheck(media_idx);
+	public void newsCheck(String media_type, Integer media_idx) throws SQLException {
+		mediaDAO.newsCheck(media_type,media_idx);
 	}
 
 	@Override

@@ -14,7 +14,7 @@ public class MediaVO {
 	private String reporter_email;
 	private String writeDate;
 	private String last_writeDate;
-	private Date last_media_title;
+	private String last_media_title;
 	private Date last_media_content;
 	private String news_type;
 	private String title_key;
@@ -98,10 +98,10 @@ public class MediaVO {
 	public void setLast_writeDate(String last_writeDate) {
 		this.last_writeDate = last_writeDate;
 	}
-	public Date getLast_media_title() {
+	public String getLast_media_title() {
 		return last_media_title;
 	}
-	public void setLast_media_title(Date last_media_title) {
+	public void setLast_media_title(String last_media_title) {
 		this.last_media_title = last_media_title;
 	}
 	public Date getLast_media_content() {
@@ -249,5 +249,5 @@ public class MediaVO {
 				+ ", media_check=" + media_check + ", createDate=" + createDate + ", updateDate=" + updateDate
 				+ ", checkCondition=" + checkCondition + ", total=" + total + ", match_total=" + match_total
 				+ ", match_total2=" + match_total2 + "]";
-	}
+	}	
 }

@@ -576,7 +576,7 @@
 		left join
 			(select company_name, user_idx from user_data) as d
 		on c.user_idx = d.user_idx) as b
-	on a.keyword = b.keyword;
+	on a.keyword = b.keyword limit 1;
  	</insert>
  
  	<select id="read" resultType="MediaVO">
@@ -614,7 +614,7 @@
  		update 
  			media_data
  		set
- 			last_media_title = '1'
+ 			last_media_title = #{media_type}
  		where
  			media_idx = #{media_idx}
  		
