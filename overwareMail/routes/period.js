@@ -1,3 +1,4 @@
+const logger = require('../winston/config_f.js');
 var express = require('express');
 var urlencode = require('urlencode');
 var request = require('request');
