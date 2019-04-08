@@ -1,3 +1,4 @@
+const logger = require('../winston/config_f.js');
 var express = require('express');
 var router = express.Router();
 var datetime = require('node-datetime');

@@ -1,3 +1,4 @@
+const logger = require('../winston/config_f.js');
 var express = require('express');
 var passport = require('passport');
 var bcrypt = require('bcrypt-nodejs');
@@ -286,6 +287,7 @@ router.post('/login', function (req, res, next) {
       }
       return res.redirect('/login');
     }
+    logger.info('user :',user);
     req.logIn(user, function(err) {
       if (err) { return next(err); }
       if(req.get('referer').indexOf('/email') != -1){
