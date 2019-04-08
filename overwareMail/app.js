@@ -1,7 +1,6 @@
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
-var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 // 추가
@@ -12,8 +11,8 @@ var passport = require('passport');
 var  flash = require('connect-flash');
 const logger = require('morgan');
 const winston = require('./winston/config');
-app.use(logger('dev', { stream: winston.stream}));
 var app = express();
+app.use(logger('dev', { stream: winston.stream}));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -25,7 +24,7 @@ app.set('layout extractStyles', true);
 // middlewares setup
 app.use(compression());
 app.use(expressLayouts);
-app.use(logger('dev'));
+// app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.json({limit: '500mb'}));
 app.use(bodyParser.urlencoded({limit: '500mb', extended: true}));
