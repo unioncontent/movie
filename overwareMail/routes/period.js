@@ -58,7 +58,7 @@ router.post('/getNextPage',isAuthenticated,async function(req, res, next) {
 });
 
 async function getListPageData(idx,param){
-  logger.info('getListPageData:',param);
+  logger.info('getListPageData');
   var datetime = require('node-datetime');
   var dt = datetime.create();
   var end = dt.format('Y-m-d');
@@ -106,6 +106,8 @@ async function getListPageData(idx,param){
   if (typeof param.keyword !== 'undefined') {
     // searchBody['keyword'] = param.keyword;
     searchParam[2] = param.keyword;
+    searchParam[7] = 0;
+    searchParam[8] = 0;
     data['keyword'] = param.keyword;
   }
   if (typeof param.ivt !== 'undefined') {

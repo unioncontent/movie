@@ -1,3 +1,5 @@
+const logger = require('../winston/config_f.js');
+const mysql = require('mysql');
 const DBpromise = require('../db/db_info.js');
 
 /*
@@ -23,10 +25,12 @@ var period = {
   },
   call_stats: async function(param){
     var sql = 'call union_mail.stats(?,?,?,?,?,?,?,?,?,0)';
+    logger.info(mysql.format(sql, param)+';');
     return await getResult(sql,param);
   },
   call_stats2: async function(param){
     var sql = 'call union_mail.stats_m(?,?,?,?,?,?,?,?,?,0)';
+    logger.info(mysql.format(sql, param)+';');
     return await getResult(sql,param);
   },
   call_mail_detail: async function(type,param){

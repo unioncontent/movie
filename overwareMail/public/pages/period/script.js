@@ -271,6 +271,7 @@ $(document).on('click','.page-link',function(){
 function ajaxGetPageList(param){
   console.log('ajaxGetPageList:',param);
   $('.preloader3').show();
+  
   $.ajax({
     url: '/period/getNextPage',
     type: 'post',
@@ -311,33 +312,34 @@ function ajaxGetPageList(param){
         </tr>'
         $('#listTable tbody').eq(0).append(html);
       });
-      var limit = 20;
-      var pageCount = Math.ceil(data.result.listCount/limit);
       $('#listTable tfoot').eq(0).empty();
-      if(pageCount > 1) {
-        var html = '<tr><td colspan="12"><ul class="pagination float-right">';
-        var pageSize = 5;
-        var pRCnt = parseInt(data.result.currentPage / pageSize);
-        if(data.result.currentPage % pageSize == 0){
-          pRCnt = parseInt(data.result.currentPage / pageSize) - 1;
-        }
-        if(data.result.currentPage > 5) {
-          html += '<li class="page-item"><a class="page-link" data-value="1" aria-label="Previous">\
-              <i class="ti-angle-double-left f-12"></i>\
-              <span aria-hidden="true"></span>\
-              <span class="sr-only">Previous</span>\
-            </a></li>\
-            <li class="page-item"><a class="page-link" data-value=\"'+(pRCnt * pageSize)+'"\ aria-label="Previous">\
-              <i class="ti-angle-left f-12"></i>\
-              <span aria-hidden="true"></span>\
-              <span class="sr-only">Previous</span>\
-            </a></li>';
+      if(keywordValue != ''){
+        var limit = 20;
+        var pageCount = Math.ceil(data.result.listCount/limit);
+        if(pageCount > 1) {
+          var html = '<tr><td colspan="12"><ul class="pagination float-right">';
+          var pageSize = 5;
+          var pRCnt = parseInt(data.result.currentPage / pageSize);
+          if(data.result.currentPage % pageSize == 0){
+            pRCnt = parseInt(data.result.currentPage / pageSize) - 1;
+          }
+          if(data.result.currentPage > 5) {
+            html += '<li class="page-item"><a class="page-link" data-value="1" aria-label="Previous">\
+            <i class="ti-angle-double-left f-12"></i>\
+            <span aria-hidden="true"></span>\
+            <span class="sr-only">Previous</span>\
+          </a></li>\
+          <li class="page-item"><a class="page-link" data-value=\"'+(pRCnt * pageSize)+'"\ aria-label="Previous">\
+            <i class="ti-angle-left f-12"></i>\
+            <span aria-hidden="true"></span>\
+            <span class="sr-only">Previous</span>\
+          </a></li>';
         }
 
         for(var index=pRCnt * pageSize + 1;index<(pRCnt + 1)*pageSize + 1;index++){
           var active = (data.result.currentPage == index) ? "active" : "";
           html += '<li class=\"'+active+' page-item">\
-            <a class="page-link" data-value=\"'+index+'"\ >'+index+'</a></li>'
+          <a class="page-link" data-value=\"'+index+'"\ >'+index+'</a></li>'
 
           if(index == pageCount) {
             break;
@@ -345,20 +347,21 @@ function ajaxGetPageList(param){
         }
         if((pRCnt + 1) * pageSize < pageCount) {
           html += '<li class="page-item">\
-                <a class="page-link" data-value=\"'+((pRCnt + 1)*pageSize+1)+'"\ aria-label="Next">\
-                  <i class="ti-angle-right f-12"></i>\
-                  <span aria-hidden="true"></span>\
-                  <span class="sr-only">Next</span>\
-                </a></li>\
-                <li class="page-item">\
-                <a class="page-link" data-value=\"'+pageCount+'"\ aria-label="Next">\
-                  <i class="ti-angle-double-right f-12"></i>\
-                  <span aria-hidden="true"></span>\
-                  <span class="sr-only">Next</span>\
-                </a></li>';
+          <a class="page-link" data-value=\"'+((pRCnt + 1)*pageSize+1)+'"\ aria-label="Next">\
+            <i class="ti-angle-right f-12"></i>\
+            <span aria-hidden="true"></span>\
+            <span class="sr-only">Next</span>\
+          </a></li>\
+          <li class="page-item">\
+            <a class="page-link" data-value=\"'+pageCount+'"\ aria-label="Next">\
+              <i class="ti-angle-double-right f-12"></i>\
+              <span aria-hidden="true"></span>\
+              <span class="sr-only">Next</span>\
+            </a></li>';
+          }
+          html += '</ul></td></tr>';
+          $('#listTable tfoot').eq(0).append(html);
         }
-        html += '</ul></td></tr>';
-        $('#listTable tfoot').eq(0).append(html);
       }
       $('.preloader3').fadeOut(500);
     }
