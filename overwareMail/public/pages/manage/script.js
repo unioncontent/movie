@@ -65,6 +65,7 @@ $(document).on('click', '.btn-delete', function() {
   } else {
     swal({
       title: "삭제하시겠습니까?",
+      text: "삭제 처리 시, 몇분의 시간이 소요되니 잠시만 기다려주세요.",
       icon: "warning",
       buttons: [
         "취소", true
@@ -79,6 +80,7 @@ $(document).on('click', '.btn-delete', function() {
   }
 });
 function deleteAjax(param) {
+  console.log('deleteAjax 삭제진행');
   $.ajax({
     url: '/email/manage/delete',
     type: 'post',
@@ -387,12 +389,12 @@ function ajaxGetPageList(param) {
           ((item.M_type != 1) || (item.M_type == 1 && item.M_send == null))
           ? '-'
           : item.M_send) + '</div></td>\
-        <td><div class="date-nobr">' + (
+        <td><div class="date-nobr '+((item.M_delete == '1') ? 'text-danger':'')+'">' + (
           ((item.M_send == null) || (item.M_type == 1 && (send_o > now_o)))
           ? '-'
           : item.M_send) + '</div></td>';
+        html +='<td data-mtype="' + item.M_type + '" data-mid="' + item.M_a_id + '" data-idx="' + item.n_idx + '" data-module="' + item.M_module + '">';
         if(item.M_delete == '0'){
-          html +='<td data-mtype="' + item.M_type + '" data-mid="' + item.M_a_id + '" data-idx="' + item.n_idx + '" data-module="' + item.M_module + '">';
           if (item.M_send == null || (item.M_type == 1 && (send_o > now_o))) {
             html += '<button class="btn btn-sm btn-inverse btn-send">보내기</button> ';
           } else {
@@ -402,11 +404,11 @@ function ajaxGetPageList(param) {
           if (item.M_send == null || (item.M_type == 1 && (send_o > now_o))) {
             html += '<button class="btn btn-sm btn-inverse btn-edit">수정</button> ';
           }
-          html += '<button class="btn btn-sm btn-inverse btn-rewrite">재작성</button></td>';
         }
         else if(item.M_delete == '1'){
-          html += '<td>삭제됨</td>';
+          html += '<button class="btn btn-sm btn-danger m-r-5">삭제됨</button>';
         }
+        html += '<button class="btn btn-sm btn-inverse btn-rewrite">재작성</button></td>';
         html += '</tr>';
         $('#listTable tbody').eq(0).append(html);
       });
