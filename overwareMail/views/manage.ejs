@@ -126,6 +126,7 @@
                       <td><div class="date-nobr"><%= list[i].M_regdate %></div></td>
                       <td><div class="date-nobr"><%= ((list[i].M_type != 1) || (list[i].M_type == 1 && list[i].M_send == null)) ?'-': list[i].M_send %></div></td>
                       <td><div class="date-nobr"><%= ((list[i].M_send == null) || (list[i].M_type == 1 && (send > now))) ?'-': list[i].M_send %></div></td>
+                      <%if(list[i].M_delete == '0'){%>
                       <td data-mtype="<%=list[i].M_type%>" data-mid="<%= list[i].M_a_id %>" data-idx="<%= list[i].n_idx %>" data-module="<%= list[i].M_module %>">
                         <%if((list[i].M_send == null) || (send > now)){%>
                           <button class="btn btn-sm btn-inverse btn-send">보내기</button>
@@ -138,6 +139,9 @@
                         <%}%>
                         <button class="btn btn-sm btn-inverse btn-rewrite">재작성</button>
                       </td>
+                      <%}else if(list[i].M_delete == '1'){%>
+                        <td>삭제됨</td>
+                      <%}%>
                     </tr>
                     <% } %>
                   </tbody>

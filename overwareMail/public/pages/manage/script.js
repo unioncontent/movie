@@ -390,18 +390,24 @@ function ajaxGetPageList(param) {
         <td><div class="date-nobr">' + (
           ((item.M_send == null) || (item.M_type == 1 && (send_o > now_o)))
           ? '-'
-          : item.M_send) + '</div></td>\
-        <td data-mtype="' + item.M_type + '" data-mid="' + item.M_a_id + '" data-idx="' + item.n_idx + '" data-module="' + item.M_module + '">';
-        if (item.M_send == null || (item.M_type == 1 && (send_o > now_o))) {
-          html += '<button class="btn btn-sm btn-inverse btn-send">보내기</button> ';
-        } else {
-          html += '<button class="btn btn-sm btn-inverse btn-resend">재발송</button> ';
+          : item.M_send) + '</div></td>';
+        if(item.M_delete == '0'){
+          html +='<td data-mtype="' + item.M_type + '" data-mid="' + item.M_a_id + '" data-idx="' + item.n_idx + '" data-module="' + item.M_module + '">';
+          if (item.M_send == null || (item.M_type == 1 && (send_o > now_o))) {
+            html += '<button class="btn btn-sm btn-inverse btn-send">보내기</button> ';
+          } else {
+            html += '<button class="btn btn-sm btn-inverse btn-resend">재발송</button> ';
+          }
+          html += '<button class="btn btn-sm btn-inverse btn-delete">삭제</button> ';
+          if (item.M_send == null || (item.M_type == 1 && (send_o > now_o))) {
+            html += '<button class="btn btn-sm btn-inverse btn-edit">수정</button> ';
+          }
+          html += '<button class="btn btn-sm btn-inverse btn-rewrite">재작성</button></td>';
         }
-        html += '<button class="btn btn-sm btn-inverse btn-delete">삭제</button> ';
-        if (item.M_send == null || (item.M_type == 1 && (send_o > now_o))) {
-          html += '<button class="btn btn-sm btn-inverse btn-edit">수정</button> ';
+        else if(item.M_delete == '1'){
+          html += '<td>삭제됨</td>';
         }
-        html += '<button class="btn btn-sm btn-inverse btn-rewrite">재작성</button></td></tr>';
+        html += '</tr>';
         $('#listTable tbody').eq(0).append(html);
       });
       var limit = 20;
