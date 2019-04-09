@@ -96,7 +96,8 @@ var mailAllA = {
     return await getResult(sql,pValue);
   },
   delete: async function(n_idx){
-    var sql = 'delete from m_mail_all_a where n_idx=?';
+    // var sql = 'delete from m_mail_all_a where n_idx=?';
+    var sql = 'update m_mail_all_a set M_delete = 1, M_senddate = now() where n_idx=?';
     return await getResult(sql,[n_idx]);
   },
   updateMailBodyHis:async function(param){
