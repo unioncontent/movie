@@ -137,8 +137,10 @@ function getNewsClippingData(){
         var obj = new Object();
         $.each(data.result.news, function(index, value) {
           var siteLogoHtml = '';
-          if (value.media_subname != 'out' && value.media_subname != null){
-            siteLogoHtml ='<img alt="'+value.media_subname+'" style="width: 15px;height: 15px;margin-right: 2px;vertical-align:text-bottom;" src="http://showbox.email/images/newsclipping/'+value.media_subname+'_logo.png" class="site-logo">';
+          if($.isNumeric(value.me_rank)){
+            if (value.media_subname != 'out' && value.media_subname != null){
+              siteLogoHtml ='<img alt="'+value.media_subname+'" style="width: 15px;height: 15px;margin-right: 2px;vertical-align:text-bottom;" src="http://showbox.email/images/newsclipping/'+value.media_subname+'_logo.png" class="site-logo">';
+            }
           }
 
           var replyHtml = '<label class="replyLabel" style="display: inline-block;border-radius: 10px;padding: 2px 6px;font-size: 84%;font-weight: 700;line-height: 1;color: #fff;text-align: center;white-space: nowrap;vertical-align: baseline;background-color: #bdc3c7;margin-left: .5rem;margin-bottom: 0;">'+((value.replynum == null)? '0':value.replynum)+'</label>';
@@ -201,8 +203,10 @@ function getNewsClippingData(){
           html ='<li><img src="https://ssl.pstatic.net/sstatic/search/pc/img/bu_news_sublst.gif" style="vertical-align:  text-top;">';
           $.each(sortList, function(i, v) {
             var siteLogoHtml_s = '';
-            if (v.media_subname != 'out' && v.media_subname != null){
-              siteLogoHtml_s ='<img alt="'+v.media_subname+'" style="width: 15px;height: 15px;margin-right: 2px;vertical-align:text-bottom;" src="http://showbox.email/images/newsclipping/'+v.media_subname+'_logo.png" class="site-logo">';
+            if($.isNumeric(v.me_rank)){
+              if (v.media_subname != 'out' && v.media_subname != null){
+                siteLogoHtml_s ='<img alt="'+v.media_subname+'" style="width: 15px;height: 15px;margin-right: 2px;vertical-align:text-bottom;" src="http://showbox.email/images/newsclipping/'+v.media_subname+'_logo.png" class="site-logo">';
+              }
             }
             var replyHtml = '<label class="replyLabel" style="display: inline-block;border-radius: 10px;padding: 2px 6px;font-size: 84%;font-weight: 700;line-height: 1;color: #fff;text-align: center;white-space: nowrap;vertical-align: baseline;background-color: #bdc3c7;margin-left: .5rem;margin-bottom: 0;">'+((v.replynum == null)?'0':v.replynum)+'</label>';
             html +='<span style="margin-left:5px;"><a href="'+v.url+'" target="_blank"><div style="display:inline-block;overflow:hidden;max-width:492px;text-decoration:none !important;color:black;text-overflow:ellipsis;white-space:nowrap;word-wrap:normal;word-break:normal;vertical-align:top;">['+siteLogoHtml_s+v.media_name+replyHtml+']</div></a><i class="fas fa-times news-delete" data-idx="'+v.media_idx+'"  data-type="news_mail" data-str="media_idx"></i></span>';
