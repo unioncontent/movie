@@ -1,4 +1,7 @@
+const mysql = require('mysql');
 const DBpromise = require('../db/db_info.js');
+const logger = require('../winston/config_f.js');
+
 /*
   지난기사보기 - content_view
 */
@@ -38,11 +41,11 @@ var content = {
 
 async function getResult(sql,param) {
   var db = new DBpromise();
-  console.log(sql,param);
+  logger.info(mysql.format(sql, param)+';');
   try{
     return await db.query(sql,param);
   } catch(e){
-    console.log('DB Error:',e);
+    logger.error('DB Error:',e);
     return [];
   } finally{
     db.close();

@@ -25,13 +25,11 @@ router.get('/', isAuthenticated, async function(req, res, next) {
     list2:await period.call_dashbord([-1,req.user.n_idx])
     // ,wlist:await period.selectReservationView([2,req.user.n_idx,req.user.n_idx,req.user.n_idx])
   };
-  logger.info('data:',data);
   res.render('index',data);
 });
 
 router.post('/statistics',isAuthenticated, async function(req, res, next) {
   var result = await period.call_dashbord2([0,req.user.n_idx]);
-  logger.info('statistics1:',result);
   var maillinkWaitCnt = await period.selectReservationCount(req.user.user_admin,req.user.n_idx);
   var data = {
     todaySendCount : result[0].sendCount,
@@ -43,7 +41,6 @@ router.post('/statistics',isAuthenticated, async function(req, res, next) {
     failP : 0
   };
   result = await period.call_dashbord([0,req.user.n_idx]);
-  logger.info('statistics2:',result);
   data.todaySendCount += result[0].sendCount || 0;
   data.todayCount += result[0].nCount || 0;
   data.successNfailCount.success += result[0].success || 0;
@@ -287,7 +284,6 @@ router.post('/login', function (req, res, next) {
       }
       return res.redirect('/login');
     }
-    logger.info('user :',user);
     req.logIn(user, function(err) {
       if (err) { return next(err); }
       if(req.get('referer').indexOf('/email') != -1){

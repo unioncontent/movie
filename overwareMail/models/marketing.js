@@ -1,4 +1,6 @@
+const mysql = require('mysql');
 const DBpromise = require('../db/db_info.js');
+const logger = require('../winston/config_f.js');
 
 /*
  페이스북 테이블 - facebook_videos
@@ -154,18 +156,17 @@ function insertSqlSetting(table,keys){
   return sql;
 }
 
+
 async function getResult(sql,param) {
   var db = new DBpromise();
-  console.log('sql : ',sql);
-  console.log('param : ',param);
+  logger.info(mysql.format(sql, param)+';');
   try{
     return await db.query(sql,param);
   } catch(e){
-    console.log('DB Error:',e);
+    logger.error('DB Error:',e);
     return [];
   } finally{
     db.close();
   }
 }
-
 module.exports = marketing;
