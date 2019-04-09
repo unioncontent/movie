@@ -270,6 +270,8 @@ function getNewsClippingData(){
         $.each(data.result.news, function(index, value) {
           var siteLogoHtml = '';
           if($.isNumeric(value.me_rank)){
+            // console.log(value.me_rank);
+            // console.log(value);
             if (value.media_subname != 'out' && value.media_subname != null){
               siteLogoHtml ='<img alt="'+value.media_subname+'" style="width: 15px;height: 15px;margin-right: 2px;vertical-align:text-bottom;" src="http://showbox.email/images/newsclipping/'+value.media_subname+'_logo.png" class="site-logo">';
             }
@@ -373,6 +375,8 @@ function getNewsClippingData(){
             }
 
             if($.isNumeric(v.me_rank)){
+              // console.log(v.me_rank);
+              // console.log(v);
               if (v.media_subname != 'out' && v.media_subname != null){
                 siteLogoHtml_s ='<img alt="'+v.media_subname+'" style="width: 15px;height: 15px;margin-right: 2px;vertical-align:text-bottom;" src="http://showbox.email/images/newsclipping/'+v.media_subname+'_logo.png" class="site-logo">';
               }
