@@ -1,4 +1,6 @@
+const mysql = require('mysql');
 const DBpromise = require('../db/db_info.js');
+const logger = require('../winston/config_f.js');
 
 /*
  메일발송리스트 테이블 - m_mail_all_a
@@ -133,12 +135,11 @@ function insertSqlSetting(keys){
 
 async function getResult(sql,param) {
   var db = new DBpromise();
-  console.log(sql);
-  console.log(param);
+  logger.info(mysql.format(sql, param)+';');
   try{
     return await db.query(sql,param);
   } catch(e){
-    console.log('DB Error:',e);
+    logger.error('DB Error:',e);
     return [];
   } finally{
     db.close();

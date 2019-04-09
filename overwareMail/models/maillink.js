@@ -1,4 +1,6 @@
+const mysql = require('mysql');
 const DBpromise = require('../db/db_info.js');
+const logger = require('../winston/config_f.js');
 /*
   maillink send - ml_automail_tran
   maillink result - ml_automail_message
@@ -136,15 +138,16 @@ function insertSqlSetting(table,keys){
 
 async function getResult(sql,param) {
   var db = new DBpromise();
-  console.log(sql,param);
+  logger.info(mysql.format(sql, param)+';');
   try{
     return await db.query(sql,param);
   } catch(e){
-    console.log('DB Error:',e);
+    logger.error('DB Error:',e);
     return [];
   } finally{
     db.close();
   }
 }
+
 
 module.exports = mail;

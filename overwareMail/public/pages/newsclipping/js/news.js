@@ -107,7 +107,12 @@ $(document).on("click",".group",function(){
             <option value="2" '+((item.news_type == '2') ? 'selected' : (item.title_key == '경쟁영화') ? 'selected' : '')+'>경쟁영화</option>\
             <option value="3" '+((item.news_type == '3') ? 'selected' : (item.title_key == '캐스팅') ? 'selected' : '')+'>캐스팅</option>\
             <option value="4" '+((item.news_type == '4') ? 'selected' : (item.title_key == '쇼박스기업뉴스' || item.title_key == '오리온') ? 'selected' : '')+'>쇼박스기업뉴스</option>\
-            <option value="5" '+((item.news_type == '5') ? 'selected' : (item.title_key == '영화일반') ? 'selected' : '')+'>영화일반</option>\
+            <option value="5" '+((item.news_type == '5') ? 'selected' : (item.title_key.indexOf('영화일반') != -1) ? 'selected' : '')+'>영화일반-기타</option>\
+            <option value="51" '+((item.news_type == '51') ? 'selected' : '')+'>영화일반-인터뷰</option>\
+            <option value="52" '+((item.news_type == '52') ? 'selected' : '')+'>영화일반-리뷰</option>\
+            <option value="53" '+((item.news_type == '53') ? 'selected' : '')+'>영화일반-예고편</option>\
+            <option value="54" '+((item.news_type == '54') ? 'selected' : '')+'>영화일반-포스터</option>\
+            <option value="54" '+((item.news_type == '55') ? 'selected' : '')+'>영화일반-화보</option>\
             <option value="6" '+((item.news_type == '6') ? 'selected' : (item.title_key == '보도국') ? 'selected' : '')+'>보도국</option>\
             <option value="7" '+((item.news_type == '7') ? 'selected' : (item.title_key == '박스오피스') ? 'selected' : '')+'>박스오피스</option>\
           </select>\
@@ -371,7 +376,12 @@ function ajaxGetPageList(param){
               <option value="2" '+((item.news_type == '2') ? 'selected' : (item.title_key == '경쟁영화') ? 'selected' : '')+'>경쟁영화</option>\
               <option value="3" '+((item.news_type == '3') ? 'selected' : (item.title_key == '캐스팅') ? 'selected' : '')+'>캐스팅</option>\
               <option value="4" '+((item.news_type == '4') ? 'selected' : (item.title_key == '쇼박스기업뉴스' || item.title_key == '오리온') ? 'selected' : '')+'>쇼박스기업뉴스</option>\
-              <option value="5" '+((item.news_type == '5') ? 'selected' : (item.title_key == '영화일반') ? 'selected' : '')+'>영화일반</option>\
+              <option value="5" '+((item.news_type == '5') ? 'selected' : (item.title_key.indexOf('영화일반') != -1) ? 'selected' : '')+'>영화일반-기타</option>\
+              <option value="51" '+((item.news_type == '51') ? 'selected' : '')+'>영화일반-인터뷰</option>\
+              <option value="52" '+((item.news_type == '52') ? 'selected' : '')+'>영화일반-리뷰</option>\
+              <option value="53" '+((item.news_type == '53') ? 'selected' : '')+'>영화일반-예고편</option>\
+              <option value="54" '+((item.news_type == '54') ? 'selected' : '')+'>영화일반-포스터</option>\
+              <option value="54" '+((item.news_type == '55') ? 'selected' : '')+'>영화일반-화보</option>\
               <option value="6" '+((item.news_type == '6') ? 'selected' : (item.title_key == '보도국') ? 'selected' : '')+'>보도국</option>\
               <option value="7" '+((item.news_type == '7') ? 'selected' : (item.title_key == '박스오피스') ? 'selected' : '')+'>박스오피스</option>\
             </select>\

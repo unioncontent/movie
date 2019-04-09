@@ -1,5 +1,6 @@
+const logger = require('../winston/config_f.js');
+const mysql = require('mysql');
 const DBpromise = require('../db/db_info.js');
-
 /*
  메일발송상세 테이블 - n_mail_detail
 */
@@ -27,15 +28,14 @@ function insertSqlSetting(keys){
 
 async function getResult(sql,param) {
   var db = new DBpromise();
-  console.log(sql,param);
+  logger.info(mysql.format(sql, param)+';');
   try{
     return await db.query(sql,param);
   } catch(e){
-    console.log('DB Error:',e);
+    logger.error('DB Error:',e);
     return [];
   } finally{
     db.close();
   }
 }
-
 module.exports = nMailDetailB;

@@ -1,5 +1,6 @@
+const mysql = require('mysql');
 const DBpromise = require('../db/db_info.js');
-
+const logger = require('../winston/config_f.js');
 /*
  뉴스 테이블 - media_data
  뉴스 등록 테이블 - news_mail
@@ -402,12 +403,11 @@ function insertSqlSetting(keys){
 
 async function getResult(sql,param) {
   var db = new DBpromise();
-  console.log('sql:',sql);
-  console.log('param:',param);
+  logger.info(mysql.format(sql, param)+';');
   try{
     return await db.query(sql,param);
   } catch(e){
-    console.log('DB Error:',e);
+    logger.error('DB Error:',e);
     return [];
   } finally{
     db.close();

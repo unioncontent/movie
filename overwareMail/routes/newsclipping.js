@@ -62,7 +62,7 @@ router.get('/send',isAuthenticated,async function(req, res) {
   res.render('newsclipping_email',data);
 });
 
-router.get('/send2',isAuthenticated,async function(req, res) {
+router.get('/send:type',isAuthenticated,async function(req, res) {
   var searchParam = [req.user.user_admin,0,10];
   var data = {
     mailList : await mailListA.selectView({},searchParam),
@@ -72,7 +72,7 @@ router.get('/send2',isAuthenticated,async function(req, res) {
     groupListCount : await mailListC.selectViewCount({},searchParam),
     groupListPageNum : 1
   };
-  res.render('newsclipping_email2',data);
+  res.render('newsclipping_email'+req.params.type,data);
 });
 
 router.post('/getData',async function(req, res) {
@@ -442,7 +442,6 @@ function formatDate(d) {
   return [year, month, day].join('-');
 }
 async function getListPageData(idx,param){
-  logger.info('getListPageData:',param);
   var data = {
     list:[],
     listCount:{total:0},
@@ -553,7 +552,6 @@ router.post('/list/delete',isAuthenticated, async function(req, res) {
 });
 
 async function getListPageData2(idx,param){
-  logger.info('getListPageData:',param);
   var data = {
     list:[],
     listCount:{total:0},

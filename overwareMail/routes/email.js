@@ -203,7 +203,6 @@ router.post('/manage/getNextPage',isAuthenticated,async function(req, res, next)
 });
 
 async function getListPageData(user,param){
-  logger.info('getListPageData:',param);
   var dt = datetime.create();
   var end = dt.format('Y-m-d');
   dt.offsetInDays(-7);

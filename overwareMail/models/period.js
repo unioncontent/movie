@@ -287,11 +287,10 @@ async function getResult(sql,param,dbName) {
   if(dbName) db = new DBpromise(dbName);
   else db = new DBpromise();
   try{
-    console.log(sql);
-    console.log(param);
+    logger.info(mysql.format(sql, param)+';');
     return await db.query(sql,param);
   } catch(e){
-    console.log("DB Error:",e);
+    logger.error('DB Error:',e);
     return [];
   } finally{
     db.close();

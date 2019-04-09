@@ -1,5 +1,6 @@
+const mysql = require('mysql');
 const DBpromise = require('../db/db_info.js');
-
+const logger = require('../winston/config_f.js');
 /*
  키워드 테이블 - keyword_data
  메일 키워드 테이블 - m_keyword_data
@@ -78,11 +79,11 @@ function insertSqlSetting(table,keys){
 
 async function getResult(sql,param) {
   var db = new DBpromise();
-  console.log(sql,param);
+  logger.info(mysql.format(sql, param)+';');
   try{
     return await db.query(sql,param);
   } catch(e){
-    console.log('DB Error:',e);
+    logger.error('DB Error:',e);
     return [];
   } finally{
     db.close();

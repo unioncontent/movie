@@ -191,7 +191,7 @@ router.post('/addNews',isAuthenticated,async function(req, res, next) {
     var list = JSON.parse(req.body.list);
     await asyncForEach(list, async (item, index, array) => {
       var param = item;
-      logger.info(item);
+      logger.info(param.mName,param.rName,param.date,param.code,param.idx,param.idx);
       try{
         await newsclipping.insert(param.detail,param.mPage,[param.mName,param.rName,param.date,param.code,param.idx,param.idx]);
         if(param.mName != '' && param.rName != ''){
@@ -199,7 +199,7 @@ router.post('/addNews',isAuthenticated,async function(req, res, next) {
         }
       }
       catch(err){
-        logger.info(err);
+        logger.error(err);
       }
     });
     res.send({status:true});
