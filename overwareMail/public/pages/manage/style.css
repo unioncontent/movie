@@ -50,7 +50,7 @@
   .title_nobr{
     font-size: 13px;
     padding-left: 3px;
-    width: 395px;
+    width: 365px;
     white-space: pre-line;
   }
   .kwd_nobr,.num_nobr{
@@ -62,7 +62,7 @@
     width: 90px;
     word-wrap: break-word;
     white-space: initial;
-    white-space: pre-line;
+    /* white-space: pre-line; */
   }
   .title_nobr:hover{
     cursor:default;

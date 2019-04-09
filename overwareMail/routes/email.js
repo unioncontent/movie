@@ -152,6 +152,7 @@ router.post('/manage/updateMtype',isAuthenticated, async function(req, res) {
 });
 
 router.post('/manage/delete',isAuthenticated, async function(req, res) {
+  logger.info('/manage/delete');
   var result;
   if(req.body.module == '1'){
     result = await maillink.deleteMlAT(req.body.idx);
