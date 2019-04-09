@@ -271,7 +271,7 @@ $(document).on('click','.page-link',function(){
 function ajaxGetPageList(param){
   console.log('ajaxGetPageList:',param);
   $('.preloader3').show();
-  
+
   $.ajax({
     url: '/period/getNextPage',
     type: 'post',
@@ -313,7 +313,7 @@ function ajaxGetPageList(param){
         $('#listTable tbody').eq(0).append(html);
       });
       $('#listTable tfoot').eq(0).empty();
-      if(keywordValue != ''){
+      if(keywordValue == ''){
         var limit = 20;
         var pageCount = Math.ceil(data.result.listCount/limit);
         if(pageCount > 1) {
