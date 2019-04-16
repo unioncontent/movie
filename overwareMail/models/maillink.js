@@ -1,6 +1,4 @@
-const mysql = require('mysql');
-const DBpromise = require('../db/db_info.js');
-const logger = require('../winston/config_f.js');
+let funDB = require('../db/db_fun.js');
 /*
   maillink send - ml_automail_tran
   maillink result - ml_automail_message
@@ -12,14 +10,14 @@ var mail = {
     sql = 'SELECT TABLE_NAME FROM Information_schema.tables \
     WHERE table_schema = \'union_mail\' \
     AND table_name LIKE \'ml_automail_tran_%\';';
-    return await getResult(sql);
+    return await funDB.getResult('d',sql);
   },
   insert: async function(values){
     var sql = 'INSERT INTO union_mail.ml_automail_tran ( AUTOMAILID, CHANNEL, MSGGENTYPE, EMSUBJECT, EMFROMNAME, EMFROMADDRESS, EMTONAME, EMTOADDRESS, EMMSGURL, SENDTIME, GENDATE, ETC1 ) VALUES ?';
     Promise.all(values).then(async function(v) {
-      await getResult(sql,[v]);
+      await funDB.getResult('d',sql,[v]);
       sql2 = 'update union_mail.ml_automail_tran set EMMSGURL = concat(EMMSGURL,\'&num=\',SEQ) where EMMSGURL not like \'%&num=%\'';
-      return await getResult(sql2);
+      return await funDB.getResult('d',sql2);
     }).catch(function(err){
       console.error('Promise.all error', err);
       return;
@@ -27,46 +25,46 @@ var mail = {
   },
   insertTest: async function(values){
     var sql = 'INSERT INTO union_mail.ml_automail_tran ( AUTOMAILID, CHANNEL, MSGGENTYPE, EMSUBJECT, EMFROMNAME, EMFROMADDRESS, EMTONAME, EMTOADDRESS, EMMSGURL, SENDTIME, GENDATE, ETC1 ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
-    return await getResult(sql,values);
+    return await funDB.getResult('d',sql,values);
   },
   insert2: async function(table,param){
     var pValue = Object.values(param);
     var sql = insertSqlSetting(table,Object.keys(param));
-    return await getResult(sql,pValue);
+    return await funDB.getResult('d',sql,pValue);
   },
   update: async function(param){
     var sql = 'update n_mail_all set M_body = ? where n_idx = ?';
-    return await getResult(sql,param);
+    return await funDB.getResult('d',sql,param);
   },
   updateURL: async function(){
     var sql = 'update union_mail.ml_automail_tran set EMMSGURL = concat(EMMSGURL,\'&num=\',SEQ) where EMMSGURL not like \'%&num=%\'';
-    return await getResult(sql);
+    return await funDB.getResult('d',sql);
   },
   deleteTest: async function(param){
     var sql = 'delete from union_mail.ml_mail_test where n_idx=?;';
-    return await getResult(sql,param);
+    return await funDB.getResult('d',sql,param);
   },
   deleteMlAMSG: async function(param){
     var sql = 'delete from union_mail.ml_automail_message where MSGID=?;';
-    return await getResult(sql,param);
+    return await funDB.getResult('d',sql,param);
   },
   deleteMlATI: async function(param){
     var sql = 'delete from union_mail.ml_automail_tran where SEQ=?;';
-    return await getResult(sql,param)
+    return await funDB.getResult('d',sql,param)
   },
   deleteMlAT: async function(param){
     var sql = 'delete from union_mail.ml_automail_tran where ETC1=?;';
-    return await getResult(sql,param)
+    return await funDB.getResult('d',sql,param)
     // sql = 'delete from ml_automail_tran_201805 where MSGID=?;';
-    // return await getResult(sql,param);
+    // return await funDB.getResult('d',sql,param);
   },
   deleteMlABackUp: async function(table,param){
     sql = 'delete from union_mail.'+table+' where ETC1=?;';
-    return await getResult(sql,param);
+    return await funDB.getResult('d',sql,param);
   },
   deleteMlABackUpTest: async function(table,param){
     sql = 'delete from union_mail.'+table+' where SEQ=?';
-    return await getResult(sql,param);
+    return await funDB.getResult('d',sql,param);
   },
   selectResultDetail:async function(param){
     // var sql = 'SELECT * FROM mail_send_result where n_idx=? ';
@@ -90,11 +88,11 @@ var mail = {
     sql += ') as b left join m_mail_list_all as l\
     on b.EMTONAME = l.M_name\
     group by b.SEQ order by null) as j order by j.EMTONAME asc'
-    return await getResult(sql,param.arr[0]);
+    return await funDB.getResult('d',sql,param.arr[0]);
   },
   selectResult: async function(param){
     var sql = 'select distinct RSLTMSG from mail_send_backup where MSGID = ?';
-    var result = await getResult(sql,param);
+    var result = await funDB.getResult('d',sql,param);
     var returnVal = false;
     if(result.length == 1){
       returnVal = true;
@@ -117,11 +115,11 @@ var mail = {
     left join m_mail_list_all as l on a.EMTOADDRESS = l.M_email\
     left join m_keyword_data as k on m.M_keyword = k.keyword_idx\
     group by a.SEQ';
-    return await getResult(sql,param[0]);
+    return await funDB.getResult('d',sql,param[0]);
   },
   selectEmailOneView:async function(idx){
     var sql = 'SELECT * FROM union_mail.ml_mail_test where n_idx=?';
-    return await getResult(sql,idx);
+    return await funDB.getResult('d',sql,idx);
   }
 }
 
@@ -135,19 +133,5 @@ function insertSqlSetting(table,keys){
   var sql = "INSERT INTO union_mail."+table+" ( "+columns+" ) VALUES ( "+placeholders+" );";
   return sql;
 }
-
-async function getResult(sql,param) {
-  var db = new DBpromise();
-  logger.info(mysql.format(sql, param)+';');
-  try{
-    return await db.query(sql,param);
-  } catch(e){
-    logger.error('DB Error:',e);
-    return [];
-  } finally{
-    db.close();
-  }
-}
-
 
 module.exports = mail;

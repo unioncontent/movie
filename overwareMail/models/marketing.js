@@ -1,7 +1,4 @@
-const mysql = require('mysql');
-const DBpromise = require('../db/db_info.js');
-const logger = require('../winston/config_f.js');
-
+let funDB = require('../db/db_fun.js');
 /*
  페이스북 테이블 - facebook_videos
  네이버 테이블 - naver_videos
@@ -23,7 +20,7 @@ var marketing = {
     FROM facebook_videos where sns_idx = ?';
     // 값이 있으면 insert 안되도록
     sql += ' and NOT EXISTS (SELECT * FROM marketing_sns_mail WHERE n_idx = ?);'
-    return await getResult(sql,[param.cnt,param.v_cnt,param.l_cnt,param.r_cnt,param.s_cnt,param.date,param.idx,param.idx]);
+    return await funDB.getResult('o',sql,[param.cnt,param.v_cnt,param.l_cnt,param.r_cnt,param.s_cnt,param.date,param.idx,param.idx]);
   },
   insertPortal: async function(param){
     var sql = 'insert into marketing_portal_mail(n_idx, ps_name, ps_content,ps_title, ps_writer, url, uid,\
@@ -38,25 +35,25 @@ var marketing = {
     sql +=' portal_writer, url, uid,\
     ?, ?, ?, ?, ?, writeDate, board_number, title_key, keyword, keyword_type, textType, thumbnail, now(), now(),?\
     FROM naver_videos where portal_idx = ?  and NOT EXISTS (SELECT * FROM marketing_portal_mail WHERE n_idx = ?);';
-    return await getResult(sql,[param.cnt,param.v_cnt,param.l_cnt,param.r_cnt,param.s_cnt,param.date,param.idx,param.idx]);
+    return await funDB.getResult('o',sql,[param.cnt,param.v_cnt,param.l_cnt,param.r_cnt,param.s_cnt,param.date,param.idx,param.idx]);
   },
   insert: async function(table,param){
     var pValue = Object.values(param);
     var sql = insertSqlSetting(table,Object.keys(param));
-    return await getResult(sql,pValue);
+    return await funDB.getResult('o',sql,pValue);
   },
   delete: async function(table,param){
     var sql = "delete from "+table+" where n_idx= ?";
-    return await getResult(sql,param);
+    return await funDB.getResult('o',sql,param);
   },
   update: async function(table,param){
     var sql = "update "+table+"  set ps_title=?, reportDate=?";
     sql+= " where n_idx = ?";
-    return await getResult(sql,param);
+    return await funDB.getResult('o',sql,param);
   },
   selectMarketingMailTable: async function(param){
     var sql = 'SELECT  * FROM marketing_mail where date(reportDate) = \''+param.eDate+'\' order by ps_name,ps_writer,createDate desc';
-    return await getResult(sql);
+    return await funDB.getResult('o',sql);
   },
   selectMarketingTable: async function(body,param){
     var sql = 'SELECT * FROM marketing_mail where url is not null';
@@ -67,7 +64,7 @@ var marketing = {
       sql +=' and (ps_title like \'%'+body.search+'%\' or ps_content like \'%'+body.search+'%\')';
     }
     sql += ' order by writeDate desc limit ?,?';
-    return await getResult(sql,param);
+    return await funDB.getResult('o',sql,param);
   },
   selectMarketingTableCount: async function(body,param){
     var sql = 'SELECT count(*) as total FROM marketing_mail where url is not null';
@@ -77,7 +74,7 @@ var marketing = {
     if('search' in body){
       sql +=' and (ps_title like \'%'+body.search+'%\' or ps_content like \'%'+body.search+'%\')';
     }
-    var count = await getResult(sql,param[0]);
+    var count = await funDB.getResult('o',sql,param[0]);
     if(count.length == 0){
       return 0;
     }
@@ -97,7 +94,7 @@ var marketing = {
       sql +=' and sns_writer = \''+body.writer+'\'';
     }
     sql += ' order by writeDate desc limit ?,?';
-    return await getResult(sql,param);
+    return await funDB.getResult('o',sql,param);
   },
   selectFacebookTableCount: async function(body,param){
     var sql = "SELECT count(*) as total FROM sns_view where url is not null ";
@@ -110,7 +107,7 @@ var marketing = {
     if('writer' in body){
       sql +=' and sns_writer = \''+body.writer+'\'';
     }
-    var count = await getResult(sql,param[0]);
+    var count = await funDB.getResult('o',sql,param[0]);
     if(count.length == 0){
       return 0;
     }
@@ -127,7 +124,7 @@ var marketing = {
       sql +=' and portal_title like \'%'+body.search+'%\'';
     }
     sql += ' order by writeDate desc limit ?,?';
-    return await getResult(sql,param);
+    return await funDB.getResult('o',sql,param);
   },
   selectNaverTableCount: async function(body,param){
     var sql = "SELECT count(*) as total FROM portal_view where portal_name = \'naver\'";
@@ -137,7 +134,7 @@ var marketing = {
     if('search' in body){
       sql +=' and portal_title like \'%'+body.search+'%\'';
     }
-    var count = await getResult(sql);
+    var count = await funDB.getResult('o',sql);
     if(count.length == 0){
       return 0;
     }
@@ -156,17 +153,4 @@ function insertSqlSetting(table,keys){
   return sql;
 }
 
-
-async function getResult(sql,param) {
-  var db = new DBpromise();
-  logger.info(mysql.format(sql, param)+';');
-  try{
-    return await db.query(sql,param);
-  } catch(e){
-    logger.error('DB Error:',e);
-    return [];
-  } finally{
-    db.close();
-  }
-}
 module.exports = marketing;
