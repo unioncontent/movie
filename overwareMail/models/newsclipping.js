@@ -1,14 +1,15 @@
-const mysql = require('mysql');
-const DBpromise = require('../db/db_info.js');
-const logger = require('../winston/config_f.js');
+let funDB = require('../db/db_fun.js');
 /*
+ 변경DB
  뉴스 테이블 - media_data
  뉴스 등록 테이블 - news_mail
  키워드 이슈 테이블 - issue_data
  키워드 테이블 - keyword_data
  기업 뉴스 테이블 - companynews_data
- 지난 뉴스 클리핑 테이블 - n_mail_all , n_mail_detail
+ ---
+ 기존DB
  뷰 - newsclipping_view
+ 지난 뉴스 클리핑 테이블 - n_mail_all , n_mail_detail
 */
 
 var newsclipping = {
@@ -18,12 +19,12 @@ var newsclipping = {
       sql+= '_m';
     }
     sql += '(?,?,?,?)';
-    return await getResult(sql,param);
+    return await funDB.getResult('d',sql,param);
   },
   call_newsclipping_period_result: async function(param){
     var sql = 'call union_mail.newsclipping_period_result(?,?)';
     // call union_mail.newsclipping_period_result('success', '225');
-    var result = await getResult(sql,param);
+    var result = await funDB.getResult('d',sql,param);
     return (result.length > 0)?result[0]:result;
   },
   insert: async function(detail,page,param){
@@ -45,38 +46,38 @@ var newsclipping = {
     sql += 'FROM `union`.news_view where media_idx = ?';
     // 값이 있으면 insert 안되도록
     sql += ' and NOT EXISTS (SELECT * FROM news_mail WHERE media_idx = ?);'
-    return await getResult(sql,param);
+    return await funDB.getResult('o',sql,param);
   },
   insertReporter: async function(param){
     var sql = 'INSERT INTO `union`.reporter_data (reporter_media_name,reporter_name) SELECT ?,? FROM DUAL WHERE NOT EXISTS (SELECT * FROM `union`.reporter_data WHERE reporter_media_name=? and reporter_name=?); ';
-    return await getResult(sql,param);
+    return await funDB.getResult('o',sql,param);
   },
   insert2: async function(param){
     var pValue = Object.values(param);
     var sql = insertSqlSetting(Object.keys(param));
-    return await getResult(sql,pValue);
+    return await funDB.getResult('o',sql,pValue);
   },
   deleteList: async function(param){
     var sql = "delete from "+param.table+" where "+param.idxStr+"=?";
     if(param.table == "news_mail"){
       sql += " or news_detail="+param.idx;
     }
-    return await getResult(sql,param.idx);
+    return await funDB.getResult('o',sql,param.idx);
   },
   cancelUpdate: async function(param){
     var sql = "update "+param.table+" set news_detail = null where news_detail=?";
-    return await getResult(sql,param.idx);
+    return await funDB.getResult('o',sql,param.idx);
   },
   delete: async function(param){
     var sql = "delete from news_mail where media_idx=?";
-    return await getResult(sql,param);
+    return await funDB.getResult('o',sql,param);
   },
   updateGroup: async function(param){
     var sql = "update news_mail set news_detail=? where ";
     var arr = [].map.call(param.idxs, function(obj) { return 'media_idx=?'; });
     sql += arr.join(' or ');
     param.idxs.unshift(param.midx);
-    return await getResult(sql,param.idxs);
+    return await funDB.getResult('o',sql,param.idxs);
   },
   update: async function(detail,page,param){
     var sql = "update news_mail set reportDate=?,news_type=?";
@@ -93,9 +94,9 @@ var newsclipping = {
       sql += ',media_page=NULL';
     }
     sql+= " where media_idx=?";
-    await getResult(sql,param);
+    await funDB.getResult('o',sql,param);
     sql = "update news_mail set reportDate=?,news_type=? where news_detail=?";
-    return await getResult(sql,param);
+    return await funDB.getResult('o',sql,param);
   },
   selectKeywordMailTable: async function(param){
     var sql = 'select * FROM keyword_mail ';
@@ -103,7 +104,13 @@ var newsclipping = {
       sql += ' where k_type=? ';
     }
     sql += 'order by k_type,k_main';
-    return await getResult(sql,param);
+    try {
+      return await funDB.getResult('o',sql,param);
+    } catch (e) {
+      console.log(e)
+    } finally {
+      return await funDB.getResult('d',sql,param);
+    }
   },
   selectMediaTable2: async function(body,k_list){
     var sql = "SELECT * FROM news_view where title_key in (select distinct keyword_main from keyword_data where user_idx=1 or user_idx=21)";
@@ -118,7 +125,7 @@ var newsclipping = {
     }
     sql += ' order by writeDate';
 
-    var result = await getResult(sql);
+    var result = await funDB.getResult('o',sql);
     var regExp = /[\{\}\[\]\/?.,;:|\‘’“”…)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi;
     return [].map.call(result, function(obj) {
       obj.count = 0;
@@ -189,7 +196,7 @@ var newsclipping = {
     sql += ' order by '+(('rank' in body)?'-ME_rank desc,':'')+' writeDate desc';
     sql += ' limit ?,?';
 
-    var result = await getResult(sql,param);
+    var result = await funDB.getResult('o',sql,param);
     return result;
     // return [].map.call(result, function(obj) {
     //   obj.type = '0';
@@ -270,7 +277,7 @@ var newsclipping = {
       }
       sql +=' and (news_type = \''+body.type+'\' or title_key = \''+typeStr+'\')';
     }
-    var count = await getResult(sql,param[0]);
+    var count = await funDB.getResult('o',sql,param[0]);
     if(count.length == 0){
       return 0;
     }
@@ -300,7 +307,7 @@ var newsclipping = {
       // sql +=' and media_title like \'%'+body.search+'%\'';
     }
     sql += ' order by updateDate desc limit ?,?';
-    return await getResult(sql,param);
+    return await funDB.getResult('o',sql,param);
   },
   selectNewsMailTableCount: async function(body,param){
     var sql = 'SELECT count(*) as total FROM news_mail where title_key in (select distinct keyword_main from keyword_data where user_idx=? or user_idx=21)';
@@ -322,7 +329,7 @@ var newsclipping = {
       sql +=' and (media_title like \'%'+body.search.replace(/'/gi,"''").replace(/[?]/gi,"")+'%\' or media_content like \'%'+body.search.replace(/'/gi,"''").replace(/[?]/gi,"")+'%\')';
       // sql +=' and media_title like \'%'+body.search+'%\'';
     }
-    var count = await getResult(sql,param[0]);
+    var count = await funDB.getResult('o',sql,param[0]);
     if(count.length == 0){
       return 0;
     }
@@ -343,11 +350,11 @@ var newsclipping = {
     // DATE_FORMAT(writeDate, '%Y.%m.%d') AS writeDate,media_subname,DATE_FORMAT(writeDate, '%Y-%m-%d %H:%i:%s') AS writeDateStr,media_title,media_name,reporter_name,keyword,textType,thumbnail,news_type,replynum,news_detail \
     // FROM news_mail where title_key in (select distinct keyword_main from keyword_data where user_idx=? or user_idx=21)";
     // sql+=' and Date(reportDate) = \''+body.eDate+'\'';
-    return await getResult(sql,param);
+    return await funDB.getResult('o',sql,param);
   },
   selectIssueTable: async function(param){
     var sql = 'SELECT * FROM issue_data where (company_name = \'쇼박스\' or title_key in (select distinct keyword_main from keyword_data where user_idx=1 or user_idx=21)) and  Date(writeDate) = \''+param.eDate+'\'';
-    return await getResult(sql);
+    return await funDB.getResult('o',sql);
   },
   selectOneMailBodyDate: async function(param){
     // var sql = "SELECT DATE_FORMAT(SENDTIME, '%Y-%m-%d') AS SENDTIME,M_body,MSGID as n_idx FROM newsclipping_view where MSGID=? group by M_body order by SENDTIME desc,MSGID desc";
@@ -356,7 +363,7 @@ var newsclipping = {
     // on a.n_idx = b.MSGID\
     // where a.n_idx=? group by a.M_body order by b.SENDTIME desc,a.n_idx desc;"
     var sql = "SELECT DATE_FORMAT(M_senddate, '%Y-%m-%d') AS SENDTIME,M_body,n_idx FROM `union`.n_mail_all where n_idx=? group by M_body order by M_senddate desc,n_idx desc;"
-    return await getResult(sql,param);
+    return await funDB.getResult('d',sql,param);
   },
   selectOneMailBodyDate2: async function(param){
     // var sql = "SELECT DATE_FORMAT(SENDTIME, '%Y-%m-%d') AS SENDTIME,M_body,MSGID as n_idx FROM newsclipping_view where M_subject like '%"+param+"%' group by M_body order by SENDTIME desc,MSGID desc";
@@ -365,7 +372,7 @@ var newsclipping = {
     // on a.n_idx = b.MSGID\
     // where a.M_subject like '%"+param+"%' group by a.M_body order by b.SENDTIME desc,a.n_idx desc;"
     var sql = "SELECT M_subject,DATE_FORMAT(M_senddate, '%Y-%m-%d') AS SENDTIME,M_body,n_idx FROM `union`.n_mail_all as a where M_subject like '%"+param+"%' group by M_body order by M_senddate desc,n_idx desc;"
-    return await getResult(sql);
+    return await funDB.getResult('d',sql);
   },
   selectListView: async function(body,param){
     var sql = 'SELECT * FROM newsclipping_list_view where n_idx is not null ';
@@ -374,7 +381,7 @@ var newsclipping = {
     }
     sql += ' and (  M_id = ? or M_id in (select n_idx from m_mail_user where user_admin=?)) ';
     sql += ' order by n_idx desc limit ?,?';
-    return await getResult(sql,param);
+    return await funDB.getResult('d',sql,param);
   },
   selectListViewCount: async function(body,param){
     var sql = 'SELECT count(*) as total FROM  newsclipping_list_view where n_idx is not null ';
@@ -382,7 +389,7 @@ var newsclipping = {
       sql+=' and M_regdate between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
     }
     sql += ' and (  M_id = ? or M_id in (select n_idx from m_mail_user where user_admin=?))';
-    var count = await getResult(sql,param);
+    var count = await funDB.getResult('d',sql,param);
     if(count.length == 0){
       return 0;
     }
@@ -401,19 +408,6 @@ function insertSqlSetting(keys){
   return sql;
 }
 
-async function getResult(sql,param) {
-  var db = new DBpromise();
-  logger.info(mysql.format(sql, param)+';');
-  try{
-    return await db.query(sql,param);
-  } catch(e){
-    logger.error('DB Error:',e);
-    return [];
-  } finally{
-    db.close();
-  }
-}
-
 module.exports = newsclipping;
 
 
@@ -425,7 +419,7 @@ selectView: async function(body,param){
   }
   sql += ' and (  M_id = ? or M_id in (select n_idx from m_mail_user where user_admin=?)) ';
   sql += ' group by M_idx_A order by M_idx_A desc limit ?,?';
-  return await getResult(sql,param);
+  return await funDB.getResult('d',sql,param);
 },
 selectViewCount: async function(body,param){
   var sql = 'SELECT count(*) as total FROM (SELECT * from newsclipping_view where M_idx_A is not null ';
@@ -433,7 +427,7 @@ selectViewCount: async function(body,param){
     sql+=' and M_regdate between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
   }
   sql += ' and (  M_id = ? or M_id in (select n_idx from m_mail_user where user_admin=?)) group by M_idx_A) a';
-  var count = await getResult(sql,param);
+  var count = await funDB.getResult('d',sql,param);
   if(count.length == 0){
     return 0;
   }
@@ -448,7 +442,7 @@ selectListView: async function(body,param){
   }
   sql += ' and (  M_id = ? or M_id in (select n_idx from m_mail_user where user_admin=?)) ';
   sql += ' order by n_idx desc limit ?,?';
-  return await getResult(sql,param);
+  return await funDB.getResult('d',sql,param);
 },
 selectListViewCount: async function(body,param){
   var sql = 'SELECT count(*) as total FROM  newsclipping_list_view where n_idx is not null ';
@@ -456,7 +450,7 @@ selectListViewCount: async function(body,param){
     sql+=' and M_regdate between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
   }
   sql += ' and (  M_id = ? or M_id in (select n_idx from m_mail_user where user_admin=?))';
-  var count = await getResult(sql,param);
+  var count = await funDB.getResult('d',sql,param);
   if(count.length == 0){
     return 0;
   }
@@ -474,6 +468,6 @@ selectResultDetail:async function(param){
     }
   }
   // sql+=' group by E_mail';
-  return await getResult(sql,param.arr);
+  return await funDB.getResult('d',sql,param.arr);
 },
 */

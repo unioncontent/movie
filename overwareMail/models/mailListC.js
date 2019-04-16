@@ -1,7 +1,4 @@
-const mysql = require('mysql');
-const DBpromise = require('../db/db_info.js');
-const logger = require('../winston/config_f.js');
-
+let funDB = require('../db/db_fun.js');
 /*
  메일 그룹 리스트 테이블 - m_mail_list_c
  View 테이블 - mail_list_group_view
@@ -13,12 +10,24 @@ var mailListC = {
     sql += list.map(function(val) {
       return '('+mail[0].M_id+',\''+val+'\','+mail[0].n_idx+',\''+mail[0].M_email+'\')';
     }).join(',');
-    return await getResult(sql);
+    try {
+      await funDB.getResult('o',sql);
+    } catch (e) {
+      console.log(e)
+    } finally {
+      return await funDB.getResult('d',sql);
+    }
   },
   insert: async function(param){
     var pValue = Object.values(param);
     var sql = insertSqlSetting(Object.keys(param));
-    return await getResult(sql,pValue);
+    try {
+      await funDB.getResult('o',sql,pValue);
+    } catch (e) {
+      console.log(e)
+    } finally {
+      return await funDB.getResult('d',sql,pValue);
+    }
   },
   deleteFun: async function(param){
     var pValue = Object.values(param);
@@ -33,7 +42,13 @@ var mailListC = {
       sql += ' M_idx_a=?';
     }
     sql += 'and M_id=?;'
-    return await getResult(sql,pValue);
+    try {
+      await funDB.getResult('o',sql,pValue);
+    } catch (e) {
+      console.log(e)
+    } finally {
+      return await funDB.getResult('d',sql,pValue);
+    }
   },
   getEmail : async function(param,idx){
     var sql = 'select M_email from m_mail_list_c where M_ID=? ';
@@ -47,7 +62,7 @@ var mailListC = {
     else if(typeof param == 'string'){
       sql += 'and M_group_title =\''+param+'\'';
     }
-    var result = await getResult(sql,[idx]);
+    var result = await funDB.getResult('d',sql,[idx]);
     return [].map.call(result, function(obj) { return obj.M_email; });
   },
   getOneEmail:async function(param){
@@ -63,7 +78,7 @@ var mailListC = {
       sql += 'where n_idx ='+param;
     }
     sql += ')';
-    var result = await getResult(sql);
+    var result = await funDB.getResult('d',sql);
     return [].map.call(result, function(obj) { return obj.M_email; });
   },
   getOneEmail2:async function(idx,param){
@@ -79,7 +94,7 @@ var mailListC = {
       sql += 'where n_idx ='+param;
     }
     sql += ')';
-    var result = await getResult(sql);
+    var result = await funDB.getResult('d',sql);
     return [].map.call(result, function(obj) { return obj.M_idx_a; });
     // var sql = 'select distinct M_email,M_name from m_mail_list_all where M_id = '+idx+' and M_email in (';
     // sql += 'select distinct M_email from m_mail_list_c where M_group_title in (select M_group_title from m_mail_list_c ';
@@ -94,7 +109,7 @@ var mailListC = {
     //   sql += 'where n_idx ='+param;
     // }
     // sql += '))';
-    // var result = await getResult(sql);
+    // var result = await funDB.getResult('d',sql);
     // return [].map.call(result, function(obj) { return [obj.M_name,obj.M_email]; });
   },
   getOneEmail3:async function(param){
@@ -110,7 +125,7 @@ var mailListC = {
       sql += 'where n_idx ='+param;
     }
     sql += ') group by M_group_title';
-    var result = await getResult(sql);
+    var result = await funDB.getResult('d',sql);
     return [].map.call(result, function(obj) { return [obj.M_group_title,obj.M_group_title+'&lt; '+obj.total+'명 &gt;']});
   },
   getIdx : async function(param,idx){
@@ -125,7 +140,7 @@ var mailListC = {
     else if(typeof param == 'string'){
       sql += 'and M_group_title =\''+param+'\'';
     }
-    var result = await getResult(sql,[idx]);
+    var result = await funDB.getResult('d',sql,[idx]);
     return [].map.call(result, function(obj) { return obj.M_idx_a; });
   },
   getIdx2 : async function(param,idx){
@@ -141,24 +156,24 @@ var mailListC = {
       sql += 'and M_group_title =\''+param+'\'';
     }
     sql += '  group by M_group_title';
-    var result = await getResult(sql,[idx]);
+    var result = await funDB.getResult('d',sql,[idx]);
     return [].map.call(result, function(obj) { return obj.n_idx; });
   },
   titleCheck: async function(param){
     var sql = 'select * from m_mail_list_c where M_group_title=? and M_id=?;';
-    return await getResult(sql,param);
+    return await funDB.getResult('d',sql,param);
   },
   titleEmailCheck: async function(email,param){
     var sql = 'select * from m_mail_list_c where M_group_title=? and M_id=? and M_email like \'%'+email+'%\';';
-    return await getResult(sql,param);
+    return await funDB.getResult('d',sql,param);
   },
   getOneInfo : async function(m_idx){
     var sql = 'select * from m_mail_list_c where M_idx_a=?';
-    return await getResult(sql,[m_idx]);
+    return await funDB.getResult('d',sql,[m_idx]);
   },
   getOneData : async function(idx){
     var sql = 'select * from m_mail_list_c where n_idx=?';
-    return await getResult(sql,[idx]);
+    return await funDB.getResult('d',sql,[idx]);
   },
   selectView: async function(body,param){
     var sql = 'select M_ID,date_format(M_regdate, \'%Y-%m-%d %H:%i:%s\') as M_regdate,user_name,search,FORMAT(count(*),0) as groupCount,M_group_title,M_group_title';
@@ -177,11 +192,17 @@ var mailListC = {
     else{
       sql += ' order by search limit ?,?';
     }
-    return await getResult(sql,param);
+    return await funDB.getResult('d',sql,param);
   },
   update: async function(param){
     var sql = 'update m_mail_list_c set M_email=? where M_idx_a=?;';
-    return await getResult(sql,[param.M_email,param.n_idx]);
+    try {
+      await funDB.getResult('o',sql,[param.M_email,param.n_idx]);
+    } catch (e) {
+      console.log(e)
+    } finally {
+      return await funDB.getResult('d',sql,[param.M_email,param.n_idx]);
+    }
   },
   selectViewCount: async function(body,param){
     var sql = 'select count(*) as total from (SELECT * FROM mail_list_group_view where';
@@ -190,7 +211,7 @@ var mailListC = {
     }
     sql += ' M_ID = ?';
     sql += ' group by M_group_title) a';
-    var count = await getResult(sql,param);
+    var count = await funDB.getResult('d',sql,param);
     if(count.length == 0){
       return 0;
     }
@@ -213,7 +234,7 @@ var mailListC = {
     if (typeof body.order !== 'undefined') {
       sql += ' order by n_idx desc limit ?,?';
     }
-    return await getResult(sql,param);
+    return await funDB.getResult('d',sql,param);
   },
   selectViewCount2: async function(body,param){
     var sql = 'select count(*) as total FROM mail_list_group_view where M_id = ?';
@@ -227,7 +248,7 @@ var mailListC = {
         case 't': sql+=' and M_tel =\''+body.search.replace( /(\s*)/g, "")+'\''; break;
       }
     }
-    var count = await getResult(sql,param);
+    var count = await funDB.getResult('d',sql,param);
     if(count.length == 0){
       return 0;
     }
@@ -244,19 +265,6 @@ function insertSqlSetting(keys){
   var sql = "INSERT INTO m_mail_list_c ( "+columns+" ) VALUES ( "+placeholders+" );";
 
   return sql;
-}
-
-async function getResult(sql,param) {
-  var db = new DBpromise();
-  logger.info(mysql.format(sql, param)+';');
-  try{
-    return await db.query(sql,param);
-  } catch(e){
-    logger.error('DB Error:',e);
-    return [];
-  } finally{
-    db.close();
-  }
 }
 
 module.exports = mailListC;

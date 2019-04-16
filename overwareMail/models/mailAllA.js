@@ -1,6 +1,4 @@
-const mysql = require('mysql');
-const DBpromise = require('../db/db_info.js');
-const logger = require('../winston/config_f.js');
+let funDB = require('../db/db_fun.js');
 
 /*
  메일발송리스트 테이블 - m_mail_all_a
@@ -10,12 +8,12 @@ var mailAllA = {
   selectMailList:async function(param){
     var sql = 'SELECT M_subject,M_keyword,n_idx FROM `union`.m_mail_all_a where M_keyword = ? and M_invitation = ? and M_template = ?\
     and M_senddate is not null and M_id in (SELECT n_idx FROM `union`.m_mail_user where user_admin = ?  or n_idx = ? or n_idx = ?) order by M_regdate desc limit ?,?';
-    return await getResult(sql,param);
+    return await funDB.getResult('d',sql,param);
   },
   selectMailListCount:async function(param){
     var sql = 'SELECT count(*) as total FROM `union`.m_mail_all_a where M_keyword = ? and M_invitation = ? and M_template = ?\
     and M_senddate is not null and M_id in (SELECT n_idx FROM `union`.m_mail_user where user_admin = ?  or n_idx = ? or n_idx = ?)';
-    var count = await getResult(sql,param);
+    var count = await funDB.getResult('d',sql,param);
     if(count.length == 0){
       return 0;
     }
@@ -45,7 +43,7 @@ var mailAllA = {
       sql += 'or M_keyword_idx = '+body.user_keyword;
     }
     sql += ' ) order by M_regdate desc limit ?,?';
-    return await getResult(sql,param);
+    return await funDB.getResult('d',sql,param);
   },
   selectEmailViewCount:async function(body,param){
     var sql = 'SELECT count(*) as total FROM manage_view where n_idx is not null ';
@@ -69,7 +67,7 @@ var mailAllA = {
       sql += 'or M_keyword_idx = '+body.user_keyword;
     }
     sql += ' ) ';
-    var count = await getResult(sql,param);
+    var count = await funDB.getResult('d',sql,param);
     if(count.length == 0){
       return 0;
     }
@@ -79,32 +77,36 @@ var mailAllA = {
   },
   selectEmailOneView:async function(idx){
     var sql = 'SELECT * FROM m_mail_all_a where n_idx=?';
-    return await getResult(sql,idx);
+    return await funDB.getResult('d',sql,idx);
   },
   selectEmailHtmlView:async function(idx){
     var sql = 'SELECT M_body_his FROM m_mail_all_a where n_idx=?';
-    return await getResult(sql,idx);
+    return await funDB.getResult('d',sql,idx);
   },
   selectPastMailBody:async function(param){
     var sql = 'SELECT M_body FROM m_mail_all_a where M_keyword = ? and M_invitation = ? and M_template = ?\
     and M_senddate is not null and (M_id in (SELECT n_idx FROM m_mail_user where user_admin = 1) or M_id = ?) order by n_idx desc limit 1;';
-    var result = await getResult(sql,param);
+    var result = await funDB.getResult('d',sql,param);
 
     return (result.length != 0)?result[0].M_body:'';
   },
   insert: async function(param){
     var pValue = Object.values(param);
     var sql = insertSqlSetting(Object.keys(param));
-    return await getResult(sql,pValue);
+    return await funDB.getResult('d',sql,pValue);
+  },
+  delete_e: async function(n_idx){
+    var sql = 'delete from m_mail_all_a where n_idx=?';
+    return await funDB.getResult('d',sql,[n_idx]);
   },
   delete: async function(n_idx){
     // var sql = 'delete from m_mail_all_a where n_idx=?';
     var sql = 'update m_mail_all_a set M_delete = 1, M_senddate = now() where n_idx=?';
-    return await getResult(sql,[n_idx]);
+    return await funDB.getResult('d',sql,[n_idx]);
   },
   updateMailBodyHis:async function(param){
     var sql = 'update m_mail_all_a set M_body_his=? where n_idx=?';
-    return await getResult(sql,param);
+    return await funDB.getResult('d',sql,param);
   },
   updateMtype:async function(param){
     var sql = 'update m_mail_all_a set M_type=?';
@@ -112,15 +114,15 @@ var mailAllA = {
       sql += ', M_senddate=null ';
     }
     sql += 'where n_idx=?';
-    return await getResult(sql,param);
+    return await funDB.getResult('d',sql,param);
   },
   updateSendDate: async function(param){
     var sql = 'update m_mail_all_a set M_senddate = ? where n_idx = ?';
-    return await getResult(sql,param);
+    return await funDB.getResult('d',sql,param);
   },
   updateId: async function(param){
     var sql = 'update m_mail_all_a set M_a_id=? where n_idx=?';
-    return await getResult(sql,param);
+    return await funDB.getResult('d',sql,param);
   }
 }
 
@@ -131,19 +133,6 @@ function insertSqlSetting(keys){
   var sql = "INSERT INTO m_mail_all_a ( "+columns+" ) VALUES ( "+placeholders+" );";
 
   return sql;
-}
-
-async function getResult(sql,param) {
-  var db = new DBpromise();
-  logger.info(mysql.format(sql, param)+';');
-  try{
-    return await db.query(sql,param);
-  } catch(e){
-    logger.error('DB Error:',e);
-    return [];
-  } finally{
-    db.close();
-  }
 }
 
 module.exports = mailAllA;

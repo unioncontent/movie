@@ -1,6 +1,4 @@
-const mysql = require('mysql');
-const DBpromise = require('../db/db_info.js');
-const logger = require('../winston/config_f.js');
+let funDB = require('../db/db_fun.js');
 /*
  키워드 테이블 - keyword_data
  메일 키워드 테이블 - m_keyword_data
@@ -9,7 +7,7 @@ const logger = require('../winston/config_f.js');
 var keyword = {
   selectMovieKwd: async function(admin,param){
     var sql = 'SELECT * FROM m_keyword_data where user_idx=? and keyword_property=1';
-    return await getResult(sql,param);
+    return await funDB.getResult('d',sql,param);
   },
   selectKwdList: async function(body,param){
     var sql = 'SELECT keyword_idx, user_idx, keyword_property, keyword_main,  DATE_FORMAT(createDate, \'%Y-%m-%d %H:%i:%s\') AS createDate, DATE_FORMAT(updateDate, \'%Y-%m-%d %H:%i:%s\') AS updateDate FROM m_keyword_data where user_idx=?';
@@ -17,7 +15,7 @@ var keyword = {
       sql +=' and keyword_main like \'%'+body.keyword+'%\'';
     }
     sql += ' order by keyword_idx desc limit ?,?';
-    return await getResult(sql,param);
+    return await funDB.getResult('d',sql,param);
   },
   selectKwdListCount: async function(body,param){
     var sql = 'SELECT count(*) as total FROM m_keyword_data where user_idx=?';
@@ -25,7 +23,7 @@ var keyword = {
       sql +=' and keyword_main like \'%'+body.keyword+'%\'';
     }
     sql += ' order by keyword_idx desc';
-    var count = await getResult(sql,param);
+    var count = await funDB.getResult('d',sql,param);
     if(count.length == 0){
       return 0;
     }
@@ -36,36 +34,60 @@ var keyword = {
   insert: async function(table,param){
     var pValue = Object.values(param);
     var sql = insertSqlSetting(table,Object.keys(param));
-    return await getResult(sql,pValue);
+    try {
+      await funDB.getResult('o',sql,pValue);
+    } catch (e) {
+      console.log(e)
+    } finally {
+      return await funDB.getResult('d',sql,pValue);
+    }
   },
   addKwdCheck: async function(param) {
     var sql = 'select * from m_keyword_data where keyword_main=?';
-    return await getResult(sql,param);
+    return await funDB.getResult('d',sql,param);
   },
   update: async function(param){
     var pValue = Object.values(param);
     var sql = 'update m_keyword_data set keyword_main=? where keyword_idx=?';
-    return await getResult(sql,pValue);
+    try {
+      await funDB.getResult('o',sql,pValue);
+    } catch (e) {
+      console.log(e)
+    } finally {
+      return await funDB.getResult('d',sql,pValue);
+    }
   },
   updateState: async function(param){
     var pValue = Object.values(param);
     var sql = 'update m_keyword_data set keyword_property=? where keyword_idx=?';
-    return await getResult(sql,pValue);
+    try {
+      await funDB.getResult('o',sql,pValue);
+    } catch (e) {
+      console.log(e)
+    } finally {
+      return await funDB.getResult('d',sql,pValue);
+    }
   },
   delete: async function(param){
     var sql = 'delete from m_keyword_data where keyword_idx=?';
-    return await getResult(sql,param);
+    try {
+      await funDB.getResult('o',sql,param);
+    } catch (e) {
+      console.log(e)
+    } finally {
+      return await funDB.getResult('d',sql,param);
+    }
   },
   selectMovieKwdAll: async function(admin,param){
     if(admin != null){
       param = admin;
     }
     var sql = 'select * from m_keyword_data where user_idx=?';
-    return await getResult(sql,param);
+    return await funDB.getResult('d',sql,param);
   },
   selectKwd_o: async function(){
     var sql = 'select * from keyword_data where user_idx=1 and keyword_property = \'포함\' group by keyword_main';
-    return await getResult(sql);
+    return await funDB.getResult('d',sql);
   }
 }
 
@@ -75,19 +97,6 @@ function insertSqlSetting(table,keys){
   placeholders = arr.join(', ');
   var sql = "INSERT INTO "+table+" ( "+columns+" ) VALUES ( "+placeholders+" );";
   return sql;
-}
-
-async function getResult(sql,param) {
-  var db = new DBpromise();
-  logger.info(mysql.format(sql, param)+';');
-  try{
-    return await db.query(sql,param);
-  } catch(e){
-    logger.error('DB Error:',e);
-    return [];
-  } finally{
-    db.close();
-  }
 }
 
 module.exports = keyword;

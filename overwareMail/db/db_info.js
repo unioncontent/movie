@@ -8,12 +8,19 @@ class Database {
       password : 'qwer1234',
       database : 'union'
     };
-    if(type){
+    if(type == 'm'){
       this.db = {
         host     : '183.111.125.240',
         user     : 'unionc',
         password : 'unionc!@#',
         database : 'tm001'
+      };
+    } else if(type == 'o'){
+      this.db = {
+        host     : '49.247.5.169',
+        user     : 'overware',
+        password : 'uni1004!@',
+        database : 'union'
       };
     }
     this.connection = mysql.createConnection(this.db);
