@@ -313,6 +313,7 @@ function ajaxGetPageList(param){
         $('#listTable tbody').eq(0).append(html);
       });
       $('#listTable tfoot').eq(0).empty();
+      var keywordValue = $('#keyword').val();
       if(keywordValue == ''){
         var limit = 20;
         var pageCount = Math.ceil(data.result.listCount/limit);
