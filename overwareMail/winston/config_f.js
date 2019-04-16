@@ -27,7 +27,7 @@ const logger = winston.createLogger({
   level: 'info',
   transports: [
     new winston.transports.DailyRotateFile({
-        filename: 'C:/overware/overwareMail/logs/console.log',
+        filename: 'C:/overware/overwareMail/log/console.log',
         zippedArchive: true, // 압축여부
         format: winston.format.printf(info => `${new Date().toFormat('YYYY-MM-DD HH24:MI:SS')} [${info.level.toUpperCase()}] - ${info.message}`)
     }),

@@ -109,7 +109,7 @@ $(document).on('click', '.btn-edit', function() {
   var typeVal = thisTd.data('mtype');
   var idxVal = thisTd.data('idx');
   var mIdVal = thisTd.data('mid');
-  if (tdEles.eq(8).text() != '-') {
+  if (tdEles.eq(8).text().replace(/\n/gi,'').trim() != '-') {
     swal("ERROR!", '발송된 메일은 수정하실 수 없습니다.', "error");
     return false;
   }
