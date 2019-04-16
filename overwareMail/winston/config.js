@@ -4,7 +4,7 @@ const winston = require('winston');
 const options = {
   file: {
     level: 'info',
-    filename: `C:/overware/overwareMail/logs/app.log`,
+    filename: `C:/overware/overwareMail/log/app.log`,
     handleExceptions: true,
     json: true,
     maxsize: 52428800, // 50MB

@@ -58,7 +58,7 @@ router.post('/getNextPage',isAuthenticated,async function(req, res, next) {
 });
 
 async function getListPageData(idx,param){
-  logger.info('getListPageData');
+  logger.info('period-getListPageData');
   var datetime = require('node-datetime');
   var dt = datetime.create();
   var end = dt.format('Y-m-d');
@@ -132,7 +132,6 @@ async function getListPageData(idx,param){
     // data['list'] = await period.selectView(searchBody,searchParam);
     // data['listCount'] = await period.selectViewCount(searchBody,searchParam);
     var result = [];
-    logger.info(data.module);
     if(data.module == '1'){
       result = await period.call_stats(searchParam);
     } else if(data.module == '2'){
@@ -143,7 +142,7 @@ async function getListPageData(idx,param){
     data['currentPage'] = currentPage;
   }
   catch(e){
-    logger.error(e);
+    logger.error('통계에러 : ',e);
   }
   return data;
 }

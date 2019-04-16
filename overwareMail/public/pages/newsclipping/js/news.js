@@ -300,6 +300,10 @@ $('#checkboxAll').on('click',function(){
 $(document).on('click','.news-checkbox',function(){
   $('#checkboxAll').prop('checked', false);
 });
+// 보고날짜 변경시
+$(document).on('change','input[name=datefilter]',function(){
+  $('input[name=datefilter]').val($(this).val());
+});
 //페이지 이동
 $(document).on('click','.page-link',function(){
   // var num = Number($(this).text()) || Number($(this).data().num);

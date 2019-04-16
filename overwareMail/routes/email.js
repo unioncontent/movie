@@ -606,7 +606,7 @@ router.post('/save',isAuthenticated, async function(req, res) {
       mailAllParam['n_idx'] = req.body['idx'];
       mailAllParam['M_id'] = req.body['Mid'];
 
-      await mailAllA.delete(mailAllParam['n_idx']);
+      await mailAllA.delete_e(mailAllParam['n_idx']);
     }
   }
   // 메일발송 리스트 insert

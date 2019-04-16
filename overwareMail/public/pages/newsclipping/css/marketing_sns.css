@@ -1,0 +1,69 @@
+.table td, .table th {
+  vertical-align: middle;
+}
+/* loader */
+.preloader3{
+  display: none;
+  padding-top:20%;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 100px;
+  width: 500px;
+  margin: auto;
+  max-width: 100%;
+  z-index: 10000;
+}
+.datepicker{
+  min-width: 88px;
+}
+.reportrange{
+  min-width: 207px;
+}
+.table td, .table th {
+  text-align: center;
+}
+.title_nobr,.nobr{
+  font-size: 15px;
+  padding-left: 3px;
+  text-overflow: ellipsis;
+  width: 400px;
+  overflow: hidden;
+  margin: 0px auto;
+}
+.nobr{
+  width: 66px;
+}
+.nobr>i{
+  font-size: 10px;
+}
+.select-news{
+  font-size: 12px;
+  max-height: 35px;
+  line-height: 16px;
+}
+.title_nobr:hover{
+  cursor:pointer;
+  font-weight: bold;
+}
+.border-checkbox-section .border-checkbox-group .border-checkbox-label{
+  margin: 0px;
+}
+#listTable .table thead th{
+  vertical-align: middle;
+  text-align: center;
+}
+#addBtn{
+  font-weight: bold;
+  color: white;
+  height: 40px;
+  background-color: #a6a6a6;
+  border-color: #a6a6a6;
+}
+/* daterangepicker */
+.card .card-header span:not(.input-group-addon) {
+  display: inline;
+}
+#searchInput{
+  font-size: 12px
+}
