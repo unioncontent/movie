@@ -26,7 +26,6 @@ var period = {
     return await funDB.getResult('d',sql,param);
   },
   call_stats2: async function(param){
-    logger.error('call_stats2 실행중 ');
     var sql = 'call union_mail.stats_m(?,?,?,?,?,?,?,?,?,0)';
     return await funDB.getResult('d',sql,param);
   },
