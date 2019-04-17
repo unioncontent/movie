@@ -1,4 +1,5 @@
 const mysql = require('mysql');
+const logger = require('../winston/config_f.js');
 
 class Database {
   constructor(type) {
@@ -23,14 +24,15 @@ class Database {
         database : 'union'
       };
     }
+    logger.info('this.db.user :'+this.db.user);
     this.connection = mysql.createConnection(this.db);
   }
   test_open(){
     this.connection.connect(function (err) {
       if (err) {
-        console.error('mysql connection error :' + err);
+        logger.error('mysql connection error :' + err);
       } else {
-        console.info('mysql is connected successfully.');
+        logger.info('mysql is connected successfully.');
       }
     });
   }
