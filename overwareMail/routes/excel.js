@@ -22,8 +22,8 @@ router.get('/',async function(req, res) {
     sucess = await period.call_mymailer_detail_result([parseInt(req.query.idx),'']);
     fail = await period.call_mymailer_detail_result([parseInt(req.query.idx),'1']);
   }
-  logger.info(sucess);
-  logger.info(fail);
+  // logger.info(sucess);
+  // logger.info(fail);
   var wb = new xl.Workbook({
     defaultFont: {
       size: 12,
