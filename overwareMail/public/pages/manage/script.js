@@ -386,7 +386,7 @@ function ajaxGetPageList(param) {
         <td><div class="group-nobr" title="' + groupStr + '">' + groupStr + '</div></td>\
         <td><div class="date-nobr">' + item.M_regdate + '</div></td>\
         <td><div class="date-nobr">' + (
-          ((item.M_type != 1) || (item.M_type == 1 && item.M_send == null))
+          ((item.M_delete == '1') || (item.M_type != 1) || (item.M_type == 1 && item.M_send == null))
           ? '-'
           : item.M_send) + '</div></td>\
         <td><div class="date-nobr '+((item.M_delete == '1') ? 'text-danger':'')+'">' + (

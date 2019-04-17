@@ -124,7 +124,7 @@
                       <td><%= recipiStr %></td>
                       <td><div class="group-nobr" title="<%= groupStr %>"><%= groupStr %></div></td>
                       <td><div class="date-nobr"><%= list[i].M_regdate %></div></td>
-                      <td><div class="date-nobr"><%= ((list[i].M_type != 1) || (list[i].M_type == 1 && list[i].M_send == null)) ?'-': list[i].M_send %></div></td>
+                      <td><div class="date-nobr"><%= ((list[i].M_delete == '1') || (list[i].M_type != 1) || (list[i].M_type == 1 && list[i].M_send == null)) ?'-': list[i].M_send %></div></td>
                       <td>
                         <div class="date-nobr <%=(list[i].M_delete == '1') ? 'text-danger':''%>">
                           <%= ((list[i].M_send == null) || (list[i].M_type == 1 && (send > now))) ?'-': list[i].M_send %>

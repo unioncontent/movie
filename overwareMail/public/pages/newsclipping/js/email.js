@@ -350,6 +350,7 @@ function getNewsClippingData(){
         //   html += '</li>';
         //   $('div[data-idx='+index+']').siblings('.relation_list').append(html);
         // });
+
         var s_obj = new Object();
         $.each(obj, function(index, value) {
           // var html ='<ul class="relation_list" data-midx="'+index+'" style="list-style: none;padding:0;margin: 13px;margin-bottom:  0px;margin-left: 10px;line-height: 18px;position: relative;font-size: 12px;"></ul>';
@@ -403,6 +404,8 @@ function getNewsClippingData(){
               else{
                 $('div[data-idx='+index+']').siblings('.relation_list').append(html);
               }
+            }else{
+              $('div[data-idx='+index+']').siblings('.relation_list').append(html);
             }
           });
 
@@ -417,6 +420,7 @@ function getNewsClippingData(){
             html ='<li><img src="https://ssl.pstatic.net/sstatic/search/pc/img/bu_news_sublst.gif" style="vertical-align:  text-top;"> 외 '+v+' 건</li>';
             $('div[data-idx='+i+']').siblings('.relation_list').append(html);
         });
+
         // 데이터 없을 시
         $.each([ 1,2,3,5,6 ], function( index, value ) {
           dataNoneSetting(value,'');
