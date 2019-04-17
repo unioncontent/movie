@@ -58,7 +58,7 @@ var period = {
   call_mymailer_detail_result: async function(param){
     var sql = 'call union_mail.mymailer_detail_result(?,?)';
     // call union_mail.mymailer_detail_result(85, '1');
-    var result = await funDB.getResult('o',sql,param);
+    var result = await funDB.getResult('d',sql,param);
     return (result.length > 0)? result[0]:[];
   },
   selectReservationView: async function(param){

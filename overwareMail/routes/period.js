@@ -41,7 +41,6 @@ router.post('/getPeriod',isAuthenticated,async function(req, res, next) {
       newsCount:await period.call_mail_detail(req.body.M_module,[2,req.body.M_idx_A,req.body.keyword,req.body.sDate]),
       replyCount:await period.call_mail_detail(req.body.M_module,[3,req.body.M_idx_A,req.body.keyword,req.body.sDate])
     };
-    logger.info(data);
     res.send({status:true,result:data});
   } catch(e){
     res.status(500).send(e);
