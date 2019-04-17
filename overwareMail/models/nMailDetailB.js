@@ -7,11 +7,23 @@ var nMailDetailB = {
   insert: async function(param){
     var pValue = Object.values(param);
     var sql = insertSqlSetting(Object.keys(param));
-    return await funDB.getResult('d',sql,pValue);
+    try {
+      await funDB.getResult('o',sql,pValue);
+    } catch (e) {
+      console.log(e)
+    } finally {
+      return await funDB.getResult('d',sql,pValue);
+    }
   },
   delete: async function(n_idx){
-    var sql = 'delete from n_mail_detail where M_idx_A=?';
-    return await funDB.getResult('d',sql,[n_idx]);
+    var sql = 'delete from n_mail_detail where M_idx_A=?';    
+    try {
+      await funDB.getResult('o',sql,[n_idx]);
+    } catch (e) {
+      console.log(e)
+    } finally {
+      return await funDB.getResult('d',sql,[n_idx]);
+    }
   }
 }
 
