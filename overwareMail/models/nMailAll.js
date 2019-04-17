@@ -7,11 +7,23 @@ var nMailAll = {
   insert: async function(param){
     var pValue = Object.values(param);
     var sql = insertSqlSetting(Object.keys(param));
-    return await funDB.getResult('d',sql,pValue);
+    try {
+      await funDB.getResult('o',sql,pValue);
+    } catch (e) {
+      console.log(e)
+    } finally {
+      return await funDB.getResult('d',sql,pValue);
+    }
   },
   delete: async function(n_idx){
     var sql = 'delete from n_mail_all where n_idx=?';
-    return await funDB.getResult('d',sql,[n_idx]);
+    try {
+      await funDB.getResult('o',sql,[n_idx]);
+    } catch (e) {
+      console.log(e)
+    } finally {
+      return await funDB.getResult('d',sql,[n_idx]);
+    }
   },
   selectSendMailDate:async function(n_idx){
     var sql = 'SELECT M_subject,max(n_idx) as n_idx FROM n_mail_all group by M_subject order by M_subject desc,n_idx desc';
@@ -33,11 +45,23 @@ var nMailAll = {
   },
   updateSendDate: async function(param){
     var sql = 'update n_mail_all set M_senddate = ? where n_idx = ?';
-    return await funDB.getResult('d',sql,param);
+    try {
+      await funDB.getResult('o',sql,param);
+    } catch (e) {
+      console.log(e)
+    } finally {
+      return await funDB.getResult('d',sql,param);
+    }
   },
   updateId: async function(param){
     var sql = 'update n_mail_all set M_a_id=? where n_idx=?';
-    return await funDB.getResult('d',sql,param);
+    try {
+      await funDB.getResult('o',sql,param);
+    } catch (e) {
+      console.log(e)
+    } finally {
+      return await funDB.getResult('d',sql,param);
+    }
   }
 }
 
