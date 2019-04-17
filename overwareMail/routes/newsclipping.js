@@ -22,7 +22,6 @@ var isAuthenticated = function (req, res, next) {
 };
 
 router.post('/grouping',isAuthenticated, async function(req, res) {
-  logger.info(req.body);
   var result = await newsclipping.updateGroup(req.body);
   if(!('protocol41' in result)){
     res.status(500).send('그룹핑 실패! 개발자에게 문의해주세요.');
@@ -411,8 +410,8 @@ router.get('/period',isAuthenticated,async function(req, res) {
 });
 
 router.post('/period/result',isAuthenticated,async function(req, res, next) {
+  logger.info('/period/result : ',Object.values(req.body));
   var data = [];
-  logger.info('/period/result : ',req.body);
   if(req.body.module == '1'){
     delete req.body.module;
     data = await newsclipping.call_newsclipping_period_result(Object.values(req.body));
