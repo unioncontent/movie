@@ -1,4 +1,5 @@
 overwareMail/bin/
+overwareMail/db/
 overwareMail/log/
 overwareMail/node_modules/
 overwareMail/public/uploads/
