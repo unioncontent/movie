@@ -251,6 +251,7 @@ function getNewsClippingData(){
     },
     success:function(data){
       if(data.status){
+        console.log(data.result);
         // 초기화
         $('.section:not(div[data-type=4],div[data-type=issue],div[data-type=marketing],div[data-type=movie]) .section-body').empty();
         $('div[data-type=issue] .section-body tbody tr:not(.head)').remove();

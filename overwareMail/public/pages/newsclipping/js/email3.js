@@ -402,6 +402,8 @@ function getNewsClippingData(){
                 else{
                   $('div[data-idx='+index+']').siblings('.relation_list').append(html);
                 }
+              }else{
+                $('div[data-idx='+index+']').siblings('.relation_list').append(html);
               }
             }
           });
