@@ -111,9 +111,6 @@ public class GloController {
 		if(cri.getTextType() == null || cri.getTextType().equals("검출상태")) {
 			cri.setTextType(null);
 		}
-		if(cri.getNation() == null || cri.getNation().equals("국가")) {
-			cri.setNation(null);
-		}
 		if(cri.getWork().equals("전체")) {
 			cri.setWork(null);
 		}
@@ -130,9 +127,7 @@ public class GloController {
 			}
 		}
 		if(cri.getKeyword() == "" || "undefined".equals(cri.getKeyword()))  {
-			logger.info("keyword is null");
 			cri.setKeyword(null);
-			
 		} 
 		
 		logger.info("MODAL cri: " + cri);
@@ -241,6 +236,12 @@ public class GloController {
 		}
 		if(cri.getNation() == null || cri.getNation().equals("국가")) {
 			cri.setNation(null);
+		}
+		if(cri.getSelectKey() == null || cri.getSelectKey().equals("키워드")) {
+			cri.setSelectKey(null);
+		}
+		if(cri.getTextType() == null || cri.getTextType().equals("검출상태")) {
+			cri.setTextType(null);
 		}
 		if(cri.getWork().equals("전체")) {
 			cri.setWork(null);

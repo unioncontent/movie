@@ -214,8 +214,6 @@
 	<script type="text/javascript" src="../bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
 	<!-- Date-time picker js -->
 	<script type="text/javascript" src="../assets/pages/advance-elements/bootstrap-datetimepicker.min.js"></script>
-	<!-- echart js -->
-	<script src="../assets/pages/chart/echarts/js/echarts-all.js" type="text/javascript"></script>
 	<!-- i18next.min.js -->
 	<script type="text/javascript" src="../bower_components/i18next/i18next.min.js"></script>
 	<script type="text/javascript" src="../bower_components/i18next-xhr-backend/i18nextXHRBackend.min.js"></script>
@@ -339,6 +337,9 @@ $(document).ready(function(){
 			self.location = "gloExcel?"
 			  + "&work=" + work
 			  + "&site=" + $('#site').val()
+			  + "&nation=" + $(".selectNation option:selected").val()
+			  + "&selectKey=" + $(".selectKeyword option:selected").val()
+			  + "&textType=" + $(".selectState option:selected").val()
 			  + "&startDate=" + decodeURI(window.location.href.split("startDate=")[1]).split("&")[0].split(" ")[0]
 			  + "&endDate=" + decodeURI(window.location.href.split("endDate=")[1]).split("&")[0].split(" ")[0]
 			  + "&searchType=" + $("#selectSearchType option:selected").val().replace(" ", "")
@@ -354,18 +355,18 @@ $('.btn-detail').on("click", function(event){
 	  swal("검색어를 입력해주세요.");
   }
   
-  	var idx = $(this).attr('value');
-	console.log("idx : "+idx);
-	var site = $('#site').val();
-	console.log("site : "+site);
+  var idx = $(this).attr('value');
+	var site = $(".selectSite option:selected").val()
+	var nation = $(".selectNation option:selected").val()
+	var key = $(".selectKeyword option:selected").val()
+	var state = $(".selectState option:selected").val()
 	var work = $('#work').val();
-	if (work == "" || work == "undefined"){
+	if (work == ""){
 		var work = "전체";
-		console.log("work : "+work);
 	}
 	var startDate = decodeURI(window.location.href.split("startDate=")[1]).split("&")[0].split(" ")[0];
 	var endDate =  decodeURI(window.location.href.split("endDate=")[1]).split("&")[0].split(" ")[0];
-	var searchType = $("#selectSearchType option:selected").val();
+	var searchType = $("#selectSearchType option:selected").val().replace(" ", "");
 	var keyword = $('#keywordInput').val().replace(" ", "").trim();
 	var keywordIn = $('#keywordInput').val();
 	
@@ -374,6 +375,9 @@ $('.btn-detail').on("click", function(event){
 		url : "gloModal",
 		data : {
 			site : site,
+			nation : nation,
+			selectKey : key,
+			textType : state,
 			work : work,
 			startDate : startDate,
 			endDate : endDate,
