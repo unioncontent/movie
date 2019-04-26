@@ -375,7 +375,7 @@
                       </div>
                       <!-- Morris chart end -->
                       <!-- List start -->
-                              <div class="col-md-12">
+                              <%-- <div class="col-md-12">
                                 <div class="card">
                                   <div class="card-header">
                                     <h5><font style="font-weight: bold; color: black;">이메일 발송현황</font></h5>
@@ -412,7 +412,7 @@
 					                          ${mvo.m_subject}
 					                        </a>
                                             </td>
-                                            <%-- <td>
+                                            <td>
                                             <fmt:parseNumber value="${mvo.sendCount}" var="sendCount"/>
 											<fmt:formatNumber value="${sendCount}" pattern="#,##0"/>회
                                             </td>
@@ -423,7 +423,7 @@
                                             <td>
                                             <fmt:parseNumber value="${mvo.fail}" var="fail"/>
 											<fmt:formatNumber value="${fail}" pattern="#,##0"/>회
-                                            </td> --%>
+                                            </td>
                                             <td>
                                             ${mvo.sendCount}회
                                             </td>
@@ -433,14 +433,14 @@
                                             <td>
                                             ${mvo.fail}회
                                             </td>
-                                            <%-- <td>
+                                            <td>
                                             <c:if test="${mvo.total == 0}">
                                             ${mvo.total}건
                                             </c:if>
                                             <c:if test="${mvo.total != 0}">
                                             <a href="javascript:popupOpen9('<fmt:formatDate value="${mvo.m_send}" type="DATE" pattern="yyyy-MM-dd" />');" >${mvo.total}건</a>
                                             </c:if>
-                                            </td> --%>
+                                            </td>
                                           </tr>
                                         </c:forEach>
                                         </tbody>
@@ -451,7 +451,7 @@
                                       </div>
                                       </div>
                                       </div>
-                                      </div>
+                                      </div> --%>
                       <%-- <div class="col-md-6">
                         <div class="card">
                           <div class="card-header">

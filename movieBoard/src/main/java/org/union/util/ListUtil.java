@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import org.union.domain.CommunityVO;
 import org.union.domain.ExtractVO;
 import org.union.domain.FvVO;
+import org.union.domain.GloVO;
 import org.union.domain.MediaVO;
 import org.union.domain.MobileEntVO;
 import org.union.domain.NaverMovieVO;
@@ -297,6 +298,43 @@ public class ListUtil {
 				vo.setWriteDate(addList.get(i).getWriteDate());
 				vo.setUpdateDate(date.format(addList.get(i).getUpdateDate()));
 				vo.setCreateDate(date2.format(addList.get(i).getUpdateDate()));
+				
+				list.add(vo);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return list;
+	}
+	
+	public List<GloVO> listAddGloList(List<GloVO> list, List<GloVO> addList) {
+
+		try {
+
+			for(int i = 0; i < addList.size(); i++) {
+				GloVO vo = new GloVO();
+				
+				if("0".equals(addList.get(i).getGlo_work())) {
+					vo.setGlo_work("보류");
+				}else if("1".equals(addList.get(i).getGlo_work())) {
+					vo.setGlo_work("삭제요청");
+				}else if("2".equals(addList.get(i).getGlo_work())) {
+					vo.setGlo_work("기관전달");
+				}else if("3".equals(addList.get(i).getGlo_work())) {
+					vo.setGlo_work("기타");
+				}
+				vo.setGlo_k_word(addList.get(i).getGlo_k_word());
+				vo.setGlo_title(addList.get(i).getGlo_title());
+				vo.setRegdate(date.format(addList.get(i).getGlo_regdate()));
+				if("0".equals(addList.get(i).getGlo_del_chk())) {
+					vo.setGlo_del_chk("유지");
+				}else if("1".equals(addList.get(i).getGlo_del_chk())) {
+					vo.setGlo_del_chk("삭제");
+				}
+				vo.setWork_date(date.format(addList.get(i).getGlo_work_date()));
+				vo.setGlo_site(addList.get(i).getGlo_site());
 				
 				list.add(vo);
 			}

@@ -27,6 +27,7 @@
 			default-target-url="/login/loginSuccess"
 			authentication-failure-url="http://overware.co.kr/" 
 			always-use-default-target="true"
+			
 			 />
 
 		<!-- <security:session-management>
@@ -36,7 +37,7 @@
 
 		<security:logout delete-cookies="JSESSIONID,SPRING_SECURITY_REMEMBER_ME_COOKIE"
 			invalidate-session="true" logout-url="/logoutAction" logout-success-url="/" />
-
+		
 		<security:intercept-url pattern="/dashBoard/**" access="ROLE_USER" />
 		<security:intercept-url pattern="/period/**" access="ROLE_USER" />
 		<security:intercept-url pattern="/marketing/**" access="ROLE_USER" />
@@ -48,10 +49,8 @@
 		<security:intercept-url pattern="/extract/extract" access="ROLE_USER" />
 		<security:intercept-url pattern="/classification/classification" access="ROLE_USER" />
 		<security:intercept-url pattern="/listAll/**" access="ROLE_USER" />
+		<security:intercept-url pattern="/glo/**" access="ROLE_USER" />
 		
-	
-		
-
 		<!-- <security:remember-me key="wmoskey"
 			token-validity-seconds="2419200" /> -->
 	

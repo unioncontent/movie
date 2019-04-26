@@ -606,7 +606,7 @@ public class ClassificationController {
         List<File> downloadFiles = new ArrayList<File>();
         
         for (String fimeName : fimeNames) {
-        	File downloadFile  = new File("D:\\img" + fimeName);
+        	File downloadFile  = new File("/usr/local/img/" + fimeName);
         	downloadFiles.add(downloadFile);
             
         }
@@ -619,7 +619,7 @@ public class ClassificationController {
         
     public void copyInto(MultipartFile upload,HttpServletRequest re,CommunityVO vo){
     	
-    	String paths = "D:\\";
+    	String paths = "/usr/local/";
             
             try {
                byte bytes[]=upload.getBytes();//내가올린파일에 정보를 가져올수 있다.

@@ -11,10 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.union.domain.CommunityVO;
 import org.union.domain.MediaVO;
@@ -54,7 +56,7 @@ public class UploadController {
 		String fileName = file.getOriginalFilename();
 		String uploadName = uid + "_" + fileName;
 
-		FileOutputStream fos = new FileOutputStream("D:\\img\\" + uploadName);
+		FileOutputStream fos = new FileOutputStream("/usr/local/img/" + uploadName);
 		
 		IOUtils.copy(file.getInputStream(), fos);
 		model.addAttribute("uploadName", uploadName);
@@ -67,7 +69,7 @@ public class UploadController {
 	@GetMapping(value = "classification/show", produces = {"image/jpg", "image/jpeg" })
 	public @ResponseBody byte[] show(String name) throws Exception {
 
-		InputStream in = new FileInputStream("D:\\img\\" + name);
+		InputStream in = new FileInputStream("/usr/local/img/" + name);
 		// OutputStream out = new ByteArrayOutputStream();
 
 		return IOUtils.toByteArray(in);

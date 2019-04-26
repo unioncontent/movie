@@ -384,6 +384,15 @@
             <span class="pcoded-mcaret"></span>
           </a>
         </li>
+        <c:if test="${user.user_name == 'union'}">
+        <li class="glo">
+          <a href="../glo/glo" data-i18n="nav.advance-components.main">
+            <span class="pcoded-micon"><i class="icofont icofont-earth"></i></span>
+            <span class="pcoded-mtext">해외통계관리</span>
+            <span class="pcoded-mcaret"></span>
+          </a>
+        </li>
+        </c:if>
       </li>
     </ul>
   </div>

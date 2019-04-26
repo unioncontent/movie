@@ -86,7 +86,7 @@ $(document).ready(function () {
         function(){
           swal("Success!", "이미지다운 되었습니다.", "success");
           
-          self.location = "imageDownload?" + "searchType=" + decodeURI(window.location.href.split("&searchType=")[1]).split("&")[0]
+          location = "http://49.247.5.169/classification/imageDownload?" + "searchType=" + decodeURI(window.location.href.split("&searchType=")[1]).split("&")[0]
 	 	  + "&keyword=" + decodeURI(window.location.href.split("&keyword=")[1]).split("&")[0]
     	  + "&company=" + $("#selectCompany option:selected").val()
           + "&selectKey=" + $('#selectKeyword option:selected').val()
@@ -112,7 +112,7 @@ $(document).ready(function () {
 	  console.log(thumbName);
 	  
 	  
-	  var path = '../classification/show?name=' + thumbName;
+	  var path = 'http://49.247.5.169/classification/show?name=' + thumbName;
 	  $("#thumbnail").attr("src", path);
 	  $('#imageModal').modal('show');
 	  
@@ -141,6 +141,7 @@ $(document).ready(function () {
     swal("Success!", "이미지업로드가 되었습니다.", "success");
     
     location.reload();
+    
     //이미지처리메시지 - 실패시
     // swal("error!", "이미지업로드가 실패했습니다.", "error");
   });
@@ -230,6 +231,7 @@ function uploadImage(file, domain, idx){
 		processData : false,
 		contentType : false,
 		method : 'POST',
+		crossDomain : true,
 		success : function(data) {
 			console.log(data);
 

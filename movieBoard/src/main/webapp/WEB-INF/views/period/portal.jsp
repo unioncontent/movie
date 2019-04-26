@@ -413,8 +413,9 @@
                               <div class="col-lg-12">
                                 <div class="card">
                                   <div class="card-header">
+                                  	●
                                     <h5 class="card-header-text m-b-5 m-t-5">
-						               <font style="font-weight: bold; color: black;">검출데이터</font>
+						               <font style="font-weight: bold; color: black;"> 검출데이터</font>
                                     </h5>
                                     <button id = "excel" class="btn btn-warning f-right alert-confirm" ><i class="icofont icofont-download-alt"></i>EXCEL</button>
                                   </div>

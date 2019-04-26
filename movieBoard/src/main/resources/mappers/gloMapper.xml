@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  
+ <mapper namespace = "org.union.mappers.GloMapper">
+ 	
+ 	<sql id="search">
+		<if test="nation != null">
+			and glo_nation = #{nation}
+		</if>
+		<if test="site != null">
+				and glo_site = #{site}
+			</if>
+		<!-- <if test="startDate == null">
+			and glo_regdate <![CDATA[>=]]> CURDATE()
+			and glo_regdate <![CDATA[>=]]> '2019-04-19 00:00:00'
+		</if> -->
+		<if test="startDate != null">
+			and glo_regdate <![CDATA[>=]]> #{startDate}
+			<if test="endDate != null">
+				and glo_regdate <![CDATA[<=]]> #{endDate}
+			</if>
+		</if>
+	</sql>
+	
+	<sql id="detailSearch">
+		<if test="keyword != null">
+			<if test="searchType != null">
+				<if test="searchType == 't'.toString()">
+					and glo_title_null like concat('%', #{keyword}, '%')
+				</if>
+				<if test="searchType == 'r'.toString()">
+					and glo_num like concat('%', #{keyword}, '%')
+				</if>
+				<if test="searchType == 'm'.toString()">
+					and replace(glo_k_word, ' ', '') like concat('%', #{keyword}, '%')
+				</if>
+			</if>
+		</if>
+		<if test="work != null">
+			and glo_work = #{work}
+		</if>
+		<if test="nation != null">
+			and glo_nation = #{nation}
+		</if>
+		<if test="selectKey != null">
+			and glo_k_word = #{selectKey}
+		</if>
+		<if test="textType != null">
+			and glo_del_chk = #{textType}
+		</if>
+		<if test="startDate == null">
+			<!-- and glo_regdate <![CDATA[>=]]> CURDATE() -->
+			and glo_regdate <![CDATA[>=]]> '2019-04-19 00:00:00'
+		</if>
+		<if test="startDate != null">
+			and glo_regdate <![CDATA[>=]]> #{startDate}
+			<if test="endDate != null">
+				and glo_regdate <![CDATA[<=]]> #{endDate}
+			</if>
+		</if>
+	</sql>
+	
+	<delete id="deleteGlo">
+ 		delete from
+ 			glo_all
+ 		where
+ 			glo_idx = #{glo_idx}
+ 	</delete>
+ 	
+ 	<update id="updateGlo">
+		update
+			glo_all
+		set
+			glo_work = #{glo_work},
+			glo_work_date = now()
+		where
+			glo_idx = #{glo_idx}
+	</update>
+	
+ 	<select id="totalCnt" resultType="Integer">
+ 		select 
+ 			count(*)
+		from 
+			glo_osp;
+ 	</select>
+ 	
+ 	<select id="gloCnt" resultType="Integer">
+ 		select 
+ 			count(*)
+		from 
+			glo_osp
+		where
+			glo_nation != 'korea';
+ 	</select>
+ 	
+ 	<select id="gloTypeCount" resultType="GloVO">
+	 	select 
+			count(*) total,
+	    	count(if(glo_work='1', glo_work, null)) del,
+	    	count(if(glo_work='2', glo_work, null)) sen,
+	    	count(if(glo_work='3', glo_work, null)) etc
+		from 
+			glo_all
+		where 
+			glo_regdate >= '2019-04-19 00:00:00';
+ 	</select>
+ 	
+ 	<select id="graphGloCount" resultType="Integer">
+ 		select count(*) from glo_all
+ 		where
+			glo_nation != 'korea'
+		and glo_regdate <![CDATA[>=]]> #{startDate}
+		and glo_regdate <![CDATA[<=]]> #{endDate}
+ 	</select>
+ 	
+ 	<select id="graphKoCount" resultType="Integer">
+ 		select count(*) from glo_all
+ 		where
+			glo_nation = 'korea'
+		and glo_regdate <![CDATA[>=]]> #{startDate}
+		and glo_regdate <![CDATA[<=]]> #{endDate}
+ 	</select>
+ 	
+ 	<select id="graphGloList" resultType="GloVO">
+	 	select 
+	 		a.glo_nation, a.glo_site, b.glo_url, a.total, a.del, a.sen, a.etc
+		from (select 
+			c.glo_nation, c.glo_site, c.total as total, c.del, c.sen, c.etc 
+		from (select 
+			glo_nation,
+			glo_site,
+	        glo_url,
+			count(*) total,
+	    	count(if(glo_work='1', glo_work, null)) del,
+	    	count(if(glo_work='2', glo_work, null)) sen,
+	    	count(if(glo_work='3', glo_work, null)) etc
+		from 
+			glo_all
+		where 
+			glo_site is not null
+		<include refid="search"></include> 
+		group by glo_site) as c) as a
+	    left join
+	    (select glo_site, glo_url from glo_osp group by glo_site)as b
+	    on a.glo_site = b.glo_site;
+ 	</select>
+ 	
+ 	<select id="nationList" resultType="GloVO">
+ 		select glo_nation from glo_osp group by glo_nation;
+ 	</select>
+ 	
+ 	<select id="siteList" resultType="GloVO">
+ 		select glo_site from glo_osp;
+ 	</select>
+ 	
+ 	<select id="keywordList" resultType="KeywordVO">
+ 		select keyword_main from keyword_data where user_idx = 33 group by keyword_main order by createDate desc;
+ 	</select>
+ 	
+ 	<select id="detailList" resultType="GloVO">
+ 		SELECT 
+ 			* 
+ 		FROM 
+ 			glo_all 
+ 		where 
+ 			glo_site = #{site}
+ 		<include refid="detailSearch"></include>
+ 		order by glo_regdate desc
+		limit  
+			#{startPage}, #{perPageNum}
+ 	</select>
+ 	
+ 	<select id="detailCnt" resultType="Integer">
+ 		SELECT 
+ 			count(*) 
+ 		FROM 
+ 			glo_all 
+ 		where 
+ 			glo_site = #{site}
+ 		<include refid="detailSearch"></include>
+ 	</select>
+ 	
+ 	<select id="detailExcel" resultType="GloVO">
+ 		SELECT 
+ 			* 
+ 		FROM 
+ 			glo_all 
+ 		where 
+ 			glo_site = #{site}
+ 		<include refid="detailSearch"></include>
+ 		order by glo_regdate desc
+ 	</select>
+ </mapper>

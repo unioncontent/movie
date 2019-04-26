@@ -202,33 +202,23 @@ public class PeriodController {
 		
 		model.addAttribute("youtubeCount", snsService.youtubeTotalCount(cri));
 		
-		if(selectKey.equals("마약왕")) {
-			cri.setSelectKey("1");
-		}else if(selectKey.equals("미성년")) {
-			cri.setSelectKey("2");
-		}else if(selectKey.equals("뺑반")) {
-			cri.setSelectKey("3");
-		}else if(selectKey.equals("성난황소")) {
-			cri.setSelectKey("4");
-		}else if(selectKey.equals("암수살인")) {
-			cri.setSelectKey("5");
-		}else if(selectKey.equals("영화 전투")) {
-			cri.setSelectKey("6");
-		}else if(selectKey.equals("영화돈")) {
-			cri.setSelectKey("7");
-		}else if(selectKey.equals("패키지")) {
-			cri.setSelectKey("8");
-		}else if(selectKey.equals("남산의부장들")) {
-			cri.setSelectKey("12");
-		}else if(selectKey.equals("퍼펙트맨")) {
-			cri.setSelectKey("13");
-		}else {
-			cri.setSelectKey("0");
-		}
-		
-		logger.info("메일 셀렉키: " + cri.getSelectKey());
-		
-		model.addAttribute("mailList", mediaService.mailList(cri));
+		/*
+		 * if(selectKey.equals("마약왕")) { cri.setSelectKey("1"); }else
+		 * if(selectKey.equals("미성년")) { cri.setSelectKey("2"); }else
+		 * if(selectKey.equals("뺑반")) { cri.setSelectKey("3"); }else
+		 * if(selectKey.equals("성난황소")) { cri.setSelectKey("4"); }else
+		 * if(selectKey.equals("암수살인")) { cri.setSelectKey("5"); }else
+		 * if(selectKey.equals("영화 전투")) { cri.setSelectKey("6"); }else
+		 * if(selectKey.equals("영화돈")) { cri.setSelectKey("7"); }else
+		 * if(selectKey.equals("패키지")) { cri.setSelectKey("8"); }else
+		 * if(selectKey.equals("남산의부장들")) { cri.setSelectKey("12"); }else
+		 * if(selectKey.equals("퍼펙트맨")) { cri.setSelectKey("13"); }else {
+		 * cri.setSelectKey("0"); }
+		 * 
+		 * logger.info("메일 셀렉키: " + cri.getSelectKey());
+		 * 
+		 * model.addAttribute("mailList", mediaService.mailList(cri));
+		 */
 	}
 
 	@GetMapping("/community")

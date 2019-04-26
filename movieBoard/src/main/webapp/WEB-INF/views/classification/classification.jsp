@@ -6,7 +6,6 @@
 <html lang="en">
 
 <head>
-
 <meta name="_csrf" content="${_csrf.token}" />
 <!-- default header name is X-CSRF-TOKEN -->
 <meta name="_csrf_header" content="${_csrf.headerName}"/>
@@ -733,7 +732,10 @@
 		// ajax 보안
 		var token = $("meta[name='_csrf']").attr("content");
 		var header = $("meta[name='_csrf_header']").attr("content");
-
+	
+		console.log("token: " + token);
+		console.log("header: " + header);
+		
 		$(function() {
 		    $(document).ajaxSend(function(e, xhr, options) {
 		        xhr.setRequestHeader(header, token);

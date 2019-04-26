@@ -5,7 +5,7 @@ import java.util.Date;
 public class SearchCriteria extends Criteria {
 
 	
-	private String searchType, keyword, selectKey, subSelectKey,company, textType, portal_name, portal_type, hour, url, media_name, sns_name, reporter_name, sns_writer, mediaMain, mediaState;
+	private String searchType, keyword, selectKey, subSelectKey,company, textType, portal_name, portal_type, hour, url, media_name, sns_name, reporter_name, sns_writer, mediaMain, mediaState, nation, site, work;
 	private Integer total;
 	private String startDate, endDate, createstartDate, createendDate, createminusDate, writeDate;
 	private Date date;
@@ -246,16 +246,44 @@ public class SearchCriteria extends Criteria {
 	public void setSns_writer(String sns_writer) {
 		this.sns_writer = sns_writer;
 	}
+	
+	public String getNation() {
+		return nation;
+	}
 
+
+	public void setNation(String nation) {
+		this.nation = nation;
+	}
+
+
+	public String getSite() {
+		return site;
+	}
+
+
+	public void setSite(String site) {
+		this.site = site;
+	}
+	
+	public String getWork() {
+		return work;
+	}
+
+
+	public void setWork(String work) {
+		this.work = work;
+	}
+	
 	@Override
 	public String toString() {
 		return "SearchCriteria [searchType=" + searchType + ", keyword=" + keyword + ", selectKey=" + selectKey
 				+ ", subSelectKey=" + subSelectKey + ", company=" + company + ", textType=" + textType
 				+ ", portal_name=" + portal_name + ", portal_type=" + portal_type + ", hour=" + hour + ", url=" + url
 				+ ", media_name=" + media_name + ", sns_name=" + sns_name + ", reporter_name=" + reporter_name
-				+ ", sns_writer=" + sns_writer + ", mediaMain=" + mediaMain + ", mediaState=" + mediaState + ", total="
-				+ total + ", startDate=" + startDate + ", endDate=" + endDate + ", createstartDate=" + createstartDate
-				+ ", createendDate=" + createendDate + ", createminusDate=" + createminusDate + ", writeDate="
-				+ writeDate + ", date=" + date + "]";
+				+ ", sns_writer=" + sns_writer + ", mediaMain=" + mediaMain + ", mediaState=" + mediaState + ", nation="
+				+ nation + ", site=" + site + ", work=" + work + ", total=" + total + ", startDate=" + startDate
+				+ ", endDate=" + endDate + ", createstartDate=" + createstartDate + ", createendDate=" + createendDate
+				+ ", createminusDate=" + createminusDate + ", writeDate=" + writeDate + ", date=" + date + "]";
 	}
 }

@@ -45,6 +45,7 @@
 </head>
 
 <body class="fix-menu">
+	<!-- <div><font size="5">&nbsp;IMAGE SERVER</font></div> -->
     <section class="login p-fixed d-flex text-center bg-primary common-img-bg">
         <!-- Container-fluid starts -->
         <div class="container-fluid auth-body">
