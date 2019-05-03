@@ -385,7 +385,7 @@ function ajaxGetPageList(param){
               <option value="52" '+((item.news_type == '52') ? 'selected' : '')+'>영화일반-리뷰</option>\
               <option value="53" '+((item.news_type == '53') ? 'selected' : '')+'>영화일반-예고편</option>\
               <option value="54" '+((item.news_type == '54') ? 'selected' : '')+'>영화일반-포스터</option>\
-              <option value="54" '+((item.news_type == '55') ? 'selected' : '')+'>영화일반-화보</option>\
+              <option value="55" '+((item.news_type == '55') ? 'selected' : '')+'>영화일반-화보</option>\
               <option value="6" '+((item.news_type == '6') ? 'selected' : (item.title_key == '보도국') ? 'selected' : '')+'>보도국</option>\
               <option value="7" '+((item.news_type == '7') ? 'selected' : (item.title_key == '박스오피스') ? 'selected' : '')+'>박스오피스</option>\
             </select>\
