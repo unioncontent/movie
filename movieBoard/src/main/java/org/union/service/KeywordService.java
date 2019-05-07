@@ -26,6 +26,7 @@ public interface KeywordService {
 	public List<KeywordVO> showboxListAll() throws SQLException;
 	
 	public List<KeywordListVO> listPage(SearchCriteria cri) throws SQLException;
+	public Integer totalCnt() throws SQLException;
 	
 	public void insertMain(KeywordListVO vo) throws SQLException;
 	

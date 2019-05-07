@@ -268,4 +268,10 @@ public class KeywordServiceImpl implements KeywordService{
 		keywordDAO.searchKeyUpdateOff(keyword_main, keyword);
 		
 	}
+
+	@Override
+	public Integer totalCnt() throws SQLException {
+
+		return keywordDAO.totalCnt();
+	}
 }

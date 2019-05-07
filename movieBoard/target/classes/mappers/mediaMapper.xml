@@ -83,6 +83,9 @@
 		<if test="mediaMain == 1">
 			and media_main = 1
 		</if>
+		<if test="portal_name != null">
+			and media_subname = 'naver'
+		</if>
 	</sql>
 	
 	<sql id="search2">
@@ -137,6 +140,9 @@
 		</if>
 		<if test="mediaMain == 1">
 			and media_main = 1
+		</if>
+		<if test="portal_name != null">
+			and media_subname = 'naver'
 		</if>
 	</sql>
 	

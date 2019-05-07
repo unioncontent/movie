@@ -207,6 +207,14 @@
                             <button class="btn btn-warning alert-confirm f-right p-r-5 p-l-5 m-l-15 m-b-5  m-t-5" style="height:40px;"><i class="icofont icofont-download-alt"></i>EXCEL</button>
                             <c:if test="${user.user_name == 'union'}">
                             <button id="alert-check" class="btn btn-list alert-check f-right p-r-5 p-l-5 m-l-15 m-b-5  m-t-5" style="height:40px;"><i class="icofont icofont-ui-check"></i>등록</button>
+                            <c:if test="${portal_name != null}">
+                            	<button id="alert-naver" class="btn btn-list alert-naver f-right p-r-5 p-l-5 m-l-15 m-b-5  m-t-5" style="height:40px; background: #03cf5d; border-color: #03cf5d;">
+	                            	NAVER
+                            	</button>
+                            </c:if>
+	                        <c:if test="${portal_name == null}">
+	                        	<button id="alert-naver" class="btn btn-list alert-naver f-right p-r-5 p-l-5 m-l-15 m-b-5  m-t-5" style="height:40px;">NAVER</button>
+	                        </c:if>
                             </c:if>
                             <!-- <input type="submit" value="등록" class="btn btn-primary alert-check f-right p-r-5 p-l-5 m-l-15 m-b-10" onclick="show()"> -->
                             <!-- <button id="insertAllBtn" type="button" class="alert-success-msg btn btn-success waves-effect f-right p-r-5 p-l-5 m-l-15 m-b-10"><i class="icofont icofont-check-circled"></i>선택처리</button> -->
@@ -707,6 +715,36 @@
 					});
 	  });
 		
+		//네이버 버튼
+		$(document).on("click",".alert-naver",function(){
+			
+			var portal_name = "${portal_name}";
+			console.log("portal_name:" + portal_name);
+			var makeQeury = '${pageMaker.makeQuery(1)}'.slice(0, -2);
+		
+			if(portal_name != "naver"){
+				self.location = "news" + makeQeury
+				+ $('#selectPerPageNum option:selected').val()
+				+ "&selectKey=" + $('#selectKeyword option:selected').val()
+				+ "&searchType=" + $("#selectSearchType option:selected").val()
+				+ "&mediaMain=" + $('#selectMediaMain option:selected').val()
+				+ "&portal_name=" + "naver"
+				+ "&keyword=" + $('#keywordInput').val()
+				+ "&startDate=" + makeDateFormat($("#fromDate").val(), 0)
+				+ "&endDate=" +  makeDateFormat($("#fromDate").val(), 1)
+			}else{
+				self.location = "news" + makeQeury
+				+ $('#selectPerPageNum option:selected').val()
+				+ "&selectKey=" + $('#selectKeyword option:selected').val()
+				+ "&searchType=" + $("#selectSearchType option:selected").val()
+				+ "&mediaMain=" + $('#selectMediaMain option:selected').val()
+				+ "&portal_name=" + "undefined"
+				+ "&keyword=" + $('#keywordInput').val()
+				+ "&startDate=" + makeDateFormat($("#fromDate").val(), 0)
+				+ "&endDate=" +  makeDateFormat($("#fromDate").val(), 1)
+			}
+	  });
+		
 		//엑셀출력 확인메시지
 		$(document).on("click",".alert-confirm",function(){
 	    swal({
@@ -725,6 +763,7 @@
 					 	+ "&keyword=" + decodeURI(window.location.href.split("&keyword=")[1]).split("&")[0]
 			        	+ "&selectKey=" + $('#selectKeyword option:selected').val()
 			        	+ "&mediaMain=" + $('#selectMediaMain option:selected').val()
+			        	+ "&portal_name=" + decodeURI(window.location.href.split("porta_name=")[1]).split("&")[0]
 						+ "&startDate=" + makeDateFormat($("#fromDate").val(), 0)
 						+ "&endDate=" +  makeDateFormat($("#fromDate").val(), 1)
 
@@ -960,9 +999,12 @@
 							+ "&selectKey=" + $('#selectKeyword option:selected').val()
 							+ "&searchType=" + $("#selectSearchType option:selected").val()
 							+ "&mediaMain=" + $('#selectMediaMain option:selected').val()
+							+ "&portal_name=" + decodeURI(window.location.href.split("porta_name=")[1]).split("&")[0]
 							+ "&keyword=" + $('#keywordInput').val()
 	    					+ "&startDate=" + makeDateFormat($("#fromDate").val(), 0)
 	    					+ "&endDate=" +  makeDateFormat($("#fromDate").val(), 1)
+	    					
+	    					
 		}
 
 	//날짜 계산 함수

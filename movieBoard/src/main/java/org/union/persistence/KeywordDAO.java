@@ -38,6 +38,7 @@ public interface KeywordDAO {
 	public KeywordVO readByKeyword(String keyword) throws SQLException;
 	
 	public List<KeywordListVO> listPage(SearchCriteria cri) throws SQLException;
+	public Integer totalCnt() throws SQLException;
 	
 	public void createMain(KeywordListVO vo) throws SQLException;
 	

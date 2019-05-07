@@ -286,4 +286,9 @@ public class KeywordDAOImpl implements KeywordDAO {
 		}
 	}
 
+	@Override
+	public Integer totalCnt() throws SQLException {
+		return session1.selectOne(namespace + "totalCnt");
+	}
+
 }

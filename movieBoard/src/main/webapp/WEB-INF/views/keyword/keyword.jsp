@@ -153,9 +153,9 @@
                               </tr>
                             </thead>
                             <tbody>
-                              <c:forEach items="${mainList}" var="keyword" varStatus="index">
+                              <c:forEach items="${mainList}" var="keyword" varStatus="status">
                               <tr>
-                                <th scope="row">${index.count}</th>
+                                <th scope="row">${totalCount - status.index}</th>
                                 <td>${keyword.createDate}</td>
                                 <td>${keyword.company}</td>
                                 <td>${keyword.keyword_main}</td>

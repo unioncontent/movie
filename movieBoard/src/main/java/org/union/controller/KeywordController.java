@@ -91,6 +91,9 @@ public class KeywordController {
 		}
 		
 		model.addAttribute("mainList", keywordService.listPage(cri));
+		
+		Integer totalCount = keywordService.totalCnt();
+		model.addAttribute("totalCount", totalCount);
 	}
 	
 	@GetMapping("/swearword")

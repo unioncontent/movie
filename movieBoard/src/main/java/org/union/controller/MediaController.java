@@ -92,6 +92,10 @@ public class MediaController {
 			logger.info("MediaMain is null");
 			cri.setMediaMain(null);
 		}
+		if(cri.getPortal_name() == "" || "undefined".equals(cri.getPortal_name()) ) {
+			logger.info("Portal_name is null");
+			cri.setPortal_name(null);
+		}
 		
 		if("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate())
 				|| cri.getStartDate() == "" || cri.getEndDate() == ""){
@@ -143,6 +147,7 @@ public class MediaController {
 		
 		
 		model.addAttribute("mediaList", mediaList);
+		model.addAttribute("portal_name", cri.getPortal_name());
 		
 		Integer totalCount = mediaService.allPageCount(cri);
 		
