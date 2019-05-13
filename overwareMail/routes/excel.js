@@ -9,7 +9,7 @@ var router = express.Router();
 var maillink = require('../models/maillink.js');
 var period = require('../models/period.js');
 
-const aDir = 'C:/overware/overwareMail/';
+const aDir = '/home/overwareMail/';
 
 router.get('/',async function(req, res) {
   var sucess = [];

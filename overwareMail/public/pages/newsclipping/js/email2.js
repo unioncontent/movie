@@ -120,16 +120,17 @@ function getNewsClippingData(){
     success:function(data){
       if(data.status){
         // 초기화
-        $('.section:not(div[data-type=4],div[data-type=issue],div[data-type=marketing],div[data-type=movie]) .section-body').empty();
-        $('div[data-type=issue] .section-body tbody tr:not(.head)').remove();
+        $('.section:not(div[data-type=4],div[data-type=marketing],div[data-type=movie]) .section-body').empty();
+        // $('.section:not(div[data-type=4],div[data-type=issue],div[data-type=marketing],div[data-type=movie]) .section-body').empty();
+        // $('div[data-type=issue] .section-body tbody tr:not(.head)').remove();
         $('div[data-type=marketing] .section-body tbody tr:not(.head)').remove();
         $('div[data-type=4] .section-body tbody tr:not(.head)').remove();
         $('div[data-type=7]').empty();
         // 생성
-        $.each(data.result.issue, function(index, value) {
-          var html = '<tr><td style="text-align:center;color:#ed1252;padding:17px 0;border:1px solid #f4f4f4;border-left:0px;border-top:0px;text-align:center;">#'+value.keyword+'</td><td style="border-bottom: 1px solid #f4f4f4;text-align: left;color: #666;"><div class="text" style="width:500px;display:inline-block;padding:10px;padding-right:0px;white-space:pre-line;word-break:break-all;top:4px;">'+value.issue_content+'</div></td></tr>';
-          $('div[data-type=issue] .section-body tbody').append(html);
-        });
+        // $.each(data.result.issue, function(index, value) {
+        //   var html = '<tr><td style="text-align:center;color:#ed1252;padding:17px 0;border:1px solid #f4f4f4;border-left:0px;border-top:0px;text-align:center;">#'+value.keyword+'</td><td style="border-bottom: 1px solid #f4f4f4;text-align: left;color: #666;"><div class="text" style="width:500px;display:inline-block;padding:10px;padding-right:0px;white-space:pre-line;word-break:break-all;top:4px;">'+value.issue_content+'</div></td></tr>';
+        //   $('div[data-type=issue] .section-body tbody').append(html);
+        // });
         $.each(data.result.marketing, function(index, value) {
           var html = '<tr><td style="padding:9px 7px 5px 11px;border-bottom:1px solid #f4f4f4;"><img alt="'+value.ps_name+'" src="http://showbox.email/images/newsclipping/'+value.ps_name+'_logo.png" style="width:13px;height: 13px;margin-bottom:3px;margin-right: 5px;vertical-align:text-bottom;"><div class="text" style="width:450px;display:inline-block;text-overflow:ellipsis;overflow:hidden;vertical-align:baseline;white-space:nowrap;top: 4px;"><a href="'+value.url+'" target="_blank" style="text-decoration:none!important;color:black;font-weight:bold;">'+value.ps_title+'</a><i class="fas fa-times news-delete" data-idx="'+value.n_idx+'" data-type="marketing_'+value.m_type+'_mail" data-str="n_idx"></i></div><div class="info" style="color: #666;font-size: 11px;"><span class="date">총검출수 '+value.total_cnt+'</span><span class="bar" style="display:inline-block;overflow:hidden;width:0;height:11px;margin:-1px 5px 1px 4px;border-left:1px solid #eaeaea;vertical-align:middle;"></span><span class="date">조회수 '+value.view_cnt+'</span><span class="bar" style="display: inline-block;overflow:hidden;width:0;height:11px;margin:-1px 5px 1px 4px;border-left:1px solid #eaeaea;vertical-align: middle;"></span><span class="date">좋아요 '+value.like_cnt+'</span><span class="bar" style="display:inline-block;overflow:hidden;width:0;height:11px;margin:-1px 5px 1px 4px;border-left:1px solid #eaeaea;vertical-align:middle;"></span><span class="date">댓글 '+value.reply_cnt+'</span></div></td><td style="border-bottom:1px solid #f4f4f4;border-left:1px solid #f4f4f4;text-align: center;color: #666;">'+value.ps_writer+'</td><td style="padding:13px 0;border-bottom: 1px solid #f4f4f4;border-left: 1px solid #f4f4f4;text-align: center;color: #666;">'+value.writeDate+'</td></tr><tr><td colspan="3" style="border-bottom: 1px solid #d0cdcd;"><div class="text" style="width:700px;display: inline-block;padding:10px;white-space:pre-line;word-break:break-all;top:4px;">'+((value.ps_content == null) ? '내용없음' :value.ps_content)+'</div></td></tr>';
           $('div[data-type=marketing] .section-body tbody').append(html);
@@ -227,7 +228,7 @@ function getNewsClippingData(){
         $.each([ 1,2,3,5,6 ], function( index, value ) {
           dataNoneSetting(value,'');
         });
-        dataNoneSetting('issue','other');
+        // dataNoneSetting('issue','other');
         dataNoneSetting('marketing','other');
         dataNoneSetting('4','showbox');
       }
@@ -249,13 +250,13 @@ function dataNoneSetting(num,type){
   //     $('div[data-type='+num+'] .section-body tbody').append(html);
   //   }
   // }
-  else{
-    if($('div[data-type='+num+'] .section-body tbody tr').length < 1){
-      var issueStr = (num == 'issue') ? 'colspan=2' : '';
-      var html = '<tr><td '+issueStr+'><p style="text-align:center;margin:0px;margin-top:15px;font-size:12px;font-weight:bold;color:#666;">해당 데이터 없습니다.</p></td></tr>';
-      $('div[data-type='+num+'] .section-body tbody').append(html);
-    }
-  }
+  // else{
+  //   if($('div[data-type='+num+'] .section-body tbody tr').length < 1){
+  //     var issueStr = (num == 'issue') ? 'colspan=2' : '';
+  //     var html = '<tr><td '+issueStr+'><p style="text-align:center;margin:0px;margin-top:15px;font-size:12px;font-weight:bold;color:#666;">해당 데이터 없습니다.</p></td></tr>';
+  //     $('div[data-type='+num+'] .section-body tbody').append(html);
+  //   }
+  // }
 }
 // 박스오피스
 function boxoffice(){

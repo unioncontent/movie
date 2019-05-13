@@ -1,11 +1,11 @@
 let funDB = require('../db/db_fun.js');
 
 /*
-  지난기사보기 - content_view
+  지난기사보기 - manage_view
 */
 var content = {
   selectView: async function(param){
-    var sql = 'SELECT * FROM manage_view where M_keyword_idx = ? and M_invitation = ? and M_template =\'0\' and ((M_type=0 and M_send is not null) or (M_type=1 and M_send < now())) ';
+    var sql = 'SELECT * FROM manage_view WHERE M_delete != 1 and M_keyword_idx = ? and M_invitation = ? and M_template =\'0\' and ((M_type=0 and M_send is not null) or (M_type=1 and M_send < now())) ';
     var values = [param.keyword,param.ivt];
     if('idx' in param){
       sql += 'and n_idx=? ';
@@ -27,7 +27,7 @@ var content = {
     return await funDB.getResult('d',sql,values);
   },
   selectViewCount: async function(param){
-    var sql = 'SELECT count(*) as total FROM manage_view where M_keyword_idx = ? and M_invitation = ? and M_template =\'0\' and ((M_type=0 and M_send is not null) or (M_type=1 and M_send < now())) ';
+    var sql = 'SELECT count(*) as total FROM manage_view WHERE M_delete != 1 and M_keyword_idx = ? and M_invitation = ? and M_template =\'0\' and ((M_type=0 and M_send is not null) or (M_type=1 and M_send < now())) ';
     var values = [param.keyword,param.ivt];
     if('idx' in param){
       sql += 'and n_idx=? ';

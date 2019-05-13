@@ -150,7 +150,7 @@ async function getListPageData(idx,param){
 // 첨부파일 삭제
 router.get('/removeDir/:date',isAuthenticated,async function(req, res) {
   var fs = require('fs-extra');
-  var filePath = __dirname +'/public/uploads/files/'+req.params.date;
+  var filePath = __dirname +'/home/overwareMail/public/uploads/files/'+req.params.date;
   try {
     fs.removeSync(filePath);
     res.send('success!');
@@ -160,8 +160,11 @@ router.get('/removeDir/:date',isAuthenticated,async function(req, res) {
 });
 // 첨부파일 다운로드
 router.get('/download/:date/:fileName',async function(req, res) {
-  // logger.info('/download/:date/:fileName = ',req.params);
-  var filePath = __dirname.replace('\\routes','') +'/public/uploads/files/'+req.params.date;
+  logger.info('fileName = '+req.params.fileName);
+  logger.info('date = '+req.params.date);
+
+  var filePath = __dirname.replace('/routes','') +'/public/uploads/files/'+req.params.date;
+  logger.info('filePath = '+filePath);
   var fs = require('fs');
   var fileListLength = fs.readdirSync(filePath).length;
   var count = 1;

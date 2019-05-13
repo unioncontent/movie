@@ -415,7 +415,7 @@ async function asyncForEach(array, callback) {
 async function asyncFileRemove(dateF,fileArr){
   logger.info('asyncFileRemove');
   await asyncForEach(fileArr, async (item, index, array) => {
-    var removePath = ___dirname.replace('\\routes','') +"/public/uploads/files/"+dateF+"/"+item;
+    var removePath = ___dirname.replace('\\routes','') +"/home/overwareMail/public/uploads/files/"+dateF+"/"+item;
     fs.removeSync(removePath.replace(/ /gi, ""));
     logger.info('remove file:',removePath.replace(/ /gi, ""));
     logger.info(getFiles(removePath));
@@ -879,7 +879,7 @@ router.post('/remove/file',function (req, res) {
   try {
     var date = datetime.create();
     var today = date.format('Ymd');
-    var file = ___dirname.replace('\\routes','') +"/public/uploads/files/"+today+"/"+req.body.file;
+    var file = ___dirname.replace('\\routes','') +"/home/overwareMail/public/uploads/files/"+today+"/"+req.body.file;
     var result = fs.removeSync(file.replace(/ /gi, ""));
     return res.send({status:true});
   } catch (err) {
@@ -892,14 +892,14 @@ var storageImage = multer.diskStorage({
   destination: async function (req, file, cb) {
     var date = datetime.create();
     var today = date.format('Ymd');
-    var path = await mkdirsFun('public/uploads/image/'+today);
+    var path = await mkdirsFun('/home/overwareMail/public/uploads/image/'+today);
     await cb(null, path); // cb 콜백함수를 통해 전송된 파일 저장 디렉토리 설정
   },
   filename: function (req, file, cb) {
     var date = datetime.create();
     var today = date.format('Ymd');
     var time = date.format('HMS');
-    if (fs.existsSync('public/uploads/image/'+today+'/'+file.originalname)) {
+    if (fs.existsSync('/home/overwareMail/public/uploads/image/'+today+'/'+file.originalname)) {
       file.originalname = time+'_'+file.originalname;
     }
     cb(null, file.originalname); // cb 콜백함수를 통해 전송된 파일 이름 설정
@@ -907,7 +907,7 @@ var storageImage = multer.diskStorage({
 });
 var uploadImage = multer({ storage: storageImage });
 router.post('/send/img',uploadImage.single('file'),function(req, res) {
-  logger.info('/send/img:',req.file.path);
+  logger.info('/send/img:'+req.file.path);
   if (!req.file) {
     logger.info("No file passed");
     return res.status(500).send("No file passed");
@@ -915,7 +915,7 @@ router.post('/send/img',uploadImage.single('file'),function(req, res) {
   logger.info('filelist:',getFiles(req.file.destination));
   logger.info(req.file);
 
-  var result = req.file.destination.replace('public/','')+'/'+req.file.originalname;
+  var result = req.file.destination.replace('/home/overwareMail/public/','')+'/'+req.file.originalname;
   res.send({location:'http://showbox.email/'+result});
 });
 
@@ -924,7 +924,7 @@ var storageFile = multer.diskStorage({
   destination: async function (req, file, cb) {
     var date = datetime.create();
     var today = date.format('Ymd');
-    var path = await mkdirsFun('public/uploads/files/'+today);
+    var path = await mkdirsFun('/home/overwareMail/public/uploads/files/'+today);
     await cb(null, path);
   },
   filename: function (req, file, cb) {
@@ -934,7 +934,7 @@ var storageFile = multer.diskStorage({
     var date = datetime.create();
     var today = date.format('Ymd');
     var time = date.format('HMS');
-    if (fs.existsSync('public/uploads/files/'+today+'/'+file.originalname)) {
+    if (fs.existsSync('/home/overwareMail/public/uploads/files/'+today+'/'+file.originalname)) {
       file.originalname = time+'_'+file.originalname;
     }
     cb(null, file.originalname)
@@ -942,7 +942,7 @@ var storageFile = multer.diskStorage({
 });
 var uploadFile = multer({ storage: storageFile });
 router.post('/send/file',uploadFile.single('file'),function(req, res) {
-  logger.info('/send/file:',req.file);
+  logger.info('/send/file:'+req.file);
   if (!req.file) {
     logger.info("No file passed");
     return res.status(500).send("No file passed");
@@ -952,7 +952,7 @@ router.post('/send/file',uploadFile.single('file'),function(req, res) {
     fs.removeSync(req.file.path);
     return res.status(500).send("exe는 업로드 불가합니다.");
   }
-  var result = req.file.destination.replace('public/uploads/files/','')+'/'+req.file.filename.split('.')[0];
+  var result = req.file.destination.replace('/home/overwareMail/public/uploads/files/','')+'/'+req.file.filename.split('.')[0];
   res.send({location:'http://showbox.email/period/download/'+result});
 });
 
