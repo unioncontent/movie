@@ -3,8 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "pm2-dev start ecosystem.config.js",
-    "deploy": "npm install && pm2 start ecosystem.config.js --env production"
+    "start": "forever start -a --minUptime 5 --spinSleepTime 5 /home/overwareMail/bin/www"
   },
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
