@@ -358,4 +358,11 @@ public class CommunityDAOImpl implements CommunityDAO {
 		
 	}
 
+
+	@Override
+	public List<CommunityVO> allPageallEXList(SearchCriteria cri) throws SQLException {
+
+		return session1.selectList(namespace + "allPageallEXList", cri);
+	}
+
 }

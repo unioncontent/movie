@@ -236,6 +236,14 @@
 				</if>
 			</if>
 		</if>
+		<if test="domain != null">
+			<if test="keyword != null">
+				and domain = #{domain}
+			</if>
+			<if test="keyword == null">
+				where domain = #{domain}
+			</if>
+		</if>
 	</sql>
 
 	<sql id="search_writeDate">
@@ -856,6 +864,45 @@
 			
 	</select>
 	
+	<select id="allPageallEXList" resultType="CommunityVO">
+		select 
+			*
+		from
+		(select
+			community_idx, community_name, community_title, community_content, keyword, createDate, writeDate, url,'community' as domain, textType
+		from 
+			community_data
+		where
+			url is not null
+		<include refid="allsearch"></include>
+        
+        UNION ALL
+        
+        select
+			media_idx, media_name, media_title, media_content, keyword, createDate, writeDate, url,'media' as domain,textType
+		from 
+			media_data
+		where
+			url is not null
+		<include refid="allsearch"></include>
+        
+        UNION ALL
+        
+        select
+			portal_idx, portal_name, portal_title, portal_content, keyword, createDate, writeDate, url, 'portal' as domain,textType
+		from 
+			portal_data
+		where
+			url is not null
+		and 
+			score is null
+		<include refid="allsearch"></include>
+        ) x 
+        <include refid="keywordSearch"></include>
+        order 
+			by createDate desc
+	</select>
+	
 	<select id="allPageallList" resultType="CommunityVO">
 		select 
 			*
@@ -902,7 +949,7 @@
 			count(*)
 		from
 		(select
-			community_idx, community_name, community_title, community_content, keyword, createDate, writeDate, url
+			community_idx, community_name, community_title, community_content, keyword, createDate, writeDate, url, 'community' as domain
 		from 
 			community_data
 		where
@@ -912,7 +959,7 @@
         UNION ALL
         
         select
-			media_idx, media_name, media_title, media_content, keyword, createDate, writeDate, url
+			media_idx, media_name, media_title, media_content, keyword, createDate, writeDate, url, 'media' as domain
 		from 
 			media_data
 		where
@@ -922,7 +969,7 @@
         UNION ALL
         
         select
-			portal_idx, portal_name, portal_title, portal_content, keyword, createDate, writeDate, url
+			portal_idx, portal_name, portal_title, portal_content, keyword, createDate, writeDate, url, 'portal' as domain
 		from 
 			portal_data
 		where

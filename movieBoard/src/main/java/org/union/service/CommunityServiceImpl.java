@@ -328,4 +328,10 @@ public class CommunityServiceImpl implements CommunityService {
 		communityDAO.deleteTextDelete(community_idx);
 		
 	}
+
+	@Override
+	public List<CommunityVO> allPageallEXList(SearchCriteria cri) throws SQLException {
+
+		return communityDAO.allPageallEXList(cri);
+	}
 }

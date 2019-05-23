@@ -74,7 +74,10 @@ public class ListAllController {
 			logger.info("selectKey is null");
 			cri.setSelectKey(null);
 		}
-		
+		if(cri.getDomain() == "" || "도메인".equals(cri.getDomain()) ) {
+			logger.info("selectKey is null");
+			cri.setDomain(null);
+		}
 		if("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate())
 				|| cri.getStartDate() == "" || cri.getEndDate() == ""){
 			cri.setStartDate(null);
@@ -236,6 +239,11 @@ public class ListAllController {
 			cri.setSelectKey(null);
 		}
 		
+		if(cri.getDomain() == "" || "도메인".equals(cri.getDomain()) ) {
+			logger.info("selectKey is null");
+			cri.setDomain(null);
+		}
+		
 		if("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate())
 				|| cri.getStartDate() == "" || cri.getEndDate() == ""){
 			cri.setStartDate(null);
@@ -271,22 +279,37 @@ public class ListAllController {
 			}
 		}
 		
-		logger.info("cri: " + cri);
-
-		List<ExtractVO> extractList = new ArrayList<ExtractVO>();
-		ListUtil listUtil = new ListUtil();
+		logger.info("cri: " + cri.getDomain());
 		
-		
-		listUtil.listAddCommunityList(extractList, communityService.allPage(cri));
-		listUtil.listAddPortalList(extractList, portalService.allPage(cri));
-		listUtil.listAddMediaList(extractList, mediaService.allPage(cri));
-		
-		ExtractComparator comparator = new ExtractComparator();
-		Collections.sort(extractList, comparator);
-		
-		
-		model.addObject("list", extractList);
-		model.setView(excelView);
+		if(cri.getDomain() == "" || "도메인".equals(cri.getDomain()) ) {
+			List<ExtractVO> extractList = new ArrayList<ExtractVO>();
+			ListUtil listUtil = new ListUtil();
+			
+			
+			listUtil.listAddCommunityList(extractList, communityService.allPage(cri));
+			listUtil.listAddPortalList(extractList, portalService.allPage(cri));
+			listUtil.listAddMediaList(extractList, mediaService.allPage(cri));
+			
+			ExtractComparator comparator = new ExtractComparator();
+			Collections.sort(extractList, comparator);
+			
+			
+			model.addObject("list", extractList);
+			model.setView(excelView);
+		}else {
+			List<ExtractVO> extractList = new ArrayList<ExtractVO>();
+			ListUtil listUtil = new ListUtil();
+			
+			
+			listUtil.listAddCommunityList(extractList, communityService.allPageallEXList(cri));
+			
+			ExtractComparator comparator = new ExtractComparator();
+			Collections.sort(extractList, comparator);
+			
+			
+			model.addObject("list", extractList);
+			model.setView(excelView);
+		}
 		
 		return model;
 	}

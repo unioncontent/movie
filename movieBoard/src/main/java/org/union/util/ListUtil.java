@@ -73,13 +73,17 @@ public class ListUtil {
 	}
 
 	public List<ExtractVO> listAddCommunityList(List<ExtractVO> list, List<CommunityVO> addList) {
-
+			
 		try {
 
 			for(int i = 0; i < addList.size(); i++) {
 				ExtractVO vo = new ExtractVO();
-				
-				vo.setDomain("community");
+					
+				if(addList.get(i).getDomain() != null) {
+					vo.setDomain(addList.get(i).getDomain());
+				}else {
+					vo.setDomain("community");
+				}
 				vo.setDomainType(addList.get(i).getCommunity_name());
 				vo.setKeyword_main(addList.get(i).getKeyword_main());
 				vo.setKeyword(addList.get(i).getKeyword());

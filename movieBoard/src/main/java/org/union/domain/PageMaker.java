@@ -103,6 +103,7 @@ public class PageMaker {
 		            .queryParam("mediaMain", ((SearchCriteria)cri).getMediaMain())
 		            .queryParam("mediaState", ((SearchCriteria)cri).getMediaState())
 		            .queryParam("portal_name", ((SearchCriteria)cri).getPortal_name())
+		            .queryParam("domain", ((SearchCriteria)cri).getDomain())
 		            .build();
 			
 			return uriComponents.toUriString();

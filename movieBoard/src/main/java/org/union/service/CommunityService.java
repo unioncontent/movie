@@ -23,6 +23,7 @@ public interface CommunityService {
 	public List<CommunityVO> totalallPageallList(SearchCriteria cri) throws SQLException;
 	public Integer totalallPageallCount(SearchCriteria cri) throws SQLException;
 	public List<CommunityVO> allPageallList(SearchCriteria cri) throws SQLException;
+	public List<CommunityVO> allPageallEXList(SearchCriteria cri) throws SQLException;
 	public Integer allPageallCount(SearchCriteria cri) throws SQLException;
 	
 	public List<CommunityVO> allPageList(SearchCriteria cri) throws SQLException;

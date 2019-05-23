@@ -144,12 +144,18 @@
                           <option value="기타글">기타글</option>
                           <option value="삭제글">삭제글</option>
                         </select>
-                        <select id= "selectPerPageNum" name="select" class="col-md-1 form-control form-control-inverse m-r-10 m-b-10 p-r-5 f-left select-left">	
+                        <select id= "selectPerPageNum" name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left">	
 	                        <option value="30">리스트</option>
 	                        <option id= "30" >30</option>
 	                        <option id = "60">60</option>
 	                        <option id = "120">120</option>
 	                        <option id = "150">150</option>
+                        </select>
+                        <select id= "selectDomain" name="select" class="col-md-1 form-control form-control-inverse m-r-10 m-b-10 p-r-5 f-left select-left">	
+	                        <option>도메인</option>
+	                        <option value="portal">portal</option>
+                          <option value="media">media</option>
+                          <option value="community">community</option>
                         </select>
 						</c:if>
 
@@ -664,6 +670,32 @@ $(function() {
 			//searchList();
 		});
 		
+		var DomainOption = decodeURI(window.location.href.split("domain=")[1]).split("&")[0];
+		console.log("DomainOption: " + DomainOption);
+		console.log(decodeURI(window.location.href.split("&domain=")[1]));
+		
+		var $selectDomain = $('#selectDomain');
+
+		if(DomainOption != 'undefined'){
+			for(var i = 0; i < $selectDomain[0].length; i++ ){
+				if($selectDomain[0][i].value == DomainOption){
+					$selectDomain[0][i].selected = 'selected';
+				}
+			}
+		}
+		$selectDomain[0][0].disabled = true;
+
+
+		// 도메인 선택시
+		$selectDomain.change(function(){
+			console.log("selectDomain clicked....");
+			console.log($('#selectDomain option:selected').val());
+
+			searchList();
+
+			//searchList();
+		});
+		
 		var textOption = decodeURI(window.location.href.split("textType=")[1]).split("&")[0];
 		console.log("textOption: " + textOption);
 
@@ -870,6 +902,7 @@ $(function() {
         	  + "&company=" + $("#selectCompany option:selected").val()
 	          + "&selectKey=" + $('#selectKeyword option:selected').val()
 	          + "&textType=" + $("#selectTextType option:selected").val()
+	          + "&domain=" + $("#selectDomain option:selected").val()
       		  + "&startDate=" + makeDateFormat($("#fromDate").val(), 0)
       		  + "&endDate=" +  makeDateFormat($("#fromDate").val(), 1);
 
@@ -1031,6 +1064,7 @@ $(function() {
 						+ "&selectKey=" + $('#selectKeyword option:selected').val()
 						+ "&textType=" + $("#selectTextType option:selected").val()
 						+ "&searchType=" + $("#selectSearchType option:selected").val()
+						+ "&domain=" + $("#selectDomain option:selected").val()
 						+ "&keyword=" + $('#keywordInput').val()
     					+ "&startDate=" + makeDateFormat($("#fromDate").val(), 0)
     					+ "&endDate=" +  makeDateFormat($("#fromDate").val(), 1)
