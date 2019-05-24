@@ -18,6 +18,15 @@ var isAuthenticated = function (req, res, next) {
   res.redirect('/login');
 };
 
+async function asyncForEach(array, callback) {
+  for (var index = 0; index < array.length; index++) {
+   var done = await callback(array[index], index, array);
+    if(done == false){
+     break;
+    }
+  }
+}
+
 // 대시보드
 router.get('/', isAuthenticated, async function(req, res, next) {
   var data = {
