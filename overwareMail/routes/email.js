@@ -666,7 +666,7 @@ async function settingMailBody(bodyHtml,keyword,template,idx,num,ivt){
   // logger.info('settingMailBody('+bodyHtml+','+keyword+','+template+','+idx+','+num+','+ivt+')');
   var sideHtmlStart = '<table width="750" align="center" cellpadding="0" cellspacing="0" style="border: solid 1px #cacaca; padding: 20px;"><tbody><tr><td>';
   if(template == '0'){
-    sideHtmlStart += '<table width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td width="642"><img src="http://showbox.email/templates/images/logo/show_logo.png" width="135" height="36" alt="로고"></td><td width="92"><p style="font-size:  12px;">NEWS ';
+    sideHtmlStart += '<table width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td width="642"><img src="http://showbox.email/templates/images/logo/show_logo.png" width="135" height="36" alt="로고"></td><td width="92"><p style="font-size:  12px;text-align: right;">NEWS ';
     if(num != '0' && ivt  == '0'){
       sideHtmlStart+= 'No.'+num;
     }

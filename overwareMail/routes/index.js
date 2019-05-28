@@ -353,7 +353,7 @@ function settingTophtml(M_template,num,ivtVal){
     ivt : '0'
   };
   if(M_template == '0'){
-    Obj.html = '<table width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td width="642"><img src="http://showbox.email/templates/images/logo/show_logo.png" width="135" height="36" alt="로고"></td><td width="92"><p style="font-size:  12px;">NEWS ';
+    Obj.html = '<table width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td width="642"><img src="http://showbox.email/templates/images/logo/show_logo.png" width="135" height="36" alt="로고"></td><td width="92"><p style="font-size:  12px;text-align: right;">NEWS ';
     if(num != '' && ivtVal == 0){
       Obj.html += 'No.'+num;
     }
