@@ -46,80 +46,81 @@ var newsclipping = {
     sql += 'FROM `union`.news_view where media_idx = ?';
     // 값이 있으면 insert 안되도록
     sql += ' and NOT EXISTS (SELECT * FROM news_mail WHERE media_idx = ?);'
-    try {
-      await funDB.getResult('o',sql,param);
-    } catch (e) {
-      console.log(e)
-    } finally {
-      return await funDB.getResult('d',sql,param);
-    }
+    return await funDB.getResult('o',sql,param);
+    // try {
+    // } catch (e) {
+    //   console.log(e)
+    // } finally {
+    //   return await funDB.getResult('d',sql,param);
+    // }
   },
   insertReporter: async function(param){
     var sql = 'INSERT INTO `union`.reporter_data (reporter_media_name,reporter_name) SELECT ?,? FROM DUAL WHERE NOT EXISTS (SELECT * FROM `union`.reporter_data WHERE reporter_media_name=? and reporter_name=?); ';
-    try {
-      await funDB.getResult('o',sql,param);
-    } catch (e) {
-      console.log(e)
-    } finally {
-      return await funDB.getResult('d',sql,param);
-    }
+    return await funDB.getResult('o',sql,param);
+    // try {
+    // } catch (e) {
+    //   console.log(e)
+    // } finally {
+    //   return await funDB.getResult('d',sql,param);
+    // }
   },
   insert2: async function(param){
     var pValue = Object.values(param);
     var sql = insertSqlSetting(Object.keys(param));
-    try {
-      await funDB.getResult('o',sql,pValue);
-    } catch (e) {
-      console.log(e)
-    } finally {
-      return await funDB.getResult('d',sql,pValue);
-    }
+    return await funDB.getResult('o',sql,pValue);
+    // try {
+    // } catch (e) {
+    //   console.log(e)
+    // } finally {
+    //   return await funDB.getResult('d',sql,pValue);
+    // }
   },
   deleteList: async function(param){
     var sql = "delete from "+param.table+" where "+param.idxStr+"=?";
     if(param.table == "news_mail"){
       sql += " or news_detail="+param.idx;
     }
-    try {
-      await funDB.getResult('o',sql,param.idx);
-    } catch (e) {
-      console.log(e)
-    } finally {
-      return await funDB.getResult('d',sql,param.idx);
-    }
+    return await funDB.getResult('o',sql,param.idx);
+    // try {
+    // } catch (e) {
+    //   console.log(e)
+    // } finally {
+    //   return await funDB.getResult('d',sql,param.idx);
+    // }
   },
   cancelUpdate: async function(param){
     var sql = "update "+param.table+" set news_detail = null where news_detail=?";
-    try {
-      await funDB.getResult('o',sql,param.idx);
-    } catch (e) {
-      console.log(e)
-    } finally {
-      return await funDB.getResult('d',sql,param.idx);
-    }
+    return await funDB.getResult('o',sql,param.idx);
+
+    // try {
+    // } catch (e) {
+    //   console.log(e)
+    // } finally {
+    //   return await funDB.getResult('d',sql,param.idx);
+    // }
   },
   delete: async function(param){
     var sql = "delete from news_mail where media_idx=?";
-    try {
-      await funDB.getResult('o',sql,param);
-    } catch (e) {
-      console.log(e)
-    } finally {
-      return await funDB.getResult('d',sql,param);
-    }
+    return await funDB.getResult('o',sql,param);
+    // try {
+    // } catch (e) {
+    //   console.log(e)
+    // } finally {
+    //   return await funDB.getResult('d',sql,param);
+    // }
   },
   updateGroup: async function(param){
     var sql = "update news_mail set news_detail=? where ";
     var arr = [].map.call(param.idxs, function(obj) { return 'media_idx=?'; });
     sql += arr.join(' or ');
     param.idxs.unshift(param.midx);
-    try {
-      await funDB.getResult('o',sql,param.idxs);
-    } catch (e) {
-      console.log(e)
-    } finally {
-      return await funDB.getResult('d',sql,param.idxs);
-    }
+    return await funDB.getResult('o',sql,param.idxs);
+    // try {
+    // } catch (e) {
+    //   console.log(e)
+    // } finally {
+    //   return await funDB.getResult('d',sql,param.idxs);
+    // }
   },
   update: async function(detail,page,param){
     var sql = "update news_mail set reportDate=?,news_type=?";
@@ -144,13 +145,13 @@ var newsclipping = {
       await funDB.getResult('d',sql,param);
     }
     sql = "update news_mail set reportDate=?,news_type=? where news_detail=?";
-    try {
-      await funDB.getResult('o',sql,param);
-    } catch (e) {
-      console.log(e)
-    } finally {
-      return await funDB.getResult('d',sql,param);
-    }
+    return await funDB.getResult('o',sql,param);
+    // try {
+    // } catch (e) {
+    //   console.log(e)
+    // } finally {
+    //   return await funDB.getResult('d',sql,param);
+    // }
   },
   selectKeywordMailTable: async function(param){
     var sql = 'select * FROM keyword_mail ';
