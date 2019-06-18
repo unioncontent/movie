@@ -113,29 +113,31 @@ $(document).on('click', '.btn-edit', function() {
     swal("ERROR!", '발송된 메일은 수정하실 수 없습니다.', "error");
     return false;
   }
-  if (moduleVal == '2' && typeVal != '0') {
-    $.ajax({
-      url: '/email/manage/checkMail',
-      type: 'post',
-      data: {
-        mid: mIdVal
-      },
-      datatype: 'json',
-      error: function(request, status, error) {
-        console.log('code:' + request.status + '\n' + 'message:' + request.responseText + '\n' + 'error:' + error);
-        swal("ERROR!", "다시 시도해주세요.", "error");
-      },
-      success: function(data) {
-        if (data.status == 112) {
-          swal("ERROR!", "예약메일의 상태가 발송대기 중이므로 메일 수정할 수 없습니다.", "error");
-          return false;
-        }
-        editModal(idxVal);
-      }
-    });
-  } else {
-    editModal(idxVal);
-  }
+  editModal(idxVal);
+  //
+  // if (moduleVal == '2' && typeVal != '0') {
+  //   $.ajax({
+  //     url: '/email/manage/checkMail',
+  //     type: 'post',
+  //     data: {
+  //       mid: mIdVal
+  //     },
+  //     datatype: 'json',
+  //     error: function(request, status, error) {
+  //       console.log('code:' + request.status + '\n' + 'message:' + request.responseText + '\n' + 'error:' + error);
+  //       swal("ERROR!", "다시 시도해주세요.", "error");
+  //     },
+  //     success: function(data) {
+  //       if (data.status == 112) {
+  //         swal("ERROR!", "예약메일의 상태가 발송대기 중이므로 메일 수정할 수 없습니다.", "error");
+  //         return false;
+  //       }
+  //       editModal(idxVal);
+  //     }
+  //   });
+  // } else {
+  //   editModal(idxVal);
+  // }
 });
 function editModal(idxVal) {
   swal({
@@ -415,7 +417,7 @@ function ajaxGetPageList(param) {
       var limit = 20;
       var pageCount = Math.ceil(data.result.listCount / limit);
       $('#listTable tfoot').eq(0).empty();
-      if (pageCount > 1) {
+      if (pageCount > 1 && data.result.keyword == '') {
         var html = '<tr><td colspan="11"><ul class="pagination float-right">';
         var pageSize = 5;
         var pRCnt = parseInt(data.result.currentPage / pageSize);

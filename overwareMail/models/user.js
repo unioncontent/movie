@@ -8,7 +8,14 @@ var user = {
   insert: async function(table,param){
     var pValue = Object.values(param);
     var sql = insertSqlSetting(table,Object.keys(param));
-    return await funDB.getResult('d',sql,pValue);
+    // return await funDB.getResult('d',sql,pValue);
+    try {
+      await funDB.getResult('o',sql,pValue);
+    } catch (e) {
+      console.log(e)
+    } finally {
+      return await funDB.getResult('d',sql,pValue);
+    }
   },
   update: async function(param){
     var sql = 'update m_mail_user set user_name=?,user_pw=?,company_name=?';
@@ -20,11 +27,24 @@ var user = {
     }
     var pValue = Object.values(param);
     sql +=' where n_idx=?';
-    return await funDB.getResult('d',sql,pValue);
+    try {
+      await funDB.getResult('o',sql,pValue);
+    } catch (e) {
+      console.log(e)
+    } finally {
+      return await funDB.getResult('d',sql,pValue);
+    }
   },
   delete: async function(param){
     var sql = 'delete from m_mail_user where n_idx=?;';
-    return await funDB.getResult('d',sql,param);
+    // return await funDB.getResult('d',sql,param);
+    try {
+      await funDB.getResult('o',sql,param);
+    } catch (e) {
+      console.log(e)
+    } finally {
+      return await funDB.getResult('d',sql,param);
+    }
   },
   addIdCheck: async function(param) {
     var sql = 'select * from m_mail_user where user_id=?';
@@ -54,7 +74,14 @@ var user = {
   },
   deleteReporter: async function(email,param){
     var sql = 'delete from reporter_data where reporter_email like \'%'+email+'%\' and reporter_name=?';
-    return await funDB.getResult('d',sql,param);
+    // return await funDB.getResult('d',sql,param);
+    try {
+      await funDB.getResult('o',sql,param);
+    } catch (e) {
+      console.log(e)
+    } finally {
+      return await funDB.getResult('d',sql,param);
+    }
   },
   getNextReporterID: async function(){
     var sql = 'select replace(reporter_ID,\'P\',\'\') as reporter_ID from reporter_data where reporter_ID is not null ORDER BY reporter_idx DESC LIMIT 1;';

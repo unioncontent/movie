@@ -150,7 +150,7 @@
                     <% } %>
                   </tbody>
                   <tfoot>
-                    <%
+                    <% if(keyword == ''){
                     var pageCount = Math.ceil(listCount/limit);
                     if(pageCount > 1) {
                     %>
@@ -211,7 +211,8 @@
                         </ul>
                       </td>
                     </tr>
-                    <% } %>
+                    <% }
+                   } %>
                   </tfoot>
                 </table>
               </div>
@@ -246,8 +247,6 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/2.1.27/daterangepicker.css" />
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/2.1.27/moment.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/2.1.27/daterangepicker.js"></script>
-<!-- sweetalert -->
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sweetalert@2.1.0/dist/sweetalert.min.js"></script>
 <!-- custom -->
 <link rel="stylesheet" href="/pages/manage/style.css">
 <script src="/pages/manage/script.js"></script>

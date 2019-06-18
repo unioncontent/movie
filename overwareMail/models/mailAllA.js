@@ -35,14 +35,20 @@ var mailAllA = {
     if('ivt' in body){
       sql +=' and M_invitation= '+body.ivt;
     }
-    if(('sDate' in body) && ('eDate' in body)){
-      sql+=' and M_regdate between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
-    }
     sql += ' and (  M_id = ? or M_id in (select n_idx from m_mail_user where user_admin=?) ';
     if('user_keyword' in body){
       sql += 'or M_keyword_idx = '+body.user_keyword;
     }
-    sql += ' ) order by M_regdate desc limit ?,?';
+    sql += ' ) ';
+    if(!('keyword' in body)){
+      if(('sDate' in body) && ('eDate' in body)){
+        sql+=' and M_regdate between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
+      }
+    }
+    sql += ' order by M_regdate desc';
+    if(!('keyword' in body)){
+      sql += ' limit ?,?';
+    }
     return await funDB.getResult('d',sql,param);
   },
   selectEmailViewCount:async function(body,param){
@@ -59,8 +65,10 @@ var mailAllA = {
         case 't': sql+=' and M_subject like \'%'+body.search+'%\''; break;
       }
     }
-    if(('sDate' in body) && ('eDate' in body)){
-      sql+=' and M_regdate between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
+    if(!('keyword' in body)){
+      if(('sDate' in body) && ('eDate' in body)){
+        sql+=' and M_regdate between \''+body.sDate+' 00:00:00\' and \''+body.eDate+' 23:59:59\'';
+      }
     }
     sql += ' and (  M_id = ? or M_id in (select n_idx from m_mail_user where user_admin=?) ';
     if('user_keyword' in body){
@@ -93,20 +101,58 @@ var mailAllA = {
   insert: async function(param){
     var pValue = Object.values(param);
     var sql = insertSqlSetting(Object.keys(param));
-    return await funDB.getResult('d',sql,pValue);
+    // return await funDB.getResult('d',sql,pValue);
+    try {
+      await funDB.getResult('o',sql,pValue);
+    } catch (e) {
+      console.log(e)
+    } finally {
+      return await funDB.getResult('d',sql,pValue);
+    }
   },
   delete_e: async function(n_idx){
     var sql = 'delete from m_mail_all_a where n_idx=?';
-    return await funDB.getResult('d',sql,[n_idx]);
+    // return await funDB.getResult('d',sql,[n_idx]);
+    try {
+      await funDB.getResult('o',sql,[n_idx]);
+    } catch (e) {
+      console.log(e)
+    } finally {
+      return await funDB.getResult('d',sql,[n_idx]);
+    }
   },
   delete: async function(n_idx){
     // var sql = 'delete from m_mail_all_a where n_idx=?';
     var sql = 'update m_mail_all_a set M_delete = 1, M_senddate = now() where n_idx=?';
-    return await funDB.getResult('d',sql,[n_idx]);
+    // return await funDB.getResult('d',sql,[n_idx]);
+    try {
+      await funDB.getResult('o',sql,[n_idx]);
+    } catch (e) {
+      console.log(e)
+    } finally {
+      return await funDB.getResult('d',sql,[n_idx]);
+    }
+  },
+  delete_mail: async function(M_a_id){
+    var sql = 'update m_mail_all_a set M_delete = 1, M_senddate = now() where M_a_id=?';
+    try {
+      await funDB.getResult('o',sql,[M_a_id]);
+    } catch (e) {
+      console.log(e)
+    } finally {
+      return await funDB.getResult('d',sql,[M_a_id]);
+    }
   },
   updateMailBodyHis:async function(param){
     var sql = 'update m_mail_all_a set M_body_his=? where n_idx=?';
-    return await funDB.getResult('d',sql,param);
+    // return await funDB.getResult('d',sql,param);
+    try {
+      await funDB.getResult('o',sql,param);
+    } catch (e) {
+      console.log(e)
+    } finally {
+      return await funDB.getResult('d',sql,param);
+    }
   },
   updateMtype:async function(param){
     var sql = 'update m_mail_all_a set M_type=?';
@@ -114,15 +160,36 @@ var mailAllA = {
       sql += ', M_senddate=null ';
     }
     sql += 'where n_idx=?';
-    return await funDB.getResult('d',sql,param);
+    // return await funDB.getResult('d',sql,param);
+    try {
+      await funDB.getResult('o',sql,param);
+    } catch (e) {
+      console.log(e)
+    } finally {
+      return await funDB.getResult('d',sql,param);
+    }
   },
   updateSendDate: async function(param){
     var sql = 'update m_mail_all_a set M_senddate = ? where n_idx = ?';
-    return await funDB.getResult('d',sql,param);
+    // return await funDB.getResult('d',sql,param);
+    try {
+      await funDB.getResult('o',sql,param);
+    } catch (e) {
+      console.log(e)
+    } finally {
+      return await funDB.getResult('d',sql,param);
+    }
   },
   updateId: async function(param){
     var sql = 'update m_mail_all_a set M_a_id=? where n_idx=?';
-    return await funDB.getResult('d',sql,param);
+    // return await funDB.getResult('d',sql,param);
+    try {
+      await funDB.getResult('o',sql,param);
+    } catch (e) {
+      console.log(e)
+    } finally {
+      return await funDB.getResult('d',sql,param);
+    }
   }
 }
 

@@ -43,6 +43,7 @@ app.use(flash()); // flash message
 app.use(passport.initialize());
 app.use(passport.session());
 // routes setup
+var mailCount = 0;
 app.use(function(req, res, next) {
   // console.log(req.user);
   res.locals.user = {
@@ -54,10 +55,20 @@ app.use(function(req, res, next) {
     user_name: '',
     company_name: '',
     createDate: '',
-    updateDate: ''
+    updateDate: '',
+    m_idx:''
   };
   if('user' in req){
     res.locals.user = req.user;
+  }
+  next();
+}, async function (req, res, next) {
+  if(req.originalUrl == "/"){
+    var mymailer = require('./models/mymailer.js');
+    mailCount = await mymailer.countSelectMailList(res.locals.user.n_idx);
+    res.locals.mailCount = mailCount;
+  } else {
+    res.locals.mailCount = mailCount;
   }
   next();
 });

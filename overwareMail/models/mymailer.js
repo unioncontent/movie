@@ -1,6 +1,37 @@
 let funDB = require('../db/db_fun.js');
 
+
+
 var mymailer = {
+  selectMailList:async function(qeury){
+    var sql = 'SELECT M_recipi,M_group,M_subject,M_send,M_regdate FROM `union`.manage_view where '+qeury+' order by M_send asc';
+    return await funDB.getResult('d',sql);
+  },
+  selectMailidx:async function(param){
+    var sql = 'SELECT concat(replace(GROUP_CONCAT( CAST(i.id AS char(100)) SEPARATOR \'|\'),\',\',\'\')) as id,concat(replace(GROUP_CONCAT( DATE_FORMAT(i.send_time, \'%Y-%m-%d %H:%i:%s\') SEPARATOR \'|\'),\',\',\'\')) as strtime,concat(\'n_idx = \',replace(GROUP_CONCAT( d.second SEPARATOR \' or n_idx =\'),\',\',\'\')) as whereQuery  FROM tm001.customer_info as i\
+    left join (select count(*) as total,a.* from tm001.customer_data as a group by id) as d on i.id = d.id\
+    where i.send_time > now() and i.wasRead = \'O\' and i.wasSend = \'X\' and i.wasComplete = \'X\' and i.real_id is null';
+    if(param=='1'){
+      sql += ' and d.sixth != 25';
+    }
+    sql += ' order by i.send_time asc';
+    return await funDB.getResult('m',sql);
+  },
+  countSelectMailList:async function(param){
+    var sql = 'select count(*) as total from (SELECT i.* FROM tm001.customer_info as i\
+    left join (select count(*) as total,a.* from tm001.customer_data as a group by id) as d on i.id = d.id\
+    where i.send_time > now() and i.wasRead = \'O\' and i.wasSend = \'X\' and i.wasComplete = \'X\' and i.real_id is null';
+    if(param=='1'){
+      sql += ' and d.sixth != 25';
+    }
+    sql += ' ) as t';
+    var total = await funDB.getResult('m',sql);
+    var result = 0;
+    if(total.length > 0){
+      result = total[0]['total'];
+    }
+    return result;
+  },
   selectSendCheckMail:async function(param){
     var sql = 'SELECT * FROM tm001.customer_info where id = ? and wasRead = \'O\' and wasSend = \'X\' and wasComplete = \'X\' and real_id is null';
     return await funDB.getResult('m',sql,param);
@@ -30,7 +61,7 @@ var mymailer = {
     Promise.all(values).then(async function(v) {
       return await funDB.getResult('m',sql,[v]);
     }).catch(function(err){
-      console.error("Promise.all error", err);
+      console.log("Promise.all error : ", err);
       return;
     });
   },
@@ -52,7 +83,7 @@ var mymailer = {
     return await funDB.getResult('m',sql,param);
   },
   deleteSendTable: async function(param){
-    var sql = "delete from customer_data where id=?";
+    var sql = "delete from tm001.customer_data where id=?";
     return await funDB.getResult('m',sql,param);
   },
   deleteInfoTable: async function(param){

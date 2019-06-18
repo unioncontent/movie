@@ -32,7 +32,14 @@ var mailListAll = {
     var sql = 'update reporter_data set\
     reporter_media_name=?, reporter_name=?, reporter_email=?, reporter_phoneNum=?, updateDate=?\
     where reporter_idx=?;';
-    return await funDB.getResult('d',sql,pValue);
+    // return await funDB.getResult('d',sql,pValue);
+    try {
+      await funDB.getResult('o',sql,pValue);
+    } catch (e) {
+      console.log(e)
+    } finally {
+      return await funDB.getResult('d',sql,pValue);
+    }
   },
   deleteFun: async function(param){
     var sql = 'delete from m_mail_list_all where n_idx=?;';

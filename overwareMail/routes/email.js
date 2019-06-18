@@ -831,9 +831,13 @@ async function mailInsert(req){
           now];
         });
         result = await mymailer.insertMailSendUser(values);
+        // logger.error('result :',type(result));
         if(result != undefined){
           throw new Error('insertMailSendUserError');
         }
+        // if(result.length == 0){
+        //   throw new Error('insertMailSendUserError');
+        // }
         if(mailData.M_type == '0'){
           result = await mymailer.updateSendInfo(['X','X','X',mailId]);
           if(!('changedRows' in result)){

@@ -6,6 +6,7 @@ var LocalStrategy = require('passport-local').Strategy;
 var router = express.Router();
 // DB module
 var maillink = require('../models/maillink.js');
+var mymailer = require('../models/mymailer.js');
 var newsclipping = require('../models/newsclipping.js');
 var nMailAll = require('../models/nMailAll.js');
 var period = require('../models/period.js');
@@ -35,6 +36,44 @@ router.get('/', isAuthenticated, async function(req, res, next) {
     // ,wlist:await period.selectReservationView([2,req.user.n_idx,req.user.n_idx,req.user.n_idx])
   };
   res.render('index',data);
+});
+
+
+// 마이메일러 예약 리스트 확인
+router.post('/mymailerList', isAuthenticated, async function(req, res, next) {
+  var data = { result:[],arrTime:[],id:[] };
+  var result = await mymailer.selectMailidx(res.locals.user.n_idx);
+  if(result.length != 0){
+    if(result[0]['strtime'] != null){
+      data['arrTime'] = result[0]['strtime'].split('|');
+    }
+    if(result[0]['id'] != null){
+      data['id'] = result[0]['id'].split('|');
+    }
+    if(result[0]['whereQuery'] != null){
+      result = await mymailer.selectMailList(result[0]['whereQuery']);
+      if(result.length != 0){
+        data['result'] = result;
+      }
+    }
+  }
+  res.send(data);
+});
+
+router.post('/mymailerList/delete', isAuthenticated, async function(req, res, next) {
+  console.log(req.body.id);
+  var result = await mymailer.deleteSendTable(req.body.id);
+  if(!('protocol41' in result)){
+    res.status(500).send('deleteSendTable delete query 실패');
+    return false;
+  }
+  result = await mymailer.deleteInfoTable(req.body.id);
+  if(!('protocol41' in result)){
+    res.status(500).send('deleteInfoTable delete query 실패');
+    return false;
+  }
+  result = await mailAllA.delete_mail(req.body.id);
+  res.send('삭제 완료');
 });
 
 router.post('/statistics',isAuthenticated, async function(req, res, next) {
