@@ -4,6 +4,21 @@
 input:focus,button:focus {
   outline: none;
 }
+* a {
+  font-size: 14px;
+  color: #fff;
+}
+* a:focus, * a:hover {
+  font-weight: 400;
+  text-decoration: none;
+  color: #fff;
+}
+.pcoded .pcoded-container {
+  display: block;
+  position: relative;
+  background: #f7f7f7;
+  min-height: calc(100vh);
+}
 /* reportrange */
 #reportrange{
   padding-top: 11px;

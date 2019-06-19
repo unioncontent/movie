@@ -1,5 +1,5 @@
 // General variables
-$theme-bg-color: #f3f3f3;
+$theme-bg-color: #f7f7f7;
 $theme-font-size:0.875em;
 $theme-font-color: #666;
 $theme-font-family: 'Open Sans', sans-serif;
@@ -67,7 +67,7 @@ $theme-color:(
 		)
 	);
 
-@function theme-color($color-name, $color-variant) {  
+@function theme-color($color-name, $color-variant) {
   @return map-get(map-get($theme-color, $color-name), $color-variant);
 }
 

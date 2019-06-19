@@ -1632,11 +1632,11 @@ li.edge > ul {
         }
 
         &[navbar-theme="theme4"] {
-            background: #34475a;
+            background: #2c4850;
 
             .pcoded-item {
                 .pcoded-hasmenu .pcoded-submenu {
-                    background: #3e495b;
+                    background: #2c4850;
                 }
 
                 &[item-border="true"] > li > a {
@@ -1670,13 +1670,13 @@ li.edge > ul {
                 .pcoded-hasmenu .pcoded-submenu {
                     li {
                         > a {
-                            color: #b4bcc8;
+                            color: #23a353;
                         }
 
                         &.active > a,
                         &:hover > a {
-                            background: #2c3e50;
-                            color: #1abc9c;
+                            background: #2c4850;
+                            color: #23a353;
                         }
                     }
                     border-top-color: #1ABC9C;

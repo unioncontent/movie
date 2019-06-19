@@ -12,8 +12,8 @@ table.table-bordered.dataTable tbody td:focus {
 }
 
 .page-item.active .page-link {
-    background-color: $primary-color;
-    border-color: $primary-color;
+    background-color: #9e9e9e;
+    border-color: #9e9e9e;
 }
 
 .page-link {
@@ -286,11 +286,11 @@ table.fixedHeader-locked {
     background-color: white
 }
 
-@media print {
-    table.fixedHeader-floating {
-        display: none
-    }
-}
+// @media print {
+//     table.fixedHeader-floating {
+//         display: none
+//     }
+// }
 
 
 /*===== Key-table data-table ===== */
