@@ -98,7 +98,7 @@ var user = {
       sql += ' where reporter_media_name like \'%'+search+'%\' ';
     }
     sql += ' order by reporter_media_name limit ?,?;';
-    return await funDB.getResult('d',sql,param);
+    return await funDB.getResult('o',sql,param);
   },
   selectReporterCount: async function(search,param){
     var sql = 'select count(*) as total from (select distinct(reporter_media_name) from reporter_data ';
@@ -106,7 +106,7 @@ var user = {
       sql += ' where reporter_media_name like \'%'+search+'%\' ';
     }
     sql += ' ) a;';
-    return await funDB.getResult('d',sql,param);
+    return await funDB.getResult('o',sql,param);
   }
 }
 

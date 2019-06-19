@@ -18,22 +18,22 @@
     </div>
     <div class="page-body">
       <div class="row" id="listTable">
-        <div class="col-md-12">
+        <div class="col-xs-12">
           <div class="card m-b-10">
             <div class="card-header">
-              <select id="selectType" name="select" class="col-12 col-md-1 m-b-10 form-control form-control-default f-left">
+              <select id="selectType" name="select" class="col-12 col-xs-1 m-b-10 form-control form-control-default f-left">
                 <option>분류</option>
                 <option value="0">직원</option>
                 <option value="1">기자</option>
                 <option value="2">관계사</option>
               </select>
-              <div class="col-12 col-md-3 f-right col-sm-9 m-l-10 p-l-0 p-r-0 m-b-10 right-icon-control">
+              <div class="col-12 col-xs-3 f-right col-xs-9 m-l-10 p-l-0 p-r-0 m-b-10 right-icon-control">
                 <input type="text" class="form-control p-t-10 form-control-default search-text" id="keywordInput">
                 <div class="form-icon" id="searchBtn">
                   <i class="fas fa-search"></i>
                 </div>
               </div>
-              <select id="selectSearchType" name="select" class="col-12 col-md-1 form-control form-control-default f-right search-select">
+              <select id="selectSearchType" name="select" class="col-12 col-xs-1 form-control form-control-default f-right search-select">
                 <option value="c">언론사</option>
                 <option value="e">이메일</option>
                 <option value="n">이름</option>
@@ -186,7 +186,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-12">
+        <div class="col-xs-12">
           <button class="btn btn-inverse btn-cGroup m-b-50" style="float: right;"><i class="fas fa-plus"></i>그룹등록</button>
         </div>
       </div>
@@ -197,7 +197,7 @@
 
       <!-- Modal start-->
       <div class='modal fade' id='edit-Modal' tabindex="-1" role="dialog">
-        <div class='modal-dialog modal-lg' role='document'>
+        <div class='modal-dialog modal-xlg' role='document'>
           <div class='modal-content'>
             <div class='modal-header'>
               <h5 class="modal-title">수정</h5>
@@ -206,12 +206,12 @@
               <div class='card'>
                 <div class="card-block table-border-style">
                   <div class="table-responsive">
-                    <table class="table table-sm" id='modal-cnt'>
+                    <table class="table table-xs" id='modal-cnt'>
                       <tbody>
                         <tr>
                           <th class="b-r-1 text-left" id="type">언론사</th>
                           <td class="edit-td">
-                            <input class="form-control col-sm-6 input-sm" id="media" type='text'/>
+                            <input class="form-control col-xs-6 input-xs" id="media" type='text'/>
                             <input id="o_media" type='hidden'/>
                           </td>
                         </tr>
@@ -245,7 +245,7 @@
                           <input type="hidden" id="n_idx"/>
                           <th class="b-r-1 text-left">이메일</th>
                           <td class="edit-td">
-                            <input class="form-control col-sm-6 input-sm f-left" id="email" type='text'/>
+                            <input class="form-control col-xs-6 input-xs f-left" id="email" type='text'/>
                             <input type="hidden" id="emailCheck"/>
                             <input id="o_email" type='hidden'/>
                             <button id="emailCheckBtn" type="button" class="btn btn-inverse m-l-5">
@@ -256,14 +256,14 @@
                         <tr>
                           <th class="b-r-1 text-left">이름</th>
                           <td class="edit-td">
-                            <input class="form-control col-sm-6 input-sm" id="name" type='text'/>
+                            <input class="form-control col-xs-6 input-xs" id="name" type='text'/>
                             <input id="o_name" type='hidden'/>
                           </td>
                         </tr>
                         <tr>
                           <th class="b-r-1 text-left">연락처</th>
                           <td class="edit-td">
-                            <input class="form-control col-sm-6 input-sm" id="tel" type='tel'/>
+                            <input class="form-control col-xs-6 input-xs" id="tel" type='tel'/>
                             <input id="o_tel" type='hidden'/>
                           </td>
                         </tr>

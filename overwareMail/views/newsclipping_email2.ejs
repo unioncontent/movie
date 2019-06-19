@@ -17,10 +17,10 @@
     </div>
     <div class="page-body">
       <div class="row">
-        <div class="col-md-12">
+        <div class="col-xs-12">
           <div class="card">
             <div class="card-header">
-              <div class="col-sm-1 f-left p-l-0" id="mail_t_div">
+              <div class="col-xs-1 f-left p-l-0" id="mail_t_div">
                  <select id="mail_t" class="form-control form-control-defalut">
                     <option value="2">모듈1</option>
                     <option value="1">모듈2</option>
@@ -33,9 +33,9 @@
             </div>
             <div class="card-block">
               <div class="form-group row">
-                <label class="col-sm-2 col-form-label">* 발송형태</label>
+                <label class="col-xs-2 col-form-label">* 발송형태</label>
                 <div id="type" class="form-radio">
-                  <div class="col-sm-12">
+                  <div class="col-xs-12">
                     <div class="radio radiofill radio-inverse radio-inline">
                       <label>
                         <input type="radio" value="0" name="M_type" checked>
@@ -52,15 +52,15 @@
                 </div>
               </div>
               <div class="form-group row reserveTime" style="display:none;">
-                <label class="col-sm-2 col-form-label">* 예약시간</label>
-                <div class="col-sm-5 row">
-                  <div class='col-sm-6 input-group p-r-0'>
+                <label class="col-xs-2 col-form-label">* 예약시간</label>
+                <div class="col-xs-5 row">
+                  <div class='col-xs-6 input-group p-r-0'>
                     <span class="input-group-addon bg-inverse">
                       <span class="far fa-calendar-alt"></span>
                     </span>
                     <input type="text" id="datepicker" class="form-control" />
                   </div>
-                  <div class='col-sm-6 input-group p-r-0' id="date">
+                  <div class='col-xs-6 input-group p-r-0' id="date">
                     <span class="input-group-addon bg-inverse">
                       <span class="far fa-clock"></span>
                     </span>
@@ -70,45 +70,45 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-sm-2 col-form-label">* 보내는 사람</label>
-                <div class="col-sm-5">
-                  <select id="M_sender" class="sender-select col-sm-12 form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true">
+                <label class="col-xs-2 col-form-label">* 보내는 사람</label>
+                <div class="col-xs-5">
+                  <select id="M_sender" class="sender-select col-xs-12 form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true">
                   </select>
                   <span class='messages'><p class='text-danger error'></p></span>
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-sm-2 col-form-label">* 받는 사람</label>
-                <div class="col-sm-5">
-                  <select id="M_recipi" class="recipi-select col-sm-12 form-control select2-hidden-accessible" multiple="" tabindex="-1" aria-hidden="true">
+                <label class="col-xs-2 col-form-label">* 받는 사람</label>
+                <div class="col-xs-5">
+                  <select id="M_recipi" class="recipi-select col-xs-12 form-control select2-hidden-accessible" multiple="" tabindex="-1" aria-hidden="true">
                   </select>
                   <span class='messages'><p class='text-danger error'></p></span>
                 </div>
-                <div class="col-sm-1 btn-check3">
+                <div class="col-xs-1 btn-check3">
                   <button type="button" class="btn btn-inverse btn-modal">주소록</button>
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-sm-2 col-form-label">수신자 그룹</label>
-                <div class="col-sm-5">
-                  <select id="M_group" class="group-select col-sm-12 form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true">
+                <label class="col-xs-2 col-form-label">수신자 그룹</label>
+                <div class="col-xs-5">
+                  <select id="M_group" class="group-select col-xs-12 form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true">
                   </select>
                   <span class='messages'><p class='text-danger error'></p></span>
                 </div>
-                <div class="col-sm-1 btn-check1">
+                <div class="col-xs-1 btn-check1">
                   <button type="button" class="btn btn-inverse btn-modal">주소록</button>
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-sm-2 col-form-label">* 보고날짜</label>
-                <div class="col-sm-5">
+                <label class="col-xs-2 col-form-label">* 보고날짜</label>
+                <div class="col-xs-5">
                   <input type="text" id="datepicker2" class="form-control" />
                 </div>
               </div>
               <div class="form-group row">
                 <!-- <div id="body-header" style="display:none;"> <table style="border-collapse: collapse;border-spacing: 0;"> <tbody> <tr> <td style="width: 133px;height: 42px;border: 1px solid #e3e3e3;text-align: center;"> <a href="" target="_blank" style="text-decoration: blink;font-size: 12px;color: #878787;">주요뉴스</a> </td><td style="width: 133px;height: 42px;border: 1px solid #e3e3e3;text-align: center;"> <a href="" target="_blank" style="text-decoration: blink;font-size: 12px;color: #878787;">키워드 이슈</a> </td><td style="width: 133px;height: 42px;border: 1px solid #e3e3e3;text-align: center;"> <a href="" target="_blank" style="text-decoration: blink;font-size: 12px;color: #878787;">박스오피스</a> </td><td style="width: 133px;height: 42px;border: 1px solid #e3e3e3;text-align: center;"> <a href="" target="_blank" style="text-decoration: blink;font-size: 12px;color: #878787;">기업 뉴스</a> </td></tr></tbody> </table> </div> -->
-                <label class="col-sm-2 col-form-label">* 메일내용</label>
-                <div class="col-sm-10" style="overflow-x:  auto;overflow-y: hidden;">
+                <label class="col-xs-2 col-form-label">* 메일내용</label>
+                <div class="col-xs-10" style="overflow-x:  auto;overflow-y: hidden;">
                   <div id="M_body" style="float:left;font-family:굴림, Gulim;"><div id="header"><img src="http://showbox.email/images/newsclipping/header.jpg" style="display: inherit;"><div id="info" style="background-color: #f7f7f7;height: 37px;"> <span style="padding: 10px;padding-left: 15px;display: inline-block;font-size: 11px;color: #686868;">ShowBox News Clipping</span> <span id="date-span" style="float: right;display: inline-block;padding: 8px;padding-right: 25px;line-height:17px;"><a href="http://showbox.email/preview/newsclipping?date=2019-05-22" target="_blank" style="cursor:pointer;text-decoration: blink;font-size: 11px;color: #686868">2019.05.22 (수)</a></span></div></div><div id="body" style="padding:27px 24px;padding-top: 0px;"><div id="body-content"><div class="section" data-type="1" style="padding-top:24px"> <div class="section-header" style="border-bottom: 2px solid #efefef;padding-bottom: 3px;height: 31px;"> <img src="http://showbox.email/images/newsclipping/icon.jpg" style="display: inherit;float:left;"><span style="font-family:NanumGothic;font-size: 16px;padding-left: 5px; float:left;">쇼박스 영화</span></div><div class="section-body"><p style="text-align:center;margin:0px;margin-top:15px;font-size:12px;font-weight:bold;color: #666;">해당 데이터 없습니다.</p></div></div><div class="section" data-type="2" style="padding-top:50px"> <div class="section-header" style="border-bottom: 2px solid #efefef;padding-bottom: 3px;height: 31px;"><img src="http://showbox.email/images/newsclipping/icon.jpg" style="display: inherit; float:left;"><span style="font-family:NanumGothic;font-size:16px;padding-left:5px;float:left;">경쟁 영화</span></div><div class="section-body"><p style="text-align:center;margin:0px;margin-top:15px;font-size:12px;font-weight:bold;color: #666;">해당 데이터 없습니다.</p></div></div><div class="section" data-type="5" style="padding-top:50px"><div class="section-header" style="border-bottom: 2px solid #efefef;padding-bottom: 3px;height: 31px;"><img src="http://showbox.email/images/newsclipping/icon.jpg" style="display: inherit; float:left;"><span style="font-family:NanumGothic;font-size:16px;padding-left:5px;float:left;">영화 일반</span></div><div class="section-body"><p style="text-align:center;margin:0px;margin-top:15px;font-size:12px;font-weight:bold;color: #666;">해당 데이터 없습니다.</p></div></div><div class="section" data-type="6" style="padding-top:50px"><div class="section-header" style="border-bottom: 2px solid #efefef;padding-bottom: 3px;height: 31px;"><img src="http://showbox.email/images/newsclipping/icon.jpg" style="display: inherit; float:left;"><span style="font-family:NanumGothic;font-size:16px;padding-left:5px;float:left;">보도국</span></div><div class="section-body"><p style="text-align:center;margin:0px;margin-top:15px;font-size:12px;font-weight:bold;color: #666;">해당 데이터 없습니다.</p></div></div><div class="section" data-type="3" style="padding-top:50px"><div class="section-header" style="border-bottom: 2px solid #efefef;padding-bottom: 3px;height: 31px;"><img src="http://showbox.email/images/newsclipping/icon.jpg" style="display: inherit; float:left;"><span style="font-family:NanumGothic;font-size:16px;padding-left:5px;float:left;">캐스팅</span></div><div class="section-body"><p style="text-align:center;margin:0px;margin-top:15px;font-size:12px;font-weight:bold;color: #666;">해당 데이터 없습니다.</p></div></div><div class="section" data-type="marketing" style="padding-top:50px"><div class="section-header" style="border-bottom: 2px solid #efefef;padding-bottom:8px;height:31px;"><img src="http://showbox.email/images/newsclipping/icon.jpg" style="display: inherit; float:left;"> <span style="font-family:NanumGothic;font-size: 16px;padding-left: 5px; float:left;">마케팅채널관리</span> </div><div class="section-body"><table style="width:100%; font-size: 12px;border-collapse: collapse;border-spacing: 0;"><colgroup><col width="377px"><col width="83px"><col width="83px"><col width="83px"></colgroup><tbody></tbody></table></div></div><div class="section" data-type="movie" style="padding-top:50px"> <div class="section-header" style="border-bottom: 2px solid #efefef;padding-bottom: 8px;height: 31px;"><img src="http://showbox.email/images/newsclipping/icon.jpg" style="display: inherit; float:left;"><span style="font-family:NanumGothic;font-size: 16px;padding-left: 5px; float:left;">박스오피스</span><a href="http://movie.daum.net/boxoffice/weekly" target="_blank"><img src="http://showbox.email/images/newsclipping/link_icon.jpg" style="display: inherit;float:left;padding-top: 5px;padding-left: 11px;"> </a></div><div class="section-body"><div data-type="7"></div><table style="font-family: 굴림;font-size:12px;margin-top: 22px;"><colgroup><col width="50px"><col width="532px"><col width="111px"><col width="50px"></colgroup><tbody id="movieList"></tbody></table></div></div><div class="section" data-type="4" style="padding-top:50px"> <div class="section-header" style="border-bottom: 2px solid #efefef;padding-bottom: 8px;height: 31px;"><img src="http://showbox.email/images/newsclipping/icon.jpg" style="display: inherit; float:left;"><span style="font-family:NanumGothic;font-size: 16px;padding-left: 5px; float:left;">오리온 기업뉴스</span><a href="http://finance.naver.com/item/news.nhn?code=086980" target="_blank"><img src="http://showbox.email/images/newsclipping/link_icon.jpg" style="display: inherit;float:left;padding-top: 5px;padding-left: 11px;"></a></div><div class="section-body"><table style="width:100%;font-size: 12px;border-collapse:collapse;border-spacing:0;"><colgroup><col width="377px"><col width="83px"><col width="83px"></colgroup><tbody></tbody></table></div></div></div></div></div>
                   <!-- <div class="section" data-type="issue" style="padding-top:50px"> <div class="section-header" style="border-bottom: 2px solid #efefef;padding-bottom: 8px;height: 31px;"><img src="http://showbox.email/images/newsclipping/icon.jpg" style="display: inherit; float:left;"><span style="font-family:NanumGothic;font-size:16px;padding-left:5px;float:left;">키워드이슈</span></div><div class="section-body"> <table style="border-collapse: collapse;border-spacing: 0;"><colgroup><col width="140px"><col width="605px"></colgroup><tbody style="font-family:Gulim; font-size:12px"></tbody></table></div></div> -->
                 </div>
@@ -125,12 +125,12 @@
       </div>
       <!-- Modal start-->
       <div class='modal fade' id='mailList-Modal' role='dialog'>
-        <div class='modal-dialog modal-lg' role='document'>
+        <div class='modal-dialog modal-xlg' role='document'>
           <div class='modal-content'>
             <div class='modal-header'>
               <h5 class="modal-title">메일 주소록</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">×</span>
+                <span aria-hidden="true"><i class="ti-close"></i></span>
               </button>
             </div>
             <div class='modal-body p-b-0'>
@@ -149,7 +149,7 @@
                             </div>
                             <div class="listBox">
                               <ul>
-                                <li class="hasmenu">
+                                <li class="haxsenu">
                                   <h3 class="menubar">
                                     전체선택(현재 리스트)
                                     <i class="fas fa-sort-down float-right m-r-5"></i>
@@ -174,7 +174,7 @@
                             </div>
                             <div class="listBox">
                               <ul>
-                                <li class="hasmenu">
+                                <li class="haxsenu">
                                   <h3 class="menubar">
                                     그룹
                                   </h3>
@@ -194,15 +194,15 @@
                               <input type="text" data-type="group" value="<%=groupListPageNum%>"/>
                                / <p class="count"><%=(Math.ceil(groupListCount/10) < 1)? 1 : Math.ceil(groupListCount/10)%></p>
                               <div class="bottomBtn">
-                                <button class="btn btn-default btn-sm" data-type="group" data-value="first" data-num="0"><i class="fas fa-angle-double-left"></i></button>
-                                <button class="btn btn-default btn-sm" data-type="group" data-value="prev" data-num="<%=(groupListPageNum != 1) ? groupListPageNum-1 : 0%>"><i class="fas fa-chevron-left"></i></button>
-                                <button class="btn btn-default btn-sm" data-type="group" data-value="next" data-num="<%=(groupListPageNum != groupListCount) ? groupListPageNum+1 : groupListCount%>"><i class="fas fa-chevron-right"></i></button>
-                                <button class="btn btn-default btn-sm" data-type="group" data-value="end" data-num="<%=Math.ceil(groupListCount/10)%>"><i class="fas fa-angle-double-right"></i></button>
+                                <button class="btn btn-default btn-xs" data-type="group" data-value="first" data-num="0"><i class="fas fa-angle-double-left"></i></button>
+                                <button class="btn btn-default btn-xs" data-type="group" data-value="prev" data-num="<%=(groupListPageNum != 1) ? groupListPageNum-1 : 0%>"><i class="fas fa-chevron-left"></i></button>
+                                <button class="btn btn-default btn-xs" data-type="group" data-value="next" data-num="<%=(groupListPageNum != groupListCount) ? groupListPageNum+1 : groupListCount%>"><i class="fas fa-chevron-right"></i></button>
+                                <button class="btn btn-default btn-xs" data-type="group" data-value="end" data-num="<%=Math.ceil(groupListCount/10)%>"><i class="fas fa-angle-double-right"></i></button>
                               </div>
                             </div>
                             <div class="listBox">
                               <ul>
-                                <li class="hasmenu">
+                                <li class="haxsenu">
                                   <h3>이메일</h3>
                                   <ul class="submenu emailLi">
                                     <% for(var i=0; i < mailList.length; i++) { %>
@@ -220,10 +220,10 @@
                               <input type="text" data-type="mail" value="<%=mailListPageNum%>"/>
                                / <p class="count"><%=(Math.ceil(mailListCount/10) < 1)? 1 : Math.ceil(mailListCount/10)%></p>
                               <div class="bottomBtn">
-                                <button class="btn btn-default btn-sm" data-type="mail" data-value="first" data-num="0"><i class="fas fa-angle-double-left"></i></button>
-                                <button class="btn btn-default btn-sm" data-type="mail" data-value="prev" data-num="<%=(mailListPageNum != 1) ? (mailListPageNum-1) * 10 : 0%>"><i class="fas fa-chevron-left"></i></button>
-                                <button class="btn btn-default btn-sm" data-type="mail" data-value="next" data-num="<%=(mailListPageNum != Math.ceil(mailListCount/10)) ? mailListPageNum * 10 : Math.ceil(mailListCount/10) * 10%>"><i class="fas fa-chevron-right"></i></button>
-                                <button class="btn btn-default btn-sm" data-type="mail" data-value="end" data-num="<%=(Math.ceil(mailListCount/10)-1) * 10%>"><i class="fas fa-angle-double-right"></i></button>
+                                <button class="btn btn-default btn-xs" data-type="mail" data-value="first" data-num="0"><i class="fas fa-angle-double-left"></i></button>
+                                <button class="btn btn-default btn-xs" data-type="mail" data-value="prev" data-num="<%=(mailListPageNum != 1) ? (mailListPageNum-1) * 10 : 0%>"><i class="fas fa-chevron-left"></i></button>
+                                <button class="btn btn-default btn-xs" data-type="mail" data-value="next" data-num="<%=(mailListPageNum != Math.ceil(mailListCount/10)) ? mailListPageNum * 10 : Math.ceil(mailListCount/10) * 10%>"><i class="fas fa-chevron-right"></i></button>
+                                <button class="btn btn-default btn-xs" data-type="mail" data-value="end" data-num="<%=(Math.ceil(mailListCount/10)-1) * 10%>"><i class="fas fa-angle-double-right"></i></button>
                               </div>
                             </div>
                           </td>
@@ -231,9 +231,9 @@
                         <tr>
                           <td>
                             <div class="rightLeftBtn">
-                              <button class="btn btn-inverse btn-sm m-b-5" data-value="group" data-type="right"><i class="fas fa-chevron-right"></i></button>
-                              <button class="btn btn-inverse btn-sm m-b-5" data-value="group" data-type="left"><i class="fas fa-chevron-left"></i></button>
-                              <button class="btn btn-inverse btn-sm m-b-5" data-value="group" data-type="allLeft"><i class="fas fa-angle-double-left"></i></button>
+                              <button class="btn btn-inverse btn-xs m-b-5" data-value="group" data-type="right"><i class="fas fa-chevron-right"></i></button>
+                              <button class="btn btn-inverse btn-xs m-b-5" data-value="group" data-type="left"><i class="fas fa-chevron-left"></i></button>
+                              <button class="btn btn-inverse btn-xs m-b-5" data-value="group" data-type="allLeft"><i class="fas fa-angle-double-left"></i></button>
                             </div>
                           </td>
                           <td class="rightTd">
@@ -250,9 +250,9 @@
                         <tr>
                           <td>
                             <div class="rightLeftBtn">
-                              <button class="btn btn-inverse btn-sm m-b-5" data-value="recipi" data-type="right"><i class="fas fa-chevron-right"></i></button>
-                              <button class="btn btn-inverse btn-sm m-b-5" data-value="recipi" data-type="left"><i class="fas fa-chevron-left"></i></button>
-                              <button class="btn btn-inverse btn-sm m-b-5" data-value="recipi" data-type="allLeft"><i class="fas fa-angle-double-left"></i></button>
+                              <button class="btn btn-inverse btn-xs m-b-5" data-value="recipi" data-type="right"><i class="fas fa-chevron-right"></i></button>
+                              <button class="btn btn-inverse btn-xs m-b-5" data-value="recipi" data-type="left"><i class="fas fa-chevron-left"></i></button>
+                              <button class="btn btn-inverse btn-xs m-b-5" data-value="recipi" data-type="allLeft"><i class="fas fa-angle-double-left"></i></button>
                             </div>
                           </td>
                           <td>

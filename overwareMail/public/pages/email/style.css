@@ -153,9 +153,9 @@ button.close{
   backgceil-color: white;
   overflow: auto;
 }
-#mailList-Modal .modal-body{
+/* #mailList-Modal .modal-body{
   max-height: 700px;
-}
+} */
 /* select2 */
 .select2-container--default .select2-selection--multiple .select2-selection__rendered li{
   text-overflow: ellipsis;

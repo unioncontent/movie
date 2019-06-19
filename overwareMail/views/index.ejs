@@ -81,7 +81,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-12">
+        <div class="col-xs-12">
           <div class="card">
             <div class="card-block table-border-style">
               <div class="table-responsive">
@@ -145,11 +145,17 @@
                       <td data-idx="<%= list[i].n_idx %>"><%= numberWithCommas(list[i].success) %></td>
                       <td data-idx="<%= list[i].n_idx %>"><%= numberWithCommas(list[i].fail) %></td>
                       <td>
+                        <%
+                          var chkDate = new Date(list[i].M_send);
+                          chkDate.setHours(chkDate.getHours()+2);
+                        %>
                         <%=(list[i].M_type == '0') ? '즉시' : '예약'%>
                         <% if((new Date().getTime() < new Date(list[i].M_send).getTime())){ %>
-                        <label class="badge badge-danger m-b-0">대기</label>
-                        <%} else if(list[i].sendCount == '0' && list[i].success == '0' && list[i].fail == '0' && (new Date().getTime() > new Date(list[i].M_send).getTime())){ %>
-                        <label class="badge badge-warning m-b-0">발송중</label>
+                        <label class="badge badge-primary m-b-0">대기</label>
+                        <%} else if(list[i].sendCount == '0' && list[i].success == '0' && list[i].fail == '0' && (new Date().getTime() < chkDate)){ %>
+                          <label class="badge badge-warning m-b-0">발송중</label>
+                        <!-- } else if(list[i].sendCount == '0' && list[i].success == '0' && list[i].fail == '0' && (new Date().getTime() > new Date(list[i].M_send).getTime())){ -->
+                          <!-- <label class="badge badge-danger m-b-0">발송안됨</label> -->
                         <%}%>
                       </td>
                     </tr>
@@ -167,13 +173,13 @@
         </div>
       </div>
       <!-- Modal start-->
-      <div class='modal fade' id='success-Modal' role='dialog'>
-        <div class='modal-dialog  modal-lg modal-lg-1' role='document'>
+      <!-- <div class='modal fade' id='success-Modal' aria-hidden="true" tabindex="-1" role="dialog">
+        <div class='modal-dialog  modal-xlg modal-lg-1' role='document'>
           <div class='modal-content'>
             <div class='modal-header'>
               <h5 class="modal-title">성공 상세보기</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">×</span>
+                <span aria-hidden="true"><i class="ti-close"></i></span>
               </button>
             </div>
             <div class='modal-body'>
@@ -185,7 +191,7 @@
                 </div>
               </div>
               <div class="table-responsive">
-                <table class="table table-sm">
+                <table class="table table-xs">
                   <thead>
                     <tr class="text-capitalize">
                       <th></th>
@@ -200,25 +206,22 @@
                   </tbody>
                 </table>
               </div>
-              <!-- <ul>
-                <li><i class="fas fa-exclamation-triangle"></i></li>
-              </ul> -->
             </div>
             <div class="modal-footer">
               <button class="btn btn-secondary mobtn" data-dismiss='modal' aria-label='Close' type="button">취소</button>
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
       <!-- Modal end-->
       <!-- Modal start-->
-      <div class='modal fade' id='error-Modal' role='dialog'>
-        <div class='modal-dialog modal-lg modal-lg-1' role='document'>
+      <!-- <div class='modal fade' id='error-Modal' role='dialog'>
+        <div class='modal-dialog modal-xlg modal-xlg-1' role='document'>
           <div class='modal-content'>
             <div class='modal-header'>
               <h5 class="modal-title">실패 상세보기</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">×</span>
+                <span aria-hidden="true"><i class="ti-close"></i></span>
               </button>
             </div>
             <div class='modal-body'>
@@ -230,7 +233,7 @@
                 </div>
               </div>
               <div class="table-responsive">
-                <table class="table table-sm">
+                <table class="table table-xs">
                   <thead>
                     <tr class="text-capitalize">
                       <th></th>
@@ -239,23 +242,19 @@
                       <th>회사</th>
                       <th>이름</th>
                       <th>오류</th>
-                      <!-- <span class="text-muted smtpMsg"><i class="fas fa-question-circle"></i></span> -->
                     </tr>
                   </thead>
                   <tbody id="error-list" class="text-danger">
                   </tbody>
                 </table>
               </div>
-              <!-- <ul>
-                <li><i class="fas fa-exclamation-triangle"></i></li>
-              </ul> -->
             </div>
             <div class="modal-footer">
               <button class="btn btn-secondary mobtn" data-dismiss='modal' aria-label='Close' type="button">취소</button>
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
       <!-- Modal end-->
     </div>
   </div>
@@ -298,7 +297,7 @@
   .table-cp td,.table-cp th{
     text-align: center;
   }
-  .table.table-sm td, .table.table-sm th {
+  .table.table-xs td, .table.table-xs th {
     padding: .3rem;
   }
   /* mail preview css start */
@@ -321,7 +320,7 @@
     white-space: inherit;
     white-space: pre-line;
   }
-  .modal-lg-1 {
+  .modal-xlg-1 {
       max-width: 1016px;
   }
   /* mail preview css end */
@@ -435,8 +434,8 @@ $(document).on('click','.success',function(){
   });
 });
 // 실패 클릭시
-// $(document).on('click','.smtpMsg',function(){
-//   $('#smtp-Modal').modal('show');
+// $(document).on('click','.xstpMsg',function(){
+//   $('#xstp-Modal').modal('show');
 // });
 $(document).on('click','.error_nobr',function(){
   $(this).toggleClass('error_nobr_more');
@@ -493,7 +492,7 @@ $(document).on('click','.fail',function(){
 });
 
 //date 포멧
-function dateToYYYYMMDD(date){
+function dateToYYYYMxsD(date){
   function pad(num) {
     num = num + '';
     return num.length < 2 ? '0' + num : num;
@@ -528,7 +527,7 @@ function areaChart(){
       var date = new Date();
       date.setDate(date.getDate()+2);
       for(var i=0; i<8 ; i++){
-        arr.push({'date':date_sub(dateToYYYYMMDD(date), 1),'success':'0','fail':'0'});
+        arr.push({'date':date_sub(dateToYYYYMxsD(date), 1),'success':'0','fail':'0'});
         date.setDate(date.getDate()-1);
       }
 

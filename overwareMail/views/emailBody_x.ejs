@@ -48,15 +48,15 @@
                     if(numIdx != '0'){
                   %>
                   <tr>
-                    <td style="font-size: small;padding:5px 0 5px;border-bottom:1px dotted #d9d9d9;color:#444;">
+                    <td style="font-size: xsall;padding:5px 0 5px;border-bottom:1px dotted #d9d9d9;color:#444;">
                       [No.<%=pastView[i].M_seq_number%>차]
                       <a style="text-decoration:none; color:black;" href="<%=url%>" target="_blank"><%=pastView[i].M_subject%></a>
                     </td>
-                    <td style="font-size: small;padding:5px 0 5px;border-bottom:1px dotted #d9d9d9;color:#444;"><%=pastView[i].M_regdate%></td>
+                    <td style="font-size: xsall;padding:5px 0 5px;border-bottom:1px dotted #d9d9d9;color:#444;"><%=pastView[i].M_regdate%></td>
                   </tr>
                 <% } } %>
                 <tr>
-                  <td colspan="2" style="text-align: center; font-size: small;padding:10px 0 5px;">
+                  <td colspan="2" style="text-align: center; font-size: xsall;padding:10px 0 5px;">
                     <%
                       var pages = Math.ceil(pastCount / limit);
                       var index=1;

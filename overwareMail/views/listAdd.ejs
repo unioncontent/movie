@@ -18,7 +18,7 @@
     </div>
     <div class="page-body">
       <div class="row">
-        <div class="col-md-12">
+        <div class="col-xs-12">
           <div class="alert alert-default" style="border-radius:  0; border-width:  2px;  margin-bottom: 1rem;">
           	<ul class="p-l-15 f-12" style="list-style-type: disc; color:  #666;">
               	<li>회사명은 검색창에서 선택해주세요. 검색창에 회사가 없을 시 회사명을 입력해주시기 바랍니다.</li>
@@ -27,24 +27,24 @@
           	</ul>
         	</div>
         </div>
-        <div class="col-md-12">
+        <div class="col-xs-12">
           <div class="card">
             <div class="card-block">
               <div class="form-group row">
-                <label class="col-sm-2 col-form-label">* 회사</label>
-                <div class="col-sm-5">
+                <label class="col-xs-2 col-form-label">* 회사</label>
+                <div class="col-xs-5">
                   <input id="mediaName" type="text" class="form-control">
                   <span class='messages'><p class='text-danger error'></p></span>
                 </div>
-                <div class="col-sm-1 btn-check">
+                <div class="col-xs-1 btn-check">
                   <button id="mediaCheckBtn" type="button" class="btn btn-inverse">
                     검색
                   </button>
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-sm-2 col-form-label">* 분류</label>
-                <div class="col-sm-5">
+                <label class="col-xs-2 col-form-label">* 분류</label>
+                <div class="col-xs-5">
                   <div id="M_reporter" class="form-radio">
                     <div class="radio radiofill radio-inverse radio-inline">
                       <label class="m-b-0 m-t-5">
@@ -69,47 +69,47 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-sm-2 col-form-label">* 이름</label>
-                <div class="col-sm-5">
+                <label class="col-xs-2 col-form-label">* 이름</label>
+                <div class="col-xs-5">
                   <input id="name" type="text" class="form-control">
                   <span class='messages'><p class='text-danger error'></p></span>
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-sm-2 col-form-label">* 이메일</label>
-                <div class="col-sm-5">
+                <label class="col-xs-2 col-form-label">* 이메일</label>
+                <div class="col-xs-5">
                   <input id="email" type="text" class="form-control" placeholder="이메일 중복체크를 해주세요." readonly>
                   <input type="hidden" id="emailCheck"/>
                   <span class='messages'><p class='text-danger error'></p></span>
                 </div>
-                <div class="col-sm-1 btn-check">
+                <div class="col-xs-1 btn-check">
                   <button id="emailCheckBtn" type="button" class="btn btn-inverse">
                     중복체크
                   </button>
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-sm-2 col-form-label">연락처</label>
-                <div class="col-sm-5">
+                <label class="col-xs-2 col-form-label">연락처</label>
+                <div class="col-xs-5">
                   <input id="tel" type="text" class="form-control">
                   <span class='messages'><p class='text-danger error'></p></span>
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-sm-2 col-form-label">그룹</label>
-                <div class="col-sm-5">
+                <label class="col-xs-2 col-form-label">그룹</label>
+                <div class="col-xs-5">
                   <div class="form-control f-left file-list">
                     <ul id="uploadGroupList"></ul>
                     <input id="group" type="hidden">
                   </div>
                 </div>
-                <div class="col-sm-1 btn-check">
+                <div class="col-xs-1 btn-check">
                   <button class="btn-group btn btn-inverse m-b-0">선택하기</button>
                 </div>
               </div>
               <div class="row">
-                <label class="col-sm-2"></label>
-                <div class="col-sm-10">
+                <label class="col-xs-2"></label>
+                <div class="col-xs-10">
                   <button type="submit" class="btn-submit btn btn-inverse m-b-0">등록</button>
                 </div>
               </div>
@@ -153,18 +153,18 @@
       </div>
       <!-- Modal start-->
       <div class='modal fade' id='group-Modal' data-backdrop="static" data-keyboard="false" role='dialog'>
-        <div class='modal-dialog  modal-lg' role='document'>
+        <div class='modal-dialog  modal-xlg' role='document'>
           <div class='modal-content'>
             <div class='modal-header'>
               <h5 class="modal-title">그룹 선택</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">×</span>
+                <span aria-hidden="true"><i class="ti-close"></i></span>
               </button>
             </div>
             <div class='modal-body'>
               <div class='card'>
                 <div class="card-header">
-                  <div class="f-right col-sm-3 p-l-0 p-r-0 right-icon-control">
+                  <div class="f-right col-xs-3 p-l-0 p-r-0 right-icon-control">
                     <input type="text" class="form-control form-control-default search-text" id="groupInput" placeholder="그룹명 검색">
                     <div class="form-icon" id="searchGroupBtn">
                       <i class="fas fa-search"></i>
@@ -375,7 +375,7 @@ input.upload {
           });
           var page = param['start'] / 10;
           if(page < Math.floor(data.count.total / 10)){
-            var moreHtml = '<div class="col-sm-12 p-t-5 p-b-5 bg-inverse text-center" id="more" data-num="'+((page+1)*10)+'">더보기 <i class="fas fa-chevron-down"></i></div>';
+            var moreHtml = '<div class="col-xs-12 p-t-5 p-b-5 bg-inverse text-center" id="more" data-num="'+((page+1)*10)+'">더보기 <i class="fas fa-chevron-down"></i></div>';
             $("#search-Modal .table-responsive").append(moreHtml);
           }
         }

@@ -17,16 +17,16 @@
     </div>
     <div class="page-body">
       <div class="row">
-        <div class="col-md-12">
+        <div class="col-xs-12">
           <div class="card">
             <div class="card-header">
               <button id="sendBtn" type="submit" class="btn btn-inverse f-right m-b-0"><i class="fas fa-arrow-right"></i>보내기</button>
             </div>
             <div class="card-block">
               <div class="form-group row">
-                <label class="col-sm-2 col-form-label">* 발송형태</label>
+                <label class="col-xs-2 col-form-label">* 발송형태</label>
                 <div id="type" class="form-radio">
-                  <div class="col-sm-12">
+                  <div class="col-xs-12">
                     <div class="radio radio-inline">
                       <label>
                         <input type="radio" value="0" name="M_type" checked>
@@ -43,15 +43,15 @@
                 </div>
               </div>
               <div class="form-group row reserveTime" style="display:none;">
-                <label class="col-sm-2 col-form-label">* 예약시간</label>
-                <div class="col-sm-5 row">
-                  <div class='col-sm-6 input-group p-r-0'>
+                <label class="col-xs-2 col-form-label">* 예약시간</label>
+                <div class="col-xs-5 row">
+                  <div class='col-xs-6 input-group p-r-0'>
                     <span class="input-group-addon bg-inverse">
                       <span class="far fa-calendar-alt"></span>
                     </span>
                     <input type="text" id="datepicker" class="form-control" />
                   </div>
-                  <div class='col-sm-6 input-group p-r-0' id="date">
+                  <div class='col-xs-6 input-group p-r-0' id="date">
                     <span class="input-group-addon bg-inverse">
                       <span class="far fa-clock"></span>
                     </span>
@@ -61,10 +61,10 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-sm-2 col-form-label">* 보내는 사람</label>
-                <div class="col-sm-5">
+                <label class="col-xs-2 col-form-label">* 보내는 사람</label>
+                <div class="col-xs-5">
                   <input id="M_sender_test" type="text" data-value="" class="form-control" placeholder="보내는 사람 이름이나 이메일, 회사명을 입력해주세요.">
-                  <div class="searchSelect col-sm-12 form-control">
+                  <div class="searchSelect col-xs-12 form-control">
                     <ul>
                     </ul>
                   </div>
@@ -72,9 +72,9 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-sm-2 col-form-label">* 받는 사람</label>
-                <div class="col-sm-5">
-                  <select id="M_recipi_test" class="sender-select col-sm-12 form-control">
+                <label class="col-xs-2 col-form-label">* 받는 사람</label>
+                <div class="col-xs-5">
+                  <select id="M_recipi_test" class="sender-select col-xs-12 form-control">
                     <option>
                       <input id="M_recipi" type="text" class="form-control" placeholder="받는 사람">
                     </option>
@@ -82,14 +82,14 @@
                   </select>
                   <span class='messages'><p class='text-danger error'></p></span>
                 </div>
-                <div class="col-sm-1 btn-check3">
+                <div class="col-xs-1 btn-check3">
                   <button type="button" class="btn btn-inverse btn-modal">주소록</button>
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-sm-2 col-form-label">수신 그룹</label>
-                <div class="col-sm-5">
-                  <select id="M_group_test" class="sender-select col-sm-12 form-control">
+                <label class="col-xs-2 col-form-label">수신 그룹</label>
+                <div class="col-xs-5">
+                  <select id="M_group_test" class="sender-select col-xs-12 form-control">
                     <option>
                       <input id="M_group" type="text" class="form-control" placeholder="수신 그룹">
                     </option>
@@ -97,13 +97,13 @@
                   </select>
                   <span class='messages'><p class='text-danger error'></p></span>
                 </div>
-                <div class="col-sm-1 btn-check1">
+                <div class="col-xs-1 btn-check1">
                   <button type="button" class="btn btn-inverse btn-modal">주소록</button>
                 </div>
               </div>
               <!-- <div class="row">
-                <label class="col-sm-2"></label>
-                <div class="col-sm-10">
+                <label class="col-xs-2"></label>
+                <div class="col-xs-10">
                     <button id="sendBtn" type="submit" class="btn btn-inverse m-b-0">보내기</button>
                 </div>
               </div> -->
@@ -113,12 +113,12 @@
       </div>
       <!-- Modal start-->
       <div class='modal fade' id='mailList-Modal' role='dialog'>
-        <div class='modal-dialog modal-lg' role='document'>
+        <div class='modal-dialog modal-xlg' role='document'>
           <div class='modal-content'>
             <div class='modal-header'>
               <h5 class="modal-title">메일 주소록</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">×</span>
+              <button type="button" class="close" data-dixsiss="modal" aria-label="Close">
+                <span aria-hidden="true"><i class="ti-close"></i></span>
               </button>
             </div>
             <div class='modal-body p-b-0'>
@@ -137,7 +137,7 @@
                             </div>
                             <div class="listBox">
                               <ul>
-                                <li class="hasmenu">
+                                <li class="haxsenu">
                                   <h3 class="menubar">
                                     전체선택(현재 리스트)
                                     <i class="fas fa-sort-down float-right m-r-5"></i>
@@ -162,7 +162,7 @@
                             </div>
                             <div class="listBox">
                               <ul>
-                                <li class="hasmenu">
+                                <li class="haxsenu">
                                   <h3 class="menubar">
                                     그룹
                                   </h3>
@@ -182,15 +182,15 @@
                               <input type="text" data-type="group" value="<%=groupListPageNum%>"/>
                                / <p class="count"><%=(Math.ceil(groupListCount/10) < 1)? 1 : Math.ceil(groupListCount/10)%></p>
                               <div class="bottomBtn">
-                                <button class="btn btn-default btn-sm" data-type="group" data-value="first" data-num="0"><i class="fas fa-angle-double-left"></i></button>
-                                <button class="btn btn-default btn-sm" data-type="group" data-value="prev" data-num="<%=(groupListPageNum != 1) ? groupListPageNum-1 : 1%>"><i class="fas fa-chevron-left"></i></button>
-                                <button class="btn btn-default btn-sm" data-type="group" data-value="next" data-num="<%=(groupListPageNum != groupListCount) ? groupListPageNum+1 : groupListCount%>"><i class="fas fa-chevron-right"></i></button>
-                                <button class="btn btn-default btn-sm" data-type="group" data-value="end" data-num="<%=Math.ceil(groupListCount/10)%>"><i class="fas fa-angle-double-right"></i></button>
+                                <button class="btn btn-default btn-xs" data-type="group" data-value="first" data-num="0"><i class="fas fa-angle-double-left"></i></button>
+                                <button class="btn btn-default btn-xs" data-type="group" data-value="prev" data-num="<%=(groupListPageNum != 1) ? groupListPageNum-1 : 1%>"><i class="fas fa-chevron-left"></i></button>
+                                <button class="btn btn-default btn-xs" data-type="group" data-value="next" data-num="<%=(groupListPageNum != groupListCount) ? groupListPageNum+1 : groupListCount%>"><i class="fas fa-chevron-right"></i></button>
+                                <button class="btn btn-default btn-xs" data-type="group" data-value="end" data-num="<%=Math.ceil(groupListCount/10)%>"><i class="fas fa-angle-double-right"></i></button>
                               </div>
                             </div>
                             <div class="listBox">
                               <ul>
-                                <li class="hasmenu">
+                                <li class="haxsenu">
                                   <h3>이메일</h3>
                                   <ul class="submenu emailLi">
                                     <% for(var i=0; i < mailList.length; i++) { %>
@@ -208,10 +208,10 @@
                               <input type="text" data-type="mail" value="<%=mailListPageNum%>"/>
                                / <p class="count"><%=(Math.ceil(mailListCount/10) < 1)? 1 : Math.ceil(mailListCount/10)%></p>
                               <div class="bottomBtn">
-                                <button class="btn btn-default btn-sm" data-type="mail" data-value="first" data-num="0"><i class="fas fa-angle-double-left"></i></button>
-                                <button class="btn btn-default btn-sm" data-type="mail" data-value="prev" data-num="<%=(mailListPageNum != 1) ? (mailListPageNum-1) * 10 : 0%>"><i class="fas fa-chevron-left"></i></button>
-                                <button class="btn btn-default btn-sm" data-type="mail" data-value="next" data-num="<%=(mailListPageNum != Math.ceil(mailListCount/10)) ? mailListPageNum * 10 : Math.ceil(mailListCount/10) * 10%>"><i class="fas fa-chevron-right"></i></button>
-                                <button class="btn btn-default btn-sm" data-type="mail" data-value="end" data-num="<%=(Math.ceil(mailListCount/10)-1) * 10%>"><i class="fas fa-angle-double-right"></i></button>
+                                <button class="btn btn-default btn-xs" data-type="mail" data-value="first" data-num="0"><i class="fas fa-angle-double-left"></i></button>
+                                <button class="btn btn-default btn-xs" data-type="mail" data-value="prev" data-num="<%=(mailListPageNum != 1) ? (mailListPageNum-1) * 10 : 0%>"><i class="fas fa-chevron-left"></i></button>
+                                <button class="btn btn-default btn-xs" data-type="mail" data-value="next" data-num="<%=(mailListPageNum != Math.ceil(mailListCount/10)) ? mailListPageNum * 10 : Math.ceil(mailListCount/10) * 10%>"><i class="fas fa-chevron-right"></i></button>
+                                <button class="btn btn-default btn-xs" data-type="mail" data-value="end" data-num="<%=(Math.ceil(mailListCount/10)-1) * 10%>"><i class="fas fa-angle-double-right"></i></button>
                               </div>
                             </div>
                           </td>
@@ -219,9 +219,9 @@
                         <tr>
                           <td>
                             <div class="rightLeftBtn">
-                              <button class="btn btn-inverse btn-sm m-b-5" data-value="group" data-type="right"><i class="fas fa-chevron-right"></i></button>
-                              <button class="btn btn-inverse btn-sm m-b-5" data-value="group" data-type="left"><i class="fas fa-chevron-left"></i></button>
-                              <button class="btn btn-inverse btn-sm m-b-5" data-value="group" data-type="allLeft"><i class="fas fa-angle-double-left"></i></button>
+                              <button class="btn btn-inverse btn-xs m-b-5" data-value="group" data-type="right"><i class="fas fa-chevron-right"></i></button>
+                              <button class="btn btn-inverse btn-xs m-b-5" data-value="group" data-type="left"><i class="fas fa-chevron-left"></i></button>
+                              <button class="btn btn-inverse btn-xs m-b-5" data-value="group" data-type="allLeft"><i class="fas fa-angle-double-left"></i></button>
                             </div>
                           </td>
                           <td class="rightTd">
@@ -238,9 +238,9 @@
                         <tr>
                           <td>
                             <div class="rightLeftBtn">
-                              <button class="btn btn-inverse btn-sm m-b-5" data-value="recipi" data-type="right"><i class="fas fa-chevron-right"></i></button>
-                              <button class="btn btn-inverse btn-sm m-b-5" data-value="recipi" data-type="left"><i class="fas fa-chevron-left"></i></button>
-                              <button class="btn btn-inverse btn-sm m-b-5" data-value="recipi" data-type="allLeft"><i class="fas fa-angle-double-left"></i></button>
+                              <button class="btn btn-inverse btn-xs m-b-5" data-value="recipi" data-type="right"><i class="fas fa-chevron-right"></i></button>
+                              <button class="btn btn-inverse btn-xs m-b-5" data-value="recipi" data-type="left"><i class="fas fa-chevron-left"></i></button>
+                              <button class="btn btn-inverse btn-xs m-b-5" data-value="recipi" data-type="allLeft"><i class="fas fa-angle-double-left"></i></button>
                             </div>
                           </td>
                           <td>
@@ -262,7 +262,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-inverse" id="saveBtn">적용</button>
-              <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+              <button type="button" class="btn btn-default" data-dixsiss="modal">취소</button>
             </div>
           </div>
         </div>
@@ -272,31 +272,31 @@
       <div id="login-Modal" class="modal fade" data-toggle="modal" data-backdrop="static" data-keyboard="false" role="dialog">
         <div class="modal-dialog">
           <div class="login-card card-block login-card-modal">
-            <form class="md-float-material">
+            <form class="xs-float-material">
               <div class="text-center">
                 <img src="/images/login_logo.png" alt="logo.png">
               </div>
               <div class="auth-box">
                 <div class="row m-b-20">
-                  <div class="col-md-12">
+                  <div class="col-xs-12">
                     <h3>Sign In</h3>
                   </div>
                 </div>
                 <hr>
                 <div class="input-group">
                   <input name="username" type="text" class="form-control" placeholder="ID">
-                  <span class="md-line"></span>
+                  <span class="xs-line"></span>
                 </div>
                 <div class="input-group">
                   <input name="password" type="password" class="form-control" placeholder="Password">
-                  <span class="md-line"></span>
+                  <span class="xs-line"></span>
                 </div>
                 <div class="has-danger text-left">
                   <div class="col-form-label" id="login-msg"></div>
                 </div>
                 <div class="row m-t-15">
-                  <div class="col-md-12">
-                    <button type="button" id='loginBtn' class="btn btn-inverse btn-md btn-block waves-effect text-center">확인</button>
+                  <div class="col-xs-12">
+                    <button type="button" id='loginBtn' class="btn btn-inverse btn-xs btn-block waves-effect text-center">확인</button>
                   </div>
                 </div>
               </div>
@@ -353,7 +353,7 @@
       monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
       dayNames: ['일','월','화','수','목','금','토'],
       dayNamesShort: ['일','월','화','수','목','금','토'],
-      dayNamesMin: ['일','월','화','수','목','금','토'],
+      dayNamexsin: ['일','월','화','수','목','금','토'],
       yearSuffix: '년',
       showMonthAfterYear: true,
       minDate: 0,
@@ -499,7 +499,7 @@
   });
   // 메일 editor js
   // function saveImgFile(file){
-  //   data = new FormData();
+  //   data = new Forxsata();
   //   data.append("file", file);
   //   $.ajax({
   //     type: "POST",
@@ -576,7 +576,7 @@
     })
     .then((value) => {
       if (value != null) {
-        var now = $.datepicker.formatDate('yymmdd', new Date());
+        var now = $.datepicker.formatDate('yymxsd', new Date());
         var fileListArr = $("#fileList").val().split(',');
         var fileListStr = "";
         var fileNameStr = "";
@@ -584,7 +584,7 @@
         $.each(fileListArr, function(index, value) {
           if(value != "" && value != 'undefined'){
             fileDBListStr += value;
-            var now = $.datepicker.formatDate('yymmdd', new Date());
+            var now = $.datepicker.formatDate('yymxsd', new Date());
             fileListStr += 'http://mail.overware.co.kr/uploads/files/'+now+'/'+value;
             fileNameStr += $.trim($('.jFiler-items-list').find('[data-value=\"'+value+'\"]').attr('title'));
             if(fileListArr.length-1 != index){

@@ -18,40 +18,40 @@
     </div>
     <div class="page-body">
       <div class="row" id="listTable">
-        <div class="col-md-12">
+        <div class="col-xs-12">
           <div class="alert alert-default" style="border-radius:  0; border-width:  2px;  margin-bottom: 1rem;">
           	<ul class="p-l-15 f-12" style="list-style-type: disc; color:  #666;">
               <li>모듈1 예약메일은 발송시간 3분 전부터 발송대기 상태가 되므로 보내기, 수정, 발송취소가 불가합니다.</li>
           	</ul>
         	</div>
         </div>
-        <div class="col-md-12">
+        <div class="col-xs-12">
           <div class="card">
             <div class="card-header">
-              <select name="select" class="col-md-1 form-control form-control-default m-b-10 p-r-5 f-left" id="selectKeyword">
+              <select name="select" class="col-xs-1 form-control form-control-default m-b-10 p-r-5 f-left" id="selectKeyword">
                 <option>키워드</option>
                 <%for(var i=0; i < klist.length; i++) {%>
                   <option value='<%=klist[i].keyword_idx%>'><%=klist[i].keyword_main%></option>
                 <%}%>
               </select>
-              <div class="col-sm-3 p-l-5 p-t-5 m-b-10 f-left border-checkbox-section">
+              <div class="col-xs-3 p-l-5 p-t-5 m-b-10 f-left border-checkbox-section">
                 <div class="border-checkbox-group border-checkbox-group-default m-r-5">
                   <input class="border-checkbox" type="checkbox" id="searchBtn1" name="search" value="1">
                   <label class="border-checkbox-label" for="searchBtn1">인비테이션</label>
                 </div>
               </div>
-              <div class="col-12 col-md-2 f-right col-sm-9 m-l-10 p-l-0 p-r-0  m-b-10 right-icon-control">
+              <div class="col-12 col-xs-2 f-right col-xs-9 m-l-10 p-l-0 p-r-0  m-b-10 right-icon-control">
                 <input type="text" class="p-t-10 form-control form-control-default search-text" id="searchInput">
                 <div class="form-icon" id="searchBtn">
                   <i class="fas fa-search"></i>
                 </div>
               </div>
-              <select id="selectSearchType" name="select" class="col-12 col-md-1 form-control form-control-default f-right search-select">
+              <select id="selectSearchType" name="select" class="col-12 col-xs-1 form-control form-control-default f-right search-select">
                 <option value="t">제목</option>
                 <option value="n">발송차수</option>
               </select>
-              <div class="col-md-2 p-r-5 p-l-5 m-r-5 f-right reportrange">
-                <div id="reportrange" class="form-control form-control-default p-t-10">
+              <div class="col-xs-2 p-r-5 p-l-5 m-r-5 f-right reportrange">
+                <div id="reportrange" class="form-control form-control-default">
                   <i class="glyphicon glyphicon-calendar far fa-calendar-alt"></i>
                   <span>2018.10.11 - 2018.10.11</span>
                   <i class="f-right fa fa-angle-down" style="font-size: 17px;"></i>
@@ -133,18 +133,18 @@
                       <td data-mtype="<%=list[i].M_type%>" data-mid="<%= list[i].M_a_id %>" data-idx="<%= list[i].n_idx %>" data-module="<%= list[i].M_module %>">
                       <%if(list[i].M_delete == '0'){%>
                         <%if((list[i].M_send == null) || (list[i].M_type == 1 && send > now)){%>
-                          <button class="btn btn-sm btn-inverse btn-send">보내기</button>
+                          <button class="btn btn-xsm btn-inverse btn-send">보내기</button>
                         <%}else{%>
-                          <button class="btn btn-sm btn-inverse btn-resend">재발송</button>
+                          <button class="btn btn-xsm btn-inverse btn-resend">재발송</button>
                         <%}%>
-                        <button class="btn btn-sm btn-inverse btn-delete">삭제</button>
+                        <button class="btn btn-xsm btn-inverse btn-delete">삭제</button>
                         <%if(list[i].M_send == null || (list[i].M_type == 1 && send > now)){%>
-                          <button class="btn btn-sm btn-inverse btn-edit">수정</button>
+                          <button class="btn btn-xsm btn-inverse btn-edit">수정</button>
                         <%}
                           }else if(list[i].M_delete == '1'){%>
-                          <button class="btn btn-sm btn-danger m-r-5">삭제됨</button>
+                          <button class="btn btn-xsm btn-danger m-r-5">삭제됨</button>
                         <%}%>
-                        <button class="btn btn-sm btn-inverse btn-rewrite">재작성</button>
+                        <button class="btn btn-xsm btn-inverse btn-rewrite">재작성</button>
                       </td>
                     </tr>
                     <% } %>
@@ -222,16 +222,16 @@
       </div>
       <!-- Modal start-->
       <div class='modal fade' id='previewMail-Modal' role='dialog'>
-        <div class='modal-dialog modal-lg' role='document'>
+        <div class='modal-dialog modal-xlg' role='document'>
           <div class='modal-content'>
             <div class='modal-header'>
               <h5 class="modal-title"><span id="date"></span>미리보기</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">×</span>
+                <span aria-hidden="true"><i class="ti-close"></i></span>
               </button>
             </div>
             <div class='modal-body'>
-              <div class='col-sm-12' id="mailBody"></div>
+              <div class='col-xs-12' id="mailBody"></div>
             </div>
             <div class="modal-footer">
               <button class="btn btn-secondary mobtn" data-dismiss='modal' aria-label='Close' type="button">취소</button>

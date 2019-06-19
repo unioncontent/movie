@@ -17,10 +17,10 @@
     </div>
     <div class="page-body">
       <div class="row" id="listTable">
-        <div class="col-md-12">
+        <div class="col-xs-12">
           <button class="btn btn-inverse m-b-20" style="float: right;" onclick="location.href='/user/add'"><i class="fas fa-plus"></i>계정등록</button>
         </div>
-        <div class="col-md-12">
+        <div class="col-xs-12">
           <div class="card m-b-10">
             <div class="card-block table-border-style">
               <div class="table-responsive">
@@ -54,7 +54,7 @@
                       <td><span class="vStr"><%=list[i].user_name%></span><input type="text" class="vInput form-control" id="name" value="<%=list[i].user_name%>"><input type="hidden" id="o_name" value="<%=list[i].user_name%>"></td>
                       <td>
                         <% if(list[i].user_admin != null) { %>
-                        <select id="user_keyword" name="select" class="col-sm-10 form-control form-control-defalut">
+                        <select id="user_keyword" name="select" class="col-xs-10 form-control form-control-defalut">
                           <option value="0" <%=(list[i].user_keyword == null)? 'seleted':'disabled'%>>선택안함</option>
                           <% for(var j=0; j < keywordList.length; j++) { %>
                             <option value="<%=keywordList[j].keyword_idx%>" <%=(keywordList[j].keyword_idx == list[i].user_keyword)?'selected':'disabled'%>><%=keywordList[j].keyword_main%></option>
@@ -394,7 +394,7 @@
             <td><span class="vStr">'+item.user_name+'</span><input type="text" class="vInput form-control" id="name" value="'+item.user_name+'"><input type="hidden" id="o_name" value="'+item.user_name+'"></td>\
             <td>';
           if(item.user_admin != null) {
-            html +='<select id="user_keyword" name="select" class="col-sm-10 form-control form-control-defalut"><option value="0" '+((item.user_keyword == null)? 'seleted':'disabled')+'>선택안함</option>';
+            html +='<select id="user_keyword" name="select" class="col-xs-10 form-control form-control-defalut"><option value="0" '+((item.user_keyword == null)? 'seleted':'disabled')+'>선택안함</option>';
             for(var j=0; j < data.list.keywordList.length; j++) {
               html += '<option value="'+data.list.keywordList[j].keyword_idx+'" '+((data.list.keywordList[j].keyword_idx == item.user_keyword)?'selected':'disabled')+'>'+data.list.keywordList[j].keyword_main+'</option>'
             }

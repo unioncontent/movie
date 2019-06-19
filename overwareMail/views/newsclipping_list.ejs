@@ -17,10 +17,10 @@
     </div>
     <div class="page-body">
       <div class="row" id="listTable">
-        <div class="col-md-12">
+        <div class="col-xs-12">
           <div class="card">
             <div class="card-header">
-              <div class="col-md-3 p-r-0 p-l-0 f-right reportrange">
+              <div class="col-xs-3 p-r-0 p-l-0 f-right reportrange">
                 <div id="reportrange" class="form-control form-control-default">
                   <i class="glyphicon glyphicon-calendar far fa-calendar-alt"></i>
                   <span></span>
@@ -95,7 +95,7 @@
                         <div class="date-nobr"><%if(list[i].M_type == 1 && (new Date().getTime() < new Date(list[i].SENDTIME).getTime())){%><i class="fas fa-minus"></i><%}else{%><%=list[i].SENDTIME%><%}%></div>
                       </td>
                       <td>
-                        <button class="btn btn-sm btn-inverse btn-delete" data-module="<%= list[i].M_module %>" data-mid="<%= list[i].M_a_id %>" data-idx="<%= list[i].n_idx %>">삭제</button>
+                        <button class="btn btn-xs btn-inverse btn-delete" data-module="<%= list[i].M_module %>" data-mid="<%= list[i].M_a_id %>" data-idx="<%= list[i].n_idx %>">삭제</button>
                       </td>
                     </tr>
                     <% } %>
