@@ -1,7 +1,20 @@
 /*var width = $(window).width(), height = $(window).height();
 alert('width : ' +width + 'height : ' + height);*/
 "use strict";
-$(document).ready(function() {
+$( document ).ready(function() {
+  var classNameArr = $(location).attr('pathname').replace("/","").split("/");
+  var className = classNameArr[0];
+  if(className == ""){
+    className = "dashBoard";
+  }
+  else if(className == "user"){
+    className = "list";
+  }
+  else if(className == "newsclipping"){
+    className = classNameArr[1];
+  }
+  $("ul.pcoded-item li."+className).addClass('active pcoded-trigger');
+
   var $window = $(window);
   //add id to main menu for mobile menu start
   var getBody = $("body");
@@ -117,6 +130,64 @@ $(document).ready(function() {
     }
     $('.showChat_inner').toggle('slide', options, 500);
     $('.showChat').css('display', 'block');
+  });
+});
+
+$('.side_mail').on('click', function() {
+  $('#mail-Modal #modal-list tbody').empty();
+  $.ajax({
+    url: '/mymailerList',
+    type: 'post',
+    error: function(request, status, error) {
+      console.log('code:' + request.status + '\n' + 'message:' + request.responseText + '\n' + 'error:' + error);
+      alert('새로고침 후 다시 시도해주세요.');
+    },
+    success: function(data) {
+      console.log(data);
+      var count = 0;
+      data.result.forEach(function(item, idx) {
+        var html = '<tr>\
+            <td>'+item.M_regdate+'</td>\
+            <td>'+((item.M_group!=null)?item.M_group:item.M_recipi)+'</td>\
+            <td style="white-space: inherit;"d>'+item.M_subject+'</td>\
+            <td>'+data.arrTime[count]+'</td>\
+            <td><i class="far fa-trash-alt mail-trash" data-id="'+data.id[count]+'"></i></td>\
+          </tr>';
+        $('#mail-Modal #modal-list tbody').append(html);
+        count++;
+      });
+      $('#mail-Modal').modal('show');
+    }
+  });
+});
+$(document).on('click','.mail-trash',function() {
+  $('#mail-Modal').modal('hide');
+  var param = $(this).data('id');
+  swal({
+    title: "삭제하시겠습니까?",
+    icon: "warning",
+    buttons: [
+      "취소", true
+    ],
+    dangerMode: true
+  }).then(function(value) {
+    if (value == null) {
+      return false;
+    }
+    $.ajax({
+      url: '/mymailerList/delete',
+      type: 'post',
+      data: {'id':param},
+      datatype: 'json',
+      error: function(request, status, error) {
+        console.log('code:' + request.status + '\n' + 'message:' + request.responseText + '\n' + 'error:' + error);
+        alert('새로고침 후 다시 시도해주세요.');
+      },
+      success: function(data) {
+        console.log(data);
+        alert('삭제 완료되었습니다.');
+      }
+    });
   });
 });
 

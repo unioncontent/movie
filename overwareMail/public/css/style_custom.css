@@ -4,13 +4,8 @@
 input:focus,button:focus {
   outline: none;
 }
-* a {
+nav.header-navbar a {
   font-size: 14px;
-  color: #fff;
-}
-* a:focus, * a:hover {
-  font-weight: 400;
-  text-decoration: none;
   color: #fff;
 }
 .pcoded .pcoded-container {
@@ -161,25 +156,56 @@ input.search-text{
 .right-icon-control .form-icon{
   top: 10px;
 }
-/* button */
-.pcoded[theme-layout=vertical][vertical-nav-type=collapsed] .pcoded-navbar .pcoded-item>li .btn-s-search{
+/* menu */
+.side_bar {
+  border-top: 1px solid #1f3339;
+  width: 209px;
+  margin: auto;
+  margin-top: 7px;
+  margin-bottom: 7px;
+}
+.side_mail {
+  width: 90%;
+  margin: 18px 11px;
+  height: 56px;
+  background: #ffffff2e;
+  border-radius: 10px;
+  padding: 8px 0px;
+  cursor: default;
+}
+.side_mail ul {
+  color: white;
+  font-family: 굴림;
+  font-size: 12px;
+  margin: 10px 0px;
+  padding: 0px 10px;
+  text-align: center;
+}
+.side_mail ul li:first-child {
+  margin-bottom: 5px;
+}
+.side_mail span.pcoded-micon {
+  padding-top: 20px;
+  position: absolute;
+  color: white;
+}
+.pcoded[theme-layout=vertical][vertical-nav-type=expanded] .pcoded-navbar .pcoded-item>li .side_mail i.ti-info{
+  display: none;
+}
+.pcoded[theme-layout=vertical][vertical-nav-type=collapsed] .pcoded-navbar .pcoded-item>li .side_mail i.ti-info{
+  display: inherit;
+}
+.pcoded[theme-layout=vertical][vertical-nav-type=collapsed] .pcoded-navbar .pcoded-item>li .side_mail {
   width: 90%;
   margin: 2px;
   padding: 0px 14px;
 }
-.pcoded[theme-layout=vertical] .pcoded-navbar .pcoded-item>li .btn-s-search{
-  width: 90%;
-  margin: 11px;
+
+.pcoded[theme-layout=vertical][vertical-nav-type=collapsed] .pcoded-navbar .pcoded-item>li .side_mail ul{
+  display: none;
 }
-.pcoded[theme-layout=vertical][vertical-nav-type=collapsed] .pcoded-navbar .pcoded-item>li .btn-s-search span{
-  opacity: 0;
-  visibility: hidden;
-  position: absolute;
-}
-.pcoded[theme-layout=vertical] .pcoded-navbar .pcoded-item>li .btn-s-search span{
-  opacity: 1;
-  visibility: visible;
-}
+
+/* button */
 .btn{
   font-size: 14px;
 }

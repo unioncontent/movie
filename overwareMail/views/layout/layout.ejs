@@ -9,7 +9,7 @@
         <![endif]-->
     <!-- Meta -->
     <meta charset="utf-8">
-    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui"> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <!-- <meta name="description" content="Phoenixcoded"> -->
     <meta name="keywords" content="flat ui, admin , Flat ui, Admin , Responsive, Landing, Bootstrap, App, Template, Mobile, iOS, Android, apple, creative app">
@@ -46,7 +46,7 @@
       <div class="pcoded-overlay-box"></div>
       <div class="pcoded-container navbar-wrapper">
         <% include header.ejs %>
-        <div class="pcoded-main-container" style="margin-top: 56px;">
+        <div class="pcoded-main-container">
           <div class="pcoded-wrapper">
             <!-- left menu start -->
             <% include side.ejs %>
@@ -112,104 +112,11 @@
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-slimScroll/1.3.8/jquery.slimscroll.js"></script>
 
   <!-- Custom js -->
-  <script type="text/javascript" src="/js/script-min.js"></script>
   <script src="/js/pcoded.min.js"></script>
   <script src="/js/ie.js"></script>
   <script src="/js/demo-12.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-mousewheel/3.1.13/jquery.mousewheel.min.js"></script>
-  <!-- <style>
-  @media only screen and (max-width: 992px){
-    .pcoded-navbar {
-      top: 56px;
-    }
-  }
-  </style> -->
-  <script>
-  $( document ).ready(function() {
-    // $( "#pcoded" ).pcodedmenu({
-    //   FixedNavbarPosition: true
-    // });
-    $('.header-navbar').attr('pcoded-header-position','fixed');
-    $('.pcoded-navbar').attr('pcoded-navbar-position','fixed');
-    $('.pcoded-main-container').css('margin-top','56px');
-    // if ($('#pcoded').attr('pcoded-device-type') != "phone") {
-    //   $('.pcoded-main-container').css('top','56px');
-    // }
-    // else{
-    //   $('.pcoded-container').css('padding-bottom','0px');
-    //   $('.pcoded-main-container').css('top','0px');
-    // }
-    var classNameArr = $(location).attr('pathname').replace("/","").split("/");
-    var className = classNameArr[0];
-    if(className == ""){
-      className = "dashBoard";
-    }
-    else if(className == "user"){
-      className = "list";
-    }
-    else if(className == "newsclipping"){
-      className = classNameArr[1];
-    }
-    $("ul.pcoded-item li."+className).addClass('active pcoded-trigger');
-  });
-  $('.side_mail').on('click', function() {
-    $('#mail-Modal #modal-list tbody').empty();
-    $.ajax({
-      url: '/mymailerList',
-      type: 'post',
-      error: function(request, status, error) {
-        console.log('code:' + request.status + '\n' + 'message:' + request.responseText + '\n' + 'error:' + error);
-        alert('새로고침 후 다시 시도해주세요.');
-      },
-      success: function(data) {
-        console.log(data);
-        var count = 0;
-        data.result.forEach(function(item, idx) {
-          var html = '<tr>\
-              <td>'+item.M_regdate+'</td>\
-              <td>'+((item.M_group!=null)?item.M_group:item.M_recipi)+'</td>\
-              <td style="white-space: inherit;"d>'+item.M_subject+'</td>\
-              <td>'+data.arrTime[count]+'</td>\
-              <td><i class="far fa-trash-alt mail-trash" data-id="'+data.id[count]+'"></i></td>\
-            </tr>';
-          $('#mail-Modal #modal-list tbody').append(html);
-          count++;
-        });
-        $('#mail-Modal').modal('show');
-      }
-    });
-  });
-  $(document).on('click','.mail-trash',function() {
-    $('#mail-Modal').modal('hide');
-    var param = $(this).data('id');
-    swal({
-      title: "삭제하시겠습니까?",
-      icon: "warning",
-      buttons: [
-        "취소", true
-      ],
-      dangerMode: true
-    }).then(function(value) {
-      if (value == null) {
-        return false;
-      }
-      $.ajax({
-        url: '/mymailerList/delete',
-        type: 'post',
-        data: {'id':param},
-        datatype: 'json',
-        error: function(request, status, error) {
-          console.log('code:' + request.status + '\n' + 'message:' + request.responseText + '\n' + 'error:' + error);
-          alert('새로고침 후 다시 시도해주세요.');
-        },
-        success: function(data) {
-          console.log(data);
-          alert('삭제 완료되었습니다.');
-        }
-      });
-    });
-  });
-  </script>
+  <script type="text/javascript" src="/js/script.min.js"></script>
   <%- script %>
 </html>
