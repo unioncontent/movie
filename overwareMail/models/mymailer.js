@@ -8,9 +8,9 @@ var mymailer = {
     return await funDB.getResult('d',sql);
   },
   selectMailidx:async function(param){
-    var sql = 'SELECT concat(replace(GROUP_CONCAT( CAST(i.id AS char(100)) SEPARATOR \'|\'),\',\',\'\')) as id,concat(replace(GROUP_CONCAT( DATE_FORMAT(i.send_time, \'%Y-%m-%d %H:%i:%s\') SEPARATOR \'|\'),\',\',\'\')) as strtime,concat(\'n_idx = \',replace(GROUP_CONCAT( d.second SEPARATOR \' or n_idx =\'),\',\',\'\')) as whereQuery  FROM tm001.customer_info as i\
-    left join (select count(*) as total,a.* from tm001.customer_data as a group by id) as d on i.id = d.id\
-    where i.send_time > now() and i.wasRead = \'O\' and i.wasSend = \'X\' and i.wasComplete = \'X\' and i.real_id is null';
+    var sql = 'SELECT concat(replace(GROUP_CONCAT( CAST(i.id AS char(100)) SEPARATOR \'|\'),\',\',\'\')) as id,concat(replace(GROUP_CONCAT( DATE_FORMAT(i.send_time, \'%Y-%m-%d %H:%i:%s\') SEPARATOR \'|\'),\',\',\'\')) as strtime,concat(\'n_idx = \',replace(GROUP_CONCAT( d.second SEPARATOR \' or n_idx =\'),\',\',\'\')) as whereQuery \
+    FROM (select id,send_time from tm001.customer_info where send_time > now() and wasRead = \'O\' and wasSend = \'X\' and wasComplete = \'X\' and real_id is null order by send_time asc) as i \
+    left join (select count(*) as total,a.* from tm001.customer_data as a group by id) as d on i.id = d.id';
     if(param=='1'){
       sql += ' and d.sixth != 25';
     }
