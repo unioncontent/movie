@@ -5,6 +5,8 @@ var router = express.Router();
 var keyword = require('../models/keyword.js');
 
 var isAuthenticated = function (req, res, next) {
+  var url = req.originalUrl;
+  logger.info('page = '+url);
   if (req.isAuthenticated()){
     return next();
   }

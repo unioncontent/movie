@@ -14,6 +14,8 @@ var user = require('../models/user.js');
 var mailAllA = require('../models/mailAllA.js');
 
 var isAuthenticated = function (req, res, next) {
+  var url = req.originalUrl;
+  logger.info('page = '+url);
   if (req.isAuthenticated())
     return next();
   res.redirect('/login');

@@ -7,6 +7,8 @@ var mailListA = require('../models/mailListA.js');
 var mailListC = require('../models/mailListC.js');
 
 var isAuthenticated = function (req, res, next) {
+  var url = req.originalUrl;
+  logger.info('page = '+url);
   if (req.isAuthenticated()){
     if(req.user.user_admin == null){
       return next();

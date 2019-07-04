@@ -109,10 +109,10 @@ $(document).on('click', '.btn-edit', function() {
   var typeVal = thisTd.data('mtype');
   var idxVal = thisTd.data('idx');
   var mIdVal = thisTd.data('mid');
-  if (tdEles.eq(8).text().replace(/\n/gi,'').trim() != '-') {
-    swal("ERROR!", '발송된 메일은 수정하실 수 없습니다.', "error");
-    return false;
-  }
+  // if (tdEles.eq(8).text().replace(/\n/gi,'').trim() != '-') {
+  //   swal("ERROR!", '발송된 메일은 수정하실 수 없습니다.', "error");
+  //   return false;
+  // }
   editModal(idxVal);
   //
   // if (moduleVal == '2' && typeVal != '0') {
@@ -387,10 +387,10 @@ function ajaxGetPageList(param) {
         <td>' + recipiStr + '</td>\
         <td><div class="group-nobr" title="' + groupStr + '">' + groupStr + '</div></td>\
         <td><div class="date-nobr">' + item.M_regdate + '</div></td>\
-        <td><div class="date-nobr">' + (
+        <td><div class="date-nobr '+((item.M_type == 1 && item.M_a_id == null) ? 'text-danger':'')+'">' + (
           ((item.M_delete == '1') || (item.M_type != 1) || (item.M_type == 1 && item.M_send == null))
           ? '-'
-          : item.M_send) + '</div></td>\
+          : (item.M_type == 1 && item.M_a_id == null) ? '예약안됨':item.M_send) + '</div></td>\
         <td><div class="date-nobr '+((item.M_delete == '1') ? 'text-danger':'')+'">' + (
           ((item.M_send == null) || (item.M_type == 1 && (send_o > now_o)))
           ? '-'

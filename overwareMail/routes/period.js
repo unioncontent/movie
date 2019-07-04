@@ -10,6 +10,8 @@ var keyword = require('../models/keyword.js');
 var mailType = require('../models/mailType.js');
 
 var isAuthenticated = function (req, res, next) {
+  var url = req.originalUrl;
+  logger.info('page = '+url);
   if (req.isAuthenticated()){
     return next();
   }

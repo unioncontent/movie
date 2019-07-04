@@ -6,6 +6,8 @@ var newsclipping = require('../models/newsclipping.js');
 var keyword = require('../models/keyword.js');
 
 var isAuthenticated = function (req, res, next) {
+  var url = req.originalUrl;
+  logger.info('page = '+url);
   if (req.isAuthenticated()){
     if(req.user.n_idx == 30){
       return next();

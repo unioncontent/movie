@@ -124,7 +124,7 @@
                       <td><%= recipiStr %></td>
                       <td><div class="group-nobr" title="<%= groupStr %>"><%= groupStr %></div></td>
                       <td><div class="date-nobr"><%= list[i].M_regdate %></div></td>
-                      <td><div class="date-nobr"><%= ((list[i].M_delete == '1') || (list[i].M_type != 1) || (list[i].M_type == 1 && list[i].M_send == null)) ?'-': list[i].M_send %></div></td>
+                      <td><div class="date-nobr <%=(list[i].M_type == 1 && list[i].M_a_id == null) ? 'text-danger':'' %>"><%= ((list[i].M_delete == '1') || (list[i].M_type != 1) || (list[i].M_type == 1 && list[i].M_send == null)) ? '-': (list[i].M_type == 1 && list[i].M_a_id == null)?'예약안됨':list[i].M_send %></div></td>
                       <td>
                         <div class="date-nobr <%=(list[i].M_delete == '1') ? 'text-danger':''%>">
                           <%= ((list[i].M_send == null) || (list[i].M_type == 1 && (send > now))) ?'-': list[i].M_send %>
@@ -132,13 +132,13 @@
                       </td>
                       <td data-mtype="<%=list[i].M_type%>" data-mid="<%= list[i].M_a_id %>" data-idx="<%= list[i].n_idx %>" data-module="<%= list[i].M_module %>">
                       <%if(list[i].M_delete == '0'){%>
-                        <%if((list[i].M_send == null) || (list[i].M_type == 1 && send > now)){%>
+                        <%if((list[i].M_type == 1 && list[i].M_a_id == null) || (list[i].M_send == null) || (list[i].M_type == 1 && send > now)){%>
                           <button class="btn btn-xsm btn-inverse btn-send">보내기</button>
                         <%}else{%>
                           <button class="btn btn-xsm btn-inverse btn-resend">재발송</button>
                         <%}%>
                         <button class="btn btn-xsm btn-inverse btn-delete">삭제</button>
-                        <%if(list[i].M_send == null || (list[i].M_type == 1 && send > now)){%>
+                        <%if((list[i].M_type == 1 && list[i].M_a_id == null) || list[i].M_send == null || (list[i].M_type == 1 && send > now)){%>
                           <button class="btn btn-xsm btn-inverse btn-edit">수정</button>
                         <%}
                           }else if(list[i].M_delete == '1'){%>

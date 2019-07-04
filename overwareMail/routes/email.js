@@ -18,6 +18,7 @@ var period = require('../models/period.js');
 
 var isAuthenticated = function (req, res, next) {
   var url = req.originalUrl;
+  logger.info('page = '+url);
   if (req.isAuthenticated()){
     return next();
   }
@@ -82,7 +83,6 @@ router.get('/manage',isAuthenticated, async function(req, res) {
   data.klist = await keyword.selectMovieKwdAll(req.user.user_admin,req.user.n_idx) || [];
   res.render('manage',data);
 });
-
 router.get('/manageHis',isAuthenticated, async function(req, res) {
   var data = await getListPageData(req.user,req.query);
   data.klist = await keyword.selectMovieKwdAll(req.user.user_admin,req.user.n_idx) || [];
@@ -97,7 +97,6 @@ router.post('/manage/checkMail',isAuthenticated, async function(req, res) {
   res.send(data);
 });
 router.post('/manage/updateMtype',isAuthenticated, async function(req, res) {
-  logger.info('/manage/updateMtype : ',req.body);
   var result,check;
   if(req.body.module == '1'){
     result = await maillink.deleteMlAT(req.body.idx);
@@ -150,7 +149,6 @@ router.post('/manage/updateMtype',isAuthenticated, async function(req, res) {
   }
   res.send({status:true});
 });
-
 router.post('/manage/delete',isAuthenticated, async function(req, res) {
   logger.info('/manage/delete');
   var result;
@@ -193,16 +191,15 @@ router.post('/manage/delete',isAuthenticated, async function(req, res) {
   }
   res.send({status:true});
 });
-
 router.post('/manage/getNextPage',isAuthenticated,async function(req, res, next) {
   try{
     var data = await getListPageData(req.user,req.body);
     res.send({status:true,result:data});
   } catch(e){
+    logger.error('getNextPage ERROR:',e.message);
     res.status(500).send(e);
   }
 });
-
 async function getListPageData(user,param){
   var dt = datetime.create();
   var end = dt.format('Y-m-d');
@@ -259,14 +256,13 @@ async function getListPageData(user,param){
     data['currentPage'] = currentPage;
   }
   catch(e){
-    logger.error(e);
+    logger.error('getListPageData ERROR:',e.message);
   }
   return data;
 }
 
 // 메일 주소록 페이징
 router.post('/getModalListPage',isAuthenticated, async function(req, res) {
-  logger.info('getModalListPage');
   var data = {
     group : [],
     groupTotal : [],
@@ -534,7 +530,7 @@ router.post('/test',isAuthenticated, async function(req, res) {
     }
   }
   catch(e){
-    logger.error(e);
+    logger.error('test ERROR:',e.message);
     res.status(500).send('메일 저장에 실패했습니다.');
     return false;
   }
@@ -636,7 +632,8 @@ router.post('/save',isAuthenticated, async function(req, res) {
         }
       }
       catch(e){
-        logger.error('mailInsert ERROR:',e);
+        res.status(500).send('메일 저장 중 오류가 생겼습니다.');
+        logger.error('mailInsert ERROR:',e.message);
         insertCheck = true;
         await mailAllA.updateMtype(['0',m_idx_a]);
         if(mailAllParam.M_module == '1'){
@@ -720,7 +717,7 @@ async function mailInsert(req){
   if(result.length == 0) return true;
   var mailData = result[0];
 
-  logger.info('req : ',req);
+  logger.info('req : ',JSON.stringify(req));
   // 재발송 하기 전 메일 모듈 데이터 삭제
   if(mailData.M_module == 1 || req.origin == 1){
     await maillink.deleteMlAT(mailData.n_idx);
@@ -741,6 +738,7 @@ async function mailInsert(req){
         });
       }
       if((mailData.M_module == 2 || req.origin == 2) && ('M_a_id' in req)){
+        // await mailAllA.updateMtype(['0',req.body.idx]);
         await mymailer.deleteSendTable(req.M_a_id);
         await mymailer.deleteInfoTable(req.M_a_id);
         await mymailer.deleteBackupTable(req.M_a_id);
@@ -845,9 +843,10 @@ async function mailInsert(req){
           }
         }
     } catch (e) {
+      logger.error('메일저장 ERROR:',e.message);
       await mymailer.deleteInfoTable(mailId);
       await mymailer.deleteSendTable(mailId);
-      throw new Error('module2');
+      throw new Error(e);
     }
   }
 }
@@ -911,7 +910,6 @@ var storageImage = multer.diskStorage({
 });
 var uploadImage = multer({ storage: storageImage });
 router.post('/send/img',uploadImage.single('file'),function(req, res) {
-  logger.info('/send/img:'+req.file.path);
   if (!req.file) {
     logger.info("No file passed");
     return res.status(500).send("No file passed");
@@ -946,7 +944,6 @@ var storageFile = multer.diskStorage({
 });
 var uploadFile = multer({ storage: storageFile });
 router.post('/send/file',uploadFile.single('file'),function(req, res) {
-  logger.info('/send/file:'+req.file);
   if (!req.file) {
     logger.info("No file passed");
     return res.status(500).send("No file passed");
