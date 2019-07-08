@@ -390,7 +390,7 @@ function ajaxGetPageList(param) {
         <td><div class="date-nobr '+((item.M_type == 1 && item.M_a_id == null) ? 'text-danger':'')+'">' + (
           ((item.M_delete == '1') || (item.M_type != 1) || (item.M_type == 1 && item.M_send == null))
           ? '-'
-          : (item.M_type == 1 && item.M_a_id == null) ? '예약안됨':item.M_send) + '</div></td>\
+          : (item.M_type == 1 && item.M_a_id == null) ? '예약오류':item.M_send) + '</div></td>\
         <td><div class="date-nobr '+((item.M_delete == '1') ? 'text-danger':'')+'">' + (
           ((item.M_send == null) || (item.M_type == 1 && (send_o > now_o)))
           ? '-'

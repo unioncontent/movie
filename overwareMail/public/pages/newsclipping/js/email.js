@@ -245,6 +245,7 @@ function getNewsClippingData(){
       eDate : newsEDate
     },
     datatype : 'json',
+    async: false,
     error:function(request,status,error){
       console.log('code:'+request.status+'\n'+'message:'+request.responseText+'\n'+'error:'+error);
       swal("ERROR!", request.responseText, "error");

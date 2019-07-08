@@ -196,7 +196,7 @@ router.post('/manage/getNextPage',isAuthenticated,async function(req, res, next)
     var data = await getListPageData(req.user,req.body);
     res.send({status:true,result:data});
   } catch(e){
-    logger.error('getNextPage ERROR:',e.message);
+    logger.error('getNextPage ERROR:',JSON.stringify(e));
     res.status(500).send(e);
   }
 });
@@ -256,7 +256,7 @@ async function getListPageData(user,param){
     data['currentPage'] = currentPage;
   }
   catch(e){
-    logger.error('getListPageData ERROR:',e.message);
+    logger.error('getListPageData ERROR:',JSON.stringify(e));
   }
   return data;
 }
@@ -530,7 +530,7 @@ router.post('/test',isAuthenticated, async function(req, res) {
     }
   }
   catch(e){
-    logger.error('test ERROR:',e.message);
+    logger.error('test ERROR:',JSON.stringify(e));
     res.status(500).send('메일 저장에 실패했습니다.');
     return false;
   }
@@ -633,7 +633,7 @@ router.post('/save',isAuthenticated, async function(req, res) {
       }
       catch(e){
         res.status(500).send('메일 저장 중 오류가 생겼습니다.');
-        logger.error('mailInsert ERROR:',e.message);
+        logger.error('mailInsert ERROR:',JSON.stringify(e));
         insertCheck = true;
         await mailAllA.updateMtype(['0',m_idx_a]);
         if(mailAllParam.M_module == '1'){
@@ -843,7 +843,7 @@ async function mailInsert(req){
           }
         }
     } catch (e) {
-      logger.error('메일저장 ERROR:',e.message);
+      logger.error('메일저장 ERROR:',JSON.stringify(e));
       await mymailer.deleteInfoTable(mailId);
       await mymailer.deleteSendTable(mailId);
       throw new Error(e);
