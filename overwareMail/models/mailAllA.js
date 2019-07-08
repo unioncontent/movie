@@ -84,15 +84,15 @@ var mailAllA = {
     }
   },
   selectEmailOneView:async function(idx){
-    var sql = 'SELECT * FROM m_mail_all_a where n_idx=?';
+    var sql = 'SELECT * FROM m_mail_all_a where n_idx=? and M_delete = 0';
     return await funDB.getResult('d',sql,idx);
   },
   selectEmailHtmlView:async function(idx){
-    var sql = 'SELECT M_body_his FROM m_mail_all_a where n_idx=?';
+    var sql = 'SELECT M_body_his FROM m_mail_all_a where n_idx=? and M_delete = 0';
     return await funDB.getResult('d',sql,idx);
   },
   selectPastMailBody:async function(param){
-    var sql = 'SELECT M_body FROM m_mail_all_a where M_keyword = ? and M_invitation = ? and M_template = ?\
+    var sql = 'SELECT M_body FROM m_mail_all_a where M_keyword = ? and M_invitation = ? and M_template = ? and M_delete = 0\
     and M_senddate is not null and (M_id in (SELECT n_idx FROM m_mail_user where user_admin = 1) or M_id = ?) order by n_idx desc limit 1;';
     var result = await funDB.getResult('d',sql,param);
 
