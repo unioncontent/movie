@@ -61,3 +61,7 @@
   cursor:pointer;
   font-weight: bold;
 }
+/* modal */
+.table.table-xs td{
+  padding: 5px;
+}
