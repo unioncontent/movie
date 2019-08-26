@@ -388,19 +388,35 @@ function getNewsClippingData(){
             // }
             html +='</div></a><span class="txt_sinfo" style="display: inline-block;overflow: hidden;max-width: 260px;white-space: nowrap;text-overflow: ellipsis;vertical-align: top;color: #666;"><span class="press">'+v.media_name+'</span>'+pageHtml+'<span class="bar" style="display: inline-block;overflow: hidden;width: 0;height: 11px;margin: -1px 5px 1px 4px;border-left: 1px solid #eaeaea;vertical-align: middle;"></span> '+v.writeDate+' <i class="fas fa-times news-delete" data-idx="'+v.media_idx+'"  data-type="news_mail" data-str="media_idx"></i></span> </li>';
             // html ='<li> <img src="https://ssl.pstatic.net/sstatic/search/pc/img/bu_news_sublst.gif" style="vertical-align:  text-top;"><a href="'+v.url+'" target="_blank"><div style="display: inline-block;overflow: hidden;max-width: 492px;text-decoration: none !important;color: black;margin-right: 5px;margin-left: 5px;text-overflow: ellipsis;white-space: nowrap;word-wrap: normal;word-break: normal;vertical-align: top;">'+siteLogoHtml_s+v.media_title+replyHtml+'</div></a><span class="txt_sinfo" style="display: inline-block;overflow: hidden;max-width: 260px;white-space: nowrap;text-overflow: ellipsis;vertical-align: top;color: #666;"><span class="press">'+v.media_name+'</span>'+pageHtml+'<span class="bar" style="display: inline-block;overflow: hidden;width: 0;height: 11px;margin: -1px 5px 1px 4px;border-left: 1px solid #eaeaea;vertical-align: middle;"></span> '+v.writeDate+' <i class="fas fa-times news-delete" data-idx="'+v.media_idx+'"  data-type="news_mail" data-str="media_idx"></i></span> </li>';
-            if($('div[data-idx='+index+']').parents('.section').data('type') != undefined){
-              if($('div[data-idx='+index+']').parents('.section').data('type').toString().indexOf('5') != -1 || $('div[data-idx='+index+']').parents('.section').data('type') == '2'){
+            var sectionType = $('div[data-idx='+index+']').parents('.section').data('type');
+            if(sectionType != undefined){
+              // if($('div[data-idx='+index+']').parents('.section').data('type').toString().indexOf('5') != -1 || $('div[data-idx='+index+']').parents('.section').data('type') == '2'){
+              //   // console.log('index : ',index,'/ length :',$('div[data-idx='+index+']').siblings('.relation_list').find('li').length);
+              //   if($('div[data-idx='+index+']').siblings('.relation_list').find('li').length > 4){
+              //     if(s_obj[index] == undefined){
+              //       s_obj[index] = 1;
+              //     }
+              //     else{
+              //       s_obj[index] += 1;
+              //     }
+              //     // console.log('index : ',index,'/ s_obj :',s_obj[index]);
+              //   }
+              //   else{
+              //     $('div[data-idx='+index+']').siblings('.relation_list').append(html);
+              //   }
+              // }else{
+              //   $('div[data-idx='+index+']').siblings('.relation_list').append(html);
+              // }
+              if(sectionType == '1' || sectionType == '2' || sectionType == '3' || sectionType == '5' || sectionType == 'movie'){
                 // console.log('index : ',index,'/ length :',$('div[data-idx='+index+']').siblings('.relation_list').find('li').length);
-                if($('div[data-idx='+index+']').siblings('.relation_list').find('li').length > 4){
+                if(((sectionType == '1' || sectionType == 'movie') && $('div[data-idx='+index+']').siblings('.relation_list').find('li').length > 9) || (sectionType != '1' && sectionType != 'movie' && $('div[data-idx='+index+']').siblings('.relation_list').find('li').length > 4)){
                   if(s_obj[index] == undefined){
                     s_obj[index] = 1;
                   }
                   else{
                     s_obj[index] += 1;
                   }
-                  // console.log('index : ',index,'/ s_obj :',s_obj[index]);
-                }
-                else{
+                }else{
                   $('div[data-idx='+index+']').siblings('.relation_list').append(html);
                 }
               }else{
