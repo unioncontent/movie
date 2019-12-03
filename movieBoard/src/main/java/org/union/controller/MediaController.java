@@ -138,6 +138,8 @@ public class MediaController {
 		
 		logger.info("cri: " + cri);
 		
+		logger.info("test: " + cri.getSelectKey());
+		
 		SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
 		List<MediaVO> mediaList = mediaService.allPageList(cri);
 		
@@ -639,6 +641,11 @@ public class MediaController {
 		if(cri.getSelectKey() == "" || "키워드".equals(cri.getSelectKey()) ) {
 			logger.info("selectKey is null");
 			cri.setSelectKey(null);
+		}
+		
+		if(cri.getPortal_name() == "" || "undefined".equals(cri.getPortal_name()) ) {
+			logger.info("Portal_name is null");
+			cri.setPortal_name(null);
 		}
 		
 		if("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate())

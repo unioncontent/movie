@@ -86,7 +86,12 @@
                                   <div class="col-md-10">
                                     <a id="link" href="http://unionc.co.kr/unionc/ow/index.html" target="_blank"><p class="text-inverse text-left m-b-0">© Union Contents.</p></a>
                                     <p class="text-inverse text-left m-b-0">TEL : 070-7700-1555</p>
-                                    <p class="text-inverse text-left">ADRESS : 서울시 서초구 서초대로25길 6 3층</p>
+                                    <p class="text-inverse text-left m-b-0">ADRESS : 서울시 서초구 서초대로25길 6 3층</p>
+                                    <p class="text-inverse text-left">
+                                    <a id="link" href="../notice/privacy" target="_blank" style="color: #34495e">개인정보처리방침</a>
+                                    <font style="color: #34495e;">|</font>
+                                    <a id="link" href="../notice/terms" target="_blank" style="color: #34495e"> 서비스약관</a></p>     
+                                    </div>
                                   </div>
                                 </div>
                             </div>

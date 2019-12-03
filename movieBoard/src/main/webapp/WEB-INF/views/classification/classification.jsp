@@ -152,6 +152,12 @@
                           </c:forEach>
                           </c:if>
                         </select>
+                        <select id = "selectCollectType" name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left">
+                          <option>수집</option>
+                          <option value="0">수동</option>
+                          <option value="1">자동</option>
+                          <option value="2">전체</option>
+                        </select>
                         <select id = "selectTextType" name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left">
                           <option>분류</option>
                           <option value="좋은글">좋은글</option>
@@ -181,6 +187,12 @@
                           <c:if test="${user.user_type == 2}">
                           <option value="${companyList.user_name}">${companyList.user_name}</option>
                           </c:if>
+                        </select>
+                        <select style="display: none;"  id = "selectCollectType" name="select" class="col-md-1 form-control form-control-inverse m-b-10 p-r-5 f-left select-left">
+                          <option>수집</option>
+                          <option value="0">수동</option>
+                          <option value="1">자동</option>
+                          <option value="2">전체</option>
                         </select>
                         <select name="select" class="col-md-1 form-control form-control-inverse m-b-10 m-l-0 p-r-5 f-left select-left" id="selectKeyword">
                           <option>키워드</option>
@@ -304,20 +316,34 @@
                                     <td>${extractVO.community_name}</td>
                                     <td><div class='keyword-nowrap'>${extractVO.keyword}</div></td>
                                     <td>
-                                    <c:if test="${extractVO.thumbnail != null}">
+                                    	<c:if test="${extractVO.thumbnail != null}">
                                       	<input type = "hidden" value = "${extractVO.thumbnail}">
                                       	<div class="image btn-list-image"><i class="icofont icofont-ui-image"></i></div>
                                       </c:if>
                                       <c:if test="${user.user_name == 'union'}">
-                                      <c:if test="${extractVO.thumbnail == null}">
-                                      	<input type = "hidden" value = "${extractVO.thumbnail}">
-                                      	<div class="image btn-list-image"><i class="icofont icofont-clip"></i></div>
-                                      </c:if>
+	                                      <c:if test="${extractVO.thumbnail == null}">
+	                                      	<input type = "hidden" value = "${extractVO.thumbnail}">
+	                                      	<div class="image btn-list-image"><i class="icofont icofont-clip"></i></div>
+	                                      </c:if>
+	                                      <c:if test="${extractVO.community_content == null}">
+	                                      	<a href="${extractVO.url}" target="_blank">
+	                                        	<div class="lineDel">${extractVO.community_title}</div>
+	                                      	</a>
+	                                    </c:if>
+	                                    <c:if test="${extractVO.community_content != null}">
+	                                      	<a href="${extractVO.url}" target="_blank">
+	                                        <div class="title-nowrap">${extractVO.community_title}</div>
+	                                      </a><br>
+	                                      <span class="text-success" style="text-align: center;">${extractVO.community_content}</span>
+	                                    </c:if>
+	                                   </c:if>
+	                                   
+                                    <c:if test="${user.user_name != 'union'}">
+	                                    <a href="${extractVO.url}" target="_blank">
+	                                    	<div class="title-nowrap">${extractVO.community_title}</div>
+	                                    </a><br>
+                                    	<span class="text-success" style="text-align: center;">${extractVO.community_content}</span>
                                     </c:if>
-                                      <a href="${extractVO.url}" target="_blank">
-                                        <div class="title-nowrap">${extractVO.community_title}</div>
-                                      </a><br>
-                                      <span class="text-success" style="text-align: center;">${extractVO.community_content}</span>
                                     </td>
                                     <c:if test="${user.user_name != 'union'}">
                                     <td>
@@ -332,7 +358,13 @@
                                     </td>
                                     <c:if test="${user.user_name == 'union'}">
                                     <td>
-                                      <div class="radios${index.count}">
+                                    <c:if test="${extractVO.keyword_type == '수동'}">
+                                    	<div class="collect-icon"><i class="ti-pencil-alt"></i></div>
+                                    	<div class="radios${index.count}" style="margin-left: 30px;">
+                                    </c:if>
+                                    <c:if test="${extractVO.keyword_type != '수동'}">
+                                    	<div class="radios${index.count}"">
+                                    </c:if>
                                         <c:choose>
                                         	<c:when test="${extractVO.textType eq '좋은글'}">
                                         	<input type="radio" id="radio1${index.count}" name="radios${index.count}" checked>
@@ -819,6 +851,26 @@
 			var textSearch = "ok";
 			searchList(textSearch);
 		});
+		
+		var CollectOption = decodeURI(window.location.href.split("keyword_type=")[1]).split("&")[0];
+
+		var $selectCollectType = $('#selectCollectType');
+
+		if(selectCollectType != 'undefined'){
+			for(var i = 0; i < $selectCollectType[0].length; i++ ){
+				if($selectCollectType[0][i].value == CollectOption){
+					$selectCollectType[0][i].selected = 'selected';
+				}
+			}
+		}
+		$selectCollectType[0][0].disabled = true;
+
+
+		// 키워드분류 선택시
+		$selectCollectType.change(function(){
+
+			searchList(textSearch);
+		});
 
 
 		var textOption = decodeURI(window.location.href.split("textType=")[1]).split("&")[0];
@@ -919,12 +971,7 @@
 							location.reload();
 						});
 		  });
-
-
-
-		
-
-
+	
 		// 당일 클릭시
 		$('#toDay').on("click", function(){
 		  console.log("toDay clicked....");
@@ -992,7 +1039,7 @@
 		// content 길시에 ...으로 변경
 		var $content = $(".text-success");
 
-		var size = 25;
+		var size = 30;
 
 		for (var i =1; i < $content.length; i++){
 			if($content[i].innerText.length >= size){
@@ -1102,6 +1149,7 @@
 				  + $('#selectPerPageNum option:selected').val()
 				  + "&company=" + $("#selectCompany option:selected").val()
 		          + "&selectKey=" + $('#selectKeyword option:selected').val()
+		          + "&keyword_type=" + $("#selectCollectType option:selected").val()
 		          + "&textType=" + $("#selectTextType option:selected").val()
 				  + "&searchType=" + $("#selectSearchType option:selected").val()
 				  + "&keyword=" + ""
@@ -1113,6 +1161,7 @@
 				  + $('#selectPerPageNum option:selected').val()
 				  + "&company=" + $("#selectCompany option:selected").val()
 		          + "&selectKey=" + $('#selectKeyword option:selected').val()
+		          + "&keyword_type=" + $("#selectCollectType option:selected").val()
 		          + "&textType=" + $("#selectTextType option:selected").val()
 				  + "&searchType=" + $("#selectSearchType option:selected").val()
 				  + "&keyword=" + $('#keywordInput').val()

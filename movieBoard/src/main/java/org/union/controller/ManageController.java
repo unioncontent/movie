@@ -91,7 +91,7 @@ public class ManageController {
 	
 		logger.info("UserVO: " + userVO);
 		
-		userVO.setUser_type(1);
+		userVO.setUser_type(2);
 		userVO.setUser_name(userVO.getCompany_name());
 		
 		userService.insert(userVO);

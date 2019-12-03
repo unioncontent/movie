@@ -4,12 +4,14 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.union.domain.CommunityVO;
+import org.union.domain.FindVO;
 import org.union.domain.GloVO;
 import org.union.domain.KeywordVO;
 import org.union.domain.SearchCriteria;
 
 public interface GloDAO {
 	
+	public void insertIp(FindVO vo) throws SQLException;
 	public Integer totalCnt() throws SQLException;
 	public Integer gloCnt() throws SQLException;
 	public List<GloVO> gloTypeCount() throws SQLException;

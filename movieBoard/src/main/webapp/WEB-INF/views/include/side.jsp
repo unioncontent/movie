@@ -98,13 +98,13 @@
               <span class="pcoded-mcaret"></span>
             </a>
           </li>
-          <li class="">
+          <!-- <li class="">
             <a href="../marketing/b_channel" data-i18n="nav.advance-components.draggable">
               <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
               <span class="pcoded-mtext">FACEBOOK BANGWOOL</span>
               <span class="pcoded-mcaret"></span>
             </a>
-          </li>
+          </li> -->
           <%-- <c:if test="${user.user_name == 'union'}">
           <li class="">
             <a href="../marketing/n_channel2" data-i18n="nav.advance-components.draggable">
@@ -384,7 +384,7 @@
             <span class="pcoded-mcaret"></span>
           </a>
         </li>
-        <c:if test="${user.user_name == 'union'}">
+        <%-- <c:if test="${user.user_name == 'union'}">
         <li class="glo">
           <a href="../glo/glo" data-i18n="nav.advance-components.main">
             <span class="pcoded-micon"><i class="icofont icofont-earth"></i></span>
@@ -392,7 +392,7 @@
             <span class="pcoded-mcaret"></span>
           </a>
         </li>
-        </c:if>
+        </c:if> --%>
       </li>
     </ul>
   </div>

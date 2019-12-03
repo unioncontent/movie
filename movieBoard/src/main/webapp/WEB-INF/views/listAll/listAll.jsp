@@ -205,6 +205,12 @@
 	                        <option id = "120">120</option>
 	                        <option id = "150">150</option>
                         </select>
+                        <select style="display: none;" id= "selectDomain" name="select" class="col-md-1 form-control form-control-inverse m-r-10 m-b-10 p-r-5 f-left select-left">	
+	                        <option>도메인</option>
+	                        <option value="portal">portal</option>
+                          <option value="media">media</option>
+                          <option value="community">community</option>
+                        </select>
 						</c:if>
                       </div>
                       <div class="col-md-5">

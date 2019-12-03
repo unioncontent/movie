@@ -241,6 +241,13 @@
 		order by createDate desc
 	</select>
 	
+	<select id="totalCnt" resultType="Integer">
+		select 
+			count(*) 
+		from 
+			(select count(*) from  keyword_data group by keyword_main) as c;
+	</select>
+	
 	<insert id="createMain">
 		insert keyword_data (user_idx, keyword_main)
 		values ((select user_idx from user_data b where company_name = #{company}), #{keyword_main})

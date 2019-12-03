@@ -87,7 +87,7 @@ a:hover { color: black; text-decoration: underline;}
 									<div class="page-header">
 										<div class="col-lg-12">
 										<div class="page-header-title">
-											<h4>해외통계관리</h4>
+											<h4>해외통계관리( 24시간 기준 )</h4>
 										</div>
 										<div class="page-header-breadcrumb">
 											<ul class="breadcrumb-title">

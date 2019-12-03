@@ -87,6 +87,11 @@ public class ClassificationController {
 			cri.setSelectKey(null);
 		}
 		
+		if(cri.getDomain() == "" || "도메인".equals(cri.getDomain()) ) {
+			logger.info("selectKey is null");
+			cri.setDomain(null);
+		}
+		
 		if("undefined".equals(cri.getStartDate()) || "undefined".equals(cri.getEndDate())
 				|| cri.getStartDate() == "" || cri.getEndDate() == ""){
 			cri.setStartDate(null);
@@ -125,6 +130,12 @@ public class ClassificationController {
 			if(cri.getTextType().equals("undefined") || cri.getTextType().equals("분류") || cri.getTextType().isEmpty()) {
 				cri.setTextType(null);
 			}
+		}
+		
+		
+		if(cri.getKeyword_type() == "" || "수집".equals(cri.getKeyword_type()) || "2".equals(cri.getKeyword_type()) ) {
+			logger.info("selectKey is null");
+			cri.setKeyword_type(null);
 		}
 		
 		// 회사 선택에 따른 키워드 재추출
@@ -583,9 +594,9 @@ public class ClassificationController {
 		ListUtil listUtil = new ListUtil();
 		
 		
-		listUtil.listAddCommunityList(classiList, communityService.listAll(cri));
-		listUtil.listAddPortalList(classiList, portalService.listAll(cri));
-		listUtil.listAddMediaList(classiList, mediaService.listAll(cri));
+		listUtil.listAddCommunityList(classiList, communityService.listAllEx(cri));
+		listUtil.listAddPortalList(classiList, portalService.listAllEx(cri));
+		listUtil.listAddMediaList(classiList, mediaService.listAllEx(cri));
 		
 		ExtractComparator comparator = new ExtractComparator();
 		Collections.sort(classiList, comparator);

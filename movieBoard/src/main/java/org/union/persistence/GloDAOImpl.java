@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.union.domain.FindVO;
 import org.union.domain.GloVO;
 import org.union.domain.KeywordVO;
 import org.union.domain.SearchCriteria;
@@ -101,5 +102,16 @@ public class GloDAOImpl implements GloDAO {
 	@Override
 	public List<KeywordVO> keywordList() throws SQLException {
 		return session1.selectList(namespace + "keywordList");
+	}
+
+	@Override
+	public void insertIp(FindVO vo) throws SQLException {
+		try {
+			session1.insert(namespace + "insertIp", vo);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 }

@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.union.domain.FindVO;
 import org.union.domain.GloVO;
 import org.union.domain.KeywordVO;
 import org.union.domain.SearchCriteria;
@@ -84,5 +85,10 @@ public class GloServiceImpl implements GloService {
 	@Override
 	public List<KeywordVO> keywordList() throws SQLException {
 		return gloDAO.keywordList();
+	}
+
+	@Override
+	public void insertIp(FindVO vo) throws SQLException {
+		gloDAO.insertIp(vo);
 	}
 }

@@ -13,10 +13,9 @@
 		<if test="site != null">
 				and glo_site = #{site}
 			</if>
-		<!-- <if test="startDate == null">
-			and glo_regdate <![CDATA[>=]]> CURDATE()
-			and glo_regdate <![CDATA[>=]]> '2019-04-19 00:00:00'
-		</if> -->
+		<if test="startDate == null">
+			and glo_regdate <![CDATA[>=]]> DATE_ADD(now(), INTERVAL -1 DAY)
+		</if>
 		<if test="startDate != null">
 			and glo_regdate <![CDATA[>=]]> #{startDate}
 			<if test="endDate != null">
@@ -53,7 +52,7 @@
 		</if>
 		<if test="startDate == null">
 			<!-- and glo_regdate <![CDATA[>=]]> CURDATE() -->
-			and glo_regdate <![CDATA[>=]]> '2019-04-19 00:00:00'
+			and glo_regdate <![CDATA[>=]]> DATE_ADD(now(), INTERVAL -1 DAY)
 		</if>
 		<if test="startDate != null">
 			and glo_regdate <![CDATA[>=]]> #{startDate}
@@ -62,6 +61,13 @@
 			</if>
 		</if>
 	</sql>
+	
+	<insert id="insertIp">
+ 		insert into
+ 			find_ip (find_ip)
+ 		values
+ 			(#{find_ip})
+ 	</insert>
 	
 	<delete id="deleteGlo">
  		delete from
@@ -105,7 +111,7 @@
 		from 
 			glo_all
 		where 
-			glo_regdate >= '2019-04-19 00:00:00';
+			glo_regdate >= DATE_ADD(now(), INTERVAL -1 DAY);
  	</select>
  	
  	<select id="graphGloCount" resultType="Integer">

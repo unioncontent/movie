@@ -244,12 +244,14 @@ public class UploadController {
 				vo.setReporter_name(writer);
 				vo.setKeyword(keyword);
 				vo.setTextType(textType);
+				vo.setKeyword_type("수동");
 				vo.setUrl(url);
 				if(vo.getThumbnail() == "") {
 					vo.setThumbnail(null);
 				}else {
 					vo.setThumbnail(insertFileName.getBody());
 				}
+				
 				
 				mediaService.regist(vo);
 				
@@ -265,6 +267,7 @@ public class UploadController {
 				vo.setWriteDate(writeDate);
 				vo.setReporter_name(writer);
 				vo.setKeyword(keyword);
+				vo.setKeyword_type("수동");
 				vo.setTextType(textType);
 				vo.setUrl(url);
 				
@@ -290,6 +293,7 @@ public class UploadController {
 				vo.setCommunity_writer_IP(writerIP);
 				vo.setWriteDate(writeDate);
 				vo.setKeyword(keyword);
+				vo.setKeyword_type("수동");
 				vo.setTextType(textType);
 				vo.setUrl(url);
 				if(vo.getThumbnail() == "") {
@@ -314,6 +318,7 @@ public class UploadController {
 				vo.setCommunity_writer_IP(writerIP);
 				vo.setWriteDate(writeDate);
 				vo.setKeyword(keyword);
+				vo.setKeyword_type("수동");
 				vo.setTextType(textType);
 				vo.setUrl(url);
 				

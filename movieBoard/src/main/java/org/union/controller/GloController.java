@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.union.domain.CommunityVO;
 import org.union.domain.ExtractVO;
+import org.union.domain.FindVO;
 import org.union.domain.GloVO;
 import org.union.domain.GraphVO;
 import org.union.domain.MediaVO;
@@ -43,6 +44,8 @@ import org.union.util.ExcelView;
 import org.union.util.ExcelViewGlo;
 import org.union.util.ExtractComparator;
 import org.union.util.ListUtil;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 @Controller
 @RequestMapping("/glo/*")
@@ -93,6 +96,38 @@ public class GloController {
 		
 		model.addAttribute("gloList", gloService.graphGloList(cri));
 		
+	}
+	
+	@GetMapping("/gloTest")
+	public void gloTest(@ModelAttribute("cri") SearchCriteria cri, Model model, HttpServletRequest request) throws SQLException {
+			 
+	        String ip = request.getHeader("X-Forwarded-For");
+	 
+	        logger.info(">>>> X-FORWARDED-FOR : " + ip);
+	 
+	        if (ip == null) {
+	            ip = request.getHeader("Proxy-Client-IP");
+	            logger.info(">>>> Proxy-Client-IP : " + ip);
+	        }
+	        if (ip == null) {
+	            ip = request.getHeader("WL-Proxy-Client-IP"); // 웹로직
+	            logger.info(">>>> WL-Proxy-Client-IP : " + ip);
+	        }
+	        if (ip == null) {
+	            ip = request.getHeader("HTTP_CLIENT_IP");
+	            logger.info(">>>> HTTP_CLIENT_IP : " + ip);
+	        }
+	        if (ip == null) {
+	            ip = request.getHeader("HTTP_X_FORWARDED_FOR");
+	            logger.info(">>>> HTTP_X_FORWARDED_FOR : " + ip);
+	        }
+	        if (ip == null) {
+	            ip = request.getRemoteAddr();
+	        }
+	        
+	        logger.info(">>>> Result : IP Address : "+ip);
+         
+	        model.addAttribute("clientIP", ip);
 	}
 	
 	@RequestMapping(value="/gloModal", method=RequestMethod.POST)
@@ -271,6 +306,19 @@ public class GloController {
 		model.setView(excelViewglo);
 		
 		return model;
+	}
+	
+	@ResponseBody
+	@PostMapping("/insertIP")
+	public String modifyPOST(String find_ip) throws SQLException {
+		
+		logger.info("insert 실행!");
+		FindVO vo = new FindVO();
+		vo.setFind_ip(find_ip);
+		
+		gloService.insertIp(vo);
+		
+		return "success";
 	}
 
 }
